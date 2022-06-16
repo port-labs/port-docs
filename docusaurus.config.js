@@ -6,15 +6,15 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "Port Documentation",
-  tagline: "Developer Experience",
-  url: "https://app.getport.io/",
+  title: "Port",
+  tagline: "Documentation Portal",
+  url: "https://docs.getport.io/",
   baseUrl: "/",
   onBrokenLinks: "warn",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
-  organizationName: "port", // Usually your GitHub org/user name.
-  projectName: "frontend", // Usually your repo name.
+  organizationName: "port-labs", // Usually your GitHub org/user name.
+  projectName: "port", // Usually your repo name.
   staticDirectories: ["static"],
 
   presets: [
@@ -25,13 +25,13 @@ const config = {
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
-          editUrl: "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
+          // editUrl: "https://github.com/port-labs",
         },
-        blog: {
-          showReadingTime: true,
-          // Please change this to your repo.
-          editUrl: "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
-        },
+        // blog: {
+        //   showReadingTime: true,
+        //   // Please change this to your repo.
+        //   editUrl: "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
+        // },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
         },
@@ -43,7 +43,7 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: "Port Documentation Portal",
+        title: "Port Documentation",
         logo: {
           alt: "Port Logo",
           src: "img/logo.svg",
@@ -55,9 +55,9 @@ const config = {
             position: "left",
             label: "Tutorial",
           },
-          { to: "/blog", label: "Blog", position: "left" },
+          // { to: "/blog", label: "Blog", position: "left" },
           {
-            href: "https://github.com/facebook/docusaurus",
+            href: "https://github.com/port-labs",
             label: "GitHub",
             position: "right",
           },
@@ -78,17 +78,13 @@ const config = {
           {
             title: "Community",
             items: [
-              // {
-              //   label: "Stack Overflow",
-              //   href: "https://stackoverflow.com/questions/tagged/docusaurus",
-              // },
-              // {
-              //   label: "Discord",
-              //   href: "https://discordapp.com/invite/docusaurus",
-              // },
               {
                 label: "Twitter",
                 href: "https://twitter.com/tweetsbyport",
+              },
+              {
+                label: "Linkedin",
+                href: "https://www.linkedin.com/company/getport/mycompany/",
               },
             ],
           },
@@ -102,6 +98,10 @@ const config = {
               {
                 label: "GitHub",
                 href: "https://github.com/port-labs",
+              },
+              {
+                label: "Port",
+                href: "https://getport.io",
               },
             ],
           },
