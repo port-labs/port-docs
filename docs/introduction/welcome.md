@@ -4,13 +4,18 @@ sidebar_position: 1
 
 # Welcome
 
-Let's discover **Port**.
+**Port** is the Developer Platform meant to supercharge your DevOps and Developers, and allow you to regain control of your environment.
 
 ## Getting Started
 
-Here you will find all the relevant information regarding Port's API, and how you can leverage it to organize & manage your microservices across your organization.
+This documentation is your one-stop-shop for all of your questions about the Port Platform.
 
-:::tip
+Whether you already have a Port installation, or you're just getting started and need to start from the basics, everything you need is right here.
+
+The best way to get started is by reading our [quickstart](quickstart.md), so let's dive right in!
+
+
+<!-- :::tip
 This document focuses on API usage examples and use cases, viewing your populated data is also available in the Ports’s [Dashboard app](https://app.getport.io/) (along with interactive documentation for the different API endpoints)
 
 :::
@@ -31,4 +36,4 @@ Or check the **API Documentation** at **[api.getport.io](https://api.getport.io)
 
 * [Service catalog page](Docs%205bfab/Untitled.png)
 
-* [More Examples](Docs%205bfab/More%20Examp%207427b.md)
+* [More Examples](Docs%205bfab/More%20Examp%207427b.md) -->

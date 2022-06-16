@@ -4,7 +4,72 @@ sidebar_position: 2
 
 # Quickstart
 
-Port helps you to -
+## What is Port
+
+**Port** is a Developer Platform meant to make life easier for Developers and DevOps in an organization, by creating a single Platform that acts as a Source-Of-Truth for all of the infrastructure and operations that happen in the organization's tech stack.
+
+### Port helps you
+
+* Map all your software and infrastructure components (microservices, monoliths, deployments, repos, databases, and more) and see all of them in one place
+* Create a self-service portal for your internal customers in order to empower them to perform actions and reduce toil on the DevOps team, while ensuring unified standards and governance over the processes inside your organization 
+* Create a **comprehensive catalog** by mapping all your software and infrastructure components (microservices, monoliths, deployments, repos, databases, and more) and see all of them in one place
+* Make your **catalog active** by assigning to it actions that can be used by you and your internal customers, while ensuring unified standards and governance over the processes inside your organization
+
+Port's 3 core building blocks are *Blueprints*, *Entities* and *Relations*. This tutorial will walk you through your first steps on the platform and get you started on your DevPortal journey!🚢 
+
+## Define a Blueprint
+
+We use Blueprints to model our data in Port. A Blueprint allows us to define what properties and fields an *Entity* will have.
+
+In Port, you control how the data looks, any data format you can think of can be represented, but for now, let's start with a simple example:
+
+You are a large car manufacturer 🛠 , and you want to manage your different car models in Port, so you can easily track all of your car models and variants, different engines and more.
+
+Let's head to [Port](https://app.getport.io/blueprints) and look at the Blueprints page, at the top right corner let's click on **New Blueprint** and configure our first blueprint - **Car Model** as shown in the image below:
+
+![Create New Blueprint](/img/introduction/quickstart/newBlueprintButton.png)
+
+After clicking the button, you should see a creation form similar to what is shown in the image below:
+
+![New Blueprint Text](/img/introduction/quickstart/newBlueprintDefaultText.png)
+
+Our Car Model Blueprint is going to include the following fields:
+
+- **Name** - The name of the car model
+- **Year** - The year the car model was produced
+
+In order to create a Blueprint with the following properties, we will use the following JSON body:
+
+```json
+{
+    "identifier": "car_model",
+    "title": "Car Model",
+    "dataSource": "Port",
+    "schema": {
+        "properties": {
+            "name": {
+                "type": "string",
+                "title": "Name",
+                "description": "The name of the car model"
+            },
+            "year": {
+                "type": "number",
+                "title": "Year",
+                "description": "The year the car model was produced"
+            }
+        },
+        "required": []
+    }
+}
+```
+
+Click on the save button, and you should see your new Blueprint in the Blueprints graph
+
+## Create Your First Entities
+
+## Create a Relation
+
+## Next Steps
 
 1. Map all your software and infrastructure components (microservices, monoliths, deployments, repos, databases, and more) and see all of them in one place
 2. Create a self-service portal for your internal customers in order to empower them to perform actions and reduce toil on the DevOps team, while ensuring unified standards and governance over the processes inside your organization

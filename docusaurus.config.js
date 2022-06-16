@@ -51,7 +51,7 @@ const config = {
         items: [
           {
             type: "doc",
-            docId: "tutorial-welcome/welcome",
+            docId: "introduction/welcome",
             position: "left",
             label: "Tutorial",
           },
