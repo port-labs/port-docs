@@ -63,7 +63,21 @@ In order to create a Blueprint with the following properties, we will use the fo
 }
 ```
 
-Click on the save button, and you should see your new Blueprint in the Blueprints graph
+Click on the save button, and you should see your new Blueprint in the Blueprints graph:
+
+![Blueprints graph with new Car Model](../../static/img/introduction/quickstart/blueprintGraphWithCarModelClosed.png)
+
+If you click on the `expand` button as shown in the image below:
+
+![Blueprints graph with new Car Model And Expand Makred](../../static/img/introduction/quickstart/blueprintGraphWithCarModelClosedAndExpandMarked.png)
+
+You should see an expanded view of the blueprint we just created, with all of the properties listed alongside the types we provided for them:
+
+![Blueprints graph with new Car Model open](../../static/img/introduction/quickstart/blueprintGraphWithCarModelOpen.png)
+
+Congratulations! you have just created your first Blueprint! 🎉
+
+In the next part, we will start creating `Entities` that match this new Blueprint, and we will see our car company coming together!
 
 ## Create Your First Entities
 
