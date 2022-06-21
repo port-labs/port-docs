@@ -33,10 +33,13 @@ After clicking the button, you should see a creation form similar to what is sho
 
 ![New Blueprint Text](/img/introduction/quickstart/newBlueprintDefaultText.png)
 
-Our Car Model Blueprint is going to include the following fields:
+Our Car Model Blueprint is going to include the following properties:
 
-- **Name** - The name of the car model
 - **Year** - The year the car model was produced
+
+:::note
+Don't worry if you feel like the Car Model blueprint should include more properties, you can always go back and add or remove properties later. 
+:::
 
 In order to create a Blueprint with the following properties, we will use the following JSON body:
 
@@ -47,11 +50,6 @@ In order to create a Blueprint with the following properties, we will use the fo
     "dataSource": "Port",
     "schema": {
         "properties": {
-            "name": {
-                "type": "string",
-                "title": "Name",
-                "description": "The name of the car model"
-            },
             "year": {
                 "type": "number",
                 "title": "Year",
@@ -63,7 +61,7 @@ In order to create a Blueprint with the following properties, we will use the fo
 }
 ```
 
-Click on the save button, and you should see your new Blueprint in the Blueprints graph:
+Click on the `save` button, and you should see your new Blueprint in the Blueprints graph:
 
 ![Blueprints graph with new Car Model](../../static/img/introduction/quickstart/blueprintGraphWithCarModelClosed.png)
 
@@ -81,91 +79,284 @@ In the next part, we will start creating `Entities` that match this new Blueprin
 
 ## Create Your First Entities
 
+Now that we have a Blueprint for **Car Model**, we can add some *Entities*.
+
+An **Entity** is an actual object that is of the type of a certain Blueprint. In our instance, every entity we create under the Car Model blueprint, is a Car Model in our factory.
+
+Let's create our first Entity to make things clearer, In the sidebar on the left side of the page, you can already see the **Car Models** page, so let's click on it:
+
+![Blueprints graph with new Car Model open and Car Models page marked](../../static/img/introduction/quickstart/blueprintGraphWithCarModelOpenAndCarModelsPageMarked.png)
+
+You should arrive at the Car Models page, now let's create a new Car Model **Entity** by clicking the `+ Car Model` button:
+
+![Car Model Entity page with create entity button marked](../../static/img/introduction/quickstart/carModelEntityPageWithCreateEntityMarked.png)
+
+After clicking the button we should see a form to add a new Car Model, let's fill it up with the following details:
+
+```
+Title: Aventador
+Team: - leave blank -
+# For identifier, click on the "Auto generate" toggle to enter a custom identifier
+Identifier: aventador
+Year: 2022
+```
+
+After filling all of these details, your creation page should look like this:
+
+![Car Model Entity filled with create entity button marked](../../static/img/introduction/quickstart/carModelEntityCreateFilledAndCreateMarked.png)
+
+You can go ahead and press the `Create` button at the bottom right corner (as shown in the image above), and you should see your new Car Model in the Car Models page:
+
+![Car Model Entity page with first entity](../../static/img/introduction/quickstart/carModelEntityPageWithFirstEntity.png)
+
+Let's repeat the process again, click on the `+ Car Model` again, but this time let's add an entity using JSON by clicking the `Json Mode` button:
+
+![Car Model Create Entity page with json mode marked](../../static/img/introduction/quickstart/createCarModelBlueprintJsonModeMarked.png)
+
+After clicking the button, you will have a JSON editor similar to the one we saw in the blueprints page, paste in the following content:
+
+```json
+{
+    "identifier": "huracan",
+    "title": "Huracan",
+    "team": "",
+    "blueprint": "car_model",
+    "properties": {
+        "year": "2022"
+    },
+    "relations": {}
+}
+```
+
+Then click on the create button at the bottom right corner:
+
+![Car Model Create Entity page with json filled and create marked](../../static/img/introduction/quickstart/createCarModelEntityWithJsonAndCeateMarked.png)
+
+Now you should see your 2 car models displayed in the page like shown in the image below:
+
+![Car Model Entity page with 2 models](../../static/img/introduction/quickstart/carModelPageWithTwoModels.png)
+
+Amazing! You have just created 2 awesome entities 🎉
+
+As you can probably realize, we use Blueprints to define our data models, and Entities to store actual objects with data.
+
+In the next part, we will look at our last building block - **Relations** so let's get to it.
+
 ## Create a Relation
 
-## Next Steps
+A **Relation** allows us to create a connection between two Blueprints and the entities that are based on them. Using Relations we are able to create a dependency graph between multiple entities, allowing us to query our data more easily, and also view all related entities from a single simplified page.
+
+Currently our car factory only has car models, but everybody knows a car needs an engine, our Engine Blueprint will have the following fields:
+
+- **Horsepower** - How much Horsepower does this engine unit have
+- **Volume** - The volume (in liters) of the engine
+- **Layout** - The engine layout (I3, V4, Hybrid, Electric, etc...)
+
+In addition, this time we will mark the `horsepower` field as `required`, so we can make sure that our engine has a horsepower value.
+
+Let's go over the steps needed to create our Engine Blueprint:
+
+ so let's go ahead and create an **Engine Blueprint**:
+
+- Go back to the Blueprints page
+- Click on the New Blueprint button
+- Paste in the content shown below and then click create:
+
+```json
+{
+    "identifier": "engine",
+    "title": "Engine",
+    "icon": "GPU",
+    "dataSource": "Port",
+    "schema": {
+        "properties": {
+            "horsepower": {
+                "type": "number",
+                "title": "Horsepower",
+                "description": "How much Horsepower does this engine unit have"
+            },
+            "volume": {
+                "type": "number",
+                "title": "Volume",
+                "description": "The volume (in liters) of the engine"
+            },
+            "layout": {
+                "type": "string",
+                "title": "Engine Layout",
+                "description": "The engine layout (I3, V4, Hybrid, Electric, etc...)"
+            }
+        },
+        "required": ["horsepower"]
+    }
+}
+```
+
+:::tip
+**Remember**, if you are having trouble at any point, we performed the exact same steps with the **Engine** Blueprint in the [Define a Blueprint section](#define-a-blueprint), so you can just go back to that part as reference.
+:::
+
+Next, we will create 2 engines to go with our car models, in order to do that we'll go to the newly created **Engines** page, and create them using the JSON bodies written below (remember that you can also create the new engines from the UI, JSON is a bit faster when you already know the contents of your new entity):
+
+**Aventador Engine:**
+
+```json
+{
+    "identifier": "aventador_v12",
+    "title": "Aventador V12",
+    "team": "",
+    "blueprint": "engine",
+    "properties": {
+        "horsepower": "769",
+        "volume": "6.5",
+        "layout": "V12"
+    },
+    "relations": {}
+}
+```
+
+**Huracan Engine:**
+
+```json
+{
+    "identifier": "huracan_v10",
+    "title": "Huracan V10",
+    "team": "",
+    "blueprint": "engine",
+    "properties": {
+        "horsepower": "602",
+        "volume": "5.2",
+        "layout": "V10"
+    },
+    "relations": {}
+}
+```
+
+In case you need a reminder on how to create both of these **Engine Entities**, refer to the following steps:
+
+- Go to the Engines page
+- Click on the `+ Engine` button
+- Paste in (or manually type) the contents of the two engines and then click create
+
+:::tip
+If you are still having trouble, refer back to the [Create Your First Entities](#create-your-first-entities) section
+:::
+
+After you're finished, your blueprints page and your Engines page should look like this:
+
+![Blueprints Page with Car Model and Engine](../../static/img/introduction/quickstart/blueprintsPageWithCarModelAndEngine.png)
+
+![Engine Page with 2 engines](../../static/img/introduction/quickstart/engineEntityPageWithTwoEngines.png)
+
+Now that we have 2 Blueprints with Entities to match, we can create a relation between them.
+
+:::info
+Remember that our goal is for each **Car Model** to have an **Engine** that goes with it, so that is exactly the relation we are going to create now
+:::
+
+### Car Model to Engine Relation
+
+Our cars need an engine, so the relation we will map is one where the Engine is **Used In** a Car Model, in order to create that relation, let's follow these steps:
+
+Go to the Blueprints page and click on the `New Blueprints Relation` button like show below:
+
+![Blueprints page with Create Relation Marked](../../static/img/introduction/quickstart/blueprintsPageWithCarModelEngineAndCreateRelationMarked.png)
+
+In the creation form that appears, paste in the following content:
+
+```json
+{
+    "title": "UsedIn",
+    "identifier": "car_model-to-engine",
+    "source": "engine",
+    "target": "car_model",
+    "required": true,
+    "many": false
+}
+```
+
+Then click the `save` button at the bottom right corner, as shown in the image below:
+
+![Car Model Engine Relation with Save Marked](../../static/img/introduction/quickstart/carModelEngineRelationWithSaveMarked.png)
+
+Now your Blueprints graph should look like this:
+
+![Blueprints Graph With Car Engine Relation](../../static/img/introduction/quickstart/blueprintsGraphWithCarEngineRelation.png)
+
+:::note
+Look at the dependency graph we just got, an **Engine Entity is used in a Car Model Entity**, we modeled the relationship between our Blueprints in a way that shows which blueprint depends on the other.
+:::
+
+Now that we have a relationship, it's time to use it to show which car uses which engine
+
+### Giving Engines a New Home (Well, Car)
+
+To use our new relations, we will go back to the **Engines** page.
+
+We already have an engine for our **Aventador** - that is the `Aventador V12`, and for our **Huracan** - that is the `Huracan V10`.
+
+At the right side of the page you should see 3 dots (`...`) in the line that matches each engine like shown below:
+
+![Engine Page with 3 dots Marked](../../static/img/introduction/quickstart/enginesPageWith3DotsMarked.png)
+
+Click on the 3 dots in the line of the `Huracan V10` engine and you should see a small menu with an option that says `Show all Properties`, as shown below:
+
+![Engine Page with show all properties Marked](../../static/img/introduction/quickstart/enginesPageWithShowAllPropertiesMarked.png)
+
+Click on that option and you will once again see the form to edit the details of our `Huracan V10` engine, this time you will see a new section at the bottom of the form that says `Relations` and a drop-down list which after clicking shows you the available car models:
+
+![Engine entity with relations DDL Marked](../../static/img/introduction/quickstart/engineEntityWithRelationsDDLMarked.png)
+
+Select the Huracan option from the drop-down list and then click on the `Update` button:
+
+![Engine entity with relation selected and update marked](../../static/img/introduction/quickstart/engineEntityWithUpdateButtonMarked.png)
+
+Repeat the same process, only this time select the `Aventador V12` engine from the table, and in the relations drop-down, select the `Aventador` car then click `update`.
+
+After attaching the engines to the car models, your engines page should look like this (notice the marked column and its values):
+
+![Engines page with relations filled and marked](../../static/img/introduction/quickstart/enginesWithRelationsFilledAndMarked.png)
+
+Click on either the `Huracan` or `Aventador` links in the marked column and you will see what we call the **Specific Entity Page**, this page allows you to see the complete details and dependency graph of a specific entity.
+
+![Car Model specific entity page after relation](../../static/img/introduction/quickstart/carModelSpecificEntityPageAfterRelation.png)
+
+:::info
+In our case, the specific entity page for a Car Model, will also show us the Engine that is used in it, because that is the relation we mapped.
+:::
+
+feel free to continue exploring the specific entity page and also the Engines and Car Models pages, notice the `Filter`, `Hide`, `Sort` and `Group By` controls you can find at the top right of Port's table widgets.
+
+## What Now?
+
+Congratulations! you just modeled your first environment in Port! 🎉🚢
+
+This quickstart was used to show you a basic example that doesn't require any domain-specific knowledge, but now you have all the tools you need to get started!
+
+You can begin creating Blueprints that describe your `Services`, `Applications`, `Clusters`, `Infrastructure` resources, or continue your new Car Manufacturer journey!
+
+### Recommended Next Steps
+
+:::tip
+These suggestions show the basic steps in creating your very own Developer Portal, if you want to learn more about Port before starting your DevPortal journey, look at [Diving Deeper](#diving-deeper) or [Using the API](#using-the-api) below.
+:::
 
 1. Map all your software and infrastructure components (microservices, monoliths, deployments, repos, databases, and more) and see all of them in one place
 2. Create a self-service portal for your internal customers in order to empower them to perform actions and reduce toil on the DevOps team, while ensuring unified standards and governance over the processes inside your organization
-3. Create a **comprehensive catalog** by mapping all your software and infrastructure components (microservices, monoliths, deployments, repos, databases, and more) and see all of them in one place
-4. Make your **catalog active** by assigning to it actions that can be used by you and your internal customers, while ensuring unified standards and governance over the processes inside your organization
+3. Create a **comprehensive** catalog by mapping all your software and infrastructure components and see all of them in one place
+4. Make your catalog **active** by assigning to it actions that can be used by you and your internal customers, while ensuring unified standards and governance over the processes inside your organization
 
-In this tutorial, we will show you how to use Port to better understand what your software and infrastructure are made of, and manage all the components in one place.
+### Diving Deeper
 
-## 1. Define Your Entity Types
+If you want to learn more about Port's capabilities in a specific area, you can check out any of these resources:
 
-Port’s two main building blocks are entity types and entities.
+- Blueprints Deep Dive
+- Entities Deep Dive
+- Relations Deep Dive
+- Pages Deep Dive
 
-In this section, we will define the entity types that our entities will be based on.
+### Using the API
 
-### Entity Types & Properties
+If you want to take advantage of Port's REST API Interface, take a look at these resources:
 
-Let’s start by choosing the **entity types according to what we want to manage in Port.**
-
-Please pick a relevant scenario, and perform the API call to create the entity types:
-
-```jsx
-Here we will have a list of scenarios (microservice management, environments..).
-When the user chooses a scenario, a **diagram** will be displayed with the **API code**
-and a copy button
-```
-
-### Relationship Definition
-
-The next step after creating the entity types will be to **define the relationships between them.**
-
-According to the scenario you have selected above, perform the relevant API call to create the relationships:
-
-```jsx
-Here we will have a list of scenarios (microservice management, environments..).
-When the user chooses a scenario, a diagram will be displayed with the API code
-and a copy button
-```
-
-:::note
-💡 Got confused for some reason? you can delete all data and start again by using this API call - add here
-:::
-
-
-**Great! 🥳**  now we have a **model** that represents the entities that we want to manage in Port
-
-**Click here to see the entity model inside your system**
-
-## 2. Create Your First Entities
-
-Now we will **create entities based on our entity types.**
-
-According to the scenario you have selected above, perform the relevant API call to create some entities:
-
-```jsx
-Here we will have a list of scenarios (microservice management, environments..).
-When the user chooses a scenario, a diagram will be displayed with the API code
-and a copy button
-```
-
-## 3. View The Data You Created!
-
-All done! 🎊  you have created -
-
-1. A **model (entity types and relationships)** that represents your organization
-2. Entities based on this model
-
-In addition, a **page for each entity** type is automatically created for you.
-
-You can view it all in **your system**
-
-:::tip
-💡 You can create more pages that display information about your entities. For further information please see the [pages section](https://www.notion.so/Pages-8e026b983f2d40cb8f9b3c04b9b50c03)
-
-:::
-
-### What Now?
-
-1. **Create your own entities by integrating Port with your processes**
-    1. This can be done by adding our API call to your workflow. For example - create a new environment in Port through a Terraform script. Check out the **[Templates Section](https://www.notion.so/Templates-6f16be20ed234ed5a77952e2494b7c26)** to get inspiration on what you could manage with Port and also start with one click!
-    2. Further explanation on how to create and manage your entities catalog can be found here -
-
-        [Setup Entity Catalog](https://www.notion.so/Setup-Entity-Catalog-bf55227428414e309a5a76ede04d5fff)
-
-2. **Turn your catalog to an active portal by assigning actions to your entities**
-    1. Further explanation here -
+- API At a Glance
+- Port API Reference

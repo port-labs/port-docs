@@ -2,40 +2,26 @@
 
 This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
 
-### Installation
+### Getting started with the docs
+
+Install nodejs, it is recommended to use [NVM](https://github.com/nvm-sh/nvm#install--update-script):
 
 ```
-$ yarn
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+# After this, you can use nvm to install the latest version of node:
+nvm install node
 ```
 
-### Local Development
+If you are not using NVM, just install the latest version of [Node](https://nodejs.org/en/) LTS
+
+Once you have Node installed, switch to the `staging` branch of this repository and install package dependencies by running the following command in the project directory:
 
 ```
-$ yarn start
+npm install
 ```
 
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
-
-### Build
+Then you can start looking at the docs and editing them using:
 
 ```
-$ yarn build
+npm run start
 ```
-
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
-
-### Deployment
-
-Using SSH:
-
-```
-$ USE_SSH=true yarn deploy
-```
-
-Not using SSH:
-
-```
-$ GIT_USER=<Your GitHub username> yarn deploy
-```
-
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
