@@ -6,7 +6,9 @@ sidebar_position: 2
 
 ## What is Port
 
-**Port** is a Developer Platform meant to make life easier for Developers and DevOps in an organization, by creating a single Platform that acts as a Source-Of-Truth for all of the infrastructure assets and operations that happen in the organization's tech stack. Port then allows engineers to perform actions on these assets in a self-service fashion. From provisioning a Dev Environment, Seeing the owner of a Microservices, or any unique usecase DevOps want to self-serve and automate.
+**Port** is a Developer Platform meant to make life easier for Developers and DevOps in an organization, by creating a single Platform that acts as a Source-Of-Truth for all of the infrastructure assets and operations that happen in the organization's tech stack.
+
+Port then allows engineers to perform actions on these assets in a self-service fashion. From provisioning a Dev Environment, Seeing the owner of a Microservices, or any unique usecase DevOps want to self-serve and automate.
 
 ### Port helps you
 
@@ -19,9 +21,19 @@ Port's 3 core building blocks are *Blueprints*, *Entities* and *Relations*. This
 
 We use Blueprints to model our data in Port. A Blueprint allows us to define what properties and fields an *Entity* will have.
 
-In Port, you control how the data looks, any data format you can think of can be represented, but for now, let's start with a simple example:
+In Port, you control how the data looks, any data format you can think of can be represented.
 
-You are a large car manufacturer 🛠 , and you want to manage your different car models in Port, so you can easily track all of your car models and variants, different engines and more.
+We know that every organization is a snowflake, and everybody have their own preferences and standards for representing their data and asset structure, we choose the **Blueprints** approach to enable that.
+
+but for now, let's start with a simple example:
+
+You are a large car manufacturer 🛠, and you want to manage your different car models in Port, so you can easily track all of your car models and variants, different engines and more.
+
+:::note
+**Port** is a DevOps tools first, and our goal is to make it easy to manage all of the software components in your organization.
+
+But we feel like it would be easier to understand the **power** Port provides by first going through a simple example that is not specific to the Developer Platform domain.
+:::
 
 Let's head to [Port](https://app.getport.io/blueprints) and look at the Blueprints page, at the top right corner let's click on **New Blueprint** and configure our first blueprint - **Car Model** as shown in the image below:
 
