@@ -10,8 +10,6 @@ sidebar_position: 2
 
 ### Port helps you
 
-* Map all your software and infrastructure components (microservices, monoliths, deployments, repos, databases, and more) and see all of them in one place
-* Create a self-service portal for your internal customers in order to empower them to perform actions and reduce toil on the DevOps team, while ensuring unified standards and governance over the processes inside your organization 
 * Create a **comprehensive catalog** by mapping all your software and infrastructure components (microservices, monoliths, deployments, repos, databases, and more) and see all of them in one place
 * Make your **catalog active** by assigning to it actions that can be used by you and your internal customers, while ensuring unified standards and governance over the processes inside your organization
 
@@ -340,10 +338,10 @@ You can begin creating Blueprints that describe your `Services`, `Applications`,
 These suggestions show the basic steps in creating your very own Developer Portal, if you want to learn more about Port before starting your DevPortal journey, look at [Diving Deeper](#diving-deeper) or [Using the API](#using-the-api) below.
 :::
 
-1. Map all your software and infrastructure components (microservices, monoliths, deployments, repos, databases, and more) and see all of them in one place
-2. Create a self-service portal for your internal customers in order to empower them to perform actions and reduce toil on the DevOps team, while ensuring unified standards and governance over the processes inside your organization
-3. Create a **comprehensive** catalog by mapping all your software and infrastructure components and see all of them in one place
-4. Make your catalog **active** by assigning to it actions that can be used by you and your internal customers, while ensuring unified standards and governance over the processes inside your organization
+1. Create a **comprehensive** catalog by creating Blueprints for all of your infrastructure resources (and don't be afraid to go back and iterate)
+2. Map out the Relations between the different Blueprints
+3. Begin ingesting data and creating Entities based on your Blueprints, either manually, through the API or using one of our integrations
+4. Define **actions** that allow you to control your environment and resources straight from Port
 
 ### Diving Deeper
 
