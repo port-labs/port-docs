@@ -6,7 +6,7 @@ sidebar_position: 2
 
 ## What is Port
 
-**Port** is a Developer Platform meant to make life easier for Developers and DevOps in an organization, by creating a single Platform that acts as a Source-Of-Truth for all of the infrastructure and operations that happen in the organization's tech stack.
+**Port** is a Developer Platform meant to make life easier for Developers and DevOps in an organization, by creating a single Platform that acts as a Source-Of-Truth for all of the infrastructure assets and operations that happen in the organization's tech stack. Port then allows engineers to perform actions on these assets in a self-service fashion. From provisioning a Dev Environment, Seeing the owner of a Microservices, or any unique usecase DevOps want to self-serve and automate.
 
 ### Port helps you
 
@@ -347,10 +347,10 @@ These suggestions show the basic steps in creating your very own Developer Porta
 
 If you want to learn more about Port's capabilities in a specific area, you can check out any of these resources:
 
-- Blueprints Deep Dive
-- Entities Deep Dive
-- Relations Deep Dive
-- Pages Deep Dive
+- [Blueprints Deep Dive](../setup-your-port/setup-catalog/blueprints)
+- [Entities Deep Dive](../setup-your-port/setup-catalog/entities)
+- [Pages Deep Dive](../setup-your-port/setup-catalog/pages)
+- Mirror Properties Deep Dive
 
 ### Using the API
 
