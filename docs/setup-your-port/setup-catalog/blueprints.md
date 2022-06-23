@@ -16,9 +16,9 @@ Modern infrastructure is composed of many moving parts. a blueprint represents e
 
 In this section you will:
 
-1. **Map your software infrastructure** - To understand what blueprints and technical assets you want to manage
-2. **Create your blueprints** - Including the relationships between them and their properties
-3. **View the entities inside Port** - To see the blueprints you created
+1. **Map your software infrastructure** - to understand what blueprints you want to manage
+2. **Create your blueprints** - including their properties
+3. **View the results inside Port** - see the blueprints you created
 
 :::tip
 The most important thing to know about blueprints is that they are **completely customizable**, they will support any number of properties you choose, with every type you might need.
