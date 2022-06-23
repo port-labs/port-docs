@@ -4,11 +4,11 @@ sidebar_position: 2
 
 # Quickstart
 
-## What is Port
+## What is Port?
 
 **Port** is a Developer Platform meant to make life easier for Developers and DevOps in an organization, by creating a single Platform that acts as a Source-Of-Truth for all of the infrastructure assets and operations that happen in the organization's tech stack.
 
-Port then allows engineers to perform actions on these assets in a self-service fashion. From provisioning a Dev Environment, Seeing the owner of a Microservices, or any unique usecase DevOps want to self-serve and automate.
+Port then allows engineers to perform actions on these assets in a self-service fashion. From provisioning a Dev Environment, Understanding who is the owner of a Microservice, or any unique use case DevOps want to self-serve and automate.
 
 ### Port helps you
 
