@@ -37,3 +37,36 @@ For now we are not going to assign a team to our entities, but we will explore t
 :::
 
 ## Creating entities
+
+:::note
+Remember that an access token is needed to make API requests, refer back to [Getting an API token](blueprints#getting-an-api-token) if you need to generate a new one
+:::
+
+:::info
+We will be creating entities for the `Microservice` blueprint from [Creating a Blueprint](blueprints#creating-a-blueprint) and the `Package` blueprint from [Blueprint Next Steps](blueprints#next-steps), please make sure create them before reading on if you want to follow along
+:::
+
+We'll present 2 ways to create entities:
+
+- From the UI
+- From the API
+
+### From the UI
+
+In order to create an entity from the UI, go to the [Page](pages) matching the Blueprint you want to add an entity to, you can find the page list in the sidebar on the left side of Port's UI
+
+We will first go to the `Microservices` page:
+
+![Microservices page marked](../../../static/img/setup-your-port/self-service-portal/relations/graphPackageMicroserviceCreateRelationMarked.png)
+
+After clicking the button an editor window will open with a format similar to the one we explained in the [Understanding the structure of a relation](#understanding-the-structure-of-a-relation) section, paste in the following content to create the `Package-Deployment` relation:
+
+```json
+{
+    "identifier": "package-microservice",
+    "title": "Used In",
+    "source": "package",
+    "target": "microservice",
+    "required": false
+}
+```
