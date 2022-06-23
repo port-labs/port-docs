@@ -347,19 +347,20 @@ You can begin creating Blueprints that describe your `Services`, `Applications`,
 ### Recommended next steps
 
 :::tip
-These suggestions show the basic steps in creating your very own Developer Portal, if you want to learn more about Port before starting your DevPortal journey, look at [Diving Deeper](#diving-deeper) or [Using the API](#using-the-api) below.
+These suggestions show the basic steps in creating your very own Developer Portal, if you want to learn more about Port before starting your DevPortal journey, look at [Diving deeper](#diving-deeper) or [Using the API](#using-the-api) below.
 :::
 
-1. Create a **comprehensive** catalog by creating Blueprints for all of your infrastructure resources (and don't be afraid to go back and iterate)
-2. Map out the Relations between the different Blueprints
-3. Begin ingesting data and creating Entities based on your Blueprints, either manually, through the API or using one of our integrations
-4. Define **actions** that allow you to control your environment and resources straight from Port
+1. Create [Blueprints](../setup-your-port/setup-catalog/blueprints) for your software and infrastructure components
+2. Map out the [Relations](../setup-your-port/setup-catalog/relations) between your Blueprints
+3. Ingest data to your catalog by creating [Entities](../setup-your-port/setup-catalog/entities) based on your Blueprints via Port's UI or using our API
+4. Define Actions that can be used by you and your developers
 
 ### Diving deeper
 
 If you want to learn more about Port's capabilities in a specific area, you can check out any of these resources:
 
 - [Blueprints Deep Dive](../setup-your-port/setup-catalog/blueprints)
+- [Relations Deep Dive](../setup-your-port/setup-catalog/relations)
 - [Entities Deep Dive](../setup-your-port/setup-catalog/entities)
 - [Pages Deep Dive](../setup-your-port/setup-catalog/pages)
 - Mirror Properties Deep Dive

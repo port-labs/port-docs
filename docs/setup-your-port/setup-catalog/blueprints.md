@@ -533,6 +533,22 @@ If we want to add a property called `Is Deployed?` with the `boolean` type, our 
 
 For more information about the PATCH request format, refer to the [API Reference](https://app.getport.io/Api-docs)
 
+
+:::info A note about mirror properties
+If you try to update a blueprint that has a [relation](relations), you will notice that its JSON body contains a key called `mirrorProperties`:
+
+```json
+"mirrorProperties": {
+    "microservice": {
+        "path": "package-microservice.$identifier"
+    }
+}
+```
+
+We will explore Mirror Properties further in a dedicated section, but for now just know that any edits to a blueprint should leave the objects that have `.$identifier` in their path property intact
+
+:::
+
 ## Deleting blueprints
 
 :::danger
