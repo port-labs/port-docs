@@ -153,7 +153,7 @@ const config = {
 		identifier: 'package-microservice',
 		title: 'Used In',
 		target: 'microservice',
-		required: true,
+		required: false,
 	};
 
 	const response = await axios.post(`${API_URL}/blueprints/${source_blueprint_name}/relations`, relation, config);
@@ -179,7 +179,7 @@ curl --location --request POST "https://api.getport.io/v0.1/blueprints/$source_b
     \"identifier\": \"package-microservice\",
     \"title\": \"Used In\",
     \"target\": \"microservice\",
-    \"required\": true
+    \"required\": false
 }"
 
 # The output of the command contains the content of the resulting blueprint
@@ -194,3 +194,61 @@ After creating the relation, you should see a visual indicator in the blueprints
 ![Blueprints Graph with Relations Line](../../../static/img/setup-your-port/self-service-portal/relations/graphPackageMicroserviceWithRelationLine.png)
 
 ## Updating relations
+
+When updating a relation, it is only possible to update the `title`, `identifier` and `required` keys
+
+Just like before, we can update a relation from the UI or from the API.
+
+### From the UI
+
+In order to update a relation from the UI, go to the Blueprints Graph, hover over the relation connector line between the 2 blueprints and click on the relations icon that appears:
+
+![Graph relations edit marked](../../../static/img/setup-your-port/self-service-portal/relations/graphRelationEditMarked.png)
+
+A json editor will appear in read-only mode.
+
+You can toggle editing at the bottom left corner of the editor.
+
+![Graph relations editor with edit marked](../../../static/img/setup-your-port/self-service-portal/relations/graphRelationEditorWithEditButtonMarked.png)
+
+:::info editing relations
+Toggling edit mode will remove the fields that cannot be updated in the relation from the editor, don't worry about it, they are still saved in the background, but because they cannot be updated they are hidden away.
+:::
+
+After editing the relation, click on `save` at the bottom right corner of the editor and you should see the updated relation.
+
+### From the API
+
+In order to update a relation from the API, we will make a PATCH request to the URL `https://api.getport.io/v0.1/{source_blueprint_identifier}/relations/{relation_identifier}`.
+
+A PATCH request has a specific format that allows for precise changes in an existing relation, let's look at an example:
+
+If we want to rename the relation to `Used In MS`, our PATCH request body will look like this:
+
+```json
+{
+    "type": "renameTitle",
+    "newTitle": "Used In MS"
+}
+```
+
+For more information about the PATCH request format, refer to the [API Reference](https://app.getport.io/Api-docs)
+
+## Deleting relations
+
+:::danger
+A relation cannot be restored after deletion!
+:::
+
+In order to delete a relation you can:
+
+- Click on the trash can icon in the specific relation node in the Blueprints Graph
+- Make a REST DELETE request to the URL `https://api.getport.io/v0.1/{source_blueprint_identifier}/relations/{relation_identifier}`
+
+![Graph relations delete marked](../../../static/img/setup-your-port/self-service-portal/relations/graphRelationDeleteMarked.png)
+
+## Next steps
+
+Now that we understand **Relations**, we can start to see how Port helps us understand our infrastructure layout, and helps us make sure everything is organized.
+
+In the next section we will talk about **Entities**, entities are the real objects that use the blueprints we defined, and they are the final building block in creating our Software Catalog! 

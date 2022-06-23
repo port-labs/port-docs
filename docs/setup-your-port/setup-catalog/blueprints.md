@@ -557,7 +557,7 @@ A blueprint cannot be restored after deletion!
 
 In order to delete a blueprint you can:
 
-- Click on the trash can icon in the Blueprints Graph
+- Click on the trash can icon in the specific blueprint node in the Blueprints Graph
 - Make a REST DELETE request to the URL `https://api.getport.io/v0.1/{blueprint_identifier}`
 
 ![Blueprints Graph delete button marked](../../../static/img/setup-your-port/self-service-portal/blueprints/blueprintGraphDeleteButtonMarked.png)
