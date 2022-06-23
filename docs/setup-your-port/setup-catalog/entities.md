@@ -30,4 +30,10 @@ The basic structure of an Entity request:
 - `properties` - An object containing key-value pairs where each key is a property in the blueprint the entity is based on
 - `relations` - An object containing key-value pairs where each key is the name of a [Relation](relations) defined over the blueprint this entity is based on.
 
+:::info teams and ownership
+Entities also have the `team` key which defines ownership over an entity and also controls who can modify or delete an existing entity.
+
+For now we are not going to assign a team to our entities, but we will explore this topic in more depth in the Teams, Users and Permissions section.
+:::
+
 ## Creating entities

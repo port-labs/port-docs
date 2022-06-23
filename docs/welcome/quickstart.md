@@ -37,11 +37,11 @@ But we feel like it would be easier to understand the **power** Port provides by
 
 Let's head to [Port](https://app.getport.io/blueprints) and look at the Blueprints page, at the top right corner let's click on **New Blueprint** and configure our first blueprint - **Car Model** as shown in the image below:
 
-![Create New Blueprint](/img/introduction/quickstart/newBlueprintButton.png)
+![Create New Blueprint](/img/welcome/quickstart/newBlueprintButton.png)
 
 After clicking the button, you should see a creation form similar to what is shown in the image below:
 
-![New Blueprint Text](/img/introduction/quickstart/newBlueprintDefaultText.png)
+![New Blueprint Text](/img/welcome/quickstart/newBlueprintDefaultText.png)
 
 Our Car Model Blueprint is going to include the following properties:
 
@@ -73,15 +73,15 @@ In order to create a Blueprint with the following properties, we will use the fo
 
 Click on the `save` button, and you should see your new Blueprint in the Blueprints graph:
 
-![Blueprints graph with new Car Model](../../static/img/introduction/quickstart/blueprintGraphWithCarModelClosed.png)
+![Blueprints graph with new Car Model](../../static/img/welcome/quickstart/blueprintGraphWithCarModelClosed.png)
 
 If you click on the `expand` button as shown in the image below:
 
-![Blueprints graph with new Car Model And Expand Makred](../../static/img/introduction/quickstart/blueprintGraphWithCarModelClosedAndExpandMarked.png)
+![Blueprints graph with new Car Model And Expand Makred](../../static/img/welcome/quickstart/blueprintGraphWithCarModelClosedAndExpandMarked.png)
 
 You should see an expanded view of the blueprint we just created, with all of the properties listed alongside the types we provided for them:
 
-![Blueprints graph with new Car Model open](../../static/img/introduction/quickstart/blueprintGraphWithCarModelOpen.png)
+![Blueprints graph with new Car Model open](../../static/img/welcome/quickstart/blueprintGraphWithCarModelOpen.png)
 
 Congratulations! you have just created your first Blueprint! 🎉
 
@@ -95,11 +95,11 @@ An **Entity** is an actual object that is of the type of a certain Blueprint. In
 
 Let's create our first Entity to make things clearer, In the sidebar on the left side of the page, you can already see the **Car Models** page, so let's click on it:
 
-![Blueprints graph with new Car Model open and Car Models page marked](../../static/img/introduction/quickstart/blueprintGraphWithCarModelOpenAndCarModelsPageMarked.png)
+![Blueprints graph with new Car Model open and Car Models page marked](../../static/img/welcome/quickstart/blueprintGraphWithCarModelOpenAndCarModelsPageMarked.png)
 
 You should arrive at the Car Models page, now let's create a new Car Model **Entity** by clicking the `+ Car Model` button:
 
-![Car Model Entity page with create entity button marked](../../static/img/introduction/quickstart/carModelEntityPageWithCreateEntityMarked.png)
+![Car Model Entity page with create entity button marked](../../static/img/welcome/quickstart/carModelEntityPageWithCreateEntityMarked.png)
 
 After clicking the button we should see a form to add a new Car Model, let's fill it up with the following details:
 
@@ -113,15 +113,15 @@ Year: 2022
 
 After filling all of these details, your creation page should look like this:
 
-![Car Model Entity filled with create entity button marked](../../static/img/introduction/quickstart/carModelEntityCreateFilledAndCreateMarked.png)
+![Car Model Entity filled with create entity button marked](../../static/img/welcome/quickstart/carModelEntityCreateFilledAndCreateMarked.png)
 
 You can go ahead and press the `Create` button at the bottom right corner (as shown in the image above), and you should see your new Car Model in the Car Models page:
 
-![Car Model Entity page with first entity](../../static/img/introduction/quickstart/carModelEntityPageWithFirstEntity.png)
+![Car Model Entity page with first entity](../../static/img/welcome/quickstart/carModelEntityPageWithFirstEntity.png)
 
 Let's repeat the process again, click on the `+ Car Model` again, but this time let's add an entity using JSON by clicking the `Json Mode` button:
 
-![Car Model Create Entity page with json mode marked](../../static/img/introduction/quickstart/createCarModelBlueprintJsonModeMarked.png)
+![Car Model Create Entity page with json mode marked](../../static/img/welcome/quickstart/createCarModelBlueprintJsonModeMarked.png)
 
 After clicking the button, you will have a JSON editor similar to the one we saw in the blueprints page, paste in the following content:
 
@@ -140,11 +140,11 @@ After clicking the button, you will have a JSON editor similar to the one we saw
 
 Then click on the create button at the bottom right corner:
 
-![Car Model Create Entity page with json filled and create marked](../../static/img/introduction/quickstart/createCarModelEntityWithJsonAndCeateMarked.png)
+![Car Model Create Entity page with json filled and create marked](../../static/img/welcome/quickstart/createCarModelEntityWithJsonAndCeateMarked.png)
 
 Now you should see your 2 car models displayed in the page like shown in the image below:
 
-![Car Model Entity page with 2 models](../../static/img/introduction/quickstart/carModelPageWithTwoModels.png)
+![Car Model Entity page with 2 models](../../static/img/welcome/quickstart/carModelPageWithTwoModels.png)
 
 Amazing! You have just created 2 awesome entities 🎉
 
@@ -253,9 +253,9 @@ If you are still having trouble, refer back to the [Create Your First Entities](
 
 After you're finished, your blueprints page and your Engines page should look like this:
 
-![Blueprints Page with Car Model and Engine](../../static/img/introduction/quickstart/blueprintsPageWithCarModelAndEngine.png)
+![Blueprints Page with Car Model and Engine](../../static/img/welcome/quickstart/blueprintsPageWithCarModelAndEngine.png)
 
-![Engine Page with 2 engines](../../static/img/introduction/quickstart/engineEntityPageWithTwoEngines.png)
+![Engine Page with 2 engines](../../static/img/welcome/quickstart/engineEntityPageWithTwoEngines.png)
 
 Now that we have 2 Blueprints with Entities to match, we can create a relation between them.
 
@@ -269,7 +269,7 @@ Our cars need an engine, so the relation we will map is one where the Engine is 
 
 Go to the Blueprints page and click on the `New Blueprints Relation` button like show below:
 
-![Blueprints page with Create Relation Marked](../../static/img/introduction/quickstart/blueprintsPageWithCarModelEngineAndCreateRelationMarked.png)
+![Blueprints page with Create Relation Marked](../../static/img/welcome/quickstart/blueprintsPageWithCarModelEngineAndCreateRelationMarked.png)
 
 In the creation form that appears, paste in the following content:
 
@@ -286,11 +286,11 @@ In the creation form that appears, paste in the following content:
 
 Then click the `save` button at the bottom right corner, as shown in the image below:
 
-![Car Model Engine Relation with Save Marked](../../static/img/introduction/quickstart/carModelEngineRelationWithSaveMarked.png)
+![Car Model Engine Relation with Save Marked](../../static/img/welcome/quickstart/carModelEngineRelationWithSaveMarked.png)
 
 Now your Blueprints graph should look like this:
 
-![Blueprints Graph With Car Engine Relation](../../static/img/introduction/quickstart/blueprintsGraphWithCarEngineRelation.png)
+![Blueprints Graph With Car Engine Relation](../../static/img/welcome/quickstart/blueprintsGraphWithCarEngineRelation.png)
 
 :::note
 Look at the dependency graph we just got, an **Engine Entity is used in a Car Model Entity**, we modeled the relationship between our Blueprints in a way that shows which blueprint depends on the other.
@@ -306,29 +306,29 @@ We already have an engine for our **Aventador** - that is the `Aventador V12`, a
 
 At the right side of the page you should see 3 dots (`...`) in the line that matches each engine like shown below:
 
-![Engine Page with 3 dots Marked](../../static/img/introduction/quickstart/enginesPageWith3DotsMarked.png)
+![Engine Page with 3 dots Marked](../../static/img/welcome/quickstart/enginesPageWith3DotsMarked.png)
 
 Click on the 3 dots in the line of the `Huracan V10` engine and you should see a menu with an option that says `Show all Properties`, as shown below:
 
-![Engine Page with show all properties Marked](../../static/img/introduction/quickstart/enginesPageWithShowAllPropertiesMarked.png)
+![Engine Page with show all properties Marked](../../static/img/welcome/quickstart/enginesPageWithShowAllPropertiesMarked.png)
 
 Click on that option and you will once again see the form to edit the details of our `Huracan V10` engine, this time you will see a new section at the bottom of the form that says `Relations` and a drop-down list which after clicking shows you the available car models:
 
-![Engine entity with relations DDL Marked](../../static/img/introduction/quickstart/engineEntityWithRelationsDDLMarked.png)
+![Engine entity with relations DDL Marked](../../static/img/welcome/quickstart/engineEntityWithRelationsDDLMarked.png)
 
 Select the Huracan option from the drop-down list and then click on the `Update` button:
 
-![Engine entity with relation selected and update marked](../../static/img/introduction/quickstart/engineEntityWithUpdateButtonMarked.png)
+![Engine entity with relation selected and update marked](../../static/img/welcome/quickstart/engineEntityWithUpdateButtonMarked.png)
 
 Repeat the same process, only this time select the `Aventador V12` engine from the table, and in the relations drop-down, select the `Aventador` car then click `update`.
 
 After attaching the engines to the car models, your engines page should look like this (notice the marked column and its values):
 
-![Engines page with relations filled and marked](../../static/img/introduction/quickstart/enginesWithRelationsFilledAndMarked.png)
+![Engines page with relations filled and marked](../../static/img/welcome/quickstart/enginesWithRelationsFilledAndMarked.png)
 
 Click on either the `Huracan` or `Aventador` links in the marked column and you will see what we call the **Specific Entity Page**, this page allows you to see the complete details and dependency graph of a specific entity.
 
-![Car Model specific entity page after relation](../../static/img/introduction/quickstart/carModelSpecificEntityPageAfterRelation.png)
+![Car Model specific entity page after relation](../../static/img/welcome/quickstart/carModelSpecificEntityPageAfterRelation.png)
 
 :::info
 In our case, the specific entity page for a Car Model, will also show us the Engine that is used in it, because that is the relation we mapped.
