@@ -308,7 +308,7 @@ At the right side of the page you should see 3 dots (`...`) in the line that mat
 
 ![Engine Page with 3 dots Marked](../../static/img/introduction/quickstart/enginesPageWith3DotsMarked.png)
 
-Click on the 3 dots in the line of the `Huracan V10` engine and you should see a small menu with an option that says `Show all Properties`, as shown below:
+Click on the 3 dots in the line of the `Huracan V10` engine and you should see a menu with an option that says `Show all Properties`, as shown below:
 
 ![Engine Page with show all properties Marked](../../static/img/introduction/quickstart/enginesPageWithShowAllPropertiesMarked.png)
 
