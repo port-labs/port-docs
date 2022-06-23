@@ -108,11 +108,11 @@ Now let's look at the structure of this property definition and also explore the
 - `default` - A default value for this property in case an entity is created without explicitly providing a value
 - `description` - A description for the property, this value is visible via in info node from the UI, and can help provide more information about the use of a property
 
+![Property Description Label Example](../../../static/img/setup-your-port/self-service-portal/blueprints/propertyDescriptionLabelExample.png)
+
 :::note
 The only mandatory property field is `type`
 :::
-
-![Property Description Label Example](../../../static/img/setup-your-port/self-service-portal/blueprints/propertyDescriptionLabelExample.png)
 
 ## Blueprint Property Types
 
