@@ -8,7 +8,7 @@ import TabItem from "@theme/TabItem"
 
 # Blueprints
 
-## What Is a Blueprint?
+## What is a blueprint?
 
 Blueprints are the most basic building block in Port.
 
@@ -26,7 +26,7 @@ The most important thing to know about blueprints is that they are **completely 
 You can be as precise or as abstract as you want, and the best thing is you can always go back and update your blueprints as your infrastructure grows, and as your Developer Platform evolves.
 :::
 
-## Define Your Blueprints
+## Define your blueprints
 
 There are a few important steps when trying to define your blueprints:
 
@@ -42,7 +42,7 @@ By the end of this section, you should have something like this in mind:
 Check out the Templates Section to get inspiration on what you can manage with Port, and also get started with one click!
 :::
 
-## Understanding The Structure Of a Blueprint
+## Understanding the structure of a blueprint
 
 The basic structure of a Blueprint request:
 
@@ -87,7 +87,7 @@ Let's go over each field and explain its meaning:
 All property fields are **Nullable** by default (`required=false`). So if you want to enforce a specific property, it needs to appear in the `required` array
 :::
 
-## Defining Blueprint Properties
+## Defining blueprint properties
 
 Let's look at an example for a property definition:
 
@@ -124,7 +124,7 @@ The API supports the following **types**:
 - `object` - A well formatted object (i.e. python dictionary, javascript object, JSON, etc...)
 - `array` - A multi-element array - `[1,2,3]`, `["a","b","c"]`
 
-## Property Type Examples
+## Property type examples
 
 Here are examples for property definitions for all available types (remember that only the `type` field is mandatory):
 
@@ -185,7 +185,7 @@ Here are examples for property definitions for all available types (remember tha
 }
 ```
 
-## Blueprint Property Formats
+## Blueprint property formats
 
 The API supports the following **formats**:
 
@@ -199,7 +199,7 @@ The API supports the following **formats**:
 The `format` field is only supported when the property `type` is `string`
 :::
 
-## Property Format Examples
+## Property format examples
 
 Here are examples for property definitions for all available formats (remember that a `format` only works when `type="string"`):
 
@@ -267,7 +267,7 @@ Here are examples for property definitions for all available formats (remember t
 
 Let's see how we can use Port's API to create blueprints:
 
-### Getting an API Token
+### Getting an API token
 
 :::note
 For this next part you will need your Port `CLIENT_ID` and `CLIENT_SECRET`
@@ -502,7 +502,7 @@ You should now have a blueprint in the Blueprints Graph that looks like this:
 
 ![Example microservice blueprint](../../../static/img/setup-your-port/self-service-portal/blueprints/exampleMicroserviceBlueprint.png)
 
-## Updating Blueprints
+## Updating blueprints
 
 You can always change the blueprint, add/remove properties or change existing property types as necessary.
 
@@ -533,7 +533,7 @@ If we want to add a property called `Is Deployed?` with the `boolean` type, our 
 
 For more information about the PATCH request format, refer to the [API Reference](https://app.getport.io/Api-docs)
 
-## Deleting Blueprints
+## Deleting blueprints
 
 :::danger
 A blueprint cannot be restored after deletion!
@@ -548,7 +548,9 @@ In order to delete a blueprint you can:
 
 ## Next steps
 
-In the next section we will talk about **Relations**, relations are a connection between two blueprints.
+Now that we understand **Blueprints**, we can start to model separate entities in our infrastructure!
+
+In the next section we will talk about **Relations**, relations are a connection between two blueprints, and they will help us go from separate entities to a connected infrastructure map.
 
 As preparation for the relations section, let's create a blueprint for `Package` to go with the `Microservice` blueprint we created earlier:
 

@@ -10,14 +10,14 @@ sidebar_position: 2
 
 Port then allows engineers to perform actions on these assets in a self-service fashion. From provisioning a Dev Environment, Understanding who is the owner of a Microservice, or any unique use case DevOps want to self-serve and automate.
 
-### Port helps you
+### Port helps you to:
 
 * Create a **comprehensive catalog** by mapping all your software and infrastructure components (microservices, monoliths, deployments, repos, databases, and more) and see all of them in one place
 * Make your **catalog active** by assigning to it actions that can be used by you and your internal customers, while ensuring unified standards and governance over the processes inside your organization
 
 Port's 3 core building blocks are *Blueprints*, *Entities* and *Relations*. This tutorial will walk you through your first steps on the platform and get you started on your DevPortal journey!🚢 
 
-## Define a Blueprint
+## Define a blueprint
 
 We use Blueprints to model our data in Port. A Blueprint allows us to define what properties and fields an *Entity* will have.
 
@@ -87,7 +87,7 @@ Congratulations! you have just created your first Blueprint! 🎉
 
 In the next part, we will start creating `Entities` that match this new Blueprint, and we will see our car company coming together!
 
-## Create Your First Entities
+## Create your first entities
 
 Now that we have a Blueprint for **Car Model**, we can add some *Entities*.
 
@@ -152,7 +152,7 @@ As you can probably realize, we use Blueprints to define our data models, and En
 
 In the next part, we will look at our last building block - **Relations** so let's get to it.
 
-## Create a Relation
+## Create a relation
 
 A **Relation** allows us to create a connection between two Blueprints and the entities that are based on them. Using Relations we are able to create a dependency graph between multiple entities, allowing us to query our data more easily, and also view all related entities from a single simplified page.
 
@@ -207,7 +207,7 @@ Let's go over the steps needed to create our Engine Blueprint:
 
 Next, we will create 2 engines to go with our car models, in order to do that we'll go to the newly created **Engines** page, and create them using the JSON bodies written below (remember that you can also create the new engines from the UI, JSON is a bit faster when you already know the contents of your new entity):
 
-**Aventador Engine:**
+**Aventador engine**
 
 ```json
 {
@@ -224,7 +224,7 @@ Next, we will create 2 engines to go with our car models, in order to do that we
 }
 ```
 
-**Huracan Engine:**
+**Huracan engine**
 
 ```json
 {
@@ -263,7 +263,7 @@ Now that we have 2 Blueprints with Entities to match, we can create a relation b
 Remember that our goal is for each **Car Model** to have an **Engine** that goes with it, so that is exactly the relation we are going to create now
 :::
 
-### Car Model to Engine Relation
+### Car Model to Engine relation
 
 Our cars need an engine, so the relation we will map is one where the Engine is **Used In** a Car Model, in order to create that relation, let's follow these steps:
 
@@ -298,7 +298,7 @@ Look at the dependency graph we just got, an **Engine Entity is used in a Car Mo
 
 Now that we have a relationship, it's time to use it to show which car uses which engine
 
-### Giving Engines a New Home (Well, Car)
+### Giving engines a new home (well, car)
 
 To use our new relations, we will go back to the **Engines** page.
 
@@ -336,7 +336,7 @@ In our case, the specific entity page for a Car Model, will also show us the Eng
 
 feel free to continue exploring the specific entity page and also the Engines and Car Models pages, notice the `Filter`, `Hide`, `Sort` and `Group By` controls you can find at the top right of Port's table widgets.
 
-## What Now?
+## What now?
 
 Congratulations! you just modeled your first environment in Port! 🎉🚢
 
@@ -344,7 +344,7 @@ This quickstart was used to show you a basic example that doesn't require any do
 
 You can begin creating Blueprints that describe your `Services`, `Applications`, `Clusters`, `Infrastructure` resources, or continue your new Car Manufacturer journey!
 
-### Recommended Next Steps
+### Recommended next steps
 
 :::tip
 These suggestions show the basic steps in creating your very own Developer Portal, if you want to learn more about Port before starting your DevPortal journey, look at [Diving Deeper](#diving-deeper) or [Using the API](#using-the-api) below.
@@ -355,7 +355,7 @@ These suggestions show the basic steps in creating your very own Developer Porta
 3. Begin ingesting data and creating Entities based on your Blueprints, either manually, through the API or using one of our integrations
 4. Define **actions** that allow you to control your environment and resources straight from Port
 
-### Diving Deeper
+### Diving deeper
 
 If you want to learn more about Port's capabilities in a specific area, you can check out any of these resources:
 

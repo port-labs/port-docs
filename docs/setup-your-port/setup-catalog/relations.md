@@ -11,7 +11,7 @@ import TabItem from "@theme/TabItem"
 
 **For example**, to see where your `microservices` are deployed, you need to create a relation between your microservices and `deployments`
 
-## Understanding The Structure Of a Relation
+## Understanding the structure of a relation
 
 The basic structure of a Relation request:
 
@@ -51,7 +51,7 @@ This will allow you to interact with relations in code in a generic way, without
 When creating a blueprint from the API, there is no need for the `source` field, for more info refer to the [Creating Relations From the UI](#from-the-ui) section
 :::
 
-## Creating Relations
+## Creating relations
 
 :::note
 Remember that an access token is needed to make API requests, refer back to [Getting an API token](blueprints#getting-an-api-token) if you need to generate a new one
@@ -72,7 +72,7 @@ In order to create a relation from the UI, go to the Blueprints Graph, at the to
 
 ![Graph Package Microservice Create Relation Marked](../../../static/img/setup-your-port/self-service-portal/relations/graphPackageMicroserviceCreateRelationMarked.png)
 
-After clicking the button an editor window will open with a format similar to the one we explained in the [Understanding The Structure Of a Relation](#understanding-the-structure-of-a-relation) section, paste in the following content to create the `Package-Deployment` relation:
+After clicking the button an editor window will open with a format similar to the one we explained in the [Understanding the structure of a relation](#understanding-the-structure-of-a-relation) section, paste in the following content to create the `Package-Deployment` relation:
 
 ```json
 {
@@ -88,7 +88,7 @@ After clicking the button an editor window will open with a format similar to th
 
 In order to create a relation from the API, we will make a POST request to the URL `https://api.getport.io/v0.1/{source_blueprint_identifier}/relations`.
 
-The request body is almost identical to the one we have seen in the [Understanding The Structure Of a Relation](#understanding-the-structure-of-a-relation) section, the only difference is that we don't need the `source` key anymore, because we define that in the request URL.
+The request body is almost identical to the one we have seen in the [Understanding the structure of a relation](#understanding-the-structure-of-a-relation) section, the only difference is that we don't need the `source` key anymore, because we define that in the request URL.
 
 Here are some request examples that will create our `Package-Deployment` relation:
 
