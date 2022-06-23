@@ -192,3 +192,5 @@ curl --location --request POST "https://api.getport.io/v0.1/blueprints/$source_b
 After creating the relation, you should see a visual indicator in the blueprints graph:
 
 ![Blueprints Graph with Relations Line](../../../static/img/setup-your-port/self-service-portal/relations/graphPackageMicroserviceWithRelationLine.png)
+
+## Updating relations

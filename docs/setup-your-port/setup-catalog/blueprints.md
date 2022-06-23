@@ -114,7 +114,7 @@ Now let's look at the structure of this property definition and also explore the
 The only mandatory property field is `type`
 :::
 
-## Blueprint Property Types
+## Blueprint property types
 
 The API supports the following **types**:
 
@@ -263,7 +263,7 @@ Here are examples for property definitions for all available formats (remember t
 }
 ```
 
-## Create Blueprints
+## Create blueprints
 
 Let's see how we can use Port's API to create blueprints:
 
@@ -351,7 +351,7 @@ access_token=$(curl --location --request GET "https://api.getport.io/v0.1/auth/a
 
 </Tabs>
 
-### Creating a Blueprint
+### Creating a blueprint
 
 Let's create a basic Blueprint for a `Microservice` using the API, our Blueprint will include a **Slack Channel** and a **Repo URL**.
 
