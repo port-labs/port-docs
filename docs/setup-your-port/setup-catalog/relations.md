@@ -2,6 +2,9 @@
 sidebar_position: 2
 ---
 
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+
 # Relations
 
 **Relations** help map the connections between the entities inside your organization
@@ -69,6 +72,123 @@ In order to create a relation from the UI, go to the Blueprints Graph, at the to
 
 ![Graph Package Microservice Create Relation Marked](../../../static/img/setup-your-port/self-service-portal/relations/graphPackageMicroserviceCreateRelationMarked.png)
 
-After clicking the button an editor window will open with a format similar to the one we explained in the [Understanding The Structure Of a Relation](#understanding-the-structure-of-a-relation) section, paste in the following content to create the `Package-Deployment` relation
+After clicking the button an editor window will open with a format similar to the one we explained in the [Understanding The Structure Of a Relation](#understanding-the-structure-of-a-relation) section, paste in the following content to create the `Package-Deployment` relation:
+
+```json
+{
+    "identifier": "package-microservice",
+    "title": "Used In",
+    "source": "package",
+    "target": "microservice",
+    "required": false
+}
+```
 
 ### From the API
+
+In order to create a relation from the API, we will make a POST request to the URL `https://api.getport.io/v0.1/{source_blueprint_identifier}/relations`.
+
+The request body is almost identical to the one we have seen in the [Understanding The Structure Of a Relation](#understanding-the-structure-of-a-relation) section, the only difference is that we don't need the `source` key anymore, because we define that in the request URL.
+
+Here are some request examples that will create our `Package-Deployment` relation:
+
+<Tabs groupId="code-examples" defaultValue="python" values={[
+    {label: "Python", value: "python"},
+    {label: "Javascript", value: "javascript"},
+    {label: "cURL", value: "curl"}
+]}>
+
+<TabItem value="python">
+
+```python
+# Dependencies to install:
+# $ python -m pip install requests
+
+# the access_token variable should already have the token from previous examples
+
+import requests
+
+API_URL = 'https://api.getport.io/v0.1'
+
+source_blueprint_name = 'package'
+
+headers = {
+    'Authorization': f'Bearer {access_token}'
+}
+
+relation = {
+    'identifier': 'package-microservice',
+    'title': 'Used In',
+    'target': 'microservice',
+    'required': False
+}
+
+response = requests.post(f'{API_URL}/blueprints/{source_blueprint_name}/relations', json=relation, headers=headers)
+
+# response.json() contains the content of the resulting relation
+
+```
+
+</TabItem>
+
+<TabItem value="javascript">
+
+```javascript
+// Dependencies to install:
+// $ npm install axios --save
+
+// the accessToken variable should already have the token from previous examples
+
+const axios = require('axios').default;
+
+const API_URL = 'https://api.getport.io/v0.1';
+
+const config = {
+		headers: {
+			Authorization: `Bearer ${accessToken}`,
+		},
+	};
+
+	const relation = {
+		identifier: 'package-microservice',
+		title: 'Used In',
+		target: 'microservice',
+		required: true,
+	};
+
+	const response = await axios.post(`${API_URL}/blueprints/${source_blueprint_name}/relations`, relation, config);
+
+	console.log(response.data);
+
+    // response.data contains the content of the resulting relation
+
+```
+</TabItem>
+
+<TabItem value="curl">
+
+```bash
+# the access_token variable should already have the token from previous examples
+
+source_blueprint_name='package'
+
+curl --location --request POST "https://api.getport.io/v0.1/blueprints/$source_blueprint_name/relations" \
+	--header "Authorization: Bearer $access_token" \
+	--header "Content-Type: application/json" \
+	--data-raw "{
+    \"identifier\": \"package-microservice\",
+    \"title\": \"Used In\",
+    \"target\": \"microservice\",
+    \"required\": true
+}"
+
+# The output of the command contains the content of the resulting blueprint
+```
+
+</TabItem>
+
+</Tabs>
+
+After creating the relation, you should see a visual indicator in the blueprints graph:
+
+![Blueprints Graph with Relations Line](../../../static/img/setup-your-port/self-service-portal/relations/graphPackageMicroserviceWithRelationLine.png)
