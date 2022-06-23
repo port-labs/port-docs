@@ -42,6 +42,227 @@ By the end of this section, you should have something like this in mind:
 Check out the Templates Section to get inspiration on what you can manage with Port, and also get started with one click!
 :::
 
+## Understanding The Structure Of a Blueprint
+
+The basic structure of a Blueprint request:
+
+```json
+{
+    "identifier": "UniqueID",
+    "title": "Title",
+    "icon": "one of Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud, Cluster, CPU, Customer, Datadog, DefaultEntity, DefaultProperty, DeployedAt, Deployment, DevopsTool, Docs, Environment, Git, Github, GitVersion, GoogleCloud, GPU, Grafana, Jenkins, Lambda, Link, Lock, Microservice, Moon, Node, Okta, Package, Permission, Server, Service, Terraform",
+    "dataSource": "Port",
+    "schema": {
+        "properties": {
+            "foo": {
+                "type": "string",
+                "title": "Foo"
+            },
+            "bar": {
+                "type": "number",
+                "title": "Bar"
+            },
+            "date": {
+                "type": "string",
+                "format": "date-time",
+                "title": "Date"
+            }
+        },
+        "required": []
+    }
+}
+```
+
+Let's go over each field and explain its meaning:
+
+- `identifier` - A unique identifier (Note that while the identifier is unique, it can be changed after creation)
+- `title` - A nicely written name for the blueprint
+- `icon` - An icon to visually distinguish from other blueprints, can be one of the following: `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud, Cluster, CPU, Customer, Datadog, DefaultEntity, DefaultProperty, DeployedAt, Deployment, DevopsTool, Docs, Environment, Git, Github, GitVersion, GoogleCloud, GPU, Grafana, Jenkins, Lambda, Link, Lock, Microservice, Moon, Node, Okta, Package, Permission, Server, Service, Terraform`
+- `dataSource` - The source entity data is ingested from for this Blueprint, can be either `Port` or `Github`
+- `schema` - An object containing two more nested fields:
+  - `properties` - An object containing a collection of type and format fields as shown in the Properties, types and formats document
+  - `required` - An array of strings containing the name of properties that are mandatory in every entity created
+
+:::note
+All property fields are **Nullable** by default (`required=false`). So if you want to enforce a specific property, it needs to appear in the `required` array
+:::
+
+## Defining Blueprint Properties
+
+Let's look at an example for a property definition:
+
+```json
+"string_prop": {
+    "title": "String Property",
+    "type": "string",
+    "default": "foo",
+    "description": "A string property"
+}
+```
+
+Now let's look at the structure of this property definition and also explore the entire set of options for a single property:
+
+- `title` - A nicely written name for the property
+- `type` - The data type of the property, we will explore all available types in the [Blueprint Property Types](#blueprint-property-types) section
+- `format` - A specific data format to pair with some of the available types, will be explored further in the [Blueprint Property Formats](#blueprint-property-formats) section
+- `default` - A default value for this property in case an entity is created without explicitly providing a value
+- `description` - A description for the property, this value is visible via in info node from the UI, and can help provide more information about the use of a property
+
+:::note
+The only mandatory property field is `type`
+:::
+
+![Property Description Label Example](../../../static/img/setup-your-port/self-service-portal/blueprints/propertyDescriptionLabelExample.png)
+
+## Blueprint Property Types
+
+The API supports the following **types**:
+
+- `string` - Just a simple string - `"hello"`
+- `number` - Numeric field (including integers, doubles, floats, etc...) - `1`, `2.3`, `5e3`,...
+- `boolean` - `true`/ `false`
+- `object` - A well formatted object (i.e. python dictionary, javascript object, JSON, etc...)
+- `array` - A multi-element array - `[1,2,3]`, `["a","b","c"]`
+
+## Property Type Examples
+
+Here are examples for property definitions for all available types (remember that only the `type` field is mandatory):
+
+### String
+
+```json
+{
+    "title": "String Property",
+    "type": "string",
+    "description": "A string property",
+    "default": "foo"
+}
+```
+
+### Number
+
+```json
+{
+    "title": "Number Property",
+    "type": "number",
+    "description": "A number property",
+    "default": 42
+}
+```
+
+### Boolean
+
+```json
+{
+    "title": "Boolean Property",
+    "type": "boolean",
+    "description": "A boolean property",
+    "default": True
+}
+```
+
+### Object
+
+```json
+{
+    "title": "Object Property",
+    "type": "object",
+    "description": "An object property",
+    "default": {
+        "foo": "bar"
+    }
+}
+```
+
+### Array
+
+```json
+{
+    "title": "Array Property",
+    "type": "array",
+    "description": "An array property",
+    "default": [1, 2, 3]
+}
+```
+
+## Blueprint Property Formats
+
+The API supports the following **formats**:
+
+- `url` - A formatted URL, for example `"https://getport.io"`
+- `email` - A formatted Email, for example `"port@getport.io"`
+- `date-time` - A formatted ISO string datetime, for example `"2022-04-18T11:44:15.345Z"`
+- `ipv4` - A standard IPv4 address, for example `127.0.0.1`
+- `ipv6` - A standard IPv6 address, for example `FE80:CD00:0A20:0CDE:1257:1C34:211E:729C`
+
+:::note
+The `format` field is only supported when the property `type` is `string`
+:::
+
+## Property Format Examples
+
+Here are examples for property definitions for all available formats (remember that a `format` only works when `type="string"`):
+
+### URL
+
+```json
+{
+    "title": "URL Property",
+    "type": "string",
+    "format": "url",
+    "description": "A URL property",
+    "default": "https://getport.io"
+}
+```
+
+### Email
+
+```json
+{
+    "title": "Email Property",
+    "type": "string",
+    "format": "email",
+    "description": "An Email property",
+    "default": "mor@getport.io"
+}
+```
+
+### Date Time
+
+```json
+{
+    "title": "Datetime Property",
+    "type": "string",
+    "format": "date-time",
+    "description": "A datetime property",
+    "default": "2022-04-18T11:44:15.345Z"
+}
+```
+
+### IPv4
+
+```json
+{
+    "title": "IPv4 Property",
+    "type": "string",
+    "format": "ipv4",
+    "description": "An IPv4 property",
+    "default": "127.0.0.1"
+}
+```
+
+### IPv6
+
+```json
+{
+    "title": "IPv6 Property",
+    "type": "string",
+    "format": "ipv6",
+    "description": "An IPv6 property",
+    "default": "0000:0000:0000:0000:0000:0000:0000:0000"
+}
+```
+
 ## Create Blueprints and Relations
 
 Let's see how we can use Port's API to create blueprints:
@@ -115,98 +336,3 @@ access_token=$(curl --location --request GET "https://api.getport.io/v0.1/auth/a
 </TabItem>
 
 </Tabs>
-
-### Understanding The Structure Of a Blueprint
-
-The basic structure of a Blueprint request:
-
-```json
-{
-    "identifier": "UniqueID",
-    "title": "Title",
-    "icon": "one of Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud, Cluster, CPU, Customer, Datadog, DefaultEntity, DefaultProperty, DeployedAt, Deployment, DevopsTool, Docs, Environment, Git, Github, GitVersion, GoogleCloud, GPU, Grafana, Jenkins, Lambda, Link, Lock, Microservice, Moon, Node, Okta, Package, Permission, Server, Service, Terraform",
-    "dataSource": "Port",
-    "schema": {
-        "properties": {
-            "foo": {
-                "type": "string",
-                "title": "Foo"
-            },
-            "bar": {
-                "type": "number",
-                "title": "Bar"
-            },
-            "date": {
-                "type": "string",
-                "format": "date-time",
-                "title": "Date"
-            }
-        },
-        "required": []
-    }
-}
-```
-
-Let's go over each field and explain its meaning:
-
-- `identifier` - A unique identifier (Note that while the identifier is unique, it can be changed after creation)
-- `title` - A nicely written name for the blueprint
-- `icon` - An icon to visually distinguish from other blueprints, can be one of the following: `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud, Cluster, CPU, Customer, Datadog, DefaultEntity, DefaultProperty, DeployedAt, Deployment, DevopsTool, Docs, Environment, Git, Github, GitVersion, GoogleCloud, GPU, Grafana, Jenkins, Lambda, Link, Lock, Microservice, Moon, Node, Okta, Package, Permission, Server, Service, Terraform`
-- `dataSource` - The source entity data is ingested from for this Blueprint, can be either `Port` or `Github`
-- `schema` - An object containing two more nested fields:
-  - `properties` - An object containing a collection of type and format fields as shown in the Properties, types and formats document
-  - `required` - An array of strings containing the name of properties that are mandatory in every entity created
-
-:::note
-All property fields are **Nullable** by default (`required=false`). So if you want to enforce a specific property, it needs to appear in the `required` array
-:::
-
-### Defining Blueprint Properties
-
-Let's look at an example for a property definition:
-
-```json
-"string_prop": {
-    "title": "String Property",
-    "type": "string",
-    "default": "foo",
-    "description": "A string property"
-}
-```
-
-Now let's look at the structure of this property definition and also explore the entire set of options for a single property:
-
-- `title` - A nicely written name for the property
-- `type` - The data type of the property, we will explore all available types in the [Blueprint Property Types](#blueprint-property-types) section
-- `format` - A specific data format to pair with some of the available types, will be explored further in the [Blueprint Property Formats](#blueprint-property-formats) section
-- `default` - A default value for this property in case an entity is created without explicitly providing a value
-- `description` - A description for the property, this value is visible via in info node from the UI, and can help provide more information about the use of a property
-
-:::note
-The only mandatory property field is `type`
-:::
-
-![Property Description Label Example](../../../static/img/setup-your-port/self-service-portal/blueprints/propertyDescriptionLabelExample.png)
-
-### Blueprint Property Types
-
-The API supports the following **types**:
-
-- `string` - Just a simple string - `"hello"`
-- `number` - Numeric field (including integers, doubles, floats, etc...) - `1`, `2.3`, `5e3`,...
-- `boolean` - `true`/ `false`
-- `object` - A well formatted object (i.e. python dictionary, javascript object, JSON, etc...)
-- `array` - A multi-element array - `[1,2,3]`, `["a","b","c"]`
-
-### Blueprint Property Formats
-
-The API supports the following **formats**:
-
-- `url` - A formatted URL, for example `"https://getport.io"`
-- `email` - A formatted Email, for example `"port@getport.io"`
-- `date-time` - A formatted ISO string datetime, for example `"2022-04-18T11:44:15.345Z"`
-- `ipv4` - A standard IPv4 address, for example `127.0.0.1`
-
-:::note
-The `format` field is only supported when the property `type` is `string`
-:::
