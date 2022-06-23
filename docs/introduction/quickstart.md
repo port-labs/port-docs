@@ -342,7 +342,7 @@ Congratulations! you just modeled your first environment in Port! 🎉🚢
 
 This quickstart was used to show you a basic example that doesn't require any domain-specific knowledge, but now you have all the tools you need to get started!
 
-You can begin creating Blueprints that describe your `Services`, `Applications`, `Clusters`, `Infrastructure` resources, or continue your new Car Manufacturer journey!
+You can begin creating Blueprints that describe your `Services`, `Applications`, `Clusters`, `Infrastructure resources`, or continue your new Car Manufacturer journey!
 
 ### Recommended next steps
 
