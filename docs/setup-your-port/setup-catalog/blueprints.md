@@ -263,7 +263,7 @@ Here are examples for property definitions for all available formats (remember t
 }
 ```
 
-## Create Blueprints and Relations
+## Create Blueprints
 
 Let's see how we can use Port's API to create blueprints:
 
@@ -273,8 +273,9 @@ Let's see how we can use Port's API to create blueprints:
 For this next part you will need your Port `CLIENT_ID` and `CLIENT_SECRET`
 :::
 
-In order to perform any action with Port's API, you first need an access token, here are some code examples from various languages
-<Tabs defaultValue="python" values={[
+In order to perform any action with Port's API, you first need an **access token**, here are some code examples from various languages
+
+<Tabs groupId="code-examples" defaultValue="python" values={[
     {label: "Python", value: "python"},
     {label: "Javascript", value: "javascript"},
     {label: "cURL", value: "curl"}
@@ -283,16 +284,19 @@ In order to perform any action with Port's API, you first need an access token, 
 <TabItem value="python">
 
 ```python
+# Dependencies to install:
+# $ python -m pip install requests
+
 import requests
 
-CLIENT_ID = "YOUR_CLIENT_ID"
-CLIENT_SECRET = "YOUR_CLIENT_SECRET"
+CLIENT_ID = 'YOUR_CLIENT_ID'
+CLIENT_SECRET = 'YOUR_CLIENT_SECRET'
 
-API_URL = "https://api.getport.io/v0.1"
+API_URL = 'https://api.getport.io/v0.1'
 
-credentials = {"client_id": CLIENT_ID, "client_secret": CLIENT_SECRET}
+credentials = {'client_id': CLIENT_ID, 'client_secret': CLIENT_SECRET}
 
-token_response = requests.get(f"{API_URL}/auth/access_token", params=credentials)
+token_response = requests.get(f'{API_URL}/auth/access_token', params=credentials)
 
 access_token = token_response.json()['accessToken']
 
@@ -305,12 +309,16 @@ access_token = token_response.json()['accessToken']
 <TabItem value="javascript">
 
 ```javascript
+// Dependencies to install:
+// $ npm install axios --save
+
 const axios = require('axios').default;
 
 const CLIENT_ID = 'YOUR_CLIENT_ID';
 const CLIENT_SECRET = 'YOUR_CLIENT_SECRET';
 
 const API_URL = 'https://api.getport.io/v0.1';
+
 const response = await axios.get(`${API_URL}/auth/access_token`, {
     params: {
         client_id: CLIENT_ID,
@@ -328,6 +336,12 @@ const accessToken = response.data.accessToken;
 <TabItem value="curl">
 
 ```bash
+# Dependencies to install:
+# For apt:
+# $ sudo apt-get install jq
+# For yum:
+# $ sudo yum install jq
+
 access_token=$(curl --location --request GET "https://api.getport.io/v0.1/auth/access_token?client_id=YOUR_CLIENT_ID&client_secret=YOUR_CLIENT_SECRET" | jq '.accessToken' | sed 's/"//g')
 
 # The token will be available in the access_token variable
@@ -336,3 +350,198 @@ access_token=$(curl --location --request GET "https://api.getport.io/v0.1/auth/a
 </TabItem>
 
 </Tabs>
+
+### Creating a Blueprint
+
+Let's create a basic Blueprint for a `Microservice` using the API, our Blueprint will include a **Slack Channel** and a **Repo URL**.
+
+In order to interact with the Blueprints API our basic URL will be [https://api.getport.io/v0.1/blueprints](https://api.getport.io/v0.1/blueprints), and we will create the blueprint using a REST **POST** request.
+
+:::note
+Remember the **access token** we generated earlier, we will use it while making new requests to Port's API
+:::
+
+
+<Tabs groupId="code-examples" defaultValue="python" values={[
+    {label: "Python", value: "python"},
+    {label: "Javascript", value: "javascript"},
+    {label: "cURL", value: "curl"}
+]}>
+
+<TabItem value="python">
+
+```python
+# Dependencies to install:
+# $ python -m pip install requests
+
+# the access_token variable should already have the token from the previous example
+
+import requests
+
+API_URL = 'https://api.getport.io/v0.1'
+
+headers = {
+    'Authorization': f'Bearer {access_token}'
+}
+
+blueprint = {
+    'identifier': 'microservice',
+    'title': 'Microservice',
+    'icon': 'Microservice',
+    'schema': {
+        'properties': {
+            'slackChannel': {
+                'type': 'string',
+                'title': 'Slack Channel',
+                'description': 'The channel of the microservice\'s maintainers'
+            },
+            'repoUrl': {
+                'type': 'string',
+                'format': 'url',
+                'title': 'Repository URL',
+                'description': 'A URL to the Git repository of the microservice'
+            }
+        },
+        'required': ['repoUrl'],
+    }
+}
+
+response = requests.post(f'{API_URL}/blueprints', json=blueprint, headers=headers)
+
+# response.json() contains the content of the resulting blueprint
+
+```
+
+</TabItem>
+
+<TabItem value="javascript">
+
+```javascript
+// Dependencies to install:
+// $ npm install axios --save
+
+// the accessToken variable should already have the token from the previous example 
+
+const axios = require('axios').default;
+
+const API_URL = 'https://api.getport.io/v0.1';
+
+const config = {
+		headers: {
+			Authorization: `Bearer ${accessToken}`,
+		},
+	};
+
+	const blueprint = {
+		identifier: 'microservice',
+		title: 'Microservice',
+		icon: 'Microservice',
+		schema: {
+			properties: {
+				slackChannel: {
+					type: 'string',
+					title: 'Slack Channel',
+					description: "The channel of the microservice's maintainers",
+				},
+				repoUrl: {
+					type: 'string',
+					format: 'url',
+					title: 'Repository URL',
+					description: 'A URL to the Git repository of the microservice',
+				},
+			},
+			required: ['repoUrl'],
+		},
+	};
+
+	const response = await axios.post(`${API_URL}/blueprints`, blueprint, config);
+
+    // response.data contains the content of the resulting blueprint
+
+```
+</TabItem>
+
+<TabItem value="curl">
+
+```bash
+# the access_token variable should already have the token from the previous example
+
+curl --location --request POST "https://api.getport.io/v0.1/blueprints" \
+	--header "Authorization: Bearer $access_token" \
+	--header "Content-Type: application/json" \
+	--data-raw "{
+    \"identifier\": \"microservice\",
+    \"title\": \"Microservice\",
+    \"icon\": \"Microservice\",
+    \"schema\": {
+        \"properties\": {
+            \"slackChannel\": {
+                \"type\": \"string\",
+                \"title\": \"Slack Channel\",
+                \"description\": \"The channel of the microservice's maintainers\"
+            },
+            \"repoUrl\": {
+                \"type\": \"string\",
+                \"format\": \"url\",
+                \"title\": \"Repository URL\",
+                \"description\": \"A URL to the Git repository of the microservice\"
+            }
+        },
+        \"required\": [\"repoUrl\"]
+    }
+}"
+
+# The output of the command contains the content of the resulting blueprint
+```
+
+</TabItem>
+
+</Tabs>
+
+You should now have a blueprint in the Blueprints Graph that looks like this:
+
+![Example microservice blueprint](../../../static/img/setup-your-port/self-service-portal/blueprints/exampleMicroserviceBlueprint.png)
+
+## Updating Blueprints
+
+You can always change the blueprint, add/remove properties or change existing property types as necessary.
+
+In order to update a blueprint you can:
+
+- Click the Pencil icon in the Blueprints Graph
+- Make a REST PUT request to the URL `https://api.getport.io/v0.1/{blueprint_identifier}`
+- Make a REST PATCH request to the URL `https://api.getport.io/v0.1/{blueprint_identifier}`
+
+![Blueprints Graph edit button marked](../../../static/img/setup-your-port/self-service-portal/blueprints/blueprintGraphEditButtonMarked.png)
+
+A PUT request has the exact same body as a POST request, it will simply overwrite the blueprint with the new data provided
+
+A PATCH request has a more specific format that allows for precise changes in an existing blueprint, let's look at an example:
+
+If we want to add a property called `Is Deployed?` with the `boolean` type, our PATCH request body will look like this:
+
+```json
+{
+    "type": "setSchemaProperty",
+    "propertyName": "isdeployed",
+    "definition": {
+      "type": "boolean",
+      "title": "Is Deployed?",
+    }
+}
+```
+
+For more information about the PATCH request format, refer to the [API Reference](https://app.getport.io/Api-docs)
+
+## Deleting Blueprints
+
+:::danger
+A blueprint cannot be restored after deletion!
+:::
+
+In order to delete a blueprint you can:
+
+- Click on the trash can icon in the Blueprints Graph
+- Make a REST DELETE request to the URL `https://api.getport.io/v0.1/{blueprint_identifier}`
+
+![Blueprints Graph delete button marked](../../../static/img/setup-your-port/self-service-portal/blueprints/blueprintGraphDeleteButtonMarked.png)
