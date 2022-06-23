@@ -545,3 +545,38 @@ In order to delete a blueprint you can:
 - Make a REST DELETE request to the URL `https://api.getport.io/v0.1/{blueprint_identifier}`
 
 ![Blueprints Graph delete button marked](../../../static/img/setup-your-port/self-service-portal/blueprints/blueprintGraphDeleteButtonMarked.png)
+
+## Next steps
+
+In the next section we will talk about **Relations**, relations are a connection between two blueprints.
+
+As preparation for the relations section, let's create a blueprint for `Package` to go with the `Microservice` blueprint we created earlier:
+
+You can create the new blueprint from the UI (using the `New Blueprint` button in the Blueprints Graph) or from the API, the body of the request for the new blueprint should be:
+
+```json
+{
+    "identifier": "package",
+    "title": "Package",
+    "icon": "Package",
+    "schema": {
+        "properties": {
+            "version": {
+                "title": "Version",
+                "type": "number",
+                "default": "1.0.0"
+            },
+            "inhouse": {
+                "title": "In House?",
+                "type": "boolean"
+            }
+        },
+        "required": []
+    },
+    "dataSource": "Port"
+}
+```
+
+At the end of this section, your Blueprints Graph should include the two blueprints shown below:
+
+![graph package microservice](../../../static/img/setup-your-port/self-service-portal/blueprints/graphPackageMicroservice.png)
