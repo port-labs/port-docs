@@ -5,6 +5,7 @@ sidebar_position: 3
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
+
 # Entities
 
 An entity is the data inside Port that represents your software and infrastructure. Entities are created based on Blueprints.
@@ -66,7 +67,7 @@ We will first go to the `Microservices` page:
 
 After clicking the `+ Microservice` button, a UI form will open with the properties we created for the `Microservice` blueprint:
 
-![Microservices page marked](../../../static/img/setup-your-port/self-service-portal/entities/EntityFormUI.png)
+![Microservices creation form](../../../static/img/setup-your-port/self-service-portal/entities/EntityFormUI.png)
 
 #### Code Format
 Every entity has a format similar to the one we explained in the [Understanding the structure of an entity](#understanding-the-structure-of-an-entity) section, which is viewable via the the *Json Mode button*. You can paste in the following content to create your first `Microservice`:
@@ -201,7 +202,7 @@ curl --location --request POST "https://api.getport.io/v0.1/entities" \
 You should now have a new entity called `Notification Service` in the Microservice page that looks like this:
 
 
-![Microservices page marked](../../../static/img/setup-your-port/self-service-portal/entities/NewMSEntity.png)
+![New Microservice entity marked](../../../static/img/setup-your-port/self-service-portal/entities/NewMSEntity.png)
 
 
 ## Updating an entity
@@ -213,7 +214,7 @@ You can change any mutable entity, and edit/delete its property values.
 - Click the Pencil icon in each of the table columns.
 - Click the `...` button at the right end of an entity listing, then click `Show all properties`.
 
-![Microservices page marked](../../../static/img/setup-your-port/self-service-portal/entities/EditEntityButtons.png)
+![Edit Microservice entity](../../../static/img/setup-your-port/self-service-portal/entities/EditEntityButtons.png)
 
 ### From the API
 
@@ -249,11 +250,57 @@ In order to delete an entity you can:
 - Click the `...` button at the right end of an entity listing, then click `Delete`.
 - Make a **REST DELETE** request to the URL `https://api.getport.io/v0.1/entities/{entity_identifier}`
 
-![Blueprints Graph delete button marked](../../../static/img/setup-your-port/self-service-portal/entities/DeleteEntityButton.png)
+![Delete entity button marked](../../../static/img/setup-your-port/self-service-portal/entities/DeleteEntityButton.png)
 
     
 ## Next steps
 
-Now that we understand **Entities**, we can start creating connected entities to model related data in the infrastructure!
+Now that we understand **Entities**, we can start creating related entities to model our related data in the infrastructure!
+
+First, let's create a new `Package` entity (If you haven't created a `Package` blueprint yet, please do so now on [Creating a Package blueprint](blueprints#next-steps)).
+
+We will go to the `Packages` page:
+
+![Create a package in the Packages page](../../../static/img/setup-your-port/self-service-portal/entities/CreatePackageButton.png)
+
+After clicking the `+ package` button, a UI form will open with the properties we created for the `Package` blueprint:
+
+![New Package creation form](../../../static/img/setup-your-port/self-service-portal/entities/NewPackageForm.png)
+
+:::note
+Since `Package` is **related** to `Microservice`, when creating a new package we will see an additional field(s) representing the relation(s). Selecting a related entity is done according to the entity title (via the UI), or according to the entity identifer (via the json editor).
+:::
+
+#### From the UI
+
+We would like to connect our newly `Package` entity to the `Microservice` entity we created above.
+
+![Connect package to microservice](../../../static/img/setup-your-port/self-service-portal/entities/ConnectMStoPKG.png)
+
+#### Code Format
+We can also paste in the following content to create your first `Package`, in the `Json mode`.
+
+```json
+{
+    {
+        "identifier": "requests-pkg-v2-28",
+        "title": "Requests",
+        "team": "",
+        "blueprint": "package",
+        "properties": {
+            "version": "2.28",
+            "inhouse": "false"
+        },
+        "relations": {
+            "package-to-service": "notification-microservice"
+        }
+    }
+}
+```
+
+Once we click the `Create` button, we will see our newly created entity in the Packages' table:
+
+![Packages' page with the new package](../../../static/img/setup-your-port/self-service-portal/entities/PackageFirstListing.png)
 
 
+In the next section we will talk about **Pages**. Pages are components that represent blueprints and specific entities. Under a page view one could find the specific data of an entity within its context. 
