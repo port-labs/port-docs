@@ -388,6 +388,7 @@ blueprint = {
     'identifier': 'microservice',
     'title': 'Microservice',
     'icon': 'Microservice',
+    'formulaProperties': {},
     'schema': {
         'properties': {
             'slackChannel': {
@@ -436,6 +437,7 @@ const config = {
 		identifier: 'microservice',
 		title: 'Microservice',
 		icon: 'Microservice',
+        formulaProperties: {},
 		schema: {
 			properties: {
 				slackChannel: {
@@ -473,6 +475,7 @@ curl --location --request POST "https://api.getport.io/v0.1/blueprints" \
     \"identifier\": \"microservice\",
     \"title\": \"Microservice\",
     \"icon\": \"Microservice\",
+    \"formulaProperties\": {},
     \"schema\": {
         \"properties\": {
             \"slackChannel\": {
@@ -577,6 +580,7 @@ You can create the new blueprint from the UI (using the `New Blueprint` button i
     "identifier": "package",
     "title": "Package",
     "icon": "Package",
+    "formulaProperties": {},
     "schema": {
         "properties": {
             "version": {

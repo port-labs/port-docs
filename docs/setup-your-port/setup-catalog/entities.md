@@ -12,7 +12,7 @@ An entity is the data inside Port that represents your software and infrastructu
 
 **For example**, to create a new `Microservice` instance you will need to create an entity of a `Microservice`.
 
-## understanding the structure of an entity
+## Understanding the structure of an entity
 
 The basic structure of an Entity request:
 
@@ -133,7 +133,7 @@ entity = {
 
 response = requests.post(f'{API_URL}/entities', json=entity, headers=headers)
 
-# response.json() contains the content of the resulting blueprint
+# response.json() contains the content of the resulting entity
 
 ```
 
@@ -186,8 +186,8 @@ curl --location --request POST "https://api.getport.io/v0.1/entities" \
     \"title\": \"Notification Service\",
     \"blueprint\": \"microservice\",
     \"properties\": {
-            \"repoUrl\": \"#notification-service\",
-            \"slackChannel\": \"https://www.github.com/user/notification\"
+            \"repoUrl\": \"https://www.github.com/user/notification\",
+            \"slackChannel\": \"#notification-service\"
     }
 }"
 
@@ -220,29 +220,29 @@ You can change any mutable entity, and edit/delete its property values.
 
 - Make a **REST POST** request to the URL `https://api.getport.io/v0.1/entities?upsert=true`
   
-  This request will the `upsert` flag set to `true` will overwrite the entity if it exists, and will create it if not. 
+  This request with the `upsert` flag set to `true` will overwrite the entity if it exists, and will create it if not. 
   The request body is the same as creating a new entity, just with the additional flag `upsert=true`.
 
 
 - Make a **REST PUT** request to the URL `https://api.getport.io/v0.1/entities/{entity_identifier}`
   
-  A PUT request has the same body as a POST request and it will simply overwrite the entity if it exists. It will return an error code if the entity does not exist (based on identidier-match).
+  A PUT request has the same body as a POST request and it will simply overwrite the entity if it exists. It will return an error code if the entity does not exist (based on identifier-match).
 
 
 - Make a **REST PATCH** request to the URL `https://api.getport.io/v0.1/entities/{entity_identifier}`
   
   A PATCH request has a specific format that allows precise changes in an existing entity, for example:
 
-    - To Edit a specific property, let say: `slackChannel`, send a PATCH request with the following body:
+    - To Edit a specific property, let's say: `slackChannel`, send a PATCH request with the following body:
         ```json
-        'properties': {"chart-name": "new chart"}
+        'properties': {"slackChannel": "#my-awesome-channel"}
         ```
 
 
-## Deleting blueprints
+## Deleting entities
 
 :::danger
-A blueprint cannot be restored after deletion!
+An entity cannot be restored after deletion!
 :::
 
 In order to delete an entity you can:
@@ -257,7 +257,7 @@ In order to delete an entity you can:
 
 Now that we understand **Entities**, we can start creating related entities to model our related data in the infrastructure!
 
-First, let's create a new `Package` entity (If you haven't created a `Package` blueprint yet, please do so now on [Creating a Package blueprint](blueprints#next-steps)).
+First, let's create a new `Package` entity (If you haven't created a `Package` blueprint yet, please refer to [Creating a Package blueprint](blueprints#next-steps)).
 
 We will go to the `Packages` page:
 
@@ -273,12 +273,12 @@ Since `Package` is **related** to `Microservice`, when creating a new package we
 
 #### From the UI
 
-We would like to connect our newly `Package` entity to the `Microservice` entity we created above.
+We would like to connect our newly created `Package` entity to the `Microservice` entity we created above.
 
 ![Connect package to microservice](../../../static/img/setup-your-port/self-service-portal/entities/ConnectMStoPKG.png)
 
 #### Code Format
-We can also paste in the following content to create your first `Package`, in the `Json mode`.
+We can also paste in the following content to create our first `Package`, in `JSON mode`.
 
 ```json
 {
@@ -298,7 +298,7 @@ We can also paste in the following content to create your first `Package`, in th
 }
 ```
 
-Once we click the `Create` button, we will see our newly created entity in the Packages' table:
+Once we click the `Create` button, we will see our newly created entity in the `Packages` table:
 
 ![Packages' page with the new package](../../../static/img/setup-your-port/self-service-portal/entities/PackageFirstListing.png)
 
