@@ -52,7 +52,7 @@ Remember that an access token is needed to make API requests, refer back to [Get
 We will be creating entities for the `Microservice` blueprint from [Creating a Blueprint](blueprints#creating-a-blueprint) and the `Package` blueprint from [Blueprint Next Steps](blueprints#next-steps), please make sure to create them before reading on if you want to follow along
 :::
 
-We'll present 2 ways to create entities:
+There are 2 ways to create entities:
 
 - From the UI
 - From the API
@@ -63,13 +63,17 @@ In order to create an entity from the UI, go to the [Page](pages) that matches t
 
 We will first go to the `Microservices` page:
 
+![Main screen Microservices page marked](../../../static/img/setup-your-port/self-service-portal/entities/GoToMicroservicePage.png)
+
+To create a new `Microservice` we click the `+ Microservice` button:
+
 ![Microservices page marked](../../../static/img/setup-your-port/self-service-portal/entities/CreateNewMsUI.png)
 
 After clicking the `+ Microservice` button, a UI form will open with the properties we created for the `Microservice` blueprint:
 
 ![Microservices creation form](../../../static/img/setup-your-port/self-service-portal/entities/EntityFormUI.png)
 
-#### Code Format
+#### Creating with a Code Format
 Every entity has a format similar to the one we explained in the [Understanding the structure of an entity](#understanding-the-structure-of-an-entity) section, which is viewable via the the *Json Mode button*. You can paste in the following content to create your first `Microservice`:
 
 ```json
@@ -85,11 +89,13 @@ Every entity has a format similar to the one we explained in the [Understanding 
 }
 ```
 
+![Json creator mode](../../../static/img/setup-your-port/self-service-portal/entities/CreateMicroserviceJSONForm.png)
+
 ### From the API
 
 #### Getting an API Token
 :::note
-This next part assumes that you already have your API access Token. If not, see details in [Getting an API Token](blueprints#getting-an-api-token).
+This next part assumes that you already have your API access Token. If not, please see details on [Getting an API Token](blueprints#getting-an-api-token).
 :::
 
 #### Creating an entity
