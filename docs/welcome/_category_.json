@@ -1,4 +1,5 @@
 {
 	"label": "Welcome",
-	"position": 1
+	"position": 1,
+	"collapsed": true
 }
