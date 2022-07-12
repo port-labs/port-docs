@@ -16,12 +16,12 @@ You decide how you work and you build the perfect setup and workflows for your o
 
 ### Port as a Builder
 
-Our approach is a builder approach, in which you can build in Port your asset landscape the way you want it to look. We don't enforce anything on how you build your catalog.  
+Our approach is to let build anything with maximum flexibility. Therefore, we went for a **builder approach**, in which you can build in Port your asset landscape the way you want it to look. We don't enforce anything on how you build your catalog.  
 
 ### We are API-first
 <sup>And it is not just an empty claim.</sup>
 
-We build Port with an API-First approach, meaning that our Product and API go hand in hand. This, in turn, ultimately benefits our dev velocity, but it also benefits our users directly.
+We build Port with an **API-First approach**, meaning that our Product and API go hand in hand. This, in turn, ultimately benefits our dev velocity, but it also benefits our users directly.
 It means that you can use our API to perform any operation on the Platform, while we provide you with the logic and the detailed documentation.
 
 :::note
