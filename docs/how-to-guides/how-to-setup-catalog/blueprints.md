@@ -52,6 +52,7 @@ The basic structure of a Blueprint request:
     "title": "Title",
     "icon": "one of Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud, Cluster, CPU, Customer, Datadog, DefaultEntity, DefaultProperty, DeployedAt, Deployment, DevopsTool, Docs, Environment, Git, Github, GitVersion, GoogleCloud, GPU, Grafana, Jenkins, Lambda, Link, Lock, Microservice, Moon, Node, Okta, Package, Permission, Server, Service, Terraform",
     "dataSource": "Port",
+    "formulaProperties": {},
     "schema": {
         "properties": {
             "foo": {
