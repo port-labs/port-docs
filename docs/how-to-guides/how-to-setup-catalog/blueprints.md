@@ -12,7 +12,7 @@ import TabItem from "@theme/TabItem"
 
 Blueprints are the most basic building block in Port.
 
-Modern infrastructure is composed of many moving parts. a blueprint represents each and every asset you manage, from `microservice` to `environments` of all kinds, `permissions`, `databases`, and more.
+Modern infrastructure is composed of many moving parts. a blueprint represents every asset you manage, from `microservice` to `environments` of all kinds, `permissions`, `databases`, and more.
 
 In this section you will:
 

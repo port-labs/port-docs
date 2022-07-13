@@ -16,7 +16,7 @@ You decide how you work and you build the perfect setup and workflows for your o
 
 ### Port as a Builder
 
-Our approach is to let build anything with maximum flexibility. Therefore, we went for a **builder approach**, in which you can build in Port your asset landscape the way you want it to look. We don't enforce anything on how you build your catalog.  
+Our approach is to let you build anything with maximum flexibility. Therefore, we went for a **builder approach**, in which you can build in Port your asset landscape the way you want it to look. We don't enforce anything on how you build your catalog.  
 
 ### We are API-first
 <sup>And it is not just an empty claim.</sup>
