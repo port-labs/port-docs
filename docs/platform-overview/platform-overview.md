@@ -9,7 +9,7 @@ sidebar_label: Platform Overview
 
 Welcome to Port! :wave:
 
-Whether you are DevEx, Platform or DevOps engineer, Port helps you to create your customized software catalog, as part of your developer portal, in no time! and to make the life of your developers much easier with self-service capabilities.
+Whether you are a DevEx, Platform or DevOps engineer, Port helps you to create your customized software catalog, as part of your developer portal, in no time! and to make the life of your developers much easier with self-service capabilities.
 
 You decide how you work and you build the perfect setup and workflows for your organizational needs.
 
@@ -35,7 +35,7 @@ Visit our [Swagger.](https://api.getport.io/static/index.html#/)
 - A **Page** holds all the information you need for a specific blueprint, entity, and more.
 - There are a few different ways you can make actions in Port:
   - Via the **UI**.
-  - With our **API**.
+  - Using our **API**.
 - Audit Log, User management, and more are available on the Platform.
 
 ## Blueprints Page
@@ -56,8 +56,8 @@ When you first log in to Port, you will see an empty blueprints page.
 ### How to Create a Blueprint?
 
 Creating a blueprint can be done in two ways:
-- From the UI
-- From the API
+- Via the UI
+- Using the API
 
 :::tip 
 To create your first blueprint, please see our: [Quickstart Guide.](../welcome/quickstart) 
@@ -82,7 +82,7 @@ The `Software Catalog` holds all of the [pages](#main-pages).
 
 ## Pages
 
-### How a page is created?
+### How Port page is created?
 
 #### Main Pages
 
@@ -106,7 +106,7 @@ An entity is the object instance of a blueprint, and it represents the data of t
 
 ![Microservices Main Page](../../static/img/platform-overview/MicroservicesMainPage.png)
 
-See [Port Components](../technical-reference/port-components/port-components) for further details.
+See [Port Components](../technical-reference/port-components) for further details.
 :::
 
 ### Saved Views
@@ -118,7 +118,7 @@ Pages can also be created from any main page, by creating saved views:
 
 ## The Audit Log
 
-In Port, we store every event in a nice visual log that shows what events have occurred on blueprints and entities: such as what entity was modified, who made the action, what type of event was it, what is the status of the action, and when was the event occurred.  
+In Port, we store every event in a nice visual log that shows what events have occurred on blueprints and entities: such as what entity was modified, who made the action, what type of event was it, what is the status of the action, and when did the event occur.  
 
 The page is divided into 2 tabs:
 - Entities
@@ -129,7 +129,7 @@ The page is divided into 2 tabs:
 
 ## The Users page
 
-In Port, we have a dedicated page to manage all users using the system. This page shows a list of all users, including their group belonging.
+In Port, we have a dedicated page to manage all users using the system. This page shows a list of all users, including their group membership.
 
 ![Main Users Page](../../static/img/platform-overview/UsersPageExample.png)
 
