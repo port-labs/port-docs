@@ -341,3 +341,7 @@ Here is how property formats are used:
 ## Deleting a Blueprint
 
 
+:::tip Explore How to Create, Edit, and Delete Blueprints [ ➡️ ](../api-reference)
+:::
+:::danger Explore Advanced Operations on Blueprint with our API [ ➡️ ](../api-reference)
+:::
