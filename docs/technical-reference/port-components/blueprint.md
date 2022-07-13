@@ -59,17 +59,16 @@ Each blueprint is represented by a **Json schema**, as shown in the following se
 ```
 
 | Field | Type | Description | Optional Values |
-| ----------- | ----------- | ----- | ----- |
+| ----------- | ----------- | ----------- | ----------- |
 | `identifier` | `String` | A unique identifier (Note that while the identifier is unique, it can be changed after creation) |
-| `title` | `String` | A nicely written name for the blueprint |
-| `icon` | `String` | An icon to visually distinguish from other blueprints, can be one of the following:  | `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud,...` See the full icon list [below.](#full-icon-list) |
+| `title` | `String` | A nicely written name for the blueprint |One of the list:  `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud,...` See the full icon list [below.](#full-icon-list) |
 | `dataSource` | `String` | The source from which entity data is ingested, can be either `Port` or `Github` | `Port` or `Github` | 
 | `formulaProperties` | `Object` | Contains the properties that are defined using formula templating | Example: "`repo-link`": "`https://github.com/{{$identifier}}`"|
 | `schema` | {     `properties`: {},     `required`: [] } | An object containing two more nested fields |
 
 
 #### Full Icon list
-:::note 
+:::note Available Icons
 `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud, Cluster, CPU, Customer, Datadog, DefaultEntity, DefaultProperty, DeployedAt, Deployment, DevopsTool, Docs, Environment, Git, Github, GitVersion, GoogleCloud, GPU, Grafana, Jenkins, Lambda, Link, Lock, Microservice, Moon, Node, Okta, Package, Permission, Server, Service, Terraform`
 :::
 
