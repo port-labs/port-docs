@@ -27,7 +27,7 @@ By the end of this section, you should have something like this in mind:
 
 ### Blueprint's JSON schema
 
-Each blueprint is represented by a Json schema, as shown in the following section:
+Each blueprint is represented by a **Json schema**, as shown in the following section:
 
 ```json
 {
@@ -58,17 +58,25 @@ Each blueprint is represented by a Json schema, as shown in the following sectio
 
 ```
 
-| Link | Description | Optional Values |
+| Link | Type | Description | Optional Values |
 | ----------- | ----------- | ----- |
-| `identifier` | A unique identifier (Note that while the identifier is unique, it can be changed after creation) |
-| `title` | A nicely written name for the blueprint |
-| `icon` | An icon to visually distinguish from other blueprints, can be one of the following:  | `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud, Cluster, CPU, Customer, Datadog, DefaultEntity, DefaultProperty, DeployedAt, Deployment, DevopsTool, Docs, Environment, Git, Github, GitVersion, GoogleCloud, GPU, Grafana, Jenkins, Lambda, Link, Lock, Microservice, Moon, Node, Okta, Package, Permission, Server, Service, Terraform` |
-| `dataSource` | The source from which entity data is ingested, can be either `Port` or `Github` |
-| Contact Us | Directly to our Slack channel |
-| Status Page | TBD |
+| `identifier` | `String` | A unique identifier (Note that while the identifier is unique, it can be changed after creation) |
+| `title` | `String` | A nicely written name for the blueprint |
+| `icon` | `String` | An icon to visually distinguish from other blueprints, can be one of the following:  | `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud, Cluster, CPU, Customer, Datadog, DefaultEntity, DefaultProperty, DeployedAt, Deployment, DevopsTool, Docs, Environment, Git, Github, GitVersion, GoogleCloud, GPU, Grafana, Jenkins, Lambda, Link, Lock, Microservice, Moon, Node, Okta, Package, Permission, Server, Service, Terraform` |
+| `dataSource` | `String` | The source from which entity data is ingested, can be either `Port` or `Github` | `Port` or `Github` | 
+| `formulaProperties` | `Object` | Contains the properties that are defined using formula templating | 
+| `schema` | {
+    `properties`: {},
+    `required`: []
+} | An object containing two more nested fields |
+
 
 ### Blueprint's Properties
 
+```json
+
+
+```
 
 
 ## Creating a Blueprint

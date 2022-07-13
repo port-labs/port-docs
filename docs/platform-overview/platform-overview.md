@@ -118,7 +118,7 @@ Pages can also be created from any main page, by creating saved views:
 
 ## The Audit Log
 
-In Port, we store every event in a nice visual log that shows what events have occurred on blueprints and entities: such as what entity was modified, who made the action, what type of event was it, what is the status of the action, and when was the event occurred.  
+In Port, we store every event in a nice visual log that shows what events have occurred on blueprints and entities: such as what entity was modified, who made the action, what type of event was it, what is the status of the action, and when did the event occur.  
 
 The page is divided into 2 tabs:
 - Entities
