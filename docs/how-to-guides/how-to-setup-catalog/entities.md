@@ -288,7 +288,7 @@ We can also paste in the following content to create our first `Package`, in `JS
 
 ```json
 {
-    {
+
         "identifier": "requests-pkg-v2-28",
         "title": "Requests",
         "team": "",
@@ -300,7 +300,7 @@ We can also paste in the following content to create our first `Package`, in `JS
         "relations": {
             "package-to-service": "notification-microservice"
         }
-    }
+    
 }
 ```
 
