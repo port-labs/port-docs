@@ -7,50 +7,6 @@ import TabItem from "@theme/TabItem"
 
 # Relations
 
-**Relations** help map the connections between the entities inside your organization
-
-**For example**, to see where your `microservices` are deployed, you need to create a relation between your microservices and `deployments`
-
-## Understanding the structure of a relation
-
-The basic structure of a Relation request:
-
-```json
-{
-    "identifier": "UniqueId",
-    "title": "Title",
-    "source": "Blueprint Source Identifier",
-    "target": "Blueprint Target Identifier",
-    "required": false
-}
-```
-
-- `identifier` - A unique identifier (Note that while the identifier is unique, it can be changed after creation)
-- `title` - A nicely written name for the relation
-- `source` - The source entity, in the Package-Deployment example, the source is `Package`
-- `target` - The target entity, in the Package-Deployment example, the target is `Deployment`
-- `required` - Whether the target entity is required when creating a new source.
-  - In the Package-Deployment example, the relation is not required, because a package might be developed without being deployed in a specific service
-  - In a Deployment-Kubernetes example, the relation is required, because a deployment must be deployed in some cluster
-
-:::tip
-The title allows you to give a human-readable to relations. For example: A `Package` is `Used By` a `Deployment`
-
-Using titles also allows you to conveniently access relations programmatically in a generic way while keeping the UI readable.
-
-For example, you can define a convention where all relations are named in a specific format:
-- `{blueprint_1}-{blueprint_2}`
-- `{blueprint_1}-to-{blueprint_2}`
-- `{blueprint_1}<->{blueprint_2}`
-- or anything similar that works for you
-
-This will allow you to interact with relations in code in a generic way, without impacting UX.
-:::
-
-:::note
-When creating a blueprint from the API, there is no need for the `source` field, for more info refer to the [Creating Relations From the UI](#from-the-ui) section
-:::
-
 ## Creating relations
 
 :::note
