@@ -1,13 +1,19 @@
 ---
 sidebar_position: 1.4
+sidebar_label: Relation operations
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Relations
+# Relation Operations
 
 ## Creating relations
+
+Relations can be created in two ways:
+
+- From the UI
+- From the API
 
 :::note
 Remember that an access token is needed to make API requests, refer back to [Getting an API token](blueprints#getting-an-api-token) if you need to generate a new one
@@ -17,10 +23,6 @@ Remember that an access token is needed to make API requests, refer back to [Get
 Relations require 2 blueprints to map a connection between, if you haven't created the `Microservice` blueprint in [Creating a Blueprint](blueprints#creating-a-blueprint) and the `Package` blueprint in [Blueprint Next Steps](blueprints#next-steps), please make sure to do so if you want to follow along
 :::
 
-We'll present 2 ways to create relations:
-
-- From the UI
-- From the API
 
 ### From the UI
 
