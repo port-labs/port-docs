@@ -11,7 +11,7 @@ A **blueprint** is *the most basic* building block in Port. It represents assets
 Blueprints are completely customizable, and they support any number of properties the user chooses, all of which can be modified as you go. 
 
 
-## Defining your Blueprints
+## Defining your blueprints
 
 Before you start, there are a few important steps when trying to define your blueprints:
 
@@ -27,7 +27,7 @@ By the end of this section, you should have something like this in mind:
 ![Example Blueprints and Relations Layout](../../../static/img/setup-your-port/self-service-portal/blueprints/exampleBlueprintsAndRelationsLayout.png)
 :::
 
-## Blueprint's Structure
+## Blueprint's structure
 
 ### Blueprint's JSON schema
 
@@ -62,7 +62,7 @@ Each blueprint is represented by a **Json schema**, as shown in the following se
 
 ```
 ---
-### Structure Table
+### Structure table
 
 | Field | Type | Description | Optional Values |
 | ----------- | ----------- | ----------- | ----------- |
@@ -70,15 +70,28 @@ Each blueprint is represented by a **Json schema**, as shown in the following se
 | `title` | `String` | A nicely written name for the blueprint |One of the list:  `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud,...` See the full icon list [below.](#full-icon-list) |
 | `dataSource` | `String` | The source from which entity data is ingested, can be either `Port` or `Github` | `Port` or `Github` | 
 | `formulaProperties` | `Object` | Contains the properties that are defined using formula templating | Example: "`repo-link`": "`https://github.com/{{$identifier}}`"|
-| `schema` | {     `properties`: {},     `required`: [] } | An object containing two more nested fields | See [`properties`](#blueprints-properties) for more details. |
+| `schema` | `Object` | An object containing two more nested fields, including `properties` and `required` | See the schame structure here: [`schema`](#blueprints-schema). |
 
 
-#### Full Icon list
+#### Full icon list
 :::note Available Icons
 `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud, Cluster, CPU, Customer, Datadog, DefaultEntity, DefaultProperty, DeployedAt, Deployment, DevopsTool, Docs, Environment, Git, Github, GitVersion, GoogleCloud, GPU, Grafana, Jenkins, Lambda, Link, Lock, Microservice, Moon, Node, Okta, Package, Permission, Server, Service, Terraform`
 :::
 
-## Blueprint's Properties
+#### Blueprint's schema
+
+```json
+    "schema"; {
+            "properties": {},
+            "required": []
+        }
+```
+| Schema field | Type | Description | 
+| ----------- | ----------- | ----------- | 
+| `properties` | `Object` | See our [`properties`](#blueprints-properties) section for more details. |
+| `required` | `List` | A list of the **required** properties, out of the `properties` object list. <br /> This is  reflected in the UI form as mandatory fields for the user to insert.  |
+
+## Blueprint's properties
 
 Each blueprint has a `properties` section under its `schema`. In this section, you can define all of the unique properties that describe your asset.
 
@@ -101,7 +114,7 @@ Now let's look at the structure of this property definition and also explore the
 | `type` | `String` | **A mandatory Field.** The data type of the property. You can explore all available types in the [Property Types](#property-types) section |
 | `format` | `String` | A specific data format to pair with some of the available types. You can explore all formats in the [String Formats](#string-property-formats) section | 
 | `default` | Should match the `type` | A default value for this property in case an entity is created without explicitly providing a value. |
-| `description` | `String` | A description of the property. This value is visible via in info node from the UI. It provides detailed information about the use of a specific property. |
+| `description` | `String` | A description of the property.<br /> This value is visible to users when hovering on the info icon on the UI ℹ︎. It provides detailed information about the use of a specific property. |
 
 
 :::tip
@@ -111,7 +124,7 @@ we highly recommend you set a `description`, so your developers will have the co
 ![Property Description Tooltip Example](../../../static/img/technical-reference/port-components/propertyDescriptionTooltipExample.png)
 
 
-## Property Types
+## Property types
 
 ```json {3} showLineNumbers
 "string_prop": {
@@ -123,13 +136,13 @@ we highly recommend you set a `description`, so your developers will have the co
 ```
 We currently support the following types:
 
-| `type:` | Description |
-| ----------- | ----------- | 
-| `string` | A nicely written name for the property |
-| `number` | Numeric field (including integers, doubles, floats, etc...) - `1`, `2.3`, `5e3`,... |
-| `boolean` | A `true` or `false` |
-| `object` | A well formatted object (i.e. python dictionary, javascript object, JSON, etc...) |
-| `array` | A multi-element array - `[1,2,3]`, `["a","b","c"]` |
+| `type` | Description | Example Values |
+| ----------- | ----------- | ----------- | 
+| `string` | A nicely written name for the property | `"This is a string field"`
+| `number` | Numeric field (including integers, doubles, floats, etc...) | `1`, `2.3`, `5e3`,... |
+| `boolean` | Boolean field | A `true` or `false` |
+| `object` | A well formatted object (i.e. python dictionary, javascript object, JSON, etc...) | `{ 'key1': 'value1', 'key2': 'value2', ...}` |
+| `array` | A multi-element array | `[1,2,3]`, `["a","b","c"]` |
 
 :::note
 Those are the `properties` that our API supports. See [API reference](../api-reference).
@@ -232,7 +245,7 @@ Here is how property definitions look for all available types (remember that onl
 </details>
 
 
-## String Property Formats
+## String property formats
 
 ```json {3-4} showLineNumbers
 "string_prop": {
@@ -245,7 +258,7 @@ Here is how property definitions look for all available types (remember that onl
 ```
 We currently support the following `string` formats:
 
-| `format:` | Description | 
+| `format` | Description | 
 | ----------- | ----------- | 
 | `url` | A formatted URL, for example `"https://getport.io"` |
 | `email` | A formatted Email, for example `"port@getport.io"` |
