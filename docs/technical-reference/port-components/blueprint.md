@@ -258,13 +258,13 @@ Here is how property definitions look for all available types (remember that onl
 ```
 We currently support the following `string` formats:
 
-| `format` | Description | 
-| ----------- | ----------- | 
-| `url` | A formatted URL, for example `"https://getport.io"` |
-| `email` | A formatted Email, for example `"port@getport.io"` |
-| `date-time` | A formatted ISO string datetime, for example `"2022-04-18T11:44:15.345Z"` |
-| `ipv4` | A standard IPv4 address, for example `127.0.0.1` |
-| `ipv6` | A standard IPv6 address, for example `FE80:CD00:0A20:0CDE:1257:1C34:211E:729C` |
+| `format` | Description | Example Values |
+| ----------- | ----------- | ----------- | 
+| `url` | A formatted URL | `"https://getport.io"` |
+| `email` | A formatted Email | `"port@getport.io"` |
+| `date-time` | A formatted ISO string datetime | `"2022-04-18T11:44:15.345Z"` |
+| `ipv4` | A standard IPv4 address | `127.0.0.1` |
+| `ipv6` | A standard IPv6 address | `FE80:CD00:0A20:0CDE:1257:1C34:211E:729C` |
 
 :::note
 Those are the `format` types that our API supports. See [API reference](../api-reference).
@@ -339,6 +339,7 @@ Here is how property formats are used:
 ```
 </div>
 </details>
+<br /><br />
 
 
 :::tip Explore How to Create, Edit, and Delete Blueprints [ ➡️ ](../api-reference)
