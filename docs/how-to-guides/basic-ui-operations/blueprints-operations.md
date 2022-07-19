@@ -1,18 +1,24 @@
 ---
-sidebar_position: 2
+sidebar_position: 1.1
+sidebar label: Blueprint Operations
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
 
-# Blueprints
+# Blueprint operations
 
 ## Create blueprints
 
+### From the UI
+
+
+### From the API
+
 Let's see how we can use Port's API to create blueprints:
 
-### Getting an API token
+#### Getting an API token
 
 :::note
 For this next part you will need your Port `CLIENT_ID` and `CLIENT_SECRET`
@@ -96,7 +102,7 @@ access_token=$(curl --location --request GET "https://api.getport.io/v0.1/auth/a
 
 </Tabs>
 
-### Creating a blueprint
+#### Creating a blueprint
 
 Let's create a basic Blueprint for a `Microservice` using the API, our Blueprint will include a **Slack Channel** and a **Repo URL**.
 

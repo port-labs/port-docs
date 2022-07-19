@@ -1,27 +1,30 @@
 ---
-sidebar_position: 4
+sidebar_position: 1.2
+sidebar label: Entity Operations
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
 
-# Entities
+# Entity operations
 
 ## Creating entities
 
+There are 2 ways to create entities:
+
+- From the UI
+- From the API
+
 :::note
-Remember that an access token is needed to make API requests, refer back to [Getting an API token](blueprints#getting-an-api-token) if you need to generate a new one
+Remember that an access token is needed to make API requests, refer back to [Getting an API token](blueprints#getting-an-api-token) if you need to generate a new one.
 :::
 
 :::info
 We will be creating entities for the `Microservice` blueprint from [Creating a Blueprint](blueprints#creating-a-blueprint) and the `Package` blueprint from [Blueprint Next Steps](blueprints#next-steps), please make sure to create them before reading on if you want to follow along
 :::
 
-There are 2 ways to create entities:
 
-- From the UI
-- From the API
 
 ### From the UI
 
