@@ -8,7 +8,7 @@ sidebar_position: 1.3
 
 An entity is the object instance of a blueprint, and it represents the data of the software components which is defined by the blueprint properties.
 
-## Entity Structure
+## Entity structure
 
 This is the basic structure of an Entity:
 
@@ -28,7 +28,7 @@ This is the basic structure of an Entity:
 | ----------- | ----------- | ----------- | 
 | `identifier` | `String` | A unique identifier (Note that while the identifier is unique, it can be changed after creation) |
 | `title` | `String` | A nicely written name for the entity that will be shown in the UI. |
-| `team` | `Array` | **Optional Field.** An array of the associated teams, according to this array group permissions are handled. |
+| `team` | `Array` | **Optional Field.** An array of the associated teams.<br /> Note that group permissions are handled according to this array. |
 | `blueprint` | `String` | The name of the [Blueprint](./blueprint) that this entity is based on. | 
 | `properties` | `Object` | An object containing key-value pairs, where each key is a property as defined in the blueprint and each value applies the `type` of the property | Example: "`repo-link`": "`https://github.com/{{$identifier}}`"|
 | `relations` | `object` | An object containing key-value pairs where each key is the name of a [Relation](relations) defined over the blueprint this entity is based on. |
