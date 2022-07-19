@@ -10,7 +10,7 @@ This allows us to connect between entities of the related blueprints.
 
 ## Relation JSON structure
 
-The basic structure of a Relation request:
+The basic structure of a Relation schema:
 
 ```json showLineNumbers
 {
