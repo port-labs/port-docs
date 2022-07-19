@@ -3,6 +3,8 @@ sidebar_position: 1.2
 ---
 # Relation
 
+## What is a relation?
+
 **Relations** enable us to make connections between blueprints. Meaning, giving logical context to your software catalog.  
 This allows us to connect between entities of the related blueprints.  
 
