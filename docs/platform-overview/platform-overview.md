@@ -9,7 +9,7 @@ sidebar_label: Platform Overview
 
 Welcome to Port! :wave:
 
-Whether you are a DevEx, Platform or DevOps engineer, Port helps you to create your customized software catalog, as part of your developer portal, in no time! and to make the life of your developers much easier with self-service capabilities.
+Whether you are a DevEx, Platform or DevOps engineer, Port helps you to create your customized developer portal, as part of your developer portal, in no time! and to make the life of your developers much easier with self-service capabilities.
 
 You decide how you work and you build the perfect setup and workflows for your organizational needs.
 
@@ -36,7 +36,9 @@ Visit our [Swagger.](https://api.getport.io/static/index.html#/)
 - There are a few different ways you can make actions in Port:
   - Via the **UI**.
   - Using our **API**.
-- Audit Log, User management, and more are available on the Platform.
+  - Using 3rd party app integrations, like Slack (Coming soon).
+  - CLI (Coming soon).
+- Audit Log, User management, granular permissions, and more are available on the Platform.
 
 ## Blueprints Page
 
@@ -71,9 +73,9 @@ On the left side of our application, you can find the main navigation bar.
 It is divided into two sections: `Organization` and `Software Catalog`.
 
 The `Organization` section holds the following system pages:
-- [Blueprints.](#first-whats-a-blueprint)
-- [Users.](#the-users-page)
-- [Audit Log.](#the-audit-log)
+- [Blueprints](#first-whats-a-blueprint)
+- [Users](#the-users-page)
+- [Audit Log](#the-audit-log)
 
 The `Software Catalog` holds all of the [pages](#main-pages).
 
@@ -95,7 +97,6 @@ Every blueprint's page is its main page, and it shows a full-page table view tha
 #### Entity Pages
 
 Every [Entity](#whats-an-entity) has its page, showing a summary of the entity's data and its related entities.  
-An entity page will be created upon the creation of a new entity.
 
 ![Entity page](../../static/img/platform-overview/EntityPageExample.png)
 

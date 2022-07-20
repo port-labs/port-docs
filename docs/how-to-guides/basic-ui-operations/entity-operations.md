@@ -24,11 +24,13 @@ Remember that an access token is needed to make API requests, refer back to [Get
 We will be creating entities for the `Microservice` blueprint from [Creating a Blueprint](blueprints#creating-a-blueprint) and the `Package` blueprint from [Blueprint Next Steps](blueprints#next-steps), please make sure to create them before reading on if you want to follow along
 :::
 
-
+:::note
+An entity page will be created upon the creation of a new entity.
+:::
 
 ### From the UI
 
-In order to create an entity from the UI, go to the [Page](pages) that matches the Blueprint you want to add an entity to. You can find the list of all the pages in the sidebar on the left side of Port's UI.
+To create an entity from the UI, go to the [Page](pages) that matches the Blueprint you want to add an entity to. You can find the list of all the pages in the sidebar on the left side of Port's UI.
 
 We will first go to the `Microservices` page:
 
@@ -43,19 +45,19 @@ After clicking the `+ Microservice` button, a UI form will open with the propert
 ![Microservices creation form](../../../static/img/setup-your-port/self-service-portal/entities/EntityFormUI.png)
 
 #### Creating with a Code Format
-Every entity has a format similar to the one we explained in the [Understanding the structure of an entity](#understanding-the-structure-of-an-entity) section, which is viewable via the the *Json Mode button*. You can paste in the following content to create your first `Microservice`:
+Every entity has a format similar to the one we explained in the [Understanding the structure of an entity](#understanding-the-structure-of-an-entity) section, which is viewable via the *Json Mode button*. You can paste in the following content to create your first `Microservice`:
 
-```json
-{
-    "identifier": "notification-microservice",
-    "title": "Notification Service",
-    "blueprint": "microservice",
-    "properties": {
-        "repoUrl": "https://www.github.com/User/notification",
-        "slackChannel": "#notification-service"
-    },
-    "relations": {}
-}
+```json showLineNumbers
+    {
+        "identifier": "notification-microservice",
+        "title": "Notification Service",
+        "blueprint": "microservice",
+        "properties": {
+            "repoUrl": "https://www.github.com/User/notification",
+            "slackChannel": "#notification-service"
+        },
+        "relations": {}
+    }
 ```
 
 ![Json creator mode](../../../static/img/setup-your-port/self-service-portal/entities/CreateMicroserviceJSONForm.png)
@@ -64,7 +66,7 @@ Every entity has a format similar to the one we explained in the [Understanding 
 
 #### Getting an API Token
 :::note
-This next part assumes that you already have your API access Token. If not, please see details on [Getting an API Token](blueprints#getting-an-api-token).
+This next part assumes that you already have your API Access Token. If not, please see details on [Getting an API Token](blueprints#getting-an-api-token).
 :::
 
 #### Creating an entity
@@ -174,7 +176,7 @@ curl --location --request POST "https://api.getport.io/v0.1/entities" \
 </Tabs>
 
 
-You should now have a new entity called `Notification Service` in the Microservice page that looks like this:
+You should now have a new entity called `Notification Service` on the Microservice page that looks like this:
 
 
 ![New Microservice entity marked](../../../static/img/setup-your-port/self-service-portal/entities/NewMSEntity.png)
@@ -195,7 +197,7 @@ You can change any mutable entity, and edit/delete its property values.
 
 - Make a **REST POST** request to the URL `https://api.getport.io/v0.1/entities?upsert=true`
   
-  This request with the `upsert` flag set to `true` will overwrite the entity if it exists, and will create it if not. 
+  This request with the `upsert` flag set to `true` will overwrite the entity if it exists and will create it if not. 
   The request body is the same as creating a new entity, just with the additional flag `upsert=true`.
 
 
@@ -220,7 +222,7 @@ You can change any mutable entity, and edit/delete its property values.
 An entity cannot be restored after deletion!
 :::
 
-In order to delete an entity you can:
+To delete an entity you can:
 
 - Click the `...` button at the right end of an entity listing, then click `Delete`.
 - Make a **REST DELETE** request to the URL `https://api.getport.io/v0.1/entities/{entity_identifier}`
@@ -236,14 +238,14 @@ First, let's create a new `Package` entity (If you haven't created a `Package` b
 
 We will go to the `Packages` page:
 
-![Create a package in the Packages page](../../../static/img/setup-your-port/self-service-portal/entities/CreatePackageButton.png)
+![Create a package on the Packages page](../../../static/img/setup-your-port/self-service-portal/entities/CreatePackageButton.png)
 
 After clicking the `+ package` button, a UI form will open with the properties we created for the `Package` blueprint:
 
-![New Package creation form](../../../static/img/setup-your-port/self-service-portal/entities/NewPackageForm.png)
+![A New Package creation form](../../../static/img/setup-your-port/self-service-portal/entities/NewPackageForm.png)
 
 :::note
-Since `Package` is **related** to `Microservice`, when creating a new package we will see an additional field(s) representing the relation(s). Selecting a related entity is done according to the entity title (via the UI), or according to the entity identifer (via the json editor).
+Since `Package` is **related** to `Microservice` when creating a new package we will see an additional field(s) representing the relation(s). Selecting a related entity is done according to the entity title (via the UI), or according to the entity identifier (via the JSON editor).
 :::
 
 #### From the UI
@@ -278,4 +280,4 @@ Once we click the `Create` button, we will see our newly created entity in the `
 ![Packages' page with the new package](../../../static/img/setup-your-port/self-service-portal/entities/PackageFirstListing.png)
 
 
-In the next section we will talk about **Pages**. Pages are components that represent blueprints and specific entities. Under a page view one could find the specific data of an entity within its context. 
+In the next section, we will talk about **Pages**. Pages are components that represent blueprints and specific entities. Under a page view, one could find the specific data of an entity within its context. 
