@@ -26,7 +26,7 @@ You'll find here a step-by-step guide to installing the GitHub App of Port.
 
 ### Triggers
 
-- Merging a branch to the `main` (default) branch will trigger the app to look for the input type.
+- Merging a branch to the `main` (default) branch will trigger the app look for the input type.
 
 ### Permissions
 
@@ -67,6 +67,14 @@ You'll find here a step-by-step guide to installing the GitHub App of Port.
 
     ![GitHub app installation success indication on Port](../../../static/img/technical-reference/integrations/github-app/GitHubInstallationSuccess.png)
 
-## Testing our App with mock data
+
+## Trying out our App with mock data
+
+:::note
+This repo is `private` at the moment, so you’ll get a 404.
+Please contact us with your GitHub user for access.
+:::
 
 1. Clone our example repo: [github-app-setup-example](https://github.com/port-labs/github-app-setup-example).
+
+2. 
