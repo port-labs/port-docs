@@ -273,12 +273,6 @@ To support Port from our side, Port needs the following information.
     :::note
     Users can also manually access Port by going to the App Homepage URL: `https://app.getport.io/?org_id={your_organization_id}`
     :::
-    
-<br/><br/>
-
-### Enjoy using Port! 🚀
-
-<br/><br/>
 
 ---
 

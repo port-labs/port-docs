@@ -85,6 +85,7 @@ Under `General` tab:
 
     ![Okta dashboard with Port app](../../../static/img/technical-reference/sso/okta/OktaDashboard.png)
 
+---
 
 ## How to allow pulling Okta groups to Port
 :::note
