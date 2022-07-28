@@ -41,10 +41,6 @@ Merging a branch to the `main` (default) branch will trigger the app look for th
 
 ### Permissions
 
-
-
-## What our GitHub app provides out of the box?
-
 ### GitHub environment variables
 
 | variable name | Type | Description | 
@@ -95,3 +91,11 @@ Please contact us with your GitHub user for access.
     ![Blueprint with Github app integration active](../../static/img/integrations/github-app/BlueprintWithIntegrationActive.png)
 
     ![Blueprint with Github app integration active expanded](../../static/img/integrations/github-app/BlueprintWithIntegrationActiveExpanded.png)
+
+5. Now let's get the data inside Port:
+
+    If you already have a `port.yml` file in the `main` branch of the cloned example repository, update it to match the blueprint that you created (The example itself does not require any changes, so if you just created the blueprint without changing `microservice.json`, it should all work out of the box)
+
+    If you don't have a `port.yml` file, please create one in your repository in a format that matches the example shown in [How does our GitHub App Work?](#how-does-our-github-app-work) and then commit it/merge it into the `main` branch
+
+6. After the changes have been merged, you should see the data specified in the `port.yml` file appear in the page matching your new blueprint in Port!
