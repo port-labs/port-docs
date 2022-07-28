@@ -343,7 +343,6 @@ Here is how property formats are used:
 ```
 </div>
 </details>
-<br /><br />
 
 
 

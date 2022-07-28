@@ -78,7 +78,7 @@ Our `source` to `target` relations are one-to-many, at the moment. Meaning that 
 For example, a `deployment -> microservices` relation means that a `microservice` can be deployed many times, while a `deployment` represents a single `microservice`.
 :::
 :::note
-We will support multi-to-multi relations soon 🚀🤘
+We will support many-to-many relations soon 🚀🤘
 :::
 
 
