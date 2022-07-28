@@ -60,7 +60,7 @@ A full page table widget that holds all of the blueprints specific entities.
 ## Entity Page
 
 Each entity has a specific page that contains two tabs (by default).  
-The first is the `Overview` tab, which shows two widgets: the details of the entity and a table(s) of its related entity(ies). The second is an `Audit Log` tab that contains a full-page table widget. <br /><br />
+The first is the `Overview` tab, which shows two widgets: the details of the entity and a table(s) of its related entity(ies). The second is an `Audit Log` tab that contains a full-page table widget.
 
 :::note Relations within an entity page
 **Related entities** of an entity are presented on the entity page a bulk of table widgets. 
@@ -80,7 +80,6 @@ The table below summarizes the available operation according to the page type:
 | Entity page | V | X | X | X |
 | Users page | V | X | X | X |
 | Audit log page | V | X | X | X |
-<br />
 
 All page operations are available on the top bar of the bar, as shown here:<br />  
 ![Page operations marked](../../../static/img/technical-reference/port-components/pages/PageOperationsMarked.png)
@@ -226,7 +225,5 @@ We provide a free search option on tables.
 Searching on a table is available on the left side of the top bar:
 
 ![Table search bar marked](../../../static/img/technical-reference/port-components/pages/TableSearchBar.png)
-
-<br /><br />
 
 [Explore Advanced Operations on Pages with our API ➡️ ](../api-reference)

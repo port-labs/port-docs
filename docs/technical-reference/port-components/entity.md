@@ -43,14 +43,10 @@ The `team` key defines ownership over an entity and controls who can modify or d
 To Explore more about Ownership in Port see our [Permissions](../../welcome) section.
 :::
 
-<br />
-
 ## Example
 
 <details>
 <summary> A microservice entity </summary>
-<div>
-
 In this example, you can see how a `microservice` entity is defined.
 
 #### Microservice entity
@@ -100,10 +96,7 @@ Notice that this entity is based on the following blueprint definition, where th
 }
 ```
 :::
-
-</div>
 </details>
-<br />
 
 ## Related entities
 
@@ -119,7 +112,6 @@ This option is shown under the `relations` section as follows:
 :::tip
 Click for more details about [**relations**](./relation).
 :::
-<br />
 ---
 
 [Explore How to Create, Edit, and Delete Entities ➡️ ](../api-reference)

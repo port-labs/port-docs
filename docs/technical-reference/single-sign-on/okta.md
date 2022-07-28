@@ -89,7 +89,7 @@ Under `General` tab:
 
 ## How to allow pulling Okta groups to Port
 :::note
-This stage is **OPTIONAL** and is required only if you wish to pull all of your Okta groups into Port inherently.  <br/>
+This stage is **OPTIONAL** and is required only if you wish to pull all of your Okta groups into Port inherently.
 
 **Benefit:** managing permissions and user access on Port.  
 **Outcome:** For every user that logs we will get automatically his associate OKTA groups, according to your definition in the settings below.

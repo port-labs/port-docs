@@ -233,7 +233,6 @@ To support Port from our side, Port needs the following information.
     **IMPORTANT:** To make the **Port** app connection work, users who have access need to have a legal value in their `Email` field in Azure AD.
     :::
 
-<br/>
 
 5. Make the Port application visible on the `myapplications` page:
 
@@ -279,7 +278,7 @@ To support Port from our side, Port needs the following information.
 ## How to allow pulling AzureAD groups to Port
 
 :::note
-This stage is **OPTIONAL** and is required only if you wish to pull all of your AzureAD groups into Port inherently.  <br/>
+This stage is **OPTIONAL** and is required only if you wish to pull all of your AzureAD groups into Port inherently.
 
 **Benefit:** managing permissions and user access on Port.  
 **Outcome:** For every user that logs we will get automatically his associate AzureAD groups, according to your definition in the settings below.

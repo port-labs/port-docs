@@ -90,7 +90,7 @@ We will support many-to-many relations soon 🚀🤘
 When two blueprints are connected via a relation, a new set of properties becomes available to entities in the `source` blueprint.
 Those new properties are called `mirrorProperties`.
 
-On the `source` blueprint, there will be an additional section called `mirrorProperties` that represents the mirror to the identifier of the `target` blueprint.<br /><br />
+On the `source` blueprint, there will be an additional section called `mirrorProperties` that represents the mirror to the identifier of the `target` blueprint.
 
 See the `mirrorProperties` structure in the [blueprint schema](./blueprint#mirror-properties).
 
@@ -98,8 +98,6 @@ See the `mirrorProperties` structure in the [blueprint schema](./blueprint#mirro
 
 When two blueprints are connected, creating an entity of the `source` blueprint will show an additional option - a `relation`.  
 This will add a property under the `relations` section, as shown in the [relations section.](./entity#related-entities)
-
-<br /><br />
 
 [Explore How to Create, Edit, and Delete Relations ➡️ ](../api-reference)
 

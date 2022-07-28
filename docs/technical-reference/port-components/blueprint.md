@@ -280,7 +280,6 @@ Here is how property formats are used:
 
 <details>
 <summary> See String Format Examples </summary>
-<div>
 
 ### URL
 
@@ -341,7 +340,6 @@ Here is how property formats are used:
     "default": "0000:0000:0000:0000:0000:0000:0000:0000"
 }
 ```
-</div>
 </details>
 
 
@@ -352,7 +350,9 @@ When two blueprints are connected via a relation, a new set of properties become
 Those new properties, as shown in the [relation](./relation) section of this manual, are called `mirrorProperties`. 
 
 :::note
-The default mirror property that is assigned when creating a new relation (on the `source` blueprint) is a mirror to the identifier of the `target` blueprint.<br /><br />
+The default mirror property that is assigned when creating a new relation (on the `source` blueprint) is a mirror to the identifier of the `target` blueprint.
+
+
 The format of the mirror property section is as follows:
 ```json
         "mirrorProperties": {
@@ -363,8 +363,6 @@ The format of the mirror property section is as follows:
 ```
 
 :::
-
-<br />
 
 [Explore How to Create, Edit, and Delete Blueprints ➡️ ](../api-reference)
 
