@@ -23,13 +23,13 @@ This is a step-by-step guide to configuring the integration between Port and Azu
     
     <center>
 
-    ![Okta new application wizard](../../../static/img/technical-reference/sso/azure-ad/AzureADNavBar.png)
+    ![AzureAD new application wizard](../../../static/img/technical-reference/sso/azure-ad/AzureADNavBar.png)
     
     </center>
 
 3. Click `New registration` at the top of the page
 
-    ![Okta new application wizard](../../../static/img/technical-reference/sso/azure-ad/AzureNewRegistration.png)
+    ![AzureAD new application wizard](../../../static/img/technical-reference/sso/azure-ad/AzureNewRegistration.png)
 
 4. Define the Port application settings:
 
@@ -45,7 +45,7 @@ This is a step-by-step guide to configuring the integration between Port and Azu
      * Set `Platform` to `Web`.
      * Set `URL` to ` https://auth.getport.io/login/callback`.
 
-    ![Okta new application wizard](../../../static/img/technical-reference/sso/azure-ad/ApplicationRegistrationForm.png)
+    ![AzureAD new application wizard](../../../static/img/technical-reference/sso/azure-ad/ApplicationRegistrationForm.png)
 
     4.4 Click `Register`.
 
@@ -288,7 +288,7 @@ To support Port from our side, Port needs the following information.
 This stage is **OPTIONAL** and is required only if you wish to pull all of your AzureAD groups into Port inherently.  <br/>
 
 **Benefit:** managing permissions and user access on Port.  
-**Outcome:** For every user that logs we will get automatically his associate OKTA groups, according to your definition in the settings below.
+**Outcome:** For every user that logs we will get automatically his associate AzureAD groups, according to your definition in the settings below.
 :::
 
 1. On the `Token configuration` tab, Click `Add groups claim`
