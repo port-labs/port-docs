@@ -72,7 +72,7 @@ The JSON schema of the relation is as follows:
 ```
 
 Resulting in this outcome in the UI:
-![Blueprints Graph with Relations Line](../../../static/img/technical-reference/port-components/DeployToMicroserviceRelationUI.png)
+![Blueprints Graph with Relations Line](../../../static/img/platform-overview/port-components/DeployToMicroserviceRelationUI.png)
 
 :::info
 Our `source` to `target` relations are one-to-many, at the moment. Meaning that the `target` blueprint can have many entities of the `source` blueprint.  
@@ -102,6 +102,6 @@ This will add a property under the `relations` section, as shown in the [relatio
 
 ## Next Steps
 
-[Explore How to Create, Edit, and Delete Relations with basic examples](../../how-to-guides/basic-operations/relation-operations.md)
+[Explore How to Create, Edit, and Delete Relations with basic examples](../../tutorials/basic-operations/relation-operations.md)
 
-[Dive into advanced operations on Relations with our API ➡️ ](../api-reference)
+[Dive into advanced operations on Relations with our API ➡️ ](../../api-reference)

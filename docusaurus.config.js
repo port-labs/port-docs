@@ -38,19 +38,19 @@ const config = {
       }),
     ],
     [
-      'redocusaurus',
+      "redocusaurus",
       {
         // Plugin Options for loading OpenAPI files
         specs: [
           {
-            spec: 'openapi/port-api.yaml',
-            route: '/docs/technical-reference/api-reference/',
+            spec: "openapi/port-api.yaml",
+            route: "/docs/api-reference/",
           },
         ],
         // Theme Options for modifying how redoc renders them
         theme: {
           // Change with your site colors
-          primaryColor: '#1890ff',
+          primaryColor: "#1890ff",
         },
       },
     ],
@@ -134,7 +134,7 @@ const config = {
          * The position of the live playground, above or under the editor
          * Possible values: "top" | "bottom"
          */
-        playgroundPosition: 'bottom',
+        playgroundPosition: "bottom",
       },
     }),
   themes: [
@@ -146,8 +146,7 @@ const config = {
     ],
   ],
 
-  plugins: ['@docusaurus/theme-live-codeblock'],
-
+  plugins: ["@docusaurus/theme-live-codeblock"],
 };
 
 module.exports = config;

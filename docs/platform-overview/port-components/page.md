@@ -51,11 +51,11 @@ A tab is a sub-page view of a page, and itself is a page.
 
 A full page table widget that holds all of the blueprints specific entities. 
 
-![Microservice blueprint page](../../../static/img/technical-reference/port-components/pages/MicroserviceBlueprintPage.png)
+![Microservice blueprint page](../../../static/img/platform-overview/port-components/pages/MicroserviceBlueprintPage.png)
 
 #### Default view
 
-![Empty Microservice blueprint page](../../../static/img/technical-reference/port-components/pages/MicroserviceBlueprintEmptyPage.png)
+![Empty Microservice blueprint page](../../../static/img/platform-overview/port-components/pages/MicroserviceBlueprintEmptyPage.png)
 
 ## Entity Page
 
@@ -66,7 +66,7 @@ The first is the `Overview` tab, which shows two widgets: the details of the ent
 **Related entities** of an entity are presented on the entity page a bulk of table widgets. 
 :::
 
-![Microservice entity page tabs marked](../../../static/img/technical-reference/port-components/pages/MicroserviceEntityPage.png)
+![Microservice entity page tabs marked](../../../static/img/platform-overview/port-components/pages/MicroserviceEntityPage.png)
 
 
 ## Page operations
@@ -82,7 +82,7 @@ The table below summarizes the available operation according to the page type:
 | Audit log page | V | X | X | X |
 
 All page operations are available on the top bar of the bar, as shown here:<br />  
-![Page operations marked](../../../static/img/technical-reference/port-components/pages/PageOperationsMarked.png)
+![Page operations marked](../../../static/img/platform-overview/port-components/pages/PageOperationsMarked.png)
 
 ### Saving views
 
@@ -99,20 +99,20 @@ Each time a change is made on a page, and the `Save this view` becomes enabled, 
 
 <center>
 
-![Save view menu button marked](../../../static/img/technical-reference/port-components/pages/SaveViewDropMenuButton.png)
+![Save view menu button marked](../../../static/img/platform-overview/port-components/pages/SaveViewDropMenuButton.png)
 
 </center>
 
 After clicking the `Save as a new page` button, a window will pop:  
 
-![Save as a new page popup](../../../static/img/technical-reference/port-components/pages/SaveAPageForm.png)
+![Save as a new page popup](../../../static/img/platform-overview/port-components/pages/SaveAPageForm.png)
 
 :::note
 When saving a new page or editing an existing one, a set of icons is available to you:
 
 <center>
 
-![Page Icons dropdown menu](../../../static/img/technical-reference/port-components/pages/PageIcons.png)
+![Page Icons dropdown menu](../../../static/img/platform-overview/port-components/pages/PageIcons.png)
 
 </center>
 :::
@@ -125,13 +125,13 @@ By clicking the `...` button on the top right corner, you can edit the page name
 
 <center>
 
-![Page menu](../../../static/img/technical-reference/port-components/pages/PageMenu.png)
+![Page menu](../../../static/img/platform-overview/port-components/pages/PageMenu.png)
 
 </center>
 
 Editing a page:
 
-![Edit Page popup window](../../../static/img/technical-reference/port-components/pages/EditPageForm.png)
+![Edit Page popup window](../../../static/img/platform-overview/port-components/pages/EditPageForm.png)
 
 #### Deleting pages
 :::note
@@ -162,14 +162,14 @@ We highly recommend using the table operations to provide the cleanest and most 
 
 All table operations are available on the top bar of the table:
 
-![Table operations bar](../../../static/img/technical-reference/port-components/pages/TableOperationsBar.png)
+![Table operations bar](../../../static/img/platform-overview/port-components/pages/TableOperationsBar.png)
 
 
 ### Filter 
 
 Filtering a table is done using the following menu:
 
-![Table filter menu marked](../../../static/img/technical-reference/port-components/pages/TableFilterMenu.png)
+![Table filter menu marked](../../../static/img/platform-overview/port-components/pages/TableFilterMenu.png)
 
 You can choose any field to filter, and define a filtering operator and a value to it.  
 You can filter according to *one or many fields* while setting the relation between each field filter: `And/Or`.
@@ -185,7 +185,7 @@ We support the following filtering operators: `'contains', '=', '!=', 'begins wi
 
 Sorting the table is done on the following menu:
 
-![Table sort menu marked](../../../static/img/technical-reference/port-components/pages/TableSortMenu.png)
+![Table sort menu marked](../../../static/img/platform-overview/port-components/pages/TableSortMenu.png)
 
 You can sort by any field, and use *one or many* fields to sort according to. We support `Ascending` and `Descending` sorting options.
 
@@ -198,7 +198,7 @@ Sorting a specific column can be done by clicking on the column title.
 
 Hiding table columns is done on the following menu:
 
-![Table hide menu marked](../../../static/img/technical-reference/port-components/pages/TableHideMenu.png)
+![Table hide menu marked](../../../static/img/platform-overview/port-components/pages/TableHideMenu.png)
 
 You can decide whether each field is viewable to users or not.
 
@@ -210,7 +210,7 @@ We highly recommend hiding irrelevant data from users, to provide a clean view.
 
 Grouping by entities is done on the following menu:
 
-![Table group by menu marked](../../../static/img/technical-reference/port-components/pages/TableGroupByMenu.png)
+![Table group by menu marked](../../../static/img/platform-overview/port-components/pages/TableGroupByMenu.png)
 
 You can group results according to any field in the table.
 
@@ -224,6 +224,6 @@ Just create your group by setting, add additional viewing settings if needed, an
 We provide a free search option on tables.  
 Searching on a table is available on the left side of the top bar:
 
-![Table search bar marked](../../../static/img/technical-reference/port-components/pages/TableSearchBar.png)
+![Table search bar marked](../../../static/img/platform-overview/port-components/pages/TableSearchBar.png)
 
-[Explore Advanced Operations on Pages with our API ➡️ ](../api-reference)
+[Explore Advanced Operations on Pages with our API ➡️ ](../../api-reference)

@@ -124,7 +124,7 @@ Now let's look at the structure of this property definition and also explore the
 :::tip
 we highly recommend you set a `description`, so your developers will have the context of the property.
 
-![Property Description Tooltip Example](../../../static/img/technical-reference/port-components/propertyDescriptionTooltipExample.png)
+![Property Description Tooltip Example](../../../static/img/platform-overview/port-components/propertyDescriptionTooltipExample.png)
 :::
 
 
@@ -366,6 +366,6 @@ The format of the mirror property section is as follows:
 
 ## Next Steps
 
-[Explore How to Create, Edit, and Delete Blueprints with basic examples](../../how-to-guides/basic-operations/blueprints-operations.md)
+[Explore How to Create, Edit, and Delete Blueprints with basic examples](../../tutorials/basic-operations/blueprints-operations.md)
 
-[Dive into advanced operations on Blueprints with our API ➡️ ](../api-reference)
+[Dive into advanced operations on Blueprints with our API ➡️ ](../../api-reference)

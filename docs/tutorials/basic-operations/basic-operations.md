@@ -9,4 +9,4 @@ Here you can find examples for the basic CRUD operations on Port's components:
 
 - [Blueprint operations](./blueprints-operations.md)
 - [Entity operations](./entity-operations.md)
-- [Relation operations](./relations.md)
+- [Relation operations](./relation-operations.md)

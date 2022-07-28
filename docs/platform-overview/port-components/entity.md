@@ -115,6 +115,6 @@ Click for more details about [**relations**](./relation).
 
 ## Next Steps
 
-[Explore How to Create, Edit, and Delete Entities with basic examples](../../how-to-guides/basic-operations/entity-operations.md)
+[Explore How to Create, Edit, and Delete Entities with basic examples](../../tutorials/basic-operations/entity-operations.md)
 
-[Dive into advanced operations on Entities with our API ➡️ ](../api-reference)
+[Dive into advanced operations on Entities with our API ➡️ ](../../api-reference)

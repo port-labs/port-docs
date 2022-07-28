@@ -66,18 +66,18 @@ Merging a branch to the `main` (default) branch will trigger the app look for th
 
 2. Click `Install`.
 
-    ![GitHub app installation page](../../../static/img/technical-reference/integrations/github-app/GitHubAppInstallPage.png)
+    ![GitHub app installation page](../../static/img/integrations/github-app/GitHubAppInstallPage.png)
 
 3. Choose to which repositories you wish to install the app:
 
-    ![GitHub app installation choose repositories](../../../static/img/technical-reference/integrations/github-app/GitHubAppChooseRepos.png)
+    ![GitHub app installation choose repositories](../../static/img/integrations/github-app/GitHubAppChooseRepos.png)
 
 4. You'll be redirected to Port, please **log in**.
 
 
 5. Once Logged in, see the success indication on the top of the screen:
 
-    ![GitHub app installation success indication on Port](../../../static/img/technical-reference/integrations/github-app/GitHubInstallationSuccess.png)
+    ![GitHub app installation success indication on Port](../../static/img/integrations/github-app/GitHubInstallationSuccess.png)
 
 
 ## Trying out our App with mock data
@@ -92,6 +92,6 @@ Please contact us with your GitHub user for access.
 3. Once you are satisfied with your blueprint, go ahead and create it in Port
 4. You'll see an integration icon attached to the blueprint Node
 
-    ![Blueprint with Github app integration active](../../../static/img/technical-reference/integrations/github-app/BlueprintWithIntegrationActive.png)
+    ![Blueprint with Github app integration active](../../static/img/integrations/github-app/BlueprintWithIntegrationActive.png)
 
-    ![Blueprint with Github app integration active expanded](../../../static/img/technical-reference/integrations/github-app/BlueprintWithIntegrationActiveExpanded.png)
+    ![Blueprint with Github app integration active expanded](../../static/img/integrations/github-app/BlueprintWithIntegrationActiveExpanded.png)

@@ -19,15 +19,15 @@ This is a step-by-step guide to configuring the integration between Port and Okt
 1. In the Admin Console, go to Applications -> Applications.
 2. Click `Create App Integration`.
    
-![Okta new application wizard](../../../static/img/technical-reference/sso/okta/OktaCreateApp.png)
+![Okta new application wizard](../../static/img/sso/okta/OktaCreateApp.png)
 
 3. Create an OIDC app integration. Select **OIDC - OpenID Connect** in the Wizard.
 
-![Okta new application OIDC integration](../../../static/img/technical-reference/sso/okta/OktaCreateAppIntegration.png)
+![Okta new application OIDC integration](../../static/img/sso/okta/OktaCreateAppIntegration.png)
 
 4. Choose application type as **Single-Page application**.
 
-![Okta new application type](../../../static/img/technical-reference/sso/okta/OktaSetAppType.png)
+![Okta new application type](../../static/img/sso/okta/OktaSetAppType.png)
 
 Click `Next`.
 
@@ -40,7 +40,7 @@ Under `General Setting`:
 2. Add an application logo (Optional).
 
     Please find this logo:  
-    ![Port's logo](../../../static/img/technical-reference/sso/general-assets/PortLogo.png)
+    ![Port's logo](../../static/img/sso/general-assets/PortLogo.png)
 
 3. Under `Grant type` mark all options.
 
@@ -51,8 +51,8 @@ Under `General Setting`:
 
 6. Under `Assignments`: Set `Allow everyone in your organization to access`.
 
-    ![Okta app settings](../../../static/img/technical-reference/sso/okta/AppIntegrationSettings.png)
-    ![Okta app settings assignments](../../../static/img/technical-reference/sso/okta/AppSettingsAssignments.png)
+    ![Okta app settings](../../static/img/sso/okta/AppIntegrationSettings.png)
+    ![Okta app settings assignments](../../static/img/sso/okta/AppSettingsAssignments.png)
 
 
 ### Step #3: Configure OIDC settings
@@ -61,17 +61,17 @@ Under `General` tab:
 
 1. Copy the `Client ID` and the `Okta Domain` and send it to Port (On the Slack channel).
 
-    ![Okta app settings](../../../static/img/technical-reference/sso/okta/OktaAppSettingsPage.png)
+    ![Okta app settings](../../static/img/sso/okta/OktaAppSettingsPage.png)
 
 2. Click on the `Edit` button on the `General Settings` tab.
     
     2.1 Set the `Login initiated by` option to `Either Okta or App`:
 
-    ![Okta app settings](../../../static/img/technical-reference/sso/okta/OktaAppLoginInitiation.png)
+    ![Okta app settings](../../static/img/sso/okta/OktaAppLoginInitiation.png)
 
     2.2 Check all the options in `Application visibility`:
 
-    ![Okta app settings](../../../static/img/technical-reference/sso/okta/OktaAppVisibilitySettings.png)
+    ![Okta app settings](../../static/img/sso/okta/OktaAppVisibilitySettings.png)
 
     2.3 - Check `Login flow` to be `Redirect to app to initiate login (OIDC Compliant)` and paste the following URI under the `initiate login URI`: `https://app.getport.io?org_id={YOUR_ORG_ID}`
 
@@ -79,11 +79,11 @@ Under `General` tab:
         We will provide your `organization id` (Contact us on Slack).
     :::
 
-    ![Okta app settings login flow](../../../static/img/technical-reference/sso/okta/OktaAppLoginflowSettings.png)
+    ![Okta app settings login flow](../../static/img/sso/okta/OktaAppLoginflowSettings.png)
 
     2.4 Click `Save` and you’re done! now you’ll have the Port app on your Okta dashboard.
 
-    ![Okta dashboard with Port app](../../../static/img/technical-reference/sso/okta/OktaDashboard.png)
+    ![Okta dashboard with Port app](../../static/img/sso/okta/OktaDashboard.png)
 
 ---
 
@@ -99,11 +99,11 @@ To allow automatic OKTA group support in Port, please follow these steps:
 
 1. Under the `Application` page, select Port App and go to the `Sign On` tab:
 
-    ![Okta application sign-on settings](../../../static/img/technical-reference/sso/okta/OktaAppSingOnSettings.png)
+    ![Okta application sign-on settings](../../static/img/sso/okta/OktaAppSingOnSettings.png)
 
 2. Under `OpenID Connect Token` click `Edit`:
 
-    ![Okta application connect id token](../../../static/img/technical-reference/sso/okta/OktaAppConnectToken.png)
+    ![Okta application connect id token](../../static/img/sso/okta/OktaAppConnectToken.png)
 
 3. Add a `Groups claim type` to be `filter` and:
     
@@ -115,7 +115,7 @@ To allow automatic OKTA group support in Port, please follow these steps:
         To support all groups insert `Matches regex` with the `.*` value.
     :::
 
-    ![Okta application set group claims](../../../static/img/technical-reference/sso/okta/OktaAppSetGroupClaims.png)
+    ![Okta application set group claims](../../static/img/sso/okta/OktaAppSetGroupClaims.png)
 
     3.3 Click `Save`.
 
