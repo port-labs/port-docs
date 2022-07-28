@@ -24,7 +24,7 @@ Before you start, there are a few important steps when trying to define your blu
 :::note
 By the end of this section, you should have something like this in mind:
 
-![Example Blueprints and Relations Layout](../../../static/img/setup-your-port/self-service-portal/blueprints/exampleBlueprintsAndRelationsLayout.png)
+![Example Blueprints and Relations Layout](../../../static/img/platform-overview/port-components/blueprints/exampleBlueprintsAndRelationsLayout.png)
 :::
 
 ## Blueprint's structure

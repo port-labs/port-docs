@@ -68,7 +68,7 @@ If you click on the `expand` button as shown in the image below:
 
 You should see an expanded view of the blueprint we just created, with all of the properties listed alongside the types we provided for them:
 
-![Example microservice blueprint](../../static/img/setup-your-port/self-service-portal/blueprints/exampleMicroserviceBlueprint.png)
+![Example microservice blueprint](../../static/img/platform-overview/port-components/blueprints/exampleMicroserviceBlueprint.png)
 
 
 ### From the API
@@ -311,7 +311,7 @@ curl --location --request POST "https://api.getport.io/v0.1/blueprints" \
 
 You should now have a blueprint in the Blueprints Graph that looks like this:
 
-![Example microservice blueprint](../../static/img/setup-your-port/self-service-portal/blueprints/exampleMicroserviceBlueprint.png)
+![Example microservice blueprint](../../static/img/platform-overview/port-components/blueprints/exampleMicroserviceBlueprint.png)
 
 ## Updating blueprints
 
@@ -323,7 +323,7 @@ In order to update a blueprint you can:
 - Make a REST PUT request to the URL `https://api.getport.io/v0.1/{blueprint_identifier}`
 - Make a REST PATCH request to the URL `https://api.getport.io/v0.1/{blueprint_identifier}`
 
-![Blueprints Graph edit button marked](../../static/img/setup-your-port/self-service-portal/blueprints/blueprintGraphEditButtonMarked.png)
+![Blueprints Graph edit button marked](../../static/img/platform-overview/port-components/blueprints/blueprintGraphEditButtonMarked.png)
 
 A PUT request has the exact same body as a POST request, it will simply overwrite the blueprint with the new data provided
 
@@ -371,7 +371,7 @@ In order to delete a blueprint you can:
 - Click on the trash can icon in the specific blueprint node in the Blueprints Graph
 - Make a REST DELETE request to the URL `https://api.getport.io/v0.1/{blueprint_identifier}`
 
-![Blueprints Graph delete button marked](../../static/img/setup-your-port/self-service-portal/blueprints/blueprintGraphDeleteButtonMarked.png)
+![Blueprints Graph delete button marked](../../static/img/platform-overview/port-components/blueprints/blueprintGraphDeleteButtonMarked.png)
 
 ## Next steps
 
@@ -409,4 +409,4 @@ You can create the new blueprint from the UI (using the `New Blueprint` button i
 
 At the end of this section, your Blueprints Graph should include the two blueprints shown below:
 
-![graph package microservice](../../static/img/setup-your-port/self-service-portal/blueprints/graphPackageMicroservice.png)
+![graph package microservice](../../static/img/platform-overview/port-components/blueprints/graphPackageMicroservice.png)

@@ -28,7 +28,7 @@ Relations require 2 blueprints to map a connection between, if you haven't creat
 
 In order to create a relation from the UI, go to the Blueprints Graph, at the top right corner of the page you can find the `New Blueprints Relation` button:
 
-![Graph Package Microservice Create Relation Marked](../../static/img/setup-your-port/self-service-portal/relations/graphPackageMicroserviceCreateRelationMarked.png)
+![Graph Package Microservice Create Relation Marked](../../static/img/platform-overview/port-components/relations/graphPackageMicroserviceCreateRelationMarked.png)
 
 After clicking the button an editor window will open with a format similar to the one we explained in the [Understanding the structure of a relation](../platform-overview/port-components/relation.md#relation-json-structure) section, paste in the following content to create the `Package-Deployment` relation:
 
@@ -149,7 +149,7 @@ curl --location --request POST "https://api.getport.io/v0.1/blueprints/$source_b
 
 After creating the relation, you should see a visual indicator in the blueprints graph:
 
-![Blueprints Graph with Relations Line](../../static/img/setup-your-port/self-service-portal/relations/graphPackageMicroserviceWithRelationLine.png)
+![Blueprints Graph with Relations Line](../../static/img/platform-overview/port-components/relations/graphPackageMicroserviceWithRelationLine.png)
 
 ## Updating relations
 
@@ -161,13 +161,13 @@ Just like before, we can update a relation from the UI or from the API.
 
 In order to update a relation from the UI, go to the Blueprints Graph, hover over the relation connector line between the 2 blueprints and click on the relations icon that appears:
 
-![Graph relations edit marked](../../static/img/setup-your-port/self-service-portal/relations/graphRelationEditMarked.png)
+![Graph relations edit marked](../../static/img/platform-overview/port-components/relations/graphRelationEditMarked.png)
 
 A json editor will appear in read-only mode.
 
 You can toggle editing at the bottom left corner of the editor.
 
-![Graph relations editor with edit marked](../../static/img/setup-your-port/self-service-portal/relations/graphRelationEditorWithEditButtonMarked.png)
+![Graph relations editor with edit marked](../../static/img/platform-overview/port-components/relations/graphRelationEditorWithEditButtonMarked.png)
 
 :::info editing relations
 Toggling edit mode will remove the fields that cannot be updated in the relation from the editor, don't worry about it, they are still saved in the background, but because they cannot be updated they are hidden away.
@@ -203,7 +203,7 @@ In order to delete a relation you can:
 - Click on the trash can icon in the specific relation node in the Blueprints Graph
 - Make a REST DELETE request to the URL `https://api.getport.io/v0.1/{source_blueprint_identifier}/relations/{relation_identifier}`
 
-![Graph relations delete marked](../../static/img/setup-your-port/self-service-portal/relations/graphRelationDeleteMarked.png)
+![Graph relations delete marked](../../static/img/platform-overview/port-components/relations/graphRelationDeleteMarked.png)
 
 ## Next steps
 
