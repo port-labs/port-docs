@@ -3,7 +3,7 @@ sidebar_position: 1.4
 ---
 
 
-# Pages
+# Page
 
 ## What is a page?
 

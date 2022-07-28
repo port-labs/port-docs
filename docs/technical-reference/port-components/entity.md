@@ -112,8 +112,9 @@ This option is shown under the `relations` section as follows:
 :::tip
 Click for more details about [**relations**](./relation).
 :::
----
 
-[Explore How to Create, Edit, and Delete Entities ➡️ ](../api-reference)
+## Next Steps
 
-[Explore Advanced Operations on Entities with our API ➡️ ](../api-reference)
+[Explore How to Create, Edit, and Delete Entities with basic examples](../../how-to-guides/basic-operations/entity-operations.md)
+
+[Dive into advanced operations on Entities with our API ➡️ ](../api-reference)

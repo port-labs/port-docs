@@ -364,6 +364,8 @@ The format of the mirror property section is as follows:
 
 :::
 
-[Explore How to Create, Edit, and Delete Blueprints ➡️ ](../api-reference)
+## Next Steps
 
-[Explore Advanced Operations on Blueprint with our API ➡️ ](../api-reference)
+[Explore How to Create, Edit, and Delete Blueprints with basic examples](../../how-to-guides/basic-operations/blueprints-operations.md)
+
+[Dive into advanced operations on Blueprints with our API ➡️ ](../api-reference)

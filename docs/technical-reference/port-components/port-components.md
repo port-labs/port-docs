@@ -3,14 +3,9 @@ sidebar_position: 1
 ---
 # Port Components
 
-## Components CheatSheet
+This section will explore the different Core Components that exist in Port, for more information click any of the links below:
 
-### Blueprints
-
-Description.  
-...
-
-
- ➡️ [Detailed Blueprint Description](./blueprint)
-
- ➡️ [Advanced API Operations](../api-reference)
+- [Blueprint](./blueprint.md)
+- [Relation](./relation.md)
+- [Entity](./entity.md)
+- [Page](./page.md)

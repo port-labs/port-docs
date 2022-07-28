@@ -5,8 +5,9 @@ sidebar_position: 1.2
 
 ## What is a relation?
 
-**Relations** enable us to make connections between blueprints. Meaning, giving logical context to your software catalog.  
-This allows us to connect between entities of the related blueprints.  
+**Relations** enable us to make connections between blueprints. This gives logical context to your software catalog.  
+
+In practice we can use relations to connect between entities of the related blueprints.  
 
 **For example**, to see where your `microservices` are deployed, you need to create a relation between your `microservices` and `deployment` blueprints.
 
@@ -99,6 +100,8 @@ See the `mirrorProperties` structure in the [blueprint schema](./blueprint#mirro
 When two blueprints are connected, creating an entity of the `source` blueprint will show an additional option - a `relation`.  
 This will add a property under the `relations` section, as shown in the [relations section.](./entity#related-entities)
 
-[Explore How to Create, Edit, and Delete Relations ➡️ ](../api-reference)
+## Next Steps
 
-[Explore Advanced Operations on Relations with our API ➡️ ](../api-reference)
+[Explore How to Create, Edit, and Delete Relations with basic examples](../../how-to-guides/basic-operations/relation-operations.md)
+
+[Dive into advanced operations on Relations with our API ➡️ ](../api-reference)
