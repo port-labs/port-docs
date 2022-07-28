@@ -1,17 +1,74 @@
 ---
 sidebar_position: 1.1
-sidebar label: Blueprint Operations
+sidebar label: Blueprint Basics
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
 
-# Blueprint operations
+# Blueprint Basics
 
 ## Create blueprints
 
 ### From the UI
+
+Let's head to [Port](https://app.getport.io/blueprints) and look at the Blueprints page, at the top right corner let's click on **New Blueprint** and configure a `Microservice` blueprint as shown in the image below:
+
+![Create New Blueprint](../../static/img/welcome/quickstart/newBlueprintButton.png)
+
+After clicking the button, you should see a creation form similar to what is shown in the image below:
+
+![New Blueprint Text](../../static/img/welcome/quickstart/newBlueprintDefaultText.png)
+
+Our Microservice Blueprint is going to include the following properties:
+
+- **Repo** - A URL to the source code repository storing the code for the Microservice
+- **Slack Channel** - A URL to the Slack Channel of the team responsible for the Microservice
+
+:::note
+Don't worry if you feel like the `Microservice` blueprint should include more properties, you can always go back and add or remove properties later. 
+:::
+
+In order to create a Blueprint with the following properties, we will use the following JSON body:
+
+```json
+{
+    "identifier": "microservice",
+    "title": "Microservice",
+    "icon": "Microservice",
+    "dataSource": "Port",
+    "formulaProperties": {},
+    "schema": {
+        "properties": {
+            "slackChannel": {
+                "type": "string",
+                "title": "Slack Channel",
+                "description": "The channel of the microservice\\'s maintainers"
+            },
+            "repoUrl": {
+                "type": "string",
+                "format": "url",
+                "title": "Repository URL",
+                "description": "A URL to the Git repository of the microservice"
+            }
+        },
+        "required": ["repoURL"]
+    }
+}
+```
+
+Click on the `save` button, and you should see your new Blueprint in the Blueprints graph:
+
+![Blueprints graph with new Microservice](../../static/img/welcome/quickstart/blueprintGraphWithMicroserviceClosed.png)
+
+If you click on the `expand` button as shown in the image below:
+
+![Blueprints graph with new Microservice And Expand Makred](../../static/img/welcome/quickstart/blueprintGraphWithMicroserviceClosedAndExpandMarked.png)
+
+You should see an expanded view of the blueprint we just created, with all of the properties listed alongside the types we provided for them:
+
+![Example microservice blueprint](../../static/img/setup-your-port/self-service-portal/blueprints/exampleMicroserviceBlueprint.png)
 
 
 ### From the API
@@ -254,7 +311,7 @@ curl --location --request POST "https://api.getport.io/v0.1/blueprints" \
 
 You should now have a blueprint in the Blueprints Graph that looks like this:
 
-![Example microservice blueprint](../../../static/img/setup-your-port/self-service-portal/blueprints/exampleMicroserviceBlueprint.png)
+![Example microservice blueprint](../../static/img/setup-your-port/self-service-portal/blueprints/exampleMicroserviceBlueprint.png)
 
 ## Updating blueprints
 
@@ -266,7 +323,7 @@ In order to update a blueprint you can:
 - Make a REST PUT request to the URL `https://api.getport.io/v0.1/{blueprint_identifier}`
 - Make a REST PATCH request to the URL `https://api.getport.io/v0.1/{blueprint_identifier}`
 
-![Blueprints Graph edit button marked](../../../static/img/setup-your-port/self-service-portal/blueprints/blueprintGraphEditButtonMarked.png)
+![Blueprints Graph edit button marked](../../static/img/setup-your-port/self-service-portal/blueprints/blueprintGraphEditButtonMarked.png)
 
 A PUT request has the exact same body as a POST request, it will simply overwrite the blueprint with the new data provided
 
@@ -314,7 +371,7 @@ In order to delete a blueprint you can:
 - Click on the trash can icon in the specific blueprint node in the Blueprints Graph
 - Make a REST DELETE request to the URL `https://api.getport.io/v0.1/{blueprint_identifier}`
 
-![Blueprints Graph delete button marked](../../../static/img/setup-your-port/self-service-portal/blueprints/blueprintGraphDeleteButtonMarked.png)
+![Blueprints Graph delete button marked](../../static/img/setup-your-port/self-service-portal/blueprints/blueprintGraphDeleteButtonMarked.png)
 
 ## Next steps
 
@@ -352,4 +409,4 @@ You can create the new blueprint from the UI (using the `New Blueprint` button i
 
 At the end of this section, your Blueprints Graph should include the two blueprints shown below:
 
-![graph package microservice](../../../static/img/setup-your-port/self-service-portal/blueprints/graphPackageMicroservice.png)
+![graph package microservice](../../static/img/setup-your-port/self-service-portal/blueprints/graphPackageMicroservice.png)

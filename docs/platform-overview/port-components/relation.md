@@ -102,6 +102,6 @@ This will add a property under the `relations` section, as shown in the [relatio
 
 ## Next Steps
 
-[Explore How to Create, Edit, and Delete Relations with basic examples](../../tutorials/basic-operations/relation-operations.md)
+[Explore How to Create, Edit, and Delete Relations with basic examples](../../tutorials/relation-basics.md)
 
 [Dive into advanced operations on Relations with our API ➡️ ](../../api-reference)

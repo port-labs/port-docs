@@ -170,7 +170,7 @@ Currently our Software Catalog only has Microservices, but everybody knows a Mic
 
 In addition, this time we will mark the `version` field as `required`, so we can make sure that our package has a version value.
 
- so let's go ahead and create an **Package Blueprint**:
+so let's go ahead and create an **Package Blueprint**:
 
 - Go back to the Blueprints page
 - Click on the New Blueprint button
