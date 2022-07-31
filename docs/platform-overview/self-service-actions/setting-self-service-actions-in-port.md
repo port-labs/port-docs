@@ -472,4 +472,4 @@ Here is an example `payload` object for a `CREATE` action:
 Now that you have the basics of actions down, you can refer to our examples for some practical use-cases of actions:
 
 - Setting up a basic execution runner using AWS Lambda
-- Setting up a service provisioning pipeline using AWS Lambda
+- [Setting up a service provisioning pipeline](./execution-service-pipeline-example)
