@@ -1,8 +1,8 @@
 ---
-sidebar_position: 3
+sidebar_position: 5
 ---
 
-# Service Pipeline Example
+# Execution Service Pipeline Example
 
 Managing, tracking and simplifying the deployment of new microservices can be a difficult task.
 
