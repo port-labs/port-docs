@@ -156,10 +156,6 @@ Those are the `properties` that our API supports. See [API reference](../api-ref
 
 Here is how property definitions look for all available types (remember that only the `type` field is mandatory):
 
-<details>
-<summary> See Property Type Examples </summary>
-<div>
-
 ### String
 
 ```json
@@ -245,9 +241,6 @@ Here is how property definitions look for all available types (remember that onl
 }
 ```
 
-</div>
-</details>
-
 
 ## String property formats
 
@@ -277,9 +270,6 @@ Those are the `format` types that our API supports. See [API reference](../api-r
 ### Examples
 
 Here is how property formats are used:
-
-<details>
-<summary> See String Format Examples </summary>
 
 ### URL
 
@@ -340,7 +330,6 @@ Here is how property formats are used:
     "default": "0000:0000:0000:0000:0000:0000:0000:0000"
 }
 ```
-</details>
 
 
 

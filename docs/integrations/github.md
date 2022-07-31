@@ -41,6 +41,15 @@ Merging a branch to the `main` (default) branch will trigger the app look for th
 
 ### Permissions
 
+Port's Github App requires the following permissions:
+
+- **Read** access to code and metadata
+- **Read** and **write** access to checks and pull requests
+
+:::note
+You will also be prompted to confirm these permissions when first installing the App
+:::
+
 ### GitHub environment variables
 
 | variable name | Type | Description | 

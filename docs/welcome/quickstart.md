@@ -389,7 +389,6 @@ If you want to learn more about Port's capabilities in a specific area, you can 
 - [Relations Deep Dive](../setup-your-port/setup-catalog/relations)
 - [Entities Deep Dive](../setup-your-port/setup-catalog/entities)
 - [Pages Deep Dive](../setup-your-port/setup-catalog/pages)
-- Mirror Properties Deep Dive
 
 ### Using the API
 
