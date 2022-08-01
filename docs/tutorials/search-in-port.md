@@ -178,7 +178,19 @@ The following rule will return entities which were created in the last week:
 The `between` operator also supports standard date ranges:
 
 ```json showLineNumbers
-
+{
+    "combinator": "and",
+    "rules": [
+        {
+            "operator": "between",
+            "property": "$createdAt",
+            "value": {
+                "from": "2022-07-26T16:38:06.839Z",
+                "to": "2022-07-29T17:00:28.006Z"
+            }
+        }
+    ]
+}
 ```
 
 ### `contains` operator
