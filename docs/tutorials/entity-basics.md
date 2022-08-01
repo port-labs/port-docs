@@ -16,10 +16,6 @@ There are 2 ways to create entities:
 - From the UI
 - From the API
 
-:::note
-Remember that an access token is needed to make API requests, refer back to [Getting an API token](./blueprint-basics.md#getting-an-api-token) if you need to generate a new one.
-:::
-
 :::info
 We will be creating entities for the `Microservice` blueprint from [Creating a Blueprint](./blueprint-basics.md#creating-a-blueprint) and the `Package` blueprint from [Blueprint Next Steps](./blueprint-basics.md#next-steps), please make sure to create them before reading on if you want to follow along
 :::
@@ -44,7 +40,7 @@ After clicking the `+ Microservice` button, a UI form will open with the propert
 
 ![Microservices creation form](../../static/img/platform-overview/port-components/entities/EntityFormUI.png)
 
-#### Creating with a Code Format
+#### Creating with the JSON editor
 Every entity has a format similar to the one we explained in the [Understanding the structure of an entity](../platform-overview/port-components/entity.md#entity-json-structure) section, which is viewable via the *Json Mode button*. You can paste in the following content to create your first `Microservice`:
 
 ```json showLineNumbers
@@ -64,9 +60,8 @@ Every entity has a format similar to the one we explained in the [Understanding 
 
 ### From the API
 
-#### Getting an API Token
 :::note
-This next part assumes that you already have your API Access Token. If not, please see details on [Getting an API Token](./blueprint-basics.md#getting-an-api-token).
+Remember that an access token is needed to make API requests, refer back to [Getting an API token](./blueprint-basics.md#getting-an-api-token) if you need to generate a new one
 :::
 
 #### Creating an entity

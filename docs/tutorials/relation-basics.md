@@ -15,10 +15,6 @@ Relations can be created in two ways:
 - From the UI
 - From the API
 
-:::note
-Remember that an access token is needed to make API requests, refer back to [Getting an API token](./blueprint-basics.md#getting-an-api-token) if you need to generate a new one
-:::
-
 :::info
 Relations require 2 blueprints to map a connection between, if you haven't created the `Microservice` blueprint in [Creating a Blueprint](./blueprint-basics.md#creating-a-blueprint) and the `Package` blueprint in [Blueprint basics Next Steps](./blueprint-basics.md#next-steps), please make sure to do so if you want to follow along
 :::
@@ -43,6 +39,10 @@ After clicking the button an editor window will open with a format similar to th
 ```
 
 ### From the API
+
+:::note
+Remember that an access token is needed to make API requests, refer back to [Getting an API token](./blueprint-basics.md#getting-an-api-token) if you need to generate a new one
+:::
 
 In order to create a relation from the API, we will make a POST request to the URL `https://api.getport.io/v0.1/{source_blueprint_identifier}/relations`.
 
