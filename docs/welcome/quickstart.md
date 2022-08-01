@@ -25,7 +25,7 @@ In Port, you control how the data looks, any data format you can think of can be
 
 We know that every organization is a snowflake, and everybody have their own preferences and standards for representing their data and asset structure, we choose the **Blueprints** approach to enable that.
 
-but for now, let's start with a simple example:
+But for now, let's start with a simple example:
 
 In your organization you are using a `Microservice` architecture, and different Microservices are using `Packages` to manage the different code pieces reused by different Microservices.
 
@@ -340,7 +340,7 @@ Select the `Data Query Service` option from the drop-down list and then click on
 
 Repeat the same process, only this time select the `Requests v2.28.1` package from the table, and in the relations drop-down, once again select the `Data Query Service` Microservice then click `update`.
 
-And finally, select the `Requests v2.28.0` package, and in the relations drop-down, select the `Login Service` Microservice and then click `update`.
+And finally, select the `Requests v2.28.0` package, and in the relations drop-down, select the `Login Service` Microservice and then click `Update`.
 
 After attaching the Packages to the Microservices, your packages page should look like this (notice the marked column and its values):
 
@@ -354,7 +354,7 @@ Click on the `Data Query Service` link in the marked column and you will see wha
 In our case, the specific entity page for a Microservice, will also show us all of the Packages that it uses, because that is the relation we mapped.
 :::
 
-feel free to continue exploring the specific entity page and also the Packages and Microservices pages, notice the `Filter`, `Hide`, `Sort` and `Group By` controls you can find at the top right of Port's table widgets.
+Feel free to continue exploring the specific entity page and also the Packages and Microservices pages, notice the `Filter`, `Hide`, `Sort` and `Group By` controls you can find at the top right of Port's table widgets.
 
 ## What now?
 
@@ -394,5 +394,4 @@ If you want to learn more about Port's capabilities in a specific area, you can 
 
 If you want to take advantage of Port's REST API Interface, take a look at these resources:
 
-- API At a Glance
-- Port API Reference
+- [Port API Reference](../api-reference/)

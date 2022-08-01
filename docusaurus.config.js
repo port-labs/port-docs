@@ -102,7 +102,7 @@ const config = {
               },
               {
                 label: "Linkedin",
-                href: "https://www.linkedin.com/company/getport/mycompany/",
+                href: "https://www.linkedin.com/company/getport/",
               },
             ],
           },
@@ -111,7 +111,7 @@ const config = {
             items: [
               {
                 label: "Blog",
-                to: "https://www.getport.io/blog",
+                href: "https://www.getport.io/blog",
               },
               {
                 label: "GitHub",
