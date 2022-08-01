@@ -210,6 +210,207 @@ The output received from the `relatedTo` operator without any other rule added t
 
 ### `dependedOn` operator
 
+## Search route query parameters
+
+The search route also supports several query parameters which affect the returned output:
+
+| Parameter | Description | Available values | Default value
+|---|---|---|---|
+| `attach_title_to_identifier` | Only relevant when not attaching all properties to identifier recursively <br></br><br></br> `true`: Both the identifier and the title of the related entity will appear under the relation key <br></br><br></br> `false`: Only the identifier of the related entity will appear under the relation key  | `true`/`false` | `false`
+| `exclude_mirror_properties` | Should [mirror properties](../platform-overview/port-components/blueprint.md#mirror-properties) be returned with the result | `true`/`false` | `false`
+| `attach_all_properties_to_identifier_recurse` | `true`: related entities are returned in full under relation key <br></br><br></br> `false`: only the related entity's `identifier` will appear under the relation key | `true`/`false` | `false`
+
+### `attach_title_to_identifier` example
+
+Here is a search response with `attach_title_to_identifier=true` and `attach_all_properties_to_identifier_recurse=false`:
+
+```json showLineNumbers
+{
+    "ok": true,
+    "matchingBlueprints": [
+        "Region",
+        "deployment",
+        "vm",
+        "microservice",
+        "k8sCluster",
+        "permission",
+        "RunningService"
+    ],
+    "entities": [
+        {
+            "identifier": "e_vb9EPyW1zOamcbT1",
+            "title": "cart-deployment",
+            "blueprint": "deployment",
+            "team": "Team BE",
+            "properties": {
+                "version": "1.4",
+                "user": "yonatan",
+                "status": "failed",
+                "github-action-url": "https://a.com",
+                "RunningService": {
+                    "identifier": "e_47MwTvQj03MpVyBx",
+                    "title": "admin-test"
+                },
+                "Region": "AWS"
+            },
+            "createdAt": "2022-07-27T17:11:04.344Z",
+            "createdBy": "auth0|6278b02000955c006f9132d3",
+            "updatedAt": "2022-07-27T17:11:04.344Z",
+            "updatedBy": "auth0|6278b02000955c006f9132d3"
+        }
+    ]
+}
+```
+
+And here is the same search response with `attach_title_to_identifier=false` and `attach_all_properties_to_identifier_recurse=false`:
+
+```json showLineNumbers
+{
+    "ok": true,
+    "matchingBlueprints": [
+        "Region",
+        "deployment",
+        "vm",
+        "microservice",
+        "k8sCluster",
+        "permission",
+        "RunningService"
+    ],
+    "entities": [
+        {
+            "identifier": "e_vb9EPyW1zOamcbT1",
+            "title": "cart-deployment",
+            "blueprint": "deployment",
+            "team": "Team BE",
+            "properties": {
+                "version": "1.4",
+                "user": "yonatan",
+                "status": "failed",
+                "github-action-url": "https://a.com",
+                "RunningService": "e_47MwTvQj03MpVyBx",
+                "Region": "AWS"
+            },
+            "createdAt": "2022-07-27T17:11:04.344Z",
+            "createdBy": "auth0|6278b02000955c006f9132d3",
+            "updatedAt": "2022-07-27T17:11:04.344Z",
+            "updatedBy": "auth0|6278b02000955c006f9132d3"
+        }
+    ]
+}
+```
+
+### `attach_all_properties_to_identifier_recurse` examples
+
+Here is a search response with `attach_all_properties_to_identifier_recurse=true`:
+
+:::info important details
+Notice how the `microservice` and `k8sCluster` in the response are complete entity bodies, these are the entities related to our queried `cart-deployment`
+:::
+
+```json showLineNumbers
+{
+    "ok": true,
+    "matchingBlueprints": [
+        "Region",
+        "deployment",
+        "vm",
+        "microservice",
+        "k8sCluster",
+        "permission",
+        "RunningService"
+    ],
+    "entities": [
+        {
+            "identifier": "e_vb9EPyW1zOamcbT1",
+            "title": "cart-deployment",
+            "blueprint": "deployment",
+            "team": "Team BE",
+            "properties": {
+                "version": "1.4",
+                "user": "yonatan",
+                "status": "failed",
+                "github-action-url": "https://a.com",
+                "RunningService": {
+                    "identifier": "e_47MwTvQj03MpVyBx",
+                    "title": "admin-test",
+                    "blueprint": "RunningService",
+                    "team": "Team BE",
+                    "properties": {
+                        "version": "1.2",
+                        "status": "healthy",
+                        "microservice": {
+                            "identifier": "e_0v2AfOlozuPkCNEJ",
+                            "title": "checkout",
+                            "blueprint": "microservice",
+                            "properties": {
+                                "repo-link": null,
+                                "health-status": null,
+                                "apps_chart": "http://google.com",
+                                "argocd_app": "http://google.com",
+                                "pr_url": [
+                                    1,
+                                    2,
+                                    3,
+                                    4
+                                ],
+                                "env": "Production",
+                                "health_status": null,
+                                "sync_status": null,
+                                "namespace": null,
+                                "type": "Platformjs",
+                                "values_files_list": null,
+                                "links": null,
+                                "kibana": "http://google.com",
+                                "grafana": null
+                            },
+                            "createdAt": "2022-07-27T16:56:54.525Z",
+                            "createdBy": "auth0|6278b02000955c006f9132d3",
+                            "updatedAt": "2022-07-27T16:56:54.525Z",
+                            "updatedBy": "auth0|6278b02000955c006f9132d3"
+                        },
+                        "k8sCluster": {
+                            "identifier": "morp",
+                            "title": "morp",
+                            "blueprint": "k8sCluster",
+                            "properties": {
+                                "version": 2.1,
+                                "type": "EKS",
+                                "dasboard": "http://google.com",
+                                "Region": {
+                                    "identifier": "prod-2-use1",
+                                    "title": "prod-use1",
+                                    "blueprint": "Region",
+                                    "properties": {
+                                        "cloud": "AWS"
+                                    },
+                                    "createdAt": "2022-07-27T16:38:06.839Z",
+                                    "createdBy": "auth0|6278b02000955c006f9132d3",
+                                    "updatedAt": "2022-07-27T16:59:23.195Z",
+                                    "updatedBy": "auth0|6278b02000955c006f9132d3"
+                                }
+                            },
+                            "createdAt": "2022-07-27T16:46:34.248Z",
+                            "createdBy": "h2Mf13aRSCYQCUPIcqufoP4XRLwAt8Od@clients",
+                            "updatedAt": "2022-07-27T17:17:24.224Z",
+                            "updatedBy": "h2Mf13aRSCYQCUPIcqufoP4XRLwAt8Od@clients"
+                        }
+                    },
+                    "createdAt": "2022-07-27T17:07:46.865Z",
+                    "createdBy": "auth0|6278b02000955c006f9132d3",
+                    "updatedAt": "2022-07-27T17:07:46.865Z",
+                    "updatedBy": "auth0|6278b02000955c006f9132d3"
+                },
+                "Region": "AWS"
+            },
+            "createdAt": "2022-07-27T17:11:04.344Z",
+            "createdBy": "auth0|6278b02000955c006f9132d3",
+            "updatedAt": "2022-07-27T17:11:04.344Z",
+            "updatedBy": "auth0|6278b02000955c006f9132d3"
+        }
+    ]
+}
+```
+
 ## Code examples
 
 The following examples provide a base to begin using the search route, remember that you can always switch the content of the `rules` array to the search query that fits your search.
