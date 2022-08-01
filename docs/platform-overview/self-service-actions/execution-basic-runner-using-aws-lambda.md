@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Setting up a basic execution Runner using AWS Lambda
+# Setting up a basic execution runner using AWS Lambda
 
 In this guide, we will show how to deploy a new `AWS Lambda function` that will subscribe to the `runs` topic and perform the correct action based on the invocations performed in Port.
 
@@ -372,7 +372,7 @@ aws iam attach-role-policy --role-name lambda-port-execution-role --policy-arn a
 Now let’s add the following policy (You can refer to this [AWS document](https://docs.aws.amazon.com/mediaconnect/latest/ug/iam-policy-examples-asm-secrets.html) for more information), we’ll create a file called `execution-policy.json` and paste the following content:
 
 :::note
-Remember to replace `ARN` value listed under `Resource` with the `ARN` you received as output when creating the secret
+Remember to replace `ARN` value listed under `Resource` with the `ARN` you received as output when creating the **secret**
 :::
 
 
@@ -698,7 +698,7 @@ aws lambda update-function-configuration --function-name port-execution-lambda -
 You should see as output all of the environment variables configured for your Lambda
 
 :::note
- if your function needs multiple other environment variables, it would be easier to put them all in a JSON file (for example `environment.json`) and run the following command:
+If your function needs multiple other environment variables, it would be easier to put them all in a JSON file (for example `environment.json`) and run the following command:
  
 
 ```bash showLineNumbers
@@ -859,4 +859,4 @@ When the action has finished it will also mark the Action run as successful, whi
 
 This was just a very basic example on how to react to the execution `CREATE` action, we left placeholder code for you to insert your own custom logic that fits your infrastructure.
 
-Now that you have an execution runner, maybe try exploring our Change Log runner, so that you can react to changes in your Software Catalog.
+Now that you have an execution runner, maybe try exploring our [Change Log runner](./changelog-basic-change-listener-using-aws-lambda), so that you can react to changes in your Software Catalog.
