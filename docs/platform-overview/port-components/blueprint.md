@@ -69,14 +69,14 @@ Each blueprint is represented by a [Json schema](https://json-schema.org/), as s
 | `identifier` | `String` | A unique identifier.<br /> Note that while the identifier is unique, it can be changed after creation. |
 | `title` | `String` | A nicely written name for the blueprint |
 | `icon` | `String` | An icon for the blueprint node in the graph, and entities of the blueprint | One of the list:  `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud,...` <br /><br />See the full icon list [below.](#full-icon-list) |
-| `dataSource` | `String` | The source from which entity data is ingested, can be either `Port` or `Github` | `Port` or `Github` | 
-| `formulaProperties` | `Object` | Contains the properties that are defined using formula templating | Example: "`repo-link`": "`https://github.com/{{$identifier}}`"|
+| `dataSource` | `String` | The source from which entity data is ingested, can be either `Port` or `Github` | `Port` or [Github](../../integrations/github.md) | 
+| `formulaProperties` | `Object` | Contains the properties that are defined using [formula templates](./formula-properties) | Example: "`repo-link`": "`https://github.com/{{$identifier}}`"|
 | `schema` | `Object` | An object containing two more nested fields, including `properties` and `required` | See the schame structure here: [`schema`](#blueprints-schema). |
 
 #### Special blueprint fields
 | Field | Type | Description | Optional Values |
 | ----------- | ----------- | ----------- | ----------- |
-| `mirrorProperties` | `Object` | **Becomes available** when a relation is defined between two blueprints.<br />A mirror property is manifested to the bluepirnt's instance ([Entity](./entity)) under `relation`. | See more details on the [mirror properties](#mirror-properties) section. |
+| `mirrorProperties` | `Object` | **Becomes available** when a relation is defined between two blueprints.<br />A mirror property is manifested to the bluepirnt's instance ([Entity](./entity)) under `relation`. | See more details on the [mirror properties](./mirror-properties) page. |
 
 #### Full icon list
 :::note Available Icons
@@ -333,26 +333,11 @@ Here is how property formats are used:
 ```
 
 
-
 ## Mirror properties
 
 When two blueprints are connected via a relation, a new set of properties becomes available to entities in the source blueprint.
-Those new properties, as shown in the [relation](./relation) section of this manual, are called `mirrorProperties`. 
 
-:::note
-The default mirror property that is assigned when creating a new relation (on the `source` blueprint) is a mirror to the identifier of the `target` blueprint.
-
-
-The format of the mirror property section is as follows:
-```json
-        "mirrorProperties": {
-            "MirrorPropIdentifier": {
-                "path": "relation-identifier.$identifier"
-            }
-        }
-```
-
-:::
+Those new properties, are called `mirrorProperties`, you can learn more about them in the [mirrorProperties](./mirror-properties) page. 
 
 ## Next Steps
 

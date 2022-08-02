@@ -25,11 +25,11 @@ Now when we go to the `Services` page, we can click on the dropdown in the `+ Se
 
 A menu will pop up:
 
-![Values editor](../../../static/img/platform-overview/self-service-actions/service-pipeline-example/commonValuesEditor.png)
+![Action form](../../../static/img/platform-overview/self-service-actions/service-pipeline-example/createNewServiceForm.png)
 
 Also, note that clicking the pencil icon next to one of the `Values` fields, will open a standard JSON editor (it can also be a YAML format):
 
-![Action form](../../../static/img/platform-overview/self-service-actions/service-pipeline-example/createNewServiceForm.png)
+![Values editor](../../../static/img/platform-overview/self-service-actions/service-pipeline-example/commonValuesEditor.png)
 
 After filling in the options and clicking `Execute` a new execution run will be triggered.
 

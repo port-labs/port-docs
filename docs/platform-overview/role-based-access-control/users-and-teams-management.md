@@ -24,7 +24,7 @@ Users management is done from the **Users page.**
 Each user is defined by the following properties:
 
 1. Basic information - image, name, and email.
-2. Role - shows the user’s permissions level (see the [Permissions](./permissions-controls) section).
+2. Role - shows the user’s permissions level (see the [Permission controls](./permissions-controls) section).
 3. Teams - a `team` is a group of users that owns entities (see the [Team](#team-system-property) section).
 
 ![Users page](../../../static/img/platform-overview/role-based-access-control/teams-and-users/usersPage.png)

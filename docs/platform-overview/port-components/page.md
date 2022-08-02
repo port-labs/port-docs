@@ -137,11 +137,6 @@ Editing a page:
 :::note
 Deleting an entity page occurs when deleting the entity itself.
 :::
-:::danger Deleting a page
-Notice that deleting a blueprint page cannot be restored.  
-If the page you try to delete is *the only* view for blueprints, you'll **lose access** to all the blueprints entities.
-:::
-
 
 ## Widgets
 

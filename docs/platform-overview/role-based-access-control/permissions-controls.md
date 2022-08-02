@@ -2,7 +2,7 @@
 sidebar_position: 3
 ---
 
-# Permissions
+# Permission controls
 
 In Port, you can set granular permissions to any component according to users and groups. 
 

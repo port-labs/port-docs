@@ -66,7 +66,7 @@ In this example, you can see how a `microservice` entity is defined.
 ```
 :::note 
 Notice that this entity is based on the following blueprint definition, where the `repo-link` is mandatory.
-```json
+```json showLineNumbers
 {
     "identifier": "microservice",
     "title": "microservice",
@@ -103,15 +103,33 @@ Notice that this entity is based on the following blueprint definition, where th
 When two blueprints are connected, creating an entity of the `source` blueprint will show an additional option - a `relation`.  
 This option is shown under the `relations` section as follows:
 
-```json
-    "relations": {
-        "relation-identifier": "relatedEntityIdentifier"
-    }
+```json showLineNumbers
+"relations": {
+    "relation-identifier": "relatedEntityIdentifier"
+}
 ```
 
 :::tip
 Click for more details about [**relations**](./relation).
 :::
+
+### Relation mapping example
+
+Let's assume we have a relation between the `deployment` and `microservice` blueprints, named `deployment-to-microservice`.
+
+One of our microservices is called `Notification Service` with the identifier `notificationService`.
+
+In order to map this `microservice` to one our `notificationServiceDeploymentV1` deployment we will use the following `relations` key:
+
+```json showLineNumbers
+"relations": {
+    "deployment-to-microservice": "notificationService"
+}
+```
+
+Specifying the `notificationService` under the relation, creates a mapping between our `notificationServiceDeploymentV1` entity and the `notificationService` entity, now when you go view the `notificationServiceDeploymentV1` entity you will also see the related `notificationService` entity.
+
+In addition, you will be able to use [mirror properties](./mirror-properties) to map additional properties from the `microservice` blueprint to the `deployment` entity
 
 ## Next Steps
 

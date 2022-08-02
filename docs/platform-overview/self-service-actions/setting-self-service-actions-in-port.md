@@ -325,6 +325,7 @@ The following table includes the different fields that can be specified in the `
 | --- | --- | 
 | `type` | All of the [types](../port-components/blueprint.md#property-types) supported by Port - `string`, `number`, `boolean`, etc... | 
 | `title` | The title shown in the form when calling the action |
+| `description` (Optional) | Extra description about the requested property
 | `default` (Optional) | A default value |
 | `enum` (Optional) | A list of predefined values the user can choose from, same format as [enum](../port-components/blueprint.md#enum) |  
 
@@ -341,6 +342,15 @@ For example, you can deploy a new version of your Microservice when a `CREATE` a
 The action can be triggered from the page matching the Blueprint we configured the action on:
 
 ![Create button marked](../../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/microservicePageWithCreateMarked.png)
+
+:::tip create vs register
+When you define a `CREATE` action on a blueprint, when viewing the blueprint page you will notice that the create button now has a dropdown with 2 options: `Register` and `Create`
+
+- `Register` - This option is used to add a new entity to your catalog, without triggering a `CREATE` action, this option is useful for cases where an entity in the infrastructure was created in the past without Port, and you want to import its data into the Software Catalog.
+
+    This option is also useful for cases where an entity was created manually and you want to document it in Port after-the-fact.
+- `Create` - This option will display the form containing the required `userInputs` of our actions, upon clicking execute, a new execution message will be sent to Port's Kafka Topics, and from there you can handle the create request in your infrastructure.
+:::
 
 When clicking the `Create Microservice` option, we will see a form with the inputs we specified when we entered the new action to the actions array:
 
@@ -371,7 +381,7 @@ Every invocation of an Action publishes a new `run` message (with its own unique
 | `action` | The action identifier | `Create microservice` |
 | `resourceType` | The type of resource that triggered the action, in the case of action runs, always defaults to `run` | `run` |
 | `status` | The status of the action, in the case of action runs, always defaults to `TRIGGERED` | `TRIGGERED` |
-| `trigger` | Shows audit data for the action run | example below |
+| `trigger` | Shows audit data for the action run | Example below |
 | `context` | An object containing the context of the action, has keys for `blueprint`, `entity` and `runId` | Example below |
 | `payload` | Explanation below | Example below |
 
@@ -406,7 +416,7 @@ The `payload` object contains the data needed to act upon the action, it include
 
 - `entity` - This is the entity the run is executed on (in the case of `DAY-2` or `DELETE`, for `CREATE` it will be `null`)
 - `action` - This is the definition of the action that was triggered, it includes all of the action configuration, including the expected `userInputs`, `description`, etc...
-- `properties` - This is the properties object generated from the `userInputs` used when triggering the action
+- `properties` - This key includes the values provided by the developer when executing the action, the keys in this object match the keys defined under the `userInputs` key in the action definition
 
 Here is an example `payload` object for a `CREATE` action:
 
@@ -471,5 +481,5 @@ Here is an example `payload` object for a `CREATE` action:
 
 Now that you have the basics of actions down, you can refer to our examples for some practical use-cases of actions:
 
-- Setting up a basic execution runner using AWS Lambda
+- [Setting up a basic execution runner using AWS Lambda](./execution-basic-runner-using-aws-lambda)
 - [Setting up a service provisioning pipeline](./execution-service-pipeline-example)
