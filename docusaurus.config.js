@@ -24,6 +24,7 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
+          routeBasePath: "/",
           sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
           // editUrl: "https://github.com/port-labs",
@@ -45,7 +46,7 @@ const config = {
         specs: [
           {
             spec: "openapi/port-api.yaml",
-            route: "/docs/api-reference/",
+            route: "/api-reference/",
           },
         ],
         // Theme Options for modifying how redoc renders them
@@ -67,12 +68,12 @@ const config = {
           src: "img/logo.svg",
         },
         items: [
-          {
-            type: "doc",
-            docId: "welcome/quickstart",
-            position: "left",
-            label: "Tutorial",
-          },
+          // {
+          //   type: "doc",
+          //   docId: "welcome/quickstart",
+          //   position: "left",
+          //   label: "Tutorial",
+          // },
           // { to: "/blog", label: "Blog", position: "left" },
           {
             href: "https://github.com/port-labs",
