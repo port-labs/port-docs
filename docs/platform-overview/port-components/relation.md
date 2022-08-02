@@ -63,7 +63,7 @@ Let's say we have those two blueprints defined, and we want to connect between t
 The JSON schema of the relation is as follows:
 ```json
 {
-    "identifier": "deploy-2-microservice",
+    "identifier": "deployment-2-microservice",
     "title": "Deployement Of",
     "source": "deployment",
     "target": "microservice",

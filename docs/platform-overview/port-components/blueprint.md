@@ -15,9 +15,9 @@ Blueprints are completely customizable, and they support any number of propertie
 
 Before you start, there are a few important steps when trying to define your blueprints:
 
-1. **What assets do you want to manage** - What will your organization benefit from? For example, in one organization, managing microservices (with clusters, deployments, etc...) is a big issue. In another, it could be understating what environments the organization has in a given moment.  
+1. **What assets do you want to manage** - What will your organization benefit from? For example, in one organization, managing microservices (with clusters, deployments, etc...) is a big issue. In another, it could be understating what dev environments the organization has in a given moment.  
 
-2. **What properties characterize your assets** - For example, a microservice might have its owner, a link to its Github repository, the slack channel of the responsible team and a health check status.  
+2. **What properties characterize your assets** - For example, a microservice might have its owner, a link to its Github repository, the relevant slack channel and a health check status.  
 
 3. **What are the relationships between the different assets** - For example, we would like to create a relation between microservices and deployments to track where each microservice is deployed.
 
@@ -31,7 +31,7 @@ By the end of this section, you should have something like this in mind:
 
 ### Blueprint's JSON schema
 
-Each blueprint is represented by a **Json schema**, as shown in the following section:
+Each blueprint is represented by a [Json schema](https://json-schema.org/), as shown in the following section:
 
 ```json
 {
