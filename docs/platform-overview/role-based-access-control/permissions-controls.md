@@ -92,41 +92,30 @@ Immutable properties (Restricted properties) will be hidden from users when modi
 
 ## Teams and permissions
 
-You can define the blueprint’s permissions to follow the entity’s `team` field.
+Using the `team` field, you can give a team permissions over a specific blueprint.
 
-Meaning that performing actions (create, modify, delete) on entities will become relevant to users of the specified teams, and not only to specific roles. 
+This means that performing actions (create, modify, delete) on entities will be available to all users of the specified team, in addition to permissions provided by specific roles. 
 
-<aside>
-💡 Notice that the `team` field is not mandatory! meaning you can give access to create microservices, for example, to any user, regardless of its team belonging.
+:::info
+The `team` field is not mandatory!
 
-</aside>
+This means you can give a user access to create microservices, regardless of their team.
+:::
 
-We support manually creating your teams’ list in Port, as well as integrating with identity providers, such as Okta and AzureAD.
+We support manually creating your teams list in Port, as well as integrating with identity providers, such as Okta and AzureAD.
 
-<aside>
-🚧 Notice that Okta and Azure integrations are available only after integrating the relevant identify provider.
-For more details see [Further Info](https://www.notion.so/Permissions-a311101df15b4264b9fa85de78a90bc2).
+:::note
+Okta and Azure integrations are available only after integrating the relevant identify provider.
 
-</aside>
+For more details see [Single Sign-On (SSO)](../../single-sign-on/)
+:::
 
 ## API
 
-Please see the “Users”, “Apps”, and “Roles” sections in our [API docs](https://api.getport.io/)
+Please see the [Users](../../api-reference/#tag/Teams), [Apps](../../api-reference/#tag/Apps) and [Roles](../../api-reference/#tag/Roles) sections in our [API reference](../../api-reference/)
 
-<aside>
-💡 For now, any permission change is done via the API. Soon we will provide an easy-to-use UI for complete permission management 💪
-Until then, we will be happy to assist with any permissions adjustments you want to perform in your environment 😃
+:::info
+For now, any permission change is done via the API. Soon we will provide an easy-to-use UI for complete permission management 🚀
 
-</aside>
-
-# Upcoming features ⌛
-
-1. Automatic Permissions inheritance for actions.
-2. Granular permissions for making actions (Create, Delete).
-3. Granular blueprint properties permissions for members.
-
-# Further reading 💡
-
-[Configure Okta](https://www.notion.so/Configure-Okta-25ad2a7a4c1b4e47bb46a36e7d960cdf)
-
-[Configure Azure Active Directory](https://www.notion.so/Configure-Azure-Active-Directory-61a489ef729e4f21ab722eb55276217f)
+Until then, we will be happy to assist with any permissions adjustments you want to perform in your environment
+:::
