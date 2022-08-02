@@ -376,19 +376,19 @@ And if you want to do something completely different, you can simply delete what
 These suggestions show the basic steps in creating your very own Developer Portal, if you want to learn more about Port before starting your DevPortal journey, look at [Diving deeper](#diving-deeper) or [Using the API](#using-the-api) below.
 :::
 
-1. Create [Blueprints](../setup-your-port/setup-catalog/blueprints) for your software and infrastructure components
-2. Map out the [Relations](../setup-your-port/setup-catalog/relations) between your Blueprints
-3. Ingest data to your catalog by creating [Entities](../setup-your-port/setup-catalog/entities) based on your Blueprints via Port's UI or using our API
+1. Create [Blueprints](../platform-overview/port-components/blueprint.md) for your software and infrastructure components
+2. Map out the [Relations](../platform-overview/port-components/relation.md) between your Blueprints
+3. Ingest data to your catalog by creating [Entities](../platform-overview/port-components/entity.md) based on your Blueprints via Port's UI or using our API
 4. Define Actions that can be used by you and your developers
 
 ### Diving deeper
 
 If you want to learn more about Port's capabilities in a specific area, you can check out any of these resources:
 
-- [Blueprints Deep Dive](../setup-your-port/setup-catalog/blueprints)
-- [Relations Deep Dive](../setup-your-port/setup-catalog/relations)
-- [Entities Deep Dive](../setup-your-port/setup-catalog/entities)
-- [Pages Deep Dive](../setup-your-port/setup-catalog/pages)
+- [Blueprints Deep Dive](../platform-overview/port-components/blueprint.md)
+- [Relations Deep Dive](../platform-overview/port-components/relation.md)
+- [Entities Deep Dive](../platform-overview/port-components/entity.md)
+- [Pages Deep Dive](../platform-overview/port-components/page.md)
 
 ### Using the API
 
