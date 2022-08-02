@@ -53,6 +53,12 @@ const config = {
         theme: {
           // Change with your site colors
           primaryColor: "#1890ff",
+          primaryColorDark: "#1890ff",
+          theme: {
+            typography: {
+              fontFamily: "Inter",
+            },
+          },
         },
       },
     ],
