@@ -12,7 +12,8 @@ const config = {
   baseUrl: "/",
   onBrokenLinks: "warn",
   onBrokenMarkdownLinks: "warn",
-  favicon: "img/favicon.ico",
+  // favicon: "img/favicon.ico",
+  favicon: "img/favicon.svg",
   organizationName: "port-labs", // Usually your GitHub org/user name.
   projectName: "port", // Usually your repo name.
   staticDirectories: ["static"],
@@ -23,6 +24,7 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
+          routeBasePath: "/",
           sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
           // editUrl: "https://github.com/port-labs",
@@ -37,6 +39,29 @@ const config = {
         },
       }),
     ],
+    [
+      "redocusaurus",
+      {
+        // Plugin Options for loading OpenAPI files
+        specs: [
+          {
+            spec: "openapi/port-api.yaml",
+            route: "/api-reference/",
+          },
+        ],
+        // Theme Options for modifying how redoc renders them
+        theme: {
+          // Change with your site colors
+          primaryColor: "#1890ff",
+          primaryColorDark: "#1890ff",
+          theme: {
+            typography: {
+              fontFamily: "Inter",
+            },
+          },
+        },
+      },
+    ],
   ],
 
   themeConfig:
@@ -49,12 +74,12 @@ const config = {
           src: "img/logo.svg",
         },
         items: [
-          {
-            type: "doc",
-            docId: "welcome/quickstart",
-            position: "left",
-            label: "Tutorial",
-          },
+          // {
+          //   type: "doc",
+          //   docId: "welcome/quickstart",
+          //   position: "left",
+          //   label: "Tutorial",
+          // },
           // { to: "/blog", label: "Blog", position: "left" },
           {
             href: "https://github.com/port-labs",
@@ -66,15 +91,15 @@ const config = {
       footer: {
         style: "dark",
         links: [
-          {
-            title: "Docs",
-            items: [
-              {
-                label: "Tutorial",
-                to: "/docs/intro",
-              },
-            ],
-          },
+          // {
+          //   title: "Docs",
+          //   items: [
+          //     {
+          //       label: "Tutorial",
+          //       to: "/docs/intro",
+          //     },
+          //   ],
+          // },
           {
             title: "Community",
             items: [
@@ -84,7 +109,7 @@ const config = {
               },
               {
                 label: "Linkedin",
-                href: "https://www.linkedin.com/company/getport/mycompany/",
+                href: "https://www.linkedin.com/company/getport/",
               },
             ],
           },
@@ -93,7 +118,7 @@ const config = {
             items: [
               {
                 label: "Blog",
-                to: "https://www.getport.io/blog",
+                href: "https://www.getport.io/blog",
               },
               {
                 label: "GitHub",
@@ -112,15 +137,27 @@ const config = {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
       },
+      liveCodeBlock: {
+        /**
+         * The position of the live playground, above or under the editor
+         * Possible values: "top" | "bottom"
+         */
+        playgroundPosition: "bottom",
+      },
     }),
   themes: [
     [
       require.resolve("@easyops-cn/docusaurus-search-local"),
       {
         hashed: true,
+        indexDocs: true,
+        indexBlog: false,
+        docsRouteBasePath: "/",
       },
     ],
   ],
+
+  plugins: ["@docusaurus/theme-live-codeblock"],
 };
 
 module.exports = config;

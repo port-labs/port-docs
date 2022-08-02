@@ -25,7 +25,7 @@ In Port, you control how the data looks, any data format you can think of can be
 
 We know that every organization is a snowflake, and everybody have their own preferences and standards for representing their data and asset structure, we choose the **Blueprints** approach to enable that.
 
-but for now, let's start with a simple example:
+But for now, let's start with a simple example:
 
 In your organization you are using a `Microservice` architecture, and different Microservices are using `Packages` to manage the different code pieces reused by different Microservices.
 
@@ -170,7 +170,7 @@ Currently our Software Catalog only has Microservices, but everybody knows a Mic
 
 In addition, this time we will mark the `version` field as `required`, so we can make sure that our package has a version value.
 
- so let's go ahead and create an **Package Blueprint**:
+so let's go ahead and create an **Package Blueprint**:
 
 - Go back to the Blueprints page
 - Click on the New Blueprint button
@@ -340,7 +340,7 @@ Select the `Data Query Service` option from the drop-down list and then click on
 
 Repeat the same process, only this time select the `Requests v2.28.1` package from the table, and in the relations drop-down, once again select the `Data Query Service` Microservice then click `update`.
 
-And finally, select the `Requests v2.28.0` package, and in the relations drop-down, select the `Login Service` Microservice and then click `update`.
+And finally, select the `Requests v2.28.0` package, and in the relations drop-down, select the `Login Service` Microservice and then click `Update`.
 
 After attaching the Packages to the Microservices, your packages page should look like this (notice the marked column and its values):
 
@@ -354,7 +354,7 @@ Click on the `Data Query Service` link in the marked column and you will see wha
 In our case, the specific entity page for a Microservice, will also show us all of the Packages that it uses, because that is the relation we mapped.
 :::
 
-feel free to continue exploring the specific entity page and also the Packages and Microservices pages, notice the `Filter`, `Hide`, `Sort` and `Group By` controls you can find at the top right of Port's table widgets.
+Feel free to continue exploring the specific entity page and also the Packages and Microservices pages, notice the `Filter`, `Hide`, `Sort` and `Group By` controls you can find at the top right of Port's table widgets.
 
 ## What now?
 
@@ -376,24 +376,22 @@ And if you want to do something completely different, you can simply delete what
 These suggestions show the basic steps in creating your very own Developer Portal, if you want to learn more about Port before starting your DevPortal journey, look at [Diving deeper](#diving-deeper) or [Using the API](#using-the-api) below.
 :::
 
-1. Create [Blueprints](../setup-your-port/setup-catalog/blueprints) for your software and infrastructure components
-2. Map out the [Relations](../setup-your-port/setup-catalog/relations) between your Blueprints
-3. Ingest data to your catalog by creating [Entities](../setup-your-port/setup-catalog/entities) based on your Blueprints via Port's UI or using our API
+1. Create [Blueprints](../platform-overview/port-components/blueprint.md) for your software and infrastructure components
+2. Map out the [Relations](../platform-overview/port-components/relation.md) between your Blueprints
+3. Ingest data to your catalog by creating [Entities](../platform-overview/port-components/entity.md) based on your Blueprints via Port's UI or using our API
 4. Define Actions that can be used by you and your developers
 
 ### Diving deeper
 
 If you want to learn more about Port's capabilities in a specific area, you can check out any of these resources:
 
-- [Blueprints Deep Dive](../setup-your-port/setup-catalog/blueprints)
-- [Relations Deep Dive](../setup-your-port/setup-catalog/relations)
-- [Entities Deep Dive](../setup-your-port/setup-catalog/entities)
-- [Pages Deep Dive](../setup-your-port/setup-catalog/pages)
-- Mirror Properties Deep Dive
+- [Blueprints Deep Dive](../platform-overview/port-components/blueprint.md)
+- [Relations Deep Dive](../platform-overview/port-components/relation.md)
+- [Entities Deep Dive](../platform-overview/port-components/entity.md)
+- [Pages Deep Dive](../platform-overview/port-components/page.md)
 
 ### Using the API
 
 If you want to take advantage of Port's REST API Interface, take a look at these resources:
 
-- API At a Glance
-- Port API Reference
+- [Port API Reference](../api-reference/)
