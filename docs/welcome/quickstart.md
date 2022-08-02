@@ -29,7 +29,7 @@ But for now, let's start with a simple example:
 
 In your organization you are using a `Microservice` architecture, and different Microservices are using `Packages` to manage the different code pieces reused by different Microservices.
 
-You want to manage your **Software Catalgo** in Port, and in order to do that You want to ingest and track your `Microservices`, and you also want to track which `Package` version is used in which Microservice, and which `Package` is used in multiple Microservices.
+You want to manage your **Software Catalog** in Port, and in order to do that You want to ingest and track your `Microservices`, and you also want to track which `Package` version is used in which Microservice, and which `Package` is used in multiple Microservices.
 
 Let's head to [Port](https://app.getport.io/blueprints) and look at the Blueprints page, at the top right corner let's click on **New Blueprint** and configure our first blueprint - **Microservice** as shown in the image below:
 

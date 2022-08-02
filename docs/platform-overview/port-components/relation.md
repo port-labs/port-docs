@@ -63,7 +63,7 @@ Let's say we have those two blueprints defined, and we want to connect between t
 The JSON schema of the relation is as follows:
 ```json
 {
-    "identifier": "deploy-2-microservice",
+    "identifier": "deployment-2-microservice",
     "title": "Deployement Of",
     "source": "deployment",
     "target": "microservice",
@@ -79,26 +79,22 @@ Our `source` to `target` relations are one-to-many, at the moment. Meaning that 
 For example, a `deployment -> microservices` relation means that a `microservice` can be deployed many times, while a `deployment` represents a single `microservice`.
 :::
 :::note
-We will support many-to-many relations soon 🚀🤘
+We will support many-to-many relations soon!
 :::
-
-
 
 ## Byproducts of a relation
 
-### Mirror properties in blueprints
-
-When two blueprints are connected via a relation, a new set of properties becomes available to entities in the `source` blueprint.
-Those new properties are called `mirrorProperties`.
-
-On the `source` blueprint, there will be an additional section called `mirrorProperties` that represents the mirror to the identifier of the `target` blueprint.
-
-See the `mirrorProperties` structure in the [blueprint schema](./blueprint#mirror-properties).
 
 ### Relation object for entities
 
-When two blueprints are connected, creating an entity of the `source` blueprint will show an additional option - a `relation`.  
+When two blueprints are related, creating an entity of the `source` blueprint will show an additional option - a `relation`.  
 This will add a property under the `relations` section, as shown in the [relations section.](./entity#related-entities)
+
+### Mirror properties
+
+Creating a relation between multiple blueprints allows you to use **Mirror Properties** to enrich the data attached to your entities by querying additional data from related entities with fewer steps.
+
+You can learn more about these properties in the [Mirror Properties](./mirror-properties) page.
 
 ## Next Steps
 

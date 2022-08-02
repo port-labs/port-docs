@@ -8,5 +8,5 @@ Port has advanced RBAC controls which allow you to define who has access to what
 
 To learn more about Port's RBAC please check these resources:
 
-- Users and teams management
-- Permissions controls
+- [Users and teams management](./users-and-teams-management)
+- [Permissions controls](./permissions-controls)
