@@ -3,7 +3,7 @@ sidebar_position: 1.2
 ---
 # Relation
 
-## What is a relation?
+## What is a Relation?
 
 **Relations** enable us to make connections between blueprints. This gives logical context to your software catalog.  
 

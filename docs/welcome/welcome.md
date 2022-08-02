@@ -3,7 +3,7 @@ sidebar_position: 1
 slug: /
 ---
 
-# Welcome (Home)
+# Welcome
 
 **Port** is the Developer Platform meant to supercharge your DevOps and Developers, and allow you to regain control of your environment.
 

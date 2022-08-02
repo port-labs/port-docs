@@ -5,7 +5,7 @@ sidebar_position: 1.4
 
 # Page
 
-## What is a page?
+## What is a Page?
 
 A page is a viewing component that displays data of entities in a few forms, such as table form, data summary, etc.
 
