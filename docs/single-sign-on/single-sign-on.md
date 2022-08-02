@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Single Sign On (SSO)
+# Single Sign-On (SSO)
 
 Port offers several SSO integrations, allowing you to easily assign permissions and roles, and also use your existing Users and Teams when providing access and permissions to your Developers
 

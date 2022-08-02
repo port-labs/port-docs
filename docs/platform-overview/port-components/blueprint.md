@@ -37,7 +37,7 @@ Each blueprint is represented by a **Json schema**, as shown in the following se
 {
     "identifier": "UniqueID",
     "title": "Title",
-    "icon": "one of Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud, Cluster, CPU, Customer, Datadog, DefaultEntity, DefaultProperty, DeployedAt, Deployment, DevopsTool, Docs, Environment, Git, Github, GitVersion, GoogleCloud, GPU, Grafana, Jenkins, Lambda, Link, Lock, Microservice, Moon, Node, Okta, Package, Permission, Server, Service, Terraform",
+    "icon": "Service",
     "dataSource": "Port",
     "formulaProperties": {},
     "schema": {
