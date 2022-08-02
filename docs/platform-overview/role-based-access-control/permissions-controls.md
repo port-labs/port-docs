@@ -112,7 +112,7 @@ For more details see [Single Sign-On (SSO)](../../single-sign-on/)
 
 ## API
 
-Please see the [Users](../../api-reference/#tag/Teams), [Apps](../../api-reference/#tag/Apps) and [Roles](../../api-reference/#tag/Roles) sections in our [API reference](../../api-reference/)
+Please see the [Users](../../api-reference/#tag/Users), [Apps](../../api-reference/#tag/Apps) and [Roles](../../api-reference/#tag/Roles) sections in our [API reference](../../api-reference/)
 
 :::info
 For now, any permission change is done via the API. Soon we will provide an easy-to-use UI for complete permission management 🚀
