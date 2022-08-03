@@ -17,7 +17,11 @@
 }
 
 :root {
-  --ifm-font-family-base: 'Inter'
+  --ifm-font-family-base: 'Inter';
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Lexend';
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */

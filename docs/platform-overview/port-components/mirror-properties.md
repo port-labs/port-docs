@@ -55,7 +55,7 @@ The `mirrorProperties` key is a top-level key in the JSON of an entity (similar 
 ```
 ---
 
-## Mirror Properties key deep dive
+## Mirror Properties deep dive
 
 Let's look at some examples for basic mirror property definitions to better understand how mirror properties work:
 

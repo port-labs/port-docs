@@ -133,6 +133,10 @@ const config = {
         ],
         copyright: `Copyright © ${new Date().getFullYear()} Port, Inc. Built with Docusaurus.`,
       },
+      tableOfContents: {
+        minHeadingLevel: 2,
+        maxHeadingLevel: 4,
+      },
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
