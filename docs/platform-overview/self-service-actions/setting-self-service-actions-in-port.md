@@ -277,7 +277,7 @@ Now when we go back to the Microservice page, if we click on the 3 dots next to 
 
 The basic structure of an action:
 
-```json showLienNumbers
+```json showLineNumbers
 {
         "identifier": "UniqueID",
         "title": "Title",

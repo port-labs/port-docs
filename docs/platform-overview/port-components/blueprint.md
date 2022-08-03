@@ -33,7 +33,7 @@ By the end of this section, you should have something like this in mind:
 
 Each blueprint is represented by a [Json schema](https://json-schema.org/), as shown in the following section:
 
-```json
+```json showLineNumbers
 {
     "identifier": "UniqueID",
     "title": "Title",
@@ -85,7 +85,7 @@ Each blueprint is represented by a [Json schema](https://json-schema.org/), as s
 
 #### Blueprint's schema
 
-```json
+```json showLineNumbers
     "schema"; {
             "properties": {},
             "required": []
@@ -159,7 +159,7 @@ Here is how property definitions look for all available types (remember that onl
 
 ### String
 
-```json
+```json showLineNumbers
 {
     "title": "String Property",
     "type": "string",
@@ -170,7 +170,7 @@ Here is how property definitions look for all available types (remember that onl
 
 ### Number
 
-```json
+```json showLineNumbers
 {
     "title": "Number Property",
     "type": "number",
@@ -181,7 +181,7 @@ Here is how property definitions look for all available types (remember that onl
 
 ### Boolean
 
-```json
+```json showLineNumbers
 {
     "title": "Boolean Property",
     "type": "boolean",
@@ -192,7 +192,7 @@ Here is how property definitions look for all available types (remember that onl
 
 ### Object
 
-```json
+```json showLineNumbers
 {
     "title": "Object Property",
     "type": "object",
@@ -205,7 +205,7 @@ Here is how property definitions look for all available types (remember that onl
 
 ### Array
 
-```json
+```json showLineNumbers
 {
     "title": "Array Property",
     "type": "array",
@@ -216,7 +216,7 @@ Here is how property definitions look for all available types (remember that onl
 
 ### Objects Array
 
-```json
+```json showLineNumbers
 {
     "title": "Array of Objects",
     "type": "array",
@@ -229,7 +229,7 @@ Here is how property definitions look for all available types (remember that onl
 
 ### Enum
 
-```json
+```json showLineNumbers
 {
     "title": "Enum field",
     "type": "string",
@@ -274,7 +274,7 @@ Here is how property formats are used:
 
 ### URL
 
-```json
+```json showLineNumbers
 {
     "title": "URL Property",
     "type": "string",
@@ -286,7 +286,7 @@ Here is how property formats are used:
 
 ### Email
 
-```json
+```json showLineNumbers
 {
     "title": "Email Property",
     "type": "string",
@@ -298,7 +298,7 @@ Here is how property formats are used:
 
 ### Date Time
 
-```json
+```json showLineNumbers
 {
     "title": "Datetime Property",
     "type": "string",
@@ -310,7 +310,7 @@ Here is how property formats are used:
 
 ### IPv4
 
-```json
+```json showLineNumbers
 {
     "title": "IPv4 Property",
     "type": "string",
@@ -322,7 +322,7 @@ Here is how property formats are used:
 
 ### IPv6
 
-```json
+```json showLineNumbers
 {
     "title": "IPv6 Property",
     "type": "string",

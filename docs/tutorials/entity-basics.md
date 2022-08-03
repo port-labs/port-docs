@@ -79,7 +79,7 @@ In order to create an entity from the API, we will make a POST request to the UR
 
 <TabItem value="python">
 
-```python
+```python showLineNumbers
 # Dependencies to install:
 # $ python -m pip install requests
 
@@ -113,7 +113,7 @@ response = requests.post(f'{API_URL}/entities', json=entity, headers=headers)
 
 <TabItem value="javascript">
 
-```javascript
+```javascript showLineNumbers
 // Dependencies to install:
 // $ npm install axios --save
 
@@ -147,7 +147,7 @@ const config = {
 
 <TabItem value="curl">
 
-```bash
+```bash showLineNumbers
 # the access_token variable should already have the token from the previous example
 
 curl --location --request POST "https://api.getport.io/v0.1/entities" \
@@ -206,7 +206,7 @@ You can change any mutable entity, and edit/delete its property values.
   A PATCH request has a specific format that allows precise changes in an existing entity, for example:
 
     - To Edit a specific property, let's say: `slackChannel`, send a PATCH request with the following body:
-        ```json
+        ```json showLineNumbers
         'properties': {"slackChannel": "#my-awesome-channel"}
         ```
 
@@ -252,7 +252,7 @@ We would like to connect our newly created `Package` entity to the `Microservice
 #### Code Format
 We can also paste in the following content to create our first `Package`, in `JSON mode`.
 
-```json
+```json showLineNumbers
 {
 
         "identifier": "requests-pkg-v2-28",

@@ -302,7 +302,7 @@ aws secretsmanager create-secret --name "PortKafkaAuthCredentials" --secret-stri
 
 You should see output similar to the following:
 
-```json showLineNumbers showLineNumbers
+```json showLineNumbers
 {
     "ARN": "arn:aws:secretsmanager:eu-west-1:1111111111:secret:PortKafkaAuthCredentials-aaaaaa",
     "Name": "PortKafkaAuthCredentials",

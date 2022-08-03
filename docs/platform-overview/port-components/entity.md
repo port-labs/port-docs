@@ -51,7 +51,7 @@ In this example, you can see how a `microservice` entity is defined.
 
 #### Microservice entity
 
-```json
+```json showLineNumbers
 {
     "identifier": "my-service",
     "title": "My Service",
