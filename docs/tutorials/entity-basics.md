@@ -68,7 +68,11 @@ Remember that an access token is needed to make API requests, refer back to [Get
 Let's create a new `Microservice` using the API. Our entity is based on the `Microservice` blueprint structure.
 
 In order to create an entity from the API, we will make a POST request to the URL
-`https://api.getport.io/v0.1/entities`.
+`https://api.getport.io/v0.1/blueprints/{blueprint_identifier}/entities`.
+
+:::tip
+Note that the URL should contain the identifier of the blueprint we want to create an entity of, in this case - `microservice`
+:::
 
 
 <Tabs groupId="code-examples" defaultValue="python" values={[
@@ -93,17 +97,18 @@ headers = {
     'Authorization': f'Bearer {access_token}'
 }
 
+blueprint_id = 'microservice'
+
 entity = {
     'identifier': 'notification-microservice',
     'title': 'Notification Service',
-    'blueprint': 'microservice',
     'properties': {
         'repoUrl': 'https://www.github.com/User/notification',
         'slackChannel': '#notification-service'
     }    
 }
 
-response = requests.post(f'{API_URL}/entities', json=entity, headers=headers)
+response = requests.post(f'{API_URL}/blueprints/{blueprint_id}/entities', json=entity, headers=headers)
 
 # response.json() contains the content of the resulting entity
 
@@ -123,24 +128,26 @@ const axios = require('axios').default;
 
 const API_URL = 'https://api.getport.io/v0.1';
 
+const blueprintId = 'microservice';
+
 const config = {
 		headers: {
 			Authorization: `Bearer ${accessToken}`,
 		},
 	};
 
-	const entity = {
-		identifier: 'notification-microservice',
-		title: 'Notification Service',
-		blueprint: 'microservice',
-		properties:
-            slackChannel: '#notification-service'
-            repoUrl: 'https://www.github.com/user/notification'
-	};
+const entity = {
+    identifier: 'notification-microservice',
+    title: 'Notification Service',
+    properties: {
+        slackChannel: '#notification-service',
+        repoUrl: 'https://www.github.com/user/notification',
+    },
+};
 
-	const response = await axios.post(`${API_URL}/entities`, entity, config);
+const response = await axios.post(`${API_URL}/blueprints/${blueprintId}/entities`, entity, config);
 
-    // response.data contains the content of the resulting entity
+// response.data contains the content of the resulting entity
 
 ```
 </TabItem>
@@ -150,7 +157,9 @@ const config = {
 ```bash showLineNumbers
 # the access_token variable should already have the token from the previous example
 
-curl --location --request POST "https://api.getport.io/v0.1/entities" \
+blueprint_id='microservice'
+
+curl --location --request POST "https://api.getport.io/v0.1/blueprints/${blueprint_id}/entities" \
 	--header "Authorization: Bearer $access_token" \
 	--header "Content-Type: application/json" \
 	--data-raw "{
@@ -190,25 +199,26 @@ You can change any mutable entity, and edit/delete its property values.
 
 ### From the API
 
-- Make a **REST POST** request to the URL `https://api.getport.io/v0.1/entities?upsert=true`
+- Make a **REST POST** request to the URL `https://api.getport.io/v0.1/blueprints/{blueprint_identifier}/entities?upsert=true`
   
   This request with the `upsert` flag set to `true` will overwrite the entity if it exists and will create it if not. 
   The request body is the same as creating a new entity, just with the additional flag `upsert=true`.
 
 
-- Make a **REST PUT** request to the URL `https://api.getport.io/v0.1/entities/{entity_identifier}`
+- Make a **REST PUT** request to the URL `https://api.getport.io/v0.1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`
   
   A PUT request has the same body as a POST request and it will simply overwrite the entity if it exists. It will return an error code if the entity does not exist (based on identifier-match).
 
 
-- Make a **REST PATCH** request to the URL `https://api.getport.io/v0.1/entities/{entity_identifier}`
+- Make a **REST PATCH** request to the URL `https://api.getport.io/v0.1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`
   
-  A PATCH request has a specific format that allows precise changes in an existing entity, for example:
+A PATCH request has a specific format that allows precise changes in an existing entity, for example:
 
-    - To Edit a specific property, let's say: `slackChannel`, send a PATCH request with the following body:
-        ```json showLineNumbers
-        'properties': {"slackChannel": "#my-awesome-channel"}
-        ```
+To Edit a specific property, for example: `slackChannel`, send a PATCH request with the following body:
+
+```json showLineNumbers
+'properties': {"slackChannel": "#my-awesome-channel"}
+```
 
 
 ## Deleting entities
@@ -220,10 +230,10 @@ An entity cannot be restored after deletion!
 To delete an entity you can:
 
 - Click the `...` button at the right end of an entity listing, then click `Delete`.
-- Make a **REST DELETE** request to the URL `https://api.getport.io/v0.1/entities/{entity_identifier}`
 
 ![Delete entity button marked](../../static/img/platform-overview/port-components/entities/DeleteEntityButton.png)
 
+- Make a **REST DELETE** request to the URL `https://api.getport.io/v0.1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`
     
 ## Next steps
 
