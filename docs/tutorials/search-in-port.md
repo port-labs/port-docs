@@ -86,10 +86,11 @@ Here is an example search rule:
 
 ### Search rule structure table
 
-| Field | Description 
-|---|---|
+| Field | Description | Notes 
+|---|---|---|
 | `operator` | The search operator to use when evaluating this rule, see a list of available operators below 
-| `property` | The property to filter according to its value, can be an internal property such as `$identifier` or a standard property such as `slack_channel` 
+| `property` | The property to filter according to its value, can be an internal property such as `$identifier` or a standard property such as `slack_channel` | Not available when using the `dependedOn` and `relatedTo` operators
+| `blueprint` | The blueprint of the entity identifier specified in the `value` field | Only available when using the `dependedOn` and `relatedTo` operators 
 | `value` | The value to filter by 
 
 ## Search operators
@@ -104,7 +105,7 @@ Search currently supports the following operators:
 | `between` | Date range matching
 | `contains` | String pattern matching
 | `relatedTo` | Returns entities that have a relation with our rule target 
-| `dependedOn` | Returns entities that the rule target depends on 
+| `dependedOn` | Returns entities that depend on rule target
 
 ## Operator examples
 
@@ -207,11 +208,12 @@ The following rule will return entities whose environment property contains the 
 
 ### `relatedTo` operator
 
-The following rule will return all entities that have a relation graph with `port-api` entity:
+The following rule will return all entities that have a relationship with the entity whose identifier is `port-api` (both children and ancestors):
 
 ```json showLineNumbers
 {
     "operator": "relatedTo",
+    "blueprint": "microservice",
     "value": "port-api"
 }
 ```
@@ -221,6 +223,24 @@ The output received from the `relatedTo` operator without any other rule added t
 :::
 
 ### `dependedOn` operator
+
+The following rule will return all entities that depend on the specified entity in the query.
+
+For example, if we have the **required** relation `deployment -> microservice`, then the deployment entities depend on the microservice entities, and a `dependedOn` rule specifying a `microservice` entity will return all `deployments` of that microservice (because those `deployments` depend on the `microservice`).
+
+```json showLineNumbers
+{
+    "operator": "dependedOn",
+    "blueprint": "microservice",
+    "value": "port-api"
+}
+```
+
+:::tip deleting a depended on entity
+The output received from the `dependedOn` operator without any other rule added to the search, is similar to the output you will receive when trying to delete a depended entity from the UI.
+
+The output will include the identifiers of all the dependent entities, so that you can decide if you really want to perform the delete operation (and also delete all the dependents), or cancel the delete operation
+:::
 
 ## Search route query parameters
 
