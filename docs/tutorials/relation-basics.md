@@ -28,7 +28,7 @@ In order to create a relation from the UI, go to the Blueprints Graph, at the to
 
 After clicking the button an editor window will open with a format similar to the one we explained in the [Understanding the structure of a relation](../platform-overview/port-components/relation.md#relation-json-structure) section, paste in the following content to create the `Package-Deployment` relation:
 
-```json
+```json showLineNumbers
 {
     "identifier": "package-microservice",
     "title": "Used In",
@@ -58,7 +58,7 @@ Here are some request examples that will create our `Package-Deployment` relatio
 
 <TabItem value="python">
 
-```python
+```python showLineNumbers
 # Dependencies to install:
 # $ python -m pip install requests
 
@@ -91,7 +91,7 @@ response = requests.post(f'{API_URL}/blueprints/{source_blueprint_name}/relation
 
 <TabItem value="javascript">
 
-```javascript
+```javascript showLineNumbers
 // Dependencies to install:
 // $ npm install axios --save
 
@@ -125,7 +125,7 @@ const config = {
 
 <TabItem value="curl">
 
-```bash
+```bash showLineNumbers
 # the access_token variable should already have the token from previous examples
 
 source_blueprint_name='package'
@@ -183,7 +183,7 @@ A PATCH request has a specific format that allows for precise changes in an exis
 
 If we want to rename the relation to `Used In MS`, our PATCH request body will look like this:
 
-```json
+```json showLineNumbers
 {
     "type": "renameTitle",
     "newTitle": "Used In MS"

@@ -32,7 +32,7 @@ Don't worry if you feel like the `Microservice` blueprint should include more pr
 
 In order to create a Blueprint with the following properties, we will use the following JSON body:
 
-```json
+```json showLineNumbers
 {
     "identifier": "microservice",
     "title": "Microservice",
@@ -91,7 +91,7 @@ In order to perform any action with Port's API, you first need an **access token
 
 <TabItem value="python">
 
-```python
+```python showLineNumbers
 # Dependencies to install:
 # $ python -m pip install requests
 
@@ -116,7 +116,7 @@ access_token = token_response.json()['accessToken']
 
 <TabItem value="javascript">
 
-```javascript
+```javascript showLineNumbers
 // Dependencies to install:
 // $ npm install axios --save
 
@@ -143,7 +143,7 @@ const accessToken = response.data.accessToken;
 
 <TabItem value="curl">
 
-```bash
+```bash showLineNumbers
 # Dependencies to install:
 # For apt:
 # $ sudo apt-get install jq
@@ -178,7 +178,7 @@ Remember the **access token** we generated earlier, we will use it while making 
 
 <TabItem value="python">
 
-```python
+```python showLineNumbers
 # Dependencies to install:
 # $ python -m pip install requests
 
@@ -225,7 +225,7 @@ response = requests.post(f'{API_URL}/blueprints', json=blueprint, headers=header
 
 <TabItem value="javascript">
 
-```javascript
+```javascript showLineNumbers
 // Dependencies to install:
 // $ npm install axios --save
 
@@ -273,7 +273,7 @@ const config = {
 
 <TabItem value="curl">
 
-```bash
+```bash showLineNumbers
 # the access_token variable should already have the token from the previous example
 
 curl --location --request POST "https://api.getport.io/v0.1/blueprints" \
@@ -331,7 +331,7 @@ A PATCH request has a more specific format that allows for precise changes in an
 
 If we want to add a property called `Is Deployed?` with the `boolean` type, our PATCH request body will look like this:
 
-```json
+```json showLineNumbers
 {
     "type": "setSchemaProperty",
     "propertyName": "isdeployed",
@@ -348,7 +348,7 @@ For more information about the PATCH request format, refer to the [API Reference
 :::info A note about mirror properties
 If you try to update a blueprint that has a [relation](relations), you will notice that its JSON body contains a key called `mirrorProperties`:
 
-```json
+```json showLineNumbers
 "mirrorProperties": {
     "microservice": {
         "path": "package-microservice.$identifier"
@@ -356,7 +356,7 @@ If you try to update a blueprint that has a [relation](relations), you will noti
 }
 ```
 
-We will explore Mirror Properties further in a dedicated section, but for now just know that any edits to a blueprint should leave the objects that have `.$identifier` in their path property intact
+You can refer to the [Mirror Properties](../platform-overview/port-components/mirror-properties.md) page for more information, but for now just know that any edits to a blueprint should leave the objects that have `.$identifier` in their path property intact
 
 :::
 
@@ -383,7 +383,7 @@ As preparation for the relations section, let's create a blueprint for `Package`
 
 You can create the new blueprint from the UI (using the `New Blueprint` button in the Blueprints Graph) or from the API, the body of the request for the new blueprint should be:
 
-```json
+```json showLineNumbers
 {
     "identifier": "package",
     "title": "Package",

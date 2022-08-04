@@ -302,7 +302,7 @@ aws secretsmanager create-secret --name "PortKafkaAuthCredentials" --secret-stri
 
 You should see output similar to the following:
 
-```json showLineNumbers showLineNumbers
+```json showLineNumbers
 {
     "ARN": "arn:aws:secretsmanager:eu-west-1:1111111111:secret:PortKafkaAuthCredentials-aaaaaa",
     "Name": "PortKafkaAuthCredentials",
@@ -520,6 +520,8 @@ def report_to_port(run_id: str ,entity_props: dict):
     logger.info('Fetching token')
     token = get_port_api_token()
 
+    blueprint_identifier = 'vm'
+
     headers = {
         'Authorization': f'Bearer {token}'
     }
@@ -531,7 +533,6 @@ def report_to_port(run_id: str ,entity_props: dict):
     entity = {
         'identifier': entity_props['title'].replace(' ', '-').lower(),
         'title': entity_props['title'],
-        'blueprint': 'vm',
         'properties': {
             'cpu_cores': entity_props['cpu'],
             'memory_size': entity_props['memory'],
@@ -543,7 +544,7 @@ def report_to_port(run_id: str ,entity_props: dict):
 
     logger.info('Creating entity:')
     logger.info(json.dumps(entity))
-    response = requests.post(f'{API_URL}/entities', json=entity, headers=headers, params=params)
+    response = requests.post(f'{API_URL}/blueprints/{blueprint_identifier}/entities', json=entity, headers=headers, params=params)
     logger.info(response.status_code)
     logger.info(json.dumps(response.json()))
 

@@ -50,7 +50,7 @@ Don't worry if you feel like the `Microservice` blueprint should include more pr
 
 In order to create a Blueprint with the following properties, we will use the following JSON body:
 
-```json
+```json showLineNumbers
 {
     "identifier": "microservice",
     "title": "Microservice",
@@ -131,7 +131,7 @@ Let's repeat the process again, click on the `+ Microservice` again, but this ti
 
 After clicking the button, you will have a JSON editor similar to the one we saw in the blueprints page, paste in the following content:
 
-```json
+```json showLineNumbers
 {
     "identifier": "dataQueryService",
     "title": "Data Query Service",
@@ -176,7 +176,7 @@ so let's go ahead and create an **Package Blueprint**:
 - Click on the New Blueprint button
 - Paste in the content shown below and then click create:
 
-```json
+```json showLineNumbers
 {
     "identifier": "package",
     "title": "Package",
@@ -213,7 +213,7 @@ Next, we will create 3 packages to go with our microservices, in order to do tha
 
 **Requests 2.28.1 Package**
 
-```json
+```json showLineNumbers
 {
     "identifier": "requests_v2_28_1",
     "title": "Requests v2.28.1",
@@ -229,7 +229,7 @@ Next, we will create 3 packages to go with our microservices, in order to do tha
 
 **Requests 2.28.0 Package**
 
-```json
+```json showLineNumbers
 {
     "identifier": "requests_v2_28_0",
     "title": "Requests v2.28.0",
@@ -245,7 +245,7 @@ Next, we will create 3 packages to go with our microservices, in order to do tha
 
 **SQLAlchemy Package**
 
-```json
+```json showLineNumbers
 {
     "identifier": "sqlAlchemy_v1_4_39",
     "title": "SQL Alchemy v1.4.39",
@@ -289,7 +289,7 @@ Go to the Blueprints page and click on the `New Blueprints Relation` button like
 
 In the creation form that appears, paste in the following content:
 
-```json
+```json showLineNumbers
 {
     "title": "Used In",
     "identifier": "package-to-microservice",

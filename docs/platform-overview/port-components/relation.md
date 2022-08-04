@@ -61,7 +61,7 @@ Please see the following example of a relation between `microservices` and `depl
 Let's say we have those two blueprints defined, and we want to connect between them, in a way that the `deployment` is the `source` and `microservice` is the `target`.  
 
 The JSON schema of the relation is as follows:
-```json
+```json showLineNumbers
 {
     "identifier": "deployment-2-microservice",
     "title": "Deployement Of",

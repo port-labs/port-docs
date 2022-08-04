@@ -390,7 +390,7 @@ def get_port_api_token():
 
     return access_token
 
-def update_entity_prop_value(identifier: str, property_name: str, property_value: Union[str, int]):
+def update_entity_prop_value(blueprint_identifier: str, identifier: str, property_name: str, property_value: Union[str, int]):
     '''
     Patches a Port entity based on ``entity_props``
     '''
@@ -409,7 +409,7 @@ def update_entity_prop_value(identifier: str, property_name: str, property_value
 
     logger.info('Updating entity property values:')
     logger.info(json.dumps(entity))
-    response = requests.patch(f'{API_URL}/entities/{identifier}', json=entity, headers=headers)
+    response = requests.patch(f'{API_URL}/blueprints/{blueprint_identifier}/entities/{identifier}', json=entity, headers=headers)
     logger.info(response.status_code)
     logger.info(json.dumps(response.json()))
 
@@ -441,6 +441,7 @@ def lambda_handler(event, context):
 
                 # Here is sample code to find the change in VM free storage space
                 if change_type == 'UPDATE' and resource_type == 'entity':
+                    blueprint_identifier = message['context']['blueprint']
                     entity_after_change_state = message['diff']['after']
                     entity_identifier = entity_after_change_state["identifier"]
                     entity_title = entity_after_change_state["title"]
@@ -454,11 +455,7 @@ def lambda_handler(event, context):
                         # Or a call to some scheduled task that frees up storage on the VM
                         logger.info(f'Entity {entity_title} Storage freed up, updating in Port')
                         free_storage_after_cleanup = 4
-                        update_entity_prop_value(entity_identifier, 'free_storage', free_storage_after_cleanup)
-
-                        # All of the input fields you specified in the action invocation are available under message['payload']['properties']
-                        # For this example, we are simply invoking a simple reporter function which will send data about the new entity to Port
-                        # report_to_port(message['payload']['properties'])
+                        update_entity_prop_value(blueprint_identifier, entity_identifier, 'free_storage', free_storage_after_cleanup)
             except Exception as e:
                 traceback.print_exc()
                 logger.warn(f'Error: {e}')
@@ -604,6 +601,8 @@ token_response = requests.get(f'{API_URL}/auth/access_token', params=credentials
 
 access_token = token_response.json()['accessToken']
 
+blueprint_identifier = 'vm'
+
 headers = {
     'Authorization': f'Bearer {access_token}'
 }
@@ -611,7 +610,6 @@ headers = {
 entity = {
     "title": "Storage Example VM",
     "team": "",
-    "blueprint": "vm",
     "properties": {
         "region": "eu-west-1",
         "cpu_cores": 2,
@@ -624,7 +622,7 @@ entity = {
     "identifier": "storage-example"
 }
 
-response = requests.post(f'{API_URL}/entities', json=entity, headers=headers)
+response = requests.post(f'{API_URL}/blueprints/{blueprint_identifier}/entities', json=entity, headers=headers)
 
 print(response.json())
 ```
@@ -650,6 +648,8 @@ token_response = requests.get(f'{API_URL}/auth/access_token', params=credentials
 
 access_token = token_response.json()['accessToken']
 
+blueprint_identifier = 'vm'
+
 headers = {
     'Authorization': f'Bearer {access_token}'
 }
@@ -662,7 +662,7 @@ patch_body = {
     }
 }
 
-response = requests.patch(f'{API_URL}/entities/{entity_identifier}', json=patch_body, headers=headers)
+response = requests.patch(f'{API_URL}/blueprints/{blueprint_identifier}/entities/{entity_identifier}', json=patch_body, headers=headers)
 
 print(response.json())
 ```
