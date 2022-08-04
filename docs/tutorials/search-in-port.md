@@ -86,11 +86,24 @@ Here is an example search rule:
 
 ### Search rule structure table
 
-| Field | Description | Notes 
-|---|---|---|
+Port has 2 types of search rule operators: Comparison operators (`=`, `>`, etc...) and relation operators (`relatedTo`, `dependedOn`, etc...)
+
+This part will elaborate on the structure of a search rule for each type of operator:
+
+#### Comparison operators structure
+
+| Field | Description 
+|---|---|
 | `operator` | The search operator to use when evaluating this rule, see a list of available operators below 
-| `property` | The property to filter according to its value, can be an internal property such as `$identifier` or a standard property such as `slack_channel` | Not available when using the `dependedOn` and `relatedTo` operators
-| `blueprint` | The blueprint of the entity identifier specified in the `value` field | Only available when using the `dependedOn` and `relatedTo` operators 
+| `property` | The property to filter according to its value, can be an internal property such as `$identifier` or a standard property such as `slack_channel` |
+| `value` | The value to filter by 
+
+#### Relation operators structure
+
+| Field | Description 
+|---|---|
+| `operator` | The search operator to use when evaluating this rule, see a list of available operators below 
+| `blueprint` | The blueprint of the entity identifier specified in the `value` field 
 | `value` | The value to filter by 
 
 ## Search operators
