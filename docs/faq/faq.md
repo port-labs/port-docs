@@ -6,9 +6,13 @@ sidebar_position: 7
 
 ## What is Port, and how does it work?
 
-Port lets you quickly build a developer portal for your software, microservices and resources. This means that you can help developers get an application working by providing the relevant data about DevOps and infrastructure. In doing this, Port also creates a single source of truth for engineering architecture, assets and dependencies, with no spreadsheets or other tracking methods. 
+Port lets you quickly build a developer portal for your software, microservices and resources. This means that you can help developers get an application working by providing the relevant data about DevOps and infrastructure.
 
-Port is powered by a catalog of software, microservices and resources. Based on the catalog, DevOps or platform teams can enable developer self-service offering both a better developer experience, as well as quality and control over software development and the underlying resources. Self-service is done according to standards/templates (or guardrails) requiring security, compliance or best practices, all defined by platform or DevOps teams, freeing developers from dealing with complexity but ensuring quality at the same time. Port offers pre-built best practice templates or you can build your own.
+In doing this, Port also creates a single source of truth for engineering architecture, assets and dependencies, with no spreadsheets or other tracking methods. 
+
+Port is powered by a catalog of software, microservices and resources. Based on the catalog, DevOps or platform teams can enable developer self-service offering both a better developer experience, as well as quality and control over software development and the underlying resources.
+
+Self-service is done according to standards/templates (or guardrails) requiring security, compliance or best practices, all defined by platform or DevOps teams, freeing developers from dealing with complexity but ensuring quality at the same time. Port offers pre-built best practice templates or you can build your own.
 
 Port’s approach is [builder-based](#whats-a-builder-based-developer-portal), meaning that you define what’s exposed to developers and what isn’t, how teams see the software they own, and any other resources - CI/CD flows, dev environments, pipelines, deployments and anything cloud. Using port means no more orphan dev environments, dependencies or microservices remain in the dark, affecting costs and manageability. 
 
