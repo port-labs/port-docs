@@ -10,14 +10,14 @@ Here you'll find a step-by-step guide to installing the Port Terraform Provider.
 
 ## What does our Terraform Provider give you?
 
-- Automatic managing entities based on resources in terraform files.
-- Being able to define resources in Yml files and reflect them by terraform commands to Port.0
+- Automatic management of entities based on resources in terraform files.
+- The option to define resources inyml files and reflect them in Port using the provider
 
 ## Installation
 
 :::note Prerequisites
 
-Terraform CLI (Installation guild: https://learn.hashicorp.com/tutorials/terraform/install-cli).
+Terraform CLI (Installation guide: https://learn.hashicorp.com/tutorials/terraform/install-cli).
 :::
 
 First, require the provider in your terraform configuration:
@@ -38,17 +38,17 @@ provider "port-labs" {
 }
 ```
 
-to make terraform install the port provider, run the command:
+To make terraform install the port provider, run the command:
 
 ```shell
 terraform init
 ```
 
-The command should print something like this when the init command is finish:
+The command should print something like this when the `init` command is finish:
 
 `Terraform has been successfully initialized!`
 
-For checking if the the initialize is good, run the command:
+In order to validate that the module initialization worked, run the command:
 
 ```shell
  terraform plan
@@ -71,7 +71,7 @@ For example:
 ```hcl
 resource "port-labs_entity" "golang_monolith" {
   title = "Golang Monolith"
-  blueprint = "microservice" # should be match to exatch identifier of the blueprint
+  blueprint = "microservice" # Should match the identifier of the blueprint
   properties {
     name = "slackChannel"
     value = "#data-query"
@@ -85,20 +85,20 @@ resource "port-labs_entity" "golang_monolith" {
 }
 ```
 
-- run the command `terraform plan` for seeing the perform the actions.(You should see this result: `Plan: 1 to add, 0 to change, 0 to destroy`)
+- Run the command `terraform plan` to see the resulting set of actions terraform will take: (You should see this result `Plan: 1 to add, 0 to change, 0 to destroy`)
 
-to create the `Golang Monolith` entity, run:
+To create the `Golang Monolith` entity, run:
 
 ```shell
 terraform apply
 ```
 
 :::note Prerequisites
-Don't forget to set your port client id and secret in order for the provider to authenticate with the Port's API:
+Don't forget to set your port client id and secret in order for the provider to authenticate with Port's API:
 
 ```shell
-export PORT_CLIENT_ID=YOUR_CLIENT_ID
-export PORT_CLIENT_SECRET=YOUR_CLIENT_SECRET
+export `PORT_CLIENT_ID`=YOUR_CLIENT_ID
+export `PORT_CLIENT_SECRET`=YOUR_CLIENT_SECRET
 ```
 
 :::
