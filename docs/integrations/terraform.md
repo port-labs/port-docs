@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Terraform Provider
 
-Our integration with Terraform allows you to combine the state of your infrastructure with the entities representing them in Port. For the official documentation of the Port Terraform provider checkout out the [registry page](https://registry.terraform.io/providers/port-labs/port/)
+Our integration with Terraform allows you to combine the state of your infrastructure with the entities representing them in Port. For the official documentation of the Port Terraform provider checkout out the [registry page](https://registry.terraform.io/providers/port-labs/port-labs/)
 
 Here you'll find a step-by-step guide to installing the Port Terraform Provider.
 
