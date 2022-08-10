@@ -99,7 +99,6 @@ resource "port-labs_entity" "golang_monolith" {
     value = "Example microservice"
     type  = "string"
   }
-
   properties {
     name  = "isDeployed"
     value = "true"
