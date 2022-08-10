@@ -24,10 +24,16 @@ After clicking the button, you should see a creation form similar to what is sho
 Our Microservice Blueprint is going to include the following properties:
 
 - **Repo** - A URL to the source code repository storing the code for the Microservice
-- **Slack Channel** - A URL to the Slack Channel of the team responsible for the Microservice
+- **Slack Channel** - The Slack Channel of the team responsible for the Microservice
 
 :::note
 Don't worry if you feel like the `Microservice` blueprint should include more properties, you can always go back and add or remove properties later. 
+:::
+
+:::tip Available Icons
+You will notice that in the image above the icon field already has the value `Microservice` filled in. In addition to the icon for `Microservice` Port also supports the following:
+
+`Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud, Cluster, CPU, Customer, Datadog, DefaultEntity, DefaultProperty, DeployedAt, Deployment, DevopsTool, Docs, Environment, Git, Github, GitVersion, GoogleCloud, GPU, Grafana, Jenkins, Lambda, Link, Lock, Microservice, Moon, Node, Okta, Package, Permission, Server, Service, Terraform`
 :::
 
 In order to create a Blueprint with the following properties, we will use the following JSON body:

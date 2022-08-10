@@ -239,6 +239,10 @@ To delete an entity you can:
 
 Now that we understand **Entities**, we can start creating related entities to model our related data in the infrastructure!
 
+:::tip
+Remember that each entity has a dedicated page of its own, as seen in the [Entity page section](../platform-overview/port-components/page.md#entity-page) in [Page](../platform-overview/port-components/page.md).
+:::
+
 First, let's create a new `Package` entity (If you haven't created a `Package` blueprint yet, please refer to the [Next steps](blueprint-basics.md#next-steps) section in [Blueprint basics](./blueprint-basics.md).
 
 We will go to the `Packages` page:

@@ -120,22 +120,22 @@ In the following example, we create a mirror property called `MicroserviceName` 
 
 It is possible to use mirror properties to map properties from blueprints that are not direct children of our `source` blueprint.
 
-For example, let's assume we have the following relation chain: `Microservice -> Project -> Team`.
+For example, let's assume we have the following relation chain: `Microservice -> Project -> Squad`.
 
-We want to map the members of the team that owns the microservice directly to the `Microservice` entities.
+We want to map the members of the squad that owns the microservice directly to the `Microservice` entities.
 
-The members of the team are listed in an [array property](./blueprint#array) under the user-defined property `team_members`.
+The members of the squad are listed in an [array property](./blueprint#array) under the user-defined property `squad_members`.
 
 The names of the relations are:
 
 - `Microservice -> Project`: `microservice-to-project`
-- `Project -> Team`: `project-to-team`
+- `Project -> Squad`: `project-to-squad`
 
-Let's map the team members using a mirror property called `OwningTeamMembers`:
+Let's map the squad members using a mirror property called `OwningSquadMembers`:
 
 ```json showLineNumbers
-"OwningTeamMembers": {
-    "path": "microservice-to-project.project-to-team.team_members"
+"OwningSquadMembers": {
+    "path": "microservice-to-project.project-to-squad.squad_members"
 }
 ```
 

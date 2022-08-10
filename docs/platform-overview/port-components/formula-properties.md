@@ -89,12 +89,25 @@ Now if we have an entity under a blueprint with the formula property shown above
 
 It is possible to use mirror properties as template values for formula properties, the syntax is the same as user-defined properties.
 
-For example if an entity has a mirror property called `owningTeam`, a formulaProperty that links to the slack channel of the team can be:
+For example if an entity has a mirror property called `owningSquad`:
 
 ```json showLineNumbers
-"owning_team_slack": {
-    "title": "Owning Team Channel",
-    "formula": "https://slack.com/{{owningTeam}}"
+"mirrorProperties": {
+    "squad": {
+        "path": "microservice-to-squad.$identifier"
+    }
+    "owningSquad": {
+        "path": "microservice-to-squad.$title"
+    }
+}
+```
+
+A formulaProperty that links to the slack channel of the squad can be:
+
+```json showLineNumbers
+"owning_squad_slack": {
+    "title": "Owning Squad Channel",
+    "formula": "https://slack.com/{{owningSquad}}"
 }
 ```
 

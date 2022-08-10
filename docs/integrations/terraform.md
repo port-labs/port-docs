@@ -11,7 +11,7 @@ Here you'll find a step-by-step guide to installing the Port Terraform Provider.
 ## What does our Terraform Provider give you?
 
 - Automatic management of entities based on resources in terraform files.
-- The option to define resources inyml files and reflect them in Port using the provider
+- The option to define resources in yml files and reflect them in Port using the provider
 
 ## Installation
 
@@ -77,17 +77,37 @@ For example:
 
 ```hcl
 resource "port-labs_entity" "golang_monolith" {
-  title = "Golang Monolith"
-  blueprint = "microservice" # Should match the identifier of the blueprint
+  title     = "Golang Monolith"
+  blueprint = "microservice"
   properties {
-    name = "slackChannel"
-    value = "#data-query"
-    type = "string"
+    name  = "slackChannel" # should match the identifier of the property in the blueprint schema.
+    items = ["#rnd", "#deployments"]
+    type  = "array"
   }
   properties {
-    name = "repoUrl"
+    name  = "repoUrl"
     value = "https://github.com"
-    type = "string"
+    type  = "string"
+  }
+  properties {
+    name  = "config"
+    value = jsonencode({ "PORT" : "8080" })
+    type  = "object"
+  }
+  properties {
+    name  = "description"
+    value = "Example microservice"
+    type  = "string"
+  }
+  properties {
+    name  = "isDeployed"
+    value = "true"
+    type  = "boolean"
+  }
+   properties {
+    name  = "numberOfReplicates"
+    value = 1
+    type  = "number"
   }
 }
 ```
@@ -116,10 +136,41 @@ That's it! the entity should now be created and visible in the UI.
 
 For more examples, see the examples and test cases in the [public repository](https://github.com/port-labs/terraform-provider-port).
 
+### Create a resource with a relation
+
+Let's say we also created a blueprint that defines a `package` and a relation between package and microservice.
+:::tip
+For more information, go to the [relation basics page](../tutorials/relation-basics.md)
+:::
+
+We can describe it as a resource with a relation section in our terraform file:
+
+```hcl
+resource "port-labs_entity" "package" {
+  title     = "fmt"
+  blueprint = "package"
+  relations {
+    name       = "package-microservice"  # the name should match the identifier of the relation
+    identifier = "microservice" # the identifier should match the identifier property in the target blueprint.
+  }
+  properties {
+    name  = "version"
+    value = 1.1
+    type  = "number"
+  }
+}
+```
+
+After running the command `terraform applay` again, you should see this result:
+
+![EntityWithRelation](../../static/img/integrations/terraform-provider/EntityWithRelation.png)
+
+We successfully created a entitiy that related to the microserivce(Golang Monolith) we created previously.
+
 ### Update a resource
 
 - To update a resource, change the value of the resource in the terraform configuration files and use the command `terraform apply`.
 
-### Delete a reousrce
+### Delete a resource
 
 - To delete a resource, you need to run `terraform destory --target port-labs.{resource-name}`.

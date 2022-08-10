@@ -20,7 +20,7 @@ A page is a viewing component that displays data of entities in a few forms, suc
 **1. **Pages are built from **Widgets**.
 
 :::note Widgets
-A Widget is a view component from which Pages are built.
+A Widget is a viewing component from which Pages are built.
 It contains the entity type, and a default configuration of the view. 
 :::
 
@@ -32,7 +32,7 @@ A page can hold a single widget or multiple widgets, for example:
 **2. **Pages can contain **tabs**.
 
 :::note Tabs
-A tab is a sub-page view of a page, and itself is a page.
+A tab is a sub-page view of a page, and is a page itself.
 :::
    
    Pages can be separated into several tabs, each of which is a page that holds one or many widgets.
@@ -71,17 +71,25 @@ The first is the `Overview` tab, which shows two widgets: the details of the ent
 
 ## Page operations
 
-Each page type has a set of operations that can be done from the UI.  
-The table below summarizes the available operation according to the page type:
+Each page type has a set of operations that can be performed from the UI.  
+The table below summarizes the available operations according to the page type:
 
 | Page Type | Save a view | Save view as<br /> a new page | Edit page | Delete Page |
 | ----------- | :-----------: | :-----------: | :-----------: | :-----------: | 
-| Blueprint page | V | V | V | V |
+| Blueprint page (Default Page) | V | V | X | X |
 | Entity page | V | X | X | X |
 | Users page | V | X | X | X |
 | Audit log page | V | X | X | X |
+| Custom page (generated from save as new page) | V | V | V | V
 
-All page operations are available on the top bar of the bar, as shown here:<br />  
+:::info Default page
+The default page is automatically created when a new Blueprint is created, that page is directly tied to its blueprint, it cannot be edited or deleted.
+
+In order to edit or delete the Default blueprint page, the blueprint itself should be edited or deleted. 
+:::
+
+All page operations are available on the top bar of the bar, as shown here: (In accordance with the table above)
+
 ![Page operations marked](../../../static/img/platform-overview/port-components/pages/PageOperationsMarked.png)
 
 ### Saving views
