@@ -140,7 +140,7 @@ For more examples, see the examples and test cases in the [public repository](ht
 
 - To update a resource, change the value of the resource in the terraform configuration files and use the command `terraform apply`.
 
-### Delete a reousrce
+### Delete a resource
 
 - To delete a resource, you need to run `terraform destory --target port-labs.{resource-name}`.
 
