@@ -136,14 +136,6 @@ That's it! the entity should now be created and visible in the UI.
 
 For more examples, see the examples and test cases in the [public repository](https://github.com/port-labs/terraform-provider-port).
 
-### Update a resource
-
-- To update a resource, change the value of the resource in the terraform configuration files and use the command `terraform apply`.
-
-### Delete a resource
-
-- To delete a resource, you need to run `terraform destory --target port-labs.{resource-name}`.
-
 ### Create a resource with a relation
 
 Let's say we also created a blueprint that define a package and a relation "Used it". (refer [here](../tutorials/relation-basics.md))
@@ -170,3 +162,11 @@ After running the command `terraform applay` again, you should see this result:
 ![EntityWithRelation](../../static/img/integrations/terraform-provider/EntityWithRelation.png)
 
 We successfully created a entitiy that related to the microserivce(Golang Monolith) we created previously.
+
+### Update a resource
+
+- To update a resource, change the value of the resource in the terraform configuration files and use the command `terraform apply`.
+
+### Delete a resource
+
+- To delete a resource, you need to run `terraform destory --target port-labs.{resource-name}`.
