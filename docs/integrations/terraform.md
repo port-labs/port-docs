@@ -20,7 +20,7 @@ Here you'll find a step-by-step guide to installing the Port Terraform Provider.
 Terraform CLI (Installation guide: https://learn.hashicorp.com/tutorials/terraform/install-cli).
 :::
 
-First, require the provider in your terraform configuration:
+First, require the provider in your terraform configuration (refer [here](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/entity) for our resources schema):
 
 ```hcl
 terraform {
@@ -58,11 +58,18 @@ The result should be : `No changes. Your infrastructure matches the configuratio
 
 ## Usage
 
-Assume you have a blueprint for your microservices, and that a microservice has two properties: `slackChannel` and `repoUrl`. (Navigate to blueprint basic tutorial for guidance of how creating blueprint)
+Assume you have a blueprint for your microservices, and that a microservice has two properties: `slackChannel` and `repoUrl`.
+
+:::tip
+
+For an example how to create a blueprint, please refer to the [Create a blueprint](../tutorials/blueprint-basics.md#create-blueprints) in the [blueprint basics](../tutorials/blueprint-basics.md) tutorials
+:::
 
 For example:
 
 ![Blueprint with Terraform provider](../../static/img/integrations/terraform-provider/MicroserviceBlueprint.png)
+
+### Creating a resource
 
 Let's say we want to add a new microservice entity (e.g. Golang service), we can describe it as a resource in our terraform file:
 
@@ -108,3 +115,11 @@ That's it! the entity should now be created and visible in the UI.
 ![Entities](../../static/img/integrations/terraform-provider/Entities.png)
 
 For more examples, see the examples and test cases in the [public repository](https://github.com/port-labs/terraform-provider-port).
+
+### Update a resource
+
+- To update a resource, change the value of the resource in the terraform configuration files and use the command `terraform apply`.
+
+### Delete a reousrce
+
+- To delete a resource, you need to run `terraform destory --target port-labs.{resource-name}`.
