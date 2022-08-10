@@ -11,7 +11,7 @@ Here you'll find a step-by-step guide to installing the Port Terraform Provider.
 ## What does our Terraform Provider give you?
 
 - Automatic management of entities based on resources in terraform files.
-- The option to define resources inyml files and reflect them in Port using the provider
+- The option to define resources in yml files and reflect them in Port using the provider
 
 ## Installation
 
