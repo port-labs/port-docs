@@ -138,7 +138,11 @@ For more examples, see the examples and test cases in the [public repository](ht
 
 ### Create a resource with a relation
 
-Let's say we also created a blueprint that define a package and a relation "Used it". (refer [here](../tutorials/relation-basics.md))
+Let's say we also created a blueprint that defines a `package` and a relation between package and microservice.
+:::tip
+For more information, go to the [relation basics page](../tutorials/relation-basics.md)
+:::
+
 We can describe it as a resource with a relation section in our terraform file:
 
 ```hcl
