@@ -148,9 +148,10 @@ We currently support the following types:
 | `boolean` | Boolean field | A `true` or `false` |
 | `object` | A well formatted object (i.e. python dictionary, javascript object, JSON, etc...) | `{ 'key1': 'value1', 'key2': 'value2', ...}` |
 | `array` | A multi-element array | `[1,2,3]`, `["a","b","c"]` |
+| `enum` | A field with a pre-defined set of allowed values |
 
 :::note
-Those are the `properties` that our API supports. See [API reference](../api-reference).
+Those are the `properties` that our API supports. See [API reference](../../api-reference).
 :::
 
 ### Examples
@@ -220,10 +221,23 @@ Here is how property definitions look for all available types (remember that onl
 {
     "title": "Array of Objects",
     "type": "array",
-    "items:" {
+    "items": {
         "type": "object"
-    }
+    },
     "description": "An array property"
+}
+```
+
+### URLs Array
+```json showLineNumbers
+{
+    "title": "Array of URLs",
+    "type": "array",
+    "items": {
+        "type": "string",
+        "format": "url"
+    },
+    "description": "An array of URLs property"
 }
 ```
 
@@ -265,7 +279,7 @@ We currently support the following `string` formats:
 | `ipv6` | A standard IPv6 address | `FE80:CD00:0A20:0CDE:1257:1C34:211E:729C` |
 
 :::note
-Those are the `format` types that our API supports. See [API reference](../api-reference).
+Those are the `format` types that our API supports. See [API reference](../../api-reference).
 :::
 
 ### Examples
