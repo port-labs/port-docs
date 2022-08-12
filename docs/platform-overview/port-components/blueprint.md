@@ -69,7 +69,7 @@ Each blueprint is represented by a [Json schema](https://json-schema.org/), as s
 | `identifier` | `String` | A unique identifier.<br /> Note that while the identifier is unique, it can be changed after creation. |
 | `title` | `String` | A nicely written name for the blueprint |
 | `icon` | `String` | An icon for the blueprint node in the graph, and entities of the blueprint | One of the list:  `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud,...` <br /><br />See the full icon list [below.](#full-icon-list) |
-| `dataSource` | `String` | The source from which entity data is ingested, can be either `Port` or `Github` | `Port` or [Github](../../integrations/github.md) | 
+| `dataSource` | `String` | The source from which entity data is ingested, can be either `Port` or `Github` | `Port` or [Github](../../integrations/github/introduction.md) | 
 | `formulaProperties` | `Object` | Contains the properties that are defined using [formula templates](./formula-properties) | Example: "`repo-link`": "`https://github.com/{{$identifier}}`"|
 | `schema` | `Object` | An object containing two more nested fields, including `properties` and `required` | See the schame structure here: [`schema`](#blueprints-schema). |
 

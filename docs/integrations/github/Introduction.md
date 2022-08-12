@@ -13,7 +13,7 @@ Here you'll find a step-by-step guide to installing the GitHub App of Port.
 ## What does our GitHub application give you?
 
 - Automatic updates to the entities mapped from Github based on updates to the `port.yml` file
-- Additional metadata provided by Github see [Auto Importing Properties](./Auto%20importing%20properties), available directly from Port
+- Additional metadata provided by Github see [Auto Importing Properties](./auto-importing-properties), available directly from Port
 
 ## How does our GitHub App Work?
 
@@ -35,7 +35,8 @@ properties:
 
 ### Triggers
 
-Merging a branch to the `main` (default) branch will trigger the app look for the input type.
+1. Merging a branch to the `main` (default) branch will trigger the app to search for port.yml files
+2. Opening or updating a `pull request` will trigger a checkrun which validates the port.yml files
 
 ### Permissions
 

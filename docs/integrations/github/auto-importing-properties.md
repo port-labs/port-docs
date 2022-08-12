@@ -6,31 +6,33 @@ sidebar_position: 5
 
 ### Introduction
 
-With our github app you can auto import properties from GitHub repository, like `commitMessage` `commitedBy` `mainLanguage` and much more.
+With our github app you can auto import properties from a GitHub repository, like `commitMessage` `commitedBy` `mainLanguage` and much more.
 
 
 ### Auto importable properties
 
 | Field | Description 
 | ----------- | ----------- |
-| `repo` | A Link to the repository that the port.yml is located in. <br/><br/> * When there are multiple port.yml the link will point to the port.yml parent directory |
-| `mainLanguage` | The main language the repo is written in `Typescript` `Python` etc... |
-| `openIssues` | The number of open issues in the repository |
-| `commitMessage` | The latest commit message of the repoistory <br/><br/> * When there are multiple port.yml the commit message will be taken from the port.yml parent directory | 
-| `commitedBy` | Who did the latest commit (Author username) <br/><br/> * When there are multiple port.yml files the commited by will be determined by who did the last commit to port.yml parent directory |
-| `commitHash` | The latest commit hash of the repoistory <br/><br/> * When there are multiple port.yml the commit hash will be taken from the port.yml parent directory |
-| `organization` | The GitHub organization which the repository belongs to |
-| `description` | The repository GitHub description |
-| `visibility` | Is the repository Private or Public |
+| `repo` | A Link to the repository that the `port.yml` file is located in. <br/><br/> * When there are multiple `port.yml` files the link will point to the `port.yml` parent directory |
+| `mainLanguage` | The main language the repo is written in `Typescript`, `Python`, etc... |
 | `openIssues` | The number of the open issues for the repository |
+| `commitMessage` | The latest commit message of the repoistory <br/><br/> * When there are multiple `port.yml` files the commit message will be taken from the `port.yml` file parent directory | 
+| `commitedBy` | Who performed the latest commit (Author username) <br/><br/> * When there are multiple `port.yml` files the commited by will be determined by who did the last commit to `port.yml` file parent directory |
+| `commitHash` | The latest commit hash of the repoistory <br/><br/> * When there are multiple `port.yml` files the commit hash will be taken from the `port.yml` file parent directory |
+| `organization` | The GitHub organization that the repository belongs to |
+| `description` | The repository of the GitHub description |
+| `visibility` | Is the repository Private or Public |
 | `archived` | Is the repository archived? |
 
 
-### How do I import?
+### Using auto importable properties
 
-In order to do that all you have to do is to add the json below to your [blueprint schema](../../platform-overview/port-components/blueprint.md#blueprints-properties), if you still don't have a blueprint with GitHub integration please refer to the [Quickstart](./Quickstart) to create one easily.
+In order to use auto importable properties all you have to do is add the json below to your [blueprint schema](../../platform-overview/port-components/blueprint.md#blueprints-properties), if you still don't have a blueprint with GitHub integration please refer to the [Quickstart](./quickstart) to create one.
 
-Feel free to filter only your wanted 
+:::tip:
+You can choose to include just a subset of the auto importable properties shown above, or all of them
+:::
+
 ```json showLineNumbers
 {
     "identifier": "Microservice",
@@ -45,11 +47,6 @@ Feel free to filter only your wanted
                 "type": "string",
                 "format": "url",
                 "description": "Link to the service repo on GitHub"
-            },
-            "squad_name": {
-                "title": "Squad",
-                "type": "string",
-                "description": "Squad ownership for the service"
             },
             "organization": {
                 "description": "The organization responsible on the repository",
@@ -100,5 +97,5 @@ Feel free to filter only your wanted
 ```
 
 :::caution
-Be sure to *add* the properties above to your blueprint instead of overwriting them
+ When adding these properties, make sure to add them to the set of blueprint properties, and not to overwrite the existing properties of the blueprint
 :::

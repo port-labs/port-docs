@@ -19,13 +19,13 @@ sidebar_position: 2
 
     ![GitHub app installation page](../../../static/img/integrations/github-app/GitHubAppInstallPage.png)
 
-3. Choose to which repositories you wish to install the app:
+3. Choose the repositories you want the app to be installed for
 
     ![GitHub app installation choose repositories](../../../static/img/integrations/github-app/GitHubAppChooseRepos.png)
 
 4. You'll be redirected to Port, please **log in**.
 
 
-5. Once Logged in, see the success indication on the top of the screen:
+5. Once logged in, you will see the success indication in the top of the screen:
 
     ![GitHub app installation success indication on Port](../../../static/img/integrations/github-app/GitHubInstallationSuccess.png)
