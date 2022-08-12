@@ -33,6 +33,6 @@ Here is an example:
 
 
 2. Use multiple `port.yml` files (e.g., Monorepo use-case). 
-By default, we search for all `port.yml` files in your repo (Use `specPath` (Glob Patterns) in [Advanced configurations](./Advanced%20configurations) to control it)
+By default, we search for all `port.yml` files in your repo (Use `specPath` (Glob Patterns) in [Advanced configurations](./advanced-configuration) to control it)
 
 ![img.png](img.png)
