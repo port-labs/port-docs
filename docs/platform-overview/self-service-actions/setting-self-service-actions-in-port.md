@@ -306,28 +306,28 @@ The basic structure of an action:
 
 ### Structure table
 
-| Field | Description | 
-| --- | --- | 
-| `id` | Internal Action ID | 
-| `identifier` | Action identifier | 
-| `title` | Action title | 
-| `icon` | Action icon | 
-| `userInputs` | An object containing `properties` and `required` keys following the standard JSON schema format as seen in [Blueprint's structure](../port-components/blueprint.md#blueprints-structure) | 
-| `invocationMethod` | The methods the action is dispatched in, currently only supports `KAFKA` |
-| `trigger` | The type of the action, one of `CREATE`, `DAY-2`, `DELETE` |
-| `description` | The description of the action |
+| Field              | Description                                                                                                                                                                              |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`               | Internal Action ID                                                                                                                                                                       |
+| `identifier`       | Action identifier                                                                                                                                                                        |
+| `title`            | Action title                                                                                                                                                                             |
+| `icon`             | Action icon                                                                                                                                                                              |
+| `userInputs`       | An object containing `properties` and `required` keys following the standard JSON schema format as seen in [Blueprint's structure](../port-components/blueprint.md#blueprints-structure) |
+| `invocationMethod` | The methods the action is dispatched in, currently only supports `KAFKA`                                                                                                                 |
+| `trigger`          | The type of the action, one of `CREATE`, `DAY-2`, `DELETE`                                                                                                                               |
+| `description`      | The description of the action                                                                                                                                                            |
 
 ### Properties structure table
 
 The following table includes the different fields that can be specified in the `properties` key
 
-| Field | Description | 
-| --- | --- | 
-| `type` | All of the [types](../port-components/blueprint.md#property-types) supported by Port - `string`, `number`, `boolean`, etc... | 
-| `title` | The title shown in the form when calling the action |
-| `description` (Optional) | Extra description about the requested property
-| `default` (Optional) | A default value |
-| `enum` (Optional) | A list of predefined values the user can choose from, same format as [enum](../port-components/blueprint.md#enum) |  
+| Field                    | Description                                                                                                                  |
+| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------- |
+| `type`                   | All of the [types](../port-components/blueprint.md#property-types) supported by Port - `string`, `number`, `boolean`, etc... |
+| `title`                  | The title shown in the form when calling the action                                                                          |
+| `description` (Optional) | Extra description about the requested property                                                                               |
+| `default` (Optional)     | A default value                                                                                                              |
+| `enum` (Optional)        | A list of predefined values the user can choose from, same format as [enum](../port-components/blueprint.md#enum)            |
 
 ## Triggering actions
 
@@ -376,14 +376,14 @@ The action can be triggered by selecting it from the sub-menu of an existing ent
 
 Every invocation of an Action publishes a new `run` message (with its own unique `runId` value) to the [runs Kafka topic](./port-execution-topics), we will now explore the structure of an `action run` message:
 
-| Field | Description | Example |
-| --- | ---| --- |
-| `action` | The action identifier | `Create microservice` |
-| `resourceType` | The type of resource that triggered the action, in the case of action runs, always defaults to `run` | `run` |
-| `status` | The status of the action, in the case of action runs, always defaults to `TRIGGERED` | `TRIGGERED` |
-| `trigger` | Shows audit data for the action run | Example below |
-| `context` | An object containing the context of the action, has keys for `blueprint`, `entity` and `runId` | Example below |
-| `payload` | Explanation below | Example below |
+| Field          | Description                                                                                          | Example               |
+| -------------- | ---------------------------------------------------------------------------------------------------- | --------------------- |
+| `action`       | The action identifier                                                                                | `Create microservice` |
+| `resourceType` | The type of resource that triggered the action, in the case of action runs, always defaults to `run` | `run`                 |
+| `status`       | The status of the action, in the case of action runs, always defaults to `TRIGGERED`                 | `TRIGGERED`           |
+| `trigger`      | Shows audit data for the action run                                                                  | Example below         |
+| `context`      | An object containing the context of the action, has keys for `blueprint`, `entity` and `runId`       | Example below         |
+| `payload`      | Explanation below                                                                                    | Example below         |
 
 ### Example Trigger
 
@@ -482,4 +482,4 @@ Here is an example `payload` object for a `CREATE` action:
 Now that you have the basics of actions down, you can refer to our examples for some practical use-cases of actions:
 
 - [Setting up a basic execution runner using AWS Lambda](./execution-basic-runner-using-aws-lambda)
-- [Setting up a service provisioning pipeline](./execution-service-pipeline-example)
+<!-- - [Setting up a service provisioning pipeline](./execution-service-pipeline-example) -->

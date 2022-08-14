@@ -741,4 +741,6 @@ In addition to seeing the topic message in Cloudwatch, our Lambda function code 
 
 This was just a very basic example on how to listen and react to changes in the Software Catalog, we left placeholder code for you to insert your own custom logic that fits your infrastructure.
 
-Now that you have a changelog runner, maybe try exploring our [service pipeline example](./execution-service-pipeline-example), or dive deeper into our [execution topics](./port-execution-topics)
+If you want to dive even deeper into Port's execution capabilities, try looking at our [execution topics](./port-execution-topics.md)
+
+<!-- Now that you have a changelog runner, maybe try exploring our [service pipeline example](./execution-service-pipeline-example), or dive deeper into our [execution topics](./port-execution-topics) -->
