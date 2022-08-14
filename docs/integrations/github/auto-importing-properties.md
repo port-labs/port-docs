@@ -13,13 +13,13 @@ With our github app you can auto import properties from a GitHub repository, lik
 
 | Field | Description 
 | ----------- | ----------- |
-| `repo` | A Link to the repository that the `port.yml` file is located in. <br/><br/> * When there are multiple `port.yml` files the link will point to the `port.yml` parent directory |
+| `repo` | A Link to the repository that the `port.yml` file is located in. <br/><br/> * When there are multiple `port.yml` files the link will point to each `port.yml` file's parent directory |
 | `mainLanguage` | The main language the repo is written in `Typescript`, `Python`, etc... |
 | `openIssues` | The number of the open issues for the repository |
-| `commitMessage` | The latest commit message of the repoistory <br/><br/> * When there are multiple `port.yml` files the commit message will be taken from the `port.yml` file parent directory | 
-| `commitedBy` | Who performed the latest commit (Author username) <br/><br/> * When there are multiple `port.yml` files the commited by will be determined by who did the last commit to `port.yml` file parent directory |
-| `commitHash` | The latest commit hash of the repoistory <br/><br/> * When there are multiple `port.yml` files the commit hash will be taken from the `port.yml` file parent directory |
-| `organization` | The GitHub organization that the repository belongs to |
+| `commitMessage` | The latest commit message of the repoistory <br/><br/> * When there are multiple `port.yml` files the commit message will be taken from each `port.yml` file's parent directory | 
+| `commitedBy` | Who performed the latest commit (Author username) <br/><br/> * When there are multiple `port.yml` files the commited by will be determined by who did the last commit to each `port.yml` file's parent directory |
+| `commitHash` | The latest commit hash of the repoistory <br/><br/> * When there are multiple `port.yml` files the commit hash will be taken from each `port.yml` file's parent directory |
+| `organization` | The description of the GitHub repository |
 | `description` | The repository of the GitHub description |
 | `visibility` | Is the repository Private or Public |
 | `archived` | Is the repository archived? |
@@ -27,7 +27,7 @@ With our github app you can auto import properties from a GitHub repository, lik
 
 ### Using auto importable properties
 
-In order to use auto importable properties all you have to do is add the json below to your [blueprint schema](../../platform-overview/port-components/blueprint.md#blueprints-properties), if you still don't have a blueprint with GitHub integration please refer to the [Quickstart](./quickstart) to create one.
+In order to use auto importable properties all you have to do is add the JSON below to your [blueprint schema](../../platform-overview/port-components/blueprint.md#blueprints-properties), if you still don't have a blueprint with GitHub integration please refer to the [Quickstart](./quickstart) to create one.
 
 :::tip:
 You can choose to include just a subset of the auto importable properties shown above, or all of them
