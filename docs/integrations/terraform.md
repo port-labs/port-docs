@@ -60,7 +60,7 @@ The result should be : `No changes. Your infrastructure matches the configuratio
 
 ### Creating Blueprints
 
-First, we will create two blueprints - Environment and Microservice and we will require that a Microservice is connected to an Environment. Add the following to your terraform file:
+First, we will create two blueprints - Environment and Microservice and we will require that a Microservice is connected to an Environment. Add the following to your terraform files:
 
 ```hcl
 resource "port-labs_blueprint" "environment" {
@@ -106,7 +106,7 @@ resource "port-labs_blueprint" "microservice" {
 
 ### Creating a resource
 
-Next, we would like to create a microservice (say, "Golang Monolith") and connect to it to staging environment. Add the following resources to your terraform file:
+Next, we would like to create a microservice (say, "Golang Monolith") and connect to it to staging environment. Add the following resources to your terraform files:
 
 ```hcl
 resource "port-labs_entity" "staging_env" {
