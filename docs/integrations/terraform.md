@@ -58,29 +58,72 @@ The result should be : `No changes. Your infrastructure matches the configuratio
 
 ## Usage
 
-Assume you have a blueprint for your microservices, and that a microservice has two properties: `slackChannel` and `repoUrl`.
+### Creating Blueprints
 
-:::tip
+First, we will create two blueprints - Environment and Microservice and we will require that a Microservice is connected to an Environment. Add the following to your terraform files:
 
-For an example how to create a blueprint, please refer to the [Create a blueprint](../tutorials/blueprint-basics.md#create-blueprints) in the [blueprint basics](../tutorials/blueprint-basics.md) tutorials
-:::
+```hcl
+resource "port-labs_blueprint" "environment" {
+  title      = "Environment"
+  icon       = "Environment"
+  identifier = "env"
+  properties {
+    identifier = "name"
+    type       = "string"
+    title      = "name"
+  }
+  properties {
+    identifier = "docs-url"
+    type       = "string"
+    title      = "Docs URL"
+    format     = "url"
+  }
+}
 
-For example:
-
-![Blueprint with Terraform provider](../../static/img/integrations/terraform-provider/MicroserviceBlueprint.png)
+resource "port-labs_blueprint" "microservice" {
+  title      = "Microservice"
+  icon       = "Microservice"
+  identifier = "micro"
+  properties {
+    identifier = "slackChannel"
+    type       = "array"
+    title      = "Slack Channel"
+  }
+  properties {
+    identifier = "repoUrl"
+    type       = "string"
+    format     = "url"
+    title      = "Repository URL"
+  }
+  relations {
+    identifier = "environment"
+    title      = "Env"
+    required   = "true"
+    target     = port-labs_blueprint.environment.identifier
+  }
+}
+```
 
 ### Creating a resource
 
-Let's say we want to add a new microservice entity (e.g. Golang service), we can describe it as a resource in our terraform file:
-
-For example:
+Next, we would like to create a microservice (say, "Golang Monolith") and connect to it to staging environment. Add the following resources to your terraform files:
 
 ```hcl
+resource "port-labs_entity" "staging_env" {
+  title     = "Staging"
+  blueprint = port-labs_blueprint.environment.identifier
+  properties {
+    name  = "name"
+    value = "staging"
+    type  = "string"
+  }
+}
+
 resource "port-labs_entity" "golang_monolith" {
   title     = "Golang Monolith"
-  blueprint = "microservice"
+  blueprint = port-labs_blueprint.microservice.identifier
   properties {
-    name  = "slackChannel" # should match the identifier of the property in the blueprint schema.
+    name  = "slackChannel"
     items = ["#rnd", "#deployments"]
     type  = "array"
   }
@@ -89,36 +132,14 @@ resource "port-labs_entity" "golang_monolith" {
     value = "https://github.com"
     type  = "string"
   }
-  properties {
-    name  = "config"
-    value = jsonencode({ "PORT" : "8080" })
-    type  = "object"
-  }
-  properties {
-    name  = "description"
-    value = "Example microservice"
-    type  = "string"
-  }
-  properties {
-    name  = "isDeployed"
-    value = "true"
-    type  = "boolean"
-  }
-   properties {
-    name  = "numberOfReplicates"
-    value = 1
-    type  = "number"
+  relations {
+    name       = "environment"
+    identifier = port-labs_entity.staging_env.id
   }
 }
 ```
 
 - Run the command `terraform plan` to see the resulting set of actions terraform will take: (You should see this result `Plan: 1 to add, 0 to change, 0 to destroy`)
-
-To create the `Golang Monolith` entity, run:
-
-```shell
-terraform apply
-```
 
 :::note Prerequisites
 Don't forget to set your port client id and secret in order for the provider to authenticate with Port's API:
@@ -130,42 +151,17 @@ export `PORT_CLIENT_SECRET`=YOUR_CLIENT_SECRET
 
 :::
 
+To create the `Golang Monolith` entity, run:
+
+```shell
+terraform apply
+```
+
 That's it! the entity should now be created and visible in the UI.
 
 ![Entities](../../static/img/integrations/terraform-provider/Entities.png)
 
 For more examples, see the examples and test cases in the [public repository](https://github.com/port-labs/terraform-provider-port).
-
-### Create a resource with a relation
-
-Let's say we also created a blueprint that defines a `package` and a relation between package and microservice.
-:::tip
-For more information, go to the [relation basics page](../tutorials/relation-basics.md)
-:::
-
-We can describe it as a resource with a relation section in our terraform file:
-
-```hcl
-resource "port-labs_entity" "package" {
-  title     = "fmt"
-  blueprint = "package"
-  relations {
-    name       = "package-microservice"  # the name should match the identifier of the relation
-    identifier = "microservice" # the identifier should match the identifier property in the target blueprint.
-  }
-  properties {
-    name  = "version"
-    value = 1.1
-    type  = "number"
-  }
-}
-```
-
-After running the command `terraform applay` again, you should see this result:
-
-![EntityWithRelation](../../static/img/integrations/terraform-provider/EntityWithRelation.png)
-
-We successfully created a entitiy that related to the microserivce(Golang Monolith) we created previously.
 
 ### Update a resource
 
