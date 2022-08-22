@@ -60,34 +60,17 @@ The result should be : `No changes. Your infrastructure matches the configuratio
 
 ### Creating Blueprints
 
-First, we will create two blueprints - Environment and Microservice and we will require that a Microservice is connected to an Environment. Add the following to your terraform files:
+First, we will create two blueprints - Microservice and Package and we will connect to multiple packages. Add the following to your terraform files:
 
 ```hcl
-resource "port-labs_blueprint" "environment" {
-  title      = "Environment"
-  icon       = "Environment"
-  identifier = "env"
-  properties {
-    identifier = "name"
-    type       = "string"
-    title      = "name"
-  }
-  properties {
-    identifier = "docs-url"
-    type       = "string"
-    title      = "Docs URL"
-    format     = "url"
-  }
-}
-
 resource "port-labs_blueprint" "microservice" {
   title      = "Microservice"
   icon       = "Microservice"
-  identifier = "micro"
+  identifier = "microservice"
   properties {
-    identifier = "slackChannel"
+    identifier = "slackChannels"
     type       = "array"
-    title      = "Slack Channel"
+    title      = "Slack Channels"
   }
   properties {
     identifier = "repoUrl"
@@ -95,51 +78,105 @@ resource "port-labs_blueprint" "microservice" {
     format     = "url"
     title      = "Repository URL"
   }
+  properties {
+    identifier = "description"
+    type       = "string"
+    title      = "Description"
+  }
+  properties {
+    identifier = "config"
+    type       = "object"
+    title      = "Config"
+  }
+  properties {
+    identifier = "replicas"
+    type       = "number"
+    title      = "Number of Replicas"
+  }
+  properties {
+    identifier = "deployed"
+    type       = "boolean"
+    title      = "Is Deployed"
+  }
+}
+resource "port-labs_blueprint" "package" {
+  title      = "Package"
+  icon       = "Package"
+  identifier = "package"
+  properties {
+    identifier = "name"
+    type       = "string"
+    title      = "name"
+  }
+  properties {
+    identifier = "version"
+    type       = "string"
+    title      = "version"
+  }
   relations {
-    identifier = "environment"
-    title      = "Env"
-    required   = "true"
-    target     = port-labs_blueprint.environment.identifier
+    identifier = "package"
+    title      = "Packages"
+    target     = port-labs_blueprint.microservice.id
   }
 }
 ```
 
-### Creating a resource
+### Creating entities
 
-Next, we would like to create a microservice (say, "Golang Monolith") and connect to it to staging environment. Add the following resources to your terraform files:
+Next, we would like to create a microservice (say, "Golang Monolith") and connect to it a few packages. Add the following resources to your terraform files:
 
 ```hcl
-resource "port-labs_entity" "staging_env" {
-  title     = "Staging"
-  blueprint = port-labs_blueprint.environment.identifier
-  properties {
-    name  = "name"
-    value = "staging"
-    type  = "string"
-  }
-}
-
 resource "port-labs_entity" "golang_monolith" {
   title     = "Golang Monolith"
-  blueprint = port-labs_blueprint.microservice.identifier
+  blueprint = port-labs_blueprint.microservice.id
   properties {
-    name  = "slackChannel"
+    name  = "slackChannels" # should match the identifier of the property in the blueprint schema.
     items = ["#rnd", "#deployments"]
-    type  = "array"
   }
   properties {
-    name  = "repoUrl"
-    value = "https://github.com"
-    type  = "string"
+    name  = "config"
+    value = jsonencode({ "PORT" : "8080" })
   }
+  properties {
+    name  = "description"
+    value = "Example microservice"
+  }
+  properties {
+    name  = "deployed"
+    value = "true"
+  }
+  properties {
+    name  = "replicas"
+    value = 1
+  }
+}
+resource "port-labs_entity" "fmt" {
+  title     = "fmt"
+  blueprint = port-labs_blueprint.package.id
   relations {
-    name       = "environment"
-    identifier = port-labs_entity.staging_env.id
+    identifier = port-labs_entity.golang_monolith.id
+    name       = "package"
+  }
+  properties {
+    name  = "version"
+    value = 1.1
+  }
+}
+resource "port-labs_entity" "net" {
+  title     = "net"
+  blueprint = port-labs_blueprint.package.id
+  relations {
+    identifier = port-labs_entity.golang_monolith.id
+    name       = "package"
+  }
+  properties {
+    name  = "version"
+    value = 12.3
   }
 }
 ```
 
-- Run the command `terraform plan` to see the resulting set of actions terraform will take: (You should see this result `Plan: 1 to add, 0 to change, 0 to destroy`)
+- Run the command `terraform plan` to see the resulting set of actions terraform will take: (You should see this result `Plan: 5 to add, 0 to change, 0 to destroy`)
 
 :::note Prerequisites
 Don't forget to set your port client id and secret in order for the provider to authenticate with Port's API:
@@ -151,7 +188,7 @@ export `PORT_CLIENT_SECRET`=YOUR_CLIENT_SECRET
 
 :::
 
-To create the `Golang Monolith` entity, run:
+To create the blueprints and entities above, run:
 
 ```shell
 terraform apply
