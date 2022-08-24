@@ -8,7 +8,10 @@ sidebar_position: 4
 
 In order to manage multiple entities (of one or more blueprints), there are two ways (which you can combine):
 
-1. Use YAML sequences (arrays/lists) in your `port.yml` file.
+1. Use [YAML sequences](#YAML-sequences) (arrays/lists) in your `port.yml` file.
+2. Use [multiple](#multiple-files) `port.yml` files (e.g., Monorepo use-case).
+
+### YAML sequences
 
 Here is an example:
 
@@ -31,8 +34,8 @@ Here is an example:
     grafana: https://play.grafana.org/d/000000012/grafana-play-home
 ```
 
+### Multiple files
 
-2. Use multiple `port.yml` files (e.g., Monorepo use-case). 
 By default, we search for all `port.yml` files in your repo (Use `specPath` (Glob Patterns) in [Advanced configurations](./advanced-configuration) to control it)
 
 ![GitHub app tree of port.yml files](../../../static/img/integrations/github-app/GithubTreeOfPortYamlFiles.png)

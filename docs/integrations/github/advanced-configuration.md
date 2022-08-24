@@ -43,8 +43,8 @@ Please make sure you don't have duplicate identifiers in different `port.yml` fi
 :::
 
 ### Templating strings
-In the `port-app-config.yml` file it's posiible to also provide to any configuration a template string that will be automatically taken from the GitHub repo context.
-Template strings are wrapped into brackets for example: `{{ field }}`.
+In the `port-app-config.yml` file it's possible to also provide to any configuration a template string that will automatically be taken from the GitHub repo context.
+Template strings are wrapped into brackets, for example: `{{ field }}`.
 
 
 #### Supported template strings 
