@@ -35,8 +35,8 @@ We also support putting "{{ repositoryName }}" for any config, which means the n
 | `defaultTitle` | `String` | The title to use if one is not provided in the `port.yml` file | `null` 
 | `defaultIdentifier` | `String` | The identifier to use if one is not provided in the `port.yml` file | `null`
 | `defaultTeam` | `String` | The name of the default team to use if one is not provided in the `port.yml` file | `null`
-| `defaultPropertiesPath` | `String` | Changing the `properties` location in the `port.yml` file, you can provide custom paths like `props`, `data` or any other key. (in order to make it a top level key you ahve to provide `.`).<br/> A common usecase is to reuse existing `yml` files within the repository without the need to change it to the `port.yml` default format | `properties`
-| `deleteDependentEntities` | `Boolean` | A flag to enable deletion of dependents entities (has required relation to an entity you wish to delete) | `false`
+| `defaultPropertiesPath` | `String` | Changing the `properties` location in the `port.yml` file, you can provide custom paths like `props`, `data` or any other key. (in order to make it a top level key you have to provide `.`).<br/> A common usecase is to reuse existing `yml` files within the repository without the need to change it to the `port.yml` default format | `properties`
+| `deleteDependentEntities` | `Boolean` | A flag to enable deletion of dependent entities - A dependent entity is one that has a required relation with an entity you wish to delete | `false`
 
 :::caution
 Please make sure you don't have duplicate identifiers in different `port.yml` files when using the `defaultIdentifier` confiugration
