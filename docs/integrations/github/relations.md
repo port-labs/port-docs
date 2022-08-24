@@ -38,5 +38,5 @@ The relation identifier is provided as key (`package-microservice`), and the mic
 ### Deletion of dependent entities
 
 If you want to delete an entity from `port.yml` that has dependent entities (that has required relation(s) to the entity you want to delete), there are two options:
-1. You can remove also the dependents entities in the same operation (through `port.yml`, if you manage the dependents entities there).
+1. You can remove the dependent entities in the same operation (through `port.yml`, if you manage the dependent entities there).
 2. Enable `deleteDependentEntities` flag in [Advanced configurations](./advanced-configuration) (disabled by default).
