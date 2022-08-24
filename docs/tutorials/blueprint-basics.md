@@ -64,6 +64,28 @@ In order to create a Blueprint with the following properties, we will use the fo
 }
 ```
 
+Notice you can add an icon to a property:
+
+```json showLineNumbers
+{
+    ...
+    "schema": {
+        "properties": {
+            "repoUrl": {
+                "icon": "Github",
+                ...
+            },
+            ...
+        },
+    }
+}
+```
+The icon will be displayed in the column header of the property "repoUrl":
+
+![Blueprints graph with new Microservice](../../static/img/tutorial/repoUrlWithIcon.png)
+
+<br/>
+
 Click on the `save` button, and you should see your new Blueprint in the Blueprints graph:
 
 ![Blueprints graph with new Microservice](../../static/img/welcome/quickstart/blueprintGraphWithMicroserviceClosed.png)
