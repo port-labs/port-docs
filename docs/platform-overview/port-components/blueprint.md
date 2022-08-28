@@ -119,6 +119,7 @@ Now let's look at the structure of this property definition and also explore the
 | `title` | `String` | A nicely written name for the property |
 | `type` | `String` | **A mandatory Field.** The data type of the property. You can explore all available types in the [Property Types](#property-types) section |
 | `format` | `String` | A specific data format to pair with some of the available types. You can explore all formats in the [String Formats](#string-property-formats) section | 
+| `pattern` | `String` | A [regular expression](https://en.wikipedia.org/wiki/Regular_expression) (regex) pattern to specify the set of allowed values for the property. You can see an example in the [String regular expression patterns](#string-regular-expression-patterns) section |
 | `default` | Should match the `type` | A default value for this property in case an entity is created without explicitly providing a value. |
 | `icon` | `String` | An icon for the property column in the [blueprint page](./page#blueprint-page), in the [entity page](./page#entity-page) and in the [entity creation](../../tutorials/entity-basics.md#from-the-ui) form |	
 | `description` | `String` | A description of the property.<br /> This value is visible to users when hovering on the info icon on the UI ℹ︎. It provides detailed information about the use of a specific property. |
@@ -347,6 +348,32 @@ Here is how property formats are used:
     "default": "0000:0000:0000:0000:0000:0000:0000:0000"
 }
 ```
+
+## String regular expression patterns
+
+In order to use a regex pattern for a property value, both the `"type": "string"` and the `"pattern": "[REGEX_PATTERN]"` keys need to be used in the property JSON.
+
+A regex pattern will limit the set of legal values only to ones that are matched by the specified specified `[REGEX_PATTERN]`:
+
+```json {3-4} showLineNumbers
+"regex_prop": {
+    "title": "Regex Pattern Property",
+    "type": "string",
+    "pattern": "[a-zA-Z0-9]",
+    "description": "A property that supports values specified by a regex pattern",
+    "default": "Port1337"
+}
+```
+
+In the example above, the pattern `[a-zA-Z0-9]` sets the following rules:
+
+- Letters in the range `a-z` will be matched, in both lowercase and uppercase form
+- Digits in the range `0-9` will be matched
+- Any combination of characters and digits from the previous rules will be matched
+
+:::tip
+Port supports standard Javascript regex syntax ([ECMA 262](https://www.ecma-international.org/publications-and-standards/standards/ecma-262/)), for quick reference of some of the available regex syntax, refer to the [JSON Schema docs](https://json-schema.org/understanding-json-schema/reference/regular_expressions.html)
+:::
 
 ## Property icons
 
