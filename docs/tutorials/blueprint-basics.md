@@ -31,9 +31,9 @@ Don't worry if you feel like the `Microservice` blueprint should include more pr
 :::
 
 :::tip Available Icons
-You will notice that in the image above the icon field already has the value `Microservice` filled in. In addition to the icon for `Microservice` Port also supports the following:
+You will notice that in the image above the icon field already has the value `Microservice` filled in.
 
-`Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud, Cluster, CPU, Customer, Datadog, DefaultEntity, DefaultProperty, DeployedAt, Deployment, DevopsTool, Docs, Environment, Git, Github, GitVersion, GoogleCloud, GPU, Grafana, Jenkins, Lambda, Link, Lock, Microservice, Moon, Node, Okta, Package, Permission, Server, Service, Terraform`
+For a list of available icons refer to the [full icon list](../platform-overview/port-components/blueprint.md#full-icon-list)
 :::
 
 In order to create a Blueprint with the following properties, we will use the following JSON body:
@@ -63,28 +63,6 @@ In order to create a Blueprint with the following properties, we will use the fo
     }
 }
 ```
-
-:::tip icon property:
-
-```json showLineNumbers
-{
-    ...
-    "schema": {
-        "properties": {
-            "repoUrl": {
-                "icon": "Github",
-                ...
-            },
-            ...
-        },
-    }
-}
-```
-The icon will be displayed in the column header of the property "repoUrl":
-
-![Blueprints graph with new Microservice](../../static/img/tutorial/repoUrlWithIcon.png)
-
-:::tip
 
 Click on the `save` button, and you should see your new Blueprint in the Blueprints graph:
 
