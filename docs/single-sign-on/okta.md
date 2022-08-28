@@ -35,11 +35,11 @@ Click `Next`.
 ### Step #2: Configure your Okta application
 
 Under `General Setting`:
-1. Choose an `App integration `name` (A specific name that will appear on your Okta apps).
+1. Choose an `App integration name` (A specific name that will appear on your Okta apps).
 
 2. Add an application logo (Optional).
 
-    Please find this logo:  
+    
     ![Port's logo](../../static/img/sso/general-assets/PortLogo.png)
 
 3. Under `Grant type` mark all options.
@@ -76,7 +76,7 @@ Under `General` tab:
     2.3 - Check `Login flow` to be `Redirect to app to initiate login (OIDC Compliant)` and paste the following URI under the `initiate login URI`: `https://app.getport.io?org_id={YOUR_ORG_ID}`
 
     :::note
-        We will provide your `organization id` (Contact us on Slack).
+    We will provide your `organization id` (Contact us on Slack).
     :::
 
     ![Okta app settings login flow](../../static/img/sso/okta/OktaAppLoginflowSettings.png)
@@ -112,7 +112,7 @@ To allow automatic OKTA group support in Port, please follow these steps:
     3.2 Select the required regex phrase to your needs. 
     
     :::note
-        To support all groups insert `Matches regex` with the `.*` value.
+    To import all groups, insert `Matches regex` with the `.*` value.
     :::
 
     ![Okta application set group claims](../../static/img/sso/okta/OktaAppSetGroupClaims.png)
