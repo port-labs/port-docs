@@ -4,7 +4,11 @@ sidebar_position: 1.1
 
 # How to configure Okta
 
-This is a step-by-step guide to configuring the integration between Port and Okta. 
+This is a step-by-step guide to configuring the integration between Port and Okta.
+
+:::info
+In order to complete the process you will need to contact us, the exact information we need to provide, as well as the information Port requires from you is listed in this doc.
+:::
 
 ## What does the Port-Okta integration give you?
 
