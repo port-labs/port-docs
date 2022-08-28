@@ -262,7 +262,7 @@ The search route also supports several query parameters which affect the returne
 | Parameter | Description | Available values | Default value
 |---|---|---|---|
 | `attach_title_to_relation` | `true`: Both the identifier and the title of the related entity will appear under the relation key <br></br><br></br> `false`: Only the identifier of the related entity will appear under the relation key  | `true`/`false` | `false`
-| `exclude_calculated_properties` | Should [mirror properties](../platform-overview/port-components/blueprint.md#mirror-properties) and [formuala properties](../platform-overview/port-components/blueprint.md#) be returned with the result | `true`/`false` | `false`
+| `exclude_calculated_properties` | Should [mirror properties](../platform-overview/port-components/blueprint.md#mirror-properties) and [formula properties](../platform-overview/port-components/blueprint.md#) be returned with the result | `true`/`false` | `false`
 ### `attach_title_to_relation` example
 
 Here is a search response with `attach_title_to_relation=true`:
@@ -307,7 +307,7 @@ Here is a search response with `attach_title_to_relation=true`:
 }
 ```
 
-And here is the same search response with `attach_title_to_identifier=false`:
+And here is the same search response with `attach_title_to_relation=false`:
 
 ```json showLineNumbers
 {
