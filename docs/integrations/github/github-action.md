@@ -35,7 +35,12 @@ Add the following to your workflow yml file:
     blueprint: Package
     properties: |
       {
-        "owner": "port-labs"
+        "version": "v1",
+        "committedBy": "${{ github.actor }}",
+        "commitHash": "${{ github.sha }}",
+        "actionJob": "${{ github.job }}",
+        "repoPushedAt": "${{ github.event.repository.pushed_at}}",
+        "runLink": "${{ format('{0}/actions/runs/{1}', github.event.repository.html_url, github.run_id) }}"
       }
     relations: |
       {
