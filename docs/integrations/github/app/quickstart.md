@@ -13,13 +13,13 @@ This repo is `private` at the moment, so you’ll get a 404.
 Please contact us with your GitHub user for access.
 :::
 
-2.  Use the `microservice.json` file as a base for your [Blueprint](../../platform-overview/port-components//blueprint.md)
+2.  Use the `microservice.json` file as a base for your [Blueprint](../../../platform-overview/port-components/blueprint.md)
 
 :::tip
 You can add any property you want into the base `microservice.json` file
 :::
 
-3. Once you are satisfied with your Blueprint, go ahead and create it in Port [via UI](../../tutorials/blueprint-basics.md#from-the-ui) or [via API](../../tutorials/blueprint-basics.md#from-the-api) 
+3. Once you are satisfied with your Blueprint, go ahead and create it in Port [via UI](../../../tutorials/blueprint-basics.md#from-the-ui) or [via API](../../../tutorials/blueprint-basics.md#from-the-api) 
 
 4. Now let's get the data inside Port:
 
