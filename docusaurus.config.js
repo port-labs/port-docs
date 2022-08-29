@@ -10,8 +10,8 @@ const config = {
   tagline: "Documentation Portal",
   url: "https://docs.getport.io/",
   baseUrl: "/",
-  onBrokenLinks: "warn",
-  onBrokenMarkdownLinks: "warn",
+  onBrokenLinks: "throw",
+  onBrokenMarkdownLinks: "throw",
   // favicon: "img/favicon.ico",
   favicon: "img/favicon.svg",
   organizationName: "port-labs", // Usually your GitHub org/user name.
@@ -140,7 +140,7 @@ const config = {
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
-        additionalLanguages: ['hcl']
+        additionalLanguages: ["hcl"],
       },
       liveCodeBlock: {
         /**
