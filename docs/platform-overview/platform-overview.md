@@ -107,7 +107,7 @@ An entity is the object instance of a blueprint, and it represents the data of t
 
 ![Microservices Main Page](../../static/img/platform-overview/MicroservicesMainPage.png)
 
-See [Port Components](../port-components) for further details.
+See [Port Components](./port-components/) for further details.
 :::
 
 ### Saved Views

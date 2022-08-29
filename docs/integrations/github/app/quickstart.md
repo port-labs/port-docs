@@ -30,5 +30,5 @@ You can add any property you want into the base `microservice.json` file
 5. After the changes have been merged, you should see the data specified in the `port.yml` file appear in the page matching your new blueprint in Port!
 
 :::tip
-You might have noticed we didn't supply the repository link in the port.yml but it is shown in port automatically, if you want to know how it works you can refer to the [Auto importing properties](./Auto%20importing%20properties) section
+You might have noticed we didn't supply the repository link in the port.yml but it is shown in port automatically, if you want to know how it works you can refer to the [Auto importing properties](./auto-importing-properties) section
 :::

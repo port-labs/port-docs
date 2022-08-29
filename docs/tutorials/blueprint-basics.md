@@ -351,7 +351,7 @@ For more information about the PATCH request format, refer to the [API Reference
 
 
 :::info A note about mirror properties
-If you try to update a blueprint that has a [relation](relations), you will notice that its JSON body contains a key called `mirrorProperties`:
+If you try to update a blueprint that has a [relation](../platform-overview/port-components/relation.md), you will notice that its JSON body contains a key called `mirrorProperties`:
 
 ```json showLineNumbers
 "mirrorProperties": {

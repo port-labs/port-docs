@@ -51,7 +51,7 @@ This will allow you to interact with relations in code in a generic way, without
 :::
 
 :::note
-When creating a blueprint from the API, there is no need for the `source` field. For more info refer to the [API reference](../api-reference) section.
+When creating a blueprint from the API, there is no need for the `source` field. For more info refer to the [API reference](../../api-reference) section.
 :::
 
 
