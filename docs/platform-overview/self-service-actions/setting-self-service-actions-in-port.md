@@ -64,8 +64,7 @@ For our example, let’s create 2 blueprints and connect them to each other:
             }
         },
         "required": []
-    },
-    "dataSource": "Port"
+    }
 }
 ```
 
@@ -109,8 +108,7 @@ For our example, let’s create 2 blueprints and connect them to each other:
             }
         },
         "required": []
-    },
-    "dataSource": "Port"
+    }
 }
 ```
 </details>

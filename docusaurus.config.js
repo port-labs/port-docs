@@ -45,7 +45,7 @@ const config = {
         // Plugin Options for loading OpenAPI files
         specs: [
           {
-            spec: "openapi/port-api.yaml",
+            spec: "https://api.getport.io/yaml",
             route: "/api-reference/",
           },
         ],

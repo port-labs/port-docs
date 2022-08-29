@@ -55,7 +55,6 @@ In order to create a Blueprint with the following properties, we will use the fo
     "identifier": "microservice",
     "title": "Microservice",
     "icon": "Microservice",
-    "dataSource": "Port",
     "formulaProperties": {},
     "schema": {
         "properties": {
@@ -181,7 +180,6 @@ so let's go ahead and create an **Package Blueprint**:
     "identifier": "package",
     "title": "Package",
     "icon": "Package",
-    "dataSource": "Port",
     "formulaProperties": {},
     "schema": {
         "properties": {

@@ -71,7 +71,6 @@ Notice that this entity is based on the following blueprint definition, where th
     "identifier": "microservice",
     "title": "microservice",
     "icon": "Microservice",
-    "dataSource": "Port",
     "formulaProperties": {},
     "schema": {
         "properties": {

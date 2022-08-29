@@ -73,7 +73,6 @@ Let’s configure a `VM` blueprint, the blueprint base structure is:
         },
         "required": []
     },
-    "dataSource": "Port",
     "disableEditing": false,
     "enableResponsibleTeamEdit": false,
     "disabledProperties": [],
@@ -93,7 +92,7 @@ import requests
 CLIENT_ID = 'YOUR_CLIENT_ID'
 CLIENT_SECRET = 'YOUR_CLIENT_SECRET'
 
-API_URL = 'https://api.getport.io/v0.1'
+API_URL = 'https://api.getport.io/v1'
 
 credentials = {'client_id': CLIENT_ID, 'client_secret': CLIENT_SECRET}
 
@@ -139,7 +138,6 @@ blueprint = {
         },
         "required": []
     },
-    "dataSource": "Port",
     "disableEditing": False,
     "enableResponsibleTeamEdit": False,
     "disabledProperties": [],
@@ -216,7 +214,7 @@ import requests
 CLIENT_ID = 'YOUR_CLIENT_ID'
 CLIENT_SECRET = 'YOUR_CLIENT_SECRET'
 
-API_URL = 'https://api.getport.io/v0.1'
+API_URL = 'https://api.getport.io/v1'
 
 credentials = {'client_id': CLIENT_ID, 'client_secret': CLIENT_SECRET}
 
@@ -488,7 +486,7 @@ CLIENT_SECRET = os.environ['PORT_CLIENT_SECRET']
 
 CREATE_TRIGGER = 'CREATE'
 
-API_URL = 'https://api.getport.io/v0.1'
+API_URL = 'https://api.getport.io/v1'
 
 
 def convert_status_code_to_run_status(status_code: int):
@@ -734,7 +732,7 @@ import requests
 CLIENT_ID = 'YOUR_CLIENT_ID'
 CLIENT_SECRET = 'YOUR_CLIENT_SECRET'
 
-API_URL = 'https://api.getport.io/v0.1'
+API_URL = 'https://api.getport.io/v1'
 
 credentials = {'client_id': CLIENT_ID, 'client_secret': CLIENT_SECRET}
 
