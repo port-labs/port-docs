@@ -36,7 +36,7 @@ In this example, you can see how a microservice blueprint is defined.
 {
     "identifier": "microservice",
     "title": "Microservice",
-    "icon": "Github",
+    "icon": "Microservice",
     "schema": {
         "properties": {
             "description": {
@@ -75,12 +75,11 @@ Add the following to your workflow `yml` file:
   with:
     clientId: ${{ secrets.CLIENT_ID }}
     clientSecret: ${{ secrets.CLIENT_SECRET }}
-    identifier: reporting
-    title: Reporting
+    identifier: example-microservice
     blueprint: microservice
     properties: |
       {
-        "description": "reporting service",
+        "description": "example microservice",
         "buildNumber": 1,
         "isActive": true,
         "languages": ["TypeScript", "Shell"],
@@ -104,7 +103,7 @@ In this example, you can see how a package blueprint is defined.
 
 ```json showLineNumbers
 {
-    "identifier": "Package",
+    "identifier": "package",
     "title": "Package",
     "icon": "Package",
     "schema": {
@@ -153,8 +152,8 @@ In this example, you can see how a package-microservice relation is defined.
 {
     "title": "Used In",
     "identifier": "package-microservice",
-    "source": "Package",
-    "target": "Microservice",
+    "source": "package",
+    "target": "microservice",
     "required": false,
     "many": false
 }
@@ -171,7 +170,7 @@ Add the following to your workflow `yml` file:
     clientSecret: ${{ secrets.CLIENT_SECRET }}
     identifier: example-package
     title: Example Package
-    blueprint: Package
+    blueprint: package
     properties: |
       {
         "version": "v1",
@@ -183,7 +182,7 @@ Add the following to your workflow `yml` file:
       }
     relations: |
       {
-        "package-microservice": "reporting"
+        "package-microservice": "example-microservice"
       }
 ```
 
