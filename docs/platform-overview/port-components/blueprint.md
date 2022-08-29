@@ -38,7 +38,6 @@ Each blueprint is represented by a [Json schema](https://json-schema.org/), as s
     "identifier": "UniqueID",
     "title": "Title",
     "icon": "Service",
-    "dataSource": "Port",
     "formulaProperties": {},
     "schema": {
         "properties": {
@@ -69,7 +68,6 @@ Each blueprint is represented by a [Json schema](https://json-schema.org/), as s
 | `identifier` | `String` | A unique identifier.<br /> Note that while the identifier is unique, it can be changed after creation. |
 | `title` | `String` | A nicely written name for the blueprint |
 | `icon` | `String` | An icon for the blueprint node in the graph, and entities of the blueprint | One of the list:  `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud,...` <br /><br />See the full icon list [below.](#full-icon-list) |
-| `dataSource` | `String` | The source from which entity data is ingested, can be either `Port` or `Github` | `Port` or [Github](../../integrations/github/introduction.md) | 
 | `formulaProperties` | `Object` | Contains the properties that are defined using [formula templates](./formula-properties) | Example: "`repo-link`": "`https://github.com/{{$identifier}}`"|
 | `schema` | `Object` | An object containing two more nested fields, including `properties` and `required` | See the schame structure here: [`schema`](#blueprints-schema). |
 
@@ -79,7 +77,7 @@ Each blueprint is represented by a [Json schema](https://json-schema.org/), as s
 | `mirrorProperties` | `Object` | **Becomes available** when a relation is defined between two blueprints.<br />A mirror property is manifested to the bluepirnt's instance ([Entity](./entity)) under `relation`. | See more details on the [mirror properties](./mirror-properties) page. |
 
 #### Full icon list
-:::note Available Icons
+:::info Available Icons
 `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud, Cluster, CPU, Customer, Datadog, DefaultEntity, DefaultProperty, DeployedAt, Deployment, DevopsTool, Docs, Environment, Git, Github, GitVersion, GoogleCloud, GPU, Grafana, Jenkins, Lambda, Link, Lock, Microservice, Moon, Node, Okta, Package, Permission, Server, Service, Terraform`
 :::
 
@@ -107,6 +105,7 @@ For Example:
     "title": "My String Property",
     "type": "string",
     "default": "foo",
+    "icon": "Microservice",
     "description": "This is a string property"
 }
 ```
@@ -118,7 +117,9 @@ Now let's look at the structure of this property definition and also explore the
 | `title` | `String` | A nicely written name for the property |
 | `type` | `String` | **A mandatory Field.** The data type of the property. You can explore all available types in the [Property Types](#property-types) section |
 | `format` | `String` | A specific data format to pair with some of the available types. You can explore all formats in the [String Formats](#string-property-formats) section | 
+| `pattern` | `String` | A [regular expression](https://en.wikipedia.org/wiki/Regular_expression) (regex) pattern to specify the set of allowed values for the property. You can see an example in the [String regular expression patterns](#string-regular-expression-patterns) section |
 | `default` | Should match the `type` | A default value for this property in case an entity is created without explicitly providing a value. |
+| `icon` | `String` | An icon for the property column in the [blueprint page](./page#blueprint-page), in the [entity page](./page#entity-page) and in the [entity creation](../../tutorials/entity-basics.md#from-the-ui) form |	
 | `description` | `String` | A description of the property.<br /> This value is visible to users when hovering on the info icon on the UI ℹ︎. It provides detailed information about the use of a specific property. |
 
 
@@ -345,6 +346,51 @@ Here is how property formats are used:
     "default": "0000:0000:0000:0000:0000:0000:0000:0000"
 }
 ```
+
+## String regular expression patterns
+
+In order to use a regex pattern for a property value, both the `"type": "string"` and the `"pattern": "[REGEX_PATTERN]"` keys need to be used in the property JSON.
+
+A regex pattern will limit the set of legal values only to ones that are matched by the specified specified `[REGEX_PATTERN]`:
+
+```json {3-4} showLineNumbers
+"regex_prop": {
+    "title": "Regex Pattern Property",
+    "type": "string",
+    "pattern": "[a-zA-Z0-9]",
+    "description": "A property that supports values specified by a regex pattern",
+    "default": "Port1337"
+}
+```
+
+In the example above, the pattern `[a-zA-Z0-9]` sets the following rules:
+
+- Letters in the range `a-z` will be matched, in both lowercase and uppercase form
+- Digits in the range `0-9` will be matched
+- Any combination of characters and digits from the previous rules will be matched
+
+:::tip
+Port supports standard Javascript regex syntax ([ECMA 262](https://www.ecma-international.org/publications-and-standards/standards/ecma-262/)), for quick reference of some of the available regex syntax, refer to the [JSON Schema docs](https://json-schema.org/understanding-json-schema/reference/regular_expressions.html)
+:::
+
+## Property icons
+
+It is possible to add icons to properties:
+
+```json {4} showLineNumbers
+"string_prop": {
+    "title": "My String Property",
+    "type": "string",
+    "icon": "Github",
+    "default": "foo",
+    "description": "This is a string property"
+}
+```
+The icon will be displayed in the column header of the property (in the example above - `repoUrl`):
+
+![Blueprints graph with new Microservice](../../../static/img/platform-overview/port-components/blueprints/repoUrlWithIcon.png)
+
+For a list of available icons refer to the [full icon list](#full-icon-list)
 
 
 ## Mirror properties

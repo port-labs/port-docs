@@ -29,7 +29,7 @@ With our github app you can auto import properties from a GitHub repository, lik
 
 In order to use auto importable properties all you have to do is add the JSON below to your [blueprint schema](../../../platform-overview/port-components/blueprint.md#blueprints-properties), if you still don't have a blueprint with GitHub integration please refer to the [Quickstart](./quickstart) to create one.
 
-:::tip:
+:::tip
 You can choose to include just a subset of the auto importable properties shown above, or all of them
 :::
 
@@ -38,7 +38,6 @@ You can choose to include just a subset of the auto importable properties shown 
     "identifier": "Microservice",
     "title": "Microservice",
     "icon": "Microservice",
-    "dataSource": "Port",
     "formulaProperties": {},
     "schema": {
         "properties": {
