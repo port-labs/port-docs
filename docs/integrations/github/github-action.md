@@ -17,20 +17,19 @@ Here you'll find a step-by-step guide for Port's GitHub Action.
 
 :::note Prerequisites
 
-In order to make use of the GitHub Action, you will need an existing blueprint(s) in your Port installation.
-
-Moreover, if you want to update related entities, you will also need existing relations in your Port installation.
+- In order to authenticate with Port when using the Github Action, you will need a `CLIENT_ID` and `CLIENT_SECRET` which need to be provided when using the action.
+- In order to make use of the GitHub Action, you will need an existing blueprint(s) in your Port installation.
+  - Moreover, if you want to update related entities, you will also need existing relations in your Port installation.
 
 :::
 
 
 ### Basic Example
 
-<details>
-<summary> A microservice blueprint </summary>
-In this example, you can see how a microservice blueprint is defined.
+In this example we create a basic Blueprint and then add code that uses Port's Github Action to create/update an entity that belongs to the blueprint:
 
-#### Microservice blueprint
+<details>
+<summary> Example microservice blueprint </summary>
 
 ```json showLineNumbers
 {
@@ -65,10 +64,9 @@ In this example, you can see how a microservice blueprint is defined.
     "formulaProperties": {}
 }
 ```
-:::
 </details>
 
-Add the following to your workflow `yml` file:
+After creating the blueprint, you can add the to your workflow `yml` file to make use of the Github Action:
 
 ```yaml showLineNumbers
 - uses: port-labs/port-github-action@v1
@@ -87,19 +85,17 @@ Add the following to your workflow `yml` file:
       }
 ```
 
-:::note
-
-`CLIENT_ID` and `CLIENT_SECRET` are required. We recommend to save it as [GitHub Secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) like in the example.
+:::tip
+For security reasons it is recommend saving the `CLIENT_ID` and `CLIENT_SECRET` as [GitHub Secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) and accessing them like in the example above.
 
 :::
 
 ### Complete Example
 
+The following example adds another `package` blueprint, in addition to the `microservice` blueprint shown in the previous example. In addition, it adds a `package-microservice` relation and then the Github Action creates or updates the relation between existing entities: 
+
 <details>
 <summary> A package blueprint </summary>
-In this example, you can see how a package blueprint is defined.
-
-#### Package blueprint
 
 ```json showLineNumbers
 {
@@ -144,9 +140,7 @@ In this example, you can see how a package blueprint is defined.
 
 <details>
 <summary> A package-microservice relation </summary>
-In this example, you can see how a package-microservice relation is defined.
 
-#### Relation package-microservice
 
 ```json showLineNumbers
 {
@@ -158,7 +152,6 @@ In this example, you can see how a package-microservice relation is defined.
     "many": false
 }
 ```
-:::
 </details>
 
 Add the following to your workflow `yml` file:
