@@ -16,14 +16,14 @@ Please contact us with your GitHub user for access.
 2.  Use the `microservice.json` file as a base for your [Blueprint](../../platform-overview/port-components//blueprint.md)
 
 :::tip
-You can add any property you wish for into the base `microservice.json` file
+You can add any property you want into the base `microservice.json` file
 :::
 
 3. Once you are satisfied with your Blueprint, go ahead and create it in Port [via UI](../../tutorials/blueprint-basics.md#from-the-ui) or [via API](../../tutorials/blueprint-basics.md#from-the-api) 
 
 4. Now let's get the data inside Port:
 
-    If you don't have a `port.yml` file, please create one in your repository in a format that matches the example shown in this [GitHub Repository](https://github.com/port-labs/github-app-setup-example/blob/main/port.yml) and then commit it/merge it into the `main` branch
+    If you don't have a `port.yml` file, please create one in your repository in a format that matches the example shown in this [GitHub Repository](https://github.com/port-labs/github-app-setup-example/blob/main/port.yml) and then commit/merge it into the `main` branch
 
     If you already have a `port.yml` file in the `main` branch of the cloned example repository, update it to match the blueprint that you created (The example itself does not require any changes, so if you just created the blueprint without changing `microservice.json`, it should all work out of the box)
 
