@@ -37,6 +37,7 @@ Each blueprint is represented by a [Json schema](https://json-schema.org/), as s
 {
     "identifier": "UniqueID",
     "title": "Title",
+    "description": "Description",
     "icon": "Service",
     "formulaProperties": {},
     "schema": {
@@ -67,6 +68,7 @@ Each blueprint is represented by a [Json schema](https://json-schema.org/), as s
 | ----------- | ----------- | ----------- | ----------- |
 | `identifier` | `String` | A unique identifier.<br /> Note that while the identifier is unique, it can be changed after creation. |
 | `title` | `String` | A nicely written name for the blueprint |
+| `description` | `String` | A description for the blueprint.<br /> This value is visible to users when hovering on the info icon in the UI. |
 | `icon` | `String` | An icon for the blueprint node in the graph, and entities of the blueprint | One of the list:  `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud,...` <br /><br />See the full icon list [below.](#full-icon-list) |
 | `formulaProperties` | `Object` | Contains the properties that are defined using [formula templates](./formula-properties) | Example: "`repo-link`": "`https://github.com/{{$identifier}}`"|
 | `schema` | `Object` | An object containing two more nested fields, including `properties` and `required` | See the schame structure here: [`schema`](#blueprints-schema). |
@@ -120,7 +122,7 @@ Now let's look at the structure of this property definition and also explore the
 | `pattern` | `String` | A [regular expression](https://en.wikipedia.org/wiki/Regular_expression) (regex) pattern to specify the set of allowed values for the property. You can see an example in the [String regular expression patterns](#string-regular-expression-patterns) section |
 | `default` | Should match the `type` | A default value for this property in case an entity is created without explicitly providing a value. |
 | `icon` | `String` | An icon for the property column in the [blueprint page](./page#blueprint-page), in the [entity page](./page#entity-page) and in the [entity creation](../../tutorials/entity-basics.md#from-the-ui) form |	
-| `description` | `String` | A description of the property.<br /> This value is visible to users when hovering on the info icon on the UI ℹ︎. It provides detailed information about the use of a specific property. |
+| `description` | `String` | A description of the property.<br /> This value is visible to users when hovering on the info icon in the UI. It provides detailed information about the use of a specific property. |
 
 
 :::tip
