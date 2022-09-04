@@ -6,6 +6,10 @@ sidebar_position: 1.2
 
 This is a step-by-step guide to configuring the integration between Port and Azure Active Directory.  
 
+:::info
+In order to complete the process you will need to contact us, the exact information we need to provide, as well as the information Port requires from you is listed in this doc.
+:::
+
 ## What does the Port-AzureAd integration give you?
 
 - You'll be able to connect to the Port application via an AzureAD app. 

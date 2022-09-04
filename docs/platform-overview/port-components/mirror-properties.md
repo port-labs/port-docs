@@ -21,6 +21,7 @@ The default format of the mirror property section is as follows:
 ```json showLineNumbers
 "mirrorProperties": {
     "microservice": {
+        "title": "Microservice",
         "path": "deployment-to-microservice.$identifier"
     }
 }
@@ -34,6 +35,7 @@ The `mirrorProperties` key is a top-level key in the JSON of an entity (similar 
 ```json showLineNumbers
 "mirrorProperties": {
     "firstTargetBlueprintIdentifier": {
+        "title": "First Target Blueprint Identifier",
         "path": "firstTargetBlueprintRelationIdentifier.$identifier"
     },
     "MirrorPropertyFromFirstTargetBlueprint": {
@@ -53,6 +55,11 @@ The `mirrorProperties` key is a top-level key in the JSON of an entity (similar 
     }
 }
 ```
+
+:::tip Mirror Property Title
+Mirror properties support custom titles just like standard properties. Titles are optional but we recommend using them to increase readability
+:::
+
 ---
 
 ## Mirror Properties deep dive
@@ -76,6 +83,7 @@ In the following example, the name of the `target` blueprint is `microservice`, 
 
 ```json showLineNumbers
 "microservice": {
+    "title": "Microservice",
     "path": "deployment-to-microservice.$identifier"
 }
 ```
@@ -88,6 +96,7 @@ In the following example, we create a mirror property called `RepositoryUrl` whi
 
 ```json showLineNumbers
 "RepositoryUrl": {
+    "title": "Repository URL",
     "path": "deployment-to-microservice.repo_url"
 }
 ```
@@ -112,6 +121,7 @@ In the following example, we create a mirror property called `MicroserviceName` 
 
 ```json showLineNumbers
 "MicroserviceName": {
+    "title": "Microservice Name",
     "path": "deployment-to-microservice.$title"
 }
 ```
@@ -135,6 +145,7 @@ Let's map the squad members using a mirror property called `OwningSquadMembers`:
 
 ```json showLineNumbers
 "OwningSquadMembers": {
+    "title": "Owning Squad Members",
     "path": "microservice-to-project.project-to-squad.squad_members"
 }
 ```

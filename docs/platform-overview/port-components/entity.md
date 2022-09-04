@@ -34,13 +34,13 @@ This is the basic structure of an Entity:
 | `team` | `Array` | **Optional Field.** An array of the associated teams. Only available teams can be added. <br /> **Note that** group permissions are handled according to this array, see [Teams and ownership](#teams-and-ownership). |
 | `blueprint` | `String` | The name of the [Blueprint](./blueprint) that this entity is based on. | 
 | `properties` | `Object` | An object containing key-value pairs, where each key is a property **as defined in the blueprint definition**, and each value applies the `type` of the property. | 
-| `relations` | `object` | An object containing key-value pairs.<br /> Each key is the identifier of the [Relation](relations) that is defined on the blueprint.<br /><br />-> See more in the [Related entities](#related-entities) section. |
+| `relations` | `object` | An object containing key-value pairs.<br /> Each key is the identifier of the [Relation](./relation) that is defined on the blueprint.<br /><br />-> See more in the [Related entities](#related-entities) section. |
 
 #### Teams and ownership
 :::info teams and ownership
 The `team` key defines ownership over an entity and controls who can modify or delete an existing entity.
 
-To Explore more about Ownership in Port see our [Permissions](../../welcome) section.
+To Explore more about Ownership in Port see our [Permissions](../role-based-access-control/permissions-controls.md) section.
 :::
 
 ## Example
@@ -71,7 +71,6 @@ Notice that this entity is based on the following blueprint definition, where th
     "identifier": "microservice",
     "title": "microservice",
     "icon": "Microservice",
-    "dataSource": "Port",
     "formulaProperties": {},
     "schema": {
         "properties": {
@@ -135,4 +134,4 @@ In addition, you will be able to use [mirror properties](./mirror-properties) to
 
 [Explore How to Create, Edit, and Delete Entities with basic examples](../../tutorials/entity-basics.md)
 
-[Dive into advanced operations on Entities with our API ➡️ ](../../api-reference)
+[Dive into advanced operations on Entities with our API ➡️ ](../../../api-reference)
