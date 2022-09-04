@@ -44,7 +44,7 @@ After clicking the button an editor window will open with a format similar to th
 Remember that an access token is needed to make API requests, refer back to [Getting an API token](./blueprint-basics.md#getting-an-api-token) if you need to generate a new one
 :::
 
-In order to create a relation from the API, we will make a POST request to the URL `https://api.getport.io/v0.1/{source_blueprint_identifier}/relations`.
+In order to create a relation from the API, we will make a POST request to the URL `https://api.getport.io/v1/{source_blueprint_identifier}/relations`.
 
 The request body is almost identical to the one we have seen in the [Understanding the structure of a relation](../platform-overview/port-components/relation.md#relation-json-structure) section, the only difference is that we don't need the `source` key anymore, because we define that in the request URL.
 
@@ -66,7 +66,7 @@ Here are some request examples that will create our `Package-Deployment` relatio
 
 import requests
 
-API_URL = 'https://api.getport.io/v0.1'
+API_URL = 'https://api.getport.io/v1'
 
 source_blueprint_name = 'package'
 
@@ -99,7 +99,7 @@ response = requests.post(f'{API_URL}/blueprints/{source_blueprint_name}/relation
 
 const axios = require('axios').default;
 
-const API_URL = 'https://api.getport.io/v0.1';
+const API_URL = 'https://api.getport.io/v1';
 
 const config = {
 		headers: {
@@ -130,7 +130,7 @@ const config = {
 
 source_blueprint_name='package'
 
-curl --location --request POST "https://api.getport.io/v0.1/blueprints/$source_blueprint_name/relations" \
+curl --location --request POST "https://api.getport.io/v1/blueprints/$source_blueprint_name/relations" \
 	--header "Authorization: Bearer $access_token" \
 	--header "Content-Type: application/json" \
 	--data-raw "{
@@ -177,7 +177,7 @@ After editing the relation, click on `save` at the bottom right corner of the ed
 
 ### From the API
 
-In order to update a relation from the API, we will make a PATCH request to the URL `https://api.getport.io/v0.1/{source_blueprint_identifier}/relations/{relation_identifier}`.
+In order to update a relation from the API, we will make a PATCH request to the URL `https://api.getport.io/v1/{source_blueprint_identifier}/relations/{relation_identifier}`.
 
 A PATCH request has a specific format that allows for precise changes in an existing relation, let's look at an example:
 
@@ -201,7 +201,7 @@ A relation cannot be restored after deletion!
 In order to delete a relation you can:
 
 - Click on the trash can icon in the specific relation node in the Blueprints Graph
-- Make a REST DELETE request to the URL `https://api.getport.io/v0.1/{source_blueprint_identifier}/relations/{relation_identifier}`
+- Make a REST DELETE request to the URL `https://api.getport.io/v1/{source_blueprint_identifier}/relations/{relation_identifier}`
 
 ![Graph relations delete marked](../../static/img/platform-overview/port-components/relations/graphRelationDeleteMarked.png)
 

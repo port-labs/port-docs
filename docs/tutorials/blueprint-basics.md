@@ -43,7 +43,6 @@ In order to create a Blueprint with the following properties, we will use the fo
     "identifier": "microservice",
     "title": "Microservice",
     "icon": "Microservice",
-    "dataSource": "Port",
     "formulaProperties": {},
     "schema": {
         "properties": {
@@ -106,7 +105,7 @@ import requests
 CLIENT_ID = 'YOUR_CLIENT_ID'
 CLIENT_SECRET = 'YOUR_CLIENT_SECRET'
 
-API_URL = 'https://api.getport.io/v0.1'
+API_URL = 'https://api.getport.io/v1'
 
 credentials = {'client_id': CLIENT_ID, 'client_secret': CLIENT_SECRET}
 
@@ -131,7 +130,7 @@ const axios = require('axios').default;
 const CLIENT_ID = 'YOUR_CLIENT_ID';
 const CLIENT_SECRET = 'YOUR_CLIENT_SECRET';
 
-const API_URL = 'https://api.getport.io/v0.1';
+const API_URL = 'https://api.getport.io/v1';
 
 const response = await axios.get(`${API_URL}/auth/access_token`, {
     params: {
@@ -156,7 +155,7 @@ const accessToken = response.data.accessToken;
 # For yum:
 # $ sudo yum install jq
 
-access_token=$(curl --location --request GET "https://api.getport.io/v0.1/auth/access_token?client_id=YOUR_CLIENT_ID&client_secret=YOUR_CLIENT_SECRET" | jq '.accessToken' | sed 's/"//g')
+access_token=$(curl --location --request GET "https://api.getport.io/v1/auth/access_token?client_id=YOUR_CLIENT_ID&client_secret=YOUR_CLIENT_SECRET" | jq '.accessToken' | sed 's/"//g')
 
 # The token will be available in the access_token variable
 ```
@@ -169,7 +168,7 @@ access_token=$(curl --location --request GET "https://api.getport.io/v0.1/auth/a
 
 Let's create a basic Blueprint for a `Microservice` using the API, our Blueprint will include a **Slack Channel** and a **Repo URL**.
 
-In order to interact with the Blueprints API our basic URL will be [https://api.getport.io/v0.1/blueprints](https://api.getport.io/v0.1/blueprints), and we will create the blueprint using a REST **POST** request.
+In order to interact with the Blueprints API our basic URL will be [https://api.getport.io/v1/blueprints](https://api.getport.io/v1/blueprints), and we will create the blueprint using a REST **POST** request.
 
 :::note
 Remember the **access token** we generated earlier, we will use it while making new requests to Port's API
@@ -192,7 +191,7 @@ Remember the **access token** we generated earlier, we will use it while making 
 
 import requests
 
-API_URL = 'https://api.getport.io/v0.1'
+API_URL = 'https://api.getport.io/v1'
 
 headers = {
     'Authorization': f'Bearer {access_token}'
@@ -239,7 +238,7 @@ response = requests.post(f'{API_URL}/blueprints', json=blueprint, headers=header
 
 const axios = require('axios').default;
 
-const API_URL = 'https://api.getport.io/v0.1';
+const API_URL = 'https://api.getport.io/v1';
 
 const config = {
 		headers: {
@@ -282,7 +281,7 @@ const config = {
 ```bash showLineNumbers
 # the access_token variable should already have the token from the previous example
 
-curl --location --request POST "https://api.getport.io/v0.1/blueprints" \
+curl --location --request POST "https://api.getport.io/v1/blueprints" \
 	--header "Authorization: Bearer $access_token" \
 	--header "Content-Type: application/json" \
 	--data-raw "{
@@ -326,8 +325,8 @@ You can always change the blueprint, add/remove properties or change existing pr
 In order to update a blueprint you can:
 
 - Click the Pencil icon in the Blueprints Graph
-- Make a REST PUT request to the URL `https://api.getport.io/v0.1/{blueprint_identifier}`
-- Make a REST PATCH request to the URL `https://api.getport.io/v0.1/{blueprint_identifier}`
+- Make a REST PUT request to the URL `https://api.getport.io/v1/{blueprint_identifier}`
+- Make a REST PATCH request to the URL `https://api.getport.io/v1/{blueprint_identifier}`
 
 ![Blueprints Graph edit button marked](../../static/img/platform-overview/port-components/blueprints/blueprintGraphEditButtonMarked.png)
 
@@ -352,7 +351,7 @@ For more information about the PATCH request format, refer to the [API Reference
 
 
 :::info A note about mirror properties
-If you try to update a blueprint that has a [relation](relations), you will notice that its JSON body contains a key called `mirrorProperties`:
+If you try to update a blueprint that has a [relation](../platform-overview/port-components/relation.md), you will notice that its JSON body contains a key called `mirrorProperties`:
 
 ```json showLineNumbers
 "mirrorProperties": {
@@ -375,7 +374,7 @@ A blueprint cannot be restored after deletion!
 In order to delete a blueprint you can:
 
 - Click on the trash can icon in the specific blueprint node in the Blueprints Graph
-- Make a REST DELETE request to the URL `https://api.getport.io/v0.1/{blueprint_identifier}`
+- Make a REST DELETE request to the URL `https://api.getport.io/v1/{blueprint_identifier}`
 
 ![Blueprints Graph delete button marked](../../static/img/platform-overview/port-components/blueprints/blueprintGraphDeleteButtonMarked.png)
 
@@ -408,8 +407,7 @@ You can create the new blueprint from the UI (using the `New Blueprint` button i
             }
         },
         "required": []
-    },
-    "dataSource": "Port"
+    }
 }
 ```
 
