@@ -69,7 +69,7 @@ Each blueprint is represented by a [Json schema](https://json-schema.org/), as s
 | ----------- | ----------- | ----------- | ----------- |
 | `identifier` | `String` | A unique identifier.<br /> Note that while the identifier is unique, it can be changed after creation. |
 | `title` | `String` | A nicely written name for the blueprint |
-| `description` | `String` | A description for the blueprint |
+| `description` | `String` | A description for the blueprint.<br /> This value is visible to users when hovering on the info icon in the UI. |
 | `icon` | `String` | An icon for the blueprint node in the graph, and entities of the blueprint | One of the list:  `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud,...` <br /><br />See the full icon list [below.](#full-icon-list) |
 | `dataSource` | `String` | The source from which entity data is ingested, can be either `Port` or `Github` | `Port` or [Github](../../integrations/github.md) | 
 | `formulaProperties` | `Object` | Contains the properties that are defined using [formula templates](./formula-properties) | Example: "`repo-link`": "`https://github.com/{{$identifier}}`"|
@@ -121,7 +121,7 @@ Now let's look at the structure of this property definition and also explore the
 | `type` | `String` | **A mandatory Field.** The data type of the property. You can explore all available types in the [Property Types](#property-types) section |
 | `format` | `String` | A specific data format to pair with some of the available types. You can explore all formats in the [String Formats](#string-property-formats) section | 
 | `default` | Should match the `type` | A default value for this property in case an entity is created without explicitly providing a value. |
-| `description` | `String` | A description of the property.<br /> This value is visible to users when hovering on the info icon on the UI ℹ︎. It provides detailed information about the use of a specific property. |
+| `description` | `String` | A description of the property.<br /> This value is visible to users when hovering on the info icon in the UI. It provides detailed information about the use of a specific property. |
 
 
 :::tip
