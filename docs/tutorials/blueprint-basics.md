@@ -107,9 +107,9 @@ CLIENT_SECRET = 'YOUR_CLIENT_SECRET'
 
 API_URL = 'https://api.getport.io/v1'
 
-credentials = {'client_id': CLIENT_ID, 'client_secret': CLIENT_SECRET}
+credentials = {'clientId': CLIENT_ID, 'clientSecret': CLIENT_SECRET}
 
-token_response = requests.get(f'{API_URL}/auth/access_token', params=credentials)
+token_response = requests.post(f'{API_URL}/auth/access_token', json=credentials)
 
 access_token = token_response.json()['accessToken']
 
@@ -132,10 +132,10 @@ const CLIENT_SECRET = 'YOUR_CLIENT_SECRET';
 
 const API_URL = 'https://api.getport.io/v1';
 
-const response = await axios.get(`${API_URL}/auth/access_token`, {
-    params: {
-        client_id: CLIENT_ID,
-        client_secret: CLIENT_SECRET,
+const response = await axios.post(`${API_URL}/auth/access_token`, {
+    data: {
+        clientId: CLIENT_ID,
+        clientSecret: CLIENT_SECRET,
     },
 });
 
@@ -155,7 +155,12 @@ const accessToken = response.data.accessToken;
 # For yum:
 # $ sudo yum install jq
 
-access_token=$(curl --location --request GET "https://api.getport.io/v1/auth/access_token?client_id=YOUR_CLIENT_ID&client_secret=YOUR_CLIENT_SECRET" | jq '.accessToken' | sed 's/"//g')
+access_token=$(curl --location --request POST 'https://api.getport.io/v1/auth/access_token' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "clientId": "CLIENT_ID",
+    "clientSecret": "CLIENT_SECRET"
+}' | jq '.accessToken' | sed 's/"//g')
 
 # The token will be available in the access_token variable
 ```
