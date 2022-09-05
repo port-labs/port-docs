@@ -476,8 +476,8 @@ const API_URL = 'https://api.getport.io/v1';
 access_token=$(curl --location --request POST 'https://api.getport.io/v1/auth/access_token' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-    "clientId": "asdasd",
-    "clientSecret": "asdasdasdasd"
+    "clientId": "CLIENT_ID",
+    "clientSecret": "CLIENT_SECRET"
 }' | jq '.accessToken' | sed 's/"//g')
 
 # The token will be available in the access_token variable
