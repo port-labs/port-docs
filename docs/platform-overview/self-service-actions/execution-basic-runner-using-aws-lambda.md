@@ -96,7 +96,7 @@ API_URL = 'https://api.getport.io/v1'
 
 credentials = {'clientId': CLIENT_ID, 'clientSecret': CLIENT_SECRET}
 
-token_response = requests.post(f'{API_URL}/auth/access_token', data=credentials)
+token_response = requests.post(f'{API_URL}/auth/access_token', json=credentials)
 
 access_token = token_response.json()['accessToken']
 
@@ -218,7 +218,7 @@ API_URL = 'https://api.getport.io/v1'
 
 credentials = {'clientId': CLIENT_ID, 'clientSecret': CLIENT_SECRET}
 
-token_response = requests.post(f'{API_URL}/auth/access_token', data=credentials)
+token_response = requests.post(f'{API_URL}/auth/access_token', json=credentials)
 
 access_token = token_response.json()['accessToken']
 
@@ -505,7 +505,7 @@ def get_port_api_token():
     '''
     credentials = {'clientId': CLIENT_ID, 'clientSecret': CLIENT_SECRET}
 
-    token_response = requests.post(f'{API_URL}/auth/access_token', data=credentials)
+    token_response = requests.post(f'{API_URL}/auth/access_token', json=credentials)
     access_token = token_response.json()['accessToken']
 
     return access_token
@@ -736,7 +736,7 @@ API_URL = 'https://api.getport.io/v1'
 
 credentials = {'clientId': CLIENT_ID, 'clientSecret': CLIENT_SECRET}
 
-token_response = requests.post(f'{API_URL}/auth/access_token', data=credentials)
+token_response = requests.post(f'{API_URL}/auth/access_token', json=credentials)
 
 access_token = token_response.json()['accessToken']
 
