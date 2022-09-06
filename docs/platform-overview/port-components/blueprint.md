@@ -148,14 +148,14 @@ we highly recommend you set a `description`, so your developers will have the co
 
 We currently support the following types:
 
-| `type`    | Description                                                                                              | Example Values                               |
-| --------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
-| `string`  | A nicely written name for the property                                                                   | `"This is a string field"`                   |
-| `number`  | Numeric field (including integers, doubles, floats, etc...)                                              | `1`, `2.3`, `5e3`,...                        |
-| `boolean` | Boolean field                                                                                            | A `true` or `false`                          |
-| `object`  | A well formatted object (i.e. python dictionary, javascript object, JSON, etc...)                        | `{ 'key1': 'value1', 'key2': 'value2', ...}` |
-| `array`   | A multi-element array                                                                                    | `[1,2,3]`, `["a","b","c"]`                   |
-| `enum`    | A field with a pre-defined set of allowed values <br /> (Can be added to props of type string or number) | `["Option 1", "Option 2", "Option 3"]`       |
+| `type`    | Description                                                                                                | Example Values                               |
+| --------- | ---------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
+| `string`  | A nicely written name for the property                                                                     | `"This is a string field"`                   |
+| `number`  | Numeric field (including integers, doubles, floats, etc...)                                                | `1`, `2.3`, `5e3`,...                        |
+| `boolean` | Boolean field                                                                                              | A `true` or `false`                          |
+| `object`  | A well formatted object (i.e. python dictionary, javascript object, JSON, etc...)                          | `{ 'key1': 'value1', 'key2': 'value2', ...}` |
+| `array`   | A multi-element array                                                                                      | `[1,2,3]`, `["a","b","c"]`                   |
+| `enum`    | A field with a pre-defined set of allowed values. Can be used with properties of type `string` or `number` | `["Option 1", "Option 2", "Option 3"]`       |
 
 :::note
 Those are the `properties` that our API supports. See [API reference](../../api-reference).

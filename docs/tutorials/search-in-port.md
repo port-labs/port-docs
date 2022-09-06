@@ -25,63 +25,63 @@ Each search request is represented by a **JSON object**, as shown in the followi
 
 ```json showLineNumbers
 {
-    "combinator": "and",
-    "rules": [
-        {
-            "property": "$blueprint",
-            "operator": "=",
-            "value": "Microservice"
-        },
-        {
-            "property": "$identifier",
-            "operator": "contains",
-            "value": "admin"
-        }
-    ]
+  "combinator": "and",
+  "rules": [
+    {
+      "property": "$blueprint",
+      "operator": "=",
+      "value": "Microservice"
+    },
+    {
+      "property": "$identifier",
+      "operator": "contains",
+      "value": "admin"
+    }
+  ]
 }
 ```
 
 ```json showLineNumbers
 {
-    "combinator": "or",
-    "rules": [
-        {
-            "property": "environment",
-            "operator": "=",
-            "value": "production"
-        },
-        {
-            "property": "environment",
-            "operator": "=",
-            "value": "staging"
-        }
-    ]
+  "combinator": "or",
+  "rules": [
+    {
+      "property": "environment",
+      "operator": "=",
+      "value": "production"
+    },
+    {
+      "property": "environment",
+      "operator": "=",
+      "value": "staging"
+    }
+  ]
 }
 ```
-
 
 ---
 
 ### Search request structure table
 
-| Field | Description 
-|---|---|
-| `combinator` | Defines whether the query performs a logical `and` or an `or` between the different conditions 
-| `rules` | An array of search rules to filter results with 
+| Field        | Description                                                                                    |
+| ------------ | ---------------------------------------------------------------------------------------------- |
+| `combinator` | Defines whether the query performs a logical `and` or an `or` between the different conditions |
+| `rules`      | An array of search rules to filter results with                                                |
 
 ## Search rules
 
-A search rule is a small filtering unit, used to control the output 
+A search rule is a small filtering unit, used to control the output
 
 Here is an example search rule:
 
 ```json showLineNumbers
 {
-    "property": "$blueprint",
-    "operator": "=",
-    "value": "Microservice"
+  "property": "$blueprint",
+  "operator": "=",
+  "value": "Microservice"
 }
 ```
+
 ---
 
 ### Search rule structure table
@@ -92,33 +92,33 @@ This part will elaborate on the structure of a search rule for each type of oper
 
 #### Comparison operators structure
 
-| Field | Description 
-|---|---|
-| `operator` | The search operator to use when evaluating this rule, see a list of available operators below 
+| Field      | Description                                                                                                                                     |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `operator` | The search operator to use when evaluating this rule, see a list of available operators below                                                   |
 | `property` | The property to filter according to its value, can be an internal property such as `$identifier` or a standard property such as `slack_channel` |
-| `value` | The value to filter by 
+| `value`    | The value to filter by                                                                                                                          |
 
 #### Relation operators structure
 
-| Field | Description 
-|---|---|
-| `operator` | The search operator to use when evaluating this rule, see a list of available operators below 
-| `blueprint` | The blueprint of the entity identifier specified in the `value` field 
-| `value` | The value to filter by 
+| Field       | Description                                                                                   |
+| ----------- | --------------------------------------------------------------------------------------------- |
+| `operator`  | The search operator to use when evaluating this rule, see a list of available operators below |
+| `blueprint` | The blueprint of the entity identifier specified in the `value` field                         |
+| `value`     | The value to filter by                                                                        |
 
 ## Search operators
 
 Search currently supports the following operators:
 
-| Operator | Description 
-|---|---|
-| `=` | Equality operator
-| `!=` | Inequality operator
-| `>`,`>=`,`<`,`<=` | Numeric comparison operators
-| `between` | Date range matching
-| `contains` | String pattern matching
-| `relatedTo` | Returns entities that have a relation with our rule target 
-| `dependedOn` | Returns entities that depend on rule target
+| Operator          | Description                                                |
+| ----------------- | ---------------------------------------------------------- |
+| `=`               | Equality operator                                          |
+| `!=`              | Inequality operator                                        |
+| `>`,`>=`,`<`,`<=` | Numeric comparison operators                               |
+| `between`         | Date range matching                                        |
+| `contains`        | String pattern matching                                    |
+| `relatedTo`       | Returns entities that have a relation with our rule target |
+| `dependedOn`      | Returns entities that depend on rule target                |
 
 ## Operator examples
 
@@ -130,9 +130,9 @@ The following rule will return entities whose identifier is `port-api`:
 
 ```json showLineNumbers
 {
-    "operator": "=",
-    "property": "$identifier",
-    "value": "port-api"
+  "operator": "=",
+  "property": "$identifier",
+  "value": "port-api"
 }
 ```
 
@@ -141,7 +141,7 @@ We can search over a variety of properties:
 
 - "meta-properties" such as `$identifier`, `$title`, `$createdAt` and more
 - user-defined properties that appear under the `properties` key in the `blueprint` definition
-:::
+  :::
 
 ### `!=` operator
 
@@ -149,9 +149,9 @@ The following rule will return entities whose identifier **is not** `port-api`:
 
 ```json showLineNumbers
 {
-    "operator": "!=",
-    "property": "$identifier",
-    "value": "port-api"
+  "operator": "!=",
+  "property": "$identifier",
+  "value": "port-api"
 }
 ```
 
@@ -161,9 +161,9 @@ The following rule will return entities whose version value is less than `5`:
 
 ```json showLineNumbers
 {
-    "operator": "<",
-    "property": "version",
-    "value": 5
+  "operator": "<",
+  "property": "version",
+  "value": 5
 }
 ```
 
@@ -173,11 +173,11 @@ The following rule will return entities which were created in the last week:
 
 ```json showLineNumbers
 {
-    "operator": "between",
-    "property": "$createdAt",
-    "value": {
-        "preset": "lastWeek"
-    }
+  "operator": "between",
+  "property": "$createdAt",
+  "value": {
+    "preset": "lastWeek"
+  }
 }
 ```
 
@@ -193,17 +193,17 @@ The `between` operator also supports standard date ranges:
 
 ```json showLineNumbers
 {
-    "combinator": "and",
-    "rules": [
-        {
-            "operator": "between",
-            "property": "$createdAt",
-            "value": {
-                "from": "2022-07-26T16:38:06.839Z",
-                "to": "2022-07-29T17:00:28.006Z"
-            }
-        }
-    ]
+  "combinator": "and",
+  "rules": [
+    {
+      "operator": "between",
+      "property": "$createdAt",
+      "value": {
+        "from": "2022-07-26T16:38:06.839Z",
+        "to": "2022-07-29T17:00:28.006Z"
+      }
+    }
+  ]
 }
 ```
 
@@ -213,9 +213,9 @@ The following rule will return entities whose environment property contains the 
 
 ```json showLineNumbers
 {
-    "operator": "contains",
-    "property": "environment",
-    "value": "prod"
+  "operator": "contains",
+  "property": "environment",
+  "value": "prod"
 }
 ```
 
@@ -225,9 +225,9 @@ The following rule will return all entities that have a relationship with the en
 
 ```json showLineNumbers
 {
-    "operator": "relatedTo",
-    "blueprint": "microservice",
-    "value": "port-api"
+  "operator": "relatedTo",
+  "blueprint": "microservice",
+  "value": "port-api"
 }
 ```
 
@@ -243,9 +243,9 @@ For example, if we have the **required** relation `deployment -> microservice`, 
 
 ```json showLineNumbers
 {
-    "operator": "dependedOn",
-    "blueprint": "microservice",
-    "value": "port-api"
+  "operator": "dependedOn",
+  "blueprint": "microservice",
+  "value": "port-api"
 }
 ```
 
@@ -259,51 +259,52 @@ The output will include the identifiers of all the dependent entities, so that y
 
 The search route also supports several query parameters which affect the returned output:
 
-| Parameter | Description | Available values | Default value
-|---|---|---|---|
-| `attach_title_to_relation` | `true`: Both the identifier and the title of the related entity will appear under the relation key <br></br><br></br> `false`: Only the identifier of the related entity will appear under the relation key  | `true`/`false` | `false`
-| `exclude_calculated_properties` | Should [mirror properties](../platform-overview/port-components/blueprint.md#mirror-properties) and [formula properties](../platform-overview/port-components/blueprint.md#) be returned with the result | `true`/`false` | `false`
+| Parameter                       | Description                                                                                                                                                                                                 | Available values | Default value |
+| ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- | ------------- |
+| `attach_title_to_relation`      | `true`: Both the identifier and the title of the related entity will appear under the relation key <br></br><br></br> `false`: Only the identifier of the related entity will appear under the relation key | `true`/`false`   | `false`       |
+| `exclude_calculated_properties` | Should [mirror properties](../platform-overview/port-components/blueprint.md#mirror-properties) and [formula properties](../platform-overview/port-components/blueprint.md#) be returned with the result    | `true`/`false`   | `false`       |
+
 ### `attach_title_to_relation` example
 
 Here is a search response with `attach_title_to_relation=true`:
 
 ```json showLineNumbers
 {
-    "ok": true,
-    "matchingBlueprints": [
-        "Region",
-        "deployment",
-        "vm",
-        "microservice",
-        "k8sCluster",
-        "permission",
-        "RunningService"
-    ],
-    "entities": [
-        {
-            "identifier": "e_vb9EPyW1zOamcbT1",
-            "title": "cart-deployment",
-            "blueprint": "deployment",
-            "team": "Team BE",
-            "properties": {
-                "version": "1.4",
-                "user": "yonatan",
-                "status": "failed",
-                "github-action-url": "https://a.com",
-                "Region": "AWS"
-            },
-            "relations": {
-                "RelatedService": {
-                    "identifier": "e_47MwTvQj03MpVyBx",
-                    "title": "admin-test"
-                },
-            },
-            "createdAt": "2022-07-27T17:11:04.344Z",
-            "createdBy": "auth0|6278b02000955c006f9132d3",
-            "updatedAt": "2022-07-27T17:11:04.344Z",
-            "updatedBy": "auth0|6278b02000955c006f9132d3"
+  "ok": true,
+  "matchingBlueprints": [
+    "Region",
+    "deployment",
+    "vm",
+    "microservice",
+    "k8sCluster",
+    "permission",
+    "RunningService"
+  ],
+  "entities": [
+    {
+      "identifier": "e_vb9EPyW1zOamcbT1",
+      "title": "cart-deployment",
+      "blueprint": "deployment",
+      "team": "Team BE",
+      "properties": {
+        "version": "1.4",
+        "user": "yonatan",
+        "status": "failed",
+        "github-action-url": "https://a.com",
+        "Region": "AWS"
+      },
+      "relations": {
+        "RelatedService": {
+          "identifier": "e_47MwTvQj03MpVyBx",
+          "title": "admin-test"
         }
-    ]
+      },
+      "createdAt": "2022-07-27T17:11:04.344Z",
+      "createdBy": "auth0|6278b02000955c006f9132d3",
+      "updatedAt": "2022-07-27T17:11:04.344Z",
+      "updatedBy": "auth0|6278b02000955c006f9132d3"
+    }
+  ]
 }
 ```
 
@@ -311,38 +312,38 @@ And here is the same search response with `attach_title_to_relation=false`:
 
 ```json showLineNumbers
 {
-    "ok": true,
-    "matchingBlueprints": [
-        "Region",
-        "deployment",
-        "vm",
-        "microservice",
-        "k8sCluster",
-        "permission",
-        "RunningService"
-    ],
-    "entities": [
-        {
-            "identifier": "e_vb9EPyW1zOamcbT1",
-            "title": "cart-deployment",
-            "blueprint": "deployment",
-            "team": "Team BE",
-            "properties": {
-                "version": "1.4",
-                "user": "yonatan",
-                "status": "failed",
-                "github-action-url": "https://a.com",            
-                "Region": "AWS"
-            },
-            "relations": {
-                "RelatedService": "e_47MwTvQj03MpVyBx"
-            },
-            "createdAt": "2022-07-27T17:11:04.344Z",
-            "createdBy": "auth0|6278b02000955c006f9132d3",
-            "updatedAt": "2022-07-27T17:11:04.344Z",
-            "updatedBy": "auth0|6278b02000955c006f9132d3"
-        }
-    ]
+  "ok": true,
+  "matchingBlueprints": [
+    "Region",
+    "deployment",
+    "vm",
+    "microservice",
+    "k8sCluster",
+    "permission",
+    "RunningService"
+  ],
+  "entities": [
+    {
+      "identifier": "e_vb9EPyW1zOamcbT1",
+      "title": "cart-deployment",
+      "blueprint": "deployment",
+      "team": "Team BE",
+      "properties": {
+        "version": "1.4",
+        "user": "yonatan",
+        "status": "failed",
+        "github-action-url": "https://a.com",
+        "Region": "AWS"
+      },
+      "relations": {
+        "RelatedService": "e_47MwTvQj03MpVyBx"
+      },
+      "createdAt": "2022-07-27T17:11:04.344Z",
+      "createdBy": "auth0|6278b02000955c006f9132d3",
+      "updatedAt": "2022-07-27T17:11:04.344Z",
+      "updatedBy": "auth0|6278b02000955c006f9132d3"
+    }
+  ]
 }
 ```
 
@@ -351,9 +352,9 @@ And here is the same search response with `attach_title_to_relation=false`:
 The following examples provide a base to begin using the search route, remember that you can always switch the content of the `rules` array to the search query that fits your search.
 
 <Tabs groupId="code-examples" defaultValue="python" values={[
-    {label: "Python", value: "python"},
-    {label: "Javascript", value: "javascript"},
-    {label: "cURL", value: "curl"}
+{label: "Python", value: "python"},
+{label: "Javascript", value: "javascript"},
+{label: "cURL", value: "curl"}
 ]}>
 
 <TabItem value="python">
@@ -405,6 +406,7 @@ search_entities = search_req.json()['entities']
 for entity in search_entities:
     print(json.dumps(entity))
 ```
+
 </TabItem>
 
 <TabItem value="javascript">
@@ -413,53 +415,57 @@ for entity in search_entities:
 // Dependencies to install:
 // $ npm install axios --save
 
-const axios = require('axios').default;
+const axios = require("axios").default;
 
-const CLIENT_ID = 'YOUR_CLIENT_ID';
-const CLIENT_SECRET = 'YOUR_CLIENT_SECRET';
+const CLIENT_ID = "YOUR_CLIENT_ID";
+const CLIENT_SECRET = "YOUR_CLIENT_SECRET";
 
-const API_URL = 'https://api.getport.io/v1';
+const API_URL = "https://api.getport.io/v1";
 
 (async () => {
-	const tokenResp = await axios.post(`${API_URL}/auth/access_token`, {
-		data: {
-			clientId: CLIENT_ID,
-			clientSecret: CLIENT_SECRET,
-		},
-	});
+  const tokenResp = await axios.post(`${API_URL}/auth/access_token`, {
+    data: {
+      clientId: CLIENT_ID,
+      clientSecret: CLIENT_SECRET,
+    },
+  });
 
-	const accessToken = tokenResp.data.accessToken;
+  const accessToken = tokenResp.data.accessToken;
 
-	// You can now use the value in accessToken when making further requests
+  // You can now use the value in accessToken when making further requests
 
-	const config = {
-		headers: {
-			Authorization: `Bearer ${accessToken}`,
-		},
-	};
+  const config = {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
 
-	const query = {
-		combinator: 'or',
-		rules: [
-			{
-				property: '$title',
-				operator: '=',
-				value: 'admin-prod',
-			},
-			{
-				property: '$title',
-				operator: '=',
-				value: 'admin-test',
-			},
-		],
-	};
+  const query = {
+    combinator: "or",
+    rules: [
+      {
+        property: "$title",
+        operator: "=",
+        value: "admin-prod",
+      },
+      {
+        property: "$title",
+        operator: "=",
+        value: "admin-test",
+      },
+    ],
+  };
 
-	const response = await axios.post(`${API_URL}/entities/search`, query, config);
+  const response = await axios.post(
+    `${API_URL}/entities/search`,
+    query,
+    config
+  );
 
-	console.log(response.data['entities']);
+  console.log(response.data["entities"]);
 })();
-
 ```
+
 </TabItem>
 
 <TabItem value="curl">
@@ -502,6 +508,7 @@ curl --location --request POST 'https://api.getport.io/v1/entities/search?attach
 }'
 
 ```
+
 </TabItem>
 
 </Tabs>

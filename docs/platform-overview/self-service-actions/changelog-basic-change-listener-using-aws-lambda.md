@@ -65,7 +65,7 @@ Let’s configure a `VM` blueprint, the blueprint base structure is:
         "type": "number",
         "description": "Amount of allocated storage (GB)"
       },
-      "free_storage" :{
+      "free_storage": {
         "title": "Free Storage",
         "type": "number",
         "description": "Amount of free storage (GB)"
@@ -189,9 +189,9 @@ You should see output similar to the following:
 
 ```json showLineNumbers
 {
-    "ARN": "arn:aws:secretsmanager:eu-west-1:1111111111:secret:PortKafkaAuthCredentials-aaaaaa",
-    "Name": "PortKafkaAuthCredentials",
-    "VersionId": "aaaaa00a-00aa-0000-00a0-00000aa00a0a"
+  "ARN": "arn:aws:secretsmanager:eu-west-1:1111111111:secret:PortKafkaAuthCredentials-aaaaaa",
+  "Name": "PortKafkaAuthCredentials",
+  "VersionId": "aaaaa00a-00aa-0000-00a0-00000aa00a0a"
 }
 ```
 
@@ -211,35 +211,35 @@ You should see output similar to the following:
 
 ```json showLineNumbers
 {
-    "Role": {
-        "Path": "/",
-        "RoleName": "lambda-port-execution-role",
-        "RoleId": "AROAQFOXMPL6TZ6ITKWND",
-        "Arn": "arn:aws:iam::123456789012:role/lambda-port-execution-role",
-        "CreateDate": "2020-01-17T23:19:12Z",
-        "AssumeRolePolicyDocument": {
-				    "Version": "2012-10-17",
-				    "Statement": [
-				        {
-				            "Effect": "Allow",
-				            "Action": [
-				                "secretsmanager:GetResourcePolicy",
-				                "secretsmanager:GetSecretValue",
-				                "secretsmanager:DescribeSecret",
-				                "secretsmanager:ListSecretVersionIds"
-				            ],
-				            "Resource": [
-				                "arn:aws:secretsmanager:eu-west-1:1111111111:secret:PortKafkaAuthCredentials-aaaaaa",
-				            ]
-				        },
-				        {
-				            "Effect": "Allow",
-				            "Action": "secretsmanager:ListSecrets",
-				            "Resource": "*"
-				        }
-				    ]
-				}
+  "Role": {
+    "Path": "/",
+    "RoleName": "lambda-port-execution-role",
+    "RoleId": "AROAQFOXMPL6TZ6ITKWND",
+    "Arn": "arn:aws:iam::123456789012:role/lambda-port-execution-role",
+    "CreateDate": "2020-01-17T23:19:12Z",
+    "AssumeRolePolicyDocument": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "secretsmanager:GetResourcePolicy",
+            "secretsmanager:GetSecretValue",
+            "secretsmanager:DescribeSecret",
+            "secretsmanager:ListSecretVersionIds"
+          ],
+          "Resource": [
+            "arn:aws:secretsmanager:eu-west-1:1111111111:secret:PortKafkaAuthCredentials-aaaaaa"
+          ]
+        },
+        {
+          "Effect": "Allow",
+          "Action": "secretsmanager:ListSecrets",
+          "Resource": "*"
+        }
+      ]
     }
+  }
 }
 ```
 
@@ -259,29 +259,28 @@ Now let’s add the following policy (You can refer to this [AWS document](https
 Remember to replace `ARN` value listed under `Resource` with the `ARN` you received as output when creating the **secret**
 :::
 
-
 ```json showLineNumbers
 {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": [
-                "secretsmanager:GetResourcePolicy",
-                "secretsmanager:GetSecretValue",
-                "secretsmanager:DescribeSecret",
-                "secretsmanager:ListSecretVersionIds"
-            ],
-            "Resource": [
-                "arn:aws:secretsmanager:eu-west-1:1111111111:secret:PortKafkaAuthCredentials-aaaaaa"
-            ]
-        },
-        {
-            "Effect": "Allow",
-            "Action": "secretsmanager:ListSecrets",
-            "Resource": "*"
-        }
-    ]
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "secretsmanager:GetResourcePolicy",
+        "secretsmanager:GetSecretValue",
+        "secretsmanager:DescribeSecret",
+        "secretsmanager:ListSecretVersionIds"
+      ],
+      "Resource": [
+        "arn:aws:secretsmanager:eu-west-1:1111111111:secret:PortKafkaAuthCredentials-aaaaaa"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": "secretsmanager:ListSecrets",
+      "Resource": "*"
+    }
+  ]
 }
 ```
 
@@ -318,26 +317,19 @@ You should see output similar to the following:
 
 ```json showLineNumbers
 {
-    "Content": {
-        "Location": "https://awslambda-eu-west-1-layers.s3.eu-west-1.amazonaws.com/snapshots/123456789012/my-layer-4aaa2fbb-ff77-4b0a-ad92-5b78a716a96a?versionId=27iWyA73cCAYqyH...",
-        "CodeSha256": "tv9jJO+rPbXUUXuRKi7CwHzKtLDkDRJLB3cC3Z/ouXo=",
-        "CodeSize": 169
-    },
-    "LayerArn": "arn:aws:lambda:eu-west-1:123456789012:layer:lambda_port_execution_package_layer",
-    "LayerVersionArn": "arn:aws:lambda:eu-west-1:123456789012:layer:lambda_port_execution_package_layer:1",
-    "Description": "Python pacakges layer for lambda Port execution example",
-    "CreatedDate": "2018-11-14T23:03:52.894+0000",
-    "Version": 1,
-    "CompatibleArchitectures": [
-        "x86_64"
-     ],
-    "LicenseInfo": "MIT",
-    "CompatibleRuntimes": [
-        "python3.6",
-        "python3.7",
-        "python3.8",
-				"python3.9"
-    ]
+  "Content": {
+    "Location": "https://awslambda-eu-west-1-layers.s3.eu-west-1.amazonaws.com/snapshots/123456789012/my-layer-4aaa2fbb-ff77-4b0a-ad92-5b78a716a96a?versionId=27iWyA73cCAYqyH...",
+    "CodeSha256": "tv9jJO+rPbXUUXuRKi7CwHzKtLDkDRJLB3cC3Z/ouXo=",
+    "CodeSize": 169
+  },
+  "LayerArn": "arn:aws:lambda:eu-west-1:123456789012:layer:lambda_port_execution_package_layer",
+  "LayerVersionArn": "arn:aws:lambda:eu-west-1:123456789012:layer:lambda_port_execution_package_layer:1",
+  "Description": "Python pacakges layer for lambda Port execution example",
+  "CreatedDate": "2018-11-14T23:03:52.894+0000",
+  "Version": 1,
+  "CompatibleArchitectures": ["x86_64"],
+  "LicenseInfo": "MIT",
+  "CompatibleRuntimes": ["python3.6", "python3.7", "python3.8", "python3.9"]
 }
 ```
 
@@ -460,7 +452,7 @@ def lambda_handler(event, context):
     return {"message": "ok"}
 ```
 
-</details>    
+</details>
 
 ### Deploying the Lambda function
 
@@ -469,7 +461,6 @@ In order to deploy our Lambda function, we will run the following commands from 
 :::info using our saved `ARN`s
 Be sure to replace `ROLE_ARN` with the ARN we received an output when we created an execution role for the Lambda (Note the comment where you need to paste in the Lambda code to the new file):
 :::
-
 
 ```python showLineNumbers
 mkdir port_execution_lambda
@@ -517,7 +508,7 @@ There are just a few more steps left:
 In order to add the layer, we just need to run a simple CLI command:
 
 ```bash showLineNumbers
-# Be sure to replace the LAYER_VERSION_ARN with the value you saved 
+# Be sure to replace the LAYER_VERSION_ARN with the value you saved
 # from the layer creation output
 aws lambda update-function-configuration --function-name port-changelog-lambda \
 --layers LAYER_VERSION_ARN
@@ -540,6 +531,7 @@ If your function needs multiple other environment variables, it would be easier 
 ```bash showLineNumbers
 aws lambda update-function-configuration --function-name port-changelog-lambda --environment file://environment.json --query "Environment"
 ```
+
 :::
 
 Time to add our Kafka trigger
@@ -564,19 +556,19 @@ Here is the JSON for this `VM` entity:
 
 ```json showLineNumbers
 {
-    "title": "Storage Example VM",
-    "team": "",
-    "blueprint": "vm",
-    "properties": {
-        "region": "eu-west-1",
-        "cpu_cores": 2,
-        "memory_size": 4,
-        "storage_size": 10,
-        "deployed": "Deployed",
-        "free_storage": 6
-    },
-    "relations": {},
-    "identifier": "storage-example"
+  "title": "Storage Example VM",
+  "team": "",
+  "blueprint": "vm",
+  "properties": {
+    "region": "eu-west-1",
+    "cpu_cores": 2,
+    "memory_size": 4,
+    "storage_size": 10,
+    "deployed": "Deployed",
+    "free_storage": 6
+  },
+  "relations": {},
+  "identifier": "storage-example"
 }
 ```
 
@@ -677,59 +669,59 @@ Here is an example of the request payload received from Port, inside the Kafka m
 
 ```json showLineNumbers
 {
-    "action": "UPDATE",
-    "resourceType": "entity",
-    "status": "SUCCESS",
-    "trigger": {
-        "by": {
-            "orgId": "org_sYG4DOJZNGy8bYnt",
-            "userId": "h2Mf13aRSCYQCUPIcqufoP4XRLwAt8Od@clients"
-        },
-        "at": "2022-07-15T16:44:56.288Z",
-        "origin": "API"
+  "action": "UPDATE",
+  "resourceType": "entity",
+  "status": "SUCCESS",
+  "trigger": {
+    "by": {
+      "orgId": "org_sYG4DOJZNGy8bYnt",
+      "userId": "h2Mf13aRSCYQCUPIcqufoP4XRLwAt8Od@clients"
     },
-    "context": {
-        "entity": "storage-example",
-        "blueprint": "vm"
+    "at": "2022-07-15T16:44:56.288Z",
+    "origin": "API"
+  },
+  "context": {
+    "entity": "storage-example",
+    "blueprint": "vm"
+  },
+  "diff": {
+    "before": {
+      "identifier": "storage-example",
+      "title": "Storage Example VM",
+      "blueprint": "vm",
+      "properties": {
+        "region": "eu-west-1",
+        "cpu_cores": 2,
+        "memory_size": 4,
+        "storage_size": 10,
+        "deployed": "Deployed",
+        "free_storage": 6
+      },
+      "relations": {},
+      "createdAt": "2022-07-15T16:34:47.385Z",
+      "createdBy": "h2Mf13aRSCYQCUPIcqufoP4XRLwAt8Od@clients",
+      "updatedAt": "2022-07-15T16:34:47.385Z",
+      "updatedBy": "h2Mf13aRSCYQCUPIcqufoP4XRLwAt8Od@clients"
     },
-    "diff": {
-        "before": {
-            "identifier": "storage-example",
-            "title": "Storage Example VM",
-            "blueprint": "vm",
-            "properties": {
-                "region": "eu-west-1",
-                "cpu_cores": 2,
-                "memory_size": 4,
-                "storage_size": 10,
-                "deployed": "Deployed",
-                "free_storage": 6
-            },
-            "relations": {},
-            "createdAt": "2022-07-15T16:34:47.385Z",
-            "createdBy": "h2Mf13aRSCYQCUPIcqufoP4XRLwAt8Od@clients",
-            "updatedAt": "2022-07-15T16:34:47.385Z",
-            "updatedBy": "h2Mf13aRSCYQCUPIcqufoP4XRLwAt8Od@clients"
-        },
-        "after": {
-            "identifier": "storage-example",
-            "title": "Storage Example VM",
-            "blueprint": "vm",
-            "properties": {
-                "region": "eu-west-1",
-                "cpu_cores": 2,
-                "memory_size": 4,
-                "storage_size": 10,
-                "deployed": "Deployed",
-                "free_storage": 0.5
-            },
-            "relations": {},
-            "createdAt": "2022-07-15T16:34:47.385Z",
-            "createdBy": "h2Mf13aRSCYQCUPIcqufoP4XRLwAt8Od@clients",
-            "updatedAt": "2022-07-15T16:34:47.385Z",
-            "updatedBy": "h2Mf13aRSCYQCUPIcqufoP4XRLwAt8Od@clients"
-        }
+    "after": {
+      "identifier": "storage-example",
+      "title": "Storage Example VM",
+      "blueprint": "vm",
+      "properties": {
+        "region": "eu-west-1",
+        "cpu_cores": 2,
+        "memory_size": 4,
+        "storage_size": 10,
+        "deployed": "Deployed",
+        "free_storage": 0.5
+      },
+      "relations": {},
+      "createdAt": "2022-07-15T16:34:47.385Z",
+      "createdBy": "h2Mf13aRSCYQCUPIcqufoP4XRLwAt8Od@clients",
+      "updatedAt": "2022-07-15T16:34:47.385Z",
+      "updatedBy": "h2Mf13aRSCYQCUPIcqufoP4XRLwAt8Od@clients"
     }
+  }
 }
 ```
 
