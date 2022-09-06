@@ -40,44 +40,44 @@ Let’s configure a `VM` blueprint, the blueprint base structure is:
 
 ```json showLineNumbers
 {
-    "identifier": "vm",
-		"title": "VM",
-    "icon": "Server",
-    "schema": {
-        "properties": {
-            "region": {
-                "title": "Region",
-                "type": "string",
-                "description": "Region of the VM"
-            },
-            "cpu_cores": {
-                "title": "CPU Cores",
-                "type": "number",
-                "description": "Number of allocated CPU cores"
-            },
-            "memory_size": {
-                "title": "Memory Size ",
-                "type": "number",
-                "description": "Amount of allocated memory (GB)"
-            },
-            "storage_size": {
-                "title": "Storage Size",
-                "type": "number",
-                "description": "Amount of allocated storage (GB)"
-            },
-						"deployed": {
-                "title": "Deploy Status",
-                "type": "string",
-                "description":"The deployment status of this VM"
-            }
-        },
-        "required": []
+  "identifier": "vm",
+  "title": "VM",
+  "icon": "Server",
+  "schema": {
+    "properties": {
+      "region": {
+        "title": "Region",
+        "type": "string",
+        "description": "Region of the VM"
+      },
+      "cpu_cores": {
+        "title": "CPU Cores",
+        "type": "number",
+        "description": "Number of allocated CPU cores"
+      },
+      "memory_size": {
+        "title": "Memory Size ",
+        "type": "number",
+        "description": "Amount of allocated memory (GB)"
+      },
+      "storage_size": {
+        "title": "Storage Size",
+        "type": "number",
+        "description": "Amount of allocated storage (GB)"
+      },
+      "deployed": {
+        "title": "Deploy Status",
+        "type": "string",
+        "description": "The deployment status of this VM"
+      }
     },
-    "disableEditing": false,
-    "enableResponsibleTeamEdit": false,
-    "disabledProperties": [],
-    "disabledRelations": [],
-    "formulaProperties": {}
+    "required": []
+  },
+  "disableEditing": false,
+  "enableResponsibleTeamEdit": false,
+  "disabledProperties": [],
+  "disabledRelations": [],
+  "formulaProperties": {}
 }
 ```
 
@@ -94,9 +94,9 @@ CLIENT_SECRET = 'YOUR_CLIENT_SECRET'
 
 API_URL = 'https://api.getport.io/v1'
 
-credentials = {'client_id': CLIENT_ID, 'client_secret': CLIENT_SECRET}
+credentials = {'clientId': CLIENT_ID, 'clientSecret': CLIENT_SECRET}
 
-token_response = requests.get(f'{API_URL}/auth/access_token', params=credentials)
+token_response = requests.post(f'{API_URL}/auth/access_token', json=credentials)
 
 access_token = token_response.json()['accessToken']
 
@@ -151,7 +151,7 @@ print(response.json())
 ```
 
 </details>
-    
+
 
 ## Creating the VM CREATE action
 
@@ -161,40 +161,38 @@ Here is our action JSON:
 
 ```json showLineNumbers
 {
-    "identifier": "create_vm",
-    "title": "Create VM",
-    "icon": "Server",
-    "description": "Create a new VM in cloud provider infrastructure",
-    "trigger": "CREATE",
-    "invocationMethod": "KAFKA",
-    "userInputs": {
-        "properties": {
-            "title": {
-                "type": "string",
-                "title": "Title of the new VM"
-            },
-            "cpu": {
-                "type": "number",
-                "title": "Number of CPU cores"
-            },
-            "memory": {
-                "type": "number",
-                "title": "Size of memory"
-            },
-            "storage": {
-                "type": "number",
-                "title": "Size of storage"
-            },
-            "region": {
-                "type": "string",
-                "title": "Deployment region",
-                "enum": ["eu-west-1", "eu-west-2", "us-west-1", "us-east-1"]
-            }
-        },
-        "required": [
-            "cpu", "memory", "storage", "region"
-        ]
-    }
+  "identifier": "create_vm",
+  "title": "Create VM",
+  "icon": "Server",
+  "description": "Create a new VM in cloud provider infrastructure",
+  "trigger": "CREATE",
+  "invocationMethod": "KAFKA",
+  "userInputs": {
+    "properties": {
+      "title": {
+        "type": "string",
+        "title": "Title of the new VM"
+      },
+      "cpu": {
+        "type": "number",
+        "title": "Number of CPU cores"
+      },
+      "memory": {
+        "type": "number",
+        "title": "Size of memory"
+      },
+      "storage": {
+        "type": "number",
+        "title": "Size of storage"
+      },
+      "region": {
+        "type": "string",
+        "title": "Deployment region",
+        "enum": ["eu-west-1", "eu-west-2", "us-west-1", "us-east-1"]
+      }
+    },
+    "required": ["cpu", "memory", "storage", "region"]
+  }
 }
 ```
 
@@ -203,7 +201,6 @@ Here is code in `python` to create this action (remember to insert your `CLIENT_
 :::note Specifying the target blueprint
 Note how we use the `vm` blueprint identifier to add the action to our new blueprint
 :::
-
 
 <details>
 <summary>Click here to see code</summary>
@@ -216,9 +213,9 @@ CLIENT_SECRET = 'YOUR_CLIENT_SECRET'
 
 API_URL = 'https://api.getport.io/v1'
 
-credentials = {'client_id': CLIENT_ID, 'client_secret': CLIENT_SECRET}
+credentials = {'clientId': CLIENT_ID, 'clientSecret': CLIENT_SECRET}
 
-token_response = requests.get(f'{API_URL}/auth/access_token', params=credentials)
+token_response = requests.post(f'{API_URL}/auth/access_token', json=credentials)
 
 access_token = token_response.json()['accessToken']
 
@@ -271,7 +268,7 @@ print(response.json())
 ```
 
 </details>
-    
+
 
 Now that we have our action configured, we can begin invoking it.
 
@@ -302,16 +299,15 @@ You should see output similar to the following:
 
 ```json showLineNumbers
 {
-    "ARN": "arn:aws:secretsmanager:eu-west-1:1111111111:secret:PortKafkaAuthCredentials-aaaaaa",
-    "Name": "PortKafkaAuthCredentials",
-    "VersionId": "aaaaa00a-00aa-0000-00a0-00000aa00a0a"
+  "ARN": "arn:aws:secretsmanager:eu-west-1:1111111111:secret:PortKafkaAuthCredentials-aaaaaa",
+  "Name": "PortKafkaAuthCredentials",
+  "VersionId": "aaaaa00a-00aa-0000-00a0-00000aa00a0a"
 }
 ```
 
 :::info Saving the `ARN`
 Make sure to save the `ARN` value, we will need it to create an execution role for our Lambda function which can access the newly created secret.
 :::
-
 
 ### Creating an execution role
 
@@ -325,35 +321,35 @@ You should see output similar to the following:
 
 ```json showLineNumbers
 {
-    "Role": {
-        "Path": "/",
-        "RoleName": "lambda-port-execution-role",
-        "RoleId": "AROAQFOXMPL6TZ6ITKWND",
-        "Arn": "arn:aws:iam::123456789012:role/lambda-port-execution-role",
-        "CreateDate": "2020-01-17T23:19:12Z",
-        "AssumeRolePolicyDocument": {
-				    "Version": "2012-10-17",
-				    "Statement": [
-				        {
-				            "Effect": "Allow",
-				            "Action": [
-				                "secretsmanager:GetResourcePolicy",
-				                "secretsmanager:GetSecretValue",
-				                "secretsmanager:DescribeSecret",
-				                "secretsmanager:ListSecretVersionIds"
-				            ],
-				            "Resource": [
-				                "arn:aws:secretsmanager:eu-west-1:1111111111:secret:PortKafkaAuthCredentials-aaaaaa",
-				            ]
-				        },
-				        {
-				            "Effect": "Allow",
-				            "Action": "secretsmanager:ListSecrets",
-				            "Resource": "*"
-				        }
-				    ]
-				}
+  "Role": {
+    "Path": "/",
+    "RoleName": "lambda-port-execution-role",
+    "RoleId": "AROAQFOXMPL6TZ6ITKWND",
+    "Arn": "arn:aws:iam::123456789012:role/lambda-port-execution-role",
+    "CreateDate": "2020-01-17T23:19:12Z",
+    "AssumeRolePolicyDocument": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "secretsmanager:GetResourcePolicy",
+            "secretsmanager:GetSecretValue",
+            "secretsmanager:DescribeSecret",
+            "secretsmanager:ListSecretVersionIds"
+          ],
+          "Resource": [
+            "arn:aws:secretsmanager:eu-west-1:1111111111:secret:PortKafkaAuthCredentials-aaaaaa"
+          ]
+        },
+        {
+          "Effect": "Allow",
+          "Action": "secretsmanager:ListSecrets",
+          "Resource": "*"
+        }
+      ]
     }
+  }
 }
 ```
 
@@ -373,29 +369,28 @@ Now let’s add the following policy (You can refer to this [AWS document](https
 Remember to replace `ARN` value listed under `Resource` with the `ARN` you received as output when creating the **secret**
 :::
 
-
 ```json showLineNumbers
 {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": [
-                "secretsmanager:GetResourcePolicy",
-                "secretsmanager:GetSecretValue",
-                "secretsmanager:DescribeSecret",
-                "secretsmanager:ListSecretVersionIds"
-            ],
-            "Resource": [
-                "arn:aws:secretsmanager:eu-west-1:1111111111:secret:PortKafkaAuthCredentials-aaaaaa"
-            ]
-        },
-        {
-            "Effect": "Allow",
-            "Action": "secretsmanager:ListSecrets",
-            "Resource": "*"
-        }
-    ]
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "secretsmanager:GetResourcePolicy",
+        "secretsmanager:GetSecretValue",
+        "secretsmanager:DescribeSecret",
+        "secretsmanager:ListSecretVersionIds"
+      ],
+      "Resource": [
+        "arn:aws:secretsmanager:eu-west-1:1111111111:secret:PortKafkaAuthCredentials-aaaaaa"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": "secretsmanager:ListSecrets",
+      "Resource": "*"
+    }
+  ]
 }
 ```
 
@@ -432,30 +427,23 @@ You should see output similar to the following:
 
 ```json showLineNumbers
 {
-    "Content": {
-        "Location": "https://awslambda-eu-west-1-layers.s3.eu-west-1.amazonaws.com/snapshots/123456789012/my-layer-4aaa2fbb-ff77-4b0a-ad92-5b78a716a96a?versionId=27iWyA73cCAYqyH...",
-        "CodeSha256": "tv9jJO+rPbXUUXuRKi7CwHzKtLDkDRJLB3cC3Z/ouXo=",
-        "CodeSize": 169
-    },
-    "LayerArn": "arn:aws:lambda:eu-west-1:123456789012:layer:lambda_port_execution_package_layer",
-    "LayerVersionArn": "arn:aws:lambda:eu-west-1:123456789012:layer:lambda_port_execution_package_layer:1",
-    "Description": "Python pacakges layer for lambda Port execution example",
-    "CreatedDate": "2018-11-14T23:03:52.894+0000",
-    "Version": 1,
-    "CompatibleArchitectures": [
-        "x86_64"
-     ],
-    "LicenseInfo": "MIT",
-    "CompatibleRuntimes": [
-        "python3.6",
-        "python3.7",
-        "python3.8",
-				"python3.9"
-    ]
+  "Content": {
+    "Location": "https://awslambda-eu-west-1-layers.s3.eu-west-1.amazonaws.com/snapshots/123456789012/my-layer-4aaa2fbb-ff77-4b0a-ad92-5b78a716a96a?versionId=27iWyA73cCAYqyH...",
+    "CodeSha256": "tv9jJO+rPbXUUXuRKi7CwHzKtLDkDRJLB3cC3Z/ouXo=",
+    "CodeSize": 169
+  },
+  "LayerArn": "arn:aws:lambda:eu-west-1:123456789012:layer:lambda_port_execution_package_layer",
+  "LayerVersionArn": "arn:aws:lambda:eu-west-1:123456789012:layer:lambda_port_execution_package_layer:1",
+  "Description": "Python pacakges layer for lambda Port execution example",
+  "CreatedDate": "2018-11-14T23:03:52.894+0000",
+  "Version": 1,
+  "CompatibleArchitectures": ["x86_64"],
+  "LicenseInfo": "MIT",
+  "CompatibleRuntimes": ["python3.6", "python3.7", "python3.8", "python3.9"]
 }
 ```
 
-:::info 
+:::info
 Again, make sure to save the `LayerVersionArn` value, we will use it when deploying our Lambda function
 :::
 
@@ -503,9 +491,9 @@ def get_port_api_token():
 
     This function uses a global ``CLIENT_ID`` and ``CLIENT_SECRET``
     '''
-    credentials = {'client_id': CLIENT_ID, 'client_secret': CLIENT_SECRET}
+    credentials = {'clientId': CLIENT_ID, 'clientSecret': CLIENT_SECRET}
 
-    token_response = requests.get(f'{API_URL}/auth/access_token', params=credentials)
+    token_response = requests.post(f'{API_URL}/auth/access_token', json=credentials)
     access_token = token_response.json()['accessToken']
 
     return access_token
@@ -621,7 +609,7 @@ if __name__ == "__main__":
 ```
 
 </details>
-    
+
 
 ### Deploying the Lambda function
 
@@ -679,7 +667,7 @@ There are just a few more steps left:
 In order to add the layer, we just need to run a simple CLI command:
 
 ```bash showLineNumbers
-# Be sure to replace the LAYER_VERSION_ARN with the value you saved 
+# Be sure to replace the LAYER_VERSION_ARN with the value you saved
 # from the layer creation output
 aws lambda update-function-configuration --function-name port-execution-lambda \
 --layers LAYER_VERSION_ARN
@@ -698,11 +686,11 @@ You should see as output all of the environment variables configured for your La
 
 :::note
 If your function needs multiple other environment variables, it would be easier to put them all in a JSON file (for example `environment.json`) and run the following command:
- 
 
 ```bash showLineNumbers
 aws lambda update-function-configuration --function-name port-execution-lambda --environment file://environment.json --query "Environment"
 ```
+
 :::
 
 Time to add our Kafka trigger
@@ -734,9 +722,9 @@ CLIENT_SECRET = 'YOUR_CLIENT_SECRET'
 
 API_URL = 'https://api.getport.io/v1'
 
-credentials = {'client_id': CLIENT_ID, 'client_secret': CLIENT_SECRET}
+credentials = {'clientId': CLIENT_ID, 'clientSecret': CLIENT_SECRET}
 
-token_response = requests.get(f'{API_URL}/auth/access_token', params=credentials)
+token_response = requests.post(f'{API_URL}/auth/access_token', json=credentials)
 
 access_token = token_response.json()['accessToken']
 
@@ -764,7 +752,7 @@ print(response.json())
 ```
 
 </details>
-    
+
 
 This should send a message to our Kafka topic.
 
@@ -776,77 +764,67 @@ Here is an example of the request payload received from Port, inside the Kafka m
 
 ```json showLineNumbers
 {
-    "action": "create_vm",
-    "resourceType": "run",
-    "status": "TRIGGERED",
-    "trigger": {
-        "by": {
-            "userId": "h2Mf13aRSCYQCUPIcqufoP4XRLwAt8Od@clients",
-            "orgId": "org_sYG4DOJZNGy8bYnt"
-        },
-        "at": "2022-07-14T11:38:10.629Z",
-        "origin": "API"
+  "action": "create_vm",
+  "resourceType": "run",
+  "status": "TRIGGERED",
+  "trigger": {
+    "by": {
+      "userId": "h2Mf13aRSCYQCUPIcqufoP4XRLwAt8Od@clients",
+      "orgId": "org_sYG4DOJZNGy8bYnt"
     },
-    "context": {
-        "entity": null,
-        "blueprint": "vm",
-        "runId": "run_q2mGf9ZYkFRnZJjB"
-    },
-    "payload": {
-        "entity": null,
-        "action": {
-            "id": "action_9mFmogL7kQ0fISGx",
-            "identifier": "create_vm",
-            "title": "Create VM",
-            "icon": "Server",
-            "userInputs": {
-                "properties": {
-                    "cpu": {
-                        "type": "number",
-                        "title": "Number of CPU cores"
-                    },
-                    "memory": {
-                        "type": "number",
-                        "title": "Size of memory"
-                    },
-                    "storage": {
-                        "type": "number",
-                        "title": "Size of storage"
-                    },
-                    "region": {
-                        "type": "string",
-                        "title": "Deployment region",
-                        "enum": [
-                            "eu-west-1",
-                            "eu-west-2",
-                            "us-west-1",
-                            "us-east-1"
-                        ]
-                    }
-                },
-                "required": [
-                    "cpu",
-                    "memory",
-                    "storage",
-                    "region"
-                ]
-            },
-            "invocationMethod": "KAFKA",
-            "trigger": "CREATE",
-            "description": "Create a new VM in cloud provider infrastructure",
-            "blueprint": "vm",
-            "createdAt": "2022-07-14T09:39:01.885Z",
-            "createdBy": "h2Mf13aRSCYQCUPIcqufoP4XRLwAt8Od@clients",
-            "updatedAt": "2022-07-14T09:39:01.885Z",
-            "updatedBy": "h2Mf13aRSCYQCUPIcqufoP4XRLwAt8Od@clients"
-        },
+    "at": "2022-07-14T11:38:10.629Z",
+    "origin": "API"
+  },
+  "context": {
+    "entity": null,
+    "blueprint": "vm",
+    "runId": "run_q2mGf9ZYkFRnZJjB"
+  },
+  "payload": {
+    "entity": null,
+    "action": {
+      "id": "action_9mFmogL7kQ0fISGx",
+      "identifier": "create_vm",
+      "title": "Create VM",
+      "icon": "Server",
+      "userInputs": {
         "properties": {
-            "cpu": 2,
-            "memory": 4,
-            "storage": 50,
-            "region": "eu-west-1"
-        }
+          "cpu": {
+            "type": "number",
+            "title": "Number of CPU cores"
+          },
+          "memory": {
+            "type": "number",
+            "title": "Size of memory"
+          },
+          "storage": {
+            "type": "number",
+            "title": "Size of storage"
+          },
+          "region": {
+            "type": "string",
+            "title": "Deployment region",
+            "enum": ["eu-west-1", "eu-west-2", "us-west-1", "us-east-1"]
+          }
+        },
+        "required": ["cpu", "memory", "storage", "region"]
+      },
+      "invocationMethod": "KAFKA",
+      "trigger": "CREATE",
+      "description": "Create a new VM in cloud provider infrastructure",
+      "blueprint": "vm",
+      "createdAt": "2022-07-14T09:39:01.885Z",
+      "createdBy": "h2Mf13aRSCYQCUPIcqufoP4XRLwAt8Od@clients",
+      "updatedAt": "2022-07-14T09:39:01.885Z",
+      "updatedBy": "h2Mf13aRSCYQCUPIcqufoP4XRLwAt8Od@clients"
+    },
+    "properties": {
+      "cpu": 2,
+      "memory": 4,
+      "storage": 50,
+      "region": "eu-west-1"
     }
+  }
 }
 ```
 
