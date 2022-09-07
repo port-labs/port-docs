@@ -37,6 +37,10 @@ const config = {
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
         },
+        gtag: {
+          trackingID: "UA-225507431-1",
+          anonymizeIP: false,
+        },
         sitemap: {
           changefreq: "weekly",
           priority: 0.5,
