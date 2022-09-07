@@ -23,7 +23,6 @@ Here you'll find a step-by-step guide for Port's GitHub Action.
 
 :::
 
-
 ### Basic Example
 
 In this example we create a basic Blueprint and then add code that uses Port's Github Action to create/update an entity that belongs to the blueprint:
@@ -33,37 +32,38 @@ In this example we create a basic Blueprint and then add code that uses Port's G
 
 ```json showLineNumbers
 {
-    "identifier": "microservice",
-    "title": "Microservice",
-    "icon": "Microservice",
-    "schema": {
-        "properties": {
-            "description": {
-                "type": "string",
-                "title": "Description"
-            },
-            "buildNumber": {
-                "type": "number",
-                "title": "Build Number"
-            },
-            "isActive": {
-                "type": "boolean",
-                "title": "Is Active"
-            },
-            "languages": {
-                "type": "array",
-                "title": "Languages"
-            },
-            "versionInEnv": {
-                "type": "object",
-                "title": "Version In Env"
-            }
-        },
-        "required": ["description"]
+  "identifier": "microservice",
+  "title": "Microservice",
+  "icon": "Microservice",
+  "schema": {
+    "properties": {
+      "description": {
+        "type": "string",
+        "title": "Description"
+      },
+      "buildNumber": {
+        "type": "number",
+        "title": "Build Number"
+      },
+      "isActive": {
+        "type": "boolean",
+        "title": "Is Active"
+      },
+      "languages": {
+        "type": "array",
+        "title": "Languages"
+      },
+      "versionInEnv": {
+        "type": "object",
+        "title": "Version In Env"
+      }
     },
-    "formulaProperties": {}
+    "required": ["description"]
+  },
+  "formulaProperties": {}
 }
 ```
+
 </details>
 
 After creating the blueprint, you can add the to your workflow `yml` file to make use of the Github Action:
@@ -92,66 +92,58 @@ For security reasons it is recommend saving the `CLIENT_ID` and `CLIENT_SECRET` 
 
 ### Complete Example
 
-The following example adds another `package` blueprint, in addition to the `microservice` blueprint shown in the previous example. In addition, it adds a `package-microservice` relation and then the Github Action creates or updates the relation between existing entities: 
+The following example adds another `package` blueprint, in addition to the `microservice` blueprint shown in the previous example. In addition, it adds a `package-microservice` relation and then the Github Action creates or updates the relation between existing entities:
 
 <details>
 <summary> A package blueprint </summary>
 
 ```json showLineNumbers
 {
-    "identifier": "package",
-    "title": "Package",
-    "icon": "Package",
-    "schema": {
-        "properties": {
-            "version": {
-                "type": "string",
-                "title": "Version"
-            },
-            "committedBy": {
-                "type": "string",
-                "title": "Committed By"
-            },
-            "commitHash": {
-                "type": "string",
-                "title": "Commit Hash"
-            },
-            "actionJob": {
-                "type": "string",
-                "title": "Action Job"
-            },
-            "repoPushedAt": {
-                "type": "string",
-                "format": "date-time",
-                "title": "Repository Pushed At"
-            },
-            "runLink": {
-                "type": "string",
-                "format": "url",
-                "title": "Action Run Link"
-            }
-        },
-        "required": []
+  "identifier": "package",
+  "title": "Package",
+  "icon": "Package",
+  "schema": {
+    "properties": {
+      "version": {
+        "type": "string",
+        "title": "Version"
+      },
+      "committedBy": {
+        "type": "string",
+        "title": "Committed By"
+      },
+      "commitHash": {
+        "type": "string",
+        "title": "Commit Hash"
+      },
+      "actionJob": {
+        "type": "string",
+        "title": "Action Job"
+      },
+      "repoPushedAt": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Repository Pushed At"
+      },
+      "runLink": {
+        "type": "string",
+        "format": "url",
+        "title": "Action Run Link"
+      }
     },
-    "formulaProperties": {}
+    "required": []
+  },
+  "relations": {
+    "package-microservice": {
+      "target": "microservice",
+      "title": "Used In",
+      "required": false
+    }
+  },
+  "formulaProperties": {}
 }
 ```
-</details>
 
-<details>
-<summary> A package-microservice relation </summary>
-
-
-```json showLineNumbers
-{
-    "title": "Used In",
-    "identifier": "package-microservice",
-    "source": "package",
-    "target": "microservice",
-    "required": false,
-    "many": false
-}
-```
 </details>
 
 Add the following to your workflow `yml` file:
@@ -178,7 +170,6 @@ Add the following to your workflow `yml` file:
         "package-microservice": "example-microservice"
       }
 ```
-
 
 That's it! The entity is created or updated, and is visible in the UI.
 

@@ -24,47 +24,45 @@ For our example, let’s create 2 blueprints and connect them to each other:
 
 ![Target blueprints and relations expanded](../../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/targetBlueprintsAndRelationExpanded.png)
 
-
-
 <details>
 <summary>An example Microservice blueprint</summary>
 
 ```json showLineNumbers
 {
-    "identifier": "microservice",
-    "icon": "Microservice",
-    "formulaProperties": {},
-    "schema": {
-        "properties": {
-            "on-call": {
-                "title": "On Call",
-                "type": "string",
-                "description": "who is the on-call for this service (Pagerduty)",
-                "default": "Dev Guy"
-            },
-            "repo": {
-                "title": "Repo",
-                "type": "string",
-                "format": "url",
-                "description": "link to repo",
-                "default": "https://www.github.com"
-            },
-            "link-slack-dev": {
-                "title": "Slack Channel dev",
-                "type": "string",
-                "description": "link to Slack dev channel",
-                "default": "#rnd-microservices-alerts"
-            },
-            "datadog-link": {
-                "title": "Link to Datadog",
-                "type": "string",
-                "format": "url",
-                "description": "link to datadog",
-                "default": "https://datadog.com"
-            }
-        },
-        "required": []
-    }
+  "identifier": "microservice",
+  "icon": "Microservice",
+  "formulaProperties": {},
+  "schema": {
+    "properties": {
+      "on-call": {
+        "title": "On Call",
+        "type": "string",
+        "description": "who is the on-call for this service (Pagerduty)",
+        "default": "Dev Guy"
+      },
+      "repo": {
+        "title": "Repo",
+        "type": "string",
+        "format": "url",
+        "description": "link to repo",
+        "default": "https://www.github.com"
+      },
+      "link-slack-dev": {
+        "title": "Slack Channel dev",
+        "type": "string",
+        "description": "link to Slack dev channel",
+        "default": "#rnd-microservices-alerts"
+      },
+      "datadog-link": {
+        "title": "Link to Datadog",
+        "type": "string",
+        "format": "url",
+        "description": "link to datadog",
+        "default": "https://datadog.com"
+      }
+    },
+    "required": []
+  }
 }
 ```
 
@@ -75,55 +73,48 @@ For our example, let’s create 2 blueprints and connect them to each other:
 
 ```json showLineNumbers
 {
-    "identifier": "deployment",
-    "icon": "Deployment",
-	  "formulaProperties": {},
-    "schema": {
-        "properties": {
-            "version": {
-                "title": "Version",
-                "type": "string",
-                "description": "The deployed image tag"
-            },
-            "environment": {
-                "title": "Env",
-                "type": "string",
-                "description": "The Env which is deployed"
-            },
-            "status": {
-                "title": "Status",
-                "type": "string",
-                "description": "Deployment status (Running, Destroyed, ...)"
-            },
-            "duration": {
-                "title": "Job duration",
-                "type": "string",
-                "description": "Deployment job duration"
-            },
-            "job-url": {
-                "title": "Deploy Job URL",
-                "type": "string",
-                "format": "url",
-                "description": "Link to the deployment Job"
-            }
-        },
-        "required": []
+  "identifier": "deployment",
+  "icon": "Deployment",
+  "formulaProperties": {},
+  "schema": {
+    "properties": {
+      "version": {
+        "title": "Version",
+        "type": "string",
+        "description": "The deployed image tag"
+      },
+      "environment": {
+        "title": "Env",
+        "type": "string",
+        "description": "The Env which is deployed"
+      },
+      "status": {
+        "title": "Status",
+        "type": "string",
+        "description": "Deployment status (Running, Destroyed, ...)"
+      },
+      "duration": {
+        "title": "Job duration",
+        "type": "string",
+        "description": "Deployment job duration"
+      },
+      "job-url": {
+        "title": "Deploy Job URL",
+        "type": "string",
+        "format": "url",
+        "description": "Link to the deployment Job"
+      }
+    },
+    "required": []
+  },
+  "relations": {
+    "deployment-to-microservice": {
+      "title": "RelatedService",
+      "target": "microservice",
+      "required": false,
+      "many": false
     }
-}
-```
-</details>
-
-<details>
-<summary>Deployment to Microservice relation</summary>
-
-```json showLineNumbers
-{
-    "title": "RelatedService",
-    "identifier": "deployment-to-microservice",
-    "source": "deployment",
-    "target": "microservice",
-    "required": false,
-    "many": false
+  }
 }
 ```
 
@@ -141,30 +132,28 @@ Here is an example action array with a `CREATE` action already filled in:
 
 ```json showLineNumbers
 [
-	{
-        "identifier": "Create",
-        "title": "Create",
-        "userInputs": {
-            "properties": {
-                "repo-user": {
-                    "type": "string",
-                    "title": "Repo User",
-                    "default": "port-labs"
-                },
-                "repo-name": {
-                    "type": "string",
-                    "title": "Repo Name",
-                    "default": "*My-microservice*"
-                }
-            },
-            "required": [
-                "repo-user"
-            ]
+  {
+    "identifier": "Create",
+    "title": "Create",
+    "userInputs": {
+      "properties": {
+        "repo-user": {
+          "type": "string",
+          "title": "Repo User",
+          "default": "port-labs"
         },
-        "invocationMethod": "KAFKA",
-        "trigger": "CREATE",
-        "description": "This will create a new microservice repo"
-    }
+        "repo-name": {
+          "type": "string",
+          "title": "Repo Name",
+          "default": "*My-microservice*"
+        }
+      },
+      "required": ["repo-user"]
+    },
+    "invocationMethod": "KAFKA",
+    "trigger": "CREATE",
+    "description": "This will create a new microservice repo"
+  }
 ]
 ```
 
@@ -186,76 +175,65 @@ Let's go back to the actions array of our `Microservice` blueprint and paste in 
 
 ```json showLineNumbers
 [
-    {
-        "identifier": "Create",
-        "title": "Create",
-        "userInputs": {
-            "properties": {
-                "repo-user": {
-                    "type": "string",
-                    "title": "Repo User",
-                    "default": "port-labs"
-                },
-                "repo-name": {
-                    "type": "string",
-                    "title": "Repo Name",
-                    "default": "*My-microservice*"
-                }
-            },
-            "required": [
-                "repo-user"
-            ]
+  {
+    "identifier": "Create",
+    "title": "Create",
+    "userInputs": {
+      "properties": {
+        "repo-user": {
+          "type": "string",
+          "title": "Repo User",
+          "default": "port-labs"
         },
-        "invocationMethod": "KAFKA",
-        "trigger": "CREATE",
-        "description": "This will create a new microservice repo"
+        "repo-name": {
+          "type": "string",
+          "title": "Repo Name",
+          "default": "*My-microservice*"
+        }
+      },
+      "required": ["repo-user"]
     },
-    {
-        "identifier": "Deploy",
-        "title": "Deploy",
-        "icon": "Deploy",
-        "userInputs": {
-            "properties": {
-                "environment": {
-                    "type": "string",
-                    "enum": [
-                        "Prod",
-                        "Test",
-                        "Staging"
-                    ],
-                    "title": "Environment"
-                },
-                "branch": {
-                    "type": "string",
-                    "title": "Branch Name"
-                },
-                "commit-hash": {
-                    "type": "string",
-                    "title": "Commit Hash"
-                }
-            },
-            "required": [
-                "environment",
-                "branch",
-                "commit-hash"
-            ]
+    "invocationMethod": "KAFKA",
+    "trigger": "CREATE",
+    "description": "This will create a new microservice repo"
+  },
+  {
+    "identifier": "Deploy",
+    "title": "Deploy",
+    "icon": "Deploy",
+    "userInputs": {
+      "properties": {
+        "environment": {
+          "type": "string",
+          "enum": ["Prod", "Test", "Staging"],
+          "title": "Environment"
         },
-        "invocationMethod": "KAFKA",
-        "trigger": "DAY-2",
-        "description": "This will deploy the microservice"
+        "branch": {
+          "type": "string",
+          "title": "Branch Name"
+        },
+        "commit-hash": {
+          "type": "string",
+          "title": "Commit Hash"
+        }
+      },
+      "required": ["environment", "branch", "commit-hash"]
     },
-		{
-        "identifier": "Delete",
-        "title": "Delete",
-        "userInputs": {
-            "properties": {},
-            "required": []
-        },
-        "invocationMethod": "KAFKA",
-        "trigger": "DELETE",
-        "description": "This will delete the microservice's repo"
-    }
-    
+    "invocationMethod": "KAFKA",
+    "trigger": "DAY-2",
+    "description": "This will deploy the microservice"
+  },
+  {
+    "identifier": "Delete",
+    "title": "Delete",
+    "userInputs": {
+      "properties": {},
+      "required": []
+    },
+    "invocationMethod": "KAFKA",
+    "trigger": "DELETE",
+    "description": "This will delete the microservice's repo"
+  }
 ]
 ```
 
@@ -277,29 +255,27 @@ The basic structure of an action:
 
 ```json showLineNumbers
 {
-        "identifier": "UniqueID",
-        "title": "Title",
-        "userInputs": {
-            "properties": {
-                "property1": {
-                    "type": "string",
-                    "title": "Property title",
-                    "default": "default value"
-                },
-                "property2": {
-                    "type": "number",
-                    "title": "property title",
-                    "default": 5
-                }
-            },
-            "required": [
-                "repo-user"
-            ]
-        },
-        "invocationMethod": "KAFKA",
-        "trigger": "CREATE",
-        "description": "Action description"
-    }
+  "identifier": "UniqueID",
+  "title": "Title",
+  "userInputs": {
+    "properties": {
+      "property1": {
+        "type": "string",
+        "title": "Property title",
+        "default": "default value"
+      },
+      "property2": {
+        "type": "number",
+        "title": "property title",
+        "default": 5
+      }
+    },
+    "required": ["repo-user"]
+  },
+  "invocationMethod": "KAFKA",
+  "trigger": "CREATE",
+  "description": "Action description"
+}
 ```
 
 ### Structure table
@@ -331,7 +307,7 @@ The following table includes the different fields that can be specified in the `
 
 We will now look at trigger examples for each action type and explain what happens in the background when we execute each type
 
-**What happens when the `Execute` button for an action is clicked:** A Port [Action message](#action-message-structure) will be published to the secure [runs Kafka topic](./port-execution-topics), from which you can pull it and run your own custom logic. 
+**What happens when the `Execute` button for an action is clicked:** A Port [Action message](#action-message-structure) will be published to the secure [runs Kafka topic](./port-execution-topics), from which you can pull it and run your own custom logic.
 
 For example, you can deploy a new version of your Microservice when a `CREATE` action is triggered.
 
@@ -346,9 +322,10 @@ When you define a `CREATE` action on a blueprint, when viewing the blueprint pag
 
 - `Register` - This option is used to add a new entity to your catalog, without triggering a `CREATE` action, this option is useful for cases where an entity in the infrastructure was created in the past without Port, and you want to import its data into the Software Catalog.
 
-    This option is also useful for cases where an entity was created manually and you want to document it in Port after-the-fact.
+  This option is also useful for cases where an entity was created manually and you want to document it in Port after-the-fact.
+
 - `Create` - This option will display the form containing the required `userInputs` of our actions, upon clicking execute, a new execution message will be sent to Port's Kafka Topics, and from there you can handle the create request in your infrastructure.
-:::
+  :::
 
 When clicking the `Create Microservice` option, we will see a form with the inputs we specified when we entered the new action to the actions array:
 

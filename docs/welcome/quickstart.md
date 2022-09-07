@@ -12,14 +12,14 @@ Port then allows engineers to perform actions on these assets in a self-service 
 
 ### Port helps you to:
 
-* Create a **comprehensive catalog** by mapping all your software and infrastructure components (microservices, monoliths, deployments, repos, databases, and more) and see all of them in one place
-* Make your **catalog active** by assigning to it actions that can be used by you and your internal customers, while ensuring unified standards and governance over the processes inside your organization
+- Create a **comprehensive catalog** by mapping all your software and infrastructure components (microservices, monoliths, deployments, repos, databases, and more) and see all of them in one place
+- Make your **catalog active** by assigning to it actions that can be used by you and your internal customers, while ensuring unified standards and governance over the processes inside your organization
 
-Port's 3 core building blocks are *Blueprints*, *Entities* and *Relations*. This tutorial will walk you through your first steps on the platform and get you started on your DevPortal journey!🚢 
+Port's 3 core building blocks are _Blueprints_, _Entities_ and _Relations_. This tutorial will walk you through your first steps on the platform and get you started on your DevPortal journey!🚢
 
 ## Define a blueprint
 
-We use Blueprints to model our data in Port. A Blueprint allows us to define what properties and fields an *Entity* will have.
+We use Blueprints to model our data in Port. A Blueprint allows us to define what properties and fields an _Entity_ will have.
 
 In Port, you control how the data looks, any data format you can think of can be represented.
 
@@ -45,33 +45,33 @@ Our Microservice Blueprint is going to include the following properties:
 - **Slack Channel** - A URL to the Slack Channel of the team responsible for the Microservice
 
 :::note
-Don't worry if you feel like the `Microservice` blueprint should include more properties, you can always go back and add or remove properties later. 
+Don't worry if you feel like the `Microservice` blueprint should include more properties, you can always go back and add or remove properties later.
 :::
 
 In order to create a Blueprint with the following properties, we will use the following JSON body:
 
 ```json showLineNumbers
 {
-    "identifier": "microservice",
-    "title": "Microservice",
-    "icon": "Microservice",
-    "formulaProperties": {},
-    "schema": {
-        "properties": {
-            "slackChannel": {
-                "type": "string",
-                "title": "Slack Channel",
-                "description": "The channel of the microservice\\'s maintainers"
-            },
-            "repoUrl": {
-                "type": "string",
-                "format": "url",
-                "title": "Repository URL",
-                "description": "A URL to the Git repository of the microservice"
-            }
-        },
-        "required": []
-    }
+  "identifier": "microservice",
+  "title": "Microservice",
+  "icon": "Microservice",
+  "formulaProperties": {},
+  "schema": {
+    "properties": {
+      "slackChannel": {
+        "type": "string",
+        "title": "Slack Channel",
+        "description": "The channel of the microservice\\'s maintainers"
+      },
+      "repoUrl": {
+        "type": "string",
+        "format": "url",
+        "title": "Repository URL",
+        "description": "A URL to the Git repository of the microservice"
+      }
+    },
+    "required": []
+  }
 }
 ```
 
@@ -93,7 +93,7 @@ In the next part, we will start creating `Entities` that match this new Blueprin
 
 ## Create your first entities
 
-Now that we have a Blueprint for `Microservice`, we can add some *Entities*.
+Now that we have a Blueprint for `Microservice`, we can add some _Entities_.
 
 An **Entity** is an actual object that is of the type of a certain Blueprint. In our instance, every entity we create under the Microservice blueprint, is a Microservice in our organization.
 
@@ -132,15 +132,15 @@ After clicking the button, you will have a JSON editor similar to the one we saw
 
 ```json showLineNumbers
 {
-    "identifier": "dataQueryService",
-    "title": "Data Query Service",
-    "team": "",
-    "blueprint": "microservice",
-    "properties": {
-        "slackChannel": "#data-query",
-        "repoUrl": "https://www.github.com"
-    },
-    "relations": {}
+  "identifier": "dataQueryService",
+  "title": "Data Query Service",
+  "team": "",
+  "blueprint": "microservice",
+  "properties": {
+    "slackChannel": "#data-query",
+    "repoUrl": "https://www.github.com"
+  },
+  "relations": {}
 }
 ```
 
@@ -177,25 +177,25 @@ so let's go ahead and create an **Package Blueprint**:
 
 ```json showLineNumbers
 {
-    "identifier": "package",
-    "title": "Package",
-    "icon": "Package",
-    "formulaProperties": {},
-    "schema": {
-        "properties": {
-            "version": {
-                "type": "string",
-                "title": "Version",
-                "description": "The version of the package"
-            },
-            "inHouse": {
-                "type": "boolean",
-                "title": "In-House?",
-                "description": "Whether the package was developed in house"
-            }
-        },
-        "required": ["version"]
-    }
+  "identifier": "package",
+  "title": "Package",
+  "icon": "Package",
+  "formulaProperties": {},
+  "schema": {
+    "properties": {
+      "version": {
+        "type": "string",
+        "title": "Version",
+        "description": "The version of the package"
+      },
+      "inHouse": {
+        "type": "boolean",
+        "title": "In-House?",
+        "description": "Whether the package was developed in house"
+      }
+    },
+    "required": ["version"]
+  }
 }
 ```
 
@@ -203,25 +203,21 @@ so let's go ahead and create an **Package Blueprint**:
 **Remember**, if you are having trouble at any point, we performed the exact same steps with the **Microservice** Blueprint in the [Define a Blueprint section](#define-a-blueprint), so you can just go back to that part as reference.
 :::
 
-After you're finished, your blueprints page should look like this:
-
-![Blueprints Page with Car Model and Engine](../../static/img/welcome/quickstart/blueprintsPageWithMicroserviceAndPackage.png)
-
 Next, we will create 3 packages to go with our microservices, in order to do that we'll go to the newly created **Packages** page, and create them using the JSON bodies written below (remember that you can also create the new packages from the UI, JSON is a bit faster when you already know the contents of your new entity):
 
 **Requests 2.28.1 Package**
 
 ```json showLineNumbers
 {
-    "identifier": "requests_v2_28_1",
-    "title": "Requests v2.28.1",
-    "team": "",
-    "blueprint": "package",
-    "properties": {
-        "version": "2.28.1",
-        "inHouse": false
-    },
-    "relations": {}
+  "identifier": "requests_v2_28_1",
+  "title": "Requests v2.28.1",
+  "team": "",
+  "blueprint": "package",
+  "properties": {
+    "version": "2.28.1",
+    "inHouse": false
+  },
+  "relations": {}
 }
 ```
 
@@ -229,15 +225,15 @@ Next, we will create 3 packages to go with our microservices, in order to do tha
 
 ```json showLineNumbers
 {
-    "identifier": "requests_v2_28_0",
-    "title": "Requests v2.28.0",
-    "team": "",
-    "blueprint": "package",
-    "properties": {
-        "version": "2.28.0",
-        "inHouse": false
-    },
-    "relations": {}
+  "identifier": "requests_v2_28_0",
+  "title": "Requests v2.28.0",
+  "team": "",
+  "blueprint": "package",
+  "properties": {
+    "version": "2.28.0",
+    "inHouse": false
+  },
+  "relations": {}
 }
 ```
 
@@ -245,15 +241,15 @@ Next, we will create 3 packages to go with our microservices, in order to do tha
 
 ```json showLineNumbers
 {
-    "identifier": "sqlAlchemy_v1_4_39",
-    "title": "SQL Alchemy v1.4.39",
-    "team": "",
-    "blueprint": "package",
-    "properties": {
-        "version": "1.4.39",
-        "inHouse": false
-    },
-    "relations": {}
+  "identifier": "sqlAlchemy_v1_4_39",
+  "title": "SQL Alchemy v1.4.39",
+  "team": "",
+  "blueprint": "package",
+  "properties": {
+    "version": "1.4.39",
+    "inHouse": false
+  },
+  "relations": {}
 }
 ```
 
@@ -281,20 +277,41 @@ Remember that our goal is to know which `Packages` are used in each `Microservic
 
 Our microservices need packages, so the relation we will map is one where a Package is **Used In** a Microservice, in order to create that relation, let's follow these steps:
 
-Go to the Blueprints page and click on the `New Blueprints Relation` button like show below:
+Go to the Blueprints page and click on the `Edit` button at the package node in the graph:
 
 ![Blueprints page with Create Relation Marked](../../static/img/welcome/quickstart/blueprintsPageWithMicroservicePackageAndCreateRelationMarked.png)
 
-In the creation form that appears, paste in the following content:
+And now we can go ahead and update the blueprint with the following relation
 
 ```json showLineNumbers
 {
-    "title": "Used In",
-    "identifier": "package-to-microservice",
-    "source": "package",
-    "target": "microservice",
-    "required": true,
-    "many": false
+  "identifier": "package",
+  "title": "Package",
+  "icon": "Package",
+  "formulaProperties": {},
+  "schema": {
+    "properties": {
+      "version": {
+        "type": "string",
+        "title": "Version",
+        "description": "The version of the package"
+      },
+      "inHouse": {
+        "type": "boolean",
+        "title": "In-House?",
+        "description": "Whether the package was developed in house"
+      }
+    },
+    "required": ["version"]
+  },
+  "relations": {
+    "package-to-microserivce": {
+      "title": "Used In",
+      "target": "microservice",
+      "required": true,
+      "many": false
+    }
+  }
 }
 ```
 

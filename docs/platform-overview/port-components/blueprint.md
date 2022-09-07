@@ -57,7 +57,8 @@ Each blueprint is represented by a [Json schema](https://json-schema.org/), as s
       }
     },
     "required": []
-  }
+  },
+  "relations": {}
 }
 ```
 
@@ -78,6 +79,7 @@ Each blueprint is represented by a [Json schema](https://json-schema.org/), as s
 
 | Field              | Type     | Description                                                                                                                                                                      | Optional Values                                                        |
 | ------------------ | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `relations`        | `Object` | **Relations** enable us to make connections between blueprints. This gives logical context to your software catalog.                                                             | See more details on the [relation](./relation)                         |
 | `mirrorProperties` | `Object` | **Becomes available** when a relation is defined between two blueprints.<br />A mirror property is manifested to the bluepirnt's instance ([Entity](./entity)) under `relation`. | See more details on the [mirror properties](./mirror-properties) page. |
 
 #### Full icon list
@@ -399,15 +401,3 @@ The icon will be displayed in the column header of the property (in the example 
 ![Blueprints graph with new Microservice](../../../static/img/platform-overview/port-components/blueprints/repoUrlWithIcon.png)
 
 For a list of available icons refer to the [full icon list](#full-icon-list)
-
-## Mirror properties
-
-When two blueprints are connected via a relation, a new set of properties becomes available to entities in the source blueprint.
-
-Those new properties, are called `mirrorProperties`, you can learn more about them in the [mirrorProperties](./mirror-properties) page.
-
-## Next Steps
-
-[Explore How to Create, Edit, and Delete Blueprints with basic examples](../../tutorials/blueprint-basics.md)
-
-[Dive into advanced operations on Blueprints with our API ➡️ ](../../api-reference)

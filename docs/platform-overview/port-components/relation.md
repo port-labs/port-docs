@@ -1,13 +1,14 @@
 ---
 sidebar_position: 1.2
 ---
+
 # Relation
 
 ## What is a Relation?
 
-**Relations** enable us to make connections between blueprints. This gives logical context to your software catalog.  
+**Relations** enable us to make connections between blueprints. This gives logical context to your software catalog.
 
-In practice we can use relations to connect between entities of the related blueprints.  
+In practice we can use relations to connect between entities of the related blueprints.
 
 **For example**, to see where your `microservices` are deployed, you need to create a relation between your `microservices` and `deployment` blueprints.
 
@@ -16,32 +17,38 @@ In practice we can use relations to connect between entities of the related blue
 The basic structure of a Relation schema:
 
 ```json showLineNumbers
-{
-    "identifier": "UniqueId",
-    "title": "Title",
-    "source": "Blueprint Source Identifier",
-    "target": "Blueprint Target Identifier",
-    "required": false
+"relations": {
+    "firstRelationIdentifier" :{
+        "title": "Title",
+        "target": "Blueprint Target Identifier",
+        "required": false
+    },
+    "secondRelationIdentifier" :{
+        "title": "Title",
+        "target": "Blueprint Target Identifier",
+        "required": false
+    }
 }
 ```
 
 ---
-## Structure table
-| Field | Type | Description | 
-| ----------- | ----------- | ----------- | 
-| `identifier` | `String` | A unique identifier. <br /> **Note that** while the identifier is unique, it can be changed after creation. |
-| `title` | `String` | A nicely written name for the relation that will be shown in the UI. |
-| `source` | `String` | The source blueprint identifier. |
-| `target` | `String` | The target blueprint identifier. |
-| `required` | `Boolean` | A boolean flag to define whether the target entity is a must when creating a new source. | 
 
+## Structure table
+
+| Field        | Type      | Description                                                                                                 |
+| ------------ | --------- | ----------------------------------------------------------------------------------------------------------- |
+| `identifier` | `String`  | A unique identifier. <br /> **Note that** while the identifier is unique, it can be changed after creation. |
+| `title`      | `String`  | A nicely written name for the relation that will be shown in the UI.                                        |
+| `target`     | `String`  | The target blueprint identifier.                                                                            |
+| `required`   | `Boolean` | A boolean flag to define whether the target entity is a must when creating a new source.                    |
 
 :::tip
-The title allows you to give human-readable names to relations. For example, A `Package` <-> `Deployment` relation can be called  `Used By` to describe the context of the relation to the user.
+The title allows you to give human-readable names to relations. For example, A `Package` <-> `Deployment` relation can be called `Used By` to describe the context of the relation to the user.
 
 Using titles also allows you to conveniently access relations programmatically in a generic way while keeping the UI readable.
 
 For example, you can define a convention where all relations are named in a specific format:
+
 - `{blueprint_1}-{blueprint_2}`
 - `{blueprint_1}-to-{blueprint_2}`
 - `{blueprint_1}<->{blueprint_2}`
@@ -54,20 +61,22 @@ This will allow you to interact with relations in code in a generic way, without
 When creating a blueprint from the API, there is no need for the `source` field. For more info refer to the [API reference](../../api-reference) section.
 :::
 
-
 ## Relation example
 
 Please see the following example of a relation between `microservices` and `deployment` blueprint.
-Let's say we have those two blueprints defined, and we want to connect between them, in a way that the `deployment` is the `source` and `microservice` is the `target`.  
+Let's say we have those two blueprints defined, and we want to connect between them, in a way that the `deployment` is the `source` and `microservice` is the `target`.
 
 The JSON schema of the relation is as follows:
+
 ```json showLineNumbers
 {
-    "identifier": "deployment-2-microservice",
-    "title": "Deployement Of",
-    "source": "deployment",
-    "target": "microservice",
-    "required": false
+  "relations": {
+    "deployment-2-microservice": {
+      "target": "microservice",
+      "required": false,
+      "title": "Deployement Of"
+    }
+  }
 }
 ```
 
@@ -83,7 +92,6 @@ We will support many-to-many relations soon!
 :::
 
 ## Byproducts of a relation
-
 
 ### Relation object for entities
 

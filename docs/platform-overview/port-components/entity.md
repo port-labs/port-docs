@@ -14,29 +14,33 @@ This is the basic structure of an Entity:
 
 ```json showLineNumbers
 {
-    "identifier": "UniqueID",
-    "title": "Title",
-    "team": "",
-    "blueprint": "blueprintName",
-    "properties": {
-        "property1": "",
-        "property2": ""
-    },
-    "relations": {}
+  "identifier": "UniqueID",
+  "title": "Title",
+  "team": "",
+  "blueprint": "blueprintName",
+  "properties": {
+    "property1": "",
+    "property2": ""
+  },
+  "relations": {}
 }
 ```
+
 ---
+
 ## Structure table
-| Field | Type | Description | 
-| ----------- | ----------- | ----------- | 
-| `identifier` | `String` | A unique identifier. <br /> **Note that** while the identifier is unique, it can be changed after creation. |
-| `title` | `String` | A nicely written name for the entity that will be shown in the UI. |
-| `team` | `Array` | **Optional Field.** An array of the associated teams. Only available teams can be added. <br /> **Note that** group permissions are handled according to this array, see [Teams and ownership](#teams-and-ownership). |
-| `blueprint` | `String` | The name of the [Blueprint](./blueprint) that this entity is based on. | 
-| `properties` | `Object` | An object containing key-value pairs, where each key is a property **as defined in the blueprint definition**, and each value applies the `type` of the property. | 
-| `relations` | `object` | An object containing key-value pairs.<br /> Each key is the identifier of the [Relation](./relation) that is defined on the blueprint.<br /><br />-> See more in the [Related entities](#related-entities) section. |
+
+| Field        | Type     | Description                                                                                                                                                                                                           |
+| ------------ | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `identifier` | `String` | A unique identifier. <br /> **Note that** while the identifier is unique, it can be changed after creation.                                                                                                           |
+| `title`      | `String` | A nicely written name for the entity that will be shown in the UI.                                                                                                                                                    |
+| `team`       | `Array`  | **Optional Field.** An array of the associated teams. Only available teams can be added. <br /> **Note that** group permissions are handled according to this array, see [Teams and ownership](#teams-and-ownership). |
+| `blueprint`  | `String` | The name of the [Blueprint](./blueprint) that this entity is based on.                                                                                                                                                |
+| `properties` | `Object` | An object containing key-value pairs, where each key is a property **as defined in the blueprint definition**, and each value applies the `type` of the property.                                                     |
+| `relations`  | `object` | An object containing key-value pairs.<br /> Each key is the identifier of the [Relation](./relation) that is defined on the blueprint.<br /><br />-> See more in the [Related entities](#related-entities) section.   |
 
 #### Teams and ownership
+
 :::info teams and ownership
 The `team` key defines ownership over an entity and controls who can modify or delete an existing entity.
 
@@ -53,48 +57,47 @@ In this example, you can see how a `microservice` entity is defined.
 
 ```json showLineNumbers
 {
-    "identifier": "my-service",
-    "title": "My Service",
-    "team": "Infra",
-    "blueprint": "microservice",
-    "properties": {
-        "repo-link": "https://github.com/port-labs/my-service",
-        "health-status": "Ready"
-    },
-    "relations": {}
+  "identifier": "my-service",
+  "title": "My Service",
+  "team": "Infra",
+  "blueprint": "microservice",
+  "properties": {
+    "repo-link": "https://github.com/port-labs/my-service",
+    "health-status": "Ready"
+  },
+  "relations": {}
 }
 ```
-:::note 
+
+:::note
 Notice that this entity is based on the following blueprint definition, where the `repo-link` is mandatory.
+
 ```json showLineNumbers
 {
-    "identifier": "microservice",
-    "title": "microservice",
-    "icon": "Microservice",
-    "formulaProperties": {},
-    "schema": {
-        "properties": {
-            "repo-link": {
-                "type": "string",
-                "format": "url"
-                "title": "Repo URL"
-            },
-            "health-status": {
-                "type": "string",
-                "enum": [
-                        "Ready",
-                        "Down"
-                ],
-                "title": "Service Health Status"
-            }
-        },
-        "required": [
-            "repo-link"
-        ]
-    }
+  "identifier": "microservice",
+  "title": "microservice",
+  "icon": "Microservice",
+  "formulaProperties": {},
+  "schema": {
+    "properties": {
+      "repo-link": {
+        "type": "string",
+        "format": "url",
+        "title": "Repo URL"
+      },
+      "health-status": {
+        "type": "string",
+        "enum": ["Ready", "Down"],
+        "title": "Service Health Status"
+      }
+    },
+    "required": ["repo-link"]
+  }
 }
 ```
+
 :::
+
 </details>
 
 ## Related entities
