@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Action
 
-Our GitHub Action allows you to create/update entities in Port, straight from your GitHub Workflows.
+Our GitHub Action allows you to create/update/get entities in Port, straight from your GitHub Workflows.
 
 Here you'll find a step-by-step guide for Port's GitHub Action.
 
@@ -12,67 +12,69 @@ Here you'll find a step-by-step guide for Port's GitHub Action.
 
 - Create new entities of existing blueprints and relations.
 - Update existing entities with new information (title, properties, relations, etc...).
+- Get existing entity object.
 
 ## Usage
 
 :::note Prerequisites
 
-- In order to authenticate with Port when using the Github Action, you will need a `CLIENT_ID` and `CLIENT_SECRET` which need to be provided when using the action.
+- In order to authenticate with Port when using the GitHub Action, you will need a `CLIENT_ID` and `CLIENT_SECRET` which need to be provided when using the action.
 - In order to make use of the GitHub Action, you will need an existing blueprint(s) in your Port installation.
   - Moreover, if you want to update related entities, you will also need existing relations in your Port installation.
 
 :::
 
+### Basic Upsert Example
 
-### Basic Example
-
-In this example we create a basic Blueprint and then add code that uses Port's Github Action to create/update an entity that belongs to the blueprint:
+In this example we create a basic Blueprint and then add code that uses Port's GitHub Action to create/update an entity that belongs to the blueprint:
 
 <details>
 <summary> Example microservice blueprint </summary>
 
 ```json showLineNumbers
 {
-    "identifier": "microservice",
-    "title": "Microservice",
-    "icon": "Microservice",
-    "schema": {
-        "properties": {
-            "description": {
-                "type": "string",
-                "title": "Description"
-            },
-            "buildNumber": {
-                "type": "number",
-                "title": "Build Number"
-            },
-            "isActive": {
-                "type": "boolean",
-                "title": "Is Active"
-            },
-            "languages": {
-                "type": "array",
-                "title": "Languages"
-            },
-            "versionInEnv": {
-                "type": "object",
-                "title": "Version In Env"
-            }
-        },
-        "required": ["description"]
+  "identifier": "microservice",
+  "title": "Microservice",
+  "icon": "Microservice",
+  "schema": {
+    "properties": {
+      "description": {
+        "type": "string",
+        "title": "Description"
+      },
+      "buildNumber": {
+        "type": "number",
+        "title": "Build Number"
+      },
+      "isActive": {
+        "type": "boolean",
+        "title": "Is Active"
+      },
+      "languages": {
+        "type": "array",
+        "title": "Languages"
+      },
+      "versionInEnv": {
+        "type": "object",
+        "title": "Version In Env"
+      }
     },
-    "formulaProperties": {}
+    "required": ["description"]
+  },
+  "formulaProperties": {}
 }
 ```
+
 </details>
 
-After creating the blueprint, you can add the to your workflow `yml` file to make use of the Github Action:
+After creating the blueprint, you can add the following to your workflow `yml` file to make use of the GitHub Action:
 
 ```yaml showLineNumbers
 - uses: port-labs/port-github-action@v1
   with:
     clientId: ${{ secrets.CLIENT_ID }}
     clientSecret: ${{ secrets.CLIENT_SECRET }}
+    operation: UPSERT
     identifier: example-microservice
     blueprint: microservice
     properties: |
@@ -86,72 +88,103 @@ After creating the blueprint, you can add the to your workflow `yml` file to mak
 ```
 
 :::tip
-For security reasons it is recommend saving the `CLIENT_ID` and `CLIENT_SECRET` as [GitHub Secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) and accessing them like in the example above.
+For security reasons it is recommended to save the `CLIENT_ID` and `CLIENT_SECRET` as [GitHub Secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) and accessing them like in the example above.
 
 :::
 
+### Basic Get Example
+
+The following example gets the `example-microservice` entity from the previous example.
+
+Add the following jobs to your workflow `yml` file:
+
+```yaml showLineNumbers
+get-entity:
+  runs-on: ubuntu-latest
+  outputs:
+    entity: ${{ steps.port-github-action.outputs.entity }}
+  steps:
+    - id: port-github-action
+      uses: port-labs/port-github-action@v1
+      with:
+        clientId: ${{ secrets.CLIENT_ID }}
+        clientSecret: ${{ secrets.CLIENT_SECRET }}
+        operation: GET
+        identifier: example-microservice
+        blueprint: microservice
+use-entity:
+  runs-on: ubuntu-latest
+  needs: get-entity
+  steps:
+    - run: echo '${{needs.get-entity.outputs.entity}}' | jq .properties.versionInEnv.prod
+```
+
+The first job `get-entity`, uses the GitHub Action to get the `example-microservice` entity.
+The second job `use-entity`, uses the output from the first job, and prints `versionInEnv.prod` property of the entity.
+
 ### Complete Example
 
-The following example adds another `package` blueprint, in addition to the `microservice` blueprint shown in the previous example. In addition, it adds a `package-microservice` relation and then the Github Action creates or updates the relation between existing entities: 
+The following example adds another `package` blueprint, in addition to the `microservice` blueprint shown in the previous example. In addition, it adds a `package-microservice` relation and then the GitHub Action creates or updates the relation between existing entities:
 
 <details>
 <summary> A package blueprint </summary>
 
 ```json showLineNumbers
 {
-    "identifier": "package",
-    "title": "Package",
-    "icon": "Package",
-    "schema": {
-        "properties": {
-            "version": {
-                "type": "string",
-                "title": "Version"
-            },
-            "committedBy": {
-                "type": "string",
-                "title": "Committed By"
-            },
-            "commitHash": {
-                "type": "string",
-                "title": "Commit Hash"
-            },
-            "actionJob": {
-                "type": "string",
-                "title": "Action Job"
-            },
-            "repoPushedAt": {
-                "type": "string",
-                "format": "date-time",
-                "title": "Repository Pushed At"
-            },
-            "runLink": {
-                "type": "string",
-                "format": "url",
-                "title": "Action Run Link"
-            }
-        },
-        "required": []
+  "identifier": "package",
+  "title": "Package",
+  "icon": "Package",
+  "schema": {
+    "properties": {
+      "version": {
+        "type": "string",
+        "title": "Version"
+      },
+      "committedBy": {
+        "type": "string",
+        "title": "Committed By"
+      },
+      "commitHash": {
+        "type": "string",
+        "title": "Commit Hash"
+      },
+      "actionJob": {
+        "type": "string",
+        "title": "Action Job"
+      },
+      "repoPushedAt": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Repository Pushed At"
+      },
+      "runLink": {
+        "type": "string",
+        "format": "url",
+        "title": "Action Run Link"
+      }
     },
-    "formulaProperties": {}
+    "required": []
+  },
+  "formulaProperties": {}
 }
 ```
+
 </details>
 
 <details>
 <summary> A package-microservice relation </summary>
 
-
 ```json showLineNumbers
 {
-    "title": "Used In",
-    "identifier": "package-microservice",
-    "source": "package",
-    "target": "microservice",
-    "required": false,
-    "many": false
+  "title": "Used In",
+  "identifier": "package-microservice",
+  "source": "package",
+  "target": "microservice",
+  "required": false,
+  "many": false
 }
 ```
+
 </details>
 
 Add the following to your workflow `yml` file:
@@ -161,6 +194,7 @@ Add the following to your workflow `yml` file:
   with:
     clientId: ${{ secrets.CLIENT_ID }}
     clientSecret: ${{ secrets.CLIENT_SECRET }}
+    operation: UPSERT
     identifier: example-package
     title: Example Package
     blueprint: package
@@ -178,7 +212,6 @@ Add the following to your workflow `yml` file:
         "package-microservice": "example-microservice"
       }
 ```
-
 
 That's it! The entity is created or updated, and is visible in the UI.
 
