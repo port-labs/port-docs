@@ -29,7 +29,7 @@ Visit our [Swagger.](https://api.getport.io/static/index.html#/)
 ## Main Points
 
 - **Blueprints** are the main building blocks in Port, they represent software & infrastructure assets.
-- **Entities** are objects that match the types defined by blueprints.
+- **Entities** are objects that match the types defined by Blueprints.
 - A **Page** holds all the information you need for a specific Blueprint, Entity, and more.
 - There are a few different ways you can make actions in Port:
   - Via the **UI**.
