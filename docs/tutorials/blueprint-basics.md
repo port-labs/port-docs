@@ -6,7 +6,6 @@ sidebar label: Blueprint Basics
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-
 # Blueprint Basics
 
 ## Create blueprints
@@ -27,7 +26,7 @@ Our Microservice Blueprint is going to include the following properties:
 - **Slack Channel** - The Slack Channel of the team responsible for the Microservice
 
 :::note
-Don't worry if you feel like the `Microservice` blueprint should include more properties, you can always go back and add or remove properties later. 
+Don't worry if you feel like the `Microservice` blueprint should include more properties, you can always go back and add or remove properties later.
 :::
 
 :::tip Available Icons
@@ -40,26 +39,26 @@ In order to create a Blueprint with the following properties, we will use the fo
 
 ```json showLineNumbers
 {
-    "identifier": "microservice",
-    "title": "Microservice",
-    "icon": "Microservice",
-    "formulaProperties": {},
-    "schema": {
-        "properties": {
-            "slackChannel": {
-                "type": "string",
-                "title": "Slack Channel",
-                "description": "The channel of the microservice\\'s maintainers"
-            },
-            "repoUrl": {
-                "type": "string",
-                "format": "url",
-                "title": "Repository URL",
-                "description": "A URL to the Git repository of the microservice"
-            }
-        },
-        "required": ["repoURL"]
-    }
+  "identifier": "microservice",
+  "title": "Microservice",
+  "icon": "Microservice",
+  "formulaProperties": {},
+  "schema": {
+    "properties": {
+      "slackChannel": {
+        "type": "string",
+        "title": "Slack Channel",
+        "description": "The channel of the microservice\\'s maintainers"
+      },
+      "repoUrl": {
+        "type": "string",
+        "format": "url",
+        "title": "Repository URL",
+        "description": "A URL to the Git repository of the microservice"
+      }
+    },
+    "required": ["repoURL"]
+  }
 }
 ```
 
@@ -75,7 +74,6 @@ You should see an expanded view of the blueprint we just created, with all of th
 
 ![Example microservice blueprint](../../static/img/platform-overview/port-components/blueprints/exampleMicroserviceBlueprint.png)
 
-
 ### From the API
 
 Let's see how we can use Port's API to create blueprints:
@@ -89,9 +87,9 @@ For this next part you will need your Port `CLIENT_ID` and `CLIENT_SECRET`
 In order to perform any action with Port's API, you first need an **access token**, here are some code examples from various languages
 
 <Tabs groupId="code-examples" defaultValue="python" values={[
-    {label: "Python", value: "python"},
-    {label: "Javascript", value: "javascript"},
-    {label: "cURL", value: "curl"}
+{label: "Python", value: "python"},
+{label: "Javascript", value: "javascript"},
+{label: "cURL", value: "curl"}
 ]}>
 
 <TabItem value="python">
@@ -107,9 +105,9 @@ CLIENT_SECRET = 'YOUR_CLIENT_SECRET'
 
 API_URL = 'https://api.getport.io/v1'
 
-credentials = {'client_id': CLIENT_ID, 'client_secret': CLIENT_SECRET}
+credentials = {'clientId': CLIENT_ID, 'clientSecret': CLIENT_SECRET}
 
-token_response = requests.get(f'{API_URL}/auth/access_token', params=credentials)
+token_response = requests.post(f'{API_URL}/auth/access_token', json=credentials)
 
 access_token = token_response.json()['accessToken']
 
@@ -125,25 +123,25 @@ access_token = token_response.json()['accessToken']
 // Dependencies to install:
 // $ npm install axios --save
 
-const axios = require('axios').default;
+const axios = require("axios").default;
 
-const CLIENT_ID = 'YOUR_CLIENT_ID';
-const CLIENT_SECRET = 'YOUR_CLIENT_SECRET';
+const CLIENT_ID = "YOUR_CLIENT_ID";
+const CLIENT_SECRET = "YOUR_CLIENT_SECRET";
 
-const API_URL = 'https://api.getport.io/v1';
+const API_URL = "https://api.getport.io/v1";
 
-const response = await axios.get(`${API_URL}/auth/access_token`, {
-    params: {
-        client_id: CLIENT_ID,
-        client_secret: CLIENT_SECRET,
-    },
+const response = await axios.post(`${API_URL}/auth/access_token`, {
+  data: {
+    clientId: CLIENT_ID,
+    clientSecret: CLIENT_SECRET,
+  },
 });
 
 const accessToken = response.data.accessToken;
 
 // You can now use the value in accessToken when making further requests
-
 ```
+
 </TabItem>
 
 <TabItem value="curl">
@@ -155,7 +153,12 @@ const accessToken = response.data.accessToken;
 # For yum:
 # $ sudo yum install jq
 
-access_token=$(curl --location --request GET "https://api.getport.io/v1/auth/access_token?client_id=YOUR_CLIENT_ID&client_secret=YOUR_CLIENT_SECRET" | jq '.accessToken' | sed 's/"//g')
+access_token=$(curl --location --request POST 'https://api.getport.io/v1/auth/access_token' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "clientId": "CLIENT_ID",
+    "clientSecret": "CLIENT_SECRET"
+}' | jq '.accessToken' | sed 's/"//g')
 
 # The token will be available in the access_token variable
 ```
@@ -174,11 +177,10 @@ In order to interact with the Blueprints API our basic URL will be [https://api.
 Remember the **access token** we generated earlier, we will use it while making new requests to Port's API
 :::
 
-
 <Tabs groupId="code-examples" defaultValue="python" values={[
-    {label: "Python", value: "python"},
-    {label: "Javascript", value: "javascript"},
-    {label: "cURL", value: "curl"}
+{label: "Python", value: "python"},
+{label: "Javascript", value: "javascript"},
+{label: "cURL", value: "curl"}
 ]}>
 
 <TabItem value="python">
@@ -234,46 +236,46 @@ response = requests.post(f'{API_URL}/blueprints', json=blueprint, headers=header
 // Dependencies to install:
 // $ npm install axios --save
 
-// the accessToken variable should already have the token from the previous example 
+// the accessToken variable should already have the token from the previous example
 
-const axios = require('axios').default;
+const axios = require("axios").default;
 
-const API_URL = 'https://api.getport.io/v1';
+const API_URL = "https://api.getport.io/v1";
 
 const config = {
-		headers: {
-			Authorization: `Bearer ${accessToken}`,
-		},
-	};
+  headers: {
+    Authorization: `Bearer ${accessToken}`,
+  },
+};
 
-	const blueprint = {
-		identifier: 'microservice',
-		title: 'Microservice',
-		icon: 'Microservice',
-        formulaProperties: {},
-		schema: {
-			properties: {
-				slackChannel: {
-					type: 'string',
-					title: 'Slack Channel',
-					description: "The channel of the microservice's maintainers",
-				},
-				repoUrl: {
-					type: 'string',
-					format: 'url',
-					title: 'Repository URL',
-					description: 'A URL to the Git repository of the microservice',
-				},
-			},
-			required: ['repoUrl'],
-		},
-	};
+const blueprint = {
+  identifier: "microservice",
+  title: "Microservice",
+  icon: "Microservice",
+  formulaProperties: {},
+  schema: {
+    properties: {
+      slackChannel: {
+        type: "string",
+        title: "Slack Channel",
+        description: "The channel of the microservice's maintainers",
+      },
+      repoUrl: {
+        type: "string",
+        format: "url",
+        title: "Repository URL",
+        description: "A URL to the Git repository of the microservice",
+      },
+    },
+    required: ["repoUrl"],
+  },
+};
 
-	const response = await axios.post(`${API_URL}/blueprints`, blueprint, config);
+const response = await axios.post(`${API_URL}/blueprints`, blueprint, config);
 
-    // response.data contains the content of the resulting blueprint
-
+// response.data contains the content of the resulting blueprint
 ```
+
 </TabItem>
 
 <TabItem value="curl">
@@ -338,17 +340,16 @@ If we want to add a property called `Is Deployed?` with the `boolean` type, our 
 
 ```json showLineNumbers
 {
-    "type": "setSchemaProperty",
-    "propertyName": "isdeployed",
-    "definition": {
-      "type": "boolean",
-      "title": "Is Deployed?",
-    }
+  "type": "setSchemaProperty",
+  "propertyName": "isdeployed",
+  "definition": {
+    "type": "boolean",
+    "title": "Is Deployed?"
+  }
 }
 ```
 
 For more information about the PATCH request format, refer to the [API Reference](https://app.getport.io/Api-docs)
-
 
 :::info A note about mirror properties
 If you try to update a blueprint that has a [relation](../platform-overview/port-components/relation.md), you will notice that its JSON body contains a key called `mirrorProperties`:
@@ -390,24 +391,24 @@ You can create the new blueprint from the UI (using the `New Blueprint` button i
 
 ```json showLineNumbers
 {
-    "identifier": "package",
-    "title": "Package",
-    "icon": "Package",
-    "formulaProperties": {},
-    "schema": {
-        "properties": {
-            "version": {
-                "title": "Version",
-                "type": "number",
-                "default": "1.0.0"
-            },
-            "inhouse": {
-                "title": "In House?",
-                "type": "boolean"
-            }
-        },
-        "required": []
-    }
+  "identifier": "package",
+  "title": "Package",
+  "icon": "Package",
+  "formulaProperties": {},
+  "schema": {
+    "properties": {
+      "version": {
+        "title": "Version",
+        "type": "number",
+        "default": "1.0.0"
+      },
+      "inhouse": {
+        "title": "In House?",
+        "type": "boolean"
+      }
+    },
+    "required": []
+  }
 }
 ```
 
