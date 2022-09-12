@@ -10,50 +10,53 @@ import TabItem from "@theme/TabItem"
 
 ## Creating relations
 
-Relations can be created in two ways:
+Relations can be created using two methods:
 
-- From the UI
-- From the API
+- UI; or
+- API.
 
 :::info
-Relations require 2 blueprints to map a connection between, if you haven't created the `Microservice` blueprint in [Creating a Blueprint](./blueprint-basics.md#creating-a-blueprint) and the `Package` blueprint in [Blueprint basics Next Steps](./blueprint-basics.md#next-steps), please make sure to do so if you want to follow along
+A Relation is created between 2 Blueprints. So if you haven't created the `microservice` and `package` Blueprints, in [Creating a Blueprint](./blueprint-basics.md#creating-a-blueprint) and [Blueprint basics Next Steps](./blueprint-basics.md#next-steps), please make sure to do so in order to follow along.
 :::
-
 
 ### From the UI
 
-In order to create a relation from the UI, go to the Blueprints Graph, at the top right corner of the page you can find the `New Blueprints Relation` button:
+In order to create a relation from the UI, go to the Blueprints graph and click the pencil icon on the Blueprint that will be the `source` Blueprint of the Relation (for example, in the `package-microservice` Relation, `package` is the `source` Blueprint):
 
-![Graph Package Microservice Create Relation Marked](../../static/img/platform-overview/port-components/relations/graphPackageMicroserviceCreateRelationMarked.png)
+![Blueprints page with Create Relation Marked](../../static/img/welcome/quickstart/blueprintsPageWithMicroservicePackageAndEditPackageMarked.png)
 
-After clicking the button an editor window will open with a format similar to the one we explained in the [Understanding the structure of a relation](../platform-overview/port-components/relation.md#relation-json-structure) section, paste in the following content to create the `Package-Deployment` relation:
+An editor window will open with the current schema of the Blueprint. Because there is no Relation configured on the Blueprint right now, the `relations` key in the JSON will be empty. Paste in the following content in the `relations` key to create the `package-microservice` Relation:
 
 ```json showLineNumbers
-{
-    "identifier": "package-microservice",
-    "title": "Used In",
-    "source": "package",
-    "target": "microservice",
-    "required": false
+"relations": {
+  "package-microservice": {
+      "title": "Used In",
+      "target": "microservice",
+      "required": false
+  }
 }
 ```
 
 ### From the API
 
 :::note
-Remember that an access token is needed to make API requests, refer back to [Getting an API token](./blueprint-basics.md#getting-an-api-token) if you need to generate a new one
+Remember that an access token is necessary in order to make API requests. If you need to generate a new token, refer back to [Getting an API token](./blueprint-basics.md#getting-an-api-token).
 :::
 
-In order to create a relation from the API, we will make a POST request to the URL `https://api.getport.io/v1/{source_blueprint_identifier}/relations`.
+In order to create a relation from the API, you will make a PUT request to the URL `https://api.getport.io/v1/{source_blueprint_identifier}`.
 
-The request body is almost identical to the one we have seen in the [Understanding the structure of a relation](../platform-overview/port-components/relation.md#relation-json-structure) section, the only difference is that we don't need the `source` key anymore, because we define that in the request URL.
+The request flow is:
 
-Here are some request examples that will create our `Package-Deployment` relation:
+1. Construct the Relation object
+2. Get the existing Blueprint schema from Port API
+3. Add the new Relation object to the `relations` key of the existing Blueprint
+4. Send a PUT request with the complete Blueprint schema
+
+Here are some request examples that will create our `package-microservice` relation:
 
 <Tabs groupId="code-examples" defaultValue="python" values={[
-    {label: "Python", value: "python"},
-    {label: "Javascript", value: "javascript"},
-    {label: "cURL", value: "curl"}
+{label: "Python", value: "python"},
+{label: "Javascript", value: "javascript"}
 ]}>
 
 <TabItem value="python">
@@ -70,18 +73,27 @@ API_URL = 'https://api.getport.io/v1'
 
 source_blueprint_name = 'package'
 
+target_blueprint_name = 'microservice'
+
+relation_name = 'package-microservice'
+
+relation = {
+    'title': 'Used In',
+    'target': target_blueprint_name,
+    'required': False
+}
+
 headers = {
     'Authorization': f'Bearer {access_token}'
 }
 
-relation = {
-    'identifier': 'package-microservice',
-    'title': 'Used In',
-    'target': 'microservice',
-    'required': False
-}
+blueprint_response = requests.get(f'{API_URL}/blueprints/{source_blueprint_name}', headers=headers)
 
-response = requests.post(f'{API_URL}/blueprints/{source_blueprint_name}/relations', json=relation, headers=headers)
+blueprint = blueprint_response.json()['blueprint']
+
+blueprint['relations'][relation_name] = relation
+
+response = requests.post(f'{API_URL}/blueprints/{source_blueprint_name}', json=blueprint, headers=headers)
 
 # response.json() contains the content of the resulting relation
 
@@ -97,116 +109,101 @@ response = requests.post(f'{API_URL}/blueprints/{source_blueprint_name}/relation
 
 // the accessToken variable should already have the token from previous examples
 
-const axios = require('axios').default;
+const axios = require("axios").default;
 
-const API_URL = 'https://api.getport.io/v1';
+const API_URL = "https://api.getport.io/v1";
+
+const sourceBlueprintName = "package";
+
+const targetBlueprintName = "microservice";
+
+const relationName = "package-microservice";
+
+const relation = {
+  title: "Used In",
+  target: targetBlueprintName,
+  required: false,
+};
 
 const config = {
-		headers: {
-			Authorization: `Bearer ${accessToken}`,
-		},
-	};
+  headers: {
+    Authorization: `Bearer ${accessToken}`,
+  },
+};
 
-	const relation = {
-		identifier: 'package-microservice',
-		title: 'Used In',
-		target: 'microservice',
-		required: false,
-	};
+const blueprintResponse = await axios.get(
+  `${API_URL}/blueprints/${sourceBlueprintName}`,
+  config
+);
 
-	const response = await axios.post(`${API_URL}/blueprints/${source_blueprint_name}/relations`, relation, config);
+const blueprint = blueprintResponse.data.blueprint;
 
-	console.log(response.data);
+const updatedBlueprint = {
+  ...blueprint,
+  relations: {
+    ...blueprint.relations,
+    [relationName]: relation,
+  },
+};
 
-    // response.data contains the content of the resulting relation
+const response = await axios.post(
+  `${API_URL}/blueprints/${source_blueprint_name}`,
+  updatedBlueprint,
+  config
+);
 
-```
-</TabItem>
+console.log(response.data);
 
-<TabItem value="curl">
-
-```bash showLineNumbers
-# the access_token variable should already have the token from previous examples
-
-source_blueprint_name='package'
-
-curl --location --request POST "https://api.getport.io/v1/blueprints/$source_blueprint_name/relations" \
-	--header "Authorization: Bearer $access_token" \
-	--header "Content-Type: application/json" \
-	--data-raw "{
-    \"identifier\": \"package-microservice\",
-    \"title\": \"Used In\",
-    \"target\": \"microservice\",
-    \"required\": false
-}"
-
-# The output of the command contains the content of the resulting blueprint
+// response.data contains the content of the resulting relation
 ```
 
 </TabItem>
 
 </Tabs>
 
-After creating the relation, you should see a visual indicator in the blueprints graph:
+After creating the Relation, you will see a visual indicator in the Blueprints graph:
 
 ![Blueprints Graph with Relations Line](../../static/img/platform-overview/port-components/relations/graphPackageMicroserviceWithRelationLine.png)
 
 ## Updating relations
 
-When updating a relation, it is only possible to update the `title`, `identifier` and `required` keys
+When updating a Relation, it is only possible to update the `title`, `required` and `many` keys.
 
-Just like before, we can update a relation from the UI or from the API.
+:::caution
+When making a request to update a relation, if you try to change the identifier of a Relation, it will effectively delete the old Relation and create a new one under the new identifier
+:::
+
+Just like before, you can update a Relation from the UI or from the API.
 
 ### From the UI
 
-In order to update a relation from the UI, go to the Blueprints Graph, hover over the relation connector line between the 2 blueprints and click on the relations icon that appears:
+In order to update a Relation from the UI, go to the Blueprints graph, hover over the `source` Blueprint and click on the pencil icon that appears:
 
 ![Graph relations edit marked](../../static/img/platform-overview/port-components/relations/graphRelationEditMarked.png)
 
-A json editor will appear in read-only mode.
+An editor window will open with the current schema of the Blueprint. In order to update the Relation, simply edit the value of the `title`, `required` or `many` properties as needed in the `package-microservice` Relation object
 
-You can toggle editing at the bottom left corner of the editor.
-
-![Graph relations editor with edit marked](../../static/img/platform-overview/port-components/relations/graphRelationEditorWithEditButtonMarked.png)
-
-:::info editing relations
-Toggling edit mode will remove the fields that cannot be updated in the relation from the editor, don't worry about it, they are still saved in the background, but because they cannot be updated they are hidden away.
-:::
-
-After editing the relation, click on `save` at the bottom right corner of the editor and you should see the updated relation.
+After editing the Relation, click on `save` at the bottom right corner of the editor and view the updated Blueprint and its Relation.
 
 ### From the API
 
-In order to update a relation from the API, we will make a PATCH request to the URL `https://api.getport.io/v1/{source_blueprint_identifier}/relations/{relation_identifier}`.
+In order to update a Relation from the API, you will make a PUT request to the URL `https://api.getport.io/v1/{source_blueprint_identifier}`.
 
-A PATCH request has a specific format that allows for precise changes in an existing relation, let's look at an example:
-
-If we want to rename the relation to `Used In MS`, our PATCH request body will look like this:
-
-```json showLineNumbers
-{
-    "type": "renameTitle",
-    "newTitle": "Used In MS"
-}
-```
-
-For more information about the PATCH request format, refer to the [API Reference](../api-reference/)
+The request body will include the existing body of the Blueprint, alongside the updated `relations` object, after the desired updates to the existing Relation have been applied.
 
 ## Deleting relations
 
 :::danger
-A relation cannot be restored after deletion!
+A Relation cannot be restored after deletion!
 :::
 
-In order to delete a relation you can:
+In order to delete a Relation you can:
 
-- Click on the trash can icon in the specific relation node in the Blueprints Graph
-- Make a REST DELETE request to the URL `https://api.getport.io/v1/{source_blueprint_identifier}/relations/{relation_identifier}`
-
-![Graph relations delete marked](../../static/img/platform-overview/port-components/relations/graphRelationDeleteMarked.png)
+- Delete the object of the specific Relation in the Blueprint schema editor;
+- Make a REST PUT request to the URL `https://api.getport.io/v1/{source_blueprint_identifier}` after removing the specific Relation object from `relations` key in the Blueprint schema.
 
 ## Next steps
 
-Now that we understand **Relations**, we can start to see how Port helps us understand our infrastructure layout, and helps us make sure everything is organized.
+Now that we understand **Relations**, we can begin to see how Port helps us understand and manage our infrastructure layout.
 
-In the next section we will talk about **Entities**, entities are the real objects that use the blueprints we defined, and they are the final building block in creating our Software Catalog! 
+In the next section we will talk about **Entities**, which are objects that match the type of Blueprints we defined, and the final building block in creating our Software Catalog.

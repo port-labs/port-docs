@@ -93,7 +93,7 @@ In the next part, we will start creating Entities that match this new Blueprint,
 
 Now that we have a Blueprint for `Microservice`, we can add some _Entities_.
 
-An **Entity** is an object that matches to a type of a certain Blueprint. In our case, every Entity we create under the microservice Blueprint, is a microservice in our organization.
+An **Entity** is an object that matches a type of a certain Blueprint. In our case, every Entity we create under the microservice Blueprint, is a microservice in our organization.
 
 Let's create our first Entity to make things clearer.
 
