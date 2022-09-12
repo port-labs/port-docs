@@ -10,7 +10,7 @@ In this guide, you will deploy a new `AWS Lambda function` that will subscribe t
 
 - AWS CLI installed and configured to your desired AWS account.
 - A Port API `CLIENT_ID` and `CLIENT_SECRET`.
-- Connection credentials to the Kafka topic, provided to you by Port. they will look similar to this:
+- Connection credentials to the Kafka topic, provided to you by Port. they will look like to this:
 
 ```json showLineNumbers
 KAFKA_BROKERS=b-1-public.publicclusterprod.t9rw6w.c1.kafka.eu-west-1.amazonaws.com:9196,b-2-public.publicclusterprod.t9rw6w.c1.kafka.eu-west-1.amazonaws.com:9196,b-3-public.publicclusterprod.t9rw6w.c1.kafka.eu-west-1.amazonaws.com:9196
