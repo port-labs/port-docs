@@ -7,21 +7,19 @@ import TabItem from "@theme/TabItem"
 
 # Search In Port
 
-The Port API comes with a built-in search route that allows you to quickly and easily find what you're looking for in the Service Catalog.
+Port’s API comes with a built-in search route that allows you to navigate your Service Catalog with ease.
 
-Using the search route, you can search for Entities using various filters and rules.
+Using the search route’s filters and rules, you can search different Entities.
 
 ## Search basics
 
-Search in Port is performed by writing simple querying rules which can be combined together to construct a more complex and precise query.
+Search in Port is performed by writing simple querying rules which can be combined together to form a more complex and precise query.
 
-The base search route is `https://api.getport.io/entities/search`, it receives `HTTP POST` requests.
+The base search route is `https://api.getport.io/v1/entities/search`, it receives `HTTP POST` requests.
 
 ## Search request
 
-A search request defines the logical relation between the different search rules, and contains a list search rules used to match and filter entities.
-
-Each search request is represented by a **JSON object**, as shown in the following section:
+A search request defines the logical Relation between different search rules, and contains filters and rules to find suitable Entities. Each search request is represented by a `JSON object`, as shown in the following section:
 
 ```json showLineNumbers
 {
@@ -63,10 +61,10 @@ Each search request is represented by a **JSON object**, as shown in the followi
 
 ### Search request structure table
 
-| Field        | Description                                                                                    |
-| ------------ | ---------------------------------------------------------------------------------------------- |
-| `combinator` | Defines whether the query performs a logical `and` or an `or` between the different conditions |
-| `rules`      | An array of search rules to filter results with                                                |
+| Field        | Description                                                        |
+| ------------ | ------------------------------------------------------------------ |
+| `combinator` | Defines the query’s logical Relations between different conditions |
+| `rules`      | An array of search rules to filter results with                    |
 
 ## Search rules
 
@@ -86,25 +84,23 @@ Here is an example search rule:
 
 ### Search rule structure table
 
-Port has 2 types of search rule operators: Comparison operators (`=`, `>`, etc...) and relation operators (`relatedTo`, `dependedOn`, etc...)
-
-This part will elaborate on the structure of a search rule for each type of operator:
+Port has 2 types of search rule operators: comparison operators (`=,` `>`, etc...) and Relation operators (`relatedTo`, `dependedOn`, etc...). Let’s dive in on the structure of each search rule:
 
 #### Comparison operators structure
 
-| Field      | Description                                                                                                                                     |
-| ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| `operator` | The search operator to use when evaluating this rule, see a list of available operators below                                                   |
-| `property` | The property to filter according to its value, can be an internal property such as `$identifier` or a standard property such as `slack_channel` |
-| `value`    | The value to filter by                                                                                                                          |
+| Field      | Description                                                                                                                                                                                                                              |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `operator` | Search operator to use when evaluating this rule, see a list of available operators below                                                                                                                                                |
+| `property` | Property to filter by according to its value. It can be a [meta-property](../platform-overview/port-components/mirror-properties.md#meta-property-mirror-property) such as `$identifier`, or a standard property such as `slack_channel` |
+| `value`    | The value to filter by                                                                                                                                                                                                                   |
 
 #### Relation operators structure
 
-| Field       | Description                                                                                   |
-| ----------- | --------------------------------------------------------------------------------------------- |
-| `operator`  | The search operator to use when evaluating this rule, see a list of available operators below |
-| `blueprint` | The blueprint of the entity identifier specified in the `value` field                         |
-| `value`     | The value to filter by                                                                        |
+| Field       | Description                                                                               |
+| ----------- | ----------------------------------------------------------------------------------------- |
+| `operator`  | Search operator to use when evaluating this rule, see a list of available operators below |
+| `blueprint` | Blueprint of the Entity identifier specified in the `value` field                         |
+| `value`     | Value to filter by                                                                        |
 
 ## Search operators
 
@@ -117,8 +113,8 @@ Search currently supports the following operators:
 | `>`,`>=`,`<`,`<=` | Numeric comparison operators                               |
 | `between`         | Date range matching                                        |
 | `contains`        | String pattern matching                                    |
-| `relatedTo`       | Returns entities that have a relation with our rule target |
-| `dependedOn`      | Returns entities that depend on rule target                |
+| `relatedTo`       | Returns Entities that have a Relation with the rule target |
+| `dependedOn`      | Returns Entities that depend on rule target                |
 
 ## Operator examples
 
@@ -126,7 +122,7 @@ Here are examples for each available search rule operator:
 
 ### `=` operator
 
-The following rule will return entities whose identifier is `port-api`:
+The following rule will return Entities whose identifier is `port-api`:
 
 ```json showLineNumbers
 {
@@ -139,13 +135,13 @@ The following rule will return entities whose identifier is `port-api`:
 :::info Available properties
 We can search over a variety of properties:
 
-- "meta-properties" such as `$identifier`, `$title`, `$createdAt` and more
-- user-defined properties that appear under the `properties` key in the `blueprint` definition
+- "[Meta-properties](../platform-overview/port-components/mirror-properties.md#meta-property-mirror-property)" such as `$identifier`, `$title`, `$createdAt` and more.
+- User-defined properties that appear under the `properties` key in the `blueprint` definition
   :::
 
 ### `!=` operator
 
-The following rule will return entities whose identifier **is not** `port-api`:
+The following rule will return Entities whose identifier **is not** `port-api`:
 
 ```json showLineNumbers
 {
@@ -157,7 +153,7 @@ The following rule will return entities whose identifier **is not** `port-api`:
 
 ### `>`,`>=`,`<`,`<=` operators
 
-The following rule will return entities whose version value is less than `5`:
+The following rule will return Entities whose version value is less than `5`:
 
 ```json showLineNumbers
 {
@@ -169,7 +165,7 @@ The following rule will return entities whose version value is less than `5`:
 
 ### `between` operator
 
-The following rule will return entities which were created in the last week:
+The following rule will return Entities which were created in the last week:
 
 ```json showLineNumbers
 {
@@ -209,7 +205,7 @@ The `between` operator also supports standard date ranges:
 
 ### `contains` operator
 
-The following rule will return entities whose environment property contains the word `prod`:
+The following rule will return Entities whose environment property contains the word `prod`:
 
 ```json showLineNumbers
 {
@@ -221,7 +217,7 @@ The following rule will return entities whose environment property contains the 
 
 ### `relatedTo` operator
 
-The following rule will return all entities that have a relationship with the entity whose identifier is `port-api` (both children and ancestors):
+The following rule will return all Entities that have a relationship with the Entity whose identifier is `port-api` (both children and ancestors):
 
 ```json showLineNumbers
 {
@@ -232,14 +228,15 @@ The following rule will return all entities that have a relationship with the en
 ```
 
 :::info entity page and search
-The output received from the `relatedTo` operator without any other rule added to the search, is the same output you will receive when viewing the [entity page](../platform-overview/port-components/page.md#entity-page) of the entity you specified in the `value` field
+
+The output received from the `relatedTo` operator without any other rule added to the search, is the same output you will receive when viewing the [Entity page](../platform-overview/port-components/page.md#entity-page) of the Entity you specified in the `value` field
 :::
 
 ### `dependedOn` operator
 
-The following rule will return all entities that depend on the specified entity in the query.
+The following rule will return all Entities that depend on the specified Entity in the query.
 
-For example, if we have the **required** relation `deployment -> microservice`, then the deployment entities depend on the microservice entities, and a `dependedOn` rule specifying a `microservice` entity will return all `deployments` of that microservice (because those `deployments` depend on the `microservice`).
+For example, if we have the **required** Relation `deployment -> microservice`, then the deployment Entities depend on the microservice Entities, and a `dependedOn` rule specifying a `microservice` Entity will return all `deployments` of that microservice (because those `deployments` depend on the `microservice`).
 
 ```json showLineNumbers
 {
@@ -250,18 +247,19 @@ For example, if we have the **required** relation `deployment -> microservice`, 
 ```
 
 :::tip deleting a depended on entity
-The output received from the `dependedOn` operator without any other rule added to the search, is similar to the output you will receive when trying to delete a depended entity from the UI.
 
-The output will include the identifiers of all the dependent entities, so that you can decide if you really want to perform the delete operation (and also delete all the dependents), or cancel the delete operation
+The output received from the `dependedOn` operator without any other rule added to the search, is similar to the output you will receive when trying to delete a depended Entity from the UI.
+
+The output will include the identifiers of all the dependent Entities, so you can decide if you really want to perform the delete operation (and also delete all the dependents), or cancel the delete operation
 :::
 
 ## Search route query parameters
 
-The search route also supports several query parameters which affect the returned output:
+The search route also supports several query parameters that affect the returned output:
 
 | Parameter                       | Description                                                                                                                                                                                                 | Available values | Default value |
 | ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- | ------------- |
-| `attach_title_to_relation`      | `true`: Both the identifier and the title of the related entity will appear under the relation key <br></br><br></br> `false`: Only the identifier of the related entity will appear under the relation key | `true`/`false`   | `false`       |
+| `attach_title_to_relation`      | `true`: Both the identifier and the title of the related Entity will appear under the Relation key <br></br><br></br> `false`: Only the identifier of the related Entity will appear under the Relation key | `true`/`false`   | `false`       |
 | `exclude_calculated_properties` | Should [mirror properties](../platform-overview/port-components/blueprint.md#mirror-properties) and [formula properties](../platform-overview/port-components/blueprint.md#) be returned with the result    | `true`/`false`   | `false`       |
 
 ### `attach_title_to_relation` example
@@ -349,7 +347,7 @@ And here is the same search response with `attach_title_to_relation=false`:
 
 ## Code examples
 
-The following examples provide a base to begin using the search route, remember that you can always switch the content of the `rules` array to the search query that fits your search.
+The following examples provide a foundation to begin using the search route. Remember that you can always change the content of the `rules` array to the search query that fits your search.
 
 <Tabs groupId="code-examples" defaultValue="python" values={[
 {label: "Python", value: "python"},

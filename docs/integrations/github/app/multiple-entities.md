@@ -6,7 +6,7 @@ sidebar_position: 4
 
 ## How does it work?
 
-In order to manage multiple entities (of one or more blueprints), there are two ways (which you can combine):
+There are two methods to manage multiple Entities (of one or more Blueprints). The methods can be merged if need be:
 
 1. Use [YAML sequences](#YAML-sequences) (arrays/lists) in your `port.yml` file.
 2. Use [multiple](#multiple-files) `port.yml` files (e.g., Monorepo use-case).
@@ -19,7 +19,7 @@ Here is an example:
 - identifier: example1
   title: Example 1
   blueprint: Microservice
-  properties: 
+  properties:
     owner: port-labs
     runtime: NodeJs
     slack-channel: prod-alerts
@@ -27,7 +27,7 @@ Here is an example:
 - identifier: example2
   title: Example 2
   blueprint: Microservice
-  properties: 
+  properties:
     owner: port-labs
     runtime: NodeJs
     slack-channel: prod-alerts
@@ -36,6 +36,6 @@ Here is an example:
 
 ### Multiple files
 
-By default, we search for all `port.yml` files in your repo (Use `specPath` (Glob Patterns) in [Advanced configurations](./advanced-configuration) to control it)
+By default, we search for all `port.yml` files in your repo (Use `specPath` (Glob Patterns) in [Advanced configurations](./advanced-configuration) to control it):
 
 ![GitHub app tree of port.yml files](../../../../static/img/integrations/github-app/GithubTreeOfPortYamlFiles.png)

@@ -4,69 +4,69 @@ sidebar_position: 2
 
 # Action
 
-Our GitHub Action allows you to create/update entities in Port, straight from your GitHub Workflows.
+Our GitHub action allows you to create/update Entities in Port directly from your GitHub workflows.
 
 Here you'll find a step-by-step guide for Port's GitHub Action.
 
-## What does our GitHub Action give you?
+## GitHub Action Benefits​
 
-- Create new entities of existing blueprints and relations.
-- Update existing entities with new information (title, properties, relations, etc...).
+- Create new Entities of existing Blueprints and Relations;
+- Update existing Entities with new information (title, properties, relations, etc...).
 
 ## Usage
 
 :::note Prerequisites
 
-- In order to authenticate with Port when using the Github Action, you will need a `CLIENT_ID` and `CLIENT_SECRET` which need to be provided when using the action.
-- In order to make use of the GitHub Action, you will need an existing blueprint(s) in your Port installation.
-  - Moreover, if you want to update related entities, you will also need existing relations in your Port installation.
+- In order to authenticate with Port when using the Github action, you will need to provide a `CLIENT_ID` and `CLIENT_SECRET`.
+- In order to make use of the GitHub action, you will need an existing Blueprint(s) in your Port installation.
+  - Moreover, if you want to update related Entities, you will also need existing Relations in your Port installation.
 
 :::
 
-
 ### Basic Example
 
-In this example we create a basic Blueprint and then add code that uses Port's Github Action to create/update an entity that belongs to the blueprint:
+In this example we create a basic Blueprint and then add code that uses Port's Github action to create/update an Entity that belongs to the Blueprint:
 
 <details>
-<summary> Example microservice blueprint </summary>
+<summary> Example microservice Blueprint </summary>
 
 ```json showLineNumbers
 {
-    "identifier": "microservice",
-    "title": "Microservice",
-    "icon": "Microservice",
-    "schema": {
-        "properties": {
-            "description": {
-                "type": "string",
-                "title": "Description"
-            },
-            "buildNumber": {
-                "type": "number",
-                "title": "Build Number"
-            },
-            "isActive": {
-                "type": "boolean",
-                "title": "Is Active"
-            },
-            "languages": {
-                "type": "array",
-                "title": "Languages"
-            },
-            "versionInEnv": {
-                "type": "object",
-                "title": "Version In Env"
-            }
-        },
-        "required": ["description"]
+  "identifier": "microservice",
+  "title": "Microservice",
+  "icon": "Microservice",
+  "schema": {
+    "properties": {
+      "description": {
+        "type": "string",
+        "title": "Description"
+      },
+      "buildNumber": {
+        "type": "number",
+        "title": "Build Number"
+      },
+      "isActive": {
+        "type": "boolean",
+        "title": "Is Active"
+      },
+      "languages": {
+        "type": "array",
+        "title": "Languages"
+      },
+      "versionInEnv": {
+        "type": "object",
+        "title": "Version In Env"
+      }
     },
-    "formulaProperties": {}
+    "required": ["description"]
+  },
+  "formulaProperties": {}
 }
 ```
+
 </details>
 
-After creating the blueprint, you can add the to your workflow `yml` file to make use of the Github Action:
+After creating the Blueprint, you can add it to your workflow `yml` file to make use of the Github Action:
 
 ```yaml showLineNumbers
 - uses: port-labs/port-github-action@v1
@@ -86,72 +86,73 @@ After creating the blueprint, you can add the to your workflow `yml` file to mak
 ```
 
 :::tip
-For security reasons it is recommend saving the `CLIENT_ID` and `CLIENT_SECRET` as [GitHub Secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) and accessing them like in the example above.
+For security reasons it is recommended to save the `CLIENT_ID` and `CLIENT_SECRET` as [GitHub Secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets), and access them as shown in the example above.
 
 :::
 
 ### Complete Example
 
-The following example adds another `package` blueprint, in addition to the `microservice` blueprint shown in the previous example. In addition, it adds a `package-microservice` relation and then the Github Action creates or updates the relation between existing entities: 
+The following example adds another `package` Blueprint, in addition to the `microservice` Blueprint shown in the previous example. In addition, it also adds a `package-microservice` Relation. The Github action will create or update the Relation between the 2 existing Entities:
 
 <details>
-<summary> A package blueprint </summary>
+<summary> A package Blueprint </summary>
 
 ```json showLineNumbers
 {
-    "identifier": "package",
-    "title": "Package",
-    "icon": "Package",
-    "schema": {
-        "properties": {
-            "version": {
-                "type": "string",
-                "title": "Version"
-            },
-            "committedBy": {
-                "type": "string",
-                "title": "Committed By"
-            },
-            "commitHash": {
-                "type": "string",
-                "title": "Commit Hash"
-            },
-            "actionJob": {
-                "type": "string",
-                "title": "Action Job"
-            },
-            "repoPushedAt": {
-                "type": "string",
-                "format": "date-time",
-                "title": "Repository Pushed At"
-            },
-            "runLink": {
-                "type": "string",
-                "format": "url",
-                "title": "Action Run Link"
-            }
-        },
-        "required": []
+  "identifier": "package",
+  "title": "Package",
+  "icon": "Package",
+  "schema": {
+    "properties": {
+      "version": {
+        "type": "string",
+        "title": "Version"
+      },
+      "committedBy": {
+        "type": "string",
+        "title": "Committed By"
+      },
+      "commitHash": {
+        "type": "string",
+        "title": "Commit Hash"
+      },
+      "actionJob": {
+        "type": "string",
+        "title": "Action Job"
+      },
+      "repoPushedAt": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Repository Pushed At"
+      },
+      "runLink": {
+        "type": "string",
+        "format": "url",
+        "title": "Action Run Link"
+      }
     },
-    "formulaProperties": {}
+    "required": []
+  },
+  "formulaProperties": {}
 }
 ```
+
 </details>
 
 <details>
-<summary> A package-microservice relation </summary>
-
+<summary> A package-microservice Relation </summary>
 
 ```json showLineNumbers
 {
-    "title": "Used In",
-    "identifier": "package-microservice",
-    "source": "package",
-    "target": "microservice",
-    "required": false,
-    "many": false
+  "title": "Used In",
+  "identifier": "package-microservice",
+  "source": "package",
+  "target": "microservice",
+  "required": false,
+  "many": false
 }
 ```
+
 </details>
 
 Add the following to your workflow `yml` file:
@@ -179,8 +180,7 @@ Add the following to your workflow `yml` file:
       }
 ```
 
-
-That's it! The entity is created or updated, and is visible in the UI.
+That's it! The Entity is created or updated and is visible in the UI.
 
 ![Entity](../../../static/img/integrations/github-action/CreatedEntity.png)
 
