@@ -73,7 +73,7 @@ Each Blueprint is represented by a [Json schema](https://json-schema.org/), as s
 | `description`       | `String` | Description for the Blueprint.<br /> This value is visible to users when hovering on the info icon in the UI. |
 | `icon`              | `String` | Icon for the Blueprint's graph node, and Entities of the Blueprint                                            | Icon options: `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud,...` <br /><br />See the full icon list [below.](#full-icon-list) |
 | `formulaProperties` | `Object` | Contains the properties that are defined using [formula templates](./formula-properties)                      | Example: "`repo-link`": "`https://github.com/{{$identifier}}`"                                                                                |
-| `schema`            | `Object` | Object containing two more nested fields, including `properties` and `required`                               | See the schema structure here: [`schema`](#blueprints-schema).                                                                                |
+| `schema`            | `Object` | Object containing two more nested fields, including `properties` and `required`                               | See the schema structure here: [`schema`](#blueprint-schema).                                                                                 |
 
 #### Special blueprint fields
 
