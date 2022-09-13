@@ -351,7 +351,7 @@ The action can be triggered by selecting it from the sub-menu of an existing Ent
 
 ## Action message structure
 
-Every invocation of a Self-Service Action publishes a new `run` message (with its own unique `runId` value) to the [runs Kafka topic](<(./port-execution-topics)>). Let’s explore the structure of a Self-Service Action run message:
+Every invocation of a Self-Service Action publishes a new `run` message (with its own unique `runId` value) to the [runs Kafka topic](./port-execution-topics). Let’s explore the structure of a Self-Service Action run message:
 
 | Field          | Description                                                                                  | Example               |
 | -------------- | -------------------------------------------------------------------------------------------- | --------------------- |

@@ -33,7 +33,7 @@ You can view each user’s role in the users table (via the main menu):
 ![Users page](../../../static/img/platform-overview/role-based-access-control/permissions/usersPage.png)
 
 :::info
-Refer to the [Teams and users](./users-and-teams-management) section for more information about the users page
+Refer to the [Teams and users](./teams-and-users-management) section for more information about the users page
 :::
 
 ## Working with Permissions
