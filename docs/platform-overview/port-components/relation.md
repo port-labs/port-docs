@@ -1,73 +1,70 @@
 ---
 sidebar_position: 1.2
 ---
+
 # Relation
 
 ## What is a Relation?
 
-**Relations** enable us to make connections between blueprints. This gives logical context to your software catalog.  
+**Relations** enable us to make connections between Blueprints, consequently connecting the Entities based on these Blueprints. Doing so provides logical context to the Software Catalog.
 
-In practice we can use relations to connect between entities of the related blueprints.  
-
-**For example**, to see where your `microservices` are deployed, you need to create a relation between your `microservices` and `deployment` blueprints.
+**For example**, in order see where your `microservices` are deployed, you need to create a Relation between your `microservices` and `deployment` Blueprints.
 
 ## Relation JSON structure
 
-The basic structure of a Relation schema:
+The basic structure of a Relation object:
 
 ```json showLineNumbers
-{
-    "identifier": "UniqueId",
+"UniqueId": {
     "title": "Title",
-    "source": "Blueprint Source Identifier",
-    "target": "Blueprint Target Identifier",
-    "required": false
+    "target": "Blueprint target identifier",
+    "required": true
 }
 ```
 
----
-## Structure table
-| Field | Type | Description | 
-| ----------- | ----------- | ----------- | 
-| `identifier` | `String` | A unique identifier. <br /> **Note that** while the identifier is unique, it can be changed after creation. |
-| `title` | `String` | A nicely written name for the relation that will be shown in the UI. |
-| `source` | `String` | The source blueprint identifier. |
-| `target` | `String` | The target blueprint identifier. |
-| `required` | `Boolean` | A boolean flag to define whether the target entity is a must when creating a new source. | 
+:::info
+A Relation exists under the `relations` key in the [Blueprint JSON schema](./blueprint.md#blueprint-json-schema)
+:::
 
+---
+
+## Structure table
+
+| Field        | Type      | Description                                                                                                      |
+| ------------ | --------- | ---------------------------------------------------------------------------------------------------------------- |
+| `identifier` | `String`  | Unique identifier                                                                                                |
+| `title`      | `String`  | Relation name that will be shown in the UI                                                                       |
+| `target`     | `String`  | Target Blueprint identifier.                                                                                     |
+| `required`   | `Boolean` | Boolean flag to define whether the target Entity is a must when creating a new Entity from the source Blueprint. |
 
 :::tip
-The title allows you to give human-readable names to relations. For example, A `Package` <-> `Deployment` relation can be called  `Used By` to describe the context of the relation to the user.
 
-Using titles also allows you to conveniently access relations programmatically in a generic way while keeping the UI readable.
+The title allows you to give human-readable names to Relations. For example, A `Package` <-> `Deployment` Relation can describe how those two are related.
 
-For example, you can define a convention where all relations are named in a specific format:
+Using titles also allows you to conveniently access Relations programmatically in a generic way while keeping the UI readable.
+
+For example, you can define a convention where all Relations are named in a specific format:
+
 - `{blueprint_1}-{blueprint_2}`
 - `{blueprint_1}-to-{blueprint_2}`
 - `{blueprint_1}<->{blueprint_2}`
-- or anything similar that works for you
+- Anything similar that works for you
 
-This will allow you to interact with relations in code in a generic way, without impacting UX.
+This will allow you to interact with Relations with code in a generic way, without impacting UX.
 :::
-
-:::note
-When creating a blueprint from the API, there is no need for the `source` field. For more info refer to the [API reference](../../api-reference) section.
-:::
-
 
 ## Relation example
 
-Please see the following example of a relation between `microservices` and `deployment` blueprint.
-Let's say we have those two blueprints defined, and we want to connect between them, in a way that the `deployment` is the `source` and `microservice` is the `target`.  
+Please see the following example of a relation between `microservices` and a `deployment` Blueprint.
+Let's say we have those two Blueprints defined, and we want to connect between them, in a way that the `deployment` is the `source` and `microservice` is the `target`.
 
-The JSON schema of the relation is as follows:
+We need to add the following JSON schema of the relation to the `deployment` Blueprint's `relations` object:
+
 ```json showLineNumbers
-{
-    "identifier": "deployment-2-microservice",
-    "title": "Deployement Of",
-    "source": "deployment",
-    "target": "microservice",
-    "required": false
+"deployment-2-microservice": {
+  "title": "Deployment Of",
+  "target": "microservice",
+  "required": false
 }
 ```
 
@@ -75,24 +72,26 @@ Resulting in this outcome in the UI:
 ![Blueprints Graph with Relations Line](../../../static/img/platform-overview/port-components/DeployToMicroserviceRelationUI.png)
 
 :::info
-Our `source` to `target` relations are one-to-many, at the moment. Meaning that the `target` blueprint can have many entities of the `source` blueprint.  
-For example, a `deployment -> microservices` relation means that a `microservice` can be deployed many times, while a `deployment` represents a single `microservice`.
+Our `source` to `target` relations are one-to-many, at the moment. That means the `target` Blueprint can have many entities of the `source` blueprint.
+
+For example, a `deployment -> microservices` Relation can translate to a `microservice` being deployed many times, while a `deployment` represents a single `microservice`.
 :::
+
 :::note
 We will support many-to-many relations soon!
 :::
 
 ## Byproducts of a relation
 
-
 ### Relation object for entities
 
-When two blueprints are related, creating an entity of the `source` blueprint will show an additional option - a `relation`.  
+When two Blueprints are related, creating an Entity of the `source` Blueprint will show an additional option - a `Relation`.
+
 This will add a property under the `relations` section, as shown in the [relations section.](./entity#related-entities)
 
 ### Mirror properties
 
-Creating a relation between multiple blueprints allows you to use **Mirror Properties** to enrich the data attached to your entities by querying additional data from related entities with fewer steps.
+Creating a Relation between multiple Blueprints allows you to use **Mirror Properties** to enrich the data attached to your Entities, by querying additional data from related Entities with fewer steps.
 
 You can learn more about these properties in the [Mirror Properties](./mirror-properties) page.
 

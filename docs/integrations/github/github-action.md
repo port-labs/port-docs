@@ -4,32 +4,32 @@ sidebar_position: 2
 
 # Action
 
-Our GitHub Action allows you to create/update/get entities in Port, straight from your GitHub Workflows.
+Our GitHub action allows you to create/update Entities in Port directly from your GitHub workflows.
 
 Here you'll find a step-by-step guide for Port's GitHub Action.
 
-## What does our GitHub Action give you?
+## GitHub Action Benefits​
 
-- Create new entities of existing blueprints and relations.
-- Update existing entities with new information (title, properties, relations, etc...).
+- Create new Entities of existing Blueprints and Relations;
+- Update existing Entities with new information (title, properties, relations, etc...).
 - Get existing entity object.
 
 ## Usage
 
 :::note Prerequisites
 
-- In order to authenticate with Port when using the GitHub Action, you will need a `CLIENT_ID` and `CLIENT_SECRET` which need to be provided when using the action.
-- In order to make use of the GitHub Action, you will need an existing blueprint(s) in your Port installation.
-  - Moreover, if you want to update related entities, you will also need existing relations in your Port installation.
+- In order to authenticate with Port when using the Github action, you will need to provide a `CLIENT_ID` and `CLIENT_SECRET`.
+- In order to make use of the GitHub action, you will need an existing Blueprint(s) in your Port installation.
+  - Moreover, if you want to update related Entities, you will also need existing Relations in your Port installation.
 
 :::
 
-### Basic Upsert Example
+### Basic Example
 
-In this example we create a basic Blueprint and then add code that uses Port's GitHub Action to create/update an entity that belongs to the blueprint:
+In this example we create a basic Blueprint and then add code that uses Port's Github action to create/update an Entity that belongs to the Blueprint:
 
 <details>
-<summary> Example microservice blueprint </summary>
+<summary> Example microservice Blueprint </summary>
 
 ```json showLineNumbers
 {
@@ -88,7 +88,7 @@ After creating the blueprint, you can add the following to your workflow `yml` f
 ```
 
 :::tip
-For security reasons it is recommended to save the `CLIENT_ID` and `CLIENT_SECRET` as [GitHub Secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) and accessing them like in the example above.
+For security reasons it is recommended to save the `CLIENT_ID` and `CLIENT_SECRET` as [GitHub Secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets), and access them as shown in the example above.
 
 :::
 
@@ -124,10 +124,10 @@ The second job `use-entity`, uses the output from the first job, and prints `ver
 
 ### Complete Example
 
-The following example adds another `package` blueprint, in addition to the `microservice` blueprint shown in the previous example. In addition, it adds a `package-microservice` relation and then the GitHub Action creates or updates the relation between existing entities:
+The following example adds another `package` Blueprint, in addition to the `microservice` Blueprint shown in the previous example. In addition, it also adds a `package-microservice` Relation. The Github action will create or update the Relation between the 2 existing Entities:
 
 <details>
-<summary> A package blueprint </summary>
+<summary> A package Blueprint </summary>
 
 ```json showLineNumbers
 {
@@ -172,7 +172,7 @@ The following example adds another `package` blueprint, in addition to the `micr
 </details>
 
 <details>
-<summary> A package-microservice relation </summary>
+<summary> A package-microservice Relation </summary>
 
 ```json showLineNumbers
 {
@@ -213,7 +213,7 @@ Add the following to your workflow `yml` file:
       }
 ```
 
-That's it! The entity is created or updated, and is visible in the UI.
+That's it! The Entity is created or updated and is visible in the UI.
 
 ![Entity](../../../static/img/integrations/github-action/CreatedEntity.png)
 
