@@ -4,29 +4,29 @@ sidebar_position: 2
 
 # Action
 
-Our GitHub action allows you to create/update Entities in Port directly from your GitHub workflows.
+Our GitHub action allows you to interact with Entities in Port directly from your GitHub workflows.
 
-Here you'll find a step-by-step guide for Port's GitHub Action.
+Here you'll find a step-by-step guide for Port's GitHub action.
 
 ## GitHub Action Benefits​
 
 - Create new Entities of existing Blueprints and Relations;
 - Update existing Entities with new information (title, properties, relations, etc...).
-- Get existing entity object.
+- Get existing Entities.
 
 ## Usage
 
 :::note Prerequisites
 
-- In order to authenticate with Port when using the Github action, you will need to provide a `CLIENT_ID` and `CLIENT_SECRET`.
+- In order to authenticate with Port when using the GitHub action, you will need to provide a `CLIENT_ID` and `CLIENT_SECRET`.
 - In order to make use of the GitHub action, you will need an existing Blueprint(s) in your Port installation.
   - Moreover, if you want to update related Entities, you will also need existing Relations in your Port installation.
 
 :::
 
-### Basic Example
+### Basic Upsert Example
 
-In this example we create a basic Blueprint and then add code that uses Port's Github action to create/update an Entity that belongs to the Blueprint:
+In this example we create a basic Blueprint and then add code that uses Port's GitHub action to create/update an Entity that belongs to the Blueprint:
 
 <details>
 <summary> Example microservice Blueprint </summary>
@@ -67,7 +67,7 @@ In this example we create a basic Blueprint and then add code that uses Port's G
 
 </details>
 
-After creating the blueprint, you can add the following to your workflow `yml` file to make use of the GitHub Action:
+After creating the Blueprint, you can add the following to your workflow `yml` file to make use of the GitHub action:
 
 ```yaml showLineNumbers
 - uses: port-labs/port-github-action@v1
@@ -119,15 +119,15 @@ use-entity:
     - run: echo '${{needs.get-entity.outputs.entity}}' | jq .properties.versionInEnv.prod
 ```
 
-The first job `get-entity`, uses the GitHub Action to get the `example-microservice` entity.
+The first job `get-entity`, uses the GitHub action to get the `example-microservice` entity.
 The second job `use-entity`, uses the output from the first job, and prints `versionInEnv.prod` property of the entity.
 
 ### Complete Example
 
-The following example adds another `package` Blueprint, in addition to the `microservice` Blueprint shown in the previous example. In addition, it also adds a `package-microservice` Relation. The Github action will create or update the Relation between the 2 existing Entities:
+The following example adds another `package` Blueprint, in addition to the `microservice` Blueprint shown in the previous example. In addition, it also adds a `package-microservice` Relation. The GitHub action will create or update the Relation between the 2 existing Entities:
 
 <details>
-<summary> A package Blueprint </summary>
+<summary> A package Blueprint (including the package-microservice Relation) </summary>
 
 ```json showLineNumbers
 {
@@ -165,23 +165,15 @@ The following example adds another `package` Blueprint, in addition to the `micr
     },
     "required": []
   },
+  "relations": {
+    "package-microservice": {
+      "title": "Used In",
+      "target": "microservice",
+      "required": false,
+      "many": false
+    }
+  }
   "formulaProperties": {}
-}
-```
-
-</details>
-
-<details>
-<summary> A package-microservice Relation </summary>
-
-```json showLineNumbers
-{
-  "title": "Used In",
-  "identifier": "package-microservice",
-  "source": "package",
-  "target": "microservice",
-  "required": false,
-  "many": false
 }
 ```
 
