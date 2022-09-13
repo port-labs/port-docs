@@ -12,27 +12,27 @@ import TabItem from "@theme/TabItem"
 
 ### From the UI
 
-Let's head to [Port](https://app.getport.io/blueprints) and look at the Blueprints page, at the top right corner let's click on **New Blueprint** and configure a `Microservice` blueprint as shown in the image below:
+Let's take a look at the Blueprints page. Click on **Add blueprint** at the top right hand corner, and configure a `microservice` Blueprint. as shown in the image below:
 
 ![Create New Blueprint](../../static/img/welcome/quickstart/newBlueprintButton.png)
 
-After clicking the button, you should see a creation form similar to what is shown in the image below:
+After clicking the button, you should see a creation form:
 
 ![New Blueprint Text](../../static/img/welcome/quickstart/newBlueprintDefaultText.png)
 
-Our Microservice Blueprint is going to include the following properties:
+The microservice Blueprint will include the following properties:
 
-- **Repo** - A URL to the source code repository storing the code for the Microservice
-- **Slack Channel** - The Slack Channel of the team responsible for the Microservice
+- **Repo** - a URL to the source code repository, storing the code of the microservice.
+- **Slack Channel** - the slack channel of the team responsible for that microservice.
 
 :::note
-Don't worry if you feel like the `Microservice` blueprint should include more properties, you can always go back and add or remove properties later.
+Don't worry if you feel like the `microservice` Blueprint should include more properties, you can always go back and add or remove properties later.
 :::
 
 :::tip Available Icons
-You will notice that in the image above the icon field already has the value `Microservice` filled in.
+Notice that in the image above in the icon field, the value `microservice` is already filled in.
 
-For a list of available icons refer to the [full icon list](../platform-overview/port-components/blueprint.md#full-icon-list)
+For a list of available icons refer to the [full icon list](../platform-overview/port-components/blueprint.md#full-icon-list).
 :::
 
 In order to create a Blueprint with the following properties, we will use the following JSON body:
@@ -62,7 +62,7 @@ In order to create a Blueprint with the following properties, we will use the fo
 }
 ```
 
-Click on the `save` button, and you should see your new Blueprint in the Blueprints graph:
+Click on the `save` button and view your new Blueprint in the Blueprints graph:
 
 ![Blueprints graph with new Microservice](../../static/img/welcome/quickstart/blueprintGraphWithMicroserviceClosed.png)
 
@@ -70,21 +70,21 @@ If you click on the `expand` button as shown in the image below:
 
 ![Blueprints graph with new Microservice And Expand Makred](../../static/img/welcome/quickstart/blueprintGraphWithMicroserviceClosedAndExpandMarked.png)
 
-You should see an expanded view of the blueprint we just created, with all of the properties listed alongside the types we provided for them:
+You will see an expanded view of the Blueprint we just created, with all of the properties listed alongside the types we provided for them:
 
 ![Example microservice blueprint](../../static/img/platform-overview/port-components/blueprints/exampleMicroserviceBlueprint.png)
 
 ### From the API
 
-Let's see how we can use Port's API to create blueprints:
+Let's see how we can use Port's API to create Blueprints:
 
 #### Getting an API token
 
 :::note
-For this next part you will need your Port `CLIENT_ID` and `CLIENT_SECRET`
+For the next part, you will need your Port `CLIENT_ID` and `CLIENT_SECRET`.
 :::
 
-In order to perform any action with Port's API, you first need an **access token**, here are some code examples from various languages
+In order to perform any action with Port's API, you first need an **access token**. Below are some code examples from various languages:
 
 <Tabs groupId="code-examples" defaultValue="python" values={[
 {label: "Python", value: "python"},
@@ -169,12 +169,13 @@ access_token=$(curl --location --request POST 'https://api.getport.io/v1/auth/ac
 
 #### Creating a blueprint
 
-Let's create a basic Blueprint for a `Microservice` using the API, our Blueprint will include a **Slack Channel** and a **Repo URL**.
+Let's create a basic `microservice` Blueprint using the API. It will include a `slack channel` and a `Repo URL`.
 
-In order to interact with the Blueprints API our basic URL will be [https://api.getport.io/v1/blueprints](https://api.getport.io/v1/blueprints), and we will create the blueprint using a REST **POST** request.
+In order to interact with the Blueprints API our basic URL will be [https://api.getport.io/v1/blueprints](https://api.getport.io/v1/blueprints), and we will create the Blueprint using a REST **POST** request.
 
 :::note
-Remember the **access token** we generated earlier, we will use it while making new requests to Port's API
+We will use the [access token](#getting-an-api-token) we generated earlier when making new requests to Port's API.
+
 :::
 
 <Tabs groupId="code-examples" defaultValue="python" values={[
@@ -316,78 +317,45 @@ curl --location --request POST "https://api.getport.io/v1/blueprints" \
 
 </Tabs>
 
-You should now have a blueprint in the Blueprints Graph that looks like this:
+Now, you will have a Blueprint in the Blueprints graph as follows:
 
 ![Example microservice blueprint](../../static/img/platform-overview/port-components/blueprints/exampleMicroserviceBlueprint.png)
 
 ## Updating blueprints
 
-You can always change the blueprint, add/remove properties or change existing property types as necessary.
+You can always modify Blueprints, add/remove properties or change existing property types as necessary.
 
-In order to update a blueprint you can:
+In order to update a Blueprint, you can do either of the following:
 
-- Click the Pencil icon in the Blueprints Graph
-- Make a REST PUT request to the URL `https://api.getport.io/v1/{blueprint_identifier}`
-- Make a REST PATCH request to the URL `https://api.getport.io/v1/{blueprint_identifier}`
+- Click the pencil icon in the Blueprints graph;
+- Make a REST PUT request to the URL: `https://api.getport.io/v1/{blueprint_identifier}`
 
 ![Blueprints Graph edit button marked](../../static/img/platform-overview/port-components/blueprints/blueprintGraphEditButtonMarked.png)
 
-A PUT request has the exact same body as a POST request, it will simply overwrite the blueprint with the new data provided
-
-A PATCH request has a more specific format that allows for precise changes in an existing blueprint, let's look at an example:
-
-If we want to add a property called `Is Deployed?` with the `boolean` type, our PATCH request body will look like this:
-
-```json showLineNumbers
-{
-  "type": "setSchemaProperty",
-  "propertyName": "isdeployed",
-  "definition": {
-    "type": "boolean",
-    "title": "Is Deployed?"
-  }
-}
-```
-
-For more information about the PATCH request format, refer to the [API Reference](https://app.getport.io/Api-docs)
-
-:::info A note about mirror properties
-If you try to update a blueprint that has a [relation](../platform-overview/port-components/relation.md), you will notice that its JSON body contains a key called `mirrorProperties`:
-
-```json showLineNumbers
-"mirrorProperties": {
-    "microservice": {
-        "path": "package-microservice.$identifier"
-    }
-}
-```
-
-You can refer to the [Mirror Properties](../platform-overview/port-components/mirror-properties.md) page for more information, but for now just know that any edits to a blueprint should leave the objects that have `.$identifier` in their path property intact
-
-:::
+A PUT request has the same body as a POST request, it will simply overwrite the Blueprint with the new data provided.
 
 ## Deleting blueprints
 
 :::danger
-A blueprint cannot be restored after deletion!
+A Blueprint cannot be restored after deletion!
 :::
 
-In order to delete a blueprint you can:
+In order to delete a Blueprint you can do either of the following:
 
-- Click on the trash can icon in the specific blueprint node in the Blueprints Graph
+- Click on the trash can icon in the specific Blueprint’s node in the blueprints graph;
 - Make a REST DELETE request to the URL `https://api.getport.io/v1/{blueprint_identifier}`
 
 ![Blueprints Graph delete button marked](../../static/img/platform-overview/port-components/blueprints/blueprintGraphDeleteButtonMarked.png)
 
 ## Next steps
 
-Now that we understand **Blueprints**, we can start to model separate entities in our infrastructure!
+Now that we understand **Blueprints**, we can start modeling separate Entities in our infrastructure.
 
-In the next section we will talk about **Relations**, relations are a connection between two blueprints, and they will help us go from separate entities to a connected infrastructure map.
+In the next section, we will talk about **Relations**, a connection between two Blueprints that influences the connections between Entities, to create our infrastructure map.
 
-As preparation for the relations section, let's create a blueprint for `Package` to go with the `Microservice` blueprint we created earlier:
+To prepare for the Relations section, let's create a Blueprint for a `package` to go with the `microservice` Blueprint we created earlier:
 
-You can create the new blueprint from the UI (using the `New Blueprint` button in the Blueprints Graph) or from the API, the body of the request for the new blueprint should be:
+You can create the new Blueprint from the UI (using the `Add Blueprint` button in the Blueprints graph), or from the API. The request body of the new Blueprint will be:
 
 ```json showLineNumbers
 {
@@ -412,6 +380,6 @@ You can create the new blueprint from the UI (using the `New Blueprint` button i
 }
 ```
 
-At the end of this section, your Blueprints Graph should include the two blueprints shown below:
+At the end of this section, your Blueprints graph will include the two Blueprints shown below:
 
 ![graph package microservice](../../static/img/platform-overview/port-components/blueprints/graphPackageMicroservice.png)

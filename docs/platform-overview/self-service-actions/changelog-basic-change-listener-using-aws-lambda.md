@@ -4,13 +4,13 @@ sidebar_position: 4
 
 # Setting up a basic change log listener using AWS Lambda
 
-In this guide, we will show how to deploy a new `AWS Lambda function` that will subscribe to the `change.log` topic and react to changes in our infrastructure as reported by Port.
+In this guide, we will show how to deploy a new `AWS Lambda function`, that will subscribe to the `change.log` topic and react to changes in our infrastructure as reported by Port.
 
 ## Prerequisites
 
 - AWS CLI installed and configured to your desired AWS account
 - A Port API `CLIENT_ID` and `CLIENT_SECRET`
-- Connection credentials to the Kafka topic provided to you by Port, should look similar to this:
+- Connection credentials to the Kafka topic provided to you by Port, will look like this:
 
 ```json showLineNumbers
 KAFKA_BROKERS=b-1-public.publicclusterprod.t9rw6w.c1.kafka.eu-west-1.amazonaws.com:9196,b-2-public.publicclusterprod.t9rw6w.c1.kafka.eu-west-1.amazonaws.com:9196,b-3-public.publicclusterprod.t9rw6w.c1.kafka.eu-west-1.amazonaws.com:9196
@@ -21,22 +21,21 @@ KAFKA_USERNAME=YOUR_KAFKA_USERNAME
 KAFKA_PASSWORD=YOUR_KAFKA_PASSWORD
 ```
 
-You can always refer to our examples [code repository](https://github.com/port-labs/port-serverless-examples) to view the example shown here, and also other similar examples you can use to get started quickly
+To get yourself started quickly, you can always take a look at the [code repository](https://github.com/port-labs/port-serverless-examples) for examples.
 
 :::note
-This repo is `Private` at the moment, so you’ll get a 404.
-Please contact us with your GitHub user for access.
+This repo is `Private` at the moment, so you’ll get a 404. Please contact us with your GitHub user so we can set you up for access.
 :::
 
-Interaction with Port will be performed primarily using the API in this example, but of course every action can be performed using the web UI as well.
+Interaction with Port will be primarily conducted using the API in this example, but everything can also be performed using the web UI as well.
 
 ## Scenario
 
-You want to learn about Port’s change log capabilities, In order to do that, you want to create a new execution function that frees up or extends the storage in your VM, whenever the amount of free storage gets too low
+Whenever the amount of free storage gets too low, create a new execution function that frees up or extends the storage in your VM. Let’s learn how to do that, and what are Port’s change log capabilities.
 
 ## Creating the VM blueprint
 
-Let’s configure a `VM` blueprint, the blueprint base structure is:
+Let’s configure a `VM` Blueprint, its base structure is:
 
 ```json showLineNumbers
 {
@@ -86,7 +85,7 @@ Let’s configure a `VM` blueprint, the blueprint base structure is:
 }
 ```
 
-Here is code in `python` to create this blueprint (remember to insert your `CLIENT_ID` and `CLIENT_SECRET` in order to get an access token)
+Below you can see the `python` code to create this Blueprint (remember to insert your `CLIENT_ID` and `CLIENT_SECRET` in order to get an access token)
 
 <details>
 <summary>Click here to see the code</summary>
@@ -162,22 +161,22 @@ print(response.json())
 
 </details>
 
-Now that we have a blueprint for our VM, we need to deploy our AWS Lambda listener, that will fix the storage on our VM whenever an issue occurs
+Now that you have a blueprint for your VM, you need to deploy the `AWS Lambda` listener that will fix the storage on the VM whenever an issue occurs.
 
-## Setting up our AWS resources
+## Setting up AWS resources
 
-In this example, we will deploy an AWS Lambda function written in python
+In this example, you will deploy an AWS Lambda function written in python.
 
-Our AWS setup will require the following resources:
+**The AWS setup will require the following resources:**
 
-- A secret stored in Secrets Manager with the Kafka authentication credentials
-- An AWS Lambda execution role with access to the new secret
-- An AWS Lambda layer for our extra python libraries
-- Our AWS Lambda configured with our example python code, the code layer and execution role we created. Configured with a Kafka Trigger
+- A secret stored in Secrets Manager with the Kafka authentication credentials.
+- An AWS Lambda execution role with access to the new secret.
+- An AWS Lambda layer for our extra python libraries.
+- An AWS Lambda is configured with the example python code, the code layer and execution role you created. Configured with a Kafka Trigger
 
-### Creating a secret for our Lambda
+### Creating a secret for the Lambda
 
-Our Lambda function will use a `secret` configured in AWS Secret Manager to authenticate with the personal Kafka topic provided by Port, let’s go ahead and create that secret in the AWS CLI:
+The Lambda function will use a `secret` configured in AWS Secret Manager to authenticate with the personal Kafka topic provided by Port, let’s go ahead and create that secret in the AWS CLI:
 
 ```bash showLineNumbers
 # Remember to replace YOUR_KAFKA_USERNAME and YOUR_KAFKA_PASSWORD with the real username and password provided to you by Port
@@ -195,13 +194,13 @@ You should see output similar to the following:
 }
 ```
 
-:::info saving the `ARN`
-Make sure to save the `ARN` value, we will need it to create an execution role for our Lambda function which can access the newly created secret.
+:::info Saving the `ARN`
+Make sure to save the `ARN` value, you will need it to create an execution role for the Lambda function, which can access the newly created secret.
 :::
 
 ### Creating an execution role
 
-Before we deploy our Lambda function, it needs an [execution role](https://docs.aws.amazon.com/lambda/latest/dg/lambda-intro-execution-role.html) with access to the Kafka username and password secret we created, let’s create a [basic execution role](https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-awscli.html#with-userapp-walkthrough-custom-events-create-iam-role) with `assumeRole` permission and basic permissions for `cloudWatch`
+Before you deploy your Lambda function, it needs an [execution role](https://docs.aws.amazon.com/lambda/latest/dg/lambda-intro-execution-role.html) with access to the Kafka username and password secret you created. Let’s create a [basic execution role](https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-awscli.html#with-userapp-walkthrough-custom-events-create-iam-role) with `assumeRole` permission and basic permissions for `cloudWatch`
 
 ```bash showLineNumbers
 aws iam create-role --role-name lambda-port-execution-role --assume-role-policy-document '{"Version": "2012-10-17","Statement": [{ "Effect": "Allow", "Principal": {"Service": "lambda.amazonaws.com"}, "Action": "sts:AssumeRole"}]}'
@@ -244,7 +243,7 @@ You should see output similar to the following:
 ```
 
 :::info saving the `ARN`
-Again, make sure to save the `Arn` value, we will use it when deploying our Lambda function
+Again, make sure to save the `Arn` value, you will use it when deploying your Lambda function
 :::
 
 Let’s attach basic Lambda execution permissions to this role with the following command:
@@ -284,7 +283,7 @@ Remember to replace `ARN` value listed under `Resource` with the `ARN` you recei
 }
 ```
 
-Now let’s create the execution role (we’re assuming the `execution-policy.json` file is in the same directory as the terminal you are running the command from:
+Now let’s update the execution role (we’re assuming the `execution-policy.json` file is in the same directory as the terminal you are running the command from):
 
 ```bash showLineNumbers
 aws iam put-role-policy --role-name lambda-port-execution-role --policy-name managed-kafka-secret-access-policy --policy-document file://execution-policy.json
@@ -292,11 +291,11 @@ aws iam put-role-policy --role-name lambda-port-execution-role --policy-name man
 
 ### Creating an AWS Lambda layer
 
-Now let’s create a [Lambda Layer](https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html) that will include the extra libraries our Lambda will use.
+Now let’s create a [Lambda Layer](https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html) that will include the extra libraries the Lambda function will use.
 
-Our Lambda only needs the [requests](https://pypi.org/project/requests/) library, but we also threw in [jsonpickle](https://pypi.org/project/jsonpickle/0.3.0/) for some of the log output to make the Lambda logs more verbose and easier to understand when getting started modifying the code.
+The Lambda only needs the [requests](https://pypi.org/project/requests/) library, but the example below also includes [jsonpickle](https://pypi.org/project/jsonpickle/0.3.0/) for some of the log output to make the Lambda logs more verbose and easier to understand when starting to modify the code.
 
-Let’s just run all of the commands to both create the layer zip and deploy it to AWS (be sure to specify the region that you want the layer and lambda to be available in):
+Now, let’s just run all of the commands to both create the layer zip, and deploy it to AWS (be sure to specify the region that you want the layer and lambda to be available in):
 
 ```bash showLineNumbers
 # Create layer directory and specify requests as a required library
@@ -334,12 +333,12 @@ You should see output similar to the following:
 ```
 
 :::info
-Again, make sure to save the `LayerVersionArn` value, we will use it when deploying our Lambda function
+Again, make sure to save the `LayerVersionArn` value, you will use it to deploy your Lambda function
 :::
 
 ### Creating the Lambda function
 
-Now we can get to creating our Lambda function, the function is very basic and has specific comments where your actual execution runner logic should go.
+You can now create the Lambda function, the initial function is very basic and has specific comments where your actual execution runner logic should go.
 
 <details>
 <summary>Click here to see the function code</summary>
@@ -456,10 +455,10 @@ def lambda_handler(event, context):
 
 ### Deploying the Lambda function
 
-In order to deploy our Lambda function, we will run the following commands from the terminal.
+In order to deploy the Lambda function, run the following commands from the terminal (Note the comment where you need to paste in the Lambda code to the new file):
 
 :::info using our saved `ARN`s
-Be sure to replace `ROLE_ARN` with the ARN we received an output when we created an execution role for the Lambda (Note the comment where you need to paste in the Lambda code to the new file):
+Be sure to replace `ROLE_ARN` with the ARN you received as an output when you created an execution role for the Lambda
 :::
 
 ```python showLineNumbers
@@ -495,17 +494,17 @@ You should see output similar to the following:
 }
 ```
 
-We are just a few steps away from a complete execution flow!
+You are just a few steps away from a complete execution flow!
 
 ### Putting everything together
 
 There are just a few more steps left:
 
-- Add our layer to the Lambda function
-- Add the Port `CLIENT_ID` and `CLIENT_SECRET` as environment variables to our Lambda
+- Add the code layer to the Lambda function
+- Add the Port `CLIENT_ID` and `CLIENT_SECRET` as environment variables to the Lambda
 - Add the Kafka trigger
 
-In order to add the layer, we just need to run a simple CLI command:
+In order to add the layer, you just need to run a simple CLI command:
 
 ```bash showLineNumbers
 # Be sure to replace the LAYER_VERSION_ARN with the value you saved
@@ -514,19 +513,19 @@ aws lambda update-function-configuration --function-name port-changelog-lambda \
 --layers LAYER_VERSION_ARN
 ```
 
-You should see output showing that the `Layers` array of the Lambda now includes our layer
+You should see an output showing that now the `Layers` array of the Lambda includes our layer
 
-Now let’s add the client_id and secret variables:
+Now add the client_id and secret variables:
 
 ```bash showLineNumbers
 # Be sure to replace YOUR_CLIENT_ID and YOUR_CLIENT_SECRET with real values
 aws lambda update-function-configuration --function-name port-changelog-lambda --environment "Variables={PORT_CLIENT_ID=YOUR_CLIENT_ID,PORT_CLIENT_SECRET=YOUR_CLIENT_SECRET}" --query "Environment"
 ```
 
-You should see as output all of the environment variables configured for your Lambda
+In the command output you should see all of the secrets you configured for your Lambda Function.
 
 :::note
-If your function needs multiple other environment variables, it would be easier to put them all in a JSON file (for example `environment.json`) and run the following command:
+If your function needs multiple environment variables, it would be easier to put them all in a JSON file (for example `environment.json`) and run the following command:
 
 ```bash showLineNumbers
 aws lambda update-function-configuration --function-name port-changelog-lambda --environment file://environment.json --query "Environment"
@@ -534,7 +533,7 @@ aws lambda update-function-configuration --function-name port-changelog-lambda -
 
 :::
 
-Time to add our Kafka trigger
+Time to add the Kafka trigger
 
 ```bash showLineNumbers
 # Remember to replace YOUR_ORG_ID and SECRET_ARN
@@ -546,13 +545,13 @@ aws lambda create-event-source-mapping --topics YOUR_ORG_ID.change.log --source-
 
 ## Reacting to changes
 
-Now that we have our Lambda configured with a Kafka trigger, every change we make in our **Service Catalog** will generate a new message in the dedicated Kafka topic we specified in the trigger, that message will be sent to the Lambda function we deployed, with all of the input data required to understand what change occurred exactly, so we can act accordingly.
+Now that you have a Lambda function configured with a Kafka trigger, every change made in the Service Catalog will generate a new message in the dedicated Kafka topic you specified in the trigger. That message will be sent to the Lambda function you deployed, with all of the input data required to understand what change took place, so you can act accordingly.
 
-For more information on the data format of managed Apache Kafka triggers, refer to the [AWS docs](https://docs.aws.amazon.com/lambda/latest/dg/with-kafka.html), the code we wrote in the `lambda_handler` function already goes over all of the new messages, parses them, decodes and converts to a python dictionary for ease of use.
+For more information on the data format of managed Apache Kafka triggers, refer to the [AWS docs](https://docs.aws.amazon.com/lambda/latest/dg/with-kafka.html). The code you wrote in the `lambda_handler` function already goes over all of the new messages, parses them, decodes and converts to a python dictionary for ease of use.
 
-Let’s go ahead and create a VM entity and specify the total storage as 10 GB, and also specify that the initial free storage is 6 GB
+Let’s create a VM Entity with 10 GB of total storage, with 6 GB of initial free storage.
 
-Here is the JSON for this `VM` entity:
+Here is the JSON for this `VM` Entity:
 
 ```json showLineNumbers
 {
@@ -572,7 +571,7 @@ Here is the JSON for this `VM` entity:
 }
 ```
 
-Here is code in `python` to create this VM (remember to insert your `CLIENT_ID` and `CLIENT_SECRET` in order to get an access token)
+Below you can see the `python` code to create this VM (remember to insert your `CLIENT_ID` and `CLIENT_SECRET` in order to get an access token).
 
 <details>
 <summary>Click here to see the code</summary>
@@ -618,8 +617,8 @@ print(response.json())
 ```
 
 </details>
-    
-Now let’s simulate an instance where the free storage in our VM has dropped below 10% of the total available storage. We will do that using python code that sends a PATCH request that will update the `free_storage` property on our VM:
+
+Let’s simulate an occasion where the free storage in the VM has dropped below 10% of the total available storage. We will do that using a PATCH request in python, that will update the `free_storage` property on the VM.
 
 <details>
 <summary>Click here to see the API call code</summary>
@@ -659,13 +658,13 @@ print(response.json())
 
 </details>
     
-This **change** will automatically send a message to our Kafka topic.
+This **change** will automatically send a message to the Kafka topic.
 
-Now if we go to the CloudWatch logs for our Lambda function (Accessible in the AWS console through Lambda→functions→port-changelog-lambda→Monitor→Logs→View logs in CloudWatch), we should see a log of the latest execution of our Lambda, which also includes the actual message received, and a log of the actions taken by our python code:
+Now the CloudWatch logs for the Lambda function (Accessible in the AWS console through Lambda→functions→port-execution-lambda→Monitor→Logs→View logs in CloudWatch), will show a log of the latest executions of the Lambda function. It also includes the actual message received, and a log of the actions taken by our python code:
 
 ![Cloudwatch logs example](../../../static/img/platform-overview/self-service-actions/basic-changelog-aws-lambda-example/exampleCloudwatchlogsWithTopicMessage.png)
 
-Here is an example of the request payload received from Port, inside the Kafka message (Note the `before` and `after` keys showing the difference in our VM entity properties):
+Here is an example of the request payload received from Port, inside the Kafka message (note the `before` and `after` keys showing the difference in our VM Entity properties):
 
 ```json showLineNumbers
 {
@@ -725,11 +724,11 @@ Here is an example of the request payload received from Port, inside the Kafka m
 }
 ```
 
-In addition to seeing the topic message in Cloudwatch, our Lambda function code should also update the VM entity, and give it a new free storage value.
+In addition to seeing the message topic in Cloudwatch, the Lambda function code will also update the VM Entity, and give it a new free storage value.
 
 ## Next steps
 
-This was just a very basic example on how to listen and react to changes in the Software Catalog, we left placeholder code for you to insert your own custom logic that fits your infrastructure.
+This was just a very basic example of how to listen and react to changes in the Software Catalog. We left placeholder code for you to insert your own custom logic to fit your infrastructure.
 
 If you want to dive even deeper into Port's execution capabilities, try looking at our [execution topics](./port-execution-topics.md)
 

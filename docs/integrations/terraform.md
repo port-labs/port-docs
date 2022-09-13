@@ -4,23 +4,23 @@ sidebar_position: 2
 
 # Terraform Provider
 
-Our integration with Terraform allows you to combine the state of your infrastructure with the entities representing them in Port. For the official documentation of the Port Terraform provider checkout out the [registry page](https://registry.terraform.io/providers/port-labs/port-labs/)
+Our integration with Terraform allows you to combine the state of your infrastructure with the Entities representing them in Port. For the official documentation of the Port Terraform provider check out the [registry page](https://registry.terraform.io/providers/port-labs/port-labs/).
 
-Here you'll find a step-by-step guide to installing the Port Terraform Provider.
+Here you'll find a step-by-step guide to installing the Port Terraform provider.
 
 ## What does our Terraform Provider give you?
 
-- Automatic management of entities based on resources in terraform files.
-- The option to define resources in yml files and reflect them in Port using the provider
+- Automatic management of Entities based on resources in Terraform files.
+- The option to define resources in yml files and reflect them in Port using the provider.
 
 ## Installation
 
 :::note Prerequisites
 
-Terraform CLI (Installation guide: https://learn.hashicorp.com/tutorials/terraform/install-cli).
+[Terraform CLI](https://learn.hashicorp.com/tutorials/terraform/install-cli).
 :::
 
-First, require the provider in your terraform configuration (refer [here](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/entity) for our resources schema):
+First, require the provider in your Terraform configuration (refer [here](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/entity) for our resources schema):
 
 ```hcl
 terraform {
@@ -38,29 +38,29 @@ provider "port-labs" {
 }
 ```
 
-To make terraform install the port provider, run the command:
+Run the following command to make Terraform install the Port provider:
 
 ```shell
 terraform init
 ```
 
-The command should print something like this when the `init` command is finish:
+The command will print the following when the `init` command has finished running:
 
 `Terraform has been successfully initialized!`
 
-In order to validate that the module initialization worked, run the command:
+In order to validate the module initialization works, run the command:
 
 ```shell
  terraform plan
 ```
 
-The result should be : `No changes. Your infrastructure matches the configuration.`
+The result will be: `no changes. Your infrastructure matches the configuration.`
 
 ## Usage
 
 ### Creating Blueprints
 
-First, we will create two blueprints - Microservice and Package and we will connect to multiple packages. Add the following to your terraform files:
+First, we will create two Blueprints (microservice and package) and then connect a microservice to multiple packages. Add the following to your Terraform files:
 
 ```hcl
 resource "port-labs_blueprint" "microservice" {
@@ -123,7 +123,7 @@ resource "port-labs_blueprint" "package" {
 
 ### Creating entities
 
-Next, we would like to create a microservice (say, "Golang Monolith") and connect to it a few packages. Add the following resources to your terraform files:
+Next, we would like to create a microservice (for example, "Golang Monolith") and connect to it a few packages. To do so, Add the following resources to your Terraform files:
 
 ```hcl
 resource "port-labs_entity" "golang_monolith" {
@@ -176,10 +176,10 @@ resource "port-labs_entity" "net" {
 }
 ```
 
-- Run the command `terraform plan` to see the resulting set of actions terraform will take: (You should see this result `Plan: 5 to add, 0 to change, 0 to destroy`)
+- Run the command `terraform plan` to see the resulting set of actions Terraform will take: (You will see this result `Plan: 5 to add, 0 to change, 0 to destroy`)
 
 :::note Prerequisites
-Don't forget to set your port client id and secret in order for the provider to authenticate with Port's API:
+Don't forget to set your Port client id and secret in order for the provider to authenticate with Port's API:
 
 ```shell
 export `PORT_CLIENT_ID`=YOUR_CLIENT_ID
@@ -188,22 +188,22 @@ export `PORT_CLIENT_SECRET`=YOUR_CLIENT_SECRET
 
 :::
 
-To create the blueprints and entities above, run:
+To create the Blueprints and Entities above, run:
 
 ```shell
 terraform apply
 ```
 
-That's it! the entity should now be created and visible in the UI.
+That's it! the Entity has been created and visible in the UI.
 
 ![Entities](../../static/img/integrations/terraform-provider/Entities.png)
 
-For more examples, see the examples and test cases in the [public repository](https://github.com/port-labs/terraform-provider-port).
+For more examples, check out the examples and test cases in the [public repository](https://github.com/port-labs/terraform-provider-port).
 
 ### Update a resource
 
-- To update a resource, change the value of the resource in the terraform configuration files and use the command `terraform apply`.
+- To update a resource, change the value of the resource in the Terraform configuration files and use the command `terraform apply`.
 
 ### Delete a resource
 
-- To delete a resource, you need to run `terraform destory --target port-labs.{resource-name}`.
+- To delete a resource, you need to run `terraform destroy --target port-labs.{resource-name}`.
