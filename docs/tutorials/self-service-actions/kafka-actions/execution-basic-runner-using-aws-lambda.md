@@ -73,10 +73,6 @@ Let’s configure a `VM` Blueprint. Its base structure is:
     },
     "required": []
   },
-  "disableEditing": false,
-  "enableResponsibleTeamEdit": false,
-  "disabledProperties": [],
-  "disabledRelations": [],
   "formulaProperties": {}
 }
 ```
@@ -138,10 +134,6 @@ blueprint = {
         },
         "required": []
     },
-    "disableEditing": False,
-    "enableResponsibleTeamEdit": False,
-    "disabledProperties": [],
-    "disabledRelations": [],
     "formulaProperties": {}
 }
 

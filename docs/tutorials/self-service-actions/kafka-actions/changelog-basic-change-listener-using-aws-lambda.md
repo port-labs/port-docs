@@ -77,10 +77,9 @@ Let’s configure a `VM` Blueprint, its base structure is:
     },
     "required": []
   },
-  "disableEditing": false,
-  "enableResponsibleTeamEdit": false,
-  "disabledProperties": [],
-  "disabledRelations": [],
+  "changelogDestination": {
+    "type": "KAFKA"
+  },
   "formulaProperties": {}
 }
 ```
@@ -150,10 +149,6 @@ blueprint = {
     "changelogDestination": {
       "type": "KAFKA"
     },
-    "disableEditing": False,
-    "enableResponsibleTeamEdit": False,
-    "disabledProperties": [],
-    "disabledRelations": [],
     "formulaProperties": {}
 }
 
