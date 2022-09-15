@@ -9,4 +9,4 @@ In Port, you can activate your Software Catalog by defining self service actions
 Port enables developer self-service in 2 distinct ways:
 
 - [Self-Service Actions](./setting-self-service-actions-in-port) - configure **Create** and **Delete** actions to provision and control the resource usage in your organization. Configure **Day-2 Operations** which allow you to keep your infrastructure up-to-date.
-- [Real-time Changelog](./changelog-basic-change-listener-using-aws-lambda) - every change that occurs in Port generates a new audit log entry.
+- [Real-time Changelog](../../tutorials/self-service-actions/kafka-actions/changelog-basic-change-listener-using-aws-lambda.md) - every change that occurs in Port generates a new audit log entry.
