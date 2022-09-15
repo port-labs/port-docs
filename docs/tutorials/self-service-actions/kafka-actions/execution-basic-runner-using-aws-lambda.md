@@ -165,7 +165,7 @@ Here is the action JSON:
   "icon": "Server",
   "description": "Create a new VM in cloud provider infrastructure",
   "trigger": "CREATE",
-  "invocationMethod": "KAFKA",
+  "invocationMethod": { "type": "KAFKA" },
   "userInputs": {
     "properties": {
       "title": {
@@ -230,7 +230,7 @@ action = {
     'icon': 'Server',
     'description': 'Create a new VM in cloud provider infrastructure',
     'trigger': 'CREATE',
-    'invocationMethod': 'KAFKA',
+    'invocationMethod': { 'type': 'KAFKA' },
     'userInputs': {
         'properties': {
             'title': {
@@ -803,7 +803,7 @@ Here is an example of the request payload received from Port, inside the Kafka m
         },
         "required": ["cpu", "memory", "storage", "region"]
       },
-      "invocationMethod": "KAFKA",
+      "invocationMethod": { "type": "KAFKA" },
       "trigger": "CREATE",
       "description": "Create a new VM in cloud provider infrastructure",
       "blueprint": "vm",

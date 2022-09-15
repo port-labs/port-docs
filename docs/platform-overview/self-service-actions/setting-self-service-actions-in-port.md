@@ -151,7 +151,10 @@ Here is an action array with a `CREATE` action already filled in:
       },
       "required": ["repo-user"]
     },
-    "invocationMethod": "KAFKA",
+    "invocationMethod": {
+      "type": "WEBHOOK",
+      "url": "https://my.webhook.com/webhooks"
+    },
     "trigger": "CREATE",
     "description": "This will create a new microservice repo"
   }
@@ -194,7 +197,10 @@ Let's go back to the actions array of our `Microservice` Blueprint and paste in 
       },
       "required": ["repo-user"]
     },
-    "invocationMethod": "KAFKA",
+    "invocationMethod": {
+      "type": "WEBHOOK",
+      "url": "https://my.webhook.com/webhooks"
+    },
     "trigger": "CREATE",
     "description": "This will create a new microservice repo"
   },
@@ -220,7 +226,10 @@ Let's go back to the actions array of our `Microservice` Blueprint and paste in 
       },
       "required": ["environment", "branch", "commit-hash"]
     },
-    "invocationMethod": "KAFKA",
+    "invocationMethod": {
+      "type": "WEBHOOK",
+      "url": "https://my.webhook.com/webhooks"
+    },
     "trigger": "DAY-2",
     "description": "This will deploy the microservice"
   },
@@ -231,7 +240,10 @@ Let's go back to the actions array of our `Microservice` Blueprint and paste in 
       "properties": {},
       "required": []
     },
-    "invocationMethod": "KAFKA",
+    "invocationMethod": {
+      "type": "WEBHOOK",
+      "url": "https://my.webhook.com/webhooks"
+    },
     "trigger": "DELETE",
     "description": "This will delete the microservice's repo"
   }
@@ -273,7 +285,10 @@ The basic structure of a Self-Service Action:
     },
     "required": ["repo-user"]
   },
-  "invocationMethod": "KAFKA",
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "https://my.webhook.com/webhooks"
+  },
   "trigger": "CREATE",
   "description": "Action description"
 }
@@ -288,7 +303,7 @@ The basic structure of a Self-Service Action:
 | `title`            | Action title                                                                                                                                                                          |
 | `icon`             | Action icon                                                                                                                                                                           |
 | `userInputs`       | An object containing `properties` and `required` keys following the standard JSON schema format as seen in [Blueprint structure](../port-components/blueprint.md#blueprint-structure) |
-| `invocationMethod` | The methods the action is dispatched in, currently this supports only `KAFKA`                                                                                                         |
+| `invocationMethod` | An object containing `type` which can be `KAFKA` or `WEBHOOK` When providing `type: WEBHOOK`, `url` to POST to is required                                                            |
 | `trigger`          | The type of the action: `CREATE`, `DAY-2` or `DELETE`                                                                                                                                 |
 | `description`      | Action description                                                                                                                                                                    |
 
@@ -308,7 +323,7 @@ The following table includes the different fields that can be specified in the `
 
 We will now look at trigger examples for each action type and explain what happens behind the scenes when we execute each type.
 
-When we click on the `execute` button of an action a Port [action message](#action-message-structure) will be published to the secure [runs Kafka topic](./port-execution-topics), from which you can pull it and run your own custom logic.
+When we click on the `execute` button of an action a Port [action message](#action-message-structure) will be published to one of [secured runs Kafka topic](./port-execution-architecture/port-execution-kafka.md), or from [secured POST Webhook](./port-execution-architecture/port-execution-webhook.md).
 
 For example, you can deploy a new version of your microservice when a `CREATE` action is triggered.
 
@@ -436,7 +451,7 @@ Here is an example `payload` object for a `CREATE` action:
                 "region"
             ]
         },
-        "invocationMethod": "KAFKA",
+        "invocationMethod": { "type": "WEBHOOK", "url": "https://my.webhook.com/webhooks" },
         "trigger": "CREATE",
         "description": "This will create a new k8s cluster",
         "blueprint": "k8sCluster",

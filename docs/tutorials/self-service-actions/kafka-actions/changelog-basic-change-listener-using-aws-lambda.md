@@ -147,6 +147,9 @@ blueprint = {
         },
         "required": []
     },
+    "changelogDestination": {
+      "type": "KAFKA"
+    },
     "disableEditing": False,
     "enableResponsibleTeamEdit": False,
     "disabledProperties": [],

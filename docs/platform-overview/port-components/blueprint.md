@@ -66,14 +66,15 @@ Each Blueprint is represented by a [Json schema](https://json-schema.org/), as s
 
 ### Structure table
 
-| Field               | Type     | Description                                                                                                   | Optional Values                                                                                                                               |
-| ------------------- | -------- | ------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| `identifier`        | `String` | Unique identifier.<br /> Note that while the identifier is unique, it can be changed after creation           |
-| `title`             | `String` | The Blueprint's name                                                                                          |
-| `description`       | `String` | Description for the Blueprint.<br /> This value is visible to users when hovering on the info icon in the UI. |
-| `icon`              | `String` | Icon for the Blueprint's graph node, and Entities of the Blueprint                                            | Icon options: `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud,...` <br /><br />See the full icon list [below.](#full-icon-list) |
-| `formulaProperties` | `Object` | Contains the properties that are defined using [formula templates](./formula-properties)                      | Example: "`repo-link`": "`https://github.com/{{$identifier}}`"                                                                                |
-| `schema`            | `Object` | Object containing two more nested fields, including `properties` and `required`                               | See the schema structure here: [`schema`](#blueprint-schema).                                                                                 |
+| Field                  | Type     | Description                                                                                                   | Optional Values                                                                                                                               |
+| ---------------------- | -------- | ------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `identifier`           | `String` | Unique identifier.<br /> Note that while the identifier is unique, it can be changed after creation           |
+| `title`                | `String` | The Blueprint's name                                                                                          |
+| `description`          | `String` | Description for the Blueprint.<br /> This value is visible to users when hovering on the info icon in the UI. |
+| `icon`                 | `String` | Icon for the Blueprint's graph node, and Entities of the Blueprint                                            | Icon options: `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud,...` <br /><br />See the full icon list [below.](#full-icon-list) |
+| `formulaProperties`    | `Object` | Contains the properties that are defined using [formula templates](./formula-properties)                      | Example: "`repo-link`": "`https://github.com/{{$identifier}}`"                                                                                |
+| `schema`               | `Object` | Object containing two more nested fields, including `properties` and `required`                               | See the schema structure here: [`schema`](#blueprint-schema).                                                                                 |
+| `changelogDestination` | `Object` | Any event that happens within this blueprint context will be sent to this destination.                        | The structure is an object containing `type` which can be `KAFKA` or `WEBHOOK` When providing `type: WEBHOOK`, `url` to POST to is required   |
 
 #### Special blueprint fields
 
