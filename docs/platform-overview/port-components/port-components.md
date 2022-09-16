@@ -10,3 +10,5 @@ This section will explore the different Core Components that exist in Port. for 
 - [Relation](./relation.md)
 - [Entity](./entity.md)
 - [Page](./page.md)
+- [Mirror Properties](./mirror-properties.md)
+- [Formula Properties](./formula-properties.md)
