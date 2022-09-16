@@ -74,7 +74,7 @@ Each Blueprint is represented by a [Json schema](https://json-schema.org/), as s
 | `icon`                 | `String` | Icon for the Blueprint's graph node, and Entities of the Blueprint                                            | Icon options: `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud,...` <br /><br />See the full icon list [below.](#full-icon-list) |
 | `formulaProperties`    | `Object` | Contains the properties that are defined using [formula templates](./formula-properties)                      | Example: "`repo-link`": "`https://github.com/{{$identifier}}`"                                                                                |
 | `schema`               | `Object` | Object containing two more nested fields, including `properties` and `required`                               | See the schema structure [here](#blueprint-schema).                                                                                           |
-| `changelogDestination` | `Object` | Defines the destination where events that happen within this Blueprint's context will be delivered            | See the object structure [here](#changelog-destination).                                                                                      |
+| `changelogDestination` | `Object` | Defines the destination where events that happen within the Blueprint's context will be delivered             | See the object structure [here](#changelog-destination).                                                                                      |
 
 #### Special blueprint fields
 
@@ -405,12 +405,19 @@ For a list of available icons refer to the [full icon list](#full-icon-list)
 
 ## Changelog destination
 
-The `changelogDestination` object controls whether events that happen in the context of the Blueprint (this includes changes to the Blueprint schema, creation of new Entities that match the type of the Blueprint, changes to Entities that match the type of the Blueprint and more) are reported to a user specified destination.
+The `changelogDestination` object controls whether events that happen in the context of the Blueprint are reported to a user configured destination, and if so to which destination.
+
+Events that the `changelogDestination` configuration will report on include:
+
+- Changes to the Blueprint schema'
+- Creation of new Entities that match the type of the Blueprint;
+- Changes to Entities that match the type of the Blueprint;
+- And more.
 
 The `changelogDestination` supports 2 configurations:
 
-- [Webhook](#webhook-mode)
-- [Kafka](#kafka-mode)
+- [Webhook](../self-service-actions/port-execution-architecture/port-execution-webhook.md)
+- [Kafka](../self-service-actions/port-execution-architecture/port-execution-kafka.md)
 
 :::tip
 If you don't want to send changelog events to any destination, you can simply remove the `changeLog` destination from the Blueprint JSON.

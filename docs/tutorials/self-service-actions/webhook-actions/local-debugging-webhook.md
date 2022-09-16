@@ -2,13 +2,15 @@
 sidebar_position: 1
 ---
 
-# Local debugging webhook
+# Debugging Webhooks locally
 
-In this guide, we will show how to debug Webhook `Action` that is sent via Port.
+In this guide, we will show you how to debug Webhook Self-Service Actions that are sent from Port locally.
+
+This example contains the initial steps to set up a standard changelog use case, by following this example you will see how you can locally debug the payload that Port sends you via the webhook [invocation method](../../../platform-overview/self-service-actions/setting-self-service-actions-in-port.md#invocation-method).
 
 ## Prerequisites
 
-- A Port API `CLIENT_ID` and `CLIENT_SECRET`
+- A Port API `CLIENT_ID` and `CLIENT_SECRET`;
 - Python & PIP installed
 - Nodejs
 
@@ -16,7 +18,13 @@ Interaction with Port will be primarily conducted using the API in this example,
 
 ## Scenario
 
-Whenever the amount of free storage gets too low, create a new execution function that frees up or extends the storage in your VM. Let’s learn how to do that, and what are Port’s change log capabilities.
+You want to provision new VMs using Port's `CREATE` Self-Service Actions.
+
+In this example you will:
+
+- Create a new `VM` Blueprint
+- Add a `CREATE` action to the Blueprint
+- Use a local web-server to debug the webhook requests that Port sends every time a developer asks for a new VM.
 
 ## Creating the VM blueprint
 
@@ -148,9 +156,16 @@ print(response.json())
 
 ## Creating the VM CREATE action
 
-In order to be able to forward webhooks to the localhost, we will use [smee.io](https://smee.io/), Just click on `Start new channel` and copy the provided `Webhook Proxy URL` it should look similar to this: `https://smee.io/b1iO4C4ZGNYmiVL5`.
+In order to debug your action payload locally, you need to forward it to your local machine, meaning the webhook target needs to be your `localhost`. In order to forward the requests directed at your webhook to the localhost, we will use [smee.io](https://smee.io/).
 
-Now let’s configure a Self-Service Action. You will add a `CREATE` action that will be triggered every time a developer creates a new VM entity, the Self-Service Action will trigger your Lambda.
+All you have to do is click on `Start new channel` and copy the provided `Webhook Proxy URL`, it should look similar to this: `https://smee.io/b1iO4C4ZGNYmiVL5`
+
+Now let’s configure a Self-Service Action. You will add a `CREATE` action that will be triggered every time a developer creates a new VM entity, the Self-Service Action will trigger a small web-server running on your local machine.
+
+:::tip
+You will configure the web-server a bit later [in this guide](#creating-small-example-server-in-nodejs).
+:::
+
 Here is the action JSON:
 
 ```json showLineNumbers
@@ -160,7 +175,7 @@ Here is the action JSON:
   "icon": "Server",
   "description": "Create a new VM in cloud provider infrastructure",
   "trigger": "CREATE",
-  "invocationMethod": { "type": "WEBHOOK", "url": "<PUT SMEE URL HERE>" },
+  "invocationMethod": { "type": "WEBHOOK", "url": "YOUR SMEE URL" },
   "userInputs": {
     "properties": {
       "title": {
@@ -190,7 +205,14 @@ Here is the action JSON:
 }
 ```
 
-Below you can see the `python` code to create this action (remember to insert your `CLIENT_ID` and `CLIENT_SECRET` in order to get an access token).
+Below you can see the `python` code to create this action.
+
+:::info Replacing placeholders
+
+- Remember to insert your `CLIENT_ID` and `CLIENT_SECRET` in order to get an access token.
+- Remember to insert the proxy URL you got from `smee` in order to redirect the webhook messages to your localhost.
+
+:::
 
 :::note Specifying the target blueprint
 Note how the `vm` Blueprint identifier is used to add the action to the new Blueprint
@@ -225,7 +247,7 @@ action = {
     'icon': 'Server',
     'description': 'Create a new VM in cloud provider infrastructure',
     'trigger': 'CREATE',
-    "invocationMethod": { 'type': 'WEBHOOK', 'url': '<PUT SMEE URL HERE>' },
+    "invocationMethod": { 'type': 'WEBHOOK', 'url': 'YOUR SMEE URL' },
     'userInputs': {
         'properties': {
             'title': {
@@ -265,19 +287,19 @@ print(response.json())
 
 ## Forwarding events to localhost
 
-Now let's install the Smee client to be able to forward the events to localhost, we will use pysmee to achieve that
+Now install the Smee client to forward the events to your `localhost`, you will use `pysmee` to achieve that:
 
 ```bash
 pip install pysmee
 ```
 
-Now lets use it to forward the event, for example
+Now use it to forward the event, for example:
 
 ```bash
 pysmee forward https://smee.io/b1iO4C4ZGNYmiVL5 http://localhost:3000/webhooks
 ```
 
-You should see a log line output like this
+You should see a log line output like this:
 
 ```bash
 [2022-09-15 13:59:39,462 MainThread] INFO: Forwarding https://smee.io/b1iO4C4ZGNYmiVL5 to http://localhost:3000/webhooks
@@ -285,10 +307,10 @@ You should see a log line output like this
 
 ## Creating small example server in Nodejs
 
-Now because we are forwarding events to the localhost, all we need to do is to create a small server that will listed to `POST` requests that are being sent to the /webhooks route.
+Now because you are forwarding events to your localhost, all you need to do is create a small server that will listen to `POST` requests that are being sent to the /webhooks route.
 
-:::info
-In this example we are using Nodejs and express but you can use any language and framework you want
+:::tip
+This examples shows how to setup a small listener server using [Nodejs](https://nodejs.org/en/) and [Express](https://expressjs.com/) but you can use any language and framework you prefer.
 :::
 
 Create a folder and run the following in it
@@ -298,7 +320,7 @@ npm init -y
 npm install express
 ```
 
-Inside this folder create an `index.js` file and copy these contents
+Inside this folder create an `index.js` file and paste these contents:
 
 ```js
 const { createHmac } = require("crypto");
@@ -307,7 +329,7 @@ const app = express();
 const port = 3000;
 
 app.post("/webhooks", (request, response) => {
-  // This part is only to verify that port sent the data and not anybody else
+  // This part is used to verify that the webhook message was sent by Port
   const signed = createHmac("sha256", "<CLIENT_SECRET>")
     .update(
       `${request.headers["x-port-timestamp"]}.${JSON.stringify(request.body)}`
@@ -329,7 +351,7 @@ app.listen(port, () => {
 });
 ```
 
-now let's run the server
+Now run the server:
 
 ```bash
 node index.js
@@ -337,14 +359,18 @@ node index.js
 
 ## Triggering the action
 
-Login to port and go to the VM page and trigger the action via the
+Login to port and go to the VM page and trigger the action via the **Create VM** action button:
 
-![Port Kafka Architecture](../../../../static/img/tutorial/CreateVMDropdown.png)
+![Create VM button](../../../../static/img/tutorial/CreateVMDropdown.png)
 
 Fill the wanted details and click on `Create`
 
-![Port Kafka Architecture](../../../../static/img/tutorial/CreateVMExecution.png)
+![Create VM action form](../../../../static/img/tutorial/CreateVMExecution.png)
 
-And that's it, you should see a `Success!` output
+And that's it, the `Success!` output shows that your local server really did receive your webhook payload:
 
-![Port Kafka Architecture](../../../../static/img/tutorial/HelloWorldLog.png)
+![Webhook server response](../../../../static/img/tutorial/HelloWorldLog.png)
+
+:::tip
+Now that webhook requests are forwarded to your local machine, you can use your IDE to place breakpoints, examine the structure of the webhook request and iterate on your custom handler logic.
+:::
