@@ -66,14 +66,15 @@ Each Blueprint is represented by a [Json schema](https://json-schema.org/), as s
 
 ### Structure table
 
-| Field               | Type     | Description                                                                                                   | Optional Values                                                                                                                               |
-| ------------------- | -------- | ------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| `identifier`        | `String` | Unique identifier.<br /> Note that while the identifier is unique, it can be changed after creation           |
-| `title`             | `String` | The Blueprint's name                                                                                          |
-| `description`       | `String` | Description for the Blueprint.<br /> This value is visible to users when hovering on the info icon in the UI. |
-| `icon`              | `String` | Icon for the Blueprint's graph node, and Entities of the Blueprint                                            | Icon options: `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud,...` <br /><br />See the full icon list [below.](#full-icon-list) |
-| `formulaProperties` | `Object` | Contains the properties that are defined using [formula templates](./formula-properties)                      | Example: "`repo-link`": "`https://github.com/{{$identifier}}`"                                                                                |
-| `schema`            | `Object` | Object containing two more nested fields, including `properties` and `required`                               | See the schema structure here: [`schema`](#blueprint-schema).                                                                                 |
+| Field                  | Type     | Description                                                                                                   | Optional Values                                                                                                                               |
+| ---------------------- | -------- | ------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `identifier`           | `String` | Unique identifier.<br /> Note that while the identifier is unique, it can be changed after creation           |
+| `title`                | `String` | The Blueprint's name                                                                                          |
+| `description`          | `String` | Description for the Blueprint.<br /> This value is visible to users when hovering on the info icon in the UI. |
+| `icon`                 | `String` | Icon for the Blueprint's graph node, and Entities of the Blueprint                                            | Icon options: `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud,...` <br /><br />See the full icon list [below.](#full-icon-list) |
+| `formulaProperties`    | `Object` | Contains the properties that are defined using [formula templates](./formula-properties)                      | Example: "`repo-link`": "`https://github.com/{{$identifier}}`"                                                                                |
+| `schema`               | `Object` | Object containing two more nested fields, including `properties` and `required`                               | See the schema structure [here](#blueprint-schema).                                                                                           |
+| `changelogDestination` | `Object` | Defines the destination where events that happen within the Blueprint's context will be delivered             | See the object structure [here](#changelog-destination).                                                                                      |
 
 #### Special blueprint fields
 
@@ -150,7 +151,7 @@ We highly recommend you set a `description`, so your developers will understand 
 
 We currently support the following types:
 
-| `type`    | Description                                                                                              | Example Values                               |
+| `type`    | Description                                                                                              | Example values                               |
 | --------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
 | `string`  | A free-text string value                                                                                 | `"This is a string field"`                   |
 | `number`  | Numeric field (including integers, doubles, floats, etc...)                                              | `1`, `2.3`, `5e3`,...                        |
@@ -280,7 +281,7 @@ Here is how property definitions look like for all available types (remember tha
 
 We currently support the following `string` formats:
 
-| `format`    | Description                   | Example Values                            |
+| `format`    | Description                   | Example values                            |
 | ----------- | ----------------------------- | ----------------------------------------- |
 | `url`       | Formatted URL                 | `"https://getport.io"`                    |
 | `email`     | Formatted Email               | `"port@getport.io"`                       |
@@ -401,6 +402,35 @@ The icon will be displayed in the column header of the property (in the example 
 ![Blueprints graph with new Microservice](../../../static/img/platform-overview/port-components/blueprints/repoUrlWithIcon.png)
 
 For a list of available icons refer to the [full icon list](#full-icon-list)
+
+## Changelog destination
+
+The `changelogDestination` object controls whether events that happen in the context of the Blueprint are reported to a user configured destination, and if so to which destination.
+
+Events that the `changelogDestination` configuration will report on include:
+
+- Changes to the Blueprint schema'
+- Creation of new Entities that match the type of the Blueprint;
+- Changes to Entities that match the type of the Blueprint;
+- And more.
+
+The `changelogDestination` supports 2 configurations:
+
+- [Webhook](../self-service-actions/port-execution-architecture/port-execution-webhook.md)
+- [Kafka](../self-service-actions/port-execution-architecture/port-execution-kafka.md)
+
+:::tip
+If you don't want to send changelog events to any destination, you can simply remove the `changeLog` destination from the Blueprint JSON.
+:::
+
+### Changelog destination structure fields
+
+| Field  | Type     | Description                                                                                                                           | Example values                |
+| ------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
+| `type` | `string` | Defines the changelog destination type                                                                                                | Either `WEBHOOK` or `KAFKA`   |
+| `url`  | `string` | Defines the webhook URL where Port sends changelog events to via REST POST. <br></br> Can be added only if `type` is set to `WEBHOOK` | `https://webhook.example.com` |
+
+For more information about Port's changelog capabilities, refer to the [Port execution architecture](../self-service-actions/port-execution-architecture/port-execution-architecture.md) page.
 
 ## Mirror properties
 
