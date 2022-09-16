@@ -77,10 +77,9 @@ Let’s configure a `VM` Blueprint, its base structure is:
     },
     "required": []
   },
-  "disableEditing": false,
-  "enableResponsibleTeamEdit": false,
-  "disabledProperties": [],
-  "disabledRelations": [],
+  "changelogDestination": {
+    "type": "KAFKA"
+  },
   "formulaProperties": {}
 }
 ```
@@ -147,10 +146,9 @@ blueprint = {
         },
         "required": []
     },
-    "disableEditing": False,
-    "enableResponsibleTeamEdit": False,
-    "disabledProperties": [],
-    "disabledRelations": [],
+    "changelogDestination": {
+      "type": "KAFKA"
+    },
     "formulaProperties": {}
 }
 
@@ -662,7 +660,7 @@ This **change** will automatically send a message to the Kafka topic.
 
 Now the CloudWatch logs for the Lambda function (Accessible in the AWS console through Lambda→functions→port-execution-lambda→Monitor→Logs→View logs in CloudWatch), will show a log of the latest executions of the Lambda function. It also includes the actual message received, and a log of the actions taken by our python code:
 
-![Cloudwatch logs example](../../../static/img/platform-overview/self-service-actions/basic-changelog-aws-lambda-example/exampleCloudwatchlogsWithTopicMessage.png)
+![Cloudwatch logs example](../../../../static/img/platform-overview/self-service-actions/basic-changelog-aws-lambda-example/exampleCloudwatchlogsWithTopicMessage.png)
 
 Here is an example of the request payload received from Port, inside the Kafka message (note the `before` and `after` keys showing the difference in our VM Entity properties):
 
@@ -730,6 +728,4 @@ In addition to seeing the message topic in Cloudwatch, the Lambda function code 
 
 This was just a very basic example of how to listen and react to changes in the Software Catalog. We left placeholder code for you to insert your own custom logic to fit your infrastructure.
 
-If you want to dive even deeper into Port's execution capabilities, try looking at our [execution topics](./port-execution-topics.md)
-
-<!-- Now that you have a changelog runner, maybe try exploring our [service pipeline example](./execution-service-pipeline-example), or dive deeper into our [execution topics](./port-execution-topics) -->
+If you want to dive even deeper into Port's execution capabilities, try looking at our [execution architecture](../../../platform-overview/self-service-actions/port-execution-architecture/port-execution-architecture.md)
