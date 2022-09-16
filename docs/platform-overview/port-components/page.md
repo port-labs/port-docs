@@ -73,7 +73,7 @@ The first tab is the `Overview` tab, which shows two widgets: the Entity details
 Each page type has a set of operations that can be performed from the UI.  
 The table below summarizes the available operations according to the page type:
 
-| Page Type                                     | Save a view | Save view as<br /> a new page | Edit page | Delete Page |
+| Page type                                     | Save a view | Save view as<br /> a new page | Edit page | Delete page |
 | --------------------------------------------- | :---------: | :---------------------------: | :-------: | :---------: |
 | Blueprint page (Default Page)                 |      V      |               V               |     X     |      X      |
 | Entity page                                   |      V      |               X               |     X     |      X      |
