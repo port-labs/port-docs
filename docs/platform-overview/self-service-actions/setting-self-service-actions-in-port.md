@@ -5,7 +5,7 @@ sidebar_label: Setting Self-Service Actions In Port
 
 # Setting Self-Service Actions In Port
 
-**Actions** in Port enable developer self-service by configuring one of 3 Self-Service Action types on Blueprints and the Entities that originate from them:
+**Self-Service Actions** in Port enable developer self-service by configuring one of 3 Self-Service Action types on Blueprints and the Entities that originate from them:
 
 - **Create** - create a new Entity by triggering a provisioning process in your infrastructure.
 - **Delete** - delete an existing Entity by triggering delete logic in your infrastructure.
@@ -153,7 +153,7 @@ Here is an action array with a `CREATE` action already filled in:
     },
     "invocationMethod": {
       "type": "WEBHOOK",
-      "url": "https://my.webhook.com/webhooks"
+      "url": "https://webhook.example.com"
     },
     "trigger": "CREATE",
     "description": "This will create a new microservice repo"
@@ -199,7 +199,7 @@ Let's go back to the actions array of our `Microservice` Blueprint and paste in 
     },
     "invocationMethod": {
       "type": "WEBHOOK",
-      "url": "https://my.webhook.com/webhooks"
+      "url": "https://webhook.example.com"
     },
     "trigger": "CREATE",
     "description": "This will create a new microservice repo"
@@ -228,7 +228,7 @@ Let's go back to the actions array of our `Microservice` Blueprint and paste in 
     },
     "invocationMethod": {
       "type": "WEBHOOK",
-      "url": "https://my.webhook.com/webhooks"
+      "url": "https://webhook.example.com"
     },
     "trigger": "DAY-2",
     "description": "This will deploy the microservice"
@@ -242,7 +242,7 @@ Let's go back to the actions array of our `Microservice` Blueprint and paste in 
     },
     "invocationMethod": {
       "type": "WEBHOOK",
-      "url": "https://my.webhook.com/webhooks"
+      "url": "https://webhook.example.com"
     },
     "trigger": "DELETE",
     "description": "This will delete the microservice's repo"
@@ -287,7 +287,7 @@ The basic structure of a Self-Service Action:
   },
   "invocationMethod": {
     "type": "WEBHOOK",
-    "url": "https://my.webhook.com/webhooks"
+    "url": "https://webhook.example.com"
   },
   "trigger": "CREATE",
   "description": "Action description"
@@ -303,7 +303,7 @@ The basic structure of a Self-Service Action:
 | `title`            | Action title                                                                                                                                                                          |
 | `icon`             | Action icon                                                                                                                                                                           |
 | `userInputs`       | An object containing `properties` and `required` keys following the standard JSON schema format as seen in [Blueprint structure](../port-components/blueprint.md#blueprint-structure) |
-| `invocationMethod` | An object containing `type` which can be `KAFKA` or `WEBHOOK` When providing `type: WEBHOOK`, `url` to POST to is required                                                            |
+| `invocationMethod` | Defines the destination where invocations of the Self-Service Action will be delivered, see [invocation method](#invocation-method) for details                                       |
 | `trigger`          | The type of the action: `CREATE`, `DAY-2` or `DELETE`                                                                                                                                 |
 | `description`      | Action description                                                                                                                                                                    |
 
@@ -319,11 +319,27 @@ The following table includes the different fields that can be specified in the `
 | `default` (Optional)     | Default value                                                                                                         |
 | `enum` (Optional)        | A list of predefined values the user can choose from, same format as [enum](../port-components/blueprint.md#enum)     |
 
+## Invocation method
+
+The `invocationMethod` object controls where Self-Service Actions are reported to.
+
+The `invocationMethod` supports 2 configurations:
+
+- [Webhook](./port-execution-architecture/port-execution-webhook.md)
+- [Kafka](./port-execution-architecture/port-execution-kafka.md)
+
+### Invocation method structure fields
+
+| Field  | Type     | Description                                                                                                                               | Example values                |
+| ------ | -------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
+| `type` | `string` | Defines the Self-Service Action destination type                                                                                          | Either `WEBHOOK` or `KAFKA`   |
+| `url`  | `string` | Defines the webhook URL where Port sends Self-Service Actions to via REST POST. <br></br> Can be added only if `type` is set to `WEBHOOK` | `https://webhook.example.com` |
+
 ## Triggering actions
 
 We will now look at trigger examples for each action type and explain what happens behind the scenes when we execute each type.
 
-When we click on the `execute` button of an action a Port [action message](#action-message-structure) will be published to one of [secured runs Kafka topic](./port-execution-architecture/port-execution-kafka.md), or from [secured POST Webhook](./port-execution-architecture/port-execution-webhook.md).
+When we click on the `execute` button of an action, a Port [action message](#action-message-structure) is published to the invocation destination specified by the user (either a POST request to the user's [Webhook](./port-execution-architecture/port-execution-webhook.md) or a message to the user's dedicated [Kafka](./port-execution-architecture/port-execution-kafka.md) topic).
 
 For example, you can deploy a new version of your microservice when a `CREATE` action is triggered.
 
@@ -451,7 +467,7 @@ Here is an example `payload` object for a `CREATE` action:
                 "region"
             ]
         },
-        "invocationMethod": { "type": "WEBHOOK", "url": "https://my.webhook.com/webhooks" },
+        "invocationMethod": { "type": "WEBHOOK", "url": "https://webhook.example.com" },
         "trigger": "CREATE",
         "description": "This will create a new k8s cluster",
         "blueprint": "k8sCluster",
