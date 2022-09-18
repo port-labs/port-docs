@@ -262,7 +262,7 @@ After you commit the `port.yml` file to your repository, you should now see your
 
 A deployment config is used to represent a deployment of a microservice, in a specific environment in your infrastructure. A deployment config is a logical object which doesn't translate to a real Entity in your infrastructure. Instead, a deployment config has multiple `deployments` tied to it, each representing a new version of the deployed code of the matching microservice, in the matching environment.
 
-Let's manually create a deployment config for the `Notification Service` microservice in the `Production` environment:
+Let's manually create a deployment config Entity for the `Notification Service` microservice in the `Production` environment:
 
 ```json showLineNumbers
 {
