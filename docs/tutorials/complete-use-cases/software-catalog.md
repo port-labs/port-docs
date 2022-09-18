@@ -24,10 +24,10 @@ By the end of this guide, you will have an initial environment as shown below:
 
 Let's go over the different [Blueprints](../../platform-overview/port-components/blueprint.md) shown above and how we will create [Entities](../../platform-overview/port-components/entity.md) for each of them:
 
-- **Deployment** - a new version deployment of a microservice, will be reported using Port's GitHub Action as part of the deployment process.
-- **Deployment Config** - a version of a microservice, running in a specific environment in your infrastructure, will be reported manually in this guide.
-- **Environment** - a logical cloud environment where your services live (for example, a Kubernetes namespace), will be reported using Port's Terraform Provider.
 - **Microservice** - a microservice providing part of your product's service, will be reported by Port's GitHub App.
+- **Environment** - a logical cloud environment where your services live (for example, a Kubernetes namespace), will be reported using Port's Terraform Provider.
+- **Deployment Config** - a version of a microservice, running in a specific environment in your infrastructure, will be reported manually in this guide.
+- **Deployment** - a new version deployment of a microservice, will be reported using Port's GitHub Action as part of the deployment process.
 
 Now that you know the end-result of this guide, let's start by creating the Blueprints and [Relations](../../platform-overview/port-components/relation.md) of your software catalog
 
@@ -190,7 +190,7 @@ Now that you have your Blueprints created, connected and ready to go, time to cr
 
 ### Environment - Terraform provider
 
-To keep things short and simple, let's assume you only have a production environment, we'll use Port's Terraform provider to create an Entity for the production environment.
+To keep things short and simple, let's assume you only have a production environment, we'll use Port's [Terraform provider](../../integrations/terraform.md) to create an Entity for the production environment.
 
 :::info
 In a real environment, this terraform file would also include actual provisioning of cloud resources, such as the kubernetes namespace corresponding to the environment Entity.
@@ -260,7 +260,9 @@ After you commit the `port.yml` file to your repository, you should now see your
 
 ### Deployment Config - Port API
 
-A deployment config is used to represent a deployment of a microservice, in a specific environment in your infrastructure. A deployment config is a logical object which doesn't translate to a real Entity in your infrastructure. Instead, a deployment config has multiple `deployments` tied to it, each representing a new version of the deployed code of the matching microservice, in the matching environment.
+A deployment config is used to represent a deployment of a microservice, in a specific environment in your infrastructure. A deployment config has multiple `deployments` tied to it, each representing a new version of the deployed code of the matching microservice, in the matching environment.
+
+A deployment config is also just what it sounds like - a `config`, that means it is a good place to store runtime variables and values, links to logging, tracing or dashboard tools and more static data that does not change between deployments.
 
 Let's manually create a deployment config Entity for the `Notification Service` microservice in the `Production` environment:
 
