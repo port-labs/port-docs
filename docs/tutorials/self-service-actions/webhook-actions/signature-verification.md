@@ -44,7 +44,7 @@ Port takes the content that needs to be signed, hashes it using `HMAC-SHA-256` a
 
 ## Timestamp verification
 
-As mentioned above, Port also sends the timestamp the webhook request was generated in (in the `x-port-timestamp` header). You can compare the value of the timestamp with the timestamp of your systems and verify that the difference is within your allowed tolerance to prevent replay attacks.
+As mentioned above, Port also sends the timestamp for the webhook request in the `x-port-timestamp header`. To prevent replay attacks you can compare the value of the timestamp with the timestamp of your systems and verify that the difference is within your allowed tolerance.
 
 ## Code examples
 
