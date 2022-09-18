@@ -371,6 +371,11 @@ jobs:
             }
 ```
 
+:::tip
+For security reasons it is recommended to save the `CLIENT_ID` and `CLIENT_SECRET` as [GitHub Secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets), and access them as shown in the example above.
+
+:::
+
 ## Summary
 
 At this point, you should have a basic software catalog up and running, with new deployments Entities being created in Port, allowing you to keep track of how your code changes across your different environments.
