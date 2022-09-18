@@ -100,6 +100,8 @@ Remember that Blueprints can be created both from the [UI](../blueprint-basics.m
 
 Now that you have your Blueprints created, connected and ready to go, time to create your Entities:
 
+## Entities
+
 ### Deployment Config - Port API
 
 A deployment config is used to represent a deployment of a microservice, in a specific environment in your infrastructure. A deployment config is a logical object which doesn't translate to a real Entity in your infrastructure. Instead, a deployment config has multiple `deployments` tied to it, each representing a new version of the deployed code of the matching microservice, in the matching environment.
@@ -115,7 +117,7 @@ We are using the same `DeploymentConfig` Blueprint used in the [software catalog
   "identifier": "notification-service-prod",
   "title": "Notification Service Production",
   "properties": {
-    "locked": false
+    "locked": true
   },
   "relations": {}
 }
@@ -150,7 +152,7 @@ entity = {
     "identifier": "notification-service-prod",
     "title": "Notification Service Production",
     "properties": {
-        "locked": False
+        "locked": True
     },
     "relations": {}
 }
@@ -163,4 +165,14 @@ print(response.json())
 
 </details>
 
-Time to move on to the final piece: consistent deployment reporting.
+Now let's use the deployment config Entity to lock the `Notification Service` for new deployments.
+
+## Reading the `locked` field during deployment
+
+Let's go ahead and create a [GitHub workflow](https://docs.github.com/en/actions/using-workflows) file in a GitHub repository meant for our `Notification Service` microservice:
+
+- Create a GitHub repository (or use an existing one)
+- Create a `.github` directory
+  - Inside it create a `workflows` directory
+
+Inside the `/.github/workflows` directory create a file called `deploy-with-check.yml` with the following content:
