@@ -16,8 +16,8 @@ The environment we're going to use includes 2 [Blueprints](../../platform-overvi
 
 Let's go over the different Blueprints shown above and how we will create [Entities](../../platform-overview/port-components/entity.md) for each of them:
 
-- **Deployment** - a new version deployment of a microservice, will be reported using Port's GitHub Action as part of the deployment process.
 - **Deployment Config** - a version of a microservice, running in a specific environment in your infrastructure, will be reported manually in this guide.
+- **Deployment** - a new version deployment of a microservice, will be reported using Port's GitHub Action as part of the deployment process.
 
 Now that you know the end-result of this guide, let's start by creating the Blueprints and Relations.
 
@@ -98,19 +98,21 @@ The Blueprint JSON provided below already includes the Relations between the dif
 Remember that Blueprints can be created both from the [UI](../blueprint-basics.md#from-the-ui) and from the [API](../blueprint-basics.md#from-the-api)
 :::
 
+:::note
+Our deployment config for Blueprint has a property called `locked` with a boolean value, we will use the value of that field to determine whether new deployments are allowed.
+:::
+
 Now that you have your Blueprints created, connected and ready to go, time to create your Entities:
 
 ## Entities
 
 ### Deployment Config - Port API
 
-A deployment config is used to represent a deployment of a microservice, in a specific environment in your infrastructure. A deployment config is a logical object which doesn't translate to a real Entity in your infrastructure. Instead, a deployment config has multiple `deployments` tied to it, each representing a new version of the deployed code of the matching microservice, in the matching environment.
+A deployment config is used to represent a deployment of a microservice, in a specific environment in your infrastructure. A deployment config has multiple `deployments` tied to it, each representing a new version of the deployed code of the matching microservice, in the matching environment.
+
+A deployment config is also just what it sounds like - a `config`, that means it is a good place to store runtime variables and values, links to logging, tracing or dashboard tools and more static data that does not change between deployments.
 
 Let's manually create a deployment config Entity for the `Notification Service` microservice in the Production environment:
-
-:::tip
-We are using the same `DeploymentConfig` Blueprint used in the [software catalog](./software-catalog.md) use case, so if you followed that guide, there is no need to create new Blueprints.
-:::
 
 ```json showLineNumbers
 {
@@ -169,10 +171,147 @@ Now let's use the deployment config Entity to lock the `Notification Service` fo
 
 ## Reading the `locked` field during deployment
 
-Let's go ahead and create a [GitHub workflow](https://docs.github.com/en/actions/using-workflows) file in a GitHub repository meant for our `Notification Service` microservice:
+In order to use the `locked` field on your deployment config, you will use Port's [GitHub Action](../../integrations/github/github-action.md).
+
+Here is the deployment check flow:
+
+1. New code is pushed to the `main` branch of the `Notification Service` Git repository.
+2. A [GitHub workflow](https://docs.github.com/en/actions/using-workflows) is triggered by the push event.
+3. The Github workflow calls a [callable workflow](https://docs.github.com/en/actions/using-workflows/reusing-workflows) with parameters matching the `locked` field check of the `Notification Service`.
+4. If the value of the `locked` field is `true`, the deployment check will fail, with an error message indicating that the service is locked, and no deployment will be attempted.
+5. If the value of the `locked` field is `false`, the deployment check will succeed and a new deployment Entity will be created in Port.
+
+Let's go ahead and create a [GitHub workflow](https://docs.github.com/en/actions/using-workflows) file in a GitHub repository meant for the `Notification Service` microservice:
 
 - Create a GitHub repository (or use an existing one)
 - Create a `.github` directory
   - Inside it create a `workflows` directory
 
-Inside the `/.github/workflows` directory create a file called `deploy-with-check.yml` with the following content:
+Inside the `/.github/workflows` directory create a file called `check-service-lock.yml` with the following content:
+
+```yml showLineNumbers
+name: Check Service Lock
+
+on:
+  workflow_call:
+    inputs:
+      SERVICE_NAME:
+        required: true
+        type: string
+        default: notification-service
+      RUNTIME:
+        required: true
+        type: string
+        default: production
+    secrets:
+      PORT_CLIENT_ID:
+        required: true
+      PORT_CLIENT_SECRET:
+        required: true
+
+jobs:
+  get-entity:
+    runs-on: ubuntu-latest
+    outputs:
+      entity: ${{ steps.port-github-action.outputs.entity }}
+    steps:
+      - id: port-github-action
+        name: Get entity from Port
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          identifier: ${{ inputs.SERVICE_NAME }}-${{ inputs.RUNTIME }}
+          blueprint: DeploymentConfig
+          operation: GET
+  check-lock-status:
+    runs-on: ubuntu-latest
+    needs: get-entity
+    steps:
+      - name: Get entity lock status
+        run: echo "LOCK_STATUS=$(echo '${{needs.get-entity.outputs.entity}}' | jq -r .properties.locked)" >> $GITHUB_ENV
+      - name: Check lock status 🚧
+        if: ${{ env.LOCK_STATUS == 'true' }}
+        run: |
+          echo "Service ${{ inputs.SERVICE_NAME }} in environment ${{ inputs.RUNTIME }} is locked, stopping deployment"
+          exit 1
+```
+
+The workflow in `check-service-lock.yml` is a [callable workflow](https://docs.github.com/en/actions/using-workflows/reusing-workflows), you can use it in any of your deployment workflows using parameters provided in the _calling_ workflow, thus saving you the need to duplicate the same workflow logic over and over.
+
+Inside the `/.github/workflows` directory create a file called `deploy-notification-service.yml` with the following content:
+
+```yml showLineNumbers
+name: Report Deployment
+
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  check-lock-status:
+    uses: ./.github/workflows/check-service-lock.yml
+    with:
+      SERVICE_NAME: notification-service
+      RUNTIME: prod
+    secrets:
+      PORT_CLIENT_ID: ${{ secrets.PORT_CLIENT_ID }}
+      PORT_CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
+
+  report-deployment:
+    name: Report new deployment Entity
+    needs: [check-lock-status]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract SHA short
+        run: echo "SHA_SHORT=${GITHUB_SHA:0:7}" >> $GITHUB_ENV
+      - name: "Report deployment Entity to port 🚢"
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          identifier: notification-service-prod-${{ env.SHA_SHORT }}
+          title: Notification-Service-Production-${{ env.SHA_SHORT }}
+          blueprint: Deployment
+          properties: |
+            {
+               "jobUrl": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+               "commitSha": "${{ env.SHA_SHORT }}"
+            }
+          relations: |
+            {
+               "instanceOf": "notification-service-prod"
+            }
+```
+
+:::tip
+For security reasons it is recommended to save the `CLIENT_ID` and `CLIENT_SECRET` as [GitHub Secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets), and access them as shown in the example above.
+:::
+
+The workflow in `deploy-notification-service.yml` is triggered every time a push is made to the `main` branch of the repository.
+
+The workflows has 2 configured jobs:
+
+- check-lock-status;
+- report-deployment.
+
+the `report-deployment` job is configured with a `needs` key whose value is `[check-lock-status]`, meaning the `report-deployment` step will only start when `check-lock-status` has finished.
+
+If you try to push code to your repository when the deployment config `locked` field is set to `true`, the deployment will stop:
+
+![Workflow fail graph](./../../../static/img/tutorial/complete-use-cases/environment-locking/workflow-fail-graph.png)
+
+And looking at the step that failed, you can see that the failure is due to the value of the `locked` field:
+
+![Lock check step](./../../../static/img/tutorial/complete-use-cases/environment-locking/workflow-lock-message.png)
+
+If if you set the value of the `locked` field to `false`, the workflow will perform the deployment without any issue:
+
+![Workflow success graph](./../../../static/img/tutorial/complete-use-cases/environment-locking/workflow-success-graph.png)
+
+## Summary
+
+This was just one example of the use of Port's GitHub Action in your CI/CD pipelines. By querying and creating Entities during your CI process, you can make your CI jobs more dynamic and responsive, without having to edit `yml` files and pushing new code to your repository.
+
+If this use case helped you, check out our guide to [using Port in your CI/CD](../use-port-in-your-cicd.md).
