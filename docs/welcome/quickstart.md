@@ -134,7 +134,6 @@ After clicking the button, a JSON editor will appear, similar to the one we saw 
 {
   "identifier": "dataQueryService",
   "title": "Data Query Service",
-  "team": "",
   "blueprint": "microservice",
   "properties": {
     "slackChannel": "#data-query",
@@ -215,7 +214,6 @@ Next, you will create 3 packages to correspond with your Microservices. In order
 {
   "identifier": "requests_v2_28_1",
   "title": "Requests v2.28.1",
-  "team": "",
   "blueprint": "package",
   "properties": {
     "version": "2.28.1",
@@ -231,7 +229,6 @@ Next, you will create 3 packages to correspond with your Microservices. In order
 {
   "identifier": "requests_v2_28_0",
   "title": "Requests v2.28.0",
-  "team": "",
   "blueprint": "package",
   "properties": {
     "version": "2.28.0",
@@ -247,7 +244,6 @@ Next, you will create 3 packages to correspond with your Microservices. In order
 {
   "identifier": "sqlAlchemy_v1_4_39",
   "title": "SQL Alchemy v1.4.39",
-  "team": "",
   "blueprint": "package",
   "properties": {
     "version": "1.4.39",

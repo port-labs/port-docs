@@ -6,7 +6,7 @@ sidebar_position: 1
 
 In this guide, we will show you how to debug Webhook Self-Service Actions that are sent from Port locally.
 
-This example contains the initial steps to set up a standard changelog use case, by following this example you will see how you can locally debug the payload that Port sends you via the webhook [invocation method](../../../platform-overview/self-service-actions/setting-self-service-actions-in-port.md#invocation-method).
+This example contains the initial steps to set up a standard Self-Service Action use case, following it shows how to locally debug the payload sent by Port through the webhook [invocation method](../../../platform-overview/self-service-actions/setting-self-service-actions-in-port.md#invocation-method).
 
 ## Prerequisites
 
@@ -14,7 +14,7 @@ This example contains the initial steps to set up a standard changelog use case,
 - Python & PIP installed
 - Nodejs
 
-Interaction with Port will be primarily conducted using the API in this example, but everything can also be performed using the web UI as well.
+In this example, interaction with Port will be primarily conducted using the API, but can also be done using the web UI.
 
 ## Scenario
 
@@ -263,7 +263,7 @@ action = {
                 'title': 'Size of memory'
             },
             'storage': {
-                'type': 'number',pysmee
+                'type': 'number',
                 'title': 'Size of storage'
             },
             'region': {
@@ -305,12 +305,12 @@ You should see a log line output like this:
 [2022-09-15 13:59:39,462 MainThread] INFO: Forwarding https://smee.io/b1iO4C4ZGNYmiVL5 to http://localhost:3000/webhooks
 ```
 
-## Creating small example server in Nodejs
+## Creating a small example server in Nodejs
 
 Now because you are forwarding events to your localhost, all you need to do is create a small server that will listen to `POST` requests that are being sent to the /webhooks route.
 
 :::tip
-This examples shows how to setup a small listener server using [Nodejs](https://nodejs.org/en/) and [Express](https://expressjs.com/) but you can use any language and framework you prefer.
+This example shows how to setup a small listener server using [Nodejs](https://nodejs.org/en/) and [Express](https://expressjs.com/) but you can use any language and framework you prefer.
 :::
 
 Create a folder and run the following in it
@@ -320,7 +320,7 @@ npm init -y
 npm install express
 ```
 
-Inside this folder create an `index.js` file and paste these contents:
+Inside this folder create an `index.js` file and paste the following:
 
 ```js
 const { createHmac } = require("crypto");

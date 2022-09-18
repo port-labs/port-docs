@@ -12,7 +12,7 @@ Before writing custom logic to integrate Port into your CI/CD, you should check 
 
 ## Scenario
 
-You want to use your existing CI/CD to report to Port about your microservice Entities.
+You want to use your existing CI/CD to report your microservice Entities to Port.
 
 ## Code example
 
