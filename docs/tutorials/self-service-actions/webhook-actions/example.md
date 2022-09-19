@@ -35,3 +35,15 @@ A valid option is to provision your own backend to handle Self-Service Actions' 
 Using this method, you can choose any code language and library to implement your actions.
 
 Here is an [example](https://github.com/port-labs/port-action-runner-examples/tree/main/python/s3_bucket_creation/aws_sdk/webhook), that provisions a simple backend in FastAPI (python), and uses [AWS SDK](https://aws.amazon.com/sdk-for-python/) to create a new S3 bucket.
+
+## Summary
+
+In this example we introduced few alternatives for creating an S3 bucket.
+
+Needless to say, you can use webhook to perform any action, and create any cloud resource at will. For instance:
+
+- Create EC2
+- Provision EKS cluster
+- Deploy new Lambda version
+- Invalidate Cloudfront Cache
+- etc...
