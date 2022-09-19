@@ -14,10 +14,10 @@ You can read more about software catalogs on our [blog](https://www.getport.io/b
 
 In this guide you will setup an initial software catalog. This guide will show you how to use:
 
-- Port's [Terraform provider](../../integrations/terraform.md) - to document your cloud resources
-- Port's [GitHub App](../../integrations/github/app/introduction.md) - to document your services
-- Port's [REST API](../../api-reference/) - to document your deployment configs
-- Port's [GitHub Action](../../integrations/github/github-action.md) - to document your service deployments
+- Port's [Terraform provider](../../integrations/terraform.md) - to create your cloud resources
+- Port's [GitHub App](../../integrations/github/app/introduction.md) - to create your services
+- Port's [REST API](../../api-reference/) - to create your deployment configs
+- Port's [GitHub Action](../../integrations/github/github-action.md) - to create your service deployments
 
 By the end of this guide, you will have the _Basic Model_ of a software catalog.
 
