@@ -24,7 +24,7 @@ In this [example](https://github.com/port-labs/port-action-runner-examples/tree/
 
 Existing / New CI jobs can be utilized for handling self-service actions.
 
-Some CI tools (GitHub, Jenkins, ...) has some built-in integrations, to easily provision new resources.
+Some CI tools (GitHub, Jenkins, ...) has built-in integrations, to easily provision new resources.
 
 Look for this [example](https://github.com/port-labs/port-action-runner-examples/tree/main/python/s3_bucket_creation/github_action/webhook), to see how to implement S3 bucket creation, using GitHub actions from the public marketplace.
 
