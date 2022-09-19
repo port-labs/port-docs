@@ -14,18 +14,18 @@ The environment we're going to use includes 2 [Blueprints](../../platform-overvi
 
 ![Service locking layout](../../../static/img/tutorial/complete-use-cases/service-locking/service-locking-layout.png)
 
-Let's go over the different Blueprints shown above and how we will create [Entities](../../platform-overview/port-components/entity.md) for each of them:
+Let's go over the different Blueprints shown above and how we'll create [Entities](../../platform-overview/port-components/entity.md) for each one of them:
 
-- **Deployment Config** - a deployment config is a representation of the current “live” version of a service running in a specific environment. It will include references to the service, environment and deployment, as well as real-time information such as status, uptime and any other relevant metadata.
+- **Deployment Config** - a deployment config is a representation of the current “live” version of a service running in a specific environment. It will include references to the service, environment, and deployment, as well as real-time information such as status, uptime, and any other relevant metadata.
   - In this example deployment configs will be reported manually.
-- **Deployment** - a deployment could be described as an object representing a CD job. It includes the version of the deployed service and a link to the job itself. Unlike other objects, the deployment is an immutable item in the software catalog. It is important to keep it immutable to ensure the catalog remains a consistent source of truth.
+- **Deployment** - a deployment could be described as an object representing a CD job. It includes the version of the deployed service and a link to the job itself. Unlike other objects, the deployment is an immutable item in the software catalog. It is important to keep it immutable to ensure the catalog remains reliable.
   - In this example deployments will be reported using Port's GitHub Action as part of the deployment process.
 
-Now that you know the end-result of this guide, let's start by creating the Blueprints and Relations.
+Now that you know the end result of this guide, let's start by creating the Blueprints and Relations.
 
 ## Blueprints and Relations
 
-Below you can find the JSON for all of the Blueprints you need to create to follow this guide:
+Below you can find the JSON for all of the Blueprints you require for the following guide:
 
 :::note
 The Blueprint JSON provided below already includes the Relations between the different Blueprints, so please create them in the order that they appear.
@@ -109,7 +109,7 @@ Remember that Blueprints can be created both from the [UI](../blueprint-basics.m
 :::
 
 :::note
-Our deployment config for Blueprint has a property called `locked` with a boolean value, we will use the value of that field to determine whether new deployments of the service are allowed.
+Our deployment config Blueprint has a property called `locked` with a boolean value. We will use the value of that field to determine whether new deployments of the service are allowed.
 :::
 
 Now that you have your Blueprints created, connected and ready to go, time to create your Entities:
@@ -118,9 +118,9 @@ Now that you have your Blueprints created, connected and ready to go, time to cr
 
 ### Deployment Config - Port API
 
-A deployment config is used to represent a deployment of a microservice, in a specific environment in your infrastructure. A deployment config has multiple `deployments` tied to it, each representing a new version of the deployed code of the matching microservice, in the matching environment.
+A deployment config is used to represent a service deployment in a specific environment in your infrastructure. A deployment config has multiple `deployments` tied to it, each representing a new version of the deployed code of the matching service, in its matching environment.
 
-A deployment config is also just what it sounds like - a `config`, that means it is a good place to store runtime variables and values, links to logging, tracing or dashboard tools and more static data that does not change between deployments.
+A deployment config is also just what it sounds like - a `config`, which means it is a good place to store runtime variables and values, links to logging, tracing, or dashboard tools, and more static data that does not change between deployments.
 
 Let's manually create a deployment config Entity for the `Notification Service` service in the Production environment:
 
@@ -185,17 +185,17 @@ In order to use the `locked` field on your deployment config, you will use Port'
 
 Here is the deployment check flow:
 
-1. New code is pushed to the `main` branch of the `Notification Service` Git repository.
-2. A [GitHub workflow](https://docs.github.com/en/actions/using-workflows) is triggered by the push event.
-3. The Github workflow calls a [callable workflow](https://docs.github.com/en/actions/using-workflows/reusing-workflows) with parameters matching the `locked` field check of the `Notification Service`.
-4. If the value of the `locked` field is `true`, the deployment check will fail, with an error message indicating that the service is locked, and no deployment will be attempted.
-5. If the value of the `locked` field is `false`, the deployment check will succeed and a new deployment Entity will be created in Port.
+1. New code is pushed to the `main` branch of the `Notification Service` Git repository;
+2. A [GitHub workflow](https://docs.github.com/en/actions/using-workflows) is triggered by the push event;
+3. The Github workflow calls a [callable workflow](https://docs.github.com/en/actions/using-workflows/reusing-workflows) with parameters matching the `locked` field check of the `Notification Service`;
+4. If the value of the `locked` field is `true`, the deployment check will fail, with an error message indicating that the service is locked, and no deployment will be attempted;
+5. If the value of the `locked` field is `false`, the deployment check will succeed and a new deployment Entity will be created in Port;
 
 Let's go ahead and create a [GitHub workflow](https://docs.github.com/en/actions/using-workflows) file in a GitHub repository meant for the `Notification Service` microservice:
 
-- Create a GitHub repository (or use an existing one)
-- Create a `.github` directory
-  - Inside it create a `workflows` directory
+- Create a GitHub repository (or use an existing one);
+- Create a `.github` directory;
+  - Inside it create a `workflows` directory.
 
 Inside the `/.github/workflows` directory create a file called `check-service-lock.yml` with the following content:
 
@@ -314,16 +314,16 @@ If you try to push code to your repository when the deployment config `locked` f
 
 ![Workflow fail graph](./../../../static/img/tutorial/complete-use-cases/service-locking/workflow-fail-graph.png)
 
-And looking at the step that failed, you can see that the failure is due to the value of the `locked` field:
+When you will look at the step that failed, you will see that the failure is due to the value of the `locked` field:
 
 ![Lock check step](./../../../static/img/tutorial/complete-use-cases/service-locking/workflow-lock-message.png)
 
-If if you set the value of the `locked` field to `false`, the workflow will perform the deployment without any issue:
+If you set the value of the `locked` field to `false`, the workflow will perform the deployment without any issue:
 
 ![Workflow success graph](./../../../static/img/tutorial/complete-use-cases/service-locking/workflow-success-graph.png)
 
 ## Summary
 
-This was just one example of the use of Port's GitHub Action in your CI/CD pipelines. By querying and creating Entities during your CI process, you can make your CI jobs more dynamic and responsive, without having to edit `yml` files and pushing new code to your repository.
+This was just a single example of Port's GitHub Action value in your CI/CD pipelines. By querying and creating Entities during your CI process, you can make your CI jobs even more dynamic and responsive, without having to edit `yml` files and push new code to your repository.
 
 If this use case helped you, check out our guide to [using Port in your CI/CD](../use-port-in-your-cicd.md).
