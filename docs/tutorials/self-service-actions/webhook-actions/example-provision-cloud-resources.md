@@ -2,7 +2,7 @@
 sidebar_position: 3
 ---
 
-# Example
+# Example - Provision Cloud Resources
 
 In this guide, we are going to present different methods to create an S3 bucket (e.g.), using Port Self-Service Actions.
 
