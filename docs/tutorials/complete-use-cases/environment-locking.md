@@ -16,7 +16,8 @@ The environment we're going to use includes 2 [Blueprints](../../platform-overvi
 
 Let's go over the different Blueprints shown above and how we will create [Entities](../../platform-overview/port-components/entity.md) for each of them:
 
-- **Deployment Config** - a version of a microservice, running in a specific environment in your infrastructure, will be reported manually in this guide.
+- **Deployment Config** - a deployment config is a representation of the current “live” version of a service running in a specific environment. It will include references to the service, environment and deployment, as well as real-time information such as status, uptime and any other relevant metadata.
+  - In this example deployment configs will be reported manually.
 - **Deployment** - a new version deployment of a microservice, will be reported using Port's GitHub Action as part of the deployment process.
 
 Now that you know the end-result of this guide, let's start by creating the Blueprints and Relations.
