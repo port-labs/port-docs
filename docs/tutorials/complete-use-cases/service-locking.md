@@ -2,17 +2,17 @@
 sidebar_position: 2
 ---
 
-# Environment Locking
+# Service Locking
 
-Using Port, it is very simple to implement convenient environment locking for your different development and production environments.
+Using Port, it is very simple to implement convenient service locking for services in your different development and production environments.
 
 ## Goal
 
-In this guide you will implement an environment locking mechanism using Port's [GitHub Action](../../integrations/github/github-action.md).
+In this guide you will implement a service locking mechanism using Port's [GitHub Action](../../integrations/github/github-action.md).
 
 The environment we're going to use includes 2 [Blueprints](../../platform-overview/port-components/blueprint.md) with a [Relation](../../platform-overview/port-components/relation.md) between them:
 
-![Environment locking layout](../../../static/img/tutorial/complete-use-cases/environment-locking/environment-locking-layout.png)
+![Service locking layout](../../../static/img/tutorial/complete-use-cases/service-locking/service-locking-layout.png)
 
 Let's go over the different Blueprints shown above and how we will create [Entities](../../platform-overview/port-components/entity.md) for each of them:
 
@@ -109,7 +109,7 @@ Remember that Blueprints can be created both from the [UI](../blueprint-basics.m
 :::
 
 :::note
-Our deployment config for Blueprint has a property called `locked` with a boolean value, we will use the value of that field to determine whether new deployments are allowed.
+Our deployment config for Blueprint has a property called `locked` with a boolean value, we will use the value of that field to determine whether new deployments of the service are allowed.
 :::
 
 Now that you have your Blueprints created, connected and ready to go, time to create your Entities:
@@ -122,7 +122,7 @@ A deployment config is used to represent a deployment of a microservice, in a sp
 
 A deployment config is also just what it sounds like - a `config`, that means it is a good place to store runtime variables and values, links to logging, tracing or dashboard tools and more static data that does not change between deployments.
 
-Let's manually create a deployment config Entity for the `Notification Service` microservice in the Production environment:
+Let's manually create a deployment config Entity for the `Notification Service` service in the Production environment:
 
 ```json showLineNumbers
 {
@@ -312,15 +312,15 @@ the `report-deployment` job is configured with a `needs` key whose value is `[ch
 
 If you try to push code to your repository when the deployment config `locked` field is set to `true`, the deployment will stop:
 
-![Workflow fail graph](./../../../static/img/tutorial/complete-use-cases/environment-locking/workflow-fail-graph.png)
+![Workflow fail graph](./../../../static/img/tutorial/complete-use-cases/service-locking/workflow-fail-graph.png)
 
 And looking at the step that failed, you can see that the failure is due to the value of the `locked` field:
 
-![Lock check step](./../../../static/img/tutorial/complete-use-cases/environment-locking/workflow-lock-message.png)
+![Lock check step](./../../../static/img/tutorial/complete-use-cases/service-locking/workflow-lock-message.png)
 
 If if you set the value of the `locked` field to `false`, the workflow will perform the deployment without any issue:
 
-![Workflow success graph](./../../../static/img/tutorial/complete-use-cases/environment-locking/workflow-success-graph.png)
+![Workflow success graph](./../../../static/img/tutorial/complete-use-cases/service-locking/workflow-success-graph.png)
 
 ## Summary
 

@@ -9,3 +9,4 @@ In order to get started quickly with Port, we have compiled a list of common use
 Select a use case from the list below to get started:
 
 - [Software Catalog](./software-catalog.md)
+- [Service Locking](./service-locking.md)
