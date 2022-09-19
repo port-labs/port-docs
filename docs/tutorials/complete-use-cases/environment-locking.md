@@ -18,7 +18,8 @@ Let's go over the different Blueprints shown above and how we will create [Entit
 
 - **Deployment Config** - a deployment config is a representation of the current “live” version of a service running in a specific environment. It will include references to the service, environment and deployment, as well as real-time information such as status, uptime and any other relevant metadata.
   - In this example deployment configs will be reported manually.
-- **Deployment** - a new version deployment of a microservice, will be reported using Port's GitHub Action as part of the deployment process.
+- **Deployment** - a deployment could be described as an object representing a CD job. It includes the version of the deployed service and a link to the job itself. Unlike other objects, the deployment is an immutable item in the software catalog. It is important to keep it immutable to ensure the catalog remains a consistent source of truth.
+  - In this example deployments will be reported using Port's GitHub Action as part of the deployment process.
 
 Now that you know the end-result of this guide, let's start by creating the Blueprints and Relations.
 
@@ -72,6 +73,14 @@ The Blueprint JSON provided below already includes the Relations between the dif
         "type": "string",
         "format": "url",
         "title": "Job URL"
+      },
+      "deployingUser": {
+        "type": "string",
+        "title": "Deploying User"
+      },
+      "imageTag": {
+        "type": "string",
+        "title": "Image Tag"
       },
       "commitSha": {
         "type": "string",
@@ -278,6 +287,8 @@ jobs:
           properties: |
             {
                "jobUrl": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+               "deployingUser": "${{ github.actor }}",
+               "imageTag": "latest",
                "commitSha": "${{ env.SHA_SHORT }}"
             }
           relations: |
