@@ -16,6 +16,7 @@ In this guide you will setup an initial software catalog. This guide will show y
 
 - Port's [Terraform provider](../../integrations/terraform.md) - to document your cloud resources
 - Port's [GitHub App](../../integrations/github/app/introduction.md) - to document your services
+- Port's [REST API](../../api-reference/) - to document your deployment configs
 - Port's [GitHub Action](../../integrations/github/github-action.md) - to document your service deployments
 
 By the end of this guide, you will have the _Basic Model_ of a software catalog.
@@ -65,6 +66,55 @@ The Blueprint JSON provided below already includes the Relations between the dif
         "title": "Repository URL",
         "format": "url",
         "description": "Link to the service repo on GitHub"
+      },
+      "responsibleTeam": {
+        "type": "string",
+        "title": "Responsible Team"
+      },
+      "onCall": {
+        "type": "string",
+        "title": "Current On-Call"
+      },
+      "coreLanguage": {
+        "type": "string",
+        "title": "Core Language",
+        "enum": [
+          "Go",
+          "Javascript",
+          "Typescript",
+          "Python",
+          "Java",
+          "C++",
+          "C#",
+          "Ruby"
+        ]
+      },
+      "businessDomain": {
+        "type": "string",
+        "title": "Business Domain",
+        "enum": [
+          "General",
+          "Infra",
+          "Marketing",
+          "Analytics",
+          "Customer Support"
+        ]
+      },
+      "docsLink": {
+        "type": "string",
+        "format": "url",
+        "title": "Documentation Link"
+      },
+      "deploymentService": {
+        "type": "string",
+        "title": "Deployment Service",
+        "enum": ["Lambda", "K8S", "AppRunner", "Amplify", "Cloudfront", "ECS"]
+      },
+      "helmLink": {
+        "type": "string",
+        "format": "url",
+        "title": "Helm Link",
+        "description": "Link to the Helm chart of the service"
       }
     },
     "required": []
@@ -89,8 +139,27 @@ The Blueprint JSON provided below already includes the Relations between the dif
     "properties": {
       "awsRegion": {
         "type": "string",
-        "enum": ["eu-west-1", "us-west-1"],
+        "enum": ["eu-west-1", "eu-west-2", "us-west-1", "us-west-2"],
         "title": "AWS Region"
+      },
+      "configUrl": {
+        "type": "string",
+        "format": "url",
+        "title": "Config URL",
+        "description": "Link to the cluster configuration file"
+      },
+      "slackChannel": {
+        "type": "string",
+        "format": "url",
+        "title": "Slack Channel"
+      },
+      "onCall": {
+        "type": "string",
+        "title": "Current On-Call"
+      },
+      "namespace": {
+        "type": "string",
+        "title": "namespace"
       }
     },
     "required": []
@@ -113,6 +182,34 @@ The Blueprint JSON provided below already includes the Relations between the dif
   "icon": "Microservice",
   "schema": {
     "properties": {
+      "healthStatus": {
+        "type": "string",
+        "title": "Health Status",
+        "enum": ["Healthy", "Degraded", "Crashed", "Restarting"],
+        "enumColors": {
+          "Healthy": "green",
+          "Degraded": "orange",
+          "Crashed": "red",
+          "Restarting": "yellow"
+        }
+      },
+      "newRelicUrl": {
+        "type": "string",
+        "format": "url",
+        "title": "New Relic",
+        "description": "Link to the new relic dashboard of the service"
+      },
+      "sentryUrl": {
+        "type": "string",
+        "format": "url",
+        "title": "Sentry URL",
+        "description": "Link to the new sentry dashboard of the service"
+      },
+      "prometheusUrl": {
+        "type": "string",
+        "format": "url",
+        "title": "Prometheus URL"
+      },
       "locked": {
         "type": "boolean",
         "title": "Locked",
@@ -159,6 +256,14 @@ The Blueprint JSON provided below already includes the Relations between the dif
         "format": "url",
         "title": "Job URL"
       },
+      "deployingUser": {
+        "type": "string",
+        "title": "Deploying User"
+      },
+      "imageTag": {
+        "type": "string",
+        "title": "Image Tag"
+      },
       "commitSha": {
         "type": "string",
         "title": "Commit SHA"
@@ -170,6 +275,10 @@ The Blueprint JSON provided below already includes the Relations between the dif
     "awsRegion": {
       "title": "AWS Region",
       "path": "instanceOf.deployedAt.awsRegion"
+    },
+    "deploymentService": {
+      "title": "Deployment Service",
+      "path": "instanceOf.instanceOf.deploymentService"
     }
   },
   "formulaProperties": {},
@@ -209,7 +318,7 @@ terraform {
   required_providers {
     port-labs = {
       source  = "port-labs/port-labs"
-      version = "~> 0.4.5"
+      version = "~> 0.4.6"
     }
   }
 }
@@ -219,13 +328,29 @@ provider "port-labs" {
   secret    = "{YOUR CLIENT SECRET}" # or set the env var PORT_CLIENT_SECRET
 }
 
-software "port-labs_entity" "production" {
+resource "port-labs_entity" "production" {
   identifier = "production"
   title      = "Production"
   blueprint  = "Environment"
   properties {
-    name  = "aws_region"
+    name  = "awsRegion"
     value = "eu-west-1"
+  }
+  properties {
+    name  = "configUrl"
+    value = "https://github.com/config-labs/kube/config.yml"
+  }
+  properties {
+    name  = "slackChannel"
+    value = "https://yourslack.slack.com/archives/CHANNEL-ID"
+  }
+  properties {
+    name  = "onCall"
+    value = "Mor P"
+  }
+  properties {
+    name  = "namespace"
+    value = "Production"
   }
 }
 ```
@@ -256,6 +381,13 @@ title: Notification Service
 blueprint: Service
 properties:
   slackChannel: "https://yourslack.slack.com/archives/CHANNEL-ID"
+  responsibleTeam: "Infra"
+  onCall: "Mor P"
+  coreLanguage: "Python"
+  businessDomain: "Infra"
+  docsLink: "https://docs.exmaple.com"
+  deploymentService: "Lambda"
+  helmLink: "https://github.com/port-labs/helm/notification.yml"
 ```
 
 :::tip
@@ -277,6 +409,10 @@ Let's manually create a deployment config Entity for the `Notification Service` 
   "identifier": "notification-service-prod",
   "title": "Notification Service Production",
   "properties": {
+    "healthStatus": "Healthy",
+    "newRelicUrl": "https://newrelic.com",
+    "sentryUrl": "https://sentry.io/",
+    "prometheusUrl": "https://prometheus.io",
     "locked": false
   },
   "relations": {
@@ -315,6 +451,10 @@ entity = {
     "identifier": "notification-service-prod",
     "title": "Notification Service Production",
     "properties": {
+        "healthStatus": "Healthy",
+        "newRelicUrl": "https://newrelic.com",
+        "sentryUrl": "https://sentry.io/",
+        "prometheusUrl": "https://prometheus.io",
         "locked": False
     },
     "relations": {
@@ -371,6 +511,8 @@ jobs:
           properties: |
             {
                "jobUrl": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+               "deployingUser": "${{ github.actor }}",
+               "imageTag": "latest",
                "commitSha": "${{ env.SHA_SHORT }}"
             }
           relations: |
