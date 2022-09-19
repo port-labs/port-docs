@@ -22,7 +22,7 @@ In this [example](https://github.com/port-labs/port-action-runner-examples/tree/
 
 ## Utilizing CI Job
 
-Existing / New CI jobs can be utilized for handling self-service actions.
+Existing / New CI jobs can be utilized to handle Self-Service Actions.
 
 Some CI tools (GitHub, Jenkins, ...) have built-in integrations to easily provision new resources.
 
