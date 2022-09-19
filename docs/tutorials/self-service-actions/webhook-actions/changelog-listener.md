@@ -104,6 +104,10 @@ For this limited example, the `deployment config` Blueprint will include mostly 
 
 </details>
 
+:::info
+Remember that in order to report changelog events to a webhook, the [changelogDestination](../../../platform-overview/port-components/blueprint.md#changelog-destination) key needs to be provided and filled in the Blueprint definition.
+:::
+
 In addition, here is a `deployment config` Entity matching the Blueprint schema:
 
 <details>
@@ -602,7 +606,7 @@ To redirect webhook triggers to your local API, open a new terminal and run the 
 pysmee forward YOUR_WEBHOOK_URL http://localhost:80/api/slack
 ```
 
-## Watching changes in your slack channel
+## Watching change events in your slack channel
 
 To see the result of your API, either create, update or delete a deployment config Entity.
 
@@ -613,3 +617,14 @@ Remember that you can make changes to Entities both from the [UI](../../entity-b
 After making a change, you should see a new message in the slack channel you chose when you created the slack webhook. For example, here is the message that is sent when updating an existing Entity:
 
 ![Software catalog changelog slack message](../../../../static/img/tutorial/self-service-actions/webhook-actions/changelog-listener/changelog-slack-message.png)
+
+## Summary
+
+This example shows you the power of Port's changelog capabilities.
+
+The action taken in this guide is informative and does not perform any change in your infrastructure, but it can be adapted to:
+
+- Provision more cloud resources;
+- Perform a scale-up action;
+- Alert the on-call;
+- etc.
