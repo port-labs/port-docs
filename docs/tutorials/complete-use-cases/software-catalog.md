@@ -31,9 +31,9 @@ Before we dive into the details of each [Blueprints](../../platform-overview/por
   - In this example services will be reported by Port's GitHub App.
 - **Environment** - an environment is any production, staging, QA, DevEnv, on-demand or any other environment type.
   - In this example environments will be reported using Port's Terraform Provider.
-- **Deployment Config** - A deployment config is a representation of the current “live” version of a service running in a specific environment. It will include references to the service, environment and deployment, as well as real-time information such as status, uptime and any other relevant metadata.
+- **Deployment Config** - a deployment config is a representation of the current “live” version of a service running in a specific environment. It will include references to the service, environment and deployment, as well as real-time information such as status, uptime and any other relevant metadata.
   - In this example deployment configs will be reported manually.
-- **Deployment** - A deployment could be described as an object representing a CD job. It includes the version of the deployed service and a link to the job itself. Unlike other objects, the deployment is an immutable item in the software catalog. It is important to keep it immutable to ensure the catalog remains a consistent source of truth.
+- **Deployment** - a deployment could be described as an object representing a CD job. It includes the version of the deployed service and a link to the job itself. Unlike other objects, the deployment is an immutable item in the software catalog. It is important to keep it immutable to ensure the catalog remains a consistent source of truth.
   - In this example deployments will be reported using Port's GitHub Action as part of the deployment process.
 
 Now that you know the end-result of this guide, let's start by creating the Blueprints and [Relations](../../platform-overview/port-components/relation.md) of your software catalog
