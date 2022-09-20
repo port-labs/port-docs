@@ -21,15 +21,15 @@ A Relation is created between 2 Blueprints. So if you haven't created the `micro
 
 ### From the UI
 
-In order to create a relation from the UI, go to the Blueprints graph and click the pencil icon on the Blueprint that will be the `source` Blueprint of the Relation (for example, in the `package-microservice` Relation, `package` is the `source` Blueprint):
+In order to create a relation from the UI, go to the Blueprints graph and click the pencil icon on the Blueprint that will be the `source` Blueprint of the Relation (for example, in the `microservice` Relation, `package` is the `source` Blueprint):
 
 ![Blueprints page with Create Relation Marked](../../static/img/welcome/quickstart/blueprintsPageWithMicroservicePackageAndEditPackageMarked.png)
 
-An editor window will open with the current schema of the Blueprint. Because there is no Relation configured on the Blueprint right now, the `relations` key in the JSON will be empty. Paste in the following content in the `relations` key to create the `package-microservice` Relation:
+An editor window will open with the current schema of the Blueprint. Because there is no Relation configured on the Blueprint right now, the `relations` key in the JSON will be empty. Paste in the following content in the `relations` key to create the `microservice` Relation:
 
 ```json showLineNumbers
 "relations": {
-  "package-microservice": {
+  "microservice": {
       "title": "Used In",
       "target": "microservice",
       "required": false
@@ -52,7 +52,7 @@ The request flow is:
 3. Add the new Relation object to the `relations` key of the existing Blueprint
 4. Send a PUT request with the complete Blueprint schema
 
-Here are some request examples that will create our `package-microservice` relation:
+Here are some request examples that will create our `microservice` relation:
 
 <Tabs groupId="code-examples" defaultValue="python" values={[
 {label: "Python", value: "python"},
@@ -75,7 +75,7 @@ source_blueprint_name = 'package'
 
 target_blueprint_name = 'microservice'
 
-relation_name = 'package-microservice'
+relation_name = 'microservice'
 
 relation = {
     'title': 'Used In',
@@ -117,7 +117,7 @@ const sourceBlueprintName = "package";
 
 const targetBlueprintName = "microservice";
 
-const relationName = "package-microservice";
+const relationName = "microservice";
 
 const relation = {
   title: "Used In",
@@ -181,7 +181,7 @@ In order to update a Relation from the UI, go to the Blueprints graph, hover ove
 
 ![Graph relations edit marked](../../static/img/platform-overview/port-components/relations/graphRelationEditMarked.png)
 
-An editor window will open with the current schema of the Blueprint. In order to update the Relation, simply edit the value of the `title`, `required` or `many` properties as needed in the `package-microservice` Relation object
+An editor window will open with the current schema of the Blueprint. In order to update the Relation, simply edit the value of the `title`, `required` or `many` properties as needed in the `microservice` Relation object
 
 After editing the Relation, click on `save` at the bottom right corner of the editor and view the updated Blueprint and its Relation.
 

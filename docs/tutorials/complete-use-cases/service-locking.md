@@ -92,7 +92,7 @@ The Blueprint JSON provided below already includes the Relations between the dif
   "mirrorProperties": {},
   "formulaProperties": {},
   "relations": {
-    "instanceOf": {
+    "DeploymentConfig": {
       "title": "Deployment Config",
       "target": "DeploymentConfig",
       "required": false,
@@ -293,7 +293,7 @@ jobs:
             }
           relations: |
             {
-               "instanceOf": "notification-service-prod"
+               "DeploymentConfig": "notification-service-prod"
             }
 ```
 

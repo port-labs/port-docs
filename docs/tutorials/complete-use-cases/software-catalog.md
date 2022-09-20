@@ -223,13 +223,13 @@ The Blueprint JSON provided below already includes the Relations between the dif
   "mirrorProperties": {},
   "formulaProperties": {},
   "relations": {
-    "deployedAt": {
+    "Environment": {
       "title": "Environment",
       "target": "Environment",
       "required": false,
       "many": false
     },
-    "instanceOf": {
+    "Service": {
       "title": "Service",
       "target": "Service",
       "required": false,
@@ -274,16 +274,16 @@ The Blueprint JSON provided below already includes the Relations between the dif
   "mirrorProperties": {
     "awsRegion": {
       "title": "AWS Region",
-      "path": "instanceOf.deployedAt.awsRegion"
+      "path": "DeploymentConfig.Environment.awsRegion"
     },
     "deploymentService": {
       "title": "Deployment Service",
-      "path": "instanceOf.instanceOf.deploymentService"
+      "path": "DeploymentConfig.Service.deploymentService"
     }
   },
   "formulaProperties": {},
   "relations": {
-    "instanceOf": {
+    "DeploymentConfig": {
       "title": "Deployment Config",
       "target": "DeploymentConfig",
       "required": false,
@@ -416,8 +416,8 @@ Let's manually create a deployment config Entity for the `Notification Service` 
     "locked": false
   },
   "relations": {
-    "deployedAt": "production",
-    "instanceOf": "notification-service"
+    "Environment": "production",
+    "Service": "notification-service"
   }
 }
 ```
@@ -458,8 +458,8 @@ entity = {
         "locked": False
     },
     "relations": {
-        "deployedAt": "production",
-        "instanceOf": "notification-service"
+        "Environment": "production",
+        "Service": "notification-service"
     }
 }
 
@@ -517,7 +517,7 @@ jobs:
             }
           relations: |
             {
-               "instanceOf": "notification-service-prod"
+               "DeploymentConfig": "notification-service-prod"
             }
 ```
 
