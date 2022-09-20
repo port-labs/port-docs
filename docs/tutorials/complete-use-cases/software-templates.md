@@ -162,15 +162,15 @@ A full example with a backend, can be found [here](https://github.com/port-labs/
 :::info
 The above example also creates a new Service Entity in Port, and updates the action run details.
 
-These steps are highly recommended, in order to keep track of the Self-Service Action run, and the created resources over time.
+These steps are highly recommended to keep track, over time, of the Self-Service Action run and created resources.
 :::
 
-That's it! You should be ready to use the provisioned actions, like shown here:
+That's it! You should be ready to use the provisioned actions, as shown here:
 
 ![create-service.png](../../../static/img/tutorial/complete-use-cases/software-templates/create-service.png)
 
 ## Summary
 
-Software templates are extremely useful, in order to keep high velocity of development, while maintaining high quality.
+Software templates are extremely useful, in order to keep a high velocity of development while maintaining high quality.
 
 Using Port Self-Service Actions, you can conveniently create and record new projects from public or private templates.
