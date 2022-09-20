@@ -260,6 +260,75 @@ Now when we go back to the Microservice page, if we click on the 3 dots next to 
 
 ![Delete button marked](../../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/delete-action-marked.png)
 
+#### Add multiple Self-Service Actions of the same type
+
+One more feature to notice, is the ability to create Self-Service Actions of the same type (e.g. `Create` or `Delete`).
+
+For instance, you can add 2 `Create` actions to the `Microservice` Blueprint, to support different programming languages:
+
+```json showLineNumbers
+[
+  {
+    "identifier": "CreatePython",
+    "title": "Create Python",
+    "userInputs": {
+      "properties": {
+        "repo-user": {
+          "type": "string",
+          "title": "Repo User",
+          "default": "port-labs"
+        },
+        "repo-name": {
+          "type": "string",
+          "title": "Repo Name",
+          "default": "*My-Python-microservice*"
+        }
+      },
+      "required": ["repo-user"]
+    },
+    "invocationMethod": {
+      "type": "WEBHOOK",
+      "url": "https://webhook.example.com"
+    },
+    "trigger": "CREATE",
+    "description": "This will create a new Python microservice repo"
+  },
+  {
+    "identifier": "CreateGo",
+    "title": "Create Go",
+    "userInputs": {
+      "properties": {
+        "repo-user": {
+          "type": "string",
+          "title": "Repo User",
+          "default": "port-labs"
+        },
+        "repo-name": {
+          "type": "string",
+          "title": "Repo Name",
+          "default": "*My-Go-microservice*"
+        }
+      },
+      "required": ["repo-user"]
+    },
+    "invocationMethod": {
+      "type": "WEBHOOK",
+      "url": "https://webhook.example.com"
+    },
+    "trigger": "CREATE",
+    "description": "This will create a new Go microservice repo"
+  }
+]
+```
+
+Now when you go to the Microservices Blueprint page, you will see 2 new buttons - `Create Python Microservice` and `Create Go Microservice`:
+
+<center>
+
+![Multiple Create Actions](../../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/multiple-create-actions.png)
+
+</center>
+
 ## Self-Service Action definition structure
 
 ### Self-Service Action JSON Structure
