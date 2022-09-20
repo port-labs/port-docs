@@ -140,6 +140,10 @@ Below is a `python` code snippet to create both the deployment config Blueprint 
 Remember to replace the placeholders for `YOUR_CLIENT_ID`, `YOUR_CLIENT_SECRET` and `YOUR_WEBHOOK_URL` with your Port client ID, secret and your webhook URL (or Smee proxy URL).
 :::
 
+:::tip
+Remember that Blueprints and Entities can be created both from the [UI](../../entity-basics.md#from-the-ui) and from the [API](../../entity-basics.md#from-the-api).
+:::
+
 <details>
 <summary>Click here to see the code</summary>
 
