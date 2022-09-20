@@ -137,7 +137,8 @@ We can search over a variety of properties:
 
 - "[Meta-properties](../platform-overview/port-components/mirror-properties.md#meta-property-mirror-property)" such as `$identifier`, `$title`, `$createdAt` and more.
 - User-defined properties that appear under the `properties` key in the `blueprint` definition
-  :::
+
+:::
 
 ### `!=` operator
 

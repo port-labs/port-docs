@@ -281,6 +281,11 @@ The basic structure of a Self-Service Action:
         "type": "number",
         "title": "property title",
         "default": 5
+      },
+      "property3": {
+        "type": "string",
+        "format": "entity",
+        "blueprint": "microservice"
       }
     },
     "required": ["repo-user"]
@@ -311,13 +316,56 @@ The basic structure of a Self-Service Action:
 
 The following table includes the different fields that can be specified in the `properties` key:
 
-| Field                    | Description                                                                                                           |
-| ------------------------ | --------------------------------------------------------------------------------------------------------------------- |
-| `type`                   | All the [types](../port-components/blueprint.md#property-types) Port supports - `string`, `number`, `boolean`, etc... |
-| `title`                  | The title shown in the form when activating the Self-Service Action                                                   |
-| `description` (Optional) | Extra description for the requested property                                                                          |
-| `default` (Optional)     | Default value                                                                                                         |
-| `enum` (Optional)        | A list of predefined values the user can choose from, same format as [enum](../port-components/blueprint.md#enum)     |
+| Field                    | Description                                                                                                                                 |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `type`                   | All the [types](../port-components/blueprint.md#property-types) Port supports - `string`, `number`, `boolean`, etc...                       |
+| `title`                  | The title shown in the form when activating the Self-Service Action                                                                         |
+| `format`                 | Specific data format to pair with some of the available types. You can explore all formats in the [String Formats](#string-formats) section |
+| `blueprint`              | Identifier of an existing Blueprint to fetch Entities from                                                                                  |
+| `description` (Optional) | Extra description for the requested property                                                                                                |
+| `default` (Optional)     | Default value                                                                                                                               |
+| `enum` (Optional)        | A list of predefined values the user can choose from, same format as [enum](../port-components/blueprint.md#enum)                           |
+
+### String formats
+
+```json {3-4} showLineNumbers
+"entity_prop": {
+    "title": "My string prop",
+    "type": "string",
+    "format": "url",
+    "description": "This is an entity property"
+}
+```
+
+In addition to the formats introduced in [Blueprint string property formats](../port-components/blueprint.md#string-property-formats), Port Self-Service Actions also support the following `string` formats:
+
+| `format` | Description                            | Example values           |
+| -------- | -------------------------------------- | ------------------------ |
+| `entity` | An Entity from the specified Blueprint | `"notification-service"` |
+
+#### Examples
+
+Here is how to use property formats:
+
+#### Entity
+
+```json {3-5} showLineNumbers
+"entity_prop": {
+    "title": "My string prop",
+    "type": "string",
+    "format": "entity",
+    "blueprint": "microservice",
+    "description": "This is an entity property"
+}
+```
+
+When `"format": "entity"` is used, a `blueprint` field is available.
+
+The `blueprint` field takes an identifier of an existing Blueprint. Then, when using the configured Self-Service Action in Port's UI, the specified field will include a list of existing Entities of the selected Blueprint from your software catalog to choose from.
+
+:::tip
+For more examples, refer to [string property formats examples](../port-components/blueprint.md#examples-1).
+:::
 
 ## Invocation method
 
@@ -395,7 +443,7 @@ Every invocation of a Self-Service Action publishes a new `run` message (with it
 
 ### Example Trigger
 
-The trigger includes audit data such as who triggered the action, and when and how did he trigger it (`UI` or `API`)
+The trigger includes audit data such as who triggered the action, and when and how did they trigger it (`UI` or `API`)
 
 ```json showLineNumbers
 "trigger": {
@@ -418,9 +466,9 @@ The trigger includes audit data such as who triggered the action, and when and h
 }
 ```
 
-### Action run payload
+### Self-Service Action run payload
 
-The `payload` object contains the data needed to act upon the action, it includes the following keys:
+The `payload` object contains the data of the Self-Service Action invocation, it includes the following keys:
 
 - `entity` - The Entity the run is executed on (in the case of `DAY-2` or `DELETE`, for `CREATE` it will be null).
 - `action` - Definition of the action that was triggered, includes all of the action configuration, including expected `userInputs`, `description`, etc.

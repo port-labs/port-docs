@@ -82,6 +82,15 @@ Let's see how we can use Port's API to create Blueprints:
 
 :::note
 For the next part, you will need your Port `CLIENT_ID` and `CLIENT_SECRET`.
+
+To find your Port API credentials go to [Port](https://app.getport.io), click on `Crednetials` at the bottom left corner and you will be able to view and copy your `CLIENT_ID` and `CLIENT_SECRET`:
+
+<center>
+
+![Port Developer Portal Credentials Modal](../../static/img/tutorial/credentials-modal.png)
+
+</center>
+
 :::
 
 In order to perform any action with Port's API, you first need an **access token**. Below are some code examples from various languages:
