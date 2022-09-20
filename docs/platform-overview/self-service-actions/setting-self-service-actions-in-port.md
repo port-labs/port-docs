@@ -5,10 +5,10 @@ sidebar_label: Setting Self-Service Actions In Port
 
 # Setting Self-Service Actions In Port
 
-**Self-Service Actions** in Port enable developer self-service by configuring one of 3 Self-Service Action types on Blueprints and the Entities that originate from them:
+**Self-Service Actions** in Port enable developer self-service by configuring one of the 3 Self-Service Action types on Blueprints and the Entities that originated from them:
 
-- **Create** - create a new Entity by triggering a provisioning process in your infrastructure.
-- **Delete** - delete an existing Entity by triggering delete logic in your infrastructure.
+- **Create** - a new Entity by triggering a provisioning process in your infrastructure.
+- **Delete** - an existing Entity by triggering delete logic in your infrastructure.
 - **Day-2 Operations** - trigger an existing Entity’s logic in your infrastructure to update or modify the existing Entity on demand.
 
 ## Configuring a new self-service action
@@ -19,8 +19,8 @@ Let's configure new Self-Service Actions, starting with the Blueprints.
 
 For example, let’s create 2 Blueprints and connect them to each other:
 
-- **Blueprint #1**: Microservice
-- **Blueprint #2**: Deployment
+- **Blueprint #1**: Microservice;
+- **Blueprint #2**: Deployment.
 
 ![Target blueprints and relations expanded](../../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/targetBlueprintsAndRelationExpanded.png)
 
