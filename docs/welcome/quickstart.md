@@ -285,7 +285,7 @@ In the edit form that appears, you will notice a `relations` key that is current
 
 ```json showLineNumbers
 "relations": {
-    "package-to-microservice": {
+    "microservice": {
       "title": "Used In",
       "target": "microservice",
       "required": true,

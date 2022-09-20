@@ -70,7 +70,7 @@ For example, let’s create 2 Blueprints and connect them to each other:
 </details>
 
 <details>
-<summary>An example Deployment Blueprint (with the deployment-to-microservice Relation included)</summary>
+<summary>An example Deployment Blueprint (with the `microservice` Relation included)</summary>
 
 ```json showLineNumbers
 {
@@ -110,7 +110,7 @@ For example, let’s create 2 Blueprints and connect them to each other:
     "required": []
   },
   "relations": {
-    "deployment-to-microservice": {
+    "microservice": {
       "title": "RelatedService",
       "target": "microservice",
       "required": false

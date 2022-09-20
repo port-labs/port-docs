@@ -123,7 +123,7 @@ Click for more details about [**relations**](./relation).
 
 ### Relation mapping example
 
-Let's assume we have a Relation between the `deployment` and `microservice` Blueprints named `deployment-to-microservice`.
+Let's assume we have a Relation between the `deployment` and `microservice` Blueprints named `microservice`.
 
 One of our microservices is called `Notification Service` with the identifier `notificationService`.
 
@@ -131,7 +131,7 @@ In order to map this `microservice` to our _notificationServiceDeploymentV1_ `de
 
 ```json showLineNumbers
 "relations": {
-    "deployment-to-microservice": "notificationService"
+    "microservice": "notificationService"
 }
 ```
 

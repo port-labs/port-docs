@@ -124,10 +124,10 @@ The second job `use-entity`, uses the output from the first job, and prints `ver
 
 ### Complete Example
 
-The following example adds another `package` Blueprint, in addition to the `microservice` Blueprint shown in the previous example. In addition, it also adds a `package-microservice` Relation. The GitHub action will create or update the Relation between the 2 existing Entities:
+The following example adds another `package` Blueprint, in addition to the `microservice` Blueprint shown in the previous example. In addition, it also adds a `microservice` Relation. The GitHub action will create or update the Relation between the 2 existing Entities:
 
 <details>
-<summary> A package Blueprint (including the package-microservice Relation) </summary>
+<summary> A package Blueprint (including the `microservice` Relation) </summary>
 
 ```json showLineNumbers
 {
@@ -166,7 +166,7 @@ The following example adds another `package` Blueprint, in addition to the `micr
     "required": []
   },
   "relations": {
-    "package-microservice": {
+    "microservice": {
       "title": "Used In",
       "target": "microservice",
       "required": false,
@@ -201,7 +201,7 @@ Add the following to your workflow `yml` file:
       }
     relations: |
       {
-        "package-microservice": "example-microservice"
+        "microservice": "example-microservice"
       }
 ```
 

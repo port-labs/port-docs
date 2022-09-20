@@ -278,7 +278,7 @@ We can also paste the following content to create our first `Package`, in `JSON 
     "inhouse": "false"
   },
   "relations": {
-    "package-microservice": "notification-microservice"
+    "microservice": "notification-microservice"
   }
 }
 ```
