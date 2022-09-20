@@ -262,9 +262,9 @@ Now when we go back to the Microservice page, if we click on the 3 dots next to 
 
 #### Add multiple Self-Service Actions of the same type
 
-One more feature to notice, is the ability to create Self-Service Actions of the same type (e.g. `Create` or `Delete`).
+It is possible to add multiple Self-Service Actions of the same type (e.g. `Create` or `Delete`).
 
-For instance, you can add 2 `Create` actions to the `Microservice` Blueprint, to support different programming languages:
+For instance, you can add 2 `Create` Self-Service Actions to the `Microservice` Blueprint, to support different programming languages:
 
 ```json showLineNumbers
 [
