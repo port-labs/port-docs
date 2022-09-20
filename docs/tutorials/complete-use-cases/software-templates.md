@@ -56,7 +56,7 @@ The action will receive some user input:
 :::note
 In the following JSON, you need to replace few instances of `<WEBHOOK_URL>` with your URL.
 
-For local setup, look at this [example](../self-service-actions/webhook-actions/local-debugging-webhook.md#forwarding-events-to-localhost).
+For local setup, look at this [example](../self-service-actions/webhook-actions/local-debugging-webhook.md#creating-the-vm-create-action).
 :::
 
 <details>
