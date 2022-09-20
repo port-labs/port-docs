@@ -46,7 +46,7 @@ First, you need to create a simple `Service` blueprint.
 
 Then, add `Create` actions to it, in order to support creation of multiple services of different frameworks.
 
-In this case, we add action to provision [Django](https://github.com/cookiecutter/cookiecutter-django), [C++](https://github.com/DerThorsten/cpp_cookiecutter) and [Go](https://github.com/lacion/cookiecutter-golang) services.
+In this case, we add actions to provision [Django](https://github.com/cookiecutter/cookiecutter-django), [C++](https://github.com/DerThorsten/cpp_cookiecutter) and [Go](https://github.com/lacion/cookiecutter-golang) services.
 
 The action will receive some user input:
 
