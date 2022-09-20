@@ -4,17 +4,17 @@ sidebar_position: 3
 
 # Software Templates
 
-A software template allows you to generate a customized skeleton of a new resource (e.g. service), usually of a high standard.
+A software template allows you to generate a customized skeleton of a new resource (e.g. service), usually based on community best practices.
 
-There are few open source projects out there, that enables you to create a project from a software template, such as [Cookiecutter](https://pypi.org/project/cookiecutter/).
+There are a few open source projects out there that enable you to create a project from a software template, such as [Cookiecutter](https://github.com/cookiecutter/cookiecutter).
 
-In the next section we will establish an example.
+In the next section we are going to present an example.
 
-## Example - Create a new service repository
+## Example - create a new service repository
 
-The following example utilizing Port [webhook-actions](../../platform-overview/self-service-actions/port-execution-architecture/port-execution-webhook.md) to create a new service repository from a software template.
+The following example utilizes Port [webhook-actions](../../platform-overview/self-service-actions/port-execution-architecture/port-execution-webhook.md) to create a new service repository from a software template.
 
-First, you need to create a simple `Service` blueprint.
+First, you need to create a simple `Service` Blueprint.
 
 <details>
 <summary>Service Blueprint JSON</summary>
@@ -44,23 +44,23 @@ First, you need to create a simple `Service` blueprint.
 
 </details>
 
-Then, add `Create` actions to it, in order to support creation of multiple services of different frameworks.
+Then, add `Create` Self-Service Actions to the Blueprint, in order to support the creation of multiple services from different frameworks.
 
 In this case, we add actions to provision [Django](https://github.com/cookiecutter/cookiecutter-django), [C++](https://github.com/DerThorsten/cpp_cookiecutter) and [Go](https://github.com/lacion/cookiecutter-golang) services.
 
-The action will receive some user input:
+The action will receive the following user inputs:
 
-- GitHub's organization and repository to host the output service project.
+- GitHub organization and repository to host the created service project;
 - Template specific parameters, such as `project_name` and `description`.
 
 :::note
-In the following JSON, you need to replace few instances of `<WEBHOOK_URL>` with your URL.
+In the following JSON, you need to replace the `<WEBHOOK_URL>` placeholders with your URL.
 
 For local setup, look at this [example](../self-service-actions/webhook-actions/local-debugging-webhook.md#creating-the-vm-create-action).
 :::
 
 <details>
-<summary>Actions JSON</summary>
+<summary>Self-Service Actions JSON</summary>
 
 ```json showLineNumbers
 [
@@ -155,14 +155,14 @@ For local setup, look at this [example](../self-service-actions/webhook-actions/
 
 Next, in order to listen to the webhook events, you need to set up a simple backend.
 
-Within the backend, we are going to generate the project from the Cookiecutter template (+ user parameters), and host it in GitHub.
+Within the backend, you are going to generate the project from the Cookiecutter template (with the provided user parameters), and push it to the GitHub repository you specified.
 
 A full example with a backend, can be found [here](https://github.com/port-labs/port-cookiecutter-example).
 
 :::info
-The above example also creates a new Service entity in Port, and updates the action run details.
+The above example also creates a new Service Entity in Port, and updates the action run details.
 
-These steps are tremendously recommended, for the purpose of keeping track of the action, and the created resources over time.
+These steps are highly recommended, in order to keep track of the Self-Service Action run, and the created resources over time.
 :::
 
 That's it! You should be ready to use the provisioned actions, like shown here:
