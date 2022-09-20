@@ -46,7 +46,7 @@ First, you need to create a simple `Service` blueprint.
 
 Then, add `Create` actions to it, in order to support creation of multiple services of different frameworks.
 
-In this case, we add action to provision a [Django](https://github.com/cookiecutter/cookiecutter-django) service.
+In this case, we add action to provision [Django](https://github.com/cookiecutter/cookiecutter-django), [C++](https://github.com/DerThorsten/cpp_cookiecutter) and [Go](https://github.com/lacion/cookiecutter-golang) services.
 
 The action will receive some user input:
 
@@ -54,7 +54,7 @@ The action will receive some user input:
 - Template specific parameters, such as `project_name` and `description`.
 
 :::note
-In the following JSON, you need to replace `<WEBHOOK_URL>` with your URL.
+In the following JSON, you need to replace few instances of `<WEBHOOK_URL>` with your URL.
 
 For local setup, look at this [example](../self-service-actions/webhook-actions/local-debugging-webhook.md#forwarding-events-to-localhost).
 :::
@@ -66,7 +66,7 @@ For local setup, look at this [example](../self-service-actions/webhook-actions/
 [
   {
     "identifier": "CreateDjangoService",
-    "title": "Create Django Service",
+    "title": "Create Django",
     "icon": "Service",
     "userInputs": {
       "properties": {
@@ -91,6 +91,62 @@ For local setup, look at this [example](../self-service-actions/webhook-actions/
     },
     "trigger": "CREATE",
     "description": "Creates a new Django service"
+  },
+  {
+    "identifier": "CreateCPPService",
+    "title": "Create C++",
+    "icon": "Service",
+    "userInputs": {
+      "properties": {
+        "github_organization": {
+          "type": "string"
+        },
+        "github_repository": {
+          "type": "string"
+        },
+        "project_name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": ["github_organization", "github_repository"]
+    },
+    "invocationMethod": {
+      "type": "WEBHOOK",
+      "url": "<WEBHOOK_URL>"
+    },
+    "trigger": "CREATE",
+    "description": "Creates a new C++ service"
+  },
+  {
+    "identifier": "CreateGoService",
+    "title": "Create Go",
+    "icon": "Service",
+    "userInputs": {
+      "properties": {
+        "github_organization": {
+          "type": "string"
+        },
+        "github_repository": {
+          "type": "string"
+        },
+        "app_name": {
+          "type": "string"
+        },
+        "project_short_description": {
+          "type": "string"
+        }
+      },
+      "required": ["github_organization", "github_repository"]
+    },
+    "invocationMethod": {
+      "type": "WEBHOOK",
+      "url": "<WEBHOOK_URL>"
+    },
+    "trigger": "CREATE",
+    "description": "Creates a new Go service"
   }
 ]
 ```
@@ -106,7 +162,7 @@ A full example with a backend, can be found [here](https://github.com/port-labs/
 :::info
 The above example also creates a new Service entity in Port, and updates the action run details.
 
-This steps are tremendously recommended, for the purpose of keeping track of the action, and the created resources over time.
+These steps are tremendously recommended, for the purpose of keeping track of the action, and the created resources over time.
 :::
 
 That's it! You should be ready to use the provisioned actions, like shown here:
