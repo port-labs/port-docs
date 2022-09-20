@@ -337,7 +337,7 @@ The following table includes the different fields that can be specified in the `
 }
 ```
 
-In addition to the formats introduced in [Blueprint string property formats](../port-components/blueprint.md#string-property-formats). Port Self-Service Actions support the following `string` formats:
+In addition to the formats introduced in [Blueprint string property formats](../port-components/blueprint.md#string-property-formats), Port Self-Service Actions also support the following `string` formats:
 
 | `format` | Description                            | Example values           |
 | -------- | -------------------------------------- | ------------------------ |
@@ -361,7 +361,7 @@ Here is how to use property formats:
 
 When `"format": "entity"` is used, a `blueprint` field is available.
 
-The `blueprint` field takes an identifier of an existing Blueprint. Then when using the Self-Service Action for in Port's UI, the specified field will include a list of existing Entities of the selected Blueprint from your software catalog to choose from when invoking the action
+The `blueprint` field takes an identifier of an existing Blueprint. Then, when using the configured Self-Service Action in Port's UI, the specified field will include a list of existing Entities of the selected Blueprint from your software catalog to choose from.
 
 :::tip
 For more examples, refer to [string property formats examples](../port-components/blueprint.md#examples-1).
@@ -443,7 +443,7 @@ Every invocation of a Self-Service Action publishes a new `run` message (with it
 
 ### Example Trigger
 
-The trigger includes audit data such as who triggered the action, and when and how did he trigger it (`UI` or `API`)
+The trigger includes audit data such as who triggered the action, and when and how did they trigger it (`UI` or `API`)
 
 ```json showLineNumbers
 "trigger": {
@@ -466,9 +466,9 @@ The trigger includes audit data such as who triggered the action, and when and h
 }
 ```
 
-### Action run payload
+### Self-Service Action run payload
 
-The `payload` object contains the data needed to act upon the action, it includes the following keys:
+The `payload` object contains the data of the Self-Service Action invocation, it includes the following keys:
 
 - `entity` - The Entity the run is executed on (in the case of `DAY-2` or `DELETE`, for `CREATE` it will be null).
 - `action` - Definition of the action that was triggered, includes all of the action configuration, including expected `userInputs`, `description`, etc.
