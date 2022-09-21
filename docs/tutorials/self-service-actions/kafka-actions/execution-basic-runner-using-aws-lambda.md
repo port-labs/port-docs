@@ -23,11 +23,6 @@ KAFKA_PASSWORD=YOUR_KAFKA_PASSWORD
 
 To get yourself started quickly, you can always take a look at the [code repository](https://github.com/port-labs/port-serverless-examples) for examples.
 
-:::note
-This repo is `Private` at the moment, so you’ll get a 404. Please contact us with your GitHub user so we can set you up for access.
-
-:::
-
 Interaction with Port will be primarily conducted using the API in this example, but everything can also be performed using the web UI as well.
 
 ## Scenario
