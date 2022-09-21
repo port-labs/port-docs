@@ -51,9 +51,7 @@ To Explore more about Ownership in Port see our [Permissions](../role-based-acce
 
 <details>
 <summary> A microservice entity </summary>
-In this example, you can see how a `microservice` Entity is defined.
-
-#### Microservice entity
+In this example, you can see how a `microservice` Entity is defined:
 
 ```json showLineNumbers
 {
@@ -111,9 +109,23 @@ When two Blueprints are connected, creating an Entity of the `source` Blueprint 
 
 This option is shown under the `relations` section as follows:
 
+### Entity Relation example - `many = false`
+
+When a Relation between Blueprints is configured with `many = false`, you can add a Relation to an Entity by adding the `relationIdentifier` as a key, and the `relatedEntityIdentifier` as a value:
+
 ```json showLineNumbers
 "relations": {
     "relation-identifier": "relatedEntityIdentifier"
+}
+```
+
+### Entity Relation example - `many = true`
+
+When a Relation between Blueprints is configured with `many = true`, you can add a Relation to an Entity by adding the `relationIdentifier` as a key, and an array of `relatedEntityIdentifier`(s) as a value:
+
+```json showLineNumbers
+"relations": {
+    "relation-identifier": ["relatedEntityIdentifier1", "relatedEntityIdentifier2"]
 }
 ```
 
@@ -127,7 +139,7 @@ Let's assume we have a Relation between the `deployment` and `microservice` Blue
 
 One of our microservices is called `Notification Service` with the identifier `notificationService`.
 
-In order to map this `microservice` to our _notificationServiceDeploymentV1_ `deployment` we will use the following `relations` key (In the _notificationServiceDeploymentV1_ Entity JSON):
+In order to map this `microservice` to our `notificationServiceDeploymentV1` `deployment` we will use the following `relations` key (In the `notificationServiceDeploymentV1` Entity JSON):
 
 ```json showLineNumbers
 "relations": {
