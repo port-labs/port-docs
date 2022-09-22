@@ -6,7 +6,7 @@ sidebar_position: 4
 
 Infrastructure as Code templates are used for automating operations (such as create, day-2, and delete) in the lifecycle of cloud resources.
 
-Working with an IaC template allows developers to easily manage resources, with no need to know the underline practices and tools (such as Terraform).
+Working with an IaC template allows developers to easily manage resources, without needing to know the underlying systems, tools, and practices (such as Terraform).
 
 Let's review an example of how to make use of IaC templates, using Port's Self-Service Actions.
 
@@ -23,7 +23,7 @@ Another template for managing `SNS Topic` is available there.
 
 :::note Prerequisites
 
-- An AWS credentials with permissions to create, change ACL, and delete S3 buckets.
+- AWS credentials with permissions to create, change ACL, and delete S3 buckets.
 - A Docker daemon for running the backend image.
 
 :::
@@ -45,17 +45,17 @@ docker run \
   -it hedwigz/webhook-terraform:v0.2
 ```
 
-Now we have a running server that gets webhook request from Port and applies them to terraform files!
+Now you have a running server that receives webhook request from Port and applies them to terraform files!
 
 To make your local machine public to Port, you can use either [ngrok](https://ngrok.com/download) or [smee](https://smee.io/).
 
-In case of choosing `ngrok`, run:
+If you choose `ngrok`, run:
 
 ```shell
 ngrok http 8080
 ```
 
-And you should see similar output:
+You will see output similar to the following:
 
 ```shell
 ngrok
@@ -194,50 +194,50 @@ Replace `<your ngrok forwarding URL>` with the URL you got earlier.
 
 Everything is ready to run the configured Self-Service Actions.
 
-- Go to `AWS Bucket` Blueprint page, and run `Create AWS Bucket`:
+Go to the `AWS Bucket` Blueprint page, and run `Create AWS Bucket`:
 
 ![create-bucket-button.png](../../../static/img/tutorial/complete-use-cases/iac-templates/create-bucket-button.png)
 
-- Fill in the name of the S3 bucket (must be globally unique!) and `Create`:
+Fill in the name of the S3 bucket (must be globally unique!) and click `Create`:
 
 ![create-bucket-form.png](../../../static/img/tutorial/complete-use-cases/iac-templates/create-bucket-form.png)
 
-Hooray! In a minute, you'll have a new S3 bucket, recorded also as Port entity.
+Hooray! In a minute, you'll have a new S3 bucket, which is also added as a Port entity.
 
 ![created-bucket.png](../../../static/img/tutorial/complete-use-cases/iac-templates/created-bucket.png)
 
 #### Change ACL (Day-2 Operation)
 
-After creating the bucket, you might want to do some changes in its configuration over time.
+After creating the bucket, you might want to make changes in its configuration over time.
 
-For example, a valid use-case is to change the bucket visibility from `private` to `public-read`.
+For example, a valid use case is to change the bucket visibility from `private` to `public-read`.
 
-- Go to the bucket entity and choose `Change ACL` Day-2 operation:
+Go to the bucket entity and choose the `Change ACL` Day-2 operation:
 
 ![change-acl-button.png](../../../static/img/tutorial/complete-use-cases/iac-templates/change-acl-button.png)
 
-- Choose the `public-read` option for `ACL`, and `Execute`:
+Choose the `public-read` option for `ACL`, and `Execute`:
 
 ![change-acl-form.png](../../../static/img/tutorial/complete-use-cases/iac-templates/change-acl-form.png)
 
-`Terraform apply` was triggered behind the scenes, and when finished, you will see the entity's `Bucket ACL` property updates to `public-read`.
+`Terraform apply` will be triggered behind the scenes, and when it finishes, you will see the entity's `Bucket ACL` property updates to `public-read`.
 
 #### Delete
 
 Finally, you can clear your environment and delete the bucket.
 
-- Go to the bucket entity and choose `Delete`:
+Go to the bucket entity and choose `Delete`:
 
 ![delete-bucket-button.png](../../../static/img/tutorial/complete-use-cases/iac-templates/delete-bucket-button.png)
 
-- Click on `Delete`:
+Click on `Delete`:
 
 ![delete-bucket-modal.png](../../../static/img/tutorial/complete-use-cases/iac-templates/delete-bucket-modal.png)
 
-Done! Your bucket will get deleted from AWS and Port.
+Done! Your bucket will be deleted from AWS and Port.
 
 ## Summary
 
-IaC templates helps your team to efficiently control and configure any cloud resources in your possession.
+IaC templates help your team control and configure any cloud resources in your possession efficiently.
 
-Port Self-Service Actions allows you to quickly ramp up an event based infrastructure to leverage your IaC templates.
+Port Self-Service Actions allow you to quickly ramp up an event based infrastructure to leverage your IaC templates.
