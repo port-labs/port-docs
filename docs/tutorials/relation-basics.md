@@ -32,7 +32,8 @@ An editor window will open with the current schema of the Blueprint. Because the
   "microservice": {
       "title": "Used In",
       "target": "microservice",
-      "required": false
+      "required": false,
+      "many": false
   }
 }
 ```
@@ -80,7 +81,8 @@ relation_name = 'microservice'
 relation = {
     'title': 'Used In',
     'target': target_blueprint_name,
-    'required': False
+    'required': False,
+    'many': False
 }
 
 headers = {
@@ -123,6 +125,7 @@ const relation = {
   title: "Used In",
   target: targetBlueprintName,
   required: false,
+  many: false,
 };
 
 const config = {
