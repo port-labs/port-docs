@@ -8,7 +8,8 @@ In this guide, we are going to present different methods to create an S3 bucket 
 
 :::note
 Throughout this tutorial, we will use [webhook-actions](../../platform-overview/self-service-actions/port-execution-architecture/port-execution-webhook.md), and a simple backend that listens to the webhook events.
-Nevertheless, you can choose to use [kafka-actions](../../platform-overview/self-service-actions/port-execution-architecture/port-execution-kafka.md) as well.
+
+You can choose to use [kafka-actions](../../platform-overview/self-service-actions/port-execution-architecture/port-execution-kafka.md) as well.
 
 Each action shown in this example, creates a new Entity in Port and updates action run info in order to keep track of the action status and its outcomes.
 :::
@@ -41,7 +42,7 @@ Here is an [example](https://github.com/port-labs/port-action-runner-examples/tr
 
 In this example, you were introduced to a few alternatives for creating an S3 bucket.
 
-Needless to say, you can use webhook to perform any action, and create any resource you require. For instance:
+Needless to say, you can use webhooks to perform any action, and create any resource you require. For instance:
 
 - Create EC2;
 - Provision K8s cluster;
