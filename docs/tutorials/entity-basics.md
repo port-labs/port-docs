@@ -283,6 +283,10 @@ We can also paste the following content to create our first `Package`, in `JSON 
 }
 ```
 
+:::note
+Remember that if the Relation is configured with `many=true`, the value of the `microservice` key should be an array.
+:::
+
 Once we click the `Create` button, we will see our newly created entity in the `Packages` table:
 
 ![Packages' page with the new package](../../static/img/platform-overview/port-components/entities/PackageFirstListing.png)
