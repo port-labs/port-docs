@@ -6,7 +6,7 @@ sidebar_position: 1.3
 
 ## What is an Entity?
 
-An Entity is an object that match the type defined by a Blueprint, and it represents the data of the software components which is defined by the Blueprint properties.
+An Entity is an object that matches the type defined by a Blueprint, and it represents the data of the software components which is defined by the Blueprint properties.
 
 ## Entity JSON structure
 

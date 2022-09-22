@@ -42,23 +42,6 @@ A Relation exists under the `relations` key in the [Blueprint JSON schema](./blu
 | `required` | `Boolean` | Boolean flag to define whether the target Entity is a must when creating a new Entity from the source Blueprint                                                 |
 | `many`     | `Boolean` | Boolean flag to define whether multiple target Entities can be mapped to the Relation. For more information refer to [X-to-many relation](#x-to-many-relation). |
 
-:::tip
-
-The title allows you to give human-readable names to Relations. For example, A `Package` <-> `Deployment` Relation can describe how those two are related.
-
-Using titles also allows you to conveniently access Relations programmatically in a generic way while keeping the UI readable.
-
-For example, you can define a convention where all Relations are named in a specific format:
-
-- `{target_blueprint}`
-- `{blueprint_1}-{blueprint_2}`
-- `{blueprint_1}-to-{blueprint_2}`
-- `{blueprint_1}<->{blueprint_2}`
-- Anything similar that works for you
-
-This will allow you to interact with Relations with code in a generic way, without impacting UX.
-:::
-
 ## Relation example
 
 Please see the following example of a relation between `microservices` and a `package` Blueprint.
@@ -80,24 +63,7 @@ Resulting in this outcome in the UI:
 
 ## X-to-many relation
 
-Relations support the following relationship dynamics:
-
-- One-to-one;
-- Many-to-one;
-- One-to-many;
-- Many-to-many.
-
-When the `many` key is `false`, a Relation can be:
-
-- One-to-one - by assigning a source Entity one target Entity;
-- Many-to-one - by assigning to multiple source Entities one target Entity.
-
-When the `many` key is `true`, a Relation can be:
-
-- One-to-one - by assigning a source Entity one target Entity;
-- Many-to-one - by assigning to multiple source Entities one target Entity;
-- One-to-many - by assigning a source Entity multiple target Entities;
-- Many-to-many - by assigning to multiple source Entities multiple target Entities.
+Relations also support the `many` (its default value is `false`).
 
 From a schema standpoint, when a Relation is defined `"many": true`, the corresponding Relation identifier in the Entities of the source Blueprint becomes an array(`[]`) as seen in [Entity Relation example - `many = true`](./entity.md#entity-relation-example---many--true).
 
