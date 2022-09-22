@@ -42,14 +42,16 @@ docker run \
   -e AWS_REGION=<AWS_REGION> \
   -e DEBUG=true \
   -p 8080:8080 \
-  -it hedwigz/webhook-terraform:v0.2
+  -it ghcr.io/port-labs/webhook-terraform:v0.2
 ```
 
 Now you have a running server that receives webhook request from Port and applies them to terraform files!
 
 To make your local machine public to Port, you can use either [ngrok](https://ngrok.com/download) or [smee](https://smee.io/).
 
-If you choose `ngrok`, run:
+A reference of working with `smee`, you can find in our [local debugging guide](../self-service-actions/webhook-actions/local-debugging-webhook.md#creating-the-vm-create-action).
+
+Otherwise, if you choose `ngrok`, run:
 
 ```shell
 ngrok http 8080
@@ -118,7 +120,7 @@ Next, we want to create Self-Service Actions to support `Create`, `Change ACL`, 
 <details>
 <summary> Self-Service Actions for AWS Bucket Blueprint </summary>
 
-Replace `<your ngrok forwarding URL>` with the URL you got earlier.
+Replace `<YOUR_WEBHOOK_URL>` with the URL you got earlier.
 
 ```json showLineNumbers
 [
@@ -142,7 +144,7 @@ Replace `<your ngrok forwarding URL>` with the URL you got earlier.
     },
     "invocationMethod": {
       "type": "WEBHOOK",
-      "url": "<your ngrok forwarding URL>"
+      "url": "<YOUR_WEBHOOK_URL>"
     },
     "trigger": "CREATE",
     "description": "Create a new S3 Bucket in AWS"
@@ -163,7 +165,7 @@ Replace `<your ngrok forwarding URL>` with the URL you got earlier.
     },
     "invocationMethod": {
       "type": "WEBHOOK",
-      "url": "<your ngrok forwarding URL>"
+      "url": "<YOUR_WEBHOOK_URL>"
     },
     "trigger": "DAY-2",
     "description": "Change S3 Bucket ACL"
@@ -178,7 +180,7 @@ Replace `<your ngrok forwarding URL>` with the URL you got earlier.
     },
     "invocationMethod": {
       "type": "WEBHOOK",
-      "url": "<your ngrok forwarding URL>"
+      "url": "<YOUR_WEBHOOK_URL>"
     },
     "trigger": "DELETE",
     "description": "Delete an S3 Bucket from AWS"
