@@ -8,7 +8,7 @@ Infrastructure as Code templates are used for automating operations in the lifec
 
 Working with an IaC template allows developers to easily manage resources, with no need to know the underline practices and tools (such as Terraform).
 
-Let's review an example of how to apply IaC templates, using Port's Self-Service Actions.
+Let's review an example of how to make use of IaC templates, using Port's Self-Service Actions.
 
 ## Example
 
@@ -25,7 +25,8 @@ Another template for managing `SNS Topic` is available there.
 
 - An AWS credentials with permissions to create, change ACL, and delete S3 buckets.
 - A Docker daemon for running the backend image.
-  :::
+
+:::
 
 ### Running the Backend
 
@@ -54,7 +55,7 @@ In case of choosing `ngrok`, run:
 ngrok http 8080
 ```
 
-And you should get a forwarding URL:
+And you should see similar output:
 
 ```shell
 ngrok
@@ -119,9 +120,7 @@ Next, we want to create actions that will support create, change ACL, and delete
 <details>
 <summary> Self-Service Actions for AWS Bucket Blueprint </summary>
 
-:::note
 Replace `<your ngrok forwarding URL>` with the URL you got earlier.
-:::
 
 ```json showLineNumbers
 [
@@ -201,7 +200,7 @@ Everything is ready to run the configured Self-Service Actions.
 
 ![create-bucket-button.png](../../../static/img/tutorial/complete-use-cases/iac-templates/create-bucket-button.png)
 
-- Fill in the name of the S3 Bucket (must be globally unique) and `Create`!
+- Fill in the name of the S3 Bucket (must be globally unique!) and `Create`:
 
 ![create-bucket-form.png](../../../static/img/tutorial/complete-use-cases/iac-templates/create-bucket-form.png)
 
@@ -211,19 +210,19 @@ Hooray! In a minute, you'll have a new S3 bucket, recorded also as Port entity.
 
 #### Change ACL (Day-2 Operation)
 
-After creating the bucket, you might want to do changes in its configuration over time.
+After creating the bucket, you might want to do some changes in its configuration over time.
 
-For example, a valid use-case will be to change the bucket visibility from `private` to `public-read`.
+For example, a valid use-case is to change the bucket visibility from `private` to `public-read`.
 
 - Go to the Bucket entity and choose `Change ACL` Day-2 operation:
 
 ![change-acl-button.png](../../../static/img/tutorial/complete-use-cases/iac-templates/change-acl-button.png)
 
-- Choose the `public-read` option for bucket ACL, and `Execute`:
+- Choose the `public-read` option for `ACL`, and `Execute`:
 
 ![change-acl-form.png](../../../static/img/tutorial/complete-use-cases/iac-templates/change-acl-form.png)
 
-`Terraform apply` was triggered, and when finished, you will see the `Bucket ACL` property updates to `public-read`.
+`Terraform apply` was triggered behind the scenes, and when finished, you will see the entity's `Bucket ACL` property updates to `public-read`.
 
 #### Delete
 
@@ -241,6 +240,6 @@ Done! As soon as the backend will finish the operation, your bucket will get del
 
 ## Summary
 
-IaC templates helps your team to efficiently control and configure any cloud resources you have.
+IaC templates helps your team to efficiently control and configure any cloud resources in your possession.
 
-Port Self-Service Actions allows you to quickly ramp up an event based infrastructure to apply your IaC templates.
+Port Self-Service Actions allows you to quickly ramp up an event based infrastructure to leverage your IaC templates.
