@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # IaC Templates
 
-Infrastructure as Code templates are used for automating operations (such as create, day-2, and delete) in the lifecycle of cloud resources.
+Infrastructure as Code templates are used for automating operations (such as create, day-2, and delete) for the cloud resources lifecycle.
 
 Working with an IaC template allows developers to easily manage resources, without needing to know the underlying systems, tools, and practices (such as Terraform).
 
@@ -30,7 +30,7 @@ Another template for managing `SNS Topic` is available there.
 
 ### Running the Backend
 
-First, run the backend image with the following command (replace placeholders):
+First, run the backend image with the following command (make sure to replace the placeholders):
 
 ```shell
 docker run \
@@ -45,11 +45,11 @@ docker run \
   -it ghcr.io/port-labs/webhook-terraform:v0.2
 ```
 
-Now you have a running server that receives webhook request from Port and applies them to terraform files!
+Now you have a running server that receives a webhook request from Port and applies them to terraform files!
 
 To make your local machine public to Port, you can use either [ngrok](https://ngrok.com/download) or [smee](https://smee.io/).
 
-A reference of working with `smee`, you can find in our [local debugging guide](../self-service-actions/webhook-actions/local-debugging-webhook.md#creating-the-vm-create-action).
+Our [local debugging guide](../self-service-actions/webhook-actions/local-debugging-webhook.md#creating-the-vm-create-action) contains a reference on how to work with `smee`.
 
 Otherwise, if you choose `ngrok`, run:
 
@@ -212,7 +212,7 @@ Hooray! In a minute, you'll have a new S3 bucket, which is also added as a Port 
 
 After creating the bucket, you might want to make changes in its configuration over time.
 
-For example, a valid use case is to change the bucket visibility from `private` to `public-read`.
+For example, a valid use case is to change bucket visibility from `private` to `public-read`.
 
 Go to the bucket entity and choose the `Change ACL` Day-2 operation:
 
@@ -222,7 +222,7 @@ Choose the `public-read` option for `ACL`, and `Execute`:
 
 ![change-acl-form.png](../../../static/img/tutorial/complete-use-cases/iac-templates/change-acl-form.png)
 
-`Terraform apply` will be triggered behind the scenes, and when it finishes, you will see the entity's `Bucket ACL` property updates to `public-read`.
+`Terraform apply` will be triggered behind the scenes, and when it finishes, you will see the entity's `Bucket ACL` property updated to `public-read`.
 
 #### Delete
 
@@ -240,6 +240,6 @@ Done! Your bucket will be deleted from AWS and Port.
 
 ## Summary
 
-IaC templates help your team control and configure any cloud resources in your possession efficiently.
+IaC templates help your team efficiently control and configure any cloud resources in your possession.
 
 Port Self-Service Actions allow you to quickly ramp up an event based infrastructure to leverage your IaC templates.
