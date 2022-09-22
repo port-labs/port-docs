@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # IaC Templates
 
-Infrastructure as Code templates are used for automating operations in the lifecycle of cloud resources, such as create, day-2, and delete.
+Infrastructure as Code templates are used for automating operations (such as create, day-2, and delete) in the lifecycle of cloud resources.
 
 Working with an IaC template allows developers to easily manage resources, with no need to know the underline practices and tools (such as Terraform).
 
@@ -72,8 +72,6 @@ Keep the `Forwarding URL` for later use.
 
 First, set up a Blueprint for an S3 bucket in Port.
 
-This can be achieved by using the Web UI or using the [Port's Terraform Provider](../../integrations/terraform.md).
-
 You can create as many properties as you want for the bucket, but for this example we will keep it lean with 4 properties - `URL`, `Bucket Name`, `Bucket ACL` and `Tags`.
 
 <details>
@@ -115,7 +113,7 @@ You can create as many properties as you want for the bucket, but for this examp
 
 </details>
 
-Next, we want to create actions that will support create, change ACL, and delete S3 buckets.
+Next, we want to create Self-Service Actions to support `Create`, `Change ACL`, and `Delete` S3 buckets.
 
 <details>
 <summary> Self-Service Actions for AWS Bucket Blueprint </summary>
@@ -200,7 +198,7 @@ Everything is ready to run the configured Self-Service Actions.
 
 ![create-bucket-button.png](../../../static/img/tutorial/complete-use-cases/iac-templates/create-bucket-button.png)
 
-- Fill in the name of the S3 Bucket (must be globally unique!) and `Create`:
+- Fill in the name of the S3 bucket (must be globally unique!) and `Create`:
 
 ![create-bucket-form.png](../../../static/img/tutorial/complete-use-cases/iac-templates/create-bucket-form.png)
 
@@ -214,7 +212,7 @@ After creating the bucket, you might want to do some changes in its configuratio
 
 For example, a valid use-case is to change the bucket visibility from `private` to `public-read`.
 
-- Go to the Bucket entity and choose `Change ACL` Day-2 operation:
+- Go to the bucket entity and choose `Change ACL` Day-2 operation:
 
 ![change-acl-button.png](../../../static/img/tutorial/complete-use-cases/iac-templates/change-acl-button.png)
 
@@ -228,7 +226,7 @@ For example, a valid use-case is to change the bucket visibility from `private` 
 
 Finally, you can clear your environment and delete the bucket.
 
-- Go to the Bucket entity and choose `Delete`:
+- Go to the bucket entity and choose `Delete`:
 
 ![delete-bucket-button.png](../../../static/img/tutorial/complete-use-cases/iac-templates/delete-bucket-button.png)
 
@@ -236,7 +234,7 @@ Finally, you can clear your environment and delete the bucket.
 
 ![delete-bucket-modal.png](../../../static/img/tutorial/complete-use-cases/iac-templates/delete-bucket-modal.png)
 
-Done! As soon as the backend will finish the operation, your bucket will get deleted from AWS and Port.
+Done! Your bucket will get deleted from AWS and Port.
 
 ## Summary
 
