@@ -29,34 +29,33 @@ To create an Entity from the UI, go to the [Page](../platform-overview/port-comp
 
 First go to the `Microservices` page:
 
-![Main screen Microservices page marked](../../static/img/platform-overview/port-components/entities/GoToMicroservicePage.png)
+![Developer Portal Blueprints graph Packages page marked](../../static/img/tutorial/entity-basics/BlueprintsGraphPackagesPageMarked.png)
 
-To create a new `Microservice` click the `+ Microservice` button:
+To create a new `Package` click the `+ Package` button:
 
-![Microservices page marked](../../static/img/platform-overview/port-components/entities/CreateNewMsUI.png)
+![Developer Portal create Package](../../static/img/tutorial/entity-basics/PackagesPageCreatePackageMarked.png)
 
 A UI form will open with the properties we created for the `Microservice` Blueprint:
 
-![Microservices creation form](../../static/img/platform-overview/port-components/entities/EntityFormUI.png)
+![Developer Portal create Package creation form](../../static/img/tutorial/entity-basics/CreatePackageModal.png)
 
 #### Creating with the JSON editor
 
-Every entity has a format similar to the one we explained in the [Understanding the structure of an entity](../platform-overview/port-components/entity.md#entity-json-structure), which is viewable via the _JSON mode_ button. In order to create your first `microservice`, paste in the following content:
+Every entity has a format similar to the one we explained in the [Understanding the structure of an entity](../platform-overview/port-components/entity.md#entity-json-structure), which is viewable via the _JSON mode_ button. In order to create your first `package`, paste in the following content:
 
 ```json showLineNumbers
 {
-  "identifier": "notification-microservice",
-  "title": "Notification Service",
-  "blueprint": "microservice",
+  "identifier": "requests-pkg-v2-28",
+  "title": "Requests",
+  "team": "",
+  "blueprint": "Package",
   "properties": {
-    "repoUrl": "https://www.github.com/User/notification",
-    "slackChannel": "#notification-service"
+    "version": "2.28",
+    "inHouse": false
   },
   "relations": {}
 }
 ```
-
-![Json creator mode](../../static/img/platform-overview/port-components/entities/CreateMicroserviceJSONForm.png)
 
 ### From the API
 
@@ -66,12 +65,12 @@ Remember that an access token is needed to make API requests, refer back to [Get
 
 #### Creating an entity
 
-Let's create a new `Microservice` using the API. Our entity is based on the `Microservice` Blueprint structure.
+Let's create a new `Package` using the API. Our entity is based on the `Package` Blueprint structure.
 
 Our first step will be to make a POST request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities`.
 
 :::tip
-Note that the URL should contain the Blueprint’s identifier, in this case - `microservice`.
+Note that the URL should contain the Blueprint’s identifier, in this case - `package`.
 :::
 
 <Tabs groupId="code-examples" defaultValue="python" values={[
@@ -96,15 +95,17 @@ headers = {
     'Authorization': f'Bearer {access_token}'
 }
 
-blueprint_id = 'microservice'
+blueprint_id = 'Package'
 
 entity = {
-    'identifier': 'notification-microservice',
-    'title': 'Notification Service',
-    'properties': {
-        'repoUrl': 'https://www.github.com/User/notification',
-        'slackChannel': '#notification-service'
-    }
+  'identifier': 'requests-pkg-v2-28',
+  'title': 'Requests',
+  'team': '',
+  'properties': {
+    'version': '2.28',
+    'inHouse': False
+  },
+  'relations': {}
 }
 
 response = requests.post(f'{API_URL}/blueprints/{blueprint_id}/entities', json=entity, headers=headers)
@@ -127,7 +128,7 @@ const axios = require("axios").default;
 
 const API_URL = "https://api.getport.io/v1";
 
-const blueprintId = "microservice";
+const blueprintId = "Package";
 
 const config = {
   headers: {
@@ -136,12 +137,14 @@ const config = {
 };
 
 const entity = {
-  identifier: "notification-microservice",
-  title: "Notification Service",
+  identifier: "requests-pkg-v2-28",
+  title: "Requests",
+  team: "",
   properties: {
-    slackChannel: "#notification-service",
-    repoUrl: "https://www.github.com/user/notification",
+    version: "2.28",
+    inHouse: false,
   },
+  relations: {},
 };
 
 const response = await axios.post(
@@ -160,18 +163,17 @@ const response = await axios.post(
 ```bash showLineNumbers
 # the access_token variable should already have the token from the previous example
 
-blueprint_id='microservice'
+blueprint_id='Package'
 
 curl --location --request POST "https://api.getport.io/v1/blueprints/${blueprint_id}/entities" \
 	--header "Authorization: Bearer $access_token" \
 	--header "Content-Type: application/json" \
 	--data-raw "{
-    \"identifier\": \"notification-microservice\",
-    \"title\": \"Notification Service\",
-    \"blueprint\": \"microservice\",
+    \"identifier\": \"requests-pkg-v2-28\",
+    \"title\": \"Requests\",
     \"properties\": {
-            \"repoUrl\": \"https://www.github.com/user/notification\",
-            \"slackChannel\": \"#notification-service\"
+            \"version\": \"2.28\",
+            \"inHouse\": false
     }
 }"
 
@@ -182,9 +184,9 @@ curl --location --request POST "https://api.getport.io/v1/blueprints/${blueprint
 
 </Tabs>
 
-You will have a new Entity called `Notification Service` on the Microservice page:
+You will have a new Entity called `Requests` on the Packages page:
 
-![New Microservice entity marked](../../static/img/platform-overview/port-components/entities/NewMSEntity.png)
+![Developer Portal New Package entity marked](../../static/img/tutorial/entity-basics/RequestsNewPackage.png)
 
 ## Updating an entity
 
@@ -195,7 +197,7 @@ You can change any mutable Entity, and edit/delete its property values.
 - Click the Pencil icon in each of the table columns;
 - Click the `...` button at the right side of an Entity listing, then click `show all properties`.
 
-![Edit Microservice entity](../../static/img/platform-overview/port-components/entities/EditEntityButtons.png)
+![Developer Portal Edit Package entity](../../static/img/tutorial/entity-basics/PackagesEntityEditMarked.png)
 
 ### From the API
 
@@ -215,10 +217,10 @@ The API offers several methods to update an existing Entity:
 
 A PATCH request has a specific format that allows precise changes in an existing Entity, for example:
 
-To Edit a specific property, for example: `slackChannel`, send a PATCH request with the following body:
+To Edit a specific property, for example: `version`, send a PATCH request with the following body:
 
 ```json showLineNumbers
-'properties': {"slackChannel": "#my-awesome-channel"}
+properties': {"version": "2.29"}
 ```
 
 ## Deleting entities
@@ -243,46 +245,46 @@ Now that we understand **Entities**, we can start creating related Entities to m
 Remember that each Entity has a page of its own, as seen in the [Entity page section](../platform-overview/port-components/page.md#entity-page) in [Page](../platform-overview/port-components/page.md).
 :::
 
-First, let's create a new `Package` entity (If you haven't created a `Package` blueprint yet, please refer to the [Next steps](blueprint-basics.md#next-steps) section in [Blueprint basics](./blueprint-basics.md).
+First, let's create another `package` Entity.
 
-We will go to the `Packages` page:
-
-![Create a package on the Packages page](../../static/img/platform-overview/port-components/entities/CreatePackageButton.png)
-
-After clicking the `+ package` button, a UI form will open with the properties we created for the `Package` Blueprint:
-
-![A New Package creation form](../../static/img/platform-overview/port-components/entities/NewPackageForm.png)
-
-:::note
-Since `Package` is **Related** to `Microservice` when creating a new package we will see an additional field(s) representing the Relation(s). Selecting a related Entity is done according to the Entity title (via the UI), or according to the Entity identifier (via the JSON editor).
-:::
-
-#### From the UI
-
-We would like to connect our newly created `Package` Entity to the `Microservice` Entity we created above.
-
-![Connect package to microservice](../../static/img/platform-overview/port-components/entities/ConnectMStoPKG.png)
-
-#### Code Format
-
-We can also paste the following content to create our first `Package`, in `JSON mode`.
+From the UI or using the API create a `package` Entity with the following details:
 
 ```json showLineNumbers
 {
-  "identifier": "requests-pkg-v2-28",
-  "title": "Requests",
-  "team": "",
-  "blueprint": "package",
+  "identifier": "sqlAlchemy_v1_4_39",
+  "title": "SQL Alchemy v1.4.39",
   "properties": {
-    "version": "2.28",
-    "inhouse": "false"
+    "version": "1.4.39",
+    "inHouse": false
+  },
+  "relations": {}
+}
+```
+
+Now, let's create a `microservice` Entity (Either from the `microservice` page or using Port's API) that uses the `package` Entities. Create a `microservice` Entity with the following details:
+
+```json showLineNumbers
+{
+  "identifier": "notification-microservice",
+  "title": "Notification Service",
+  "properties": {
+    "repoUrl": "https://www.github.com/User/notification",
+    "slackChannel": "#notification-service"
   },
   "relations": {
-    "microservice": "notification-microservice"
+    "packages": ["requests-pkg-v2-28", "sqlAlchemy_v1_4_39"]
   }
 }
 ```
 
-Once we click the `Create` button, we will see our newly created entity in the `Packages` table:
+:::note
+Since `Microservice` is **Related** to `Package` when creating a new package we will see an additional field(s) representing the Relation(s).
 
-![Packages' page with the new package](../../static/img/platform-overview/port-components/entities/PackageFirstListing.png)
+- When a Relation is configured `many = false` - selecting a related Entity is done according to the Entity title (via the UI), or according to the Entity identifier (via the JSON editor);
+- When a Relation is configured `many = true` - selecting related Entities will open up a new JSON editor with an array format where you can type in the identifiers of the related Entities.
+
+:::
+
+The result is a `microservice` Entity that has 2 different `package` Entities related to it:
+
+![Developer Portal Microservice With Many Package](../../static/img/tutorial/entity-basics/MicroserviceWithManyPackages.png)
