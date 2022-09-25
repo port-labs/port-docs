@@ -12,7 +12,7 @@ In the next section we are going to present an example.
 
 ## Example - create a new service repository
 
-The following example utilizes Port [webhook-actions](../../platform-overview/self-service-actions/port-execution-architecture/port-execution-webhook.md) to create a new service repository from a software template.
+The following example utilizes Port [webhook-actions](../platform-overview/self-service-actions/port-execution-architecture/port-execution-webhook.md) to create a new service repository from a software template.
 
 First, you need to create a simple `Service` Blueprint.
 
@@ -56,7 +56,7 @@ The action will receive the following user inputs:
 :::note
 In the following JSON, you need to replace the `<WEBHOOK_URL>` placeholders with your URL.
 
-For local setup, look at this [example](../self-service-actions/webhook-actions/local-debugging-webhook.md#creating-the-vm-create-action).
+For local setup, look at this [example](../tutorials/self-service-actions/webhook-actions/local-debugging-webhook.md#creating-the-vm-create-action).
 :::
 
 <details>
@@ -167,7 +167,7 @@ These steps are highly recommended to keep track, over time, of the Self-Service
 
 That's it! You should be ready to use the provisioned actions, as shown here:
 
-![create-service.png](../../../static/img/tutorial/complete-use-cases/software-templates/create-service.png)
+![create-service.png](../../static/img/tutorial/complete-use-cases/software-templates/create-service.png)
 
 ## Summary
 

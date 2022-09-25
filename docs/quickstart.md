@@ -1,5 +1,6 @@
 ---
 sidebar_position: 1
+slug: /
 ---
 
 # Quickstart
@@ -31,11 +32,11 @@ To create your Software Catalog, you need to to ingest and track your microservi
 
 Let's head to [Port](https://app.getport.io/blueprints) and look at the Blueprints page, at the top right corner let's click on **Add Blueprint** and configure our first blueprint - **Package** as shown in the image below:
 
-![Developer PortalCreate New Blueprint](/img/welcome/quickstart/newBlueprintButton.png)
+![Developer PortalCreate New Blueprint](../static/img/welcome/quickstart/newBlueprintButton.png)
 
 After clicking the button, you should see a creation form as shown below:
 
-![Developer Portal New Blueprint Text](/img/welcome/quickstart/newBlueprintDefaultText.png)
+![Developer Portal New Blueprint Text](../static/img/welcome/quickstart/newBlueprintDefaultText.png)
 
 Our package Blueprint is going to include the following properties:
 
@@ -77,15 +78,15 @@ In order to create a Blueprint using the properties, use the following JSON body
 
 Click on the `save` button, and you should see your new Blueprint in the Blueprints graph:
 
-![Developer Portal Blueprints graph with new Package Blueprint](../../static/img/welcome/quickstart/blueprintGraphWithPackageClosed.png)
+![Developer Portal Blueprints graph with new Package Blueprint](../static/img/welcome/quickstart/blueprintGraphWithPackageClosed.png)
 
 Click on the `expand` button as shown in the image below:
 
-![Developer Portal Blueprints graph with new Package Blueprint And Expand Marked](../../static/img/welcome/quickstart/blueprintGraphWithPackageClosedExpandMarked.png)
+![Developer Portal Blueprints graph with new Package Blueprint And Expand Marked](../static/img/welcome/quickstart/blueprintGraphWithPackageClosedExpandMarked.png)
 
 You should see an expanded view of the blueprint you just created, with all of its properties listed alongside the types you provided:
 
-![Developer Portal Blueprints graph with new Package open](../../static/img/welcome/quickstart/blueprintGraphWithPackageOpen.png)
+![Developer Portal Blueprints graph with new Package open](../static/img/welcome/quickstart/blueprintGraphWithPackageOpen.png)
 
 Congratulations! you have just created your first Blueprint! 🎉
 
@@ -101,11 +102,11 @@ Let's create our first Entity to make things clearer.
 
 Click on the packages page on the left sidebar:
 
-![Developer Portal Blueprints graph with new Package open and Packages page marked](../../static/img/welcome/quickstart/blueprintGraphWithPackageOpenAndPackagesPageMarked.png)
+![Developer Portal Blueprints graph with new Package open and Packages page marked](../static/img/welcome/quickstart/blueprintGraphWithPackageOpenAndPackagesPageMarked.png)
 
 On the packages page, click on the `+ Package` button to start creating a new Entity:
 
-![Developer Portal Package Entity page with create entity button marked](../../static/img/welcome/quickstart/packageEntityPageWithCreateEntityMarked.png)
+![Developer Portal Package Entity page with create entity button marked](../static/img/welcome/quickstart/packageEntityPageWithCreateEntityMarked.png)
 
 After clicking the button a new package form will appear. Let's fill it up with the following details:
 
@@ -120,15 +121,15 @@ inHouse: false
 
 After filling all of the above, your creation page should look like this:
 
-![Developer Portal Package Entity filled with create entity button marked](../../static/img/welcome/quickstart/packageEntityCreateFilledAndCreateMarked.png)
+![Developer Portal Package Entity filled with create entity button marked](../static/img/welcome/quickstart/packageEntityCreateFilledAndCreateMarked.png)
 
 You can go ahead and press the `Create` button at the bottom right corner (as shown in the image above), and witness your new package appear in the packages page:
 
-![Developer Portal Package Entity page with first entity](../../static/img/welcome/quickstart/packgeEntityPageWithFirstEntity.png)
+![Developer Portal Package Entity page with first entity](../static/img/welcome/quickstart/packgeEntityPageWithFirstEntity.png)
 
 Let's repeat that process again, add another package, but this time add an entity using JSON by clicking the JSON mode button:
 
-![Developer Portal Package Create Entity page with json mode marked](../../static/img/welcome/quickstart/createPackageBlueprintJsonModeMarked.png)
+![Developer Portal Package Create Entity page with json mode marked](../static/img/welcome/quickstart/createPackageBlueprintJsonModeMarked.png)
 
 After clicking the button, a JSON editor will appear, similar to the one we saw in the blueprints page. Paste in the following content:
 
@@ -148,7 +149,7 @@ Then click on the create button at the bottom right corner.
 
 Now you should see your 2 packages displayed in the page as shown in the image below:
 
-![Developer Portal package Entity page with 2 Entities](../../static/img/welcome/quickstart/packagePageWithTwoEntities.png)
+![Developer Portal package Entity page with 2 Entities](../static/img/welcome/quickstart/packagePageWithTwoEntities.png)
 
 Amazing! You have just created 2 awesome entities 🎉
 
@@ -205,7 +206,7 @@ so let's go ahead and create a **Microservice Blueprint**:
 
 After you're done, your blueprints page should look like this:
 
-![Developer Portal Blueprints Page with microservice and package](../../static/img/welcome/quickstart/blueprintsPageWithMicroserviceAndPackage.png)
+![Developer Portal Blueprints Page with microservice and package](../static/img/welcome/quickstart/blueprintsPageWithMicroserviceAndPackage.png)
 
 Now we'll create our microservice to package Relation.
 
@@ -215,7 +216,7 @@ Our goal is to know what packages are used in each microservice, therefore you w
 
 Go to the Blueprints page, hover over the `microservice` Blueprint and click on the `pencil` icon as shown below:
 
-![Developer Portal Blueprints page with Create Relation Marked](../../static/img/welcome/quickstart/blueprintsPageWithMicroservicePackageAndEditPackageMarked.png)
+![Developer Portal Blueprints page with Create Relation Marked](../static/img/welcome/quickstart/blueprintsPageWithMicroservicePackageAndEditPackageMarked.png)
 
 In the edit form that appears, you will notice a `relations` key that is currently empty, paste the following content inside it:
 
@@ -233,7 +234,7 @@ Then click the `save` button at the bottom right corner.
 
 Now your Blueprints graph should look like this:
 
-![Developer Portal Blueprints Graph With Package Microservice Relation](../../static/img/welcome/quickstart/blueprintsGraphWithPackageMicroserviceRelation.png)
+![Developer Portal Blueprints Graph With Package Microservice Relation](../static/img/welcome/quickstart/blueprintsGraphWithPackageMicroserviceRelation.png)
 
 :::note
 Look at the connection graph you have just created. You modeled the relationship between your Blueprints in a way that shows which Blueprint depends on the other.
@@ -273,16 +274,16 @@ To create the microservice, follow these steps:
 :::note
 If you choose to type the values manually, in order to input the packages used by the microservice, click the `expand` icon next to the `Package` field, a new JSON form with an empty array (`[]`) will appear, you can type the identifiers of the package Entities you created there, the form will also auto-complete you and only show you legal package values:
 
-![Developer Portal Package Relation Array](../../static/img/welcome/quickstart/EditPackagesArrayProperty.png)
+![Developer Portal Package Relation Array](../static/img/welcome/quickstart/EditPackagesArrayProperty.png)
 :::
 
 Now you should see your new microservice Entity, and if you look at the package column, you will see multiple package values:
 
-![Developer Portal Microservice with multiple packages marked](../../static/img/welcome/quickstart/MicroserviceWithManyPackages.png)
+![Developer Portal Microservice with multiple packages marked](../static/img/welcome/quickstart/MicroserviceWithManyPackages.png)
 
 Click on the `Notification Service` link in the marked column and you will see what we call the **specific Entity page**. This page allows you to see the complete details and dependency graph of a specific entity.
 
-![Microservice specific entity page after relation](../../static/img/welcome/quickstart/microserviceSpecificEntityPageAfterRelation.png)
+![Microservice specific entity page after relation](../static/img/welcome/quickstart/microserviceSpecificEntityPageAfterRelation.png)
 
 :::info
 In our case, the specific entity page for a microservice will also show us a tab with all of the Packages that it uses because that is the Relation we mapped.
@@ -310,23 +311,23 @@ And, if you want to do something completely different, you can simply delete wha
 These suggestions show the basic steps in creating your very own Developer Portal, if you want to learn more about Port before starting your Developer Portal journey, look at [Diving deeper](#diving-deeper) or [Using the API](#using-the-api) below.
 :::
 
-1. Create [Blueprints](../platform-overview/port-components/blueprint.md) for your software and infrastructure components;
-2. Map out the [Relations](../platform-overview/port-components/relation.md) between your Blueprints;
-3. Ingest data to your catalog by creating [Entities](../platform-overview/port-components/entity.md) based on your Blueprints via Port's UI or using our API;
-4. Define [Self-Service Actions](../platform-overview/port-components/../self-service-actions/self-service-actions.md) that can be used by you and your developers.
+1. Create [Blueprints](./platform-overview/port-components/blueprint.md) for your software and infrastructure components;
+2. Map out the [Relations](./platform-overview/port-components/relation.md) between your Blueprints;
+3. Ingest data to your catalog by creating [Entities](./platform-overview/port-components/entity.md) based on your Blueprints via Port's UI or using our API;
+4. Define [Self-Service Actions](./platform-overview/self-service-actions/self-service-actions.md) that can be used by you and your developers.
 
 ### Diving deeper
 
 If you want to learn more about Port's capabilities in a specific area, you can check out any of these resources:
 
-- [Blueprints deep dive](../platform-overview/port-components/blueprint.md)
-- [Relations deep dive](../platform-overview/port-components/relation.md)
-- [Entities deep dive](../platform-overview/port-components/entity.md)
-- [Pages deep dive](../platform-overview/port-components/page.md)
-- [Self-Service Actions deep dive](../platform-overview/port-components/../self-service-actions/self-service-actions.md)
+- [Blueprints deep dive](./platform-overview/port-components/blueprint.md)
+- [Relations deep dive](./platform-overview/port-components/relation.md)
+- [Entities deep dive](./platform-overview/port-components/entity.md)
+- [Pages deep dive](./platform-overview/port-components/page.md)
+- [Self-Service Actions deep dive](./platform-overview/self-service-actions/self-service-actions.md)
 
 ### Using the API
 
 If you want to make use of Port's REST API Interface, take a look at these resources:
 
-- [Port API Reference](../api-reference/).
+- [Port API Reference](./api-reference/).
