@@ -8,13 +8,13 @@ Using Port, it is very simple to implement convenient service locking for servic
 
 ## Goal
 
-In this guide you will implement a service locking mechanism using Port's [GitHub Action](../../integrations/github/github-action.md).
+In this guide you will implement a service locking mechanism using Port's [GitHub Action](../integrations/github/github-action.md).
 
-The environment we're going to use includes 2 [Blueprints](../../platform-overview/port-components/blueprint.md) with a [Relation](../../platform-overview/port-components/relation.md) between them:
+The environment we're going to use includes 2 [Blueprints](../platform-overview/port-components/blueprint.md) with a [Relation](../platform-overview/port-components/relation.md) between them:
 
-![Service locking layout](../../../static/img/tutorial/complete-use-cases/service-locking/service-locking-layout.png)
+![Service locking layout](../../static/img/tutorial/complete-use-cases/service-locking/service-locking-layout.png)
 
-Let's go over the different Blueprints shown above and how we'll create [Entities](../../platform-overview/port-components/entity.md) for each one of them:
+Let's go over the different Blueprints shown above and how we'll create [Entities](../platform-overview/port-components/entity.md) for each one of them:
 
 - **Deployment Config** - a deployment config is a representation of the current “live” version of a service running in a specific environment. It will include references to the service, environment, and deployment, as well as real-time information such as status, uptime, and any other relevant metadata.
   - In this example deployment configs will be reported manually.
@@ -105,7 +105,7 @@ The Blueprint JSON provided below already includes the Relations between the dif
 </details>
 
 :::tip
-Remember that Blueprints can be created both from the [UI](../blueprint-basics.md#from-the-ui) and from the [API](../blueprint-basics.md#from-the-api)
+Remember that Blueprints can be created both from the [UI](../tutorials/blueprint-basics.md#from-the-ui) and from the [API](../tutorials/blueprint-basics.md#from-the-api)
 :::
 
 :::note
@@ -181,7 +181,7 @@ Now let's use the deployment config Entity to lock the `Notification Service` fo
 
 ## Reading the `locked` field during deployment
 
-In order to use the `locked` field on your deployment config, you will use Port's [GitHub Action](../../integrations/github/github-action.md).
+In order to use the `locked` field on your deployment config, you will use Port's [GitHub Action](../integrations/github/github-action.md).
 
 Here is the deployment check flow:
 
@@ -312,18 +312,18 @@ the `report-deployment` job is configured with a `needs` key whose value is `[ch
 
 If you try to push code to your repository when the deployment config `locked` field is set to `true`, the deployment will stop:
 
-![Workflow fail graph](./../../../static/img/tutorial/complete-use-cases/service-locking/workflow-fail-graph.png)
+![Workflow fail graph](./../../static/img/tutorial/complete-use-cases/service-locking/workflow-fail-graph.png)
 
 When you will look at the step that failed, you will see that the failure is due to the value of the `locked` field:
 
-![Lock check step](./../../../static/img/tutorial/complete-use-cases/service-locking/workflow-lock-message.png)
+![Lock check step](./../../static/img/tutorial/complete-use-cases/service-locking/workflow-lock-message.png)
 
 If you set the value of the `locked` field to `false`, the workflow will perform the deployment without any issue:
 
-![Workflow success graph](./../../../static/img/tutorial/complete-use-cases/service-locking/workflow-success-graph.png)
+![Workflow success graph](./../../static/img/tutorial/complete-use-cases/service-locking/workflow-success-graph.png)
 
 ## Summary
 
 This was just a single example of Port's GitHub Action value in your CI/CD pipelines. By querying and creating Entities during your CI process, you can make your CI jobs even more dynamic and responsive, without having to edit `yml` files and push new code to your repository.
 
-If this use case helped you, check out our guide to [using Port in your CI/CD](../use-port-in-your-cicd.md).
+If this use case helped you, check out our guide to [using Port in your CI/CD](../tutorials/use-port-in-your-cicd.md).

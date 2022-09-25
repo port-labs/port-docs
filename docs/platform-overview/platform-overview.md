@@ -62,7 +62,7 @@ There are two ways to create a Blueprint:
 - Using API
 
 :::tip
-To create your first blueprint, please see our [quickstart guide](../welcome/quickstart).
+To create your first blueprint, please see our [quickstart guide](../quickstart.md).
 :::
 
 ## Navigation Bar

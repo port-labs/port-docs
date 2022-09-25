@@ -10,3 +10,5 @@ Select a use case from the list below to get started:
 
 - [Software Catalog](./software-catalog.md)
 - [Service Locking](./service-locking.md)
+- [Software Templates](./software-templates.md)
+- [IaC Templates](./iac-templates.md)
