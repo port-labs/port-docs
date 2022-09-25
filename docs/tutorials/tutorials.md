@@ -13,4 +13,4 @@ Below are tutorials for different common use-cases in Port:
 - [Search in port](./search-in-port.md)
 - [Self-Service Actions using Webhooks](./self-service-actions/getting-started.md)
 - [Self-Service Actions using Kafka](./self-service-actions/kafka-actions/execution-basic-runner-using-aws-lambda.md)
-- [Complete use cases](./complete-use-cases/complete-use-cases.md)
+- [Complete use cases](../complete-use-cases/complete-use-cases.md)
