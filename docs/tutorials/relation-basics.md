@@ -8,7 +8,7 @@ import TabItem from "@theme/TabItem"
 
 # Relation Basics
 
-## Creating relations
+## Creating Relations
 
 Relations can be created using two methods:
 
@@ -21,7 +21,7 @@ A Relation is created between 2 Blueprints. So if you haven't created the `micro
 
 ### From the UI
 
-In order to create a relation from the UI, go to the Blueprints graph and click the pencil icon on the Blueprint that will be the `source` Blueprint of the Relation (for example, you want to map multiple `packages` that are used by a single `microservice`, so `microservice` is the `source` Blueprint):
+In order to create a relation from the UI, go to the Blueprints graph and click the pencil icon on the Blueprint that will be the `source` Blueprint of the Relation (for example, you want to map multiple `packages` that are used by a `microservice`, so `microservice` is the `source` Blueprint):
 
 ![Blueprints page with Create Relation Marked](../../static/img/tutorial/relation-basics/MicroservicePackageEditMarked.png)
 
@@ -31,7 +31,7 @@ An editor window will open with the current schema of the Blueprint. Because the
 "relations": {
   "package": {
       "title": "Package",
-      "target": "package",
+      "target": "Package",
       "required": false,
       "many": true
   }
@@ -72,9 +72,9 @@ import requests
 
 API_URL = 'https://api.getport.io/v1'
 
-source_blueprint_name = 'microservice'
+source_blueprint_name = 'Microservice'
 
-target_blueprint_name = 'package'
+target_blueprint_name = 'Package'
 
 relation_name = 'package'
 
@@ -115,9 +115,9 @@ const axios = require("axios").default;
 
 const API_URL = "https://api.getport.io/v1";
 
-const sourceBlueprintName = "microservice";
+const sourceBlueprintName = "Microservice";
 
-const targetBlueprintName = "package";
+const targetBlueprintName = "Package";
 
 const relationName = "package";
 
@@ -173,7 +173,12 @@ After creating the Relation, you will see a visual indicator in the Blueprints g
 When updating a Relation, it is only possible to update the `title`, `required` and `many` keys.
 
 :::caution
-When making a request to update a relation, if you try to change the identifier of a Relation, it will effectively delete the old Relation and create a new one under the new identifier
+A few points to consider when updating an existing Relation:
+
+- If you try to change the identifier of a Relation, it will effectively delete the old Relation and create a new one under the new identifier;
+- If there are Entities that are already Entities connected using the Relation, changing the identifier will fail with an error message;
+- If an existing Relation is defined `many = true` and there are multiple connected Entities in the Relation array, trying to update the Relation to `many = false` will fail.
+
 :::
 
 Just like before, you can update a Relation from the UI or from the API.

@@ -48,10 +48,10 @@ Every entity has a format similar to the one we explained in the [Understanding 
   "identifier": "requests-pkg-v2-28",
   "title": "Requests",
   "team": "",
-  "blueprint": "package",
+  "blueprint": "Package",
   "properties": {
     "version": "2.28",
-    "inhouse": false
+    "inHouse": false
   },
   "relations": {}
 }
@@ -95,7 +95,7 @@ headers = {
     'Authorization': f'Bearer {access_token}'
 }
 
-blueprint_id = 'package'
+blueprint_id = 'Package'
 
 entity = {
   'identifier': 'requests-pkg-v2-28',
@@ -103,7 +103,7 @@ entity = {
   'team': '',
   'properties': {
     'version': '2.28',
-    'inhouse': False
+    'inHouse': False
   },
   'relations': {}
 }
@@ -128,7 +128,7 @@ const axios = require("axios").default;
 
 const API_URL = "https://api.getport.io/v1";
 
-const blueprintId = "package";
+const blueprintId = "Package";
 
 const config = {
   headers: {
@@ -142,7 +142,7 @@ const entity = {
   team: "",
   properties: {
     version: "2.28",
-    inhouse: false,
+    inHouse: false,
   },
   relations: {},
 };
@@ -163,7 +163,7 @@ const response = await axios.post(
 ```bash showLineNumbers
 # the access_token variable should already have the token from the previous example
 
-blueprint_id='package'
+blueprint_id='Package'
 
 curl --location --request POST "https://api.getport.io/v1/blueprints/${blueprint_id}/entities" \
 	--header "Authorization: Bearer $access_token" \
@@ -173,7 +173,7 @@ curl --location --request POST "https://api.getport.io/v1/blueprints/${blueprint
     \"title\": \"Requests\",
     \"properties\": {
             \"version\": \"2.28\",
-            \"inhouse\": false
+            \"inHouse\": false
     }
 }"
 
@@ -220,7 +220,7 @@ A PATCH request has a specific format that allows precise changes in an existing
 To Edit a specific property, for example: `version`, send a PATCH request with the following body:
 
 ```json showLineNumbers
-'properties': {"version": "2.29"}
+properties': {"version": "2.29"}
 ```
 
 ## Deleting entities
@@ -245,63 +245,46 @@ Now that we understand **Entities**, we can start creating related Entities to m
 Remember that each Entity has a page of its own, as seen in the [Entity page section](../platform-overview/port-components/page.md#entity-page) in [Page](../platform-overview/port-components/page.md).
 :::
 
-First, let's create a new `Package` entity (If you haven't created a `Package` blueprint yet, please refer to the [Next steps](blueprint-basics.md#next-steps) section in [Blueprint basics](./blueprint-basics.md).
+First, let's create another `package` Entity.
 
-We will go to the `Packages` page:
-
-![Create a package on the Packages page](../../static/img/platform-overview/port-components/entities/CreatePackageButton.png)
-
-After clicking the `+ package` button, a UI form will open with the properties we created for the `Package` Blueprint:
-
-![A New Package creation form](../../static/img/platform-overview/port-components/entities/NewPackageForm.png)
-
-:::note
-Since `Microservice` is **Related** to `Package` when creating a new package we will see an additional field(s) representing the Relation(s). Selecting a related Entity is done according to the Entity title (via the UI), or according to the Entity identifier (via the JSON editor).
-:::
-
-#### From the UI
-
-We would like to connect our newly created `Package` Entity to the `Microservice` Entity we created above.
-
-![Connect package to microservice](../../static/img/platform-overview/port-components/entities/ConnectMStoPKG.png)
-
-#### Code Format
-
-We can also paste the following content to create our first `Package`, in `JSON mode`.
+From the UI or using the API create a `package` Entity with the following details:
 
 ```json showLineNumbers
 {
-  "identifier": "requests-pkg-v2-28",
-  "title": "Requests",
-  "team": "",
-  "blueprint": "package",
+  "identifier": "sqlAlchemy_v1_4_39",
+  "title": "SQL Alchemy v1.4.39",
   "properties": {
-    "version": "2.28",
-    "inhouse": "false"
-  },
-  "relations": {
-    "microservice": "notification-microservice"
-  }
-}
-```
-
-```json showLineNumbers
-{
-  "identifier": "notification-microservice",
-  "title": "Notification Service",
-  "blueprint": "microservice",
-  "properties": {
-    "repoUrl": "https://www.github.com/User/notification",
-    "slackChannel": "#notification-service"
+    "version": "1.4.39",
+    "inHouse": false
   },
   "relations": {}
 }
 ```
 
+Now, let's create a `microservice` Entity (Either from the `microservice` page or using Port's API) that uses the `package` Entities. Create a `microservice` Entity with the following details:
+
+```json showLineNumbers
+{
+  "identifier": "notification-microservice",
+  "title": "Notification Service",
+  "properties": {
+    "repoUrl": "https://www.github.com/User/notification",
+    "slackChannel": "#notification-service"
+  },
+  "relations": {
+    "package": ["requests-pkg-v2-28", "sqlAlchemy_v1_4_39"]
+  }
+}
+```
+
 :::note
-Remember that if the Relation is configured with `many=true`, the value of the `microservice` key should be an array.
+Since `Microservice` is **Related** to `Package` when creating a new package we will see an additional field(s) representing the Relation(s).
+
+- When a Relation is configured `many = false` - selecting a related Entity is done according to the Entity title (via the UI), or according to the Entity identifier (via the JSON editor);
+- When a Relation is configured `many = true` - selecting related Entities will open up a new JSON editor with an array format where you can type in the identifiers of the related Entities.
+
 :::
 
-Once we click the `Create` button, we will see our newly created entity in the `Packages` table:
+The result is a `microservice` Entity that has 2 different `package` Entities related to it:
 
-![Packages' page with the new package](../../static/img/platform-overview/port-components/entities/PackageFirstListing.png)
+![Developer Portal Microservice With Many Package](../../static/img/tutorial/entity-basics/MicroserviceWithManyPackages.png)
