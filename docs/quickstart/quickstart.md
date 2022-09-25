@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 1
 ---
 
 # Quickstart
@@ -220,7 +220,7 @@ Go to the Blueprints page, hover over the `microservice` Blueprint and click on 
 In the edit form that appears, you will notice a `relations` key that is currently empty, paste the following content inside it:
 
 ```json showLineNumbers
-"package": {
+"packages": {
     "title": "Package",
     "target": "Package",
     "description": "Package(s) used by the microservice",
@@ -258,7 +258,7 @@ The microservice Entity you are going to create is for the `notification service
     "slackChannel": "#notification-service"
   },
   "relations": {
-    "package": ["requests-pkg-v2-28", "sqlAlchemy_v1_4_39"]
+    "packages": ["requests-pkg-v2-28", "sqlAlchemy_v1_4_39"]
   }
 }
 ```
