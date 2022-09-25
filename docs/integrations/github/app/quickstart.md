@@ -10,10 +10,6 @@ sidebar_position: 3
 :::
 
 1. Clone our example repo: [github-app-setup-example](https://github.com/port-labs/github-app-setup-example).
-   :::note
-   This repo is `private` at the moment, so you’ll get a 404.
-   Please contact us with your GitHub user for access.
-   :::
 
 2. Use the `microservice.json` file as a base for your [Blueprint](../../../platform-overview/port-components/blueprint.md).
 
