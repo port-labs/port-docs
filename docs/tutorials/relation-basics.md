@@ -8,7 +8,7 @@ import TabItem from "@theme/TabItem"
 
 # Relation Basics
 
-## Creating relations
+## Creating Relations
 
 Relations can be created using two methods:
 
@@ -21,18 +21,19 @@ A Relation is created between 2 Blueprints. So if you haven't created the `micro
 
 ### From the UI
 
-In order to create a relation from the UI, go to the Blueprints graph and click the pencil icon on the Blueprint that will be the `source` Blueprint of the Relation (for example, in the `microservice` Relation, `package` is the `source` Blueprint):
+In order to create a relation from the UI, go to the Blueprints graph and click the pencil icon on the Blueprint that will be the `source` Blueprint of the Relation (for example, you want to map multiple `packages` that are used by a `microservice`, so `microservice` is the `source` Blueprint):
 
-![Blueprints page with Create Relation Marked](../../static/img/welcome/quickstart/blueprintsPageWithMicroservicePackageAndEditPackageMarked.png)
+![Blueprints page with Create Relation Marked](../../static/img/tutorial/relation-basics/MicroservicePackageEditMarked.png)
 
-An editor window will open with the current schema of the Blueprint. Because there is no Relation configured on the Blueprint right now, the `relations` key in the JSON will be empty. Paste in the following content in the `relations` key to create the `microservice` Relation:
+An editor window will open with the current schema of the Blueprint. Because there is no Relation configured on the Blueprint right now, the `relations` key in the JSON will be empty. Paste in the following content in the `relations` key to create the Relation:
 
 ```json showLineNumbers
 "relations": {
-  "microservice": {
-      "title": "Used In",
-      "target": "microservice",
-      "required": false
+  "packages": {
+      "title": "Package",
+      "target": "Package",
+      "required": false,
+      "many": true
   }
 }
 ```
@@ -52,7 +53,7 @@ The request flow is:
 3. Add the new Relation object to the `relations` key of the existing Blueprint
 4. Send a PUT request with the complete Blueprint schema
 
-Here are some request examples that will create our `microservice` relation:
+Here are some request examples that will create the Relation between your `microservice` and `package` Blueprints:
 
 <Tabs groupId="code-examples" defaultValue="python" values={[
 {label: "Python", value: "python"},
@@ -71,16 +72,17 @@ import requests
 
 API_URL = 'https://api.getport.io/v1'
 
-source_blueprint_name = 'package'
+source_blueprint_name = 'Microservice'
 
-target_blueprint_name = 'microservice'
+target_blueprint_name = 'Package'
 
-relation_name = 'microservice'
+relation_name = 'packages'
 
 relation = {
-    'title': 'Used In',
+    'title': 'Package',
     'target': target_blueprint_name,
-    'required': False
+    'required': False,
+    'many': True
 }
 
 headers = {
@@ -113,16 +115,17 @@ const axios = require("axios").default;
 
 const API_URL = "https://api.getport.io/v1";
 
-const sourceBlueprintName = "package";
+const sourceBlueprintName = "Microservice";
 
-const targetBlueprintName = "microservice";
+const targetBlueprintName = "Package";
 
-const relationName = "microservice";
+const relationName = "packages";
 
 const relation = {
-  title: "Used In",
+  title: "Package",
   target: targetBlueprintName,
   required: false,
+  many: true,
 };
 
 const config = {
@@ -163,14 +166,19 @@ console.log(response.data);
 
 After creating the Relation, you will see a visual indicator in the Blueprints graph:
 
-![Blueprints Graph with Relations Line](../../static/img/platform-overview/port-components/relations/graphPackageMicroserviceWithRelationLine.png)
+![Developer Portal Blueprints Graph with Relations Line](../../static/img/platform-overview/port-components/MicroservicePackageBlueprintGraphManyRelationUI.png)
 
 ## Updating relations
 
 When updating a Relation, it is only possible to update the `title`, `required` and `many` keys.
 
 :::caution
-When making a request to update a relation, if you try to change the identifier of a Relation, it will effectively delete the old Relation and create a new one under the new identifier
+A few points to consider when updating an existing Relation:
+
+- If you try to change the identifier of a Relation, it will effectively delete the old Relation and create a new one under the new identifier;
+- If there are Entities that are already Entities connected using the Relation, changing the identifier will fail with an error message;
+- If an existing Relation is defined `many = true` and there are multiple connected Entities in the Relation array, trying to update the Relation to `many = false` will fail.
+
 :::
 
 Just like before, you can update a Relation from the UI or from the API.
@@ -179,7 +187,7 @@ Just like before, you can update a Relation from the UI or from the API.
 
 In order to update a Relation from the UI, go to the Blueprints graph, hover over the `source` Blueprint and click on the pencil icon that appears:
 
-![Graph relations edit marked](../../static/img/platform-overview/port-components/relations/graphRelationEditMarked.png)
+![Developer Portal Graph relations edit marked](../../static/img/tutorial/relation-basics/MicroservicePackageExpandedEditMarked.png)
 
 An editor window will open with the current schema of the Blueprint. In order to update the Relation, simply edit the value of the `title`, `required` or `many` properties as needed in the `microservice` Relation object
 

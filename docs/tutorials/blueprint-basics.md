@@ -39,7 +39,7 @@ In order to create a Blueprint with the following properties, we will use the fo
 
 ```json showLineNumbers
 {
-  "identifier": "microservice",
+  "identifier": "Microservice",
   "title": "Microservice",
   "icon": "Microservice",
   "formulaProperties": {},
@@ -210,7 +210,7 @@ headers = {
 }
 
 blueprint = {
-    'identifier': 'microservice',
+    'identifier': 'Microservice',
     'title': 'Microservice',
     'icon': 'Microservice',
     'formulaProperties': {},
@@ -259,7 +259,7 @@ const config = {
 };
 
 const blueprint = {
-  identifier: "microservice",
+  identifier: "Microservice",
   title: "Microservice",
   icon: "Microservice",
   formulaProperties: {},
@@ -297,7 +297,7 @@ curl --location --request POST "https://api.getport.io/v1/blueprints" \
 	--header "Authorization: Bearer $access_token" \
 	--header "Content-Type: application/json" \
 	--data-raw "{
-    \"identifier\": \"microservice\",
+    \"identifier\": \"Microservice\",
     \"title\": \"Microservice\",
     \"icon\": \"Microservice\",
     \"formulaProperties\": {},
@@ -368,7 +368,7 @@ You can create the new Blueprint from the UI (using the `Add Blueprint` button i
 
 ```json showLineNumbers
 {
-  "identifier": "package",
+  "identifier": "Package",
   "title": "Package",
   "icon": "Package",
   "formulaProperties": {},
@@ -379,7 +379,7 @@ You can create the new Blueprint from the UI (using the `Add Blueprint` button i
         "type": "number",
         "default": "1.0.0"
       },
-      "inhouse": {
+      "inHouse": {
         "title": "In House?",
         "type": "boolean"
       }
