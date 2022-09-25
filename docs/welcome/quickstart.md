@@ -81,7 +81,7 @@ Click on the `save` button, and you should see your new Blueprint in the Bluepri
 
 Click on the `expand` button as shown in the image below:
 
-![Developer Portal Blueprints graph with new Package Blueprint And Expand Marked](../../static/img/welcome/quickstart/blueprintGraphWithPackageAndExpandMarked.png)
+![Developer Portal Blueprints graph with new Package Blueprint And Expand Marked](../../static/img/welcome/quickstart/blueprintGraphWithPackageClosedAndExpandMarked.png)
 
 You should see an expanded view of the blueprint you just created, with all of its properties listed alongside the types you provided:
 
