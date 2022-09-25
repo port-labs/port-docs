@@ -77,11 +77,11 @@ In order to create a Blueprint using the properties, use the following JSON body
 
 Click on the `save` button, and you should see your new Blueprint in the Blueprints graph:
 
-<!-- ![Developer Portal Blueprints graph with new Package Blueprint](../../static/img/welcome/quickstart/blueprintGraphWithPackageClosed.png) -->
+![Developer Portal Blueprints graph with new Package Blueprint](../../static/img/welcome/quickstart/blueprintGraphWithPackageClosed.png)
 
 Click on the `expand` button as shown in the image below:
 
-<!-- ![Developer Portal Blueprints graph with new Package Blueprint And Expand Marked](../../static/img/welcome/quickstart/blueprintGraphWithPackageClosedAndExpandMarked.png) -->
+![Developer Portal Blueprints graph with new Package Blueprint And Expand Marked](../../static/img/welcome/quickstart/blueprintGraphWithPackageClosedAndExpandMarked.png)
 
 You should see an expanded view of the blueprint you just created, with all of its properties listed alongside the types you provided:
 
