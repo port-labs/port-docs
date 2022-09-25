@@ -272,7 +272,7 @@ Now, let's create a `microservice` Entity (Either from the `microservice` page o
     "slackChannel": "#notification-service"
   },
   "relations": {
-    "package": ["requests-pkg-v2-28", "sqlAlchemy_v1_4_39"]
+    "packages": ["requests-pkg-v2-28", "sqlAlchemy_v1_4_39"]
   }
 }
 ```

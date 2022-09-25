@@ -29,7 +29,7 @@ An editor window will open with the current schema of the Blueprint. Because the
 
 ```json showLineNumbers
 "relations": {
-  "package": {
+  "packages": {
       "title": "Package",
       "target": "Package",
       "required": false,
@@ -76,7 +76,7 @@ source_blueprint_name = 'Microservice'
 
 target_blueprint_name = 'Package'
 
-relation_name = 'package'
+relation_name = 'packages'
 
 relation = {
     'title': 'Package',
@@ -119,7 +119,7 @@ const sourceBlueprintName = "Microservice";
 
 const targetBlueprintName = "Package";
 
-const relationName = "package";
+const relationName = "packages";
 
 const relation = {
   title: "Package",
