@@ -208,7 +208,7 @@ A Relation cannot be restored after deletion!
 In order to delete a Relation you can:
 
 - Delete the object of the specific Relation in the Blueprint schema editor;
-- Make a REST PUT request to the URL `https://api.getport.io/v1/{source_blueprint_identifier}` after removing the specific Relation object from `relations` key in the Blueprint schema.
+- Make an HTTP PUT request to the URL `https://api.getport.io/v1/{source_blueprint_identifier}` after removing the specific Relation object from `relations` key in the Blueprint schema.
 
 ## Next steps
 

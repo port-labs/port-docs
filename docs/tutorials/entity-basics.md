@@ -203,17 +203,17 @@ You can change any mutable Entity, and edit/delete its property values.
 
 The API offers several methods to update an existing Entity:
 
-- Make a **REST POST** request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities?upsert=true`
+- Make an **HTTP POST** request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities?upsert=true`
 
   This request with the `upsert` flag set to `true` will update a matching Entity if one exists, if no matching Entity is found, a new one will be created.
 
   The request body is the same as creating a new entity, just with the additional flag `upsert=true`.
 
-- Make a **REST PUT** request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`
+- Make an **HTTP PUT** request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`
 
   A PUT request has the same body as a POST request and it will simply overwrite the entity if it exists. It will return an error code if the entity does not exist (based on identifier-match).
 
-- Make a **REST PATCH** request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`
+- Make an **HTTP PATCH** request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`
 
 A PATCH request has a specific format that allows precise changes in an existing Entity, for example:
 
@@ -235,7 +235,7 @@ To delete an Entity you can:
 
 ![Delete entity button marked](../../static/img/platform-overview/port-components/entities/DeleteEntityButton.png)
 
-- Make a **REST DELETE** request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`
+- Make an **HTTP DELETE** request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`
 
 ## Next steps
 

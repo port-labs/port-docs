@@ -356,8 +356,7 @@ The basic structure of a Self-Service Action:
         "format": "entity",
         "blueprint": "microservice"
       }
-    },
-    "required": ["repo-user"]
+    }
   },
   "invocationMethod": {
     "type": "WEBHOOK",
@@ -447,10 +446,10 @@ The `invocationMethod` supports 2 configurations:
 
 ### Invocation method structure fields
 
-| Field  | Type     | Description                                                                                                                               | Example values                |
-| ------ | -------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
-| `type` | `string` | Defines the Self-Service Action destination type                                                                                          | Either `WEBHOOK` or `KAFKA`   |
-| `url`  | `string` | Defines the webhook URL where Port sends Self-Service Actions to via REST POST. <br></br> Can be added only if `type` is set to `WEBHOOK` | `https://webhook.example.com` |
+| Field  | Type     | Description                                                                                                                                       | Example values                |
+| ------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
+| `type` | `string` | Defines the Self-Service Action destination type                                                                                                  | Either `WEBHOOK` or `KAFKA`   |
+| `url`  | `string` | Defines the webhook URL where Port sends Self-Service Actions to via HTTP POST request. <br></br> Can be added only if `type` is set to `WEBHOOK` | `https://webhook.example.com` |
 
 ## Triggering actions
 

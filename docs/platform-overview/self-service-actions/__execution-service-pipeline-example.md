@@ -61,9 +61,9 @@ Since some of these day-2 operations can be sensitive/dangerous/expensive, we as
 ![Upscale confirmation](../../../static/img/platform-overview/self-service-actions/service-pipeline-example/upscaleServiceForm.png)
 
 Port also exposes a **change log** Kafka Topic, by listening to that topic, you can subscribe to changes performed on every entity.
-So for example if the status of a service changes from `Healthy` to `Degraded` a message will be sent to the **change log** Kafka Topic. An automatic process can listen to messages in the topic, perform automatic fixing/healthcheck validation of the service, and then update the status in Port again when the issue is resolved, that way you can always use Port as a source of truth for the status of the environment, and also use it to trigger checks and maintenance. 
+So for example if the status of a service changes from `Healthy` to `Degraded` a message will be sent to the **change log** Kafka Topic. An automatic process can listen to messages in the topic, perform automatic fixing/healthcheck validation of the service, and then update the status in Port again when the issue is resolved, that way you can always use Port as a source of truth for the status of the environment, and also use it to trigger checks and maintenance.
 
-**Note:** This demo example showed actions being performed using Port’s web UI, but every action and interaction we have shown here can be invoked with a REST API request
+**Note:** This demo example showed actions being performed using Port’s web UI, but every action and interaction we have shown here can be invoked with an API request
 
 Now you have a list of all the provisioned Services:
 
