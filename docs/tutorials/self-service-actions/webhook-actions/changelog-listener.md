@@ -17,9 +17,9 @@ In the following example, you will create a changelog listener that can react to
 
 To implement the listener, use the following:
 
-- Python with [FastAPI](https://fastapi.tiangolo.com/) - to setup a REST API that will handle webhook requests;
+- Python with [FastAPI](https://fastapi.tiangolo.com/) - to setup an API that will handle webhook requests;
 - [Smee.io](https://smee.io) and [pysmee](https://pypi.org/project/pysmee/) - to redirect webhook requests to your local API;
-- Port's changelog capabilities - to send an event to your REST API every time something changes in your software catalog;
+- Port's changelog capabilities - to send an event to your API every time something changes in your software catalog;
 - Slack webhooks - to send a message to your slack server, alerting your users of the change.
 
 **Your API will be triggered every time a change occurs to your `deploymentConfig` Blueprint, or one of its Entities.**

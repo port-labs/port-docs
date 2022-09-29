@@ -180,7 +180,7 @@ access_token=$(curl --location --request POST 'https://api.getport.io/v1/auth/ac
 
 Let's create a basic `microservice` Blueprint using the API. It will include a `slack channel` and a `Repo URL`.
 
-In order to interact with the Blueprints API our basic URL will be [https://api.getport.io/v1/blueprints](https://api.getport.io/v1/blueprints), and we will create the Blueprint using a REST **POST** request.
+In order to interact with the Blueprints API our basic URL will be [https://api.getport.io/v1/blueprints](https://api.getport.io/v1/blueprints), and we will create the Blueprint using an HTTP **POST** request.
 
 :::note
 We will use the [access token](#getting-an-api-token) we generated earlier when making new requests to Port's API.
@@ -337,7 +337,7 @@ You can always modify Blueprints, add/remove properties or change existing prope
 In order to update a Blueprint, you can do either of the following:
 
 - Click the pencil icon in the Blueprints graph;
-- Make a REST PUT request to the URL: `https://api.getport.io/v1/{blueprint_identifier}`
+- Make an HTTP PUT request to the URL: `https://api.getport.io/v1/{blueprint_identifier}`
 
 ![Blueprints Graph edit button marked](../../static/img/platform-overview/port-components/blueprints/blueprintGraphEditButtonMarked.png)
 
@@ -352,7 +352,7 @@ A Blueprint cannot be restored after deletion!
 In order to delete a Blueprint you can do either of the following:
 
 - Click on the trash can icon in the specific Blueprint’s node in the blueprints graph;
-- Make a REST DELETE request to the URL `https://api.getport.io/v1/{blueprint_identifier}`
+- Make an HTTP DELETE request to the URL `https://api.getport.io/v1/{blueprint_identifier}`
 
 ![Blueprints Graph delete button marked](../../static/img/platform-overview/port-components/blueprints/blueprintGraphDeleteButtonMarked.png)
 

@@ -8,5 +8,5 @@ Port’s advanced RBAC controls grant you the power and control to define access
 
 To learn more about Port's RBAC please check these resources:
 
-- [Teams and users management](./teams-and-users-management)
+- [Users and Teams management](./users-and-teams-management)
 - [Permissions controls](./permissions-controls)

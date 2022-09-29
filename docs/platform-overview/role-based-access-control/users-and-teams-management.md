@@ -2,24 +2,25 @@
 sidebar_position: 2
 ---
 
-# Teams and users management
+# Users and Teams management
 
 In Port, you can control and manage all your users and teams, in one place.
 
 This allows admins to manage their users and teams inside Port:
 
-1. Manage users (via the users page);
-2. Promote ownership of assets within the organization (with team assignments);
-3. Set granular permissions on the portal (permission management).
+1. Invite users to your organization and assign them specific roles and teams.
+2. Manage teams and their members.
+3. Promote ownership of assets within the organization (with team assignments).
+4. Set granular permissions on the portal (permission management).
 
 It will also benefit developers, who could:
 
-1. Know what software assets they own and are responsible for;
+1. Know what software assets they own and are responsible for.
 2. View and perform actions on their assets, according to their role and team belonging.
 
-## Users page
+## Users & Teams Page
 
-Users management is done from the **Users page**.
+Users and teams management is done from the **Users & Teams page**.
 
 Each user is defined by the following properties:
 
@@ -27,7 +28,7 @@ Each user is defined by the following properties:
 2. Role - the user’s permissions level (see the [Permission controls](./permissions-controls) section);
 3. Teams - a `team` is a group of users that owns Entities (see the [Team](#team-system-property) section).
 
-![Users page](../../../static/img/platform-overview/role-based-access-control/teams-and-users/usersPage.png)
+![Teams and Users page](../../../static/img/platform-overview/role-based-access-control/users-and-teams/usersAndTeams.png)
 
 :::caution
 Modifying roles and teams via the users page will become available soon!
@@ -54,7 +55,7 @@ Entity JSON example with `team` field:
 
 Team dropdown selector in the Entity create/edit page:
 
-![Team property](../../../static/img/platform-overview/role-based-access-control/teams-and-users/teamPropertyMarkedInUIForm.png)
+![Team property](../../../static/img/platform-overview/role-based-access-control/users-and-teams/teamPropertyMarkedInUIForm.png)
 
 | Field | Type | Description                                            | Default      |
 | ----- | ---- | ------------------------------------------------------ | ------------ |
