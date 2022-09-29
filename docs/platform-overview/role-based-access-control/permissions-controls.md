@@ -10,7 +10,7 @@ In Port, you can set granular permissions to **Blueprints** and **Actions**, acc
 
 Admins will have control over their Software Catalog in Port, by setting **granular permissions** for every component. In addition, user experience will improve, by showing and giving the users individual control only over Entities that are relevant to them, thus preventing information overload.
 
-In Port, we have 2 ways to enforce permissions, by Roles and by Ownership:
+In Port, you can enforce permissions by [Roles](#roles), and/or by [Team Ownership](#setting-permissions-by-team-ownership).
 
 ## Roles
 
@@ -23,7 +23,7 @@ There are 3 types of roles. Which have the following permissions out-of-the-box:
 | Member                   | Read-only permissions. And permissions to execute Actions                                                    |
 
 As mentioned above, these permissions are given by default when you first set up your organization, based on the behaviours we learned to be best-practices.
-However, as part of Port's [builder-approach](#whats-a-builder-based-developer-portal), we let you decide and control the permissions you want to grant, in a way that fits your organization best. We'll explore those options down below and in the tutorials section.
+However, as part of Port's [builder-approach](../../faq/faq.md#whats-a-builder-based-developer-portal), we let you decide and control the permissions you want to grant, in a way that fits your organization best. We'll explore those options down below and in the tutorials section.
 
 :::info
 In addition to the permissions specific to each role, they also inherit the permissions of the role below them:
@@ -41,15 +41,11 @@ You can view (and edit) each user’s role in the users table (via the main menu
 Refer to the [Users and Teams](./users-and-teams-management) section for more information about the users page
 :::
 
-## Ownership
-
-In addition to Role-based permissions, you can use the [`team` property](../port-components/entity#teams-and-ownership) to define permissions for Entities.
-
 ## Working with Permissions
 
 In this section we'll show a few examples of the different ways you can use permissions in your organization, and show how to apply them.
 
-### Permissions use-case examples
+### Use-case examples
 
 Using permissions management, the following configurations, among others, are available:
 
@@ -58,7 +54,7 @@ Using permissions management, the following configurations, among others, are av
    2. Example - Members can create a new "Microservice" Entity but are not permitted to delete a "Microservice" Entity.
 2. Each Entity property/relation can be immutable separately for specific users/roles.
    1. Example - The `repository_link` property can be immutable for all roles (except Admin).
-3. Allow specific users/roles to only modify Entities owned by their team.
+3. Allow specific users/roles to only modify Entities [owned by their team](#setting-permissions-by-team-ownership).
    1. Example - Members can edit only "Microservices" that belong to their team.
 4. Actions execution grants can be given to specific users or roles
    1. Example - Allow every Member to create a new "Deployment" Entity but only "Deployment" moderators can perform a day-2 Action of "adding resources".
@@ -116,7 +112,23 @@ To allow only Admins to change the property `slackChannelUrl`, remove the Modera
 }
 ```
 
-### Teams and permissions
+By default, "Member" users can execute every new Action of the Blueprint. You can change it for example to only allow Moderators (and Admins) to execute the Action "clone_env":
+
+```json showLineNumbers diff
+{
+  "actions": {
+    "clone_env": {
+      "execute": {
+        "roles": ["Env-moderator"], // changed from ["Env-moderator", "Member"]
+        "users": [],
+        "ownedByTeam": false
+      }
+    }
+  }
+}
+```
+
+### Setting permissions by team ownership
 
 You'll notice that some operations have the `ownedByTeam` flag. This allows you to set permissions by team ownership, rather than by Roles or direct assignment.
 For example, doing this:
@@ -128,14 +140,14 @@ For example, doing this:
       "execute": {
         "roles": ["Env-moderator"],
         "users": [],
-        "ownedByTeam": true
+        "ownedByTeam": true // changed from false
       }
     }
   }
 }
 ```
 
-Will allow **every user**, regardless of its Roles, to perform the Action "delete_env" on "Env" Entities that belong to a team he is a part of (entities that have the `team` property set).
+Will allow **every user**, regardless of its Roles, to perform the Action "delete_env" on "Env" Entities that belong to a team he is a part of (entities that have the [`team` property](../port-components/entity#teams-and-ownership) set).
 
 :::info
 The `team` field is not mandatory! You can give a user access to create "Env", regardless of their team.
