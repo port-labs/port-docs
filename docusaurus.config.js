@@ -159,6 +159,9 @@ const config = {
          */
         playgroundPosition: "bottom",
       },
+      hubspot: {
+        accountId: 21928972,
+      },
     }),
   themes: [
     [
@@ -172,7 +175,10 @@ const config = {
     ],
   ],
 
-  plugins: ["@docusaurus/theme-live-codeblock"],
+  plugins: [
+    "@docusaurus/theme-live-codeblock",
+    "@stackql/docusaurus-plugin-hubspot",
+  ],
 };
 
 module.exports = config;
