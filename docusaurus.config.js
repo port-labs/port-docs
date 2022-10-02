@@ -9,10 +9,9 @@ const config = {
   title: "Port",
   tagline: "Documentation Portal",
   url: "https://docs.getport.io/",
-  baseUrl: "/docs/",
+  baseUrl: "docs/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "throw",
-  // favicon: "img/favicon.ico",
   favicon: "img/favicon.svg",
   organizationName: "port-labs", // Usually your GitHub org/user name.
   projectName: "port", // Usually your repo name.
@@ -24,11 +23,12 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          routeBasePath: "/",
+          routeBasePath: "/docs",
           sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
           // editUrl: "https://github.com/port-labs",
         },
+        blog: false,
         // blog: {
         //   showReadingTime: true,
         //   // Please change this to your repo.
@@ -81,7 +81,7 @@ const config = {
         title: "Port Documentation",
         logo: {
           alt: "Port Logo",
-          src: "../img/logo.svg",
+          src: "img/logo.svg",
         },
         items: [
           // {
@@ -167,7 +167,7 @@ const config = {
         hashed: true,
         indexDocs: true,
         indexBlog: false,
-        docsRouteBasePath: "/",
+        docsRouteBasePath: "/docs",
       },
     ],
   ],
