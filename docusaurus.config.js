@@ -9,7 +9,7 @@ const config = {
   title: "Port",
   tagline: "Documentation Portal",
   url: "https://docs.getport.io/",
-  baseUrl: "/",
+  baseUrl: "/docs/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "throw",
   // favicon: "img/favicon.ico",
@@ -81,7 +81,7 @@ const config = {
         title: "Port Documentation",
         logo: {
           alt: "Port Logo",
-          src: "img/logo.svg",
+          src: "../img/logo.svg",
         },
         items: [
           // {
