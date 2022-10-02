@@ -6,27 +6,27 @@ sidebar_position: 3
 
 In Port, you can set granular permissions to **Blueprints** and **Actions**, according to users and teams.
 
-**Why is it beneficial for your organization?**
+**How is it beneficial for your organization?**
 
-Admins will have control over their Software Catalog in Port, by setting **granular permissions** for every component. In addition, user experience will improve, by showing and giving the users individual control only over Entities that are relevant to them, thus preventing information overload.
+Admins will have control over their Software Catalog in Port, by setting **granular permissions** for every component. In addition, user experience will improve, by displaying and granting control over specific Entities to their designated users, thus preventing information overload.
 
 In Port, you can enforce permissions by [Roles](#roles), and/or by [Team Ownership](#setting-permissions-by-team-ownership).
 
 ## Roles
 
-There are 3 types of roles. Which have the following permissions out-of-the-box:
+There are 3 types of roles. Below are their out-of-the-box permissions:
 
 | Role                     | Description                                                                                                  |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------ |
-| Admin                    | Perform any action on the platform.                                                                          |
-| Moderator of a Blueprint | Perform any action on a specific Blueprint and it's Entities. A user can be moderator of several Blueprints. |
-| Member                   | Read-only permissions. And permissions to execute Actions                                                    |
+| Admin                    | Perform any action on the platform                                                                        |
+| Moderator of a Blueprint | Perform any action on a specific Blueprint and it's Entities. A user can be moderator of several Blueprints |
+| Member                   | Read-only permissions, And permissions to execute Actions                                                    |
 
 As mentioned above, these permissions are given by default when you first set up your organization, based on the behaviours we learned to be best-practices.
 However, as part of Port's [builder-approach](../../faq/faq.md#whats-a-builder-based-developer-portal), we let you decide and control the permissions you want to grant, in a way that fits your organization best. We'll explore those options down below and in the tutorials section.
 
 :::info
-In addition to the permissions specific to each role, they also inherit the permissions of the role below them:
+In addition to the permissions designated for each role, permissions are also inherited from the role below them:
 
 Admin > Moderator > Member
 
@@ -43,23 +43,20 @@ Refer to the [Users and Teams](./users-and-teams-management) section for more in
 
 ## Working with Permissions
 
-In this section we'll show a few examples of the different ways you can use permissions in your organization, and show how to apply them.
+In this section we'll show you a few examples of ways to use permissions in your organization, and how to apply them.
 
 ### Use-case examples
 
-Using permissions management, the following configurations, among others, are available:
+The following configurations, among others, are available when using permissions management:
 
-1. Entities can be made immutable/partially immutable (can only create/delete/modify) for specific users/roles.
-   1. Example - "Deployment" Entities are immutable for all roles, and "Cluster" Entities are editable only by the moderators.
-   2. Example - Members can create a new "Microservice" Entity but are not permitted to delete a "Microservice" Entity.
-2. Each Entity property/relation can be immutable separately for specific users/roles.
-   1. Example - The `repository_link` property can be immutable for all roles (except Admin).
-3. Allow specific users/roles to only modify Entities [owned by their team](#setting-permissions-by-team-ownership).
-   1. Example - Members can edit only "Microservices" that belong to their team.
-4. Actions execution grants can be given to specific users or roles
-   1. Example - Allow every Member to create a new "Deployment" Entity but only "Deployment" moderators can perform a day-2 Action of "adding resources".
+1. Entities can be made immutable/partially immutable (can only create/delete/modify) for specific users/roles. For example:
+   a. "Deployment" Entities are immutable for all roles, and "Cluster" Entities are editable only by the moderators.
+   b. Members can create a new "Microservice" Entity, but are not permitted to delete a "Microservice" Entity.
+2. Each Entity property/relation can be immutable separately for specific users/roles. For example, the `repository_link` property can be immutable for all roles (except Admin).
+3. Allow specific users/roles to only modify Entities [owned by their team](#setting-permissions-by-team-ownership). For example, members can edit only "Microservices" that belong to their team.
+4. Actions execution grants can be given to specific users or roles. For example, you can allow every Member to create a new "Deployment" Entity but only "Deployment" moderators can perform a day-2 Action of "adding resources".
 
-### Setting permissions for a Blueprint (and it's Actions)
+### Setting permissions for a Blueprint (and its Actions)
 
 To set permissions for a Blueprint, click on the permissions icon of the desired Blueprint in the Blueprints page:
 
@@ -69,9 +66,9 @@ This will open the following window:
 
 ![Permissions Window](../../../static/img/platform-overview/role-based-access-control/permissions/permissionsModal.png)
 
-As you can see, every operation that can be done on the Blueprint or it's Entities is listed in the JSON and can be controlled.
+As you can see, every operation that can be performed on the Blueprint or its Entities is listed in the JSON and can be controlled.
 
-For example, If we want to enable a specific user to update the Blueprint, you can change the JSON to be like so:
+For example, If we want to enable a specific user to update the Blueprint, you can change the JSON as follows:
 
 ```json showLineNumbers
 {
@@ -82,7 +79,7 @@ For example, If we want to enable a specific user to update the Blueprint, you c
 }
 ```
 
-To enable Members to create Entities of "Env" Blueprint :
+To enable Members to create Entities of "Env" Blueprint:
 
 ```json showLineNumbers
 {
@@ -112,7 +109,7 @@ To allow only Admins to change the property `slackChannelUrl`, remove the Modera
 }
 ```
 
-By default, "Member" users can execute every new Action of the Blueprint. You can change it for example to only allow Moderators (and Admins) to execute the Action "clone_env":
+By default, "Member" users can execute every new Action of the Blueprint. If you want, you can change it, for example to only allow Moderators (and Admins) to execute the Action "clone_env":
 
 ```json showLineNumbers diff
 {
@@ -130,8 +127,8 @@ By default, "Member" users can execute every new Action of the Blueprint. You ca
 
 ### Setting permissions by team ownership
 
-You'll notice that some operations have the `ownedByTeam` flag. This allows you to set permissions by team ownership, rather than by Roles or direct assignment.
-For example, doing this:
+You will notice that some operations have the `ownedByTeam` flag. This allows you to set permissions by team ownership, rather than by Roles or direct assignment.
+For example, the following JSON will allow **every user**, regardless of their roles, to perform the Action "delete_env" on "Env" Entities that belong to a team they are part of (entities that have the [`team` property](../port-components/entity#teams-and-ownership) set):
 
 ```json showLineNumbers
 {
@@ -147,8 +144,6 @@ For example, doing this:
 }
 ```
 
-Will allow **every user**, regardless of its Roles, to perform the Action "delete_env" on "Env" Entities that belong to a team he is a part of (entities that have the [`team` property](../port-components/entity#teams-and-ownership) set).
-
 :::info
 The `team` field is not mandatory! You can give a user access to create "Env", regardless of their team.
 :::
@@ -159,11 +154,11 @@ Okta and Azure integrations are available only after integrating the relevant id
 For more details see [Single Sign-On (SSO)](../../single-sign-on/)
 :::
 
-## UI Behavior
+## UI behavior
 
 Configuring user permissions is reflected in Port's UI. The UI also includes indication messages when trying to perform actions. For example:
 
-For example, the `register` and `unregister` buttons will be disabled in the UI, according to the Blueprint permissions (unauthorized users/groups will not be able to register or unregister entities).
+The `register` and `unregister` buttons will be disabled in the UI, in accordance with the Blueprint permissions (unauthorized users/groups will not be able to register or unregister entities).
 
 ![Create button disabled without permissions](../../../static/img/platform-overview/role-based-access-control/permissions/memberNoCreatePermission.png)
 
