@@ -9,7 +9,7 @@ const config = {
   title: "Port",
   tagline: "Documentation Portal",
   url: "https://docs.getport.io/",
-  baseUrl: "/docs/",
+  baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "throw",
   favicon: "img/favicon.svg",
@@ -23,7 +23,7 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          routeBasePath: "/",
+          routeBasePath: "/docs",
           sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
           // editUrl: "https://github.com/port-labs",
@@ -170,7 +170,7 @@ const config = {
         hashed: true,
         indexDocs: true,
         indexBlog: false,
-        docsRouteBasePath: "/",
+        docsRouteBasePath: "/docs",
       },
     ],
   ],
