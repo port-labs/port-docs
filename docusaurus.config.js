@@ -7,7 +7,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Port",
-  tagline: "Documentation Portal",
+  tagline: "Documentation site",
   url: "https://docs.getport.io",
   baseUrl: "/",
   onBrokenLinks: "throw",
