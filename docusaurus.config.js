@@ -29,11 +29,6 @@ const config = {
           // editUrl: "https://github.com/port-labs",
         },
         blog: false,
-        // blog: {
-        //   showReadingTime: true,
-        //   // Please change this to your repo.
-        //   editUrl: "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
-        // },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
         },
@@ -56,7 +51,7 @@ const config = {
         specs: [
           {
             spec: "https://api.getport.io/yaml",
-            route: "/api-reference/",
+            route: "/docs/api-reference/",
           },
         ],
         // Theme Options for modifying how redoc renders them
@@ -178,6 +173,18 @@ const config = {
   plugins: [
     "@docusaurus/theme-live-codeblock",
     "@stackql/docusaurus-plugin-hubspot",
+    [
+      "@docusaurus/plugin-client-redirects",
+      {
+        createRedirects(existingPath) {
+          console.log("path is:", existingPath);
+          if (existingPath.includes("/docs") && existingPath !== "/") {
+            return [existingPath.replace("/docs/", "/")];
+          }
+          return undefined;
+        },
+      },
+    ],
   ],
 };
 
