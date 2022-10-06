@@ -182,15 +182,6 @@ const config = {
             // Support URLs without /docs prepended and route them to /docs
             return [existingPath.replace("/docs/", "/")];
           }
-          if (existingPath.includes("complete-use-cases")) {
-            // Fix paths sent in marketing email
-            return [
-              existingPath.replace(
-                "/docs/complete-use-cases/",
-                "/tutorials/complete-use-cases/"
-              ),
-            ];
-          }
           return undefined;
         },
       },
