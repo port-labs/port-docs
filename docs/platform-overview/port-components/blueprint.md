@@ -3,7 +3,7 @@ sidebar_position: 1.1
 sidebar_label: Blueprint
 ---
 
-# The Blueprint Component
+# Blueprint
 
 ## What is a Blueprint?
 

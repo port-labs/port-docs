@@ -11,22 +11,24 @@ type FeatureItem = {
 const FeatureList: FeatureItem[] = [
   {
     title: "Learn the Basics",
-    Svg: require("@site/static/img/undraw_docusaurus_mountain.svg").default,
-    description: <>Quickly learn what is Port all about and how to get started.</>,
+    Svg: require("@site/static/img/port_code_icon.svg").default,
+    description: (
+      <>Quickly learn what Port is all about and how to get started.</>
+    ),
   },
   {
     title: "All of Your Questions Answered",
-    Svg: require("@site/static/img/undraw_docusaurus_tree.svg").default,
+    Svg: require("@site/static/img/port_box_icon.svg").default,
     description: (
       <>
-        Trying to figure out how to call a specific API? Maybe need a hand configuring the latest integration? The
-        answer is here!
+        Trying to figure out how to call a specific API? Maybe need a hand
+        configuring the latest integration? The answer is here!
       </>
     ),
   },
   {
     title: "Beginner -> Superuser",
-    Svg: require("@site/static/img/undraw_docusaurus_react.svg").default,
+    Svg: require("@site/static/img/port_flower_icon.svg").default,
     description: <>Advanced examples, unique usecases and more.</>,
   },
 ];
