@@ -16,11 +16,11 @@ In Port, you can enforce permissions by [Roles](#roles), and/or by [Team Ownersh
 
 There are 3 types of roles. Below are their out-of-the-box permissions:
 
-| Role                     | Description                                                                                                  |
-| ------------------------ | ------------------------------------------------------------------------------------------------------------ |
-| Admin                    | Perform any action on the platform                                                                        |
+| Role                     | Description                                                                                                 |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------- |
+| Admin                    | Perform any action on the platform                                                                          |
 | Moderator of a Blueprint | Perform any action on a specific Blueprint and it's Entities. A user can be moderator of several Blueprints |
-| Member                   | Read-only permissions, And permissions to execute Actions                                                    |
+| Member                   | Read-only permissions, And permissions to execute Actions                                                   |
 
 As mentioned above, these permissions are given by default when you first set up your organization, based on the behaviours we learned to be best-practices.
 However, as part of Port's [builder-approach](../../faq/faq.md#whats-a-builder-based-developer-portal), we let you decide and control the permissions you want to grant, in a way that fits your organization best. We'll explore those options down below and in the tutorials section.
@@ -146,12 +146,6 @@ For example, the following JSON will allow **every user**, regardless of their r
 
 :::info
 The `team` field is not mandatory! You can give a user access to create "Env", regardless of their team.
-:::
-
-:::note
-Okta and Azure integrations are available only after integrating the relevant identity provider.
-
-For more details see [Single Sign-On (SSO)](../../single-sign-on/)
 :::
 
 ## UI behavior
