@@ -7,12 +7,11 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Port",
-  tagline: "Documentation Portal",
-  url: "https://docs.getport.io/",
+  tagline: "Documentation site",
+  url: "https://docs.getport.io",
   baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "throw",
-  // favicon: "img/favicon.ico",
   favicon: "img/favicon.svg",
   organizationName: "port-labs", // Usually your GitHub org/user name.
   projectName: "port", // Usually your repo name.
@@ -24,16 +23,12 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          routeBasePath: "/",
+          routeBasePath: "/docs",
           sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
           // editUrl: "https://github.com/port-labs",
         },
-        // blog: {
-        //   showReadingTime: true,
-        //   // Please change this to your repo.
-        //   editUrl: "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
-        // },
+        blog: false,
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
         },
@@ -56,7 +51,7 @@ const config = {
         specs: [
           {
             spec: "https://api.getport.io/yaml",
-            route: "/api-reference/",
+            route: "/docs/api-reference/",
           },
         ],
         // Theme Options for modifying how redoc renders them
@@ -159,6 +154,9 @@ const config = {
          */
         playgroundPosition: "bottom",
       },
+      hubspot: {
+        accountId: 21928972,
+      },
     }),
   themes: [
     [
@@ -167,12 +165,28 @@ const config = {
         hashed: true,
         indexDocs: true,
         indexBlog: false,
-        docsRouteBasePath: "/",
+        docsRouteBasePath: "/docs",
       },
     ],
   ],
 
-  plugins: ["@docusaurus/theme-live-codeblock"],
+  plugins: [
+    "@docusaurus/theme-live-codeblock",
+    "@stackql/docusaurus-plugin-hubspot",
+    [
+      "@docusaurus/plugin-client-redirects",
+      {
+        createRedirects(existingPath) {
+          console.log("path is:", existingPath);
+          if (existingPath.includes("/docs") && existingPath !== "/") {
+            // Support URLs without /docs prepended and route them to /docs
+            return [existingPath.replace("/docs/", "/")];
+          }
+          return undefined;
+        },
+      },
+    ],
+  ],
 };
 
 module.exports = config;

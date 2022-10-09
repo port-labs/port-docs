@@ -111,7 +111,7 @@ This option is shown under the `relations` section as follows:
 
 ### Entity Relation example - `many = false`
 
-When a Relation between Blueprints is configured with `many = false`, you can add a Relation to an Entity by adding the `relationIdentifier` as a key, and the `relatedEntityIdentifier` as a value:
+When a Relation between Blueprints is configured with `many = false`, you can add a Relation to an Entity by adding the `relationIdentifier` as key, and the `relatedEntityIdentifier` as value:
 
 ```json showLineNumbers
 "relations": {
@@ -121,7 +121,7 @@ When a Relation between Blueprints is configured with `many = false`, you can ad
 
 ### Entity Relation example - `many = true`
 
-When a Relation between Blueprints is configured with `many = true`, you can add a Relation to an Entity by adding the `relationIdentifier` as a key, and an array of `relatedEntityIdentifier`(s) as a value:
+When a Relation between Blueprints is configured with `many = true`, you can add a Relation to an Entity by adding the `relationIdentifier` as key, and an array of `relatedEntityIdentifier`(s) as value:
 
 ```json showLineNumbers
 "relations": {
@@ -155,4 +155,4 @@ In addition, you will be able to use [Mirror Properties](./mirror-properties) to
 
 [Explore How to Create, Edit, and Delete Entities with basic examples](../../tutorials/entity-basics.md)
 
-[Dive into advanced operations on Entities with our API ➡️ ](../../../api-reference)
+[Dive into advanced operations on Entities with our API ➡️ ](../../api-reference)

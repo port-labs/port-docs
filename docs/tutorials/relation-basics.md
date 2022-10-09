@@ -25,7 +25,7 @@ In order to create a relation from the UI, go to the Blueprints graph and click 
 
 ![Blueprints page with Create Relation Marked](../../static/img/tutorial/relation-basics/MicroservicePackageEditMarked.png)
 
-An editor window will open with the current schema of the Blueprint. Because there is no Relation configured on the Blueprint right now, the `relations` key in the JSON will be empty. Paste in the following content in the `relations` key to create the Relation:
+An editor window will open with the current schema of the Blueprint. Since there is no Relation configured on the Blueprint at the moment, the `relations` key in the JSON will be empty. Paste the following content in the `relations` key to create the Relation:
 
 ```json showLineNumbers
 "relations": {
@@ -175,9 +175,9 @@ When updating a Relation, it is only possible to update the `title`, `required` 
 :::caution
 A few points to consider when updating an existing Relation:
 
-- If you try to change the identifier of a Relation, it will effectively delete the old Relation and create a new one under the new identifier;
-- If there are Entities that are already Entities connected using the Relation, changing the identifier will fail with an error message;
-- If an existing Relation is defined `many = true` and there are multiple connected Entities in the Relation array, trying to update the Relation to `many = false` will fail.
+- If you change a Relation identifier, it will effectively delete the old Relation and create a new one under the new identifier;
+- If there are Entities that are already connected via Relation, you won't be able to change the identifier and an error message will appear;
+- If an existing Relation is defined `many = true` and there are multiple connected Entities in the Relation array, you will fail to update the Relation to `many = false`.
 
 :::
 
