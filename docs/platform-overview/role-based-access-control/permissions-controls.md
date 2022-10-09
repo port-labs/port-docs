@@ -79,7 +79,7 @@ For example, If we want to enable a specific user to update the Blueprint, you c
 }
 ```
 
-To enable Members to create Entities of "Env" Blueprint:
+To enable Members to create Entities of `Env` Blueprint:
 
 ```json showLineNumbers
 {
@@ -109,7 +109,7 @@ To allow only Admins to change the property `slackChannelUrl`, remove the Modera
 }
 ```
 
-By default, "Member" users can execute every new Action of the Blueprint. If you want, you can change it, for example to only allow Moderators (and Admins) to execute the Action "clone_env":
+By default, `Member` users can execute every new Action of the Blueprint. If you want, you can change it, for example to only allow Moderators (and Admins) to execute the Action `clone_env`:
 
 ```json showLineNumbers diff
 {
@@ -128,7 +128,7 @@ By default, "Member" users can execute every new Action of the Blueprint. If you
 ### Setting permissions by team ownership
 
 You will notice that some operations have the `ownedByTeam` flag. This allows you to set permissions by team ownership, rather than by Roles or direct assignment.
-For example, the following JSON will allow **every user**, regardless of their roles, to perform the Action "delete_env" on "Env" Entities that belong to a team they are part of (entities that have the [`team` property](../port-components/entity#teams-and-ownership) set):
+For example, the following JSON will allow **every user**, regardless of their roles, to perform the Action `delete_env` on `Env` Entities that belong to a team they are part of (entities that have the [`team` property](../port-components/entity#teams-and-ownership) set):
 
 ```json showLineNumbers
 {
@@ -145,7 +145,7 @@ For example, the following JSON will allow **every user**, regardless of their r
 ```
 
 :::info
-The `team` field is not mandatory! You can give a user access to create "Env", regardless of their team.
+The `team` field is not mandatory! You can give a user access to create `Env`, regardless of their team.
 :::
 
 ## UI behavior

@@ -96,15 +96,44 @@ const config = {
       footer: {
         style: "dark",
         links: [
-          // {
-          //   title: "Docs",
-          //   items: [
-          //     {
-          //       label: "Tutorial",
-          //       to: "/docs/intro",
-          //     },
-          //   ],
-          // },
+          {
+            title: "Documentation",
+            items: [
+              {
+                label: "Quickstart",
+                to: "/docs/",
+              },
+              {
+                label: "Tutorials",
+                to: "/docs/tutorials",
+              },
+              {
+                label: "Integrations",
+                to: "/docs/integrations",
+              },
+            ],
+          },
+          {
+            title: "Complete Use Cases",
+            items: [
+              {
+                label: "Software Catalog",
+                to: "/docs/complete-use-cases/software-catalog",
+              },
+              {
+                label: "Service Locking",
+                to: "/docs/complete-use-cases/service-locking",
+              },
+              {
+                label: "Software Templates",
+                to: "/docs/complete-use-cases/software-templates",
+              },
+              {
+                label: "IaC Templates",
+                to: "/docs/complete-use-cases/iac-templates",
+              },
+            ],
+          },
           {
             title: "Community",
             items: [
@@ -132,6 +161,19 @@ const config = {
               {
                 label: "Port",
                 href: "https://getport.io",
+              },
+            ],
+          },
+          {
+            title: "Legal",
+            items: [
+              {
+                label: "Terms of Service",
+                href: "https://getport.io/legal/terms-of-service",
+              },
+              {
+                label: "Privacy Policy",
+                href: "https://getport.io/legal/privacy-policy",
               },
             ],
           },
