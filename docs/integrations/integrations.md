@@ -4,6 +4,6 @@ Port offers several Integrations, allowing you to easily ingest and manage data 
 
 You can find more details about our available integrations by checking the list below:
 
-- [GitHub App](./github/app/introduction.md)
+- [GitHub App](./github/app/)
 - [GitHub Action](./github/github-action.md)
 - [Terraform Provider](./terraform.md)
