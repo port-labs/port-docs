@@ -175,7 +175,7 @@ so let's go ahead and create a **Microservice Blueprint**:
 
 ```json showLineNumbers
 {
-  "identifier": "Microservice",
+  "identifier": "microservice",
   "title": "Microservice",
   "icon": "Microservice",
   "schema": {
