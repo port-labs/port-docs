@@ -35,17 +35,17 @@ A Relation exists under the `relations` key in the [Blueprint JSON schema](./blu
 
 ## Structure table
 
-| Field      | Type      | Description                                                                                                                                                     |
-| ---------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `title`    | `String`  | Relation name that will be shown in the UI                                                                                                                      |
-| `target`   | `String`  | Target Blueprint identifier                                                                                                                                     |
-| `required` | `Boolean` | Boolean flag to define whether the target Entity is a must when creating a new Entity from the source Blueprint                                                 |
-| `many`     | `Boolean` | Boolean flag to define whether multiple target Entities can be mapped to the Relation. For more information refer to [X-to-many relation](#x-to-many-relation). |
+| Field      | Type      | Description                                                                                                                                                    |
+| ---------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `title`    | `String`  | Relation name that will be shown in the UI                                                                                                                     |
+| `target`   | `String`  | Target Blueprint identifier                                                                                                                                    |
+| `required` | `Boolean` | Boolean flag to define whether the target Entity is a must when creating a new Entity from the source Blueprint                                                |
+| `many`     | `Boolean` | Boolean flag to define whether multiple target Entities can be mapped to the Relation. For more information refer to [X-to-many relation](#x-to-many-relation) |
 
 ## Relation example
 
 Please see the following example of a relation between `microservices` and a `package` Blueprint.
-Let's say we have those two Blueprints defined, and we want to connect between them, in a way that the `microservice` is the `source` and `package` is the `target`.
+Let's say we have both Blueprints defined and we want to connect between them in a way that the `microservice` will be the `source` and the `package` will be the `target`.
 
 We need to add the following JSON schema of the relation to the `microservice` Blueprint's `relations` object:
 
@@ -61,9 +61,9 @@ We need to add the following JSON schema of the relation to the `microservice` B
 Resulting in this outcome in the UI:
 ![Blueprints Graph with Relations Line](../../../static/img/platform-overview/port-components/MicroservicePackageBlueprintGraphRelationUI.png)
 
-## X-to-many relation
+## X-to-many Relation
 
-Relations also support the `many` (its default value is `false`).
+Relations also support `many` (its default value is `false`).
 
 From a schema standpoint, when a Relation is defined `"many": true`, the corresponding Relation identifier in the Entities of the source Blueprint becomes an array(`[]`) as seen in [Entity Relation example - `many = true`](./entity.md#entity-relation-example---many--true).
 
@@ -71,9 +71,9 @@ There is also a visual indicator in the Blueprints graph when using `"many": tru
 
 ![Developer Portal Blueprints Graph Many Relation](../../../static/img/platform-overview/port-components/MicroservicePackageBlueprintGraphManyRelationUI.png)
 
-## Byproducts of a relation
+## Byproducts of a Relation
 
-### Relation object for entities
+### Relation object for Entities
 
 When two Blueprints are related, creating an Entity of the `source` Blueprint will show an additional option - a `Relation`.
 
