@@ -19,6 +19,7 @@ KAFKA_AUTHENTICATION_MECHANISM=scram-sha-512
 KAFKA_ENABLE_SSL=true
 KAFKA_USERNAME=YOUR_KAFKA_USERNAME
 KAFKA_PASSWORD=YOUR_KAFKA_PASSWORD
+KAFKA_CONSUMER_GROUP_NAME=YOUR_KAFKA_CONSUMER_GROUP
 ```
 
 To get yourself started quickly, you can always take a look at the [code repository](https://github.com/port-labs/port-serverless-examples) for examples.
@@ -530,10 +531,11 @@ aws lambda update-function-configuration --function-name port-changelog-lambda -
 Time to add the Kafka trigger
 
 ```bash showLineNumbers
-# Remember to replace YOUR_ORG_ID and SECRET_ARN
+# Remember to replace YOUR_ORG_ID, SECRET_ARN, and YOUR_KAFKA_CONSUMER_GROUP_NAME
 aws lambda create-event-source-mapping --topics YOUR_ORG_ID.change.log --source-access-configuration Type=SASL_SCRAM_512_AUTH,URI=SECRET_ARN \
           --function-name port-changelog-lambda \
           --batch-size 1 --starting-position LATEST \
+          --self-managed-kafka-event-source-config '{"ConsumerGroupId":"YOUR_KAFKA_CONSUMER_GROUP_NAME"}' \
           --self-managed-event-source '{"Endpoints":{"KAFKA_BOOTSTRAP_SERVERS":["b-1-public.publicclusterprod.t9rw6w.c1.kafka.eu-west-1.amazonaws.com:9196", "b-2-public.publicclusterprod.t9rw6w.c1.kafka.eu-west-1.amazonaws.com:9196", "b-3-public.publicclusterprod.t9rw6w.c1.kafka.eu-west-1.amazonaws.com:9196"]}}'
 ```
 

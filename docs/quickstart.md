@@ -223,7 +223,7 @@ In the edit form that appears, you will notice a `relations` key that is current
 ```json showLineNumbers
 "packages": {
     "title": "Package",
-    "target": "Package",
+    "target": "package",
     "description": "Package(s) used by the microservice",
     "many": true,
     "required": true
