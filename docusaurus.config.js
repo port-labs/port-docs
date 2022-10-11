@@ -228,6 +228,13 @@ const config = {
         },
       },
     ],
+    [
+      "@docusaurus/plugin-ideal-image",
+      {
+        quality: 70,
+        disableInDev: false,
+      },
+    ],
   ],
 };
 
