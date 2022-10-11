@@ -38,7 +38,7 @@ In the users tab, you can:
 - Invite new users;
 - Edit users;
 - Delete users;
-- And more.
+- Etc.
 
 ### Teams tab
 
@@ -48,7 +48,7 @@ In the teams tab, you can:
 - Create new teams;
 - Edit teams;
 - Delete teams;
-- And more.
+- Etc.
 
 :::tip Using SSO for users and teams
 When Single Sign-On (SSO) is enabled, users and teams information (including team membership) is taken directly from your identity provider (IdP).
