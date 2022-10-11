@@ -50,10 +50,16 @@ In the teams tab, you can:
 - Delete teams;
 - And more.
 
-:::info Using SSO for users and teams
+:::tip Using SSO for users and teams
 When Single Sign-On (SSO) is enabled, users and teams information (including team membership) is taken directly from your identity provider (IdP).
 
-Because the information is taken from your IdP, you can't edit it directly in Port, and the interface will display a message with an explanation:
+Because the users and teams information is taken from your IdP, some actions can't be performed when SSO is active:
+
+- Create teams;
+- Edit team membership;
+- Delete teams.
+
+If you try to perform one of the disabled actions, the interface will display a message with an explanation:
 
 ![Managed by SSO notice](../../../static/img/platform-overview/role-based-access-control/users-and-teams/createTeamNoticeWithSSO.png)
 :::
