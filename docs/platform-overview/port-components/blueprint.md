@@ -234,7 +234,13 @@ Here is how property definitions look like for all available types (remember tha
   "items": {
     "type": "object"
   },
-  "description": "An array property"
+  "description": "An array property",
+  "default": [
+    {
+      "foo": "bar",
+      "version": 1
+    }
+  ]
 }
 ```
 
