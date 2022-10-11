@@ -30,8 +30,38 @@ Each user is defined by the following properties:
 
 ![Teams and Users page](../../../static/img/platform-overview/role-based-access-control/users-and-teams/usersAndTeams.png)
 
-:::caution
-Modifying roles and teams via the users page will become available soon!
+### Users tab
+
+In the users tab, you can:
+
+- View all users;
+- Invite new users;
+- Edit users;
+- Delete users;
+- Etc.
+
+### Teams tab
+
+In the teams tab, you can:
+
+- View all teams;
+- Create new teams;
+- Edit teams;
+- Delete teams;
+- Etc.
+
+:::tip Using SSO for users and teams
+When Single Sign-On (SSO) is enabled, users and teams information (including team membership) is taken directly from your identity provider (IdP).
+
+Since the information is taken from your IdP, some actions can't be performed when SSO is active, such as:
+
+- Create teams;
+- Edit team membership;
+- Delete teams.
+
+If you try to perform one of the disabled actions, the interface will display an explanation:
+
+![Managed by SSO notice](../../../static/img/platform-overview/role-based-access-control/users-and-teams/createTeamNoticeWithSSO.png)
 :::
 
 ## `Team` system property
