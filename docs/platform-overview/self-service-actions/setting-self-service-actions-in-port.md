@@ -153,7 +153,7 @@ Here is an action array with a `CREATE` action already filled in:
     },
     "invocationMethod": {
       "type": "WEBHOOK",
-      "url": "https://webhook.example.com"
+      "url": "https://example.com"
     },
     "trigger": "CREATE",
     "description": "This will create a new microservice repo"
@@ -199,7 +199,7 @@ Let's go back to the actions array of our `Microservice` Blueprint and paste in 
     },
     "invocationMethod": {
       "type": "WEBHOOK",
-      "url": "https://webhook.example.com"
+      "url": "https://example.com"
     },
     "trigger": "CREATE",
     "description": "This will create a new microservice repo"
@@ -228,7 +228,7 @@ Let's go back to the actions array of our `Microservice` Blueprint and paste in 
     },
     "invocationMethod": {
       "type": "WEBHOOK",
-      "url": "https://webhook.example.com"
+      "url": "https://example.com"
     },
     "trigger": "DAY-2",
     "description": "This will deploy the microservice"
@@ -242,7 +242,7 @@ Let's go back to the actions array of our `Microservice` Blueprint and paste in 
     },
     "invocationMethod": {
       "type": "WEBHOOK",
-      "url": "https://webhook.example.com"
+      "url": "https://example.com"
     },
     "trigger": "DELETE",
     "description": "This will delete the microservice's repo"
@@ -288,7 +288,7 @@ For instance, you can add 2 `Create` Self-Service Actions to the `Microservice` 
     },
     "invocationMethod": {
       "type": "WEBHOOK",
-      "url": "https://webhook.example.com"
+      "url": "https://example.com"
     },
     "trigger": "CREATE",
     "description": "This will create a new Python microservice repo"
@@ -313,7 +313,7 @@ For instance, you can add 2 `Create` Self-Service Actions to the `Microservice` 
     },
     "invocationMethod": {
       "type": "WEBHOOK",
-      "url": "https://webhook.example.com"
+      "url": "https://example.com"
     },
     "trigger": "CREATE",
     "description": "This will create a new Go microservice repo"
@@ -360,7 +360,7 @@ The basic structure of a Self-Service Action:
   },
   "invocationMethod": {
     "type": "WEBHOOK",
-    "url": "https://webhook.example.com"
+    "url": "https://example.com"
   },
   "trigger": "CREATE",
   "description": "Action description"
@@ -446,10 +446,10 @@ The `invocationMethod` supports 2 configurations:
 
 ### Invocation method structure fields
 
-| Field  | Type     | Description                                                                                                                                       | Example values                |
-| ------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
-| `type` | `string` | Defines the Self-Service Action destination type                                                                                                  | Either `WEBHOOK` or `KAFKA`   |
-| `url`  | `string` | Defines the webhook URL where Port sends Self-Service Actions to via HTTP POST request. <br></br> Can be added only if `type` is set to `WEBHOOK` | `https://webhook.example.com` |
+| Field  | Type     | Description                                                                                                                                       | Example values              |
+| ------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
+| `type` | `string` | Defines the Self-Service Action destination type                                                                                                  | Either `WEBHOOK` or `KAFKA` |
+| `url`  | `string` | Defines the webhook URL where Port sends Self-Service Actions to via HTTP POST request. <br></br> Can be added only if `type` is set to `WEBHOOK` | `https://example.com`       |
 
 ## Triggering actions
 
@@ -583,7 +583,7 @@ Here is an example `payload` object for a `CREATE` action:
                 "region"
             ]
         },
-        "invocationMethod": { "type": "WEBHOOK", "url": "https://webhook.example.com" },
+        "invocationMethod": { "type": "WEBHOOK", "url": "https://example.com" },
         "trigger": "CREATE",
         "description": "This will create a new k8s cluster",
         "blueprint": "k8sCluster",

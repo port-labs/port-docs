@@ -71,7 +71,7 @@ Each Blueprint is represented by a [Json schema](https://json-schema.org/), as s
 | `identifier`           | `String` | Unique identifier.<br /> Note that while the identifier is unique, it can be changed after creation           |
 | `title`                | `String` | The Blueprint's name                                                                                          |
 | `description`          | `String` | Description for the Blueprint.<br /> This value is visible to users when hovering on the info icon in the UI. |
-| `icon`                 | `String` | Icon for the Blueprint's graph node, and Entities of the Blueprint                                            | Icon options: `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud,...` <br /><br />See the full icon list [below.](#full-icon-list) |
+| `icon`                 | `String` | Icon for the Blueprint's graph node, and Entities of the Blueprint                                            | Icon options: `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud,...` <br /><br />See the full icon list [below](#full-icon-list). |
 | `formulaProperties`    | `Object` | Contains the properties that are defined using [formula templates](./formula-properties)                      | Example: "`repo-link`": "`https://github.com/{{$identifier}}`"                                                                                |
 | `schema`               | `Object` | Object containing two more nested fields, including `properties` and `required`                               | See the schema structure [here](#blueprint-schema).                                                                                           |
 | `changelogDestination` | `Object` | Defines the destination where events that happen within the Blueprint's context will be delivered             | See the object structure [here](#changelog-destination).                                                                                      |
@@ -128,7 +128,7 @@ Now let's look at the structure of this property definition and also explore the
 | `format`      | `String`                | Specific data format to pair with some of the available types. You can explore all formats in the [String Formats](#string-property-formats) section                                                                                                                                                                                                                          |
 | `pattern`     | `String`                | [Regular expression](https://en.wikipedia.org/wiki/Regular_expression) (regex) pattern to specify the set of allowed values for the property. You can see an example in the [String regular expression patterns](#string-regular-expression-patterns) section                                                                                                                 |
 | `default`     | Should match the `type` | Default value for this property in case an Entity is created without explicitly providing a value.                                                                                                                                                                                                                                                                            |
-| `icon`        | `String`                | Icon for the property column in the [Blueprint page](./page#blueprint-page), in the [Entity page](./page#entity-page) and in the [Entity creation](../../tutorials/entity-basics.md#from-the-ui) form                                                                                                                                                                         |
+| `icon`        | `String`                | Icon for the property column in the [Blueprint page](./page#blueprint-page), in the [Entity page](./page#entity-page) and in the [Entity creation](../../tutorials/entity-basics.md#from-the-ui) form <br /><br />See the full icon list [above](#full-icon-list).                                                                                                            |
 | `description` | `String`                | Description of the property.<br /> This value is visible to users when hovering on the info icon in the UI. It provides detailed information about the use of a specific property.                                                                                                                                                                                            |
 | `enumColors`  | `Object`                | Define colors for enum fields. <br /> Can be added only if an enum field exists. <br /> Each key is one of the defined enum options and each value is one of the following colors: <br /> [blue, turquoise, orange, purple, lightBlue, pink, yellow, green, red, darkGray] <br /><br /> Notice: In case enum is defined and enumColor field is not default colors will be set |
 
@@ -234,7 +234,13 @@ Here is how property definitions look like for all available types (remember tha
   "items": {
     "type": "object"
   },
-  "description": "An array property"
+  "description": "An array property",
+  "default": [
+    {
+      "foo": "bar",
+      "version": 1
+    }
+  ]
 }
 ```
 
@@ -261,6 +267,7 @@ Here is how property definitions look like for all available types (remember tha
   "enum": ["Option 1", "Option 2", "Option 3"],
   "enumColors": {
     "Option 1": "red",
+    "Option 2": "green",
     "Option 3": "blue"
   },
   "description": "Enum dropdown menu"
@@ -425,10 +432,10 @@ If you don't want to send changelog events to any destination, you can simply re
 
 ### Changelog destination structure fields
 
-| Field  | Type     | Description                                                                                                                                   | Example values                |
-| ------ | -------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
-| `type` | `string` | Defines the changelog destination type                                                                                                        | Either `WEBHOOK` or `KAFKA`   |
-| `url`  | `string` | Defines the webhook URL where Port sends changelog events to via HTTP POST request. <br></br> Can be added only if `type` is set to `WEBHOOK` | `https://webhook.example.com` |
+| Field  | Type     | Description                                                                                                                                   | Example values              |
+| ------ | -------- | --------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
+| `type` | `string` | Defines the changelog destination type                                                                                                        | Either `WEBHOOK` or `KAFKA` |
+| `url`  | `string` | Defines the webhook URL where Port sends changelog events to via HTTP POST request. <br></br> Can be added only if `type` is set to `WEBHOOK` | `https://example.com`       |
 
 For more information about Port's changelog capabilities, refer to the [Port execution architecture](../self-service-actions/port-execution-architecture/port-execution-architecture.md) page.
 

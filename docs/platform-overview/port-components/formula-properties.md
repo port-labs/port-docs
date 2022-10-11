@@ -16,11 +16,13 @@ The `formulaProperties` key is a top-level key in the JSON of an entity (similar
 "formulaProperties": {
     "formulaProp1": {
         "title": "First formula property from meta-property",
-        "formula": "https://github.com/{{$identifier}}"
+        "formula": "https://github.com/{{$identifier}}",
+        "icon": "Aws"
     },
     "formulaProp2": {
         "title": "Second formula property from user-defined property",
-        "formula": "published-package-{{version}}"
+        "formula": "published-package-{{version}}",
+        "icon": "Deployment
     }
 }
 ```
@@ -52,7 +54,8 @@ In the following example, we create a Formula Property called `changelog_filenam
 ```json showLineNumbers
 "changelog_filename": {
     "title": "Changelog Filename",
-    "formula": "changelog-{{version}}.md"
+    "formula": "changelog-{{version}}.md",
+    "icon": "Bucket"
 }
 ```
 
@@ -80,7 +83,8 @@ In the following example, let’s create a formula property called `grafana_url`
 ```json showLineNumbers
 "grafana_url": {
     "title": "Grafana URL",
-    "formula": "https://grafana.com/{{$identifier}}"
+    "formula": "https://grafana.com/{{$identifier}}",
+    "icon": "Grafana"
 }
 ```
 
@@ -108,7 +112,8 @@ A Formula Property that links to the slack channel of the squad can be:
 ```json showLineNumbers
 "owning_squad_slack": {
     "title": "Owning Squad Channel",
-    "formula": "https://slack.com/{{owningSquad}}"
+    "formula": "https://slack.com/{{owningSquad}}",
+    "icon": "Team"
 }
 ```
 
