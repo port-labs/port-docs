@@ -267,6 +267,7 @@ Here is how property definitions look like for all available types (remember tha
   "enum": ["Option 1", "Option 2", "Option 3"],
   "enumColors": {
     "Option 1": "red",
+    "Option 2": "green",
     "Option 3": "blue"
   },
   "description": "Enum dropdown menu"
