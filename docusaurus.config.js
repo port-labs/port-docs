@@ -23,7 +23,7 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          routeBasePath: "/docs",
+          routeBasePath: "/",
           sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
           // editUrl: "https://github.com/port-labs",
@@ -33,7 +33,7 @@ const config = {
           customCss: require.resolve("./src/css/custom.css"),
         },
         gtag: {
-          trackingID: "UA-225507431-1",
+          trackingID: "G-3YL3X47R7L",
           anonymizeIP: false,
         },
         sitemap: {
@@ -51,7 +51,7 @@ const config = {
         specs: [
           {
             spec: "https://api.getport.io/yaml",
-            route: "/docs/api-reference/",
+            route: "/api-reference/",
           },
         ],
         // Theme Options for modifying how redoc renders them
@@ -101,15 +101,15 @@ const config = {
             items: [
               {
                 label: "Quickstart",
-                to: "/docs/",
+                to: "/",
               },
               {
                 label: "Tutorials",
-                to: "/docs/tutorials",
+                to: "/tutorials",
               },
               {
                 label: "Integrations",
-                to: "/docs/integrations",
+                to: "/integrations",
               },
             ],
           },
@@ -118,19 +118,19 @@ const config = {
             items: [
               {
                 label: "Software Catalog",
-                to: "/docs/complete-use-cases/software-catalog",
+                to: "/complete-use-cases/software-catalog",
               },
               {
                 label: "Service Locking",
-                to: "/docs/complete-use-cases/service-locking",
+                to: "/complete-use-cases/service-locking",
               },
               {
                 label: "Software Templates",
-                to: "/docs/complete-use-cases/software-templates",
+                to: "/complete-use-cases/software-templates",
               },
               {
                 label: "IaC Templates",
-                to: "/docs/complete-use-cases/iac-templates",
+                to: "/complete-use-cases/iac-templates",
               },
             ],
           },
@@ -207,7 +207,7 @@ const config = {
         hashed: true,
         indexDocs: true,
         indexBlog: false,
-        docsRouteBasePath: "/docs",
+        docsRouteBasePath: "/",
       },
     ],
   ],
@@ -220,9 +220,9 @@ const config = {
       {
         createRedirects(existingPath) {
           console.log("path is:", existingPath);
-          if (existingPath.includes("/docs") && existingPath !== "/") {
+          if (!existingPath.includes("/docs") && existingPath !== "/") {
             // Support URLs without /docs prepended and route them to /docs
-            return [existingPath.replace("/docs/", "/")];
+            return [existingPath.replace("/", "/docs/", 1)];
           }
           return undefined;
         },
