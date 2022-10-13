@@ -119,7 +119,7 @@ To grant permissions for a specific user to edit the `deployedAt` relation, add 
 }
 ```
 
-By default, **Member** users can execute every new Action of the Blueprint. If you want, you can change it, for example to only allow **Moderators** (and **Admins**) to execute the Action `clone_env`:
+By default, **Member** users can execute every new Action of the Blueprint. If necessary, you can change it. For example, you can allow **Moderators** (and **Admins**) to only execute the Action `clone_env`:
 
 ```json showLineNumbers diff
 {
