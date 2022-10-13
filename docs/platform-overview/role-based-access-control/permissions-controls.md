@@ -206,6 +206,15 @@ If both are set, then the global setting will be used when evaluating permission
 `update`, `updateProperties` and `updateRelations` apply for registration as well. So if some user lacks permissions to update some property for example, then he will not have the ability to provide it when registering a new Entity.  
 :::
 
+### Edge-cases
+
+In some occasions, it's possible to apply permissions in a way that deadlocks users from interacting with the platform.
+And while these cases are valid, they might be a little counterintuitive.
+Here are a few examples that show how you can grant permissions for a user, but still not enabling him to perform the operation due to other restrictions:
+
+1. If the user have permissions to edit any property except for a required property - then the user will not be able to register or update the Entity as a whole because he can't provide the required property.
+2. If the `ownedByTeam` setting is enabled for register, and the user does not have permissions to edit the `team` property - then the user will not be able to register the Entity since he can't mark it as owned by his team.
+
 ## UI behavior
 
 Configuring user permissions is reflected in Port's UI. The UI also includes indication messages when trying to perform actions. For example:
