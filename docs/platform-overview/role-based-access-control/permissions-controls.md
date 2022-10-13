@@ -209,11 +209,11 @@ If both permission types are set, then the global setting will be used when eval
 ### Edge-cases
 
 In some occasions, it's possible to apply permissions in a way that deadlocks users from interacting with the platform.
-And while these cases are valid, they might be a little counterintuitive.
-Here are a few examples that show how you can grant permissions for a user, but still not enabling him to perform the operation due to other restrictions:
+While these cases are valid, they might be a little counterintuitive.
+Here are a few examples of how can you grant a user permissions, but still not enable him to perform the operation due to other restrictions:
 
-1. If the user have permissions to edit any property except for a required property - then the user will not be able to register or update the Entity as a whole because he can't provide the required property.
-2. If the `ownedByTeam` setting is enabled for register, and the user does not have permissions to edit the `team` property - then the user will not be able to register the Entity since he can't mark it as owned by his team.
+1. If the user has permissions to edit any property (except for a required property) - then the user will not be able to register or update the Entity as a whole because he can't provide the required property.
+2. If the `ownedByTeam` setting is enabled for registration, and the user does not have permissions to edit the `team` property - then the user will not be able to register the Entity since he can't mark it as owned by his team.
 
 ## UI behavior
 
