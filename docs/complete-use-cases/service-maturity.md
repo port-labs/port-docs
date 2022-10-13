@@ -42,7 +42,8 @@ Let's go over the different Blueprints shown below and how we'll create [Entitie
 
 :::note
 
-In this article we are using `Levels` to define the service maturity
+In this article, we are using `Levels` to define the service maturity following a [Levels Model](https://spiresearch.com/psmaturitymodel/service-maturity-levels.html).
+
 But, the `priority` property is made to support any custom naming convention you would like, and it won't affect the actual calculation of the Maturity behind the scenes.
 
 For example, You can rename `Level 1` - `Level 5` to `Bronze` - `Gold` without any problem or required changes
