@@ -19,12 +19,12 @@ There are 3 types of roles. Below are their out-of-the-box permissions:
 | Role                         | Description                                                                                                    |
 | ---------------------------- | -------------------------------------------------------------------------------------------------------------- |
 | **Admin**                    | Perform any operation on the platform                                                                          |
-| **Moderator** of a Blueprint | Perform any operation on a specific Blueprint and it's Entities. A user can be moderator of several Blueprints |
-| **Member**                   | Read-only permissions, And permissions to execute Actions                                                      |
+| **Moderator** of a Blueprint | Perform any operation on a specific Blueprint and its Entities. A user can be a moderator of several Blueprints |
+| **Member**                   | Read-only permissions + permissions to execute Actions                                                      |
 
 :::info
-**Moderator** role is dynamically created for each Blueprint in the platform upon creation.
-For example, creating the Blueprint `Env` will create a role named `Env-moderator`, which can perform any operation on the `Env` Blueprint and it's Entities.
+The **Moderator** role is uniquely created for each Blueprint in the platform upon creation.
+For example, creating the Blueprint `Env` will generate a role named `Env-moderator`, which can perform any operation on the `Env` Blueprint and its Entities.
 :::
 
 As mentioned above, these permissions are given by default when you first set up your organization, based on the behaviours we learned to be best-practices.
