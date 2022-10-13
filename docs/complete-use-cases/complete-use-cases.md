@@ -12,3 +12,4 @@ Select a use case from the list below to get started:
 - [Service Locking](./service-locking.md)
 - [Software Templates](./software-templates.md)
 - [IaC Templates](./iac-templates.md)
+- [Service Maturity](./service-maturity.md)
