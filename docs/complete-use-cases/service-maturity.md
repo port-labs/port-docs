@@ -56,14 +56,34 @@ In the [repository of this example](https://github.com/port-labs/port-service-ma
 
 1. At the top of the `workflow` file, there is a `schedule` trigger for this `workflow`, in our example, every 1 hour we will trigger a `workflow run`
 
-```
-  schedule:
-   - cron:  '0 * * * *'
+```yaml showLineNumber
+schedule:
+  - cron: "0 * * * *"
 ```
 
 2. After the `workflow` has been triggered we have to run all the `Checks` defined in the workflow
 3. For each `Check`, we will create a new `CheckRun` Entity inside of Port via the API that describes whether the test succeeded or failed
 4. The last step of the workflow will search for all the latest `Check Runs` and calculate the Service level and update the relation of it to the right `Rank` entity. for example, if a service passes all of the `Level 1` checks, he is automatic will get to `Level 2` and so on until he fails, if he fails in some level he stays in this level until this `Check` passes
+
+:::tip
+
+Scheduled run doesn't always fit with the needs of the service maturity within the organization.
+With that in mind, you can always add a `pull_request` trigger to your `workflow file`
+
+For instance:
+
+```yaml showLineNumber
+on:
+  pull_request:
+    types:
+      - "opened"
+      - "synchronize"
+      - "reopened"
+      - "ready_for_review"
+      - "converted_to_draft"
+```
+
+:::
 
 ## Setup
 
@@ -204,8 +224,14 @@ To create any custom `Check` as above, all you need to do is the following:
 
 :::note
 
-Please make sure to add the workflow call to the `run-maturity-tests.yml` workflow. If you won't the workflow will never be called by the schedule run
+Please make sure to add the workflow call to the `run-maturity-tests.yml` workflow. If you don't the workflow will never be called by the scheduled run
 :::
+
+## Contributing Checks
+
+The [example repo](https://github.com/port-labs/port-service-maturity-example) is open for pull requests!
+
+Feel free to open pull requests that include your `Checks` to extend the capabilities of this example!
 
 ## Summary
 
