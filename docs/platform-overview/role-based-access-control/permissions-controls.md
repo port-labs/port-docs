@@ -162,8 +162,8 @@ The `team` field is not mandatory! You can give a user access to create `Env`, r
 
 When granting write permissions for Entities of a Blueprint, you have 2 levels of control:
 
-1. Global permissions - permission to create/update an Entity as a whole. For example, allowing **Member** users to update `Env` Entities (all the properties and relations).
-2. Granular permissions - controlling which properties and relations a user/role can update when creating or updating an Entity, for example, allowing **Member** users to only update the property `slackChannelUrl` of `Env` Entities.
+1. Global permissions - create/update an Entity as a whole. For example, allow **Member** users to update `Env` Entities (all the properties and relations).
+2. Granular permissions - control which properties and relations a user/role can update when creating or updating an Entity. For example, allow **Member** users to only update the property `slackChannelUrl` of `Env` Entities.
 
 To apply granular permissions for a Blueprint, use the `updateProperties` and `updateRelations` fields in the JSON.
 The following change will allow **Member** users to update _only_ the `slackChannelUrl` property of `Env` Entities:
