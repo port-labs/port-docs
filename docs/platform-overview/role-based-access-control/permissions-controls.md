@@ -27,7 +27,7 @@ The **Moderator** role is uniquely created for each Blueprint in the platform up
 For example, creating the Blueprint `Env` will generate a role named `Env-moderator`, which can perform any operation on the `Env` Blueprint and its Entities.
 :::
 
-As mentioned above, these permissions are given by default when you first set up your organization, based on the behaviours we learned to be best-practices.
+As mentioned above, these permissions are given by default when you first set up your organization, based on the behaviors we learned are best-practices.
 However, as part of Port's [builder-approach](../../faq/faq.md#whats-a-builder-based-developer-portal), we let you decide and control the permissions you want to grant, in a way that fits your organization best. We'll explore those options down below and in the tutorials section.
 
 :::info
