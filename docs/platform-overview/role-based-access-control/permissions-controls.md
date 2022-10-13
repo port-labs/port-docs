@@ -199,7 +199,7 @@ The following change will allow **Member** users to update _every_ property/rela
 
 :::caution
 Using global permissions overrides any granular permission that has been set!
-If both are set, then the global setting will be used when evaluating permissions.
+If both permission types are set, then the global setting will be used when evaluating permissions.
 :::
 
 :::info
