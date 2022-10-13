@@ -58,7 +58,7 @@ The following configurations, among others, are available when using permissions
    a. `Deployment` Entities are immutable for all roles, and `Cluster` Entities are editable only by the **Moderators**.
    b. **Members** can create a new `Microservice` Entity, but are not permitted to delete a `Microservice` Entity.
 2. Each Entity property/relation can be immutable separately for specific users/roles. For example, the `repository_link` property can be immutable for all roles (except **Admin**).
-3. Allow specific users/roles to only modify Entities [owned by their team](#setting-permissions-by-team-ownership). For example, **Members** can edit only `Microservices` that belong to their team.
+3. Allow specific users/roles to modify only Entities [owned by their team](#setting-permissions-by-team-ownership). For example, **Members** can edit only `Microservices` that belong to their team.
 4. Actions execution grants can be given to specific users or roles. For example, you can allow every **Member** to create a new `Deployment` Entity but only `Deployment` **Moderators** can perform a day-2 Action of "adding resources".
 
 ### Setting permissions for a Blueprint (and its Actions)
