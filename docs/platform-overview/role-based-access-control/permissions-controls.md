@@ -28,7 +28,7 @@ For example, creating the Blueprint `Env` will generate a role named `Env-modera
 :::
 
 As mentioned above, these permissions are given by default when you first set up your organization, based on the behaviors we learned are best-practices.
-However, as part of Port's [builder-approach](../../faq/faq.md#whats-a-builder-based-developer-portal), we let you decide and control the permissions you want to grant, in a way that fits your organization best. We'll explore those options down below and in the tutorials section.
+However, as part of Port's [builder-approach](../../faq/faq.md#whats-a-builder-based-developer-portal), you can decide and control the permissions you want to grant, in the way that suits your organization best. We'll explore those options down below and in the tutorials section.
 
 :::info
 In addition to the permissions designated for each role, permissions are also inherited from the role below them:
