@@ -203,7 +203,7 @@ If both are set, then the global setting will be used when evaluating permission
 :::
 
 :::info
-`update`, `updateProperties` and `updateRelations` apply for registration as well. So if some user lacks permissions to update some property for example, then he will not have the ability to provide it when registering a new Entity.  
+`update`, `updateProperties` and `updateRelations` settings apply when registering new Entities as well. This means that a user can't register a new Entity with a property (or relation) that he doesn't have permissions to edit.  
 :::
 
 ### Edge-cases
