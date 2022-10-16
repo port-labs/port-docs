@@ -26,11 +26,69 @@ Architectures and deployments vary greatly, and so do preferences and standards 
 
 But for now, let's start with a simple example:
 
-Your organization uses a microservice architecture; different microservices use packages to manage code reused by various microservices.
+Your organization uses a microservice architecture; a single **microservice** can be deployed to multiple **environments** (production, staging, QA, etc.).
 
-To create your Software Catalog, you need to to ingest and track your microservices, track which package (and which version) is used in which microservice, and which package is used in multiple microservices.
+To create your Software Catalog, you need to to ingest and track your microservices, track your existing environments, and map out which microservice is deployed at which environment.
 
-Let's head to [Port](https://app.getport.io/blueprints) and look at the Blueprints page, at the top right corner let's click on **Add Blueprint** and configure our first blueprint - **Package** as shown in the image below:
+In this tutorial you are going to create 3 Blueprints:
+
+- Service;
+- Environment;
+- Running service.
+
+Note the **Running service** Blueprint - it is meant to represent a running deployment of your **service** in one of your **environments**.
+
+:::tip
+During this tutorial, we will demonstrate a way to perform every step both from Port's web UI and using Port's REST API.
+
+This tutorial will include complete examples to interact with Port's API, but for more examples you can visit the [API section](./tutorials/blueprint-basics.md#from-the-api) in [Blueprint basics](./tutorials/blueprint-basics.md).
+
+For readability, snippets to copy and paste and examples will be inside collapsed boxes:
+
+<details>
+<summary>Example JSON block</summary>
+
+```json showLineNumbers
+{
+  "foo": "bar"
+}
+```
+
+</details>
+
+<details>
+<summary>Example code block</summary>
+
+```python showLineNumbers
+print("hello world!")
+```
+
+</details>
+
+:::
+
+### Service Blueprint
+
+Our service Blueprint is going to include the following properties (among others):
+
+- **Github URL** - a link to the GitHub repository of the microservice;
+- **On Call** - the current on-call developer;
+- **Last Incident** - the last time an incident occurred in the microservice;
+- **Language** - the main programming language used for the microservice;
+- **Product** - the business unit category of the microservice;
+- **Version** - the latest version of the microservice;
+- **Number of JIRA issues** - the number of currently open JIRA issues;
+- **Slack notifications** - a URL to the Slack Channel of the team responsible for the microservice.
+
+:::tip
+Don't worry if you want to add/remove properties, you can always go back and edit later.
+:::
+
+In addition, the `on-call` field will be marked as `required`, so that we always know who is the current on-call for the service.
+
+#### From the UI
+
+Let's head to [Port](https://app.getport.io/blueprints) and look at the Blueprints page, at the top right corner let's click on **Add Blueprint** and configure our first blueprint - **Service** as shown in the image below:
 
 ![Developer PortalCreate New Blueprint](../static/img/welcome/quickstart/newBlueprintButton.png)
 
@@ -38,59 +96,427 @@ After clicking the button, you should see a creation form as shown below:
 
 ![Developer Portal New Blueprint Text](../static/img/welcome/quickstart/newBlueprintDefaultText.png)
 
-Our package Blueprint is going to include the following properties:
-
-- **Version** - The package version
-- **In-House** - Whether the package was developed in house or externally
-
-In addition, the `version` field will be marked as `required`, so we can make sure that our package has a version value.
-
 :::note
-Don't worry if you want to add more properties to the Blueprint, you can always go back and edit later.
+When you click on `Add Blueprint`, you will see a template for a `microservice` Blueprint which is identical to the one you will create. So you can just click `save` and skip to [Environment Blueprint](#environment-blueprint).
 :::
 
-In order to create a Blueprint using the properties, use the following JSON body:
+In order to create a the service Blueprint, use the following JSON body:
+
+<details>
+<summary>Service Blueprint JSON</summary>
 
 ```json showLineNumbers
 {
-  "identifier": "package",
-  "title": "Package",
-  "icon": "Package",
-  "formulaProperties": {},
-  "relations": {},
+  "identifier": "microservice",
+  "description": "This blueprint represents service in our software catalog",
+  "title": "Service",
+  "icon": "Microservice",
   "schema": {
     "properties": {
+      "on-call": {
+        "type": "string",
+        "icon": "Okta",
+        "title": "On Call",
+        "format": "email",
+        "default": "develoepr@getport.io"
+      },
+      "language": {
+        "type": "string",
+        "icon": "Git",
+        "title": "Language",
+        "default": "Node",
+        "enum": ["GO", "Python", "Node"],
+        "enumColors": {
+          "GO": "red",
+          "Python": "green",
+          "Node": "blue"
+        }
+      },
+      "locked": {
+        "type": "boolean",
+        "title": "Locked",
+        "icon": "Lock",
+        "default": false
+      },
+      "number-of-open-jira-issues": {
+        "type": "number",
+        "icon": "DevopsTool",
+        "title": "Number of JIRA Issues",
+        "default": 42
+      },
+      "product": {
+        "title": "Product",
+        "type": "string",
+        "icon": "Docs",
+        "default": "Analytics",
+        "enum": ["SaaS", "Control Panel", "Analytics"],
+        "description": "Choose product unit related to the service"
+      },
+      "url": {
+        "type": "string",
+        "title": "Github URL",
+        "icon": "Github",
+        "format": "url",
+        "default": "https://git.com",
+        "description": "the link to the repo in our github"
+      },
+      "config": {
+        "title": "Service Config",
+        "type": "object",
+        "icon": "Argo",
+        "default": {
+          "foo": "bar"
+        }
+      },
+      "monitor-links": {
+        "title": "Monitor Tooling",
+        "type": "array",
+        "icon": "Datadog",
+        "items": {
+          "type": "string",
+          "format": "url"
+        },
+        "default": [
+          "https://grafana.com",
+          "https://prometheus.com",
+          "https://datadog.com"
+        ]
+      },
+      "last-incident": {
+        "icon": "CPU",
+        "type": "string",
+        "title": "Last Incident",
+        "format": "date-time",
+        "default": "2022-04-18T11:44:15.345Z"
+      },
       "version": {
         "type": "string",
+        "icon": "Package",
         "title": "Version",
-        "description": "The version of the package"
+        "pattern": "[a-zA-Z0-9.]",
+        "description": "A property that supports values specified by a regex pattern",
+        "default": "Port1337"
       },
-      "inHouse": {
-        "type": "boolean",
-        "title": "In-House?",
-        "description": "Whether the package was developed in house"
+      "ip": {
+        "title": "IPv4 Property",
+        "icon": "Cluster",
+        "type": "string",
+        "format": "ipv4",
+        "description": "An IPv4 property",
+        "default": "127.0.0.1"
       }
     },
-    "required": ["version"]
-  }
+    "required": ["on-call"]
+  },
+  "mirrorProperties": {},
+  "formulaProperties": {
+    "slack-notifications": {
+      "title": "Slack Notifications",
+      "icon": "Link",
+      "formula": "https://slack.com/{{$identifier}}"
+    },
+    "on-call-plus-version": {
+      "title": "On Call + Version",
+      "icon": "Jenkins",
+      "formula": "{{on-call}} + {{version}}"
+    },
+    "launch-darkly": {
+      "title": "Launch Darkly",
+      "icon": "Customer",
+      "formula": "https://launchdarkly.com/{{$title}}"
+    }
+  },
+  "relations": {}
 }
 ```
 
-Click on the `save` button, and you should see your new Blueprint in the Blueprints graph:
+</details>
+
+Click on the `save` button, and [you should see](#the-results) your new Blueprint in the Blueprints graph.
+
+#### From the API
+
+To interact with Port's API, we will use python, the only package requirement is the [requests](https://pypi.org/project/requests/) library which you can install by running:
+
+```bash showLineNumbers
+python -m pip install requests
+```
+
+:::note
+For the next part, you will need your Port `CLIENT_ID` and `CLIENT_SECRET`.
+
+To find your Port API credentials go to [Port](https://app.getport.io), click on `Crednetials` at the bottom left corner and you will be able to view and copy your `CLIENT_ID` and `CLIENT_SECRET`:
+
+<center>
+
+![Port Developer Portal Credentials Modal](../static/img/tutorial/credentials-modal.png)
+
+</center>
+
+:::
+
+In order to perform any action with Port's API, you first need an **access token**:
+
+<details>
+<summary>Get an API access token</summary>
+
+```python showLineNumbers
+# Dependencies to install:
+# $ python -m pip install requests
+
+import requests
+
+CLIENT_ID = 'YOUR_CLIENT_ID'
+CLIENT_SECRET = 'YOUR_CLIENT_SECRET'
+
+API_URL = 'https://api.getport.io/v1'
+
+credentials = {'clientId': CLIENT_ID, 'clientSecret': CLIENT_SECRET}
+
+token_response = requests.post(f'{API_URL}/auth/access_token', json=credentials)
+
+access_token = token_response.json()['accessToken']
+
+# You can now use the value in access_token when making further requests
+
+```
+
+:::tip
+For examples in other languages you can visit the [API section](./tutorials/blueprint-basics.md#from-the-api) in [Blueprint basics](./tutorials/blueprint-basics.md).
+
+:::
+
+</details>
+
+Now that you have an access token, you can use it for every interaction you make with Port's API. You will also use in the section below to create the `Service` Blueprint:
+
+<details>
+<summary>Create the service Blueprint</summary>
+
+Note this example assumes the token is saved in the `access_token` variable.
+
+```python showLineNumbers
+# Dependencies to install:
+# $ python -m pip install requests
+import json
+import requests
+
+# the access_token variable should already have the token from the previous example
+
+API_URL = 'https://api.getport.io/v1'
+
+headers = {
+    'Authorization': f'Bearer {access_token}'
+}
+
+blueprint = {
+    "identifier": "microservice",
+    "description": "This blueprint represents service in our software catalog",
+    "title": "Service",
+    "icon": "Microservice",
+    "schema": {
+        "properties": {
+            "on-call": {
+                "type": "string",
+                "icon": "Okta",
+                "title": "On Call",
+                "format": "email",
+                "default": "develoepr@getport.io"
+            },
+            "language": {
+                "type": "string",
+                "icon": "Git",
+                "title": "Language",
+                "default": "Node",
+                "enum": ["GO", "Python", "Node"],
+                "enumColors": {
+                    "GO": "red",
+                    "Python": "green",
+                    "Node": "blue"
+                }
+            },
+            "locked": {
+                "type": "boolean",
+                "title": "Locked",
+                "icon": "Lock",
+                "default": False
+            },
+            "number-of-open-jira-issues": {
+                "type": "number",
+                "icon": "DevopsTool",
+                "title": "Number of JIRA Issues",
+                "default": 42
+            },
+            "product": {
+                "title": "Product",
+                "type": "string",
+                "icon": "Docs",
+                "default": "Analytics",
+                "enum": ["SaaS", "Control Panel", "Analytics"],
+                "description": "Choose product unit related to the service"
+            },
+            "url": {
+                "type": "string",
+                "title": "Github URL",
+                "icon": "Github",
+                "format": "url",
+                "default": "https://git.com",
+                "description": "the link to the repo in our github"
+            },
+            "config": {
+                "title": "Service Config",
+                "type": "object",
+                "icon": "Argo",
+                "default": {
+                    "foo": "bar"
+                }
+            },
+            "monitor-links": {
+                "title": "Monitor Tooling",
+                "type": "array",
+                "icon": "Datadog",
+                "items": {
+                    "type": "string",
+                    "format": "url"
+                },
+                "default": ["https://grafana.com", "https://prometheus.com", "https://datadog.com"]
+            },
+            "last-incident": {
+                "icon": "CPU",
+                "type": "string",
+                "title": "Last Incident",
+                "format": "date-time",
+                "default": "2022-04-18T11:44:15.345Z"
+            },
+            "version": {
+                "type": "string",
+                "icon": "Package",
+                "title": "Version",
+                "pattern": "[a-zA-Z0-9.]",
+                "description": "A property that supports values specified by a regex pattern",
+                "default": "Port1337"
+            },
+            "ip": {
+                "title": "IPv4 Property",
+                "icon": "Cluster",
+                "type": "string",
+                "format": "ipv4",
+                "description": "An IPv4 property",
+                "default": "127.0.0.1"
+            }
+        },
+        "required": ["on-call"]
+    },
+    "mirrorProperties": {},
+    "formulaProperties": {
+        "slack-notifications": {
+            "title": "Slack Notifications",
+            "icon": "Link",
+            "formula": "https://slack.com/{{$identifier}}"
+        },
+        "on-call-plus-version": {
+            "title": "On Call + Version",
+            "icon": "Jenkins",
+            "formula": "{{on-call}} + {{version}}"
+        },
+        "launch-darkly": {
+            "title": "Launch Darkly",
+            "icon": "Customer",
+            "formula": "https://launchdarkly.com/{{$title}}"
+        }
+    },
+    "relations": {}
+}
+
+response = requests.post(f'{API_URL}/blueprints', json=blueprint, headers=headers)
+# response.json() contains the content of the resulting blueprint
+
+print(json.dumps(response.json(), indent=2))
+
+```
+
+</details>
+
+#### The results
+
+<!-- REPLACE -->
 
 ![Developer Portal Blueprints graph with new Package Blueprint](../static/img/welcome/quickstart/blueprintGraphWithPackageClosed.png)
 
 Click on the `expand` button as shown in the image below:
 
+<!-- REPLACE -->
+
 ![Developer Portal Blueprints graph with new Package Blueprint And Expand Marked](../static/img/welcome/quickstart/blueprintGraphWithPackageClosedExpandMarked.png)
 
 You should see an expanded view of the blueprint you just created, with all of its properties listed alongside the types you provided:
+
+<!-- REPLACE -->
 
 ![Developer Portal Blueprints graph with new Package open](../static/img/welcome/quickstart/blueprintGraphWithPackageOpen.png)
 
 Congratulations! you have just created your first Blueprint! 🎉
 
-In the next part, we will start creating Entities that match this new Blueprint, making the Software Catalog come together!
+### Environment Blueprint
+
+Our environment Blueprint is going to include the following properties:
+
+- **Environment type** - the type of the environment (production, staging, QA, etc.);
+- **Cloud provider** - the cloud provider where the cluster is deployed;
+- **Region** - The cloud region where the cluster is deployed.
+
+<!-- COntinue working on the blueprint schema, add enum colors for cloud providers, add formula properties for grafana, prometheus -->
+
+In addition, the `environment type` field will be marked as `required`, so we can make sure that our environments are tagged correctly.
+
+In order to create a the service Blueprint, use the following JSON body:
+
+<details>
+<summary>Service Blueprint JSON</summary>
+
+```json showLineNumbers
+{
+  "identifier": "microservice",
+  "description": "This blueprint represents service in our software catalog",
+  "title": "Service",
+  "icon": "Microservice",
+  "schema": {
+    "properties": {
+      "on-call": {
+        "type": "string",
+        "icon": "Okta",
+        "title": "On Call",
+        "format": "email",
+        "default": "develoepr@getport.io"
+      }
+    },
+    "required": ["on-call"]
+  },
+  "mirrorProperties": {},
+  "formulaProperties": {
+    "grafana-url": {
+      "title": "Grafana URL",
+      "icon": "Link",
+      "formula": "https://grafana.com/{{$identifier}}"
+    },
+    "prometheus-url": {
+      "title": "Prometheus URL",
+      "icon": "Link",
+      "formula": "https://prometheus.com/{{$identifier}}"
+    },
+    "aws-url": {
+      "title": "AWS Cloudwatch URL",
+      "icon": "Aws",
+      "formula": "https://aws.com/{{$identifier}}"
+    }
+  },
+  "relations": {}
+}
+```
+
+</details>
+
+In the next part, we will start creating Entities that match these new Blueprints, making the Software Catalog come together!
 
 ## Create your first Entities
 
@@ -163,9 +589,7 @@ A **Relation** is a connection between two Blueprints and the Entities that are 
 
 Currently our Software Catalog only has packages, but everybody knows packages are just the building blocks for larger applications and services, so we'll now create a microservice Blueprint to represent the application that will make use of our packages. Our Microservice Blueprint will contain the following fields:
 
-- **Repo** - A URL to the source code repository storing the microservice code;
-- **Slack Channel** - A URL to the Slack Channel of the team responsible for the Microservice;
-- In addition, our **Relation** will list the packages used by the microservice.
+In addition, our **Relation** will list the packages used by the microservice.
 
 so let's go ahead and create a **Microservice Blueprint**:
 
