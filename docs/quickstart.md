@@ -814,7 +814,7 @@ In the next part, we will look at our last building block - _Relations_. Let's g
 
 A **Relation** is a connection between two Blueprints and the Entities that are based on them. Using Relations you can create a connection graph between multiple Entities, the connection graph helps you understand the structure of your infrastructure and gain easier access to the data of related Entities.
 
-Currently our Software Catalog has services and environments, but in practice a single service is deployed to multiple environments at the same time. In order to keep track of all the different services and their active deployments, we're no going to create another Blueprint `Running Service`. Our running service Blueprint will contain the following fields:
+Currently our Software Catalog has services and environments, but in practice a single service is deployed to multiple environments at the same time. In order to keep track of all the different services and their active deployments, we're now going to create another Blueprint `Running Service`. Our running service Blueprint will contain the following fields:
 
 - **Health status** - the health status of the running service;
 - **Deployed branch** - the branch where the code of the running service is taken from;
