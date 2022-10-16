@@ -11,7 +11,7 @@ Port is a Developer Platform made to make life easier for developers and DevOps 
 
 Port then allows engineers to perform actions on these assets in a self-service fashion. From provisioning a dev environment, understanding who is the owner of a microservice, or any unique use case DevOps want to self-serve and automate.
 
-### Port helps you to:
+### Port helps you to
 
 - Create a comprehensive **Software Catalog** by mapping all your software and infrastructure components in one place: microservices, monoliths, deployments, repos, databases, and more.
 - Let your developers provision, terminate and perform day 2 operations on any asset exposed (microservice or not) in your catalog, within the policies and guardrails you’ve set, ensuring unified standards and governance over the processes inside your organization.
@@ -529,7 +529,7 @@ In order to create a the environment Blueprint, use the following JSON body:
 
 #### From the UI
 
-To create the environment Blueprint from the UI, repeat the steps you took in [creating a service Blueprint from the UI](#from-the-ui) using the environment JSON.
+To create the environment Blueprint from the UI, repeat the steps you took in [creating a service Blueprint from the UI](#from-the-ui) using the environment Blueprint JSON.
 
 #### From the API
 
@@ -644,7 +644,7 @@ An **Entity** is an object that matches a type of a certain Blueprint. In our ca
 
 Let's create some initial Entities to make things clearer.
 
-### Service Entity
+### Service and Environment Entity
 
 #### From the UI
 
@@ -814,133 +814,347 @@ In the next part, we will look at our last building block - _Relations_. Let's g
 
 A **Relation** is a connection between two Blueprints and the Entities that are based on them. Using Relations you can create a connection graph between multiple Entities, the connection graph helps you understand the structure of your infrastructure and gain easier access to the data of related Entities.
 
-Currently our Software Catalog has services and environments, but in practice everybody knows packages are just the building blocks for larger applications and services, so we'll now create a microservice Blueprint to represent the application that will make use of our packages. Our Microservice Blueprint will contain the following fields:
+Currently our Software Catalog has services and environments, but in practice a single service is deployed to multiple environments at the same time. In order to keep track of all the different services and their active deployments, we're no going to create another Blueprint `Running Service`. Our running service Blueprint will contain the following fields:
 
-In addition, our **Relation** will list the packages used by the microservice.
+- **Health status** - the health status of the running service;
+- **Deployed branch** - the branch where the code of the running service is taken from;
+- **Locked** - is the running service currently locked (meaning no new deployments are allowed).
 
-so let's go ahead and create a **Microservice Blueprint**:
+In addition, the running service Blueprint will include two **Relations**:
 
-- Go back to the Blueprints page;
-- Click on the Add Blueprint button;
-- Paste the content shown below and then click create:
+- A Relation to a service - to denote the microservice the running service belongs to;
+- A Relation to an environment - to denote teh environment the running service is deployed at.
+
+In order to create the running service Blueprint, use the following JSON body:
+
+<details>
+<summary>Running service Blueprint JSON</summary>
 
 ```json showLineNumbers
 {
-  "identifier": "microservice",
-  "title": "Microservice",
-  "icon": "Microservice",
+  "identifier": "runningService",
+  "description": "This blueprint represents a running version of a service in an environment",
+  "title": "Running Service",
+  "icon": "DeployedAt",
   "schema": {
     "properties": {
-      "repoUrl": {
+      "health-status": {
         "type": "string",
-        "format": "url",
-        "title": "Repository URL",
-        "description": "A URL to the Git repository of the microservice"
+        "title": "Health Status",
+        "enum": ["Healthy", "Degraded", "Crashed"],
+        "enumColors": {
+          "Healthy": "green",
+          "Degraded": "orange",
+          "Crashed": "red"
+        }
       },
-      "slackChannel": {
+      "locked": {
+        "type": "boolean",
+        "title": "Locked",
+        "icon": "Lock",
+        "default": false
+      },
+      "deployedBranch": {
         "type": "string",
-        "title": "Slack Channel",
-        "description": "The channel of the microservice\\'s maintainers"
+        "title": "Deployed Branch"
       }
     },
     "required": []
   },
   "mirrorProperties": {},
-  "formulaProperties": {},
-  "relations": {}
+  "formulaProperties": {
+    "sentryUrl": {
+      "title": "Sentry URL",
+      "icon": "Link",
+      "formula": "https://sentry.io/{{$identifier}}"
+    },
+    "newRelicUrl": {
+      "title": "NewRelic URL",
+      "icon": "Link",
+      "formula": "https://newrelic.com/{{$identifier}}"
+    }
+  },
+  "relations": {
+    "microservice": {
+      "target": "microservice",
+      "description": "The service this running deployment belongs to",
+      "many": false,
+      "required": true,
+      "title": "Service"
+    },
+    "environment": {
+      "target": "environment",
+      "description": "The environment this running deployment is deployed at",
+      "many": false,
+      "required": true,
+      "title": "Environment"
+    }
+  }
 }
 ```
+
+</details>
 
 :::tip
-**Remember**, if you are having trouble at any point, you performed the exact same steps with the **Package** Blueprint in the [Define a Blueprint section](#define-a-blueprint), so feel free to go back for reference.
-:::
+In the Blueprint JSON of the running service Blueprint you will notice one new addition: the `relations` object is now filled with two keys - `service` and `environment` these two keys represent the target Blueprints for our Relations.
 
-After you're done, your blueprints page should look like this:
+The JSON matching the two Relations is also provided here:
 
-![Developer Portal Blueprints Page with microservice and package](../static/img/welcome/quickstart/blueprintsPageWithMicroserviceAndPackage.png)
-
-Now we'll create our microservice to package Relation.
-
-### Microservice to package Relation
-
-Our goal is to know what packages are used in each microservice, therefore you will map that Relation between the Blueprints according to the following steps:
-
-Go to the Blueprints page, hover over the `microservice` Blueprint and click on the `pencil` icon as shown below:
-
-![Developer Portal Blueprints page with Create Relation Marked](../static/img/welcome/quickstart/blueprintsPageWithMicroservicePackageAndEditPackageMarked.png)
-
-In the edit form that appears, you will notice a `relations` key that is currently empty, paste the following content inside it:
+<details>
+<summary>Service Relation JSON</summary>
 
 ```json showLineNumbers
-"packages": {
-    "title": "Package",
-    "target": "package",
-    "description": "Package(s) used by the microservice",
-    "many": true,
-    "required": true
+{
+  "microservice": {
+    "title": "Service",
+    "description": "The service this running deployment belongs to",
+    "target": "microservice",
+    "required": true,
+    "many": false
+  }
 }
 ```
 
-Then click the `save` button at the bottom right corner.
+</details>
 
-Now your Blueprints graph should look like this:
+<details>
+<summary>Environment Relation JSON</summary>
 
-![Developer Portal Blueprints Graph With Package Microservice Relation](../static/img/welcome/quickstart/blueprintsGraphWithPackageMicroserviceRelation.png)
+```json showLineNumbers
+{
+  "environment": {
+    "title": "Environment",
+    "description": "The environment this running deployment is deployed at",
+    "target": "environment",
+    "required": true,
+    "many": false
+  }
+}
+```
+
+</details>
+
+:::
+
+Let's go ahead and create a **Running Service Blueprint**:
+
+### From the UI
+
+- Go back to the Blueprints page;
+- Click on the Add Blueprint button;
+- Paste the running service Blueprint JSON body and click `Save`
+
+:::tip
+**Remember**, if you are having trouble at any point, you performed the exact same steps with the **Service** Blueprint in the [Define a Blueprint section](#define-a-blueprint), so feel free to go back for reference.
+:::
+
+### From the API
+
+To create the running service Blueprint from the API, use the following code snippet (remember that an access token is required):
+
+<details>
+<summary>Create the running service Blueprint</summary>
+
+Note this example assumes the token is saved in the `access_token` variable.
+
+```python showLineNumbers
+# Dependencies to install:
+# $ python -m pip install requests
+import json
+import requests
+
+# the access_token variable should already have the token from the previous example
+
+API_URL = 'https://api.getport.io/v1'
+
+headers = {
+    'Authorization': f'Bearer {access_token}'
+}
+
+blueprint = {
+    "identifier": "runningService",
+    "description": "This blueprint represents a running version of a service in an environment",
+    "title": "Running Service",
+    "icon": "DeployedAt",
+    "schema": {
+        "properties": {
+            "health-status": {
+                "type": "string",
+                "title": "Health Status",
+                "enum": [
+                    "Healthy",
+                    "Degraded",
+                    "Crashed"
+                ],
+                "enumColors": {
+                    "Healthy": "green",
+                    "Degraded": "orange",
+                    "Crashed": "red"
+                }
+            },
+            "locked": {
+                "type": "boolean",
+                "title": "Locked",
+                "icon": "Lock",
+                "default": False
+            },
+            "deployedBranch": {
+                "type": "string",
+                "title": "Deployed Branch"
+            }
+        },
+        "required": []
+    },
+    "mirrorProperties": {},
+    "formulaProperties": {
+        "sentryUrl": {
+            "title": "Sentry URL",
+            "icon": "Link",
+            "formula": "https://sentry.io/{{$identifier}}"
+        },
+        "newRelicUrl": {
+            "title": "NewRelic URL",
+            "icon": "Link",
+            "formula": "https://newrelic.com/{{$identifier}}"
+        }
+    },
+    "relations": {
+        "microservice": {
+            "target": "microservice",
+            "description": "The service this running deployment belongs to",
+            "many": False,
+            "required": True,
+            "title": "Service"
+        },
+        "environment": {
+            "target": "environment",
+            "description": "The environment this running deployment is deployed at",
+            "many": False,
+            "required": True,
+            "title": "Environment"
+        }
+    }
+}
+
+response = requests.post(f'{API_URL}/blueprints', json=blueprint, headers=headers)
+# response.json() contains the content of the resulting blueprint
+
+print(json.dumps(response.json(), indent=2))
+
+```
+
+</details>
+
+### The results
+
+After you're done, your Blueprints page should look like this:
+
+![Developer Portal Blueprints Page with service, environment and running service](../static/img/welcome/quickstart/blueprintsGraphWithRunningServiceEnvironmentServiceRelation.png)
 
 :::note
 Look at the connection graph you have just created. You modeled the relationship between your Blueprints in a way that shows which Blueprint depends on the other.
 :::
 
-Now that we have a relationship, it's time to use it to show which package is used in which microservice. To do that, you are going to create a new microservice Entity and specify the package Entities it uses:
+Now we'll a running service Entity.
 
-### Mapping Packages to Microservices
+## Running Service Entity
 
-You already have 2 packages Entities that you created - those are `SQL Alchemy v1.4.39` and `Requests v2.28.1`.
+Our goal is to track running versions of microservices and their respective environments.
 
-You are now going to create a microservice Entity and map these packages to it using the Relation you created.
+You already have 2 Entities you created - those are the `Production` environment and the `Notification Service` service.
 
-The microservice Entity you are going to create is for the `notification service` of your application, here is its JSON:
+You are now going to create a running service Entity and map the environment and the service to it using the Relation you created.
+
+In order to create the running service Entity, use the following JSON body:
+
+<details>
+<summary>Notification service prod Running Service Entity JSON</summary>
 
 ```json showLineNumbers
 {
-  "identifier": "notification-microservice",
-  "title": "Notification Service",
   "properties": {
-    "repoUrl": "https://www.github.com/User/notification",
-    "slackChannel": "#notification-service"
+    "locked": true,
+    "health-status": "Healthy",
+    "deployedBranch": "main"
   },
   "relations": {
-    "packages": ["requests-pkg-v2-28", "sqlAlchemy_v1_4_39"]
-  }
+    "microservice": "notification-service",
+    "environment": "production"
+  },
+  "title": "Notification Service Prod",
+  "identifier": "notification-service-prod"
 }
 ```
 
-To create the microservice, follow these steps:
+</details>
 
-- Go to the Microservices page;
-- Click the `+ Microservice` button;
-- Type the values matching the JSON above (or just switch to JSON mode and paste);
-- Click the create button at the bottom right corner.
+### From the UI
 
-:::note
-If you choose to type the values manually, in order to input the packages used by the microservice, click the `expand` icon next to the `Package` field, a new JSON form with an empty array (`[]`) will appear, you can type the identifiers of the package Entities you created there, the form will also auto-complete you and only show you legal package values:
+To create the Entity from the UI, repeat the steps you took in [creating service and environment Entities from the UI](#from-the-ui-2) using the `notification-service-prod` Entity JSON.
 
-![Developer Portal Package Relation Array](../static/img/welcome/quickstart/EditPackagesArrayProperty.png)
-:::
+### From the API
 
-Now you should see your new microservice Entity, and if you look at the package column, you will see multiple package values:
+To create the `notification-service-prod` Entity from the API, use the following code snippet (remember that an access token is required):
 
-![Developer Portal Microservice with multiple packages marked](../static/img/welcome/quickstart/MicroserviceWithManyPackages.png)
+<details>
+<summary>Create the running service Entity</summary>
 
-Click on the `Notification Service` link in the marked column and you will see what we call the **specific Entity page**. This page allows you to see the complete details and dependency graph of a specific entity.
+Note this example assumes the token is saved in the `access_token` variable.
 
-![Microservice specific entity page after relation](../static/img/welcome/quickstart/microserviceSpecificEntityPageAfterRelation.png)
+```python showLineNumbers
+# Dependencies to install:
+# $ python -m pip install requests
+import json
+import requests
+
+# the access_token variable should already have the token from the previous example
+
+API_URL = 'https://api.getport.io/v1'
+
+headers = {
+    'Authorization': f'Bearer {access_token}'
+}
+
+running_service_blueprint_identifier = 'runningService'
+
+running_service_entity = {
+    "properties": {
+        "locked": True,
+        "health-status": "Healthy",
+        "deployedBranch": "main"
+    },
+    "relations": {
+        "microservice": "notification-service",
+        "environment": "production"
+    },
+    "title": "Notification Service Prod",
+    "identifier": "notification-service-prod"
+}
+
+running_service_response = requests.post(f'{API_URL}/blueprints/{running_service_blueprint_identifier}/entities',
+                                         json=running_service_entity, headers=headers)
+
+print(json.dumps(running_service_response.json(), indent=2))
+
+```
+
+</details>
+
+### The results
+
+Now you should see your new running service Entity, and if you look at the Service column and the Environment column, you will see the service and environment you created previously:
+
+![Developer Portal Running Service with service and environment marked](../static/img/welcome/quickstart/RunningServiceWithServiceAndEnvironment.png)
+
+Click on the `Notification Service Prod` link in the `title` column and you will see what we call the **specific Entity page**. This page allows you to see the complete details and dependency graph of a specific entity.
+
+![Developer Portal Running Service specific entity page after relation](../static/img/welcome/quickstart/runningServiceSpecificEntityPageAfterRelation.png)
 
 :::info
-In our case, the specific entity page for a microservice will also show us a tab with all of the Packages that it uses because that is the Relation we mapped.
+In our case, the specific entity page for a running service will also show us a tab with the **microservice** the running service belongs to, and another tab with the **environment** of the running service because that is the Relation we mapped.
 :::
 
-Feel free to continue exploring the specific entity page and the Packages and microservices pages. Notice the `filter`, `hide`, `sort` and `group by` controls you can find at the top right of Port's table widgets.
+Feel free to continue exploring the specific entity page and the environments, services and running service pages. Notice the `filter`, `hide`, `sort` and `group by` controls you can find at the top right of Port's table widgets.
 
 ## What now?
 
@@ -971,14 +1185,17 @@ These suggestions show the basic steps in creating your very own Developer Porta
 
 If you want to learn more about Port's capabilities in a specific area, you can check out any of these resources:
 
-- [Blueprints deep dive](./platform-overview/port-components/blueprint.md)
-- [Relations deep dive](./platform-overview/port-components/relation.md)
-- [Entities deep dive](./platform-overview/port-components/entity.md)
-- [Pages deep dive](./platform-overview/port-components/page.md)
-- [Self-Service Actions deep dive](./platform-overview/self-service-actions/self-service-actions.md)
+- [Blueprints deep dive](./platform-overview/port-components/blueprint.md);
+- [Relations deep dive](./platform-overview/port-components/relation.md);
+- [Entities deep dive](./platform-overview/port-components/entity.md);
+- [Pages deep dive](./platform-overview/port-components/page.md);
+- [Self-Service Actions deep dive](./platform-overview/self-service-actions/self-service-actions.md).
 
 ### Using the API
 
-If you want to make use of Port's REST API Interface, take a look at these resources:
+If you want to continue utilizing Port's REST API Interface, take a look at these resources:
 
+- [Blueprint Basics](./tutorials/blueprint-basics.md);
+- [Relation Basics](./tutorials/relation-basics.md);
+- [Entity Basics](./tutorials/relation-basics.md);
 - [Port API Reference](./api-reference/).
