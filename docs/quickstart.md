@@ -1179,7 +1179,8 @@ These suggestions show the basic steps in creating your very own Developer Porta
 1. Create [Blueprints](./platform-overview/port-components/blueprint.md) for your software and infrastructure components;
 2. Map out the [Relations](./platform-overview/port-components/relation.md) between your Blueprints;
 3. Ingest data to your catalog by creating [Entities](./platform-overview/port-components/entity.md) based on your Blueprints via Port's UI or using our API;
-4. Define [Self-Service Actions](./platform-overview/self-service-actions/self-service-actions.md) that can be used by you and your developers.
+4. Define [Self-Service Actions](./platform-overview/self-service-actions/self-service-actions.md) that can be used by you and your developers;
+5. Use one of our [Complete use cases](./complete-use-cases/complete-use-cases.md) to fully set up your software catalog.
 
 ### Diving deeper
 
