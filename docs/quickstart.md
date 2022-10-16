@@ -27,9 +27,13 @@ The goal of this tutorial is:
 - To see functional code snippets to interact with Port's API;
 - To experience the power of Port as an internal developer platform.
 
-By the end of this tutorial you will have the basis of a software catalog that allows you to view a complete image of your software infrastructure:
+By following this tutorial you will have the basis of a software catalog that allows you to view a complete image of your software infrastructure.
+
+Your developers will be able to see all the services in a given environment and their status:
 
 ![Developer Portal Environment View for running services](../static/img/welcome/quickstart/EndResultEnvironmentPage.png)
+
+In addition, your developers will be able to see all the environments that a specific microservice is deployed at, and which version is deployed where:
 
 ![Developer Portal Service View for environments](../static/img/welcome/quickstart/EndResultServicePage.png)
 
@@ -149,12 +153,6 @@ In order to create a the service Blueprint, use the following JSON body:
           "Node": "blue"
         }
       },
-      "locked": {
-        "type": "boolean",
-        "title": "Locked",
-        "icon": "Lock",
-        "default": false
-      },
       "number-of-open-jira-issues": {
         "type": "number",
         "icon": "DevopsTool",
@@ -209,7 +207,7 @@ In order to create a the service Blueprint, use the following JSON body:
       "version": {
         "type": "string",
         "icon": "Package",
-        "title": "Version",
+        "title": "Latest Version",
         "pattern": "[a-zA-Z0-9.]",
         "description": "A property that supports values specified by a regex pattern",
         "default": "Port1337"
@@ -232,10 +230,10 @@ In order to create a the service Blueprint, use the following JSON body:
       "icon": "Link",
       "formula": "https://slack.com/{{$identifier}}"
     },
-    "on-call-plus-version": {
-      "title": "On Call + Version",
+    "latest-build-output": {
+      "title": "Latest Build Output",
       "icon": "Jenkins",
-      "formula": "{{on-call}} + {{version}}"
+      "formula": "{{url}}/{{version}}"
     },
     "launch-darkly": {
       "title": "Launch Darkly",
@@ -352,12 +350,6 @@ blueprint = {
                     "Node": "blue"
                 }
             },
-            "locked": {
-                "type": "boolean",
-                "title": "Locked",
-                "icon": "Lock",
-                "default": False
-            },
             "number-of-open-jira-issues": {
                 "type": "number",
                 "icon": "DevopsTool",
@@ -408,7 +400,7 @@ blueprint = {
             "version": {
                 "type": "string",
                 "icon": "Package",
-                "title": "Version",
+                "title": "Latest Version",
                 "pattern": "[a-zA-Z0-9.]",
                 "description": "A property that supports values specified by a regex pattern",
                 "default": "Port1337"
@@ -431,10 +423,10 @@ blueprint = {
             "icon": "Link",
             "formula": "https://slack.com/{{$identifier}}"
         },
-        "on-call-plus-version": {
-            "title": "On Call + Version",
+        "latest-build-output": {
+            "title": "Latest Build Output",
             "icon": "Jenkins",
-            "formula": "{{on-call}} + {{version}}"
+            "formula": "{{url}}/{{version}}"
         },
         "launch-darkly": {
             "title": "Launch Darkly",
@@ -770,7 +762,6 @@ service_entity = {
     "properties": {
         "on-call": "mor@getport.io",
         "language": "Python",
-        "locked": False,
         "number-of-open-jira-issues": 21,
         "product": "Analytics",
         "url": "https://github.com/port/notification-service",
@@ -835,7 +826,8 @@ Currently our Software Catalog has services and environments, but in practice a 
 
 - **Health status** - the health status of the running service;
 - **Deployed branch** - the branch where the code of the running service is taken from;
-- **Locked** - is the running service currently locked (meaning no new deployments are allowed).
+- **Locked** - is the running service currently locked (meaning no new deployments are allowed);
+- **Version** - the current version of the running service.
 
 In addition, the running service Blueprint will include two **Relations**:
 
@@ -874,6 +866,13 @@ In order to create the running service Blueprint, use the following JSON body:
       "deployedBranch": {
         "type": "string",
         "title": "Deployed Branch"
+      },
+      "version": {
+        "type": "string",
+        "icon": "Package",
+        "title": "Version",
+        "pattern": "[a-zA-Z0-9.]",
+        "default": "Port1337"
       }
     },
     "required": []
@@ -1018,6 +1017,13 @@ blueprint = {
             "deployedBranch": {
                 "type": "string",
                 "title": "Deployed Branch"
+            },
+            "version": {
+                "type": "string",
+                "icon": "Package",
+                "title": "Version",
+                "pattern": "[a-zA-Z0-9.]",
+                "default": "Port1337"
             }
         },
         "required": []
@@ -1092,7 +1098,8 @@ In order to create the running service Entity, use the following JSON body:
   "properties": {
     "locked": true,
     "health-status": "Healthy",
-    "deployedBranch": "main"
+    "deployedBranch": "main",
+    "version": "1.0.0"
   },
   "relations": {
     "microservice": "notification-service",
@@ -1138,7 +1145,8 @@ running_service_entity = {
     "properties": {
         "locked": True,
         "health-status": "Healthy",
-        "deployedBranch": "main"
+        "deployedBranch": "main",
+        "version": "1.0.0"
     },
     "relations": {
         "microservice": "notification-service",
