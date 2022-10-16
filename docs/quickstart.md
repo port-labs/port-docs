@@ -675,7 +675,6 @@ After clicking the button a new service form will appear. Let's fill it up with 
   "properties": {
     "on-call": "mor@getport.io",
     "language": "Python",
-    "locked": false,
     "number-of-open-jira-issues": 21,
     "product": "Analytics",
     "url": "https://github.com/port/notification-service",
