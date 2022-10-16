@@ -97,7 +97,7 @@ Our service Blueprint is going to include the following properties (among others
 - **Last Incident** - the last time an incident occurred in the microservice;
 - **Language** - the main programming language used for the microservice;
 - **Product** - the business unit category of the microservice;
-- **Version** - the latest version of the microservice;
+- **Latest Version** - the latest version of the microservice;
 - **Number of JIRA issues** - the number of currently open JIRA issues;
 - **Slack notifications** - a URL to the Slack Channel of the team responsible for the microservice.
 
