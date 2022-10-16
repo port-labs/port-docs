@@ -18,6 +18,23 @@ Port then allows engineers to perform actions on these assets in a self-service 
 
 Port's three core building blocks are _Blueprints_, _Entities_ and _Relations_. This tutorial will walk you through your first steps on the platform and get you started on your Developer Portal journey!🚢
 
+## The goal of this tutorial
+
+The goal of this tutorial is:
+
+- To teach you about Port's core components;
+- To get you familiar with Port's web UI;
+- To see functional code snippets to interact with Port's API;
+- To experience the power of Port as an internal developer platform.
+
+By the end of this tutorial you will have the basis of a software catalog that allows you to view a complete image of your software infrastructure:
+
+![Developer Portal Environment View for running services](../static/img/welcome/quickstart/EndResultEnvironmentPage.png)
+
+![Developer Portal Service View for environments](../static/img/welcome/quickstart/EndResultServicePage.png)
+
+Let's get started! 🚢
+
 ## Define a Blueprint
 
 Blueprints are used to model data in Port. A Blueprint allows us to define what properties and fields an _Entity_ will contain.
