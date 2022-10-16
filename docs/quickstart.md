@@ -439,21 +439,15 @@ print(json.dumps(response.json(), indent=2))
 
 #### The results
 
-<!-- REPLACE -->
-
-![Developer Portal Blueprints graph with new Package Blueprint](../static/img/welcome/quickstart/blueprintGraphWithPackageClosed.png)
+![Developer Portal Blueprints graph with new Service Blueprint](../static/img/welcome/quickstart/blueprintGraphWithServiceClosed.png)
 
 Click on the `expand` button as shown in the image below:
 
-<!-- REPLACE -->
-
-![Developer Portal Blueprints graph with new Package Blueprint And Expand Marked](../static/img/welcome/quickstart/blueprintGraphWithPackageClosedExpandMarked.png)
+![Developer Portal Blueprints graph with new Service Blueprint And Expand Marked](../static/img/welcome/quickstart/blueprintGraphWithServiceClosedAndExpandMarked.png)
 
 You should see an expanded view of the blueprint you just created, with all of its properties listed alongside the types you provided:
 
-<!-- REPLACE -->
-
-![Developer Portal Blueprints graph with new Package open](../static/img/welcome/quickstart/blueprintGraphWithPackageOpen.png)
+![Developer Portal Blueprints graph with new Service open](../static/img/welcome/quickstart/blueprintGraphWithServiceOpen.png)
 
 Congratulations! you have just created your first Blueprint! 🎉
 
@@ -465,49 +459,66 @@ Our environment Blueprint is going to include the following properties:
 - **Cloud provider** - the cloud provider where the cluster is deployed;
 - **Region** - The cloud region where the cluster is deployed.
 
+In addition the Blueprint is going to include the following formula property:
+
+- **Grafana URL** - link to the Grafana dashboard of the environment.
+
+:::tip
+For more information about formula properties check out [this](./platform-overview/port-components/formula-properties.md) document
+:::
+
 <!-- COntinue working on the blueprint schema, add enum colors for cloud providers, add formula properties for grafana, prometheus -->
 
 In addition, the `environment type` field will be marked as `required`, so we can make sure that our environments are tagged correctly.
 
-In order to create a the service Blueprint, use the following JSON body:
+In order to create a the environment Blueprint, use the following JSON body:
 
 <details>
-<summary>Service Blueprint JSON</summary>
+<summary>Environment Blueprint JSON</summary>
 
 ```json showLineNumbers
 {
-  "identifier": "microservice",
-  "description": "This blueprint represents service in our software catalog",
-  "title": "Service",
-  "icon": "Microservice",
+  "identifier": "environment",
+  "description": "This blueprint represents an environment in our software catalog",
+  "title": "Environment",
+  "icon": "Environment",
   "schema": {
     "properties": {
-      "on-call": {
+      "type": {
         "type": "string",
-        "icon": "Okta",
-        "title": "On Call",
-        "format": "email",
-        "default": "develoepr@getport.io"
+        "title": "Environment type",
+        "enum": ["Integration", "Production", "Staging", "Security", "QA"]
+      },
+      "cloud-provider": {
+        "type": "string",
+        "title": "Cloud Provider",
+        "enum": ["AWS", "GCP", "Azure", "Oracle"],
+        "enumColors": {
+          "AWS": "orange",
+          "GCP": "green",
+          "Azure": "blue",
+          "Oracle": "red"
+        }
+      },
+      "region": {
+        "type": "string",
+        "title": "Region",
+        "enum": [
+          "eu-west-1",
+          "eu-west-2",
+          "us-west-1",
+          "us-east-1",
+          "us-east-2"
+        ]
       }
     },
-    "required": ["on-call"]
+    "required": ["type"]
   },
   "mirrorProperties": {},
   "formulaProperties": {
-    "grafana-url": {
+    "grafanaUrl": {
       "title": "Grafana URL",
-      "icon": "Link",
-      "formula": "https://grafana.com/{{$identifier}}"
-    },
-    "prometheus-url": {
-      "title": "Prometheus URL",
-      "icon": "Link",
-      "formula": "https://prometheus.com/{{$identifier}}"
-    },
-    "aws-url": {
-      "title": "AWS Cloudwatch URL",
-      "icon": "Aws",
-      "formula": "https://aws.com/{{$identifier}}"
+      "formula": "https://grafana.com/{$identifier}"
     }
   },
   "relations": {}
@@ -516,66 +527,282 @@ In order to create a the service Blueprint, use the following JSON body:
 
 </details>
 
+#### From the UI
+
+To create the environment Blueprint from the UI, repeat the steps you took in [creating a service Blueprint from the UI](#from-the-ui) using the environment JSON.
+
+#### From the API
+
+To create the environment Blueprint from the API, use the following code snippet (remember that an access token is required):
+
+<details>
+<summary>Create the environment Blueprint</summary>
+
+Note this example assumes the token is saved in the `access_token` variable.
+
+```python showLineNumbers
+# Dependencies to install:
+# $ python -m pip install requests
+import json
+import requests
+
+# the access_token variable should already have the token from the previous example
+
+API_URL = 'https://api.getport.io/v1'
+
+headers = {
+    'Authorization': f'Bearer {access_token}'
+}
+
+blueprint = {
+    "identifier": "environment",
+    "description": "This blueprint represents an environment in our software catalog",
+    "title": "Environment",
+    "icon": "Environment",
+    "schema": {
+        "properties": {
+            "type": {
+                "type": "string",
+                "title": "Environment type",
+                "enum": [
+                    "Integration",
+                    "Production",
+                    "Staging",
+                    "Security",
+                    "QA"
+                ]
+            },
+            "cloud-provider": {
+                "type": "string",
+                "title": "Cloud Provider",
+                "enum": [
+                    "AWS",
+                    "GCP",
+                    "Azure",
+                    "Oracle"
+                ],
+                "enumColors": {
+                    "AWS": "orange",
+                    "GCP": "green",
+                    "Azure": "blue",
+                    "Oracle": "red"
+                }
+            },
+            "region": {
+                "type": "string",
+                "title": "Region",
+                "enum": [
+                    "eu-west-1",
+                    "eu-west-2",
+                    "us-west-1",
+                    "us-east-1",
+                    "us-east-2"
+                ]
+            }
+        },
+        "required": [
+            "type"
+        ]
+    },
+    "mirrorProperties": {},
+    "formulaProperties": {
+        "grafanaUrl": {
+            "title": "Grafana URL",
+            "formula": "https://grafana.com/{$identifier}"
+        }
+    },
+    "relations": {}
+}
+
+response = requests.post(f'{API_URL}/blueprints', json=blueprint, headers=headers)
+# response.json() contains the content of the resulting blueprint
+
+print(json.dumps(response.json(), indent=2))
+```
+
+</details>
+
+#### The results
+
+![Developer Portal Blueprints graph with new Environment Blueprint](../static/img/welcome/quickstart/blueprintGraphWithEnvironmentClosed.png)
+
+Click on the `expand` button as shown in the image below:
+
+![Developer Portal Blueprints graph with new Environment Blueprint And Expand Marked](../static/img/welcome/quickstart/blueprintGraphWithEnvironmentClosedAndExpandMarked.png)
+
+You should see an expanded view of the blueprint you just created, with all of its properties listed alongside the types you provided:
+
+![Developer Portal Blueprints graph with new Environment open](../static/img/welcome/quickstart/blueprintGraphWithEnvironmentOpen.png)
+
 In the next part, we will start creating Entities that match these new Blueprints, making the Software Catalog come together!
 
 ## Create your first Entities
 
-Now that we have a Blueprint for `package`, we can add some _Entities_.
+Now that we have Blueprints for `environment` and `service`, we can add some _Entities_.
 
-An **Entity** is an object that matches a type of a certain Blueprint. In our case, every Entity we create under the microservice Blueprint, is a microservice in our organization.
+An **Entity** is an object that matches a type of a certain Blueprint. In our case, every Entity we create under the service Blueprint, is a microservice in our organization. And every environment we create under the environment Blueprint, is a different environment where our code is running.
 
-Let's create our first Entity to make things clearer.
+Let's create some initial Entities to make things clearer.
 
-Click on the packages page on the left sidebar:
+### Service Entity
 
-![Developer Portal Blueprints graph with new Package open and Packages page marked](../static/img/welcome/quickstart/blueprintGraphWithPackageOpenAndPackagesPageMarked.png)
+#### From the UI
 
-On the packages page, click on the `+ Package` button to start creating a new Entity:
+Click on the services page on the left sidebar:
 
-![Developer Portal Package Entity page with create entity button marked](../static/img/welcome/quickstart/packageEntityPageWithCreateEntityMarked.png)
+![Developer Portal Blueprints graph with new Service and Services page marked](../static/img/welcome/quickstart/blueprintGraphWithServicesPageMarked.png)
 
-After clicking the button a new package form will appear. Let's fill it up with the following details:
+On the services page, click on the `+ Service` button to start creating a new Entity:
 
-```text showLineNumbers
-Title: Requests
-Team: - leave blank -
-# For identifier, click on the "Auto generate" toggle to enter a custom identifier
-Identifier: requests-pkg-v2-28
-version: 2.28
-inHouse: false
-```
+![Developer Portal Service Entity page with create entity button marked](../static/img/welcome/quickstart/serviceEntityPageWithCreateEntityMarked.png)
 
-After filling all of the above, your creation page should look like this:
+After clicking the button a new service form will appear. Let's fill it up with the following details:
 
-![Developer Portal Package Entity filled with create entity button marked](../static/img/welcome/quickstart/packageEntityCreateFilledAndCreateMarked.png)
-
-You can go ahead and press the `Create` button at the bottom right corner (as shown in the image above), and witness your new package appear in the packages page:
-
-![Developer Portal Package Entity page with first entity](../static/img/welcome/quickstart/packgeEntityPageWithFirstEntity.png)
-
-Let's repeat that process again, add another package, but this time add an entity using JSON by clicking the JSON mode button:
-
-![Developer Portal Package Create Entity page with json mode marked](../static/img/welcome/quickstart/createPackageBlueprintJsonModeMarked.png)
-
-After clicking the button, a JSON editor will appear, similar to the one we saw in the blueprints page. Paste in the following content:
+<details>
+<summary>Notification service Entity JSON</summary>
 
 ```json showLineNumbers
 {
-  "identifier": "sqlAlchemy_v1_4_39",
-  "title": "SQL Alchemy v1.4.39",
   "properties": {
-    "version": "1.4.39",
-    "inHouse": false
+    "on-call": "mor@getport.io",
+    "language": "Python",
+    "locked": false,
+    "number-of-open-jira-issues": 21,
+    "product": "Analytics",
+    "url": "https://github.com/port/notification-service",
+    "config": {
+      "enable_analytics": true
+    },
+    "monitor-links": ["https://grafana.com", "https://datadog.com"],
+    "last-incident": "2022-04-18T11:44:15.345Z",
+    "version": "1.0.0",
+    "ip": "8.8.8.8"
   },
-  "relations": {}
+  "relations": {},
+  "title": "Notification Service",
+  "identifier": "notification-service"
 }
 ```
 
-Then click on the create button at the bottom right corner.
+:::tip
+You can either switch the creation form to Json Mode using the toggle, or you can just manually type the values into the fields.
+:::
 
-Now you should see your 2 packages displayed in the page as shown in the image below:
+</details>
 
-![Developer Portal package Entity page with 2 Entities](../static/img/welcome/quickstart/packagePageWithTwoEntities.png)
+After filling all of the above, your creation page should look like this:
+
+![Developer Portal Service Entity filled with create entity button marked](../static/img/welcome/quickstart/serviceEntityCreateFilledAndCreateMarked.png)
+
+You can go ahead and press the `Create` button at the bottom right corner (as shown in the image above).
+
+Now to create an environment Entity, repeat these same steps, but this time go to the environments page:
+
+![Developer Portal Blueprints graph with new Environment and Environments page marked](../static/img/welcome/quickstart/blueprintGraphWithEnvironmentsPageMarked.png)
+
+And use the following data for the environment Entity:
+
+<details>
+<summary>Production environment Entity JSON</summary>
+
+```json showLineNumbers
+{
+  "properties": {
+    "type": "Production",
+    "cloud-provider": "AWS",
+    "region": "eu-west-1"
+  },
+  "relations": {},
+  "title": "Production",
+  "identifier": "production"
+}
+```
+
+</details>
+
+Now you can [witness your new service and environment](#the-results-2) Entities appear in the services page and environments page respectively.
+
+#### From the API
+
+To create both the service Entity and the environment Entity from the API, use the following code snippet (remember that an access token is required):
+
+<details>
+<summary>Create the service Entity and the environment Entity</summary>
+
+Note this example assumes the token is saved in the `access_token` variable.
+
+```python showLineNumbers
+# Dependencies to install:
+# $ python -m pip install requests
+import json
+import requests
+
+# the access_token variable should already have the token from the previous example
+
+API_URL = 'https://api.getport.io/v1'
+
+headers = {
+    'Authorization': f'Bearer {access_token}'
+}
+
+service_blueprint_identifier = 'microservice'
+
+env_blueprint_identifier = 'environment'
+
+service_entity = {
+    "properties": {
+        "on-call": "mor@getport.io",
+        "language": "Python",
+        "locked": False,
+        "number-of-open-jira-issues": 21,
+        "product": "Analytics",
+        "url": "https://github.com/port/notification-service",
+        "config": {
+            "enable_analytics": True
+        },
+        "monitor-links": [
+            "https://grafana.com",
+            "https://datadog.com"
+        ],
+        "last-incident": "2022-04-18T11:44:15.345Z",
+        "version": "1.0.0",
+        "ip": "8.8.8.8"
+    },
+    "relations": {},
+    "title": "Notification Service",
+    "identifier": "notification-service"
+}
+
+env_entity = {
+    "properties": {
+        "type": "Production",
+        "cloud-provider": "AWS",
+        "region": "eu-west-1"
+    },
+    "relations": {},
+    "title": "Production",
+    "identifier": "production"
+}
+
+service_response = requests.post(f'{API_URL}/blueprints/{service_blueprint_identifier}/entities', json=service_entity, headers=headers)
+
+print(json.dumps(service_response.json(), indent=2))
+
+env_response = requests.post(f'{API_URL}/blueprints/{env_blueprint_identifier}/entities', json=env_entity, headers=headers)
+
+print(json.dumps(env_response.json(), indent=2))
+
+```
+
+</details>
+
+#### The results
+
+The respective pages for each of our Blueprints will now show the Entities we created:
+
+![Developer Portal Service Entity page with first entity](../static/img/welcome/quickstart/serviceEntityPageWithFirstEntity.png)
+
+![Developer Portal Environment Entity page with first entity](../static/img/welcome/quickstart/environmentEntityPageWithFirstEntity.png)
 
 Amazing! You have just created 2 awesome entities 🎉
 
@@ -587,7 +814,7 @@ In the next part, we will look at our last building block - _Relations_. Let's g
 
 A **Relation** is a connection between two Blueprints and the Entities that are based on them. Using Relations you can create a connection graph between multiple Entities, the connection graph helps you understand the structure of your infrastructure and gain easier access to the data of related Entities.
 
-Currently our Software Catalog only has packages, but everybody knows packages are just the building blocks for larger applications and services, so we'll now create a microservice Blueprint to represent the application that will make use of our packages. Our Microservice Blueprint will contain the following fields:
+Currently our Software Catalog has services and environments, but in practice everybody knows packages are just the building blocks for larger applications and services, so we'll now create a microservice Blueprint to represent the application that will make use of our packages. Our Microservice Blueprint will contain the following fields:
 
 In addition, our **Relation** will list the packages used by the microservice.
 
