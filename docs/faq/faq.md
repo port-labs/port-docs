@@ -4,6 +4,10 @@ sidebar_position: 7
 
 # FAQ
 
+## How can I get started?
+
+Port is open for self-service, so you are invited to [open an account](https://app.getport.io/?screen_hint=login) and start building your developer portal right away. In addition, feel free to request a [private demo](https://www.getport.io/free-trial) with our team.
+
 ## What is Port, and how does it work?
 
 Port is a developer portal for your software, microservices and resources. With Port, you can help developers develop applications quickly and efficiently, by providing them the relevant data about DevOps and infrastructure.
@@ -38,7 +42,7 @@ With our builder-based approach you can make Port developer portals exactly the 
 
 ## Is it free?
 
-Port provides a free forever plan for up to 2 devex seats and 15 developers. Above that, please refer to our [pricing](https://www.getport.io/pricing), which is based on a $19/month charge per developer using the platform.
+Port provides a free forever plan for up to 10 users per month. Above that, please refer to our [pricing page](https://www.getport.io/pricing).
 
 ## How do I get started?
 
