@@ -40,9 +40,7 @@ With our builder-based approach you can make Port developer portals exactly the 
 
 Port provides a free forever plan for up to 2 devex seats and 15 developers. Above that, please refer to our [pricing](https://www.getport.io/pricing), which is based on a $19/month charge per developer using the platform.
 
-## What happens when I request a free trial?
-
-Port is about to become a self-service platform. Until that happens, we’d like to offer a free 15 minute call, after which you’ll be able to set up Port for yourself. We also offer dedicated slack support (paid plans receive even better support).
+## How do I get started?
 
 ## What security does Port have in place?
 
