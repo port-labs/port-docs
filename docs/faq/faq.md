@@ -44,8 +44,6 @@ With our builder-based approach you can make Port developer portals exactly the 
 
 Port provides a free forever plan for up to 10 users per month. Above that, please refer to our [pricing page](https://www.getport.io/pricing).
 
-## How do I get started?
-
 ## What security does Port have in place?
 
 Port was built with security in mind, deeply integrated into our SDLC with controls such as Software Composition Analysis, Static and Dynamic Application Security Testing, and Security Design and Implementation reviews.
