@@ -10,7 +10,7 @@ Using Port, it is very simple to implement convenient service maturity for servi
 
 In this guide, you will implement a service maturity model using Port's [GitHub Action](../integrations/github/github-action.md).
 
-When finishing this tutorial, you will have a well-defined service maturity environment that will use customized `Checks` that run periodically that determines each `Service`'s maturity within the organization:
+After you finish the tutorial, you will have a well-defined service maturity environment that will use customized `Checks` that run periodically. They determine each `Service`'s maturity within the organization:
 
 Services
 ![Services](../../static/img/tutorial/complete-use-cases/service-maturity/services.png)
@@ -26,19 +26,19 @@ Let's go over the different Blueprints shown below and how we'll create [Entitie
 
 ![Service Maturity Layout](../../static/img/tutorial/complete-use-cases/service-maturity/service-maturity-layout.png)
 
-- **Service** - service is the object that we would like to estimate its maturity i.e Payment Service, Order Service etc...
-  - **Repository** - the URL of the git repository
-- **Check** - a check is the definition of the Check responsibility
-  - **Category** - in which domain the check applies to (Service Ownership, security, reliability etc..)
-  - **Description** - a small description of the check and its purpose
-- **Check Run** - a check run is the actual Job Run of the Check definition on a specific Service
-  - **Job URL** - a link to the Job URL of the actual GitHub run
-  - **Build Id** - an identifier to the `buildId` of the check run to identify multiple check runs of the same build
-  - **Status** - check run result `failure` or `success`
-- **Rank** - a rank is a collection of properties that defines what a rank is a `Check` blueprint is connected to it to define how important the `Check` is, while the `Service` blueprint is connected to it to define the service maturity
-  - **Level** - The level of the Rank (Level 1, Level 2 etc...)
-  - **Priority** - The importance of the Rank 1 - 5
-  - **Description** - An explanation of how service in this Rank is supposed to look like
+- **Service** - the object that we would like to estimate its maturity. For example. i.e Payment Service, Order Service, etc;
+  - **Repository** - URL of the git repository.
+- **Check** - definition of the Check responsibility;
+  - **Category** - in which domain the check applies (Service Ownership, security, reliability, etc);
+  - **Description** - a small description of the check and its purpose.
+- **Check Run** - actual Job Run of the Check definition on a specific Service;
+  - **Job URL** - link to the Job URL of the actual GitHub run;
+  - **Build Id** - identifier to the `buildId` of the check run to identify multiple check runs of the same build;
+  - **Status** - check run result `failure` or `success`.
+- **Rank** - a collection of properties that defines what rank is a `Check` blueprint connected to and how important is it, while the `Service` blueprint is connected to it to define the service maturity;
+  - **Level** - Rank level (Level 1, Level 2 etc...)
+  - **Priority** - Rank importance 1 - 5
+  - **Description** - explanation regarding how the Rank appears, and matches the building accordingly. 
 
 :::note
 
