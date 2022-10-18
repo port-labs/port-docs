@@ -64,6 +64,8 @@ During this tutorial, we will demonstrate a way to perform every step both from 
 
 This tutorial will include complete examples to interact with Port's API, but for more examples you can visit the [API section](./tutorials/blueprint-basics.md#from-the-api) in [Blueprint basics](./tutorials/blueprint-basics.md).
 
+Port also has a [GitHub app](./integrations/github/app/app.md) and a [Terraform provider](./integrations/terraform.md) you can use to ingest data and interact with Port's components.
+
 For readability, snippets to copy and paste and examples will be inside collapsed boxes:
 
 <details>
@@ -1179,6 +1181,40 @@ In our case, the specific entity page for a running service will also show us a 
 :::
 
 Feel free to continue exploring the specific entity page and the environments, services and running service pages. Notice the `filter`, `hide`, `sort` and `group by` controls you can find at the top right of Port's table widgets.
+
+You can also use Port's API to [get and search](./tutorials/search-in-port.md) for Blueprints and Entities, here is a code example to get the running service Entity we created in this tutorial:
+
+<details>
+<summary>Get the running service Entity</summary>
+
+Note this example assumes the token is saved in the `access_token` variable.
+
+```python showLineNumbers
+# Dependencies to install:
+# $ python -m pip install requests
+import json
+import requests
+
+# the access_token variable should already have the token from the previous example
+
+API_URL = 'https://api.getport.io/v1'
+
+headers = {
+    'Authorization': f'Bearer {access_token}'
+}
+
+running_service_blueprint_identifier = 'runningService'
+
+running_service_entity_identifier = 'notification-service-prod'
+
+running_service_response = requests.get(
+    f'{API_URL}/blueprints/{running_service_blueprint_identifier}/entities/{running_service_entity_identifier}', headers=headers)
+
+print(json.dumps(running_service_response.json(), indent=2))
+
+```
+
+</details>
 
 ## What now?
 
