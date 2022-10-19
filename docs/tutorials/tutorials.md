@@ -3,7 +3,7 @@ sidebar_position: 1
 sidebar label: Tutorials
 ---
 
-# Basic Operations
+# Tutorials
 
 Below are tutorials for different common use-cases in Port:
 
