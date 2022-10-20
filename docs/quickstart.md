@@ -1182,7 +1182,7 @@ In our case, the specific entity page for a running service will also show us a 
 
 Feel free to continue exploring the specific entity page and the environments, services and running service pages. Notice the `filter`, `hide`, `sort` and `group by` controls you can find at the top right of Port's table widgets.
 
-You can also use Port's API to [get and search](./tutorials/search-in-port.md) for Blueprints and Entities, here is a code example to get the running service Entity we created in this tutorial:
+You can also use Port's API to make GET requests for Blueprints and Entities, here is a code example to get the running service Entity we created in this tutorial:
 
 <details>
 <summary>Get the running service Entity</summary>
@@ -1215,6 +1215,8 @@ print(json.dumps(running_service_response.json(), indent=2))
 ```
 
 </details>
+
+In addition, you can also use Port's API to [search](./tutorials/search-in-port.md) for Blueprints and Entities.
 
 ## What now?
 
