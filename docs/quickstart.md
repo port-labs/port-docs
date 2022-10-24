@@ -22,12 +22,12 @@ Port's three core building blocks are _Blueprints_, _Entities_ and _Relations_. 
 
 The goal of this tutorial is:
 
-- To teach you about Port's core components;
-- To get you familiar with Port's web UI;
-- To see functional code snippets to interact with Port's API;
-- To experience the power of Port as an internal developer platform.
+- Teach you about Port's core components;
+- Familiarize you with Port's web UI;
+- View functional code snippets to interact with Port's API;
+- Experience the power of Port as an internal developer platform.
 
-By following this tutorial you will have the basis of a software catalog that allows you to view a complete image of your software infrastructure.
+This guide will give you a foundation to start building your software catalog in Port and view a complete image of your software infrastructure.
 
 Your developers will be able to see all the services in a given environment and their status:
 
@@ -60,9 +60,9 @@ In this tutorial you are going to create 3 Blueprints:
 Note the **Running service** Blueprint - it is meant to represent a running deployment of your **service** in one of your **environments**.
 
 :::tip
-During this tutorial, we will demonstrate a way to perform every step both from Port's web UI and using Port's REST API.
+In this tutorial, we will demonstrate how to perform every step using Port's web UI and Port's REST API.
 
-This tutorial will include complete examples to interact with Port's API, but for more examples you can visit the [API section](./tutorials/blueprint-basics.md#from-the-api) in [Blueprint basics](./tutorials/blueprint-basics.md).
+This tutorial includes various examples of ways to interact with Port's API. For more, you are welcome to visit the [API section](./tutorials/blueprint-basics.md#from-the-api) in [Blueprint basics](./tutorials/blueprint-basics.md).
 
 Port also has a [GitHub app](./integrations/github/app/app.md) and a [Terraform provider](./integrations/terraform.md) you can use to ingest data and interact with Port's components.
 
@@ -94,28 +94,28 @@ print("hello world!")
 
 Our service Blueprint is going to include the following properties (among others):
 
-- **Github URL** - a link to the GitHub repository of the microservice;
-- **On Call** - the current on-call developer;
-- **Last Incident** - the last time an incident occurred in the microservice;
-- **Language** - the main programming language used for the microservice;
-- **Product** - the business unit category of the microservice;
-- **Latest Version** - the latest version of the microservice;
-- **Number of JIRA issues** - the number of currently open JIRA issues;
-- **Slack notifications** - a URL to the Slack Channel of the team responsible for the microservice.
+- **Github URL** - link to the GitHub repository of the microservice;
+- **On Call** - current on-call developer;
+- **Last Incident** - last time an incident occurred in the microservice;
+- **Language** - main programming language used for the microservice;
+- **Product** - business unit category of the microservice;
+- **Latest Version** - latest version of the microservice;
+- **Number of JIRA issues** - number of currently open JIRA issues;
+- **Slack notifications** - URL to the Slack Channel of the team responsible for the microservice.
 
 :::tip
-Don't worry if you want to add/remove properties, you can always go back and edit later.
+Don't worry if you want to add/remove properties, you can always go back and re-edit them later.
 :::
 
-In addition, the `on-call` field will be marked as `required`, so that we always know who is the current on-call for the service.
+In addition, the `on-call` field is marked as `required`, so that we always know who is the current on-call for the service.
 
 #### From the UI
 
-Let's head to [Port](https://app.getport.io/blueprints) and look at the Blueprints page, at the top right corner let's click on **Add Blueprint** and configure our first blueprint - **Service** as shown in the image below:
+Let's head to [Port](https://app.getport.io/blueprints) and look at the Blueprints page, at the top right corner let's click on **Add Blueprint** and configure our first Blueprint - **Service** as shown in the image below:
 
 ![Developer PortalCreate New Blueprint](../static/img/welcome/quickstart/newBlueprintButton.png)
 
-After clicking the button, you should see a creation form as shown below:
+After clicking the button, you will see a creation form as shown below:
 
 ![Developer Portal New Blueprint Text](../static/img/welcome/quickstart/newBlueprintDefaultText.png)
 
@@ -123,7 +123,7 @@ After clicking the button, you should see a creation form as shown below:
 When you click on `Add Blueprint`, you will see a template for a `microservice` Blueprint which is identical to the one you will create. So you can just click `save` and skip to [Environment Blueprint](#environment-blueprint).
 :::
 
-In order to create a the service Blueprint, use the following JSON body:
+In order to create the service Blueprint, use the following JSON body:
 
 <details>
 <summary>Service Blueprint JSON</summary>
@@ -249,7 +249,7 @@ In order to create a the service Blueprint, use the following JSON body:
 
 </details>
 
-Click on the `save` button, and [you should see](#the-results) your new Blueprint in the Blueprints graph.
+Click on the `save` button, and [you will see](#the-results) your new Blueprint in the Blueprints graph.
 
 #### From the API
 
@@ -305,7 +305,7 @@ For examples in other languages you can visit the [API section](./tutorials/blue
 
 </details>
 
-Now that you have an access token, you can use it for every interaction you make with Port's API. You will also use in the section below to create the `Service` Blueprint:
+Now that you have an access token, you can use it for every interaction you make with Port's API. You will also use it in the section below to create the `Service` Blueprint:
 
 <details>
 <summary>Create the service Blueprint</summary>
@@ -456,7 +456,7 @@ Click on the `expand` button as shown in the image below:
 
 ![Developer Portal Blueprints graph with new Service Blueprint And Expand Marked](../static/img/welcome/quickstart/blueprintGraphWithServiceClosedAndExpandMarked.png)
 
-You should see an expanded view of the blueprint you just created, with all of its properties listed alongside the types you provided:
+You will see an expanded view of the Blueprint you just created, with all of its properties listed alongside the types you provided:
 
 ![Developer Portal Blueprints graph with new Service open](../static/img/welcome/quickstart/blueprintGraphWithServiceOpen.png)
 
@@ -466,23 +466,23 @@ Congratulations! you have just created your first Blueprint! 🎉
 
 Our environment Blueprint is going to include the following properties:
 
-- **Environment type** - the type of the environment (production, staging, QA, etc.);
-- **Cloud provider** - the cloud provider where the cluster is deployed;
-- **Region** - The cloud region where the cluster is deployed.
+- **Environment type** - type of the environment (production, staging, QA, etc.);
+- **Cloud provider** - cloud provider where the cluster is deployed;
+- **Region** - cloud region where the cluster is deployed.
 
-In addition the Blueprint is going to include the following formula property:
+In addition, the Blueprint is going to include the following formula property:
 
 - **Grafana URL** - link to the Grafana dashboard of the environment.
 
 :::tip
-For more information about formula properties check out [this](./platform-overview/port-components/formula-properties.md) document
+For more information about formula properties click [here](./platform-overview/port-components/formula-properties.md).
 :::
 
 <!-- COntinue working on the blueprint schema, add enum colors for cloud providers, add formula properties for grafana, prometheus -->
 
-In addition, the `environment type` field will be marked as `required`, so we can make sure that our environments are tagged correctly.
+In addition, the `environment type` field will be marked as `required`, that way we can make sure that our environments are tagged correctly.
 
-In order to create a the environment Blueprint, use the following JSON body:
+To create the environment Blueprint, use the following JSON body:
 
 <details>
 <summary>Environment Blueprint JSON</summary>
@@ -641,19 +641,19 @@ Click on the `expand` button as shown in the image below:
 
 ![Developer Portal Blueprints graph with new Environment Blueprint And Expand Marked](../static/img/welcome/quickstart/blueprintGraphWithEnvironmentClosedAndExpandMarked.png)
 
-You should see an expanded view of the blueprint you just created, with all of its properties listed alongside the types you provided:
+You will see an expanded view of the Blueprint you just created, with all of its properties listed alongside the types you provided:
 
 ![Developer Portal Blueprints graph with new Environment open](../static/img/welcome/quickstart/blueprintGraphWithEnvironmentOpen.png)
 
-In the next part, we will start creating Entities that match these new Blueprints, making the Software Catalog come together!
+In the next part, we will start to create Entities that match the new Blueprints we created, assembling the Software Catalog!
 
 ## Create your first Entities
 
 Now that we have Blueprints for `environment` and `service`, we can add some _Entities_.
 
-An **Entity** is an object that matches a type of a certain Blueprint. In our case, every Entity we create under the service Blueprint, is a microservice in our organization. And every environment we create under the environment Blueprint, is a different environment where our code is running.
+An **Entity** is an object that matches a type of a certain Blueprint. In our case, every Entity we create under the service Blueprint, is a microservice in our organization. And every environment we create under the environment Blueprint, is a different environment in which our code is running.
 
-Let's create some initial Entities to make things clearer.
+Let's take it slowly, and start by creating some initial Entities.
 
 ### Service and Environment Entity
 
@@ -663,7 +663,7 @@ Click on the services page on the left sidebar:
 
 ![Developer Portal Blueprints graph with new Service and Services page marked](../static/img/welcome/quickstart/blueprintGraphWithServicesPageMarked.png)
 
-On the services page, click on the `+ Service` button to start creating a new Entity:
+On the services page, click on the `+ Service` button to create a new Entity:
 
 ![Developer Portal Service Entity page with create entity button marked](../static/img/welcome/quickstart/serviceEntityPageWithCreateEntityMarked.png)
 
@@ -706,7 +706,7 @@ After filling all of the above, your creation page should look like this:
 
 You can go ahead and press the `Create` button at the bottom right corner (as shown in the image above).
 
-Now to create an environment Entity, repeat these same steps, but this time go to the environments page:
+Now to create an environment Entity, repeat the same steps, but this time go to the environments page:
 
 ![Developer Portal Blueprints graph with new Environment and Environments page marked](../static/img/welcome/quickstart/blueprintGraphWithEnvironmentsPageMarked.png)
 
@@ -825,17 +825,17 @@ A **Relation** is a connection between two Blueprints and the Entities that are 
 
 Currently our Software Catalog has services and environments, but in practice a single service is deployed to multiple environments at the same time. In order to keep track of all the different services and their active deployments, we're now going to create another Blueprint `Running Service`. Our running service Blueprint will contain the following fields:
 
-- **Health status** - the health status of the running service;
-- **Deployed branch** - the branch where the code of the running service is taken from;
+- **Health status** - health status of the running service;
+- **Deployed branch** - branch where the code of the running service is taken from;
 - **Locked** - is the running service currently locked (meaning no new deployments are allowed);
-- **Version** - the current version of the running service.
+- **Version** - current version of the running service.
 
 In addition, the running service Blueprint will include two **Relations**:
 
-- A Relation to a service - to denote the microservice the running service belongs to;
-- A Relation to an environment - to denote teh environment the running service is deployed at.
+- Relation to a service - to denote the microservice the running service belongs to;
+- Relation to an environment - to denote the environment the running service is deployed at.
 
-In order to create the running service Blueprint, use the following JSON body:
+To create the running service Blueprint, use the following JSON body:
 
 <details>
 <summary>Running service Blueprint JSON</summary>
@@ -1071,7 +1071,7 @@ print(json.dumps(response.json(), indent=2))
 
 ### The results
 
-After you're done, your Blueprints page should look like this:
+After you're done, your Blueprints page will look like this:
 
 ![Developer Portal Blueprints Page with service, environment and running service](../static/img/welcome/quickstart/blueprintsGraphWithRunningServiceEnvironmentServiceRelation.png)
 
@@ -1079,7 +1079,7 @@ After you're done, your Blueprints page should look like this:
 Look at the connection graph you have just created. You modeled the relationship between your Blueprints in a way that shows which Blueprint depends on the other.
 :::
 
-Now we'll a running service Entity.
+Now we'll create a running service Entity.
 
 ## Running Service Entity
 
@@ -1168,19 +1168,19 @@ print(json.dumps(running_service_response.json(), indent=2))
 
 ### The results
 
-Now you should see your new running service Entity, and if you look at the Service column and the Environment column, you will see the service and environment you created previously:
+Now you will see your new running service Entity, and if you look at the Service column and the Environment column, you will see the service and environment you created previously:
 
 ![Developer Portal Running Service with service and environment marked](../static/img/welcome/quickstart/RunningServiceWithServiceAndEnvironment.png)
 
-Click on the `Notification Service Prod` link in the `title` column and you will see what we call the **specific Entity page**. This page allows you to see the complete details and dependency graph of a specific entity.
+Click on the `Notification Service Prod` link in the `title` column and you will see what we call the **specific Entity page**. This page allows you to see the complete details and dependency graph of a specific Entity.
 
 ![Developer Portal Running Service specific entity page after relation](../static/img/welcome/quickstart/runningServiceSpecificEntityPageAfterRelation.png)
 
 :::info
-In our case, the specific entity page for a running service will also show us a tab with the **microservice** the running service belongs to, and another tab with the **environment** of the running service because that is the Relation we mapped.
+In our case, the specific Entity page for a running service will also show us a tab with the **microservice** the running service belongs to, and another tab with the **environment** of the running service because that is the Relation we mapped.
 :::
 
-Feel free to continue exploring the specific entity page and the environments, services and running service pages. Notice the `filter`, `hide`, `sort` and `group by` controls you can find at the top right of Port's table widgets.
+Feel free to continue exploring the specific Entity page and the environments, services and running service pages. Notice the `filter`, `hide`, `sort` and `group by` controls you can find at the top right of Port's table widgets.
 
 You can also use Port's API to make GET requests for Blueprints and Entities, here is a code example to get the running service Entity we created in this tutorial:
 
