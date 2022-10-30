@@ -17,6 +17,7 @@ In this guide, you will setup an initial software catalog. You will learn how to
 - Port's [Terraform provider](../integrations/terraform.md) - to create your cloud resources;
 - Port's [GitHub App](../integrations/github/app/) - to create your services;
 - Port's [REST API](../api-reference/) - to create your deployment configs;
+- Port's [K8s Exporter](../integrations/k8s-exporter) - to create your deployment service pods;
 - Port's [GitHub Action](../integrations/github/github-action.md) - to create your service deployments.
 
 By the end of this guide, you will have the _Basic Model_ of a software catalog.
@@ -33,6 +34,8 @@ Before we dive into the details of each [Blueprint](../platform-overview/port-co
   - In this example environments will be reported using Port's Terraform Provider.
 - **Deployment Config** - a representation of the current “live” version of a service running in a specific environment. It will include references to the service, environment, and deployment, as well as real-time information such as status, uptime, and any other relevant metadata.
   - In this example deployment configs will be reported manually.
+- **Deployment Service Pod** - instances of a service. It includes a reference to the deployment config, and other details like specification and runtime status of containers.
+  - In this example deployment service pods will be reported live using Port's K8s Exporter.
 - **Deployment** - an object representing a CD job. It includes the version of the deployed service and a link to the job itself. Unlike other objects, the deployment is an immutable item in the software catalog. It is important to keep it immutable to ensure the catalog remains reliable.
   - In this example deployments will be reported using Port's GitHub Action as part of the deployment process.
 
@@ -232,6 +235,66 @@ The Blueprint JSON provided below already includes the Relations between the dif
     "Service": {
       "title": "Service",
       "target": "Service",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary>Deployment Service Pod Blueprint JSON</summary>
+
+```json showLineNumbers
+{
+  "identifier": "DeployedServicePod",
+  "title": "Deployed Service Pod",
+  "icon": "Cluster",
+  "schema": {
+    "properties": {
+      "startTime": {
+        "type": "string",
+        "title": "Start Time",
+        "format": "date-time"
+      },
+      "phase": {
+        "type": "string",
+        "title": "Phase",
+        "enum": ["Pending", "Running", "Succeeded", "Failed", "Unknown"],
+        "enumColors": {
+          "Pending": "yellow",
+          "Running": "blue",
+          "Succeeded": "green",
+          "Failed": "red",
+          "Unknown": "darkGray"
+        }
+      },
+      "labels": {
+        "type": "object",
+        "title": "Labels"
+      },
+      "containers": {
+        "title": "Containers",
+        "type": "array"
+      },
+      "conditions": {
+        "type": "array",
+        "title": "Conditions"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {
+    "Environment": {
+      "path": "DeploymentConfig.Environment.$identifier"
+    }
+  },
+  "formulaProperties": {},
+  "relations": {
+    "DeploymentConfig": {
+      "target": "DeploymentConfig",
       "required": false,
       "many": false
     }
@@ -467,6 +530,38 @@ entity = {
 response = requests.post(f'{API_URL}/blueprints/{target_blueprint}/entities', json=entity, headers=headers)
 
 print(response.json())
+```
+
+</details>
+
+### Deployment Service Pod - K8s Exporter
+
+A deployment service pod is used to represent an instance of a deployed service. A deployment service pod has a `deployment config` tied to it, which represents the deployed service that the pod is an instance of.
+
+Below is a `config.yaml` configuration file to use as the [K8s Exporter](../integrations/k8s-exporter) config.
+
+<details>
+<summary>Click here to see the config</summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: v1/pods
+    selector:
+      query: .metadata.namespace | startswith("kube") | not
+    port:
+      entity:
+        mappings:
+          - identifier: .metadata.name
+            title: .metadata.name
+            blueprint: '"DeployedServicePod"'
+            properties:
+              startTime: .status.startTime
+              phase: .status.phase
+              labels: .metadata.labels
+              containers: (.spec.containers | map({image, resources})) + .status.containerStatuses | group_by(.image) | map(add)
+              conditions: .status.conditions
+            relations:
+              DeploymentConfig: .metadata.labels."app.kubernetes.io/name" + "-prod"
 ```
 
 </details>
