@@ -228,6 +228,22 @@ The following rule will return all Entities that have a relationship with the En
 }
 ```
 
+If we wish to search entities that have a relationship that the Entity but only the children or ancestors relations, you can use the property `direction`.
+
+```json showLineNumbers
+{
+  "operator": "relatedTo",
+  "blueprint": "microservice",
+  "value": "port-api",
+  "direction": "upstream"
+}
+```
+
+**Available Direction:**
+
+- upstream
+- downstream
+
 :::info entity page and search
 
 The output received from the `relatedTo` operator without any other rule added to the search, is the same output you will receive when viewing the [Entity page](../platform-overview/port-components/page.md#entity-page) of the Entity you specified in the `value` field
