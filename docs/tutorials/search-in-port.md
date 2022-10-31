@@ -228,7 +228,12 @@ The following rule will return all Entities that have a relationship with the En
 }
 ```
 
-If we wish to search entities that have a relationship that the Entity but only the children or ancestors relations, you can use the property `direction`.
+#### `direction` property
+
+The `relatedTo` operator also supports the `direction` property - which allows you to search for dependent Entities in a specific direction on the dependency graph:
+
+- To search for Entities which depend on the source - use `"direction": "downstream"`
+- To search for Entities which the source depends on - `"direction": "upstream"`
 
 ```json showLineNumbers
 {
@@ -238,11 +243,6 @@ If we wish to search entities that have a relationship that the Entity but only 
   "direction": "upstream"
 }
 ```
-
-**Available Direction:**
-
-- upstream
-- downstream
 
 :::info entity page and search
 
