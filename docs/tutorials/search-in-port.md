@@ -228,6 +228,22 @@ The following rule will return all Entities that have a relationship with the En
 }
 ```
 
+#### `direction` property
+
+The `relatedTo` operator also supports the `direction` property - which allows you to search for dependent Entities in a specific direction on the dependency graph:
+
+- To search for Entities which depend on the source - use `"direction": "downstream"`
+- To search for Entities which the source depends on - `"direction": "upstream"`
+
+```json showLineNumbers
+{
+  "operator": "relatedTo",
+  "blueprint": "microservice",
+  "value": "port-api",
+  "direction": "upstream"
+}
+```
+
 :::info entity page and search
 
 The output received from the `relatedTo` operator without any other rule added to the search, is the same output you will receive when viewing the [Entity page](../platform-overview/port-components/page.md#entity-page) of the Entity you specified in the `value` field
