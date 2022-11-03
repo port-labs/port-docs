@@ -179,7 +179,8 @@ resources: # List of K8s resources to list, watch, and export to Port.
 
 - A reference for available Kubernetes Resources to list, watch, and export: https://kubernetes.io/docs/reference/kubernetes-api/
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to give you the power to map and transform K8s objects to Port Entities.
-  :::
+
+:::
 
 3. After configuring the `config.yml` file from the previous step. Install the `Kubernetes Exporter` chart by using the following command:
 
