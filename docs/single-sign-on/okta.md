@@ -30,7 +30,7 @@ In order to complete the process you will need to contact us, the exact informat
 
 ![Okta new application OIDC integration](../../static/img/sso/okta/OktaCreateAppIntegration.png)
 
-1. Choose **Single-Page application** as your application type.
+4. Choose **Single-Page application** as your application type.
 
 ![Okta new application type](../../static/img/sso/okta/OktaSetAppType.png)
 
