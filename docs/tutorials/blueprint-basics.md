@@ -57,7 +57,7 @@ In order to create a Blueprint with the following properties, we will use the fo
         "description": "A URL to the Git repository of the microservice"
       }
     },
-    "required": ["repoURL"]
+    "required": ["repoUrl"]
   }
 }
 ```
