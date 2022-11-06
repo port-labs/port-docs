@@ -47,7 +47,7 @@ the latest versions of the charts. You can then run `helm search repo port-labs`
 For example, in order to export your Kubernetes `Replica Sets` and `Pods` to Port, you may use the following Port Blueprints definitions, and `config.yaml`:
 
 <details>
-<summary> A DeployedReplicaSet Blueprint </summary>
+<summary> DeployedReplicaSet Blueprint </summary>
 
 ```json showLineNumbers
 {
