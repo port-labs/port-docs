@@ -17,7 +17,7 @@ In order to complete the process you will need to contact us, the exact informat
 - Your Okta teams will be synced with Port, automatically upon user sign-in.
 - Set granular permissions on Port according to your Okta groups.
 
-## How to Configure the Okta App Login to Port​
+## How to configure the Okta app integration for Port​
 
 ### Step #1: Create a new Okta application
 

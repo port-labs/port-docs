@@ -17,7 +17,7 @@ In order to complete the process you will need to contact us, the exact informat
 - Your Onelogin roles will be synced with Port, automatically upon user sign-in.
 - Set granular permissions on Port according to your Onelogin roles.
 
-## How to Configure the Onelogin App Login to Port​
+## How to configure the Onelogin app integration for Port​
 
 ### Step #1: Create a new Onelogin application
 
@@ -43,9 +43,13 @@ In order to complete the process you will need to contact us, the exact informat
 
 Click `Save`.
 
+:::tip
+Most of the following steps involve editing the initial Port app you created, you can always go back to it by opening the admin console, and going to Applications -> Applications, the Port app will appear in the application list.
+:::
+
 ### Step #2: Configure your Onelogin application
 
-`Configuration` menu:
+In the Port app, go to the `Configuration` menu and follow these steps:
 
 1. Under `Login URL` set the login URL to the one **provided to you by Port**.
 
@@ -60,16 +64,18 @@ Click `Save`.
 Click `Save`.
 
 :::caution
-Be sure to click save before moving on to the other steps, without the `Login URL` and the `Redirect URI's` filled in, trying to save any other application parameter will result in an error.
+Be sure to click save before moving on to the other steps, without the `Redirect URI's` filled in, trying to save any other application parameter will result in an error.
 :::
 
 ### Step #3: Configure OIDC settings
 
-`SSO` menu:
+In the Port app, go to the `SSO` menu and follow these steps:
 
 1. Copy the `Client ID` and the `Client Secret` and send it to Port (on the slack channel).
 
-2. Change the Token Endpoint - Authentication Method to `None (PKCE)`:
+2. Click on the `Well-known Configuration` Link, and send the address of the page that opened to Port (it will be in the format `https://{YOUR_DOMAIN}.onelogin.com/oidc/2/.well-known/openid-configuration`)
+
+3. Change the Token Endpoint - Authentication Method to `None (PKCE)`:
 
 ![Okta app settings](../../static/img/sso/onelogin/OneloginSSOSetting.png)
 
@@ -111,7 +117,7 @@ After creating the mapping rule, go back to Users -> Mappings and click on `Reap
 
 ### Step #5: Configure OpenID Claims
 
-Go back to the new Port OIDC app and in the `Parameters` menu follow these steps:
+In the Port app, go to the `Parameters` menu and follow these steps:
 
 1. Click on the `+` button.
 2. In the form that appears, under `Field Name` write: `openid` and click `save`.
@@ -128,37 +134,45 @@ At the end of the process, your `Parameters` section will look like this:
 
 Click `Save`.
 
+### Step #6: Exposing the application to your organization
+
+1. In the `Application` page, select the Port app and go to the `Access` menu.
+2. In the `Roles` section, select the roles you want to expose the Port app to:
+
+   ![Onelogin Assign App Roles](../../static/img/sso/onelogin/OneloginAssignAppRoles.png)
+
+3. Click `Save`.
+
+After completing these steps, users with roles that the Port app was assigned to, will see the Port app in their Portal and upon clicking it, will be logged in to Port:
+
+[Onelogin Portal With Port App](../../static/img/sso/onelogin/OneloginPortalWithApp.png)
+
 ---
 
-## How to allow pulling Okta groups to Port
+## How to allow pulling Onelogin roles to Port
 
 :::note
-This stage is **OPTIONAL** and is required only if you wish to pull all of your Okta groups into Port inherently.
+This stage is **OPTIONAL** and is required only if you wish to pull all of your Onelogin roles into Port inherently.
 
 **Benefit:** managing permissions and user access on Port.  
-**Outcome:** for every user that logs in, we will automatically get their associated Okta groups, according to your definition in the settings below.
+**Outcome:** for every user that logs in, we will automatically get their associated Onelogin roles, according to your definition in the settings below.
 :::
 
-To allow automatic Okta group support in Port, please follow these steps:
+To allow automatic Onelogin roles support in Port, please follow these steps:
 
-1. Under the `Application` page, select Port App and go to the `Sign On` tab:
+1. In the `Application` page, select the Port app and go to the `Parameters` menu;
 
-   ![Okta application sign-on settings](../../static/img/sso/okta/OktaAppSingOnSettings.png)
+2. Click on the `Groups` claim:
 
-2. Under `OpenID Connect Token` click `Edit`:
+   ![Onelogin App Parameters Setting](../../static/img/sso/onelogin/OneloginParametersSetting.png)
 
-   ![Okta application connect id token](../../static/img/sso/okta/OktaAppConnectToken.png)
+3. Update the groups claim:
 
-3. Add a `Groups claim type` and choose the option `filter`, then:
+   1. Change the value of `Default if no value selected` to `User Roles`;
+   2. From the dropdown, select `Semicolon delimited input`:
 
-   3.1 Value = `groups`
+   ![Onelogin App Groups Claim Setting](../../static/img/sso/onelogin/OneloginGroupsClaim.png)
 
-   3.2 Select the required regex phrase to your needs.
+   3. Click `Save`.
 
-   :::note
-   To import all groups, insert `Matches regex` with the `.*` value.
-   :::
-
-   ![Okta application set group claims](../../static/img/sso/okta/OktaAppSetGroupClaims.png)
-
-   3.3 Click `Save`.
+4. Click `Save`.
