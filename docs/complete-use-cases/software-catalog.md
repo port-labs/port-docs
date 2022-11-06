@@ -20,7 +20,7 @@ In this guide, you will setup an initial software catalog. You will learn how to
 - Port's [Kubernetes Exporter](../integrations/k8s-exporter) - to create your deployment service pods;
 - Port's [GitHub Action](../integrations/github/github-action.md) - to create your service deployments.
 
-By the end of this guide, you will have the _Basic Model_ of a software catalog.
+By the end of this guide, you will have a _Basic Model_ of a software catalog.
 
 The Basic Model covers the main SDLC intersections: from Services, to Environments and Deployments, and lastly the cloud:
 
@@ -34,7 +34,7 @@ Before we dive into the details of each [Blueprint](../platform-overview/port-co
   - In this example environments will be reported using Port's Terraform Provider.
 - **Deployment Config** - a representation of the current “live” version of a service running in a specific environment. It will include references to the service, environment, and deployment, as well as real-time information such as status, uptime, and any other relevant metadata.
   - In this example deployment configs will be reported manually.
-- **Deployment Service Pod** - pods (instances) of a service. It includes a reference to the deployment config, and details such as specification and runtime status of containers.
+- **Deployment Service Pod** - pods (instances) of a service. It includes a reference to the deployment config and details such as the specification and runtime status of containers.
   - In this example deployment service pods will be reported using Port's Kubernetes Exporter.
 - **Deployment** - an object representing a CD job. It includes the version of the deployed service and a link to the job itself. Unlike other objects, the deployment is an immutable item in the software catalog. It is important to keep it immutable to ensure the catalog remains reliable.
   - In this example deployments will be reported using Port's GitHub Action as part of the deployment process.
@@ -536,7 +536,7 @@ print(response.json())
 
 ### Deployment Service Pod - K8s Exporter
 
-A deployment service pod is used to represent an instance of a deployed service. A deployment service pod has a `deployment config` tied to it, which represents the deployed service that the pod is an instance of.
+A deployment service pod represents an instance of a deployed service. A deployment service pod has a `deployment config` tied to it, which represents the deployed service that the pod is an instance of.
 
 Below is a `config.yaml` configuration file to use as the [Kubernetes Exporter](../integrations/k8s-exporter) config:
 
