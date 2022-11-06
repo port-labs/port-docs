@@ -28,17 +28,17 @@ Let's go over the different Blueprints shown below and how we'll create [Entitie
 
 - **Service** - the object that we would like to estimate its maturity. For example - payment service, order service, parsing service etc;
   - **Repository** - URL of the git repository of the service.
-- **Check** - definition of the Check responsibility;
+- **Check** - the check definition. For example - snyk vulnerabilities check, readme check etc..;
   - **Category** - in which domain the check applies (Service Ownership, security, reliability, etc);
   - **Description** - a small description of the check and its purpose.
 - **Check Run** - actual job run of the `Check` definition on a specific Service;
   - **Job URL** - link to the job URL of the actual GitHub check run;
   - **Build Id** - the `buildId` the check ran for;
   - **Status** - check run result `failure` or `success`.
-- **Rank** - a collection of properties that defines what rank is a `Check` blueprint connected to and how important is it, while the `Service` blueprint is connected to it to define the service maturity;
+- **Rank** - the object defines the level of a `Check` or `Service` (Levels 1 - 5). The higher the level, the higher the maturity;
   - **Level** - Rank level (Level 1, Level 2 etc...)
   - **Priority** - Rank importance 1 - 5
-  - **Description** - explanation regarding how the Rank appears, and matches the building accordingly.
+  - **Description** - explanation of what `Checks` or `Services` need to reach this level.
 
 :::note
 
@@ -107,7 +107,7 @@ In the [example repo](https://github.com/port-labs/port-service-maturity-example
 
 :::caution
 
-Before continuing, if you don't have Snyk & Pager Duty account, remove `check-snyk-vulnerabilities-python.yml`, `check-pager-duty.yml` and `check-pager-duty-team.yml` because they require an API token to integrate to those services and perform the checks.
+Before continuing, if you don't have Snyk & Pager Duty account, remove `check-snyk-vulnerabilities-python.yml`, `check-pager-duty.yml` and `check-pager-duty-team.yml` from `run-maturity-tests.yml` file because they require an API token to integrate to those services and perform the checks.
 
 In addition, remove these resources from the `setup.tf` file:
 `resource "port-labs_entity" "pager-check"`
