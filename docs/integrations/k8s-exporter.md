@@ -11,7 +11,7 @@ Here you'll find a step-by-step guide to installing the K8s Exporter in your Kub
 ## What does our Kubernetes Exporter offer you?
 
 - List and export existing Kubernetes objects in your cluster.
-- Watch live for changes (Create/Update/Delete) of Kubernetes objects and automatically apply the changes to your Entities in Port.
+- Watch for changes (Create/Update/Delete) of Kubernetes objects in real time and automatically apply the changes to your Entities in Port.
 - Configure which Kubernetes objects are relevant, and how to map and transform objects to Port Entities.
 
 ## Installation using Helm Chart
@@ -177,7 +177,7 @@ resources: # List of K8s resources to list, watch, and export to Port.
 
 :::info
 
-- A reference for available Kubernetes Resources to list, watch, and export: https://kubernetes.io/docs/reference/kubernetes-api/
+- A reference of available Kubernetes Resources to list, watch, and export can be found [here](https://kubernetes.io/docs/reference/kubernetes-api/)
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to give you the power to map and transform K8s objects to Port Entities.
 
 :::
