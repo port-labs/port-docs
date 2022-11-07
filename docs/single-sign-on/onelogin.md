@@ -8,7 +8,7 @@ sidebar_position: 1.3
 This is a step-by-step guide to configuring the integration between Port and Onelogin.
 
 :::info
-In order to complete the process you will need to contact Port to deliver and receive information, as detailed in the guide below. 
+In order to complete the process you will need to contact Port to deliver and receive information, as detailed in the guide below.
 :::
 
 ## Port-Onelogin Integration Benefits ​
@@ -73,7 +73,7 @@ In the Port app, go to the `SSO` menu and follow these steps:
 
 1. Copy the `Client ID` and the `Client Secret` and send it to Port (on the slack channel).
 
-2. Click on the `Well-known Configuration` Link, and send the address of the page that opened to Port (it will be in the format `https://{YOUR_DOMAIN}.onelogin.com/oidc/2/.well-known/openid-configuration`)
+2. Click on the `Well-known Configuration` Link, and send the page address to Port (its format will be `https://{YOUR_DOMAIN}.onelogin.com/oidc/2/.well-known/openid-configuration`)
 
 3. Change the Token Endpoint - Authentication Method to `None (PKCE)`:
 
