@@ -10,3 +10,4 @@ In order to get started with our SSO integrations, select the one you are curren
 
 - [Okta](./okta.md)
 - [Azure Active Directory (AzureAD)](./azure-ad.md)
+- [Onelogin](./onelogin.md)
