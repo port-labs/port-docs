@@ -4,7 +4,11 @@ sidebar_position: 1
 
 # OpenAPI
 
-## Definition in Blueprint
+Port supports importing and displaying [OpenAPI](https://www.openapis.org/) specification files as [Swagger UI](https://swagger.io/) tabs.
+
+By using the combination of `"type": "object` and `"spec": "open-api"` in a [Blueprint property](../port-components/blueprint.md#blueprint-properties), Port will display the Swagger UI matching the spec file provided in the [Specific Entity Page](../port-components/page.md#entity-page). In addition it will also provide advanced functionality such as performing HTTP calls to the spec target directly from Port.
+
+## OpenAPI property definition in Blueprint schema
 
 ```json showLineNumbers
 {
@@ -15,10 +19,8 @@ sidebar_position: 1
 }
 ```
 
-:::note
-You can see the openAPI on Specific Entity Page.
-:::
-
 ## Example
+
+Here is how the Swagger tab in the Specific Entity Page looks when an OpenAPI spec is provided:
 
 ![OpenAPI Example](../../../static/img/platform-overview/plugins/openAPI.png)
