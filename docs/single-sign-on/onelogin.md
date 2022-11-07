@@ -8,13 +8,13 @@ sidebar_position: 1.3
 This is a step-by-step guide to configuring the integration between Port and Onelogin.
 
 :::info
-In order to complete the process you will need to contact us, the exact information we need to provide, as well as the information Port requires from you is listed in this doc.
+In order to complete the process you will need to contact Port to deliver and receive information, as detailed in the guide below. 
 :::
 
 ## Port-Onelogin Integration Benefits ​
 
-- Connect to the Port application via a Onelogin app.
-- Your Onelogin roles will be synced with Port, automatically upon user sign-in.
+- Connect to the Port application via a Onelogin app;
+- Your Onelogin roles will be automatically synced with Port, upon user sign-in;
 - Set granular permissions on Port according to your Onelogin roles.
 
 ## How to configure the Onelogin app integration for Port​
@@ -32,8 +32,8 @@ In order to complete the process you will need to contact us, the exact informat
 
 4. Define the initial Port application settings:
 
-   1. `Display Name`: Insert a friendly name for the Port app, like `Port`.
-   2. Add a rectangular icon and a square icon (optional):
+   1. `Display Name`: Insert a name of your choice for the Port app, like `Port`.
+   2. Add rectangular and square icons (optional):
 
    ![Port's logo](../../static/img/sso/general-assets/PortLogo.png)
 
@@ -44,7 +44,7 @@ In order to complete the process you will need to contact us, the exact informat
 Click `Save`.
 
 :::tip
-Most of the following steps involve editing the initial Port app you created, you can always go back to it by opening the admin console, and going to Applications -> Applications, the Port app will appear in the application list.
+Most of the following steps involve editing the initial Port app you created. Keep in mind you can always go back to it by opening the admin console and going to Applications -> Applications, the Port app will appear in the application list.
 :::
 
 ### Step #2: Configure your Onelogin application
@@ -64,7 +64,7 @@ In the Port app, go to the `Configuration` menu and follow these steps:
 Click `Save`.
 
 :::caution
-Be sure to click save before moving on to the other steps, without the `Redirect URI's` filled in, trying to save any other application parameter will result in an error.
+Be sure to click save before moving on to the next step because without the `Redirect URI's` filled in, trying to save any other application parameter will result in an error.
 :::
 
 ### Step #3: Configure OIDC settings
@@ -83,7 +83,7 @@ Click `Save`.
 
 ### Step #4: Add `email_verified` custom property to all users
 
-The use of OpenID requires that Onelogin pass to Port an `email_verified` field upon user login. Onelogin does not store and expose that field by default, so in this step you are going to configure that field, and apply it to all users in your Onelogin account, the steps outlined here can also be found in the [Onelogin documentation](https://developers.onelogin.com/openid-connect/guides/email-verified).
+The use of OpenID requires that Onelogin passes to Port an `email_verified` field upon user login. Onelogin does not store and expose that field by default, so in this step, you are going to configure that field and apply it to all users in your Onelogin account. The steps outlined here can also be found in the [Onelogin documentation](https://developers.onelogin.com/openid-connect/guides/email-verified).
 
 1. In the Admin Console, go to Users -> Custom User Fields.
 2. Click on `New User Field`.
@@ -96,11 +96,11 @@ The use of OpenID requires that Onelogin pass to Port an `email_verified` field 
 The custom field is `null` by default, in order to change its value to `true` you will create a custom mapping rule:
 
 :::note
-It is also possible to manually change the value of the `Email Verified` field to `true` manually for each user that needs access to Port in your organization. But if a large number of users in your organization need access to port, manual assignment is not scalable.
+It is also possible to manually change the value of the `Email Verified` field to `true` for each user that requires access to Port in your organization. However, granting access manually to a large number of users is not scalable.
 :::
 
 :::tip
-The mapping specified here will set the value of the `Email Verified` custom field to `true` for every user whose `Status` is `Active` in your Onelogin organization, feel free to use a different mapping if you need a more specific mapping.
+The mapping specified here will set the value of the `Email Verified` custom field to `true` for every user whose `Status` is `Active` in your Onelogin organization. Feel free to use a different mapping if you seek a specific mapping.
 :::
 
 1. Go to Users -> Mappings
@@ -113,17 +113,17 @@ The mapping specified here will set the value of the `Email Verified` custom fie
 
 ![Onelogin Email Verified Mapping Rule](../../static/img/sso/onelogin/OneloginEmailVerifiedMappingRule.png)
 
-After creating the mapping rule, go back to Users -> Mappings and click on `Reapply All Mappings`. The new mapping might take a few minutes before it is applied. You can check the status of the mapping job either by by going to Activity -> Jobs and checking the status of the mapping job or by looking at a specific user and verifying that it has the `Email Verified` field set to `true` (and not an empty field which is the default).
+After creating the mapping rule, go back to Users -> Mappings and click on `Reapply All Mappings`. The new mapping might process for a few minutes before it is applied. You can check the mapping job status either by going to Activity -> Jobs or by looking at a specific user and verifying that it has the `Email Verified` field set to `true` (and not the default empty field).
 
 ### Step #5: Configure OpenID Claims
 
 In the Port app, go to the `Parameters` menu and follow these steps:
 
-1. Click on the `+` button.
-2. In the form that appears, under `Field Name` write: `openid` and click `save`.
-3. In the value drop down that appears, select `OpenID name`
+1. Click on the `+` button;
+2. In the form that appears, under `Field Name` write: `openid` and click `save`;
+3. In the value drop down that appears, select `OpenID name`.
 
-Repeat the process 2 more times and add the following additional parameters:
+Repeat the process two more times and add the following additional parameters:
 
 1. `Field Name`: email, `Value`: Email
 2. `Field Name`: email_verified, `Value`: Email Verified (Custom)
