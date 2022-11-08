@@ -173,7 +173,9 @@ Here is how property definitions look like for all available types (remember tha
 ```json showLineNumbers
 {
   "title": "String Property",
+  // highlight-start
   "type": "string",
+  // highlight-end
   "description": "A string property",
   "default": "foo"
 }
@@ -184,7 +186,9 @@ Here is how property definitions look like for all available types (remember tha
 ```json showLineNumbers
 {
   "title": "Number Property",
+  // highlight-start
   "type": "number",
+  // highlight-end
   "description": "A number property",
   "default": 42
 }
@@ -195,7 +199,9 @@ Here is how property definitions look like for all available types (remember tha
 ```json showLineNumbers
 {
   "title": "Boolean Property",
+  // highlight-start
   "type": "boolean",
+  // highlight-end
   "description": "A boolean property",
   "default": true
 }
@@ -206,7 +212,9 @@ Here is how property definitions look like for all available types (remember tha
 ```json showLineNumbers
 {
   "title": "Object Property",
+  // highlight-start
   "type": "object",
+  // highlight-end
   "description": "An object property",
   "default": {
     "foo": "bar"
@@ -219,7 +227,9 @@ Here is how property definitions look like for all available types (remember tha
 ```json showLineNumbers
 {
   "title": "Array Property",
+  // highlight-start
   "type": "array",
+  // highlight-end
   "description": "An array property",
   "default": [1, 2, 3]
 }
@@ -230,10 +240,12 @@ Here is how property definitions look like for all available types (remember tha
 ```json showLineNumbers
 {
   "title": "Array of Objects",
+  // highlight-start
   "type": "array",
   "items": {
     "type": "object"
   },
+  // highlight-end
   "description": "An array property",
   "default": [
     {
@@ -249,11 +261,13 @@ Here is how property definitions look like for all available types (remember tha
 ```json showLineNumbers
 {
   "title": "Array of URLs",
+  // highlight-start
   "type": "array",
   "items": {
     "type": "string",
     "format": "url"
   },
+  // highlight-end
   "description": "An array of URLs property"
 }
 ```
@@ -264,12 +278,14 @@ Here is how property definitions look like for all available types (remember tha
 {
   "title": "Enum field",
   "type": "string",
+  // highlight-start
   "enum": ["Option 1", "Option 2", "Option 3"],
   "enumColors": {
     "Option 1": "red",
     "Option 2": "green",
     "Option 3": "blue"
   },
+  // highlight-end
   "description": "Enum dropdown menu"
 }
 ```
@@ -288,14 +304,14 @@ Here is how property definitions look like for all available types (remember tha
 
 We currently support the following `string` formats:
 
-| `format`    | Description                                                | Example values                            |
-| ----------- | ---------------------------------------------------------- | ----------------------------------------- |
-| `url`       | Formatted URL                                              | `"https://getport.io"`                    |
-| `email`     | Formatted Email                                            | `"port@getport.io"`                       |
-| `date-time` | Formatted ISO string datetime                              | `"2022-04-18T11:44:15.345Z"`              |
-| `ipv4`      | Standard IPv4 address                                      | `127.0.0.1`                               |
-| `ipv6`      | Standard IPv6 address                                      | `FE80:CD00:0A20:0CDE:1257:1C34:211E:729C` |
-| `yaml`      | a [.yaml](https://en.wikipedia.org/wiki/YAML) file content | `a: 123`                                  |
+| `format`    | Description                                               | Example values                            |
+| ----------- | --------------------------------------------------------- | ----------------------------------------- |
+| `url`       | Formatted URL                                             | `"https://getport.io"`                    |
+| `email`     | Formatted Email                                           | `"port@getport.io"`                       |
+| `date-time` | Formatted ISO string datetime                             | `"2022-04-18T11:44:15.345Z"`              |
+| `ipv4`      | Standard IPv4 address                                     | `127.0.0.1`                               |
+| `ipv6`      | Standard IPv6 address                                     | `FE80:CD00:0A20:0CDE:1257:1C34:211E:729C` |
+| `yaml`      | a [YAML](https://en.wikipedia.org/wiki/YAML) file content | `a: 123`                                  |
 
 :::note
 Those are the `format` types that our API supports. See [API reference](../../api-reference).
@@ -310,8 +326,10 @@ Here is how to use property formats:
 ```json showLineNumbers
 {
   "title": "URL Property",
+  // highlight-start
   "type": "string",
   "format": "url",
+  // highlight-end
   "description": "A URL property",
   "default": "https://getport.io"
 }
@@ -322,8 +340,10 @@ Here is how to use property formats:
 ```json showLineNumbers
 {
   "title": "Email Property",
+  // highlight-start
   "type": "string",
   "format": "email",
+  // highlight-end
   "description": "An Email property",
   "default": "mor@getport.io"
 }
@@ -334,8 +354,10 @@ Here is how to use property formats:
 ```json showLineNumbers
 {
   "title": "Datetime Property",
+  // highlight-start
   "type": "string",
   "format": "date-time",
+  // highlight-end
   "description": "A datetime property",
   "default": "2022-04-18T11:44:15.345Z"
 }
@@ -346,8 +368,10 @@ Here is how to use property formats:
 ```json showLineNumbers
 {
   "title": "IPv4 Property",
+  // highlight-start
   "type": "string",
   "format": "ipv4",
+  // highlight-end
   "description": "An IPv4 property",
   "default": "127.0.0.1"
 }
@@ -358,8 +382,10 @@ Here is how to use property formats:
 ```json showLineNumbers
 {
   "title": "IPv6 Property",
+  // highlight-start
   "type": "string",
   "format": "ipv6",
+  // highlight-end
   "description": "An IPv6 property",
   "default": "0000:0000:0000:0000:0000:0000:0000:0000"
 }
@@ -367,34 +393,38 @@ Here is how to use property formats:
 
 ### Yaml
 
-```json {3-4} showLineNumbers
+```json showLineNumbers
 "config": {
     "title": "Microservice Config",
+    // highlight-start
     "type": "string",
     "format": "yaml",
+    // highlight-end
     "description": "The configuration to use when deploying the service"
 }
 ```
 
-Below is a `python` code snippet to parse a `yaml` property to an object:
+Below is a `python` code snippet to parse a `yaml` property to a dictionary:
 
 <details>
 <summary>Click here to see the code</summary>
 
-How the Entity looks:
+The target Entity for the snippet:
 
-```json {6} showLineNumbers
+```json showLineNumbers
 {
   "identifier": "my-cool-service-prod",
   "title": "Cool Service Production",
   "properties": {
     {...} // some properties
+    // highlight-start
     "config": "do_awesome_things: true\nthings_not_to_do:\n    - fail\n    - be slow\n    - have bugs"
+    // highlight-end
   }
 }
 ```
 
-How to use it in code:
+Snippet to fetch the `config` property and parse it from yaml to a python dictionary:
 
 ```python showLineNumbers
 # pip install pyyaml
@@ -414,9 +444,9 @@ headers = {
 }
 response = requests.get(f'{API_URL}/blueprints/{target_blueprint}/entities/{target_blueprint}', headers=headers)
 
-configProp = yaml.safe_load(response.json()["entity"]["properties"]["config"])
+config_prop = yaml.safe_load(response.json()["entity"]["properties"]["config"])
 
-print(configProp)
+print(config_prop)
 ```
 
 </details>
