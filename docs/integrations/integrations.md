@@ -7,3 +7,4 @@ You can find more details about our available integrations by checking the list 
 - [GitHub App](./github/app/)
 - [GitHub Action](./github/github-action.md)
 - [Terraform Provider](./terraform.md)
+- [Kubernetes Exporter](./k8s-exporter)

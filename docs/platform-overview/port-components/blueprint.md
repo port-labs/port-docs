@@ -100,7 +100,7 @@ Each Blueprint is represented by a [Json schema](https://json-schema.org/), as s
 
 | Schema field | Type     | Description                                                                                                                           |
 | ------------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `properties` | `Object` | See our [`properties`](#blueprints-properties) section for more details.                                                              |
+| `properties` | `Object` | See our [`properties`](#blueprint-properties) section for more details.                                                               |
 | `required`   | `List`   | A list of the **required** properties, out of the `properties` object list. <br /> These are mandatory fields to fill in the UI form. |
 
 ## Blueprint properties
