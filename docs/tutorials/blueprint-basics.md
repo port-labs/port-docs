@@ -376,7 +376,7 @@ You can create the new Blueprint from the UI (using the `Add Blueprint` button i
     "properties": {
       "version": {
         "title": "Version",
-        "type": "number",
+        "type": "string",
         "default": "1.0.0"
       },
       "inHouse": {
