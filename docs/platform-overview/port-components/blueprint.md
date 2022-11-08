@@ -288,13 +288,14 @@ Here is how property definitions look like for all available types (remember tha
 
 We currently support the following `string` formats:
 
-| `format`    | Description                   | Example values                            |
-| ----------- | ----------------------------- | ----------------------------------------- |
-| `url`       | Formatted URL                 | `"https://getport.io"`                    |
-| `email`     | Formatted Email               | `"port@getport.io"`                       |
-| `date-time` | Formatted ISO string datetime | `"2022-04-18T11:44:15.345Z"`              |
-| `ipv4`      | Standard IPv4 address         | `127.0.0.1`                               |
-| `ipv6`      | Standard IPv6 address         | `FE80:CD00:0A20:0CDE:1257:1C34:211E:729C` |
+| `format`    | Description                                                | Example values                            |
+| ----------- | ---------------------------------------------------------- | ----------------------------------------- |
+| `url`       | Formatted URL                                              | `"https://getport.io"`                    |
+| `email`     | Formatted Email                                            | `"port@getport.io"`                       |
+| `date-time` | Formatted ISO string datetime                              | `"2022-04-18T11:44:15.345Z"`              |
+| `ipv4`      | Standard IPv4 address                                      | `127.0.0.1`                               |
+| `ipv6`      | Standard IPv6 address                                      | `FE80:CD00:0A20:0CDE:1257:1C34:211E:729C` |
+| `yaml`      | a [.yaml](https://en.wikipedia.org/wiki/YAML) file content | `a: 123`                                  |
 
 :::note
 Those are the `format` types that our API supports. See [API reference](../../api-reference).
@@ -363,6 +364,62 @@ Here is how to use property formats:
   "default": "0000:0000:0000:0000:0000:0000:0000:0000"
 }
 ```
+
+### Yaml
+
+```json {3-4} showLineNumbers
+"config": {
+    "title": "Microservice Config",
+    "type": "string",
+    "format": "yaml",
+    "description": "The configuration to use when deploying the service"
+}
+```
+
+Below is a `python` code snippet to parse a `yaml` property to an object:
+
+<details>
+<summary>Click here to see the code</summary>
+
+How the Entity looks:
+
+```json {6} showLineNumbers
+{
+  "identifier": "my-cool-service-prod",
+  "title": "Cool Service Production",
+  "properties": {
+    {...} // some properties
+    "config": "do_awesome_things: true\nthings_not_to_do:\n    - fail\n    - be slow\n    - have bugs"
+  }
+}
+```
+
+How to use it in code:
+
+```python showLineNumbers
+# pip install pyyaml
+import yaml
+
+API_URL = 'https://api.getport.io/v1'
+
+target_blueprint = 'Microservice'
+target_entity = 'my-cool-service-prod'
+
+credentials = {'clientId': 'YOUR_CLIENT_ID', 'clientSecret': 'YOUR_CLIENT_SECRET'}
+token_response = requests.post(f'{API_URL}/auth/access_token', json=credentials)
+access_token = token_response.json()['accessToken']
+
+headers = {
+    'Authorization': f'Bearer {access_token}'
+}
+response = requests.get(f'{API_URL}/blueprints/{target_blueprint}/entities/{target_blueprint}', headers=headers)
+
+configProp = yaml.safe_load(response.json()["entity"]["properties"]["config"])
+
+print(configProp)
+```
+
+</details>
 
 ## String regular expression patterns
 

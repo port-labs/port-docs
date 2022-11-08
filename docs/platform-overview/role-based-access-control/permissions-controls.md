@@ -75,7 +75,7 @@ As you can see, every operation that can be performed on the Blueprint or its En
 
 For example, If you want to enable **Members** to register Entities of `Env` Blueprint, you can change the JSON as follows:
 
-```json showLineNumbers
+```json {4} showLineNumbers
 {
   "entities": {
     "register": {
@@ -89,7 +89,7 @@ For example, If you want to enable **Members** to register Entities of `Env` Blu
 
 To allow only **Admins** to change the property `slackChannelUrl`, remove the Moderator role:
 
-```json showLineNumbers
+```json {5} showLineNumbers
 {
   "entities": {
     "updateProperties": {
@@ -105,7 +105,7 @@ To allow only **Admins** to change the property `slackChannelUrl`, remove the Mo
 
 To grant permissions for a specific user to edit the `deployedAt` relation, add to the users array:
 
-```json showLineNumbers
+```json {6} showLineNumbers
 {
   "entities": {
     "updateRelations": {
@@ -121,7 +121,7 @@ To grant permissions for a specific user to edit the `deployedAt` relation, add 
 
 By default, **Member** users can execute every new Action of the Blueprint. If necessary, you can change it. For example, you can allow **Moderators** (and **Admins**) to only execute the Action `clone_env`:
 
-```json showLineNumbers diff
+```json {5} showLineNumbers diff
 {
   "actions": {
     "clone_env": {
@@ -140,7 +140,7 @@ By default, **Member** users can execute every new Action of the Blueprint. If n
 You will notice that some operations have the `ownedByTeam` flag. This allows you to set permissions by team ownership, rather than by Roles or direct assignment.
 For example, the following JSON will allow **every user**, regardless of their roles, to perform the Action `delete_env` on `Env` Entities that belong to a team they are part of (entities that have the [`team` property](../port-components/entity#teams-and-ownership) set):
 
-```json showLineNumbers
+```json {7} showLineNumbers
 {
   "actions": {
     "delete_env": {
@@ -168,7 +168,7 @@ When granting write permissions for Entities of a Blueprint, you have 2 levels o
 To apply granular permissions for a Blueprint, use the `updateProperties` and `updateRelations` fields in the JSON.
 The following change will allow **Member** users to update _only_ the `slackChannelUrl` property of `Env` Entities:
 
-```json showLineNumbers
+```json {5} showLineNumbers
 {
   "entities": {
     "updateProperties": {
@@ -185,7 +185,7 @@ The following change will allow **Member** users to update _only_ the `slackChan
 If you want to apply global permissions, use the `update` field in the JSON.
 The following change will allow **Member** users to update _every_ property/relation of `Env` Entities that are owned by their team:
 
-```json showLineNumbers
+```json {6} showLineNumbers
 {
   "entities": {
     "update": {
