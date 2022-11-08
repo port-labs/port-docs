@@ -21,7 +21,7 @@ By using the combination of `"type": "string` and `"format": "markdown"` in a [B
 
 ## Example
 
-Here is how the Markdown tab in the Specific Entity Page looks when markdown text is provided:
+Here is how the Markdown tab in the Entity's profile page looks when markdown text is provided:
 
 ![Markdown Example](../../../static/img/platform-overview/plugins/markdown.png)
 
