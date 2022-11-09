@@ -424,12 +424,12 @@ Here is how to use property formats:
 }
 ```
 
-Below is a `python` code snippet to parse a `yaml` property to a dictionary:
+You can see below a `python` code snippet that parses a `yaml` formatted property as a dictionary object:
 
 <details>
 <summary>Click here to see the code</summary>
 
-The target Entity for the snippet:
+The Entity used in the example:
 
 ```json showLineNumbers
 {
@@ -444,7 +444,7 @@ The target Entity for the snippet:
 }
 ```
 
-Snippet to fetch the `config` property and parse it from yaml to a python dictionary:
+Snippet to fetch the `config` property and parse it from `yaml` to a python dictionary:
 
 ```python showLineNumbers
 # pip install pyyaml
