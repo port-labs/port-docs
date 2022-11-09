@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1.1
+sidebar_position: 1
 sidebar_label: Blueprint
 ---
 
@@ -151,18 +151,24 @@ We highly recommend you set a `description`, so your developers will understand 
 
 We currently support the following types:
 
-| `type`    | Description                                                                                              | Example values                               |
-| --------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
-| `string`  | A free-text string value                                                                                 | `"This is a string field"`                   |
-| `number`  | Numeric field (including integers, doubles, floats, etc...)                                              | `1`, `2.3`, `5e3`,...                        |
-| `boolean` | Boolean field                                                                                            | A `true` or `false`                          |
-| `object`  | A well formatted object (i.e. python dictionary, javascript object, JSON, etc...)                        | `{ 'key1': 'value1', 'key2': 'value2', ...}` |
-| `array`   | A multi-element array                                                                                    | `[1,2,3]`, `["a","b","c"]`                   |
-| `enum`    | Field with a pre-defined set of allowed values. Can be used with properties of type `string` or `number` | `["Option 1", "Option 2", "Option 3"]`       |
+| `type`    | Description                                                                       | Example values                               |
+| --------- | --------------------------------------------------------------------------------- | -------------------------------------------- |
+| `string`  | A free-text string value                                                          | `"This is a string field"`                   |
+| `number`  | Numeric field (including integers, doubles, floats, etc...)                       | `1`, `2.3`, `5e3`,...                        |
+| `boolean` | Boolean field                                                                     | A `true` or `false`                          |
+| `object`  | A well formatted object (i.e. python dictionary, javascript object, JSON, etc...) | `{ 'key1': 'value1', 'key2': 'value2', ...}` |
+| `array`   | A multi-element array                                                             | `[1,2,3]`, `["a","b","c"]`                   |
 
 :::note
 Those are the `properties` that our API supports. See [API reference](../../api-reference).
 :::
+
+We support the following additional props:
+
+|        | Description                                                                                                                                | Example values                                   |
+| ------ | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------ |
+| `enum` | Field with a pre-defined set of allowed values. Can be used with properties of type `string` or `number`                                   | `["Option 1", "Option 2", "Option 3"]`           |
+| `spec` | Field with a pre-defined set of allowed values (only 'open-api' is supported currently). Can be used with properties of type `object` only | A legal [OpenAPI](../widgets/open-api) JSON spec |
 
 ### Examples
 
@@ -290,6 +296,19 @@ Here is how property definitions look like for all available types (remember tha
 }
 ```
 
+### Spec
+
+```json showLineNumbers
+{
+  "title": "Swagger",
+  // highlight-start
+  "type": "object",
+  "spec": "open-api",
+  // highlight-end
+  "description": "Open-API Prop"
+}
+```
+
 ## String property formats
 
 ```json {3-4} showLineNumbers
@@ -304,14 +323,15 @@ Here is how property definitions look like for all available types (remember tha
 
 We currently support the following `string` formats:
 
-| `format`    | Description                                               | Example values                            |
-| ----------- | --------------------------------------------------------- | ----------------------------------------- |
-| `url`       | Formatted URL                                             | `"https://getport.io"`                    |
-| `email`     | Formatted Email                                           | `"port@getport.io"`                       |
-| `date-time` | Formatted ISO string datetime                             | `"2022-04-18T11:44:15.345Z"`              |
-| `ipv4`      | Standard IPv4 address                                     | `127.0.0.1`                               |
-| `ipv6`      | Standard IPv6 address                                     | `FE80:CD00:0A20:0CDE:1257:1C34:211E:729C` |
-| `yaml`      | a [YAML](https://en.wikipedia.org/wiki/YAML) file content | `a: 123`                                  |
+| `format`                          | Description                                               | Example values                            |
+| --------------------------------- | --------------------------------------------------------- | ----------------------------------------- |
+| `url`                             | Formatted URL                                             | `"https://getport.io"`                    |
+| `email`                           | Formatted Email                                           | `"port@getport.io"`                       |
+| `date-time`                       | Formatted ISO string datetime                             | `"2022-04-18T11:44:15.345Z"`              |
+| `ipv4`                            | Standard IPv4 address                                     | `127.0.0.1`                               |
+| `ipv6`                            | Standard IPv6 address                                     | `FE80:CD00:0A20:0CDE:1257:1C34:211E:729C` |
+| `yaml`                            | a [YAML](https://en.wikipedia.org/wiki/YAML) file content | `a: 123`                                  |
+| [`markdown`](../widgets/markdown) | String in markdown language format                        | `An Example of **bold text**.`            |
 
 :::note
 Those are the `format` types that our API supports. See [API reference](../../api-reference).
@@ -451,17 +471,32 @@ print(config_prop)
 
 </details>
 
+### Markdown
+
+```json showLineNumbers
+{
+  "title": "Markdown Property",
+  // highlight-start
+  "type": "string",
+  "format": "markdown",
+  // highlight-end
+  "description": "An Markdown property"
+}
+```
+
 ## String regular expression patterns
 
 In order to use a regex pattern for a property value, both the `"type": "string"` and the `"pattern": "[REGEX_PATTERN]"` keys need to be used in the property JSON.
 
 A regex pattern will limit the set of legal values only to ones that are matched by the specified `[REGEX_PATTERN]`:
 
-```json {3-4} showLineNumbers
+```json showLineNumbers
 "regex_prop": {
     "title": "Regex Pattern Property",
+    // highlight-start
     "type": "string",
     "pattern": "[a-zA-Z0-9]",
+    // highlight-end
     "description": "A property that supports values specified by a regex pattern",
     "default": "Port1337"
 }
@@ -481,10 +516,11 @@ Port supports standard Javascript regex syntax ([ECMA 262](https://www.ecma-inte
 
 You can add icons to properties:
 
-```json {4} showLineNumbers
+```json showLineNumbers
 "string_prop": {
     "title": "My String Property",
     "type": "string",
+    // highlight-next-line
     "icon": "Github",
     "default": "foo",
     "description": "This is a string property"
