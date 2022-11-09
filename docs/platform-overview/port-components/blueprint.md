@@ -446,7 +446,7 @@ response = requests.get(f'{API_URL}/blueprints/{target_blueprint}/entities/{targ
 
 config_prop = yaml.safe_load(response.json()["entity"]["properties"]["config"])
 
-print(config_prop)
+print(config_prop["do_awesome_things"]) # prints: True
 ```
 
 </details>
