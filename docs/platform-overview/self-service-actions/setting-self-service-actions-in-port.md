@@ -408,9 +408,9 @@ The following table includes the different fields that can be specified in the `
 
 In addition to the formats introduced in [Blueprint string property formats](../port-components/blueprint.md#string-property-formats), Port Self-Service Actions also support the following `string` formats:
 
-| `format` | Description                            | Example values           |
-| -------- | -------------------------------------- | ------------------------ |
-| `entity` | An Entity from the specified Blueprint | `"notification-service"` |
+| `format` | Description                          | Example values            |
+| -------- | ------------------------------------ | ------------------------- |
+| `entity` | An Entity from a specified Blueprint | `"notifications-service"` |
 
 #### Examples
 

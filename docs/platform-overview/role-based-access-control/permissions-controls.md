@@ -79,6 +79,7 @@ For example, If you want to enable **Members** to register Entities of `Env` Blu
 {
   "entities": {
     "register": {
+      // highlight-next-line
       "roles": ["Env-moderator", "Member"], // changed from ["Env-moderator"]
       "users": [],
       "ownedByTeam": false
@@ -94,6 +95,7 @@ To allow only **Admins** to change the property `slackChannelUrl`, remove the Mo
   "entities": {
     "updateProperties": {
       "slackChannelUrl": {
+        // highlight-next-line
         "roles": [], // changed from ["Env-moderator"]
         "users": [],
         "ownedByTeam": false
@@ -111,6 +113,7 @@ To grant permissions for a specific user to edit the `deployedAt` relation, add 
     "updateRelations": {
       "deployedAt": {
         "roles": ["Env-moderator"],
+        // highlight-next-line
         "users": ["some-user@myorg.com"], // changed from []
         "ownedByTeam": false
       }
@@ -126,6 +129,7 @@ By default, **Member** users can execute every new Action of the Blueprint. If n
   "actions": {
     "clone_env": {
       "execute": {
+        // highlight-next-line
         "roles": ["Env-moderator"], // changed from ["Env-moderator", "Member"]
         "users": [],
         "ownedByTeam": false
@@ -147,6 +151,7 @@ For example, the following JSON will allow **every user**, regardless of their r
       "execute": {
         "roles": ["Env-moderator"],
         "users": [],
+        // highlight-next-line
         "ownedByTeam": true // changed from false
       }
     }
@@ -173,6 +178,7 @@ The following change will allow **Member** users to update _only_ the `slackChan
   "entities": {
     "updateProperties": {
       "slackChannelUrl": {
+        // highlight-next-line
         "roles": ["Env-moderator", "Member"], // changed from ["Env-moderator"]
         "users": [],
         "ownedByTeam": false
@@ -191,6 +197,7 @@ The following change will allow **Member** users to update _every_ property/rela
     "update": {
       "roles": ["Env-moderator"],
       "users": [],
+      // highlight-next-line
       "ownedByTeam": true // changed from false
     }
   }
