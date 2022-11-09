@@ -12,5 +12,5 @@ For more information about available widgets, click on any of the links below:
 
 ## Documentation
 
-- [OpenAPI](./open-api)
 - [Markdown](./markdown)
+- [OpenAPI](./open-api)
