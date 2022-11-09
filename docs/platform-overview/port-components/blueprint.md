@@ -168,7 +168,7 @@ We support the following additional props:
 |        | Description                                                                                                                                | Example values                                   |
 | ------ | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------ |
 | `enum` | Field with a pre-defined set of allowed values. Can be used with properties of type `string` or `number`                                   | `["Option 1", "Option 2", "Option 3"]`           |
-| `spec` | Field with a pre-defined set of allowed values (only 'open-api' is supported currently). Can be used with properties of type `object` only | A legal [OpenAPI](../plugins/open-api) JSON spec |
+| `spec` | Field with a pre-defined set of allowed values (only 'open-api' is supported currently). Can be used with properties of type `object` only | A legal [OpenAPI](../widgets/open-api) JSON spec |
 
 ### Examples
 
@@ -312,7 +312,7 @@ We currently support the following `string` formats:
 | `date-time`                     | Formatted ISO string datetime      | `"2022-04-18T11:44:15.345Z"`              |
 | `ipv4`                          | Standard IPv4 address              | `127.0.0.1`                               |
 | `ipv6`                          | Standard IPv6 address              | `FE80:CD00:0A20:0CDE:1257:1C34:211E:729C` |
-| [markdown](../plugins/markdown) | String in markdown language format | `An Example of **bold text**.`            |
+| [markdown](../widgets/markdown) | String in markdown language format | `An Example of **bold text**.`            |
 
 :::note
 Those are the `format` types that our API supports. See [API reference](../../api-reference).
