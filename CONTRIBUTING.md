@@ -49,4 +49,4 @@ Contributions are very welcome. If you think you need help planning your contrib
 3. Write small numbers (up to 10), in a word and not in a number. For example **two** instead of **2**.
 4. Make sure the spacing between different types of lines is the same throughout the whole document.
 5. When referring to someone performing an action that isn’t the docs reader, refer to them in a plural word, and not in second body grammer. For example, “they can use”, instead of “he can use”.
-6. Try avoiding adding “ing” to actions. FOr example, “reacting to” compared to “react to”.
+6. Try avoiding adding “ing” to actions. For example, “reacting to” compared to “react to”.
