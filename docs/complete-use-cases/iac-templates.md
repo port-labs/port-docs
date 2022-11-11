@@ -17,7 +17,8 @@ The following example will walk you through how to set up Self-Service Actions t
 We will use a backend written in Go, which leverages Terraform templates to execute the aforementioned operations.
 
 :::info
-The full example can be found [here](https://github.com/port-labs/terraform-connector).
+The full example can be found [**HERE**](https://github.com/port-labs/terraform-connector).
+
 Another template for managing `SNS Topic` is available there.
 :::
 
