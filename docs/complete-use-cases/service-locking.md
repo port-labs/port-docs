@@ -6,6 +6,10 @@ sidebar_position: 2
 
 Using Port, it is very simple to implement convenient service locking for services in your different development and production environments.
 
+:::tip
+All relevant files and resources for this guide are available [**HERE**](https://github.com/port-labs/resource-catalog-microservice-repo)
+:::
+
 ## Goal
 
 In this guide you will implement a service locking mechanism using Port's [GitHub Action](../integrations/github/github-action.md).
