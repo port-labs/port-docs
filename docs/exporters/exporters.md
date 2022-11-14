@@ -5,4 +5,4 @@ Port offers several Integrations, allowing you to easily ingest and manage data 
 You can find more details about our available integrations by checking the list below:
 
 - [GitHub App](./github-app/github-app.md)
-- [Kubernetes Exporter](./k8s-exporter.md)
+- [Kubernetes Exporter](./k8s-exporter)
