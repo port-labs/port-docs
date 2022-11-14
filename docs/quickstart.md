@@ -1261,4 +1261,4 @@ If you want to continue utilizing Port's REST API Interface, take a look at thes
 - [Blueprint Basics](./tutorials/blueprint-basics.md);
 - [Relation Basics](./tutorials/relation-basics.md);
 - [Entity Basics](./tutorials/relation-basics.md);
-- [Port API Reference](./api-reference/).
+- [Port API Reference](./api-methods/rest.md).

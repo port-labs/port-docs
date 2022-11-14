@@ -5,7 +5,7 @@ title: Quickstart
 
 :::note Prerequisites
 
-[Please install our GitHub app](./installation).
+[Please install our GitHub app](../installation).
 :::
 
 # Quickstart

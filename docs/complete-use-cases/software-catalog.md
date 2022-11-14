@@ -15,7 +15,7 @@ You can read more about software catalogs on our [blog](https://www.getport.io/b
 In this guide, you will setup an initial software catalog. You will learn how to use:
 
 - Port's [Terraform provider](../api-methods/terraform.md) - to create your cloud resources;
-- Port's [REST API](../api-methods/rest/rest.md) - to create your deployment configs;
+- Port's [REST API](../api-methods/rest.md) - to create your deployment configs;
 - Port's [GitHub Action](../api-methods/github-action.md) - to create your service deployments.
 - Port's [GitHub App](../exporters/github-app/github-app.md) - to create your services;
 - Port's [Kubernetes Exporter](../exporters/k8s-exporter/introduction.md) - to create your deployment service pods;
@@ -434,7 +434,7 @@ Now that you have your environment ready, it's time to create a service.
 
 ### Service - GitHub app
 
-To create your service, you will connect Port's [GitHub app](../exporters/github-app/gitops/) to your service repository, and add a `port.yml` file describing the service you want to create an Entity for in Port.
+To create your service, you will connect Port's [GitHub app](../exporters/github-app/gitops/Introduction.md) to your service repository, and add a `port.yml` file describing the service you want to create an Entity for in Port.
 
 Here is an example `port.yml` file for a service called `Notification Service`:
 

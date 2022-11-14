@@ -89,4 +89,4 @@ You can learn more about these properties in the [Mirror Properties](./mirror-pr
 
 [Explore How to Create, Edit, and Delete Relations with basic examples](../../tutorials/relation-basics.md)
 
-[Dive into advanced operations on Relations with our API ➡️ ](../../api-reference)
+[Dive into advanced operations on Relations with our API ➡️ ](../../api-methods/rest.md)
