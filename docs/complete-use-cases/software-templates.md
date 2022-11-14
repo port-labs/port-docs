@@ -10,6 +10,10 @@ There are a few open source projects out there that enable you to create a proje
 
 In the next section we are going to present an example.
 
+:::tip
+All relevant files and resources for this guide are available [**HERE**](https://github.com/port-labs/port-cookiecutter-example)
+:::
+
 ## Example - create a new service repository
 
 The following example utilizes Port [webhook-actions](../platform-overview/self-service-actions/port-execution-architecture/port-execution-webhook.md) to create a new service repository from a software template.
