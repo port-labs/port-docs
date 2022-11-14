@@ -1,0 +1,252 @@
+---
+sidebar_position: 6
+---
+
+# Microservice Dependency Mapping
+
+Port make's your life easy when storing metadata about your microservices.
+
+## Goal
+
+Our goal is to see how we can use Port to maintain the current state of a microservice's package dependencies.
+
+## Example
+
+In this example we will review a use-case for maintaining package dependencies for a Microservice in a mono-repo environment.
+Our development environment is Node and we manage our packages using yarn.
+
+### Use-case setup
+
+Lets review our Blueprints and repository structure so we can better understand what this use-case is trying to accomplish.
+
+#### Blueprints
+
+<details>
+<summary>DeploymentConfig Blueprint</summary>
+
+_Please notice the 'relations' seciton at the bottom of the Blueprint_
+
+```json showLineNumbers
+{
+  "identifier": "DeploymentConfig",
+  "title": "Deployment Config",
+  "icon": "Service",
+  "schema": {
+    "properties": {
+      "locked": {
+        "type": "boolean",
+        "title": "Locked",
+        "default": false,
+        "description": "Are deployments currently allowed for this configuration",
+        "icon": "Lock"
+      },
+      "deploymentName": {
+        "type": "string",
+        "title": "Deployment Name"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "formulaProperties": {},
+  "relations": {
+    "at": {
+      "title": "Environment",
+      "target": "environment",
+      "required": false,
+      "many": false
+    },
+    "package": {
+      "title": "Package",
+      "target": "Package",
+      "required": false,
+      "many": true
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary>Package Blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "Package",
+  "title": "Package",
+  "icon": "Package",
+  "schema": {
+    "properties": {
+      "version": {
+        "title": "Version",
+        "type": "string"
+      },
+      "inHouse": {
+        "title": "In-House?",
+        "type": "boolean"
+      }
+    },
+    "required": ["version"]
+  },
+  "mirrorProperties": {},
+  "formulaProperties": {},
+  "relations": {}
+}
+```
+
+</details>
+
+<br/>
+Lets have a look at our new relation!
+
+![blueprints.png](../../static/img/tutorial/complete-use-cases/microservice-dependency/blueprints.png)
+
+_For more information about DeploymentConfig and it's uses, click [here](../complete-use-cases/software-catalog#deployment-config---port-api)._
+
+As we can see in the image above, 2 Blueprints were created; DeploymentConfig and Package. Notice how the 'Package' property is actually the relation we created. It consists of an Array of packages (this is thanks to the '"many": true' property of the relation ), since there can be many Package dependencies per each DeploymentConfig.
+
+#### Repository structure
+
+Here is a [link](https://github.com/port-labs/demo-node-project) to the Git repository we will be working on during this use-case.
+
+Directory tree:
+
+```
+.
+├── README.md
+├── package.json
+├── apps
+│   ├── frontend/
+│   ├── backend/
+│   └── db/
+├── scripts
+│   ├── scan-yarn-lock.py
+    └── scan_requirements.txt
+├── .github
+│   └── workflows
+│       └── update-packages.yml
+└── yarn.lock
+```
+
+As stated before, in this example we will cover a mono-repo use case. In this repository, microservices are positioned in the 'apps/' directory, which we will refer to as MICROSERVICE_PATH.
+
+```
+# Later, this environment variable will be passed to the workflow in Github Actions
+MICROSERVICE_PATH = 'apps/'
+```
+
+We will also persume that the directory names in MICROSERVICE_PATH (i.e. apps/frontend will be 'frontend', apps/backend will be 'backend') are the names of the different Microservices we are managing.
+
+Since we are working with DeploymentConfigs - which are configured by a Microservice and Runtime (Environment) - we will have to take into account which Runtime we are managing packages for. This will be passed on to us from the workflow call.
+
+### Automating Entity creation
+
+Let's begin by creating a Python script to handle scanning the 'yarn.lock' file. We will also implement Package entity creation, and update the exisiting Microservices with their relevant package dependencies.
+
+[This Python script](https://github.com/port-labs/demo-node-project/blob/main/scripts/scan-yarn-lock.py) has some useful functions with which we interact with Port.
+Have a look at:
+
+```python
+get_port_api_token()
+    ...
+report_to_port(blueprint, entity_json, token)
+    ...
+get_port_entity(blueprint, identifier, token)
+    ...
+```
+
+Environment variables:
+
+_Any environment variable which is read from the operating system; os.environ.get(), is passed on to the script by the Github Action which will trigger the run._
+
+```
+MICROSERVICE_PATH = os.environ.get("MICROSERVICE_PATH")
+
+# ../../yarn.lock relative path to script
+YARN_LOCK_PATH = os.path.join(os.path.dirname(os.path.dirname(
+    os.path.dirname(__file__))), 'yarn.lock')
+
+# Port Client Secret and ID
+CLIENT_ID = os.environ.get("PORT_CLIENT_ID")
+CLIENT_SECRET = os.environ.get("PORT_CLIENT_SECRET")
+
+# Port's API url
+API_URL = 'https://api.getport.io/v1'
+
+# The environment's runtime (i.e 'production', 'test', 'staging')
+RUNTIME = os.environ.get("RUNTIME")
+
+```
+
+### Triggering a run using Github Actions
+
+In our environment, a change in main means a change in the 'Production' environment. Lets create a workflow which monitors changes in Production.
+In order to monitor the 'yarn.lock' file, we will create a Github Action which watches the lock file on 'main' branch.
+
+On a file change, we will run the Python script.
+
+Lets walk through the [workflow](https://github.com/port-labs/demo-node-project/blob/main/.github/workflows/update-packages.yml).
+
+```
+name: Update Packages in Port
+
+on:
+  # Trigger this workflow when yarn.lock file changes on main branch
+  push:
+    branches:
+      - "main"
+    paths:
+      - "yarn.lock"
+
+  # Trigger workflow when manually called - We keep this in case we want to manually re-sync packages with Port for some reason
+  workflow_dispatch:
+
+
+jobs:
+  update-microservices:
+    name: "Run yarn.lock scanner"
+    runs-on: ubuntu-latest
+    env:
+      RUNTIME: "production" # main branch indiciates this is a change in production environment.
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+          cache: 'pip'
+          cache-dependency-path: '.github/scripts/scan_requirements.txt'
+
+      # Install python requirements
+      - run: |
+          pip install -r .github/scripts/scan_requirements.txt
+
+      # Run python scanner script with necessary env vars
+      - name: Run scanner script
+        env:
+          PORT_CLIENT_ID: ${{ secrets.PORT_CLIENT_ID }}
+          PORT_CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
+          MICROSERVICE_PATH: "apps/"
+        run: |
+            python .github/scripts/scan-yarn-lock.py
+
+```
+
+After setting up the Workflow, we are done!
+
+Let's see our workflow in action.
+Try installing a new package and push it to main:
+
+```
+npm install prettier
+git add -u
+git commit -m "Updated yarn.lock to contain prettier package"
+git push
+```
+
+Now merge the code in to main and see the magic happen!
+
+![trigger_workflow.png](../../static/img/tutorial/complete-use-cases/microservice-dependency/trigger_workflow.png)
+The workflow automatically runs, and when it finishes, we should see the new packages created and related to the relevant microservice.
+
+![new_package.png](../../static/img/tutorial/complete-use-cases/microservice-dependency/new_package.png)
