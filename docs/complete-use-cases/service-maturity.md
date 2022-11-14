@@ -8,7 +8,7 @@ Using Port, it is very simple to implement, calculate and track service maturity
 
 ## Goal
 
-In this guide, you will implement a service maturity model using Port's [GitHub Action](../integrations/github/github-action.md).
+In this guide, you will implement a service maturity model using Port's [GitHub Action](../api-methods/github-action.md).
 
 After you finish the tutorial, you will have a well-defined service maturity environment that will use customized `Checks` that run periodically. They determine each `Service`'s maturity within the organization:
 

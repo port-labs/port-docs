@@ -2,19 +2,9 @@
 sidebar_position: 3
 ---
 
-# Kubernetes Exporter
-
-Our integration with Kubernetes allows you to export Kubernetes objects to Port as Entities of existing Blueprints.
+## Quickstart
 
 Here you'll find a step-by-step guide to installing the K8s Exporter in your Kubernetes Cluster.
-
-## What does our Kubernetes Exporter offer you?
-
-- List and export existing Kubernetes objects in your cluster.
-- Watch for changes (Create/Update/Delete) of Kubernetes objects in real time and automatically apply the changes to your Entities in Port.
-- Configure which Kubernetes objects are relevant, and how to map and transform objects to Port Entities.
-
-## Installation using Helm Chart
 
 :::info
 The helm chart with full installation & usage guide can be found [here](https://github.com/port-labs/helm-charts/tree/main/charts/port-k8s-exporter).
@@ -28,7 +18,7 @@ The helm chart with full installation & usage guide can be found [here](https://
 
 <center>
 
-![Port Developer Portal Credentials Modal](../../static/img/tutorial/credentials-modal.png)
+![Port Developer Portal Credentials Modal](../../../static/img/tutorial/credentials-modal.png)
 
 </center>
 :::
@@ -195,8 +185,8 @@ Done! the exporter will begin creating and updating objects from your Kubernetes
 
 For instance, you can see a `Replica Set` and its `Pods` in a single Port Entity page:
 
-![Developer Portal Kubernetes Exporter Replica Set Entity](../../static/img/integrations/k8s-exporter/ReplicaSetAndPods.png)
+![Developer Portal Kubernetes Exporter Replica Set Entity](../../../static/img/integrations/k8s-exporter/ReplicaSetAndPods.png)
 
-And you can look for the respective audit logs with indication of the Kubernetes Exporter as the source:
+And you can look for the respective audit logs with an indication of the Kubernetes Exporter as the source:
 
-![Developer Portal Kubernetes Exporter Audit Log](../../static/img/integrations/k8s-exporter/AuditLog.png)
+![Developer Portal Kubernetes Exporter Audit Log](../../../static/img/integrations/k8s-exporter/AuditLog.png)

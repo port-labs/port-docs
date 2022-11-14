@@ -1,6 +1,5 @@
 ---
-sidebar_position: 1
-title: "Github App"
+sidebar_position: 0
 ---
 
 # Introduction
@@ -8,8 +7,6 @@ title: "Github App"
 Our GitHub app allows you to quickly and easily map out your Software Catalog, according to your existing code repositories and projects.
 
 You can visit [our GitHub App](https://github.com/apps/getport-io) page to get started.
-
-Here you'll find a step-by-step guide to installing the GitHub App of Port.
 
 ## What Does Our GitHub Application Offer You?​
 

@@ -8,7 +8,7 @@ Using Port, it is very simple to implement convenient service locking for servic
 
 ## Goal
 
-In this guide you will implement a service locking mechanism using Port's [GitHub Action](../integrations/github/github-action.md).
+In this guide you will implement a service locking mechanism using Port's [GitHub Action](../api-methods/github-action.md).
 
 The environment we're going to use includes 2 [Blueprints](../platform-overview/port-components/blueprint.md) with a [Relation](../platform-overview/port-components/relation.md) between them:
 
@@ -181,7 +181,7 @@ Now let's use the deployment config Entity to lock the `Notification Service` fo
 
 ## Reading the `locked` field during deployment
 
-In order to use the `locked` field on your deployment config, you will use Port's [GitHub Action](../integrations/github/github-action.md).
+In order to use the `locked` field on your deployment config, you will use Port's [GitHub Action](../api-methods/github-action.md).
 
 Here is the deployment check flow:
 

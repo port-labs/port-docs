@@ -51,7 +51,7 @@ const config = {
         specs: [
           {
             spec: "https://api.getport.io/yaml",
-            route: "/api-reference/",
+            route: "/docs/api-methods/api-reference/rest",
           },
         ],
         // Theme Options for modifying how redoc renders them
