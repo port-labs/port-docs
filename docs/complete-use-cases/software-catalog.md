@@ -459,7 +459,7 @@ properties:
 
 After the commit of the `port.yml` file to your repository, you will now see your service in Port.
 
-### Deployment Config - Port API
+### Deployment Config - Port API {#deployment-config-bp}
 
 A deployment config is used to represent a service deployment in a specific environment in your infrastructure. A deployment config has multiple `deployments` tied to it, each representing a new version of the deployed code of the matching service, in its matching environment.
 
