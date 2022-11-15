@@ -117,7 +117,7 @@ resources:
 
 :::info
 
-- Currently, we support only `pull-request` as GitHub objects (kind) but more are coming soon!
+- Currently, we support only `pull-request` as GitHub objects (referenced by the `kind` key) but more are coming soon!
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitHub objects to Port Entities.
 - You can find the GitHub pull request object structure [Here](https://docs.github.com/en/rest/pulls/pulls#get-a-pull-request)
 
