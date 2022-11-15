@@ -10,7 +10,7 @@ title: Quickstart
 
 # Quickstart
 
-In this tutorial, we will export pull requests as entities to Port!
+In this tutorial, we will export pull requests from GitHub and create matching Port Entities!
 
 1. Prepare Port `pull-request` Blueprint and `port-app-config.yml`.
 
