@@ -14,4 +14,4 @@ Our integration with Kubernetes allows you to export Kubernetes objects to Port 
 
 ## Next Steps
 
-[Explore How to install and automatically import entities from k8s](./quickstart)
+[Explore How to install and automatically import Entities from k8s](./quickstart)
