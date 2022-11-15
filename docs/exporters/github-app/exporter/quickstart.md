@@ -12,7 +12,7 @@ title: Quickstart
 
 In this tutorial, we will export pull requests from GitHub and create matching Port Entities!
 
-1. Prepare Port `pull-request` Blueprint and `port-app-config.yml`.
+1. Create a `pull-request` Blueprint and `port-app-config.yml` Blueprint.
 
 To export your GitHub `Pull Requests` Port, you may use the following Port Blueprints definitions, and `port-app-config.yml`:
 
