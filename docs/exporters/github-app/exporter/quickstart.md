@@ -87,7 +87,7 @@ For more info refer to [Advanced Configuration](../advanced-configuration)
 
 <details>
 
-<summary> Port `port-app-config.yml` </summary>
+<summary> Port port-app-config.yml </summary>
 
 ```yaml showLineNumbers
 resources:
