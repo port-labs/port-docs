@@ -5,4 +5,4 @@ Port offers several Exporters, allowing you to easily export data from systems a
 You can find more details about our available exporters by checking the list below:
 
 - [GitHub App](./github-app/github-app.md)
-- [Kubernetes Exporter](./k8s-exporter/introduction.md)
+- [Kubernetes Exporter](./k8s-exporter/k8s-exporter.md)

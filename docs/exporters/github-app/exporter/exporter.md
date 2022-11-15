@@ -2,7 +2,7 @@
 sidebar_position: 0
 ---
 
-# Introduction
+# GitHub Exporter
 
 Our integration with GitHub allows you to export GitHub objects to Port as Entities of existing Blueprints.
 

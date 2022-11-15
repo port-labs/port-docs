@@ -160,7 +160,7 @@ We currently support the following types:
 | `array`   | A multi-element array                                                             | `[1,2,3]`, `["a","b","c"]`                   |
 
 :::note
-Those are the `properties` that our API supports. See [API reference](../../api-methods/rest.md).
+Those are the `properties` that our API supports. See [API reference](../../api-providers/rest.md).
 :::
 
 We support the following additional props:
@@ -334,7 +334,7 @@ We currently support the following `string` formats:
 | [`markdown`](../widgets/markdown) | String in markdown language format                        | `An Example of **bold text**.`            |
 
 :::note
-Those are the `format` types that our API supports. See [API reference](../../api-methods/rest.md).
+Those are the `format` types that our API supports. See [API reference](../../api-providers/rest.md).
 :::
 
 ### Examples
@@ -572,4 +572,4 @@ Those new properties are called `mirrorProperties`, you can learn more about the
 
 [Explore How to Create, Edit, and Delete Blueprints with basic examples](../../tutorials/blueprint-basics.md)
 
-[Dive into advanced operations on Blueprints with our API ➡️ ](../../api-methods/rest.md)
+[Dive into advanced operations on Blueprints with our API ➡️ ](../../api-providers/rest.md)

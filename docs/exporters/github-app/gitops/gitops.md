@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Introduction
+# GitOps GitHub App
 
 Our GitHub app allows you to quickly and easily map out your Software Catalog, according to your existing code repositories and projects.
 

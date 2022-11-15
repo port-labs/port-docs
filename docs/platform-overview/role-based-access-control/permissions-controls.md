@@ -238,4 +238,4 @@ Immutable properties (restricted properties) will be hidden from users when modi
 
 ## API
 
-Please see the [Blueprint Permissions](../../api-methods/rest.md/#tag/Blueprints/paths/~1v1~1blueprints~1%7Bblueprint_identifier%7D~1permissions) and [Actions Permissions](../../api-methods/rest.md/#tag/Actions/paths/~1v1~1blueprints~1%7Bblueprint_identifier%7D~1actions~1%7Baction_identifier%7D~1permissions/get) sections in our [API reference](../../api-methods/rest.md)
+Please see the [Blueprint Permissions](../../api-providers/rest.md/#tag/Blueprints/paths/~1v1~1blueprints~1%7Bblueprint_identifier%7D~1permissions) and [Actions Permissions](../../api-providers/rest.md/#tag/Actions/paths/~1v1~1blueprints~1%7Bblueprint_identifier%7D~1actions~1%7Baction_identifier%7D~1permissions/get) sections in our [API reference](../../api-providers/rest.md)

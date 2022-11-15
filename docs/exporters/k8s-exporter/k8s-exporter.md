@@ -2,7 +2,7 @@
 sidebar_position: 3
 ---
 
-# Introduction
+# K8S Exporter
 
 Our integration with Kubernetes allows you to export Kubernetes objects to Port as Entities of existing Blueprints.
 

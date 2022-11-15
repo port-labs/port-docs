@@ -7,7 +7,7 @@ sidebar_position: 8
 Port can be easily integrated into your existing CI/CD process by using our API.
 
 :::tip
-Before writing custom logic to integrate Port into your CI/CD, you should check our existing [exporters](../exporters/exporters.md) and [API Methods](../api-methods/api-methods.md).
+Before writing custom logic to integrate Port into your CI/CD, you should check our existing [exporters](../exporters/exporters.md) and [API Providers](../api-providers/api-providers.md).
 :::
 
 ## Scenario

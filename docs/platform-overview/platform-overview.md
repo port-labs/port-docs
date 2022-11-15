@@ -147,7 +147,7 @@ TBD
 | Link                                                                                                    | Description                                                               |
 | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
 | **Product Docs**                                                                                        | You are here!                                                             |
-| [API Docs](../api-methods/rest.md)                                                                      | Our full API docs                                                         |
+| [API Docs](../api-providers/rest.md)                                                                    | Our full API docs                                                         |
 | [API Swagger](https://api.getport.io/static/index.html#/)                                               | Our Swagger host                                                          |
 | [Community](https://join.slack.com/t/devex-community/shared_invite/zt-1bmf5621e-GGfuJdMPK2D8UN58qL4E_g) | Our DevEx community will help you with best practices and success stories |
 | Contact Us                                                                                              | Directly to our Slack channel                                             |
