@@ -2,7 +2,7 @@
 sidebar_position: 3
 ---
 
-## Quickstart
+# Quickstart
 
 Here you'll find a step-by-step guide to installing the K8s Exporter in your Kubernetes Cluster.
 
