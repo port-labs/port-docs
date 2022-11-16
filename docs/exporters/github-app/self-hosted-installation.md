@@ -73,25 +73,25 @@ It can be deployed on any platform that allows deploying images as containers su
 
 You can pull the Docker image by running:
 
-```
+```bash showLineNumbers
 docker pull ghcr.io/port-labs/port-self-hosted-github-app:0.1.0
 ```
 
 And now run it via:
 
-```
+```bash showLineNumbers
 docker run -e APP_ID=<APP_ID from register step> -e WEBHOOK_SECRET=<WEBHOOK_SECRET from previous step> -e GHE_HOST=<GITHUB BASE HOST, ie github.compay.com> -e PORT=<Any PORT> -e PORT_URL=https://api.getport.io -e PORT_CLIENT_ID=<Port's CLIENT_ID> -e PORT_CLIENT_SECRET=<Port's CLIENT_SECRET> -e PRIVATE_KEY=<BASE 64 PRIVATEKEY> ghcr.io/port-labs/port-self-hosted-github-app
 ```
 
-| Env variable         | Description                                                                                                                    |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------ | --- |
-| `APP_ID`             | Application ID, it should show up in the edit GitHub App page in the upper section                                             |
-| `WEBHOOK_SECRET`     | The same string that was been used to register the application in the previous step                                           |
-| `GHE_HOST`           | Your organization's self-hosted GitHub hostname                                                                                  |
-| `PORT`               | The port that the GitHub App will listen to                                                                                               |
-| `PORT_URL`           | Port's API Base URL                                                                                                            |
-| `PORT_CLIENT_ID`     | Port client id for interacting with the API                                                                                    |
-| `PORT_CLIENT_SECRET` | Port client secret for interacting with the API                                                                                |
+| Env variable         | Description                                                                                                                         |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | --- |
+| `APP_ID`             | Application ID, it should show up in the edit GitHub App page in the upper section                                                  |
+| `WEBHOOK_SECRET`     | The same string that was been used to register the application in the previous step                                                 |
+| `GHE_HOST`           | Your organization's self-hosted GitHub hostname                                                                                     |
+| `PORT`               | The port that the GitHub App will listen to                                                                                         |
+| `PORT_URL`           | Port's API Base URL                                                                                                                 |
+| `PORT_CLIENT_ID`     | Port client id for interacting with the API                                                                                         |
+| `PORT_CLIENT_SECRET` | Port client secret for interacting with the API                                                                                     |
 | `PRIVATE_KEY`        | A base64 encoded private key, you can get the private key base64 value by running the command `base64 -i private-key-file-path.pem` |     |
 
 ## Installing Port's GitHub application
