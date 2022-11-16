@@ -48,7 +48,9 @@ Then select "Create GitHub App"
 
 5. Now go to the settings of the created GitHub App and Generate a private key
 
-![Generate Private key](../../../static/img/integrations/github-app/SelfHosetdGeneratePrivayKey.png) and save the downloaded file
+![Generate Private key](../../../static/img/integrations/github-app/SelfHosetdGeneratePrivayKey.png)
+
+And save the downloaded file
 
 ## Deployment
 
@@ -65,14 +67,9 @@ Then select "Create GitHub App"
 
 ## Docker
 
-:::tip
-You can get the private key base64 value by running
+To use our GitHub app you will need to deploy our official GitHub app docker image on your VPC.
 
-```
-base64 -i private-key-file-path.pem
-```
-
-:::
+It can be deployed on any platform that allows deploying images as containers such as: K8S, ECS, AWS App Runner, etc.
 
 You can pull the Docker image by running:
 
@@ -86,7 +83,20 @@ And now run it via
 docker run -e APP_ID=<APP_ID from register step> -e WEBHOOK_SECRET=<WEBHOOK_SECRET from previous step> -e GHE_HOST=<GITHUB BASE HOST, ie github.compay.com> -e PORT=<Any PORT> -e PORT_URL=https://api.getport.io -e PORT_CLIENT_ID=<Port's CLIENT_ID> -e PORT_CLIENT_SECRET=<Port's CLIENT_SECRET> -e PRIVATE_KEY=<BASE 64 PRIVATEKEY> ghcr.io/port-labs/port-self-hosted-github-app
 ```
 
+| Env variable         | Description                                                                                                                    |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------ | --- |
+| `APP_ID`             | Application ID, it should show up in the edit GitHub App page in the upper section                                             |
+| `WEBHOOK_SECRET`     | The same string that have been used to register the application in the previous step                                           |
+| `GHE_HOST`           | Your organization self-hosted GitHub hostname                                                                                  |
+| `PORT`               | The port that the will listen to                                                                                               |
+| `PORT_URL`           | Port's API Base URL                                                                                                            |
+| `PORT_CLIENT_ID`     | Port client id for interacting with the API                                                                                    |
+| `PORT_CLIENT_SECRET` | Port client secret for interacting with the API                                                                                |
+| `PRIVATE_KEY`        | A base64 encoded private key, can be You can get the private key base64 value by running `base64 -i private-key-file-path.pem` |     |
+
 ## Installing Port's GitHub application
+
+After you have the App registered in your organization, and the docker up and running, you can install the app and select the repositories to integrate it with
 
 1. First, navigate to your organization inside your self-hosted GitHub and click on Settings
 
@@ -105,3 +115,10 @@ docker run -e APP_ID=<APP_ID from register step> -e WEBHOOK_SECRET=<WEBHOOK_SECR
 5. Choose the repositories you want the app to be installed for.
 
 ![GitHub app installation chooses repositories](../../../static/img/integrations/github-app/SelfHostedInstallationRepoSelection.png)
+
+## Next Steps
+
+Now that you have the GitHub app installed, you can refer to our examples for some practical use cases:
+
+- [Exporting pull requests as entities to Port](./exporter/quickstart.md)
+- [Exporting entities via port.yml definition file](./gitops/quickstart.md)
