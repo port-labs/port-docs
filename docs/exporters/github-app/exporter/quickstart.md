@@ -132,10 +132,6 @@ Now you can view and query all of your Pull Requests as Port Entities!
 
 ![Developer Portal GitHub Pull Requests](../../../../static/img/integrations/github-app/GitHubPullRequests.png)
 
-And you can also see the description in markdown format inside the Specific Entity Page:
-
-![Developer Portal GitHub Pull Request Description](../../../../static/img/integrations/github-app/PullRequestDescription.png)
-
-And you can also look for the respective audit logs with an indication of the GitHub Exporter as the source:
+You can also see the description in markdown format inside the [Specific Entity Page] ![Developer Portal GitHub Pull Request Description](../../../../static/img/integrations/github-app/PullRequestDescription.png), and look for the respective audit logs with an indication of the GitHub Exporter as the source:
 
 ![Developer Portal GitHub Exporter Audit Log](../../../../static/img/integrations/github-app/AuditLog.png)
