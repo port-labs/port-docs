@@ -4,20 +4,22 @@ sidebar_position: 6
 
 # Microservice Dependency Mapping
 
-Using Port, it is very easy to implement and track package dependency mapping for your microservices.
+Using Port, it is very easy to implement and track package dependency mapping for your microservices, which can be useful, for example, while trying to investigate a dependency related issue or bug, or while checking for security issues.
 
 :::tip
-All relevant files and resources for this guide are available [**HERE**](https://github.com/port-labs/demo-node-project)
+All relevant files and resources for this guide are available [**HERE**](https://github.com/port-labs/demo-node-project) for the `yarn.lock` use-case, and [**HERE**](https://github.com/port-labs/demo-node-poject-npm) for the `package.json` use-case.
 :::
 
 ## Goal
 
-In this guide you will implement a pacakge dependency mapping between your microservices and the code packages and libraries they use.
+In this guide you will implement a package dependency mapping between your microservices and the code packages and libraries they use.
 
 ## Example
 
-In this example we will review a use-case for maintaining package dependencies for a Microservice in a mono-repo environment.
-Our development environment is Node and we manage our packages using [yarn v2+](https://yarnpkg.com/getting-started).
+In this example we will review a 2 use-cases for maintaining package dependencies for a Microservice.
+
+1. A single-microservice Node project managed by npm.
+2. A mono-repo, multi-microservice Node project which is managed by [yarn v2+](https://yarnpkg.com/getting-started).
 
 ### Use-case setup
 
@@ -110,6 +112,10 @@ _For more information about DeploymentConfig and it's uses, click [here](../comp
 
 As we can see in the image above, 2 Blueprints were created: `DeploymentConfig` and `Package`. Notice that the `Package` property is the Relation we created. It consists of an array of packages (this is thanks to the `"many": true` property of the Relation), since each microservice, and respectively, each DeploymentConfig can depend on multiple Pacakges.
 
+Since both of the use-cases we are covering contain a DeploymentConfig-to-Package relation, we can use these Blueprints in both cases.
+
+### Mapping Yarn dependencies
+
 #### Repository structure
 
 Here is a [link](https://github.com/port-labs/demo-node-project) to the Git repository we will be working on in this use-case.
@@ -139,7 +145,7 @@ We will also persume that the directory names in `MICROSERVICE_PATH` match the n
 
 Since we are working with DeploymentConfigs - which are configured by a Microservice and Runtime (Environment) - we will have to take into account which `runtime` we are managing packages for. This will be passed on to us from the workflow call.
 
-### Automating Entity creation
+#### Automating Entity creation
 
 Let's begin by creating a Python script to handle scanning the 'yarn.lock' file. We will also implement Package Entity creation and update the exisiting DeploymentConfigs with their related package dependencies.
 
@@ -180,7 +186,7 @@ RUNTIME = os.environ.get("RUNTIME")
 
 ```
 
-### Triggering a run using Github Workflows
+#### Triggering a run using Github Workflows
 
 In our environment, a change in main means a change in the 'Production' environment. Let's create a workflow which monitors changes in Production.
 In order to monitor the `yarn.lock` file, we will create a Github Workflow which watches the lock file on the `main` branch.
@@ -237,7 +243,7 @@ Let's see our workflow in action.
 Try installing a new package and push it to main:
 
 ```bash showLineNumbers
-npm workspace backend run install prettier
+yarn workspace backend run install prettier
 git add -u
 git commit -m "Updated yarn.lock to contain prettier package"
 git push
@@ -249,3 +255,19 @@ Now merge the code to main and see the magic happen!
 The workflow automatically runs, and when it finishes, we should see the new packages created and mapped to the relevant microservice deployment config.
 
 ![new_package.png](../../static/img/tutorial/complete-use-cases/microservice-dependency/new_package.png)
+
+### Mapping NPM dependencies
+
+While most of the steps to achieving our goal are the same in an NPM managed environment, let's state the slight differences.
+
+:::tip  
+Click [**_HERE_**](https://github.com/port-labs/demo-node-poject-npm) for the relevant files for this use-case.
+:::
+
+First off all, in this scenario we will be mapping our `package.json` file, as oppose to our `yarn.lock` file. There are some small differences in their structure.
+
+That being said, we will have to tinker our python script to match the changes. We removed `MICROSERVICE_PATH` since the is a single-microservice use-case, and we changed the logic of the scanner to match the different structure.
+
+## Summary
+
+Port allows to implement easy-to-maintain package dependency mapping. Using our RESTful API and Github Workflows, we were able to create a block in your CI/CD pipleline which keeps track of you Microservices' packages and their versions.
