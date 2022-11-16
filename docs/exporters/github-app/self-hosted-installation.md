@@ -88,7 +88,7 @@ docker run -e APP_ID=<APP_ID from register step> -e WEBHOOK_SECRET=<WEBHOOK_SECR
 | `APP_ID`             | Application ID, it should show up in the edit GitHub App page in the upper section                                             |
 | `WEBHOOK_SECRET`     | The same string that was been used to register the application in the previous step                                           |
 | `GHE_HOST`           | Your organization's self-hosted GitHub hostname                                                                                  |
-| `PORT`               | The port that the will listen to                                                                                               |
+| `PORT`               | The port that the GitHub App will listen to                                                                                               |
 | `PORT_URL`           | Port's API Base URL                                                                                                            |
 | `PORT_CLIENT_ID`     | Port client id for interacting with the API                                                                                    |
 | `PORT_CLIENT_SECRET` | Port client secret for interacting with the API                                                                                |
