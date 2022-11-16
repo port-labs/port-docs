@@ -10,7 +10,8 @@ sidebar_position: 1
 
 - A registered organization in Port;
 - Your Port user role is set to `Admin`.
-  :::
+
+:::
 
 ### Installation
 

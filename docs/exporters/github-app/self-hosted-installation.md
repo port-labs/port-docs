@@ -8,7 +8,8 @@ sidebar_position: 1
 
 - A registered organization in Port;
 - Your Port user role is set to `Admin`.
-  :::
+
+:::
 
 In organizations that have a self-hosted GitHub installation there is no access to our official public app, therefore there are some extra steps you need to take for installation:
 
