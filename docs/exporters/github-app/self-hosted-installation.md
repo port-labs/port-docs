@@ -10,7 +10,7 @@ sidebar_position: 1
 - Your Port user role is set to `Admin`.
   :::
 
-In organizations that have a self-hosted GitHub installation, there is no access to our official public app, therefore there are some extra steps that have to be taken before you can install it:
+In organizations that have a self-hosted GitHub installation there is no access to our official public app, therefore there are some extra steps you need to take for installation:
 
 1. Register Port's GitHub App in your GitHub organization;
 2. Deploy Port's GitHub App Docker Image inside your VPC;
