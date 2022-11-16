@@ -96,7 +96,7 @@ docker run -e APP_ID=<APP_ID from register step> -e WEBHOOK_SECRET=<WEBHOOK_SECR
 
 ## Installing Port's GitHub application
 
-After you have the App registered in your organization, and the docker up and running, you can install the app and select the repositories to integrate it with
+After you have the App registered in your organization and the docker is up and running, you can install the app and select the repositories to integrate it with
 
 1. First, navigate to your organization inside your self-hosted GitHub and click on Settings
 
