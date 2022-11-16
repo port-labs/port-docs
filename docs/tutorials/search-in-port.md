@@ -232,8 +232,8 @@ The following rule will return all Entities that have a relationship with the En
 
 The `relatedTo` operator also supports the `direction` property - which allows you to search for dependent Entities in a specific direction on the dependency graph:
 
-- To search for Entities which depend on the source - use `"direction": "downstream"`
-- To search for Entities which the source depends on - `"direction": "upstream"`
+- To search for Entities which depend on the source - use `"direction": "upstream"`
+- To search for Entities which the source depends on - `"direction": "downstream"`
 
 ```json showLineNumbers
 {
