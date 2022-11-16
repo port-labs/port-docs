@@ -14,3 +14,4 @@ For more information about available widgets, click on any of the links below:
 
 - [Markdown](./markdown)
 - [OpenAPI](./open-api)
+- [Datadog](./datadog)
