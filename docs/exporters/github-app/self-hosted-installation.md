@@ -92,7 +92,7 @@ docker run -e APP_ID=<APP_ID from register step> -e WEBHOOK_SECRET=<WEBHOOK_SECR
 | `PORT_URL`           | Port's API Base URL                                                                                                            |
 | `PORT_CLIENT_ID`     | Port client id for interacting with the API                                                                                    |
 | `PORT_CLIENT_SECRET` | Port client secret for interacting with the API                                                                                |
-| `PRIVATE_KEY`        | A base64 encoded private key, can be You can get the private key base64 value by running `base64 -i private-key-file-path.pem` |     |
+| `PRIVATE_KEY`        | A base64 encoded private key, you can get the private key base64 value by running the command `base64 -i private-key-file-path.pem` |     |
 
 ## Installing Port's GitHub application
 
