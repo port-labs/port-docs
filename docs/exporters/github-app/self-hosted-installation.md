@@ -14,7 +14,7 @@ In organizations that have a self-hosted GitHub installation, there is no access
 
 1. Register Port's GitHub App in your GitHub organization;
 2. Deploy Port's GitHub App Docker Image inside your VPC;
-3. Installing the App
+3. Install Port's GitHub App in your GitHub organization and on select repositories.
 
 ## Registering Port's GitHub App
 
