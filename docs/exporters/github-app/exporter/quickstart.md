@@ -121,7 +121,7 @@ resources:
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitHub objects to Port Entities.
 - Click [Here](https://docs.github.com/en/rest/pulls/pulls#get-a-pull-request) for the GitHub pull request object structure.
 
-You might have noticed that the `status` field is not provided by GitHub's API, that's because it is a custom property we added to make things simpler.
+You might have noticed that the `status` field is not provided by GitHub's API, that's because it is a custom property we added to simplify things.
 :::
 
 2. push `port-app-config.yml` to your default branch.
