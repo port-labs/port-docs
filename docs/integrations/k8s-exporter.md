@@ -47,15 +47,42 @@ the latest versions of the charts. You can then run `helm search repo port-labs`
 For example, in order to export your Kubernetes `Replica Sets` and `Pods` to Port, you may use the following Port Blueprints definitions, and `config.yaml`:
 
 <details>
-<summary> DeployedReplicaSet Blueprint </summary>
+<summary> DeploymentConfig Blueprint </summary>
 
 ```json showLineNumbers
 {
-  "identifier": "DeployedReplicaSet",
-  "title": "Deployed Replica Set",
+  "identifier": "DeploymentConfig",
+  "title": "Deployment Config",
   "icon": "Cluster",
   "schema": {
     "properties": {
+      "newRelicUrl": {
+        "type": "string",
+        "format": "url",
+        "title": "New Relic",
+        "description": "Link to the new relic dashboard of the service",
+        "default": "https://newrelic.com"
+      },
+      "sentryUrl": {
+        "type": "string",
+        "format": "url",
+        "title": "Sentry URL",
+        "description": "Link to the new sentry dashboard of the service",
+        "default": "https://sentry.io/"
+      },
+      "prometheusUrl": {
+        "type": "string",
+        "format": "url",
+        "title": "Prometheus URL",
+        "default": "https://prometheus.io"
+      },
+      "locked": {
+        "type": "boolean",
+        "title": "Locked",
+        "default": false,
+        "description": "Are deployments currently allowed for this configuration",
+        "icon": "Lock"
+      },
       "creationTimestamp": {
         "type": "string",
         "title": "Creation Timestamp",
@@ -125,8 +152,8 @@ For example, in order to export your Kubernetes `Replica Sets` and `Pods` to Por
   "mirrorProperties": {},
   "formulaProperties": {},
   "relations": {
-    "DeployedReplicaSet": {
-      "target": "DeployedReplicaSet",
+    "DeployedConfig": {
+      "target": "DeployedConfig",
       "required": false,
       "many": false
     }
@@ -149,7 +176,7 @@ resources: # List of K8s resources to list, watch, and export to Port.
         mappings: # Mappings between one K8s object to one or many Port Entities. Each value is a JQ query.
           - identifier: .metadata.name
             title: .metadata.name
-            blueprint: '"DeployedReplicaSet"'
+            blueprint: '"DeploymentConfig"'
             properties:
               creationTimestamp: .metadata.creationTimestamp
               annotations: .metadata.annotations
@@ -193,9 +220,13 @@ helm install my-port-k8s-exporter port-labs/port-k8s-exporter \
 
 Done! the exporter will begin creating and updating objects from your Kubernetes cluster as Port Entities shortly.
 
-For instance, you can see a `Replica Set` and its `Pods` in a single Port Entity page:
+For instance, you can see a `Deployment Config` and its `Pods` in a single Port Entity page:
 
-![Developer Portal Kubernetes Exporter Replica Set Entity](../../static/img/integrations/k8s-exporter/ReplicaSetAndPods.png)
+![Developer Portal Kubernetes Exporter Deployment Config Entity](../../static/img/integrations/k8s-exporter/DeploymentConfigAndPods.png)
+
+:::note
+The Kubernetes Exporter was instructed to fill in only some properties in an Entity of `Deployment Config` Blueprint. By its nature, it will keep the values of other properties untouched.
+:::
 
 And you can look for the respective audit logs with indication of the Kubernetes Exporter as the source:
 
