@@ -12,7 +12,7 @@ sidebar_position: 1
 
 In organizations that have a self-hosted GitHub installation, there is no access to our official public app, therefore there are some extra steps that have to be taken before you can install it:
 
-1. Register an app on GitHub
+1. Register Port's GitHub App in your GitHub organization;
 2. Deploying our Docker Image inside your VPC
 3. Installing the App
 
