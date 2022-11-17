@@ -168,7 +168,7 @@ We support the following additional props:
 |        | Description                                                                                                                              | Example values                         |
 | ------ | ---------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
 | `enum` | Field with a pre-defined set of allowed values. Can be used with properties of type `string` or `number`                                 | `["Option 1", "Option 2", "Option 3"]` |
-| `spec` | Field with a pre-defined set of allowed values. A property with a `spec` property will be displayed as a tab in the specific entity page | `'open-api', 'embedded-url'`           |
+| `spec` | Field with a pre-defined set of allowed values. A property with a `spec` key will be displayed as a separate tab in the Specific Entity Page | `'open-api', 'embedded-url'`           |
 
 ### Examples
 
