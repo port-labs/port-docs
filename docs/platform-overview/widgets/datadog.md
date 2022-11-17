@@ -23,4 +23,4 @@ By using the combination of `"type": "string`, `"format": "url` and `"spec": "em
 
 Here is how the Datadog tab in the Specific Entity Page appears when an `embedded-url` spec with a Datadog dashboard URL is provided:
 
-![OpenAPI Example](../../../static/img/platform-overview/plugins/datadog.png)
+![Datadog Dashboard Example](../../../static/img/platform-overview/plugins/datadog.png)
