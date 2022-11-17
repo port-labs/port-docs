@@ -343,8 +343,8 @@ And if we want to get all of the `DeploymentConfigs` that are deployed in the _P
 ```json showLineNumbers
 {
   "operator": "relatedTo",
-  "blueprint": "depconf",
-  "value": "Administration-Service-Production",
+  "blueprint": "Environment",
+  "value": "Production",
   "direction": "downstream"
 }
 ```
