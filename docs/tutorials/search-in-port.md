@@ -236,7 +236,7 @@ Let's assume that we have the Blueprints `DeploymentConfig` and `Microservice` w
 
 ```json showLineNumbers
 "relations": {
-  "DeploymentConfig": {
+  "relatedMicroservice": {
     "description": "The service this DeploymentConfig belongs to",
     "many": false,
     "required": false,
