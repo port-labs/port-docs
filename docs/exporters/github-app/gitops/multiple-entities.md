@@ -36,6 +36,6 @@ Here is an example:
 
 ### Multiple files
 
-By default, we search for all `port.yml` files in your repo (Use `specPath` (Glob Patterns) in [Advanced configurations](./advanced-configuration) to control it):
+By default, we search for all `port.yml` files in your repo (Use `specPath` (Glob Patterns) in [Advanced configurations](../advanced-configuration) to control it):
 
 ![GitHub app tree of port.yml files](../../../../static/img/integrations/github-app/GithubTreeOfPortYamlFiles.png)
