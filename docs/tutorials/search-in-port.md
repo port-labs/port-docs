@@ -250,16 +250,18 @@ By looking at the resulting graph layout, we can also map the directions:
 
 ![Dependency graph upstream downstream diagram](../../static/img/tutorial/search-in-port/upstream-downstream-diagram.png)
 
-- To search for Entities which depend on the source - use `"direction": "upstream"`
-  - In the diagram above, `DeploymentConfig` is **upstream** from `Microservice`, because `DeploymentConfig` Entities depend on `Microservice` Entities
-- To search for Entities which the source depends on - `"direction": "downstream"`
-  - In the diagram above, `Microservice` is **downstream** from `DeploymentCOnfig`, because `DeploymentConfig` Entities depend on `Microservice` Entities
+- To search for Entities which the source depends on - `"direction": "upstream"`;
+  - In the diagram above, `Microservice` is **upstream** from `DeploymentConfig`, because `DeploymentConfig` Entities depend on `Microservice` Entities.
+- To search for Entities which depend on the source - use `"direction": "downstream"`;
+  - In the diagram above, `DeploymentConfig` is **downstream** from `Microservice`, because `DeploymentConfig` Entities depend on `Microservice` Entities.
+
+So if we want to search for the original _Port-API_ `Microservice` that the _port-api-production_ `DeploymentConfig` depends on, the search rule would be:
 
 ```json showLineNumbers
 {
   "operator": "relatedTo",
-  "blueprint": "microservice",
-  "value": "port-api",
+  "blueprint": "DeploymentConfig",
+  "value": "port-api-production",
   "direction": "upstream"
 }
 ```
