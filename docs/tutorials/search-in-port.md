@@ -246,25 +246,172 @@ Let's assume that we have the Blueprints `DeploymentConfig` and `Microservice` w
 }
 ```
 
+In addition, we have the following Entities:
+
+```text showLineNumbers
+Deployment Configs:
+- Administration-Service-Production
+- Port-API-Production
+
+Microservices:
+- Administration Service
+- Port-API
+
+Environments:
+- Production
+```
+
+And the following Relations:
+
+```text showLineNumbers
+Administration-Service-Production -> Administration-Service
+Administration-Service-Production -> Production
+
+Port-API-Production -> Port-API
+Port-API-Production -> Production
+```
+
 By looking at the resulting graph layout, we can also map the directions:
 
-![Dependency graph upstream downstream diagram](../../static/img/tutorial/search-in-port/upstream-downstream-diagram.png)
+![Dependency graph upstream downstream diagram](../../static/img/tutorial/search-in-port/search-direction-diagram.png)
 
 - To search for Entities which the source depends on - `"direction": "upstream"`;
-  - In the diagram above, `Microservice` is **upstream** from `DeploymentConfig`, because `DeploymentConfig` Entities depend on `Microservice` Entities.
 - To search for Entities which depend on the source - use `"direction": "downstream"`;
-  - In the diagram above, `DeploymentConfig` is **downstream** from `Microservice`, because `DeploymentConfig` Entities depend on `Microservice` Entities.
 
-So if we want to search for the original _Port-API_ `Microservice` that the _port-api-production_ `DeploymentConfig` depends on, the search rule would be:
+In the example shown above, if we want to get the `Microservice` and `Environment` that _Administration-Service-Production_ depends on, the search rule would be:
 
 ```json showLineNumbers
 {
   "operator": "relatedTo",
   "blueprint": "DeploymentConfig",
-  "value": "port-api-production",
+  "value": "Administration-Service-Production",
   "direction": "upstream"
 }
 ```
+
+And the result would be:
+
+<details>
+<summary>Administration-Service-Production upstream related Entities</summary>
+
+```json showLineNumbers
+{
+  "ok": true,
+  "matchingBlueprints": ["Microservice", "Environment"],
+  "entities": [
+    {
+      "identifier": "Administration-Service",
+      "title": "Administration-Service",
+      "blueprint": "Microservice",
+      "properties": {
+        "on-call": "mor@getport.io",
+        "language": "Python",
+        "slack-notifications": "https://slack.com/Administration-Service",
+        "launch-darkly": "https://launchdarkly.com/Administration-Service"
+      },
+      "relations": {},
+      "createdAt": "2022-11-17T15:54:20.432Z",
+      "createdBy": "auth0|62ab380295b34240aa511cdb",
+      "updatedAt": "2022-11-17T15:54:20.432Z",
+      "updatedBy": "auth0|62ab380295b34240aa511cdb"
+    },
+    {
+      "identifier": "Production",
+      "title": "Production",
+      "blueprint": "Environment",
+      "properties": {
+        "awsRegion": "eu-west-1",
+        "configUrl": "https://github.com/config-labs/kube/config.yml",
+        "slackChannel": "https://yourslack.slack.com/archives/CHANNEL-ID",
+        "onCall": "Mor P",
+        "namespace": "Production"
+      },
+      "relations": {},
+      "createdAt": "2022-09-19T08:54:23.025Z",
+      "createdBy": "Cnc3SiO7T0Ld1y1u0BsBZFJn0SCiPeLS",
+      "updatedAt": "2022-10-16T09:28:32.960Z",
+      "updatedBy": "auth0|62ab380295b34240aa511cdb"
+    }
+  ]
+}
+```
+
+</details>
+
+And if we want to get all of the `DeploymentConfigs` that are deployed in the _Production_ `Environment`, the search rule would be:
+
+```json showLineNumbers
+{
+  "operator": "relatedTo",
+  "blueprint": "depconf",
+  "value": "Administration-Service-Production",
+  "direction": "downstream"
+}
+```
+
+And the result would be:
+
+<details>
+<summary>Production downstream related Entities</summary>
+
+```json showLineNumbers
+{
+  "ok": true,
+  "matchingBlueprints": ["DeploymentConfig"],
+  "entities": [
+    {
+      "identifier": "Administration-Service-Production",
+      "title": "Administration-Service-Production",
+      "blueprint": "DeploymentConfig",
+      "properties": {
+        "url": "https://github.com/port-labs/administration-service",
+        "config": {
+          "encryption": "SHA256"
+        },
+        "monitor-links": [
+          "https://grafana.com",
+          "https://prometheus.com",
+          "https://datadog.com"
+        ]
+      },
+      "relations": {
+        "relatedMicroservice": "Administration-Service",
+        "relatedEnv": "Production"
+      },
+      "createdAt": "2022-11-17T15:55:55.591Z",
+      "createdBy": "auth0|62ab380295b34240aa511cdb",
+      "updatedAt": "2022-11-17T15:55:55.591Z",
+      "updatedBy": "auth0|62ab380295b34240aa511cdb"
+    },
+    {
+      "identifier": "Port-API-Production",
+      "title": "Port-API-Production",
+      "blueprint": "DeploymentConfig",
+      "properties": {
+        "url": "https://github.com/port-labs/port-api",
+        "config": {
+          "foo": "bar"
+        },
+        "monitor-links": [
+          "https://grafana.com",
+          "https://prometheus.com",
+          "https://datadog.com"
+        ]
+      },
+      "relations": {
+        "relatedMicroservice": "Port-API",
+        "relatedEnv": "Production"
+      },
+      "createdAt": "2022-11-17T15:55:10.714Z",
+      "createdBy": "auth0|62ab380295b34240aa511cdb",
+      "updatedAt": "2022-11-17T15:55:20.253Z",
+      "updatedBy": "auth0|62ab380295b34240aa511cdb"
+    }
+  ]
+}
+```
+
+</details>
 
 :::info entity page and search
 
