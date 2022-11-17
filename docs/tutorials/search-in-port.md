@@ -230,10 +230,30 @@ The following rule will return all Entities that have a relationship with the En
 
 #### `direction` property
 
-The `relatedTo` operator also supports the `direction` property - which allows you to search for dependent Entities in a specific direction on the dependency graph:
+The `relatedTo` operator also supports the `direction` property - which allows you to search for dependent Entities in a specific direction on the dependency graph, to better understand the functionality of this property, let's take a look at this example:
+
+Let's assume that we have the Blueprints `DeploymentConfig` and `Microservice` with the following Relation definition (declared on the `DeploymentConfig` Blueprint):
+
+```json showLineNumbers
+"relations": {
+  "DeploymentConfig": {
+    "description": "The service this DeploymentConfig belongs to",
+    "many": false,
+    "required": false,
+    "target": "Microservice",
+    "title": "Microservice"
+  }
+}
+```
+
+By looking at the resulting graph layout, we can also map the directions:
+
+![Dependency graph upstream downstream diagram](../../static/img/tutorial/search-in-port/upstream-downstream-diagram.png)
 
 - To search for Entities which depend on the source - use `"direction": "upstream"`
+  - In the diagram above, `DeploymentConfig` is **upstream** from `Microservice`, because `DeploymentConfig` Entities depend on `Microservice` Entities
 - To search for Entities which the source depends on - `"direction": "downstream"`
+  - In the diagram above, `Microservice` is **downstream** from `DeploymentCOnfig`, because `DeploymentConfig` Entities depend on `Microservice` Entities
 
 ```json showLineNumbers
 {
