@@ -275,7 +275,7 @@ By looking at the resulting graph layout, we can also map the directions:
 
 ![Dependency graph upstream downstream diagram](../../static/img/tutorial/search-in-port/search-direction-diagram.png)
 
-- To search for Entities which the source depends on - `"direction": "upstream"`;
+- To search for Entities which the source depends on - use `"direction": "upstream"`;
 - To search for Entities which depend on the source - use `"direction": "downstream"`;
 
 In the example shown above, if we want to get the `Microservice` and `Environment` that _Administration-Service-Production_ depends on, the search rule would be:
