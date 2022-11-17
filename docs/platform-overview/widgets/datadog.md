@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Datadog
 
-With Port, you can import and display [Datadog](https://docs.datadoghq.com/dashboards/sharing/) dashboards using a url link.
+With Port, you can import and display [Datadog](https://docs.datadoghq.com/dashboards/sharing/) dashboards using a URL link.
 
 By using the combination of `"type": "string`, `"format": "url` and `"spec": "embedded-url"` in a [Blueprint property](../port-components/blueprint.md#blueprint-properties), Port will display the Datadog dashboard matching the url provided in the [Specific Entity Page](../port-components/page.md#entity-page).
 
