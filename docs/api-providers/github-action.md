@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Action
+# GitHub Action
 
 Our GitHub action allows you to interact with Entities in Port directly from your GitHub workflows.
 
@@ -207,6 +207,6 @@ Add the following to your workflow `yml` file:
 
 That's it! The Entity is created or updated and is visible in the UI.
 
-![Entity](../../../static/img/integrations/github-action/CreatedEntity.png)
+![Entity](../../static/img/integrations/github-action/CreatedEntity.png)
 
 For more information, checkout the [public repository](https://github.com/port-labs/port-github-action).
