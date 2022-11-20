@@ -264,4 +264,4 @@ Since this is a single-microservice project use-case, we removed the `MICROSERVI
 
 ## Summary
 
-Port allows to implement easy-to-maintain package dependency mapping. Using our RESTful API and Github Workflows, we were able to create a block in your CI/CD pipleline which keeps track of you Microservices' packages and their versions.
+Port makes it simple to implement easy-to-maintain package dependency mapping. Using our RESTful API and Github Workflows, you were able to create a block in your CI/CD pipeline which keeps track of your Microservices' packages and their versions.
