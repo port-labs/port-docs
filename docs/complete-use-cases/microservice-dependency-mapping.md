@@ -16,7 +16,7 @@ In this guide you will implement a package dependency mapping between your micro
 
 ## Example
 
-In this example we will review a 2 use-cases for maintaining package dependencies for a Microservice.
+In this example we will review 2 use-cases for maintaining package dependencies for a Microservice.
 
 1. A single-microservice Node project managed by npm.
 2. A mono-repo, multi-microservice Node project which is managed by [yarn v2+](https://yarnpkg.com/getting-started).
@@ -180,12 +180,12 @@ RUNTIME = os.environ.get("RUNTIME")
 
 ```
 
-#### Triggering a run using Github Workflows
+#### Triggering a run using GitHub Workflows
 
-In our environment, a change in main means a change in the 'Production' environment. Let's create a workflow which monitors changes in Production.
+In our environment, a change in main means a change in the `Production` environment. Let's create a workflow which monitors changes in Production.
 In order to monitor the `yarn.lock` file, we will create a Github Workflow which watches the lock file on the `main` branch.
 
-When the `yarn.lock` file changes in the main branch, the workflow will be triggered and if necessary, the Python scanner script will be run.
+When the `yarn.lock` file changes in the main branch, the workflow will be triggered and if necessary, and the Python scanner script will be run.
 
 Let's walk through the [workflow](https://github.com/port-labs/demo-node-project/blob/main/.github/workflows/update-packages.yml).
 
@@ -246,7 +246,7 @@ git push
 Now merge the code to main and see the magic happen!
 
 ![trigger_workflow.png](../../static/img/tutorial/complete-use-cases/microservice-dependency/trigger_workflow.png)
-The workflow automatically runs, and when it finishes, we should see the new packages created and mapped to the relevant microservice deployment config.
+The workflow runs automatically, and when it finishes, we should see the new packages created and mapped to the relevant microservice deployment config.
 
 ![new_package.png](../../static/img/tutorial/complete-use-cases/microservice-dependency/new_package.png)
 
@@ -258,7 +258,7 @@ While most of the steps to achieving our goal are the same in an NPM managed env
 Click [**HERE**](https://github.com/port-labs/demo-node-poject-npm) for the relevant files for this use-case.
 :::
 
-First of all, in this scenario we will be mapping our `package-lock.json` file, as opposed to our `yarn.lock` file. There are some small differences in their structure.
+First of all, in this scenario we will be mapping our `package-lock.json` file, as opposed to our `yarn.lock` file. There are also some small differences in the project structure.
 
 Since this is a single-microservice project use-case, we removed the `MICROSERVICE_PATH` parameter, we also changed the logic of the scanner to match the different file structure and format.
 
