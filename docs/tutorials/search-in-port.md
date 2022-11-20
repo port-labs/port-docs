@@ -230,7 +230,7 @@ The following rule will return all Entities that have a relationship with the En
 
 #### `direction` property
 
-The `relatedTo` operator also supports the `direction` property - which allows you to search for dependent Entities in a specific direction on the dependency graph, to better understand the functionality of this property, let's take a look at this example:
+The `relatedTo` operator also supports the `direction` property - which allows you to search for dependent Entities in a specific direction on the dependency graph. To better understand the functionality of this property, let's take a look at the example below:
 
 Let's assume that we have the Blueprints `DeploymentConfig` and `Microservice` with the following Relation definition (declared on the `DeploymentConfig` Blueprint):
 
@@ -276,7 +276,7 @@ By looking at the resulting graph layout, we can also map the directions:
 ![Dependency graph upstream downstream diagram](../../static/img/tutorial/search-in-port/search-direction-diagram.png)
 
 - To search for Entities which the source depends on - use `"direction": "upstream"`;
-- To search for Entities which depend on the source - use `"direction": "downstream"`;
+- To search for Entities which depend on the source - use `"direction": "downstream"`.
 
 In the example shown above, if we want to get the `Microservice` and `Environment` that _Order-Service-Production_ depends on, the search rule would be:
 
@@ -289,7 +289,7 @@ In the example shown above, if we want to get the `Microservice` and `Environmen
 }
 ```
 
-And the result would be:
+And the result shall be:
 
 <details>
 <summary>Order-Service-Production upstream related Entities</summary>
@@ -338,7 +338,7 @@ And the result would be:
 
 </details>
 
-And if we want to get all of the `DeploymentConfigs` that are deployed in the _Production_ `Environment`, the search rule would be:
+If we want to get all of the `DeploymentConfigs` that are deployed in the _Production_ `Environment`, the search rule would be:
 
 ```json showLineNumbers
 {
@@ -349,7 +349,7 @@ And if we want to get all of the `DeploymentConfigs` that are deployed in the _P
 }
 ```
 
-And the result would be:
+And the result shall be:
 
 <details>
 <summary>Production downstream related Entities</summary>
