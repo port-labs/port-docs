@@ -18,8 +18,8 @@ In this guide you will implement a package dependency mapping between your micro
 
 In this example we will review 2 use-cases for maintaining package dependencies for a Microservice.
 
-1. A single-microservice Node project managed by npm.
-2. A mono-repo, multi-microservice Node project which is managed by [yarn v2+](https://yarnpkg.com/getting-started).
+1. [A mono-repo](#mapping-yarn-dependencies), multi-microservice Node project which is managed by [yarn v2+](https://yarnpkg.com/getting-started).
+2. [A single-microservice](#mapping-npm-dependencies) Node project managed by npm.
 
 ### Use-case setup
 
@@ -97,7 +97,6 @@ _Please notice the 'relations' seciton at the bottom of the Blueprint_
 
 </details>
 
-<br/>
 Let's have a look at our new relation!
 
 ![blueprints.png](../../static/img/tutorial/complete-use-cases/microservice-dependency/blueprints.png)
