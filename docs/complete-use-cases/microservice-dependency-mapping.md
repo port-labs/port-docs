@@ -141,7 +141,7 @@ Since we are working with DeploymentConfigs - which are configured by a Microser
 
 #### Automating Entity creation
 
-Let's begin by creating a Python script to handle scanning the 'yarn.lock' file. We will also implement Package Entity creation and update the exisiting DeploymentConfigs with their related package dependencies.
+Let's begin by creating a Python script to handle scanning the `yarn.lock` file. We will also implement Package Entity creation and update the existing DeploymentConfigs with their related package dependencies.
 
 [This Python script](https://github.com/port-labs/demo-node-project/blob/main/scripts/scan-yarn-lock.py) has some useful functions with which we interact with Port.
 Have a look at:
