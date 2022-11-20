@@ -387,7 +387,7 @@ Here is how to use property formats:
 Even though the input is the same in both `email` and `user` formats, their presentation is different:
 
 - `email` format displays the raw email string; 
-- "user" format displays the user's name and avatar from Port's list of known users.
+- `user` format displays the user's name and avatar from Port's list of known users.
 
 In addition, "user" format distinguishes between known users in Port and users external to Port.
 :::
