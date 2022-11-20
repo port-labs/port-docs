@@ -225,4 +225,4 @@ We provide a free search option on tables. Searching on a table is available on 
 
 ![Table search bar marked](../../../static/img/platform-overview/port-components/pages/TableSearchBar.png)
 
-[Explore Advanced Operations on Pages with our API ➡️ ](../../api-reference)
+[Explore Advanced Operations on Pages with our API ➡️ ](../../api-providers/rest.md)

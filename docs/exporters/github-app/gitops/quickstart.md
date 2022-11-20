@@ -1,12 +1,12 @@
 ---
-sidebar_position: 3
+sidebar_position: 1
 ---
 
 # Quickstart
 
 :::note Prerequisites
 
-[Please install our GitHub app](./installation).
+[Please install our GitHub app](../installation.md).
 :::
 
 1. Clone our example repo: [github-app-setup-example](https://github.com/port-labs/github-app-setup-example).

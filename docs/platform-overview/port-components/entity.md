@@ -155,4 +155,4 @@ In addition, you will be able to use [Mirror Properties](./mirror-properties) to
 
 [Explore How to Create, Edit, and Delete Entities with basic examples](../../tutorials/entity-basics.md)
 
-[Dive into advanced operations on Entities with our API ➡️ ](../../api-reference)
+[Dive into advanced operations on Entities with our API ➡️ ](../../api-providers/rest.md)
