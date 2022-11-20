@@ -74,7 +74,8 @@ Let’s configure a `VM` Blueprint, its base structure is:
   "enableResponsibleTeamEdit": false,
   "disabledProperties": [],
   "disabledRelations": [],
-  "formulaProperties": {}
+  "formulaProperties": {},
+  "calculationProperties": {}
 }
 ```
 
@@ -144,7 +145,9 @@ blueprint = {
     "enableResponsibleTeamEdit": False,
     "disabledProperties": [],
     "disabledRelations": [],
-    "formulaProperties": {}
+    "formulaProperties": {},
+    "calculationProperties": {},
+
 }
 
 response = requests.post(f'{API_URL}/blueprints', json=blueprint, headers=headers)
