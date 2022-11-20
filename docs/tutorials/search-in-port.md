@@ -250,12 +250,12 @@ In addition, we have the following Entities:
 
 ```text showLineNumbers
 Deployment Configs:
-- Administration-Service-Production
-- Port-API-Production
+- Order-Service-Production
+- Cart-Service-Production
 
 Microservices:
-- Administration Service
-- Port-API
+- Order Service
+- Cart Service
 
 Environments:
 - Production
@@ -264,11 +264,11 @@ Environments:
 And the following Relations:
 
 ```text showLineNumbers
-Administration-Service-Production -> Administration-Service
-Administration-Service-Production -> Production
+Order-Service-Production -> Order-Service
+Order-Service-Production -> Production
 
-Port-API-Production -> Port-API
-Port-API-Production -> Production
+Cart-Service-Production -> Cart-Service
+Cart-Service-Production -> Production
 ```
 
 By looking at the resulting graph layout, we can also map the directions:
@@ -278,13 +278,13 @@ By looking at the resulting graph layout, we can also map the directions:
 - To search for Entities which the source depends on - use `"direction": "upstream"`;
 - To search for Entities which depend on the source - use `"direction": "downstream"`;
 
-In the example shown above, if we want to get the `Microservice` and `Environment` that _Administration-Service-Production_ depends on, the search rule would be:
+In the example shown above, if we want to get the `Microservice` and `Environment` that _Order-Service-Production_ depends on, the search rule would be:
 
 ```json showLineNumbers
 {
   "operator": "relatedTo",
   "blueprint": "DeploymentConfig",
-  "value": "Administration-Service-Production",
+  "value": "Order-Service-Production",
   "direction": "upstream"
 }
 ```
@@ -292,7 +292,7 @@ In the example shown above, if we want to get the `Microservice` and `Environmen
 And the result would be:
 
 <details>
-<summary>Administration-Service-Production upstream related Entities</summary>
+<summary>Order-Service-Production upstream related Entities</summary>
 
 ```json showLineNumbers
 {
@@ -300,14 +300,14 @@ And the result would be:
   "matchingBlueprints": ["Microservice", "Environment"],
   "entities": [
     {
-      "identifier": "Administration-Service",
-      "title": "Administration-Service",
+      "identifier": "Order-Service",
+      "title": "Order-Service",
       "blueprint": "Microservice",
       "properties": {
         "on-call": "mor@getport.io",
         "language": "Python",
-        "slack-notifications": "https://slack.com/Administration-Service",
-        "launch-darkly": "https://launchdarkly.com/Administration-Service"
+        "slack-notifications": "https://slack.com/Order-Service",
+        "launch-darkly": "https://launchdarkly.com/Order-Service"
       },
       "relations": {},
       "createdAt": "2022-11-17T15:54:20.432Z",
@@ -360,11 +360,11 @@ And the result would be:
   "matchingBlueprints": ["DeploymentConfig"],
   "entities": [
     {
-      "identifier": "Administration-Service-Production",
-      "title": "Administration-Service-Production",
+      "identifier": "Order-Service-Production",
+      "title": "Order-Service-Production",
       "blueprint": "DeploymentConfig",
       "properties": {
-        "url": "https://github.com/port-labs/administration-service",
+        "url": "https://github.com/port-labs/order-service",
         "config": {
           "encryption": "SHA256"
         },
@@ -375,7 +375,7 @@ And the result would be:
         ]
       },
       "relations": {
-        "relatedMicroservice": "Administration-Service",
+        "relatedMicroservice": "Order-Service",
         "relatedEnv": "Production"
       },
       "createdAt": "2022-11-17T15:55:55.591Z",
@@ -384,11 +384,11 @@ And the result would be:
       "updatedBy": "auth0|62ab380295b34240aa511cdb"
     },
     {
-      "identifier": "Port-API-Production",
-      "title": "Port-API-Production",
+      "identifier": "Cart-Service-Production",
+      "title": "Cart-Service-Production",
       "blueprint": "DeploymentConfig",
       "properties": {
-        "url": "https://github.com/port-labs/port-api",
+        "url": "https://github.com/port-labs/cart-service",
         "config": {
           "foo": "bar"
         },
@@ -399,7 +399,7 @@ And the result would be:
         ]
       },
       "relations": {
-        "relatedMicroservice": "Port-API",
+        "relatedMicroservice": "Cart-Service",
         "relatedEnv": "Production"
       },
       "createdAt": "2022-11-17T15:55:10.714Z",
