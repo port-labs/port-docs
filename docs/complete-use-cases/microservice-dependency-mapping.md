@@ -239,7 +239,7 @@ Try installing a new package and push it to main:
 ```bash showLineNumbers
 yarn workspace backend add prettier
 git add -u
-git commit -m "Updated yarn.lock to contain prettier package"
+git commit -m "Add prettier package to backend and update yarn.lock"
 git push
 ```
 
