@@ -7,7 +7,7 @@ sidebar_position: 6
 Using Port, it is very easy to implement and track package dependency mapping for your microservices, which can be useful, for example, while trying to investigate a dependency related issue or bug, or while checking for security issues.
 
 :::tip
-All relevant files and resources for this guide are available [**HERE**](https://github.com/port-labs/demo-node-project) for the `yarn.lock` use-case, and [**HERE**](https://github.com/port-labs/demo-node-poject-npm) for the `package.json` use-case.
+All relevant files and resources for this guide are available [**HERE**](https://github.com/port-labs/demo-node-project) for the `yarn.lock` use-case, and [**HERE**](https://github.com/port-labs/demo-node-poject-npm) for the `package-lock.json` use-case.
 :::
 
 ## Goal
