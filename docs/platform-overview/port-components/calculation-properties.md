@@ -4,15 +4,15 @@ sidebar_position: 7
 
 # Calculation Properties
 
-Calculation Properties allow you to use existing properties defined on [Blueprints](./blueprint), either directly using [Relations](./relation) and [Mirror Properties](./mirror-properties), in order to create new properties by using `jq` language.
+Calculation Properties allow you to use existing properties defined on [Blueprints](./blueprint), either directly or by using [Relations](./relation) and [Mirror Properties](./mirror-properties), in order to create new properties by using the [`jq`](https://github.com/stedolan/jq) processor for `JSON`.
 
-Calculation Properties make it easier to define properties that are based on other properties but with the ability to transform the data.
-Calculation Properties can be used for merging, slicing, selecting values and etc
+Calculation Properties make it easier to define properties that are based on values from other properties, with the added ability to transform the data.
+Calculation Properties can be used for merging, slicing, selecting values, etc.
 
 :::tip
-Port supports standard jq syntax, for quick reference of some of the available jq syntax, refer to the [jq tutorial](https://stedolan.github.io/jq/tutorial).
+Port supports standard `jq` syntax, for a quick reference of some of the available `jq` syntax, refer to the [jq tutorial](https://stedolan.github.io/jq/tutorial).
 
-For a jq playgroud, refer to the [JQ playground](https://jqplay.org/)
+For a playground where you can test different inputs and `jq` processing patterns, refer to the [JQ playground](https://jqplay.org/)
 :::
 
 ## Calculation Properties JSON schema
@@ -33,7 +33,7 @@ The `calculationProperties` key is a top-level key in the JSON of an entity (sim
 Let's look at some examples of basic Calculation Properties definitions to better understand how Calculation Properties work:
 
 :::info example context
-Remember that in a real blueprint, all of these examples live in the `calculationProperties` key of the blueprint
+Remember that in a real Blueprint, all of these examples live in the `calculationProperties` key of the Blueprint
 :::
 
 :::tip
@@ -64,8 +64,30 @@ In the following example, we create a Calculation Property called `merge_config`
 }
 ```
 
-As you can see,if we have an Entity that have `deployed_config` with the value `{cpu : 200}`
-then its `merge_config` with the value `{memory: 400}` property value will be: `{cpu : 200, memory: 400}`.
+In this instance, if you have a `deployed_config` **object** property with the value:
+
+```json showLineNumbers
+{
+  "cpu": 200
+}
+```
+
+And a `service_config` **object** property with the value:
+
+```json showLineNumbers
+{
+  "memory": 400
+}
+```
+
+Then the `merge_config` Calculation Property value will be:
+
+```json showLineNumbers
+{
+  "cpu": 200,
+  "memory": 400
+}
+```
 
 ### Using mirror properties in calculation properties
 
