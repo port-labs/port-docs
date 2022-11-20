@@ -447,8 +447,9 @@ The Entity used in the example:
 Snippet to fetch the `config` property and parse it from `yaml` to a python dictionary:
 
 ```python showLineNumbers
-# pip install pyyaml
+# pip install pyyaml requests
 import yaml
+import requests
 
 API_URL = 'https://api.getport.io/v1'
 
@@ -462,7 +463,7 @@ access_token = token_response.json()['accessToken']
 headers = {
     'Authorization': f'Bearer {access_token}'
 }
-response = requests.get(f'{API_URL}/blueprints/{target_blueprint}/entities/{target_blueprint}', headers=headers)
+response = requests.get(f'{API_URL}/blueprints/{target_blueprint}/entities/{target_entity}', headers=headers)
 
 config_prop = yaml.safe_load(response.json()["entity"]["properties"]["config"])
 
