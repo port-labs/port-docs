@@ -56,12 +56,6 @@ _Please notice the 'relations' seciton at the bottom of the Blueprint_
   "mirrorProperties": {},
   "formulaProperties": {},
   "relations": {
-    "at": {
-      "title": "Environment",
-      "target": "environment",
-      "required": false,
-      "many": false
-    },
     "package": {
       "title": "Package",
       "target": "Package",
