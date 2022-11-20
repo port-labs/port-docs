@@ -218,7 +218,7 @@ The following rule will return Entities whose environment property contains the 
 
 ### `relatedTo` operator
 
-The following rule will return all Entities that have a relationship with the Entity whose identifier is `port-api` (both children and ancestors):
+The following rule will return all Entities that have a relationship with the Entity whose identifier is `port-api` (both [upstream and downstream](#direction-property)):
 
 ```json showLineNumbers
 {
