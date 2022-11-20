@@ -9,6 +9,12 @@ Calculation Properties allow you to use existing properties defined on [Blueprin
 Calculation Properties make it easier to define properties that are based on other properties but with the ability to transform the data.
 Calculation Properties can be used for merging, slicing, selecting values and etc
 
+:::tip
+Port supports standard jq syntax, for quick reference of some of the available jq syntax, refer to the [jq tutorial](https://stedolan.github.io/jq/tutorial).
+
+For a jq playgroud, refer to the [JQ playground](https://jqplay.org/)
+:::
+
 ## Calculation Properties JSON schema
 
 The `calculationProperties` key is a top-level key in the JSON of an entity (similar to `identifier`, `title`, `properties`, etc..)
@@ -60,12 +66,6 @@ In the following example, we create a Calculation Property called `merge_config`
 
 As you can see,if we have an Entity that have `deployed_config` with the value `{cpu : 200}`
 then its `merge_config` with the value `{memory: 400}` property value will be: `{cpu : 200, memory: 400}`.
-
-:::tip
-Port supports standard jq syntax, for quick reference of some of the available jq syntax, refer to the [jq tutorial](https://stedolan.github.io/jq/tutorial).
-
-For a jq playgroud, refer to the [JQ playground](https://jqplay.org/)
-:::
 
 ### Using mirror properties in calculation properties
 
