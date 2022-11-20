@@ -255,7 +255,7 @@ The workflow automatically runs, and when it finishes, we should see the new pac
 While most of the steps to achieving our goal are the same in an NPM managed environment, let's state the slight differences.
 
 :::tip  
-Click [**_HERE_**](https://github.com/port-labs/demo-node-poject-npm) for the relevant files for this use-case.
+Click [**HERE**](https://github.com/port-labs/demo-node-poject-npm) for the relevant files for this use-case.
 :::
 
 First off all, in this scenario we will be mapping our `package-lock.json` file, as oppose to our `yarn.lock` file. There are some small differences in their structure.
