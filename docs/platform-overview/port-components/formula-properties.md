@@ -22,7 +22,7 @@ The `formulaProperties` key is a top-level key in the JSON of an entity (similar
     "formulaProp2": {
         "title": "Second formula property from user-defined property",
         "formula": "published-package-{{version}}",
-        "icon": "Deployment
+        "icon": "Deployment"
     }
 }
 ```
