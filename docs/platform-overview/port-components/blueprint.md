@@ -327,6 +327,7 @@ We currently support the following `string` formats:
 | --------------------------------- | --------------------------------------------------------- | ----------------------------------------- |
 | `url`                             | Formatted URL                                             | `"https://getport.io"`                    |
 | `email`                           | Formatted Email                                           | `"port@getport.io"`                       |
+| `user`                            | Formatted Email                                           | `"port@getport.io"`                       |
 | `date-time`                       | Formatted ISO string datetime                             | `"2022-04-18T11:44:15.345Z"`              |
 | `ipv4`                            | Standard IPv4 address                                     | `127.0.0.1`                               |
 | `ipv6`                            | Standard IPv6 address                                     | `FE80:CD00:0A20:0CDE:1257:1C34:211E:729C` |
@@ -368,6 +369,28 @@ Here is how to use property formats:
   "default": "mor@getport.io"
 }
 ```
+
+### User
+
+```json showLineNumbers
+{
+  "title": "User Property",
+  // highlight-start
+  "type": "string",
+  "format": "user",
+  // highlight-end
+  "description": "A User property"
+}
+```
+
+:::note
+Even though the input is the same in both "email" and "user" formats, their presentation is different:<br />
+
+- "email" format displays the raw string email
+- "user" format displays the user's name and avatar from Port's list of known users.
+
+In addition, "user" format distinguishes between known users in Port and users external to Port.
+:::
 
 ### Date Time
 
@@ -480,7 +503,7 @@ print(config_prop["do_awesome_things"]) # prints: True
   "type": "string",
   "format": "markdown",
   // highlight-end
-  "description": "An Markdown property"
+  "description": "A Markdown property"
 }
 ```
 
