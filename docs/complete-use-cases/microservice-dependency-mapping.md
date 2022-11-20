@@ -258,7 +258,7 @@ While most of the steps to achieving our goal are the same in an NPM managed env
 Click [**HERE**](https://github.com/port-labs/demo-node-poject-npm) for the relevant files for this use-case.
 :::
 
-First off all, in this scenario we will be mapping our `package-lock.json` file, as oppose to our `yarn.lock` file. There are some small differences in their structure.
+First of all, in this scenario we will be mapping our `package-lock.json` file, as opposed to our `yarn.lock` file. There are some small differences in their structure.
 
 That being said, we will have to tinker our python script to match the changes. We removed `MICROSERVICE_PATH` since the is a single-microservice use-case, and we changed the logic of the scanner to match the different structure.
 
