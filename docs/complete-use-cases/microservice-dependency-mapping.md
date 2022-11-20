@@ -185,7 +185,7 @@ RUNTIME = os.environ.get("RUNTIME")
 In our environment, a change in main means a change in the 'Production' environment. Let's create a workflow which monitors changes in Production.
 In order to monitor the `yarn.lock` file, we will create a Github Workflow which watches the lock file on the `main` branch.
 
-On a file change, we will run the Python script.
+When the `yarn.lock` file changes in the main branch, the workflow will be triggered and if necessary, the Python scanner script will be run.
 
 Let's walk through the [workflow](https://github.com/port-labs/demo-node-project/blob/main/.github/workflows/update-packages.yml).
 
