@@ -386,10 +386,17 @@ Here is how to use property formats:
 :::note
 Even though the input is the same in both `email` and `user` formats, their presentation is different:
 
-- `email` format displays the raw email string; 
+- `email` format displays the raw email string;
 - `user` format displays the user's name and avatar from Port's list of known users.
 
-In addition, "user" format distinguishes between known users in Port and users external to Port.
+In addition, `user` format distinguishes between users by their status:
+
+| User Status  | Example                                                                                             |
+| ------------ | --------------------------------------------------------------------------------------------------- |
+| Active       | ![Active user](../../../static/img/platform-overview/port-components/blueprints/activeUser.png)     |
+| Invited      | ![Invited user](../../../static/img/platform-overview/port-components/blueprints/invitedUser.png)   |
+| Unregistered | ![External user](../../../static/img/platform-overview/port-components/blueprints/externalUser.png) |
+
 :::
 
 ### Date Time
