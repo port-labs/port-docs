@@ -2,9 +2,13 @@
 sidebar_position: 2
 ---
 
-# Datadog
+# Embedded Url
 
-With Port, you can import and display [Datadog](https://docs.datadoghq.com/dashboards/sharing/) dashboards using a URL link.
+You can use the embedded-url `spec` property to embed any webpage you want into an additional tab in the **specific Entity page**.
+Simply make sure the URL you're embedding is viewable to the internet.
+
+For example:
+[Datadog](https://docs.datadoghq.com/dashboards/sharing/) dashboards using a URL link.
 
 By using the combination of `"type": "string`, `"format": "url` and `"spec": "embedded-url"` in a [Blueprint property](../port-components/blueprint.md#blueprint-properties), Port will display the Datadog dashboard matching the provided URL in the [Specific Entity Page](../port-components/page.md#entity-page).
 
