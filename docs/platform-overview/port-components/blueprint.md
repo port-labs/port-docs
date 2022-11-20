@@ -384,7 +384,7 @@ Here is how to use property formats:
 ```
 
 :::note
-Even though the input is the same in both "email" and "user" formats, their presentation is different:<br />
+Even though the input is the same in both `email` and `user` formats, their presentation is different:
 
 - `email` format displays the raw email string; 
 - "user" format displays the user's name and avatar from Port's list of known users.
