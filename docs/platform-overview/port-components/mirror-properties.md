@@ -4,13 +4,15 @@ sidebar_position: 5
 
 # Mirror Properties
 
-When two blueprints are connected via a Relation, a new set of properties becomes available to Entities in the `source` blueprint.
+When two Blueprints are connected via a Relation, a new set of properties becomes available to Entities in the `source` Blueprint.
 
 Those new properties are called `mirrorProperties`.
 
 Mirror properties will appear on the `source` Blueprint as an additional key called `mirrorProperties`. It represents additional properties queried from the `target` Blueprint (or from other Entities further down the connection graph).
 
-Mirror Properties allow you to map property values from related Entities, to named `keys` in the `source` Blueprint, thus giving you more context and data when viewing an Entity, while not cluttering the output with unnecessary fields.
+Mirror properties allow you to map property values from related Entities, to named `keys` in the `source` Blueprint, thus giving you more context and data when viewing an Entity, while not cluttering the output with unnecessary fields.
+
+Mirror properties support both [user-defined](#user-defined-mirror-property) properties, and [meta-properties](#meta-property-mirror-property) by using similar syntax.
 
 ## Mirror Properties JSON schema
 
@@ -26,7 +28,7 @@ The `mirrorProperties` key is a top-level key in the Entity's JSON (similar to `
         "path": "firstTargetBlueprintRelationIdentifier.prop1"
     },
     "secondMirrorPropertyFromFirstTargetBlueprint": {
-        "path": "firstTargetBlueprintRelationIdentifier.$prop2"
+        "path": "firstTargetBlueprintRelationIdentifier.prop2"
     },
     "mirrorPropertyFromALongRelationChain": {
         "path": "firstTargetBlueprintRelationIdentifier.nestedBlueprintRelationIdentifier.prop1"
@@ -39,6 +41,10 @@ The `mirrorProperties` key is a top-level key in the Entity's JSON (similar to `
     }
 }
 ```
+
+:::info Identifiers and titles as mirror properties
+Want to use an identifier or title as a mirror property? Those are meta-properties, so you will need to reference them with a dollar sign (`$`) before them (i.e. `$identifier`, `$title`). For more information, refer to the [meta-properties](#meta-property-mirror-property) section.
+:::
 
 :::tip Mirror Property Title
 MirrorProperties support custom titles similarly to standard properties. Titles are optional, but we recommend using them to increase readability and comfort.
@@ -60,7 +66,7 @@ Remember that in a real Blueprint, all of these examples live in the `mirrorProp
 
 This is a standard Mirror Property created from a user-defined property in the `target` Blueprint.
 
-In the following example, we create a Mirror Property called `RepositoryUrl`, which is mapped to the `repo_url` property in the `target` blueprint (in this example the name of the relation is `deployment-to-microservice`)
+In the following example, we create a Mirror Property called `RepositoryUrl`, which is mapped to the `repo_url` property in the `target` Blueprint (in this example the name of the Relation is `deployment-to-microservice`)
 
 ```json showLineNumbers
 "RepositoryUrl": {
@@ -71,7 +77,7 @@ In the following example, we create a Mirror Property called `RepositoryUrl`, wh
 
 ### Meta-property mirror property
 
-This is a Mirror Property created from one of Port's _meta-properties_ on the `target` blueprint.
+This is a Mirror Property created from one of Port's _meta-properties_ on the `target` Blueprint.
 
 :::info Meta-properties
 A meta-property is a property that exists on every Entity in Port, the user can control its value, but he can not choose not to add it to the Entity or Blueprint definition.
@@ -84,6 +90,16 @@ Example meta-properties include:
 - and more.
 
 Meta-properties are always referenced using a dollar sign (`$`) before them, this makes it easier to tell if a property is user-defined or a meta-property.
+
+Here is a short table demonstrating the usage of common mirror properties:
+
+| Meta-property | Description          | Mirror property syntax |
+| ------------- | -------------------- | ---------------------- |
+| identifier    | Entity identifier    | `$identifier`          |
+| title         | Entity title         | `$title`               |
+| createdAt     | Entity creation time | `$createdAt`           |
+| updatedAt     | Entity update time   | `$updatedAt`           |
+
 :::
 
 In the following example, we create a Mirror Property called `MicroserviceName` which is mapped to the `title` meta-property in the `target` Blueprint (in this example the name of the Relation is `deployment-to-microservice`). Note how the `title` field is referenced using `$title` because it is a meta-property
@@ -95,17 +111,17 @@ In the following example, we create a Mirror Property called `MicroserviceName` 
 }
 ```
 
-### Nested relation mirror property
+### Nested Relation mirror property
 
-It is possible to use Mirror Properties to map properties from Blueprints that are not direct descendants of our `source` blueprint.
+It is possible to use Mirror Properties to map properties from Blueprints that are not direct descendants of our `source` Blueprint.
 
-For example, let's assume we have the following relation chain: `Microservice -> Project -> Squad`.
+For example, let's assume we have the following Relation chain: `Microservice -> Project -> Squad`.
 
 We want to map the members of the squad that owns the microservice directly to the `Microservice` entities.
 
 The members of the squad are listed in an [array property](./blueprint#array) under the user-defined property `squad_members`.
 
-The names of the relations are:
+The names of the Relations are:
 
 - `Microservice -> Project`: `microservice-to-project`
 - `Project -> Squad`: `project-to-squad`
@@ -123,6 +139,6 @@ Let's map the squad members using a Mirror Property called `OwningSquadMembers`:
 
 Mirror Properties allow you to enhance the data presented in the Software Catalog by utilizing existing data from related Entities.
 
-Blueprints that have relations with multiple other Blueprints can greatly benefit from Mirror Properties by creating a central source for a host of relevant information.
+Blueprints that have Relations with multiple other Blueprints can greatly benefit from Mirror Properties by creating a central source for a host of relevant information.
 
 Now that you know about Mirror Properties, consider looking into [Formula Properties](./formula-properties) which allow you to fill property values using custom templates.
