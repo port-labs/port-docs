@@ -77,7 +77,8 @@ Let’s configure a `VM` Blueprint, its base structure is:
   "changelogDestination": {
     "type": "KAFKA"
   },
-  "formulaProperties": {}
+  "formulaProperties": {},
+  "calculationProperties": {}
 }
 ```
 
@@ -146,7 +147,9 @@ blueprint = {
     "changelogDestination": {
       "type": "KAFKA"
     },
-    "formulaProperties": {}
+    "formulaProperties": {},
+    "calculationProperties": {},
+
 }
 
 response = requests.post(f'{API_URL}/blueprints', json=blueprint, headers=headers)

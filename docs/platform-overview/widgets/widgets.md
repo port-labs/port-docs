@@ -13,4 +13,5 @@ For more information about available widgets, click on any of the links below:
 ## Documentation
 
 - [Markdown](./markdown)
+- [Embedded-url (iframe)](./embedded-url)
 - [OpenAPI](./open-api)

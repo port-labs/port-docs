@@ -14,11 +14,11 @@ You can read more about software catalogs on our [blog](https://www.getport.io/b
 
 In this guide, you will setup an initial software catalog. You will learn how to use:
 
-- Port's [Terraform provider](../integrations/terraform.md) - to create your cloud resources;
-- Port's [GitHub App](../integrations/github/app/) - to create your services;
-- Port's [REST API](../api-reference/) - to create your deployment configs;
-- Port's [Kubernetes Exporter](../integrations/k8s-exporter) - to create your deployment service pods;
-- Port's [GitHub Action](../integrations/github/github-action.md) - to create your service deployments.
+- Port's [Terraform provider](../api-providers/terraform.md) - to create your cloud resources;
+- Port's [REST API](../api-providers/rest.md) - to create your deployment configs;
+- Port's [GitHub Action](../api-providers/github-action.md) - to create your service deployments.
+- Port's [GitHub App](../exporters/github-app/github-app.md) - to create your services;
+- Port's [Kubernetes Exporter](../exporters/k8s-exporter/k8s-exporter.md) - to create your deployment service pods;
 
 By the end of this guide, you will have a _Basic Model_ of a software catalog.
 
@@ -124,6 +124,7 @@ The Blueprint JSON provided below already includes the Relations between the dif
   },
   "mirrorProperties": {},
   "formulaProperties": {},
+  "calculationProperties": {},
   "relations": {}
 }
 ```
@@ -169,6 +170,7 @@ The Blueprint JSON provided below already includes the Relations between the dif
   },
   "mirrorProperties": {},
   "formulaProperties": {},
+  "calculationProperties": {},
   "relations": {}
 }
 ```
@@ -225,6 +227,7 @@ The Blueprint JSON provided below already includes the Relations between the dif
   },
   "mirrorProperties": {},
   "formulaProperties": {},
+  "calculationProperties": {},
   "relations": {
     "Environment": {
       "title": "Environment",
@@ -292,6 +295,7 @@ The Blueprint JSON provided below already includes the Relations between the dif
     }
   },
   "formulaProperties": {},
+  "calculationProperties": {},
   "relations": {
     "DeploymentConfig": {
       "target": "DeploymentConfig",
@@ -345,6 +349,7 @@ The Blueprint JSON provided below already includes the Relations between the dif
     }
   },
   "formulaProperties": {},
+  "calculationProperties": {},
   "relations": {
     "DeploymentConfig": {
       "title": "Deployment Config",
@@ -368,7 +373,7 @@ Now that you have your Blueprints created, connected and ready to go, time to cr
 
 ### Environment - Terraform provider
 
-To keep things short and simple, let's assume you only have a production environment. We'll use Port's [Terraform provider](../integrations/terraform.md) to create an Entity for it.
+To keep things short and simple, let's assume you only have a production environment. We'll use Port's [Terraform provider](../api-providers/terraform.md) to create an Entity for it.
 
 :::info
 In a real environment, this terraform file would also include actual provisioning of cloud resources, such as the kubernetes namespace corresponding to the environment Entity.
@@ -434,7 +439,7 @@ Now that you have your environment ready, it's time to create a service.
 
 ### Service - GitHub app
 
-To create your service, you will connect Port's [GitHub app](../integrations/github/app/installation.md) to your service repository, and add a `port.yml` file describing the service you want to create an Entity for in Port.
+To create your service, you will connect Port's [GitHub app](../exporters/github-app/gitops/gitops.md) to your service repository, and add a `port.yml` file describing the service you want to create an Entity for in Port.
 
 Here is an example `port.yml` file for a service called `Notification Service`:
 
@@ -454,12 +459,12 @@ properties:
 ```
 
 :::tip
-`repo` is a GitHub App [auto-imported properties](../integrations/github/app/auto-importing-properties.md), as such it will be added automatically to the `port.yml` file of the service Entity.
+`repo` is a GitHub App [auto-imported properties](../exporters/github-app/gitops/auto-importing-properties.md), as such it will be added automatically to the `port.yml` file of the service Entity.
 :::
 
 After the commit of the `port.yml` file to your repository, you will now see your service in Port.
 
-### Deployment Config - Port API
+### Deployment Config - Port API {#deployment-config-bp}
 
 A deployment config is used to represent a service deployment in a specific environment in your infrastructure. A deployment config has multiple `deployments` tied to it, each representing a new version of the deployed code of the matching service, in its matching environment.
 
@@ -538,7 +543,7 @@ print(response.json())
 
 A deployment service pod represents an instance of a deployed service. A deployment service pod has a `deployment config` tied to it, which represents the deployed service that the pod is an instance of.
 
-Below is a `config.yaml` configuration file to use as the [Kubernetes Exporter](../integrations/k8s-exporter) config:
+Below is a `config.yaml` configuration file to use as the [Kubernetes Exporter](../exporters/k8s-exporter/k8s-exporter.md) config:
 
 <details>
 <summary>Click here to see the config</summary>

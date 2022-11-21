@@ -4,7 +4,7 @@ sidebar_position: 6
 
 # Formula Properties
 
-Formula Properties allow you to use existing properties defined on [Blueprints](./blueprint), either directly using [Relations](./relation) and [Mirror Properties](./mirror-properties), in order to create new properties in accordance with set templates.
+Formula Properties allow you to use existing properties defined on [Blueprints](./blueprint), either directly or by using [Relations](./relation) and [Mirror Properties](./mirror-properties), in order to create new properties in accordance with set templates.
 
 Formula Properties make it easier to define properties that are based on standard data formats that don’t change between different Entities of the same Blueprint. For example URLs, slack channel names, Git repository names and more.
 
@@ -22,7 +22,7 @@ The `formulaProperties` key is a top-level key in the JSON of an entity (similar
     "formulaProp2": {
         "title": "Second formula property from user-defined property",
         "formula": "published-package-{{version}}",
-        "icon": "Deployment
+        "icon": "Deployment"
     }
 }
 ```
