@@ -40,6 +40,7 @@ Each Blueprint is represented by a [Json schema](https://json-schema.org/), as s
   "description": "Description",
   "icon": "Service",
   "formulaProperties": {},
+  "calculationProperties": {},
   "schema": {
     "properties": {
       "foo": {

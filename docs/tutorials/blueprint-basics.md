@@ -43,6 +43,7 @@ In order to create a Blueprint with the following properties, we will use the fo
   "title": "Microservice",
   "icon": "Microservice",
   "formulaProperties": {},
+  "calculationProperties": {},
   "schema": {
     "properties": {
       "slackChannel": {
@@ -214,6 +215,7 @@ blueprint = {
     'title': 'Microservice',
     'icon': 'Microservice',
     'formulaProperties': {},
+    "calculationProperties": {},
     'schema': {
         'properties': {
             'slackChannel': {
@@ -372,6 +374,7 @@ You can create the new Blueprint from the UI (using the `Add Blueprint` button i
   "title": "Package",
   "icon": "Package",
   "formulaProperties": {},
+  "calculationProperties": {},
   "schema": {
     "properties": {
       "version": {

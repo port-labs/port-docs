@@ -57,6 +57,7 @@ The Blueprint JSON provided below already includes the Relations between the dif
   },
   "mirrorProperties": {},
   "formulaProperties": {},
+  "calculationProperties": {},
   "relations": {}
 }
 ```
@@ -95,6 +96,7 @@ The Blueprint JSON provided below already includes the Relations between the dif
   },
   "mirrorProperties": {},
   "formulaProperties": {},
+  "calculationProperties": {},
   "relations": {
     "DeploymentConfig": {
       "title": "Deployment Config",

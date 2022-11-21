@@ -96,6 +96,7 @@ For this limited example, the `deployment config` Blueprint will include mostly 
   },
   "mirrorProperties": {},
   "formulaProperties": {},
+  "calculationProperties": {},
   "relations": {},
   "changelogDestination": {
     "type": "WEBHOOK",
@@ -222,6 +223,7 @@ blueprint = {
     },
     "mirrorProperties": {},
     "formulaProperties": {},
+    "calculationProperties": {},
     "relations": {},
     "changelogDestination": {
         "type": "WEBHOOK",
