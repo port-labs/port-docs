@@ -2,48 +2,89 @@
 sidebar_position: 2
 ---
 
-# Embedded Url (iframe)
+# Embedded URL
 
-You can use the embedded-url `spec` property to embed any publicly available webpage you want into an additional tab in the **specific Entity page**.
-Simply make sure the URL you're embedding is viewable to the internet.
+You can use the embedded-url `spec` property to embed any publicly available webpage into an additional tab in the [**Specific Entity Page**](../port-components/page.md#entity-page).
 
 By using the combination of `"type": "string`, `"format": "url` and `"spec": "embedded-url"` in a [Blueprint property](../port-components/blueprint.md#blueprint-properties), Port will display the url as a new tab matching the provided URL in the blueprint's entity.
 
-# Prerequisite
+:::note
+Make sure the URL you want to embed in Port is publicly available (i.e. not inside a private VPC or only accessible using a VPN)
+:::
 
-In order to add an embedded view tab into your **specific Entity page**, you must first get the URL you want to embed.
-Copy this URL.
+## Prerequisites
 
-# Create a new property in the blueprint
+In order to add an embedded view tab into your Specific Entity Page, all you need is a publicly available URL with the data you want to embed.
 
-make sure the property has a `spec` value equals to `embedded-url`.
+## Embedded URL property definition in Blueprint schema
 
 ```json showLineNumbers
 {
-  "title": "[THE TAB TITLE]",
+  "title": "Embedded URL Tab",
   "type": "string",
   "format": "url",
   "spec": "embedded-url"
 }
 ```
 
-this will create a new property in the blueprint's entities that can store the url.
+## Examples
 
-# Add your copied url to the entity:
+### Datadog dashboard
 
-Go to the blueprint's page and edit one of the enitities:
-In this example we are embedding a [Datadog](https://docs.datadoghq.com/dashboards/sharing/) dashboard but this can be any webpage that can be shared publicly.
+In this example we are embedding a [Datadog](https://docs.datadoghq.com/dashboards/sharing/) dashboard in order to get application metrics directly inside Port.
 
-![Datadog Dashboard Example](../../../static/img/platform-overview/plugins/editEntityScreenshot.png)
+Add the `embedded-URL` property to a Blueprint:
 
-Add your copied url to the property and click Update.
+<details>
+<summary>Blueprint property definition</summary>
 
-## Go to the new tab in the entity's **specific Entity page**
+```json showLineNumbers
+{
+  "datadog": {
+    "title": "Datadog",
+    "type": "string",
+    "format": "url",
+    "spec": "embedded-url"
+  }
+}
+```
 
-Here is how the Datadog tab appears in the Specific Entity Page when an `embedded-url` spec with a public [Datadog](https://docs.datadoghq.com/dashboards/sharing/) dashboard URL is provided:
+</details>
 
-![Datadog Dashboard Example](../../../static/img/platform-overview/plugins/datadog.png)
+Create or edit an Entity of the Blueprint you added the `Datadog` property to, and specify the URL to the Datadog dashboard:
 
-# Example 2: Retool S3 File Explorer
+![Datadog Entity edit example](../../../static/img/platform-overview/widgets/editEntityDatadog.png)
 
-![S3 File Explorer Retool Example](../../../static/img/platform-overview/plugins/s3FileExplorer.png)
+Now go to the Specific Entity Page of your Entity and the Datadog dashboard will be visible in a dedicated tab:
+
+![Datadog dashboard example](../../../static/img/platform-overview/widgets/datadog.png)
+
+### Kibana dashboard
+
+In this example we are embedding a [Kibana](https://www.elastic.co/kibana/) dashboard in order to get logs, metrics and visualizations directly inside Port.
+
+Add the `embedded-URL` property to a Blueprint:
+
+<details>
+<summary>Blueprint property definition</summary>
+
+```json showLineNumbers
+{
+  "kibana": {
+    "title": "Kibana",
+    "type": "string",
+    "format": "url",
+    "spec": "embedded-url"
+  }
+}
+```
+
+</details>
+
+Create or edit an Entity of the Blueprint you added the `Kibana` property to, and specify the URL to the Kibana dashboard:
+
+![Kibana Entity edit example](../../../static/img/platform-overview/widgets/editEntityKibana.png)
+
+Now go to the Specific Entity Page of your Entity and the Datadog dashboard will be visible in a dedicated tab:
+
+![Kibana dashboard example](../../../static/img/platform-overview/widgets/kibana.png)
