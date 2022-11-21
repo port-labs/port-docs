@@ -33,6 +33,7 @@ For example, let’s create 2 Blueprints and connect them to each other:
   "title": "Microservice",
   "icon": "Microservice",
   "formulaProperties": {},
+  "calculationProperties": {},
   "schema": {
     "properties": {
       "on-call": {
@@ -78,6 +79,7 @@ For example, let’s create 2 Blueprints and connect them to each other:
   "title": "Deployment",
   "icon": "Deployment",
   "formulaProperties": {},
+  "calculationProperties": {},
   "schema": {
     "properties": {
       "version": {

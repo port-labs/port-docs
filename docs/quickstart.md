@@ -226,6 +226,7 @@ In order to create the service Blueprint, use the following JSON body:
     "required": ["on-call"]
   },
   "mirrorProperties": {},
+  "calculationProperties": {},
   "formulaProperties": {
     "slack-notifications": {
       "title": "Slack Notifications",
@@ -419,6 +420,7 @@ blueprint = {
         "required": ["on-call"]
     },
     "mirrorProperties": {},
+    "calculationProperties": {},
     "formulaProperties": {
         "slack-notifications": {
             "title": "Slack Notifications",
@@ -526,6 +528,7 @@ To create the environment Blueprint, use the following JSON body:
     "required": ["type"]
   },
   "mirrorProperties": {},
+  "calculationProperties": {},
   "formulaProperties": {
     "grafanaUrl": {
       "title": "Grafana URL",
@@ -616,6 +619,7 @@ blueprint = {
         ]
     },
     "mirrorProperties": {},
+    "calculationProperties": {},
     "formulaProperties": {
         "grafanaUrl": {
             "title": "Grafana URL",
@@ -879,6 +883,7 @@ To create the running service Blueprint, use the following JSON body:
     "required": []
   },
   "mirrorProperties": {},
+  "calculationProperties": {},
   "formulaProperties": {
     "sentryUrl": {
       "title": "Sentry URL",
@@ -1030,6 +1035,7 @@ blueprint = {
         "required": []
     },
     "mirrorProperties": {},
+    "calculationProperties": {},
     "formulaProperties": {
         "sentryUrl": {
             "title": "Sentry URL",

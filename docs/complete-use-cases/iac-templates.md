@@ -110,6 +110,7 @@ You can create as many properties as you want for the bucket, but for this examp
   },
   "mirrorProperties": {},
   "formulaProperties": {},
+  "calculationProperties": {},
   "relations": {}
 }
 ```

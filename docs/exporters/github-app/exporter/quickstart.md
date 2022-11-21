@@ -76,6 +76,7 @@ To export your GitHub `Pull Requests` to Port, you can use the following Port Bl
   },
   "mirrorProperties": {},
   "formulaProperties": {},
+  "calculationProperties": {},
   "relations": {}
 }
 ```
