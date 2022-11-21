@@ -30,7 +30,7 @@ Let's review our Blueprints and repository structure so we can better understand
 <details>
 <summary>DeploymentConfig Blueprint</summary>
 
-_Please notice the 'relations' seciton at the bottom of the Blueprint_
+Please notice the 'relations' seciton at the bottom of the Blueprint
 
 ```json showLineNumbers
 {
@@ -102,7 +102,7 @@ Let's have a look at our new relation!
 
 ![blueprints.png](../../static/img/tutorial/complete-use-cases/microservice-dependency/blueprints.png)
 
-_For more information about DeploymentConfig and it's uses, click [here](./software-catalog#deployment-config-bp)._
+For more information about DeploymentConfig and it's uses, click [here](./software-catalog#deployment-config-bp).
 
 As we can see in the image above, 2 Blueprints were created: `DeploymentConfig` and `Package`. Notice that the `Package` property is the Relation we created. It consists of an array of packages (this is thanks to the `"many": true` property of the Relation), since each microservice, and respectively, each DeploymentConfig can depend on multiple Pacakges.
 
