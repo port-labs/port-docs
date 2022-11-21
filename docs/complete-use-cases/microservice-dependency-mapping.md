@@ -134,7 +134,7 @@ Directory tree:
 
 As stated before, in this example we will cover a mono-repo use-case. In this repository, microservices are positioned in the 'apps/' directory, which we will refer to as `MICROSERVICE_PATH`.
 
-We will also persume that the directory names in `MICROSERVICE_PATH` match the names of the different microservices we are managing and tracking (i.e. apps/frontend will be 'frontend' which matches a microservice named `frontend`).
+We will also presume that the directory names in `MICROSERVICE_PATH` match the names of the different Microservices we are managing and tracking (i.e. apps/frontend will be 'frontend' which matches a Microservice named `frontend`).
 
 Since we are working with DeploymentConfigs - which are configured by a Microservice and Runtime (Environment) - we will have to take into account which `runtime` we are managing packages for. This will be passed on to us from the workflow call.
 
