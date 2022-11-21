@@ -58,33 +58,3 @@ Create or edit an Entity of the Blueprint you added the `Datadog` property to, a
 Now go to the Specific Entity Page of your Entity and the Datadog dashboard will be visible in a dedicated tab:
 
 ![Datadog dashboard example](../../../static/img/platform-overview/widgets/datadog.png)
-
-### Kibana dashboard
-
-In this example we are embedding a [Kibana](https://www.elastic.co/kibana/) dashboard in order to get logs, metrics and visualizations directly inside Port.
-
-Add the `embedded-URL` property to a Blueprint:
-
-<details>
-<summary>Blueprint property definition</summary>
-
-```json showLineNumbers
-{
-  "kibana": {
-    "title": "Kibana",
-    "type": "string",
-    "format": "url",
-    "spec": "embedded-url"
-  }
-}
-```
-
-</details>
-
-Create or edit an Entity of the Blueprint you added the `Kibana` property to, and specify the URL to the Kibana dashboard:
-
-![Kibana Entity edit example](../../../static/img/platform-overview/widgets/editEntityKibana.png)
-
-Now go to the Specific Entity Page of your Entity and the Datadog dashboard will be visible in a dedicated tab:
-
-![Kibana dashboard example](../../../static/img/platform-overview/widgets/kibana.png)
