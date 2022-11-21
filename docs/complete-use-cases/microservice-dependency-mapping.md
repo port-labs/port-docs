@@ -259,7 +259,7 @@ Click [**HERE**](https://github.com/port-labs/demo-node-poject-npm) for the rele
 
 First of all, in this scenario we will be mapping our `package-lock.json` file, as opposed to our `yarn.lock` file. There are also some small differences in the project structure.
 
-Since this is a single-microservice project use-case, we removed the `MICROSERVICE_PATH` parameter, we also changed the logic of the scanner to match the different file structure and format.
+Since this is a single-microservice project use-case, we removed the `MICROSERVICE_PATH` parameter and changed the logic of the scanner to match the different file structures and formats.
 
 ## Summary
 
