@@ -69,7 +69,8 @@ Let’s configure a `VM` Blueprint. Its base structure is:
     },
     "required": []
   },
-  "formulaProperties": {}
+  "formulaProperties": {},
+  "calculationProperties": {}
 }
 ```
 
@@ -130,7 +131,9 @@ blueprint = {
         },
         "required": []
     },
-    "formulaProperties": {}
+    "formulaProperties": {},
+    "calculationProperties": {},
+
 }
 
 response = requests.post(f'{API_URL}/blueprints', json=blueprint, headers=headers)
