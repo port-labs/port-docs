@@ -50,3 +50,9 @@ Contributions are very welcome. If you think you need help planning your contrib
 4. Make sure the spacing between different types of lines is the same throughout the whole document.
 5. When referring to someone performing an action that isn’t the docs reader, refer to them in a plural word, and not in second body grammer. For example, “they can use”, instead of “he can use”.
 6. Try avoiding adding “ing” to actions. For example, “reacting to” compared to “react to”.
+
+## Contributor License Agreement (CLA)
+
+In order to accept your pull request, we need you to submit a CLA. You only need to do this once, so if you've already contributed to Port's documentation before, you're good to go. If you are submitting a pull request for the first time, just let us know that you have completed the CLA and we can cross-check with your GitHub username.
+
+The CLA template is available [here](./contributor-license-agreement.txt), please fill it according to the instructions and then email the filled agreement to [support@getport.io](mailto:support@getport.io).
