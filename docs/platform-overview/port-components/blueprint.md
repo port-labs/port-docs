@@ -160,15 +160,15 @@ We currently support the following types:
 | `array`   | A multi-element array                                                             | `[1,2,3]`, `["a","b","c"]`                   |
 
 :::note
-Those are the `properties` that our API supports. See [API reference](../../api-reference).
+Those are the `properties` that our API supports. See [API reference](../../api-providers/rest.md).
 :::
 
 We support the following additional props:
 
-|        | Description                                                                                                                                | Example values                                   |
-| ------ | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------ |
-| `enum` | Field with a pre-defined set of allowed values. Can be used with properties of type `string` or `number`                                   | `["Option 1", "Option 2", "Option 3"]`           |
-| `spec` | Field with a pre-defined set of allowed values (only 'open-api' is supported currently). Can be used with properties of type `object` only | A legal [OpenAPI](../widgets/open-api) JSON spec |
+|        | Description                                                                                                                                   | Example values                                    |
+| ------ | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| `enum` | Field with a pre-defined set of allowed values. Can be used with properties of type `string` or `number`                                      | `["Option 1", "Option 2", "Option 3"]`            |
+| `spec` | Field with a pre-defined set of allowed values. A property with a `spec` key will be displayed as a separate tab in the Specific Entity Page. | [`open-api`](../widgets/open-api), `embedded-url` |
 
 ### Examples
 
@@ -334,7 +334,7 @@ We currently support the following `string` formats:
 | [`markdown`](../widgets/markdown) | String in markdown language format                        | `An Example of **bold text**.`            |
 
 :::note
-Those are the `format` types that our API supports. See [API reference](../../api-reference).
+Those are the `format` types that our API supports. See [API reference](../../api-providers/rest.md).
 :::
 
 ### Examples
@@ -572,4 +572,4 @@ Those new properties are called `mirrorProperties`, you can learn more about the
 
 [Explore How to Create, Edit, and Delete Blueprints with basic examples](../../tutorials/blueprint-basics.md)
 
-[Dive into advanced operations on Blueprints with our API ➡️ ](../../api-reference)
+[Dive into advanced operations on Blueprints with our API ➡️ ](../../api-providers/rest.md)

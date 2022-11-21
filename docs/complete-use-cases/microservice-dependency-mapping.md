@@ -2,9 +2,9 @@
 sidebar_position: 6
 ---
 
-# Microservice Dependency Mapping
+# Microservice dependency mapping
 
-Using Port, it is very easy to implement and track package dependency mapping for your microservices, which can be useful, for example, while trying to investigate a dependency related issue or bug, or while checking for security issues.
+Using Port, it is very easy to implement and track package dependency mapping for your microservices. That can be useful, for example, while trying to investigate a dependency related issue or bug, or while checking for security issues.
 
 :::tip
 All relevant files and resources for this guide are available [**HERE**](https://github.com/port-labs/demo-node-project) for the `yarn.lock` use-case, and [**HERE**](https://github.com/port-labs/demo-node-poject-npm) for the `package-lock.json` use-case.
@@ -16,14 +16,14 @@ In this guide you will implement a package dependency mapping between your micro
 
 ## Example
 
-In this example we will review a 2 use-cases for maintaining package dependencies for a Microservice.
+In this example we will review two use-cases for maintaining package dependencies for a Microservice.
 
-1. A single-microservice Node project managed by npm.
-2. A mono-repo, multi-microservice Node project which is managed by [yarn v2+](https://yarnpkg.com/getting-started).
+1. [A mono-repo](#mapping-yarn-dependencies), multi-microservice Node project which is managed by [yarn v2+](https://yarnpkg.com/getting-started).
+2. [A single-microservice](#mapping-npm-dependencies) Node project managed by npm.
 
 ### Use-case setup
 
-Let's review our Blueprints and repository structure so we can better understand what this use-case is trying to accomplish.
+Let's review our Blueprints and repository structure so we can better understand what this use-case will accomplish.
 
 #### Blueprints
 
@@ -97,16 +97,15 @@ Please notice the 'relations' seciton at the bottom of the Blueprint
 
 </details>
 
-<br/>
 Let's have a look at our new relation!
 
 ![blueprints.png](../../static/img/tutorial/complete-use-cases/microservice-dependency/blueprints.png)
 
 For more information about DeploymentConfig and it's uses, click [here](./software-catalog#deployment-config-bp).
 
-As we can see in the image above, 2 Blueprints were created: `DeploymentConfig` and `Package`. Notice that the `Package` property is the Relation we created. It consists of an array of packages (this is thanks to the `"many": true` property of the Relation), since each microservice, and respectively, each DeploymentConfig can depend on multiple Pacakges.
+As we can see in the image above, two Blueprints were created: `DeploymentConfig` and `Package`. Notice that the `Package` property is the Relation we created. It consists of an array of packages (this is thanks to the `"many": true` property of the Relation), since each microservice, and respectively, each DeploymentConfig can depend on multiple Packages.
 
-Since both of the use-cases we are covering contain a DeploymentConfig-to-Package relation, we can use these Blueprints in both cases.
+Since both of the use-cases we are learning contain a DeploymentConfig-to-Package relation, we can use these Blueprints in both cases.
 
 ### Mapping Yarn dependencies
 
@@ -133,15 +132,15 @@ Directory tree:
 └── yarn.lock
 ```
 
-As stated before, in this example we will cover a mono-repo use-case. In this repository, microservices are positioned in the 'apps/' directory, which we will refer to as `MICROSERVICE_PATH`.
+As stated before, in this example we will learn about a mono-repo use-case. In this repository, Microservices are positioned in the 'apps/' directory, which we will refer to as `MICROSERVICE_PATH`.
 
-We will also persume that the directory names in `MICROSERVICE_PATH` match the names of the different microservices we are managing and tracking (i.e. apps/frontend will be 'frontend' which matches a microservice named `frontend`).
+We will also presume that the directory names in `MICROSERVICE_PATH` match the names of the different Microservices we are managing and tracking (i.e. apps/frontend will be 'frontend' which matches a Microservice named `frontend`).
 
 Since we are working with DeploymentConfigs - which are configured by a Microservice and Runtime (Environment) - we will have to take into account which `runtime` we are managing packages for. This will be passed on to us from the workflow call.
 
 #### Automating Entity creation
 
-Let's begin by creating a Python script to handle scanning the `yarn.lock` file. We will also implement Package Entity creation and update the existing DeploymentConfigs with their related package dependencies.
+Let's begin by creating a Python script to handle scanning the `yarn.lock` file. We will also implement package Entity creation and update the existing DeploymentConfigs with their related package dependencies.
 
 [This Python script](https://github.com/port-labs/demo-node-project/blob/main/scripts/scan-yarn-lock.py) has some useful functions with which we interact with Port.
 Have a look at:
@@ -180,12 +179,12 @@ RUNTIME = os.environ.get("RUNTIME")
 
 ```
 
-#### Triggering a run using Github Workflows
+#### Triggering a run using GitHub Workflows
 
-In our environment, a change in main means a change in the 'Production' environment. Let's create a workflow which monitors changes in Production.
-In order to monitor the `yarn.lock` file, we will create a Github Workflow which watches the lock file on the `main` branch.
+In our environment, a "change in main" means a change in the `Production` environment. Let's create a workflow that monitors changes in Production.
+In order to monitor the `yarn.lock` file, we will create a GitHub workflow which watches the lock file on the `main` branch.
 
-When the `yarn.lock` file changes in the main branch, the workflow will be triggered and if necessary, the Python scanner script will be run.
+When the `yarn.lock` file changes in the main branch, the workflow will be triggered. If necessary, the Python scanner script will run.
 
 Let's walk through the [workflow](https://github.com/port-labs/demo-node-project/blob/main/.github/workflows/update-packages.yml).
 
@@ -243,10 +242,10 @@ git commit -m "Add prettier package to backend and update yarn.lock"
 git push
 ```
 
-Now merge the code to main and see the magic happen!
+Now merge the code to main and witness the magic!
 
 ![trigger_workflow.png](../../static/img/tutorial/complete-use-cases/microservice-dependency/trigger_workflow.png)
-The workflow automatically runs, and when it finishes, we should see the new packages created and mapped to the relevant microservice deployment config.
+The workflow runs automatically, and when it finishes, we will see the new packages created and mapped to the relevant microservice deployment config.
 
 ![new_package.png](../../static/img/tutorial/complete-use-cases/microservice-dependency/new_package.png)
 
@@ -258,10 +257,10 @@ While most of the steps to achieving our goal are the same in an NPM managed env
 Click [**HERE**](https://github.com/port-labs/demo-node-poject-npm) for the relevant files for this use-case.
 :::
 
-First of all, in this scenario we will be mapping our `package-lock.json` file, as opposed to our `yarn.lock` file. There are some small differences in their structure.
+First of all, in this scenario we will be mapping our `package-lock.json` file, as opposed to our `yarn.lock` file. There are also some small differences in the project structure.
 
-Since this is a single-microservice project use-case, we removed the `MICROSERVICE_PATH` parameter, we also changed the logic of the scanner to match the different file structure and format.
+Since this is a single-microservice project use-case, we removed the `MICROSERVICE_PATH` parameter and changed the logic of the scanner to match the different file structures and formats.
 
 ## Summary
 
-Port makes it simple to implement easy-to-maintain package dependency mapping. Using our RESTful API and Github Workflows, you were able to create a block in your CI/CD pipeline which keeps track of your Microservices' packages and their versions.
+Port simplifies implementations and easy-to-maintain package dependency mapping. Using our RESTful API and GitHub Workflows, you are able to create a block in your CI/CD pipeline which keeps track of your Microservices' packages and their versions.
