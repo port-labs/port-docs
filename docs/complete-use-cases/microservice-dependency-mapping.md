@@ -23,7 +23,7 @@ In this example we will review two use-cases for maintaining package dependencie
 
 ### Use-case setup
 
-Let's review our Blueprints and repository structure so we can better understand what this use-case is trying to accomplish.
+Let's review our Blueprints and repository structure so we can better understand what this use-case will accomplish.
 
 #### Blueprints
 
