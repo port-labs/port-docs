@@ -103,7 +103,7 @@ Let's have a look at our new relation!
 
 _For more information about DeploymentConfig and it's uses, click [here](./software-catalog#deployment-config-bp)._
 
-As we can see in the image above, 2 Blueprints were created: `DeploymentConfig` and `Package`. Notice that the `Package` property is the Relation we created. It consists of an array of packages (this is thanks to the `"many": true` property of the Relation), since each microservice, and respectively, each DeploymentConfig can depend on multiple Pacakges.
+As we can see in the image above, two Blueprints were created: `DeploymentConfig` and `Package`. Notice that the `Package` property is the Relation we created. It consists of an array of packages (this is thanks to the `"many": true` property of the Relation), since each microservice, and respectively, each DeploymentConfig can depend on multiple Packages.
 
 Since both of the use-cases we are covering contain a DeploymentConfig-to-Package relation, we can use these Blueprints in both cases.
 
