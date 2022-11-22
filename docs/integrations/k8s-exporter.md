@@ -153,7 +153,7 @@ For example, in order to export your Kubernetes `Replica Sets` and `Pods` to Por
   "formulaProperties": {},
   "relations": {
     "DeploymentConfig": {
-      "target": "DeployedConfig",
+      "target": "DeploymentConfig",
       "required": false,
       "many": false
     }
@@ -225,7 +225,7 @@ For instance, you can see a `Deployment Config` and its `Pods` in a single Port 
 ![Developer Portal Kubernetes Exporter Deployment Config Entity](../../static/img/integrations/k8s-exporter/DeploymentConfigAndPods.png)
 
 :::note
-The Kubernetes Exporter was instructed to fill in only some properties in an Entity of `Deployment Config` Blueprint. By its nature, it will keep the values of other properties untouched.
+The Kubernetes Exporter was instructed to fill in only some of the properties in a `Deployment Config` Entity. By its nature, it will keep the values of other properties untouched.
 :::
 
 And you can look for the respective audit logs with indication of the Kubernetes Exporter as the source:
