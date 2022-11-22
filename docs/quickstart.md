@@ -64,7 +64,7 @@ In this tutorial, we will demonstrate how to perform every step using Port's web
 
 This tutorial includes various examples of ways to interact with Port's API. For more, you are welcome to visit the [API section](./tutorials/blueprint-basics.md#from-the-api) in [Blueprint basics](./tutorials/blueprint-basics.md).
 
-Port also has a [GitHub app](./integrations/github/app/app.md) and a [Terraform provider](./integrations/terraform.md) you can use to ingest data and interact with Port's components.
+Port also has a [GitHub app](./exporters/github-app/github-app.md) and a [Terraform provider](./api-providers/terraform.md) you can use to ingest data and interact with Port's components.
 
 For readability, snippets to copy and paste and examples will be inside collapsed boxes:
 
@@ -226,6 +226,7 @@ In order to create the service Blueprint, use the following JSON body:
     "required": ["on-call"]
   },
   "mirrorProperties": {},
+  "calculationProperties": {},
   "formulaProperties": {
     "slack-notifications": {
       "title": "Slack Notifications",
@@ -419,6 +420,7 @@ blueprint = {
         "required": ["on-call"]
     },
     "mirrorProperties": {},
+    "calculationProperties": {},
     "formulaProperties": {
         "slack-notifications": {
             "title": "Slack Notifications",
@@ -526,6 +528,7 @@ To create the environment Blueprint, use the following JSON body:
     "required": ["type"]
   },
   "mirrorProperties": {},
+  "calculationProperties": {},
   "formulaProperties": {
     "grafanaUrl": {
       "title": "Grafana URL",
@@ -616,6 +619,7 @@ blueprint = {
         ]
     },
     "mirrorProperties": {},
+    "calculationProperties": {},
     "formulaProperties": {
         "grafanaUrl": {
             "title": "Grafana URL",
@@ -879,6 +883,7 @@ To create the running service Blueprint, use the following JSON body:
     "required": []
   },
   "mirrorProperties": {},
+  "calculationProperties": {},
   "formulaProperties": {
     "sentryUrl": {
       "title": "Sentry URL",
@@ -1030,6 +1035,7 @@ blueprint = {
         "required": []
     },
     "mirrorProperties": {},
+    "calculationProperties": {},
     "formulaProperties": {
         "sentryUrl": {
             "title": "Sentry URL",
@@ -1261,4 +1267,4 @@ If you want to continue utilizing Port's REST API Interface, take a look at thes
 - [Blueprint Basics](./tutorials/blueprint-basics.md);
 - [Relation Basics](./tutorials/relation-basics.md);
 - [Entity Basics](./tutorials/relation-basics.md);
-- [Port API Reference](./api-reference/).
+- [Port API Reference](./api-providers/rest.md).
