@@ -152,7 +152,7 @@ For example, in order to export your Kubernetes `Replica Sets` and `Pods` to Por
   "mirrorProperties": {},
   "formulaProperties": {},
   "relations": {
-    "DeployedConfig": {
+    "DeploymentConfig": {
       "target": "DeployedConfig",
       "required": false,
       "many": false
