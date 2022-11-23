@@ -7,7 +7,14 @@ sidebar_position: 7
 Calculation Properties allow you to use existing properties defined on [Blueprints](./blueprint), either directly or by using [Relations](./relation) and [Mirror Properties](./mirror-properties), in order to create new properties by using the [`jq`](https://github.com/stedolan/jq) processor for `JSON`.
 
 Calculation Properties make it easier to define properties that are based on values from other properties, with the added ability to transform the data.
-Calculation Properties can be used for merging, slicing, selecting values, etc.
+
+The Calculation Properties support the types `string`, `number`, `object`, `array`, `boolean`, `yaml` .
+
+With Calculation Properties you can:
+
+- Filter/Select/Slice/Concat from an existing property.
+- Make some math equation or modification, for example - calculate required disk storage by specifying page size, and number of pages needed.
+- Merge some properties, including deep-merge and overriding.
 
 :::tip
 Port supports standard `jq` syntax, for a quick reference of some of the available `jq` syntax, refer to the [jq tutorial](https://stedolan.github.io/jq/tutorial).
@@ -23,6 +30,7 @@ The `calculationProperties` key is a top-level key in the JSON of an entity (sim
 "calculationProperties": {
     "calProp1": {
         "title": "First calculation property from meta-property",
+        "type": "object",
         "calculation": ".properties.config1 * .properties.config2",
     }
 }
@@ -58,9 +66,12 @@ In the following example, we create a Calculation Property called `merge_config`
         "type": "object"
     }
 },
-"merge_config": {
-    "title": "Merge config",
-    "calculation": ".properties.deployed_config * .properties.service_config",
+"calculationProperties" : {
+    "merge_config": {
+        "title": "Merge config",
+        "type": "objet",
+        "calculation": ".properties.deployed_config * .properties.service_config",
+    }
 }
 ```
 
@@ -86,6 +97,32 @@ Then the `merge_config` Calculation Property value will be:
 {
   "cpu": 200,
   "memory": 400
+}
+```
+
+:::tip
+For [Yaml](./blueprint.md#yaml) properties, the synatx of the calculation will remain the same, but the Type will be `string`
+and the format will be yaml.
+:::
+
+### Calculation property Edge cases
+
+In some occasions, if the key contains special characters or starts with a digit, you need to surround it with double quotes like this: ."foo$"
+For example, we create a Property called `on-call` ,and we want to use `jq` on the property:
+
+```json showLineNumbers
+
+"properties":{
+    "on-call":{
+        "type": "object"
+    },
+},
+"calculationProperties": {
+    "on-call-calculation": {
+        "title": "On call   ",
+        "type": "objet",
+        "calculation": " .properties.'on-call'",
+    }
 }
 ```
 
