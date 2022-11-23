@@ -608,10 +608,8 @@ const API_URL = "https://api.getport.io/v1";
 
 (async () => {
   const tokenResp = await axios.post(`${API_URL}/auth/access_token`, {
-    data: {
-      clientId: CLIENT_ID,
-      clientSecret: CLIENT_SECRET,
-    },
+    clientId: CLIENT_ID,
+    clientSecret: CLIENT_SECRET,
   });
 
   const accessToken = tokenResp.data.accessToken;
