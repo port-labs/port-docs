@@ -26,7 +26,9 @@ const config = {
           routeBasePath: "/",
           sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
-          // editUrl: "https://github.com/port-labs",
+          editUrl: ({ locale, docPath }) => {
+            return `https://github.com/port-labs/port-docs/edit/main/docs/${docPath}`;
+          },
         },
         blog: false,
         theme: {
@@ -79,15 +81,8 @@ const config = {
           src: "img/logo.svg",
         },
         items: [
-          // {
-          //   type: "doc",
-          //   docId: "welcome/quickstart",
-          //   position: "left",
-          //   label: "Tutorial",
-          // },
-          // { to: "/blog", label: "Blog", position: "left" },
           {
-            href: "https://github.com/port-labs",
+            href: "https://github.com/port-labs/port-docs",
             label: "GitHub",
             position: "right",
           },
