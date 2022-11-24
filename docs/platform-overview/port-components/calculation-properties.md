@@ -8,12 +8,12 @@ Calculation Properties allow you to use existing properties defined on [Blueprin
 
 Calculation Properties make it easier to define properties that are based on values from other properties, with the added ability to transform the data.
 
-The Calculation Properties support the types `string`, `number`, `object`, `array`, `boolean`, `yaml` .
+The Calculation Properties support the types `string`, `number`, `object`, `array`, `boolean`, and `yaml` .
 
-With Calculation Properties you can:
+With Calculation Properties allow you to:
 
-- Filter/Select/Slice/Concat from an existing property.
-- Create math equations or modification. For example - calculate required disk storage by specifying page size, and number of pages needed.
+- Filter/Select/Slice/Concat from an existing property;
+- Create math equations or modifications. For example ,calculate required disk storage by specifying page size, and number of pages needed.
 - Merge complex properties, including deep-merge and overriding.
 
 :::tip
@@ -45,16 +45,16 @@ Remember that in a real Blueprint, all of these examples live in the `calculatio
 :::
 
 :::tip
-The top-level key in a single calculation property is the name of the property.
+The top-level key in a single calculation Property is the name of the property.
 
 Inside the Calculation Property object you can specify the `title` to grant the property a more readable name.  
 :::
 
-### User-defined Calculation property
+### User-defined Calculation Property
 
 This is a standard Calculation Property created from a user-defined property available in the Blueprint.
 
-In the following example, we create a Calculation Property called `MBMemory` of type `number` and we want to transform it into GB unit:
+In the following example, we will create a Calculation Property called `MBMemory` of type `number`, and then transform it into a GB unit:
 
 ```json showLineNumbers
 
@@ -90,12 +90,12 @@ Then the `GBMemory` Calculation Property value will be:
 
 ## Examples
 
-Here are a few examples for usage of Calculation properties:
+Here are a few examples of Calculation Properties use cases:
 
-### Concat Strings
+### Concat strings
 
 Assume you have two `string` properties: one is called `str1` with the value `hello`, the other is called `str2` with the value `world`.
-The following calculation will result `hello world`:
+The following calculation will result in `hello world`:
 
 ```json showLineNumbers
 {
@@ -106,10 +106,10 @@ The following calculation will result `hello world`:
 ```
 
 :::tip
-If you want to provide your own string template to concat properties with, you can do so by wrapping your template string with single quotes (`'`), for example: `'https://' + .properties.str1'`
+If you want to provide your own string template to concat properties , wrap your template string with single quotes (`'`), such as `'https://' + .properties.str1'`
 :::
 
-### Slice Array
+### Slice array
 
 Assume you have an `array` property called `array1` with the value `[1,2,3,4]`. You can use the following slicing calculation to get the result `[2,3,4]`:
 
@@ -121,9 +121,9 @@ Assume you have an `array` property called `array1` with the value `[1,2,3,4]`. 
 }
 ```
 
-### Merge Objects
+### Merge objects
 
-Assume you have two `object` properties: one called `deployed_config` with the value `{cpu: 200}`, the other called `service_config` with the value `{memory: 400}`,and You can merge these two object properties and get a unified config by using the following calculation:
+Assume you have two `object` properties: one called `deployed_config` with the value `{cpu: 200}`, the other called `service_config` with the value `{memory: 400}`. You can merge these two object properties and receive a unified config by using the following calculation:
 
 ```json showLineNumbers
 "calculationProperties" : {
@@ -139,7 +139,7 @@ The result will be `{cpu: 200, memory: 400}`.
 
 :::info Object merging
 
-- Object merging performs a deep merge, nested keys from the original objects will also appear in the resulting merged object.
+- Object merging performs a deep merge, resulting in nested keys from the original objects appearing in the resulting merged object.
 - If the same `key` appears in one or more of the merged properties, the last property that appears will have its `keys` take precedence over the `keys` of properties that appeared earlier in the calculation.
 
 For example, Let's assume we have 2 properties with type `object`, and we want to perform a deep merge between them:
@@ -162,10 +162,10 @@ If the calculation is `".properties.obj2 * .properties.obj1"` , the result will 
 For merging YAML properties, the merging behavior will be the same, but if you specify `type: "string` and `format: "yaml"`, the result will be a YAML object.
 :::
 
-## Calculation property Edge cases
+## Calculation Property edge cases
 
-In some occasions, if the key contains special characters or starts with a digit, you need to surround it with double quotes like this: .`"foo$"`
-For example, if you want to use your `on-call` property in a Calculation property (note the single quotes (`'`) around `on-call`):
+Sometimes, if the key contains special characters or starts with a digit, you need to surround it with double quotes like this: .`"foo$"`.
+For example, if you want to use your `on-call` property in a Calculation Property (note the single quotes (`'`) around `on-call`):
 
 ```json showLineNumbers
 
