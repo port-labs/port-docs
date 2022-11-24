@@ -114,13 +114,13 @@ For example, if you want to use your `on-call` property in a Calculation propert
 
 "properties":{
     "on-call":{
-        "type": "object"
+        "type": "string"
     },
 },
 "calculationProperties": {
     "on-call-calculation": {
         "title": "On call",
-        "type": "objet",
+        "type": "string",
         "calculation": ".properties.'on-call'",
     }
 }
