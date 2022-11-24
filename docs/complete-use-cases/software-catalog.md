@@ -70,10 +70,6 @@ The Blueprint JSON provided below already includes the Relations between the dif
         "format": "url",
         "description": "Link to the service repo on GitHub"
       },
-      "responsibleTeam": {
-        "type": "string",
-        "title": "Responsible Team"
-      },
       "onCall": {
         "type": "string",
         "title": "Current On-Call"
@@ -449,7 +445,6 @@ title: Notification Service
 blueprint: Service
 properties:
   slackChannel: "https://yourslack.slack.com/archives/CHANNEL-ID"
-  responsibleTeam: "Infra"
   onCall: "Mor P"
   coreLanguage: "Python"
   businessDomain: "Infra"
