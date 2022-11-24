@@ -141,10 +141,8 @@ const CLIENT_SECRET = "YOUR_CLIENT_SECRET";
 const API_URL = "https://api.getport.io/v1";
 
 const response = await axios.post(`${API_URL}/auth/access_token`, {
-  data: {
-    clientId: CLIENT_ID,
-    clientSecret: CLIENT_SECRET,
-  },
+  clientId: CLIENT_ID,
+  clientSecret: CLIENT_SECRET,
 });
 
 const accessToken = response.data.accessToken;
