@@ -137,11 +137,29 @@ Assume you have two `object` properties: one called `deployed_config` with the v
 
 The result will be `{cpu: 200, memory: 400}`.
 
-**Notice**: This is a deep merge, The last property will **take presents** if there is any conflicts of properties.
+:::info Object merging
 
-:::tip
-For [Yaml](./blueprint.md#yaml) properties, the syntax of the calculation will remain the same, but the type will be `string`
-and the `format` will be `yaml`.
+- Object merging performs a deep merge, nested keys from the original objects will also appear in the resulting merged object.
+- If the same `key` appears in one or more of the merged properties, the last property that appears will have its `keys` take precedence over the `keys` of properties that appeared earlier in the calculation.
+
+For example, Let's assume we have 2 properties with type `object`, and we want to perform a deep merge between them:
+
+```json showLineNumbers
+{
+  "obj1": {
+    "cpu": 200
+  },
+  "obj2": {
+    "cpu": 400
+  }
+}
+```
+
+If the calculation is `".properties.obj1 * .properties.obj2"` , the result will be `{cpu: 400}`,
+
+If the calculation is `".properties.obj2 * .properties.obj1"` , the result will be `{cpu: 200}`,
+
+For merging YAML properties, the merging behavior will be the same, but if you specify `type: "string` and `format: "yaml"`, the result will be a YAML object.
 :::
 
 ## Calculation property Edge cases
