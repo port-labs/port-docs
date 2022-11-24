@@ -54,18 +54,79 @@ Inside the Calculation Property object you can specify the `title` to grant the 
 
 This is a standard Calculation Property created from a user-defined property available in the Blueprint.
 
-In the following example, we create a Calculation Property called `merge_config` which merged the value of `deployed_config` and `service_config`
+In the following example, we create a Calculation Property called `MBMemory` of type `number` and we want to transform it into GB unit:
 
 ```json showLineNumbers
 
 "properties":{
-    "deployed_config":{
-        "type": "object"
+    "MBMemory":{
+        "type": "number"
     },
-    "service_config":{
-        "type": "object"
-    }
 },
+"calculationProperties" : {
+    "GBMemory": {
+        "title": "GB config",
+        "type": "number",
+        "calculation": ".properties.MBMemory / 1024"
+    }
+}
+```
+
+In this instance, if you have a `MBMemory` **object** property with the value:
+
+```json showLineNumbers
+{
+  "MBMemory": 2048
+}
+```
+
+Then the `GBMemory` Calculation Property value will be:
+
+```json showLineNumbers
+{
+  "GBMemory": 2
+}
+```
+
+## Examples
+
+Here is a few exmaple how Calcualtion property can be beneficial:
+
+### Concat Strings
+
+Assume you have properties called `str1` with the value `hello` and `str2` of type `string` with the value `world`.
+This is the formula get `hello world`
+
+```json showLineNumbers
+{
+  "title": "Concat strings example",
+  "type": "string",
+  "calculation": ".properties.str1 + .properties.str2"
+}
+```
+
+:::tip
+You can concat properties to a default string, For example: '"https://" + .properties.str1'
+:::
+
+### Slice Array
+
+Assume you have properties called `array1` of type `array` with the value `[1,2,3,4]`. This is the formula to get the result `[2,3,4]`
+
+```json showLineNumbers
+{
+  "title": "Slice array example",
+  "type": "string",
+  "calculation": ".properties.array1[1:4]"
+}
+```
+
+### Merge Objects
+
+Assume you have properties called `deployed_config` with the value `{cpu: 200}` and `service_config` with the value `{memory: 400}`,
+and we want to merge between these objects:
+
+```json showLineNumbers
 "calculationProperties" : {
     "merge_config": {
         "title": "Merge config",
@@ -75,37 +136,16 @@ In the following example, we create a Calculation Property called `merge_config`
 }
 ```
 
-In this instance, if you have a `deployed_config` **object** property with the value:
+The result will be `{cpu: 200, memory: 400}`.
 
-```json showLineNumbers
-{
-  "cpu": 200
-}
-```
-
-And a `service_config` **object** property with the value:
-
-```json showLineNumbers
-{
-  "memory": 400
-}
-```
-
-Then the `merge_config` Calculation Property value will be:
-
-```json showLineNumbers
-{
-  "cpu": 200,
-  "memory": 400
-}
-```
+**Notice**: This is a deep merge, The last property will **take presents** if there is any conficts of properties.
 
 :::tip
 For [Yaml](./blueprint.md#yaml) properties, the synatx of the calculation will remain the same, but the Type will be `string`
-and the format will be yaml.
+and the format will be `yaml`.
 :::
 
-### Calculation property Edge cases
+## Calculation property Edge cases
 
 In some occasions, if the key contains special characters or starts with a digit, you need to surround it with double quotes like this: .`"foo$"`
 For example, if you want to use your `on-call` property in a Calculation property (note the single quotes (`'`) around `on-call`):
@@ -126,7 +166,7 @@ For example, if you want to use your `on-call` property in a Calculation propert
 }
 ```
 
-### Using mirror properties in calculation properties
+## Using mirror properties in calculation properties
 
 It is possible to use Mirror Properties as template values for Calculation Properties, since the syntax is the same as user-defined properties.
 
