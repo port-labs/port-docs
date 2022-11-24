@@ -13,7 +13,7 @@ The Calculation Properties support the types `string`, `number`, `object`, `arra
 With Calculation Properties you can:
 
 - Filter/Select/Slice/Concat from an existing property.
-- Make math equation or modification. For example - calculate required disk storage by specifying page size, and number of pages needed.
+- Create math equations or modification. For example - calculate required disk storage by specifying page size, and number of pages needed.
 - Merge complex properties, including deep-merge and overriding.
 
 :::tip
@@ -90,12 +90,12 @@ Then the `GBMemory` Calculation Property value will be:
 
 ## Examples
 
-Here is a few example how Calculation property can be beneficial:
+Here are a few examples for usage of Calculation properties:
 
 ### Concat Strings
 
-Assume you have properties called `str1` with the value `hello` and `str2` of type `string` with the value `world`.
-This is the formula get `hello world`
+Assume you have two `string` properties: one is called `str1` with the value `hello`, the other is called `str2` with the value `world`.
+The following calculation will result `hello world`:
 
 ```json showLineNumbers
 {
@@ -106,12 +106,12 @@ This is the formula get `hello world`
 ```
 
 :::tip
-You can concat properties to a default string, For example: '"https://" + .properties.str1'
+If you want to provide your own string template to concat properties with, you can do so by wrapping your template string with single quotes (`'`), for example: `'https://' + .properties.str1'`
 :::
 
 ### Slice Array
 
-Assume you have properties called `array1` of type `array` with the value `[1,2,3,4]`. This is the formula to get the result `[2,3,4]`
+Assume you have an `array` property called `array1` with the value `[1,2,3,4]`. You can use the following slicing calculation to get the result `[2,3,4]`:
 
 ```json showLineNumbers
 {
@@ -123,8 +123,7 @@ Assume you have properties called `array1` of type `array` with the value `[1,2,
 
 ### Merge Objects
 
-Assume you have properties called `deployed_config` with the value `{cpu: 200}` and `service_config` with the value `{memory: 400}`,
-and we want to merge between these objects:
+Assume you have two `object` properties: one called `deployed_config` with the value `{cpu: 200}`, the other called `service_config` with the value `{memory: 400}`,and You can merge these two object properties and get a unified config by using the following calculation:
 
 ```json showLineNumbers
 "calculationProperties" : {
@@ -141,8 +140,8 @@ The result will be `{cpu: 200, memory: 400}`.
 **Notice**: This is a deep merge, The last property will **take presents** if there is any conflicts of properties.
 
 :::tip
-For [Yaml](./blueprint.md#yaml) properties, the syntax of the calculation will remain the same, but the Type will be `string`
-and the format will be `yaml`.
+For [Yaml](./blueprint.md#yaml) properties, the syntax of the calculation will remain the same, but the type will be `string`
+and the `format` will be `yaml`.
 :::
 
 ## Calculation property Edge cases
