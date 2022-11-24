@@ -4,10 +4,16 @@ Please include a summary of the change and which issue is fixed. Please also inc
 
 ## Added docs pages
 
-- Quickstart
+Please also include the path for the added docs
+
+- Quickstart (`/`)
+- Blueprint (`/platform-overview/port-components/blueprint`)
 - ...
 
 ## Updated docs pages
 
-- Quickstart
+Please also include the path for the updated docs
+
+- Quickstart (`/`)
+- Blueprint (`/platform-overview/port-components/blueprint`)
 - ...

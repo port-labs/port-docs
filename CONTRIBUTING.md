@@ -27,11 +27,11 @@ Contributions are very welcome. If you think you need help planning your contrib
    4. Relation;
    5. Mirror-Properties;
    6. Self-Service Actions;
-   7. Lambda;
-   8. Software Catalog;
-   9. Other code lines and terms (agreed upon in advance).
-4. **Button names** - will be capitalized according to the exact way the term is written in Port.
-5. **After brackets or a colon (`:`)** - there is no need to put a capital letter.
+   7. Software Catalog;
+   8. Other code lines and terms (agreed upon in advance).
+4. **General product names** - well known products such as Lambda, Kubernetes, ArgoCD, etc. should follow their standard capitalization rules and styling.
+5. **Button names** - will be capitalized according to the exact way the term is written in Port.
+6. **After brackets or a colon (`:`)** - there is no need to put a capital letter.
 
 ### Punctuation
 
