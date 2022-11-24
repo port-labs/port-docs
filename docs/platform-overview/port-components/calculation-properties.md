@@ -65,7 +65,7 @@ In the following example, we create a Calculation Property called `MBMemory` of 
 },
 "calculationProperties" : {
     "GBMemory": {
-        "title": "GB config",
+        "title": "GB Memory",
         "type": "number",
         "calculation": ".properties.MBMemory / 1024"
     }
@@ -90,7 +90,7 @@ Then the `GBMemory` Calculation Property value will be:
 
 ## Examples
 
-Here is a few exmaple how Calcualtion property can be beneficial:
+Here is a few example how Calculation property can be beneficial:
 
 ### Concat Strings
 
@@ -138,10 +138,10 @@ and we want to merge between these objects:
 
 The result will be `{cpu: 200, memory: 400}`.
 
-**Notice**: This is a deep merge, The last property will **take presents** if there is any conficts of properties.
+**Notice**: This is a deep merge, The last property will **take presents** if there is any conflicts of properties.
 
 :::tip
-For [Yaml](./blueprint.md#yaml) properties, the synatx of the calculation will remain the same, but the Type will be `string`
+For [Yaml](./blueprint.md#yaml) properties, the syntax of the calculation will remain the same, but the Type will be `string`
 and the format will be `yaml`.
 :::
 
