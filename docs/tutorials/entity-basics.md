@@ -209,7 +209,9 @@ The API offers several methods to update an existing Entity:
 
   The request body is the same as creating a new entity, just with the additional flag `upsert=true`.
 
-  Moreover, another flag called `merge` is available. Adding `merge=true` to the request allows you to update only specific properties, just like in PATCH request.
+  Moreover, another flag called `merge` is available (can be added only along with `upsert=true`).
+
+  Adding `merge=true` to the request allows you to update only specific properties, just like in PATCH request.
 
   On the other hand, `merge=false` (default) will overwrite the entity (similar to PUT request).
 
