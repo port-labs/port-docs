@@ -449,10 +449,11 @@ The `invocationMethod` supports 2 configurations:
 
 ### Invocation method structure fields
 
-| Field  | Type     | Description                                                                                                                                       | Example values              |
-| ------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
-| `type` | `string` | Defines the Self-Service Action destination type                                                                                                  | Either `WEBHOOK` or `KAFKA` |
-| `url`  | `string` | Defines the webhook URL where Port sends Self-Service Actions to via HTTP POST request. <br></br> Can be added only if `type` is set to `WEBHOOK` | `https://example.com`       |
+| Field   | Type      | Description                                                                                                                                       | Example values              |
+| ------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
+| `type`  | `string`  | Defines the Self-Service Action destination type                                                                                                  | Either `WEBHOOK` or `KAFKA` |
+| `agent` | `boolean` | Defines whether to use [Port Agent](./port-execution-agent) for execution or not. <br></br> Can be added only if `type` is set to `WEBHOOK`       | Either `true` or `false`    |
+| `url`   | `string`  | Defines the webhook URL where Port sends Self-Service Actions to via HTTP POST request. <br></br> Can be added only if `type` is set to `WEBHOOK` | `https://example.com`       |
 
 ## Triggering actions
 
