@@ -47,7 +47,10 @@ helm install my-port-agent port-labs/port-agent \
 - [Setting Self-Service Actions In Port](../setting-self-service-actions-in-port) - to set up a Blueprint and Self-Service Actions.
 - [Changelog Listener](../../../tutorials/self-service-actions/webhook-actions/changelog-listener) - to create a Blueprint with `changelogDestination` to listen and act on changes in the Software Catalog.
 
-When using the execution agent, in the `url` field you need to provide a URL to an internal service (i.e. REST API) running inside your private network that the execution agent will be able to forward the Self-Service Action event to.
+When using the execution agent, in the `url` field you need to provide a URL to a service (for example, a REST API) that will accept the invocation event.
+
+- The service can be a private service running inside your private network;
+- Or it can be a public service accessible from the public internet (**note** that in this scenario, the execution agent needs corresponding outbound network rules that will allow it to contact the public service).
 
 :::note
 **IMPORTANT**: To make use of the **Port Execution Agent**, you need to configure:
