@@ -2,18 +2,18 @@
 sidebar_position: 5
 ---
 
-# Pie Chart
+# Pie chart
 
-You can create a pie chart illustrating your catalog data divided by a specific category inside a specfic entity page [**Specific Entity Page**](../port-components/page.md#entity-page).
+You can create a pie chart illustrating data from Entities in your software catalog divided by categories and Entity properties inside a specific entity page [**Specific Entity Page**](../port-components/page.md#entity-page).
 
 ## Creating visualization
 
-- On the top right of the page click on `Add Visualization` button:
-- Select Pie Chart
+- On the top right of the page click on `Add Visualization` button;
+- Select Pie Chart;
 
 ![Dropdown](../../../static/img/platform-overview/widgets/AddPieChartVisualization.png)
 
-- Fill out the form and click save:
+- Fill out the form and click save.
 
 ![Dropdown](../../../static/img/platform-overview/widgets/AddPieChartForm.png)
 
