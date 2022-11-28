@@ -62,7 +62,6 @@ If you don't have `README.md` or `open-api.json` file within the selected exampl
 </details>
 
 You have to place the `port-app-config.yml` inside the `.github` folder or within the `.github-private` repository in the root directory to apply it for the whole organization.
-For more info refer to [Advanced Configuration](./advanced-configuration)
 
 <details>
 
