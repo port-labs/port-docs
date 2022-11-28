@@ -13,7 +13,7 @@ You can create a pie chart illustrating your catalog data divided by a specific 
 
 ![Dropdown](../../../static/img/platform-overview/widgets/AddPieChartVisualization.png)
 
-- Fill out the prompted form and click save
+- Fill out the form and click save:
 
 ![Dropdown](../../../static/img/platform-overview/widgets/AddPieChartForm.png)
 
