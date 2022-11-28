@@ -404,7 +404,7 @@ In addition to the formats introduced in [Blueprint string property formats](../
 | `type`       | Description                                     | Example values                                  |
 | ------------ | ----------------------------------------------- | ----------------------------------------------- |
 | `entity`     | An Entity from a specified Blueprint            | `"notifications-service"`                       |
-| Entity Array | An array of Entities from a specified Blueprint | `["notifications-service", "frontend-service"]` |
+| Entity array | An array of Entities from a specified Blueprint | `["notifications-service", "frontend-service"]` |
 
 #### Examples
 
@@ -412,12 +412,14 @@ Here is how to use property formats:
 
 #### Entity
 
-```json {3-5} showLineNumbers
+```json showLineNumbers
 "entity_prop": {
     "title": "My string prop",
+    // highlight-start
     "type": "string",
     "format": "entity",
     "blueprint": "microservice",
+    // highlight-end
     "description": "This is an entity property"
 }
 ```
@@ -428,21 +430,22 @@ The `blueprint` field takes an identifier of an existing Blueprint. Then, when u
 
 #### Entity Array
 
-```json {3-5} showLineNumbers
+```json showLineNumbers
 "entity_prop": {
     "title": "My string prop",
-    "type": "array",
-    "blueprint": "microservice",
     "description": "This property is an array of Entities",
+    // highlight-start
+    "type": "array",
     "items": {
       "type": "string",
       "blueprint": "service",
       "format": "entity"
     }
+    // highlight-end
 }
 ```
 
-When `"type": "array"` is used, you can create an `"items"` property. Under `"items"` you can state `"format": "entity"` and the needed `"blueprint"` of which you want to pass the entities of. You can then pass an Entity array to your Port Action.
+When `"type": "array"` is used, you can create an `items` property. Within `items` you can use `"format": "entity"` and write the identifier of the selected `blueprint` which you want to include Entities from (similar to [Entity](#entity) format). You can then pass an Entity array to your Port Action.
 
 ## Invocation method
 
