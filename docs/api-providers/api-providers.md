@@ -6,4 +6,5 @@ You can find more details about our available API Providers by checking the list
 
 - [REST](./rest);
 - [GitHub Action](./github-action);
+- [GitOps](./gitops);
 - [Terraform Provider](./terraform).
