@@ -6,7 +6,7 @@ sidebar_position: 1
 
 Our GitHub app allows you to quickly and easily map out your Software Catalog, according to your existing code repositories and projects.
 
-You can visit [our GitHub App](https://github.com/apps/getport-io) page to get started.
+You can install the our GitHub App by following [our installation guide](../../exporters/github-exporter/installation.md) to get started.
 
 ## What Does Our GitHub Application Offer You?​
 
@@ -17,7 +17,7 @@ You can visit [our GitHub App](https://github.com/apps/getport-io) page to get s
 
 In order to use the GitHub App, all you need to do is include a `port.yml` file in your code repositories, or multiple `port.yml` files in your Monorepo.
 
-The `port.yml` file format is very similar to a standard [Port Entity](../../../platform-overview/port-components/entity.md#), here is an example:
+The `port.yml` file format is very similar to a standard [Port Entity](../../platform-overview/port-components/entity.md#), here is an example:
 
 ```yaml showLineNumbers
 identifier: example
