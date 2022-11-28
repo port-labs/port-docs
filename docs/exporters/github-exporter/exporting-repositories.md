@@ -12,7 +12,7 @@ title: Exporting repositories
 
 # Exporting repositories
 
-By the end of the tutorial, we will have a `microservice` blueprint that contains `REAMDE.md`, `open-api.json` files and a `repository URL` that are auto synced from GitHub to Port.
+By the end of the tutorial, we will have a `microservice` blueprint that contains `REAMDE.md` file and a `repository URL` that are auto synced from GitHub to Port properties.
 
 1. Create a `microservice` Blueprint and `port-app-config.yml` configuration file.
 
@@ -20,7 +20,7 @@ To export your GitHub `repositories` to Port, you can use the following Port Blu
 
 :::note
 
-If you don't have `README.md` or `open-api.json` file within the selected example repository for this tutorial skip from specifying them in the Blueprint and configuration file below.
+If you don't have `README.md` file within the selected example repository for this tutorial skip from specifying them in the Blueprint and configuration file below.
 
 :::
 
@@ -79,7 +79,6 @@ resources:
           title: ".name"
           blueprint: '"microservice"'
           properties:
-            swagger: file://open-api.json # fetching the open-api file that is within the root folder of the repository and injecting it as a swagger property
             readme: file://README.md # fetching the README.md file that is within the root folder of the repository and injecting it as a markdown property
             url: ".html_url" # fetching from GitHub metadata the repository url and injecting it as a url proeprty
 ```
@@ -103,6 +102,29 @@ You can also see the `README.md` in markdown format inside the [Specific Entity 
 
 ![Developer Portal GitHub README](../../../static/img/integrations/github-app/GitHubReadme.png)
 
-And the `open-api.json` file as Swagger component [Specific Entity Page](../../platform-overview/port-components/page.md#entity-page)
+You can also have a Swagger component within the [Specific Entity Page](../../platform-overview/port-components/page.md#entity-page), to achieve that all you have to do is to add a `jq` mapping of an `open-api.json` file to the `port-app-config.yml` created above.
+
+<details>
+
+<summary> Port port-app-config.yml with swagger </summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: repository
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: ".name"
+          title: ".name"
+          blueprint: '"microservice"'
+          properties:
+            swagger: file://open-api.json # fetching the open-api file that is within the root folder of the repository and injecting it as a swagger property
+            readme: file://README.md # fetching the README.md file that is within the root folder of the repository and injecting it as a markdown property
+            url: ".html_url" # fetching from GitHub metadata the repository url and injecting it as a url proeprty
+```
+
+</details>
 
 ![Developer Portal GitHub Swagger](../../../static/img/integrations/github-app/GitHubSwagger.png)
