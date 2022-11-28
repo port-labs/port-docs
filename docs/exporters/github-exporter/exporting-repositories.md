@@ -12,7 +12,7 @@ title: Exporting repositories
 
 # Exporting repositories
 
-By the end of the tutorial, we will have a `microservice` blueprint that contains `REAMDE.md` file and a `repository URL` that are auto synced from GitHub to Port properties.
+By the end of this tutorial, we will have a `microservice` Blueprint that contains an auto-synced `REAMDE.md` file and `repository URL` from GitHub to Port properties.
 
 1. Create a `microservice` Blueprint and `port-app-config.yml` configuration file.
 
@@ -20,7 +20,7 @@ To export your GitHub `repositories` to Port, you can use the following Port Blu
 
 :::note
 
-If you don't have `README.md` file within the selected example repository for this tutorial skip from specifying them in the Blueprint and configuration file below.
+If you don't have a `README.md` file within the selected example repository for this tutorial, then delete the `readme` property from the Blueprint below.
 
 :::
 
@@ -61,7 +61,7 @@ If you don't have `README.md` file within the selected example repository for th
 
 </details>
 
-You have to place the `port-app-config.yml` inside the `.github` folder or within the `.github-private` repository in the root directory to apply it for the whole organization.
+In order to apply the  `port-app-config.yml` in the whole organization, place it in the `.github` folder or in the `.github-private` repository in the root directory.
 
 <details>
 
@@ -92,17 +92,17 @@ resources:
 
 :::
 
-2. push `port-app-config.yml` to your default branch.
+2. Push `port-app-config.yml` to your default branch.
 
-Done! after the push is complete, right on the next commit to the repository the exporter will start ingesting the entities.
+That's it! after the push is complete, the exporter will start ingesting the entities on the next commit to the repository.
 
 ![Developer Portal Microservice](../../../static/img/integrations/github-app/GitHubMicroservices.png)
 
-You can also see the `README.md` in markdown format inside the [Specific Entity Page](../../platform-overview/port-components/page.md#entity-page)
+Check out the `README.md` in markdown format inside the [Specific Entity Page](../../platform-overview/port-components/page.md#entity-page)
 
 ![Developer Portal GitHub README](../../../static/img/integrations/github-app/GitHubReadme.png)
 
-You can also have a Swagger component within the [Specific Entity Page](../../platform-overview/port-components/page.md#entity-page), to achieve that all you have to do is to add a `jq` mapping of an `open-api.json` file to the `port-app-config.yml` created above.
+You can also have a Swagger component within the [Specific Entity Page](../../platform-overview/port-components/page.md#entity-page). To achieve that all you have to do is to add a `jq` mapping of an `open-api.json` file to the `port-app-config.yml` created above.
 
 <details>
 
