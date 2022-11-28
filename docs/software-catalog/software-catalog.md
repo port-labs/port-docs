@@ -1,9 +1,8 @@
 ---
 sidebar_position: 1
-sidebar_label: Platform Overview
 ---
 
-# Port Platform Overview
+# Software Catalog
 
 ## What is Port
 
@@ -152,3 +151,11 @@ TBD
 | [Community](https://join.slack.com/t/devex-community/shared_invite/zt-1bmf5621e-GGfuJdMPK2D8UN58qL4E_g) | Our DevEx community will help you with best practices and success stories |
 | Contact Us                                                                                              | Directly to our Slack channel                                             |
 | Status Page                                                                                             | TBD                                                                       |
+
+The following section will explore the different Core Components that exist in Port. for more information click on any of the links below:
+
+- [Blueprint](./blueprint.md)
+- [Relation](./relation.md)
+- [Entity](./entity.md)
+- [Mirror Properties](./mirror-properties.md)
+- [Calculation Properties](./calculation-properties.md)

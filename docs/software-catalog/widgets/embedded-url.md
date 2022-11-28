@@ -4,9 +4,9 @@ sidebar_position: 2
 
 # Embedded URL
 
-You can use the embedded-url `spec` property to embed any publicly available webpage into an additional tab in the [**Specific Entity Page**](../port-components/page.md#entity-page).
+You can use the embedded-url `spec` property to embed any publicly available webpage into an additional tab in the [**Specific Entity Page**](..//entity.md#entity-page).
 
-By using the combination of `"type": "string`, `"format": "url` and `"spec": "embedded-url"` in a [Blueprint property](../port-components/blueprint.md#blueprint-properties), Port will display the url as a new tab matching the provided URL in the blueprint's entity.
+By using the combination of `"type": "string`, `"format": "url` and `"spec": "embedded-url"` in a [Blueprint property](../blueprint.md#blueprint-properties), Port will display the url as a new tab matching the provided URL in the blueprint's entity.
 
 :::note
 Make sure the URL you want to embed in Port is publicly available (i.e. not inside a private VPC or only accessible using a VPN)

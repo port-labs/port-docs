@@ -14,11 +14,11 @@ All relevant files and resources for this guide are available [**HERE**](https:/
 
 In this guide you will implement a service locking mechanism using Port's [GitHub Action](../api-providers/github-action.md).
 
-The environment we're going to use includes 2 [Blueprints](../platform-overview/port-components/blueprint.md) with a [Relation](../platform-overview/port-components/relation.md) between them:
+The environment we're going to use includes 2 [Blueprints](../software-catalog/blueprint.md) with a [Relation](../software-catalog/relation.md) between them:
 
 ![Service locking layout](../../static/img/tutorial/complete-use-cases/service-locking/service-locking-layout.png)
 
-Let's go over the different Blueprints shown above and how we'll create [Entities](../platform-overview/port-components/entity.md) for each one of them:
+Let's go over the different Blueprints shown above and how we'll create [Entities](../software-catalog/entity.md) for each one of them:
 
 - **Deployment Config** - a deployment config is a representation of the current “live” version of a service running in a specific environment. It will include references to the service, environment, and deployment, as well as real-time information such as status, uptime, and any other relevant metadata.
   - In this example deployment configs will be reported manually.
@@ -332,4 +332,4 @@ If you set the value of the `locked` field to `false`, the workflow will perform
 
 This was just a single example of Port's GitHub Action value in your CI/CD pipelines. By querying and creating Entities during your CI process, you can make your CI jobs even more dynamic and responsive, without having to edit `yml` files and push new code to your repository.
 
-If this use case helped you, check out our guide to [using Port in your CI/CD](../tutorials/use-port-in-your-cicd.md).
+If this use case helped you, check out our guide to [using Port in your CI/CD](../api-providers/use-port-in-your-cicd.md).

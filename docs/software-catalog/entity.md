@@ -44,7 +44,7 @@ This is the basic structure of an Entity:
 :::info teams and ownership
 The `team` key defines ownership over an Entity and controls who can modify or delete an existing Entity.
 
-To Explore more about Ownership in Port see our [Permissions](../role-based-access-control/permissions-controls.md) section.
+To Explore more about Ownership in Port see our [Permissions](./role-based-access-control/permissions-controls.md) section.
 :::
 
 ## Example
@@ -152,8 +152,20 @@ Specifying the `notificationService` under the Relation maps the connection betw
 
 In addition, you will be able to use [Mirror Properties](./mirror-properties) to map additional properties from the `microservice` Blueprint to the `deployment` Entity
 
+## Entity page
+
+Each Entity has a specific page that contains two tabs (by default).
+
+The first tab is the `Overview` tab, which shows two widgets: the Entity details and a table(s) of its related Entity(ies). The second tab is an `Audit Log` tab that contains a full-page table widget.
+
+:::note Relations within an entity page
+**Related entities** of an Entity are presented on the Entity page as a list of table widgets containing the related Entity(ies) data.
+:::
+
+![Microservice entity page tabs marked](../../static/img/platform-overview/port-components/pages/MicroserviceEntityPage.png)
+
 ## Next Steps
 
-[Explore How to Create, Edit, and Delete Entities with basic examples](../../tutorials/entity-basics.md)
+[Explore How to Create, Edit, and Delete Entities with basic examples](../tutorials/entity-basics.md)
 
-[Dive into advanced operations on Entities with our API ➡️ ](../../api-providers/rest.md)
+[Dive into advanced operations on Entities with our API ➡️ ](../api-providers/rest.md)

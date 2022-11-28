@@ -17,7 +17,7 @@ You want to use your existing CI/CD to report your microservice Entities to Port
 ## Code example
 
 :::info
-In this example, you will create an Entity for the `Microservice` Blueprint from [creating a Blueprint](./blueprint-basics.md#creating-a-blueprint). Please make sure to create it beforehand.
+In this example, you will create an Entity for the `Microservice` Blueprint from [creating a Blueprint](../tutorials/blueprint-basics.md#creating-a-blueprint). Please make sure to create it beforehand.
 :::
 
 Create a local JSON file, named `entity.json`, with the following content:
@@ -47,5 +47,5 @@ curl --location --request POST "https://api.getport.io/v1/blueprints/${blueprint
 ```
 
 :::note
-Remember that an access token is needed to make API requests, refer back to [Getting an API token](./blueprint-basics.md#getting-an-api-token) if you need to generate a new one.
+Remember that an access token is needed to make API requests, refer back to [Getting an API token](../tutorials/blueprint-basics.md#getting-an-api-token) if you need to generate a new one.
 :::

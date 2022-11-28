@@ -729,4 +729,4 @@ In addition to seeing the message topic in Cloudwatch, the Lambda function code 
 
 This was just a very basic example of how to listen and react to changes in the Software Catalog. We left placeholder code for you to insert your own custom logic to fit your infrastructure.
 
-If you want to dive even deeper into Port's execution capabilities, try looking at our [reporting architecture](../../../platform-overview/self-service-actions/port-execution-architecture/port-execution-architecture.md)
+If you want to dive even deeper into Port's execution capabilities, try looking at our [reporting architecture](../../../self-service-actions/port-execution-architecture/port-execution-architecture.md)

@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Software Catalog
+# Software Development Lifecycle (SDLC)
 
 A software catalog keeps track of all your cloud and development resources and assets. Moreover, it gives your developers a full picture of your development infrastructure and responsibilities for different services.
 
@@ -26,7 +26,7 @@ The Basic Model covers the main SDLC intersections: from Services, to Environmen
 
 ![software catalog layout](../../static/img/tutorial/complete-use-cases/software-catalog/software-catalog-layout.png)
 
-Before we dive into the details of each [Blueprint](../platform-overview/port-components/blueprint.md) type in the software catalog, here’s a brief explanation of the ontology diagrammed below, and how will we create [Entities](../platform-overview/port-components/entity.md) for each of them:
+Before we dive into the details of each [Blueprint](../software-catalog/blueprint.md) type in the software catalog, here’s a brief explanation of the ontology diagrammed below, and how will we create [Entities](../software-catalog/entity.md) for each of them:
 
 - **Service** - a microservice, a software monolith, or any other software architecture.
   - In this example services will be reported by Port's GitHub App.
@@ -39,7 +39,7 @@ Before we dive into the details of each [Blueprint](../platform-overview/port-co
 - **Deployment** - an object representing a CD job. It includes the version of the deployed service and a link to the job itself. Unlike other objects, the deployment is an immutable item in the software catalog. It is important to keep it immutable to ensure the catalog remains reliable.
   - In this example deployments will be reported using Port's GitHub Action as part of the deployment process.
 
-Now that you know the end result of this guide, let's start by creating the Blueprints and [Relations](../platform-overview/port-components/relation.md) of your software catalog.
+Now that you know the end result of this guide, let's start by creating the Blueprints and [Relations](../software-catalog/relation.md) of your software catalog.
 
 ## Blueprints and Relations
 
@@ -627,4 +627,4 @@ At this point, you should have a basic software catalog up and running, with new
 
 This guide is only the start of your software catalog - go ahead and add more environments, more services, and more cloud infrastructure resources to give your developers a complete image of your infrastructure.
 
-Then, begin providing [Self-Service](../platform-overview/self-service-actions/self-service-actions.md) capabilities to your developers.
+Then, begin providing [Self-Service](../self-service-actions/self-service-actions.md) capabilities to your developers.

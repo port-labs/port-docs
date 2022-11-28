@@ -22,7 +22,7 @@ For example, let’s create 2 Blueprints and connect them to each other:
 - **Blueprint #1**: Microservice;
 - **Blueprint #2**: Deployment.
 
-![Target blueprints and relations expanded](../../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/targetBlueprintsAndRelationExpanded.png)
+![Target blueprints and relations expanded](../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/targetBlueprintsAndRelationExpanded.png)
 
 <details>
 <summary>An example Microservice Blueprint</summary>
@@ -127,7 +127,7 @@ For example, let’s create 2 Blueprints and connect them to each other:
 
 In order to create a Self-Service Action, go to the Blueprints page, expand the Microservice Blueprint and click on the `Create action` button as shown below:
 
-![Create action button on blueprint marked](../../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/createActionOnBlueprintButtonMarked.png)
+![Create action button on blueprint marked](../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/createActionOnBlueprintButtonMarked.png)
 
 After clicking the button, you should see an editor with an empty array (`[]`) appear, that's where we will add our Self-Service Action
 
@@ -165,15 +165,15 @@ Here is an action array with a `CREATE` action already filled in:
 
 This is how the JSON editor looks after submitting the Self-Service Action:
 
-![Action editor filled](../../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/microserviceEditorWithCreateAction.png)
+![Action editor filled](../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/microserviceEditorWithCreateAction.png)
 
 Now when you go to the Microservices Blueprint page, you will see a new button - `Create Microservice`:
 
-![Create button marked](../../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/microservicePageWithCreateMarked.png)
+![Create button marked](../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/microservicePageWithCreateMarked.png)
 
 After clicking the `Create Microservice` option, we will see a form with the inputs specified when the new action was entered to the actions array:
 
-![Action create form](../../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/actionCreateForm.png)
+![Action create form](../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/actionCreateForm.png)
 
 ### More Self-Service Actions
 
@@ -256,11 +256,11 @@ Now when we go back to the Microservice page, if we click on the 3 dots next to 
 
 **Day-2:**
 
-![Day-2 button marked](../../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/day-2-action-marked.png)
+![Day-2 button marked](../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/day-2-action-marked.png)
 
 **Delete:**
 
-![Delete button marked](../../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/delete-action-marked.png)
+![Delete button marked](../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/delete-action-marked.png)
 
 #### Add multiple Self-Service Actions of the same type
 
@@ -327,7 +327,7 @@ Now when you go to the Microservices Blueprint page, you will see 2 new buttons 
 
 <center>
 
-![Multiple Create Actions](../../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/multiple-create-actions.png)
+![Multiple Create Actions](../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/multiple-create-actions.png)
 
 </center>
 
@@ -371,16 +371,16 @@ The basic structure of a Self-Service Action:
 
 ### Structure table
 
-| Field              | Description                                                                                                                                                                           |
-| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `id`               | Internal Action ID                                                                                                                                                                    |
-| `identifier`       | Action identifier                                                                                                                                                                     |
-| `title`            | Action title                                                                                                                                                                          |
-| `icon`             | Action icon                                                                                                                                                                           |
-| `userInputs`       | An object containing `properties` and `required` keys following the standard JSON schema format as seen in [Blueprint structure](../port-components/blueprint.md#blueprint-structure) |
-| `invocationMethod` | Defines the destination where invocations of the Self-Service Action will be delivered, see [invocation method](#invocation-method) for details                                       |
-| `trigger`          | The type of the action: `CREATE`, `DAY-2` or `DELETE`                                                                                                                                 |
-| `description`      | Action description                                                                                                                                                                    |
+| Field              | Description                                                                                                                                                                            |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`               | Internal Action ID                                                                                                                                                                     |
+| `identifier`       | Action identifier                                                                                                                                                                      |
+| `title`            | Action title                                                                                                                                                                           |
+| `icon`             | Action icon                                                                                                                                                                            |
+| `userInputs`       | An object containing `properties` and `required` keys following the standard JSON schema format as seen in [Blueprint structure](../software-catalog/blueprint.md#blueprint-structure) |
+| `invocationMethod` | Defines the destination where invocations of the Self-Service Action will be delivered, see [invocation method](#invocation-method) for details                                        |
+| `trigger`          | The type of the action: `CREATE`, `DAY-2` or `DELETE`                                                                                                                                  |
+| `description`      | Action description                                                                                                                                                                     |
 
 ### Properties structure table
 
@@ -388,13 +388,13 @@ The following table includes the different fields that can be specified in the `
 
 | Field                    | Description                                                                                                                                                                     |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `type`                   | All the [types](../port-components/blueprint.md#property-types) Port supports - `string`, `number`, `boolean`, etc...                                                           |
+| `type`                   | All the [types](../software-catalog/blueprint.md#property-types) Port supports - `string`, `number`, `boolean`, etc...                                                          |
 | `title`                  | The title shown in the form when activating the Self-Service Action                                                                                                             |
 | `format`                 | Specific data format to pair with some of the available types. You can explore all formats in the [String Formats](#string-formats) section                                     |
 | `blueprint`              | Identifier of an existing Blueprint to fetch Entities from                                                                                                                      |
 | `description` (Optional) | Extra description for the requested property                                                                                                                                    |
 | `default` (Optional)     | Default value                                                                                                                                                                   |
-| `enum` (Optional)        | A list of predefined values the user can choose from, same format as [enum](../port-components/blueprint.md#enum)                                                               |
+| `enum` (Optional)        | A list of predefined values the user can choose from, same format as [enum](../software-catalog/blueprint.md#enum)                                                              |
 | `icon` (Optional)        | Icon for the user input property. Icon options: `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud,...` <br /><br />See the full icon list [below](#full-icon-list). |
 
 ### String formats
@@ -408,7 +408,7 @@ The following table includes the different fields that can be specified in the `
 }
 ```
 
-In addition to the formats introduced in [Blueprint string property formats](../port-components/blueprint.md#string-property-formats), Port Self-Service Actions also support the following `string` formats:
+In addition to the formats introduced in [Blueprint string property formats](../software-catalog/blueprint.md#string-property-formats), Port Self-Service Actions also support the following `string` formats:
 
 | `format` | Description                          | Example values            |
 | -------- | ------------------------------------ | ------------------------- |
@@ -435,7 +435,7 @@ When `"format": "entity"` is used, a `blueprint` field is available.
 The `blueprint` field takes an identifier of an existing Blueprint. Then, when using the configured Self-Service Action in Port's UI, the specified field will include a list of existing Entities of the selected Blueprint from your software catalog to choose from.
 
 :::tip
-For more examples, refer to [string property formats examples](../port-components/blueprint.md#examples-1).
+For more examples, refer to [string property formats examples](../software-catalog/blueprint.md#examples-1).
 :::
 
 ## Invocation method
@@ -466,7 +466,7 @@ For example, you can deploy a new version of your microservice when a `CREATE` a
 
 The action is triggered from the page matching the Blueprint we configured the action on:
 
-![Create button marked](../../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/microservicePageWithCreateMarked.png)
+![Create button marked](../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/microservicePageWithCreateMarked.png)
 
 :::tip create vs register
 When you define a `CREATE` action on a Blueprint, when viewing the Blueprint page you will notice that the create button now has a dropdown. Two options will appear: `Register` and `Create`:
@@ -481,13 +481,13 @@ When you define a `CREATE` action on a Blueprint, when viewing the Blueprint pag
 
 When clicking the `Create Microservice` option, we will see a form with the inputs we specified when we entered the new action to the actions array:
 
-![Action create form](../../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/actionCreateForm.png)
+![Action create form](../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/actionCreateForm.png)
 
 ### DAY-2 action
 
 The action can be triggered by selecting it from the sub-menu of an existing Entity:
 
-![Day-2 button marked](../../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/day-2-action-marked.png)
+![Day-2 button marked](../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/day-2-action-marked.png)
 
 :::note DAY-2 actions
 All Day-2 operations will appear in this sub-menu.
@@ -497,7 +497,7 @@ All Day-2 operations will appear in this sub-menu.
 
 The action can be triggered by selecting it from the sub-menu of an existing Entity:
 
-![Delete button marked](../../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/delete-action-marked.png)
+![Delete button marked](../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/delete-action-marked.png)
 
 ## Action message structure
 
@@ -608,4 +608,4 @@ Here is an example `payload` object for a `CREATE` action:
 
 Now that you have the basics of Self-Service Actions, you can refer to our examples for some practical use-cases:
 
-- [Setting up a basic execution runner using AWS Lambda](../../tutorials/self-service-actions/kafka-actions/execution-basic-runner-using-aws-lambda.md)
+- [Setting up a basic execution runner using AWS Lambda](../tutorials/self-service-actions/kafka-actions/execution-basic-runner-using-aws-lambda.md)

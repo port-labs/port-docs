@@ -6,7 +6,7 @@ sidebar_position: 1
 
 With Port, you can import and display [Markdown](https://en.wikipedia.org/wiki/Markdown) files as tabs.
 
-By using the combination of `"type": "string` and `"format": "markdown"` in a [Blueprint property](../port-components/blueprint.md#blueprint-properties), Port will format and display the markdown text in the [Specific Entity Page](../port-components/page.md#entity-page).
+By using the combination of `"type": "string` and `"format": "markdown"` in a [Blueprint property](../blueprint.md#blueprint-properties), Port will format and display the markdown text in the [Specific Entity Page](../entity.md#entity-page).
 
 ## Definition in Blueprint
 

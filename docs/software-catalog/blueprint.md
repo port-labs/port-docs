@@ -24,7 +24,7 @@ Before you start, there are a few things to consider when defining your Blueprin
 :::note
 By the end of this section, you should have a Blueprint architecture similar to this in mind:
 
-![Example Blueprints and Relations Layout](../../../static/img/platform-overview/port-components/blueprints/exampleBlueprintsAndRelationsLayout.png)
+![Example Blueprints and Relations Layout](../../static/img/platform-overview/port-components/blueprints/exampleBlueprintsAndRelationsLayout.png)
 :::
 
 ## Blueprint structure
@@ -129,14 +129,14 @@ Now let's look at the structure of this property definition and also explore the
 | `format`      | `String`                | Specific data format to pair with some of the available types. You can explore all formats in the [String Formats](#string-property-formats) section                                                                                                                                                                                                                          |
 | `pattern`     | `String`                | [Regular expression](https://en.wikipedia.org/wiki/Regular_expression) (regex) pattern to specify the set of allowed values for the property. You can see an example in the [String regular expression patterns](#string-regular-expression-patterns) section                                                                                                                 |
 | `default`     | Should match the `type` | Default value for this property in case an Entity is created without explicitly providing a value.                                                                                                                                                                                                                                                                            |
-| `icon`        | `String`                | Icon for the property column in the [Blueprint page](./page#blueprint-page), in the [Entity page](./page#entity-page) and in the [Entity creation](../../tutorials/entity-basics.md#from-the-ui) form <br /><br />See the full icon list [above](#full-icon-list).                                                                                                            |
+| `icon`        | `String`                | Icon for the property column in the [Blueprint page](./page#blueprint-page), in the [Entity page](./page#entity-page) and in the [Entity creation](../tutorials/entity-basics.md#from-the-ui) form <br /><br />See the full icon list [above](#full-icon-list).                                                                                                               |
 | `description` | `String`                | Description of the property.<br /> This value is visible to users when hovering on the info icon in the UI. It provides detailed information about the use of a specific property.                                                                                                                                                                                            |
 | `enumColors`  | `Object`                | Define colors for enum fields. <br /> Can be added only if an enum field exists. <br /> Each key is one of the defined enum options and each value is one of the following colors: <br /> [blue, turquoise, orange, purple, lightBlue, pink, yellow, green, red, darkGray] <br /><br /> Notice: In case enum is defined and enumColor field is not default colors will be set |
 
 :::tip
 We highly recommend you set a `description`, so your developers will understand the property’s context.
 
-![Property Description Tooltip Example](../../../static/img/platform-overview/port-components/propertyDescriptionTooltipExample.png)
+![Property Description Tooltip Example](../../static/img/platform-overview/port-components/propertyDescriptionTooltipExample.png)
 :::
 
 ## Property types
@@ -161,7 +161,7 @@ We currently support the following types:
 | `array`   | A multi-element array                                                             | `[1,2,3]`, `["a","b","c"]`                   |
 
 :::note
-Those are the `properties` that our API supports. See [API reference](../../api-providers/rest.md).
+Those are the `properties` that our API supports. See [API reference](../api-providers/rest.md).
 :::
 
 We support the following additional props:
@@ -336,7 +336,7 @@ We currently support the following `string` formats:
 | [`markdown`](../widgets/markdown) | String in markdown language format                        | `An Example of **bold text**.`            |
 
 :::note
-Those are the `format` types that our API supports. See [API reference](../../api-providers/rest.md).
+Those are the `format` types that our API supports. See [API reference](../api-providers/rest.md).
 :::
 
 ### Examples
@@ -392,11 +392,11 @@ Even though the input is the same in both `email` and `user` formats, their pres
 
 In addition, `user` format distinguishes between users by their status:
 
-| User Status  | Example                                                                                             |
-| ------------ | --------------------------------------------------------------------------------------------------- |
-| Active       | ![Active user](../../../static/img/platform-overview/port-components/blueprints/activeUser.png)     |
-| Invited      | ![Invited user](../../../static/img/platform-overview/port-components/blueprints/invitedUser.png)   |
-| Unregistered | ![External user](../../../static/img/platform-overview/port-components/blueprints/externalUser.png) |
+| User Status  | Example                                                                                          |
+| ------------ | ------------------------------------------------------------------------------------------------ |
+| Active       | ![Active user](../../static/img/platform-overview/port-components/blueprints/activeUser.png)     |
+| Invited      | ![Invited user](../../static/img/platform-overview/port-components/blueprints/invitedUser.png)   |
+| Unregistered | ![External user](../../static/img/platform-overview/port-components/blueprints/externalUser.png) |
 
 :::
 
@@ -561,7 +561,7 @@ You can add icons to properties:
 
 The icon will be displayed in the column header of the property (in the example above - `repoUrl`):
 
-![Blueprints graph with new Microservice](../../../static/img/platform-overview/port-components/blueprints/repoUrlWithIcon.png)
+![Blueprints graph with new Microservice](../../static/img/platform-overview/port-components/blueprints/repoUrlWithIcon.png)
 
 For a list of available icons refer to the [full icon list](#full-icon-list)
 
@@ -602,6 +602,6 @@ Those new properties are called `mirrorProperties`, you can learn more about the
 
 ## Next Steps
 
-[Explore How to Create, Edit, and Delete Blueprints with basic examples](../../tutorials/blueprint-basics.md)
+[Explore How to Create, Edit, and Delete Blueprints with basic examples](../tutorials/blueprint-basics.md)
 
-[Dive into advanced operations on Blueprints with our API ➡️ ](../../api-providers/rest.md)
+[Dive into advanced operations on Blueprints with our API ➡️ ](../api-providers/rest.md)

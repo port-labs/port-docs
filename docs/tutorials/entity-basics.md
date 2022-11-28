@@ -25,7 +25,7 @@ An Entity page will be created upon the creation of a new entity.
 
 ### From the UI
 
-To create an Entity from the UI, go to the [Page](../platform-overview/port-components/page.md) that matches the Blueprint you want to add an Entity to. You can find the pages list in the sidebar on the left side of Port's UI.
+To create an Entity from the UI, go to the page that matches the Blueprint you want to add an Entity to. You can find the pages list in the sidebar on the left side of Port's UI.
 
 First go to the `Microservices` page:
 
@@ -41,7 +41,7 @@ A UI form will open with the properties we created for the `Microservice` Bluepr
 
 #### Creating with the JSON editor
 
-Every entity has a format similar to the one we explained in the [Understanding the structure of an entity](../platform-overview/port-components/entity.md#entity-json-structure), which is viewable via the _JSON mode_ button. In order to create your first `package`, paste in the following content:
+Every entity has a format similar to the one we explained in the [Understanding the structure of an entity](../software-catalog/entity.md#entity-json-structure), which is viewable via the _JSON mode_ button. In order to create your first `package`, paste in the following content:
 
 ```json showLineNumbers
 {
@@ -248,7 +248,7 @@ To delete an Entity you can:
 Now that we understand **Entities**, we can start creating related Entities to model our related data in the infrastructure!
 
 :::tip
-Remember that each Entity has a page of its own, as seen in the [Entity page section](../platform-overview/port-components/page.md#entity-page) in [Page](../platform-overview/port-components/page.md).
+Remember that each Entity has a page of its own, as seen in the [Entity page section](../software-catalog/entity.md#entity-page).
 :::
 
 First, let's create another `package` Entity.

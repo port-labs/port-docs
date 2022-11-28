@@ -59,7 +59,7 @@ We need to add the following JSON schema of the relation to the `microservice` B
 ```
 
 Resulting in this outcome in the UI:
-![Blueprints Graph with Relations Line](../../../static/img/platform-overview/port-components/MicroservicePackageBlueprintGraphRelationUI.png)
+![Blueprints Graph with Relations Line](../../static/img/platform-overview/port-components/MicroservicePackageBlueprintGraphRelationUI.png)
 
 ## X-to-many Relation
 
@@ -69,7 +69,7 @@ From a schema standpoint, when a Relation is defined `"many": true`, the corresp
 
 There is also a visual indicator in the Blueprints graph when using `"many": true` (note the `Array` label):
 
-![Developer Portal Blueprints Graph Many Relation](../../../static/img/platform-overview/port-components/MicroservicePackageBlueprintGraphManyRelationUI.png)
+![Developer Portal Blueprints Graph Many Relation](../../static/img/platform-overview/port-components/MicroservicePackageBlueprintGraphManyRelationUI.png)
 
 ## Byproducts of a Relation
 
@@ -87,6 +87,6 @@ You can learn more about these properties in the [Mirror Properties](./mirror-pr
 
 ## Next Steps
 
-[Explore How to Create, Edit, and Delete Relations with basic examples](../../tutorials/relation-basics.md)
+[Explore How to Create, Edit, and Delete Relations with basic examples](../tutorials/relation-basics.md)
 
-[Dive into advanced operations on Relations with our API ➡️ ](../../api-providers/rest.md)
+[Dive into advanced operations on Relations with our API ➡️ ](../api-providers/rest.md)

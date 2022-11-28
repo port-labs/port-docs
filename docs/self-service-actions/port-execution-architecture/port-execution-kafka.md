@@ -8,7 +8,7 @@ Port manages a Kafka Topic per customer that publishes the execution run request
 
 You can listen to a Kafka Topic with any code platform you wish to use, and also use it as a trigger for a serverless function. For example, AWS Lambda.
 
-![Port Kafka Architecture](../../../../static/img/platform-overview/self-service-actions/portKafkaArchitecture.png)
+![Port Kafka Architecture](../../../static/img/platform-overview/self-service-actions/portKafkaArchitecture.png)
 
 The steps shown in the image above are as follows:
 

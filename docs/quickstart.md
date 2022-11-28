@@ -472,15 +472,13 @@ Our environment Blueprint is going to include the following properties:
 - **Cloud provider** - cloud provider where the cluster is deployed;
 - **Region** - cloud region where the cluster is deployed.
 
-In addition, the Blueprint is going to include the following formula property:
+In addition, the Blueprint is going to include the following calculation property:
 
 - **Grafana URL** - link to the Grafana dashboard of the environment.
 
 :::tip
-For more information about formula properties click [here](./platform-overview/port-components/formula-properties.md).
+For more information about calculation properties click [here](./software-catalog/calculation-properties.md).
 :::
-
-<!-- COntinue working on the blueprint schema, add enum colors for cloud providers, add formula properties for grafana, prometheus -->
 
 In addition, the `environment type` field will be marked as `required`, that way we can make sure that our environments are tagged correctly.
 
@@ -528,13 +526,14 @@ To create the environment Blueprint, use the following JSON body:
     "required": ["type"]
   },
   "mirrorProperties": {},
-  "calculationProperties": {},
-  "formulaProperties": {
+  "calculationProperties": {
     "grafanaUrl": {
       "title": "Grafana URL",
-      "formula": "https://grafana.com/{$identifier}"
+      "calculation": "'https://grafana.com/' + .identifier",
+      "type": "string"
     }
   },
+  "formulaProperties": {},
   "relations": {}
 }
 ```
@@ -619,13 +618,14 @@ blueprint = {
         ]
     },
     "mirrorProperties": {},
-    "calculationProperties": {},
-    "formulaProperties": {
-        "grafanaUrl": {
+    "calculationProperties": {
+      "grafanaUrl": {
             "title": "Grafana URL",
-            "formula": "https://grafana.com/{$identifier}"
+            "calculation": "'https://grafana.com/' + .identifier",
+            "type": "string"
         }
     },
+    "formulaProperties": {},
     "relations": {}
 }
 
@@ -1244,21 +1244,20 @@ And, if you want to do something completely different, you can simply delete wha
 These suggestions show the basic steps in creating your very own Developer Portal, if you want to learn more about Port before starting your Developer Portal journey, look at [Diving deeper](#diving-deeper) or [Using the API](#using-the-api) below.
 :::
 
-1. Create [Blueprints](./platform-overview/port-components/blueprint.md) for your software and infrastructure components;
-2. Map out the [Relations](./platform-overview/port-components/relation.md) between your Blueprints;
-3. Ingest data to your catalog by creating [Entities](./platform-overview/port-components/entity.md) based on your Blueprints via Port's UI or using our API;
-4. Define [Self-Service Actions](./platform-overview/self-service-actions/self-service-actions.md) that can be used by you and your developers;
+1. Create [Blueprints](./software-catalog/blueprint.md) for your software and infrastructure components;
+2. Map out the [Relations](./software-catalog/relation.md) between your Blueprints;
+3. Ingest data to your catalog by creating [Entities](./software-catalog/entity.md) based on your Blueprints via Port's UI or using our API;
+4. Define [Self-Service Actions](./self-service-actions/self-service-actions.md) that can be used by you and your developers;
 5. Use one of our [Complete use cases](./complete-use-cases/complete-use-cases.md) to fully set up your software catalog.
 
 ### Diving deeper
 
 If you want to learn more about Port's capabilities in a specific area, you can check out any of these resources:
 
-- [Blueprints deep dive](./platform-overview/port-components/blueprint.md);
-- [Relations deep dive](./platform-overview/port-components/relation.md);
-- [Entities deep dive](./platform-overview/port-components/entity.md);
-- [Pages deep dive](./platform-overview/port-components/page.md);
-- [Self-Service Actions deep dive](./platform-overview/self-service-actions/self-service-actions.md).
+- [Blueprints deep dive](./software-catalog/blueprint.md);
+- [Relations deep dive](./software-catalog/relation.md);
+- [Entities deep dive](./software-catalog/entity.md);
+- [Self-Service Actions deep dive](./self-service-actions/self-service-actions.md).
 
 ### Using the API
 
