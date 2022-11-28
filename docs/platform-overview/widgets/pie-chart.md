@@ -33,4 +33,4 @@ You can create a pie chart illustrating your catalog data divided by a specific 
 | `Description`           | `String` | A short description to describe the visualization                                                                      | `null`  | `false`  |
 | `Blueprint`             | `String` | The chart will display data about entities of the chosen blueprint that are related to this ServiceInEnv               | `null`  | `true`   |
 | `Breakdown by property` | `String` | Group your chart by a specific property                                                                                | `null`  | `true`   |
-| `Filters`               | `Array`  | Filters to include or exclue specific data [Read more](https://docs.getport.io/tutorials/search-in-port/#search-rules) | []      | `false`  |
+| `Filters`               | `Array`  | Filters to include or exclue specific data based on Port's [Search Rules](https://docs.getport.io/tutorials/search-in-port/#search-rules) | []      | `false`  |
