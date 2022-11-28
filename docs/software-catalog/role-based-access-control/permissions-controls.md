@@ -142,7 +142,7 @@ By default, **Member** users can execute every new Action of the Blueprint. If n
 ### Setting permissions by team ownership
 
 You will notice that some operations have the `ownedByTeam` flag. This allows you to set permissions by team ownership, rather than by Roles or direct assignment.
-For example, the following JSON will allow **every user**, regardless of their roles, to perform the Action `delete_env` on `Env` Entities that belong to a team they are part of (entities that have the [`team` property](../port-components/entity#teams-and-ownership) set):
+For example, the following JSON will allow **every user**, regardless of their roles, to perform the Action `delete_env` on `Env` Entities that belong to a team they are part of (entities that have the [`team` property](../entity#teams-and-ownership) set):
 
 ```json showLineNumbers
 {

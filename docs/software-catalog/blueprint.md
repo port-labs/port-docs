@@ -67,15 +67,15 @@ Each Blueprint is represented by a [Json schema](https://json-schema.org/), as s
 
 ### Structure table
 
-| Field                  | Type     | Description                                                                                                   | Optional Values                                                                                                                               |
-| ---------------------- | -------- | ------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| `identifier`           | `String` | Unique identifier.<br /> Note that while the identifier is unique, it can be changed after creation           |
-| `title`                | `String` | The Blueprint's name                                                                                          |
-| `description`          | `String` | Description for the Blueprint.<br /> This value is visible to users when hovering on the info icon in the UI. |
-| `icon`                 | `String` | Icon for the Blueprint's graph node, and Entities of the Blueprint                                            | Icon options: `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud,...` <br /><br />See the full icon list [below](#full-icon-list). |
-| `formulaProperties`    | `Object` | Contains the properties that are defined using [formula templates](./formula-properties)                      | Example: "`repo-link`": "`https://github.com/{{$identifier}}`"                                                                                |
-| `schema`               | `Object` | Object containing two more nested fields, including `properties` and `required`                               | See the schema structure [here](#blueprint-schema).                                                                                           |
-| `changelogDestination` | `Object` | Defines the destination where events that happen within the Blueprint's context will be delivered             | See the object structure [here](#changelog-destination).                                                                                      |
+| Field                   | Type     | Description                                                                                                   | Optional Values                                                                                                                               |
+| ----------------------- | -------- | ------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `identifier`            | `String` | Unique identifier.<br /> Note that while the identifier is unique, it can be changed after creation           |
+| `title`                 | `String` | The Blueprint's name                                                                                          |
+| `description`           | `String` | Description for the Blueprint.<br /> This value is visible to users when hovering on the info icon in the UI. |
+| `icon`                  | `String` | Icon for the Blueprint's graph node, and Entities of the Blueprint                                            | Icon options: `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud,...` <br /><br />See the full icon list [below](#full-icon-list). |
+| `calculationProperties` | `Object` | Contains the properties that are defined using [calculation templates](./calculation-properties)              | Example: "`repo-link`": "`https://github.com/{{$identifier}}`"                                                                                |
+| `schema`                | `Object` | Object containing two more nested fields, including `properties` and `required`                               | See the schema structure [here](#blueprint-schema).                                                                                           |
+| `changelogDestination`  | `Object` | Defines the destination where events that happen within the Blueprint's context will be delivered             | See the object structure [here](#changelog-destination).                                                                                      |
 
 #### Special blueprint fields
 
@@ -129,7 +129,7 @@ Now let's look at the structure of this property definition and also explore the
 | `format`      | `String`                | Specific data format to pair with some of the available types. You can explore all formats in the [String Formats](#string-property-formats) section                                                                                                                                                                                                                          |
 | `pattern`     | `String`                | [Regular expression](https://en.wikipedia.org/wiki/Regular_expression) (regex) pattern to specify the set of allowed values for the property. You can see an example in the [String regular expression patterns](#string-regular-expression-patterns) section                                                                                                                 |
 | `default`     | Should match the `type` | Default value for this property in case an Entity is created without explicitly providing a value.                                                                                                                                                                                                                                                                            |
-| `icon`        | `String`                | Icon for the property column in the [Blueprint page](./page#blueprint-page), in the [Entity page](./page#entity-page) and in the [Entity creation](../tutorials/entity-basics.md#from-the-ui) form <br /><br />See the full icon list [above](#full-icon-list).                                                                                                               |
+| `icon`        | `String`                | Icon for the property column in the Blueprint page, in the [Entity page](./entity#entity-page) and in the [Entity creation](../tutorials/entity-basics.md#from-the-ui) form <br /><br />See the full icon list [above](#full-icon-list).                                                                                                                                      |
 | `description` | `String`                | Description of the property.<br /> This value is visible to users when hovering on the info icon in the UI. It provides detailed information about the use of a specific property.                                                                                                                                                                                            |
 | `enumColors`  | `Object`                | Define colors for enum fields. <br /> Can be added only if an enum field exists. <br /> Each key is one of the defined enum options and each value is one of the following colors: <br /> [blue, turquoise, orange, purple, lightBlue, pink, yellow, green, red, darkGray] <br /><br /> Notice: In case enum is defined and enumColor field is not default colors will be set |
 
@@ -166,10 +166,10 @@ Those are the `properties` that our API supports. See [API reference](../api-pro
 
 We support the following additional props:
 
-|        | Description                                                                                                                                   | Example values                                    |
-| ------ | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
-| `enum` | Field with a pre-defined set of allowed values. Can be used with properties of type `string` or `number`                                      | `["Option 1", "Option 2", "Option 3"]`            |
-| `spec` | Field with a pre-defined set of allowed values. A property with a `spec` key will be displayed as a separate tab in the Specific Entity Page. | [`open-api`](../widgets/open-api), `embedded-url` |
+|        | Description                                                                                                                                   | Example values                                   |
+| ------ | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| `enum` | Field with a pre-defined set of allowed values. Can be used with properties of type `string` or `number`                                      | `["Option 1", "Option 2", "Option 3"]`           |
+| `spec` | Field with a pre-defined set of allowed values. A property with a `spec` key will be displayed as a separate tab in the Specific Entity Page. | [`open-api`](./widgets/open-api), `embedded-url` |
 
 ### Examples
 
@@ -324,16 +324,16 @@ Here is how property definitions look like for all available types (remember tha
 
 We currently support the following `string` formats:
 
-| `format`                          | Description                                               | Example values                            |
-| --------------------------------- | --------------------------------------------------------- | ----------------------------------------- |
-| `url`                             | Formatted URL                                             | `"https://getport.io"`                    |
-| `email`                           | Formatted Email                                           | `"port@getport.io"`                       |
-| `user`                            | Formatted Email                                           | `"port@getport.io"`                       |
-| `date-time`                       | Formatted ISO string datetime                             | `"2022-04-18T11:44:15.345Z"`              |
-| `ipv4`                            | Standard IPv4 address                                     | `127.0.0.1`                               |
-| `ipv6`                            | Standard IPv6 address                                     | `FE80:CD00:0A20:0CDE:1257:1C34:211E:729C` |
-| `yaml`                            | a [YAML](https://en.wikipedia.org/wiki/YAML) file content | `a: 123`                                  |
-| [`markdown`](../widgets/markdown) | String in markdown language format                        | `An Example of **bold text**.`            |
+| `format`                         | Description                                               | Example values                            |
+| -------------------------------- | --------------------------------------------------------- | ----------------------------------------- |
+| `url`                            | Formatted URL                                             | `"https://getport.io"`                    |
+| `email`                          | Formatted Email                                           | `"port@getport.io"`                       |
+| `user`                           | Formatted Email                                           | `"port@getport.io"`                       |
+| `date-time`                      | Formatted ISO string datetime                             | `"2022-04-18T11:44:15.345Z"`              |
+| `ipv4`                           | Standard IPv4 address                                     | `127.0.0.1`                               |
+| `ipv6`                           | Standard IPv6 address                                     | `FE80:CD00:0A20:0CDE:1257:1C34:211E:729C` |
+| `yaml`                           | a [YAML](https://en.wikipedia.org/wiki/YAML) file content | `a: 123`                                  |
+| [`markdown`](./widgets/markdown) | String in markdown language format                        | `An Example of **bold text**.`            |
 
 :::note
 Those are the `format` types that our API supports. See [API reference](../api-providers/rest.md).

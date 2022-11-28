@@ -32,7 +32,7 @@ Don't worry if you feel like the `microservice` Blueprint should include more pr
 :::tip Available Icons
 Notice that in the image above in the icon field, the value `microservice` is already filled in.
 
-For a list of available icons refer to the [full icon list](../platform-overview/port-components/blueprint.md#full-icon-list).
+For a list of available icons refer to the [full icon list](../software-catalog/blueprint.md#full-icon-list).
 :::
 
 In order to create a Blueprint with the following properties, we will use the following JSON body:

@@ -117,7 +117,7 @@ const config = {
             items: [
               {
                 label: "Software Catalog",
-                to: "/complete-use-cases/software-catalog",
+                to: "/complete-use-cases/sdlc",
               },
               {
                 label: "Service Locking",

@@ -88,11 +88,11 @@ Port has 2 types of search rule operators: comparison operators (`=,` `>`, etc..
 
 #### Comparison operators structure
 
-| Field      | Description                                                                                                                                                                                                                              |
-| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `operator` | Search operator to use when evaluating this rule, see a list of available operators below                                                                                                                                                |
-| `property` | Property to filter by according to its value. It can be a [meta-property](../platform-overview/port-components/mirror-properties.md#meta-property-mirror-property) such as `$identifier`, or a standard property such as `slack_channel` |
-| `value`    | The value to filter by                                                                                                                                                                                                                   |
+| Field      | Description                                                                                                                                                                                                             |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `operator` | Search operator to use when evaluating this rule, see a list of available operators below                                                                                                                               |
+| `property` | Property to filter by according to its value. It can be a [meta-property](../software-catalog/mirror-properties.md#meta-property-mirror-property) such as `$identifier`, or a standard property such as `slack_channel` |
+| `value`    | The value to filter by                                                                                                                                                                                                  |
 
 #### Relation operators structure
 
@@ -135,7 +135,7 @@ The following rule will return Entities whose identifier is `port-api`:
 :::info Available properties
 We can search over a variety of properties:
 
-- "[Meta-properties](../platform-overview/port-components/mirror-properties.md#meta-property-mirror-property)" such as `$identifier`, `$title`, `$createdAt` and more.
+- "[Meta-properties](../software-catalog/mirror-properties.md#meta-property-mirror-property)" such as `$identifier`, `$title`, `$createdAt` and more.
 - User-defined properties that appear under the `properties` key in the `blueprint` definition
 
 :::
@@ -415,7 +415,7 @@ And the result shall be:
 
 :::info entity page and search
 
-The output received from the `relatedTo` operator without any other rule added to the search, is the same output you will receive when viewing the [Entity page](../platform-overview/port-components/page.md#entity-page) of the Entity you specified in the `value` field
+The output received from the `relatedTo` operator without any other rule added to the search, is the same output you will receive when viewing the [Entity page](../software-catalog/entity.md#entity-page) of the Entity you specified in the `value` field
 :::
 
 ### `dependedOn` operator
@@ -446,7 +446,7 @@ The search route also supports several query parameters that affect the returned
 | Parameter                       | Description                                                                                                                                                                                                 | Available values | Default value |
 | ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- | ------------- |
 | `attach_title_to_relation`      | `true`: Both the identifier and the title of the related Entity will appear under the Relation key <br></br><br></br> `false`: Only the identifier of the related Entity will appear under the Relation key | `true`/`false`   | `false`       |
-| `exclude_calculated_properties` | Should [mirror properties](../platform-overview/port-components/blueprint.md#mirror-properties) and [formula properties](../platform-overview/port-components/blueprint.md#) be returned with the result    | `true`/`false`   | `false`       |
+| `exclude_calculated_properties` | Should [mirror properties](../software-catalog/blueprint.md#mirror-properties) and [formula properties](../software-catalog/blueprint.md#) be returned with the result                                      | `true`/`false`   | `false`       |
 
 ### `attach_title_to_relation` example
 

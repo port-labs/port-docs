@@ -102,7 +102,7 @@ An Entity is the object instance of a Blueprint, and it represents software comp
 
 ![Microservices Main Page](../../static/img/platform-overview/MicroservicesMainPage.png)
 
-See [Port Components](./port-components/) for further details.
+See [Port Components](./software-catalog/) for further details.
 :::
 
 ### Saved Views

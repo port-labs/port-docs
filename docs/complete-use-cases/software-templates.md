@@ -16,7 +16,7 @@ All relevant files and resources for this guide are available [**HERE**](https:/
 
 ## Example - create a new service repository
 
-The following example utilizes Port [webhook-actions](../platform-overview/self-service-actions/port-execution-architecture/port-execution-webhook.md) to create a new service repository from a software template.
+The following example utilizes Port [webhook-actions](../self-service-actions/port-execution-architecture/port-execution-webhook.md) to create a new service repository from a software template.
 
 First, you need to create a simple `Service` Blueprint.
 

@@ -141,4 +141,4 @@ Mirror Properties allow you to enhance the data presented in the Software Catalo
 
 Blueprints that have Relations with multiple other Blueprints can greatly benefit from Mirror Properties by creating a central source for a host of relevant information.
 
-Now that you know about Mirror Properties, consider looking into [Formula Properties](./formula-properties) which allow you to fill property values using custom templates.
+Now that you know about Mirror Properties, consider looking into [Calculation Properties](./calculation-properties) which allow you to fill property values using custom templates.
