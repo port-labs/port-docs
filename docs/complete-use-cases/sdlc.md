@@ -17,7 +17,7 @@ In this guide, you will setup an initial software catalog. You will learn how to
 - Port's [Terraform provider](../api-providers/terraform.md) - to create your cloud resources;
 - Port's [REST API](../api-providers/rest.md) - to create your deployment configs;
 - Port's [GitHub Action](../api-providers/github-action.md) - to create your service deployments.
-- Port's [GitHub App](../exporters/github-app/github-app.md) - to create your services;
+- Port's [GitHub App](../api-providers/gitops/gitops.md) - to create your services;
 - Port's [Kubernetes Exporter](../exporters/k8s-exporter/k8s-exporter.md) - to create your deployment service pods;
 
 By the end of this guide, you will have a _Basic Model_ of a software catalog.
@@ -435,7 +435,7 @@ Now that you have your environment ready, it's time to create a service.
 
 ### Service - GitHub app
 
-To create your service, you will connect Port's [GitHub app](../exporters/github-app/gitops/gitops.md) to your service repository, and add a `port.yml` file describing the service you want to create an Entity for in Port.
+To create your service, you will connect Port's [GitHub app](../api-providers/gitops/gitops.md) to your service repository, and add a `port.yml` file describing the service you want to create an Entity for in Port.
 
 Here is an example `port.yml` file for a service called `Notification Service`:
 
@@ -454,7 +454,7 @@ properties:
 ```
 
 :::tip
-`repo` is a GitHub App [auto-imported properties](../exporters/github-app/gitops/auto-importing-properties.md), as such it will be added automatically to the `port.yml` file of the service Entity.
+`repo` is a GitHub App [auto-imported properties](../api-providers/gitops/auto-importing-properties.md), as such it will be added automatically to the `port.yml` file of the service Entity.
 :::
 
 After the commit of the `port.yml` file to your repository, you will now see your service in Port.

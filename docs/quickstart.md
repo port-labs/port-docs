@@ -64,7 +64,7 @@ In this tutorial, we will demonstrate how to perform every step using Port's web
 
 This tutorial includes various examples of ways to interact with Port's API. For more, you are welcome to visit the [API section](./tutorials/blueprint-basics.md#from-the-api) in [Blueprint basics](./tutorials/blueprint-basics.md).
 
-Port also has a [GitHub app](./exporters/github-app/github-app.md) and a [Terraform provider](./api-providers/terraform.md) you can use to ingest data and interact with Port's components.
+Port also has a [GitHub app](./exporters/github-exporter) and a [Terraform provider](./api-providers/terraform.md) you can use to ingest data and interact with Port's components.
 
 For readability, snippets to copy and paste and examples will be inside collapsed boxes:
 
