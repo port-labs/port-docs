@@ -209,19 +209,25 @@ The API offers several methods to update an existing Entity:
 
   The request body is the same as creating a new entity, just with the additional flag `upsert=true`.
 
+  Moreover, another flag called `merge` is available (can be added only along with `upsert=true`).
+
+  Adding `merge=true` to the request allows you to update only specific properties, just like in PATCH request.
+
+  On the other hand, `merge=false` (default) will overwrite the entity (similar to PUT request).
+
 - Make an **HTTP PUT** request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`
 
   A PUT request has the same body as a POST request and it will simply overwrite the entity if it exists. It will return an error code if the entity does not exist (based on identifier-match).
 
 - Make an **HTTP PATCH** request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`
 
-A PATCH request has a specific format that allows precise changes in an existing Entity, for example:
+  A PATCH request has a specific format that allows precise changes in an existing Entity, for example:
 
-To Edit a specific property, for example: `version`, send a PATCH request with the following body:
+  To Edit a specific property, for example: `version`, send a PATCH request with the following body:
 
-```json showLineNumbers
-properties': {"version": "2.29"}
-```
+  ```json showLineNumbers
+  properties': {"version": "2.29"}
+  ```
 
 ## Deleting entities
 
