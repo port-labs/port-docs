@@ -19,7 +19,7 @@ You can create a pie chart illustrating your catalog data divided by a specific 
 
 ## Editing visualization
 
-- On the top right of the pie chart widget click on the three dots icon
+- On the top right of the pie chart widget click on the three dots icon;
 - Select your desired action (edit/delete).
 
 ![Dropdown](../../../static/img/platform-overview/widgets/EditOrDeleteWidget.png)
