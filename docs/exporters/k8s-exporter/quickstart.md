@@ -189,7 +189,7 @@ resources: # List of K8s resources to list, watch, and export to Port.
               containers: (.spec.containers | map({image, resources})) + .status.containerStatuses | group_by(.image) | map(add)
               conditions: .status.conditions
             relations:
-              DeployedReplicaSet: .metadata.ownerReferences[0].name
+              DeploymentConfig: .metadata.ownerReferences[0].name
 ```
 
 </details>
