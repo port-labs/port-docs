@@ -6,7 +6,7 @@ sidebar_position: 1
 
 Our GitHub app allows you to quickly and easily map out your Software Catalog, according to your existing code repositories and projects.
 
-You can install the our GitHub App by following [our installation guide](../../exporters/github-exporter/installation.md) to get started.
+You can install the our GitHub App by following [our installation guide](../../exporters/github-exporter/installation.md).
 
 ## What Does Our GitHub Application Offer You?​
 
