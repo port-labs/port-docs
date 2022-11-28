@@ -20,7 +20,7 @@ The helm chart with full installation guide can be found [here](https://github.c
 
 1. Add Port's Helm repo by using the following command:
 
-```
+```bash showLineNumbers
 helm repo add port-labs https://port-labs.github.io/helm-charts
 ```
 
@@ -33,7 +33,7 @@ the latest versions of the charts. You can then run `helm search repo port-labs`
 Remember to replace the placeholders for `YOUR_ORG_ID`, `YOUR_KAFKA_CONSUMER_GROUP`, `YOUR_KAFKA_USERNAME` and `YOUR_KAFKA_PASSWORD`.
 :::
 
-```
+```bash showLineNumbers
 helm install my-port-agent port-labs/port-agent \
     --create-namespace --namespace port-agent \
     --set env.normal.PORT_ORG_ID=YOUR_ORG_ID
@@ -47,6 +47,8 @@ helm install my-port-agent port-labs/port-agent \
 - [Setting Self-Service Actions In Port](../setting-self-service-actions-in-port) - to set up a Blueprint and Self-Service Actions.
 - [Changelog Listener](../../../tutorials/self-service-actions/webhook-actions/changelog-listener) - to create a Blueprint with `changelogDestination` to listen and act on changes in the Software Catalog.
 
+When using the execution agent, in the `url` field you need to provide a URL to an internal service (i.e. REST API) running inside your private network that the execution agent will be able to forward the Self-Service Action event to.
+
 :::note
 **IMPORTANT**: To make use of the **Port Execution Agent**, you need to configure:
 
@@ -55,12 +57,14 @@ helm install my-port-agent port-labs/port-agent \
 
 For example:
 
-```
-{ "type": "WEBHOOK", "agent": true, "url": "YOUR URL" }
+```json showLineNumbers
+{ "type": "WEBHOOK", "agent": true, "url": "URL_TO_API_INSIDE_YOUR_NETWORK" }
 ```
 
 :::
 
 Well Done! **Port Agent** is now running in your environment, and will trigger any Webhook that you've configured (for Self-Service Actions, or changes in the Software Catalog).
+
+When a new invocation is detected, the agent will pull it from your Kafka topic and forward it to the internal API in your private network.
 
 ![Port Execution Agent Logs](../../../../static/img/platform-overview/self-service-actions/port-execution-agent/portAgentLogs.png)
