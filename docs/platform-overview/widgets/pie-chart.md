@@ -8,7 +8,7 @@ You can create a pie chart illustrating your catalog data divided by a specific 
 
 ## Creating visualization
 
-- On the top right of the page click on "Add Visualization" button
+- On the top right of the page click on `Add Visualization` button:
 - Select Pie Chart
 
 ![Dropdown](../../../static/img/platform-overview/widgets/AddPieChartVisualization.png)
