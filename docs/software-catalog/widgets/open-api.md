@@ -23,4 +23,4 @@ By using the combination of `"type": "object` and `"spec": "open-api"` in a [Blu
 
 Here is how the Swagger tab in the Specific Entity Page appears when an OpenAPI spec is provided:
 
-![OpenAPI Example](../../../static/img/platform-overview/widgets/openAPI.png)
+![OpenAPI Example](../../../static/img/software-catalog/widgets/openAPI.png)

@@ -22,7 +22,7 @@ For example, let’s create 2 Blueprints and connect them to each other:
 - **Blueprint #1**: Microservice;
 - **Blueprint #2**: Deployment.
 
-![Target blueprints and relations expanded](../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/targetBlueprintsAndRelationExpanded.png)
+![Target blueprints and relations expanded](../../static/img/self-service-actions/setting-self-service-actions-in-port/targetBlueprintsAndRelationExpanded.png)
 
 <details>
 <summary>An example Microservice Blueprint</summary>
@@ -127,7 +127,7 @@ For example, let’s create 2 Blueprints and connect them to each other:
 
 In order to create a Self-Service Action, go to the Blueprints page, expand the Microservice Blueprint and click on the `Create action` button as shown below:
 
-![Create action button on blueprint marked](../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/createActionOnBlueprintButtonMarked.png)
+![Create action button on blueprint marked](../../static/img/self-service-actions/setting-self-service-actions-in-port/createActionOnBlueprintButtonMarked.png)
 
 After clicking the button, you should see an editor with an empty array (`[]`) appear, that's where we will add our Self-Service Action
 
@@ -165,15 +165,15 @@ Here is an action array with a `CREATE` action already filled in:
 
 This is how the JSON editor looks after submitting the Self-Service Action:
 
-![Action editor filled](../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/microserviceEditorWithCreateAction.png)
+![Action editor filled](../../static/img/self-service-actions/setting-self-service-actions-in-port/microserviceEditorWithCreateAction.png)
 
 Now when you go to the Microservices Blueprint page, you will see a new button - `Create Microservice`:
 
-![Create button marked](../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/microservicePageWithCreateMarked.png)
+![Create button marked](../../static/img/self-service-actions/setting-self-service-actions-in-port/microservicePageWithCreateMarked.png)
 
 After clicking the `Create Microservice` option, we will see a form with the inputs specified when the new action was entered to the actions array:
 
-![Action create form](../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/actionCreateForm.png)
+![Action create form](../../static/img/self-service-actions/setting-self-service-actions-in-port/actionCreateForm.png)
 
 ### More Self-Service Actions
 
@@ -256,11 +256,11 @@ Now when we go back to the Microservice page, if we click on the 3 dots next to 
 
 **Day-2:**
 
-![Day-2 button marked](../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/day-2-action-marked.png)
+![Day-2 button marked](../../static/img/self-service-actions/setting-self-service-actions-in-port/day-2-action-marked.png)
 
 **Delete:**
 
-![Delete button marked](../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/delete-action-marked.png)
+![Delete button marked](../../static/img/self-service-actions/setting-self-service-actions-in-port/delete-action-marked.png)
 
 #### Add multiple Self-Service Actions of the same type
 
@@ -327,7 +327,7 @@ Now when you go to the Microservices Blueprint page, you will see 2 new buttons 
 
 <center>
 
-![Multiple Create Actions](../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/multiple-create-actions.png)
+![Multiple Create Actions](../../static/img/self-service-actions/setting-self-service-actions-in-port/multiple-create-actions.png)
 
 </center>
 
@@ -466,7 +466,7 @@ For example, you can deploy a new version of your microservice when a `CREATE` a
 
 The action is triggered from the page matching the Blueprint we configured the action on:
 
-![Create button marked](../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/microservicePageWithCreateMarked.png)
+![Create button marked](../../static/img/self-service-actions/setting-self-service-actions-in-port/microservicePageWithCreateMarked.png)
 
 :::tip create vs register
 When you define a `CREATE` action on a Blueprint, when viewing the Blueprint page you will notice that the create button now has a dropdown. Two options will appear: `Register` and `Create`:
@@ -481,13 +481,13 @@ When you define a `CREATE` action on a Blueprint, when viewing the Blueprint pag
 
 When clicking the `Create Microservice` option, we will see a form with the inputs we specified when we entered the new action to the actions array:
 
-![Action create form](../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/actionCreateForm.png)
+![Action create form](../../static/img/self-service-actions/setting-self-service-actions-in-port/actionCreateForm.png)
 
 ### DAY-2 action
 
 The action can be triggered by selecting it from the sub-menu of an existing Entity:
 
-![Day-2 button marked](../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/day-2-action-marked.png)
+![Day-2 button marked](../../static/img/self-service-actions/setting-self-service-actions-in-port/day-2-action-marked.png)
 
 :::note DAY-2 actions
 All Day-2 operations will appear in this sub-menu.
@@ -497,7 +497,7 @@ All Day-2 operations will appear in this sub-menu.
 
 The action can be triggered by selecting it from the sub-menu of an existing Entity:
 
-![Delete button marked](../../static/img/platform-overview/self-service-actions/setting-self-service-actions-in-port/delete-action-marked.png)
+![Delete button marked](../../static/img/self-service-actions/setting-self-service-actions-in-port/delete-action-marked.png)
 
 ## Action message structure
 

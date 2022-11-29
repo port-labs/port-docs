@@ -364,15 +364,15 @@ node index.js
 
 Login to port and go to the VM page and trigger the action via the **Create VM** action button:
 
-![Create VM button](../../../static/img/tutorial/CreateVMDropdown.png)
+![Create VM button](../../../static/img/self-service-actions/CreateVMDropdown.png)
 
 Fill the wanted details and click on `Create`
 
-![Create VM action form](../../../static/img/tutorial/CreateVMExecution.png)
+![Create VM action form](../../../static/img/self-service-actions/CreateVMExecution.png)
 
 And that's it, the `Success!` output shows that your local server really did receive your webhook payload:
 
-![Webhook server response](../../../static/img/tutorial/HelloWorldLog.png)
+![Webhook server response](../../../static/img/self-service-actions/HelloWorldLog.png)
 
 :::tip
 Now that webhook requests are forwarded to your local machine, you can use your IDE to place breakpoints, examine the structure of the webhook request and iterate on your custom handler logic.

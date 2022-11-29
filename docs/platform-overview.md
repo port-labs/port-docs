@@ -10,6 +10,8 @@ Welcome to Port! :wave:
 
 Whether you are a DevEx, platform, or DevOps engineer, Port helps you create your custom Developer Portal in no time! With Port, you can build the perfect setup and workflow for your organizational needs, in order to make your developer's lives much easier with self-service capabilities
 
+![Developer Platform complete vision](../static/img/quickstart/platform-vision.svg)
+
 ### Port as a Builder
 
 Our approach is to let you build anything with maximum flexibility. Therefore, we took a **builder-based** approach, in which you can build your asset landscape whichever way works for you. We don't enforce anything on how you build your catalog.
@@ -51,7 +53,7 @@ The Blueprints page is the main system page, in which you can create your full a
 
 When you first log in to Port, you will see an empty Blueprints page, like this one:
 
-![Empty Blueprints Page](../static/img/platform-overview/EmptyBlueprintsPage.png)
+![Empty Blueprints Page](../static/img/software-catalog/EmptyBlueprintsPage.png)
 
 ### How to Create a Blueprint?
 
@@ -78,7 +80,7 @@ The `Organization` section holds the following system pages:
 
 The `Software Catalog` holds all of the [pages](#main-pages).
 
-![Navigation Bar](../static/img/platform-overview/NavigationBar.png)
+![Navigation Bar](../static/img/software-catalog/NavigationBar.png)
 
 ## Pages
 
@@ -90,13 +92,13 @@ A new page is created whenever a new Blueprint is created. The page will appear 
 
 Every Blueprint's page is its main page, showing a full-page table view containing the [Entities](#whats-an-entity) of a specific Blueprint.
 
-![Microservices Main Page](../static/img/platform-overview/MicroservicesMainPage.png)
+![Microservices Main Page](../static/img/software-catalog/MicroservicesMainPage.png)
 
 #### Entity Pages
 
 Every [Entity](#whats-an-entity) has its page, showing a summary of the Entity's data and other related entities.
 
-![Entity page](../static/img/platform-overview/EntityPageExample.png)
+![Entity page](../static/img/software-catalog/EntityPageExample.png)
 
 :::note
 
@@ -104,7 +106,7 @@ Every [Entity](#whats-an-entity) has its page, showing a summary of the Entity's
 
 An Entity is the object instance of a Blueprint, and it represents software component data,as defined by the Blueprint properties.
 
-![Microservices Main Page](../static/img/platform-overview/MicroservicesMainPage.png)
+![Microservices Main Page](../static/img/software-catalog/MicroservicesMainPage.png)
 
 See [Port Components](./software-catalog/) for further details.
 :::
@@ -113,7 +115,7 @@ See [Port Components](./software-catalog/) for further details.
 
 Pages can also be created from any main page, by creating saved views:
 
-![Create a saved view page](../static/img/platform-overview/SaveViewAs.gif)
+![Create a saved view page](../static/img/software-catalog/SaveViewAs.gif)
 
 ## The Audit Log
 
@@ -125,13 +127,13 @@ The page is divided into 2 tabs:
 - Blueprints
 - Runs
 
-![Main Audit Log Page Entities Tab](../static/img/platform-overview/AuditLogPage.png)
+![Main Audit Log Page Entities Tab](../static/img/software-catalog/AuditLogPage.png)
 
 ## The Users page
 
 Port has a dedicated for managing all users, showing a list of all users, including their group membership.
 
-![Main Users Page](../static/img/platform-overview/UsersPageExample.png)
+![Main Users Page](../static/img/software-catalog/UsersPageExample.png)
 
 ### Managing Users
 

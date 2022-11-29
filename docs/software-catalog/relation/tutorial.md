@@ -23,7 +23,7 @@ A Relation is created between 2 Blueprints. So if you haven't created the `micro
 
 In order to create a relation from the UI, go to the Blueprints graph and click the pencil icon on the Blueprint that will be the `source` Blueprint of the Relation (for example, you want to map multiple `packages` that are used by a `microservice`, so `microservice` is the `source` Blueprint):
 
-![Blueprints page with Create Relation Marked](../../../static/img/tutorial/relation-basics/MicroservicePackageEditMarked.png)
+![Blueprints page with Create Relation Marked](../../../static/img/software-catalog/relation/tutorial/MicroservicePackageEditMarked.png)
 
 An editor window will open with the current schema of the Blueprint. Since there is no Relation configured on the Blueprint at the moment, the `relations` key in the JSON will be empty. Paste the following content in the `relations` key to create the Relation:
 
@@ -166,7 +166,7 @@ console.log(response.data);
 
 After creating the Relation, you will see a visual indicator in the Blueprints graph:
 
-![Developer Portal Blueprints Graph with Relations Line](../../../static/img/platform-overview/port-components/MicroservicePackageBlueprintGraphManyRelationUI.png)
+![Developer Portal Blueprints Graph with Relations Line](../../../static/img/software-catalog/MicroservicePackageBlueprintGraphManyRelationUI.png)
 
 ## Update Relations
 
@@ -187,7 +187,7 @@ Just like before, you can update a Relation from the UI or from the API.
 
 In order to update a Relation from the UI, go to the Blueprints graph, hover over the `source` Blueprint and click on the pencil icon that appears:
 
-![Developer Portal Graph relations edit marked](../../../static/img/tutorial/relation-basics/MicroservicePackageExpandedEditMarked.png)
+![Developer Portal Graph relations edit marked](../../../static/img/software-catalog/relation/tutorial/MicroservicePackageExpandedEditMarked.png)
 
 An editor window will open with the current schema of the Blueprint. In order to update the Relation, simply edit the value of the `title`, `required` or `many` properties as needed in the `microservice` Relation object
 

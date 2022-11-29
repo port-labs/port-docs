@@ -28,7 +28,7 @@ Each user is defined by the following properties:
 2. Role - the user’s permissions level (see the [Permission controls](./permissions-controls) section);
 3. Teams - a `team` is a group of users that owns Entities (see the [Team](#team-system-property) section).
 
-![Teams and Users page](../../../static/img/platform-overview/role-based-access-control/users-and-teams/usersAndTeams.png)
+![Teams and Users page](../../../static/img/software-catalog/role-based-access-control/users-and-teams/usersAndTeams.png)
 
 ### Users tab
 
@@ -61,7 +61,7 @@ Since the information is taken from your IdP, some actions can't be performed wh
 
 If you try to perform one of the disabled actions, the interface will display an explanation:
 
-![Managed by SSO notice](../../../static/img/platform-overview/role-based-access-control/users-and-teams/createTeamNoticeWithSSO.png)
+![Managed by SSO notice](../../../static/img/software-catalog/role-based-access-control/users-and-teams/createTeamNoticeWithSSO.png)
 :::
 
 ## `Team` system property
@@ -85,7 +85,7 @@ Entity JSON example with `team` field:
 
 Team dropdown selector in the Entity create/edit page:
 
-![Team property](../../../static/img/platform-overview/role-based-access-control/users-and-teams/teamPropertyMarkedInUIForm.png)
+![Team property](../../../static/img/software-catalog/role-based-access-control/users-and-teams/teamPropertyMarkedInUIForm.png)
 
 | Field | Type | Description                                            | Default      |
 | ----- | ---- | ------------------------------------------------------ | ------------ |

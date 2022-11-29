@@ -199,15 +199,15 @@ Replace `<YOUR_WEBHOOK_URL>` with the URL you got earlier.
 Everything is ready to run the configured Self-Service Actions.
 
 Go to the `AWS Bucket` Blueprint page, and run `Create AWS Bucket`:
-![create-bucket-button.png](../../static/img/tutorial/complete-use-cases/iac-templates/create-bucket-button.png)
+![create-bucket-button.png](../../static/img/complete-use-cases/iac-templates/create-bucket-button.png)
 
 Fill in the name of the S3 bucket (must be globally unique!) and click `Create`:
 
-![create-bucket-form.png](../../static/img/tutorial/complete-use-cases/iac-templates/create-bucket-form.png)
+![create-bucket-form.png](../../static/img/complete-use-cases/iac-templates/create-bucket-form.png)
 
 Hooray! In a minute, you'll have a new S3 bucket, which is also added as a Port entity.
 
-![created-bucket.png](../../static/img/tutorial/complete-use-cases/iac-templates/created-bucket.png)
+![created-bucket.png](../../static/img/complete-use-cases/iac-templates/created-bucket.png)
 
 #### Change ACL (Day-2 operation)
 
@@ -217,11 +217,11 @@ For example, a valid use case is to change bucket visibility from `private` to `
 
 Go to the bucket entity and choose the `Change ACL` Day-2 operation:
 
-![change-acl-button.png](../../static/img/tutorial/complete-use-cases/iac-templates/change-acl-button.png)
+![change-acl-button.png](../../static/img/complete-use-cases/iac-templates/change-acl-button.png)
 
 Choose the `public-read` option for `ACL`, and `Execute`:
 
-![change-acl-form.png](../../static/img/tutorial/complete-use-cases/iac-templates/change-acl-form.png)
+![change-acl-form.png](../../static/img/complete-use-cases/iac-templates/change-acl-form.png)
 
 `Terraform apply` will be triggered behind the scenes, and when it finishes, you will see the entity's `Bucket ACL` property updated to `public-read`.
 
@@ -231,11 +231,11 @@ Finally, you can clear your environment and delete the bucket.
 
 Go to the bucket entity and choose `Delete`:
 
-![delete-bucket-button.png](../../static/img/tutorial/complete-use-cases/iac-templates/delete-bucket-button.png)
+![delete-bucket-button.png](../../static/img/complete-use-cases/iac-templates/delete-bucket-button.png)
 
 Click on `Delete`:
 
-![delete-bucket-modal.png](../../static/img/tutorial/complete-use-cases/iac-templates/delete-bucket-modal.png)
+![delete-bucket-modal.png](../../static/img/complete-use-cases/iac-templates/delete-bucket-modal.png)
 
 Done! Your bucket will be deleted from AWS and Port.
 

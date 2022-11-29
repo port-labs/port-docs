@@ -99,7 +99,7 @@ Please notice the 'relations' seciton at the bottom of the Blueprint
 
 Let's have a look at our new relation!
 
-![blueprints.png](../../static/img/tutorial/complete-use-cases/microservice-dependency/blueprints.png)
+![blueprints.png](../../static/img/complete-use-cases/microservice-dependency/blueprints.png)
 
 For more information about DeploymentConfig and it's uses, click [here](./software-catalog#deployment-config-bp).
 
@@ -244,10 +244,10 @@ git push
 
 Now merge the code to main and witness the magic!
 
-![trigger_workflow.png](../../static/img/tutorial/complete-use-cases/microservice-dependency/trigger_workflow.png)
+![trigger_workflow.png](../../static/img/complete-use-cases/microservice-dependency/trigger_workflow.png)
 The workflow runs automatically, and when it finishes, we will see the new packages created and mapped to the relevant microservice deployment config.
 
-![new_package.png](../../static/img/tutorial/complete-use-cases/microservice-dependency/new_package.png)
+![new_package.png](../../static/img/complete-use-cases/microservice-dependency/new_package.png)
 
 ### Mapping NPM dependencies
 

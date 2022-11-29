@@ -53,8 +53,8 @@ Add the `embedded-URL` property to a Blueprint:
 
 Create or edit an Entity of the Blueprint you added the `Datadog` property to, and specify the URL to the Datadog dashboard:
 
-![Datadog Entity edit example](../../../static/img/platform-overview/widgets/editEntityDatadog.png)
+![Datadog Entity edit example](../../../static/img/software-catalog/widgets/editEntityDatadog.png)
 
 Now go to the Specific Entity Page of your Entity and the Datadog dashboard will be visible in a dedicated tab:
 
-![Datadog dashboard example](../../../static/img/platform-overview/widgets/datadog.png)
+![Datadog dashboard example](../../../static/img/software-catalog/widgets/datadog.png)

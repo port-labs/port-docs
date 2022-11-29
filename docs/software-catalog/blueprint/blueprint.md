@@ -27,7 +27,7 @@ Before you start, there are a few things to consider when defining your Blueprin
 :::note
 By the end of this section, you should have a Blueprint architecture similar to this in mind:
 
-![Example Blueprints and Relations Layout](../../../static/img/platform-overview/port-components/blueprints/exampleBlueprintsAndRelationsLayout.png)
+![Example Blueprints and Relations Layout](../../../static/img/software-catalog/blueprints/exampleBlueprintsAndRelationsLayout.png)
 :::
 
 ## Blueprint structure
@@ -138,7 +138,7 @@ Now let's look at the structure of this property definition and also explore the
 :::tip
 We highly recommend you set a `description`, so your developers will understand the property’s context.
 
-![Property Description Tooltip Example](../../../static/img/platform-overview/port-components/propertyDescriptionTooltipExample.png)
+![Property Description Tooltip Example](../../../static/img/software-catalog/propertyDescriptionTooltipExample.png)
 :::
 
 ## Property types
@@ -304,11 +304,11 @@ Even though the input is the same in both `email` and `user` formats, their pres
 
 In addition, `user` format distinguishes between users by their status:
 
-| User Status  | Example                                                                                             |
-| ------------ | --------------------------------------------------------------------------------------------------- |
-| Active       | ![Active user](../../../static/img/platform-overview/port-components/blueprints/activeUser.png)     |
-| Invited      | ![Invited user](../../../static/img/platform-overview/port-components/blueprints/invitedUser.png)   |
-| Unregistered | ![External user](../../../static/img/platform-overview/port-components/blueprints/externalUser.png) |
+| User Status  | Example                                                                            |
+| ------------ | ---------------------------------------------------------------------------------- |
+| Active       | ![Active user](../../../static/img/software-catalog/blueprints/activeUser.png)     |
+| Invited      | ![Invited user](../../../static/img/software-catalog/blueprints/invitedUser.png)   |
+| Unregistered | ![External user](../../../static/img/software-catalog/blueprints/externalUser.png) |
 
 :::
 
@@ -589,7 +589,7 @@ You can add icons to properties:
 
 The icon will be displayed in the column header of the property (in the example above - `repoUrl`):
 
-![Blueprints graph with new Microservice](../../../static/img/platform-overview/port-components/blueprints/repoUrlWithIcon.png)
+![Blueprints graph with new Microservice](../../../static/img/software-catalog/blueprints/repoUrlWithIcon.png)
 
 For a list of available icons refer to the [full icon list](#full-icon-list)
 

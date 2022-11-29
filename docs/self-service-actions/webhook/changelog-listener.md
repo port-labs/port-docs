@@ -341,7 +341,7 @@ Remember that you can make changes to Entities both from the [UI](../../software
 
 When the **health status** of a `deployment config` Entity changes, you should see a new message in the slack channel you chose when you created the slack webhook:
 
-![Software catalog changelog slack message](../../../static/img/tutorial/self-service-actions/webhook-actions/changelog-listener/changelog-slack-message.png)
+![Software catalog changelog slack message](../../../static/img/self-service-actions/changelog-slack-message.png)
 
 ## Summary
 

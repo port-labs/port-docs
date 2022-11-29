@@ -17,10 +17,10 @@ In this guide, you will implement a service maturity model using Port's [GitHub 
 After you finish the tutorial, you will have a well-defined service maturity environment that will use customized `Checks` that run periodically. They determine each `Service`'s maturity within the organization:
 
 Services
-![Services](../../static/img/tutorial/complete-use-cases/service-maturity/services.png)
+![Services](../../static/img/complete-use-cases/service-maturity/services.png)
 
 Checks
-![Checks](../../static/img/tutorial/complete-use-cases/service-maturity/checks.png)
+![Checks](../../static/img/complete-use-cases/service-maturity/checks.png)
 
 ## Environment Structure
 
@@ -28,7 +28,7 @@ The environment we're going to use includes 4 [Blueprints](../software-catalog/b
 
 Let's go over the different Blueprints shown below and how we'll create [Entities](../software-catalog/entity/entity.md) for each one of them:
 
-![Service Maturity Layout](../../static/img/tutorial/complete-use-cases/service-maturity/service-maturity-layout.png)
+![Service Maturity Layout](../../static/img/complete-use-cases/service-maturity/service-maturity-layout.png)
 
 - **Service** - the object that we would like to estimate its maturity. For example - payment service, order service, parsing service etc;
   - **Repository** - URL of the git repository of the service.
@@ -100,7 +100,7 @@ To find your Port API credentials go to [Port](https://app.getport.io), click on
 
 <center>
 
-![Port Developer Portal Credentials Modal](../../static/img/tutorial/credentials-modal.png)
+![Port Developer Portal Credentials Modal](../../static/img/software-catalog/credentials-modal.png)
 
 </center>
 :::
@@ -149,11 +149,11 @@ Now after all the Blueprints and Entities exist in Port, we should configure the
 ### Test service maturity
 
 Congratulations that's it! when you finish the setup steps above whenever the scheduled workflow triggers, you should see a scheduled `workflow run` that updates the maturity of your service in Port!
-![Workflow](../../static/img/tutorial/complete-use-cases/service-maturity/run-service-maturity-workflow.png)
-![Workflow full](../../static/img/tutorial/complete-use-cases/service-maturity/run-service-maturity-workflow-full.png)
+![Workflow](../../static/img/complete-use-cases/service-maturity/run-service-maturity-workflow.png)
+![Workflow full](../../static/img/complete-use-cases/service-maturity/run-service-maturity-workflow-full.png)
 
 Now you can head to [Port](https://app.getport.io/Services) and see your service's maturity `Level`
-![Services](../../static/img/tutorial/complete-use-cases/service-maturity/services.png)
+![Services](../../static/img/complete-use-cases/service-maturity/services.png)
 
 ## Customizing Checks
 
@@ -221,7 +221,7 @@ To create any custom `Check` as above, all you need to do is the following:
 
   - Via the terraform `setup.tf` file;
   - Or via the UI (click on the `+ Check` blue button on the right top corner):
-    ![Service Maturity Layout](../../static/img/tutorial/complete-use-cases/service-maturity/checks.png)
+    ![Service Maturity Layout](../../static/img/complete-use-cases/service-maturity/checks.png)
 
 - Create a new `workflow` file like the `check-has-readme.yml` in the example above and change it accordingly.
 

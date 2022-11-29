@@ -40,7 +40,7 @@ For example, if **Members** are allowed to edit `Cluster` Entities, then `Micros
 
 You can view (and edit) each user’s role in the users table (via the main menu):
 
-![Users page](../../../static/img/platform-overview/role-based-access-control/permissions/usersPageRolesHightlight.png)
+![Users page](../../../static/img/software-catalog/role-based-access-control/permissions/usersPageRolesHightlight.png)
 
 :::info
 Refer to the [Users and Teams](./users-and-teams-management) section for more information about the users page
@@ -65,11 +65,11 @@ The following configurations, among others, are available when using permissions
 
 To set permissions for a Blueprint, click on the permissions icon of the desired Blueprint in the Blueprints page:
 
-![Permissions button for blueprint](../../../static/img/platform-overview/role-based-access-control/permissions/permissionsOfBlueprint.png)
+![Permissions button for blueprint](../../../static/img/software-catalog/role-based-access-control/permissions/permissionsOfBlueprint.png)
 
 This will open the following window:
 
-![Permissions Window](../../../static/img/platform-overview/role-based-access-control/permissions/permissionsModal.png)
+![Permissions Window](../../../static/img/software-catalog/role-based-access-control/permissions/permissionsModal.png)
 
 As you can see, every operation that can be performed on the Blueprint or its Entities is listed in the JSON and can be controlled.
 
@@ -228,11 +228,11 @@ Configuring user permissions is reflected in Port's UI. The UI also includes ind
 
 The `register` and `unregister` buttons will be disabled in the UI, in accordance with the Blueprint permissions (unauthorized users/groups will not be able to register or unregister entities).
 
-![Create button disabled without permissions](../../../static/img/platform-overview/role-based-access-control/permissions/memberNoCreatePermission.png)
+![Create button disabled without permissions](../../../static/img/software-catalog/role-based-access-control/permissions/memberNoCreatePermission.png)
 
 The `edit property` button will be disabled according to the permissions:
 
-![Edit property disabled without permissions](../../../static/img/platform-overview/role-based-access-control/permissions/memberNoEditPermission.png)
+![Edit property disabled without permissions](../../../static/img/software-catalog/role-based-access-control/permissions/memberNoEditPermission.png)
 
 Immutable properties (restricted properties) will be hidden from users when modifying Entities.
 

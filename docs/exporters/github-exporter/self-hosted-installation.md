@@ -61,7 +61,7 @@ And save the downloaded file
 
 <center>
 
-![Port Developer Portal Credentials Modal](../../../static/img/tutorial/credentials-modal.png)
+![Port Developer Portal Credentials Modal](../../../static/img/software-catalog/credentials-modal.png)
 
 </center>
 :::

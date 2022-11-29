@@ -29,15 +29,15 @@ To create an Entity from the UI, go to the page that matches the Blueprint you w
 
 First go to the `Microservices` page:
 
-![Developer Portal Blueprints graph Packages page marked](../../../static/img/tutorial/entity-basics/BlueprintsGraphPackagesPageMarked.png)
+![Developer Portal Blueprints graph Packages page marked](../../../static/img/software-catalog/entity/tutorial/BlueprintsGraphPackagesPageMarked.png)
 
 To create a new `Package` click the `+ Package` button:
 
-![Developer Portal create Package](../../../static/img/tutorial/entity-basics/PackagesPageCreatePackageMarked.png)
+![Developer Portal create Package](../../../static/img/software-catalog/entity/tutorial/PackagesPageCreatePackageMarked.png)
 
 A UI form will open with the properties we created for the `Microservice` Blueprint:
 
-![Developer Portal create Package creation form](../../../static/img/tutorial/entity-basics/CreatePackageModal.png)
+![Developer Portal create Package creation form](../../../static/img/software-catalog/entity/tutorial/CreatePackageModal.png)
 
 #### Creating with the JSON editor
 
@@ -186,7 +186,7 @@ curl --location --request POST "https://api.getport.io/v1/blueprints/${blueprint
 
 You will have a new Entity called `Requests` on the Packages page:
 
-![Developer Portal New Package entity marked](../../../static/img/tutorial/entity-basics/RequestsNewPackage.png)
+![Developer Portal New Package entity marked](../../../static/img/software-catalog/entity/tutorial/RequestsNewPackage.png)
 
 ## Update Entities
 
@@ -197,7 +197,7 @@ You can change any mutable Entity, and edit/delete its property values.
 - Click the Pencil icon in each of the table columns;
 - Click the `...` button at the right side of an Entity listing, then click `show all properties`.
 
-![Developer Portal Edit Package entity](../../../static/img/tutorial/entity-basics/PackagesEntityEditMarked.png)
+![Developer Portal Edit Package entity](../../../static/img/software-catalog/entity/tutorial/PackagesEntityEditMarked.png)
 
 ### From the API
 
@@ -239,7 +239,7 @@ To delete an Entity you can:
 
 - Click the `...` button at the right end of an Entity listing, then click `Delete`.
 
-![Delete entity button marked](../../../static/img/platform-overview/port-components/entities/DeleteEntityButton.png)
+![Delete entity button marked](../../../static/img/software-catalog/entity/DeleteEntityButton.png)
 
 - Make an **HTTP DELETE** request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`
 
@@ -293,4 +293,4 @@ Since `Microservice` is **Related** to `Package` when creating a new package we 
 
 The result is a `microservice` Entity that has 2 different `package` Entities related to it:
 
-![Developer Portal Microservice With Many Package](../../../static/img/tutorial/entity-basics/MicroserviceWithManyPackages.png)
+![Developer Portal Microservice With Many Package](../../../static/img/software-catalog/entity/tutorial/MicroserviceWithManyPackages.png)

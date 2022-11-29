@@ -12,7 +12,7 @@ Using Port executions, you can easily scaffold new services and increase develop
 
 We created a `Service` blueprint
 
-![Service blueprint](../../../static/img/platform-overview/self-service-actions/service-pipeline-example/serviceBlueprint.png)
+![Service blueprint](../../../static/img/self-service-actions/service-pipeline-example/serviceBlueprint.png)
 
 And we also added the following actions to this blueprint:
 
@@ -25,11 +25,11 @@ Now when we go to the `Services` page, we can click on the dropdown in the `+ Se
 
 A menu will pop up:
 
-![Action form](../../../static/img/platform-overview/self-service-actions/service-pipeline-example/createNewServiceForm.png)
+![Action form](../../../static/img/self-service-actions/service-pipeline-example/createNewServiceForm.png)
 
 Also, note that clicking the pencil icon next to one of the `Values` fields, will open a standard JSON editor (it can also be a YAML format):
 
-![Values editor](../../../static/img/platform-overview/self-service-actions/service-pipeline-example/commonValuesEditor.png)
+![Values editor](../../../static/img/self-service-actions/service-pipeline-example/commonValuesEditor.png)
 
 After filling in the options and clicking `Execute` a new execution run will be triggered.
 
@@ -42,23 +42,23 @@ We deployed a Lambda function that is triggered by messages arriving in the Kafk
 
 Looking at the generated PR - it includes Port metadata used to link the PR with the new Service entity in Port, in addition i**t also adds all of the values provided by the developer as json/yaml files**:
 
-![New Service PR](../../../static/img/platform-overview/self-service-actions/service-pipeline-example/generatedPullRequest.png)
+![New Service PR](../../../static/img/self-service-actions/service-pipeline-example/generatedPullRequest.png)
 
 And if we look in Port, we can see an intermediate Service object, that includes all of the data provided at creation, waiting for the active state fields (such as `Status` and `Sync Status`) to be filled by a Github workflow that will trigger on PR merge:
 
-![New Service Marked](../../../static/img/platform-overview/self-service-actions/service-pipeline-example/newServiceMarked.png)
+![New Service Marked](../../../static/img/self-service-actions/service-pipeline-example/newServiceMarked.png)
 
 After the PR is merged, a Github workflow is executed that reports the new Service entity status to Port, and then the Service entity has all available data fields filled:
 
-![New Service Specific Entity Page](../../../static/img/platform-overview/self-service-actions/service-pipeline-example/newServiceSpecificEntityPage.png)
+![New Service Specific Entity Page](../../../static/img/self-service-actions/service-pipeline-example/newServiceSpecificEntityPage.png)
 
 Now that the service is up and running, we can run **day-2 operations** such as Upscale or Downscale when the service is experiencing higher/lower-than-usual traffic:
 
-![2nd day operations Marked](../../../static/img/platform-overview/self-service-actions/service-pipeline-example/service2ndDayOperations.png)
+![2nd day operations Marked](../../../static/img/self-service-actions/service-pipeline-example/service2ndDayOperations.png)
 
 Since some of these day-2 operations can be sensitive/dangerous/expensive, we ask for confirmation (and these can also trigger an approval request from the DevOps team before being executed)
 
-![Upscale confirmation](../../../static/img/platform-overview/self-service-actions/service-pipeline-example/upscaleServiceForm.png)
+![Upscale confirmation](../../../static/img/self-service-actions/service-pipeline-example/upscaleServiceForm.png)
 
 Port also exposes a **change log** Kafka Topic, by listening to that topic, you can subscribe to changes performed on every entity.
 So for example if the status of a service changes from `Healthy` to `Degraded` a message will be sent to the **change log** Kafka Topic. An automatic process can listen to messages in the topic, perform automatic fixing/healthcheck validation of the service, and then update the status in Port again when the issue is resolved, that way you can always use Port as a source of truth for the status of the environment, and also use it to trigger checks and maintenance.
@@ -67,11 +67,11 @@ So for example if the status of a service changes from `Healthy` to `Degraded` a
 
 Now you have a list of all the provisioned Services:
 
-![Service list](../../../static/img/platform-overview/self-service-actions/service-pipeline-example/servicesPage.png)
+![Service list](../../../static/img/self-service-actions/service-pipeline-example/servicesPage.png)
 
 You are also able to group by either by owner, team, project, environment, and more or even to group by all of these fields together:
 
-![Services by team](../../../static/img/platform-overview/self-service-actions/service-pipeline-example/servicesByTeamView.png)
+![Services by team](../../../static/img/self-service-actions/service-pipeline-example/servicesByTeamView.png)
 
 Here are some code examples used in this demo:
 

@@ -16,7 +16,7 @@ In this guide you will implement a service locking mechanism using Port's [GitHu
 
 The environment we're going to use includes 2 [Blueprints](../software-catalog/blueprint/blueprint.md) with a [Relation](../software-catalog/relation/relation.md) between them:
 
-![Service locking layout](../../static/img/tutorial/complete-use-cases/service-locking/service-locking-layout.png)
+![Service locking layout](../../static/img/complete-use-cases/service-locking/service-locking-layout.png)
 
 Let's go over the different Blueprints shown above and how we'll create [Entities](../software-catalog/entity/entity.md) for each one of them:
 
@@ -318,15 +318,15 @@ the `report-deployment` job is configured with a `needs` key whose value is `[ch
 
 If you try to push code to your repository when the deployment config `locked` field is set to `true`, the deployment will stop:
 
-![Workflow fail graph](./../../static/img/tutorial/complete-use-cases/service-locking/workflow-fail-graph.png)
+![Workflow fail graph](./../../static/img/complete-use-cases/service-locking/workflow-fail-graph.png)
 
 When you will look at the step that failed, you will see that the failure is due to the value of the `locked` field:
 
-![Lock check step](./../../static/img/tutorial/complete-use-cases/service-locking/workflow-lock-message.png)
+![Lock check step](./../../static/img/complete-use-cases/service-locking/workflow-lock-message.png)
 
 If you set the value of the `locked` field to `false`, the workflow will perform the deployment without any issue:
 
-![Workflow success graph](./../../static/img/tutorial/complete-use-cases/service-locking/workflow-success-graph.png)
+![Workflow success graph](./../../static/img/complete-use-cases/service-locking/workflow-success-graph.png)
 
 ## Summary
 

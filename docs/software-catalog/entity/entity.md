@@ -162,7 +162,7 @@ The first tab is the `Overview` tab, which shows two widgets: the Entity details
 **Related entities** of an Entity are presented on the Entity page as a list of table widgets containing the related Entity(ies) data.
 :::
 
-![Microservice entity page tabs marked](../../../static/img/platform-overview/port-components/pages/MicroserviceEntityPage.png)
+![Microservice entity page tabs marked](../../../static/img/software-catalog/pages/MicroserviceEntityPage.png)
 
 ## Next Steps
 

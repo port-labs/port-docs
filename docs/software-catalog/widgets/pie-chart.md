@@ -11,18 +11,18 @@ You can create a pie chart illustrating data from Entities in your software cata
 - On the top right of the page click on `Add Visualization` button;
 - Select Pie Chart;
 
-![Dropdown](../../../static/img/platform-overview/widgets/AddPieChartVisualization.png)
+![Dropdown](../../../static/img/software-catalog/widgets/AddPieChartVisualization.png)
 
 - Fill out the form and click save.
 
-![Dropdown](../../../static/img/platform-overview/widgets/AddPieChartForm.png)
+![Dropdown](../../../static/img/software-catalog/widgets/AddPieChartForm.png)
 
 ## Editing visualization
 
 - On the top right of the pie chart widget click on the three dots icon;
 - Select your desired action (edit/delete).
 
-![Dropdown](../../../static/img/platform-overview/widgets/EditOrDeleteWidget.png)
+![Dropdown](../../../static/img/software-catalog/widgets/EditOrDeleteWidget.png)
 
 ## Visualization properties
 

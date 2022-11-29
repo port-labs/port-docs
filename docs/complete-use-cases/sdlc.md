@@ -24,7 +24,7 @@ By the end of this guide, you will have a _Basic Model_ of a software catalog.
 
 The Basic Model covers the main SDLC intersections: from Services, to Environments and Deployments, and lastly the cloud:
 
-![software catalog layout](../../static/img/tutorial/complete-use-cases/software-catalog/software-catalog-layout.png)
+![software catalog layout](../../static/img/complete-use-cases/software-catalog/software-catalog-layout.png)
 
 Before we dive into the details of each [Blueprint](../software-catalog/blueprint/blueprint.md) type in the software catalog, here’s a brief explanation of the ontology diagrammed below, and how will we create [Entities](../software-catalog/entity/entity.md) for each of them:
 

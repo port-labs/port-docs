@@ -11,11 +11,11 @@ sidebar_label: Tutorial
 
 Let's take a look at the Blueprints page. Click on **Add blueprint** at the top right hand corner, and configure a `microservice` Blueprint. as shown in the image below:
 
-![Create New Blueprint](../../../static/img/welcome/quickstart/newBlueprintButton.png)
+![Create New Blueprint](../../../static/img/quickstart/newBlueprintButton.png)
 
 After clicking the button, you should see a creation form:
 
-![New Blueprint Text](../../../static/img/welcome/quickstart/newBlueprintDefaultText.png)
+![New Blueprint Text](../../../static/img/quickstart/newBlueprintDefaultText.png)
 
 The microservice Blueprint will include the following properties:
 
@@ -62,15 +62,15 @@ In order to create a Blueprint with the following properties, we will use the fo
 
 Click on the `save` button and view your new Blueprint in the Blueprints graph:
 
-![Blueprints graph with new Microservice](../../../static/img/welcome/quickstart/blueprintGraphWithMicroserviceClosed.png)
+![Blueprints graph with new Microservice](../../../static/img/quickstart/blueprintGraphWithMicroserviceClosed.png)
 
 If you click on the `expand` button as shown in the image below:
 
-![Blueprints graph with new Microservice And Expand Makred](../../../static/img/welcome/quickstart/blueprintGraphWithMicroserviceClosedAndExpandMarked.png)
+![Blueprints graph with new Microservice And Expand Makred](../../../static/img/quickstart/blueprintGraphWithMicroserviceClosedAndExpandMarked.png)
 
 You will see an expanded view of the Blueprint we just created, with all of the properties listed alongside the types we provided for them:
 
-![Example microservice blueprint](../../../static/img/platform-overview/port-components/blueprints/exampleMicroserviceBlueprint.png)
+![Example microservice blueprint](../../../static/img/software-catalog/blueprints/exampleMicroserviceBlueprint.png)
 
 ### From the API
 
@@ -85,7 +85,7 @@ To find your Port API credentials go to [Port](https://app.getport.io), click on
 
 <center>
 
-![Port Developer Portal Credentials Modal](../../../static/img/tutorial/credentials-modal.png)
+![Port Developer Portal Credentials Modal](../../../static/img/software-catalog/credentials-modal.png)
 
 </center>
 
@@ -325,7 +325,7 @@ curl --location --request POST "https://api.getport.io/v1/blueprints" \
 
 Now, you will have a Blueprint in the Blueprints graph as follows:
 
-![Example microservice blueprint](../../../static/img/platform-overview/port-components/blueprints/exampleMicroserviceBlueprint.png)
+![Example microservice blueprint](../../../static/img/software-catalog/blueprints/exampleMicroserviceBlueprint.png)
 
 ## Update Blueprints
 
@@ -336,7 +336,7 @@ In order to update a Blueprint, you can do either of the following:
 - Click the pencil icon in the Blueprints graph;
 - Make an HTTP PUT request to the URL: `https://api.getport.io/v1/{blueprint_identifier}`
 
-![Blueprints Graph edit button marked](../../../static/img/platform-overview/port-components/blueprints/blueprintGraphEditButtonMarked.png)
+![Blueprints Graph edit button marked](../../../static/img/software-catalog/blueprints/blueprintGraphEditButtonMarked.png)
 
 A PUT request has the same body as a POST request, it will simply overwrite the Blueprint with the new data provided.
 
@@ -351,7 +351,7 @@ In order to delete a Blueprint you can do either of the following:
 - Click on the trash can icon in the specific Blueprint’s node in the blueprints graph;
 - Make an HTTP DELETE request to the URL `https://api.getport.io/v1/{blueprint_identifier}`
 
-![Blueprints Graph delete button marked](../../../static/img/platform-overview/port-components/blueprints/blueprintGraphDeleteButtonMarked.png)
+![Blueprints Graph delete button marked](../../../static/img/software-catalog/blueprints/blueprintGraphDeleteButtonMarked.png)
 
 ## Next steps
 
@@ -389,4 +389,4 @@ You can create the new Blueprint from the UI (using the `Add Blueprint` button i
 
 At the end of this section, your Blueprints graph will include the two Blueprints shown below:
 
-![graph package microservice](../../../static/img/platform-overview/port-components/blueprints/graphPackageMicroservice.png)
+![graph package microservice](../../../static/img/software-catalog/blueprints/graphPackageMicroservice.png)

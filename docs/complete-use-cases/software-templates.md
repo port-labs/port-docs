@@ -171,7 +171,7 @@ These steps are highly recommended to keep track, over time, of the Self-Service
 
 That's it! You should be ready to use the provisioned actions, as shown here:
 
-![create-service.png](../../static/img/tutorial/complete-use-cases/software-templates/create-service.png)
+![create-service.png](../../static/img/complete-use-cases/software-templates/create-service.png)
 
 ## Summary
 

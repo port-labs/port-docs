@@ -744,7 +744,7 @@ This will send a message to the Kafka topic.
 
 Now the CloudWatch logs for the Lambda function (Accessible in the AWS console through Lambda→functions→port-execution-lambda→Monitor→Logs→View logs in CloudWatch), will show a log of the latest executions of the Lambda function. It also includes the actual message received, and whether this new VM entity was successfully reported to Port:
 
-![Example cloudwatch logs with topic message](../../../static/img/platform-overview/self-service-actions/basic-execution-aws-lambda-example/exampleCloudwatchlogsWithTopicMessage.jpeg)
+![Example cloudwatch logs with topic message](../../../static/img/self-service-actions/basic-execution-aws-lambda-example/exampleCloudwatchlogsWithTopicMessage.jpeg)
 
 Here is an example of the request payload received from Port, inside the Kafka message:
 
