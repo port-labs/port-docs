@@ -1,5 +1,5 @@
 ---
-sidebar_position: 4
+sidebar_position: 6
 ---
 
 import Tabs from "@theme/Tabs"
@@ -415,7 +415,7 @@ And the result shall be:
 
 :::info entity page and search
 
-The output received from the `relatedTo` operator without any other rule added to the search, is the same output you will receive when viewing the [Entity page](../software-catalog/entity.md#entity-page) of the Entity you specified in the `value` field
+The output received from the `relatedTo` operator without any other rule added to the search, is the same output you will receive when viewing the [Entity page](../software-catalog/entity/entity.md#entity-page) of the Entity you specified in the `value` field
 :::
 
 ### `dependedOn` operator

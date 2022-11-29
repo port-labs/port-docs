@@ -6,7 +6,7 @@ sidebar_position: 3
 
 In this guide, we will show you how to debug Webhook Self-Service Actions that are sent from Port locally.
 
-This example contains the initial steps to set up a standard Self-Service Action use case, following it shows how to locally debug the payload sent by Port through the webhook [invocation method](../../../self-service-actions/setting-self-service-actions-in-port.md#invocation-method).
+This example contains the initial steps to set up a standard Self-Service Action use case, following it shows how to locally debug the payload sent by Port through the webhook [invocation method](../self-service-actions-deep-dive.md#invocation-method).
 
 ## Prerequisites
 
@@ -364,15 +364,15 @@ node index.js
 
 Login to port and go to the VM page and trigger the action via the **Create VM** action button:
 
-![Create VM button](../../../../static/img/tutorial/CreateVMDropdown.png)
+![Create VM button](../../../static/img/tutorial/CreateVMDropdown.png)
 
 Fill the wanted details and click on `Create`
 
-![Create VM action form](../../../../static/img/tutorial/CreateVMExecution.png)
+![Create VM action form](../../../static/img/tutorial/CreateVMExecution.png)
 
 And that's it, the `Success!` output shows that your local server really did receive your webhook payload:
 
-![Webhook server response](../../../../static/img/tutorial/HelloWorldLog.png)
+![Webhook server response](../../../static/img/tutorial/HelloWorldLog.png)
 
 :::tip
 Now that webhook requests are forwarded to your local machine, you can use your IDE to place breakpoints, examine the structure of the webhook request and iterate on your custom handler logic.

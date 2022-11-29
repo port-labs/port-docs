@@ -1,14 +1,14 @@
 ---
 sidebar_position: 3
-sidebar label: Entity Basics
+sidebar_label: Tutorial
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Entity Basics
+# Entity Tutorial
 
-## Creating entities
+## Create Entities
 
 There are 2 methods to create Entities:
 
@@ -16,7 +16,7 @@ There are 2 methods to create Entities:
 - API.
 
 :::info
-We will be creating Entities for the `Microservice` Blueprint from [Creating a Blueprint](./blueprint-basics.md#creating-a-blueprint) and the `package` Blueprint from [Blueprint Next Steps](./blueprint-basics.md#next-steps). Please make sure to create them before reading on so you to follow along.
+We will be creating Entities for the `Microservice` Blueprint from [Creating a Blueprint](../blueprint/tutorial.md#creating-a-blueprint) and the `package` Blueprint from [Blueprint Next Steps](../blueprint/tutorial.md#next-steps). Please make sure to create them before reading on so you to follow along.
 :::
 
 :::note
@@ -29,19 +29,19 @@ To create an Entity from the UI, go to the page that matches the Blueprint you w
 
 First go to the `Microservices` page:
 
-![Developer Portal Blueprints graph Packages page marked](../../static/img/tutorial/entity-basics/BlueprintsGraphPackagesPageMarked.png)
+![Developer Portal Blueprints graph Packages page marked](../../../static/img/tutorial/entity-basics/BlueprintsGraphPackagesPageMarked.png)
 
 To create a new `Package` click the `+ Package` button:
 
-![Developer Portal create Package](../../static/img/tutorial/entity-basics/PackagesPageCreatePackageMarked.png)
+![Developer Portal create Package](../../../static/img/tutorial/entity-basics/PackagesPageCreatePackageMarked.png)
 
 A UI form will open with the properties we created for the `Microservice` Blueprint:
 
-![Developer Portal create Package creation form](../../static/img/tutorial/entity-basics/CreatePackageModal.png)
+![Developer Portal create Package creation form](../../../static/img/tutorial/entity-basics/CreatePackageModal.png)
 
 #### Creating with the JSON editor
 
-Every entity has a format similar to the one we explained in the [Understanding the structure of an entity](../software-catalog/entity.md#entity-json-structure), which is viewable via the _JSON mode_ button. In order to create your first `package`, paste in the following content:
+Every entity has a format similar to the one we explained in the [Understanding the structure of an entity](./entity.md#entity-json-structure), which is viewable via the _JSON mode_ button. In order to create your first `package`, paste in the following content:
 
 ```json showLineNumbers
 {
@@ -60,7 +60,7 @@ Every entity has a format similar to the one we explained in the [Understanding 
 ### From the API
 
 :::note
-Remember that an access token is needed to make API requests, refer back to [Getting an API token](./blueprint-basics.md#getting-an-api-token) if you need to generate a new one.
+Remember that an access token is needed to make API requests, refer back to [Getting an API token](../blueprint/tutorial.md#getting-an-api-token) if you need to generate a new one.
 :::
 
 #### Creating an entity
@@ -186,9 +186,9 @@ curl --location --request POST "https://api.getport.io/v1/blueprints/${blueprint
 
 You will have a new Entity called `Requests` on the Packages page:
 
-![Developer Portal New Package entity marked](../../static/img/tutorial/entity-basics/RequestsNewPackage.png)
+![Developer Portal New Package entity marked](../../../static/img/tutorial/entity-basics/RequestsNewPackage.png)
 
-## Updating an entity
+## Update Entities
 
 You can change any mutable Entity, and edit/delete its property values.
 
@@ -197,7 +197,7 @@ You can change any mutable Entity, and edit/delete its property values.
 - Click the Pencil icon in each of the table columns;
 - Click the `...` button at the right side of an Entity listing, then click `show all properties`.
 
-![Developer Portal Edit Package entity](../../static/img/tutorial/entity-basics/PackagesEntityEditMarked.png)
+![Developer Portal Edit Package entity](../../../static/img/tutorial/entity-basics/PackagesEntityEditMarked.png)
 
 ### From the API
 
@@ -229,7 +229,7 @@ The API offers several methods to update an existing Entity:
   properties': {"version": "2.29"}
   ```
 
-## Deleting entities
+## Delete Entities
 
 :::danger
 An Entity cannot be restored after deletion!
@@ -239,7 +239,7 @@ To delete an Entity you can:
 
 - Click the `...` button at the right end of an Entity listing, then click `Delete`.
 
-![Delete entity button marked](../../static/img/platform-overview/port-components/entities/DeleteEntityButton.png)
+![Delete entity button marked](../../../static/img/platform-overview/port-components/entities/DeleteEntityButton.png)
 
 - Make an **HTTP DELETE** request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`
 
@@ -248,7 +248,7 @@ To delete an Entity you can:
 Now that we understand **Entities**, we can start creating related Entities to model our related data in the infrastructure!
 
 :::tip
-Remember that each Entity has a page of its own, as seen in the [Entity page section](../software-catalog/entity.md#entity-page).
+Remember that each Entity has a page of its own, as seen in the [Entity page section](./entity.md#entity-page).
 :::
 
 First, let's create another `package` Entity.
@@ -293,4 +293,4 @@ Since `Microservice` is **Related** to `Package` when creating a new package we 
 
 The result is a `microservice` Entity that has 2 different `package` Entities related to it:
 
-![Developer Portal Microservice With Many Package](../../static/img/tutorial/entity-basics/MicroserviceWithManyPackages.png)
+![Developer Portal Microservice With Many Package](../../../static/img/tutorial/entity-basics/MicroserviceWithManyPackages.png)

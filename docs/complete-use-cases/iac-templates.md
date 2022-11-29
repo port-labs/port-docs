@@ -50,7 +50,7 @@ Now you have a running server that receives a webhook request from Port and appl
 
 To make your local machine public to Port, you can use either [ngrok](https://ngrok.com/download) or [smee](https://smee.io/).
 
-Our [local debugging guide](../tutorials/self-service-actions/webhook-actions/local-debugging-webhook.md#creating-the-vm-create-action) contains a reference on how to work with `smee`.
+Our [local debugging guide](../self-service-actions/webhook/local-debugging-webhook.md#creating-the-vm-create-action) contains a reference on how to work with `smee`.
 
 Otherwise, if you choose `ngrok`, run:
 

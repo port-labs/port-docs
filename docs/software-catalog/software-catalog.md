@@ -8,6 +8,6 @@ The following section will explore the different Core Components that exist in P
 
 - [Blueprint](./blueprint/blueprint.md)
 - [Relation](./relation/relation.md)
-- [Entity](./entity.md)
+- [Entity](./entity/entity.md)
 - [Mirror Properties](./mirror-properties.md)
 - [Calculation Properties](./calculation-properties.md)

@@ -1,4 +1,9 @@
-# Tutorial
+---
+sidebar_position: 1
+sidebar_label: Tutorial
+---
+
+# Blueprint Tutorial
 
 ## Create Blueprints
 

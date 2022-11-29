@@ -19,7 +19,7 @@ The steps shown in the image above are as follows:
    - Ensures that the sender of the message is Port
    - Ensures that the received message is not a replay of an older message
 
-   To learn how to verify the webhook request, refer to the [Verifying Webhook Signature](../../../tutorials/self-service-actions/webhook-actions/signature-verification) page.
+   To learn how to verify the webhook request, refer to the [Verifying Webhook Signature](../webhook/signature-verification) page.
 
    :::
 

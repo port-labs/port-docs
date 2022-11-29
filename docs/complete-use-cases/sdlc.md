@@ -26,7 +26,7 @@ The Basic Model covers the main SDLC intersections: from Services, to Environmen
 
 ![software catalog layout](../../static/img/tutorial/complete-use-cases/software-catalog/software-catalog-layout.png)
 
-Before we dive into the details of each [Blueprint](../software-catalog/blueprint/blueprint.md) type in the software catalog, here’s a brief explanation of the ontology diagrammed below, and how will we create [Entities](../software-catalog/entity.md) for each of them:
+Before we dive into the details of each [Blueprint](../software-catalog/blueprint/blueprint.md) type in the software catalog, here’s a brief explanation of the ontology diagrammed below, and how will we create [Entities](../software-catalog/entity/entity.md) for each of them:
 
 - **Service** - a microservice, a software monolith, or any other software architecture.
   - In this example services will be reported by Port's GitHub App.
@@ -360,7 +360,7 @@ The Blueprint JSON provided below already includes the Relations between the dif
 </details>
 
 :::tip
-Remember that Blueprints can be created both from the [UI](../tutorials/blueprint-basics.md#from-the-ui) and from the [API](../tutorials/blueprint-basics.md#from-the-api)
+Remember that Blueprints can be created both from the [UI](../software-catalog/blueprint/tutorial.md#from-the-ui) and from the [API](../software-catalog/blueprint/tutorial.md#from-the-api)
 :::
 
 Now that you have your Blueprints created, connected and ready to go, time to create your Entities:

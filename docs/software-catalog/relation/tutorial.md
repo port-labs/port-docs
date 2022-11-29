@@ -1,14 +1,14 @@
 ---
-sidebar_position: 2
+sidebar_position: 1
 sidebar_label: Tutorial
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Tutorial
+# Relation Tutorial
 
-## Creating Relations
+## Create Relations
 
 Relations can be created using two methods:
 
@@ -168,7 +168,7 @@ After creating the Relation, you will see a visual indicator in the Blueprints g
 
 ![Developer Portal Blueprints Graph with Relations Line](../../../static/img/platform-overview/port-components/MicroservicePackageBlueprintGraphManyRelationUI.png)
 
-## Updating relations
+## Update Relations
 
 When updating a Relation, it is only possible to update the `title`, `required` and `many` keys.
 
@@ -199,7 +199,7 @@ In order to update a Relation from the API, you will make a PUT request to the U
 
 The request body will include the existing body of the Blueprint, alongside the updated `relations` object, after the desired updates to the existing Relation have been applied.
 
-## Deleting relations
+## Delete Relations
 
 :::danger
 A Relation cannot be restored after deletion!

@@ -18,7 +18,7 @@ The environment we're going to use includes 2 [Blueprints](../software-catalog/b
 
 ![Service locking layout](../../static/img/tutorial/complete-use-cases/service-locking/service-locking-layout.png)
 
-Let's go over the different Blueprints shown above and how we'll create [Entities](../software-catalog/entity.md) for each one of them:
+Let's go over the different Blueprints shown above and how we'll create [Entities](../software-catalog/entity/entity.md) for each one of them:
 
 - **Deployment Config** - a deployment config is a representation of the current “live” version of a service running in a specific environment. It will include references to the service, environment, and deployment, as well as real-time information such as status, uptime, and any other relevant metadata.
   - In this example deployment configs will be reported manually.
@@ -111,7 +111,7 @@ The Blueprint JSON provided below already includes the Relations between the dif
 </details>
 
 :::tip
-Remember that Blueprints can be created both from the [UI](../tutorials/blueprint-basics.md#from-the-ui) and from the [API](../tutorials/blueprint-basics.md#from-the-api)
+Remember that Blueprints can be created both from the [UI](../software-catalog/blueprint/tutorial.md#from-the-ui) and from the [API](../software-catalog/blueprint/tutorial.md#from-the-api)
 :::
 
 :::note

@@ -62,7 +62,7 @@ Note the **Running service** Blueprint - it is meant to represent a running depl
 :::tip
 In this tutorial, we will demonstrate how to perform every step using Port's web UI and Port's REST API.
 
-This tutorial includes various examples of ways to interact with Port's API. For more, you are welcome to visit the [API section](./tutorials/blueprint-basics.md#from-the-api) in [Blueprint basics](./tutorials/blueprint-basics.md).
+This tutorial includes various examples of ways to interact with Port's API. For more, you are welcome to visit the [API section](./software-catalog/blueprint/tutorial.md#from-the-api) in [Blueprint basics](./software-catalog/blueprint/tutorial.md).
 
 Port also has a [GitHub app](./exporters/github-exporter) and a [Terraform provider](./api-providers/terraform.md) you can use to ingest data and interact with Port's components.
 
@@ -300,7 +300,7 @@ access_token = token_response.json()['accessToken']
 ```
 
 :::tip
-For examples in other languages you can visit the [API section](./tutorials/blueprint-basics.md#from-the-api) in [Blueprint basics](./tutorials/blueprint-basics.md).
+For examples in other languages you can visit the [API section](./software-catalog/blueprint/tutorial.md#from-the-api) in [Blueprint basics](./software-catalog/blueprint/tutorial.md).
 
 :::
 
@@ -1222,7 +1222,7 @@ print(json.dumps(running_service_response.json(), indent=2))
 
 </details>
 
-In addition, you can also use Port's API to [search](./tutorials/search-in-port.md) for Blueprints and Entities.
+In addition, you can also use Port's API to [search](./software-catalog/search-in-port.md) for Blueprints and Entities.
 
 ## What now?
 
@@ -1246,7 +1246,7 @@ These suggestions show the basic steps in creating your very own Developer Porta
 
 1. Create [Blueprints](./software-catalog/blueprint/blueprint.md) for your software and infrastructure components;
 2. Map out the [Relations](./software-catalog/relation/relation.md) between your Blueprints;
-3. Ingest data to your catalog by creating [Entities](./software-catalog/entity.md) based on your Blueprints via Port's UI or using our API;
+3. Ingest data to your catalog by creating [Entities](./software-catalog/entity/entity.md) based on your Blueprints via Port's UI or using our API;
 4. Define [Self-Service Actions](./self-service-actions/self-service-actions.md) that can be used by you and your developers;
 5. Use one of our [Complete use cases](./complete-use-cases/complete-use-cases.md) to fully set up your software catalog.
 
@@ -1256,14 +1256,14 @@ If you want to learn more about Port's capabilities in a specific area, you can 
 
 - [Blueprints deep dive](./software-catalog/blueprint/blueprint.md);
 - [Relations deep dive](./software-catalog/relation/relation.md);
-- [Entities deep dive](./software-catalog/entity.md);
+- [Entities deep dive](./software-catalog/entity/entity.md);
 - [Self-Service Actions deep dive](./self-service-actions/self-service-actions.md).
 
 ### Using the API
 
 If you want to continue utilizing Port's REST API Interface, take a look at these resources:
 
-- [Blueprint Basics](./tutorials/blueprint-basics.md);
-- [Relation Basics](./tutorials/relation-basics.md);
-- [Entity Basics](./tutorials/relation-basics.md);
+- [Blueprint Tutorial](./software-catalog/blueprint/tutorial.md);
+- [Relation Tutorial](./software-catalog/relation/tutorial.md);
+- [Entity Tutorial](./software-catalog/entity/tutorial.md);
 - [Port API Reference](./api-providers/rest.md).

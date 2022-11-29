@@ -98,11 +98,11 @@ That's it! after the push is complete, the exporter will start ingesting the ent
 
 ![Developer Portal Microservice](../../../static/img/integrations/github-app/GitHubMicroservices.png)
 
-Check out the `README.md` in markdown format inside the [Specific Entity Page](../../software-catalog/entity.md#entity-page)
+Check out the `README.md` in markdown format inside the [Specific Entity Page](../../software-catalog/entity/entity.md#entity-page)
 
 ![Developer Portal GitHub README](../../../static/img/integrations/github-app/GitHubReadme.png)
 
-You can also have a Swagger component within the [Specific Entity Page](../../software-catalog/entity.md#entity-page). To achieve that all you have to do is to add a `jq` mapping of an `open-api.json` file to the `port-app-config.yml` created above.
+You can also have a Swagger component within the [Specific Entity Page](../../software-catalog/entity/entity.md#entity-page). To achieve that all you have to do is to add a `jq` mapping of an `open-api.json` file to the `port-app-config.yml` created above.
 
 <details>
 

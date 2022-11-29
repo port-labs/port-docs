@@ -1,9 +1,9 @@
 ---
 sidebar_position: 1
-sidebar_label: Setting Self-Service Actions In Port
+sidebar_label: Self-Service Actions Deep Dive
 ---
 
-# Setting Self-Service Actions In Port
+# Self-Service Actions Deep Dive
 
 **Self-Service Actions** in Port enable developer self-service by configuring one of the 3 Self-Service Action types on Blueprints and the Entities that originated from them:
 
@@ -608,4 +608,6 @@ Here is an example `payload` object for a `CREATE` action:
 
 Now that you have the basics of Self-Service Actions, you can refer to our examples for some practical use-cases:
 
+```
 - [Setting up a basic execution runner using AWS Lambda](../tutorials/self-service-actions/kafka-actions/execution-basic-runner-using-aws-lambda.md)
+```

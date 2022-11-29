@@ -17,7 +17,7 @@ sidebar_position: 1
 You can add any property you want into the base `microservice.json` file
 :::
 
-3. Once you are satisfied with your Blueprint, go ahead and create it in Port [via UI](../../tutorials/blueprint-basics.md#from-the-ui) or [via API](../../tutorials/blueprint-basics.md#from-the-api).
+3. Once you are satisfied with your Blueprint, go ahead and create it in Port [via UI](../../software-catalog/blueprint/tutorial.md#from-the-ui) or [via API](../../software-catalog/blueprint/tutorial.md#from-the-api).
 
 4. Now let's get the data inside Port:
 

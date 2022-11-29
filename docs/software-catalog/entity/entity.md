@@ -30,21 +30,21 @@ This is the basic structure of an Entity:
 
 ## Structure table
 
-| Field        | Type     | Description                                                                                                                                                                                                       |
-| ------------ | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `identifier` | `String` | Unique identifier. <br /> Note that while the identifier is unique, it can be changed after creation.                                                                                                             |
-| `title`      | `String` | Entity name that will be shown in the UI.                                                                                                                                                                         |
-| `team`       | `Array`  | **Optional Field.** An array of the associated teams. Only available teams can be added. <br /> Note that group permissions are handled according to this array, see [Teams and ownership](#teams-and-ownership). |
-| `blueprint`  | `String` | The name of the [Blueprint](./blueprint) that this Entity is based on.                                                                                                                                            |
-| `properties` | `Object` | An object containing key-value pairs, where each key is a property **as defined in the Blueprint definition**, and each value applies the `type` of the property.                                                 |
-| `relations`  | `object` | An object containing key-value pairs.<br /> Each key is the identifier of the [Relation](./relation) that is defined on the blueprint.<br /><br />See more in the [Related entities](#related-entities) section.  |
+| Field        | Type     | Description                                                                                                                                                                                                                   |
+| ------------ | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `identifier` | `String` | Unique identifier. <br /> Note that while the identifier is unique, it can be changed after creation.                                                                                                                         |
+| `title`      | `String` | Entity name that will be shown in the UI.                                                                                                                                                                                     |
+| `team`       | `Array`  | **Optional Field.** An array of the associated teams. Only available teams can be added. <br /> Note that group permissions are handled according to this array, see [Teams and ownership](#teams-and-ownership).             |
+| `blueprint`  | `String` | The name of the [Blueprint](../blueprint/blueprint.md) that this Entity is based on.                                                                                                                                          |
+| `properties` | `Object` | An object containing key-value pairs, where each key is a property **as defined in the Blueprint definition**, and each value applies the `type` of the property.                                                             |
+| `relations`  | `object` | An object containing key-value pairs.<br /> Each key is the identifier of the [Relation](../relation/relation.md) that is defined on the blueprint.<br /><br />See more in the [Related entities](#related-entities) section. |
 
 #### Teams and ownership
 
 :::info teams and ownership
 The `team` key defines ownership over an Entity and controls who can modify or delete an existing Entity.
 
-To Explore more about Ownership in Port see our [Permissions](./role-based-access-control/permissions-controls.md) section.
+To Explore more about Ownership in Port see our [Permissions](../role-based-access-control/permissions-controls.md) section.
 :::
 
 ## Example
@@ -131,7 +131,7 @@ When a Relation between Blueprints is configured with `many = true`, you can add
 ```
 
 :::tip
-Click for more details about [**relations**](./relation).
+Click for more details about [**relations**](../relation/relation.md).
 :::
 
 ### Relation mapping example
@@ -150,7 +150,7 @@ In order to map this `microservice` to our `notificationServiceDeploymentV1` `de
 
 Specifying the `notificationService` under the Relation maps the connection between our `notificationServiceDeploymentV1` Entity and the `notificationService` Entity, so that when you view the `notificationServiceDeploymentV1` entity you will also see the related `notificationService` entity.
 
-In addition, you will be able to use [Mirror Properties](./mirror-properties) to map additional properties from the `microservice` Blueprint to the `deployment` Entity
+In addition, you will be able to use [Mirror Properties](../mirror-properties.md) to map additional properties from the `microservice` Blueprint to the `deployment` Entity
 
 ## Entity page
 
@@ -162,10 +162,10 @@ The first tab is the `Overview` tab, which shows two widgets: the Entity details
 **Related entities** of an Entity are presented on the Entity page as a list of table widgets containing the related Entity(ies) data.
 :::
 
-![Microservice entity page tabs marked](../../static/img/platform-overview/port-components/pages/MicroserviceEntityPage.png)
+![Microservice entity page tabs marked](../../../static/img/platform-overview/port-components/pages/MicroserviceEntityPage.png)
 
 ## Next Steps
 
-[Explore How to Create, Edit, and Delete Entities with basic examples](../tutorials/entity-basics.md)
+[Explore How to Create, Edit, and Delete Entities with basic examples](./tutorial)
 
-[Dive into advanced operations on Entities with our API ➡️ ](../api-providers/rest.md)
+[Dive into advanced operations on Entities with our API ➡️ ](../../api-providers/rest.md)

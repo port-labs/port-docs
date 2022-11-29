@@ -26,7 +26,7 @@ Checks
 
 The environment we're going to use includes 4 [Blueprints](../software-catalog/blueprint/blueprint.md) with multiple [Relations](../software-catalog/relation/relation.md) between them.
 
-Let's go over the different Blueprints shown below and how we'll create [Entities](../software-catalog/entity.md) for each one of them:
+Let's go over the different Blueprints shown below and how we'll create [Entities](../software-catalog/entity/entity.md) for each one of them:
 
 ![Service Maturity Layout](../../static/img/tutorial/complete-use-cases/service-maturity/service-maturity-layout.png)
 
