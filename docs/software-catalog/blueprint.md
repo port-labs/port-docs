@@ -122,16 +122,15 @@ For Example:
 
 Now let's look at the structure of this property definition and also explore the entire set of options for a single property:
 
-| Field         | Type                    | Description                                                                                                                                                                                                                                                                                                                                                                   |
-| ------------- | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `title`       | `String`                | Property name                                                                                                                                                                                                                                                                                                                                                                 |
-| `type`        | `String`                | **Mandatory field.** The data type of the property. You can explore all available types in the [Property Types](#property-types) section                                                                                                                                                                                                                                      |
-| `format`      | `String`                | Specific data format to pair with some of the available types. You can explore all formats in the [String Formats](#string-property-formats) section                                                                                                                                                                                                                          |
-| `pattern`     | `String`                | [Regular expression](https://en.wikipedia.org/wiki/Regular_expression) (regex) pattern to specify the set of allowed values for the property. You can see an example in the [String regular expression patterns](#string-regular-expression-patterns) section                                                                                                                 |
-| `default`     | Should match the `type` | Default value for this property in case an Entity is created without explicitly providing a value.                                                                                                                                                                                                                                                                            |
-| `icon`        | `String`                | Icon for the property column in the Blueprint page, in the [Entity page](./entity#entity-page) and in the [Entity creation](../tutorials/entity-basics.md#from-the-ui) form <br /><br />See the full icon list [above](#full-icon-list).                                                                                                                                      |
-| `description` | `String`                | Description of the property.<br /> This value is visible to users when hovering on the info icon in the UI. It provides detailed information about the use of a specific property.                                                                                                                                                                                            |
-| `enumColors`  | `Object`                | Define colors for enum fields. <br /> Can be added only if an enum field exists. <br /> Each key is one of the defined enum options and each value is one of the following colors: <br /> [blue, turquoise, orange, purple, lightBlue, pink, yellow, green, red, darkGray] <br /><br /> Notice: In case enum is defined and enumColor field is not default colors will be set |
+| Field         | Type                    | Description                                                                                                                                                                                                                                                   |
+| ------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `title`       | `String`                | Property name                                                                                                                                                                                                                                                 |
+| `type`        | `String`                | **Mandatory field.** The data type of the property. You can explore all available types in the [Property Types](#property-types) section                                                                                                                      |
+| `format`      | `String`                | Specific data format to pair with some of the available types. You can explore all formats in the [String Formats](#string-property-formats) section                                                                                                          |
+| `pattern`     | `String`                | [Regular expression](https://en.wikipedia.org/wiki/Regular_expression) (regex) pattern to specify the set of allowed values for the property. You can see an example in the [String regular expression patterns](#string-regular-expression-patterns) section |
+| `default`     | Should match the `type` | Default value for this property in case an Entity is created without explicitly providing a value.                                                                                                                                                            |
+| `icon`        | `String`                | Icon for the property column in the Blueprint page, in the [Entity page](./entity#entity-page) and in the [Entity creation](../tutorials/entity-basics.md#from-the-ui) form <br /><br />See the full icon list [above](#full-icon-list).                      |
+| `description` | `String`                | Description of the property.<br /> This value is visible to users when hovering on the info icon in the UI. It provides detailed information about the use of a specific property.                                                                            |
 
 :::tip
 We highly recommend you set a `description`, so your developers will understand the property’s context.
@@ -163,13 +162,6 @@ We currently support the following types:
 :::note
 Those are the `properties` that our API supports. See [API reference](../api-providers/rest.md).
 :::
-
-We support the following additional props:
-
-|        | Description                                                                                                                                   | Example values                                   |
-| ------ | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
-| `enum` | Field with a pre-defined set of allowed values. Can be used with properties of type `string` or `number`                                      | `["Option 1", "Option 2", "Option 3"]`           |
-| `spec` | Field with a pre-defined set of allowed values. A property with a `spec` key will be displayed as a separate tab in the Specific Entity Page. | [`open-api`](./widgets/open-api), `embedded-url` |
 
 ### Examples
 
@@ -242,106 +234,23 @@ Here is how property definitions look like for all available types (remember tha
 }
 ```
 
-### Objects Array
-
-```json showLineNumbers
-{
-  "title": "Array of Objects",
-  // highlight-start
-  "type": "array",
-  "items": {
-    "type": "object"
-  },
-  // highlight-end
-  "description": "An array property",
-  "default": [
-    {
-      "foo": "bar",
-      "version": 1
-    }
-  ]
-}
-```
-
-### URLs Array
-
-```json showLineNumbers
-{
-  "title": "Array of URLs",
-  // highlight-start
-  "type": "array",
-  "items": {
-    "type": "string",
-    "format": "url"
-  },
-  // highlight-end
-  "description": "An array of URLs property"
-}
-```
-
-### Enum
-
-```json showLineNumbers
-{
-  "title": "Enum field",
-  "type": "string",
-  // highlight-start
-  "enum": ["Option 1", "Option 2", "Option 3"],
-  "enumColors": {
-    "Option 1": "red",
-    "Option 2": "green",
-    "Option 3": "blue"
-  },
-  // highlight-end
-  "description": "Enum dropdown menu"
-}
-```
-
-### Spec
-
-```json showLineNumbers
-{
-  "title": "Swagger",
-  // highlight-start
-  "type": "object",
-  "spec": "open-api",
-  // highlight-end
-  "description": "Open-API Prop"
-}
-```
-
 ## String property formats
-
-```json {3-4} showLineNumbers
-"string_prop": {
-    "title": "My String Property",
-    "type": "string",
-    "format": "url",
-    "default": "foo",
-    "description": "This is a string property"
-}
-```
 
 We currently support the following `string` formats:
 
-| `format`                         | Description                                               | Example values                            |
-| -------------------------------- | --------------------------------------------------------- | ----------------------------------------- |
-| `url`                            | Formatted URL                                             | `"https://getport.io"`                    |
-| `email`                          | Formatted Email                                           | `"port@getport.io"`                       |
-| `user`                           | Formatted Email                                           | `"port@getport.io"`                       |
-| `date-time`                      | Formatted ISO string datetime                             | `"2022-04-18T11:44:15.345Z"`              |
-| `ipv4`                           | Standard IPv4 address                                     | `127.0.0.1`                               |
-| `ipv6`                           | Standard IPv6 address                                     | `FE80:CD00:0A20:0CDE:1257:1C34:211E:729C` |
-| `yaml`                           | a [YAML](https://en.wikipedia.org/wiki/YAML) file content | `a: 123`                                  |
-| [`markdown`](./widgets/markdown) | String in markdown language format                        | `An Example of **bold text**.`            |
+| `format`    | Description                                               | Example values                            |
+| ----------- | --------------------------------------------------------- | ----------------------------------------- |
+| `url`       | Formatted URL                                             | `"https://getport.io"`                    |
+| `email`     | Formatted Email                                           | `"port@getport.io"`                       |
+| `user`      | Formatted Email                                           | `"port@getport.io"`                       |
+| `date-time` | Formatted ISO string datetime                             | `"2022-04-18T11:44:15.345Z"`              |
+| `ipv4`      | Standard IPv4 address                                     | `127.0.0.1`                               |
+| `ipv6`      | Standard IPv6 address                                     | `FE80:CD00:0A20:0CDE:1257:1C34:211E:729C` |
+| `yaml`      | a [YAML](https://en.wikipedia.org/wiki/YAML) file content | `a: 123`                                  |
 
 :::note
 Those are the `format` types that our API supports. See [API reference](../api-providers/rest.md).
 :::
-
-### Examples
-
-Here is how to use property formats:
 
 ### URL
 
@@ -503,6 +412,91 @@ print(config_prop["do_awesome_things"]) # prints: True
 
 </details>
 
+## Special property types
+
+It is possible to configure special types that build on the existing base types (such as arrays of `objects` or `urls`), or expose completely new functionality.
+
+The available special types and their usage examples are listed below:
+
+|        | Description                                                                                              | Example values                         |
+| ------ | -------------------------------------------------------------------------------------------------------- | -------------------------------------- |
+| `enum` | Field with a pre-defined set of allowed values. Can be used with properties of type `string` or `number` | `["Option 1", "Option 2", "Option 3"]` |
+
+### Objects Array
+
+```json showLineNumbers
+{
+  "title": "Array of Objects",
+  // highlight-start
+  "type": "array",
+  "items": {
+    "type": "object"
+  },
+  // highlight-end
+  "description": "An array property",
+  "default": [
+    {
+      "foo": "bar",
+      "version": 1
+    }
+  ]
+}
+```
+
+### URLs Array
+
+```json showLineNumbers
+{
+  "title": "Array of URLs",
+  // highlight-start
+  "type": "array",
+  "items": {
+    "type": "string",
+    "format": "url"
+  },
+  // highlight-end
+  "default": ["https://grafana.com", "https://getport.io", "https://slack.com"]
+  "description": "An array of URLs property"
+}
+```
+
+### Enum
+
+```json showLineNumbers
+{
+  "title": "Enum field",
+  "type": "string",
+  // highlight-start
+  "enum": ["Option 1", "Option 2", "Option 3"],
+  "enumColors": {
+    "Option 1": "red",
+    "Option 2": "green",
+    "Option 3": "blue"
+  },
+  // highlight-end
+  "description": "Enum dropdown menu"
+}
+```
+
+:::tip
+When using the `enum` key, you can also make use of the `enumColors` key to define the colors of the available values.
+
+Each key is one of the available enum options and each value is one of the following colors: `blue, turquoise, orange, purple, lightBlue, pink, yellow, green, red, darkGray`
+
+If `enum` is defined without `enumColors` definitions, the default colors will be set
+:::
+
+## Widget properties
+
+It is possible to configure widget properties that expose completely new functionality in Port, including new display options and loading data from external sources.
+
+The available special types and their usage examples are listed below:
+
+|                                  | Description                                                                                                                                   | Example values                                                                |
+| -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| [`markdown`](./widgets/markdown) | String in markdown language format                                                                                                            | `An Example of **bold text**.`                                                |
+| `spec`                           | Field with a pre-defined set of allowed values. A property with a `spec` key will be displayed as a separate tab in the Specific Entity Page. | [`open-api`](./widgets/open-api), [`embedded-url`](./widgets/embedded-url.md) |
+
 ### Markdown
 
 ```json showLineNumbers
@@ -513,6 +507,37 @@ print(config_prop["do_awesome_things"]) # prints: True
   "format": "markdown",
   // highlight-end
   "description": "A Markdown property"
+}
+```
+
+### OpenAPI Specification
+
+For more info on the `OpenAPI specification` property, refer to the [OpenAPI Widget](./widgets/open-api.md) doc.
+
+```json showLineNumbers
+{
+  "title": "Swagger",
+  // highlight-start
+  "type": "object",
+  "spec": "open-api",
+  // highlight-end
+  "description": "Open-API Prop"
+}
+```
+
+### Embedded URL
+
+For more info on the `embedded-url` property, refer to the [Embedded URL Widget](./widgets/embedded-url.md) doc.
+
+```json showLineNumbers
+{
+  "title": "Swagger",
+  // highlight-start
+  "type": "string",
+  "format": "url",
+  "spec": "embedded-url",
+  // highlight-end
+  "description": "Open-API Prop"
 }
 ```
 
