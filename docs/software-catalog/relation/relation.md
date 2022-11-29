@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 1
 ---
 
 # Relation
@@ -28,7 +28,7 @@ The key of the Relation object is the Relation identifier, in the example above,
 :::
 
 :::info
-A Relation exists under the `relations` key in the [Blueprint JSON schema](./blueprint.md#blueprint-json-schema)
+A Relation exists under the `relations` key in the [Blueprint JSON schema](../blueprint/blueprint#blueprint-json-schema)
 :::
 
 ---
@@ -59,17 +59,17 @@ We need to add the following JSON schema of the relation to the `microservice` B
 ```
 
 Resulting in this outcome in the UI:
-![Blueprints Graph with Relations Line](../../static/img/platform-overview/port-components/MicroservicePackageBlueprintGraphRelationUI.png)
+![Blueprints Graph with Relations Line](../../../static/img/platform-overview/port-components/MicroservicePackageBlueprintGraphRelationUI.png)
 
 ## X-to-many Relation
 
 Relations also support `many` (its default value is `false`).
 
-From a schema standpoint, when a Relation is defined `"many": true`, the corresponding Relation identifier in the Entities of the source Blueprint becomes an array(`[]`) as seen in [Entity Relation example - `many = true`](./entity.md#entity-relation-example---many--true).
+From a schema standpoint, when a Relation is defined `"many": true`, the corresponding Relation identifier in the Entities of the source Blueprint becomes an array(`[]`) as seen in [Entity Relation example - `many = true`](../entity.md#entity-relation-example---many--true).
 
 There is also a visual indicator in the Blueprints graph when using `"many": true` (note the `Array` label):
 
-![Developer Portal Blueprints Graph Many Relation](../../static/img/platform-overview/port-components/MicroservicePackageBlueprintGraphManyRelationUI.png)
+![Developer Portal Blueprints Graph Many Relation](../../../static/img/platform-overview/port-components/MicroservicePackageBlueprintGraphManyRelationUI.png)
 
 ## Byproducts of a Relation
 
@@ -87,6 +87,6 @@ You can learn more about these properties in the [Mirror Properties](./mirror-pr
 
 ## Next Steps
 
-[Explore How to Create, Edit, and Delete Relations with basic examples](../tutorials/relation-basics.md)
+[Explore How to Create, Edit, and Delete Relations with basic examples](../tutorial)
 
-[Dive into advanced operations on Relations with our API ➡️ ](../api-providers/rest.md)
+[Dive into advanced operations on Relations with our API ➡️ ](../../api-providers/rest.md)

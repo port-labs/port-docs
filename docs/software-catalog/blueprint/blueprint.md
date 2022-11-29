@@ -3,6 +3,9 @@ sidebar_position: 1
 sidebar_label: Blueprint
 ---
 
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+
 # Blueprint
 
 ## What is a Blueprint?
@@ -24,7 +27,7 @@ Before you start, there are a few things to consider when defining your Blueprin
 :::note
 By the end of this section, you should have a Blueprint architecture similar to this in mind:
 
-![Example Blueprints and Relations Layout](../../static/img/platform-overview/port-components/blueprints/exampleBlueprintsAndRelationsLayout.png)
+![Example Blueprints and Relations Layout](../../../static/img/platform-overview/port-components/blueprints/exampleBlueprintsAndRelationsLayout.png)
 :::
 
 ## Blueprint structure
@@ -129,13 +132,13 @@ Now let's look at the structure of this property definition and also explore the
 | `format`      | `String`                | Specific data format to pair with some of the available types. You can explore all formats in the [String Formats](#string-property-formats) section                                                                                                          |
 | `pattern`     | `String`                | [Regular expression](https://en.wikipedia.org/wiki/Regular_expression) (regex) pattern to specify the set of allowed values for the property. You can see an example in the [String regular expression patterns](#string-regular-expression-patterns) section |
 | `default`     | Should match the `type` | Default value for this property in case an Entity is created without explicitly providing a value.                                                                                                                                                            |
-| `icon`        | `String`                | Icon for the property column in the Blueprint page, in the [Entity page](./entity#entity-page) and in the [Entity creation](../tutorials/entity-basics.md#from-the-ui) form <br /><br />See the full icon list [above](#full-icon-list).                      |
+| `icon`        | `String`                | Icon for the property column in the Blueprint page, in the [Entity page](./entity#entity-page) and in the [Entity creation](../../tutorials/entity-basics.md#from-the-ui) form <br /><br />See the full icon list [above](#full-icon-list).                   |
 | `description` | `String`                | Description of the property.<br /> This value is visible to users when hovering on the info icon in the UI. It provides detailed information about the use of a specific property.                                                                            |
 
 :::tip
 We highly recommend you set a `description`, so your developers will understand the property’s context.
 
-![Property Description Tooltip Example](../../static/img/platform-overview/port-components/propertyDescriptionTooltipExample.png)
+![Property Description Tooltip Example](../../../static/img/platform-overview/port-components/propertyDescriptionTooltipExample.png)
 :::
 
 ## Property types
@@ -160,7 +163,7 @@ We currently support the following types:
 | `array`   | A multi-element array                                                             | `[1,2,3]`, `["a","b","c"]`                   |
 
 :::note
-Those are the `properties` that our API supports. See [API reference](../api-providers/rest.md).
+Those are the `properties` that our API supports. See [API reference](../../api-providers/rest.md).
 :::
 
 ### Examples
@@ -249,7 +252,7 @@ We currently support the following `string` formats:
 | `yaml`      | a [YAML](https://en.wikipedia.org/wiki/YAML) file content | `a: 123`                                  |
 
 :::note
-Those are the `format` types that our API supports. See [API reference](../api-providers/rest.md).
+Those are the `format` types that our API supports. See [API reference](../../api-providers/rest.md).
 :::
 
 ### URL
@@ -301,11 +304,11 @@ Even though the input is the same in both `email` and `user` formats, their pres
 
 In addition, `user` format distinguishes between users by their status:
 
-| User Status  | Example                                                                                          |
-| ------------ | ------------------------------------------------------------------------------------------------ |
-| Active       | ![Active user](../../static/img/platform-overview/port-components/blueprints/activeUser.png)     |
-| Invited      | ![Invited user](../../static/img/platform-overview/port-components/blueprints/invitedUser.png)   |
-| Unregistered | ![External user](../../static/img/platform-overview/port-components/blueprints/externalUser.png) |
+| User Status  | Example                                                                                             |
+| ------------ | --------------------------------------------------------------------------------------------------- |
+| Active       | ![Active user](../../../static/img/platform-overview/port-components/blueprints/activeUser.png)     |
+| Invited      | ![Invited user](../../../static/img/platform-overview/port-components/blueprints/invitedUser.png)   |
+| Unregistered | ![External user](../../../static/img/platform-overview/port-components/blueprints/externalUser.png) |
 
 :::
 
@@ -492,10 +495,10 @@ It is possible to configure widget properties that expose completely new functio
 
 The available special types and their usage examples are listed below:
 
-|                                  | Description                                                                                                                                   | Example values                                                                |
-| -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| [`markdown`](./widgets/markdown) | String in markdown language format                                                                                                            | `An Example of **bold text**.`                                                |
-| `spec`                           | Field with a pre-defined set of allowed values. A property with a `spec` key will be displayed as a separate tab in the Specific Entity Page. | [`open-api`](./widgets/open-api), [`embedded-url`](./widgets/embedded-url.md) |
+|                                  | Description                                                                                                                                   | Example values                                                                  |
+| -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| [`markdown`](./widgets/markdown) | String in markdown language format                                                                                                            | `An Example of **bold text**.`                                                  |
+| `spec`                           | Field with a pre-defined set of allowed values. A property with a `spec` key will be displayed as a separate tab in the Specific Entity Page. | [`open-api`](../widgets/open-api), [`embedded-url`](../widgets/embedded-url.md) |
 
 ### Markdown
 
@@ -512,7 +515,7 @@ The available special types and their usage examples are listed below:
 
 ### OpenAPI Specification
 
-For more info on the `OpenAPI specification` property, refer to the [OpenAPI Widget](./widgets/open-api.md) doc.
+For more info on the `OpenAPI specification` property, refer to the [OpenAPI Widget](../widgets/open-api.md) doc.
 
 ```json showLineNumbers
 {
@@ -527,7 +530,7 @@ For more info on the `OpenAPI specification` property, refer to the [OpenAPI Wid
 
 ### Embedded URL
 
-For more info on the `embedded-url` property, refer to the [Embedded URL Widget](./widgets/embedded-url.md) doc.
+For more info on the `embedded-url` property, refer to the [Embedded URL Widget](../widgets/embedded-url.md) doc.
 
 ```json showLineNumbers
 {
@@ -586,7 +589,7 @@ You can add icons to properties:
 
 The icon will be displayed in the column header of the property (in the example above - `repoUrl`):
 
-![Blueprints graph with new Microservice](../../static/img/platform-overview/port-components/blueprints/repoUrlWithIcon.png)
+![Blueprints graph with new Microservice](../../../static/img/platform-overview/port-components/blueprints/repoUrlWithIcon.png)
 
 For a list of available icons refer to the [full icon list](#full-icon-list)
 
@@ -603,8 +606,8 @@ Events that the `changelogDestination` configuration will report on include:
 
 The `changelogDestination` supports 2 configurations:
 
-- [Webhook](../self-service-actions/port-execution-architecture/port-execution-webhook.md)
-- [Kafka](../self-service-actions/port-execution-architecture/port-execution-kafka.md)
+- [Webhook](../../self-service-actions/port-execution-architecture/port-execution-webhook.md)
+- [Kafka](../../self-service-actions/port-execution-architecture/port-execution-kafka.md)
 
 :::tip
 If you don't want to send changelog events to any destination, you can simply remove the `changeLog` destination from the Blueprint JSON.
@@ -617,7 +620,7 @@ If you don't want to send changelog events to any destination, you can simply re
 | `type` | `string` | Defines the changelog destination type                                                                                                        | Either `WEBHOOK` or `KAFKA` |
 | `url`  | `string` | Defines the webhook URL where Port sends changelog events to via HTTP POST request. <br></br> Can be added only if `type` is set to `WEBHOOK` | `https://example.com`       |
 
-For more information about Port's changelog capabilities, refer to the [Port execution architecture](../self-service-actions/port-execution-architecture/port-execution-architecture.md) page.
+For more information about Port's changelog capabilities, refer to the [Port execution architecture](../../self-service-actions/port-execution-architecture/port-execution-architecture.md) page.
 
 ## Mirror properties
 
@@ -627,6 +630,6 @@ Those new properties are called `mirrorProperties`, you can learn more about the
 
 ## Next Steps
 
-[Explore How to Create, Edit, and Delete Blueprints with basic examples](../tutorials/blueprint-basics.md)
+[Explore How to Create, Edit, and Delete Blueprints with basic examples](./tutorial)
 
-[Dive into advanced operations on Blueprints with our API ➡️ ](../api-providers/rest.md)
+[Dive into advanced operations on Blueprints with our API ➡️ ](../../api-providers/rest.md)
