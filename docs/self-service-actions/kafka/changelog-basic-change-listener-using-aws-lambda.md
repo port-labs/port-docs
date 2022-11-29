@@ -8,8 +8,8 @@ In this guide, we will show how to deploy a new `AWS Lambda function`, that will
 
 ## Prerequisites
 
-- AWS CLI installed and configured to your desired AWS account
-- A Port API `CLIENT_ID` and `CLIENT_SECRET`
+- AWS CLI installed and configured to your desired AWS account;
+- A Port API `CLIENT_ID` and `CLIENT_SECRET`;
 - Connection credentials to the Kafka topic provided to you by Port, will look like this:
 
 ```json showLineNumbers
