@@ -27,7 +27,7 @@ Before you start, there are a few things to consider when defining your Blueprin
 :::note
 By the end of this section, you should have a Blueprint architecture similar to this in mind:
 
-![Example Blueprints and Relations Layout](../../../static/img/software-catalog/blueprints/exampleBlueprintsAndRelationsLayout.png)
+![Example Blueprints and Relations Layout](../../../static/img/software-catalog/blueprint/exampleBlueprintsAndRelationsLayout.png)
 :::
 
 ## Blueprint structure
@@ -304,11 +304,11 @@ Even though the input is the same in both `email` and `user` formats, their pres
 
 In addition, `user` format distinguishes between users by their status:
 
-| User Status  | Example                                                                            |
-| ------------ | ---------------------------------------------------------------------------------- |
-| Active       | ![Active user](../../../static/img/software-catalog/blueprints/activeUser.png)     |
-| Invited      | ![Invited user](../../../static/img/software-catalog/blueprints/invitedUser.png)   |
-| Unregistered | ![External user](../../../static/img/software-catalog/blueprints/externalUser.png) |
+| User Status  | Example                                                                           |
+| ------------ | --------------------------------------------------------------------------------- |
+| Active       | ![Active user](../../../static/img/software-catalog/blueprint/activeUser.png)     |
+| Invited      | ![Invited user](../../../static/img/software-catalog/blueprint/invitedUser.png)   |
+| Unregistered | ![External user](../../../static/img/software-catalog/blueprint/externalUser.png) |
 
 :::
 
@@ -589,7 +589,7 @@ You can add icons to properties:
 
 The icon will be displayed in the column header of the property (in the example above - `repoUrl`):
 
-![Blueprints graph with new Microservice](../../../static/img/software-catalog/blueprints/repoUrlWithIcon.png)
+![Blueprints graph with new Microservice](../../../static/img/software-catalog/blueprint/repoUrlWithIcon.png)
 
 For a list of available icons refer to the [full icon list](#full-icon-list)
 

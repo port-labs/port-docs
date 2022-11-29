@@ -6,7 +6,7 @@ sidebar_position: 2
 
 Port can trigger webhooks based on a customer provided `URL` Both for `Action` and `Changelog` events.
 
-![Port Kafka Architecture](../../../static/img/self-service-actions/portWebhookArchitecture.png)
+![Port Kafka Architecture](../../../static/img/self-service-actions/portWebhookArchitecture.jpg)
 
 The steps shown in the image above are as follows:
 

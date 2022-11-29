@@ -70,7 +70,7 @@ If you click on the `expand` button as shown in the image below:
 
 You will see an expanded view of the Blueprint we just created, with all of the properties listed alongside the types we provided for them:
 
-![Example microservice blueprint](../../../static/img/software-catalog/blueprints/exampleMicroserviceBlueprint.png)
+![Example microservice blueprint](../../../static/img/software-catalog/blueprint/exampleMicroserviceBlueprint.png)
 
 ### From the API
 
@@ -325,7 +325,7 @@ curl --location --request POST "https://api.getport.io/v1/blueprints" \
 
 Now, you will have a Blueprint in the Blueprints graph as follows:
 
-![Example microservice blueprint](../../../static/img/software-catalog/blueprints/exampleMicroserviceBlueprint.png)
+![Example microservice blueprint](../../../static/img/software-catalog/blueprint/exampleMicroserviceBlueprint.png)
 
 ## Update Blueprints
 
@@ -336,7 +336,7 @@ In order to update a Blueprint, you can do either of the following:
 - Click the pencil icon in the Blueprints graph;
 - Make an HTTP PUT request to the URL: `https://api.getport.io/v1/{blueprint_identifier}`
 
-![Blueprints Graph edit button marked](../../../static/img/software-catalog/blueprints/blueprintGraphEditButtonMarked.png)
+![Blueprints Graph edit button marked](../../../static/img/software-catalog/blueprint/blueprintGraphEditButtonMarked.png)
 
 A PUT request has the same body as a POST request, it will simply overwrite the Blueprint with the new data provided.
 
@@ -351,7 +351,7 @@ In order to delete a Blueprint you can do either of the following:
 - Click on the trash can icon in the specific Blueprint’s node in the blueprints graph;
 - Make an HTTP DELETE request to the URL `https://api.getport.io/v1/{blueprint_identifier}`
 
-![Blueprints Graph delete button marked](../../../static/img/software-catalog/blueprints/blueprintGraphDeleteButtonMarked.png)
+![Blueprints Graph delete button marked](../../../static/img/software-catalog/blueprint/blueprintGraphDeleteButtonMarked.png)
 
 ## Next steps
 
@@ -389,4 +389,4 @@ You can create the new Blueprint from the UI (using the `Add Blueprint` button i
 
 At the end of this section, your Blueprints graph will include the two Blueprints shown below:
 
-![graph package microservice](../../../static/img/software-catalog/blueprints/graphPackageMicroservice.png)
+![graph package microservice](../../../static/img/software-catalog/blueprint/graphPackageMicroservice.png)
