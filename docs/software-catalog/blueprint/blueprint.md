@@ -76,16 +76,16 @@ Each Blueprint is represented by a [Json schema](https://json-schema.org/), as s
 | `title`                 | `String` | The Blueprint's name                                                                                          |
 | `description`           | `String` | Description for the Blueprint.<br /> This value is visible to users when hovering on the info icon in the UI. |
 | `icon`                  | `String` | Icon for the Blueprint's graph node, and Entities of the Blueprint                                            | Icon options: `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud,...` <br /><br />See the full icon list [below](#full-icon-list). |
-| `calculationProperties` | `Object` | Contains the properties that are defined using [calculation templates](./calculation-properties)              | Example: "`repo-link`": "`https://github.com/{{$identifier}}`"                                                                                |
+| `calculationProperties` | `Object` | Contains the properties that are defined using [calculation templates](../calculation-properties)             | Example: "`repo-link`": "`https://github.com/{{$identifier}}`"                                                                                |
 | `schema`                | `Object` | Object containing two more nested fields, including `properties` and `required`                               | See the schema structure [here](#blueprint-schema).                                                                                           |
 | `changelogDestination`  | `Object` | Defines the destination where events that happen within the Blueprint's context will be delivered             | See the object structure [here](#changelog-destination).                                                                                      |
 
 #### Special blueprint fields
 
-| Field              | Type     | Description                                                                                                                                                         | Optional Values                                                        |
-| ------------------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| `relations`        | `Object` | Contains the [Relations](./relation) of the Blueprint                                                                                                               |
-| `mirrorProperties` | `Object` | Becomes available when a Relation is defined between two blueprints.<br />A Mirror Property represents additional data queried from the related [Entity](./entity). | See more details on the [Mirror Properties](./mirror-properties) page. |
+| Field              | Type     | Description                                                                                                                                                          | Optional Values                                                         |
+| ------------------ | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| `relations`        | `Object` | Contains the [Relations](../relation/relation.md) of the Blueprint                                                                                                   |
+| `mirrorProperties` | `Object` | Becomes available when a Relation is defined between two blueprints.<br />A Mirror Property represents additional data queried from the related [Entity](../entity). | See more details on the [Mirror Properties](../mirror-properties) page. |
 
 #### Full icon list
 
@@ -132,7 +132,7 @@ Now let's look at the structure of this property definition and also explore the
 | `format`      | `String`                | Specific data format to pair with some of the available types. You can explore all formats in the [String Formats](#string-property-formats) section                                                                                                          |
 | `pattern`     | `String`                | [Regular expression](https://en.wikipedia.org/wiki/Regular_expression) (regex) pattern to specify the set of allowed values for the property. You can see an example in the [String regular expression patterns](#string-regular-expression-patterns) section |
 | `default`     | Should match the `type` | Default value for this property in case an Entity is created without explicitly providing a value.                                                                                                                                                            |
-| `icon`        | `String`                | Icon for the property column in the Blueprint page, in the [Entity page](./entity#entity-page) and in the [Entity creation](../../tutorials/entity-basics.md#from-the-ui) form <br /><br />See the full icon list [above](#full-icon-list).                   |
+| `icon`        | `String`                | Icon for the property column in the Blueprint page, in the [Entity page](../entity#entity-page) and in the [Entity creation](../../tutorials/entity-basics.md#from-the-ui) form <br /><br />See the full icon list [above](#full-icon-list).                  |
 | `description` | `String`                | Description of the property.<br /> This value is visible to users when hovering on the info icon in the UI. It provides detailed information about the use of a specific property.                                                                            |
 
 :::tip
@@ -495,10 +495,10 @@ It is possible to configure widget properties that expose completely new functio
 
 The available special types and their usage examples are listed below:
 
-|                                  | Description                                                                                                                                   | Example values                                                                  |
-| -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| [`markdown`](./widgets/markdown) | String in markdown language format                                                                                                            | `An Example of **bold text**.`                                                  |
-| `spec`                           | Field with a pre-defined set of allowed values. A property with a `spec` key will be displayed as a separate tab in the Specific Entity Page. | [`open-api`](../widgets/open-api), [`embedded-url`](../widgets/embedded-url.md) |
+|                                   | Description                                                                                                                                   | Example values                                                                  |
+| --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| [`markdown`](../widgets/markdown) | String in markdown language format                                                                                                            | `An Example of **bold text**.`                                                  |
+| `spec`                            | Field with a pre-defined set of allowed values. A property with a `spec` key will be displayed as a separate tab in the Specific Entity Page. | [`open-api`](../widgets/open-api), [`embedded-url`](../widgets/embedded-url.md) |
 
 ### Markdown
 
@@ -626,7 +626,7 @@ For more information about Port's changelog capabilities, refer to the [Port exe
 
 When two Blueprints are connected via a Relation, a new set of properties becomes available to Entities in the source Blueprint.
 
-Those new properties are called `mirrorProperties`, you can learn more about them in the [mirrorProperties](./mirror-properties) page.
+Those new properties are called `mirrorProperties`, you can learn more about them in the [mirrorProperties](../mirror-properties) page.
 
 ## Next Steps
 

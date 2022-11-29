@@ -28,7 +28,7 @@ The key of the Relation object is the Relation identifier, in the example above,
 :::
 
 :::info
-A Relation exists under the `relations` key in the [Blueprint JSON schema](../blueprint/blueprint#blueprint-json-schema)
+A Relation exists under the `relations` key in the [Blueprint JSON schema](../blueprint/blueprint.md#blueprint-json-schema)
 :::
 
 ---
@@ -77,16 +77,16 @@ There is also a visual indicator in the Blueprints graph when using `"many": tru
 
 When two Blueprints are related, creating an Entity of the `source` Blueprint will show an additional option - a `Relation`.
 
-This will add a property under the `relations` section, as shown in the [related entities section](./entity#related-entities).
+This will add a property under the `relations` section, as shown in the [related entities section](../entity#related-entities).
 
 ### Mirror properties
 
 Creating a Relation between multiple Blueprints allows you to use **Mirror Properties** to enrich the data attached to your Entities, by querying additional data from related Entities with fewer steps.
 
-You can learn more about these properties in the [Mirror Properties](./mirror-properties) page.
+You can learn more about these properties in the [Mirror Properties](../mirror-properties) page.
 
 ## Next Steps
 
-[Explore How to Create, Edit, and Delete Relations with basic examples](../tutorial)
+[Explore How to Create, Edit, and Delete Relations with basic examples](./tutorial)
 
 [Dive into advanced operations on Relations with our API ➡️ ](../../api-providers/rest.md)

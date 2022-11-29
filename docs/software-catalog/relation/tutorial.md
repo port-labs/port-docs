@@ -16,7 +16,7 @@ Relations can be created using two methods:
 - API.
 
 :::info
-A Relation is created between 2 Blueprints. So if you haven't created the `microservice` and `package` Blueprints, in [Creating a Blueprint](../blueprint/blueprint-basics#creating-a-blueprint) and [Blueprint basics Next Steps](../blueprint/blueprint#next-steps), please make sure to do so in order to follow along.
+A Relation is created between 2 Blueprints. So if you haven't created the `microservice` and `package` Blueprints, in [Creating a Blueprint](../blueprint/tutorial.md#creating-a-blueprint) and [Blueprint basics Next Steps](../blueprint/blueprint.md#next-steps), please make sure to do so in order to follow along.
 :::
 
 ### From the UI
@@ -41,7 +41,7 @@ An editor window will open with the current schema of the Blueprint. Since there
 ### From the API
 
 :::note
-Remember that an access token is necessary in order to make API requests. If you need to generate a new token, refer back to [Getting an API token](../blueprint/blueprint-basics#getting-an-api-token).
+Remember that an access token is necessary in order to make API requests. If you need to generate a new token, refer back to [Getting an API token](../blueprint/tutorial.md#getting-an-api-token).
 :::
 
 In order to create a relation from the API, you will make a PUT request to the URL `https://api.getport.io/v1/{source_blueprint_identifier}`.
