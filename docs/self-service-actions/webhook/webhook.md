@@ -4,6 +4,7 @@ With webhook Self-Service Actions, Port will notify you using a [set format](../
 
 To get started with webhook Self-Service Actions, please check the sources below:
 
+- [Create an S3 bucket using Self-Service Actions](./s3-using-webhook.md)
 - [Webhook changelog listener](./changelog-listener.md)
 - [Debugging webhooks locally](./local-debugging-webhook.md)
 - [Validating webhook signatures](./signature-verification.md)

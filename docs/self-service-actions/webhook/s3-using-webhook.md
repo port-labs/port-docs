@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Getting Started
+# Create an S3 bucket using Self-Service Actions
 
 In this guide, we are going to present different methods to create an S3 bucket (e.g.), using Port Self-Service Actions.
 

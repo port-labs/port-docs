@@ -8,5 +8,5 @@ Port supports execution methods that will alert your infrastructure about Self-S
 
 You can read more about Port's execution methods and how you can implement them in your infrastructure by checking the list below:
 
-- [Webhook reporting](./port-execution-webhook.md)
-- [Kafka reporting](./port-execution-kafka.md)
+- [Webhook Self-Service Actions](./port-execution-webhook.md)
+- [Kafka Self-Service Actions](./port-execution-kafka.md)
