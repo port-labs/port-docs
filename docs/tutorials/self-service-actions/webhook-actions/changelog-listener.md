@@ -108,7 +108,7 @@ For this limited example, the `deployment config` Blueprint will include mostly 
 </details>
 
 :::info
-Remember that in order to report changelog events to a webhook, you need to provide the [changelogDestination](../../../software-catalog/blueprint.md#changelog-destination) key in the Blueprint definition.
+Remember that in order to report changelog events to a webhook, you need to provide the [changelogDestination](../../../software-catalog/blueprint/blueprint.md#changelog-destination) key in the Blueprint definition.
 :::
 
 In addition, below you can find a `deployment config` Entity matching the Blueprint schema:

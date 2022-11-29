@@ -24,7 +24,7 @@ Checks
 
 ## Environment Structure
 
-The environment we're going to use includes 4 [Blueprints](../software-catalog/blueprint.md) with multiple [Relations](../software-catalog/relation.md) between them.
+The environment we're going to use includes 4 [Blueprints](../software-catalog/blueprint/blueprint.md) with multiple [Relations](../software-catalog/relation/relation.md) between them.
 
 Let's go over the different Blueprints shown below and how we'll create [Entities](../software-catalog/entity.md) for each one of them:
 

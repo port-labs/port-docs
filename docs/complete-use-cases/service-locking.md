@@ -14,7 +14,7 @@ All relevant files and resources for this guide are available [**HERE**](https:/
 
 In this guide you will implement a service locking mechanism using Port's [GitHub Action](../api-providers/github-action.md).
 
-The environment we're going to use includes 2 [Blueprints](../software-catalog/blueprint.md) with a [Relation](../software-catalog/relation.md) between them:
+The environment we're going to use includes 2 [Blueprints](../software-catalog/blueprint/blueprint.md) with a [Relation](../software-catalog/relation/relation.md) between them:
 
 ![Service locking layout](../../static/img/tutorial/complete-use-cases/service-locking/service-locking-layout.png)
 

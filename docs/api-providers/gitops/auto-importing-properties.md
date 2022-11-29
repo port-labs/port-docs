@@ -25,7 +25,7 @@ With our Github app you can auto import properties from a GitHub repository, lik
 
 ### Using auto importable properties
 
-In order to use auto importable properties, add the JSON below to your [Blueprint schema](../../software-catalog/blueprint.md#blueprints-properties). If you still don't have a Blueprint with GitHub integration, please refer to the [Quickstart](./quickstart) section to create one.
+In order to use auto importable properties, add the JSON below to your [Blueprint schema](../../software-catalog/blueprint/blueprint.md#blueprints-properties). If you still don't have a Blueprint with GitHub integration, please refer to the [Quickstart](./quickstart) section to create one.
 
 :::tip
 You can choose to include only a subset of the auto importable properties shown above, or all of them.

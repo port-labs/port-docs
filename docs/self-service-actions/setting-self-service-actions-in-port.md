@@ -371,16 +371,16 @@ The basic structure of a Self-Service Action:
 
 ### Structure table
 
-| Field              | Description                                                                                                                                                                            |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `id`               | Internal Action ID                                                                                                                                                                     |
-| `identifier`       | Action identifier                                                                                                                                                                      |
-| `title`            | Action title                                                                                                                                                                           |
-| `icon`             | Action icon                                                                                                                                                                            |
-| `userInputs`       | An object containing `properties` and `required` keys following the standard JSON schema format as seen in [Blueprint structure](../software-catalog/blueprint.md#blueprint-structure) |
-| `invocationMethod` | Defines the destination where invocations of the Self-Service Action will be delivered, see [invocation method](#invocation-method) for details                                        |
-| `trigger`          | The type of the action: `CREATE`, `DAY-2` or `DELETE`                                                                                                                                  |
-| `description`      | Action description                                                                                                                                                                     |
+| Field              | Description                                                                                                                                                                                      |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `id`               | Internal Action ID                                                                                                                                                                               |
+| `identifier`       | Action identifier                                                                                                                                                                                |
+| `title`            | Action title                                                                                                                                                                                     |
+| `icon`             | Action icon                                                                                                                                                                                      |
+| `userInputs`       | An object containing `properties` and `required` keys following the standard JSON schema format as seen in [Blueprint structure](../software-catalog/blueprint/blueprint.md#blueprint-structure) |
+| `invocationMethod` | Defines the destination where invocations of the Self-Service Action will be delivered, see [invocation method](#invocation-method) for details                                                  |
+| `trigger`          | The type of the action: `CREATE`, `DAY-2` or `DELETE`                                                                                                                                            |
+| `description`      | Action description                                                                                                                                                                               |
 
 ### Properties structure table
 
@@ -388,13 +388,13 @@ The following table includes the different fields that can be specified in the `
 
 | Field                    | Description                                                                                                                                                                     |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `type`                   | All the [types](../software-catalog/blueprint.md#property-types) Port supports - `string`, `number`, `boolean`, etc...                                                          |
+| `type`                   | All the [types](../software-catalog/blueprint/blueprint.md#property-types) Port supports - `string`, `number`, `boolean`, etc...                                                |
 | `title`                  | The title shown in the form when activating the Self-Service Action                                                                                                             |
 | `format`                 | Specific data format to pair with some of the available types. You can explore all formats in the [String Formats](#string-formats) section                                     |
 | `blueprint`              | Identifier of an existing Blueprint to fetch Entities from                                                                                                                      |
 | `description` (Optional) | Extra description for the requested property                                                                                                                                    |
 | `default` (Optional)     | Default value                                                                                                                                                                   |
-| `enum` (Optional)        | A list of predefined values the user can choose from, same format as [enum](../software-catalog/blueprint.md#enum)                                                              |
+| `enum` (Optional)        | A list of predefined values the user can choose from, same format as [enum](../software-catalog/blueprint/blueprint.md#enum)                                                    |
 | `icon` (Optional)        | Icon for the user input property. Icon options: `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud,...` <br /><br />See the full icon list [below](#full-icon-list). |
 
 ### String formats
@@ -408,7 +408,7 @@ The following table includes the different fields that can be specified in the `
 }
 ```
 
-In addition to the formats introduced in [Blueprint string property formats](../software-catalog/blueprint.md#string-property-formats), Port Self-Service Actions also support the following `string` formats:
+In addition to the formats introduced in [Blueprint string property formats](../software-catalog/blueprint/blueprint.md#string-property-formats), Port Self-Service Actions also support the following `string` formats:
 
 | `format` | Description                          | Example values            |
 | -------- | ------------------------------------ | ------------------------- |
@@ -435,7 +435,7 @@ When `"format": "entity"` is used, a `blueprint` field is available.
 The `blueprint` field takes an identifier of an existing Blueprint. Then, when using the configured Self-Service Action in Port's UI, the specified field will include a list of existing Entities of the selected Blueprint from your software catalog to choose from.
 
 :::tip
-For more examples, refer to [string property formats examples](../software-catalog/blueprint.md#examples-1).
+For more examples, refer to [string property formats examples](../software-catalog/blueprint/blueprint.md#examples-1).
 :::
 
 ## Invocation method

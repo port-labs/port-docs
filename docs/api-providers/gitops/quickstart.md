@@ -11,7 +11,7 @@ sidebar_position: 1
 
 1. Clone our example repo: [github-app-setup-example](https://github.com/port-labs/github-app-setup-example).
 
-2. Use the `microservice.json` file as a base for your [Blueprint](../../software-catalog/blueprint.md).
+2. Use the `microservice.json` file as a base for your [Blueprint](../../software-catalog/blueprint/blueprint.md).
 
 :::tip
 You can add any property you want into the base `microservice.json` file
