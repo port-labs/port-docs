@@ -8,24 +8,28 @@ sidebar_position: 2
 
 When installing the K8s exporter, you can override values in the `helm install` command, either with the `--set` flag to specify values directly, or the `--set-file` flag to set individual values from a file:
 
-    helm install my-port-k8s-exporter port-labs/port-k8s-exporter \
-        --create-namespace --namespace port-k8s-exporter \
-        --set secret.secrets.portClientId=CLIENT_ID --set secret.secrets.portClientSecret=CLIENT_SECRET \
-        --set-file configMap.config=config.yaml
+```showLineNumbers
+helm install my-port-k8s-exporter port-labs/port-k8s-exporter \
+    --create-namespace --namespace port-k8s-exporter \
+    --set secret.secrets.portClientId=CLIENT_ID --set secret.secrets.portClientSecret=CLIENT_SECRET \
+    --set-file configMap.config=config.yaml
+```
 
 Alternatively, you can use a YAML file that specifies the values while installing the chart. For example:
 
-    helm install my-port-k8s-exporter port-labs/port-k8s-exporter \
-       --create-namespace --namespace port-k8s-exporter \
-       -f custom_values.yaml
+```showLineNumbers
+helm install my-port-k8s-exporter port-labs/port-k8s-exporter \
+   --create-namespace --namespace port-k8s-exporter \
+   -f custom_values.yaml
+```
 
 ### Required Configuration
 
-| Parameter                             | Description                                                                      |
-| ------------------------------------- | -------------------------------------------------------------------------------- |
-| **`secret.secrets.portClientId`**     | Port Client ID.                                                                  |
-| **`secret.secrets.portClientSecret`** | Port Client Secret.                                                              |
-| **`configMap.config`**                | Port K8s Exporter `config.yaml`. Look at [Quickstart](./quickstart) for example. |
+| Parameter                         | Description                                                                      |
+| --------------------------------- | -------------------------------------------------------------------------------- |
+| `secret.secrets.portClientId`     | Port Client ID.                                                                  |
+| `secret.secrets.portClientSecret` | Port Client Secret.                                                              |
+| `configMap.config`                | Port K8s Exporter `config.yaml`. Look at [Quickstart](./quickstart) for example. |
 
 ### Advanced Configuration
 
