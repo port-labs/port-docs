@@ -399,7 +399,7 @@ The following table includes the different fields that can be specified in the `
 
 ### Special formats
 
-In addition to the formats introduced in [Blueprint string property formats](../port-components/blueprint.md#string-property-formats), Port Self-Service Actions also support the following special formats:
+In addition to the formats that were introduced in [Blueprint string property formats](../port-components/blueprint.md#string-property-formats), Port's Self-Service Actions also support the following special formats:
 
 | `type`       | Description                                     | Example values                                  |
 | ------------ | ----------------------------------------------- | ----------------------------------------------- |
