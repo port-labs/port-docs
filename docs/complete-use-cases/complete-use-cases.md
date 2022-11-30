@@ -13,3 +13,4 @@ Select a use case from the list below to get started:
 - [Software Templates](./software-templates.md)
 - [IaC Templates](./iac-templates.md)
 - [Service Maturity](./service-maturity.md)
+- [Microservice Dependency Mapping](./microservice-dependency-mapping.md)

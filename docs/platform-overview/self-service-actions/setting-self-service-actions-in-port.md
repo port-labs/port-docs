@@ -397,22 +397,14 @@ The following table includes the different fields that can be specified in the `
 | `enum` (Optional)        | A list of predefined values the user can choose from, same format as [enum](../port-components/blueprint.md#enum)                                                               |
 | `icon` (Optional)        | Icon for the user input property. Icon options: `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud,...` <br /><br />See the full icon list [below](#full-icon-list). |
 
-### String formats
+### Special formats
 
-```json {3-4} showLineNumbers
-"entity_prop": {
-    "title": "My string prop",
-    "type": "string",
-    "format": "url",
-    "description": "This is an entity property"
-}
-```
+In addition to the formats that were introduced in [Blueprint string property formats](../port-components/blueprint.md#string-property-formats), Port's Self-Service Actions also support the following special formats:
 
-In addition to the formats introduced in [Blueprint string property formats](../port-components/blueprint.md#string-property-formats), Port Self-Service Actions also support the following `string` formats:
-
-| `format` | Description                          | Example values            |
-| -------- | ------------------------------------ | ------------------------- |
-| `entity` | An Entity from a specified Blueprint | `"notifications-service"` |
+| `type`       | Description                                     | Example values                                  |
+| ------------ | ----------------------------------------------- | ----------------------------------------------- |
+| `entity`     | Entity from a specified Blueprint            | `"notifications-service"`                       |
+| Entity array | Array of Entities from a specified Blueprint | `["notifications-service", "frontend-service"]` |
 
 #### Examples
 
@@ -420,12 +412,14 @@ Here is how to use property formats:
 
 #### Entity
 
-```json {3-5} showLineNumbers
+```json showLineNumbers
 "entity_prop": {
     "title": "My string prop",
+    // highlight-start
     "type": "string",
     "format": "entity",
     "blueprint": "microservice",
+    // highlight-end
     "description": "This is an entity property"
 }
 ```
@@ -434,9 +428,24 @@ When `"format": "entity"` is used, a `blueprint` field is available.
 
 The `blueprint` field takes an identifier of an existing Blueprint. Then, when using the configured Self-Service Action in Port's UI, the specified field will include a list of existing Entities of the selected Blueprint from your software catalog to choose from.
 
-:::tip
-For more examples, refer to [string property formats examples](../port-components/blueprint.md#examples-1).
-:::
+#### Entity Array
+
+```json showLineNumbers
+"entity_prop": {
+    "title": "My string prop",
+    "description": "This property is an array of Entities",
+    // highlight-start
+    "type": "array",
+    "items": {
+      "type": "string",
+      "blueprint": "service",
+      "format": "entity"
+    }
+    // highlight-end
+}
+```
+
+When `"type": "array"` is used, you can create an `items` property. Within `items` you can use `"format": "entity"` and write the identifier of the selected `blueprint` which you want to include Entities from (similar to [Entity](#entity) format). You can then pass an Entity array to your Port Action.
 
 ## Invocation method
 
@@ -449,10 +458,11 @@ The `invocationMethod` supports 2 configurations:
 
 ### Invocation method structure fields
 
-| Field  | Type     | Description                                                                                                                                       | Example values              |
-| ------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
-| `type` | `string` | Defines the Self-Service Action destination type                                                                                                  | Either `WEBHOOK` or `KAFKA` |
-| `url`  | `string` | Defines the webhook URL where Port sends Self-Service Actions to via HTTP POST request. <br></br> Can be added only if `type` is set to `WEBHOOK` | `https://example.com`       |
+| Field   | Type      | Description                                                                                                                                       | Example values              |
+| ------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
+| `type`  | `string`  | Defines the Self-Service Action destination type                                                                                                  | Either `WEBHOOK` or `KAFKA` |
+| `agent` | `boolean` | Defines whether to use [Port Agent](./port-execution-agent) for execution or not. <br></br> Can only be added if `type` is set to `WEBHOOK`       | Either `true` or `false`    |
+| `url`   | `string`  | Defines the webhook URL where Port sends Self-Service Actions to via HTTP POST request. <br></br> Can be added only if `type` is set to `WEBHOOK` | `https://example.com`       |
 
 ## Triggering actions
 
