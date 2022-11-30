@@ -403,8 +403,8 @@ In addition to the formats introduced in [Blueprint string property formats](../
 
 | `type`       | Description                                     | Example values                                  |
 | ------------ | ----------------------------------------------- | ----------------------------------------------- |
-| `entity`     | An Entity from a specified Blueprint            | `"notifications-service"`                       |
-| Entity array | An array of Entities from a specified Blueprint | `["notifications-service", "frontend-service"]` |
+| `entity`     | Entity from a specified Blueprint            | `"notifications-service"`                       |
+| Entity array | Array of Entities from a specified Blueprint | `["notifications-service", "frontend-service"]` |
 
 #### Examples
 
