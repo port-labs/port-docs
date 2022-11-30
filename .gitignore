@@ -21,3 +21,4 @@ yarn-error.log*
 
 # IDEA
 .idea
+.vscode

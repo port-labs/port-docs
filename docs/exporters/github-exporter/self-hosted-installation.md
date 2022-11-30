@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 # Self Hosted Installation
@@ -75,7 +75,7 @@ It can be deployed on any platform that allows deploying images as containers su
 You can pull the Docker image by running:
 
 ```bash showLineNumbers
-docker pull ghcr.io/port-labs/port-self-hosted-github-app:0.1.0
+docker pull ghcr.io/port-labs/port-self-hosted-github-app:0.2.0
 ```
 
 And now run it via:
@@ -121,5 +121,6 @@ After you have the App registered in your organization and the docker is up and 
 
 Now that you have the GitHub app installed, you can refer to our examples for some practical use cases:
 
-- [Exporting pull requests as entities to Port](./exporter/quickstart.md)
-- [Exporting entities via port.yml definition file](./gitops/quickstart.md)
+- [Exporting pull requests as entities to Port](./exporting-pull-requests)
+- [Exporting repositories files and metadata as entities to Port](./exporting-repositories.md)
+- [Exporting entities via port.yml definition file](../../api-providers/gitops/quickstart.md)

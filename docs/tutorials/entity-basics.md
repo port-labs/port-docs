@@ -203,17 +203,36 @@ You can change any mutable Entity, and edit/delete its property values.
 
 The API offers several methods to update an existing Entity:
 
-- Make an **HTTP POST** request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities?upsert=true`
+#### POST request
 
-  This request with the `upsert` flag set to `true` will update a matching Entity if one exists, if no matching Entity is found, a new one will be created.
+Make an **HTTP POST** request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities?upsert=true`
 
-  The request body is the same as creating a new entity, just with the additional flag `upsert=true`.
+This request with an `upsert` flag set to `true`, will update a matching Entity, if one exists. If no matching Entity is found, a new one will be created.
 
-- Make an **HTTP PUT** request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`
+The request body is the same body inserted when creating a new entity, with the exception of an additional flag `upsert=true`.
 
-  A PUT request has the same body as a POST request and it will simply overwrite the entity if it exists. It will return an error code if the entity does not exist (based on identifier-match).
+The **POST** method supports the following query parameters:
 
-- Make an **HTTP PATCH** request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`
+| Parameter | Default value |
+| --------- | ------------- |
+| `upsert`  | `false`       |
+| `merge`   | `false`       |
+
+To understand the behavior of the `upsert` and `merge` parameters, refer to the following possible scenarios:
+
+- `upsert=false` - create a new Entity, or, fail if an Entity with the provided identifier exists;
+- `upsert=true & merge=false` - create a new Entity, or, update an Entity if one with the provided identifier exists (will override existing values with those provided in the request - equivalent to a PUT request);
+- `upsert=true & merge=true` - create a new Entity, or, update an Entity if one with the provided identifier exists (will merge existing values with those provided in the request - equivalent to a PATCH request for each individual field provided).
+
+#### PUT request
+
+Make an **HTTP PUT** request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`
+
+A PUT request has the same body as a POST request and it will simply overwrite the Entity if it exists. It will return an error code if the Entity does not exist (based on identifier-match).
+
+#### PATCH request
+
+Make an **HTTP PATCH** request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`
 
 A PATCH request has a specific format that allows precise changes in an existing Entity, for example:
 
