@@ -25,7 +25,7 @@ The helm chart with full installation & usage guide can be found [here](https://
 
 1. Add Port's Helm repo by using the following command:
 
-```
+```bash showLineNumbers
 helm repo add port-labs https://port-labs.github.io/helm-charts
 ```
 
@@ -203,7 +203,7 @@ resources: # List of K8s resources to list, watch, and export to Port.
 
 3. After configuring the `config.yml` file from the previous step. Install the `Kubernetes Exporter` chart by using the following command:
 
-```
+```bash showLineNumbers
 helm install my-port-k8s-exporter port-labs/port-k8s-exporter \
     --create-namespace --namespace port-k8s-exporter \
     --set secret.secrets.portClientId=CLIENT_ID --set secret.secrets.portClientSecret=CLIENT_SECRET \

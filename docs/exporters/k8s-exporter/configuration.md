@@ -8,7 +8,7 @@ sidebar_position: 2
 
 When installing the K8s exporter, you can override values in the `helm install` command, either with the `--set` flag to specify values directly, or the `--set-file` flag to set individual values from a file:
 
-```showLineNumbers
+```bash showLineNumbers
 helm install my-port-k8s-exporter port-labs/port-k8s-exporter \
     --create-namespace --namespace port-k8s-exporter \
     --set secret.secrets.portClientId=CLIENT_ID --set secret.secrets.portClientSecret=CLIENT_SECRET \
@@ -17,7 +17,7 @@ helm install my-port-k8s-exporter port-labs/port-k8s-exporter \
 
 Alternatively, you can use a YAML file that specifies the values while installing the chart. For example:
 
-```showLineNumbers
+```bash showLineNumbers
 helm install my-port-k8s-exporter port-labs/port-k8s-exporter \
    --create-namespace --namespace port-k8s-exporter \
    -f custom_values.yaml
@@ -33,6 +33,6 @@ helm install my-port-k8s-exporter port-labs/port-k8s-exporter \
 
 ### Advanced Configuration
 
-| Parameter        | Description                                                                           | Default                | Use-Cases                                                                                                                                                                                                                                                                                    |
-| ---------------- | ------------------------------------------------------------------------------------- | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `resyncInterval` | The interval in minutes to send a repeated sync event for all known existing objects. | `0` (re-sync disabled) | Reconciliation every X minutes. For example, your Entity might has a related target Entity that still does not exists at the time of a sync event. The sync will fail, but later if the target Entity is available, it will eventually succeed (re-sync occurs continually every X minutes). |
+| Parameter        | Description                                                                                                           | Default                | Use-Cases                                                                                                                                                                                                                                                                                    |
+| ---------------- | --------------------------------------------------------------------------------------------------------------------- | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `resyncInterval` | The interval in minutes to send a repeated sync event for all known existing objects (regardless of new sync events). | `0` (re-sync disabled) | Reconciliation every X minutes. For example, your Entity might has a related target Entity that still does not exists at the time of a sync event. The sync will fail, but later if the target Entity is available, it will eventually succeed (re-sync occurs continually every X minutes). |
