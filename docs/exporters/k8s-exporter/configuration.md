@@ -33,6 +33,6 @@ helm install my-port-k8s-exporter port-labs/port-k8s-exporter \
 
 ### Advanced Configuration
 
-| Parameter        | Description                                                                | Default                | Use-Cases                                                                                                                                    |
-| ---------------- | -------------------------------------------------------------------------- | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| `resyncInterval` | The interval in minutes before sending a sync event for all known objects. | `0` (re-sync disabled) | Reconciliation every X minutes. For example, if your Entity has a related target Entity that still does not exists, it will try again later. |
+| Parameter        | Description                                                                 | Default                | Use-Cases                                                                                                                                                                                                          |
+| ---------------- | --------------------------------------------------------------------------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `resyncInterval` | The interval in minutes to send a repeated sync event for all known objects | `0` (re-sync disabled) | Reconciliation every X minutes. For example, if your Entity has a related target Entity that still does not exists during a sync event, it will be eventually synced (re-sync occurs continually every X minutes). |
