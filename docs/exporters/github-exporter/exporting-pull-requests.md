@@ -1,18 +1,18 @@
 ---
-sidebar_position: 1
-title: Quickstart
+sidebar_position: 4
+title: Exporting pull requests
 ---
 
 :::note Prerequisites
 
-[Please install our GitHub app](../installation).
+[Please install our GitHub app](./installation).
 :::
 
-# Quickstart
+# Exporting pull requests
 
 In this tutorial, we will export pull requests from GitHub and create matching Port Entities!
 
-1. Create a `pull-request` Blueprint and `port-app-config.yml` Blueprint.
+1. Create a `pull-request` Blueprint and `port-app-config.yml` configuration file.
 
 To export your GitHub `Pull Requests` to Port, you can use the following Port Blueprints definitions, and `port-app-config.yml`:
 
@@ -84,7 +84,6 @@ To export your GitHub `Pull Requests` to Port, you can use the following Port Bl
 </details>
 
 You have to place the `port-app-config.yml` inside the `.github` folder or within the `.github-private` repository in the root directory to apply it for the whole organization.
-For more info refer to [Advanced Configuration](../advanced-configuration)
 
 <details>
 
@@ -118,7 +117,6 @@ resources:
 
 :::info
 
-- Currently, we support only `pull-request` as GitHub objects (referenced by the `kind` key) but more are coming soon!
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitHub objects to Port Entities.
 - Click [Here](https://docs.github.com/en/rest/pulls/pulls#get-a-pull-request) for the GitHub pull request object structure.
 
@@ -131,8 +129,12 @@ Done! after the push is complete, the exporter will begin creating all the `open
 
 Now you can view and query all of your Pull Requests as Port Entities!
 
-![Developer Portal GitHub Pull Requests](../../../../static/img/integrations/github-app/GitHubPullRequests.png)
+![Developer Portal GitHub Pull Requests](../../../static/img/integrations/github-app/GitHubPullRequests.png)
 
-You can also see the description in markdown format inside the [Specific Entity Page] ![Developer Portal GitHub Pull Request Description](../../../../static/img/integrations/github-app/PullRequestDescription.png), and look for the respective audit logs with an indication of the GitHub Exporter as the source:
+You can also see the description in markdown format inside the [Specific Entity Page](../../platform-overview/port-components/page.md#entity-page)
 
-![Developer Portal GitHub Exporter Audit Log](../../../../static/img/integrations/github-app/AuditLog.png)
+![Developer Portal GitHub Pull Request Description](../../../static/img/integrations/github-app/PullRequestDescription.png)
+
+And look for the respective audit logs with an indication of the GitHub Exporter as the source:
+
+![Developer Portal GitHub Exporter Audit Log](../../../static/img/integrations/github-app/AuditLog.png)
