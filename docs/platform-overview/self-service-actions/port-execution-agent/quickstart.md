@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Quickstart
 
-This is a walkthrough of how to install the Port Execution Agent in your Kubernetes Cluster.
+Let's dive in to a walkthrough on how to install the Port execution agent in your Kubernetes cluster.
 
 :::info
 You can observe the helm chart with the full installation [here](https://github.com/port-labs/helm-charts/tree/main/charts/port-agent).
