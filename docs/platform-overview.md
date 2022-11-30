@@ -10,7 +10,7 @@ Welcome to Port! :wave:
 
 Whether you are a DevEx, platform, or DevOps engineer, Port helps you create your custom Developer Portal in no time! With Port, you can build the perfect setup and workflow for your organizational needs, in order to make your developer's lives much easier with self-service capabilities
 
-![Developer Platform complete vision](../static/img/quickstart/platform-vision.svg)
+![Developer Platform complete vision](../static/img/quickstart/platform-vision.png)
 
 ### Port as a Builder
 

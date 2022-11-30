@@ -1,15 +1,13 @@
----
-sidebar_position: 5
----
+# Dashboards
 
-# Pie chart
+Port supports multiple visualizations, allowing you to display data from your software catalog in a visual and graphic manner, making it easier to create custom dashboard and make sense of large datasets.
 
-You can create a pie chart illustrating data from Entities in your software catalog divided by categories and Entity properties inside a Specific Entity Page [**Specific Entity Page**](../entity/entity.md#entity-page).
+Continue reading to learn more about our visualization types:
 
-## Creating visualization
+## Creating visualizations
 
 - On the top right of the page click on `Add Visualization` button;
-- Select Pie Chart;
+- Select the desired visualization:
 
 ![Dropdown](../../../static/img/software-catalog/widgets/AddPieChartVisualization.png)
 
@@ -17,14 +15,20 @@ You can create a pie chart illustrating data from Entities in your software cata
 
 ![Dropdown](../../../static/img/software-catalog/widgets/AddPieChartForm.png)
 
-## Editing visualization
+## Editing visualizations
 
 - On the top right of the pie chart widget click on the three dots icon;
 - Select your desired action (edit/delete).
 
 ![Dropdown](../../../static/img/software-catalog/widgets/EditOrDeleteWidget.png)
 
-## Visualization properties
+## Visualization types
+
+### Pie chart
+
+You can create a pie chart illustrating data from Entities in your software catalog divided by categories and Entity properties inside a Specific Entity Page [**Specific Entity Page**](../entity/entity.md#entity-page).
+
+#### Visualization properties
 
 | Field                   | Type     | Description                                                                                                                               | Default | Required |
 | ----------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ------- | -------- |

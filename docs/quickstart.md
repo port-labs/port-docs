@@ -16,7 +16,7 @@ Port then allows engineers to perform actions on these assets in a self-service 
 - Create a comprehensive **Software Catalog** by mapping all your software and infrastructure components in one place: microservices, monoliths, deployments, repos, databases, and more.
 - Let your developers provision, terminate and perform day 2 operations on any asset exposed (microservice or not) in your catalog, within the policies and guardrails you’ve set, ensuring unified standards and governance over the processes inside your organization.
 
-![Developer Platform complete vision](../static/img/quickstart/platform-vision.svg)
+![Developer Platform complete vision](../static/img/quickstart/platform-vision.png)
 
 Port's three core building blocks are _Blueprints_, _Entities_ and _Relations_. This tutorial will walk you through your first steps on the platform and get you started on your Developer Portal journey!🚢
 
