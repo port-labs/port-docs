@@ -1,5 +1,5 @@
 ---
-sidebar_position: 6
+sidebar_position: 4
 ---
 
 import Tabs from "@theme/Tabs"
@@ -88,11 +88,11 @@ Port has 2 types of search rule operators: comparison operators (`=,` `>`, etc..
 
 #### Comparison operators structure
 
-| Field      | Description                                                                                                                                                                                                             |
-| ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `operator` | Search operator to use when evaluating this rule, see a list of available operators below                                                                                                                               |
-| `property` | Property to filter by according to its value. It can be a [meta-property](../software-catalog/mirror-properties.md#meta-property-mirror-property) such as `$identifier`, or a standard property such as `slack_channel` |
-| `value`    | The value to filter by                                                                                                                                                                                                  |
+| Field      | Description                                                                                                                                                                                                                       |
+| ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `operator` | Search operator to use when evaluating this rule, see a list of available operators below                                                                                                                                         |
+| `property` | Property to filter by according to its value. It can be a [meta-property](../software-catalog/blueprint/mirror-properties.md#meta-property-mirror-property) such as `$identifier`, or a standard property such as `slack_channel` |
+| `value`    | The value to filter by                                                                                                                                                                                                            |
 
 #### Relation operators structure
 
@@ -135,7 +135,7 @@ The following rule will return Entities whose identifier is `port-api`:
 :::info Available properties
 We can search over a variety of properties:
 
-- "[Meta-properties](../software-catalog/mirror-properties.md#meta-property-mirror-property)" such as `$identifier`, `$title`, `$createdAt` and more.
+- "[Meta-properties](../software-catalog/blueprint/mirror-properties.md#meta-property-mirror-property)" such as `$identifier`, `$title`, `$createdAt` and more.
 - User-defined properties that appear under the `properties` key in the `blueprint` definition
 
 :::

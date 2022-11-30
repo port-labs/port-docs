@@ -76,16 +76,16 @@ Each Blueprint is represented by a [Json schema](https://json-schema.org/), as s
 | `title`                 | `String` | The Blueprint's name                                                                                          |
 | `description`           | `String` | Description for the Blueprint.<br /> This value is visible to users when hovering on the info icon in the UI. |
 | `icon`                  | `String` | Icon for the Blueprint's graph node, and Entities of the Blueprint                                            | Icon options: `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud,...` <br /><br />See the full icon list [below](#full-icon-list). |
-| `calculationProperties` | `Object` | Contains the properties that are defined using [calculation templates](../calculation-properties)             | Example: "`repo-link`": "`https://github.com/{{$identifier}}`"                                                                                |
+| `calculationProperties` | `Object` | Contains the properties that are defined using [calculation templates](./calculation-properties)              | Example: "`repo-link`": "`https://github.com/{{$identifier}}`"                                                                                |
 | `schema`                | `Object` | Object containing two more nested fields, including `properties` and `required`                               | See the schema structure [here](#blueprint-schema).                                                                                           |
 | `changelogDestination`  | `Object` | Defines the destination where events that happen within the Blueprint's context will be delivered             | See the object structure [here](#changelog-destination).                                                                                      |
 
 #### Special blueprint fields
 
-| Field              | Type     | Description                                                                                                                                                          | Optional Values                                                         |
-| ------------------ | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| Field              | Type     | Description                                                                                                                                                          | Optional Values                                                        |
+| ------------------ | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
 | `relations`        | `Object` | Contains the [Relations](../relation/relation.md) of the Blueprint                                                                                                   |
-| `mirrorProperties` | `Object` | Becomes available when a Relation is defined between two blueprints.<br />A Mirror Property represents additional data queried from the related [Entity](../entity). | See more details on the [Mirror Properties](../mirror-properties) page. |
+| `mirrorProperties` | `Object` | Becomes available when a Relation is defined between two blueprints.<br />A Mirror Property represents additional data queried from the related [Entity](../entity). | See more details on the [Mirror Properties](./mirror-properties) page. |
 
 #### Full icon list
 
@@ -606,8 +606,8 @@ Events that the `changelogDestination` configuration will report on include:
 
 The `changelogDestination` supports 2 configurations:
 
-- [Webhook](../../self-service-actions/port-execution-architecture/port-execution-webhook.md)
-- [Kafka](../../self-service-actions/port-execution-architecture/port-execution-kafka.md)
+- [Webhook](../../self-service-actions/webhook/webhook.md)
+- [Kafka](../../self-service-actions/kafka/kafka.md)
 
 :::tip
 If you don't want to send changelog events to any destination, you can simply remove the `changeLog` destination from the Blueprint JSON.
@@ -620,13 +620,13 @@ If you don't want to send changelog events to any destination, you can simply re
 | `type` | `string` | Defines the changelog destination type                                                                                                        | Either `WEBHOOK` or `KAFKA` |
 | `url`  | `string` | Defines the webhook URL where Port sends changelog events to via HTTP POST request. <br></br> Can be added only if `type` is set to `WEBHOOK` | `https://example.com`       |
 
-For more information about Port's changelog capabilities, refer to the [Port execution architecture](../../self-service-actions/port-execution-architecture/port-execution-architecture.md) page.
+For more information about Port's changelog capabilities, refer to the [Self-Service Actions deep dive](../../self-service-actions/self-service-actions-deep-dive.md) page.
 
 ## Mirror properties
 
 When two Blueprints are connected via a Relation, a new set of properties becomes available to Entities in the source Blueprint.
 
-Those new properties are called `mirrorProperties`, you can learn more about them in the [mirrorProperties](../mirror-properties) page.
+Those new properties are called `mirrorProperties`, you can learn more about them in the [mirrorProperties](./mirror-properties) page.
 
 ## Next Steps
 

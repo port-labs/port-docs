@@ -150,7 +150,7 @@ In order to map this `microservice` to our `notificationServiceDeploymentV1` `de
 
 Specifying the `notificationService` under the Relation maps the connection between our `notificationServiceDeploymentV1` Entity and the `notificationService` Entity, so that when you view the `notificationServiceDeploymentV1` entity you will also see the related `notificationService` entity.
 
-In addition, you will be able to use [Mirror Properties](../mirror-properties.md) to map additional properties from the `microservice` Blueprint to the `deployment` Entity
+In addition, you will be able to use [Mirror Properties](../blueprint/mirror-properties.md) to map additional properties from the `microservice` Blueprint to the `deployment` Entity
 
 ## Entity page
 

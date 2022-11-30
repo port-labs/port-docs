@@ -119,7 +119,7 @@ For example, let's assume we have the following Relation chain: `Microservice ->
 
 We want to map the members of the squad that owns the microservice directly to the `Microservice` entities.
 
-The members of the squad are listed in an [array property](./blueprint#array) under the user-defined property `squad_members`.
+The members of the squad are listed in an [array property](./blueprint.md#array) under the user-defined property `squad_members`.
 
 The names of the Relations are:
 

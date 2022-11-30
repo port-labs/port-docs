@@ -4,7 +4,7 @@ sidebar_position: 5
 
 # Calculation Properties
 
-Calculation Properties allow you to use existing properties defined on [Blueprints](./blueprint), either directly or by using [Relations](./relation) and [Mirror Properties](./mirror-properties), in order to create new properties by using the [`jq`](https://github.com/stedolan/jq) processor for `JSON`.
+Calculation Properties allow you to use existing properties defined on [Blueprints](./blueprint.md), either directly or by using [Relations](../relation/relation.md) and [Mirror Properties](./mirror-properties), in order to create new properties by using the [`jq`](https://github.com/stedolan/jq) processor for `JSON`.
 
 Calculation Properties make it easier to define properties that are based on values from other properties, with the added ability to transform the data.
 

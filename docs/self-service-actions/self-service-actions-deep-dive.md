@@ -444,8 +444,8 @@ The `invocationMethod` object controls where Self-Service Actions are reported t
 
 The `invocationMethod` supports 2 configurations:
 
-- [Webhook](./port-execution-architecture/port-execution-webhook.md)
-- [Kafka](./port-execution-architecture/port-execution-kafka.md)
+- [Webhook](./webhook/webhook.md)
+- [Kafka](./kafka/kafka.md)
 
 ### Invocation method structure fields
 
@@ -458,7 +458,7 @@ The `invocationMethod` supports 2 configurations:
 
 We will now look at trigger examples for each action type and explain what happens behind the scenes when we execute each type.
 
-When we click on the `execute` button of an action, a Port [action message](#action-message-structure) is published to the invocation destination specified by the user (either a POST request to the user's [Webhook](./port-execution-architecture/port-execution-webhook.md) or a message to the user's dedicated [Kafka](./port-execution-architecture/port-execution-kafka.md) topic).
+When we click on the `execute` button of an action, a Port [action message](#action-message-structure) is published to the invocation destination specified by the user (either a POST request to the user's [Webhook](./webhook/webhook.md) or a message to the user's dedicated [Kafka](./kafka/kafka.md) topic).
 
 For example, you can deploy a new version of your microservice when a `CREATE` action is triggered.
 

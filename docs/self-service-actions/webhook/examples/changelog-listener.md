@@ -108,7 +108,7 @@ For this limited example, the `deployment config` Blueprint will include mostly 
 </details>
 
 :::info
-Remember that in order to report changelog events to a webhook, you need to provide the [changelogDestination](../../software-catalog/blueprint/blueprint.md#changelog-destination) key in the Blueprint definition.
+Remember that in order to report changelog events to a webhook, you need to provide the [changelogDestination](../../../software-catalog/blueprint/blueprint.md#changelog-destination) key in the Blueprint definition.
 :::
 
 In addition, below you can find a `deployment config` Entity matching the Blueprint schema:
@@ -142,7 +142,7 @@ Remember to replace the placeholders for `YOUR_CLIENT_ID`, `YOUR_CLIENT_SECRET` 
 :::
 
 :::tip
-Remember that Blueprints and Entities can be created both from the [UI](../../software-catalog/entity/tutorial.md#from-the-ui) and from the [API](../../software-catalog/entity/tutorial.md#from-the-api).
+Remember that Blueprints and Entities can be created both from the [UI](../../../software-catalog/entity/tutorial.md#from-the-ui) and from the [API](../../../software-catalog/entity/tutorial.md#from-the-api).
 :::
 
 <details>
@@ -325,7 +325,7 @@ INFO:uvicorn.error:Application startup complete.
 
 ### Directing the webhook to the API
 
-For this step, you can follow the steps in [forwarding events to localhost](./local-debugging-webhook.md#forwarding-events-to-localhost) from the [debugging webhooks locally](./local-debugging-webhook.md) page.
+For this step, you can follow the steps in [forwarding events to localhost](../local-debugging-webhook.md#forwarding-events-to-localhost) from the [debugging webhooks locally](../local-debugging-webhook.md) page.
 
 :::note
 Remember to use your `Smee proxy URL`, and replace `http://localhost:3000/webhooks` with `http://localhost:80/api/slack`.
@@ -336,12 +336,12 @@ Remember to use your `Smee proxy URL`, and replace `http://localhost:3000/webhoo
 To see the result of your API, update the `healthStatus` field of a deployment config Entity.
 
 :::tip
-Remember that you can make changes to Entities both from the [UI](../../software-catalog/entity/tutorial.md#from-the-ui) and from the [API](../../software-catalog/entity/tutorial.md#from-the-api).
+Remember that you can make changes to Entities both from the [UI](../../../software-catalog/entity/tutorial.md#from-the-ui) and from the [API](../../../software-catalog/entity/tutorial.md#from-the-api).
 :::
 
 When the **health status** of a `deployment config` Entity changes, you should see a new message in the slack channel you chose when you created the slack webhook:
 
-![Software catalog changelog slack message](../../../static/img/self-service-actions/changelog-slack-message.png)
+![Software catalog changelog slack message](../../../../static/img/self-service-actions/changelog-slack-message.png)
 
 ## Summary
 

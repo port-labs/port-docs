@@ -479,7 +479,7 @@ In addition, the Blueprint is going to include the following calculation propert
 - **Grafana URL** - link to the Grafana dashboard of the environment.
 
 :::tip
-For more information about calculation properties click [here](./software-catalog/calculation-properties.md).
+For more information about calculation properties click [here](./software-catalog/blueprint/calculation-properties.md).
 :::
 
 In addition, the `environment type` field will be marked as `required`, that way we can make sure that our environments are tagged correctly.

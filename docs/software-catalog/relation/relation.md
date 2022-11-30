@@ -83,7 +83,7 @@ This will add a property under the `relations` section, as shown in the [related
 
 Creating a Relation between multiple Blueprints allows you to use **Mirror Properties** to enrich the data attached to your Entities, by querying additional data from related Entities with fewer steps.
 
-You can learn more about these properties in the [Mirror Properties](../mirror-properties) page.
+You can learn more about these properties in the [Mirror Properties](../blueprint/mirror-properties) page.
 
 ## Next Steps
 
