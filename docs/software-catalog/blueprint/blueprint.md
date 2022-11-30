@@ -615,10 +615,11 @@ If you don't want to send changelog events to any destination, you can simply re
 
 ### Changelog destination structure fields
 
-| Field  | Type     | Description                                                                                                                                   | Example values              |
-| ------ | -------- | --------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
-| `type` | `string` | Defines the changelog destination type                                                                                                        | Either `WEBHOOK` or `KAFKA` |
-| `url`  | `string` | Defines the webhook URL where Port sends changelog events to via HTTP POST request. <br></br> Can be added only if `type` is set to `WEBHOOK` | `https://example.com`       |
+| Field   | Type      | Description                                                                                                                                                                                          | Example values              |
+| ------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
+| `type`  | `string`  | Defines the changelog destination type                                                                                                                                                               | Either `WEBHOOK` or `KAFKA` |
+| `agent` | `boolean` | Defines whether to use [Port Agent](../../self-service-actions/webhook/port-execution-agent/port-execution-agent.md) for execution or not. <br></br> Can only be added if `type` is set to `WEBHOOK` | Either `true` or `false`    |
+| `url`   | `string`  | Defines the webhook URL where Port sends changelog events to via HTTP POST request. <br></br> Can be added only if `type` is set to `WEBHOOK`                                                        | `https://example.com`       |
 
 For more information about Port's changelog capabilities, refer to the [Self-Service Actions deep dive](../../self-service-actions/self-service-actions-deep-dive.md) page.
 
