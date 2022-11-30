@@ -6,7 +6,7 @@ sidebar_position: 2
 
 ## How to configure the Kubernetes Exporter?
 
-You can override values in `helm install` command, with either the `--set` flag or the `--set-file` flag to set individual values from a file:
+When installing the K8s exporter, you can override values in the `helm install` command, either with the `--set` flag to specify values directly, or the `--set-file` flag to set individual values from a file:
 
     helm install my-port-k8s-exporter port-labs/port-k8s-exporter \
         --create-namespace --namespace port-k8s-exporter \
@@ -31,4 +31,4 @@ Alternatively, you can use a YAML file that specifies the values while installin
 
 | Parameter        | Description                                                                | Default                | Use-Cases                                                                                                                                    |
 | ---------------- | -------------------------------------------------------------------------- | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| `resyncInterval` | The interval in minutes before sending a sync event for all known objects. | `0` (re-sync disabled) | Reconciliation every X minutes. For example, if your entity has a related target entity that still does not exists, it will try again later. |
+| `resyncInterval` | The interval in minutes before sending a sync event for all known objects. | `0` (re-sync disabled) | Reconciliation every X minutes. For example, if your Entity has a related target Entity that still does not exists, it will try again later. |
