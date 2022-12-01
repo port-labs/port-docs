@@ -18,7 +18,7 @@ The helm chart with full installation & usage guide can be found [here](https://
 
 <center>
 
-![Port Developer Portal Credentials Modal](../../../static/img/tutorial/credentials-modal.png)
+![Port Developer Portal Credentials Modal](../../../static/img/software-catalog/credentials-modal.png)
 
 </center>
 :::

@@ -17,7 +17,7 @@ You can install the our GitHub App by following [our installation guide](../../e
 
 In order to use the GitHub App, all you need to do is include a `port.yml` file in your code repositories, or multiple `port.yml` files in your Monorepo.
 
-The `port.yml` file format is very similar to a standard [Port Entity](../../platform-overview/port-components/entity.md#), here is an example:
+The `port.yml` file format is very similar to a standard [Port Entity](../../software-catalog/entity/entity.md), here is an example:
 
 ```yaml showLineNumbers
 identifier: example

@@ -1,0 +1,696 @@
+---
+sidebar_position: 4
+---
+
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+
+# Search In Port
+
+Port’s API comes with a built-in search route that allows you to navigate your Service Catalog with ease.
+
+Using the search route’s filters and rules, you can search different Entities.
+
+## Search basics
+
+Search in Port is performed by writing simple querying rules which can be combined together to form a more complex and precise query.
+
+The base search route is `https://api.getport.io/v1/entities/search`, it receives `HTTP POST` requests.
+
+## Search request
+
+A search request defines the logical Relation between different search rules, and contains filters and rules to find suitable Entities. Each search request is represented by a `JSON object`, as shown in the following section:
+
+```json showLineNumbers
+{
+  "combinator": "and",
+  "rules": [
+    {
+      "property": "$blueprint",
+      "operator": "=",
+      "value": "Microservice"
+    },
+    {
+      "property": "$identifier",
+      "operator": "contains",
+      "value": "admin"
+    }
+  ]
+}
+```
+
+```json showLineNumbers
+{
+  "combinator": "or",
+  "rules": [
+    {
+      "property": "environment",
+      "operator": "=",
+      "value": "production"
+    },
+    {
+      "property": "environment",
+      "operator": "=",
+      "value": "staging"
+    }
+  ]
+}
+```
+
+---
+
+### Search request structure table
+
+| Field        | Description                                                        |
+| ------------ | ------------------------------------------------------------------ |
+| `combinator` | Defines the query’s logical Relations between different conditions |
+| `rules`      | An array of search rules to filter results with                    |
+
+## Search rules
+
+A search rule is a small filtering unit, used to control the output
+
+Here is an example search rule:
+
+```json showLineNumbers
+{
+  "property": "$blueprint",
+  "operator": "=",
+  "value": "Microservice"
+}
+```
+
+---
+
+### Search rule structure table
+
+Port has 2 types of search rule operators: comparison operators (`=,` `>`, etc...) and Relation operators (`relatedTo`, `dependedOn`, etc...). Let’s dive in on the structure of each search rule:
+
+#### Comparison operators structure
+
+| Field      | Description                                                                                                                                                                                                                       |
+| ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `operator` | Search operator to use when evaluating this rule, see a list of available operators below                                                                                                                                         |
+| `property` | Property to filter by according to its value. It can be a [meta-property](../software-catalog/blueprint/mirror-properties.md#meta-property-mirror-property) such as `$identifier`, or a standard property such as `slack_channel` |
+| `value`    | The value to filter by                                                                                                                                                                                                            |
+
+#### Relation operators structure
+
+| Field       | Description                                                                               |
+| ----------- | ----------------------------------------------------------------------------------------- |
+| `operator`  | Search operator to use when evaluating this rule, see a list of available operators below |
+| `blueprint` | Blueprint of the Entity identifier specified in the `value` field                         |
+| `value`     | Value to filter by                                                                        |
+
+## Search operators
+
+Search currently supports the following operators:
+
+| Operator          | Description                                                |
+| ----------------- | ---------------------------------------------------------- |
+| `=`               | Equality operator                                          |
+| `!=`              | Inequality operator                                        |
+| `>`,`>=`,`<`,`<=` | Numeric comparison operators                               |
+| `between`         | Date range matching                                        |
+| `contains`        | String pattern matching                                    |
+| `relatedTo`       | Returns Entities that have a Relation with the rule target |
+| `dependedOn`      | Returns Entities that depend on rule target                |
+
+## Operator examples
+
+Here are examples for each available search rule operator:
+
+### `=` operator
+
+The following rule will return Entities whose identifier is `port-api`:
+
+```json showLineNumbers
+{
+  "operator": "=",
+  "property": "$identifier",
+  "value": "port-api"
+}
+```
+
+:::info Available properties
+We can search over a variety of properties:
+
+- "[Meta-properties](../software-catalog/blueprint/mirror-properties.md#meta-property-mirror-property)" such as `$identifier`, `$title`, `$createdAt` and more.
+- User-defined properties that appear under the `properties` key in the `blueprint` definition
+
+:::
+
+### `!=` operator
+
+The following rule will return Entities whose identifier **is not** `port-api`:
+
+```json showLineNumbers
+{
+  "operator": "!=",
+  "property": "$identifier",
+  "value": "port-api"
+}
+```
+
+### `>`,`>=`,`<`,`<=` operators
+
+The following rule will return Entities whose version value is less than `5`:
+
+```json showLineNumbers
+{
+  "operator": "<",
+  "property": "version",
+  "value": 5
+}
+```
+
+### `between` operator
+
+The following rule will return Entities which were created in the last week:
+
+```json showLineNumbers
+{
+  "operator": "between",
+  "property": "$createdAt",
+  "value": {
+    "preset": "lastWeek"
+  }
+}
+```
+
+**Available Presets:**
+
+- tomorrow
+- today
+- yesterday
+- lastWeek
+- lastMonth
+
+The `between` operator also supports standard date ranges:
+
+```json showLineNumbers
+{
+  "combinator": "and",
+  "rules": [
+    {
+      "operator": "between",
+      "property": "$createdAt",
+      "value": {
+        "from": "2022-07-26T16:38:06.839Z",
+        "to": "2022-07-29T17:00:28.006Z"
+      }
+    }
+  ]
+}
+```
+
+### `contains` operator
+
+The following rule will return Entities whose environment property contains the word `prod`:
+
+```json showLineNumbers
+{
+  "operator": "contains",
+  "property": "environment",
+  "value": "prod"
+}
+```
+
+### `relatedTo` operator
+
+The following rule will return all Entities that have a relationship with the Entity whose identifier is `port-api` (both [upstream and downstream](#direction-property)):
+
+```json showLineNumbers
+{
+  "operator": "relatedTo",
+  "blueprint": "microservice",
+  "value": "port-api"
+}
+```
+
+#### `direction` property
+
+The `relatedTo` operator also supports the `direction` property - which allows you to search for dependent Entities in a specific direction on the dependency graph. To better understand the functionality of this property, let's take a look at the example below:
+
+Let's assume that we have the Blueprints `DeploymentConfig` and `Microservice` with the following Relation definition (declared on the `DeploymentConfig` Blueprint):
+
+```json showLineNumbers
+"relations": {
+  "relatedMicroservice": {
+    "description": "The service this DeploymentConfig belongs to",
+    "many": false,
+    "required": false,
+    "target": "Microservice",
+    "title": "Microservice"
+  }
+}
+```
+
+In addition, we have the following Entities:
+
+```text showLineNumbers
+Deployment Configs:
+- Order-Service-Production
+- Cart-Service-Production
+
+Microservices:
+- Order Service
+- Cart Service
+
+Environments:
+- Production
+```
+
+And the following Relations:
+
+```text showLineNumbers
+Order-Service-Production -> Order-Service
+Order-Service-Production -> Production
+
+Cart-Service-Production -> Cart-Service
+Cart-Service-Production -> Production
+```
+
+By looking at the resulting graph layout, we can also map the directions:
+
+![Dependency graph upstream downstream diagram](../../static/img/software-catalog/search-in-port/search-direction-diagram.png)
+
+- To search for Entities which the source depends on - use `"direction": "upstream"`;
+- To search for Entities which depend on the source - use `"direction": "downstream"`.
+
+In the example shown above, if we want to get the `Microservice` and `Environment` that _Order-Service-Production_ depends on, the search rule would be:
+
+```json showLineNumbers
+{
+  "operator": "relatedTo",
+  "blueprint": "DeploymentConfig",
+  "value": "Order-Service-Production",
+  "direction": "upstream"
+}
+```
+
+And the result shall be:
+
+<details>
+<summary>Order-Service-Production upstream related Entities</summary>
+
+```json showLineNumbers
+{
+  "ok": true,
+  "matchingBlueprints": ["Microservice", "Environment"],
+  "entities": [
+    {
+      "identifier": "Order-Service",
+      "title": "Order-Service",
+      "blueprint": "Microservice",
+      "properties": {
+        "on-call": "mor@getport.io",
+        "language": "Python",
+        "slack-notifications": "https://slack.com/Order-Service",
+        "launch-darkly": "https://launchdarkly.com/Order-Service"
+      },
+      "relations": {},
+      "createdAt": "2022-11-17T15:54:20.432Z",
+      "createdBy": "auth0|62ab380295b34240aa511cdb",
+      "updatedAt": "2022-11-17T15:54:20.432Z",
+      "updatedBy": "auth0|62ab380295b34240aa511cdb"
+    },
+    {
+      "identifier": "Production",
+      "title": "Production",
+      "blueprint": "Environment",
+      "properties": {
+        "awsRegion": "eu-west-1",
+        "configUrl": "https://github.com/config-labs/kube/config.yml",
+        "slackChannel": "https://yourslack.slack.com/archives/CHANNEL-ID",
+        "onCall": "Mor P",
+        "namespace": "Production"
+      },
+      "relations": {},
+      "createdAt": "2022-09-19T08:54:23.025Z",
+      "createdBy": "Cnc3SiO7T0Ld1y1u0BsBZFJn0SCiPeLS",
+      "updatedAt": "2022-10-16T09:28:32.960Z",
+      "updatedBy": "auth0|62ab380295b34240aa511cdb"
+    }
+  ]
+}
+```
+
+</details>
+
+If we want to get all of the `DeploymentConfigs` that are deployed in the _Production_ `Environment`, the search rule would be:
+
+```json showLineNumbers
+{
+  "operator": "relatedTo",
+  "blueprint": "Environment",
+  "value": "Production",
+  "direction": "downstream"
+}
+```
+
+And the result shall be:
+
+<details>
+<summary>Production downstream related Entities</summary>
+
+```json showLineNumbers
+{
+  "ok": true,
+  "matchingBlueprints": ["DeploymentConfig"],
+  "entities": [
+    {
+      "identifier": "Order-Service-Production",
+      "title": "Order-Service-Production",
+      "blueprint": "DeploymentConfig",
+      "properties": {
+        "url": "https://github.com/port-labs/order-service",
+        "config": {
+          "encryption": "SHA256"
+        },
+        "monitor-links": [
+          "https://grafana.com",
+          "https://prometheus.com",
+          "https://datadog.com"
+        ]
+      },
+      "relations": {
+        "relatedMicroservice": "Order-Service",
+        "relatedEnv": "Production"
+      },
+      "createdAt": "2022-11-17T15:55:55.591Z",
+      "createdBy": "auth0|62ab380295b34240aa511cdb",
+      "updatedAt": "2022-11-17T15:55:55.591Z",
+      "updatedBy": "auth0|62ab380295b34240aa511cdb"
+    },
+    {
+      "identifier": "Cart-Service-Production",
+      "title": "Cart-Service-Production",
+      "blueprint": "DeploymentConfig",
+      "properties": {
+        "url": "https://github.com/port-labs/cart-service",
+        "config": {
+          "foo": "bar"
+        },
+        "monitor-links": [
+          "https://grafana.com",
+          "https://prometheus.com",
+          "https://datadog.com"
+        ]
+      },
+      "relations": {
+        "relatedMicroservice": "Cart-Service",
+        "relatedEnv": "Production"
+      },
+      "createdAt": "2022-11-17T15:55:10.714Z",
+      "createdBy": "auth0|62ab380295b34240aa511cdb",
+      "updatedAt": "2022-11-17T15:55:20.253Z",
+      "updatedBy": "auth0|62ab380295b34240aa511cdb"
+    }
+  ]
+}
+```
+
+</details>
+
+:::info entity page and search
+
+The output received from the `relatedTo` operator without any other rule added to the search, is the same output you will receive when viewing the [Entity page](../software-catalog/entity/entity.md#entity-page) of the Entity you specified in the `value` field
+:::
+
+### `dependedOn` operator
+
+The following rule will return all Entities that depend on the specified Entity in the query.
+
+For example, if we have the **required** Relation `deployment -> microservice`, then the deployment Entities depend on the microservice Entities, and a `dependedOn` rule specifying a `microservice` Entity will return all `deployments` of that microservice (because those `deployments` depend on the `microservice`).
+
+```json showLineNumbers
+{
+  "operator": "dependedOn",
+  "blueprint": "microservice",
+  "value": "port-api"
+}
+```
+
+:::tip deleting a depended on entity
+
+The output received from the `dependedOn` operator without any other rule added to the search, is similar to the output you will receive when trying to delete a depended Entity from the UI.
+
+The output will include the identifiers of all the dependent Entities, so you can decide if you really want to perform the delete operation (and also delete all the dependents), or cancel the delete operation
+:::
+
+## Search route query parameters
+
+The search route also supports several query parameters that affect the returned output:
+
+| Parameter                       | Description                                                                                                                                                                                                 | Available values | Default value |
+| ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- | ------------- |
+| `attach_title_to_relation`      | `true`: Both the identifier and the title of the related Entity will appear under the Relation key <br></br><br></br> `false`: Only the identifier of the related Entity will appear under the Relation key | `true`/`false`   | `false`       |
+| `exclude_calculated_properties` | Should [mirror properties](../software-catalog/blueprint/blueprint.md#mirror-properties) and [formula properties](../software-catalog/blueprint/blueprint.md#) be returned with the result                  | `true`/`false`   | `false`       |
+
+### `attach_title_to_relation` example
+
+Here is a search response with `attach_title_to_relation=true`:
+
+```json showLineNumbers
+{
+  "ok": true,
+  "matchingBlueprints": [
+    "Region",
+    "deployment",
+    "vm",
+    "microservice",
+    "k8sCluster",
+    "permission",
+    "RunningService"
+  ],
+  "entities": [
+    {
+      "identifier": "e_vb9EPyW1zOamcbT1",
+      "title": "cart-deployment",
+      "blueprint": "deployment",
+      "team": "Team BE",
+      "properties": {
+        "version": "1.4",
+        "user": "yonatan",
+        "status": "failed",
+        "github-action-url": "https://a.com",
+        "Region": "AWS"
+      },
+      "relations": {
+        "RelatedService": {
+          "identifier": "e_47MwTvQj03MpVyBx",
+          "title": "admin-test"
+        }
+      },
+      "createdAt": "2022-07-27T17:11:04.344Z",
+      "createdBy": "auth0|6278b02000955c006f9132d3",
+      "updatedAt": "2022-07-27T17:11:04.344Z",
+      "updatedBy": "auth0|6278b02000955c006f9132d3"
+    }
+  ]
+}
+```
+
+And here is the same search response with `attach_title_to_relation=false`:
+
+```json showLineNumbers
+{
+  "ok": true,
+  "matchingBlueprints": [
+    "Region",
+    "deployment",
+    "vm",
+    "microservice",
+    "k8sCluster",
+    "permission",
+    "RunningService"
+  ],
+  "entities": [
+    {
+      "identifier": "e_vb9EPyW1zOamcbT1",
+      "title": "cart-deployment",
+      "blueprint": "deployment",
+      "team": "Team BE",
+      "properties": {
+        "version": "1.4",
+        "user": "yonatan",
+        "status": "failed",
+        "github-action-url": "https://a.com",
+        "Region": "AWS"
+      },
+      "relations": {
+        "RelatedService": "e_47MwTvQj03MpVyBx"
+      },
+      "createdAt": "2022-07-27T17:11:04.344Z",
+      "createdBy": "auth0|6278b02000955c006f9132d3",
+      "updatedAt": "2022-07-27T17:11:04.344Z",
+      "updatedBy": "auth0|6278b02000955c006f9132d3"
+    }
+  ]
+}
+```
+
+## Code examples
+
+The following examples provide a foundation to begin using the search route. Remember that you can always change the content of the `rules` array to the search query that fits your search.
+
+<Tabs groupId="code-examples" defaultValue="python" values={[
+{label: "Python", value: "python"},
+{label: "Javascript", value: "javascript"},
+{label: "cURL", value: "curl"}
+]}>
+
+<TabItem value="python">
+
+```python showLineNumbers
+# Dependencies to install:
+# $ python -m pip install requests
+
+import json
+import requests
+
+CLIENT_ID = "YOUR_CLIENT_ID"
+CLIENT_SECRET = "YOUR_CLIENT_SECRET"
+
+API_URL = "https://api.getport.io/v1"
+
+credentials = {"clientId": CLIENT_ID, "clientSecret": CLIENT_SECRET}
+
+token_response = requests.post(f"{API_URL}/auth/access_token", json=credentials)
+
+access_token = f"Bearer {token_response.json()['accessToken']}"
+
+# You can now use the value in access_token when making further requests
+
+headers = {
+    'Authorization': access_token
+}
+
+query = {
+    "combinator": "or",
+    "rules": [
+        {
+            "property": "$title",
+            "operator": "=",
+            "value": "admin-prod"
+        },
+        {
+            "property": "$title",
+            "operator": "=",
+            "value": "admin-test"
+        }
+    ]
+}
+
+search_req = requests.post(f"{API_URL}/entities/search", headers=headers, json=query)
+
+search_entities = search_req.json()['entities']
+
+for entity in search_entities:
+    print(json.dumps(entity))
+```
+
+</TabItem>
+
+<TabItem value="javascript">
+
+```javascript showLineNumbers
+// Dependencies to install:
+// $ npm install axios --save
+
+const axios = require("axios").default;
+
+const CLIENT_ID = "YOUR_CLIENT_ID";
+const CLIENT_SECRET = "YOUR_CLIENT_SECRET";
+
+const API_URL = "https://api.getport.io/v1";
+
+(async () => {
+  const tokenResp = await axios.post(`${API_URL}/auth/access_token`, {
+    clientId: CLIENT_ID,
+    clientSecret: CLIENT_SECRET,
+  });
+
+  const accessToken = tokenResp.data.accessToken;
+
+  // You can now use the value in accessToken when making further requests
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+
+  const query = {
+    combinator: "or",
+    rules: [
+      {
+        property: "$title",
+        operator: "=",
+        value: "admin-prod",
+      },
+      {
+        property: "$title",
+        operator: "=",
+        value: "admin-test",
+      },
+    ],
+  };
+
+  const response = await axios.post(
+    `${API_URL}/entities/search`,
+    query,
+    config
+  );
+
+  console.log(response.data["entities"]);
+})();
+```
+
+</TabItem>
+
+<TabItem value="curl">
+
+```bash showLineNumbers
+#!/bin/bash
+
+# Dependencies to install:
+# For apt:
+# $ sudo apt-get install jq
+# For yum:
+# $ sudo yum install jq
+
+access_token=$(curl --location --request POST 'https://api.getport.io/v1/auth/access_token' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "clientId": "CLIENT_ID",
+    "clientSecret": "CLIENT_SECRET"
+}' | jq '.accessToken' | sed 's/"//g')
+
+# The token will be available in the access_token variable
+
+curl --location --request POST 'https://api.getport.io/v1/entities/search?attach_title_to_relation=true&exclude_calculated_properties=false' \
+	--header "Authorization: Bearer $access_token" \
+	--header 'Content-Type: application/json' \
+	--data-raw '{
+    "combinator": "or",
+    "rules": [
+        {
+            "property": "$title",
+            "operator": "=",
+            "value": "admin-prod"
+        },
+        {
+            "property": "$title",
+            "operator": "=",
+            "value": "admin-test"
+        }
+    ]
+}'
+
+```
+
+</TabItem>
+
+</Tabs>

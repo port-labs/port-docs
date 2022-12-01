@@ -16,6 +16,8 @@ Port then allows engineers to perform actions on these assets in a self-service 
 - Create a comprehensive **Software Catalog** by mapping all your software and infrastructure components in one place: microservices, monoliths, deployments, repos, databases, and more.
 - Let your developers provision, terminate and perform day 2 operations on any asset exposed (microservice or not) in your catalog, within the policies and guardrails you’ve set, ensuring unified standards and governance over the processes inside your organization.
 
+![Developer Platform complete vision](../static/img/quickstart/platform-vision.png)
+
 Port's three core building blocks are _Blueprints_, _Entities_ and _Relations_. This tutorial will walk you through your first steps on the platform and get you started on your Developer Portal journey!🚢
 
 ## The goal of this tutorial
@@ -31,11 +33,11 @@ This guide will give you a foundation to start building your software catalog in
 
 Your developers will be able to see all the services in a given environment and their status:
 
-![Developer Portal Environment View for running services](../static/img/welcome/quickstart/EndResultEnvironmentPage.png)
+![Developer Portal Environment View for running services](../static/img/quickstart/EndResultEnvironmentPage.png)
 
 In addition, your developers will be able to see all the environments that a specific microservice is deployed at, and which version is deployed where:
 
-![Developer Portal Service View for environments](../static/img/welcome/quickstart/EndResultServicePage.png)
+![Developer Portal Service View for environments](../static/img/quickstart/EndResultServicePage.png)
 
 Let's get started! 🚢
 
@@ -62,7 +64,7 @@ Note the **Running service** Blueprint - it is meant to represent a running depl
 :::tip
 In this tutorial, we will demonstrate how to perform every step using Port's web UI and Port's REST API.
 
-This tutorial includes various examples of ways to interact with Port's API. For more, you are welcome to visit the [API section](./tutorials/blueprint-basics.md#from-the-api) in [Blueprint basics](./tutorials/blueprint-basics.md).
+This tutorial includes various examples of ways to interact with Port's API. For more, you are welcome to visit the [API section](./software-catalog/blueprint/tutorial.md#from-the-api) in [Blueprint basics](./software-catalog/blueprint/tutorial.md).
 
 Port also has a [GitHub app](./exporters/github-exporter) and a [Terraform provider](./api-providers/terraform.md) you can use to ingest data and interact with Port's components.
 
@@ -113,11 +115,11 @@ In addition, the `on-call` field is marked as `required`, so that we always know
 
 Let's head to [Port](https://app.getport.io/blueprints) and look at the Blueprints page, at the top right corner let's click on **Add Blueprint** and configure our first Blueprint - **Service** as shown in the image below:
 
-![Developer PortalCreate New Blueprint](../static/img/welcome/quickstart/newBlueprintButton.png)
+![Developer PortalCreate New Blueprint](../static/img/quickstart/newBlueprintButton.png)
 
 After clicking the button, you will see a creation form as shown below:
 
-![Developer Portal New Blueprint Text](../static/img/welcome/quickstart/newBlueprintDefaultText.png)
+![Developer Portal New Blueprint Text](../static/img/quickstart/newBlueprintDefaultText.png)
 
 :::note
 When you click on `Add Blueprint`, you will see a template for a `microservice` Blueprint which is identical to the one you will create. So you can just click `save` and skip to [Environment Blueprint](#environment-blueprint).
@@ -267,7 +269,7 @@ To find your Port API credentials go to [Port](https://app.getport.io), click on
 
 <center>
 
-![Port Developer Portal Credentials Modal](../static/img/tutorial/credentials-modal.png)
+![Port Developer Portal Credentials Modal](../static/img/software-catalog/credentials-modal.png)
 
 </center>
 
@@ -300,7 +302,7 @@ access_token = token_response.json()['accessToken']
 ```
 
 :::tip
-For examples in other languages you can visit the [API section](./tutorials/blueprint-basics.md#from-the-api) in [Blueprint basics](./tutorials/blueprint-basics.md).
+For examples in other languages you can visit the [API section](./software-catalog/blueprint/tutorial.md#from-the-api) in [Blueprint basics](./software-catalog/blueprint/tutorial.md).
 
 :::
 
@@ -452,15 +454,15 @@ print(json.dumps(response.json(), indent=2))
 
 #### The results
 
-![Developer Portal Blueprints graph with new Service Blueprint](../static/img/welcome/quickstart/blueprintGraphWithServiceClosed.png)
+![Developer Portal Blueprints graph with new Service Blueprint](../static/img/quickstart/blueprintGraphWithServiceClosed.png)
 
 Click on the `expand` button as shown in the image below:
 
-![Developer Portal Blueprints graph with new Service Blueprint And Expand Marked](../static/img/welcome/quickstart/blueprintGraphWithServiceClosedAndExpandMarked.png)
+![Developer Portal Blueprints graph with new Service Blueprint And Expand Marked](../static/img/quickstart/blueprintGraphWithServiceClosedAndExpandMarked.png)
 
 You will see an expanded view of the Blueprint you just created, with all of its properties listed alongside the types you provided:
 
-![Developer Portal Blueprints graph with new Service open](../static/img/welcome/quickstart/blueprintGraphWithServiceOpen.png)
+![Developer Portal Blueprints graph with new Service open](../static/img/quickstart/blueprintGraphWithServiceOpen.png)
 
 Congratulations! you have just created your first Blueprint! 🎉
 
@@ -472,15 +474,13 @@ Our environment Blueprint is going to include the following properties:
 - **Cloud provider** - cloud provider where the cluster is deployed;
 - **Region** - cloud region where the cluster is deployed.
 
-In addition, the Blueprint is going to include the following formula property:
+In addition, the Blueprint is going to include the following calculation property:
 
 - **Grafana URL** - link to the Grafana dashboard of the environment.
 
 :::tip
-For more information about formula properties click [here](./platform-overview/port-components/formula-properties.md).
+For more information about calculation properties click [here](./software-catalog/blueprint/calculation-properties.md).
 :::
-
-<!-- COntinue working on the blueprint schema, add enum colors for cloud providers, add formula properties for grafana, prometheus -->
 
 In addition, the `environment type` field will be marked as `required`, that way we can make sure that our environments are tagged correctly.
 
@@ -528,13 +528,14 @@ To create the environment Blueprint, use the following JSON body:
     "required": ["type"]
   },
   "mirrorProperties": {},
-  "calculationProperties": {},
-  "formulaProperties": {
+  "calculationProperties": {
     "grafanaUrl": {
       "title": "Grafana URL",
-      "formula": "https://grafana.com/{$identifier}"
+      "calculation": "'https://grafana.com/' + .identifier",
+      "type": "string"
     }
   },
+  "formulaProperties": {},
   "relations": {}
 }
 ```
@@ -619,13 +620,14 @@ blueprint = {
         ]
     },
     "mirrorProperties": {},
-    "calculationProperties": {},
-    "formulaProperties": {
-        "grafanaUrl": {
+    "calculationProperties": {
+      "grafanaUrl": {
             "title": "Grafana URL",
-            "formula": "https://grafana.com/{$identifier}"
+            "calculation": "'https://grafana.com/' + .identifier",
+            "type": "string"
         }
     },
+    "formulaProperties": {},
     "relations": {}
 }
 
@@ -639,15 +641,15 @@ print(json.dumps(response.json(), indent=2))
 
 #### The results
 
-![Developer Portal Blueprints graph with new Environment Blueprint](../static/img/welcome/quickstart/blueprintGraphWithEnvironmentClosed.png)
+![Developer Portal Blueprints graph with new Environment Blueprint](../static/img/quickstart/blueprintGraphWithEnvironmentClosed.png)
 
 Click on the `expand` button as shown in the image below:
 
-![Developer Portal Blueprints graph with new Environment Blueprint And Expand Marked](../static/img/welcome/quickstart/blueprintGraphWithEnvironmentClosedAndExpandMarked.png)
+![Developer Portal Blueprints graph with new Environment Blueprint And Expand Marked](../static/img/quickstart/blueprintGraphWithEnvironmentClosedAndExpandMarked.png)
 
 You will see an expanded view of the Blueprint you just created, with all of its properties listed alongside the types you provided:
 
-![Developer Portal Blueprints graph with new Environment open](../static/img/welcome/quickstart/blueprintGraphWithEnvironmentOpen.png)
+![Developer Portal Blueprints graph with new Environment open](../static/img/quickstart/blueprintGraphWithEnvironmentOpen.png)
 
 In the next part, we will start to create Entities that match the new Blueprints we created, assembling the Software Catalog!
 
@@ -665,11 +667,11 @@ Let's take it slowly, and start by creating some initial Entities.
 
 Click on the services page on the left sidebar:
 
-![Developer Portal Blueprints graph with new Service and Services page marked](../static/img/welcome/quickstart/blueprintGraphWithServicesPageMarked.png)
+![Developer Portal Blueprints graph with new Service and Services page marked](../static/img/quickstart/blueprintGraphWithServicesPageMarked.png)
 
 On the services page, click on the `+ Service` button to create a new Entity:
 
-![Developer Portal Service Entity page with create entity button marked](../static/img/welcome/quickstart/serviceEntityPageWithCreateEntityMarked.png)
+![Developer Portal Service Entity page with create entity button marked](../static/img/quickstart/serviceEntityPageWithCreateEntityMarked.png)
 
 After clicking the button a new service form will appear. Let's fill it up with the following details:
 
@@ -706,13 +708,13 @@ You can either switch the creation form to Json Mode using the toggle, or you ca
 
 After filling all of the above, your creation page should look like this:
 
-![Developer Portal Service Entity filled with create entity button marked](../static/img/welcome/quickstart/serviceEntityCreateFilledAndCreateMarked.png)
+![Developer Portal Service Entity filled with create entity button marked](../static/img/quickstart/serviceEntityCreateFilledAndCreateMarked.png)
 
 You can go ahead and press the `Create` button at the bottom right corner (as shown in the image above).
 
 Now to create an environment Entity, repeat the same steps, but this time go to the environments page:
 
-![Developer Portal Blueprints graph with new Environment and Environments page marked](../static/img/welcome/quickstart/blueprintGraphWithEnvironmentsPageMarked.png)
+![Developer Portal Blueprints graph with new Environment and Environments page marked](../static/img/quickstart/blueprintGraphWithEnvironmentsPageMarked.png)
 
 And use the following data for the environment Entity:
 
@@ -813,9 +815,9 @@ print(json.dumps(env_response.json(), indent=2))
 
 The respective pages for each of our Blueprints will now show the Entities we created:
 
-![Developer Portal Service Entity page with first entity](../static/img/welcome/quickstart/serviceEntityPageWithFirstEntity.png)
+![Developer Portal Service Entity page with first entity](../static/img/quickstart/serviceEntityPageWithFirstEntity.png)
 
-![Developer Portal Environment Entity page with first entity](../static/img/welcome/quickstart/environmentEntityPageWithFirstEntity.png)
+![Developer Portal Environment Entity page with first entity](../static/img/quickstart/environmentEntityPageWithFirstEntity.png)
 
 Amazing! You have just created 2 awesome entities 🎉
 
@@ -1079,7 +1081,7 @@ print(json.dumps(response.json(), indent=2))
 
 After you're done, your Blueprints page will look like this:
 
-![Developer Portal Blueprints Page with service, environment and running service](../static/img/welcome/quickstart/blueprintsGraphWithRunningServiceEnvironmentServiceRelation.png)
+![Developer Portal Blueprints Page with service, environment and running service](../static/img/quickstart/blueprintsGraphWithRunningServiceEnvironmentServiceRelation.png)
 
 :::note
 Look at the connection graph you have just created. You modeled the relationship between your Blueprints in a way that shows which Blueprint depends on the other.
@@ -1176,11 +1178,11 @@ print(json.dumps(running_service_response.json(), indent=2))
 
 Now you will see your new running service Entity, and if you look at the Service column and the Environment column, you will see the service and environment you created previously:
 
-![Developer Portal Running Service with service and environment marked](../static/img/welcome/quickstart/RunningServiceWithServiceAndEnvironment.png)
+![Developer Portal Running Service with service and environment marked](../static/img/quickstart/RunningServiceWithServiceAndEnvironment.png)
 
 Click on the `Notification Service Prod` link in the `title` column and you will see what we call the **specific Entity page**. This page allows you to see the complete details and dependency graph of a specific Entity.
 
-![Developer Portal Running Service specific entity page after relation](../static/img/welcome/quickstart/runningServiceSpecificEntityPageAfterRelation.png)
+![Developer Portal Running Service specific entity page after relation](../static/img/quickstart/runningServiceSpecificEntityPageAfterRelation.png)
 
 :::info
 In our case, the specific Entity page for a running service will also show us a tab with the **microservice** the running service belongs to, and another tab with the **environment** of the running service because that is the Relation we mapped.
@@ -1222,7 +1224,7 @@ print(json.dumps(running_service_response.json(), indent=2))
 
 </details>
 
-In addition, you can also use Port's API to [search](./tutorials/search-in-port.md) for Blueprints and Entities.
+In addition, you can also use Port's API to [search](./software-catalog/search-in-port.md) for Blueprints and Entities.
 
 ## What now?
 
@@ -1244,27 +1246,26 @@ And, if you want to do something completely different, you can simply delete wha
 These suggestions show the basic steps in creating your very own Developer Portal, if you want to learn more about Port before starting your Developer Portal journey, look at [Diving deeper](#diving-deeper) or [Using the API](#using-the-api) below.
 :::
 
-1. Create [Blueprints](./platform-overview/port-components/blueprint.md) for your software and infrastructure components;
-2. Map out the [Relations](./platform-overview/port-components/relation.md) between your Blueprints;
-3. Ingest data to your catalog by creating [Entities](./platform-overview/port-components/entity.md) based on your Blueprints via Port's UI or using our API;
-4. Define [Self-Service Actions](./platform-overview/self-service-actions/self-service-actions.md) that can be used by you and your developers;
+1. Create [Blueprints](./software-catalog/blueprint/blueprint.md) for your software and infrastructure components;
+2. Map out the [Relations](./software-catalog/relation/relation.md) between your Blueprints;
+3. Ingest data to your catalog by creating [Entities](./software-catalog/entity/entity.md) based on your Blueprints via Port's UI or using our API;
+4. Define [Self-Service Actions](./self-service-actions/self-service-actions.md) that can be used by you and your developers;
 5. Use one of our [Complete use cases](./complete-use-cases/complete-use-cases.md) to fully set up your software catalog.
 
 ### Diving deeper
 
 If you want to learn more about Port's capabilities in a specific area, you can check out any of these resources:
 
-- [Blueprints deep dive](./platform-overview/port-components/blueprint.md);
-- [Relations deep dive](./platform-overview/port-components/relation.md);
-- [Entities deep dive](./platform-overview/port-components/entity.md);
-- [Pages deep dive](./platform-overview/port-components/page.md);
-- [Self-Service Actions deep dive](./platform-overview/self-service-actions/self-service-actions.md).
+- [Blueprints deep dive](./software-catalog/blueprint/blueprint.md);
+- [Relations deep dive](./software-catalog/relation/relation.md);
+- [Entities deep dive](./software-catalog/entity/entity.md);
+- [Self-Service Actions deep dive](./self-service-actions/self-service-actions.md).
 
 ### Using the API
 
 If you want to continue utilizing Port's REST API Interface, take a look at these resources:
 
-- [Blueprint Basics](./tutorials/blueprint-basics.md);
-- [Relation Basics](./tutorials/relation-basics.md);
-- [Entity Basics](./tutorials/relation-basics.md);
+- [Blueprint Tutorial](./software-catalog/blueprint/tutorial.md);
+- [Relation Tutorial](./software-catalog/relation/tutorial.md);
+- [Entity Tutorial](./software-catalog/entity/tutorial.md);
 - [Port API Reference](./api-providers/rest.md).
