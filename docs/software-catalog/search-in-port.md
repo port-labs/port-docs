@@ -227,6 +227,25 @@ The following rule will return all Entities that have a relationship with the En
 }
 ```
 
+#### `required` property
+
+The `relatedTo` operator also supports the `required` property - which allows you to search for:
+
+- Related Entities from all Relations (Relations with either required `true` or `false`);
+- Related Entities only from required Relations (Relations with required `true`);
+- Related Entities only from non-required Relations (Relations with required `false`).
+
+For example, to search only for related Entities that _require_ the `production` Entity from the `environment` Blueprint, use the following search rule:s
+
+```json showLineNumbers
+{
+  "operator": "relatedTo",
+  "required": true,
+  "value": "production",
+  "blueprint": "environment"
+}
+```
+
 #### `direction` property
 
 The `relatedTo` operator also supports the `direction` property - which allows you to search for dependent Entities in a specific direction on the dependency graph. To better understand the functionality of this property, let's take a look at the example below:
