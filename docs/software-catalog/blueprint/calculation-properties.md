@@ -185,7 +185,7 @@ For example, if you want to use your `on-call` property in a Calculation Propert
 
 ## Using meta properties in calculation properties
 
-It is possible to use Meta Properties as template values for Calculation Properties, since the syntax is the same as user-defined properties, but without the keyword
+It is possible to use [meta properties](./mirror-properties.md/#meta-property-mirror-property) as template values for Calculation Properties, since the syntax is the same as user-defined properties, but without the keyword
 `properties` in the calculation syntax.
 
 For example, if you want to concat a url with Title property and the protocol:
