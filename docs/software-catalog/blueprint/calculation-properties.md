@@ -185,26 +185,27 @@ For example, if you want to use your `on-call` property in a Calculation Propert
 
 ## Using meta properties in calculation properties
 
-It is possible to use [meta properties](./mirror-properties.md/#meta-property-mirror-property) as template values for Calculation Properties, since the syntax is the same as user-defined properties, but without the keyword
-`properties` in the calculation syntax.
+It is possible to use [meta properties](./mirror-properties.md/#meta-property-mirror-property) as template values for Calculation Properties, since the syntax is the same as user-defined properties, but without the `properties` keyword.
 
-For example, if you want to concat a url with Title property and the protocol:
+For example, if you want to concat a base url(for example `https://datadog.com`) with the `title` meta property and the protocol:
 
 ```json showLineNumbers
 {
-   "title": "getport.io",
+   "title": "NotificationService",
   "properties": {
    ...
   },
   "calculationProperties": {
-    "on-call-calculation": {
-      "title": "On call",
+    "monitorUrl": {
+      "title": "Monitor url",
       "type": "string",
-      "calculation": "'https://' + .title"
+      "calculation": "'https://datadog.com/' + .title"
     }
   }
 }
 ```
+
+The value of property `monitorUrl` will be `https://datadog.com/NotificationService`
 
 ## Using mirror properties in calculation properties
 
