@@ -183,6 +183,29 @@ For example, if you want to use your `on-call` property in a Calculation Propert
 }
 ```
 
+## Using meta properties in calculation properties
+
+It is possible to use Meta Properties as template values for Calculation Properties, since the syntax is the same as user-defined properties, but without the keyword
+`properties` in the calculation syntax.
+
+For example, if you want to concat a url with Title property and the protocol:
+
+```json showLineNumbers
+{
+   "title": "getport.io",
+  "properties": {
+   ...
+  },
+  "calculationProperties": {
+    "on-call-calculation": {
+      "title": "On call",
+      "type": "string",
+      "calculation": "'https://' + .title"
+    }
+  }
+}
+```
+
 ## Using mirror properties in calculation properties
 
 It is possible to use Mirror Properties as template values for Calculation Properties, since the syntax is the same as user-defined properties.
@@ -202,7 +225,7 @@ A Calculation Property that links to the slack channel of the squad can be:
 ```json showLineNumbers
 "owning_squad_slack": {
     "title": "Owning Squad Channel",
-    "calculation": ".owningSquad",
+    "calculation": ".properties.owningSquad",
 }
 ```
 
