@@ -84,7 +84,7 @@ Here is an example search rule:
 
 ### Search rule structure table
 
-Port has 2 types of search rule operators: comparison operators (`=,` `>`, etc...) and Relation operators (`relatedTo`, `dependedOn`, etc...). Let’s dive in on the structure of each search rule:
+Port has 2 types of search rule operators: comparison operators (`=,` `>`, etc...) and Relation operators (`relatedTo`, etc...). Let’s dive in on the structure of each search rule:
 
 #### Comparison operators structure
 
@@ -114,7 +114,6 @@ Search currently supports the following operators:
 | `between`         | Date range matching                                        |
 | `contains`        | String pattern matching                                    |
 | `relatedTo`       | Returns Entities that have a Relation with the rule target |
-| `dependedOn`      | Returns Entities that depend on rule target                |
 
 ## Operator examples
 
@@ -225,6 +224,25 @@ The following rule will return all Entities that have a relationship with the En
   "operator": "relatedTo",
   "blueprint": "microservice",
   "value": "port-api"
+}
+```
+
+#### `required` property
+
+The `relatedTo` operator also supports the `required` property - which allows you to search for:
+
+- Related Entities from all Relations (Relations with either required `true` or `false`);
+- Related Entities only from required Relations (Relations with required `true`);
+- Related Entities only from non-required Relations (Relations with required `false`).
+
+For example, to search only for related Entities that _require_ the `production` Entity from the `environment` Blueprint, use the following search rule:s
+
+```json showLineNumbers
+{
+  "operator": "relatedTo",
+  "required": true,
+  "value": "production",
+  "blueprint": "environment"
 }
 ```
 
@@ -416,27 +434,6 @@ And the result shall be:
 :::info entity page and search
 
 The output received from the `relatedTo` operator without any other rule added to the search, is the same output you will receive when viewing the [Entity page](../software-catalog/entity/entity.md#entity-page) of the Entity you specified in the `value` field
-:::
-
-### `dependedOn` operator
-
-The following rule will return all Entities that depend on the specified Entity in the query.
-
-For example, if we have the **required** Relation `deployment -> microservice`, then the deployment Entities depend on the microservice Entities, and a `dependedOn` rule specifying a `microservice` Entity will return all `deployments` of that microservice (because those `deployments` depend on the `microservice`).
-
-```json showLineNumbers
-{
-  "operator": "dependedOn",
-  "blueprint": "microservice",
-  "value": "port-api"
-}
-```
-
-:::tip deleting a depended on entity
-
-The output received from the `dependedOn` operator without any other rule added to the search, is similar to the output you will receive when trying to delete a depended Entity from the UI.
-
-The output will include the identifiers of all the dependent Entities, so you can decide if you really want to perform the delete operation (and also delete all the dependents), or cancel the delete operation
 :::
 
 ## Search route query parameters
