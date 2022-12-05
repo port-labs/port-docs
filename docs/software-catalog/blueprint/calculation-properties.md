@@ -129,7 +129,7 @@ Assume you have two `object` properties: one called `deployed_config` with the v
 "calculationProperties" : {
     "merge_config": {
         "title": "Merge config",
-        "type": "objet",
+        "type": "object",
         "calculation": ".properties.deployed_config * .properties.service_config",
     }
 }

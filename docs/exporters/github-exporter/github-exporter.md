@@ -8,7 +8,7 @@ Our integration with GitHub allows you to export GitHub objects to Port as Entit
 
 ## What does our GitHub Exporter offer you?
 
-- List and export existing GitHub objects in your cluster;
+- List and export existing GitHub objects from your GitHub organization;
 - Watch for GitHub objects changes (create/update/delete) in real-time, and automatically apply the changes to your Entities in Port;
 - Configure which GitHub objects are relevant, and how to map and transform objects to Port Entities.
 
