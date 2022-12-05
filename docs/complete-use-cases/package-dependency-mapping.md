@@ -263,4 +263,4 @@ Since this is a single-microservice project use-case, we removed the `MICROSERVI
 
 ## Summary
 
-Port simplifies implementations and easy-to-maintain package dependency mapping. Using Port's RESTful API and GitHub Workflows, you can easily integrate reporting to Port with your existing CI/CD pipelines.
+Port makes it easy to implement and maintain package dependency mapping for you deployment configs. Using Port's RESTful API and GitHub Workflows, you can easily integrate reporting to Port with your existing CI/CD pipelines.
