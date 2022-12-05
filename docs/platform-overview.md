@@ -27,9 +27,9 @@ We Use the **OpenAPI 3** specification.
 Visit our [Swagger.](https://api.getport.io/static/index.html#/)
 :::
 
-## Main points
-
 We will now list the core components that make up Port with short explanations and links to the comprehensive documentation of each component:
+
+## Software Catalog
 
 - [**Blueprints**](./software-catalog/blueprint/) are our basic building blocks in Port. They represent assets that can be managed in Port, such as `Microservice`, `Environments`, `Packages`, `Clusters`, `Databases` and many more;
 - [**Relations**](./software-catalog/relation/) enable us to make connections between Blueprints, doing so provides logical context to the Software Catalog;
@@ -40,34 +40,49 @@ We will now list the core components that make up Port with short explanations a
 To learn more about the components listed above and more, refer to the [Software Catalog](./software-catalog/) page.
 :::
 
+## Self-Service Actions
+
+In Port, you can make your Software Catalog active by defining Self-Service Actions for your developers to perform, without assistance or dependency on DevOps teams.
+
+Port Self-Service Actions are enabled using several convenient integrations with your infrastructure:
+
+- [**Webhook Actions**](./self-service-actions/webhook/) - Port can trigger webhooks based on a customer provided `URL` Both for `Action` and `Changelog` events;
+- [**Execution Agent**](./self-service-actions/webhook/port-execution-agent/) - our execution agent provides you with a secure and convenient way to listen and act on invocations of Self-Service Actions and changes in the software catalog;
+- [**Kafka Actions**](./self-service-actions/kafka/) - Port manages a Kafka Topic per customer that publishes the execution run requests.
+  You can listen to a Kafka Topic with any code platform you wish to use, and also use it as a trigger for a serverless function. For example, AWS Lambda.
+
+:::tip
+To learn more about the Self-Service Actions and more, refer to the [Self-Service Actions](./self-service-actions/) page and the [Self-Service Actions Deep Dive](./self-service-actions/self-service-actions-deep-dive.md).
+:::
+
+## Integrations
+
 In addition to Port's core components, we provide you with multiple integrations, exporters and data ingestion methods:
 
 - Via the **UI**;
 - Using our **API**;
 - Using 3rd party app integrations, for example [GitHub App](./api-providers/gitops/), [GitHub Action](./api-providers/github-action.md), [K8s Exporter](./exporters/k8s-exporter/).
 
-## The Audit Log
+:::tip
+Refer to Port's API [providers](./api-providers/) and [exporters](./exporters/) pages to learn more.
+:::
+
+## Management
+
+Port provides enterprise-grade management tools and integrations to keep track of your Software Catalog and provide access to large R&D teams
+
+### The Audit Log
 
 In Port, we store every event in a visual log that shows which events took place on different Blueprints and Entities. For example: which Entity was modified, who invoked a Self-Service Action, what is an event’s status and more.
 
-The page is divided into 3 tabs:
-
-- Entities;
-- Blueprints;
-- Runs.
-
-![Main Audit Log Page Entities Tab](../static/img/software-catalog/AuditLogPage.png)
-
-## The Users page and the Teams page
+### The Users page and the Teams page
 
 Port has pages dedicated for managing all users and teams in the system:
 
 - The Users page shows a list of all users, including their roles and group membership;
 - The Teams page shows a list of all teams, including a list of team members for each team.
 
-![Main Users Page](../static/img/software-catalog/UsersPageExample.png)
-
-### Managing Users and Teams
+#### Managing Users and Teams
 
 In Port, you can control and manage all your users and teams, in one place. To learn more, refer to the [Users and Teams management](./software-catalog/role-based-access-control/users-and-teams-management.md) page.
 
