@@ -29,14 +29,14 @@ Visit our [Swagger.](https://api.getport.io/static/index.html#/)
 
 ## Main points
 
-- **Blueprints** are the main building blocks in Port, they represent software & infrastructure assets.
-- **Entities** are objects that match the types defined by Blueprints.
-- A **Page** holds all the information you need for a specific Blueprint, Entity, and more.
+- **Blueprints** are the main building blocks in Port, they represent software & infrastructure assets;
+- **Entities** are objects that match the types defined by Blueprints;
+- A **Page** holds all the information you need for a specific Blueprint, Entity, and more;
 - There are a few different ways you can ingest data and interact with your data in Port:
-  - Via the **UI**.
-  - Using our **API**.
+  - Via the **UI**;
+  - Using our **API**;
   - Using 3rd party app integrations, for example [GitHub App](./api-providers/gitops/), [GitHub Action](./api-providers/github-action.md), [K8s Exporter](./exporters/k8s-exporter/).
-- Audit Log, User management, granular permissions, and more are available on the Port platform.
+- Audit Log, User management, granular permissions, and more are available on the Port platform;
 
 ## Blueprints Page
 
@@ -58,11 +58,11 @@ When you first log in to Port, you will see an empty Blueprints page, like this 
 
 There are two ways to create a Blueprint:
 
-- Through the UI
-- Using API
+- Through the UI;
+- Using API.
 
 :::tip
-To create your first blueprint, please see our [quickstart guide](./quickstart.md).
+To create your first Blueprint, please see our [quickstart guide](./quickstart.md).
 :::
 
 ## Navigation bar
@@ -73,9 +73,9 @@ It is divided into two sections: `Organization` and `Software Catalog`.
 
 The `Organization` section holds the following system pages:
 
-- [Blueprints](#first-whats-a-blueprint)
-- [Users](#the-users-page)
-- [Audit Log](#the-audit-log)
+- [Blueprints](#first-whats-a-blueprint);
+- [Users & Teams](#managing-users-and-teams);
+- [Audit Log](#the-audit-log);
 
 The `Software Catalog` holds all of the [pages](#main-pages).
 
