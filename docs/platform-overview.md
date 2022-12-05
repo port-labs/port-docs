@@ -50,11 +50,11 @@ In addition to Port's core components, we provide you with multiple integrations
 
 In Port, we store every event in a visual log that shows which events took place on different Blueprints and Entities. For example: which Entity was modified, who invoked a Self-Service Action, what is an event’s status and more.
 
-The page is divided into 2 tabs:
+The page is divided into 3 tabs:
 
-- Entities
-- Blueprints
-- Runs
+- Entities;
+- Blueprints;
+- Runs.
 
 ![Main Audit Log Page Entities Tab](../static/img/software-catalog/AuditLogPage.png)
 
