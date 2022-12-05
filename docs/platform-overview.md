@@ -29,92 +29,22 @@ Visit our [Swagger.](https://api.getport.io/static/index.html#/)
 
 ## Main points
 
-- **Blueprints** are the main building blocks in Port, they represent software & infrastructure assets;
-- **Entities** are objects that match the types defined by Blueprints;
-- A **Page** holds all the information you need for a specific Blueprint, Entity, and more;
-- There are a few different ways you can ingest data and interact with your data in Port:
-  - Via the **UI**;
-  - Using our **API**;
-  - Using 3rd party app integrations, for example [GitHub App](./api-providers/gitops/), [GitHub Action](./api-providers/github-action.md), [K8s Exporter](./exporters/k8s-exporter/).
-- Audit Log, User management, granular permissions, and more are available on the Port platform;
+We will now list the core components that make up Port with short explanations and links to the comprehensive documentation of each component:
 
-## Blueprints Page
-
-### First, what's a Blueprint?
-
-A **Blueprint** is the _most basic_ building block in Port. It represents assets that can be managed in Port, such as `Microservice`, `Environments`, `Packages`, `Clusters`, `Databases`, and many more.
-
-Blueprints are completely customizable, and they support any number of properties the user chooses, all of which can be modified as you go.
-
-### Our building-space
-
-The Blueprints page is the main system page, in which you can create your full asset layout: create new Blueprints, connect between them, edit or delete them, and set advanced operations on top of every one of them.
-
-When you first log in to Port, you will see an empty Blueprints page, like this one:
-
-![Empty Blueprints Page](../static/img/software-catalog/EmptyBlueprintsPage.png)
-
-### How to create a Blueprint?
-
-There are two ways to create a Blueprint:
-
-- Through the UI;
-- Using API.
+- [**Blueprints**](./software-catalog/blueprint/) are our basic building blocks in Port. They represent assets that can be managed in Port, such as `Microservice`, `Environments`, `Packages`, `Clusters`, `Databases` and many more;
+- [**Relations**](./software-catalog/relation/) enable us to make connections between Blueprints, doing so provides logical context to the Software Catalog;
+- [**Entities**](./software-catalog/entity/) are objects that match the types defined by Blueprints;
+- [**Widgets**](./software-catalog/widgets/) and [**Dashboards**](./software-catalog/dashboards/) allow you to extend your Software Catalog with convenient and intuitive visual representations of data;
 
 :::tip
-To create your first Blueprint, please see our [quickstart guide](./quickstart.md).
+To learn more about the components listed above and more, refer to the [Software Catalog](./software-catalog/) page.
 :::
 
-## Navigation bar
+In addition to Port's core components, we provide you with multiple integrations, exporters and data ingestion methods:
 
-On the left sidebar of the platform you can find the main navigation bar.
-
-It is divided into two sections: `Organization` and `Software Catalog`.
-
-The `Organization` section holds the following system pages:
-
-- [Blueprints](#first-whats-a-blueprint);
-- [Users & Teams](#the-users-page-and-the-teams-page);
-- [Audit Log](#the-audit-log);
-
-The `Software Catalog` holds all of the [pages](#main-pages).
-
-![Navigation Bar](../static/img/software-catalog/NavigationBar.png)
-
-## Pages
-
-### How is a port page created?
-
-#### Main Pages
-
-A new page is created whenever a new Blueprint is created. The page will appear on the left side of the navigation bar, and its name will be either the title of the Blueprint, or the identifier name (if the title is not set).
-
-Every Blueprint's page is its main page, showing a full-page table view containing the [Entities](#whats-an-entity) of a specific Blueprint.
-
-![Microservices Main Page](../static/img/software-catalog/MicroservicesMainPage.png)
-
-#### Entity pages
-
-Every [Entity](#whats-an-entity) has its page, showing a summary of the Entity's data and other related entities.
-
-![Entity page](../static/img/software-catalog/EntityPageExample.png)
-
-:::note
-
-#### What's an Entity?
-
-An Entity is the object instance of a Blueprint, and it represents software component data,as defined by the Blueprint properties.
-
-![Microservices Main Page](../static/img/software-catalog/MicroservicesMainPage.png)
-
-See [Port Components](./software-catalog/) for further details.
-:::
-
-### Saved views
-
-Pages can also be created from any main page, by creating saved views:
-
-![Create a saved view page](../static/img/software-catalog/SaveViewAs.gif)
+- Via the **UI**;
+- Using our **API**;
+- Using 3rd party app integrations, for example [GitHub App](./api-providers/gitops/), [GitHub Action](./api-providers/github-action.md), [K8s Exporter](./exporters/k8s-exporter/).
 
 ## The Audit Log
 
@@ -153,4 +83,4 @@ In Port, you can control and manage all your users and teams, in one place. To l
 
 ## Next steps
 
-The best way to get started with Port is by configuring some initial Blueprints and ingesting data into the platform. To do that, move on to the [Software Catalog](./software-catalog/) page
+The best way to get started with Port is by configuring some initial Blueprints and ingesting data into the platform. To do that, move on to the [Software Catalog](./software-catalog/) page.
