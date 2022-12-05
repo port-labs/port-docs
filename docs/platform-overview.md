@@ -74,7 +74,7 @@ It is divided into two sections: `Organization` and `Software Catalog`.
 The `Organization` section holds the following system pages:
 
 - [Blueprints](#first-whats-a-blueprint);
-- [Users & Teams](#managing-users-and-teams);
+- [Users & Teams](#the-users-page-and-the-teams-page);
 - [Audit Log](#the-audit-log);
 
 The `Software Catalog` holds all of the [pages](#main-pages).
