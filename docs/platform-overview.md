@@ -61,7 +61,7 @@ In addition to Port's core components, we provide you with multiple integrations
 
 - Via the **UI**;
 - Using our **API**;
-- Using 3rd party app integrations, for example [GitHub App](./api-providers/gitops/), [GitHub Action](./api-providers/github-action.md), [K8s Exporter](./exporters/k8s-exporter/).
+- Using 3rd party app integrations, for example [GitHub App](./api-providers/gitops/), [GitHub Action](./api-providers/github-action.md), [K8s Exporter](./exporters/k8s-exporter/) and [Terraform Provider](./api-providers/terraform.md).
 
 :::tip
 Refer to Port's API [providers](./api-providers/) and [exporters](./exporters/) pages to learn more.
