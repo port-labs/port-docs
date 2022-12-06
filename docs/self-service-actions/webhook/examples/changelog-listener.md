@@ -95,7 +95,6 @@ For this limited example, the `deployment config` Blueprint will include mostly 
     "required": []
   },
   "mirrorProperties": {},
-  "formulaProperties": {},
   "calculationProperties": {},
   "relations": {},
   "changelogDestination": {
@@ -222,7 +221,6 @@ blueprint = {
         "required": []
     },
     "mirrorProperties": {},
-    "formulaProperties": {},
     "calculationProperties": {},
     "relations": {},
     "changelogDestination": {

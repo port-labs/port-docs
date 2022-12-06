@@ -119,7 +119,6 @@ The Blueprint JSON provided below already includes the Relations between the dif
     "required": []
   },
   "mirrorProperties": {},
-  "formulaProperties": {},
   "calculationProperties": {},
   "relations": {}
 }
@@ -165,7 +164,6 @@ The Blueprint JSON provided below already includes the Relations between the dif
     "required": []
   },
   "mirrorProperties": {},
-  "formulaProperties": {},
   "calculationProperties": {},
   "relations": {}
 }
@@ -222,7 +220,6 @@ The Blueprint JSON provided below already includes the Relations between the dif
     "required": []
   },
   "mirrorProperties": {},
-  "formulaProperties": {},
   "calculationProperties": {},
   "relations": {
     "Environment": {
@@ -290,7 +287,6 @@ The Blueprint JSON provided below already includes the Relations between the dif
       "path": "DeploymentConfig.Environment.$identifier"
     }
   },
-  "formulaProperties": {},
   "calculationProperties": {},
   "relations": {
     "DeploymentConfig": {
@@ -344,7 +340,6 @@ The Blueprint JSON provided below already includes the Relations between the dif
       "path": "DeploymentConfig.Service.deploymentService"
     }
   },
-  "formulaProperties": {},
   "calculationProperties": {},
   "relations": {
     "DeploymentConfig": {

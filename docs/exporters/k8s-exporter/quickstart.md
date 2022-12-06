@@ -90,7 +90,6 @@ For example, in order to export your Kubernetes `Replica Sets` and `Pods` to Por
     "required": []
   },
   "mirrorProperties": {},
-  "formulaProperties": {},
   "calculationProperties": {},
   "relations": {}
 }
@@ -141,7 +140,6 @@ For example, in order to export your Kubernetes `Replica Sets` and `Pods` to Por
     "required": []
   },
   "mirrorProperties": {},
-  "formulaProperties": {},
   "calculationProperties": {},
   "relations": {
     "DeploymentConfig": {

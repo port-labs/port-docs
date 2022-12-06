@@ -37,7 +37,6 @@ You can choose to include only a subset of the auto importable properties shown 
   "identifier": "Microservice",
   "title": "Microservice",
   "icon": "Microservice",
-  "formulaProperties": {},
   "calculationProperties": {},
   "schema": {
     "properties": {

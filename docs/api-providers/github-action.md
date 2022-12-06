@@ -61,7 +61,6 @@ In this example we create a basic Blueprint and then add code that uses Port's G
     },
     "required": ["description"]
   },
-  "formulaProperties": {},
   "calculationProperties": {}
 }
 ```
@@ -174,8 +173,7 @@ The following example adds another `package` Blueprint, in addition to the `micr
       "many": false
     }
   },
-  "formulaProperties": {}
-  "calculationProperties": {},
+  "calculationProperties": {}
 }
 ```
 

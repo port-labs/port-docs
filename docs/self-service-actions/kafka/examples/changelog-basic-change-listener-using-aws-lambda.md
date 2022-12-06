@@ -77,7 +77,6 @@ Let’s configure a `VM` Blueprint, its base structure is:
   "changelogDestination": {
     "type": "KAFKA"
   },
-  "formulaProperties": {},
   "calculationProperties": {}
 }
 ```
@@ -147,7 +146,6 @@ blueprint = {
     "changelogDestination": {
       "type": "KAFKA"
     },
-    "formulaProperties": {},
     "calculationProperties": {},
 
 }

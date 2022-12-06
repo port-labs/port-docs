@@ -54,7 +54,6 @@ Please notice the 'relations' seciton at the bottom of the Blueprint
     "required": []
   },
   "mirrorProperties": {},
-  "formulaProperties": {},
   "relations": {
     "package": {
       "title": "Package",
@@ -90,7 +89,6 @@ Please notice the 'relations' seciton at the bottom of the Blueprint
     "required": ["version"]
   },
   "mirrorProperties": {},
-  "formulaProperties": {},
   "relations": {}
 }
 ```
