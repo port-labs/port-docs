@@ -443,7 +443,7 @@ The search route also supports several query parameters that affect the returned
 | Parameter                       | Description                                                                                                                                                                                                 | Available values | Default value |
 | ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- | ------------- |
 | `attach_title_to_relation`      | `true`: Both the identifier and the title of the related Entity will appear under the Relation key <br></br><br></br> `false`: Only the identifier of the related Entity will appear under the Relation key | `true`/`false`   | `false`       |
-| `exclude_calculated_properties` | Should [mirror properties](../software-catalog/blueprint/blueprint.md#mirror-properties) and [formula properties](../software-catalog/blueprint/blueprint.md#) be returned with the result                  | `true`/`false`   | `false`       |
+| `exclude_calculated_properties` | Should [mirror properties](../software-catalog/blueprint/blueprint.md#mirror-properties) and [calculation properties](../software-catalog/blueprint/blueprint.md#calculation-properties) be returned with the result                  | `true`/`false`   | `false`       |
 
 ### `attach_title_to_relation` example
 
