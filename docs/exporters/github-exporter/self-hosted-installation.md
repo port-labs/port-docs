@@ -38,12 +38,17 @@ In organizations that have a self-hosted GitHub installation there is no access 
 - Webhook URL: HTTP Server URL, if you don't yet know the value of this step, leave it blank until you deploy the GitHub backend
 - Webhook secret: Webhook secret (Any string you would like)
 - Repository Permissions:
-  - Checks: Read and Write (for validating Port.yml)
+  - Actions: Readonly
+  - Checks: Read and Write (for validating `Port.yml`)
+  - Contents: Readonly
   - Metadata: Readonly
-  - Pull Request: Readonly
+  - Issues: Readonly
+  - Pull Request: Read and Write
 - Repository Events:
+  - Issues
   - Pull Request
   - Push
+  - Workflow Run
 
 Then select "Create GitHub App"
 
