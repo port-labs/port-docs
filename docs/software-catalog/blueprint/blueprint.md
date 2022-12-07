@@ -96,10 +96,10 @@ Each Blueprint is represented by a [Json schema](https://json-schema.org/), as s
 #### Blueprint schema
 
 ```json showLineNumbers
-    "schema"; {
-            "properties": {},
-            "required": []
-        }
+"schema": {
+    "properties": {},
+    "required": []
+}
 ```
 
 | Schema field | Type     | Description                                                                                                                           |
@@ -245,7 +245,7 @@ We currently support the following `string` formats:
 | ----------- | --------------------------------------------------------- | ----------------------------------------- |
 | `url`       | Formatted URL                                             | `"https://getport.io"`                    |
 | `email`     | Formatted Email                                           | `"port@getport.io"`                       |
-| `user`      | Formatted Email                                           | `"port@getport.io"`                       |
+| `user`      | Formatted Email or any string                             | `"port@getport.io"`                       |
 | `date-time` | Formatted ISO string datetime                             | `"2022-04-18T11:44:15.345Z"`              |
 | `ipv4`      | Standard IPv4 address                                     | `127.0.0.1`                               |
 | `ipv6`      | Standard IPv6 address                                     | `FE80:CD00:0A20:0CDE:1257:1C34:211E:729C` |
