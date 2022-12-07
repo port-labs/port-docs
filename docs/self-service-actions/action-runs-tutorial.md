@@ -68,7 +68,7 @@ To follow along, the Blueprint definition and Self-Service Action definition are
     }
   },
   "invocationMethod": {
-    "url": "https://smee.io/HWbNEEngVPEQRJA",
+    "url": "https://getport.io",
     "agent": false,
     "type": "WEBHOOK"
   },
@@ -221,12 +221,15 @@ The API returns the following response:
       "title": "Service"
     },
     "action": "create_microservice",
+    // highlight-next-line
     "endedAt": "2022-12-07T14:51:52.796Z",
     "source": "UI",
+    // highlight-start
     "link": "https://github.com/actions/toolkit/actions/runs/3617893813",
     "message": {
       "run_status": "Run completed successfully!"
     },
+    // highlight-end
     "relatedEntityExists": false,
     "relatedBlueprintExists": true,
     "properties": {
