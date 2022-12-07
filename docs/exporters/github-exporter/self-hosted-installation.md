@@ -39,7 +39,7 @@ In organizations that have a self-hosted GitHub installation there is no access 
 - Webhook secret: Webhook secret (Any string you would like)
 - Repository Permissions:
   - Actions: Readonly
-  - Checks: Read and Write (for validating Port.yml)
+  - Checks: Read and Write (for validating `Port.yml`)
   - Contents: Readonly
   - Metadata: Readonly
   - Issues: Readonly

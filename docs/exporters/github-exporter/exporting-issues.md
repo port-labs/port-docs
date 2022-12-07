@@ -10,9 +10,9 @@ title: Exporting issues
 
 In this tutorial, we will export issues from GitHub and create matching Port Entities!
 
-1. Create a `issue` Blueprint and `port-app-config.yml` configuration file.
+1. Create an `issue` Blueprint and `port-app-config.yml` configuration file.
 
-To export your GitHub `Issues` to Port, you can use the following Port Blueprints definitions, and `port-app-config.yml`:
+To export your GitHub `Issues` to Port, you can use the following Port Blueprint definition, and `port-app-config.yml`:
 
 <details>
 <summary> Issue Blueprint </summary>
@@ -86,7 +86,7 @@ To export your GitHub `Issues` to Port, you can use the following Port Blueprint
 
 </details>
 
-You have to place the `port-app-config.yml` inside the `.github` folder or within the `.github-private` repository in the root directory to apply it for the whole organization.
+You have to place the `port-app-config.yml` inside the `.github` folder or within the `.github-private` repository in the root directory to apply it for the whole organization:
 
 <details>
 

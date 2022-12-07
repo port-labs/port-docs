@@ -14,8 +14,8 @@ Our integration with GitHub allows you to export GitHub objects to Port as Entit
 
 ## Next Steps
 
-- [Explore How to automatically import `pull-requests` from GitHub](./exporting-pull-requests.md)
-- [Explore How to automatically import `repositories` from GitHub](./exporting-repositories.md)
-- [Explore How to automatically import `issues` from GitHub](./exporting-issues.md)
-- [Explore How to automatically import `workflows` from GitHub](./exporting-workflows.md)
-- [Explore How to automatically import `workflows-runs` from GitHub](./exporting-workflows-runs.md)
+- [Automatically import `pull-requests` from GitHub](./exporting-pull-requests.md)
+- [Automatically import `repositories` from GitHub](./exporting-repositories.md)
+- [Automatically import `issues` from GitHub](./exporting-issues.md)
+- [Automatically import `workflows` from GitHub](./exporting-workflows.md)
+- [Automatically import `workflows-runs` from GitHub](./exporting-workflows-runs.md)
