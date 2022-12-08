@@ -125,6 +125,20 @@ The Blueprint JSON provided below already includes the Relations between the dif
 }
 ```
 
+After creating the initial service Blueprint, go back and edit the Blueprint again, but replace the `relations` key with the following `relations` object:
+
+```json showLineNumbers
+"relations": {
+  "depends_on": {
+    "target": "Service",
+    "description": "Other services this service depends on",
+    "many": true,
+    "required": false,
+    "title": "Depends On"
+  }
+}
+```
+
 </details>
 
 <details>
@@ -382,7 +396,7 @@ terraform {
   required_providers {
     port-labs = {
       source  = "port-labs/port-labs"
-      version = "~> 0.5.0"
+      version = "~> 0.5.1"
     }
   }
 }
@@ -452,6 +466,18 @@ properties:
   deploymentService: "Lambda"
   helmLink: "https://github.com/port-labs/helm/notification.yml"
 ```
+
+:::info
+Recall that you created a Relation from the service Blueprint to itself, allowing you to map dependencies between your services. If you want to add a service that `notification-service` depends on, you can do that by adding the following relations key to the `port.yml` (some services were added as an example):
+
+```yml showLineNumbers
+relations:
+  depends_on:
+    - authorization-service
+    - mailing-service
+```
+
+:::
 
 :::tip
 `repo` is a GitHub App [auto-imported properties](../api-providers/gitops/auto-importing-properties.md), as such it will be added automatically to the `port.yml` file of the service Entity.
