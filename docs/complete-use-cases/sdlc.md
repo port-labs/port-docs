@@ -132,7 +132,7 @@ After creating the initial service Blueprint, go back and edit the Blueprint aga
   "depends_on": {
     "target": "Service",
     "description": "Other services this service depends on",
-    "many": true,
+    "many": false,
     "required": false,
     "title": "Depends On"
   }
@@ -468,13 +468,11 @@ properties:
 ```
 
 :::info
-Recall that you created a Relation from the service Blueprint to itself, allowing you to map dependencies between your services. If you want to add a service that `notification-service` depends on, you can do that by adding the following relations key to the `port.yml` (some services were added as an example):
+Recall that you created a Relation from the service Blueprint to itself, allowing you to map dependencies between your services. If you want to add a service that `notification-service` depends on, you can do that by adding the following `relations` key to the `port.yml` (some services were added as an example):
 
 ```yml showLineNumbers
 relations:
-  depends_on:
-    - authorization-service
-    - mailing-service
+  depends_on: authorization-service
 ```
 
 :::
