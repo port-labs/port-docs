@@ -6,19 +6,23 @@ sidebar_position: 2
 
 Invoking a Port Self-Service Action creates an `actionRun` object inside Port.
 
+:::tip
+To learn more about configuring Self-Service Actions, refer to the [Depp Dive](./self-service-actions-deep-dive.md), after configuring a Self-Service Actions, invoking the Self-Service Action will generate an `actionRun` which you can learn more about in this tutorial.
+:::
+
 You can find all existing Action Runs in one of three ways:
 
 1. By going to the Audit Log page and selecting the Runs tab
 2. By going to a [Specific Entity Page](../software-catalog/entity/entity.md#entity-page) and selecting Runs tab of the Entity
 3. When invoking a Self-Service Action from the UI, a toast will appear on the page, with the link to the action run that corresponds to the run of the Self-Service Action.
 
-This tutorial will teach you how to use Port's API to get existing Action Runs, update them with additional metadata and information about the results of the invoked Self-Service Action and also mark them action runs as completed or failed to keep a consistent history of invoked Self-Service Actions and their status.
+This tutorial will teach you how to use Port's API to get existing action runs, update them with additional metadata and information about the results of the invoked Self-Service Action and also mark them as completed or failed to keep a consistent history of invoked Self-Service Actions and their status.
 
 ## Setup
 
 During this tutorial, you will interact with action runs that were created from a basic `create microservice` Self-Service Action that was added to a `microservice` Blueprint.
 
-To follow along, the Blueprint definition and Self-Service Action definition are provided:
+To follow along, the Blueprint definition and Self-Service Action definitions are provided:
 
 <details>
 <summary>Microservice Blueprint</summary>
@@ -52,7 +56,6 @@ To follow along, the Blueprint definition and Self-Service Action definition are
 
 ```json showLineNumbers
 {
-  "id": "action_ed2B0O9CbEYkuqvN",
   "identifier": "create_microservice",
   "title": "Create Microservice",
   "userInputs": {
@@ -79,13 +82,42 @@ To follow along, the Blueprint definition and Self-Service Action definition are
 
 </details>
 
+<details>
+<summary>2nd day operation microservice Self-Service Action</summary>
+
+```json showLineNumbers
+{
+  "identifier": "deploy_microservice",
+  "title": "Deploy Microservice",
+  "userInputs": {
+    "properties": {
+      "environment": {
+        "title": "Environment",
+        "type": "string"
+      }
+    }
+  },
+  "invocationMethod": {
+    "url": "https://getport.io",
+    "agent": false,
+    "type": "WEBHOOK"
+  },
+  "trigger": "DAY-2",
+  "description": "Deploy the microservice in a specified environment"
+}
+```
+
+</details>
+
 :::note
 The Blueprint and Self-Service Action are purposefully minimal because they are not the focus of this tutorial, but they can easily be extended to include extra properties you might require.
 :::
 
 ## Action run Structure
 
-After performing a simple invocation of the Self-Service Action with the following parameters:
+### `CREATE` action trigger
+
+After performing a simple invocation of the `CREATE` Self-Service Action with the following parameters:
 
 ```json showLineNumbers
 {
@@ -129,7 +161,7 @@ The following action invocation body is sent to the Webhook/Kafka topic:
           }
         },
         "invocationMethod": {
-          "url": "https://smee.io/HWbNEEngVPEQRJA",
+          "url": "https://getport.io",
           "agent": false,
           "type": "WEBHOOK"
         },
@@ -186,15 +218,140 @@ Some important fields to note in the action run object are:
 
 :::
 
+### `DAY-2` action trigger
+
+An action run of a `DAY-2` Self-Service Action is very similar to an action run of a `CREATE` Self-Service Action, the main difference being that the Entity the action was invoked for is also provided in the action run object.
+
+For example, after performing a simple invocation of the `DAY-2` Self-Service Action with the following parameters:
+
+```json showLineNumbers
+{
+  "environment": "production"
+}
+```
+
+The following action invocation body is sent to the Webhook/Kafka topic (Existing Entity is highlighted):
+
+```json showLineNumbers
+{
+  "payload": {
+    "action": "deploy_microservice",
+    "resourceType": "run",
+    "status": "TRIGGERED",
+    "trigger": {
+      "by": {
+        "orgId": "org_7SDeR821bunhS8es",
+        "userId": "auth0|638879fa62c686d381b36ecb"
+      },
+      "origin": "UI",
+      "at": "2022-12-08T10:07:09.886Z"
+    },
+    "context": {
+      "entity": "my-microservice",
+      "blueprint": "microservice",
+      // highlight-next-line
+      "runId": "r_z0nJYJv0wCm2ASTR"
+    },
+    "payload": {
+      // highlight-start
+      "entity": {
+        "identifier": "my-microservice",
+        "title": "my-microservice",
+        "icon": null,
+        "blueprint": "microservice",
+        "properties": {
+          "region": "eu-west-1"
+        },
+
+        "relations": {},
+        "createdAt": "2022-12-07T15:25:28.677Z",
+        "createdBy": "KZ5zDPudPshQMShUb4cLopBEE1fNSJGE",
+        "updatedAt": "2022-12-07T15:30:24.660Z",
+        "updatedBy": "KZ5zDPudPshQMShUb4cLopBEE1fNSJGE"
+      },
+      // highlight-end
+      "action": {
+        "id": "action_AOLZfMmE3YUeBlMt",
+        "identifier": "deploy_microservice",
+        "title": "Deploy Microservice",
+        "userInputs": {
+          "properties": {
+            "environment": {
+              "title": "Environment",
+              "type": "string"
+            }
+          }
+        },
+        "invocationMethod": {
+          "url": "https://getport.io",
+          "agent": false,
+          "type": "WEBHOOK"
+        },
+        "trigger": "DAY-2",
+        "description": "Deploy the microservice in a specified environment",
+        "blueprint": "microservice",
+        "createdAt": "2022-12-08T10:05:54.935Z",
+        "createdBy": "auth0|638879fa62c686d381b36ecb",
+        "updatedAt": "2022-12-08T10:05:54.935Z",
+        "updatedBy": "auth0|638879fa62c686d381b36ecb"
+      },
+      "properties": {
+        "environment": "production"
+      }
+    }
+  }
+}
+```
+
+Note that the `runId` of the invoked Self-Service Action is: `r_z0nJYJv0wCm2ASTR`.
+
+By making a request to `https://api.getport.io/v1/actions/runs/{run_id}` where `run_id=r_z0nJYJv0wCm2ASTR`, you get the following response:
+
+```json showLineNumbers
+{
+  "ok": true,
+  "run": {
+    "id": "r_z0nJYJv0wCm2ASTR",
+    "status": "IN_PROGRESS",
+    "blueprint": {
+      "identifier": "microservice",
+      "title": "Service"
+    },
+    "entity": {
+      "identifier": "my-microservice",
+      "title": "my-microservice"
+    },
+    "action": "deploy_microservice",
+    "endedAt": null,
+    "source": "UI",
+    "relatedEntityExists": true,
+    "relatedBlueprintExists": true,
+    "properties": {
+      "environment": "production"
+    },
+    "createdAt": "2022-12-08T10:07:09.860Z",
+    "updatedAt": "2022-12-08T10:07:09.860Z",
+    "createdBy": "auth0|638879fa62c686d381b36ecb",
+    "updatedBy": "auth0|638879fa62c686d381b36ecb"
+  }
+}
+```
+
 ## Updating an action run
 
-Now let's take this action run and update its information, all updates to an action run can be performed by sending a `PATCH` request to the `https://api.getport.io/v1/actions/runs/{run_id}` endpoint.
+Now let's take an action run and update its information, all updates to an action run can be performed by sending a `PATCH` request to the `https://api.getport.io/v1/actions/runs/{run_id}` endpoint.
 
 Our different update options are:
 
-- Set the action run status - `SUCCESS`, `FAILURE`;
-- Add a link to an external log of the job runner - AWS Cloudwatch logs, Github Workflow job, Jenkins job, etc.;
-- Add a message JSON object which contains additional metadata, runtime or debug information.
+- Set the action run status via the `status` key - `SUCCESS`, `FAILURE`;
+- Add a link to an external log of the job runner via the `link` key - AWS Cloudwatch logs, Github Workflow job, Jenkins job, etc.;
+- Add a message JSON object which contains additional metadata, runtime or debug information via the `message` key.
+
+:::tip
+You don't have to provide all of the different updates in one request, you can make a `PATCH` request to the endpoint as many times as you need until the action run has finished.
+
+Do note that every patch request will override the previous information that was available for a given key. For example, when updating the `link` key multiple times, only the value provided in the latest update will be the one displayed on the action run object.
+:::
 
 Let's update our action run with the following `PATCH` request body:
 
