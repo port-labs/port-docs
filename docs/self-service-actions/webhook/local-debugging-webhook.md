@@ -74,7 +74,6 @@ Let’s configure a `VM` Blueprint, its base structure is:
   "enableResponsibleTeamEdit": false,
   "disabledProperties": [],
   "disabledRelations": [],
-  "formulaProperties": {},
   "calculationProperties": {}
 }
 ```
@@ -145,7 +144,6 @@ blueprint = {
     "enableResponsibleTeamEdit": False,
     "disabledProperties": [],
     "disabledRelations": [],
-    "formulaProperties": {},
     "calculationProperties": {},
 
 }

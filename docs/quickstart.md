@@ -228,22 +228,21 @@ In order to create the service Blueprint, use the following JSON body:
     "required": ["on-call"]
   },
   "mirrorProperties": {},
-  "calculationProperties": {},
-  "formulaProperties": {
+  "calculationProperties": {
     "slack-notifications": {
       "title": "Slack Notifications",
       "icon": "Link",
-      "formula": "https://slack.com/{{$identifier}}"
+      "calculation": "'https://slack.com/' + .identifier"
     },
     "latest-build-output": {
       "title": "Latest Build Output",
       "icon": "Jenkins",
-      "formula": "{{url}}/{{version}}"
+      "calculation": ".properties.url + '/' + .properties.version"
     },
     "launch-darkly": {
       "title": "Launch Darkly",
       "icon": "Customer",
-      "formula": "https://launchdarkly.com/{{$title}}"
+      "calculation": "'https://launchdarkly.com/' + .properties.title"
     }
   },
   "relations": {}
@@ -422,24 +421,23 @@ blueprint = {
         "required": ["on-call"]
     },
     "mirrorProperties": {},
-    "calculationProperties": {},
-    "formulaProperties": {
-        "slack-notifications": {
-            "title": "Slack Notifications",
-            "icon": "Link",
-            "formula": "https://slack.com/{{$identifier}}"
-        },
-        "latest-build-output": {
-            "title": "Latest Build Output",
-            "icon": "Jenkins",
-            "formula": "{{url}}/{{version}}"
-        },
-        "launch-darkly": {
-            "title": "Launch Darkly",
-            "icon": "Customer",
-            "formula": "https://launchdarkly.com/{{$title}}"
-        }
-    },
+    "calculationProperties": {
+      "slack-notifications": {
+        "title": "Slack Notifications",
+        "icon": "Link",
+        "calculation": "'https://slack.com/' + .identifier"
+      },
+      "latest-build-output": {
+        "title": "Latest Build Output",
+        "icon": "Jenkins",
+        "calculation": ".properties.url + '/' + .properties.version"
+      },
+      "launch-darkly": {
+        "title": "Launch Darkly",
+        "icon": "Customer",
+        "calculation": "'https://launchdarkly.com/' + .properties.title"
+      }
+  },
     "relations": {}
 }
 
@@ -535,7 +533,6 @@ To create the environment Blueprint, use the following JSON body:
       "type": "string"
     }
   },
-  "formulaProperties": {},
   "relations": {}
 }
 ```
@@ -627,7 +624,6 @@ blueprint = {
             "type": "string"
         }
     },
-    "formulaProperties": {},
     "relations": {}
 }
 
@@ -885,17 +881,16 @@ To create the running service Blueprint, use the following JSON body:
     "required": []
   },
   "mirrorProperties": {},
-  "calculationProperties": {},
-  "formulaProperties": {
+  "calculationProperties": {
     "sentryUrl": {
       "title": "Sentry URL",
       "icon": "Link",
-      "formula": "https://sentry.io/{{$identifier}}"
+      "calculation": "'https://sentry.io/' + .identifier"
     },
     "newRelicUrl": {
       "title": "NewRelic URL",
       "icon": "Link",
-      "formula": "https://newrelic.com/{{$identifier}}"
+      "calculation": "'https://newrelic.com/' + .identifier"
     }
   },
   "relations": {
@@ -1037,19 +1032,18 @@ blueprint = {
         "required": []
     },
     "mirrorProperties": {},
-    "calculationProperties": {},
-    "formulaProperties": {
-        "sentryUrl": {
-            "title": "Sentry URL",
-            "icon": "Link",
-            "formula": "https://sentry.io/{{$identifier}}"
-        },
-        "newRelicUrl": {
-            "title": "NewRelic URL",
-            "icon": "Link",
-            "formula": "https://newrelic.com/{{$identifier}}"
-        }
+    "calculationProperties": {
+    "sentryUrl": {
+      "title": "Sentry URL",
+      "icon": "Link",
+      "calculation": "'https://sentry.io/' + .identifier"
     },
+    "newRelicUrl": {
+      "title": "NewRelic URL",
+      "icon": "Link",
+      "calculation": "'https://newrelic.com/' + .identifier"
+    }
+  },
     "relations": {
         "microservice": {
             "target": "microservice",

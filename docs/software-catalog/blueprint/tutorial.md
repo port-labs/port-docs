@@ -39,7 +39,6 @@ In order to create a Blueprint with the following properties, we will use the fo
   "identifier": "Microservice",
   "title": "Microservice",
   "icon": "Microservice",
-  "formulaProperties": {},
   "calculationProperties": {},
   "schema": {
     "properties": {
@@ -209,7 +208,6 @@ blueprint = {
     'identifier': 'Microservice',
     'title': 'Microservice',
     'icon': 'Microservice',
-    'formulaProperties': {},
     "calculationProperties": {},
     'schema': {
         'properties': {
@@ -259,7 +257,7 @@ const blueprint = {
   identifier: "Microservice",
   title: "Microservice",
   icon: "Microservice",
-  formulaProperties: {},
+  calculationProperties: {},
   schema: {
     properties: {
       slackChannel: {
@@ -297,7 +295,7 @@ curl --location --request POST "https://api.getport.io/v1/blueprints" \
     \"identifier\": \"Microservice\",
     \"title\": \"Microservice\",
     \"icon\": \"Microservice\",
-    \"formulaProperties\": {},
+    \"calculationProperties\": {},
     \"schema\": {
         \"properties\": {
             \"slackChannel\": {
@@ -368,7 +366,6 @@ You can create the new Blueprint from the UI (using the `Add Blueprint` button i
   "identifier": "Package",
   "title": "Package",
   "icon": "Package",
-  "formulaProperties": {},
   "calculationProperties": {},
   "schema": {
     "properties": {
