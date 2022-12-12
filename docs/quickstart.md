@@ -547,7 +547,6 @@ To create the environment Blueprint, use the following JSON body:
       "type": "string"
     }
   },
-  "formulaProperties": {},
   "relations": {}
 }
 ```
@@ -639,7 +638,6 @@ blueprint = {
             "type": "string"
         }
     },
-    "formulaProperties": {},
     "relations": {}
 }
 
