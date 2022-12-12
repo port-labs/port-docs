@@ -1,12 +1,11 @@
 ---
-sidebar_position: 4
+sidebar_position: 3
 title: Exporting repositories
 ---
 
 :::note Prerequisites
 
 - [Please install our GitHub app](./installation).
-- GitHub repository.
 
 :::
 
