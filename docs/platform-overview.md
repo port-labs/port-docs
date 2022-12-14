@@ -27,14 +27,14 @@ We Use the **OpenAPI 3** specification.
 Visit our [Swagger.](https://api.getport.io/static/index.html#/)
 :::
 
-We will now list the core components that make up Port with short explanations and links to the comprehensive documentation of each component:
+We will now list the core components that construct Port, with short explanations and links to the comprehensive documentation of each component:
 
 ## Software Catalog
 
-- [**Blueprints**](./software-catalog/blueprint/) are our basic building blocks in Port. They represent assets that can be managed in Port, such as `Microservice`, `Environments`, `Packages`, `Clusters`, `Databases` and many more;
-- [**Relations**](./software-catalog/relation/) enable us to make connections between Blueprints, doing so provides logical context to the Software Catalog;
+- [**Blueprints**](./software-catalog/blueprint/) our basic building blocks in Port. They represent assets that can be managed in Port, such as `Microservice`, `Environments`, `Packages`, `Clusters`, `Databases`, and many more;
+- [**Relations**](./software-catalog/relation/) enable us to create connections and link between Blueprints, doing so provides logical context to the Software Catalog;
 - [**Entities**](./software-catalog/entity/) are objects that match the types defined by Blueprints;
-- [**Widgets**](./software-catalog/widgets/) and [**Dashboards**](./software-catalog/dashboards/) allow you to extend your Software Catalog with convenient and intuitive visual representations of data;
+- [**Widgets**](./software-catalog/widgets/) and [**Dashboards**](./software-catalog/dashboards/) allow you to extend your Software Catalog with convenient and intuitive visual representations of data.
 
 :::tip
 To learn more about the components listed above and more, refer to the [Software Catalog](./software-catalog/) page.
@@ -71,7 +71,7 @@ Refer to Port's API [providers](./api-providers/) and [exporters](./exporters/) 
 
 Port provides enterprise-grade management tools and integrations to keep track of your Software Catalog and provide access to large R&D teams
 
-### The Audit Log
+### The audit log
 
 In Port, we store every event in a visual log that shows which events took place on different Blueprints and Entities. For example: which Entity was modified, who invoked a Self-Service Action, what is an event’s status and more.
 
@@ -82,7 +82,7 @@ Port has pages dedicated for managing all users and teams in the system:
 - The Users page shows a list of all users, including their roles and group membership;
 - The Teams page shows a list of all teams, including a list of team members for each team.
 
-#### Managing Users and Teams
+#### Managing users and teams
 
 In Port, you can control and manage all your users and teams, in one place. To learn more, refer to the [Users and Teams management](./software-catalog/role-based-access-control/users-and-teams-management.md) page.
 
