@@ -7,22 +7,26 @@ sidebar_position: 2
 Invoking a Port Self-Service Action creates an `actionRun` object inside Port.
 
 :::tip
-To learn more about configuring Self-Service Actions, refer to the [Depp Dive](./self-service-actions-deep-dive.md), after configuring a Self-Service Actions, invoking the Self-Service Action will generate an `actionRun` which you can learn more about in this tutorial.
+To learn more about configuring Self-Service Actions, refer to the [Depp Dive](./self-service-actions-deep-dive.md). After configuring a Self-Service Action, invoking it will generate an `actionRun` which you can learn more about in this tutorial.
 :::
 
-You can find all existing Action Runs in one of three ways:
+You can find all existing action runs in one of the following methods:
 
-1. By going to the Audit Log page and selecting the Runs tab
-2. By going to a [Specific Entity Page](../software-catalog/entity/entity.md#entity-page) and selecting Runs tab of the Entity
-3. When invoking a Self-Service Action from the UI, a toast will appear on the page, with the link to the action run that corresponds to the run of the Self-Service Action.
+1. Select the Runs tab on the Audit Log page;
+2. Select the Runs tab of a specific Entity on its [Specific Entity Page](../software-catalog/entity/entity.md#entity-page);
+3. When you invoke a Self-Service Action from the UI, a toast will appear on the page, with the link to the action run that corresponds to the run of the Self-Service Action.
 
-This tutorial will teach you how to use Port's API to get existing action runs, update them with additional metadata and information about the results of the invoked Self-Service Action and also mark them as completed or failed to keep a consistent history of invoked Self-Service Actions and their status.
+This tutorial will teach you how to use Port's API to obtain existing action runs, update them with additional metadata and information about the results of the invoked Self-Service Action, and mark them as completed or failed to keep a consistent history of invoked Self-Service Actions and their status.
 
 ## Setup
 
 During this tutorial, you will interact with action runs that were created from a basic `create microservice` Self-Service Action that was added to a `microservice` Blueprint.
 
-To follow along, the Blueprint definition and Self-Service Action definitions are provided:
+The Blueprint definition and Self-Service Action we will use in this tutorial are detailed below:
+
+:::note
+The Blueprint and Self-Service Action are intentionally minimalistic since they are not the focus of this tutorial. If needed, they can easily be extended to include extra properties you require.
+:::
 
 <details>
 <summary>Microservice Blueprint</summary>
@@ -109,15 +113,11 @@ To follow along, the Blueprint definition and Self-Service Action definitions ar
 
 </details>
 
-:::note
-The Blueprint and Self-Service Action are purposefully minimal because they are not the focus of this tutorial, but they can easily be extended to include extra properties you might require.
-:::
-
-## Action run Structure
+## Action run structure
 
 ### `CREATE` action trigger
 
-After performing a simple invocation of the `CREATE` Self-Service Action with the following parameters:
+Let's invoke a `CREATE` Self-Service Action with the following parameters:
 
 ```json showLineNumbers
 {
@@ -126,7 +126,7 @@ After performing a simple invocation of the `CREATE` Self-Service Action with th
 }
 ```
 
-The following action invocation body is sent to the Webhook/Kafka topic:
+By invoking the Self-Service Action, the following action invocation body is sent to the Webhook/Kafka topic:
 
 ```json showLineNumbers
 {
@@ -211,10 +211,10 @@ By making a request to `https://api.getport.io/v1/actions/runs/{run_id}` where `
 ```
 
 :::info
-Some important fields to note in the action run object are:
+In the action run object, pay attention to the following:
 
-- `status` - Shows the current status of the action, when a Self-Service Action is invoked, the value is automatically set to `IN_PROGRESS`, but it is also possible to update the action run status to `SUCCESS` or `FAILURE`;
-- `endedAt` - Currently shows `null` because the action run status is `IN_PROGRESS`, but it will automatically update when the status of the action run is changed to either `SUCCESS` or `FAILURE`.
+- `status` - current status of the action. When a Self-Service Action is invoked, the value is automatically set to `IN_PROGRESS`, but you can alter it to `SUCCESS` or `FAILURE` according to the run's progress;
+- `endedAt` - shows `null` because the action run status is `IN_PROGRESS`, but it will automatically update when the status of the action run is changed to either `SUCCESS` or `FAILURE`.
 
 :::
 
@@ -230,7 +230,7 @@ For example, after performing a simple invocation of the `DAY-2` Self-Service Ac
 }
 ```
 
-The following action invocation body is sent to the Webhook/Kafka topic (Existing Entity is highlighted):
+The following action invocation body is sent to the Webhook/Kafka topic (existing Entity is highlighted):
 
 ```json showLineNumbers
 {
@@ -305,7 +305,7 @@ The following action invocation body is sent to the Webhook/Kafka topic (Existin
 
 Note that the `runId` of the invoked Self-Service Action is: `r_z0nJYJv0wCm2ASTR`.
 
-By making a request to `https://api.getport.io/v1/actions/runs/{run_id}` where `run_id=r_z0nJYJv0wCm2ASTR`, you get the following response:
+By making a `GET` request to `https://api.getport.io/v1/actions/runs/{run_id}` where `run_id=r_z0nJYJv0wCm2ASTR`, you receive the following response:
 
 ```json showLineNumbers
 {
@@ -339,7 +339,7 @@ By making a request to `https://api.getport.io/v1/actions/runs/{run_id}` where `
 
 ## Updating an action run
 
-Now let's take an action run and update its information, all updates to an action run can be performed by sending a `PATCH` request to the `https://api.getport.io/v1/actions/runs/{run_id}` endpoint.
+Now let's take an action run and update it. All updates can be performed by sending a `PATCH` request to the `https://api.getport.io/v1/actions/runs/{run_id}` endpoint.
 
 Our different update options are:
 
@@ -350,7 +350,7 @@ Our different update options are:
 :::tip
 You don't have to provide all of the different updates in one request, you can make a `PATCH` request to the endpoint as many times as you need until the action run has finished.
 
-Do note that every patch request will override the previous information that was available for a given key. For example, when updating the `link` key multiple times, only the value provided in the latest update will be the one displayed on the action run object.
+Note that every patch request will override the previous information that was available for a given key. For example, when updating the `link` key multiple times, only the value provided in the latest update will be the one displayed on the action run object.
 :::
 
 Let's update our action run with the following `PATCH` request body:
@@ -413,7 +413,7 @@ Note how our action run has updated:
 
 ## Tying Entities to an action run
 
-You can also add additional context and metadata to an action run, every API route that creates or changes an Entity (i.e. `POST`, `PUT`, `PATCH` and `DELETE` requests to the `https://api.getport.io/v1/blueprints/{blueprint_id}/entities/{entity_id}` route) can be sent with an additional `run_id` query parameter. By adding the `run_id` parameter, you reflect the change made to the Entity as part of the set of steps the action run performed during its runtime.
+You can also add additional context and metadata to an action run by attaching a `run_id` query parameter to every API route that creates or changes an Entity (i.e. `POST`, `PUT`, `PATCH` and `DELETE` requests to the `https://api.getport.io/v1/blueprints/{blueprint_id}/entities/{entity_id}` route). By adding the `run_id` parameter, you reflect the change made to the Entity as part of the set of steps the action run performed during its runtime.
 
 :::tip
 Tying Entities to an action run is only possible when an action run is in the `IN_PROGRESS` status.
