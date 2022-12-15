@@ -253,7 +253,6 @@ We currently support the following `string` formats:
 
 :::note
 Those are the `format` types that our API supports. See [API reference](../../api-providers/rest.md).
-See [timer reference](../blueprint/timer-properties.md).
 :::
 
 ### URL
@@ -356,6 +355,8 @@ In addition, `user` format distinguishes between users by their status:
 ```
 
 ### Timer
+
+Timer Properties allow you to define an expiration date on a specific properties. For more information, See [Timer properties section](../blueprint/timer-properties.md).
 
 ```json showLineNumbers
 {
