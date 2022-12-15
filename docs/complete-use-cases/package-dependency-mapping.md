@@ -2,7 +2,7 @@
 sidebar_position: 6
 ---
 
-# Microservice dependency mapping
+# Package dependency mapping
 
 Using Port, it is very easy to implement and track package dependency mapping for your microservices. That can be useful, for example, while trying to investigate a dependency related issue or bug, or while checking for security issues.
 
@@ -54,7 +54,6 @@ Please notice the 'relations' seciton at the bottom of the Blueprint
     "required": []
   },
   "mirrorProperties": {},
-  "formulaProperties": {},
   "relations": {
     "package": {
       "title": "Package",
@@ -90,7 +89,6 @@ Please notice the 'relations' seciton at the bottom of the Blueprint
     "required": ["version"]
   },
   "mirrorProperties": {},
-  "formulaProperties": {},
   "relations": {}
 }
 ```
@@ -142,7 +140,7 @@ Since we are working with DeploymentConfigs - which are configured by a Microser
 
 Let's begin by creating a Python script to handle scanning the `yarn.lock` file. We will also implement package Entity creation and update the existing DeploymentConfigs with their related package dependencies.
 
-[This Python script](https://github.com/port-labs/demo-node-project/blob/main/scripts/scan-yarn-lock.py) has some useful functions with which we interact with Port.
+[This Python script](https://github.com/port-labs/demo-node-project/blob/main/.github/scripts/scan-yarn-lock.py) has some useful functions with which we interact with Port.
 Have a look at:
 
 ```python
@@ -263,4 +261,4 @@ Since this is a single-microservice project use-case, we removed the `MICROSERVI
 
 ## Summary
 
-Port simplifies implementations and easy-to-maintain package dependency mapping. Using our RESTful API and GitHub Workflows, you are able to create a block in your CI/CD pipeline which keeps track of your Microservices' packages and their versions.
+Port makes it easy to implement and maintain package dependency mapping for you deployment configs. Using Port's RESTful API and GitHub Workflows, you can easily integrate reporting to Port with your existing CI/CD pipelines.

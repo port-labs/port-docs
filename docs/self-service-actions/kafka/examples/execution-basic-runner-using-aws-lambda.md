@@ -69,7 +69,6 @@ Let’s configure a `VM` Blueprint. Its base structure is:
     },
     "required": []
   },
-  "formulaProperties": {},
   "calculationProperties": {}
 }
 ```
@@ -131,7 +130,6 @@ blueprint = {
         },
         "required": []
     },
-    "formulaProperties": {},
     "calculationProperties": {},
 
 }

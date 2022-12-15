@@ -10,10 +10,10 @@ Calculation Properties make it easier to define properties that are based on val
 
 The Calculation Properties support the types `string`, `number`, `object`, `array`, `boolean`, and `yaml` .
 
-With Calculation Properties allow you to:
+Calculation Properties allow you to:
 
-- Filter/Select/Slice/Concat from an existing property;
-- Create math equations or modifications. For example ,calculate required disk storage by specifying page size, and number of pages needed.
+- Filter/Select/Slice/Concatenate data from an existing property;
+- Create math equations or modifications. For example, calculate required disk storage by specifying page size, and number of pages needed.
 - Merge complex properties, including deep-merge and overriding.
 
 :::tip
@@ -50,9 +50,7 @@ The top-level key in a single calculation Property is the name of the property.
 Inside the Calculation Property object you can specify the `title` to grant the property a more readable name.  
 :::
 
-### User-defined Calculation Property
-
-This is a standard Calculation Property created from a user-defined property available in the Blueprint.
+### Basic Calculation Property
 
 In the following example, we will create a Calculation Property called `MBMemory` of type `number`, and then transform it into a GB unit:
 
@@ -88,25 +86,27 @@ Then the `GBMemory` Calculation Property value will be:
 }
 ```
 
+This is an example of how Calculation Properties can be used to perform math equations over data ingested into Port.
+
 ## Examples
 
 Here are a few examples of Calculation Properties use cases:
 
-### Concat strings
+### Concatenate strings
 
 Assume you have two `string` properties: one is called `str1` with the value `hello`, the other is called `str2` with the value `world`.
 The following calculation will result in `hello world`:
 
 ```json showLineNumbers
 {
-  "title": "Concat strings example",
+  "title": "Concatenate strings example",
   "type": "string",
   "calculation": ".properties.str1 + .properties.str2"
 }
 ```
 
 :::tip
-If you want to provide your own string template to concat properties , wrap your template string with single quotes (`'`), such as `'https://' + .properties.str1'`
+If you want to provide your own string template to concatenate properties , wrap your template string with single quotes (`'`), such as `'https://' + .properties.str1'`
 :::
 
 ### Slice array
@@ -129,7 +129,7 @@ Assume you have two `object` properties: one called `deployed_config` with the v
 "calculationProperties" : {
     "merge_config": {
         "title": "Merge config",
-        "type": "objet",
+        "type": "object",
         "calculation": ".properties.deployed_config * .properties.service_config",
     }
 }
@@ -183,7 +183,32 @@ For example, if you want to use your `on-call` property in a Calculation Propert
 }
 ```
 
-## Using mirror properties in calculation properties
+## Using meta properties in calculation properties
+
+It is possible to use [meta properties](./mirror-properties.md/#meta-property-mirror-property) as template values for Calculation Properties, since the syntax is the same as user-defined properties, but without the `properties` keyword.
+
+For example, if you want to concatenate a template URL (for example `https://datadog.com`) with the `identifier` meta property:
+
+```json showLineNumbers
+{
+  "identifier": "notification-service",
+   "title": "Notification Service",
+  "properties": {
+   ...
+  },
+  "calculationProperties": {
+    "monitorUrl": {
+      "title": "Monitor url",
+      "type": "string",
+      "calculation": "'https://datadog.com/' + .identifier"
+    }
+  }
+}
+```
+
+The value of the property `monitorUrl` will be `https://datadog.com/notification-service`
+
+## Using Mirror Properties in Calculation Properties
 
 It is possible to use Mirror Properties as template values for Calculation Properties, since the syntax is the same as user-defined properties.
 
@@ -202,7 +227,7 @@ A Calculation Property that links to the slack channel of the squad can be:
 ```json showLineNumbers
 "owning_squad_slack": {
     "title": "Owning Squad Channel",
-    "calculation": ".owningSquad",
+    "calculation": "'https://slack.com/' + .properties.owningSquad",
 }
 ```
 

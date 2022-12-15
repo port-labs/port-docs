@@ -71,17 +71,20 @@ resource "port-labs_blueprint" "microservice" {
     identifier = "slackChannels"
     type       = "array"
     title      = "Slack Channels"
+    required   = true
   }
   properties {
     identifier = "repoUrl"
     type       = "string"
     format     = "url"
     title      = "Repository URL"
+    required   = true
   }
   properties {
     identifier = "description"
     type       = "string"
     title      = "Description"
+    required   = false
   }
   properties {
     identifier = "config"

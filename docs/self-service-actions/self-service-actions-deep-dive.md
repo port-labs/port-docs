@@ -11,6 +11,12 @@ sidebar_label: Self-Service Actions Deep Dive
 - **Delete** - an existing Entity by triggering delete logic in your infrastructure.
 - **Day-2 Operations** - trigger an existing Entity’s logic in your infrastructure to update or modify the existing Entity on demand.
 
+:::info
+This deep dive is meant to teach you how to configure Self-Service Actions, understand their structure and the different options they offer you.
+
+To learn how to update the status of an existing Self-Service Action invocation, refer to the [Action Runs Tutorial](./action-runs-tutorial.md)
+:::
+
 ## Configuring a new self-service action
 
 Let's configure new Self-Service Actions, starting with the Blueprints.
@@ -32,7 +38,6 @@ For example, let’s create 2 Blueprints and connect them to each other:
   "identifier": "microservice",
   "title": "Microservice",
   "icon": "Microservice",
-  "formulaProperties": {},
   "calculationProperties": {},
   "schema": {
     "properties": {
@@ -78,7 +83,6 @@ For example, let’s create 2 Blueprints and connect them to each other:
   "identifier": "deployment",
   "title": "Deployment",
   "icon": "Deployment",
-  "formulaProperties": {},
   "calculationProperties": {},
   "schema": {
     "properties": {
@@ -616,8 +620,7 @@ Here is an example `payload` object for a `CREATE` action:
 
 ## Next Steps
 
-Now that you have the basics of Self-Service Actions, you can refer to our examples for some practical use-cases:
+Now that you have the basics of Self-Service Actions, you can:
 
-```
-- [Setting up a basic execution runner using AWS Lambda](../tutorials/self-service-actions/kafka-actions/execution-basic-runner-using-aws-lambda.md)
-```
+- Learn about how to update a Self-Service Action after it started, by interacting with the [action run](./action-runs-tutorial.md) object;
+- Refer to our examples for some practical use-cases - [Setting up a basic execution runner using AWS Lambda](../self-service-actions/kafka/examples/execution-basic-runner-using-aws-lambda.md).

@@ -75,7 +75,6 @@ This Entity is based on the following Blueprint definition, where the `repo-link
     "identifier": "microservice",
     "title": "microservice",
     "icon": "Microservice",
-    "formulaProperties": {},
     "calculationProperties": {},
     "schema": {
         "properties": {

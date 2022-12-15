@@ -1,12 +1,11 @@
 ---
-sidebar_position: 4
+sidebar_position: 3
 title: Exporting repositories
 ---
 
 :::note Prerequisites
 
 - [Please install our GitHub app](./installation).
-- GitHub repository.
 
 :::
 
@@ -53,7 +52,6 @@ If you don't have a `README.md` file within the selected example repository for 
     "required": []
   },
   "mirrorProperties": {},
-  "formulaProperties": {},
   "calculationProperties": {},
   "relations": {}
 }
