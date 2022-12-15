@@ -43,7 +43,7 @@ A Relation exists under the `relations` key in the [Blueprint JSON schema](../bl
 | `many`     | `Boolean` | Boolean flag to define whether multiple target Entities can be mapped to the Relation. For more information refer to [X-to-many relation](#x-to-many-relation) |
 
 :::note
-A relation with `many` field set to `true` cannot be required.
+A Relation can't be configured with both `many` and `required` set to `true`
 :::
 
 ## Relation example
