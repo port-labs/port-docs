@@ -248,12 +248,12 @@ We currently support the following `string` formats:
 | `date-time` | Formatted ISO string datetime                             | `"2022-04-18T11:44:15.345Z"`              |
 | `ipv4`      | Standard IPv4 address                                     | `127.0.0.1`                               |
 | `ipv6`      | Standard IPv6 address                                     | `FE80:CD00:0A20:0CDE:1257:1C34:211E:729C` |
-| `TTL`       | Formatted ISO string datetime                             | `"2022-04-18T11:44:15.345Z"`              |
+| `timer`     | Formatted ISO string datetime                             | `"2022-04-18T11:44:15.345Z"`              |
 | `yaml`      | a [YAML](https://en.wikipedia.org/wiki/YAML) file content | `a: 123`                                  |
 
 :::note
 Those are the `format` types that our API supports. See [API reference](../../api-providers/rest.md).
-See [TTL reference](../blueprint/TTL-properties.md).
+See [timer reference](../blueprint/timer-properties.md).
 :::
 
 ### URL
@@ -355,14 +355,14 @@ In addition, `user` format distinguishes between users by their status:
 }
 ```
 
-### TTL
+### Timer
 
 ```json showLineNumbers
 {
-  "title": "TTL Property",
+  "title": "Timer Property",
   // highlight-start
   "type": "string",
-  "format": "TTL",
+  "format": "timer",
   // highlight-end
   "description": "a property that will trigger event of expired in a specific date"
 }
