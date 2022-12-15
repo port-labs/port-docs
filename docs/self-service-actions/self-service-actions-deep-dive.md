@@ -12,7 +12,7 @@ sidebar_label: Self-Service Actions Deep Dive
 - **Day-2 Operations** - trigger an existing Entity’s logic in your infrastructure to update or modify the existing Entity on demand.
 
 :::info
-This deep dive is meant to teach you how to configure Self-Service Actions, understand their structure and the different options they offer you.
+This deep dive's purpose is to teach you how to configure Self-Service Actions, understand their structure and the different options they offer you.
 
 To learn how to update the status of an existing Self-Service Action invocation, refer to the [Action Runs Tutorial](./action-runs-tutorial.md)
 :::
