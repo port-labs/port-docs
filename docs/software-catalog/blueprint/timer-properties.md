@@ -4,13 +4,13 @@ sidebar_position: 6
 
 # Timer Properties
 
-Timer Properties allow you to define an expiration date on a specific property. Timer properties allows the provisioning of a temporary anything through developer self-service actions:
+Timer properties allow you to define an expiration date on a specific property. Timer properties allows the provisioning of a temporary anything through developer self-service actions:
 
-- Temporary integration environments.
-- Temporary cloud or environment permissions.
+- Temporary integration environments;
+- Temporary cloud or environment permissions;
 - Temporary cloud resources and more.
 
-## Timer Properties JSON schema
+## Timer properties JSON schema
 
 ```json showLineNumbers
 "properties": {
@@ -22,11 +22,11 @@ Timer Properties allow you to define an expiration date on a specific property. 
 }
 ```
 
-## Timer Properties deep dive
+## Timer properties deep dive
 
-Let's look at some examples of basic Timer Properties definitions to better understand how Timer Properties work:
+Let's look at some examples of basic timer properties definitions to better understand how timer properties work:
 
-In the following example, we create a Timer Property called locked, that will be expired in 2 hours:
+In the following example, we create a timer property called locked, that will expire in 2 hours:
 
 ```json showLineNumbers
   "identifier": "e_mtLQRs6sqQOaz7QP",
@@ -41,9 +41,9 @@ In the following example, we create a Timer Property called locked, that will be
 
 ![Timer entity](../../../static/img/software-catalog/entity/TTLCreateEntity.png)
 
-After 2 hours, the property will become `Expired`, and a event of `Timer Expired` will send to the [ChangeLog](../blueprint/blueprint.md#changelog-destination).
+After 2 hours, the property status will change to `Expired`, and an event of `Timer Expired` will be sent to the [ChangeLog](../blueprint/blueprint.md#changelog-destination).
 
-The following action invocation body is sent to the Webhook/Kafka topic:
+The following [action invocation body](../../self-service-actions/self-service-actions-deep-dive.md#self-service-action-run-payload) is sent to the Webhook/Kafka topic:
 
 ```json showLineNumbers
 {
