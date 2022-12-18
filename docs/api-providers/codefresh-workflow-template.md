@@ -324,11 +324,6 @@ spec:
                       "languages": ["TypeScript", "Shell"],
                       "versionInEnv": {"prod": "v1.0.0", "staging": "v1.0.1"}
                     }
-                - name: ENTITY_RELATIONS
-                  value: |
-                    {
-                      "microservice": "example-microservice"
-                    }
           - name: entity-upsert-package
             dependencies: [entity-upsert-microservice]
             templateRef:
@@ -352,6 +347,11 @@ spec:
                   value: |
                     {
                       "version": "v1"
+                    }
+                - name: ENTITY_RELATIONS
+                  value: |
+                    {
+                      "microservice": "example-microservice"
                     }
           - name: entity-get
             dependencies: [entity-upsert-microservice, entity-upsert-package]
