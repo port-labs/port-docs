@@ -11,7 +11,7 @@ sidebar_position: 1
 
 TODO: change here the link
 
-1. Clone our example repo: [bitbucket-app-setup-example](https://github.com/port-labs/github-app-setup-example).
+1. Clone our example repo: [bitbucket-app-setup-example](https://bitbucket.com/port-labs/bitbucket-app-setup-example).
 
 2. Use the `microservice.json` file as a base for your [Blueprint](../../../software-catalog/blueprint/blueprint.md).
 
