@@ -128,4 +128,4 @@ Now that you have the GitHub app installed, you can refer to our examples for so
 
 - [Exporting pull requests as entities to Port](./exporting-pull-requests)
 - [Exporting repositories files and metadata as entities to Port](./exporting-repositories.md)
-- [Exporting entities via port.yml definition file](../../api-providers/gitops/quickstart.md)
+- [Exporting entities via port.yml definition file](../../api-providers/gitops/github-app-gitops/quickstart.md)
