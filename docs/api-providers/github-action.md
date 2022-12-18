@@ -8,7 +8,7 @@ Our GitHub action allows you to interact with Entities in Port directly from you
 
 Here you'll find a step-by-step guide for Port's GitHub action.
 
-## GitHub Action Benefits​
+## GitHub action benefits​
 
 - Create new Entities of existing Blueprints and Relations;
 - Update existing Entities with new information (title, properties, relations, etc...).
@@ -24,7 +24,7 @@ Here you'll find a step-by-step guide for Port's GitHub action.
 
 :::
 
-### Basic Upsert Example
+### Basic upsert example
 
 In this example we create a basic Blueprint and then add code that uses Port's GitHub action to create/update an Entity that belongs to the Blueprint:
 
@@ -92,7 +92,7 @@ For security reasons it is recommended to save the `CLIENT_ID` and `CLIENT_SECRE
 
 :::
 
-### Basic Get Example
+### Basic get example
 
 The following example gets the `example-microservice` entity from the previous example.
 
@@ -122,7 +122,7 @@ use-entity:
 The first job `get-entity`, uses the GitHub action to get the `example-microservice` entity.
 The second job `use-entity`, uses the output from the first job, and prints `versionInEnv.prod` property of the entity.
 
-### Complete Example
+### Complete example
 
 The following example adds another `package` Blueprint, in addition to the `microservice` Blueprint shown in the previous example. In addition, it also adds a `microservice` Relation. The GitHub action will create or update the Relation between the 2 existing Entities:
 
