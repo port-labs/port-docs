@@ -2,9 +2,9 @@
 sidebar_position: 1
 ---
 
-Our appa allows you to quickly and easily map out your Software Catalog, according to your existing code repositories and projects.
+Our GitOps apps allow you to quickly and easily map out your Software Catalog, according to your existing code repositories and projects.
 
 # GitOps
 
-- [Bitbucket App Gitops](./bitbucket-app-gitops)
-- [GitHub App Gitops](./github-app-gitops)
+- [Bitbucket App GitOps](./bitbucket-app-gitops)
+- [GitHub App GitOps](./github-app-gitops)
