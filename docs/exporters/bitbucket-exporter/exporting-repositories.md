@@ -24,13 +24,13 @@ If you don't have a `README.md` file within the selected example repository for 
 :::
 
 <details>
-<summary> Microservice Blueprint </summary>
+<summary> Repository Blueprint </summary>
 
 ```json showLineNumbers
 {
-  "identifier": "microservice",
-  "title": "Microservice",
-  "icon": "Microservice",
+  "identifier": "repository",
+  "title": "Repository",
+  "icon": "Service",
   "schema": {
     "properties": {
       "readme": {
@@ -51,6 +51,7 @@ If you don't have a `README.md` file within the selected example repository for 
     },
     "required": []
   },
+  "formulaProperties": {},
   "mirrorProperties": {},
   "calculationProperties": {},
   "relations": {}
@@ -94,7 +95,7 @@ resources:
 :::info
 
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform Bitbucket objects to Port Entities.
-- Click [Here](https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-get) for the Bitbucket repository object structure.
+- Click [Here](https://support.atlassian.com/bitbucket-cloud/docs/event-payloads/#Repository) for the Bitbucket repository object structure.
 
 :::
 
@@ -102,7 +103,7 @@ resources:
 
 That's it! after the push is complete, the exporter will start ingesting the entities on the next commit to the repository.
 
-![Developer Portal Microservice](../../../static/img/integrations/bitbucket-app/BitbucketMicroservices.png)
+![Developer Portal Microservice](../../../static/img/integrations/bitbucket-app/BitbucketRepositories.png)
 
 Check out the `README.md` in markdown format inside the [Specific Entity Page](../../software-catalog/entity/entity.md#entity-page)
 
