@@ -124,13 +124,8 @@ Done! after the push is complete, the exporter will begin creating all the `open
 
 Now you can view and query all of your Pull Requests as Port Entities!
 
-TODO: Change the images
 ![Developer Portal Bitbucket Pull Requests](../../../static/img/integrations/bitbucket-app/BitbucketPullRequests.png)
 
 You can also see the description in markdown format inside the [Specific Entity Page](../../software-catalog/entity/entity.md#entity-page)
 
 ![Developer Portal Bitbucket Pull Request Description](../../../static/img/integrations/github-app/PullRequestDescription.png)
-
-And look for the respective audit logs with an indication of the Bitbucket Exporter as the source:
-
-![Developer Portal Bitbucket Exporter Audit Log](../../../static/img/integrations/github-app/AuditLog.png)
