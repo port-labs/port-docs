@@ -430,7 +430,7 @@ Now that you have your environment ready, it's time to create a service.
 
 ### Service - GitHub app
 
-To create your service, you will connect Port's [GitHub app](../api-providers/gitops/gitops.md) to your service repository, and add a `port.yml` file describing the service you want to create an Entity for in Port.
+To create your service, you will connect Port's [GitHub app](../api-providers/gitops/github-app-gitops/github-app-gitops.md) to your service repository, and add a `port.yml` file describing the service you want to create an Entity for in Port.
 
 Here is an example `port.yml` file for a service called `Notification Service`:
 
@@ -449,7 +449,7 @@ properties:
 ```
 
 :::tip
-`repo` is a GitHub App [auto-imported properties](../api-providers/gitops/auto-importing-properties.md), as such it will be added automatically to the `port.yml` file of the service Entity.
+`repo` is a GitHub App [auto-imported properties](../api-providers/gitops/github-app-gitops/auto-importing-properties.md), as such it will be added automatically to the `port.yml` file of the service Entity.
 :::
 
 After the commit of the `port.yml` file to your repository, you will now see your service in Port.
