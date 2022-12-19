@@ -11,7 +11,6 @@ You can install the our Bitbucket App by following [our installation guide](../.
 ## What Does Our Bitbucket Application Offer You?​
 
 - Automatic updates to Entities mapped from Bitbucket, based on updates to the `port.yml` file.
-- Additional metadata provided by Bitbucket. See [Auto Importing Properties](./auto-importing-properties), available directly from Port
 
 ## How does it Work?
 

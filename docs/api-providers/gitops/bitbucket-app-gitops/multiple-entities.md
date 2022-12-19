@@ -36,6 +36,4 @@ Here is an example:
 
 ### Multiple files
 
-By default, we search for all `port.yml` files in your repo (Use `specPath` (Glob Patterns) in [Advanced configurations](./advanced-configuration) to control it):
-
 ![Bitbucket app tree of port.yml files](../../../../static/img/integrations/common/TreeOfPortYamlFiles.png)

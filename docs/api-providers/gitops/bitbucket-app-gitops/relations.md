@@ -39,10 +39,3 @@ In order to manage two Entities and a Relation (`example1` package => `example2`
 ```
 
 The Relation identifier is provided as key (`package-microservice`), and the microservice Entity to relate to, is provided as value (`example2`).
-
-### Deletion of dependent entities
-
-There are 2 options to delete an Entity from `port.yml` that has dependent Entities (that have required relation(s) to the Entity you want to delete):
-
-1. You can remove the dependent Entities in the same operation (through `port.yml`, if you manage the dependent Entities there).
-2. Enable `deleteDependentEntities` flag in [Advanced configurations](./advanced-configuration) (disabled by default).
