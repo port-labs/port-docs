@@ -24,9 +24,9 @@ Timer properties allow you to define an expiration date on a specific property. 
 
 ## Timer properties deep dive
 
-Let's look at some examples of basic timer properties definitions to better understand how timer properties work:
+Let's look at some examples of basic timer properties definitions to better understand how timer properties work.
 
-In the following example, we create a timer property called locked, that will expire in 2 hours:
+In the following example, we will create a timer property called locked, that will expire in 2 hours:
 
 ```json showLineNumbers
   "identifier": "e_mtLQRs6sqQOaz7QP",
