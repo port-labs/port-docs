@@ -9,7 +9,7 @@ sidebar_position: 1
 **Scorecards** enable us to create a set of rules that will determine the level of our Port Entities, based on their properties.
 Each scorecard has a set of rules that affects its total level, a rule has a `level` property which is one of the following: `Gold`, `Silver` or `Bronze`. Each rule has specific conditions, and the scorecard level increases when they pass.
 
-**For example**, to keep track of your organization's `Services` maturity, we can create a set of scorecards on top of a `Service` [Blueprint](../blueprint/blueprint.md) that will keep track of their progress, here are some scorecards that we can set:
+**For example**, to keep track of your organization's `Services` maturity, we can create a set of scorecards on top of a `Service` [Blueprint](../blueprint/blueprint.md) that will keep track of their progress. here are some scorecards that we can set:
 
 - Ownership
   - Has a defined on-call?
@@ -22,7 +22,7 @@ Each scorecard has a set of rules that affects its total level, a rule has a `le
   - Have a linter configured?
   - Have tests?
 
-In the end, within the specific entity page we will get a tab per scorecard which shows the progress and the rules status.
+In the end, within the specific Entity profile, we will get a tab per scorecard that shows the rules' progress and status.
 
 ![Developer Portal Scorecards Tab](../../../static/img/software-catalog/scorecard/tutorial/ScorecardsTab.png)
 
@@ -49,15 +49,15 @@ In the end, within the specific entity page we will get a tab per scorecard whic
 | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `operator` | Search operator to use when evaluating this rule, for example `=` `!=` `contains` `doesNotContains` `isEmpty` `isNotEmpty` below                                                                                                     |
 | `property` | Property to filter by according to its value. It can be a [meta-property](../../software-catalog/blueprint/mirror-properties.md#meta-property-mirror-property) such as `$identifier`, or a standard property such as `slack_channel` |
-| `value`    | The value to compare to (not required in isEmpty and isNotEmpty operators)                                                                                                                                                           |
+| `value`    | Value to compare to (not required in isEmpty and isNotEmpty operators)                                                                                                                                                           |
 
 ## Scorecard total level calculation
 
 As shown above, a Scorecard is built from several rules, and each one of them has a `level` property.
-The available levels are `Gold`, `Silver`, `Bronze`, if an entity passes all of the rules from a certain level it gets to that level, while ensuring it passed all previous levels.
+The available levels are `Gold`, `Silver`, `Bronze`. Once an Entity passes the conditions for a certain level, its level changes accordingly.
 
 :::note
-if entity didn't pass all of the rules of the `Bronze` level it will be in a `Basic` Tier.
+If an Entity hasn't passed the rules determining a `Bronze` level, it will be a `Basic` Tier.
 :::
 
 ## Scorecard example
@@ -101,7 +101,7 @@ Please see the following example of an ownership scorecard. It has two rules, on
 }
 ```
 
-## Next Steps
+## Next steps
 
 [Explore How to Create, Edit, and Delete Scorecards with basic examples](./tutorial)
 

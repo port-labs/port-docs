@@ -6,11 +6,11 @@ sidebar_label: Tutorial
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Scorecards Tutorial
+# Scorecards tutorial
 
 ## Create Scorecards
 
-Scorecards can be created using two methods:
+Scorecards can be created by two methods:
 
 - UI
 - API
@@ -21,7 +21,7 @@ A Scorecard is created upon Blueprint. So if you haven't created the `microservi
 
 ### From the UI
 
-To create a scorecard from the UI, go to the Blueprints graph and click the 3 dots icon on the `microservice` blueprint
+To create a scorecard from the UI, go to the Blueprints graph and click the 3 dots icon on the `microservice` Blueprint
 
 ![Blueprints page with Create Scorecard](../../../static/img/software-catalog/scorecard/tutorial/MicroserviceEditScorecard.png)
 
@@ -202,7 +202,7 @@ const response = await axios.put(
 
 After creating the scorecards, you will see a new Tab in the specific entity page of each of your blueprint's entities showing the level of each of the entity scorecards
 
-For example, we can [create the entity below](../entity/tutorial.md#create-entities)
+For example, we can [create the Entity below](../entity/tutorial.md#create-entities)
 
 ```json showLineNumbers
 {
@@ -227,9 +227,9 @@ Therefore the level of the entity is `Bronze` because it passed all the rules in
 
 ## Update Scorecards
 
-To update scorecards we can use the same url we used before with the same payload, but just to provide the `id` that the backend generated for that scorecard.
+To update Scorecards, we can use the same URL and payload we have used before with the `id` that the backend generated for that scorecard.
 
-And just like before, you can update a Scorecard from the UI or from the API.
+And just as we have shown earlier in the tutorial, you can update a Scorecard from the UI or from the API.
 
 ### From the UI
 
@@ -243,7 +243,7 @@ An editor window will open with the current scorecards of the Blueprint. In orde
 
 To update a scorecard you can use 2 different URLs:
 
-1. You can also update a single Scorecard using the url `https://api.getport.io/v1/{blueprint_identifier}/scorecards/{scorecard_identifier}`. The request body will be the full Scorecard + the wanted changed values
+1. Update a single Scorecard using the URL `https://api.getport.io/v1/{blueprint_identifier}/scorecards/{scorecard_identifier}`. The request body will be the full Scorecard + the wanted changed values
 2. Make a PUT request to the URL `https://api.getport.io/v1/{blueprint_identifier}/scorecards`. to multiple scorecards at once
 
 The request body will include the existing body of the Scorecard, after the desired updates to the existing Scorecard have been applied.
@@ -254,11 +254,10 @@ The request body will include the existing body of the Scorecard, after the desi
 A Scorecard cannot be restored after deletion!
 :::
 
-In order to delete a Scorecard you can:
-
+There are two ways to delete a Scorecard:
 - Make an HTTP PUT request and remove it from the array of the scorecards via the URL `https://api.getport.io/v1/{blueprint_identifier}/scorecards`
-- Make an HTTP DELETE request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards/{scorecard_identifier}` the `scorecard_identifier` is the identifier of the scorecard we want to delte
+- Make an HTTP DELETE request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards/{scorecard_identifier}` the `scorecard_identifier` is the identifier of the scorecard we want to delete
 
 :::note
-When using the multiple update scorecards `https://api.getport.io/v1/{blueprint_identifier}/scorecards` PUT request keep in mind that you will see a new `id` property, this is used via Port to identify the scorecard in order to be able to update it's properties
+When using the multiple update Scorecards `https://api.getport.io/v1/{blueprint_identifier}/scorecards` PUT request, keep in mind that you will see a new `id` property. This is used via Port to identify the Scorecard in order to be able to update its properties
 :::
