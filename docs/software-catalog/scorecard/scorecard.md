@@ -53,7 +53,7 @@ In the end, within the specific entity page we will get a tab per scorecard whic
 
 ## Scorecard total level calculation
 
-As shown above, a Scorecard is built from several rules, and each one of them have a `level` property.
+As shown above, a Scorecard is built from several rules, and each one of them has a `level` property.
 The available levels are `Gold`, `Silver`, `Bronze`, if an entity passes all of the rules from a certain level it gets to that level, while ensuring it passed all previous levels.
 
 :::note
