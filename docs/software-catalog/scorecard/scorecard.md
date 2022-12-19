@@ -15,15 +15,16 @@ Each scorecard has a set of rules that affects its total level, a rule has a `le
   - Has a defined on-call?
   - Has a team?
 - Security
-  - Does it's Snyk vulnerabillities < 1
+  - Does it's Snyk vulnerabilities < 1
 - Production Readiness
   - Using a Monitoring service?
 - Development Quality
   - Have a linter configured?
   - Have tests?
 
-In the end we will get something that's similar to this
-// add here a photo
+In the end, within the specific entity page we will get a tab per scorecard which shows the progress and the rules status.
+
+![Developer Portal Scorecards Tab](../../../static/img/software-catalog/scorecard/tutorial/ScorecardsTab.png)
 
 ## Scorecard structure table
 
