@@ -200,7 +200,7 @@ const response = await axios.put(
 
 </Tabs>
 
-After creating the scorecards, you will see a new Tab in the specific entity page of each of your blueprint's entities showing the level of each of the entity scorecards
+After creating the Scorecards, you will see a new tab in the profile Entity page of each of your Blueprint's Entities, showing the various scorecards levels.
 
 For example, we can [create the Entity below](../entity/tutorial.md#create-entities)
 
