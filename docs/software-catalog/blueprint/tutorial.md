@@ -340,7 +340,7 @@ A PUT request has the same body as a POST request, it will simply overwrite the 
 
 ### Rename properties
 
-In order to rename the properties names, you can make a HTTP PATCH request to the URL: `https://api.getport.io/v1/{blueprint_identifier}/properties/{property_name}/rename` with this following JSON:
+In order to rename the properties, you can make a HTTP PATCH request to the URL: `https://api.getport.io/v1/{blueprint_identifier}/properties/{property_name}/rename` with this following JSON:
 
 ```jsonShowLineNumbers
 {
