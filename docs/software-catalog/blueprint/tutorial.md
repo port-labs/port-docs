@@ -329,7 +329,7 @@ Now, you will have a Blueprint in the Blueprints graph as follows:
 
 You can always modify Blueprints, add/remove properties or change existing property types as necessary.
 
-In order to update a Blueprint, you can do either of the following:
+To update a Blueprint, you can do either of the following:
 
 - Click the pencil icon in the Blueprints graph;
 - Make an HTTP PUT request to the URL: `https://api.getport.io/v1/{blueprint_identifier}`
@@ -340,7 +340,7 @@ A PUT request has the same body as a POST request, it will simply overwrite the 
 
 ### Rename properties
 
-In order to rename the properties, you can make a HTTP PATCH request to the URL: `https://api.getport.io/v1/{blueprint_identifier}/properties/{property_name}/rename` with this following JSON:
+In order to rename the properties, you can make an HTTP PATCH request to the URL: `https://api.getport.io/v1/{blueprint_identifier}/properties/{property_name}/rename` with this following JSON:
 
 ```jsonShowLineNumbers
 {
@@ -348,7 +348,7 @@ In order to rename the properties, you can make a HTTP PATCH request to the URL:
 }
 ```
 
-- You can change also the calculationProperties & MirrorProperties names by using this api.
+- You can also rename the CalculationProperties & MirrorProperties names by using this API.
 
 ## Delete Blueprints
 

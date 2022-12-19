@@ -201,7 +201,7 @@ The request body will include the existing body of the Blueprint, alongside the 
 
 #### Update Relations Identifiers
 
-In order to rename the relation's identifiers, you can make a HTTP PATCH request to the URL: `https://api.getport.io/v1/{blueprint_identifier}/relations/{relation_identifier}/rename` with this following JSON:
+To rename the relation's identifiers, you can make an HTTP PATCH request to the URL: `https://api.getport.io/v1/{blueprint_identifier}/relations/{relation_identifier}/rename` with this following JSON:
 
 ```jsonShowLineNumbers
 {
