@@ -32,15 +32,14 @@ properties:
 
 ### Triggers
 
-1. Merging a branch to the `main` (default) branch will trigger the app to search for `port.yml` files.
-2. Opening or updating a `pull request` will trigger a check run which validates the `port.yml` files.
+Push directly or Merging a branch to the `main` (default) branch will trigger the app to search for `port.yml` files.
 
 ### Permissions
 
-Port's Github App requires the following permissions:
+Port's Bitbucket App requires the following permissions:
 
-- **Read** access to code and metadata;
-- **Read** and **write** access to checks and pull requests.
+- **Read** your account information.
+- **Read** your repositories and their pull requests.
 
 :::note
 You will be prompted to confirm these permissions when first installing the App.

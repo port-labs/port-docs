@@ -36,4 +36,6 @@ Here is an example:
 
 ### Multiple files
 
+By default, we search for all `port.yml` files in your repo:
+
 ![Bitbucket app tree of port.yml files](../../../../static/img/integrations/common/TreeOfPortYamlFiles.png)
