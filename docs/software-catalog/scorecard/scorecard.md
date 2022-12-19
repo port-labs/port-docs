@@ -6,8 +6,8 @@ sidebar_position: 1
 
 ## What is a Scorecard?
 
-**Scorecards** enable us to create a set of rules that will determine our Port entity's level based on its properties.
-Each scorecard has a set of rules that affects its total level, a rule has a `level` property which is one of the following: `Gold`, `Silver` or `Bronze`. Each rule has specific conditions and when they pass the scorecard level increases.
+**Scorecards** enable us to create a set of rules that will determine the level of our Port Entities, based on their properties.
+Each scorecard has a set of rules that affects its total level, a rule has a `level` property which is one of the following: `Gold`, `Silver` or `Bronze`. Each rule has specific conditions, and the scorecard level increases when they pass.
 
 **For example**, to keep track of your organization's `Services` maturity, we can create a set of scorecards on top of a `Service` [Blueprint](../blueprint/blueprint.md) that will keep track of their progress, here are some scorecards that we can set:
 
