@@ -223,6 +223,8 @@ Here is how property definitions look like for all available types (remember tha
 }
 ```
 
+See also [Properties keyword](./blueprint.md#properties)
+
 ### Array
 
 ```json showLineNumbers
@@ -236,7 +238,13 @@ Here is how property definitions look like for all available types (remember tha
 }
 ```
 
-## String property formats
+See also [Items keyword](./blueprint.md#items)
+
+## Additional keywords
+
+Some property types provide additional settings you can use to ensure data validity
+
+### Format
 
 We currently support the following `string` formats:
 
@@ -254,7 +262,7 @@ We currently support the following `string` formats:
 Those are the `format` types that our API supports. See [API reference](../../api-providers/rest.md).
 :::
 
-### URL
+#### URL
 
 ```json showLineNumbers
 {
@@ -268,7 +276,7 @@ Those are the `format` types that our API supports. See [API reference](../../ap
 }
 ```
 
-### Email
+#### Email
 
 ```json showLineNumbers
 {
@@ -282,7 +290,7 @@ Those are the `format` types that our API supports. See [API reference](../../ap
 }
 ```
 
-### User
+#### User
 
 ```json showLineNumbers
 {
@@ -311,7 +319,7 @@ In addition, `user` format distinguishes between users by their status:
 
 :::
 
-### Date Time
+#### Date Time
 
 ```json showLineNumbers
 {
@@ -325,7 +333,7 @@ In addition, `user` format distinguishes between users by their status:
 }
 ```
 
-### IPv4
+#### IPv4
 
 ```json showLineNumbers
 {
@@ -339,7 +347,7 @@ In addition, `user` format distinguishes between users by their status:
 }
 ```
 
-### IPv6
+#### IPv6
 
 ```json showLineNumbers
 {
@@ -353,7 +361,7 @@ In addition, `user` format distinguishes between users by their status:
 }
 ```
 
-### Yaml
+#### Yaml
 
 ```json showLineNumbers
 "config": {
@@ -413,6 +421,95 @@ print(config_prop["do_awesome_things"]) # prints: True
 ```
 
 </details>
+
+### Length
+
+The length of a string can be constrained using the `minLength` and `maxLength` keywords. For both keywords, the value must be a non-negative number.
+
+```json showLineNumbers
+{
+  "type": "string",
+  "minLength": 2,
+  "maxLength": 3
+}
+```
+
+### Regular Expressions
+
+The pattern keyword is used to restrict a string to a particular regular expression. The regular expression syntax is the one defined in JavaScript (ECMA 262 specifically) with Unicode support.
+
+```json showLineNumbers
+{
+  "type": "string",
+  "pattern": "^[a-zA-Z0-9-]*-service$" // requires the value to be a string with letters/numbers/dash with the suffix "-service"
+}
+```
+
+### Range
+
+Ranges of numbers are specified using a combination of the `minimum` and `maximum` keywords, (or `exclusiveMinimum` and `exclusiveMaximum` for expressing exclusive range).
+
+If _x_ is the value being validated, the following must hold true:
+
+- _x_ ≥ `minimum`
+- _x_ > `exclusiveMinimum`
+- _x_ ≤ `maximum`
+- _x_ < `exclusiveMaximum`
+
+```json showLineNumbers
+{
+  "type": "number",
+  "minimum": 0,
+  "exclusiveMaximum": 100
+}
+```
+
+### Items
+
+List validation is useful for arrays of arbitrary length where each item matches the same schema. For this kind of array, set the items keyword to a single schema that will be used to validate all of the items in the array.
+
+In the following example, we define that each item in an array is a number:
+
+```json showLineNumbers
+{
+  "type": "array",
+  "items": {
+    "type": "number"
+  }
+}
+```
+
+### Properties
+
+The properties (key-value pairs) on an object are defined using the `properties` keyword. The value of `properties` is an object, where each key is the name of a property and each value is a schema used to validate that property. Any property that doesn’t match any of the property names in the `properties` keyword is ignored by this keyword.
+
+For example, let’s say we want to define a simple schema for service metadata:
+
+```json showLineNumbers
+{
+  "type": "object",
+  "properties": {
+    "config_file_path": { "type": "string" },
+    "min_required_cpu": { "type": "number", "maximum": 8 }
+  }
+}
+```
+
+:::tip
+When using the `properties` keyword, you can also make use of the `additionalProperties` keyword to control the handling of extra stuff, that is, properties whose names are not listed in the properties keyword or match any of the regular expressions in the patternProperties keyword. By default, any additional properties are allowed.
+
+```json showLineNumbers
+{
+  "type": "object",
+  "properties": {
+    "config_file_path": { "type": "string" },
+    "min_required_cpu": { "type": "number", "maximum": 8 }
+  },
+  "additionalProperties": false
+}
+```
+
+:::
 
 ## Special property types
 
