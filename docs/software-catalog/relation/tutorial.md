@@ -199,6 +199,16 @@ In order to update a Relation from the API, you will make a PUT request to the U
 
 The request body will include the existing body of the Blueprint, alongside the updated `relations` object, after the desired updates to the existing Relation have been applied.
 
+#### Update Relations Identifiers
+
+In order to rename the relation's identifier, you can make a HTTP PATCH request to the URL: `https://api.getport.io/v1/{blueprint_identifier}/relations/{relation_identifier}/rename` with this following JSON:
+
+```jsonShowLineNumbers
+{
+  newRelationIdentifier: "updatedRelationIdentifier"
+}
+```
+
 ## Delete Relations
 
 :::danger

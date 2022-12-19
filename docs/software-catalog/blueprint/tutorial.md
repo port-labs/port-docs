@@ -338,6 +338,18 @@ In order to update a Blueprint, you can do either of the following:
 
 A PUT request has the same body as a POST request, it will simply overwrite the Blueprint with the new data provided.
 
+### Rename properties
+
+In order to rename the properties names, you can make a HTTP PATCH request to the URL: `https://api.getport.io/v1/{blueprint_identifier}/properties/{property_name}/rename` with this following JSON:
+
+```jsonShowLineNumbers
+{
+  newPropertyName: "updatedPropertyName"
+}
+```
+
+- You can change also the calculationProperties & MirrorProperties names by using this api.
+
 ## Delete Blueprints
 
 :::danger
