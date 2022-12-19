@@ -120,7 +120,7 @@ resources:
 
 2. push `port-app-config.yml` to your default branch.
 
-Done! after the push is complete, the exporter will begin creating all the `open` pull requests in the repository or organization, and update on every change to existing or creation of new `pull-requests`.
+Done! after the push is complete, the exporter will begin creating all the `open` pull requests in the repository, and update on every change to existing or creation of new `pull-requests`.
 
 Now you can view and query all of your Pull Requests as Port Entities!
 
