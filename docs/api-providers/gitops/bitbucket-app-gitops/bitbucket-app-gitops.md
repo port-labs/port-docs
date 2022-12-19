@@ -13,7 +13,7 @@ You can install the our Bitbucket App by following [our installation guide](../.
 - Automatic updates to Entities mapped from Bitbucket, based on updates to the `port.yml` file.
 - Additional metadata provided by Bitbucket. See [Auto Importing Properties](./auto-importing-properties), available directly from Port
 
-<!-- ## How does it Work?
+## How does it Work?
 
 In order to use the GitHub App, all you need to do is include a `port.yml` file in your code repositories, or multiple `port.yml` files in your Monorepo.
 
@@ -46,4 +46,4 @@ Port's Github App requires the following permissions:
 :::note
 You will be prompted to confirm these permissions when first installing the App.
 
-::: -->
+:::

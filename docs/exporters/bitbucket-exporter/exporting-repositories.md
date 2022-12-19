@@ -103,7 +103,7 @@ resources:
 That's it! after the push is complete, the exporter will start ingesting the entities on the next commit to the repository.
 
 TODO: change the images
-![Developer Portal Microservice](../../../static/img/integrations/github-app/GitHubMicroservices.png)
+![Developer Portal Microservice](../../../static/img/integrations/bitbucket-app/BitbucketMicroservices.png)
 
 Check out the `README.md` in markdown format inside the [Specific Entity Page](../../software-catalog/entity/entity.md#entity-page)
 
