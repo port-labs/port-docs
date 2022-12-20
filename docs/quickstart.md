@@ -251,7 +251,6 @@ In order to create the service Blueprint, use the following JSON body:
       "format": "url"
     }
   },
-  "
   "relations": {}
 }
 ```
