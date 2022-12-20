@@ -55,7 +55,7 @@ In order to create a Blueprint using the properties, use the following JSON body
   "identifier": "package",
   "title": "Package",
   "icon": "Package",
-  "formulaProperties": {},
+  "
   "calculationProperties": {},
   "relations": {},
   "schema": {
@@ -195,7 +195,7 @@ so let's go ahead and create a **Microservice Blueprint**:
     "required": []
   },
   "mirrorProperties": {},
-  "formulaProperties": {},
+  "
   "calculationProperties": {},
   "relations": {}
 }

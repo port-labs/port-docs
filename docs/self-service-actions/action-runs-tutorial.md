@@ -47,7 +47,7 @@ The Blueprint and Self-Service Action are intentionally minimalistic since they 
     "required": []
   },
   "mirrorProperties": {},
-  "formulaProperties": {},
+  "
   "calculationProperties": {},
   "relations": {}
 }

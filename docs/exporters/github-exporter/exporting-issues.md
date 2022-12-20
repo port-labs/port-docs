@@ -78,7 +78,7 @@ To export your GitHub `Issues` to Port, you can use the following Port Blueprint
     "required": []
   },
   "mirrorProperties": {},
-  "formulaProperties": {},
+  "
   "calculationProperties": {},
   "relations": {}
 }

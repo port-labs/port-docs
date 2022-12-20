@@ -251,7 +251,7 @@ In order to create the service Blueprint, use the following JSON body:
       "format": "url"
     }
   },
-  "formulaProperties": {},
+  "
   "relations": {}
 }
 ```
@@ -451,7 +451,7 @@ blueprint = {
         "format": "url"
       }
   },
-    "formulaProperties": {},
+    "
     "relations": {}
 }
 
@@ -911,7 +911,7 @@ To create the running service Blueprint, use the following JSON body:
       "calculation": "'https://newrelic.com/' + .identifier"
     }
   },
-  "formulaProperties": {},
+  "
   "relations": {
     "microservice": {
       "target": "microservice",
@@ -1067,7 +1067,7 @@ blueprint = {
         "calculation": "'https://newrelic.com/' + .identifier"
     }
     },
-    "formulaProperties": {},
+    "
     "relations": {
         "microservice": {
             "target": "microservice",
