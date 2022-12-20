@@ -6,18 +6,18 @@ sidebar_position: 1
 
 :::note Prerequisites
 
-[Please install our GitHub app](../../exporters/github-exporter/installation.md).
+[Please install our GitHub app](../../../exporters/github-exporter/installation.md).
 :::
 
 1. Clone our example repo: [github-app-setup-example](https://github.com/port-labs/github-app-setup-example).
 
-2. Use the `microservice.json` file as a base for your [Blueprint](../../software-catalog/blueprint/blueprint.md).
+2. Use the `microservice.json` file as a base for your [Blueprint](../../../software-catalog/blueprint/blueprint.md).
 
 :::tip
 You can add any property you want into the base `microservice.json` file
 :::
 
-3. Once you are satisfied with your Blueprint, go ahead and create it in Port [via UI](../../software-catalog/blueprint/tutorial.md#from-the-ui) or [via API](../../software-catalog/blueprint/tutorial.md#from-the-api).
+3. Once you are satisfied with your Blueprint, go ahead and create it in Port [via UI](../../../software-catalog/blueprint/tutorial.md#from-the-ui) or [via API](../../../software-catalog/blueprint/tutorial.md#from-the-api).
 
 4. Now let's get the data inside Port:
 
