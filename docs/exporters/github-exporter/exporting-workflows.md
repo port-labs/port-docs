@@ -67,7 +67,6 @@ To export your GitHub `Workflows` to Port, you can use the following Port Bluepr
     "required": []
   },
   "mirrorProperties": {},
-  "
   "calculationProperties": {},
   "relations": {}
 }

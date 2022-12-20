@@ -73,7 +73,6 @@ To export your Bitbucket `Pull Requests` to Port, you can use the following Port
     "required": []
   },
   "mirrorProperties": {},
-  "
   "calculationProperties": {},
   "relations": {}
 }

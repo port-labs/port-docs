@@ -51,7 +51,6 @@ If you don't have a `README.md` file within the selected example repository for 
     },
     "required": []
   },
-  "
   "mirrorProperties": {},
   "calculationProperties": {},
   "relations": {}
