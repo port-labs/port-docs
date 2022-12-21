@@ -244,6 +244,34 @@ See also [Items keyword](./blueprint.md#items)
 
 Some property types provide additional settings you can use to ensure data validity
 
+### Enum
+
+The `enum` keyword is used to restrict a value to a fixed set of values. It must be an array with at least one element, where each element is unique. Can be used with properties of type `string` or `number`.
+
+```json showLineNumbers
+{
+  "title": "Enum field",
+  "type": "string",
+  // highlight-start
+  "enum": ["Option 1", "Option 2", "Option 3"],
+  "enumColors": {
+    "Option 1": "red",
+    "Option 2": "green",
+    "Option 3": "blue"
+  },
+  // highlight-end
+  "description": "Enum dropdown menu"
+}
+```
+
+:::tip
+When using the `enum` keyword, you can also make use of the `enumColors` key to define the colors of the available values.
+
+Each key is one of the available enum options and each value is one of the following colors: `blue, turquoise, orange, purple, lightBlue, pink, yellow, green, red, darkGray`
+
+If `enum` is defined without `enumColors` definitions, the default colors will be set
+:::
+
 ### Format
 
 We currently support the following `string` formats:
@@ -364,13 +392,13 @@ In addition, `user` format distinguishes between users by their status:
 #### Yaml
 
 ```json showLineNumbers
-"config": {
-    "title": "Microservice Config",
-    // highlight-start
-    "type": "string",
-    "format": "yaml",
-    // highlight-end
-    "description": "The configuration to use when deploying the service"
+{
+  "title": "Microservice Config",
+  // highlight-start
+  "type": "string",
+  "format": "yaml",
+  // highlight-end
+  "description": "The configuration to use when deploying the service"
 }
 ```
 
@@ -436,7 +464,9 @@ The length of a string can be constrained using the `minLength` and `maxLength` 
 
 ### Regular Expressions
 
-The pattern keyword is used to restrict a string to a particular regular expression. The regular expression syntax is the one defined in JavaScript (ECMA 262 specifically) with Unicode support.
+In order to use a regex pattern for a property value, both the `"type": "string"` and the `"pattern": "[REGEX_PATTERN]"` keys need to be used in the property JSON.
+
+A regex pattern will limit the set of legal values only to ones that are matched by the specified `[REGEX_PATTERN]`:
 
 ```json showLineNumbers
 {
@@ -444,6 +474,10 @@ The pattern keyword is used to restrict a string to a particular regular express
   "pattern": "^[a-zA-Z0-9-]*-service$" // requires the value to be a string with letters/numbers/dash with the suffix "-service"
 }
 ```
+
+:::tip
+Port supports standard Javascript regex syntax ([ECMA 262](https://www.ecma-international.org/publications-and-standards/standards/ecma-262/)), for quick reference of some of the available regex syntax, refer to the [JSON Schema docs](https://json-schema.org/understanding-json-schema/reference/regular_expressions.html)
+:::
 
 ### Range
 
@@ -455,6 +489,8 @@ If _x_ is the value being validated, the following must hold true:
 - _x_ > `exclusiveMinimum`
 - _x_ ≤ `maximum`
 - _x_ < `exclusiveMaximum`
+
+The following example matches a number (x) in range 0 ≤ x < 100:
 
 ```json showLineNumbers
 {
@@ -479,49 +515,7 @@ In the following example, we define that each item in an array is a number:
 }
 ```
 
-### Properties
-
-The properties (key-value pairs) on an object are defined using the `properties` keyword. The value of `properties` is an object, where each key is the name of a property and each value is a schema used to validate that property. Any property that doesn’t match any of the property names in the `properties` keyword is ignored by this keyword.
-
-For example, let’s say we want to define a simple schema for service metadata:
-
-```json showLineNumbers
-{
-  "type": "object",
-  "properties": {
-    "config_file_path": { "type": "string" },
-    "min_required_cpu": { "type": "number", "maximum": 8 }
-  }
-}
-```
-
-:::tip
-When using the `properties` keyword, you can also make use of the `additionalProperties` keyword to control the handling of extra stuff, that is, properties whose names are not listed in the properties keyword or match any of the regular expressions in the patternProperties keyword. By default, any additional properties are allowed.
-
-```json showLineNumbers
-{
-  "type": "object",
-  "properties": {
-    "config_file_path": { "type": "string" },
-    "min_required_cpu": { "type": "number", "maximum": 8 }
-  },
-  "additionalProperties": false
-}
-```
-
-:::
-
-## Special property types
-
-It is possible to configure special types that build on the existing base types (such as arrays of `objects` or `urls`), or expose completely new functionality.
-
-The available special types and their usage examples are listed below:
-
-|        | Description                                                                                              | Example values                         |
-| ------ | -------------------------------------------------------------------------------------------------------- | -------------------------------------- |
-| `enum` | Field with a pre-defined set of allowed values. Can be used with properties of type `string` or `number` | `["Option 1", "Option 2", "Option 3"]` |
-
-### Objects Array
+Objects Array:
 
 ```json showLineNumbers
 {
@@ -542,7 +536,7 @@ The available special types and their usage examples are listed below:
 }
 ```
 
-### URLs Array
+URLs Array:
 
 ```json showLineNumbers
 {
@@ -559,30 +553,40 @@ The available special types and their usage examples are listed below:
 }
 ```
 
-### Enum
+### Properties
+
+It is possible to define the format and validation rules of key-value pairs inside an `object` property by using the `properties` keyword inside the `object` type definition.
+
+The value of `properties` is an object, where each key is the name of a property and each value is a schema used to validate that property. Any property that doesn’t match any of the property names in the `properties` keyword is ignored by this keyword.
+
+For example, let’s say we want to define a simple schema for service metadata:
 
 ```json showLineNumbers
 {
-  "title": "Enum field",
-  "type": "string",
-  // highlight-start
-  "enum": ["Option 1", "Option 2", "Option 3"],
-  "enumColors": {
-    "Option 1": "red",
-    "Option 2": "green",
-    "Option 3": "blue"
-  },
-  // highlight-end
-  "description": "Enum dropdown menu"
+  "type": "object",
+  "properties": {
+    "config_file_path": { "type": "string" },
+    "min_required_cpu": { "type": "number", "maximum": 8 }
+  }
 }
 ```
 
 :::tip
-When using the `enum` key, you can also make use of the `enumColors` key to define the colors of the available values.
+When using the `properties` keyword, you can also make use of the `additionalProperties` keyword to control the handling of extra properties that were not explicitly defined. That is, properties whose names are not listed in the `properties` keyword of the `object`.
 
-Each key is one of the available enum options and each value is one of the following colors: `blue, turquoise, orange, purple, lightBlue, pink, yellow, green, red, darkGray`
+By default, any additional properties are allowed (`"additionalProperties": true`), by setting `additionalProperties` to `false`, only keys explicitly specified can be saved, and any other fields will be rejected (in the example below, only `config_file_path` and `min_required_cpu` will be allowed).
 
-If `enum` is defined without `enumColors` definitions, the default colors will be set
+```json showLineNumbers
+{
+  "type": "object",
+  "properties": {
+    "config_file_path": { "type": "string" },
+    "min_required_cpu": { "type": "number", "maximum": 8 }
+  },
+  "additionalProperties": false
+}
+```
+
 :::
 
 ## Widget properties
@@ -639,34 +643,6 @@ For more info on the `embedded-url` property, refer to the [Embedded URL Widget]
   "description": "Open-API Prop"
 }
 ```
-
-## String regular expression patterns
-
-In order to use a regex pattern for a property value, both the `"type": "string"` and the `"pattern": "[REGEX_PATTERN]"` keys need to be used in the property JSON.
-
-A regex pattern will limit the set of legal values only to ones that are matched by the specified `[REGEX_PATTERN]`:
-
-```json showLineNumbers
-"regex_prop": {
-    "title": "Regex Pattern Property",
-    // highlight-start
-    "type": "string",
-    "pattern": "[a-zA-Z0-9]",
-    // highlight-end
-    "description": "A property that supports values specified by a regex pattern",
-    "default": "Port1337"
-}
-```
-
-In the example above, the pattern `[a-zA-Z0-9]` sets the following rules:
-
-- Letters in the range `a-z` will be matched, in both lowercase and uppercase form
-- Digits in the range `0-9` will be matched
-- Any combination of characters and digits from the previous rules will be matched
-
-:::tip
-Port supports standard Javascript regex syntax ([ECMA 262](https://www.ecma-international.org/publications-and-standards/standards/ecma-262/)), for quick reference of some of the available regex syntax, refer to the [JSON Schema docs](https://json-schema.org/understanding-json-schema/reference/regular_expressions.html)
-:::
 
 ## Property icons
 
