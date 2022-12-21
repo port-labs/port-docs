@@ -55,7 +55,7 @@ In this section we'll show you a few examples of ways to use permissions in your
 The following configurations, among others, are available when using permissions management:
 
 1. Entities can be made immutable/partially immutable (can only create/delete/modify) for specific users/roles. For example:
-   a. `Deployment` Entities are immutable for all roles, and `Cluster` Entities are editable only by the **Moderators**.
+   a. `Deployment` Entities are immutable for all roles, and `Cluster` Entities are editable only by the **Moderators**. <br/>
    b. **Members** can create a new `Microservice` Entity, but are not permitted to delete a `Microservice` Entity.
 2. Each Entity property/relation can be immutable separately for specific users/roles. For example, the `repository_link` property can be immutable for all roles (except **Admin**).
 3. Allow specific users/roles to modify only Entities [owned by their team](#setting-permissions-by-team-ownership). For example, **Members** can edit only `Microservices` that belong to their team.
