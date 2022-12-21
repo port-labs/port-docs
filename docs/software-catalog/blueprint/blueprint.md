@@ -244,34 +244,6 @@ See also [Items keyword](./blueprint.md#items)
 
 Some property types provide additional settings you can use to ensure data validity
 
-### Enum
-
-The `enum` keyword is used to restrict a value to a fixed set of values. It must be an array with at least one element, where each element is unique. Can be used with properties of type `string` or `number`.
-
-```json showLineNumbers
-{
-  "title": "Enum field",
-  "type": "string",
-  // highlight-start
-  "enum": ["Option 1", "Option 2", "Option 3"],
-  "enumColors": {
-    "Option 1": "red",
-    "Option 2": "green",
-    "Option 3": "blue"
-  },
-  // highlight-end
-  "description": "Enum dropdown menu"
-}
-```
-
-:::tip
-When using the `enum` keyword, you can also make use of the `enumColors` key to define the colors of the available values.
-
-Each key is one of the available enum options and each value is one of the following colors: `blue, turquoise, orange, purple, lightBlue, pink, yellow, green, red, darkGray`
-
-If `enum` is defined without `enumColors` definitions, the default colors will be set
-:::
-
 ### Format
 
 We currently support the following `string` formats:
@@ -450,6 +422,34 @@ print(config_prop["do_awesome_things"]) # prints: True
 
 </details>
 
+### Enum
+
+The `enum` keyword is used to restrict a value to a fixed set of values. It must be an array with at least one element, where each element is unique. Can be used with properties of type `string` or `number`.
+
+```json showLineNumbers
+{
+  "title": "Enum field",
+  "type": "string",
+  // highlight-start
+  "enum": ["Option 1", "Option 2", "Option 3"],
+  "enumColors": {
+    "Option 1": "red",
+    "Option 2": "green",
+    "Option 3": "blue"
+  },
+  // highlight-end
+  "description": "Enum dropdown menu"
+}
+```
+
+:::tip
+When using the `enum` keyword, you can also make use of the `enumColors` key to define the colors of the available values.
+
+Each key is one of the available enum options and each value is one of the following colors: `blue, turquoise, orange, purple, lightBlue, pink, yellow, green, red, darkGray`
+
+If `enum` is defined without `enumColors` definitions, the default colors will be set
+:::
+
 ### Length
 
 The length of a string can be constrained using the `minLength` and `maxLength` keywords. For both keywords, the value must be a non-negative number.
@@ -502,9 +502,9 @@ The following example matches a number (x) in range 0 ≤ x < 100:
 
 ### Items
 
-List validation is useful for arrays of arbitrary length where each item matches the same schema. For this kind of array, set the items keyword to a single schema that will be used to validate all of the items in the array.
+List validation is useful for arrays of arbitrary length where each item matches the same schema. For this kind of array, set the `items` keyword to a single schema that will be used to validate all of the items in the array.
 
-In the following example, we define that each item in an array is a number:
+#### Numbers array
 
 ```json showLineNumbers
 {
@@ -515,7 +515,7 @@ In the following example, we define that each item in an array is a number:
 }
 ```
 
-Objects Array:
+#### Objects array
 
 ```json showLineNumbers
 {
@@ -536,7 +536,7 @@ Objects Array:
 }
 ```
 
-URLs Array:
+#### URLs array
 
 ```json showLineNumbers
 {
