@@ -253,9 +253,10 @@ We currently support the following `string` formats:
 | `url`       | Formatted URL                                             | `"https://getport.io"`                    |
 | `email`     | Formatted Email                                           | `"port@getport.io"`                       |
 | `user`      | Formatted Email or any string                             | `"port@getport.io"`                       |
-| `date-time` | Formatted ISO string datetime                             | `"2022-04-18T11:44:15.345Z"`              |
+| `date-time` | Formatted ISO datetime string                             | `"2022-04-18T11:44:15.345Z"`              |
 | `ipv4`      | Standard IPv4 address                                     | `127.0.0.1`                               |
 | `ipv6`      | Standard IPv6 address                                     | `FE80:CD00:0A20:0CDE:1257:1C34:211E:729C` |
+| `timer`     | Formatted ISO datetime string                             | `"2022-04-18T11:44:15.345Z"`              |
 | `yaml`      | a [YAML](https://en.wikipedia.org/wiki/YAML) file content | `a: 123`                                  |
 
 :::note
@@ -358,6 +359,21 @@ In addition, `user` format distinguishes between users by their status:
   // highlight-end
   "description": "An IPv6 property",
   "default": "0000:0000:0000:0000:0000:0000:0000:0000"
+}
+```
+
+#### Timer
+
+Timer properties allow you to define an expiration date on specific properties. For more information, See the [timer properties section](../blueprint/timer-properties.md).
+
+```json showLineNumbers
+{
+  "title": "Timer Property",
+  // highlight-start
+  "type": "string",
+  "format": "timer",
+  // highlight-end
+  "description": "a property that will trigger an expiration event in a specific date"
 }
 ```
 

@@ -116,7 +116,6 @@ To export your GitHub `Workflows Runs` to Port, you can use the following Port B
     "required": []
   },
   "mirrorProperties": {},
-  "formulaProperties": {},
   "calculationProperties": {},
   "relations": {}
 }
