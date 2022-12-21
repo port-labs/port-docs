@@ -213,7 +213,7 @@ Let's go back to the actions array of our `Microservice` Blueprint and paste in 
   {
     "identifier": "Deploy",
     "title": "Deploy",
-    "icon": "Deploy",
+    "icon": "Deployment",
     "userInputs": {
       "properties": {
         "environment": {
