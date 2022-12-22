@@ -569,6 +569,22 @@ List validation is useful for arrays of arbitrary length where each item matches
 }
 ```
 
+#### Users array
+
+```json showLineNumbers
+{
+  "title": "Array of Users",
+  "description": "An array of Users property",
+  // highlight-start
+  "type": "array",
+  "items": {
+    "type": "string",
+    "format": "user"
+  },
+  // highlight-end
+}
+```
+
 ### Properties
 
 It is possible to define the format and validation rules of key-value pairs inside an `object` property by using the `properties` keyword inside the `object` type definition.
