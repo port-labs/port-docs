@@ -94,7 +94,7 @@ This workflow will monitor file changes under `terraform/*.tf`, and on a change 
 
 ### Set up the Kubernetes exporter
 
-Now it is time to populate you Port environment with entities using Port's Kubernetes Exporter.
+Now it is time to populate you Port environment with Entities using Port's Kubernetes Exporter.
 
 :::tip
 Get to know the basics of our Kubernetes exporter [here!](../exporters/k8s-exporter/quickstart.md)
