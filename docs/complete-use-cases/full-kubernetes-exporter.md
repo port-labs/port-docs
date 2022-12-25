@@ -155,7 +155,7 @@ jobs:
           --set-file configMap.config=./exporter-config/config.yaml --install
 ```
 
-This workflow will test for changes in the `exporter-config/config.yaml` file, and change will run and update the Kubernetes exporter deployed to your cluster.
+This workflow will check for changes in the `exporter-config/config.yaml` file, whenever a change occurs the updated Kubernetes exporter config will be deployed to your cluster.
 
 ## Summary
 
