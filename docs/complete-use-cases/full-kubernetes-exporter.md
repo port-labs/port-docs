@@ -12,7 +12,7 @@ Using Port's Kubernetes Exporter, you can keep track of your K8s resources and e
 
 - [Terraform CLI](https://learn.hashicorp.com/tutorials/terraform/install-cli);
 - [Helm](https://helm.sh) must be installed to use the chart. Please refer to
-  Helm's [documentation](https://helm.sh/docs) to get started.
+  Helm's [documentation](https://helm.sh/docs) to get started;
 - Create a `PORT_CLIENT_ID` and `PORT_CLIENT_SECRET` secrets in your Github Repo, to use in a Github Workflow.
 
 :::tip
