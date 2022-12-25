@@ -151,6 +151,8 @@ jobs:
           --set-file configMap.config=./exporter-config/config.yaml --install
 ```
 
-This workflow will test for changes in the `exporter-config/config.yaml` file, and change will run and update the kubernetes exporter deployed to your cluster.
+This workflow will test for changes in the `exporter-config/config.yaml` file, and change will run and update the Kubernetes exporter deployed to your cluster.
 
 ## Summary
+
+In this use-case, you achieved a fully GitOps method for exporting data from a Kubernetes cluster to Port, using Port's K8s Exporter and Terraform provider. Now you will be able to view information such as replica counts for your deployments, node readiness and job run statuses, from Port.
