@@ -27,6 +27,10 @@ To set up your Blueprints, use Port's [Terraform provider](../api-providers/terr
 
 After setting up your `main.tf` file under the `terraform/` directory, create the required `.tf` files, which will represent your Port Blueprints.
 
+:::tip
+Be sure to use the example repository listed above for a complete example of the structure and base file contents required to implement this use case.
+:::
+
 In the Git repository, you can find 10 `.tf` files which will create the following Blueprints:
 
 - Cluster
