@@ -106,7 +106,7 @@ In the Git repository under `exporter-config/config.yaml`, you can find a pre-ma
 ### Updating the exporter using Github Workflows
 
 To keep the mapping of cluster resources to Port up-to-date, you can use a GitHub Workflow to update the `config.yml` file applied to your K8s cluster whenever you make an update. On change to the `config.yml` file, the GitHub workflow will update the K8s exporter config deployed to your cluster.
-This can be achieved the following workflow:
+This can be achieved by using the following workflow:
 
 ```yaml showLineNumbers
 name: Update K8s Exporter
