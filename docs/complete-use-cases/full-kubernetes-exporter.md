@@ -16,7 +16,7 @@ Using Port's Kubernetes Exporter, you can keep track of your K8s resources and e
 - Create a `PORT_CLIENT_ID` and `PORT_CLIENT_SECRET` secrets in your Github Repo, to use in a Github Workflow.
 
 :::tip
-All relevant files and resources for this guide are available [here!](https://github.com/port-labs/port-k8s-exporter)
+All relevant files and resources for this guide are available [here!](https://github.com/port-labs/k8s-exporter-example)
 :::
 
 ## Setting up your Blueprints
