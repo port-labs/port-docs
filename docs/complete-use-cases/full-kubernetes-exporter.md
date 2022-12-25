@@ -10,22 +10,18 @@ Using Port's Kubernetes Exporter, you can keep track of your K8s resources and e
 
 ## Prerequisites
 
-:::note Prerequisites
-
 - [Terraform CLI](https://learn.hashicorp.com/tutorials/terraform/install-cli).
 - [Helm](https://helm.sh) must be installed to use the chart. Please refer to
   Helm's [documentation](https://helm.sh/docs) to get started.
 - Create a `PORT_CLIENT_ID` and `PORT_CLIENT_SECRET` secrets in your Github Repo, to use in a Github Workflow.
 
+:::tip
+All relevant files and resources for this guide are available [here!](https://github.com/port-labs/port-k8s-exporter)
 :::
 
 ## Setting up your Blueprints
 
 ### Creating Blueprints with Terraform
-
-:::tip
-All relevant files and resources for this guide are available [here!](https://github.com/port-labs/port-k8s-exporter)
-:::
 
 To set up your Blueprints, use Port's [Terraform provider](../api-providers/terraform.md).
 
@@ -106,7 +102,7 @@ In the Git repository under `exporter-config/config.yaml`, you can find a pre-ma
 ### Updating the exporter using Github Workflows
 
 You can keep your exporter `config.yaml` up to date using a Github Workflow. On change, we want the `config.yaml` to update in your cluster.
-This can be achieved using this workflow:
+This can be achieved the following workflow:
 
 ```yaml showLineNumbers
 name: Update K8s Exporter
@@ -154,3 +150,7 @@ jobs:
           --set secret.secrets.portClientId=${{ secrets.PORT_CLIENT_ID }} --set secret.secrets.portClientSecret=${{ secrets.PORT_CLIENT_SECRET }} \
           --set-file configMap.config=./exporter-config/config.yaml --install
 ```
+
+This workflow will test for changes in the `exporter-config/config.yaml` file, and change will run and update the kubernetes exporter deployed to your cluster.
+
+## Summary
