@@ -100,11 +100,11 @@ resources:
 
 2. Push `port-app-config.yml` to your default branch.
 
-That's it! after the push is complete, the exporter will start ingesting the entities on the next commit to the repository.
+That's it! after the push is complete, the exporter will start ingesting the Entities on the next commit to the repository.
 
 ![Developer Portal Microservice](../../../static/img/integrations/bitbucket-app/BitbucketRepositories.png)
 
-Check out the `README.md` in markdown format inside the [Specific Entity Page](../../software-catalog/entity/entity.md#entity-page)
+Check out the `README.md` in markdown format inside the [Specific Entity Page](../../software-catalog/entity/entity.md#entity-page).
 
 ![Developer Portal Bitbucket README](../../../static/img/integrations/github-app/GitHubReadme.png)
 
