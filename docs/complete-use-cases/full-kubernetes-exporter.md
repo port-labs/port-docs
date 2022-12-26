@@ -45,7 +45,7 @@ In the Git repository, you can find 10 `.tf` files which will create the followi
 - Service \*
 
 :::note
-`PodOwner` is an abstraction of Kubernetes objects which create and manage pods. By creating this Blueprint, we don't need a Blueprint per Pod Owner type, which will likely look pretty similar.
+`PodOwner` is an abstraction of Kubernetes objects which create and manage pods. By creating this Blueprint, we can avoid creating a dedicated Blueprint per Pod Owner type, all of which will likely look pretty similar.
 Here is the list of kubernetes objects `PodOwner` will replace:
 
 - ReplicaSet
