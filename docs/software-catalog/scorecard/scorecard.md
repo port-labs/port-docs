@@ -101,7 +101,7 @@ Please see the following example of an ownership scorecard. It has two rules, on
 }]
 ```
 
-## Next steps
+## Next steps 
 
 [Explore How to Create, Edit, and Delete Scorecards with basic examples](./tutorial)
 
