@@ -130,7 +130,7 @@ Now you can view and query all of your Pull Requests as Port Entities!
 
 ![Developer Portal GitHub Pull Requests](../../../static/img/integrations/github-app/GitHubPullRequests.png)
 
-You can also see the description in markdown format inside the [Specific Entity Page](../../software-catalog/entity/entity.md#entity-page)
+You can also see the description in markdown format inside the [Specific Entity Page](../../software-catalog/entity/entity.md#entity-page).
 
 ![Developer Portal GitHub Pull Request Description](../../../static/img/integrations/github-app/PullRequestDescription.png)
 
