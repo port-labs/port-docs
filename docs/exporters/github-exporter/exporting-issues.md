@@ -78,7 +78,6 @@ To export your GitHub `Issues` to Port, you can use the following Port Blueprint
     "required": []
   },
   "mirrorProperties": {},
-  "formulaProperties": {},
   "calculationProperties": {},
   "relations": {}
 }
@@ -134,6 +133,6 @@ Now you can view and query all of your Issues as Port Entities!
 
 ![Developer Portal GitHub Issues](../../../static/img/integrations/github-app/GitHubIssues.png)
 
-You can also see the description in markdown format inside the [Specific Entity Page](../../software-catalog/entity/entity.md#entity-page)
+You can also see the description in markdown format inside the [Specific Entity Page](../../software-catalog/entity/entity.md#entity-page).
 
 ![Developer Portal GitHub Issue Description](../../../static/img/integrations/github-app/IssueDescription.png)

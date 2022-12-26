@@ -65,7 +65,7 @@ If an Entity hasn't passed the rules determining a `Bronze` level, it will be a 
 Please see the following example of an ownership scorecard. It has two rules, one for checking if a defined on-call exists and another for checking if a team exists. The conditions for each rule use the "isNotEmpty" operator to check if the specified property is not empty.
 
 ```json showLineNumbers
-{
+[{
   "title": "Ownership",
   "identifier": "ownership",
   "rules": [
@@ -98,7 +98,7 @@ Please see the following example of an ownership scorecard. It has two rules, on
       }
     }
   ]
-}
+}]
 ```
 
 ## Next steps

@@ -14,5 +14,6 @@ Our integration with Bitbucket allows you to export Bitbucket objects to Port as
 
 ## Next Steps
 
+- [Install Port's Bitbucket Exporter](./installation.md)
 - [Automatically import `pull-requests` from Bitbucket](./exporting-pull-requests.md)
 - [Automatically import `repositories` from Bitbucket](./exporting-repositories.md)
