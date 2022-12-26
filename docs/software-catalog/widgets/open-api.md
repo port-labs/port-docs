@@ -31,6 +31,11 @@ By using a special [Open API Blueprint property](../blueprint/blueprint.md#opena
 }
 ```
 
+:::note
+
+When using URL for the `open-api` display please make sure that your server allows cross-origin (CORS) requests from `app.getport.io`
+:::
+
 ## Example
 
 Here is how the Swagger tab in the Specific Entity Page appears when an OpenAPI spec is provided:
