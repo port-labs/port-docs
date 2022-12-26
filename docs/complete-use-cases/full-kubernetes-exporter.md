@@ -90,6 +90,8 @@ jobs:
 
 This workflow will monitor file changes under `terraform/*.tf`, and on a change the workflow will run and apply the new or changed Blueprints to Port.
 
+![Blueprints outcome](../../static/img/complete-use-cases/full-kubernetes-exporter/blueprints.png)
+
 ## Exporting your Kubernetes cluster
 
 ### Set up the Kubernetes exporter
@@ -144,6 +146,7 @@ jobs:
           AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
           AWS_DEFAULT_OUTPUT: json
         run: |
+          // highlight-next-line
           # Replace this command with your method of fetching the kubeconfig file for your cluster
           aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }}
 
@@ -156,6 +159,9 @@ jobs:
           --set-file configMap.config=./exporter-config/config.yaml --install
 ```
 
+:::note
+The example above is for K8s clusters managed using AWS EKS, if you’re using a different K8s provider, you will need to change the method used to fetch your kubeconfig file inside the workfow
+:::
 This workflow will check for changes in the `exporter-config/config.yaml` file, whenever a change occurs the updated Kubernetes exporter config will be deployed to your cluster.
 
 ## Summary
