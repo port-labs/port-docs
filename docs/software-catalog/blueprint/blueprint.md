@@ -580,7 +580,7 @@ List validation is useful for arrays of arbitrary length where each item matches
   "items": {
     "type": "string",
     "format": "user"
-  },
+  }
   // highlight-end
 }
 ```
@@ -645,7 +645,22 @@ The available special types and their usage examples are listed below:
 }
 ```
 
-### OpenAPI Specification
+### OpenAPI Specification as URL
+
+For more info on the `OpenAPI specification` property, refer to the [OpenAPI Widget](../widgets/open-api.md) doc.
+
+```json showLineNumbers
+{
+  "title": "Swagger",
+  // highlight-start
+  "type": "string",
+  "spec": "open-api",
+  // highlight-end
+  "description": "Open-API Prop"
+}
+```
+
+### OpenAPI Specification as object
 
 For more info on the `OpenAPI specification` property, refer to the [OpenAPI Widget](../widgets/open-api.md) doc.
 
