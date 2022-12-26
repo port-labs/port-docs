@@ -15,7 +15,11 @@ sidebar_position: 1
 
 ### Installation
 
-1. Go to the https://bitbucket.org/YourWorkspaceName/workspace/settings/addon-management.
+1. Go to the add-on management section of your workspace settings by going to the following URL: https://bitbucket.org/<mark>YOUR_WORKSPACE_NAME</mark>/workspace/settings/addon-management.
+
+   :::info
+   Remember to replace the highlighted section with your workspace name
+   :::
 
 2. Click on `Enable development mode`
 
