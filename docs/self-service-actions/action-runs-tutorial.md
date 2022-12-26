@@ -58,29 +58,31 @@ The Blueprint and Self-Service Action are intentionally minimalistic since they 
 <summary>Create microservice Self-Service Action</summary>
 
 ```json showLineNumbers
-{
-  "identifier": "create_microservice",
-  "title": "Create Microservice",
-  "userInputs": {
-    "properties": {
-      "name": {
-        "title": "Service name",
-        "type": "string"
-      },
-      "region": {
-        "title": "Cloud Region",
-        "type": "string"
+[
+  {
+    "identifier": "create_microservice",
+    "title": "Create Microservice",
+    "userInputs": {
+      "properties": {
+        "name": {
+          "title": "Service name",
+          "type": "string"
+        },
+        "region": {
+          "title": "Cloud Region",
+          "type": "string"
+        }
       }
-    }
-  },
-  "invocationMethod": {
-    "url": "https://getport.io",
-    "agent": false,
-    "type": "WEBHOOK"
-  },
-  "trigger": "CREATE",
-  "description": "Create new microservice"
-}
+    },
+    "invocationMethod": {
+      "url": "https://getport.io",
+      "agent": false,
+      "type": "WEBHOOK"
+    },
+    "trigger": "CREATE",
+    "description": "Create new microservice"
+  }
+]
 ```
 
 </details>
@@ -89,25 +91,27 @@ The Blueprint and Self-Service Action are intentionally minimalistic since they 
 <summary>2nd day operation microservice Self-Service Action</summary>
 
 ```json showLineNumbers
-{
-  "identifier": "deploy_microservice",
-  "title": "Deploy Microservice",
-  "userInputs": {
-    "properties": {
-      "environment": {
-        "title": "Environment",
-        "type": "string"
+[
+  {
+    "identifier": "deploy_microservice",
+    "title": "Deploy Microservice",
+    "userInputs": {
+      "properties": {
+        "environment": {
+          "title": "Environment",
+          "type": "string"
+        }
       }
-    }
-  },
-  "invocationMethod": {
-    "url": "https://getport.io",
-    "agent": false,
-    "type": "WEBHOOK"
-  },
-  "trigger": "DAY-2",
-  "description": "Deploy the microservice in a specified environment"
-}
+    },
+    "invocationMethod": {
+      "url": "https://getport.io",
+      "agent": false,
+      "type": "WEBHOOK"
+    },
+    "trigger": "DAY-2",
+    "description": "Deploy the microservice in a specified environment"
+  }
+]
 ```
 
 </details>
