@@ -256,6 +256,46 @@ To delete an Entity you can:
 
 - Make an **HTTP DELETE** request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`
 
+## Remove Relations
+
+### From the API
+
+The API offers several methods to update an existing Entity:
+
+#### PUT request
+
+Make an **HTTP PUT** request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}` and set the relation value to null.
+
+To remove a specific relation, for example: `environment`, send a PUT request with the following body:
+
+```json showLineNumbers
+{
+  "identifier": "requests-pkg-v2-28",
+  "title": "Requests",
+  "team": "",
+  "properties": {
+    ...
+  },
+  "relations": {
+    "environment": null
+  }
+}
+```
+
+#### PATCH request
+
+Make an **HTTP PATCH** request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}` and set the relation value to null.
+
+To remove a specific relation, for example: `environment`, send a PATCH request with the following body:
+
+```json showLineNumbers
+{
+  "relations": {
+    "environment": null
+  }
+}
+```
+
 ## Next steps
 
 Now that we understand **Entities**, we can start creating related Entities to model our related data in the infrastructure!
