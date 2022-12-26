@@ -12,8 +12,8 @@ import TabItem from "@theme/TabItem"
 
 There are 2 methods to create Entities:
 
-- UI
-- API
+- UI; or
+- API.
 
 :::info
 We will be creating Entities for the `Microservice` Blueprint from [Creating a Blueprint](../blueprint/tutorial.md#creating-a-blueprint) and the `package` Blueprint from [Blueprint Next Steps](../blueprint/tutorial.md#next-steps). Please make sure to create them before reading on so you to follow along.

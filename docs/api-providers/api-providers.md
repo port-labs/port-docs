@@ -4,7 +4,7 @@ Port offers several API Providers, allowing you to easily ingest and manage data
 
 You can find more details about our available API Providers by checking the list below:
 
-- [REST](./rest)
-- [GitHub Action](./github-action)
-- [GitOps](./gitops)
-- [Terraform Provider](./terraform)
+- [REST](./rest);
+- [GitHub Action](./github-action);
+- [GitOps](./gitops);
+- [Terraform Provider](./terraform).
