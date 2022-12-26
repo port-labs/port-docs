@@ -144,6 +144,7 @@ jobs:
           AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
           AWS_DEFAULT_OUTPUT: json
         run: |
+          # Replace this command with your method of fetching the kubeconfig file for your cluster
           aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }}
 
           helm repo add port-labs https://port-labs.github.io/helm-charts
