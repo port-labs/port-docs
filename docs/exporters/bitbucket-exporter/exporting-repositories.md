@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 5
 title: Exporting repositories
 ---
 
@@ -59,7 +59,7 @@ If you don't have a `README.md` file within the selected example repository for 
 
 </details>
 
-In order to apply the `port-app-config.yml`, place it in the repository's root folder.
+You have to place the `port-app-config.yml` in the repository's root folder.
 
 <details>
 
