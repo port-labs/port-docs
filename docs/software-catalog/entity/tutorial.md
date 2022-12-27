@@ -242,27 +242,13 @@ To Edit a specific property, for example: `version`, send a PATCH request with t
 properties': {"version": "2.29"}
 ```
 
-## Delete Entities
+### Remove Relations
 
-:::danger
-An Entity cannot be restored after deletion!
-:::
-
-To delete an Entity you can:
-
-- Click the `...` button at the right end of an Entity listing, then click `Delete`.
-
-![Delete entity button marked](../../../static/img/software-catalog/entity/DeleteEntityButton.png)
-
-- Make an **HTTP DELETE** request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`
-
-## Remove Relations
-
-### From the API
+#### From the API
 
 The API offers several methods to remove the Relations mapping from an an existing Entity:
 
-#### PUT request
+##### PUT request
 
 Make an **HTTP PUT** request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}` and set the relation value to null.
 
@@ -282,7 +268,7 @@ To remove a specific relation, for example: `environment`, send a PUT request wi
 }
 ```
 
-#### PATCH request
+##### PATCH request
 
 Make an **HTTP PATCH** request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}` and set the relation value to null.
 
@@ -295,6 +281,20 @@ To remove a specific relation, for example: `environment`, send a PATCH request 
   }
 }
 ```
+
+## Delete Entities
+
+:::danger
+An Entity cannot be restored after deletion!
+:::
+
+To delete an Entity you can:
+
+- Click the `...` button at the right end of an Entity listing, then click `Delete`.
+
+![Delete entity button marked](../../../static/img/software-catalog/entity/DeleteEntityButton.png)
+
+- Make an **HTTP DELETE** request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`
 
 ## Next steps
 
