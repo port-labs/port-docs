@@ -8,8 +8,8 @@ sidebar_position: 3
 
 There are 2 methods to configure the Bitbucket app:
 
-1. For a `single repository`: Create a `port-app-config.yml` file in it.
-2. For `all repositories` in the organization: Create a `.bitbucket-private` repository in the organization and create a `port-app-config.yml` file in it.
+1. For a `single repository`: create a `port-app-config.yml` file in it;
+2. For `all repositories` in the organization: create a `.bitbucket-private` repository in the organization and create a `port-app-config.yml` file in it.
 
 ### Example `port-app-config.yml`
 
