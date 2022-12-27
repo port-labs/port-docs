@@ -260,7 +260,7 @@ To delete an Entity you can:
 
 ### From the API
 
-The API offers several methods to update an existing Entity:
+The API offers several methods to remove the Relations mapping from an an existing Entity:
 
 #### PUT request
 
