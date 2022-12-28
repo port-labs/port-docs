@@ -210,6 +210,10 @@ For example, if you want to colorize a Calculation Property called `status-calcu
 }
 ```
 
+:::tip
+Each key is one of the calculation result and each value is one of the following colors: `blue, turquoise, orange, purple, lightBlue, pink, yellow, green, red, darkGray`
+:::
+
 ## Using meta properties in calculation properties
 
 It is possible to use [meta properties](./mirror-properties.md/#meta-property-mirror-property) as template values for Calculation Properties, since the syntax is the same as user-defined properties, but without the `properties` keyword.
