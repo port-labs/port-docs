@@ -185,7 +185,7 @@ For example, if you want to use your `on-call` property in a Calculation Propert
 
 ## Colorized Calculation Properties
 
-It is possible to colorize Calculation Properties based on their value. This is done by adding a `colorized` key with the value `true` to the Calculation Property object. You can also add a `colors` key to specify the colors for the different values, otherwise the colors will be chosen automatically.
+You can colorize calculation properties according to their value, by adding a `colorized` key with the value `true` to the calculation property object. You can also add a `colors` key to specify the colors of the different values, otherwise, the colors will be chosen automatically for you.
 
 For example, if you want to colorize a Calculation Property called `status-calculation` with the values `OK`, `WARNING`, and `CRITICAL`:
 
