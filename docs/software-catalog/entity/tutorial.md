@@ -256,7 +256,7 @@ If a Blueprint has a Relation of type `"many": true`, by setting the specific Re
 
 Make an **HTTP POST** request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}?upsert=true`.
 
-To remove a relation from a `many` relation, for example: `environment`, send a PUT request with the following body:
+To remove a mapped related Entity from a `"many": true` relation, for example: `environment`, send a POST request with the following body:
 
 ```json showLineNumbers
 {
