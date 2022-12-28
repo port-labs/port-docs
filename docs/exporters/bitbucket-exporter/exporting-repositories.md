@@ -73,12 +73,12 @@ resources:
     port:
       entity:
         mappings:
-          identifier: ".name" # the identifier of the entity will be the repository name + the pull request id, and after the creation of the entity the exporter will send `PATCH` requests to update this pull request within Port
+          identifier: ".name" # The Entity identifier will be the repository name + the pull request ID. After the Entity is created, the exporter will send `PATCH` requests to update this pull request within Port. 
           title: ".name"
           blueprint: '"repository"'
           properties:
-            readme: file://README.md # fetching the README.md file that is within the root folder of the repository and injecting it as a markdown property
-            url: ".links.html.href" # fetching from Bitbucket metadata the repository url and injecting it as a url proeprty
+            readme: file://README.md # Fetch the README.md file that is within the root folder of the repository and inject it as a markdown property.
+            url: ".links.html.href" # fetch the repository URL from the Bitbucket metadata and inject it as a URL property.
 ```
 
 </details>
@@ -114,7 +114,7 @@ resources:
     port:
       entity:
         mappings:
-          identifier: ".name" # the identifier of the entity will be the repository name + the pull request id, and after the creation of the entity the exporter will send `PATCH` requests to update this pull request within Port
+          identifier: ".name" # the Entity identifier will be the repository name + the pull request ID. After the creation of the Entity, the exporter will send `PATCH` requests to update this pull request within Port.
           title: ".name"
           blueprint: '"repository"'
           properties:

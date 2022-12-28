@@ -102,9 +102,9 @@ docker run -e APP_ID=<APP_ID from register step> -e WEBHOOK_SECRET=<WEBHOOK_SECR
 
 ## Health check route
 
-A health check is a route that is used to check the health of a service. It is a way to ensure that the service is running properly and can perform its intended function.
+A health check is a route that is used to check the health of a service. It is a means to ensure that the service is running properly and can perform its intended function.
 
-Our GitHub App image exposes such a route at `https://host:port/health` for you to be able to monitor its status.
+Our GitHub App image previews such routes at `https://host:port/health` for you to be able to monitor its status.
 
 ## Installing Port's GitHub application
 
