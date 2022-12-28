@@ -326,7 +326,7 @@ To remove a specific relation, for example: `environment`, send a PUT request wi
 
 ##### PATCH request
 
-Make an **HTTP PATCH** request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`.
+Make an **HTTP PATCH** request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`, for example:
 
 To remove a relation from a `many` relation, for example: `environment`, send a PATCH request with the following body:
 
