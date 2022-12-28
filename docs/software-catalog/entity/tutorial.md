@@ -249,7 +249,7 @@ properties': {"version": "2.29"}
 The API offers several methods to remove the Relations mapping from an an existing Entity:
 
 :::note
-If you set a relation that has a many: true setting to null, it will remove all the relations for that entity.
+If a Blueprint has a Relation of type `"many": true`, by setting the specific Relation key to `null` on the Entity, the mapped related Entities will be removed.
 :::
 
 ##### POST request **(with upsert: true)**
