@@ -211,7 +211,7 @@ For example, if you want to colorize a Calculation Property called `status-calcu
 ```
 
 :::tip
-Each key is one of the calculation result and each value is one of the following colors: `blue, turquoise, orange, purple, lightBlue, pink, yellow, green, red, darkGray`
+Each key is one of the calculated values and each value is one of the following colors: `blue, turquoise, orange, purple, lightBlue, pink, yellow, green, red, darkGray`
 :::
 
 ## Using meta properties in calculation properties
