@@ -308,7 +308,7 @@ To remove a mapped related Entity from a `"many": true` relation (for example: `
 }
 ```
 
-To remove a mapped related Entity from a `"many": false` relation, for example: `environment`, send a PUT request with the following body:
+To remove a mapped related Entity from a `"many": false` relation (for example: `environment`), send a PUT request with the following body:
 
 ```json showLineNumbers
 {
