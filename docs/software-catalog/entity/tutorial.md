@@ -292,7 +292,7 @@ To remove a mapped related Entity from a `"many": false` relation (for example: 
 
 Make a **HTTP PUT** request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`, for example:
 
-To remove a mapped related Entity from a `"many": true` relation, for example: `environment`, send a PUT request with the following body:
+To remove a mapped related Entity from a `"many": true` relation (for example: `environment`), send a PUT request with the following body:
 
 ```json showLineNumbers
 {
