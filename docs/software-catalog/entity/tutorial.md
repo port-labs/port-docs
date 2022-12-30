@@ -242,6 +242,112 @@ To Edit a specific property, for example: `version`, send a PATCH request with t
 properties': {"version": "2.29"}
 ```
 
+### Remove Relations
+
+#### From the API
+
+The API offers several methods to remove the relations mapping from an existing Entity:
+
+:::note
+If a blueprint's relation type is `"many": true` - by setting the specific Relation key to `null` on the Entity, the mapped related Entities will be removed.
+:::
+
+##### POST request **(with upsert: true)**
+
+Make a **HTTP POST** request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}?upsert=true`, for example:
+
+To remove a mapped related Entity from a `"many": true` relation (for example: `environment`), send a POST request with the following body:
+
+```json showLineNumbers
+{
+  "identifier": "requests-pkg-v2-28",
+  "title": "Requests",
+  "team": "",
+  "properties": {
+    ...
+  },
+  "relations": {
+    "environment": [//All the relations identifiers but the one you want to remove]
+  }
+}
+```
+
+To remove a mapped related Entity from a `"many": false` relation (for example: `environment`), send a POST request with the following body:
+
+```json showLineNumbers
+{
+  "identifier": "requests-pkg-v2-28",
+  "title": "Requests",
+  "team": "",
+  "properties": {
+    ...
+  },
+  "relations": {
+    "environment": null
+  }
+}
+```
+
+##### PUT request
+
+Make a **HTTP PUT** request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`, for example:
+
+To remove a mapped related Entity from a `"many": true` relation (for example: `environment`), send a PUT request with the following body:
+
+```json showLineNumbers
+{
+  "identifier": "requests-pkg-v2-28",
+  "title": "Requests",
+  "team": "",
+  "properties": {
+    ...
+  },
+  "relations": {
+    "environment": [//All the relations identifiers but the one you want to remove]
+  }
+}
+```
+
+To remove a mapped related Entity from a `"many": false` relation (for example: `environment`), send a PUT request with the following body:
+
+```json showLineNumbers
+{
+  "identifier": "requests-pkg-v2-28",
+  "title": "Requests",
+  "team": "",
+  "properties": {
+    ...
+  },
+  "relations": {
+    "environment": null
+  }
+}
+```
+
+##### PATCH request
+
+Make a **HTTP PATCH** request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`, for example:
+
+To remove a mapped related Entity from a `"many": true` relation (for example: `environment`), send a PATCH request with the following body:
+
+```json showLineNumbers
+{
+  "relations": {
+    "environment": [//All the relations identifiers but the one you want to remove]
+  }
+}
+```
+
+To remove a mapped related Entity from a `"many": false` relation (for example: `environment`), send a PATCH request with the following body:
+
+```json showLineNumbers
+{
+  "relations": {
+    "environment": null
+  }
+}
+```
+
 ## Delete Entities
 
 :::danger

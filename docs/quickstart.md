@@ -121,10 +121,6 @@ After clicking the button, you will see a creation form as shown below:
 
 ![Developer Portal New Blueprint Text](../static/img/quickstart/newBlueprintDefaultText.png)
 
-:::note
-When you click on `Add Blueprint`, you will see a template for a `microservice` Blueprint which is identical to the one you will create. So you can just click `save` and skip to [Environment Blueprint](#environment-blueprint).
-:::
-
 In order to create the service Blueprint, use the following JSON body:
 
 <details>
