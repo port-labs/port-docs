@@ -10,6 +10,8 @@ By using a special [Open API Blueprint property](../blueprint/blueprint.md#opena
 
 ## OpenAPI property definition in Blueprint schema using URL
 
+When using the URL format, Port will query the provided URL for the OpenAPI spec and expects a JSON OpenAPI spec
+
 ```json showLineNumbers
 {
   "title": "Open API",
@@ -20,7 +22,14 @@ By using a special [Open API Blueprint property](../blueprint/blueprint.md#opena
 }
 ```
 
+:::note
+
+When using URL for the `open-api` display please make sure that your server allows cross-origin (CORS) requests from `app.getport.io`
+:::
+
 ## OpenAPI property definition in Blueprint schema using object
+
+When using the object type, you will have to provided the full JSON OpenAPI spec as an object to the entity
 
 ```json showLineNumbers
 {
@@ -30,11 +39,6 @@ By using a special [Open API Blueprint property](../blueprint/blueprint.md#opena
   "description": "Open-API Prop"
 }
 ```
-
-:::note
-
-When using URL for the `open-api` display please make sure that your server allows cross-origin (CORS) requests from `app.getport.io`
-:::
 
 ## Example
 
