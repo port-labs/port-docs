@@ -49,7 +49,26 @@ In the end, within the specific Entity profile, we will get a tab per scorecard 
 | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `operator` | Search operator to use when evaluating this rule, for example `=` `!=` `contains` `doesNotContains` `isEmpty` `isNotEmpty` below                                                                                                     |
 | `property` | Property to filter by according to its value. It can be a [meta-property](../../software-catalog/blueprint/mirror-properties.md#meta-property-mirror-property) such as `$identifier`, or a standard property such as `slack_channel` |
-| `value`    | Value to compare to (not required in isEmpty and isNotEmpty operators)                                                                                                                                                           |
+| `value`    | Value to compare to (not required in isEmpty and isNotEmpty operators)                                                                                                                                                               |
+
+## Available operators
+
+| Operator           | Supported Types                                  | Description                                                           |
+| ------------------ | ------------------------------------------------ | --------------------------------------------------------------------- |
+| `=`                | `String`, `Number`, `Boolean`                    | checks if the rule value is equal to the entity value                 |
+| `!=`               | `String`, `Number`, `Boolean`                    | checks if the rule value is not equal to the entity value             |
+| `<=`               | `String`, `Number`                               | checks if the rule value is less than or equal to the entity value    |
+| `>=`               | `String`, `Number`                               | checks if the rule value is greater than or equal to the entity value |
+| `<`                | `String`, `Number`                               | checks if the rule value is less than the entity value                |
+| `>`                | `String`, `Number`                               | checks if the rule value is greater than the entity value             |
+| `contains`         | `String`, `Number`                               | checks if the rule value is contained within the entity value         |
+| `doesNotContains`  | `String`, `Number`                               | checks if the rule value is not contained within the entity value     |
+| `endsWith`         | `String`, `Number`                               | checks if the rule value ends with the entity value                   |
+| `doesNotEndsWith`  | `String`, `Number`                               | checks if the rule value does not end with the entity value           |
+| `beginsWith`       | `String`, `Number`                               | checks if the rule value begins with the entity value                 |
+| `doesNotBeginWith` | `String`, `Number`                               | checks if the rule value does not begin with the entity value         |
+| `isEmpty`          | `String`, `Number`, `Boolean`, `Array`, `Object` | checks if the rule value is an empty string, array, or object         |
+| `isNotEmpty`       | `String`, `Number`, `Boolean`, `Array`, `Object` | checks if the rule value is not an empty string, array, or object     |
 
 ## Scorecard total level calculation
 
@@ -65,40 +84,42 @@ If an Entity hasn't passed the rules determining a `Bronze` level, it will be a 
 Please see the following example of an ownership scorecard. It has two rules, one for checking if a defined on-call exists and another for checking if a team exists. The conditions for each rule use the "isNotEmpty" operator to check if the specified property is not empty.
 
 ```json showLineNumbers
-[{
-  "title": "Ownership",
-  "identifier": "ownership",
-  "rules": [
-    {
-      "title": "Has a defined on call?",
-      "identifier": "has_on_call",
-      "level": "Gold",
-      "query": {
-        "combinator": "and",
-        "conditions": [
-          {
-            "operator": "isNotEmpty",
-            "property": "on_call"
-          }
-        ]
+[
+  {
+    "title": "Ownership",
+    "identifier": "ownership",
+    "rules": [
+      {
+        "title": "Has a defined on call?",
+        "identifier": "has_on_call",
+        "level": "Gold",
+        "query": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "operator": "isNotEmpty",
+              "property": "on_call"
+            }
+          ]
+        }
+      },
+      {
+        "title": "Has a team?",
+        "identifier": "has_team",
+        "level": "Silver",
+        "query": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "operator": "isNotEmpty",
+              "property": "$team"
+            }
+          ]
+        }
       }
-    },
-    {
-      "title": "Has a team?",
-      "identifier": "has_team",
-      "level": "Silver",
-      "query": {
-        "combinator": "and",
-        "conditions": [
-          {
-            "operator": "isNotEmpty",
-            "property": "$team"
-          }
-        ]
-      }
-    }
-  ]
-}]
+    ]
+  }
+]
 ```
 
 ## Next steps

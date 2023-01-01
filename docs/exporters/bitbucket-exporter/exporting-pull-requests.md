@@ -80,8 +80,6 @@ To export your Bitbucket `Pull Requests` to Port, you can use the following Port
 
 </details>
 
-You have to place the `port-app-config.yml` in the repository's root folder.
-
 <details>
 
 <summary> Port port-app-config.yml </summary>
@@ -94,7 +92,7 @@ resources:
     port:
       entity:
         mappings:
-          identifier: ".destination.repository.name + (.id|tostring)"
+          identifier: ".destination.repository.name + (.id|tostring)" # The Entity identifier will be the repository name + the pull request ID. After the Entity is created, the exporter will send `PATCH` requests to update this pull request within Port. 
           title: ".title"
           blueprint: '"pull-request"'
           properties:
@@ -112,6 +110,7 @@ resources:
 
 :::info
 
+- See how to apply `port-app-config.yml` either on the repository level or globally [here](./configuration.md).
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform Bitbucket objects to Port Entities.
 - Click [Here](https://support.atlassian.com/bitbucket-cloud/docs/event-payloads/#Pull-request) for the Bitbucket pull request object structure.
 
