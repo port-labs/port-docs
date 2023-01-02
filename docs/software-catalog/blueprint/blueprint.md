@@ -680,7 +680,7 @@ For more info on the `OpenAPI specification` property, refer to the [OpenAPI Wid
 
 Keep in mind that these 2 methods of getting an OpenAPI spec and rendering it as a Swagger are only differentiated by the type and format but gives the same value.
 
-1. `type: object` - lets you provide the complete spec `json` into Port.
+1. `type: object` - you provide the complete `json` spec into Port.
 2. `type: string` and `format: url` - lets you provide a URL which the `json` spec will be fetched from
    :::
 
