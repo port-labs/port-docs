@@ -683,7 +683,8 @@ Keep in mind that these 2 methods of getting an OpenAPI spec and rendering it as
 1. `type: object` - you provide the complete `json` spec into Port.
 
 2. `type: string` and `format: url` - you provide a URL which the `json` spec will be fetched from
-   :::
+
+:::
 
 ### Embedded URL
 
