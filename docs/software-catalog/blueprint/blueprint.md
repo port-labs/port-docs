@@ -334,34 +334,6 @@ In addition, `user` format distinguishes between users by their status:
 }
 ```
 
-#### IPv4
-
-```json showLineNumbers
-{
-  "title": "IPv4 Property",
-  // highlight-start
-  "type": "string",
-  "format": "ipv4",
-  // highlight-end
-  "description": "An IPv4 property",
-  "default": "127.0.0.1"
-}
-```
-
-#### IPv6
-
-```json showLineNumbers
-{
-  "title": "IPv6 Property",
-  // highlight-start
-  "type": "string",
-  "format": "ipv6",
-  // highlight-end
-  "description": "An IPv6 property",
-  "default": "0000:0000:0000:0000:0000:0000:0000:0000"
-}
-```
-
 #### Timer
 
 Timer properties allow you to define an expiration date on specific properties. For more information, See the [timer properties section](../blueprint/timer-properties.md).
