@@ -45,11 +45,11 @@ In the end, within the specific Entity profile, we will get a tab per scorecard 
 
 ## Condition structure table
 
-| Field      | Description                                                                                                                                                                                                                          |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `operator` | Search operator to use when evaluating this rule, for example `=` `!=` `contains` `doesNotContains` `isEmpty` `isNotEmpty` below                                                                                                     |
-| `property` | Property to filter by according to its value. It can be a [meta-property](../../software-catalog/blueprint/mirror-properties.md#meta-property-mirror-property) such as `$identifier`, or a standard property such as `slack_channel` |
-| `value`    | Value to compare to (not required in isEmpty and isNotEmpty operators)                                                                                                                                                               |
+| Field      | Description                                                                                                                                                                                                                                                                                                                                                                                 |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `operator` | Search operator to use when evaluating this rule, for example `=` `!=` `contains` `doesNotContains` `isEmpty` `isNotEmpty` below                                                                                                                                                                                                                                                            |
+| `property` | Property to filter by according to its value. It can be a [meta-property](../../software-catalog/blueprint/mirror-properties.md#meta-property-mirror-property) such as `$identifier`, or any other standard entity property such as `slack_channel` includeing [Mirror Properties](../blueprint/mirror-properties.md) and [Calculation Properties](../blueprint//calculation-properties.md) |
+| `value`    | Value to compare to (not required in isEmpty and isNotEmpty operators)                                                                                                                                                                                                                                                                                                                      |
 
 ## Available operators
 
@@ -72,16 +72,26 @@ In the end, within the specific Entity profile, we will get a tab per scorecard 
 
 ## Scorecard total level calculation
 
-As shown above, a Scorecard is built from several rules, and each one of them has a `level` property.
-The available levels are `Gold`, `Silver`, `Bronze`. Once an Entity passes the conditions for a certain level, its level changes accordingly.
+A Scorecard is built from several rules, and each one of them has a `level` property.
+
+The available `Scorecard` levels are
+
+`Basic` -> `Bronze` -> `Silver` -> `Gold`
+
+Once an Entity passes all of the rules for a certain level, it level changes accordingly.
 
 :::note
-If an Entity hasn't passed the rules determining a `Bronze` level, it will be a `Basic` Tier.
+You can't define a rule with a `Basic` level, the `Basic` level this level represents if an Entity hasn't passed the rules determining a `Bronze` level, it will be a `Basic` Tier.
 :::
 
 ## Scorecard example
 
-Please see the following example of an ownership scorecard. It has two rules, one for checking if a defined on-call exists and another for checking if a team exists. The conditions for each rule use the "isNotEmpty" operator to check if the specified property is not empty.
+Please see the following example of an ownership scorecard.
+
+It has two rules:
+
+1. Check that a defined on-call exists and that the number of `open_incidents` is lower than 5
+2. Check if a team exists.
 
 ```json showLineNumbers
 [
@@ -90,7 +100,7 @@ Please see the following example of an ownership scorecard. It has two rules, on
     "identifier": "ownership",
     "rules": [
       {
-        "title": "Has a defined on call?",
+        "title": "Has on call?",
         "identifier": "has_on_call",
         "level": "Gold",
         "query": {
@@ -99,6 +109,11 @@ Please see the following example of an ownership scorecard. It has two rules, on
             {
               "operator": "isNotEmpty",
               "property": "on_call"
+            },
+            {
+              "operator": "<",
+              "property": "open_incidents",
+              "value": 5
             }
           ]
         }
