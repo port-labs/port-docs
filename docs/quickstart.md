@@ -51,7 +51,7 @@ But for now, let's start with a simple example:
 
 Your organization uses a microservice architecture; a single **microservice** can be deployed to multiple **environments** (production, staging, QA, etc.).
 
-To create your Software Catalog, you need to to ingest and track your microservices, track your existing environments, and map out which microservice is deployed at which environment.
+To create your Software Catalog, you need to ingest and track your microservices, track your existing environments, and map out which microservice is deployed at which environment.
 
 In this tutorial you are going to create 3 Blueprints:
 

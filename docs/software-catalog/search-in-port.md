@@ -132,7 +132,7 @@ The following rule will return Entities whose identifier is `port-api`:
 ```
 
 :::info Available properties
-You can search over a variety of properties:
+You can write search queries that will reference a variety of properties:
 
 - "[Meta-properties](../software-catalog/blueprint/mirror-properties.md#meta-property-mirror-property)" such as `$identifier`, `$title`, `$createdAt` and more.
 - User-defined properties that appear under the `properties` key in the `blueprint` definition

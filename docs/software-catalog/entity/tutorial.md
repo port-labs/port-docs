@@ -244,7 +244,7 @@ properties': {"version": "2.29"}
 
 ### Update Entity identifier
 
-There are two methods to to change an Entity's identifier:
+There are two methods to change an Entity's identifier:
 
 #### From the UI
 
@@ -254,7 +254,16 @@ There are two methods to to change an Entity's identifier:
 
 #### PUT request
 
-Make an HTTP PUT request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{old_entity_identifier}` with the Entity definition JSON, after updating the value of the `identifier` key in the request body to the new identifier.
+Make an HTTP PUT request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{old_entity_identifier}` with the following JSON body:
+
+```json showLineNumbers
+{
+  "identifier": "new_entity_identifier",
+  ...ORIGINAL ENTITY DEFINITION
+}
+```
+
+Entity definition JSON, after updating the value of the `identifier` key in the request body to the new identifier.
 
 #### PATCH request
 

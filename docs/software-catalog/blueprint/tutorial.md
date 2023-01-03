@@ -339,17 +339,24 @@ To update a Blueprint, you can do either of the following:
 
 ### Update Blueprint identifier
 
-There are two methods to to change a Blueprint's identifier:
+There are two methods to change a Blueprint's identifier:
 
 #### From the UI
 
-1. In the Blueprints graph, on the Blueprint you want to update, click the 3 dots (`...`) button and then click the `Properties` button;
+1. In the Blueprints graph, find the node of the desired Blueprint, click on the 3 dots (`...`) button and then click on the `Properties` button;
 2. Update the value of the `identifier` key to the new identifier;
 3. Click `Save`.
 
 #### PUT request
 
-Make an HTTP PUT request to the URL `https://api.getport.io/v1/blueprints/{old_blueprint_identifier}` with the Blueprint definition JSON, after updating the value of the `identifier` key in the request body to the new identifier.
+Make an HTTP PUT request to the URL `https://api.getport.io/v1/blueprints/{old_blueprint_identifier}` with the following JSON body:
+
+```json showLineNumbers
+{
+  "identifier" :"new_blueprint_identifier",
+  ...ORIGINAL BLUEPRINT DEFINITION
+}
+```
 
 #### PATCH request
 
