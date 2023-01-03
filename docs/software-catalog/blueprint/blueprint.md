@@ -617,7 +617,23 @@ The available special types and their usage examples are listed below:
 }
 ```
 
-### OpenAPI Specification
+### OpenAPI Specification as URL
+
+For more info on the `OpenAPI specification` property, refer to the [OpenAPI Widget](../widgets/open-api.md) doc.
+
+```json showLineNumbers
+{
+  "title": "Swagger",
+  // highlight-start
+  "type": "string",
+  "format": "url",
+  "spec": "open-api",
+  // highlight-end
+  "description": "Open-API Prop"
+}
+```
+
+### OpenAPI Specification as object
 
 For more info on the `OpenAPI specification` property, refer to the [OpenAPI Widget](../widgets/open-api.md) doc.
 
@@ -631,6 +647,16 @@ For more info on the `OpenAPI specification` property, refer to the [OpenAPI Wid
   "description": "Open-API Prop"
 }
 ```
+
+:::note
+
+Keep in mind that these 2 methods of getting an OpenAPI spec and rendering it as a Swagger are only differentiated by the type and format but gives the same value.
+
+1. `type: object` - you provide the complete `json` spec into Port.
+
+2. `type: string` and `format: url` - you provide a URL which the `json` spec will be fetched from
+
+:::
 
 ### Embedded URL
 
