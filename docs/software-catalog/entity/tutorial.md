@@ -239,7 +239,7 @@ A PATCH request has a specific format that allows precise changes in an existing
 To Edit a specific property, for example: `version`, send a PATCH request with the following body:
 
 ```json showLineNumbers
-properties': {"version": "2.29"}
+{"properties": {"version": "2.29"}}
 ```
 
 ### Update Entity identifier
