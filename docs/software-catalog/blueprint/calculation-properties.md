@@ -231,6 +231,7 @@ For example, if you want to concatenate a template URL (for example `https://dat
     "monitorUrl": {
       "title": "Monitor url",
       "type": "string",
+      "format": "url",
       "calculation": "'https://datadog.com/' + .identifier"
     }
   }
