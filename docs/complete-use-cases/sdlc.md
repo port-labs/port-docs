@@ -124,7 +124,7 @@ The Blueprint JSON provided below already includes the Relations between the dif
 }
 ```
 
-After creating the initial service Blueprint, go back and edit the Blueprint again, but replace the `relations` key with the following `relations` object:
+After creating the initial service Blueprint, return to the Blueprint and replace the `relations` key with the following `relations` object:
 
 ```json showLineNumbers
 "relations": {
@@ -463,7 +463,7 @@ properties:
 ```
 
 :::info
-Recall that you created a Relation from the service Blueprint to itself, allowing you to map dependencies between your services. If you want to add a service that `notification-service` depends on, you can do that by adding the following `relations` key to the `port.yml` (some services were added as an example):
+Before, you created a Relation from the service Blueprint to itself. That Relation allowed you to map dependencies between your services. If you want to add a service on which `notification-service` depends, add the following `relations` key to the `port.yml` (notice some services were added as an example):
 
 ```yml showLineNumbers
 relations:

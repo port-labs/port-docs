@@ -331,7 +331,7 @@ You can always modify Blueprints, add/remove properties or change existing prope
 
 To update a Blueprint, you can do either of the following:
 
-- Click the 3 dots (`...`) button and then click the `Properties` button in the Blueprints graph;
+- In the Blueprints graph, click on the 3 dots (`...`) button and after it the `Properties` button;
 - Make an HTTP PUT request to the URL: `https://api.getport.io/v1/{blueprint_identifier}`
   - A PUT request has the same body as a POST request, it will simply overwrite the Blueprint with the new data provided.
 
@@ -339,7 +339,7 @@ To update a Blueprint, you can do either of the following:
 
 ### Update Blueprint identifier
 
-In order to change the identifier of a Blueprint you can use one of the following options:
+There are two methods to to change a Blueprint's identifier:
 
 #### From the UI
 

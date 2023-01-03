@@ -244,7 +244,7 @@ properties': {"version": "2.29"}
 
 ### Update Entity identifier
 
-In order to change the identifier of an Entity you can use one of the following options:
+There are two methods to to change an Entity's identifier:
 
 #### From the UI
 
