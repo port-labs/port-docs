@@ -100,6 +100,12 @@ docker run -e APP_ID=<APP_ID from register step> -e WEBHOOK_SECRET=<WEBHOOK_SECR
 | `PORT_CLIENT_SECRET` | Port client secret for interacting with the API                                                                                     |
 | `PRIVATE_KEY`        | A base64 encoded private key, you can get the private key base64 value by running the command `base64 -i private-key-file-path.pem` |     |
 
+## Health check route
+
+A health check is a route that is used to check the health of a service. It is a means to ensure that the service is running properly and can perform its intended function.
+
+Our GitHub App image previews such routes at `https://host:port/health` for you to be able to monitor its status.
+
 ## Installing Port's GitHub application
 
 After you have the App registered in your organization and the docker is up and running, you can install the app and select the repositories to integrate it with

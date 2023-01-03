@@ -14,6 +14,7 @@ Our integration with GitHub allows you to export GitHub objects to Port as Entit
 
 ## Next Steps
 
+- [Install Port's GitHub Exporter](./installation.md)
 - [Automatically import `pull-requests` from GitHub](./exporting-pull-requests.md)
 - [Automatically import `repositories` from GitHub](./exporting-repositories.md)
 - [Automatically import `issues` from GitHub](./exporting-issues.md)

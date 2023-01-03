@@ -73,7 +73,7 @@ resources:
     port:
       entity:
         mappings:
-          identifier: ".name"
+          identifier: ".name" # The Entity identifier will be the repository name. After the creation of the Entity the exporter will send `PATCH` requests to update this repository within Port.
           title: ".name"
           blueprint: '"microservice"'
           properties:
@@ -92,11 +92,11 @@ resources:
 
 2. Push `port-app-config.yml` to your default branch.
 
-That's it! after the push is complete, the exporter will start ingesting the entities on the next commit to the repository.
+That's it! after the push is complete, the exporter will start ingesting the Entities on the next commit to the repository.
 
 ![Developer Portal Microservice](../../../static/img/integrations/github-app/GitHubMicroservices.png)
 
-Check out the `README.md` in markdown format inside the [Specific Entity Page](../../software-catalog/entity/entity.md#entity-page)
+Check out the `README.md` in markdown format inside the [Specific Entity Page](../../software-catalog/entity/entity.md#entity-page).
 
 ![Developer Portal GitHub README](../../../static/img/integrations/github-app/GitHubReadme.png)
 
@@ -114,7 +114,7 @@ resources:
     port:
       entity:
         mappings:
-          identifier: ".name"
+          identifier: ".name" # The Entity identifier will be the repository name. After the Entity is created, the exporter will send `PATCH` requests to update this repository within Port. 
           title: ".name"
           blueprint: '"microservice"'
           properties:

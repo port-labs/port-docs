@@ -58,3 +58,36 @@ Create or edit an Entity of the Blueprint you added the `Datadog` property to, a
 Now go to the Specific Entity Page of your Entity and the Datadog dashboard will be visible in a dedicated tab:
 
 ![Datadog dashboard example](../../../static/img/software-catalog/widgets/datadog.png)
+
+### New Relic Chart
+
+In this example we are embedding a CPU usage [New Relic Chart](https://one.eu.newrelic.com/) to get infrastructure metrics directly inside Port.
+
+Add the `embedded-URL` property to a Blueprint:
+
+<details>
+<summary>Blueprint property definition</summary>
+
+```json showLineNumbers
+{
+  "cpuUsage": {
+    "type": "string",
+    "title": "CPU usage",
+    "spec": "embedded-url",
+    "format": "url"
+  }
+}
+```
+
+</details>
+Go to new relic and extract the chart URL of a specific chart
+
+![New Relic get embed URL](../../../static/img/software-catalog/widgets/GetEmbedUrlNewRelic.png)
+
+Create or edit an Entity of the Blueprint you added the `cpuUsage` property to, and specify the URL to the CPU Usage chart:
+
+![New Relic Entity edit example](../../../static/img/software-catalog/widgets/editEntityNewRelic.png)
+
+Now go to the Specific Entity Page of your Entity and the CPU Usage chart will be visible in a dedicated tab:
+
+![New Relic dashboard example](../../../static/img/software-catalog/widgets/new-relic.png)

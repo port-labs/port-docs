@@ -96,7 +96,7 @@ resources:
     port:
       entity:
         mappings:
-          identifier: ".head.repo.name + (.id|tostring)"
+          identifier: ".head.repo.name + (.id|tostring)" # The Entity identifier will be the repository name + the pull request ID. After the Entity is created, the exporter will send `PATCH` requests to update this pull request within Port.
           title: ".title"
           blueprint: '"pull-request"'
           properties:
@@ -130,7 +130,7 @@ Now you can view and query all of your Pull Requests as Port Entities!
 
 ![Developer Portal GitHub Pull Requests](../../../static/img/integrations/github-app/GitHubPullRequests.png)
 
-You can also see the description in markdown format inside the [Specific Entity Page](../../software-catalog/entity/entity.md#entity-page)
+You can also see the description in markdown format inside the [Specific Entity Page](../../software-catalog/entity/entity.md#entity-page).
 
 ![Developer Portal GitHub Pull Request Description](../../../static/img/integrations/github-app/PullRequestDescription.png)
 
