@@ -57,7 +57,7 @@ Here is an example request body:
 }
 ```
 
-:::caution
+:::info
 When updating the permissions of a page, be sure to include the list of roles and users that need permissions in every request. Any role or user that does not appear in the request body will lose permissions to the page (this is effectively how you deny permissions to a page from a user)
 
 For example, given the following permissions for a page:
