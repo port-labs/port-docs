@@ -69,15 +69,15 @@ Each Blueprint is represented by a [Json schema](https://json-schema.org/), as s
 
 ### Structure table
 
-| Field                   | Type     | Description                                                                                                   | Optional Values                                                                                                                               |
-| ----------------------- | -------- | ------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| `identifier`            | `String` | Unique identifier.<br /> Note that while the identifier is unique, it can be changed after creation           |
-| `title`                 | `String` | The Blueprint's name                                                                                          |
-| `description`           | `String` | Description for the Blueprint.<br /> This value is visible to users when hovering on the info icon in the UI. |
-| `icon`                  | `String` | Icon for the Blueprint's graph node, and Entities of the Blueprint                                            | Icon options: `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud,...` <br /><br />See the full icon list [below](#full-icon-list). |
-| `calculationProperties` | `Object` | Contains the properties that are defined using [calculation templates](./calculation-properties)              | Example: "`repo-link`": "`https://github.com/{{$identifier}}`"                                                                                |
-| `schema`                | `Object` | Object containing two more nested fields, including `properties` and `required`                               | See the schema structure [here](#blueprint-schema).                                                                                           |
-| `changelogDestination`  | `Object` | Defines the destination where events that happen within the Blueprint's context will be delivered             | See the object structure [here](#changelog-destination).                                                                                      |
+| Field                   | Type     | Description                                                                                                                                       | Optional Values                                                                                                                               |
+| ----------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `identifier`            | `String` | Unique identifier.<br /> Note that while the identifier is unique, it [can be changed](./tutorial.md/#update-blueprint-identifier) after creation |
+| `title`                 | `String` | Blueprint's name.                                                                                                                                 |
+| `description`           | `String` | Description for the Blueprint.<br /> The value is visible to users when hovering over the info icon in the UI.                                    |
+| `icon`                  | `String` | Icon for the Blueprint's graph node and Entities of the Blueprint.                                                                                | Icon options: `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud,...` <br /><br />See the full icon list [below](#full-icon-list). |
+| `calculationProperties` | `Object` | Contains the properties defined using [calculation templates](./calculation-properties).                                                          | Example: "`repo-link`": "`https://github.com/{{$identifier}}`"                                                                                |
+| `schema`                | `Object` | An object containing two more nested fields, including `properties` and `required`.                                                               | See the schema structure [here](#blueprint-schema).                                                                                           |
+| `changelogDestination`  | `Object` | Defines a destination where change events in the Blueprint or Blueprint's Entities will be sent to                                                | See the object structure [here](#changelog-destination).                                                                                      |
 
 #### Special blueprint fields
 
@@ -89,7 +89,7 @@ Each Blueprint is represented by a [Json schema](https://json-schema.org/), as s
 #### Full icon list
 
 :::info Available Icons
-`Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud, Cluster, CPU, Customer, Datadog, DefaultEntity, DefaultProperty, DeployedAt, Deployment, DevopsTool, Docs, Environment, Git, Github, GitVersion, GoogleCloud, GPU, Grafana, Jenkins, Lambda, Link, Lock, Microservice, Moon, Node, Okta, Package, Permission, Server, Service, Terraform`
+`Actions, Airflow, AmazonEKS, Ansible, ApiDoc, Argo, AuditLog, Aws, Azure, BitBucket, Blueprint, Bucket, Clickup, Cloud, Cluster, Codefresh, Confluence, Coralogix, CPU, Customer, Datadog, Day2Operation, DefaultBlueprint, DefaultProperty, DeployedAt, Deployment, DevopsTool, Docs, EC2, EmptyBox, Environment, Falcosidekick, Git, Github, GitVersion, GoogleCloud, GoogleCloudPlatform, GPU, Grafana, Infinity, Jenkins, Jira, Kafka, Kiali, kibana, Lambda, Link, Lock, logz, Microservice, Moon, Node, Okta, Package, Permission, Prometheus, Relic, S3, Server, Service, Slack, Team, Terraform, TwoUsers, Users, UserSmall`
 :::
 
 #### Blueprint schema
