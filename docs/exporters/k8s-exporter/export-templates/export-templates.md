@@ -23,7 +23,6 @@ appprojects                       appproj,appprojs   argoproj.io/v1alpha1       
 Then, in order to map `applications`, your `config.yaml` will contain:
 
 ```yaml
-# highlight-next-line
 - kind: argoproj.io/v1alpha1/applications
   identifier: .metadata.name
   blueprint: '"argoApp"'
