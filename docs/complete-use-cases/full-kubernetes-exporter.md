@@ -167,4 +167,4 @@ This workflow will check for changes in the `exporter-config/config.yaml` file, 
 
 ## Summary
 
-In this use-case, you achieved a fully GitOps method for exporting data from a Kubernetes cluster to Port, using Port's K8s Exporter and Terraform provider. Now you have a comprehensive mapping of your Kubernetes cluster in Port, which updates in real-time according to the state of your Kubernetes cluster. Now you will be able to view information such as replica counts for your deployments, node readiness and job run statuses, directly from Port.
+In this use-case, you implemented a complete GitOps based flow for exporting data from a Kubernetes cluster to Port, using Port's K8s Exporter and Terraform provider. You now have a comprehensive mapping of your Kubernetes cluster in Port, that updates in real-time according to the state of your Kubernetes cluster and allowes you to view information directly from Port such as replica counts for your deployments, node readiness and job run statuses.
