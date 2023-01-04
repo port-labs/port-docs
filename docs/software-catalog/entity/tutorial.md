@@ -242,6 +242,39 @@ To Edit a specific property, for example: `version`, send a PATCH request with t
 {"properties": {"version": "2.29"}}
 ```
 
+### Update Entity identifier
+
+There are two methods to change an Entity's identifier:
+
+#### From the UI
+
+1. In either the matching Blueprint page or [Entity page](./entity.md#entity-page), click the 3 dots (`...`) button and then click the `Edit` button;
+2. Update the value of the `identifier` key to the new identifier;
+3. Click `Update`.
+
+#### PUT request
+
+Make an HTTP PUT request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{old_entity_identifier}` with the following JSON body:
+
+```json showLineNumbers
+{
+  "identifier": "new_entity_identifier",
+  ...ORIGINAL ENTITY DEFINITION
+}
+```
+
+Entity definition JSON, after updating the value of the `identifier` key in the request body to the new identifier.
+
+#### PATCH request
+
+Make an HTTP PATCH request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{old_entity_identifier}` with the following JSON body:
+
+```json showLineNumbers
+{
+  "identifier": "new_entity_identifier"
+}
+```
+
 ### Remove Relations
 
 #### From the API
