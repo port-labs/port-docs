@@ -34,7 +34,7 @@ Before we dive into the details of each [Blueprint](../software-catalog/blueprin
   - In this example environments will be reported using Port's Terraform Provider.
 - **Deployment Config** - a representation of the current “live” version of a service running in a specific environment. It will include references to the service, environment, and deployment, as well as real-time information such as status, uptime, and any other relevant metadata.
   - In this example deployment configs will be reported manually.
-- **Deployment Service Pod** - pods (instances) of a service. It includes a reference to the deployment config and details such as the specification and runtime status of containers.
+- **Deployed Service Pod** - pods (instances) of a service. It includes a reference to the deployment config and details such as the specification and runtime status of containers.
   - In this example deployment service pods will be reported using Port's Kubernetes Exporter.
 - **Deployment** - an object representing a CD job. It includes the version of the deployed service and a link to the job itself. Unlike other objects, the deployment is an immutable item in the software catalog. It is important to keep it immutable to ensure the catalog remains reliable.
   - In this example deployments will be reported using Port's GitHub Action as part of the deployment process.
@@ -255,12 +255,12 @@ After creating the initial service Blueprint, return to the Blueprint and replac
 </details>
 
 <details>
-<summary>Deployment Service Pod Blueprint JSON</summary>
+<summary>Deployed Service Pod Blueprint JSON</summary>
 
 ```json showLineNumbers
 {
-  "identifier": "deploymentServicePod",
-  "title": "Deployment Service Pod",
+  "identifier": "deployedServicePod",
+  "title": "Deployed Service Pod",
   "icon": "Cluster",
   "schema": {
     "properties": {
@@ -556,7 +556,7 @@ print(response.json())
 
 </details>
 
-### Deployment Service Pod - K8s Exporter
+### Deployed Service Pod - K8s Exporter
 
 A deployment service pod represents an instance of a deployed service. A deployment service pod has a `deployment config` tied to it, which represents the deployed service that the pod is an instance of.
 
@@ -575,7 +575,7 @@ resources:
         mappings:
           - identifier: .metadata.name
             title: .metadata.name
-            blueprint: '"deploymentServicePod"'
+            blueprint: '"deployedServicePod"'
             properties:
               startTime: .status.startTime
               phase: .status.phase

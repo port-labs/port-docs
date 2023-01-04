@@ -72,7 +72,7 @@ Entity JSON example with `team` field:
 
 ```json showLineNumbers
 {
-  "identifier": "uniqueID",
+  "identifier": "unique-ID",
   "title": "Entity Title",
   "team": "",
   "blueprint": "testBlueprint",
