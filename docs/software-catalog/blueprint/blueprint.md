@@ -38,7 +38,7 @@ Each Blueprint is represented by a [Json schema](https://json-schema.org/), as s
 
 ```json showLineNumbers
 {
-  "identifier": "UniqueID",
+  "identifier": "uniqueID",
   "title": "Title",
   "description": "Description",
   "icon": "Service",

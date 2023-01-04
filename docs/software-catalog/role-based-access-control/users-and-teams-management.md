@@ -72,12 +72,12 @@ Entity JSON example with `team` field:
 
 ```json showLineNumbers
 {
-  "identifier": "",
-  "title": "",
+  "identifier": "uniqueID",
+  "title": "Entity Title",
   "team": "",
-  "blueprint": "TestBlueprint",
+  "blueprint": "testBlueprint",
   "properties": {
-    "prop1": ""
+    "prop1": "value"
   },
   "relations": {}
 }

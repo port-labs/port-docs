@@ -43,7 +43,7 @@ For this limited example, the `deployment config` Blueprint will include mostly 
 
 ```json showLineNumbers
 {
-  "identifier": "DeploymentConfig",
+  "identifier": "deploymentConfig",
   "title": "Deployment Config",
   "icon": "Microservice",
   "schema": {
@@ -156,7 +156,7 @@ WEBHOOK_URL = 'YOUR_WEBHOOK_URL'
 
 API_URL = 'https://api.getport.io/v1'
 
-target_blueprint = 'DeploymentConfig'
+target_blueprint = 'deploymentConfig'
 
 credentials = {'clientId': CLIENT_ID, 'clientSecret': CLIENT_SECRET}
 
@@ -169,7 +169,7 @@ headers = {
 }
 
 blueprint = {
-    "identifier": "DeploymentConfig",
+    "identifier": target_blueprint,
     "title": "Deployment Config",
     "icon": "Microservice",
     "schema": {

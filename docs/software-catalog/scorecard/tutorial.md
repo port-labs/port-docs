@@ -93,7 +93,7 @@ import requests
 
 API_URL = 'https://api.getport.io/v1'
 
-blueprint_name = 'Microservice'
+blueprint_name = 'microservice'
 
 scorecards = [
   {
@@ -144,7 +144,7 @@ const axios = require("axios").default;
 
 const API_URL = "https://api.getport.io/v1";
 
-const blueprintName = "Microservice";
+const blueprintName = "microservice";
 
 const scorecards = [
   {
@@ -255,6 +255,7 @@ A Scorecard cannot be restored after deletion!
 :::
 
 There are two ways to delete a Scorecard:
+
 - Make an HTTP PUT request and remove it from the array of the scorecards via the URL `https://api.getport.io/v1/{blueprint_identifier}/scorecards`
 - Make an HTTP DELETE request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards/{scorecard_identifier}` the `scorecard_identifier` is the identifier of the scorecard we want to delete
 
