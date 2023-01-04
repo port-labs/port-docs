@@ -13,7 +13,7 @@ import TabItem from "@theme/TabItem"
 Pages have 4 regular CRUD permissions:
 
 - Create, Read, Update and Delete.
-- Currently only Read permission can be modified.
+- Currently only read permission can be modified.
 
 ## Get page permissions
 
@@ -30,7 +30,7 @@ Make an **HTTP GET** request to the URL: `https://api.getport.io/v1/pages/{Page_
 The response will contain the roles and users that are allowed to read (view) the requested page.
 
 :::note
-Only Page Permissions of Software Catalog Pages can be requested.
+Only page permissions of software catalog pages can be requested.
 :::
 
 ## Update page permissions
@@ -58,7 +58,7 @@ Here is an example request body:
 ```
 
 :::info
-When updating the permissions of a page, be sure to include the list of roles and users that need permissions in every request. Any role or user that does not appear in the request body will lose permissions to the page (this is effectively how you deny permissions to a page from a user)
+When updating page permissions, be sure to include a list of roles and users that need permissions in every request. Any role or user that does not appear in the request body will lose permissions to the page (this is also how you deny permissions from a user)
 
 For example, given the following permissions for a page:
 

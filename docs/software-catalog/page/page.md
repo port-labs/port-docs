@@ -4,26 +4,26 @@ sidebar_position: 1
 
 # Page
 
-## What is a Page?
+## What is a page?
 
-A page is a viewing component that displays Entity data in different forms such as a table form, data summary, etc.
+A page displays Entity data in different forms, such as a table, data summary, etc.
 
-### Basic concepts of pages
+### The basic concepts of a page
 
-- Blueprint default page is automatically created when a Blueprint is created, and is located in the navigation bar. It contains a single table widget.
-- Pages are dynamic - you can create multiple pages that display different data according to the filters you set in advance.
+- When a Blueprint is created, a page is automatically generated. You can find it in the navigation bar, and it contains a single table widget;
+- Pages are dynamic - you can create multiple pages that display diverse data, according to the filters you set in advance;
 - Entity pages automatically appear for each new Entity you create.
 
 ### Pages architecture
 
 #### Page widgets
 
-Widgets enhance the content of your developer portal with different visual views based on the data ingested into Port.
+Widgets enhance your developer portal by providing diverse visuals, based on the data ingested into Port.
 
 A page can hold a single widget or multiple widgets, for example:
 
-- A full table view widget;
-- A markdown widget with the README of a service;
+- Full table view widget;
+- Markdown widget with the README of a service;
 - etc.
 
 To learn more, refer to the [Widgets](../widgets/widgets.md) section.
@@ -32,7 +32,7 @@ To learn more, refer to the [Widgets](../widgets/widgets.md) section.
 
 A tab is a sub-page within a page.
 
-Pages can be separated into several tabs, each of which is a page that holds one or many widgets.
+Pages can be separated into several tabs, each of which is a page that holds one or more widgets.
 
 **Default Tabs:**
 
@@ -40,16 +40,16 @@ Pages can be separated into several tabs, each of which is a page that holds one
 - Runs
 - Audit Log
 
-## Blueprint Page
+## Blueprint page
 
-A full page table widget that holds all of the Blueprints specific Entities.
+This page displays a table widget that details all the Blueprints specific Entities.
 
 ![Microservice blueprint page](../../../static/img/software-catalog/pages/MicroserviceBlueprintPage.png)
 
 ## Page operations
 
 Each page type has a set of operations that can be performed from the UI.  
-The table below summarizes the available operations according to the page type:
+The table below summarizes the available operations for every type:
 
 | Page type                                                                          | Save a view | Save view as<br /> a new page | Edit page | Delete page |
 | ---------------------------------------------------------------------------------- | :---------: | :---------------------------: | :-------: | :---------: |
@@ -60,18 +60,18 @@ The table below summarizes the available operations according to the page type:
 | Custom page (generated from save as new page)                                      |     ✅      |              ✅               |    ✅     |     ✅      |
 
 :::info Default page
-The default page is automatically created when a new Blueprint is created. That page is directly tied to its Blueprint and it cannot be edited or deleted.
+The default page is automatically generated when a new Blueprint is created. That page is directly tied to its Blueprint and it cannot be edited or deleted.
 
-In order to edit or delete the default Blueprint page, the Blueprint itself should be edited or deleted.
+In order to edit or delete the default Blueprint page, you need to edit or delete the Blueprint itself.
 
-It is possible to filter, sort, group by and use the table widget controls to change the layout of the default Blueprint page directly from the default page.
+It's possible to filter, sort, group by, and use the table widget controls to change the layout of the default Blueprint page directly from the default page.
 :::
 
-All page operations are available on the right top bar, as shown here: (In accordance with the table above)
+All page operations are available on the right top bar, as shown here: (in line with the table above)
 
 ![Page operations marked](../../../static/img/software-catalog/pages/PageOperationsMarked.png)
 
-### Saving views
+### Save a view
 
 Every change made on a specific page, such as filtering or sorting, enables the `Save this view` button.  
 Clicking on it will save the new view for all users.
@@ -80,7 +80,7 @@ Clicking on it will save the new view for all users.
 The ability to save a view for all users is available only for the [Admin role](../role-based-access-control/permissions-controls.md#roles)
 :::
 
-### Saving new pages
+### Save a new page
 
 Each time a change is made on a page, and the `Save this view` becomes enabled, you can press the small arrow on its right side to open the dropdown menu:
 
@@ -141,55 +141,55 @@ All table operations are available on the top bar of the table:
 
 ### Filter
 
-Filtering a table is done using the following menu:
+You can filter a table by using the following menu:
 
 ![Table filter menu marked](../../../static/img/software-catalog/pages/TableFilterMenu.png)
 
-You can define any filtering operator with a suitable value, in order to filter anything.
+To filter, you can define any filtering operator with a suitable value.
 
-You can filter according to one or many fields while setting the relation between each field filter: `And/Or`.
+You can filter one or more values while setting the relation between each field filter with a: `And/Or`.
 
 ### Sort
 
-Sorting the table is done on the following menu:
+You can sort the table on the following menu:
 
 ![Table sort menu marked](../../../static/img/software-catalog/pages/TableSortMenu.png)
 
 You can sort by one or more fields of any kind.
 
 :::tip
-Sorting a specific column can be done by clicking on the column title.
+To sort a specific column, click on the column title.
 :::
 
 ### Hide
 
-Hiding table columns is done on the following menu:
+You can hide table columns on the following menu:
 
 ![Table hide menu marked](../../../static/img/software-catalog/pages/TableHideMenu.png)
 
 You can decide whether each field is viewable to users or not.
 
 :::tip
-We highly recommend hiding irrelevant data from users, in order to provide them a clean work environment with few irrelevant distractions.
+We highly recommend hiding irrelevant data from users, to provide them with a clean work environment, relieving them from any irrelevant distractions.
 :::
 
 ### Group By
 
-Grouping by Entities is done on the following menu:
+You can group by Entities on the following menu:
 
 ![Table group by menu marked](../../../static/img/software-catalog/pages/TableGroupByMenu.png)
 
 You can group results according to any field in the table.
 
 :::tip
-Group by is recommended when you want to create custom views for users, such as Microservices by Owners.
+Group by is recommended when you want to create custom views for users, such as "microservices by owners".
 
 Just create your `group by` setting, add additional viewing settings if needed, and [save a new page](#saving-new-pages) from the custom view.
 :::
 
 ### Search
 
-We provide a free text search option on tables. Searching on a table is available on the left side of the top bar:
+We provide a free text search option on tables. To search on a table, click the left side of the top bar:
 
 ![Table search bar marked](../../../static/img/software-catalog/pages/TableSearchBar.png)
 
