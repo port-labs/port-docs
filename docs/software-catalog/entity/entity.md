@@ -14,7 +14,7 @@ This is the basic structure of an Entity:
 
 ```json showLineNumbers
 {
-  "identifier": "UniqueID",
+  "identifier": "unique-ID",
   "title": "Title",
   "team": "",
   "blueprint": "blueprintName",

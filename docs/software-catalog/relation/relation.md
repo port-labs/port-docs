@@ -56,7 +56,7 @@ We need to add the following JSON schema of the relation to the `microservice` B
 ```json showLineNumbers
 "package": {
   "title": "Package",
-  "target": "Package",
+  "target": "package",
   "required": false,
   "many": false
 }

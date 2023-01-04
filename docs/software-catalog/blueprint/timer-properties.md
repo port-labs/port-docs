@@ -30,9 +30,9 @@ In the following example, we will create a timer property called locked, that wi
 
 ```json showLineNumbers
   "identifier": "e_mtLQRs6sqQOaz7QP",
-  "title": "Timer-example",
+  "title": "Timer Example",
   "icon": "Microservice",
-  "blueprint": "Timer-example",
+  "blueprint": "timerExample",
   "properties": {
     "timer": "2022-12-01T16:50:00+02:00"
   },
@@ -49,7 +49,7 @@ The following [action invocation body](../../self-service-actions/self-service-a
 {
   "identifier": "event_4QyQDmuzaAhY8lM2",
   "context": {
-    "blueprintIdentifier": "Timer-example",
+    "blueprintIdentifier": "timerExample",
     "entityId": "e_mtLQRs6sqQOaz7QP",
     "blueprintId": "bp_djjY7NcdzHdpxI1y",
     "entityIdentifier": "e_mtLQRs6sqQOaz7QP"

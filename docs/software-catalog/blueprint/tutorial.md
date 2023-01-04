@@ -36,7 +36,7 @@ In order to create a Blueprint with the following properties, we will use the fo
 
 ```json showLineNumbers
 {
-  "identifier": "Microservice",
+  "identifier": "microservice",
   "title": "Microservice",
   "icon": "Microservice",
   "calculationProperties": {},
@@ -205,7 +205,7 @@ headers = {
 }
 
 blueprint = {
-    'identifier': 'Microservice',
+    'identifier': 'microservice',
     'title': 'Microservice',
     'icon': 'Microservice',
     "calculationProperties": {},
@@ -254,7 +254,7 @@ const config = {
 };
 
 const blueprint = {
-  identifier: "Microservice",
+  identifier: "microservice",
   title: "Microservice",
   icon: "Microservice",
   calculationProperties: {},
@@ -292,7 +292,7 @@ curl --location --request POST "https://api.getport.io/v1/blueprints" \
 	--header "Authorization: Bearer $access_token" \
 	--header "Content-Type: application/json" \
 	--data-raw "{
-    \"identifier\": \"Microservice\",
+    \"identifier\": \"microservice\",
     \"title\": \"Microservice\",
     \"icon\": \"Microservice\",
     \"calculationProperties\": {},
@@ -405,7 +405,7 @@ You can create the new Blueprint from the UI (using the `Add Blueprint` button i
 
 ```json showLineNumbers
 {
-  "identifier": "Package",
+  "identifier": "package",
   "title": "Package",
   "icon": "Package",
   "calculationProperties": {},

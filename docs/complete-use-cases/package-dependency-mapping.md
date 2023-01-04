@@ -28,13 +28,13 @@ Let's review our Blueprints and repository structure so we can better understand
 #### Blueprints
 
 <details>
-<summary>DeploymentConfig Blueprint</summary>
+<summary>Deployment Config Blueprint</summary>
 
-Please notice the 'relations' seciton at the bottom of the Blueprint
+Please notice the `relations` section at the bottom of the Blueprint
 
 ```json showLineNumbers
 {
-  "identifier": "DeploymentConfig",
+  "identifier": "deploymentConfig",
   "title": "Deployment Config",
   "icon": "Service",
   "schema": {
@@ -57,7 +57,7 @@ Please notice the 'relations' seciton at the bottom of the Blueprint
   "relations": {
     "package": {
       "title": "Package",
-      "target": "Package",
+      "target": "package",
       "required": false,
       "many": true
     }
@@ -72,7 +72,7 @@ Please notice the 'relations' seciton at the bottom of the Blueprint
 
 ```json showLineNumbers
 {
-  "identifier": "Package",
+  "identifier": "package",
   "title": "Package",
   "icon": "Package",
   "schema": {
@@ -99,11 +99,11 @@ Let's have a look at our new relation!
 
 ![blueprints.png](../../static/img/complete-use-cases/microservice-dependency/blueprints.png)
 
-For more information about DeploymentConfig and it's uses, click [here](./software-catalog#deployment-config-bp).
+For more information about Deployment Config and it's uses, click [here](./software-catalog#deployment-config-bp).
 
-As we can see in the image above, two Blueprints were created: `DeploymentConfig` and `Package`. Notice that the `Package` property is the Relation we created. It consists of an array of packages (this is thanks to the `"many": true` property of the Relation), since each microservice, and respectively, each DeploymentConfig can depend on multiple Packages.
+As we can see in the image above, two Blueprints were created: `deploymentConfig` and `package`. Notice that the `package` property is the Relation we created. It consists of an array of packages (this is thanks to the `"many": true` property of the Relation), since each microservice, and respectively, each Deployment Config can depend on multiple Packages.
 
-Since both of the use-cases we are learning contain a DeploymentConfig-to-Package relation, we can use these Blueprints in both cases.
+Since both of the use-cases we are learning contain a deploymentConfig-to-package relation, we can use these Blueprints in both cases.
 
 ### Mapping Yarn dependencies
 
@@ -134,11 +134,11 @@ As stated before, in this example we will learn about a mono-repo use-case. In t
 
 We will also presume that the directory names in `MICROSERVICE_PATH` match the names of the different Microservices we are managing and tracking (i.e. apps/frontend will be 'frontend' which matches a Microservice named `frontend`).
 
-Since we are working with DeploymentConfigs - which are configured by a Microservice and Runtime (Environment) - we will have to take into account which `runtime` we are managing packages for. This will be passed on to us from the workflow call.
+Since we are working with Deployment Configs - which are configured by a Microservice and Runtime (Environment) - we will have to take into account which `runtime` we are managing packages for. This will be passed on to us from the workflow call.
 
 #### Automating Entity creation
 
-Let's begin by creating a Python script to handle scanning the `yarn.lock` file. We will also implement package Entity creation and update the existing DeploymentConfigs with their related package dependencies.
+Let's begin by creating a Python script to handle scanning the `yarn.lock` file. We will also implement package Entity creation and update the existing Deployment Configs with their related package dependencies.
 
 [This Python script](https://github.com/port-labs/demo-node-project/blob/main/.github/scripts/scan-yarn-lock.py) has some useful functions with which we interact with Port.
 Have a look at:
@@ -205,7 +205,7 @@ jobs:
     name: "Run yarn.lock scanner"
     runs-on: ubuntu-latest
     env:
-      RUNTIME: "production" # main branch indiciates this is a change in production environment.
+      RUNTIME: "production" # main branch indicates this is a change in production environment.
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4

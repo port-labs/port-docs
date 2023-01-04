@@ -7,7 +7,7 @@ sidebar_position: 2
 Using Port, it is very simple to implement convenient service locking for services in your different development and production environments.
 
 :::tip
-All relevant files and resources for this guide are available [**HERE**](https://github.com/port-labs/resource-catalog-microservice-repo)
+All relevant files and resources for this guide are available [**HERE**](https://github.com/port-labs/resource-catalog-microservice-repo/tree/docs-version)
 :::
 
 ## Goal
@@ -40,7 +40,7 @@ The Blueprint JSON provided below already includes the Relations between the dif
 
 ```json showLineNumbers
 {
-  "identifier": "DeploymentConfig",
+  "identifier": "deploymentConfig",
   "title": "Deployment Config",
   "icon": "Service",
   "schema": {
@@ -68,7 +68,7 @@ The Blueprint JSON provided below already includes the Relations between the dif
 
 ```json showLineNumbers
 {
-  "identifier": "Deployment",
+  "identifier": "deployment",
   "title": "Deployment",
   "icon": "Deployment",
   "schema": {
@@ -96,9 +96,9 @@ The Blueprint JSON provided below already includes the Relations between the dif
   "mirrorProperties": {},
   "calculationProperties": {},
   "relations": {
-    "DeploymentConfig": {
+    "deploymentConfig": {
       "title": "Deployment Config",
-      "target": "DeploymentConfig",
+      "target": "deploymentConfig",
       "required": false,
       "many": false
     }
@@ -152,7 +152,7 @@ CLIENT_SECRET = 'YOUR_CLIENT_SECRET'
 
 API_URL = 'https://api.getport.io/v1'
 
-target_blueprint = 'DeploymentConfig'
+target_blueprint = 'deploymentConfig'
 
 credentials = {'clientId': CLIENT_ID, 'clientSecret': CLIENT_SECRET}
 
@@ -236,7 +236,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           identifier: ${{ inputs.SERVICE_NAME }}-${{ inputs.RUNTIME }}
-          blueprint: DeploymentConfig
+          blueprint: deploymentConfig
           operation: GET
   check-lock-status:
     runs-on: ubuntu-latest
@@ -287,7 +287,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           identifier: notification-service-prod-${{ env.SHA_SHORT }}
           title: Notification-Service-Production-${{ env.SHA_SHORT }}
-          blueprint: Deployment
+          blueprint: deployment
           properties: |
             {
                "jobUrl": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
@@ -297,7 +297,7 @@ jobs:
             }
           relations: |
             {
-               "DeploymentConfig": "notification-service-prod"
+               "deploymentConfig": "notification-service-prod"
             }
 ```
 

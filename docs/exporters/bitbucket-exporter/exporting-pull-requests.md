@@ -12,7 +12,7 @@ title: Exporting pull requests
 
 In this tutorial, we will export pull requests from Bitbucket and create matching Port Entities!
 
-1. Create a `pull-request` Blueprint and `port-app-config.yml` configuration file.
+1. Create a `pullRequest` Blueprint and `port-app-config.yml` configuration file.
 
 To export your Bitbucket `Pull Requests` to Port, you can use the following Port Blueprints definitions, and `port-app-config.yml`:
 
@@ -21,7 +21,7 @@ To export your Bitbucket `Pull Requests` to Port, you can use the following Port
 
 ```json showLineNumbers
 {
-  "identifier": "pull-request",
+  "identifier": "pullRequest",
   "title": "Pull Request",
   "icon": "GitVersion",
   "schema": {
@@ -92,9 +92,9 @@ resources:
     port:
       entity:
         mappings:
-          identifier: ".destination.repository.name + (.id|tostring)" # The Entity identifier will be the repository name + the pull request ID. After the Entity is created, the exporter will send `PATCH` requests to update this pull request within Port. 
+          identifier: ".destination.repository.name + (.id|tostring)" # The Entity identifier will be the repository name + the pull request ID. After the Entity is created, the exporter will send `PATCH` requests to update this pull request within Port.
           title: ".title"
-          blueprint: '"pull-request"'
+          blueprint: '"pullRequest"'
           properties:
             creator: ".author.display_name"
             assignees: "[.participants[].user.display_name]"

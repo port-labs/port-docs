@@ -28,7 +28,7 @@ A search request defines the logical Relation between different search rules, an
     {
       "property": "$blueprint",
       "operator": "=",
-      "value": "Microservice"
+      "value": "microservice"
     },
     {
       "property": "$identifier",
@@ -76,7 +76,7 @@ Here is an example search rule:
 {
   "property": "$blueprint",
   "operator": "=",
-  "value": "Microservice"
+  "value": "microservice"
 }
 ```
 
@@ -255,15 +255,15 @@ For example, to search only for related Entities that _require_ the `production`
 
 The `relatedTo` operator also supports the `direction` property - which allows you to search for dependent Entities in a specific direction on the dependency graph. To better understand the functionality of this property, let's take a look at the example below:
 
-Let's assume that we have the Blueprints `DeploymentConfig` and `Microservice` with the following Relation definition (declared on the `DeploymentConfig` Blueprint):
+Let's assume that we have the Blueprints `deploymentConfig` and `microservice` with the following Relation definition (declared on the `deploymentConfig` Blueprint):
 
 ```json showLineNumbers
 "relations": {
-  "relatedMicroservice": {
-    "description": "The service this DeploymentConfig belongs to",
+  "microservice": {
+    "description": "The service this Deployment Config belongs to",
     "many": false,
     "required": false,
-    "target": "Microservice",
+    "target": "microservice",
     "title": "Microservice"
   }
 }
@@ -306,7 +306,7 @@ In the example shown above, if we want to get the `Microservice` and `Environmen
 ```json showLineNumbers
 {
   "operator": "relatedTo",
-  "blueprint": "DeploymentConfig",
+  "blueprint": "deploymentConfig",
   "value": "Order-Service-Production",
   "direction": "upstream"
 }
@@ -320,12 +320,12 @@ And the result shall be:
 ```json showLineNumbers
 {
   "ok": true,
-  "matchingBlueprints": ["Microservice", "Environment"],
+  "matchingBlueprints": ["microservice", "environment"],
   "entities": [
     {
       "identifier": "Order-Service",
       "title": "Order-Service",
-      "blueprint": "Microservice",
+      "blueprint": "microservice",
       "properties": {
         "on-call": "mor@getport.io",
         "language": "Python",
@@ -341,7 +341,7 @@ And the result shall be:
     {
       "identifier": "Production",
       "title": "Production",
-      "blueprint": "Environment",
+      "blueprint": "environment",
       "properties": {
         "awsRegion": "eu-west-1",
         "configUrl": "https://github.com/config-labs/kube/config.yml",
@@ -361,12 +361,12 @@ And the result shall be:
 
 </details>
 
-If we want to get all of the `DeploymentConfigs` that are deployed in the _Production_ `Environment`, the search rule would be:
+If we want to get all of the `deploymentConfigs` that are deployed in the _Production_ `Environment`, the search rule would be:
 
 ```json showLineNumbers
 {
   "operator": "relatedTo",
-  "blueprint": "Environment",
+  "blueprint": "environment",
   "value": "Production",
   "direction": "downstream"
 }
@@ -380,12 +380,12 @@ And the result shall be:
 ```json showLineNumbers
 {
   "ok": true,
-  "matchingBlueprints": ["DeploymentConfig"],
+  "matchingBlueprints": ["deploymentConfig"],
   "entities": [
     {
       "identifier": "Order-Service-Production",
       "title": "Order-Service-Production",
-      "blueprint": "DeploymentConfig",
+      "blueprint": "deploymentConfig",
       "properties": {
         "url": "https://github.com/port-labs/order-service",
         "config": {
@@ -398,8 +398,8 @@ And the result shall be:
         ]
       },
       "relations": {
-        "relatedMicroservice": "Order-Service",
-        "relatedEnv": "Production"
+        "microservice": "Order-Service",
+        "environment": "Production"
       },
       "createdAt": "2022-11-17T15:55:55.591Z",
       "createdBy": "auth0|62ab380295b34240aa511cdb",
@@ -409,7 +409,7 @@ And the result shall be:
     {
       "identifier": "Cart-Service-Production",
       "title": "Cart-Service-Production",
-      "blueprint": "DeploymentConfig",
+      "blueprint": "deploymentConfig",
       "properties": {
         "url": "https://github.com/port-labs/cart-service",
         "config": {
@@ -422,8 +422,8 @@ And the result shall be:
         ]
       },
       "relations": {
-        "relatedMicroservice": "Cart-Service",
-        "relatedEnv": "Production"
+        "microservice": "Cart-Service",
+        "environment": "Production"
       },
       "createdAt": "2022-11-17T15:55:10.714Z",
       "createdBy": "auth0|62ab380295b34240aa511cdb",
@@ -458,13 +458,13 @@ Here is a search response with `attach_title_to_relation=true`:
 {
   "ok": true,
   "matchingBlueprints": [
-    "Region",
+    "region",
     "deployment",
     "vm",
     "microservice",
     "k8sCluster",
     "permission",
-    "RunningService"
+    "runningService"
   ],
   "entities": [
     {
@@ -480,7 +480,7 @@ Here is a search response with `attach_title_to_relation=true`:
         "Region": "AWS"
       },
       "relations": {
-        "RelatedService": {
+        "microservice": {
           "identifier": "e_47MwTvQj03MpVyBx",
           "title": "admin-test"
         }
@@ -500,13 +500,13 @@ And here is the same search response with `attach_title_to_relation=false`:
 {
   "ok": true,
   "matchingBlueprints": [
-    "Region",
+    "region",
     "deployment",
     "vm",
     "microservice",
     "k8sCluster",
     "permission",
-    "RunningService"
+    "runningService"
   ],
   "entities": [
     {
@@ -522,7 +522,7 @@ And here is the same search response with `attach_title_to_relation=false`:
         "Region": "AWS"
       },
       "relations": {
-        "RelatedService": "e_47MwTvQj03MpVyBx"
+        "microservice": "e_47MwTvQj03MpVyBx"
       },
       "createdAt": "2022-07-27T17:11:04.344Z",
       "createdBy": "auth0|6278b02000955c006f9132d3",
