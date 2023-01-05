@@ -10,6 +10,8 @@ Using this template, you can easily create `argocdApp` and `argocdAppProject` Bl
 
 :::note
 Blueprints created in this template define Relations to Blueprints which are referenced in the [Full Kubernetes Exporter](../../../complete-use-cases/full-kubernetes-exporter.md) docs.
+
+This template covers ArgoCD Applications with relations to Deployments and Services, like ArgoCD's [Getting Started](https://argo-cd.readthedocs.io/en/stable/getting_started/) application `guestbook-ui`.
 :::
 
 ![Blueprints](../../../../static/img/integrations/k8s-exporter/argocd/blueprints.png)
