@@ -34,7 +34,7 @@ Before we dive into the details of each [Blueprint](../software-catalog/blueprin
   - In this example environments will be reported using Port's Terraform Provider.
 - **Deployment Config** - a representation of the current “live” version of a service running in a specific environment. It will include references to the service, environment, and deployment, as well as real-time information such as status, uptime, and any other relevant metadata.
   - In this example deployment configs will be reported manually.
-- **Deployment Service Pod** - pods (instances) of a service. It includes a reference to the deployment config and details such as the specification and runtime status of containers.
+- **Deployed Service Pod** - pods (instances) of a service. It includes a reference to the deployment config and details such as the specification and runtime status of containers.
   - In this example deployment service pods will be reported using Port's Kubernetes Exporter.
 - **Deployment** - an object representing a CD job. It includes the version of the deployed service and a link to the job itself. Unlike other objects, the deployment is an immutable item in the software catalog. It is important to keep it immutable to ensure the catalog remains reliable.
   - In this example deployments will be reported using Port's GitHub Action as part of the deployment process.
@@ -54,7 +54,7 @@ The Blueprint JSON provided below already includes the Relations between the dif
 
 ```json showLineNumbers
 {
-  "identifier": "Service",
+  "identifier": "service",
   "title": "Service",
   "icon": "Service",
   "schema": {
@@ -128,8 +128,8 @@ After creating the initial service Blueprint, return to the Blueprint and replac
 
 ```json showLineNumbers
 "relations": {
-  "depends_on": {
-    "target": "Service",
+  "service": {
+    "target": "service",
     "description": "Other services this service depends on",
     "many": true,
     "required": false,
@@ -145,7 +145,7 @@ After creating the initial service Blueprint, return to the Blueprint and replac
 
 ```json showLineNumbers
 {
-  "identifier": "Environment",
+  "identifier": "environment",
   "title": "Environment",
   "icon": "Environment",
   "schema": {
@@ -190,7 +190,7 @@ After creating the initial service Blueprint, return to the Blueprint and replac
 
 ```json showLineNumbers
 {
-  "identifier": "DeploymentConfig",
+  "identifier": "deploymentConfig",
   "title": "Deployment Config",
   "icon": "Microservice",
   "schema": {
@@ -236,15 +236,15 @@ After creating the initial service Blueprint, return to the Blueprint and replac
   "mirrorProperties": {},
   "calculationProperties": {},
   "relations": {
-    "Environment": {
+    "environment": {
       "title": "Environment",
-      "target": "Environment",
+      "target": "environment",
       "required": false,
       "many": false
     },
-    "Service": {
+    "service": {
       "title": "Service",
-      "target": "Service",
+      "target": "service",
       "required": false,
       "many": false
     }
@@ -255,11 +255,11 @@ After creating the initial service Blueprint, return to the Blueprint and replac
 </details>
 
 <details>
-<summary>Deployment Service Pod Blueprint JSON</summary>
+<summary>Deployed Service Pod Blueprint JSON</summary>
 
 ```json showLineNumbers
 {
-  "identifier": "DeployedServicePod",
+  "identifier": "deployedServicePod",
   "title": "Deployed Service Pod",
   "icon": "Cluster",
   "schema": {
@@ -298,13 +298,13 @@ After creating the initial service Blueprint, return to the Blueprint and replac
   },
   "mirrorProperties": {
     "Environment": {
-      "path": "DeploymentConfig.Environment.$identifier"
+      "path": "deploymentConfig.environment.$identifier"
     }
   },
   "calculationProperties": {},
   "relations": {
-    "DeploymentConfig": {
-      "target": "DeploymentConfig",
+    "deploymentConfig": {
+      "target": "deploymentConfig",
       "required": false,
       "many": false
     }
@@ -319,7 +319,7 @@ After creating the initial service Blueprint, return to the Blueprint and replac
 
 ```json showLineNumbers
 {
-  "identifier": "Deployment",
+  "identifier": "deployment",
   "title": "Deployment",
   "icon": "Deployment",
   "schema": {
@@ -347,18 +347,18 @@ After creating the initial service Blueprint, return to the Blueprint and replac
   "mirrorProperties": {
     "awsRegion": {
       "title": "AWS Region",
-      "path": "DeploymentConfig.Environment.awsRegion"
+      "path": "deploymentConfig.environment.awsRegion"
     },
     "deploymentService": {
       "title": "Deployment Service",
-      "path": "DeploymentConfig.Service.deploymentService"
+      "path": "deploymentConfig.service.deploymentService"
     }
   },
   "calculationProperties": {},
   "relations": {
-    "DeploymentConfig": {
+    "deploymentConfig": {
       "title": "Deployment Config",
-      "target": "DeploymentConfig",
+      "target": "deploymentConfig",
       "required": false,
       "many": false
     }
@@ -404,7 +404,7 @@ provider "port-labs" {
 resource "port-labs_entity" "production" {
   identifier = "production"
   title      = "Production"
-  blueprint  = "Environment"
+  blueprint  = "environment"
   properties {
     name  = "awsRegion"
     value = "eu-west-1"
@@ -451,7 +451,7 @@ Here is an example `port.yml` file for a service called `Notification Service`:
 ```yml showLineNumbers
 identifier: notification-service
 title: Notification Service
-blueprint: Service
+blueprint: service
 properties:
   slackChannel: "https://yourslack.slack.com/archives/CHANNEL-ID"
   onCall: "Mor P"
@@ -467,7 +467,7 @@ Before, you created a Relation from the service Blueprint to itself. That Relati
 
 ```yml showLineNumbers
 relations:
-  depends_on:
+  service:
     - authorization-service
     - authentication-service
     - mailer-service
@@ -501,8 +501,8 @@ Let's manually create a deployment config Entity for the `Notification Service` 
     "locked": false
   },
   "relations": {
-    "Environment": "production",
-    "Service": "notification-service"
+    "environment": "production",
+    "service": "notification-service"
   }
 }
 ```
@@ -520,7 +520,7 @@ CLIENT_SECRET = 'YOUR_CLIENT_SECRET'
 
 API_URL = 'https://api.getport.io/v1'
 
-target_blueprint = 'DeploymentConfig'
+target_blueprint = 'deploymentConfig'
 
 credentials = {'clientId': CLIENT_ID, 'clientSecret': CLIENT_SECRET}
 
@@ -543,8 +543,8 @@ entity = {
         "locked": False
     },
     "relations": {
-        "Environment": "production",
-        "Service": "notification-service"
+        "environment": "production",
+        "service": "notification-service"
     }
 }
 
@@ -556,7 +556,7 @@ print(response.json())
 
 </details>
 
-### Deployment Service Pod - K8s Exporter
+### Deployed Service Pod - K8s Exporter
 
 A deployment service pod represents an instance of a deployed service. A deployment service pod has a `deployment config` tied to it, which represents the deployed service that the pod is an instance of.
 
@@ -575,7 +575,7 @@ resources:
         mappings:
           - identifier: .metadata.name
             title: .metadata.name
-            blueprint: '"DeployedServicePod"'
+            blueprint: '"deployedServicePod"'
             properties:
               startTime: .status.startTime
               phase: .status.phase
@@ -583,7 +583,7 @@ resources:
               containers: (.spec.containers | map({image, resources})) + .status.containerStatuses | group_by(.image) | map(add)
               conditions: .status.conditions
             relations:
-              DeploymentConfig: .metadata.labels."app.kubernetes.io/name" + "-prod"
+              deploymentConfig: .metadata.labels."app.kubernetes.io/name" + "-prod"
 ```
 
 </details>
@@ -624,7 +624,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           identifier: notification-service-prod-${{ env.SHA_SHORT }}
           title: Notification-Service-Production-${{ env.SHA_SHORT }}
-          blueprint: Deployment
+          blueprint: deployment
           properties: |
             {
                "jobUrl": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
@@ -634,7 +634,7 @@ jobs:
             }
           relations: |
             {
-               "DeploymentConfig": "notification-service-prod"
+               "deploymentConfig": "notification-service-prod"
             }
 ```
 

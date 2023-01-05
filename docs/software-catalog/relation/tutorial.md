@@ -31,7 +31,7 @@ An editor window will open with the current schema of the Blueprint. Since there
 "relations": {
   "packages": {
       "title": "Package",
-      "target": "Package",
+      "target": "package",
       "required": false,
       "many": true
   }
@@ -72,9 +72,9 @@ import requests
 
 API_URL = 'https://api.getport.io/v1'
 
-source_blueprint_name = 'Microservice'
+source_blueprint_name = 'microservice'
 
-target_blueprint_name = 'Package'
+target_blueprint_name = 'package'
 
 relation_name = 'packages'
 
@@ -115,9 +115,9 @@ const axios = require("axios").default;
 
 const API_URL = "https://api.getport.io/v1";
 
-const sourceBlueprintName = "Microservice";
+const sourceBlueprintName = "microservice";
 
-const targetBlueprintName = "Package";
+const targetBlueprintName = "package";
 
 const relationName = "packages";
 

@@ -37,11 +37,11 @@ the latest versions of the charts. You can then run `helm search repo port-labs`
 For example, in order to export your Kubernetes `Replica Sets` and `Pods` to Port, you may use the following Port Blueprints definitions, and `config.yaml`:
 
 <details>
-<summary> DeploymentConfig Blueprint </summary>
+<summary> Deployment Config Blueprint </summary>
 
 ```json showLineNumbers
 {
-  "identifier": "DeploymentConfig",
+  "identifier": "deploymentConfig",
   "title": "Deployment Config",
   "icon": "Cluster",
   "schema": {
@@ -98,11 +98,11 @@ For example, in order to export your Kubernetes `Replica Sets` and `Pods` to Por
 </details>
 
 <details>
-<summary> DeployedServicePod Blueprint </summary>
+<summary> Deployed Service Pod Blueprint </summary>
 
 ```json showLineNumbers
 {
-  "identifier": "DeployedServicePod",
+  "identifier": "deployedServicePod",
   "title": "Deployed Service Pod",
   "icon": "Cluster",
   "schema": {
@@ -142,8 +142,8 @@ For example, in order to export your Kubernetes `Replica Sets` and `Pods` to Por
   "mirrorProperties": {},
   "calculationProperties": {},
   "relations": {
-    "DeploymentConfig": {
-      "target": "DeploymentConfig",
+    "deploymentConfig": {
+      "target": "deploymentConfig",
       "required": false,
       "many": false
     }
@@ -166,7 +166,7 @@ resources: # List of K8s resources to list, watch, and export to Port.
         mappings: # Mappings between one K8s object to one or many Port Entities. Each value is a JQ query.
           - identifier: .metadata.name
             title: .metadata.name
-            blueprint: '"DeploymentConfig"'
+            blueprint: '"deploymentConfig"'
             properties:
               creationTimestamp: .metadata.creationTimestamp
               annotations: .metadata.annotations
@@ -179,7 +179,7 @@ resources: # List of K8s resources to list, watch, and export to Port.
         mappings:
           - identifier: .metadata.name
             title: .metadata.name
-            blueprint: '"DeployedServicePod"'
+            blueprint: '"deployedServicePod"'
             properties:
               startTime: .status.startTime
               phase: .status.phase
@@ -187,7 +187,7 @@ resources: # List of K8s resources to list, watch, and export to Port.
               containers: (.spec.containers | map({image, resources})) + .status.containerStatuses | group_by(.image) | map(add)
               conditions: .status.conditions
             relations:
-              DeploymentConfig: .metadata.ownerReferences[0].name
+              deploymentConfig: .metadata.ownerReferences[0].name
 ```
 
 </details>

@@ -140,7 +140,7 @@ Here is an action array with a `CREATE` action already filled in:
 ```json showLineNumbers
 [
   {
-    "identifier": "Create",
+    "identifier": "create",
     "title": "Create",
     "userInputs": {
       "properties": {
@@ -186,7 +186,7 @@ Let's go back to the actions array of our `Microservice` Blueprint and paste in 
 ```json showLineNumbers
 [
   {
-    "identifier": "Create",
+    "identifier": "create",
     "title": "Create",
     "userInputs": {
       "properties": {
@@ -211,7 +211,7 @@ Let's go back to the actions array of our `Microservice` Blueprint and paste in 
     "description": "This will create a new microservice repo"
   },
   {
-    "identifier": "Deploy",
+    "identifier": "deploy",
     "title": "Deploy",
     "icon": "Deployment",
     "userInputs": {
@@ -240,7 +240,7 @@ Let's go back to the actions array of our `Microservice` Blueprint and paste in 
     "description": "This will deploy the microservice"
   },
   {
-    "identifier": "Delete",
+    "identifier": "delete",
     "title": "Delete",
     "userInputs": {
       "properties": {},
@@ -275,7 +275,7 @@ For instance, you can add 2 `Create` Self-Service Actions to the `Microservice` 
 ```json showLineNumbers
 [
   {
-    "identifier": "CreatePython",
+    "identifier": "create_python",
     "title": "Create Python",
     "userInputs": {
       "properties": {
@@ -300,7 +300,7 @@ For instance, you can add 2 `Create` Self-Service Actions to the `Microservice` 
     "description": "This will create a new Python microservice repo"
   },
   {
-    "identifier": "CreateGo",
+    "identifier": "create_go",
     "title": "Create Go",
     "userInputs": {
       "properties": {
@@ -343,7 +343,7 @@ The basic structure of a Self-Service Action:
 
 ```json showLineNumbers
 {
-  "identifier": "UniqueID",
+  "identifier": "unique_id",
   "title": "Title",
   "userInputs": {
     "properties": {
@@ -566,7 +566,7 @@ Here is an example `payload` object for a `CREATE` action:
     "entity": null,
     "action": {
         "id": "action_lGviYLG6W5U9o2Qq",
-        "identifier": "Create",
+        "identifier": "create",
         "title": "Create",
         "userInputs": {
             "properties": {
