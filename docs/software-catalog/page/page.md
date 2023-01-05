@@ -34,11 +34,11 @@ A tab is a sub-page within a page.
 
 Pages can be separated into several tabs, each of which is a page that holds one or more widgets.
 
-**Default Tabs:**
+Default tabs:
 
-- Overview
-- Runs
-- Audit Log
+- Overview;
+- Runs;
+- Audit Log.
 
 ## Blueprint page
 
@@ -67,7 +67,7 @@ In order to edit or delete the default Blueprint page, you need to edit or delet
 It's possible to filter, sort, group by, and use the table widget controls to change the layout of the default Blueprint page directly from the default page.
 :::
 
-All page operations are available on the right top bar, as shown here: (in line with the table above)
+All **page** operations are available on the right top bar, as shown here: (in line with the table above)
 
 ![Page operations marked](../../../static/img/software-catalog/pages/PageOperationsMarked.png)
 
@@ -135,7 +135,7 @@ We highly recommend using the table operations to provide a clean and accurate v
 
 :::
 
-All table operations are available on the top bar of the table:
+All **table** operations are available on the top bar of the table:
 
 ![Table operations bar](../../../static/img/software-catalog/pages/TableOperationsBar.png)
 
