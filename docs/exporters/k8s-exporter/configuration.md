@@ -31,6 +31,13 @@ helm install my-port-k8s-exporter port-labs/port-k8s-exporter \
 | `secret.secrets.portClientSecret` | Port Client Secret                                                              |
 | `configMap.config`                | Port K8s Exporter `config.yaml`. Look at [Quickstart](./quickstart) for example |
 
+### Security Configuration
+
+| Parameter               | Description                                                                                                                                                                                     | Default | Example                                                     |
+| ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ----------------------------------------------------------- |
+| `clusterRole.apiGroups` | The API groups that the K8s Exporter will be granted access to. Make sure to grant access to the relevant API groups, with respect to the resources that you've configured in the `config.yaml` | `{'*'}` | `--set clusterRole.apiGroups="{argoproj.io,'',apps}"`       |
+| `clusterRole.resources` | The resources that the K8s Exporter will be granted access to. Make sure to grant access to the relevant resources, with respect to the resources that you've configured in the `config.yaml`   | `{'*'}` | `--set clusterRole.resources="{rollouts,pods,replicasets}"` |
+
 ### Advanced Configuration
 
 | Parameter          | Description                                                                                                                                                                                                                                                                                                      | Default                                                                                                                                                      | Use-Cases                                                                                                                                                                                                                                                                                   |
