@@ -12,7 +12,7 @@ title: Exporting pull requests
 
 In this tutorial, we will export pull requests from GitHub and create matching Port Entities!
 
-1. Create a `pull-request` Blueprint and `port-app-config.yml` configuration file.
+1. Create a `pullRequest` Blueprint and `port-app-config.yml` configuration file.
 
 To export your GitHub `Pull Requests` to Port, you can use the following Port Blueprints definitions, and `port-app-config.yml`:
 
@@ -21,7 +21,7 @@ To export your GitHub `Pull Requests` to Port, you can use the following Port Bl
 
 ```json showLineNumbers
 {
-  "identifier": "pull-request",
+  "identifier": "pullRequest",
   "title": "Pull Request",
   "schema": {
     "properties": {
@@ -96,9 +96,9 @@ resources:
     port:
       entity:
         mappings:
-          identifier: ".head.repo.name + (.id|tostring)"
+          identifier: ".head.repo.name + (.id|tostring)" # The Entity identifier will be the repository name + the pull request ID. After the Entity is created, the exporter will send `PATCH` requests to update this pull request within Port.
           title: ".title"
-          blueprint: '"pull-request"'
+          blueprint: '"pullRequest"'
           properties:
             creator: ".user.login"
             assignees: ".assignees[].login"
@@ -130,7 +130,7 @@ Now you can view and query all of your Pull Requests as Port Entities!
 
 ![Developer Portal GitHub Pull Requests](../../../static/img/integrations/github-app/GitHubPullRequests.png)
 
-You can also see the description in markdown format inside the [Specific Entity Page](../../software-catalog/entity/entity.md#entity-page)
+You can also see the description in markdown format inside the [Specific Entity Page](../../software-catalog/entity/entity.md#entity-page).
 
 ![Developer Portal GitHub Pull Request Description](../../../static/img/integrations/github-app/PullRequestDescription.png)
 

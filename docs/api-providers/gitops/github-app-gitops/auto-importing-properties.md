@@ -34,7 +34,7 @@ You can choose to include only a subset of the auto importable properties shown 
 
 ```json showLineNumbers
 {
-  "identifier": "Microservice",
+  "identifier": "microservice",
   "title": "Microservice",
   "icon": "Microservice",
   "calculationProperties": {},

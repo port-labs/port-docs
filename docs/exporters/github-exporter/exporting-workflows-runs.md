@@ -10,7 +10,7 @@ title: Exporting workflows runs
 
 In this tutorial, we will export workflows runs from GitHub and create matching Port Entities!
 
-1. Create a `workflow-run` Blueprint and `port-app-config.yml` configuration file.
+1. Create a `workflowRun` Blueprint and `port-app-config.yml` configuration file.
 
 To export your GitHub `Workflows Runs` to Port, you can use the following Port Blueprints definitions, and `port-app-config.yml`:
 
@@ -19,7 +19,7 @@ To export your GitHub `Workflows Runs` to Port, you can use the following Port B
 
 ```json showLineNumbers
 {
-  "identifier": "workflow-run",
+  "identifier": "workflowRun",
   "title": "Workflow Run",
   "icon": "Github",
   "schema": {
@@ -139,7 +139,7 @@ resources:
         mappings:
           identifier: ".repository.name + (.id|tostring)"
           title: ".display_title"
-          blueprint: '"workflow-run"'
+          blueprint: '"workflowRun"'
           properties:
             name: ".name"
             triggeringActor: ".triggering_actor.login"

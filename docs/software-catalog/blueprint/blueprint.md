@@ -38,7 +38,7 @@ Each Blueprint is represented by a [Json schema](https://json-schema.org/), as s
 
 ```json showLineNumbers
 {
-  "identifier": "UniqueID",
+  "identifier": "uniqueID",
   "title": "Title",
   "description": "Description",
   "icon": "Service",
@@ -69,15 +69,15 @@ Each Blueprint is represented by a [Json schema](https://json-schema.org/), as s
 
 ### Structure table
 
-| Field                   | Type     | Description                                                                                                   | Optional Values                                                                                                                               |
-| ----------------------- | -------- | ------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| `identifier`            | `String` | Unique identifier.<br /> Note that while the identifier is unique, it can be changed after creation           |
-| `title`                 | `String` | The Blueprint's name                                                                                          |
-| `description`           | `String` | Description for the Blueprint.<br /> This value is visible to users when hovering on the info icon in the UI. |
-| `icon`                  | `String` | Icon for the Blueprint's graph node, and Entities of the Blueprint                                            | Icon options: `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud,...` <br /><br />See the full icon list [below](#full-icon-list). |
-| `calculationProperties` | `Object` | Contains the properties that are defined using [calculation templates](./calculation-properties)              | Example: "`repo-link`": "`https://github.com/{{$identifier}}`"                                                                                |
-| `schema`                | `Object` | Object containing two more nested fields, including `properties` and `required`                               | See the schema structure [here](#blueprint-schema).                                                                                           |
-| `changelogDestination`  | `Object` | Defines the destination where events that happen within the Blueprint's context will be delivered             | See the object structure [here](#changelog-destination).                                                                                      |
+| Field                   | Type     | Description                                                                                                                                       | Optional Values                                                                                                                               |
+| ----------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `identifier`            | `String` | Unique identifier.<br /> Note that while the identifier is unique, it [can be changed](./tutorial.md/#update-blueprint-identifier) after creation |
+| `title`                 | `String` | Blueprint's name.                                                                                                                                 |
+| `description`           | `String` | Description for the Blueprint.<br /> The value is visible to users when hovering over the info icon in the UI.                                    |
+| `icon`                  | `String` | Icon for the Blueprint's graph node and Entities of the Blueprint.                                                                                | Icon options: `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud,...` <br /><br />See the full icon list [below](#full-icon-list). |
+| `calculationProperties` | `Object` | Contains the properties defined using [calculation templates](./calculation-properties).                                                          | Example: "`repo-link`": "`https://github.com/{{$identifier}}`"                                                                                |
+| `schema`                | `Object` | An object containing two more nested fields, including `properties` and `required`.                                                               | See the schema structure [here](#blueprint-schema).                                                                                           |
+| `changelogDestination`  | `Object` | Defines a destination where change events in the Blueprint or Blueprint's Entities will be sent to                                                | See the object structure [here](#changelog-destination).                                                                                      |
 
 #### Special blueprint fields
 
@@ -89,7 +89,7 @@ Each Blueprint is represented by a [Json schema](https://json-schema.org/), as s
 #### Full icon list
 
 :::info Available Icons
-`Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud, Cluster, CPU, Customer, Datadog, DefaultEntity, DefaultProperty, DeployedAt, Deployment, DevopsTool, Docs, Environment, Git, Github, GitVersion, GoogleCloud, GPU, Grafana, Jenkins, Lambda, Link, Lock, Microservice, Moon, Node, Okta, Package, Permission, Server, Service, Terraform`
+`Actions, Airflow, AmazonEKS, Ansible, ApiDoc, Argo, AuditLog, Aws, Azure, BitBucket, Blueprint, Bucket, Clickup, Cloud, Cluster, Codefresh, Confluence, Coralogix, CPU, Customer, Datadog, Day2Operation, DefaultBlueprint, DefaultProperty, DeployedAt, Deployment, DevopsTool, Docs, EC2, EmptyBox, Environment, Falcosidekick, Git, Github, GitVersion, GoogleCloud, GoogleCloudPlatform, GPU, Grafana, Infinity, Jenkins, Jira, Kafka, Kiali, kibana, Lambda, Link, Lock, logz, Microservice, Moon, Node, Okta, Package, Permission, Prometheus, Relic, S3, Server, Service, Slack, Team, Terraform, TwoUsers, Users, UserSmall`
 :::
 
 #### Blueprint schema
@@ -124,15 +124,15 @@ For Example:
 
 Now let's look at the structure of this property definition and also explore the entire set of options for a single property:
 
-| Field         | Type                    | Description                                                                                                                                                                                                                                                   |
-| ------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `title`       | `String`                | Property name                                                                                                                                                                                                                                                 |
-| `type`        | `String`                | **Mandatory field.** The data type of the property. You can explore all available types in the [Property Types](#property-types) section                                                                                                                      |
-| `format`      | `String`                | Specific data format to pair with some of the available types. You can explore all formats in the [String Formats](#string-property-formats) section                                                                                                          |
-| `pattern`     | `String`                | [Regular expression](https://en.wikipedia.org/wiki/Regular_expression) (regex) pattern to specify the set of allowed values for the property. You can see an example in the [String regular expression patterns](#string-regular-expression-patterns) section |
-| `default`     | Should match the `type` | Default value for this property in case an Entity is created without explicitly providing a value.                                                                                                                                                            |
-| `icon`        | `String`                | Icon for the property column in the Blueprint page, in the [Entity page](../entity#entity-page) and in the [Entity creation](../../software-catalog/entity/tutorial.md#from-the-ui) form <br /><br />See the full icon list [above](#full-icon-list).         |
-| `description` | `String`                | Description of the property.<br /> This value is visible to users when hovering on the info icon in the UI. It provides detailed information about the use of a specific property.                                                                            |
+| Field         | Type                    | Description                                                                                                                                                                                                                                           |
+| ------------- | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `title`       | `String`                | Property name                                                                                                                                                                                                                                         |
+| `type`        | `String`                | **Mandatory field.** The data type of the property. You can explore all available types in the [Property Types](#property-types) section                                                                                                              |
+| `format`      | `String`                | Specific data format to pair with some of the available types. You can explore all formats in the [Formats](#format) section                                                                                                                          |
+| `pattern`     | `String`                | [Regular expression](https://en.wikipedia.org/wiki/Regular_expression) (regex) pattern to specify the set of allowed values for the property. You can see an example in the [regular expressions](#regular-expressions) section                       |
+| `default`     | Should match the `type` | Default value for this property in case an Entity is created without explicitly providing a value.                                                                                                                                                    |
+| `icon`        | `String`                | Icon for the property column in the Blueprint page, in the [Entity page](../entity#entity-page) and in the [Entity creation](../../software-catalog/entity/tutorial.md#from-the-ui) form <br /><br />See the full icon list [above](#full-icon-list). |
+| `description` | `String`                | Description of the property.<br /> This value is visible to users when hovering on the info icon in the UI. It provides detailed information about the use of a specific property.                                                                    |
 
 :::tip
 We highly recommend you set a `description`, so your developers will understand the property’s context.
@@ -345,34 +345,6 @@ In addition, `user` format distinguishes between users by their status:
   // highlight-end
   "description": "A datetime property",
   "default": "2022-04-18T11:44:15.345Z"
-}
-```
-
-#### IPv4
-
-```json showLineNumbers
-{
-  "title": "IPv4 Property",
-  // highlight-start
-  "type": "string",
-  "format": "ipv4",
-  // highlight-end
-  "description": "An IPv4 property",
-  "default": "127.0.0.1"
-}
-```
-
-#### IPv6
-
-```json showLineNumbers
-{
-  "title": "IPv6 Property",
-  // highlight-start
-  "type": "string",
-  "format": "ipv6",
-  // highlight-end
-  "description": "An IPv6 property",
-  "default": "0000:0000:0000:0000:0000:0000:0000:0000"
 }
 ```
 
@@ -594,7 +566,7 @@ List validation is useful for arrays of arbitrary length where each item matches
   "items": {
     "type": "string",
     "format": "user"
-  },
+  }
   // highlight-end
 }
 ```
@@ -675,7 +647,23 @@ The available special types and their usage examples are listed below:
 }
 ```
 
-### OpenAPI Specification
+### OpenAPI Specification as URL
+
+For more info on the `OpenAPI specification` property, refer to the [OpenAPI Widget](../widgets/open-api.md) doc.
+
+```json showLineNumbers
+{
+  "title": "Swagger",
+  // highlight-start
+  "type": "string",
+  "format": "url",
+  "spec": "open-api",
+  // highlight-end
+  "description": "Open-API Prop"
+}
+```
+
+### OpenAPI Specification as object
 
 For more info on the `OpenAPI specification` property, refer to the [OpenAPI Widget](../widgets/open-api.md) doc.
 
@@ -689,6 +677,16 @@ For more info on the `OpenAPI specification` property, refer to the [OpenAPI Wid
   "description": "Open-API Prop"
 }
 ```
+
+:::note
+
+Keep in mind that these 2 methods of getting an OpenAPI spec and rendering it as a Swagger are only differentiated by the type and format but gives the same value.
+
+1. `type: object` - you provide the complete `json` spec into Port.
+
+2. `type: string` and `format: url` - you provide a URL which the `json` spec will be fetched from
+
+:::
 
 ### Embedded URL
 

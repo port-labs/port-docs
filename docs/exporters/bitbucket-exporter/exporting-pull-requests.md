@@ -12,7 +12,7 @@ title: Exporting pull requests
 
 In this tutorial, we will export pull requests from Bitbucket and create matching Port Entities!
 
-1. Create a `pull-request` Blueprint and `port-app-config.yml` configuration file.
+1. Create a `pullRequest` Blueprint and `port-app-config.yml` configuration file.
 
 To export your Bitbucket `Pull Requests` to Port, you can use the following Port Blueprints definitions, and `port-app-config.yml`:
 
@@ -21,7 +21,7 @@ To export your Bitbucket `Pull Requests` to Port, you can use the following Port
 
 ```json showLineNumbers
 {
-  "identifier": "pull-request",
+  "identifier": "pullRequest",
   "title": "Pull Request",
   "icon": "GitVersion",
   "schema": {
@@ -80,8 +80,6 @@ To export your Bitbucket `Pull Requests` to Port, you can use the following Port
 
 </details>
 
-You have to place the `port-app-config.yml` in the repository's root folder.
-
 <details>
 
 <summary> Port port-app-config.yml </summary>
@@ -94,9 +92,9 @@ resources:
     port:
       entity:
         mappings:
-          identifier: ".destination.repository.name + (.id|tostring)"
+          identifier: ".destination.repository.name + (.id|tostring)" # The Entity identifier will be the repository name + the pull request ID. After the Entity is created, the exporter will send `PATCH` requests to update this pull request within Port.
           title: ".title"
-          blueprint: '"pull-request"'
+          blueprint: '"pullRequest"'
           properties:
             creator: ".author.display_name"
             assignees: "[.participants[].user.display_name]"
@@ -112,6 +110,7 @@ resources:
 
 :::info
 
+- See how to apply `port-app-config.yml` either on the repository level or globally [here](./configuration.md).
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform Bitbucket objects to Port Entities.
 - Click [Here](https://support.atlassian.com/bitbucket-cloud/docs/event-payloads/#Pull-request) for the Bitbucket pull request object structure.
 
@@ -125,6 +124,6 @@ Now you can view and query all of your Pull Requests as Port Entities!
 
 ![Developer Portal Bitbucket Pull Requests](../../../static/img/integrations/bitbucket-app/BitbucketPullRequests.png)
 
-You can also see the description in markdown format inside the [Specific Entity Page](../../software-catalog/entity/entity.md#entity-page)
+You can also see the description in markdown format inside the [Specific Entity Page](../../software-catalog/entity/entity.md#entity-page).
 
 ![Developer Portal Bitbucket Pull Request Description](../../../static/img/integrations/github-app/PullRequestDescription.png)

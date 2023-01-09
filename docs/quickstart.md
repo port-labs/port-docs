@@ -51,7 +51,7 @@ But for now, let's start with a simple example:
 
 Your organization uses a microservice architecture; a single **microservice** can be deployed to multiple **environments** (production, staging, QA, etc.).
 
-To create your Software Catalog, you need to to ingest and track your microservices, track your existing environments, and map out which microservice is deployed at which environment.
+To create your Software Catalog, you need to ingest and track your microservices, track your existing environments, and map out which microservice is deployed at which environment.
 
 In this tutorial you are going to create 3 Blueprints:
 
@@ -120,10 +120,6 @@ Let's head to [Port](https://app.getport.io/blueprints) and look at the Blueprin
 After clicking the button, you will see a creation form as shown below:
 
 ![Developer Portal New Blueprint Text](../static/img/quickstart/newBlueprintDefaultText.png)
-
-:::note
-When you click on `Add Blueprint`, you will see a template for a `microservice` Blueprint which is identical to the one you will create. So you can just click `save` and skip to [Environment Blueprint](#environment-blueprint).
-:::
 
 In order to create the service Blueprint, use the following JSON body:
 
@@ -245,7 +241,6 @@ In order to create the service Blueprint, use the following JSON body:
     },
     "launch-darkly": {
       "title": "Launch Darkly",
-      "icon": "Customer",
       "calculation": "'https://launchdarkly.com/' + .title",
       "type": "string",
       "format": "url"
@@ -444,7 +439,6 @@ blueprint = {
       },
       "launch-darkly": {
         "title": "Launch Darkly",
-        "icon": "Customer",
         "calculation": "'https://launchdarkly.com/' + .title",
         "type": "string",
         "format": "url"
@@ -1197,6 +1191,10 @@ Now you will see your new running service Entity, and if you look at the Service
 Click on the `Notification Service Prod` link in the `title` column and you will see what we call the **specific Entity page**. This page allows you to see the complete details and dependency graph of a specific Entity.
 
 ![Developer Portal Running Service specific entity page after relation](../static/img/quickstart/runningServiceSpecificEntityPageAfterRelation.png)
+
+You can also click on the `Graph` button and see a visualized view of the Entities you created and the connections between them:
+
+![Developer Portal Running Service specific entity page graph view](../static/img/quickstart/runningServiceSpecificEntityPageGraphView.png)
 
 :::info
 In our case, the specific Entity page for a running service will also show us a tab with the **microservice** the running service belongs to, and another tab with the **environment** of the running service because that is the Relation we mapped.

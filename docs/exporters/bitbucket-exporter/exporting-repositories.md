@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 5
 title: Exporting repositories
 ---
 
@@ -59,7 +59,7 @@ If you don't have a `README.md` file within the selected example repository for 
 
 </details>
 
-In order to apply the `port-app-config.yml`, place it in the repository's root folder.
+You have to place the `port-app-config.yml` in the repository's root folder.
 
 <details>
 
@@ -73,20 +73,12 @@ resources:
     port:
       entity:
         mappings:
-          identifier: ".name"
+          identifier: ".name" # The Entity identifier will be the repository name + the pull request ID. After the Entity is created, the exporter will send `PATCH` requests to update this pull request within Port. 
           title: ".name"
           blueprint: '"repository"'
           properties:
-            portAppConfigYaml: file://port-app-config.yml
-      blueprint:
-        mappings:
-          identifier: '"repository"'
-          schema:
-            properties:
-              portAppConfigYaml:
-                type: '"string"'
-                format: '"yaml"'
-                default: file://port-app-config.yml
+            readme: file://README.md # Fetch the README.md file that is within the root folder of the repository and inject it as a markdown property.
+            url: ".links.html.href" # fetch the repository URL from the Bitbucket metadata and inject it as a URL property.
 ```
 
 </details>
@@ -100,11 +92,11 @@ resources:
 
 2. Push `port-app-config.yml` to your default branch.
 
-That's it! after the push is complete, the exporter will start ingesting the entities on the next commit to the repository.
+That's it! after the push is complete, the exporter will start ingesting the Entities on the next commit to the repository.
 
 ![Developer Portal Microservice](../../../static/img/integrations/bitbucket-app/BitbucketRepositories.png)
 
-Check out the `README.md` in markdown format inside the [Specific Entity Page](../../software-catalog/entity/entity.md#entity-page)
+Check out the `README.md` in markdown format inside the [Specific Entity Page](../../software-catalog/entity/entity.md#entity-page).
 
 ![Developer Portal Bitbucket README](../../../static/img/integrations/github-app/GitHubReadme.png)
 
@@ -122,20 +114,13 @@ resources:
     port:
       entity:
         mappings:
-          identifier: ".name"
+          identifier: ".name" # the Entity identifier will be the repository name + the pull request ID. After the creation of the Entity, the exporter will send `PATCH` requests to update this pull request within Port.
           title: ".name"
           blueprint: '"repository"'
           properties:
-            portAppConfigYaml: file://port-app-config.yml
-      blueprint:
-        mappings:
-          identifier: '"repository"'
-          schema:
-            properties:
-              portAppConfigYaml:
-                type: '"string"'
-                format: '"yaml"'
-                default: file://port-app-config.yml
+            swagger: file://open-api.json # fetching the open-api file that is within the root folder of the repository and injecting it as a swagger property
+            readme: file://README.md # fetching the README.md file that is within the root folder of the repository and injecting it as a markdown property
+            url: ".links.html.href" # fetching from Bitbucket metadata the repository url and injecting it as a url proeprty
 ```
 
 </details>

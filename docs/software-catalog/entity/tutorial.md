@@ -16,7 +16,7 @@ There are 2 methods to create Entities:
 - API.
 
 :::info
-We will be creating Entities for the `Microservice` Blueprint from [Creating a Blueprint](../blueprint/tutorial.md#creating-a-blueprint) and the `package` Blueprint from [Blueprint Next Steps](../blueprint/tutorial.md#next-steps). Please make sure to create them before reading on so you to follow along.
+We will be creating Entities for the `microservice` Blueprint from [Creating a Blueprint](../blueprint/tutorial.md#creating-a-blueprint) and the `package` Blueprint from [Blueprint Next Steps](../blueprint/tutorial.md#next-steps). Please make sure to create them before reading on so you to follow along.
 :::
 
 :::note
@@ -31,11 +31,11 @@ First go to the `Microservices` page:
 
 ![Developer Portal Blueprints graph Packages page marked](../../../static/img/software-catalog/entity/tutorial/BlueprintsGraphPackagesPageMarked.png)
 
-To create a new `Package` click the `+ Package` button:
+To create a new `package` click the `+ Package` button:
 
 ![Developer Portal create Package](../../../static/img/software-catalog/entity/tutorial/PackagesPageCreatePackageMarked.png)
 
-A UI form will open with the properties we created for the `Microservice` Blueprint:
+A UI form will open with the properties we created for the `microservice` Blueprint:
 
 ![Developer Portal create Package creation form](../../../static/img/software-catalog/entity/tutorial/CreatePackageModal.png)
 
@@ -48,7 +48,7 @@ Every entity has a format similar to the one we explained in the [Understanding 
   "identifier": "requests-pkg-v2-28",
   "title": "Requests",
   "team": "",
-  "blueprint": "Package",
+  "blueprint": "package",
   "properties": {
     "version": "2.28",
     "inHouse": false
@@ -65,7 +65,7 @@ Remember that an access token is needed to make API requests, refer back to [Get
 
 #### Creating an entity
 
-Let's create a new `Package` using the API. Our entity is based on the `Package` Blueprint structure.
+Let's create a new `package` using the API. Our entity is based on the `package` Blueprint structure.
 
 Our first step will be to make a POST request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities`.
 
@@ -95,7 +95,7 @@ headers = {
     'Authorization': f'Bearer {access_token}'
 }
 
-blueprint_id = 'Package'
+blueprint_id = 'package'
 
 entity = {
   'identifier': 'requests-pkg-v2-28',
@@ -128,7 +128,7 @@ const axios = require("axios").default;
 
 const API_URL = "https://api.getport.io/v1";
 
-const blueprintId = "Package";
+const blueprintId = "package";
 
 const config = {
   headers: {
@@ -163,7 +163,7 @@ const response = await axios.post(
 ```bash showLineNumbers
 # the access_token variable should already have the token from the previous example
 
-blueprint_id='Package'
+blueprint_id='package'
 
 curl --location --request POST "https://api.getport.io/v1/blueprints/${blueprint_id}/entities" \
 	--header "Authorization: Bearer $access_token" \
@@ -239,7 +239,146 @@ A PATCH request has a specific format that allows precise changes in an existing
 To Edit a specific property, for example: `version`, send a PATCH request with the following body:
 
 ```json showLineNumbers
-properties': {"version": "2.29"}
+{ "properties": { "version": "2.29" } }
+```
+
+### Update Entity identifier
+
+There are two methods to change an Entity's identifier:
+
+#### From the UI
+
+1. In either the matching Blueprint page or [Entity page](./entity.md#entity-page), click the 3 dots (`...`) button and then click the `Edit` button;
+2. Update the value of the `identifier` key to the new identifier;
+3. Click `Update`.
+
+#### PUT request
+
+Make an HTTP PUT request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{old_entity_identifier}` with the following JSON body:
+
+```json showLineNumbers
+{
+  "identifier": "new_entity_identifier",
+  ...ORIGINAL ENTITY DEFINITION
+}
+```
+
+Entity definition JSON, after updating the value of the `identifier` key in the request body to the new identifier.
+
+#### PATCH request
+
+Make an HTTP PATCH request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{old_entity_identifier}` with the following JSON body:
+
+```json showLineNumbers
+{
+  "identifier": "new_entity_identifier"
+}
+```
+
+### Remove Relations
+
+#### From the API
+
+The API offers several methods to remove the relations mapping from an existing Entity:
+
+:::note
+If a blueprint's relation type is `"many": true` - by setting the specific Relation key to `null` on the Entity, the mapped related Entities will be removed.
+:::
+
+##### POST request **(with upsert: true)**
+
+Make a **HTTP POST** request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}?upsert=true`, for example:
+
+To remove a mapped related Entity from a `"many": true` relation (for example: `environment`), send a POST request with the following body:
+
+```json showLineNumbers
+{
+  "identifier": "requests-pkg-v2-28",
+  "title": "Requests",
+  "team": "",
+  "properties": {
+    ...
+  },
+  "relations": {
+    "environment": [//All the relations identifiers but the one you want to remove]
+  }
+}
+```
+
+To remove a mapped related Entity from a `"many": false` relation (for example: `environment`), send a POST request with the following body:
+
+```json showLineNumbers
+{
+  "identifier": "requests-pkg-v2-28",
+  "title": "Requests",
+  "team": "",
+  "properties": {
+    ...
+  },
+  "relations": {
+    "environment": null
+  }
+}
+```
+
+##### PUT request
+
+Make a **HTTP PUT** request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`, for example:
+
+To remove a mapped related Entity from a `"many": true` relation (for example: `environment`), send a PUT request with the following body:
+
+```json showLineNumbers
+{
+  "identifier": "requests-pkg-v2-28",
+  "title": "Requests",
+  "team": "",
+  "properties": {
+    ...
+  },
+  "relations": {
+    "environment": [//All the relations identifiers but the one you want to remove]
+  }
+}
+```
+
+To remove a mapped related Entity from a `"many": false` relation (for example: `environment`), send a PUT request with the following body:
+
+```json showLineNumbers
+{
+  "identifier": "requests-pkg-v2-28",
+  "title": "Requests",
+  "team": "",
+  "properties": {
+    ...
+  },
+  "relations": {
+    "environment": null
+  }
+}
+```
+
+##### PATCH request
+
+Make a **HTTP PATCH** request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`, for example:
+
+To remove a mapped related Entity from a `"many": true` relation (for example: `environment`), send a PATCH request with the following body:
+
+```json showLineNumbers
+{
+  "relations": {
+    "environment": [//All the relations identifiers but the one you want to remove]
+  }
+}
+```
+
+To remove a mapped related Entity from a `"many": false` relation (for example: `environment`), send a PATCH request with the following body:
+
+```json showLineNumbers
+{
+  "relations": {
+    "environment": null
+  }
+}
 ```
 
 ## Delete Entities
@@ -297,7 +436,7 @@ Now, let's create a `microservice` Entity (Either from the `microservice` page o
 ```
 
 :::note
-Since `Microservice` is **Related** to `Package` when creating a new package we will see an additional field(s) representing the Relation(s).
+Since `microservice` is **Related** to `package` when creating a new package we will see an additional field(s) representing the Relation(s).
 
 - When a Relation is configured `many = false` - selecting a related Entity is done according to the Entity title (via the UI), or according to the Entity identifier (via the JSON editor);
 - When a Relation is configured `many = true` - selecting related Entities will open up a new JSON editor with an array format where you can type in the identifiers of the related Entities.

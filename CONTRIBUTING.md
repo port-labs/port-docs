@@ -12,9 +12,9 @@ Contributions are very welcome. If you think you need help planning your contrib
 
 ## Styling guidelines
 
-### Capital Letters
+### Capital letters
 
-1. **Headlines** - All titles should look the same throughout the whole document. Please make sure that capital letters in headlines adhere to the following rules (Most of these rules are already enforced using CSS)
+1. **Headlines** - All titles should look the same throughout the whole document. Please make sure that capital letters in headlines adhere to the following rules
    1. **Section headlines (H1)** - capital letters throughout the headlines (including propositions). For example, "Port Platform Overview".
    2. **Subtitles (H2-4)** - capital letters only for the first word of the subtitle. The rest of the sentence will be in lowercase letters. For example: "Our building-space".
    3. **Notice/tip/info boxes** - All letters will be capital letters.
@@ -42,7 +42,7 @@ Contributions are very welcome. If you think you need help planning your contrib
    2. Two;
    3. Three.
 
-### Writing Style
+### Writing style
 
 1. Pay attention to writing "the … **will** look like this", instead of "the … should **look** like this". It shows more confidence.
 2. Write the docs in second person grammar, and not in third person grammar. For example: "**you** should do this" instead of "**we** will do this".
@@ -50,6 +50,18 @@ Contributions are very welcome. If you think you need help planning your contrib
 4. Make sure the spacing between different types of lines is the same throughout the whole document.
 5. When referring to someone performing an action that isn’t the docs reader, refer to them in a plural word, and not in second body grammer. For example, “they can use”, instead of “he can use”.
 6. Try avoiding adding “ing” to actions. For example, “reacting to” compared to “react to”.
+
+### Code examples and snippets
+
+1. Try to make use of existing code examples to write new ones, they already list and implement most of the basic helper functions so they can save you time and keep a consistent code format.
+2. When naming Blueprints, entities and relations use the following guidelines:
+   1. Blueprint identifiers: should use camelCase styling with the first letter of a phrase always being a lower letter, for example: `microservice`, `deploymentConfig`, `servicePod`, etc.
+   2. Blueprint titles: should use the section headlines (H1) rules: capital letters throughout the headlines.
+   3. Entity identifiers: should use kebab-case styling with letters always being lower, for example: `notification-service`, `recommendation-service`, `authentication`, etc.
+   4. Entity titles: Should use the section headlines (H1) rules: capital letters throughout the headlines.
+   5. Relation identifiers: should follow the name of the matching target blueprint, for example: a relation from microservice to package should use the `package` identifier, because that is the identifier of the `package` blueprint.
+   6. Relation titles: should usually follow the title of the matching target blueprint.
+   7. Self-Service Action identifiers: should use snake_case styling with letters always being lower, for example: `add_secret`, `create_bucket`, etc.
 
 ## Contributor License Agreement (CLA)
 
