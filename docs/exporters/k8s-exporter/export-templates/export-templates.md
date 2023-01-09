@@ -8,7 +8,7 @@ As shown in the [Mapping Kubernetes resources](../../../complete-use-cases/full-
 It is also possible to export and map CRDs from your K8s cluster using the exporter. To obtain all of the resource types you can query in your cluster, you can run:
 
 ```bash showLineNumbers
-kubectl api-resources
+$ kubectl api-resources
 ```
 
 For example, to figure out how to map your ArgoCD resources, you can run:
