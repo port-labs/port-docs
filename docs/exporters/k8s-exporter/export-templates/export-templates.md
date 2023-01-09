@@ -30,7 +30,7 @@ Then, in order to map ArgoCD `applications`, add the matching resource kind to y
   ...
 ```
 
-We created some pre-built Port K8s exporter templates covering different applications.
+We created several pre-built Port K8s exporter templates covering different applications.
 Each template will include:
 
 - Blueprints for the application, both in `JSON` and in `.tf` format for use with Port's [Terraform provider](../../../api-providers/terraform.md).
