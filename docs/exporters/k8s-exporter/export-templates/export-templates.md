@@ -20,7 +20,7 @@ applicationsets                   appset,appsets     argoproj.io/v1alpha1       
 appprojects                       appproj,appprojs   argoproj.io/v1alpha1                   true         AppProject
 ```
 
-Then, in order to map `applications`, your `config.yaml` will contain:
+Then, in order to map ArgoCD `applications`, add the matching resource kind to your `config.yaml`:
 
 ```yaml
 - kind: argoproj.io/v1alpha1/applications
