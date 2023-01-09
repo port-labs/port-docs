@@ -13,3 +13,4 @@ Select a use case from the list below to get started:
 - [Software Templates](./software-templates.md)
 - [IaC Templates](./iac-templates.md)
 - [Package Dependency Mapping](./package-dependency-mapping.md)
+- [Mapping Kubernetes resources](./full-kubernetes-exporter.md)
