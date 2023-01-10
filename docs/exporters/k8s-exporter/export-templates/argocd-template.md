@@ -3,7 +3,7 @@
 An ArgoCD application is an Argo CRD which is responsible for managing different k8s objects, while an ArgoCD project is an Argo CRD which clusters applications.
 
 :::info
-The files to this Exporter Template can be found **[here](https://github.com/port-labs/port-k8s-exporter-use-cases/tree/main/argocd)**
+You can find the files to this exporter template **[here](https://github.com/port-labs/port-k8s-exporter-use-cases/tree/main/argocd)**
 :::
 
 Using this template, you can easily create `argocdApp` and `argocdAppProject` Blueprints, and configure your K8s exporter to query your ArgoCD resources.
