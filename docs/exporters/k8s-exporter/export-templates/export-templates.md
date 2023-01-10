@@ -11,7 +11,7 @@ It is also possible to export and map [CRDs](https://kubernetes.io/docs/concepts
 $ kubectl api-resources
 ```
 
-For example, to figure out how to map your ArgoCD resources, you can run:
+For example, in order to figure out how to map your ArgoCD resources, you can run:
 
 ```bash showLineNumbers
 $ kubectl api-resources | grep -i argo

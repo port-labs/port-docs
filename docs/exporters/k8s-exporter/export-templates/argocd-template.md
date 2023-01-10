@@ -1,9 +1,9 @@
 # ArgoCD Template
 
-An ArgoCD Application is an Argo CRD which is responsible for managing different k8s objects, while an ArgoCD project is an Argo CRD which clusters Applications.
+An ArgoCD application is an Argo CRD which is responsible for managing different k8s objects, while an ArgoCD project is an Argo CRD which clusters applications.
 
 :::info
-The files to this Exporter Template can be found **[here](https://github.com/port-labs/port-k8s-exporter-use-cases/tree/main/argocd)**
+You can find the files to this exporter template **[here](https://github.com/port-labs/port-k8s-exporter-use-cases/tree/main/argocd)**
 :::
 
 Using this template, you can easily create `argocdApp` and `argocdAppProject` Blueprints, and configure your K8s exporter to query your ArgoCD resources.
@@ -13,7 +13,7 @@ Blueprints created in this template define Relations to Blueprints which are ref
 
 Specifically the Blueprints in this example are related to the [service](https://github.com/port-labs/k8s-exporter-example/blob/main/terraform/Service.tf) and [deployment](https://github.com/port-labs/k8s-exporter-example/blob/main/terraform/Deployment.tf) Blueprints.
 
-This template covers ArgoCD Applications with Relations to Deployments and Services, like ArgoCD's [Getting Started](https://argo-cd.readthedocs.io/en/stable/getting_started/) application `guestbook-ui`.
+This template covers ArgoCD applications with Relations to deployments and services, like ArgoCD's [Getting Started](https://argo-cd.readthedocs.io/en/stable/getting_started/) application `guestbook-ui`.
 :::
 
 ![Blueprints](../../../../static/img/integrations/k8s-exporter/argocd/blueprints.png)

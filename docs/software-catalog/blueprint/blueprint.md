@@ -253,6 +253,7 @@ We currently support the following `string` formats:
 | `url`       | Formatted URL                                             | `"https://getport.io"`                    |
 | `email`     | Formatted Email                                           | `"port@getport.io"`                       |
 | `user`      | Formatted Email or any string                             | `"port@getport.io"`                       |
+| `team`      | Team name                                                 | `"Batman Team"`                           |
 | `date-time` | Formatted ISO datetime string                             | `"2022-04-18T11:44:15.345Z"`              |
 | `ipv4`      | Standard IPv4 address                                     | `127.0.0.1`                               |
 | `ipv6`      | Standard IPv6 address                                     | `FE80:CD00:0A20:0CDE:1257:1C34:211E:729C` |
@@ -319,6 +320,19 @@ In addition, `user` format distinguishes between users by their status:
 | Unregistered | ![External user](../../../static/img/software-catalog/blueprint/externalUser.png) |
 
 :::
+
+#### Team
+
+```json showLineNumbers
+{
+  "title": "Team Property",
+  // highlight-start
+  "type": "string",
+  "format": "team",
+  // highlight-end
+  "description": "A Team property"
+}
+```
 
 #### Date Time
 
@@ -553,6 +567,22 @@ List validation is useful for arrays of arbitrary length where each item matches
     "type": "string",
     "format": "user"
   }
+  // highlight-end
+}
+```
+
+#### Teams array
+
+```json showLineNumbers
+{
+  "title": "Array of Teams",
+  "description": "An array of Teams property",
+  // highlight-start
+  "type": "array",
+  "items": {
+    "type": "string",
+    "format": "team"
+  },
   // highlight-end
 }
 ```
