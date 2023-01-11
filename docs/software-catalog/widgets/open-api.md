@@ -29,7 +29,7 @@ When using URL for the `open-api` display please make sure that your server allo
 
 ## OpenAPI property definition in Blueprint schema using object
 
-When using the object type, you will have to provided the full JSON OpenAPI spec as an object to the entity
+When using the object type, you will have to provide the full JSON OpenAPI spec as an object to the entity
 
 ```json showLineNumbers
 {
