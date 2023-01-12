@@ -82,7 +82,7 @@ For example, let’s create 2 Blueprints and connect them to each other:
 {
   "identifier": "deployment",
   "title": "Deployment",
-  "icon": "Deployment",
+  "icon": "DeployedAt",
   "calculationProperties": {},
   "schema": {
     "properties": {
