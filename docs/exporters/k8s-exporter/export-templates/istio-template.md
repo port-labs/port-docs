@@ -14,6 +14,9 @@ Using this template, you can easily create `gateway` and `virtualServices` Bluep
 
 :::note
 Blueprints created in this template define Relations to Blueprints which are referenced in the [Full Kubernetes Exporter](../../../complete-use-cases/full-kubernetes-exporter.md) docs.
+
+Specifically the Blueprints in this example are related to the [service](https://github.com/port-labs/k8s-exporter-example/blob/main/terraform/Service.tf) and [namespace](https://github.com/port-labs/k8s-exporter-example/blob/main/terraform/Namespace.tf) Blueprints.
+
 :::
 
 ![Blueprints](../../../../static/img/integrations/k8s-exporter/istio/blueprints.png)
