@@ -40,3 +40,4 @@ Each template will include:
 #### Export Templates:
 
 - [ArgoCD](./argocd-template.md)
+- [Istio](./istio-template.md)
