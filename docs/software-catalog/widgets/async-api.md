@@ -47,5 +47,5 @@ Here is how the Swagger tab in the Specific Entity Page appears when an AsyncAPI
 ![AsyncAPI Example](../../../static/img/software-catalog/widgets/asyncAPI.png)
 
 :::note
-Only AsyncAPI version 2.0.0 and above is supported at the moment.
+Only AsyncAPI versions 2.0.0 up to 2.4.0 are supported at the moment.
 :::
