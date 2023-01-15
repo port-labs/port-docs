@@ -711,7 +711,7 @@ For more info on the `AsyncAPI specification` property, refer to the [AsyncAPI W
 
 :::note
 
-Keep in mind that these 2 methods of getting an OpenAPI/AsyncAPI spec and rendering it as a Swagger are only differentiated by the type and format but gives the same value.
+Keep in mind that these 2 methods of getting an OpenAPI/AsyncAPI spec and rendering it as a Swagger are only differentiated by the type and format but give the same value.
 
 1. `type: object` - you provide the complete `json` spec into Port.
 
