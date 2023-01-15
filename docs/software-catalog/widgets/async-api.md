@@ -45,3 +45,7 @@ When using the object type, you will have to provide the full JSON AsyncAPI spec
 Here is how the Swagger tab in the Specific Entity Page appears when an AsyncAPI spec is provided:
 
 ![AsyncAPI Example](../../../static/img/software-catalog/widgets/asyncAPI.png)
+
+:::note
+We're only supporting AsyncAPI 2.0.0 and above at the moment.
+:::
