@@ -84,7 +84,7 @@ You have to place the `port-app-config.yml` inside the `.github` folder or withi
 resources:
   - kind: workflow
     selector:
-      query: "true"
+      query: "true" # a JQ expression that it's output (boolean) determinating wheter to report the current resource or not
     port:
       entity:
         mappings:

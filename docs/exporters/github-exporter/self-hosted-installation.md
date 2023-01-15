@@ -44,7 +44,7 @@ In organizations that have a self-hosted GitHub installation there is no access 
   - Metadata: Readonly
   - Issues: Readonly
   - Pull Request: Read and Write
-- Repository Events:
+- Repository Events (Needed to receive webhooks of changes from GitHub):
   - Issues
   - Pull Request
   - Push

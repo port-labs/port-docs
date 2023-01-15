@@ -1,21 +1,21 @@
 ---
-sidebar_position: 5
-title: Exporting repositories
+sidebar_position: 3
+title: Exporting files
 ---
 
 :::note Prerequisites
 
-- [Please install our Bitbucket app](./installation).
+- [Please install our GitHub app](./installation).
 
 :::
 
-# Exporting repositories
+# Exporting files
 
-By the end of this tutorial, we will have a `microservice` Blueprint that contains an auto-synced `REAMDE.md` file and `repository URL` from Bitbucket to Port properties.
+By the end of this tutorial, we will have a `microservice` Blueprint that contains an auto-synced `REAMDE.md` file and `repository URL` from GitHub to Port properties.
 
 1. Create a `microservice` Blueprint and `port-app-config.yml` configuration file.
 
-To export your Bitbucket `repositories` to Port, you can use the following Port Blueprints definitions, and `port-app-config.yml`:
+To export your GitHub `repositories` to Port, you can use the following Port Blueprints definitions, and `port-app-config.yml`:
 
 :::note
 
@@ -24,13 +24,13 @@ If you don't have a `README.md` file within the selected example repository for 
 :::
 
 <details>
-<summary> Repository Blueprint </summary>
+<summary> Microservice Blueprint </summary>
 
 ```json showLineNumbers
 {
-  "identifier": "repository",
-  "title": "Repository",
-  "icon": "Service",
+  "identifier": "microservice",
+  "title": "Microservice",
+  "icon": "Microservice",
   "schema": {
     "properties": {
       "readme": {
@@ -59,7 +59,7 @@ If you don't have a `README.md` file within the selected example repository for 
 
 </details>
 
-You have to place the `port-app-config.yml` in the repository's root folder.
+In order to apply the `port-app-config.yml` in the whole organization, place it in the `.github` folder or in the `.github-private` repository in the root directory.
 
 <details>
 
@@ -69,24 +69,24 @@ You have to place the `port-app-config.yml` in the repository's root folder.
 resources:
   - kind: repository
     selector:
-      query: "true"
+      query: "true" # a JQ expression that it's output (boolean) determinating wheter to report the current resource or not
     port:
       entity:
         mappings:
-          identifier: ".name" # The Entity identifier will be the repository name + the pull request ID. After the Entity is created, the exporter will send `PATCH` requests to update this pull request within Port. 
+          identifier: ".name" # The Entity identifier will be the repository name. After the creation of the Entity the exporter will send `PATCH` requests to update this repository within Port.
           title: ".name"
-          blueprint: '"repository"'
+          blueprint: '"microservice"'
           properties:
-            readme: file://README.md # Fetch the README.md file that is within the root folder of the repository and inject it as a markdown property.
-            url: ".links.html.href" # fetch the repository URL from the Bitbucket metadata and inject it as a URL property.
+            readme: file://README.md # fetching the README.md file that is within the root folder of the repository and injecting it as a markdown property
+            url: ".html_url" # fetching from GitHub metadata the repository url and injecting it as a url proeprty
 ```
 
 </details>
 
 :::info
 
-- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform Bitbucket objects to Port Entities.
-- Click [Here](https://support.atlassian.com/bitbucket-cloud/docs/event-payloads/#Repository) for the Bitbucket repository object structure.
+- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitHub objects to Port Entities.
+- Click [Here](https://docs.github.com/en/rest/repos/repos#get-a-repository) for the GitHub repository object structure.
 
 :::
 
@@ -94,11 +94,11 @@ resources:
 
 That's it! after the push is complete, the exporter will start ingesting the Entities on the next commit to the repository.
 
-![Developer Portal Microservice](../../../static/img/integrations/bitbucket-app/BitbucketRepositories.png)
+![Developer Portal Microservice](../../../static/img/integrations/github-app/GitHubMicroservices.png)
 
 Check out the `README.md` in markdown format inside the [Specific Entity Page](../../software-catalog/entity/entity.md#entity-page).
 
-![Developer Portal Bitbucket README](../../../static/img/integrations/github-app/GitHubReadme.png)
+![Developer Portal GitHub README](../../../static/img/integrations/github-app/GitHubReadme.png)
 
 You can also have a Swagger component within the [Specific Entity Page](../../software-catalog/entity/entity.md#entity-page). To achieve that all you have to do is to add a `jq` mapping of an `open-api.json` file to the `port-app-config.yml` created above.
 
@@ -110,17 +110,17 @@ You can also have a Swagger component within the [Specific Entity Page](../../so
 resources:
   - kind: repository
     selector:
-      query: "true"
+      query: "true" # a JQ expression that it's output (boolean) determinating wheter to report the current resource or not
     port:
       entity:
         mappings:
-          identifier: ".name" # the Entity identifier will be the repository name + the pull request ID. After the creation of the Entity, the exporter will send `PATCH` requests to update this pull request within Port.
+          identifier: ".name" # The Entity identifier will be the repository name. After the Entity is created, the exporter will send `PATCH` requests to update this repository within Port.
           title: ".name"
-          blueprint: '"repository"'
+          blueprint: '"microservice"'
           properties:
             swagger: file://open-api.json # fetching the open-api file that is within the root folder of the repository and injecting it as a swagger property
             readme: file://README.md # fetching the README.md file that is within the root folder of the repository and injecting it as a markdown property
-            url: ".links.html.href" # fetching from Bitbucket metadata the repository url and injecting it as a url proeprty
+            url: ".html_url" # fetching from GitHub metadata the repository url and injecting it as a url proeprty
 ```
 
 </details>
