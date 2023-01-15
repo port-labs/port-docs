@@ -29,7 +29,7 @@ When using URL for the `async-api` display please make sure that your server all
 
 ## AsyncAPI property definition in Blueprint schema using object
 
-When using the object type, you will have to provide the full JSON AsyncAPI spec as an object to the entity
+When using the object type, you will have to provide the full JSON AsyncAPI spec as an object to the Entity
 
 ```json showLineNumbers
 {
