@@ -71,7 +71,8 @@ And save the downloaded file
 </center>
 
 - In order to make use of [Self-Service Actions using GitHub Workflow](../../self-service-actions/github-workflow), please contact us at support@getport.io.
-  :::
+
+:::
 
 ## Docker
 
