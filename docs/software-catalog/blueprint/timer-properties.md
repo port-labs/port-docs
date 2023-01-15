@@ -17,7 +17,7 @@ Timer properties allow you to define an expiration date on a specific property. 
     "prop1": {
         "title": "Timer property",
         "type": "string",
-        "format": "Timer"
+        "format": "timer"
     }
 }
 ```
