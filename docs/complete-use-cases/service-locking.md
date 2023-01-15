@@ -330,4 +330,4 @@ If you set the value of the `locked` field to `false`, the workflow will perform
 
 This was just a single example of Port's GitHub Action value in your CI/CD pipelines. By querying and creating Entities during your CI process, you can make your CI jobs even more dynamic and responsive, without having to edit `yml` files and push new code to your repository.
 
-If this use case helped you, check out our guide to [using Port in your CI/CD](../api-providers/use-port-in-your-cicd.md).
+If you're using a different CI/CD provider, be sure to checkout the rest of our [API Providers](./../api-providers/api-providers.md) to find the integration that fits your use-case.
