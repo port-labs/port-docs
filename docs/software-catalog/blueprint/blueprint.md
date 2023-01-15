@@ -582,7 +582,7 @@ List validation is useful for arrays of arbitrary length where each item matches
   "items": {
     "type": "string",
     "format": "team"
-  },
+  }
   // highlight-end
 }
 ```
@@ -678,9 +678,40 @@ For more info on the `OpenAPI specification` property, refer to the [OpenAPI Wid
 }
 ```
 
+### AsyncAPI Specification as URL
+
+For more info on the `AsyncAPI specification` property, refer to the [AsyncAPI Widget](../widgets/async-api.md) doc.
+
+```json showLineNumbers
+{
+  "title": "Swagger",
+  // highlight-start
+  "type": "string",
+  "format": "url",
+  "spec": "async-api",
+  // highlight-end
+  "description": "Async-API Prop"
+}
+```
+
+### AsyncAPI Specification as object
+
+For more info on the `AsyncAPI specification` property, refer to the [AsyncAPI Widget](../widgets/async-api.md) doc.
+
+```json showLineNumbers
+{
+  "title": "Swagger",
+  // highlight-start
+  "type": "object",
+  "spec": "async-api",
+  // highlight-end
+  "description": "Async-API Prop"
+}
+```
+
 :::note
 
-Keep in mind that these 2 methods of getting an OpenAPI spec and rendering it as a Swagger are only differentiated by the type and format but gives the same value.
+Keep in mind that these 2 methods of getting an OpenAPI/AsyncAPI spec and rendering it as a Swagger are only differentiated by the type and format but gives the same value.
 
 1. `type: object` - you provide the complete `json` spec into Port.
 
