@@ -50,6 +50,7 @@ Port Self-Service Actions are enabled using several convenient integrations with
 - [**Execution Agent**](./self-service-actions/webhook/port-execution-agent/) - our execution agent provides you with a secure and convenient way to listen and act on invocations of Self-Service Actions and changes in the software catalog;
 - [**Kafka Actions**](./self-service-actions/kafka/) - Port manages a Kafka Topic per customer that publishes the execution run requests.
   You can listen to a Kafka Topic with any code platform you wish to use, and also use it as a trigger for a serverless function. For example, AWS Lambda.
+- [**GitHub Workflow Actions**](./self-service-actions/github-workflow/) - [Port's GitHub application](./exporters/github-exporter/installation.md) can trigger a [GitHub workflow](https://docs.github.com/en/actions/using-workflows) using a customer provided input and [`port_payload`](./self-service-actions/self-service-actions-deep-dive.md#action-message-structure).
 
 :::tip
 To learn more about the Self-Service Actions and more, refer to the [Self-Service Actions](./self-service-actions/) page and the [Self-Service Actions Deep Dive](./self-service-actions/self-service-actions-deep-dive.md).

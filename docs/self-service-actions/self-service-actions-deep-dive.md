@@ -455,24 +455,30 @@ When `"type": "array"` is used, you can create an `items` property. Within `item
 
 The `invocationMethod` object controls where Self-Service Actions are reported to.
 
-The `invocationMethod` supports 2 configurations:
+The `invocationMethod` supports 3 configurations:
 
 - [Webhook](./webhook/webhook.md)
 - [Kafka](./kafka/kafka.md)
+- [GitHub](./github-workflow/github-workflow.md)
 
 ### Invocation method structure fields
 
-| Field   | Type      | Description                                                                                                                                                                 | Example values              |
-| ------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
-| `type`  | `string`  | Defines the Self-Service Action destination type                                                                                                                            | Either `WEBHOOK` or `KAFKA` |
-| `agent` | `boolean` | Defines whether to use [Port Agent](./webhook/port-execution-agent/port-execution-agent.md) for execution or not. <br></br> Can only be added if `type` is set to `WEBHOOK` | Either `true` or `false`    |
-| `url`   | `string`  | Defines the webhook URL where Port sends Self-Service Actions to via HTTP POST request. <br></br> Can be added only if `type` is set to `WEBHOOK`                           | `https://example.com`       |
+| Field            | Type      | Description                                                                                                                                                                                                                                                                                  | Example values              |
+| ---------------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
+| `type`           | `string`  | Defines the Self-Service Action destination type                                                                                                                                                                                                                                             | Either `WEBHOOK` or `KAFKA` |
+| `agent`          | `boolean` | Defines whether to use [Port Agent](./webhook/port-execution-agent/port-execution-agent.md) for execution or not. <br></br> Can only be added if `type` is set to `WEBHOOK`                                                                                                                  | Either `true` or `false`    |
+| `url`            | `string`  | Defines the webhook URL where Port sends Self-Service Actions to via HTTP POST request. <br></br> Can be added only if `type` is set to `WEBHOOK`                                                                                                                                            | `https://example.com`       |
+| `org`            | `string`  | Defines the GitHub organization name. <br></br> Can be added only if `type` is set to `GITHUB`                                                                                                                                                                                               | `port-labs`                 |
+| `repo`           | `string`  | Defines the GitHub repository name. <br></br> Can be added only if `type` is set to `GITHUB`                                                                                                                                                                                                 | `port-docs`                 |
+| `workflow`       | `string`  | Defines the GitHub workflow id to run (You can also pass the workflow file name as a string). <br></br> Can be added only if `type` is set to `GITHUB`                                                                                                                                       | `blank.yml`                 |
+| `omitPayload`    | `boolean` | Flag to control whether to send [`port_payload`](#action-message-structure) JSON string as additional parameter to the GitHub workflow (default: `false`). <br></br> Can be added only if `type` is set to `GITHUB`                                                                          | `false`                     |
+| `omitUserInputs` | `boolean` | Flag to control whether to send the user inputs of the Port action as isolated parameters to the GitHub workflow (default: `false`). When disabled, you can still get the user inputs from the `port_payload` (unless omitted too). <br></br> Can be added only if `type` is set to `GITHUB` | `false`                     |
 
 ## Triggering actions
 
 We will now look at trigger examples for each action type and explain what happens behind the scenes when we execute each type.
 
-When we click on the `execute` button of an action, a Port [action message](#action-message-structure) is published to the invocation destination specified by the user (either a POST request to the user's [Webhook](./webhook/webhook.md) or a message to the user's dedicated [Kafka](./kafka/kafka.md) topic).
+When we click on the `execute` button of an action, a Port [action message](#action-message-structure) is published to the invocation destination specified by the user.
 
 For example, you can deploy a new version of your microservice when a `CREATE` action is triggered.
 
