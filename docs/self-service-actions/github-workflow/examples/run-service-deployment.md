@@ -85,9 +85,6 @@ For more details click [here](../../self-service-actions-deep-dive.md#invocation
 
 Let’s configure a `Deployment` Blueprint. Its base structure is:
 
-<details>
-<summary>Deployment Blueprint JSON</summary>
-
 ```json showLineNumbers
 {
   "identifier": "deployment",
@@ -121,6 +118,64 @@ Let’s configure a `Deployment` Blueprint. Its base structure is:
 }
 ```
 
+Below you can see the `python` code to create this Blueprint (remember to insert your `CLIENT_ID` and `CLIENT_SECRET` in order to get an access token).
+
+<details>
+<summary>Click here to see the code</summary>
+
+```python showLineNumbers
+import requests
+
+CLIENT_ID = 'YOUR_CLIENT_ID'
+CLIENT_SECRET = 'YOUR_CLIENT_SECRET'
+
+API_URL = 'https://api.getport.io/v1'
+
+credentials = {'clientId': CLIENT_ID, 'clientSecret': CLIENT_SECRET}
+
+token_response = requests.post(f'{API_URL}/auth/access_token', json=credentials)
+
+access_token = token_response.json()['accessToken']
+
+headers = {
+    'Authorization': f'Bearer {access_token}'
+}
+
+blueprint = {
+    "identifier": "deployment",
+    "title": "Deployment",
+    "icon": "Deployment",
+    "schema": {
+        "properties": {
+            "jobUrl": {
+                "title": "Job URL",
+                "type": "string",
+                "format": "url"
+            },
+            "deployingUser": {
+                "title": "Deploying User",
+                "type": "string"
+            },
+            "imageTag": {
+                "title": "Image Tag",
+                "type": "string"
+            },
+            "commitSha": {
+                "title": "Commit SHA",
+                "type": "string"
+            }
+        },
+        "required": []
+    },
+    "calculationProperties": {},
+
+}
+
+response = requests.post(f'{API_URL}/blueprints', json=blueprint, headers=headers)
+
+print(response.json())
+```
+
 </details>
 
 :::tip
@@ -132,10 +187,6 @@ Remember that Blueprints can be created both from the [UI](../../../software-cat
 Now let’s configure a Self-Service Action. You will add a `CREATE` action that will be triggered every time a developer wants to initiate a new deployment for a service.
 
 Here is the action JSON:
-
-:::note
-Remember to replace the placeholders for `<GITHUB_ORG>`, `<GITHUB_REPO>`.
-:::
 
 ```json showLineNumbers
 {
@@ -169,6 +220,81 @@ Remember to replace the placeholders for `<GITHUB_ORG>`, `<GITHUB_REPO>`.
   "description": "Deploy a service to the environment"
 }
 ```
+
+Below you can see the `python` code to create this action (remember to insert your `CLIENT_ID` and `CLIENT_SECRET` in order to get an access token).
+
+:::note
+Note how the `deployment` Blueprint identifier is used to add the action to the new Blueprint
+
+Moreover, don't forget to replace the placeholders for `YOUR_GITHUB_ORG`, `YOUR_GITHUB_REPO`.
+:::
+
+<details>
+<summary>Click here to see code</summary>
+
+```python showLineNumbers
+import requests
+
+CLIENT_ID = 'YOUR_CLIENT_ID'
+CLIENT_SECRET = 'YOUR_CLIENT_SECRET'
+
+GITHUB_ORG = 'YOUR_GITHUB_ORG'
+GITHUB_REPO = 'YOUR_GITHUB_REPO'
+GITHUB_WORKFLOW = 'deploy.yml'
+
+API_URL = 'https://api.getport.io/v1'
+
+credentials = {'clientId': CLIENT_ID, 'clientSecret': CLIENT_SECRET}
+
+token_response = requests.post(f'{API_URL}/auth/access_token', json=credentials)
+
+access_token = token_response.json()['accessToken']
+
+headers = {
+    'Authorization': f'Bearer {access_token}'
+}
+
+blueprint_identifier = 'deployment'
+
+action = {
+    'identifier': 'deploy_service',
+    'title': 'Deploy Service',
+    'icon': 'DeployedAt',
+    'description': 'Deploy a service to the environment',
+    'trigger': 'CREATE',
+    'invocationMethod': {
+        'type': 'GITHUB',
+        'org': GITHUB_ORG,
+        'repo': GITHUB_REPO,
+        'workflow': GITHUB_WORKFLOW
+    },
+    'userInputs': {
+        'properties': {
+            'ref': {
+                'type': 'string',
+                'title': 'The GitHub branch to deploy (Optional, otherwise will use repo's default branch)'
+            },
+            'service': {
+                'type': 'string',
+                'title': 'The service to deploy'
+            },
+            'environment': {
+                'type': 'string',
+                'title': 'The environment to deploy the service to'
+            },
+        },
+        'required': [
+            'service', 'environment'
+        ]
+    }
+}
+
+response = requests.post(f'{API_URL}/blueprints/{blueprint_identifier}/actions', json=action, headers=headers)
+
+print(response.json())
+```
+
+</details>
 
 Now that the Self-Service Action configured, you can begin invoking it.
 
