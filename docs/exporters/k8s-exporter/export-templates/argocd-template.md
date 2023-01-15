@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # ArgoCD Template
 
 An ArgoCD application is an Argo CRD which is responsible for managing different k8s objects, while an ArgoCD project is an Argo CRD which clusters applications.

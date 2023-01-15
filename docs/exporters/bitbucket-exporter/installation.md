@@ -15,19 +15,21 @@ sidebar_position: 2
 
 ### Installation
 
-1. Go to the add-on management section of your workspace settings by going to the following URL: https://bitbucket.org/<mark>YOUR_WORKSPACE_NAME</mark>/workspace/settings/addon-management.
+<!-- 1. Go to the add-on management section of your workspace settings by going to the following URL: https://bitbucket.org/<mark>YOUR_WORKSPACE_NAME</mark>/workspace/settings/addon-management.
 
    :::info
    Remember to replace the highlighted section with your workspace name
-   :::
+   ::: -->
 
-2. Click on `Enable development mode`
+1. Go to [Bitbucket app installation page](https://marketplace.atlassian.com/apps/1229886/port-connector-for-bitbucket?hosting=cloud&tab=overview)
 
-3. Click `Install app from URL`.
+2. Click `Get it now`.
 
-   ![Bitbucket app installation page](../../../static/img/integrations/bitbucket-app/InstallAppFromUrl.png)
+   ![Get it now](../../../static/img/integrations/bitbucket-app/BitbucketInstallationPage.png)
 
-   Enter this URL: https://k2nmp3aptm.eu-west-1.awsapprunner.com/atlassian-connect.json
+3. Click `Add`
+
+   ![Add app to workspace](../../../static/img/integrations/bitbucket-app/AddAppToWorkspace.png)
 
 4. Click `Grant access`.
 
