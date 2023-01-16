@@ -12,11 +12,11 @@ Before writing custom logic to integrate Port into your GitOps process, you shou
 
 ## Scenario
 
-You want to use GitOps to manage your microservice Entities and keep them up to date in Port.
+You want to use GitOps in Port to manage and regularly update your microservice Entities.
 
-To implement this use-case, you will add a `json` file in your microservice repository containing the microservice Entity JSON.
+To do so, add a `json` file in your microservice repository containing the microservice Entity JSON.
 
-Then, whenever your CI/CD process runs, it will check if the contents of the file changed and send the new files contents for Port's API with a simple API call, thus always keeping your microservice Entity up to date.
+Then, whenever your CI/CD process runs, an automatic check will review whether the contents of the file changed, and will send the new file contents to Port's API using a simple API call, thus always keeping your microservice Entity up to date.
 
 ## Code example
 
