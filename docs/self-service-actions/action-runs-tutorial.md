@@ -129,7 +129,7 @@ Let's invoke a `CREATE` Self-Service Action with the following parameters:
 }
 ```
 
-By invoking the Self-Service Action, the following action invocation body is sent to the Webhook/Kafka topic:
+By invoking the Self-Service Action, the following action invocation body is sent:
 
 ```json showLineNumbers
 {
@@ -233,7 +233,7 @@ For example, after performing a simple invocation of the `DAY-2` Self-Service Ac
 }
 ```
 
-The following action invocation body is sent to the Webhook/Kafka topic (existing Entity is highlighted):
+The following action invocation body is sent (existing Entity is highlighted):
 
 ```json showLineNumbers
 {
