@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 8
 title: Exporting files
 ---
 
@@ -11,7 +11,7 @@ title: Exporting files
 
 # Exporting files
 
-By the end of this tutorial, we will have a `microservice` Blueprint that contains an auto-synced `REAMDE.md` file and `repository URL` from GitHub to Port properties.
+By the end of this tutorial, we will have a `microservice` Blueprint that contains an auto-synced `README.md` file into a Port property.
 
 1. Create a `microservice` Blueprint and `port-app-config.yml` configuration file.
 
@@ -42,11 +42,6 @@ If you don't have a `README.md` file within the selected example repository for 
         "title": "Swagger",
         "type": "object",
         "spec": "open-api"
-      },
-      "url": {
-        "title": "URL",
-        "format": "url",
-        "type": "string"
       }
     },
     "required": []
@@ -78,7 +73,6 @@ resources:
           blueprint: '"microservice"'
           properties:
             readme: file://README.md # fetching the README.md file that is within the root folder of the repository and injecting it as a markdown property
-            url: ".html_url" # fetching from GitHub metadata the repository url and injecting it as a url proeprty
 ```
 
 </details>
@@ -120,7 +114,6 @@ resources:
           properties:
             swagger: file://open-api.json # fetching the open-api file that is within the root folder of the repository and injecting it as a swagger property
             readme: file://README.md # fetching the README.md file that is within the root folder of the repository and injecting it as a markdown property
-            url: ".html_url" # fetching from GitHub metadata the repository url and injecting it as a url proeprty
 ```
 
 </details>

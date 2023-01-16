@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 6
 title: Exporting all repositories
 ---
 
@@ -11,7 +11,7 @@ title: Exporting all repositories
 
 # Exporting all repositories
 
-By the end of this tutorial, we will have a `microservice` Blueprint that contains the properties `repository URL`, `Workspace` and `Project` which are automatically synced from Bitbucket to Port property.
+By the end of this tutorial, we will have a `microservice` Blueprint that contains the properties `repository URL`, `Workspace` and `Project` which are automatically synced from Bitbucket to Port entity.
 
 1. Create a `microservice` Blueprint and `port-app-config.yml` configuration file.
 

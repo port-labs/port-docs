@@ -11,7 +11,7 @@ title: Exporting files
 
 # Exporting files
 
-By the end of this tutorial, we will have a `microservice` Blueprint that contains an auto-synced `REAMDE.md` file into Port property.
+By the end of this tutorial, we will have a `microservice` Blueprint that contains an auto-synced README.md file into a Port property.
 
 1. Create a `microservice` Blueprint and `port-app-config.yml` configuration file.
 
