@@ -10,7 +10,7 @@ If Port's available GitOps providers do not fit your use-case, you can create a 
 Before writing custom logic to integrate Port into your GitOps process, you should check our existing [GitOps providers](./gitops.md), [exporters](../../exporters/exporters.md) and [API Providers](../../api-providers/api-providers.md).
 :::
 
-## Scenario
+## Use-case
 
 You want to use GitOps in Port to manage and regularly update your microservice Entities.
 
