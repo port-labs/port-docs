@@ -6,13 +6,13 @@ sidebar_position: 1
 
 In the following guide, you are going to build a self-service action in Port, that executes a GitHub workflow behind the scenes.
 
-The GitHub workflow in this example, is meant to run a new deployment and report back a deployment entity to Port.
+The GitHub workflow in this example, will run a new deployment and report back a deployment entity to Port.
 
 ## Prerequisites
 
 - A Port API `CLIENT_ID` and `CLIENT_SECRET`.
 
-## Creating the GitHub workflow
+## Create a GitHub workflow
 
 First, we need to set up a GitHub workflow that implements our business logic for deployment.
 
@@ -76,12 +76,12 @@ jobs:
 
 :::note
 Pay attention to the additional parameter in the workflow called `port_payload`.
-This parameter is filled out automatically by default with the [Port's action message](../../self-service-actions-deep-dive.md#action-message-structure).
-You can disable it by specifying `"omitPayload": true` in the Port's action definition.
+This parameter is completed by default with [Port's action message](../../self-service-actions-deep-dive.md#action-message-structure).
+You can disable it by specifying `"omitPayload": true` in Port's action definition.
 For more details click [here](../../self-service-actions-deep-dive.md#invocation-method-structure-fields)
 :::
 
-## Creating the Deployment blueprint
+## Create a deployment Blueprint
 
 Let’s configure a `Deployment` Blueprint. Its base structure is:
 
@@ -118,7 +118,7 @@ Let’s configure a `Deployment` Blueprint. Its base structure is:
 }
 ```
 
-Below you can see the `python` code to create this Blueprint (remember to insert your `CLIENT_ID` and `CLIENT_SECRET` in order to get an access token).
+You can see below the `python` code of the Blueprint (remember to insert your `CLIENT_ID` and `CLIENT_SECRET` in order to get an access token).
 
 <details>
 <summary>Click here to see the code</summary>
@@ -182,11 +182,11 @@ print(response.json())
 Remember that Blueprints can be created both from the [UI](../../../software-catalog/blueprint/tutorial.md#from-the-ui) and from the [API](../../../software-catalog/blueprint/tutorial.md#from-the-api)
 :::
 
-## Creating the Port action
+## Create a Port action
 
-Now let’s configure a Self-Service Action. You will add a `CREATE` action that will be triggered every time a developer wants to initiate a new deployment for a service.
+Now let’s configure a self-service action. Add a `CREATE` action that will be triggered every time a developer wants to initiate a new deployment for a service.
 
-Here is the action JSON:
+Here is the JSON of the action:
 
 ```json showLineNumbers
 {
@@ -221,10 +221,10 @@ Here is the action JSON:
 }
 ```
 
-Below you can see the `python` code to create this action (remember to insert your `CLIENT_ID` and `CLIENT_SECRET` in order to get an access token).
+You can see below the `python` code to create this action (remember to insert your `CLIENT_ID` and `CLIENT_SECRET` in order to get an access token).
 
 :::note
-Note how the `deployment` Blueprint identifier is used to add the action to the new Blueprint
+Note how the `deployment` Blueprint identifier is used to add the action to the new Blueprint.
 
 Moreover, don't forget to replace the placeholders for `YOUR_GITHUB_ORG`, `YOUR_GITHUB_REPO`.
 :::
@@ -298,9 +298,9 @@ print(response.json())
 
 Now that the Self-Service Action configured, you can begin invoking it.
 
-## Triggering the action
+## Trigger the action
 
-Let's invoke the Self-Service action using Port API.
+Let's invoke the self-service action using Port API.
 
 <details>
 <summary>Click here to see the API call code</summary>
@@ -341,10 +341,10 @@ print(response.json())
 
 </details>
 
-When the action is finished, it will mark the action run as successful. That way, your developers can tell that the deployment has finished successfully.
+When the action is finished, it will mark the action run as successful. That way, your developers can understand your deployment has finished successfully.
 
 ![Action run audit log](../../../../static/img/self-service-actions/run-service-deployment/runs-audit-log.png)
 
-## Next steps
+## Next step
 
 This was a very basic example on how to trigger a GitHub workflow using Port's self-service action. We left placeholder code for you to insert your own custom logic that fits your infrastructure.

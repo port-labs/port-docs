@@ -62,7 +62,7 @@ And save the downloaded file
 
 :::note Prerequisites
 
-- You will need your Port `CLIENT_ID` and `CLIENT_SECRET`. To find your Port API credentials go to [Port](https://app.getport.io), click on `Credentials` in the bottom left corner, and you will be able to view and copy your `CLIENT_ID` and `CLIENT_SECRET`:
+- You will need your Port `CLIENT_ID` and `CLIENT_SECRET`. To find your Port API credentials go to [Port](https://app.getport.io), click on `Credentials` at the bottom left corner, and you will be able to view and copy your `CLIENT_ID` and `CLIENT_SECRET`:
 
 <center>
 
@@ -110,7 +110,7 @@ docker run \
 | `PORT_URL`           | Port's API Base URL                                                                                                                 |
 | `PORT_CLIENT_ID`     | Port client id for interacting with the API                                                                                         |
 | `PORT_CLIENT_SECRET` | Port client secret for interacting with the API                                                                                     |
-| `PRIVATE_KEY`        | A base64 encoded private key, you can get the private key base64 value by running the command `base64 -i private-key-file-path.pem` |
+| `PRIVATE_KEY`        | A base64 encoded private key. Recieve it by running the command `base64 -i private-key-file-path.pem` |
 
 ## Health check route
 

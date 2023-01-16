@@ -16,11 +16,11 @@ An example flow would be:
 2. The `create` action is sent to the `github.runs` topic;
 3. Port's GitHub application event handler is triggered by this new action message;
 4. Port's GitHub application triggers the GitHub workflow that deploys a new version of the service;
-5. As part of the workflow, the new Microservice `Deployment` is reported back to Port;
+5. As part of the workflow, the new microservice `Deployment` is reported back to Port;
 6. When the workflow is done, Port's GitHub application reports back to Port about the status of the action run (`SUCCESS` or `FAILURE`), according to workflow's `conclusion`.
 
-## Next steps
+## Next step
 
-To get started with GitHub Self-Service Actions, please check the sources below:
+To get started with GitHub self-service actions, please check the sources below:
 
 - [Run a deployment for a service](./examples/run-service-deployment.md)
