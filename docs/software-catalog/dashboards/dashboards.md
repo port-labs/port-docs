@@ -43,7 +43,7 @@ You can create a pie chart illustrating data from Entities in your software cata
 
 Assuming we have a [Blueprint](../../software-catalog/blueprint/blueprint.md) that is called `Service` which is related to another called `Deployment` and we want to create visualizations on top of last week's deployments of this service.
 
-To achieve this desired state, we can go into one of the `Service`'s specific page and create a new visualization and after selecting the `Deployment` Blueprint in the dropdown we can fill the use the `Filters` array by the following JSON:
+To achieve this desired state, we can go into one of the `Service`'s specific page and create a new visualization and after selecting the `Deployment` Blueprint in the dropdown we can add the following filter to the the `Filters` array:
 
 ```json showLineNumbers
 [
