@@ -82,6 +82,11 @@ const config = {
         },
         items: [
           {
+            href: "https://demo.getport.io",
+            label: "Demo",
+            position: "right",
+          },
+          {
             href: "https://github.com/port-labs/port-docs",
             label: "GitHub",
             position: "right",
@@ -156,6 +161,10 @@ const config = {
               {
                 label: "Blog",
                 href: "https://www.getport.io/blog",
+              },
+              {
+                label: "Demo",
+                href: "https://demo.getport.io",
               },
               {
                 label: "GitHub",
