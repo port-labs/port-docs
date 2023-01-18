@@ -14,7 +14,7 @@ The data flow when using the Port execution agent is as follows:
 - Port sends the invocation event to your dedicated Kafka topic;
 - The execution agent pulls the new invocation event from your Kafka topic, and sends it to the URL you specified.
 
-![Port Agent Architecture](../../../../static/img/self-service-actions/portAgentArchitecture.png)
+![Port Agent Architecture](../../../../static/img/self-service-actions/portExecutionAgentArchitecture.png)
 
 ## Next steps
 
