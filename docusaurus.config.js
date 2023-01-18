@@ -86,6 +86,11 @@ const config = {
             label: "GitHub",
             position: "right",
           },
+          {
+            href: "https://demo.getport.io",
+            label: "Demo",
+            position: "right",
+          },
         ],
       },
       footer: {
@@ -156,6 +161,10 @@ const config = {
               {
                 label: "Blog",
                 href: "https://www.getport.io/blog",
+              },
+              {
+                label: "Demo",
+                href: "https://demo.getport.io",
               },
               {
                 label: "GitHub",
