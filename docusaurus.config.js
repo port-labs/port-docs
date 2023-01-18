@@ -82,13 +82,13 @@ const config = {
         },
         items: [
           {
-            href: "https://github.com/port-labs/port-docs",
-            label: "GitHub",
+            href: "https://demo.getport.io",
+            label: "Demo",
             position: "right",
           },
           {
-            href: "https://demo.getport.io",
-            label: "Demo",
+            href: "https://github.com/port-labs/port-docs",
+            label: "GitHub",
             position: "right",
           },
         ],
