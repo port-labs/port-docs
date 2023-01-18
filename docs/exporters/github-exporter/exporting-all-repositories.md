@@ -11,7 +11,7 @@ title: Exporting all repositories
 
 # Exporting all repositories
 
-By the end of this tutorial, we will have a `microservice` Blueprint that contains the properties `repository URL` and `Description` which are automatically synced from GitHub to Port entity.
+IN this tutorial you will learn how to create a `microservice` Blueprint that contains the properties `repository URL` and `Description`, which are automatically synced from GitHub to Port Entity.
 
 1. Create a `microservice` Blueprint and `port-app-config.yml` configuration file.
 
@@ -48,7 +48,7 @@ To export your GitHub `repositories` to Port, you can use the following Port Blu
 
 </details>
 
-In order to apply the `port-app-config.yml` in the whole organization, place it in the `.github` folder or in the `.github-private` repository in the root directory.
+To apply the `port-app-config.yml` in the whole organization, place it in the `.github` folder or in the `.github-private` repository in the root directory.
 
 <details>
 
