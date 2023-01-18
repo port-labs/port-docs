@@ -1,5 +1,5 @@
 ---
-sidebar_position: 4
+sidebar_position: 6
 title: Exporting pull requests
 ---
 
@@ -92,7 +92,7 @@ You have to place the `port-app-config.yml` inside the `.github` folder or withi
 resources:
   - kind: pull-request
     selector:
-      query: "true"
+      query: "true" # a JQ expression that it's output (boolean) determinating wheter to report the current resource or not
     port:
       entity:
         mappings:
@@ -101,8 +101,8 @@ resources:
           blueprint: '"pullRequest"'
           properties:
             creator: ".user.login"
-            assignees: ".assignees[].login"
-            reviewers: ".requested_reviewers[].login"
+            assignees: "[.assignees[].login]"
+            reviewers: "[.requested_reviewers[].login]"
             status: ".status" # merged, closed, opened
             closedAt: ".closed_at"
             updatedAt: ".updated_at"

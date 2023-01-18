@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 7
 title: Exporting issues
 ---
 
@@ -95,7 +95,7 @@ You have to place the `port-app-config.yml` inside the `.github` folder or withi
 resources:
   - kind: issue
     selector:
-      query: ".pull_request == null"
+      query: ".pull_request == null" # a JQ expression that it's output (boolean) determinating wheter to report the current resource or not
     port:
       entity:
         mappings:
