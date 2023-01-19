@@ -59,7 +59,7 @@ In order to create a Blueprint with the following properties, we will use the fo
 }
 ```
 
-Click on the `save` button and view your new Blueprint in the Blueprints graph:
+Click on the `save` button and view your new Blueprint in the DevPortal Setup page:
 
 ![Blueprints graph with new Microservice](../../../static/img/quickstart/blueprintGraphWithMicroserviceClosed.png)
 
@@ -321,7 +321,7 @@ curl --location --request POST "https://api.getport.io/v1/blueprints" \
 
 </Tabs>
 
-Now, you will have a Blueprint in the Blueprints graph as follows:
+Now, you will have a Blueprint in the DevPortal Setup page as follows:
 
 ![Example microservice blueprint](../../../static/img/software-catalog/blueprint/exampleMicroserviceBlueprint.png)
 
@@ -331,7 +331,7 @@ You can always modify Blueprints, add/remove properties or change existing prope
 
 To update a Blueprint, you can do either of the following:
 
-- In the Blueprints graph, click on the 3 dots (`...`) button and after it the `Properties` button;
+- In the DevPortal Setup page, click on the 3 dots (`...`) button and after it the `Properties` button;
 - Make an HTTP PUT request to the URL: `https://api.getport.io/v1/{blueprint_identifier}`
   - A PUT request has the same body as a POST request, it will simply overwrite the Blueprint with the new data provided.
 
@@ -343,7 +343,7 @@ There are two methods to change a Blueprint's identifier:
 
 #### From the UI
 
-1. In the Blueprints graph, find the node of the desired Blueprint, click on the 3 dots (`...`) button and then click on the `Properties` button;
+1. In the DevPortal Setup page, find the node of the desired Blueprint, click on the 3 dots (`...`) button and then click on the `Properties` button;
 2. Update the value of the `identifier` key to the new identifier;
 3. Click `Save`.
 
@@ -388,7 +388,7 @@ A Blueprint cannot be restored after deletion!
 
 In order to delete a Blueprint you can do either of the following:
 
-- Click on the trash can icon in the specific Blueprint’s node in the blueprints graph;
+- Click on the trash can icon in the specific Blueprint’s node in the DevPortal Setup page;
 - Make an HTTP DELETE request to the URL `https://api.getport.io/v1/{blueprint_identifier}`
 
 ![Blueprints Graph delete button marked](../../../static/img/software-catalog/blueprint/blueprintGraphDeleteButtonMarked.png)
@@ -401,7 +401,7 @@ In the next section, we will talk about **Relations**, a connection between two 
 
 To prepare for the Relations section, let's create a Blueprint for a `package` to go with the `microservice` Blueprint we created earlier:
 
-You can create the new Blueprint from the UI (using the `Add Blueprint` button in the Blueprints graph), or from the API. The request body of the new Blueprint will be:
+You can create the new Blueprint from the UI (using the `Add Blueprint` button in the DevPortal Setup page), or from the API. The request body of the new Blueprint will be:
 
 ```json showLineNumbers
 {
@@ -426,6 +426,6 @@ You can create the new Blueprint from the UI (using the `Add Blueprint` button i
 }
 ```
 
-At the end of this section, your Blueprints graph will include the two Blueprints shown below:
+At the end of this section, your DevPortal Setup page will include the two Blueprints shown below:
 
 ![graph package microservice](../../../static/img/software-catalog/blueprint/graphPackageMicroservice.png)

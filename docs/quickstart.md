@@ -113,7 +113,7 @@ In addition, the `on-call` field is marked as `required`, so that we always know
 
 #### From the UI
 
-Let's head to [Port](https://app.getport.io/blueprints) and look at the Blueprints page, at the top right corner let's click on **Add Blueprint** and configure our first Blueprint - **Service** as shown in the image below:
+Let's head to [Port](https://app.getport.io/dev-portal) and look at the Blueprints page, at the top right corner let's click on **Add Blueprint** and configure our first Blueprint - **Service** as shown in the image below:
 
 ![Developer PortalCreate New Blueprint](../static/img/quickstart/newBlueprintButton.png)
 
@@ -252,7 +252,7 @@ In order to create the service Blueprint, use the following JSON body:
 
 </details>
 
-Click on the `save` button, and [you will see](#the-results) your new Blueprint in the Blueprints graph.
+Click on the `save` button, and [you will see](#the-results) your new Blueprint in the DevPortal Setup page.
 
 #### From the API
 
