@@ -21,7 +21,7 @@ A Relation is created between 2 Blueprints. So if you haven't created the `micro
 
 ### From the UI
 
-In order to create a relation from the UI, go to the Blueprints graph and click the pencil icon on the Blueprint that will be the `source` Blueprint of the Relation (for example, you want to map multiple `packages` that are used by a `microservice`, so `microservice` is the `source` Blueprint):
+In order to create a relation from the UI, go to the DevPortal Setup page and click the pencil icon on the Blueprint that will be the `source` Blueprint of the Relation (for example, you want to map multiple `packages` that are used by a `microservice`, so `microservice` is the `source` Blueprint):
 
 ![Blueprints page with Create Relation Marked](../../../static/img/software-catalog/relation/tutorial/MicroservicePackageEditMarked.png)
 
@@ -185,7 +185,7 @@ Just like before, you can update a Relation from the UI or from the API.
 
 ### From the UI
 
-In order to update a Relation from the UI, go to the Blueprints graph, hover over the `source` Blueprint and click on the pencil icon that appears:
+In order to update a Relation from the UI, go to the DevPortal Setup page, hover over the `source` Blueprint and click on the pencil icon that appears:
 
 ![Developer Portal Graph relations edit marked](../../../static/img/software-catalog/relation/tutorial/MicroservicePackageExpandedEditMarked.png)
 
