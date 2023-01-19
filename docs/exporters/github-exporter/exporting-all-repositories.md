@@ -67,7 +67,7 @@ resources:
           blueprint: '"microservice"'
           properties:
             url: ".html_url" # fetching from GitHub metadata the repository url and injecting it as a url proeprty
-            description: ".description" # fetching from GitHub metadata the repository url and injecting it as a url proeprty
+            description: ".description" # fetching from GitHub metadata the description and injecting it as a markdown proeprty
 ```
 
 </details>
