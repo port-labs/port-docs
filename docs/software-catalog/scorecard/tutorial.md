@@ -21,7 +21,7 @@ A Scorecard is created upon Blueprint. So if you haven't created the `microservi
 
 ### From the UI
 
-To create a scorecard from the UI, go to the Blueprints graph and click the 3 dots icon on the `microservice` Blueprint
+To create a scorecard from the UI, go to the DevPortal Setup page and click the 3 dots icon on the `microservice` Blueprint
 
 ![Blueprints page with Create Scorecard](../../../static/img/software-catalog/scorecard/tutorial/MicroserviceEditScorecard.png)
 
@@ -233,7 +233,7 @@ And just as we have shown earlier in the tutorial, you can update a Scorecard fr
 
 ### From the UI
 
-In order to update a Scorecard from the UI, go to the Blueprints graph, click on the 3 dots icon and select Scorecards:
+In order to update a Scorecard from the UI, go to the DevPortal Setup page, click on the 3 dots icon and select Scorecards:
 
 ![Blueprints page with Create Scorecard](../../../static/img/software-catalog/scorecard/tutorial/MicroserviceEditScorecard.png)
 
