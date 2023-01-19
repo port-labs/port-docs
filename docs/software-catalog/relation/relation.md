@@ -71,7 +71,7 @@ Relations also support `many` (its default value is `false`).
 
 From a schema standpoint, when a Relation is defined `"many": true`, the corresponding Relation identifier in the Entities of the source Blueprint becomes an array(`[]`) as seen in [Entity Relation example - `many = true`](../entity/entity.md#entity-relation-example---many--true).
 
-There is also a visual indicator in the Blueprints graph when using `"many": true` (note the `Array` label):
+There is also a visual indicator in the DevPortal Setup page when using `"many": true` (note the `Array` label):
 
 ![Developer Portal Blueprints Graph Many Relation](../../../static/img/software-catalog/MicroservicePackageBlueprintGraphManyRelationUI.png)
 

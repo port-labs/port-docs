@@ -63,7 +63,7 @@ The following configurations, among others, are available when using permissions
 
 ### Setting permissions for a Blueprint (and its Actions)
 
-To set permissions for a Blueprint, click on the permissions icon of the desired Blueprint in the Blueprints page:
+To set permissions for a Blueprint, click on the permissions icon of the desired Blueprint in the DevPortal Setup page:
 
 ![Permissions button for blueprint](../../../static/img/software-catalog/role-based-access-control/permissions/permissionsOfBlueprint.png)
 
