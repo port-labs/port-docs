@@ -390,16 +390,16 @@ The basic structure of a Self-Service Action:
 
 The following table includes the different fields that can be specified in the `properties` key:
 
-| Field                    | Description                                                                                                                                                                     |
-| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `type`                   | All the [types](../software-catalog/blueprint/blueprint.md#property-types) Port supports - `string`, `number`, `boolean`, etc...                                                |
-| `title`                  | The title shown in the form when activating the Self-Service Action                                                                                                             |
-| `format`                 | Specific data format to pair with some of the available types. You can explore all formats in the [String Formats](#string-formats) section                                     |
-| `blueprint`              | Identifier of an existing Blueprint to fetch Entities from                                                                                                                      |
-| `description` (Optional) | Extra description for the requested property                                                                                                                                    |
-| `default` (Optional)     | Default value                                                                                                                                                                   |
-| `enum` (Optional)        | A list of predefined values the user can choose from, same format as [enum](../software-catalog/blueprint/blueprint.md#enum)                                                    |
-| `icon` (Optional)        | Icon for the user input property. Icon options: `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud,...` <br /><br />See the full icon list [below](#full-icon-list). |
+| Field                    | Description                                                                                                                                                                                                         |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `type`                   | All the [types](../software-catalog/blueprint/blueprint.md#property-types) Port supports - `string`, `number`, `boolean`, etc...                                                                                    |
+| `title`                  | The title shown in the form when activating the Self-Service Action                                                                                                                                                 |
+| `format`                 | Specific data format to pair with some of the available types. You can explore all formats in the [String Formats](#string-formats) section                                                                         |
+| `blueprint`              | Identifier of an existing Blueprint to fetch Entities from                                                                                                                                                          |
+| `description` (Optional) | Extra description for the requested property                                                                                                                                                                        |
+| `default` (Optional)     | Default value                                                                                                                                                                                                       |
+| `enum` (Optional)        | A list of predefined values the user can choose from, same format as [enum](../software-catalog/blueprint/blueprint.md#enum)                                                                                        |
+| `icon` (Optional)        | Icon for the user input property. Icon options: `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud,...` <br /><br />See the [full icon list](../software-catalog/blueprint/blueprint.md#full-icon-list). |
 
 ### Special formats
 
