@@ -76,6 +76,7 @@ After creating the Blueprint, you can add the following to your workflow `yml` f
     clientSecret: ${{ secrets.CLIENT_SECRET }}
     operation: UPSERT
     identifier: example-microservice
+    icon: GitHub
     blueprint: microservice
     properties: |
       {
@@ -189,6 +190,7 @@ Add the following to your workflow `yml` file:
     operation: UPSERT
     identifier: example-package
     title: Example Package
+    icon: GitHub
     blueprint: package
     properties: |
       {
