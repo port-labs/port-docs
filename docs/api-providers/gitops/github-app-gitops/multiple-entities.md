@@ -8,8 +8,8 @@ sidebar_position: 4
 
 There are two methods to manage multiple Entities (of one or more Blueprints). The methods can be merged if need be:
 
-1. Use [YAML sequences](#YAML-sequences) (arrays/lists) in your `port.yml` file.
-2. Use [multiple](#multiple-files) `port.yml` files (e.g., Monorepo use-case).
+1. Use YAML sequences (arrays/lists) in your `port.yml` file.
+2. Use multiple `port.yml` files (e.g., Monorepo use-case).
 
 ### YAML sequences
 

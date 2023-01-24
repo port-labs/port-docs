@@ -25,7 +25,7 @@ Pages have 4 regular CRUD permissions:
 Remember that an access token is needed to make API requests, refer back to [Getting an API token](../blueprint/tutorial.md#getting-an-api-token) if you need to generate a new one.
 :::
 
-Make an **HTTP GET** request to the URL: `https://api.getport.io/v1/pages/{Page_Identifier}/permissions`.
+Make an **HTTP GET** request to the URL: `https://api.getport.io/v1/pages/{page_identifier}/permissions`.
 
 The response will contain the roles and users that are allowed to read (view) the requested page.
 
@@ -44,7 +44,7 @@ Only page permissions of software catalog pages can be requested.
 Remember that an access token is needed to make API requests, refer back to [Getting an API token](../blueprint/tutorial.md#getting-an-api-token) if you need to generate a new one.
 :::
 
-Make an **HTTP PATCH** request to the following URL: `https://api.getport.io/v1/pages/{Page_Identifier}/permissions`.
+Make an **HTTP PATCH** request to the following URL: `https://api.getport.io/v1/pages/{page_identifier}/permissions`.
 
 Here is an example request body:
 
