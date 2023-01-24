@@ -27,6 +27,11 @@ Remember that an access token is needed to make API requests, refer back to [Get
 
 Make an **HTTP GET** request to the URL: `https://api.getport.io/v1/pages/{page_identifier}/permissions`.
 
+:::note
+Currently in order to see the page identifiers you can request all pages by making a  
+GET request to `https://api.getport.io/v1/pages`
+:::
+
 The response will contain the roles and users that are allowed to read (view) the requested page.
 
 :::note
