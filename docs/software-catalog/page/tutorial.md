@@ -57,13 +57,15 @@ Here is an example request body:
 {
   "read": {
     "roles": ["Admin", "Member"],
-    "users": []
+    "users": [],
+    "teams": []
   }
 }
 ```
 
 :::info
-When updating page permissions, be sure to include a list of roles and users that need permissions in every request. Any role or user that does not appear in the request body will lose permissions to the page (this is also how you deny permissions from a user)
+When updating page permissions, be sure to include only the relevant sections in the request body (users, roles or teams)
+Any role, user or team that does not appear in the request body will lose permissions to the page (this is also how you deny permissions from a user).
 
 For example, given the following permissions for a page:
 
@@ -71,7 +73,8 @@ For example, given the following permissions for a page:
 {
   "read": {
     "roles": ["Admin", "Member"],
-    "users": []
+    "users": [],
+    "teams": []
   }
 }
 ```
@@ -81,8 +84,7 @@ Making an HTTP PATCH request with the following body will remove the `Member` ro
 ```json showLineNumbers
 {
   "read": {
-    "roles": ["Admin"],
-    "users": []
+    "roles": ["Admin"]
   }
 }
 ```
@@ -92,10 +94,27 @@ Making an HTTP PATCH request with the following body will give the `Services-Mod
 ```json showLineNumbers
 {
   "read": {
-    "roles": ["Admin", "Member", "Services-Moderator"],
-    "users": []
+    "roles": ["Admin", "Member", "Services-Moderator"]
   }
 }
 ```
 
-:::
+Making an HTTP PATCH request with the following body will give those users permissions to view the page:
+
+```json showLineNumbers
+{
+  "read": {
+    "users": ["exampleUser1@example.com", "exampleUser2@example.com"]
+  }
+}
+```
+
+Making an HTTP PATCH request with the following body will give those teams permissions to view the page:
+
+```json showLineNumbers
+{
+  "read": {
+    "teams": ["Team 1", "Team 2"]
+  }
+}
+```
