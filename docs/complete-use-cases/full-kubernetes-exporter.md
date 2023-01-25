@@ -108,7 +108,7 @@ In the Git repository under `exporter-config/config.yaml`, you can find a pre-ma
 <details>
   <summary>Here is the config.yaml we will be using.</summary>
 
-```json
+```yaml showLineNumbers
 resources: # List of K8s resources to list, watch, and export to Port.
   - kind: v1/namespaces # group/version/resource (G/V/R) format
     selector:
@@ -181,7 +181,6 @@ resources: # List of K8s resources to list, watch, and export to Port.
             relations:
               Deployment: .metadata.ownerReferences[0].name + "-" + .metadata.namespace
 
-
   - kind: apps/v1/replicasets
     selector:
       query: (.metadata.namespace | startswith("kube") | not ) and (.metadata.ownerReferences == null)
@@ -198,7 +197,6 @@ resources: # List of K8s resources to list, watch, and export to Port.
               type: '"ReplicaSet"'
             relations:
               Namespace: .metadata.namespace
-
 
   - kind: apps/v1/daemonsets
     selector:
