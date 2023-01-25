@@ -32,7 +32,20 @@ Currently in order to see the page identifiers you can request all pages by maki
 GET request to `https://api.getport.io/v1/pages`
 :::
 
-The response will contain the roles and users that are allowed to read (view) the requested page.
+The response will contain the roles and users that are allowed to read (view) the requested page:
+
+```json showLineNumbers
+{
+  "read": {
+    "roles": ["Admin", "Member"],
+    "users": ["exampleUser1@example.com", "exampleUser2@example.com"],
+    "teams": ["Team 1", "Team 2"]
+  }
+}
+```
+
+This response body indicates that those Roles, Users and Teams have permissions to read the page.
+In addition every role, user and team which does not appear in this request body does not have permission to view the page.
 
 :::note
 Only page permissions of software catalog pages can be requested.
@@ -45,25 +58,10 @@ Only page permissions of software catalog pages can be requested.
 
 ### From the API
 
-:::note
-Remember that an access token is needed to make API requests, refer back to [Getting an API token](../blueprint/tutorial.md#getting-an-api-token) if you need to generate a new one.
-:::
-
 Make an **HTTP PATCH** request to the following URL: `https://api.getport.io/v1/pages/{page_identifier}/permissions`.
 
 Here is an example request body:
 
-```json showLineNumbers
-{
-  "read": {
-    "roles": ["Admin", "Member"],
-    "users": [],
-    "teams": []
-  }
-}
-```
-
-:::info
 When updating page permissions, be sure to include only the relevant sections in the request body (users, roles or teams)
 Any role, user or team that does not appear in the request body will lose permissions to the page (this is also how you deny permissions from a user).
 
