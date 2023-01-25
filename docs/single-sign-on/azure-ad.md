@@ -56,10 +56,14 @@ In order to complete the process you will need to contact us to receive the info
 
     ![Azure navigation bar Branding and Properties](../../static/img/sso/azure-ad/AzureAppNavBranding.png)
 
-    1.1 `Home page URL`: paste the following URL: `https://app.getport.io/?org_id={YOUR_ORGANIZATION_ID}`.
+    1.1 `Home page URL`: paste the following URL:
+
+    ```text showLineNumbers
+    https://auth.getport.io/authorize?response_type=token&client_id=96IeqL36Q0UIBxIfV1oqOkDWU6UslfDj&connection={CONNECTION_NAME}&redirect_uri=https%3A%2F%2Fapp.getport.io
+    ```
 
     :::note
-    We will provide your organization id.
+    We will provide your `{CONNECTION_NAME}` (Contact us on Slack/Intercom).
     :::
 
     1.2 Add the Port logo (optional):

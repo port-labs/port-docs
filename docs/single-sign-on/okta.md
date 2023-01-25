@@ -76,15 +76,21 @@ Under `General` tab:
 
    ![Okta app settings](../../static/img/sso/okta/OktaAppVisibilitySettings.png)
 
-   2.3 - Check `Login flow` to be `Redirect to app to initiate login (OIDC Compliant)` and paste the following URI under the `initiate login URI`: `https://app.getport.io?org_id={YOUR_ORG_ID}`.
+   2.3 Check `Login flow` to be `Redirect to app to initiate login (OIDC Compliant)`
+
+   2.4 Under `initiate login URI` paste the following URI:
+
+   ```text showLineNumbers
+   https://auth.getport.io/authorize?response_type=token&client_id=96IeqL36Q0UIBxIfV1oqOkDWU6UslfDj&connection={CONNECTION_NAME}&redirect_uri=https%3A%2F%2Fapp.getport.io
+   ```
 
    :::note
-   We will provide your `organization id` (Contact us on slack).
+   We will provide your `{CONNECTION_NAME}` (Contact us on Slack/Intercom).
    :::
 
    ![Okta app settings login flow](../../static/img/sso/okta/OktaAppLoginflowSettings.png)
 
-   2.4 Click `Save` and you’re done! now you’ll have the Port app on your Okta dashboard.
+   2.5 Click `Save` and you’re done! now you’ll have the Port app on your Okta dashboard.
 
    ![Okta dashboard with Port app](../../static/img/sso/okta/OktaDashboard.png)
 

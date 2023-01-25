@@ -51,11 +51,15 @@ Most of the following steps involve editing the initial Port app you created. Ke
 
 In the Port app, go to the `Configuration` menu and follow these steps:
 
-1. Under `Login URL` set the login URL to the one **provided to you by Port**.
+1. Under `Login URL` paste the following login URL:
 
-   :::note
-   Remember to contact us for your onelogin login URL
-   :::
+```text showLineNumbers
+https://auth.getport.io/authorize?response_type=token&client_id=96IeqL36Q0UIBxIfV1oqOkDWU6UslfDj&connection={CONNECTION_NAME}&redirect_uri=https%3A%2F%2Fapp.getport.io
+```
+
+:::note
+We will provide your `{CONNECTION_NAME}` (Contact us on Slack/Intercom).
+:::
 
 2. Under `Redirect URI's` set: `https://auth.getport.io/login/callback`.
 
