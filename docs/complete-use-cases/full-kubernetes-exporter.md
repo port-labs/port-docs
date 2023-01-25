@@ -106,7 +106,7 @@ Create a `config.yaml` with your relevant queries and Blueprints.
 In the Git repository under `exporter-config/config.yaml`, you can find a pre-made `config.yaml` which is configured to match the Blueprints we created earlier using Terraform. This `config.yaml` maps resources from all of the namespaces which dont start with "kube", and some cluster-scope resources.
 
 <details>
-  <summary>Here is the `config.yaml` we will be using.</summary>
+  <summary>Here is the config.yaml we will be using.</summary>
 
 ```json
 resources: # List of K8s resources to list, watch, and export to Port.
