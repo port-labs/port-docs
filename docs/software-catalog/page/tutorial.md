@@ -145,6 +145,6 @@ Making an **HTTP PATCH** request with the following body will give the specified
 }
 ```
 
-:::note
+:::info
 It is possible to update multiple permission keys (`roles`, `teams` and/or `users`) in a single `PATCH` request, just keep in mind that any `role`, `team` or `user` that is not specified and previously had permissions to the page, will lose those permissions.
 :::
