@@ -22,15 +22,14 @@ Pages have 4 regular CRUD permissions:
 ### From the API
 
 :::note
-Remember that an access token is needed to make API requests, refer back to [Getting an API token](../blueprint/tutorial.md#getting-an-api-token) if you need to generate a new one.
+
+- Remember that an access token is needed to make API requests, refer back to [Getting an API token](../blueprint/tutorial.md#getting-an-api-token) if you need to generate a new one.
+- Currently in order to see the page identifiers you can request all pages by making a  
+  GET request to `https://api.getport.io/v1/pages`
+
 :::
 
 Make an **HTTP GET** request to the URL: `https://api.getport.io/v1/pages/{page_identifier}/permissions`.
-
-:::note
-Currently in order to see the page identifiers you can request all pages by making a  
-GET request to `https://api.getport.io/v1/pages`
-:::
 
 The response will contain the roles and users that are allowed to read (view) the requested page:
 
@@ -44,11 +43,11 @@ The response will contain the roles and users that are allowed to read (view) th
 }
 ```
 
-This response body indicates that those Roles, Users and Teams have permissions to read the page.
-In addition every role, user and team which does not appear in this request body does not have permission to view the page.
+This response body indicates that those roles, users and teams have permissions to read the page.
+In addition, every role, user and team which does not appear in this request body does not have permission to view the page.
 
 :::note
-Only page permissions of software catalog pages can be requested.
+Only page permissions of software catalog pages can be requested. For example, the permissions for the DevPortal Setup page and the audit log page cannot be changed.
 :::
 
 ## Update page permissions
@@ -58,14 +57,35 @@ Only page permissions of software catalog pages can be requested.
 
 ### From the API
 
-Make an **HTTP PATCH** request to the following URL: `https://api.getport.io/v1/pages/{page_identifier}/permissions`.
+To update page permissions, you will need to specify the roles, teams or users that should have permissions for the page.
+
+To perform an update, make an **HTTP PATCH** request to the following URL: `https://api.getport.io/v1/pages/{page_identifier}/permissions`.
 
 Here is an example request body:
 
-When updating page permissions, be sure to include only the relevant sections in the request body (users, roles or teams)
-Any role, user or team that does not appear in the request body will lose permissions to the page (this is also how you deny permissions from a user).
+```json showLineNumbers
+{
+  "read": {
+    "roles": ["Admin", "Member"]
+  }
+}
+```
 
-For example, given the following permissions for a page:
+:::tip
+
+The `PATCH` API will perform updates only to keys that are specified in the request body. Be sure to include only the relevant keys in the request body (users, roles or teams)
+
+If you do not specify a specific key (for example `users` in the request, user permissions to the specific page will remain unchanged).
+
+When making changes to permissions, any role, user or team that does not appear in the corresponding key in the request body will lose permissions to the page (this is how you remove permissions to a page).
+
+:::
+
+### Examples
+
+Let's present a set of page permissions and then explore how different `PATCH` request bodies change the effective permissions of the page.
+
+Given the following permissions for a page:
 
 ```json showLineNumbers
 {
@@ -77,17 +97,9 @@ For example, given the following permissions for a page:
 }
 ```
 
-Making an HTTP PATCH request with the following body will remove the `Member` roles' permission to view the page:
+#### Add permissions to role
 
-```json showLineNumbers
-{
-  "read": {
-    "roles": ["Admin"]
-  }
-}
-```
-
-Making an HTTP PATCH request with the following body will give the `Services-Moderator` role permissions to view the page:
+Making an **HTTP PATCH** request with the following body will give the `Services-Moderator` role permissions to view the page (without removing the permissions of any existing role):
 
 ```json showLineNumbers
 {
@@ -97,7 +109,21 @@ Making an HTTP PATCH request with the following body will give the `Services-Mod
 }
 ```
 
-Making an HTTP PATCH request with the following body will give those users permissions to view the page:
+#### Remove permissions from role
+
+Making an **HTTP PATCH** request with the following body will remove the `Member` roles' permissions to view the page:
+
+```json showLineNumbers
+{
+  "read": {
+    "roles": ["Admin"]
+  }
+}
+```
+
+#### Add permissions to user
+
+Making an **HTTP PATCH** request with the following body will give the specified users permissions to view the page (without changing the permissions of existing `roles`):
 
 ```json showLineNumbers
 {
@@ -107,7 +133,9 @@ Making an HTTP PATCH request with the following body will give those users permi
 }
 ```
 
-Making an HTTP PATCH request with the following body will give those teams permissions to view the page:
+#### Add permissions to team
+
+Making an **HTTP PATCH** request with the following body will give the specified teams permissions to view the page (without changing the permissions of existing `roles`):
 
 ```json showLineNumbers
 {
@@ -116,3 +144,7 @@ Making an HTTP PATCH request with the following body will give those teams permi
   }
 }
 ```
+
+:::note
+It is possible to update multiple permission keys (`roles`, `teams` and/or `users`) in a single `PATCH` request, just keep in mind that any `role`, `team` or `user` that is not specified and previously had permissions to the page, will lose those permissions.
+:::
