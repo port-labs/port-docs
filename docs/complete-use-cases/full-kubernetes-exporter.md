@@ -105,6 +105,259 @@ Get to know the basics of our Kubernetes exporter [here!](../exporters/k8s-expor
 Create a `config.yaml` with your relevant queries and Blueprints.
 In the Git repository under `exporter-config/config.yaml`, you can find a pre-made `config.yaml` which is configured to match the Blueprints we created earlier using Terraform. This `config.yaml` maps resources from all of the namespaces which dont start with "kube", and some cluster-scope resources.
 
+<details>
+  <summary>Here is the `config.yaml` we will be using.</summary>
+
+```json
+resources: # List of K8s resources to list, watch, and export to Port.
+  - kind: v1/namespaces # group/version/resource (G/V/R) format
+    selector:
+      query: .metadata.name | startswith("kube") | not # JQ boolean query. If evaluated to false - skip syncing the object.
+    port:
+      entity:
+        mappings: # Mappings between one K8s object to one or many Port Entities. Each value is a JQ query.
+          - identifier: .metadata.name
+            title: .metadata.name
+            blueprint: '"Namespace"'
+            properties:
+              creationTimestamp: .metadata.creationTimestamp
+              labels: .metadata.labels
+            relations:
+              Cluster: '"educator-cluster"'
+
+  - kind: batch/v1/jobs
+    selector:
+      query: .metadata.namespace | startswith("kube") | not
+    port:
+      entity:
+        mappings:
+          - identifier: .metadata.name +  "-" + .metadata.namespace + "-" + "Job"
+            title: .metadata.name
+            blueprint: '"PodOwner"'
+            properties:
+              creationTimestamp: .metadata.creationTimestamp
+              type: '"Job"'
+              status: .status.conditions[-1].type // "Running"
+              startTime: .metadata.creationTimestamp
+              endTime: .status.completionTime
+            relations:
+              CronJob: .metadata.ownerReferences[0].name + "-" + .metadata.namespace
+              Namespace: .metadata.namespace
+
+  - kind: apps/v1/deployments
+    selector:
+      query: .metadata.namespace | startswith("kube") | not
+    port:
+      entity:
+        mappings:
+          - identifier: .metadata.name + "-" + .metadata.namespace
+            title: .metadata.name
+            icon: '"Deployment'
+            blueprint: '"Deployment"'
+            properties:
+              creationTimestamp: .metadata.creationTimestamp
+              replicas: .spec.replicas
+              strategy: .spec.strategy.type
+              availableReplicas: .status.availableReplicas
+              labels: .metadata.labels
+              containers: (.spec.template.spec.containers | map({name, image, resources}))
+            relations:
+              Namespace: .metadata.namespace
+
+  - kind: apps/v1/replicasets
+    selector:
+      query: (.metadata.namespace | startswith("kube") | not ) and (.metadata.ownerReferences != null)
+    port:
+      entity:
+        mappings:
+          - identifier: .metadata.name + "-" + .metadata.namespace + "-" + "ReplicaSet"
+            title: .metadata.name
+            blueprint: '"PodOwner"'
+            properties:
+              creationTimestamp: .metadata.creationTimestamp
+              availableReplicas: .status.availableReplicas
+              replicas: .spec.replicas
+              type: '"ReplicaSet"'
+            relations:
+              Deployment: .metadata.ownerReferences[0].name + "-" + .metadata.namespace
+
+
+  - kind: apps/v1/replicasets
+    selector:
+      query: (.metadata.namespace | startswith("kube") | not ) and (.metadata.ownerReferences == null)
+    port:
+      entity:
+        mappings:
+          - identifier: .metadata.name + "-" + .metadata.namespace + "-" + "ReplicaSet"
+            title: .metadata.name
+            blueprint: '"PodOwner"'
+            properties:
+              creationTimestamp: .metadata.creationTimestamp
+              availableReplicas: .status.availableReplicas
+              replicas: .spec.replicas
+              type: '"ReplicaSet"'
+            relations:
+              Namespace: .metadata.namespace
+
+
+  - kind: apps/v1/daemonsets
+    selector:
+      query: .metadata.namespace | startswith("kube") | not
+    port:
+      entity:
+        mappings:
+          - identifier: .metadata.name + "-" + .metadata.namespace + "-" + "DaemonSet"
+            title: .metadata.name
+            blueprint: '"PodOwner"'
+            properties:
+              creationTimestamp: .metadata.creationTimestamp
+              replicas: .spec.replicas
+              availableReplicas: .status.availableReplicas
+              type: '"DaemonSet"'
+            relations:
+              Namespace: .metadata.namespace
+
+  - kind: apps/v1/statefulsets
+    selector:
+      query: .metadata.namespace | startswith("kube") | not
+    port:
+      entity:
+        mappings:
+          - identifier: .metadata.name + "-" + .metadata.namespace + "-" + "StatefulSet"
+            title: .metadata.name
+            blueprint: '"PodOwner"'
+            properties:
+              creationTimestamp: .metadata.creationTimestamp
+              replicas: .spec.replicas
+              availableReplicas: .status.availableReplicas
+              type: '"StatefulSet"'
+            relations:
+              Namespace: .metadata.namespace
+
+  - kind: v1/pods
+    selector:
+      query: (.metadata.namespace | startswith("kube") | not ) and (.metadata.ownerReferences != null)
+    port:
+      entity:
+        mappings:
+          - identifier: .metadata.name + "-" + .metadata.namespace
+            title: .metadata.name
+            icon: '"Microservices"'
+            blueprint: '"Pod"'
+            properties:
+              startTime: .status.startTime
+              phase: .status.phase
+              labels: .metadata.labels
+              containers: (.spec.containers | map({image, resources})) + .status.containerStatuses | group_by(.image) | map(add)
+              conditions: .status.conditions
+            relations:
+              PodOwner: .metadata.ownerReferences[0].name + "-" + .metadata.namespace + "-" + .metadata.ownerReferences[0].kind
+              Node: (.spec.nodeName) | (split(".")|join("_"))
+
+  - kind: v1/pods
+    selector:
+      query: (.metadata.namespace | startswith("kube") | not ) and (.metadata.ownerReferences == null)
+    port:
+      entity:
+        mappings:
+          - identifier: .metadata.name + "-" + .metadata.namespace
+            title: .metadata.name
+            blueprint: '"Pod"'
+            properties:
+              startTime: .status.startTime
+              phase: .status.phase
+              labels: .metadata.labels
+              containers: (.spec.containers | map({image, resources})) + .status.containerStatuses | group_by(.image) | map(add)
+              conditions: .status.conditions
+            relations:
+              Node: (.spec.nodeName) | (split(".")|join("_"))
+              Namespace: .metadata.namespace
+
+  - kind: v1/services
+    selector:
+      query: .metadata.namespace | startswith("kube") | not
+    port:
+      entity:
+        mappings:
+          - identifier: .metadata.name + "-" + .metadata.namespace
+            title: .metadata.name
+            icon: '"Service"'
+            blueprint: '"Service"'
+            properties:
+              creationTimestamp: .metadata.creationTimestamp
+              labels: .metadata.labels
+              type: .spec.type
+              selectors: .spec.selector
+            relations:
+              Namespace: .metadata.namespace
+
+  - kind: v1/nodes
+    port:
+      entity:
+        mappings:
+          - identifier: (.metadata.name) | (split(".")|join("_"))
+            title: .metadata.name
+            icon: '"Node"'
+            blueprint: '"Node"'
+            properties:
+              creationTimestamp: .metadata.creationTimestamp
+              availableCpu: .status.allocatable.cpu
+              available_memory: .status.allocatable.memory
+              labels: .metadata.labels
+              ready: .status.conditions[] | select(.type == "Ready") | .status
+            relations:
+              Cluster: '"educator-cluster"'
+
+  - kind: batch/v1/cronjobs
+    selector:
+      query: .metadata.namespace | startswith("kube") | not
+    port:
+      entity:
+        mappings:
+          - identifier: .metadata.name + "-" + .metadata.namespace
+            title: .metadata.name
+            blueprint: '"CronJob"'
+            properties:
+              creationTimestamp: .metadata.creationTimestamp
+              labels: .metadata.labels
+              schedule: .spec.schedule
+              lastSuccessfulRun: .status.lastSuccessfulTime
+              lastRun: .status.lastScheduleTime
+              suspended: .spec.suspend
+
+  - kind: rbac.authorization.k8s.io/v1/roles
+    selector:
+      query: .metadata.namespace | startswith("kube") | not
+    port:
+      entity:
+        mappings:
+          - identifier: .metadata.name + "-" + .metadata.namespace
+            title: .metadata.name
+            blueprint: '"Role"'
+            properties:
+              creationTimestamp: .metadata.creationTimestamp
+              labels: .metadata.labels
+              rules: .rules
+            relations:
+              Namespace: .metadata.namespace
+
+  - kind: rbac.authorization.k8s.io/v1/clusterroles
+    port:
+      entity:
+        mappings:
+          - identifier: .metadata.name | split(":")  | join("-") | split(".") | join("-")
+            title: .metadata.name
+            blueprint: '"ClusterRole"'
+            properties:
+              creationTimestamp: .metadata.creationTimestamp
+              labels: .metadata.labels
+              rules: .rules
+            relations:
+              Cluster: '"educator-cluster"'
+```
+
+</details>
+
 ### Updating the exporter using Github Workflows
 
 To keep the mapping of cluster resources to Port up-to-date, you can use a GitHub Workflow to update the `config.yml` file applied to your K8s cluster whenever you make an update. On change to the `config.yml` file, the GitHub workflow will update the K8s exporter config deployed to your cluster.
