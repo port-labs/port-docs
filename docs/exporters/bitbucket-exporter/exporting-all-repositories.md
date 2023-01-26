@@ -34,11 +34,11 @@ To export your Bitbucket `repositories` to Port, you can use the following Port 
       },
       "workspace": {
         "type": "string",
-        "title": "Project"
+        "title": "Workspace"
       },
       "project": {
         "type": "string",
-        "title": "Workspace"
+        "title": "Project"
       }
     },
     "required": []
