@@ -8,6 +8,10 @@ In this guide, you will deploy a new `AWS Lambda function` that will subscribe t
 
 ## Prerequisites
 
+:::note
+To follow this example, please contact us via Intercom to receive a dedicated Kafka topic.
+:::
+
 - AWS CLI installed and configured to your desired AWS account;
 - A Port API `CLIENT_ID` and `CLIENT_SECRET`;
 - Connection credentials to the Kafka topic, provided to you by Port. they will look like to this:
