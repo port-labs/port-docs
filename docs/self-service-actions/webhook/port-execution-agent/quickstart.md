@@ -44,7 +44,7 @@ helm install my-port-agent port-labs/port-agent \
 
 3. Follow one of the guides below:
 
-- [Self-Service Actions Deep Dive](../../self-service-actions-deep-dive.md) - set up a Blueprint and Self-Service Actions.
+- [Self-Service Actions Deep Dive](../../self-service-actions-deep-dive/self-service-actions-deep-dive.md) - set up a Blueprint and Self-Service Actions.
 - [Changelog Listener](../examples/changelog-listener.md) - create a Blueprint with `changelogDestination` to listen and act on changes in the software catalog.
 
 When using the execution agent, in the `url` field you need to provide a URL to a service (for example, a REST API) that will accept the invocation event.
@@ -55,8 +55,8 @@ When using the execution agent, in the `url` field you need to provide a URL to 
 :::note
 **IMPORTANT**: To make use of the **Port execution agent**, you need to configure:
 
-- [Self-Service Action invocation method](../../self-service-actions-deep-dive.md#invocation-method-structure-fields) / [Change Log](../../../software-catalog/blueprint/blueprint.md#changelog-destination) destination `type` field value should be equal to `WEBHOOK`.
-- [Self-Service Action invocation method](../../self-service-actions-deep-dive.md#invocation-method-structure-fields) / [Change Log](../../../software-catalog/blueprint/blueprint.md#changelog-destination) `agent` field value should be equal to `true`.
+- [Self-Service Action invocation method](../../self-service-actions-deep-dive/self-service-actions-deep-dive.md#invocation-method-structure-fields) / [Change Log](../../../software-catalog/blueprint/blueprint.md#changelog-destination) destination `type` field value should be equal to `WEBHOOK`.
+- [Self-Service Action invocation method](../../self-service-actions-deep-dive/self-service-actions-deep-dive.md#invocation-method-structure-fields) / [Change Log](../../../software-catalog/blueprint/blueprint.md#changelog-destination) `agent` field value should be equal to `true`.
 
 For example:
 
