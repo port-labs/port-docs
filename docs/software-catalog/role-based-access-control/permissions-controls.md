@@ -139,6 +139,23 @@ By default, **Member** users can execute every new Action of the Blueprint. If n
 }
 ```
 
+By default, **Admin** users can approve/decline every new Action of the Blueprint. If necessary, you can change it. For example, you can allow **Moderators** (and **Admins**) to only approve/decline the Action `clone_env`:
+
+```json showLineNumbers diff
+{
+  "actions": {
+    "clone_env": {
+      "approval": {
+        // highlight-next-line
+        "roles": ["Env-moderator"], // changed from ["Env-moderator", "Admin"]
+        "users": ["some-user@myorg.com"] // changed from []
+        "ownedByTeam": false
+      }
+    }
+  }
+}
+```
+
 ### Setting permissions by team ownership
 
 You will notice that some operations have the `ownedByTeam` flag. This allows you to set permissions by team ownership, rather than by Roles or direct assignment.
