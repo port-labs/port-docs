@@ -541,7 +541,13 @@ The trigger includes audit data such as who triggered the action, and when and h
 "trigger": {
     "by": {
         "userId": "auth0|<USER>",
-        "orgId": "<ORG>"
+        "orgId": "<ORG>",
+        "user": {
+          "email": "<USER_EMAIL>",
+          "firstName": "<USER_FIRST_NAME>",
+          "lastName": "<USER_LASTT_NAME",
+          "id": "<USER_ID>"
+        }
     },
     "at": "2022-07-27T17:50:58.776Z",
     "origin": "UI"
