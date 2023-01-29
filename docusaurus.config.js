@@ -98,49 +98,49 @@ const config = {
         links: [
           {
             title: "Documentation",
-            items: [
-              {
-                label: "Quickstart",
-                to: "/",
-              },
-              {
-                label: "Software Catalog",
-                to: "/software-catalog",
-              },
-              {
-                label: "Self-Service Actions",
-                to: "/self-service-actions",
-              },
-              {
-                label: "API Methods",
-                to: "/api-providers",
-              },
-              {
-                label: "Exporters",
-                to: "/exporters",
-              },
-            ],
+            // items: [
+            //   {
+            //     label: "Quickstart",
+            //     to: "/",
+            //   },
+            //   {
+            //     label: "Software Catalog",
+            //     to: "/software-catalog",
+            //   },
+            //   {
+            //     label: "Self-Service Actions",
+            //     to: "/self-service-actions",
+            //   },
+            //   {
+            //     label: "API Methods",
+            //     to: "/api-providers",
+            //   },
+            //   {
+            //     label: "Exporters",
+            //     to: "/exporters",
+            //   },
+            // ],
           },
           {
             title: "Complete Use Cases",
-            items: [
-              {
-                label: "Software Catalog",
-                to: "/complete-use-cases/sdlc",
-              },
-              {
-                label: "Service Locking",
-                to: "/complete-use-cases/service-locking",
-              },
-              {
-                label: "Software Templates",
-                to: "/complete-use-cases/software-templates",
-              },
-              {
-                label: "IaC Templates",
-                to: "/complete-use-cases/iac-templates",
-              },
-            ],
+            // items: [
+            //   {
+            //     label: "Software Catalog",
+            //     to: "/complete-use-cases/sdlc",
+            //   },
+            //   {
+            //     label: "Service Locking",
+            //     to: "/complete-use-cases/service-locking",
+            //   },
+            //   {
+            //     label: "Software Templates",
+            //     to: "/complete-use-cases/software-templates",
+            //   },
+            //   {
+            //     label: "IaC Templates",
+            //     to: "/complete-use-cases/iac-templates",
+            //   },
+            // ],
           },
           {
             title: "Community",

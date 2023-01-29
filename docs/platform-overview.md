@@ -31,13 +31,13 @@ We will now list the core components that construct Port, with short explanation
 
 ## Software Catalog
 
-- [**Blueprints**](./software-catalog/blueprint/) are our basic building blocks in Port. They represent assets that can be managed in Port, such as `Microservice`, `Environments`, `Packages`, `Clusters`, `Databases`, and many more;
-- [**Relations**](./software-catalog/relation/) enable us to create connections and link between Blueprints, doing so provides logical context to the Software Catalog;
-- [**Entities**](./software-catalog/entity/) are objects that match the types defined by Blueprints;
-- [**Widgets**](./software-catalog/widgets/) and [**Dashboards**](./software-catalog/dashboards/) allow you to extend your Software Catalog with convenient and intuitive visual representations of data.
+- **Blueprints** are our basic building blocks in Port. They represent assets that can be managed in Port, such as `Microservice`, `Environments`, `Packages`, `Clusters`, `Databases`, and many more;
+- **Relations** enable us to create connections and link between Blueprints, doing so provides logical context to the Software Catalog;
+- **Entities** are objects that match the types defined by Blueprints;
+- **Widgets** and **Dashboards** allow you to extend your Software Catalog with convenient and intuitive visual representations of data.
 
 :::tip
-To learn more about the components listed above and more, refer to the [Software Catalog](./software-catalog/) page.
+To learn more about the components listed above and more, refer to the Software Catalog page.
 :::
 
 ## Self-Service Actions
@@ -46,14 +46,14 @@ In Port, you can make your Software Catalog active by defining Self-Service Acti
 
 Port Self-Service Actions are enabled using several convenient integrations with your infrastructure:
 
-- [**Webhook Actions**](./self-service-actions/webhook/) - Port can trigger webhooks based on a customer provided `URL` Both for `Action` and `Changelog` events;
-- [**Execution Agent**](./self-service-actions/webhook/port-execution-agent/) - our execution agent provides you with a secure and convenient way to listen and act on invocations of Self-Service Actions and changes in the software catalog;
-- [**Kafka Actions**](./self-service-actions/kafka/) - Port manages a Kafka Topic per customer that publishes the execution run requests.
+- **Webhook Actions** - Port can trigger webhooks based on a customer provided `URL` Both for `Action` and `Changelog` events;
+- **Execution Agent** - our execution agent provides you with a secure and convenient way to listen and act on invocations of Self-Service Actions and changes in the software catalog;
+- **Kafka Actions** - Port manages a Kafka Topic per customer that publishes the execution run requests.
   You can listen to a Kafka Topic with any code platform you wish to use, and also use it as a trigger for a serverless function. For example, AWS Lambda.
-- [**GitHub Workflow Actions**](./self-service-actions/github-workflow/) - [Port's GitHub application](./exporters/github-exporter/installation.md) can trigger a [GitHub workflow](https://docs.github.com/en/actions/using-workflows) using a customer provided input and [`port_payload`](./self-service-actions/self-service-actions-deep-dive.md#action-message-structure).
+- **GitHub Workflow Actions** - Port's GitHub application can trigger a GitHub workflow using a customer provided input and `port_payload`.
 
 :::tip
-To learn more about the Self-Service Actions and more, refer to the [Self-Service Actions](./self-service-actions/) page and the [Self-Service Actions Deep Dive](./self-service-actions/self-service-actions-deep-dive.md).
+To learn more about the Self-Service Actions and more, refer to the Self-Service Actions page and the Self-Service Actions Deep Dive.
 :::
 
 ## Integrations
@@ -62,10 +62,10 @@ In addition to Port's core components, we provide you with multiple integrations
 
 - Via the **UI**;
 - Using our **API**;
-- Using 3rd party app integrations, for example [GitHub App](./api-providers/gitops/), [GitHub Action](./api-providers/github-action.md), [K8s Exporter](./exporters/k8s-exporter/) and [Terraform Provider](./api-providers/terraform.md).
+- Using 3rd party app integrations, for example GitHub App, GitHub Action, K8s Exporter and Terraform Provider.
 
 :::tip
-Refer to Port's API [providers](./api-providers/) and [exporters](./exporters/) pages to learn more.
+Refer to Port's API providers and exporters pages to learn more.
 :::
 
 ## Management
@@ -85,18 +85,18 @@ Port has pages dedicated for managing all users and teams in the system:
 
 #### Managing users and teams
 
-In Port, you can control and manage all your users and teams, in one place. To learn more, refer to the [Users and Teams management](./software-catalog/role-based-access-control/users-and-teams-management.md) page.
+In Port, you can control and manage all your users and teams, in one place. To learn more, refer to the Users and Teams management page.
 
 ## Getting help
 
 | Source                                                                                                  | Description                                                                                                                         |
 | ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
 | Documentation                                                                                           | You are here!                                                                                                                       |
-| [API Docs](./api-providers/rest.md)                                                                     | Our full API docs                                                                                                                   |
+| API Docs                                                                                                | Our full API docs                                                                                                                   |
 | [API Swagger](https://api.getport.io/static/index.html#/)                                               | Our Swagger UI                                                                                                                      |
 | [Community](https://join.slack.com/t/devex-community/shared_invite/zt-1bmf5621e-GGfuJdMPK2D8UN58qL4E_g) | Our DevEx community will help you with best practices and success stories                                                           |
 | Contact Us                                                                                              | You can message us directly by logging in to [Port](https://app.getport.io) and clicking the chat bubble in the bottom right corner |
 
 ## Next steps
 
-The best way to get started with Port is by configuring some initial Blueprints and ingesting data into the platform. To do that, move on to the [Software Catalog](./software-catalog/) page.
+The best way to get started with Port is by configuring some initial Blueprints and ingesting data into the platform. To do that, move on to the Software Catalog page.
