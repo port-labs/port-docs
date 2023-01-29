@@ -762,7 +762,7 @@ Here is an example of the request payload received from Port, inside the Kafka m
       "user": {
         "email": "test@test.com",
         "firstName": "test",
-        "lastName": "name",
+        "lastName": "test",
         "id": "auth0|638879fa62c686d381b36ecb"
       }
     },

@@ -144,7 +144,7 @@ By invoking the Self-Service Action, the following action invocation body is sen
         "user": {
           "email": "test@test.com",
           "firstName": "test",
-          "lastName": "name",
+          "lastName": "test",
           "id": "auth0|638879fa62c686d381b36ecb"
         }
       },
@@ -254,7 +254,7 @@ The following action invocation body is sent (existing Entity is highlighted):
         "user": {
           "email": "test@test.com",
           "firstName": "test",
-          "lastName": "name",
+          "lastName": "test",
           "id": "auth0|638879fa62c686d381b36ecb"
         }
       },
