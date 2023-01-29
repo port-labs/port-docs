@@ -139,7 +139,7 @@ By default, **Member** users can execute every new Action of the Blueprint. If n
 }
 ```
 
-By default, **Admin** users can approve/decline every new Action of the Blueprint. If necessary, you can change it. For example, you can allow **Moderators** (and **Admins**) to only approve/decline the Action `clone_env`:
+By default, **Admin** users can approve/decline every new Action of the Blueprint. If necessary, you can change it. For example, you can allow **Admins** and specific users to approve/decline the Action `clone_env`:
 
 ```json showLineNumbers diff
 {
@@ -147,9 +147,8 @@ By default, **Admin** users can approve/decline every new Action of the Blueprin
     "clone_env": {
       "approval": {
         // highlight-next-line
-        "roles": ["Env-moderator"], // changed from ["Env-moderator", "Admin"]
+        "roles": ["Admin"],
         "users": ["some-user@myorg.com"] // changed from []
-        "ownedByTeam": false
       }
     }
   }
