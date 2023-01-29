@@ -7,7 +7,7 @@ description: String is a primitive data type used to save text data
 
 String is a primitive data type used to save text data.
 
-## Use cases & examples
+## Use cases
 
 The string property type can be used to store any text based data, for example:
 
@@ -21,17 +21,31 @@ The string property type can be used to store any text based data, for example:
 
 ```json showLineNumbers
 {
-  "title": "String Property",
-  // highlight-start
-  "type": "string",
-  // highlight-end
-  "icon": "Cluster",
-  "description": "A string property",
-  "default": "Prod"
+  "identifier": "microservice",
+  "description": "This blueprint represents a service in our software catalog",
+  "title": "Microservice",
+  "icon": "Microservice",
+  "schema": {
+    "properties": {
+      "stringProp": {
+        // highlight-start
+        "title": "String Property",
+        "type": "string",
+        "icon": "Cluster",
+        "description": "A string property",
+        "default": "Prod"
+        // highlight-end
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {}
 }
 ```
 
-## Enum definition
+## Enum of strings definition
 
 ```json showLineNumbers
 {
@@ -44,7 +58,7 @@ The string property type can be used to store any text based data, for example:
 }
 ```
 
-## Array definition
+## Array of strings definition
 
 ```json showLineNumbers
 {
@@ -52,5 +66,45 @@ The string property type can be used to store any text based data, for example:
   "items": {
     "type": "string"
   }
+}
+```
+
+## Terraform string definition
+
+```hcl showLineNumbers
+resource "port-labs_blueprint" "microservice" {
+  title      = "Microservice"
+  icon       = "Microservice"
+  identifier = "microservice"
+  # highlight-start
+  properties {
+    identifier = "stringProp"
+    type       = "string"
+    title      = "String Property"
+    required   = true
+  }
+  # highlight-end
+}
+```
+
+## Validate strings
+
+String validations support the following operators:
+
+- `minLength`
+- `maxLength`
+- `pattern`
+
+```json showLineNumbers
+{
+  "title": "Region",
+  "type": "string",
+  "icon": "Aws",
+  "description": "Cloud provider region",
+  // highlight-start
+  "minLength": 1,
+  "maxLength": 32,
+  "pattern": "^[a-zA-Z0-9-]*-service$"
+  // highlight-end
 }
 ```
