@@ -171,3 +171,7 @@ A calculation property that links to the slack channel of the squad can be:
 :::note
 Remember that since mirror properties are treated as user-defined properties, when referencing them in Calculation Properties, there is no need for a preceding dollar sign (`$`).
 :::
+
+## Examples
+
+Refer to the calculation property [examples](./examples.md) page
