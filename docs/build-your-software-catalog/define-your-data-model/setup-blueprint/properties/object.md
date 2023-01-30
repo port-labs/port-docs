@@ -15,6 +15,7 @@ Object is a data type used to save object definitions in JSON.
 The object property type can be used to store any key/value based data, for example:
 
 - Configurations;
+- Tags;
 - HTTP responses;
 - Dictionaries/Hash maps;
 - etc.
