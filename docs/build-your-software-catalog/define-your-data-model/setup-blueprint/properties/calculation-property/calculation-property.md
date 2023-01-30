@@ -49,7 +49,20 @@ Coming soon
 
 ## `Calculation` output types
 
-Calculation properties support the following output types `string`, `number`, `object`, `array`, `boolean`, and `yaml`.
+Calculation properties support the following output types `string`, `number`, `object`, `array`, `boolean`, and `yaml`, for example:
+
+```json showLineNumbers
+{
+  "calculationProperties": {
+    "myCalculationProp": {
+      "title": "My calculation property",
+      // highlight-next-line
+      "type": "my_output_type",
+      "calculation": ".properties.myStringProp + .properties.myStringProp"
+    }
+  }
+}
+```
 
 ## `Calculation` methods
 
@@ -121,7 +134,7 @@ Each key is one of the calculated values and each value is one of the following 
 
 ## Using meta properties in calculation properties
 
-It is possible to use [meta properties](../properties.md#meta-properties) as template values for calculation properties, since the syntax is the same as user-defined properties, but without the `properties` keyword.
+It is possible to use [meta properties](../meta-properties.md) as template values for calculation properties, since the syntax is the same as user-defined properties, but without the `properties` keyword.
 
 For example, if you want to concatenate a template URL (for example `https://datadog.com`) with the `identifier` meta property:
 
