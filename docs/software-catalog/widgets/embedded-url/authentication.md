@@ -94,6 +94,8 @@ use_pkce = true
 
 </details>
 
+# Todo: Improve Okta steps
+
 # Todo: do i need to talk about the iframe restrictions with cookies?
 
 # Todo: read more about pkce?
