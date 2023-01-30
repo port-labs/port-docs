@@ -16,7 +16,7 @@ preceding: The widget will generate a PKCE. (`code_challnage` & `code_verifier`)
 
 ![AuthorizationCodeFlow.png](../../../../static/img/software-catalog/widgets/embedded-url/AuthorizationCodeFlow.png)
 
-## Required parameters
+## Required Parameters
 
 To set up the authentication, you'll need the following parameters:
 
