@@ -3,9 +3,6 @@ sidebar_position: 1
 sidebar_label: Blueprint
 ---
 
-import Tabs from "@theme/Tabs"
-import TabItem from "@theme/TabItem"
-
 # Blueprint
 
 ## What is a Blueprint?
