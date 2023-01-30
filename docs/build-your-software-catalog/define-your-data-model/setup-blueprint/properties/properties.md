@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Define Schema
+# Properties
 
 import DocCardList from '@theme/DocCardList';
 

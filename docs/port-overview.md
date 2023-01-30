@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 1
 ---
 
 # Port Overview
@@ -8,95 +8,43 @@ sidebar_position: 2
 
 Welcome to Port! :wave:
 
-Whether you are a DevEx, platform, or DevOps engineer, Port helps you create your custom Developer Portal in no time! With Port, you can build the perfect setup and workflow for your organizational needs, in order to make your developer's lives much easier with self-service capabilities
+Internal developer portals need a context-rich software catalog with maturity and quality scorecards. They also must support comprehensive developer self-service actions. Port has it all.
 
-![Developer Platform complete vision](../static/img/quickstart/platform-vision.png)
+![Developer Platform complete vision](../static/img/port-overview/port-stack.png)
 
-### Port as a Builder
+### Port's product pillars
 
-Our approach is to let you build anything with maximum flexibility. Therefore, we took a **builder-based** approach, in which you can build your asset landscape whichever way works for you. We don't enforce anything on how you build your catalog.
+#### Software Catalog
 
-### We are API-first
+Give developers a holistic understanding of your development lifecycle and underlying architecture. Reduce cognitive load resulting from complex architectures, tool proliferation and tribal knowledge.
 
-<sup><mark>And it is not just an empty claim.</mark></sup>
+[Software Catalog live demo](https://demo.getport.io/services)
 
-We built Port with an **API-First approach**, meaning that our product and API go hand in hand, consequently benefiting our development velocity and our users, too. You can use our API to perform any operation on the Platform, while we provide you with the logic and the detailed documentation.
+#### Self-Service
 
-:::note
-We Use the **OpenAPI 3** specification.  
-Visit our [Swagger.](https://api.getport.io/static/index.html#/)
-:::
+Drive developer productivity by allowing developers to run free and use self-service actions like scaffolding a service or provisioning a cloud resource.
 
-We will now list the core components that construct Port, with short explanations and links to the comprehensive documentation of each component:
+[Self Service live demo](https://demo.getport.io/self-serve)
 
-## Software Catalog
+#### Software maturity
 
-- **Blueprints** are our basic building blocks in Port. They represent assets that can be managed in Port, such as `Microservice`, `Environments`, `Packages`, `Clusters`, `Databases`, and many more;
-- **Relations** enable us to create connections and link between Blueprints, doing so provides logical context to the Software Catalog;
-- **Entities** are objects that match the types defined by Blueprints;
-- **Widgets** and **Dashboards** allow you to extend your Software Catalog with convenient and intuitive visual representations of data.
+Port checklist you define and track standards, scorecards and KPIs for quality, production readiness, productivity, and more. Drive visibility and a culture of software quality.
 
-:::tip
-To learn more about the components listed above and more, refer to the Software Catalog page.
-:::
+[Software Maturity Live Demo](https://demo.getport.io/serviceEntity?identifier=authentication&activeTab=8)
 
-## Self-Service Actions
+#### Workflow automation
 
-In Port, you can make your Software Catalog active by defining Self-Service Actions for your developers to perform, without assistance or dependency on DevOps teams.
+With Port, you can set up automation to automatically respond to events from your software catalog such as TTL=0, service degradation and many more. This allows you to streamline your engineering processes, maintain a high level of performance, security, and compliance, and ensure your systems run smoothly.
 
-Port Self-Service Actions are enabled using several convenient integrations with your infrastructure:
+[Workflow Automation Live Demo ](https://demo.getport.io/permissions)
 
-- **Webhook Actions** - Port can trigger webhooks based on a customer provided `URL` Both for `Action` and `Changelog` events;
-- **Execution Agent** - our execution agent provides you with a secure and convenient way to listen and act on invocations of Self-Service Actions and changes in the software catalog;
-- **Kafka Actions** - Port manages a Kafka Topic per customer that publishes the execution run requests.
-  You can listen to a Kafka Topic with any code platform you wish to use, and also use it as a trigger for a serverless function. For example, AWS Lambda.
-- **GitHub Workflow Actions** - Port's GitHub application can trigger a GitHub workflow using a customer provided input and `port_payload`.
+#### R&D Insights & Reports
 
-:::tip
-To learn more about the Self-Service Actions and more, refer to the Self-Service Actions page and the Self-Service Actions Deep Dive.
-:::
+R&D Insights & Reports is a pillar of port that provides data-driven insights and analytical reports on the development process. It allows teams, developers and management to make informed decisions based on metrics, trends and usage patterns to improve the development process, optimize performance, and reduce cost.
 
-## Integrations
+[Insights & Reports live demo](https://demo.getport.io/serviceEntity?identifier=recommendation&activeTab=1)
 
-In addition to Port's core components, we provide you with multiple integrations, exporters and data ingestion methods:
+## Quick Start
 
-- Via the **UI**;
-- Using our **API**;
-- Using 3rd party app integrations, for example GitHub App, GitHub Action, K8s Exporter and Terraform Provider.
-
-:::tip
-Refer to Port's API providers and exporters pages to learn more.
-:::
-
-## Management
-
-Port provides enterprise-grade management tools and integrations to keep track of your Software Catalog and provide access to large R&D teams
-
-### The audit log
-
-In Port, we store every event in a visual log that shows which events took place on different Blueprints and Entities. For example: which Entity was modified, who invoked a Self-Service Action, what is an event’s status and more.
-
-### The users page and the teams page
-
-Port has pages dedicated for managing all users and teams in the system:
-
-- The users page: shows a list of all users, including their roles and group membership;
-- The teams page: shows a list of all teams, including a list of team members for each team.
-
-#### Managing users and teams
-
-In Port, you can control and manage all your users and teams, in one place. To learn more, refer to the Users and Teams management page.
-
-## Getting help
-
-| Source                                                                                                  | Description                                                                                                                         |
-| ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| Documentation                                                                                           | You are here!                                                                                                                       |
-| API Docs                                                                                                | Our full API docs                                                                                                                   |
-| [API Swagger](https://api.getport.io/static/index.html#/)                                               | Our Swagger UI                                                                                                                      |
-| [Community](https://join.slack.com/t/devex-community/shared_invite/zt-1bmf5621e-GGfuJdMPK2D8UN58qL4E_g) | Our DevEx community will help you with best practices and success stories                                                           |
-| Contact Us                                                                                              | You can message us directly by logging in to [Port](https://app.getport.io) and clicking the chat bubble in the bottom right corner |
-
-## Next steps
-
-The best way to get started with Port is by configuring some initial Blueprints and ingesting data into the platform. To do that, move on to the Software Catalog page.
+Port's [quick start](./build-your-software-catalog/build-your-software-catalog.md) takes around 5 minutes.  
+By the end of it you will have a good basic understanding of how Port work.
