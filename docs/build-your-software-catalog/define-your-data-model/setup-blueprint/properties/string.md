@@ -20,40 +20,27 @@ The string property type can be used to store any text based data, for example:
 - File names;
 - etc.
 
-## Definition
+## API definition
 
-<Tabs groupId="definition-examples" defaultValue="basic" values={[
+<Tabs groupId="api-definition" defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Enum", value: "enum"},
-{label: "Array", value: "array"},
-{label: "Terraform", value: "terraform"}
+{label: "Array", value: "array"}
 ]}>
 
 <TabItem value="basic">
 
 ```json showLineNumbers
 {
-  "identifier": "microservice",
-  "description": "This blueprint represents a service in our software catalog",
-  "title": "Microservice",
-  "icon": "Microservice",
-  "schema": {
-    "properties": {
-      "stringProp": {
-        // highlight-start
-        "title": "String Property",
-        "type": "string",
-        "icon": "Cluster",
-        "description": "A string property",
-        "default": "Prod"
-        // highlight-end
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "relations": {}
+  "myStringProp": {
+    "title": "My string",
+    "icon": "My icon",
+    "description": "My string property",
+    // highlight-start
+    "type": "string",
+    // highlight-end
+    "default": "My default"
+  }
 }
 ```
 
@@ -62,12 +49,14 @@ The string property type can be used to store any text based data, for example:
 
 ```json showLineNumbers
 {
-  "title": "Region",
-  "type": "string",
-  "icon": "Aws",
-  "description": "Cloud provider region",
-  // highlight-next-line
-  "enum": ["eu-west-1", "eu-west-2", "us-east-1", "us-east-2"]
+  "myStringEnum": {
+    "title": "My string enum",
+    "icon": "My icon",
+    "description": "My string enum",
+    "type": "string",
+    // highlight-next-line
+    "enum": ["my-option-1", "my-option-2"]
+  }
 }
 ```
 
@@ -76,30 +65,42 @@ The string property type can be used to store any text based data, for example:
 
 ```json showLineNumbers
 {
-  "type": "array",
-  "items": {
-    "type": "string"
+  "myStringArray": {
+    "title": "My string array",
+    "icon": "My icon",
+    "description": "My string array",
+    // highlight-start
+    "type": "array",
+    "items": {
+      "type": "string"
+    }
+    // highlight-end
   }
 }
 ```
 
 </TabItem>
+</Tabs>
 
-<TabItem value="terraform">
+## Terraform definition
 
-## Terraform string definition
+<Tabs groupId="tf-definition" defaultValue="basic" values={[
+{label: "Basic", value: "basic"},
+{label: "Enum - coming soon", value: "enum"},
+{label: "Array - coming soon", value: "array"}
+]}>
+
+<TabItem value="basic">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "microservice" {
-  title      = "Microservice"
-  icon       = "Microservice"
-  identifier = "microservice"
+resource "port-labs_blueprint" "myBlueprint" {
+  # ...blueprint properties
   # highlight-start
   properties {
-    identifier = "stringProp"
+    identifier = "myStringProp"
+    title      = "My string"
+    required   = false
     type       = "string"
-    title      = "String Property"
-    required   = true
   }
   # highlight-end
 }
@@ -108,7 +109,7 @@ resource "port-labs_blueprint" "microservice" {
 </TabItem>
 </Tabs>
 
-## Validate strings
+## Validate string
 
 String validations support the following operators:
 
@@ -116,16 +117,52 @@ String validations support the following operators:
 - `maxLength`
 - `pattern`
 
+<Tabs groupId="validation-definition" defaultValue="basic" values={[
+{label: "Basic", value: "basic"},
+{label: "Array", value: "array"},
+{label: "Terraform - coming soon", value: "tf"}
+]}>
+
+<TabItem value="basic">
+
 ```json showLineNumbers
 {
-  "title": "Region",
-  "type": "string",
-  "icon": "Aws",
-  "description": "Cloud provider region",
-  // highlight-start
-  "minLength": 1,
-  "maxLength": 32,
-  "pattern": "^[a-zA-Z0-9-]*-service$"
-  // highlight-end
+  "myStringProp": {
+    "title": "My string",
+    "icon": "My icon",
+    "description": "My string property",
+    "type": "string",
+    // highlight-start
+    "minLength": 1,
+    "maxLength": 32,
+    "pattern": "^[a-zA-Z0-9-]*-service$"
+    // highlight-end
+  }
 }
 ```
+
+</TabItem>
+
+<TabItem value="array">
+
+```json showLineNumbers
+{
+  "myStringArray": {
+    "title": "My string array",
+    "icon": "My icon",
+    "description": "My string array",
+    // highlight-start
+    "type": "array",
+    "items": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 32,
+      "pattern": "^[a-zA-Z0-9-]*-service$"
+    }
+    // highlight-end
+  }
+}
+```
+
+</TabItem>
+</Tabs>
