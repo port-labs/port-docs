@@ -47,4 +47,4 @@ R&D Insights & Reports is a pillar of port that provides data-driven insights an
 ## Quick Start
 
 Port's [quick start](./build-your-software-catalog/build-your-software-catalog.md) takes around 5 minutes.  
-By the end of it you will have a good basic understanding of how Port work.
+By the end of it you will have a good basic understanding of how Port works.
