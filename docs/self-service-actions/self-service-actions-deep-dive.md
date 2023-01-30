@@ -337,7 +337,7 @@ Now when you go to the Microservices Blueprint page, you will see 2 new buttons 
 
 ## Manual approval
 
-You can configure a manual approval step for your actions. This is useful for cases where you want to make sure that the action is approved by a specific user before it is executed.
+You can configure a manual approval step for your actions. This is useful when an action might be dangerous/destructive/expensive or organizational policy determines that it requires an extra pair of eyes before going through.
 
 To configure a manual approval step, add the `requiredApproval` field to your action:
 
@@ -372,9 +372,9 @@ To configure a manual approval step, add the `requiredApproval` field to your ac
 ]
 ```
 
-When a user clicks on the `execute` button of an action that requires approval, a new `run` object will be created in Port. The `run` object will have a status of `WAITING_FOR_APPROVAL` and will be visible in the `Runs` tab of the action.
+When a user clicks on the `execute` button of an action that requires approval, a new `run` object will be created in Port. The `run` object will have the status `WAITING_FOR_APPROVAL` and will be visible in the `Runs` tab of the action.
 
-For settings the permissions of the users who can approve the action, see [Managing permissions](/docs/software-catalog/role-based-access-control/permissions-controls.md#setting-permissions-for-a-blueprint-and-its-actions).
+To configure which users can approve the action, see [Managing permissions](/docs/software-catalog/role-based-access-control/permissions-controls.md#setting-permissions-for-a-blueprint-and-its-actions).
 
 ## Self-Service Action definition structure
 
