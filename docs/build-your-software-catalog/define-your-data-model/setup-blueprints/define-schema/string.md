@@ -3,6 +3,9 @@ sidebar_position: 1
 description: String is a primitive data type used to save text data
 ---
 
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+
 # String
 
 String is a primitive data type used to save text data.
@@ -17,7 +20,16 @@ The string property type can be used to store any text based data, for example:
 - File names;
 - etc.
 
-## Basic definition
+## Definition
+
+<Tabs groupId="definition-examples" defaultValue="basic" values={[
+{label: "Basic", value: "basic"},
+{label: "Enum", value: "enum"},
+{label: "Array", value: "array"},
+{label: "Terraform", value: "terraform"}
+]}>
+
+<TabItem value="basic">
 
 ```json showLineNumbers
 {
@@ -45,7 +57,8 @@ The string property type can be used to store any text based data, for example:
 }
 ```
 
-## Enum of strings definition
+</TabItem>
+<TabItem value="enum">
 
 ```json showLineNumbers
 {
@@ -58,7 +71,8 @@ The string property type can be used to store any text based data, for example:
 }
 ```
 
-## Array of strings definition
+</TabItem>
+<TabItem value="array">
 
 ```json showLineNumbers
 {
@@ -68,6 +82,10 @@ The string property type can be used to store any text based data, for example:
   }
 }
 ```
+
+</TabItem>
+
+<TabItem value="terraform">
 
 ## Terraform string definition
 
@@ -86,6 +104,9 @@ resource "port-labs_blueprint" "microservice" {
   # highlight-end
 }
 ```
+
+</TabItem>
+</Tabs>
 
 ## Validate strings
 
