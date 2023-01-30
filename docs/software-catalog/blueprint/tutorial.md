@@ -3,6 +3,9 @@ sidebar_position: 1
 sidebar_label: Tutorial
 ---
 
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+
 # Blueprint Tutorial
 
 ## Create Blueprints
