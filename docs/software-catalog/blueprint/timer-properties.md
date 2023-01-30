@@ -43,7 +43,7 @@ In the following example, we will create a timer property called locked, that wi
 
 After 2 hours, the property status will change to `Expired`, and an event of `Timer Expired` will be sent to the [ChangeLog](../blueprint/blueprint.md#changelog-destination).
 
-The following [action invocation body](../../self-service-actions/self-service-actions-deep-dive.md#self-service-action-run-payload) is sent to the Webhook/Kafka topic:
+The following [action invocation body](../../self-service-actions/self-service-actions-deep-dive/self-service-actions-deep-dive.md#self-service-action-run-payload) is sent to the Webhook/Kafka topic:
 
 ```json showLineNumbers
 {

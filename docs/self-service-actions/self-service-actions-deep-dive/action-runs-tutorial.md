@@ -13,7 +13,7 @@ To learn more about configuring Self-Service Actions, refer to the [Depp Dive](.
 You can find all existing action runs in one of the following methods:
 
 1. Select the Runs tab on the Audit Log page;
-2. Select the Runs tab of a specific Entity on its [Specific Entity Page](../software-catalog/entity/entity.md#entity-page);
+2. Select the Runs tab of a specific Entity on its [Specific Entity Page](../../software-catalog/entity/entity.md#entity-page);
 3. When you invoke a Self-Service Action from the UI, a toast will appear on the page, with the link to the action run that corresponds to the run of the Self-Service Action.
 
 This tutorial will teach you how to use Port's API to obtain existing action runs, update them with additional metadata and information about the results of the invoked Self-Service Action, and mark them as completed or failed to keep a consistent history of invoked Self-Service Actions and their status.
@@ -529,7 +529,7 @@ if __name__ == '__main__':
 
 Now when you look at the run log of the action run, you will see the information of the newly created Entity:
 
-![Developer portal action run log](../../static/img/self-service-actions/action_run_log.png)
+![Developer portal action run log](../../../static/img/self-service-actions/action_run_log.png)
 
 :::tip
 In the example above we created just one Entity, but it is possible to create, update or delete multiple Entities as part of the steps taken by a single action run, and all of these changes will be reflected in the action run log.
