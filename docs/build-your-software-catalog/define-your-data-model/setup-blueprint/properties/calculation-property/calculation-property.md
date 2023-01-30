@@ -7,6 +7,10 @@ description: Calculation property allows you to construct new data from existing
 
 Calculation properties allow you to use existing properties defined on blueprints, either directly or by using relations and mirror properties, in order to create new properties by using the [`jq`](https://github.com/stedolan/jq) processor for `JSON`.
 
+- Filter/Select/Slice/Concatenate data from an existing property;
+- Create math equations or modifications. For example, calculate required disk storage by specifying page size, and number of pages needed.
+- Merge complex properties, including deep-merge and overriding.
+
 ## Use cases
 
 Calculation properties make it easier to define properties that are based on values from other properties, with the added ability to transform the data, for example:
@@ -18,9 +22,13 @@ Calculation properties make it easier to define properties that are based on val
 - Merge service configurations templates to create a real service config;
 - etc.
 
+In this [live demo](https://demo.getport.io/services) example, we can see the `Slack Notifications` calculation property.
+
 ## API definition
 
 The `calculationProperties` key is a top-level key in the JSON of an entity (similar to `identifier`, `title`, `properties`, etc..)
+
+You can access properties as part of the calculation by using `.properties`
 
 <Tabs groupId="api-definition" defaultValue="basic" values={[
 {label: "Basic", value: "basic"}
@@ -47,7 +55,7 @@ The `calculationProperties` key is a top-level key in the JSON of an entity (sim
 
 Coming soon
 
-## `Calculation` output types
+## Supported Types
 
 Calculation properties support the following output types `string`, `number`, `object`, `array`, `boolean`, and `yaml`, for example:
 
@@ -64,40 +72,52 @@ Calculation properties support the following output types `string`, `number`, `o
 }
 ```
 
-## `Calculation` methods
+## Using `meta properties` in calculation properties
 
-Calculation properties allow you to:
+It is possible to use [meta properties](../meta-properties.md) as template values for calculation properties.
 
-- Filter/Select/Slice/Concatenate data from an existing property;
-- Create math equations or modifications. For example, calculate required disk storage by specifying page size, and number of pages needed.
-- Merge complex properties, including deep-merge and overriding.
-
-:::tip
-Port supports standard `jq` syntax, for a quick reference of some of the available `jq` syntax, refer to the [jq tutorial](https://stedolan.github.io/jq/tutorial).
-
-For a playground where you can test different inputs and `jq` processing patterns, refer to the [JQ playground](https://jqplay.org/)
-
-The top-level key in a single calculation property is the name of the property (in the example shown in [API definition](#api-definition) the name of the property is `myCalculationProp`).
-:::
-
-## Calculation property edge cases
-
-Sometimes, if the key contains special characters or starts with a digit, you need to surround it with double quotes like this: .`"$foo"`.
-For example, if you want to use your `on-call` property in a calculation property (note the single quotes (`'`) around `on-call`):
+For example, if you want to concatenate a template URL (for example `https://datadog.com`) with the `identifier` meta property:
 
 ```json showLineNumbers
-
-"properties":{
-    "on-call":{
-        "type": "string"
-    },
-},
-"calculationProperties": {
-    "on-call-calculation": {
-        "title": "On call",
-        "type": "string",
-        "calculation": ".properties.'on-call'",
+{
+  "identifier": "notification-service",
+   "title": "Notification Service",
+  "properties": {
+   ...
+  },
+  "calculationProperties": {
+    "monitorUrl": {
+      "title": "Monitor url",
+      "type": "string",
+      "format": "url",
+      "calculation": "'https://datadog.com/' + .identifier"
     }
+  }
+}
+```
+
+The value of the property `monitorUrl` will be `https://datadog.com/notification-service`
+
+## Using `mirror properties` in calculation properties
+
+It is possible to use [mirror properties](../mirror-property/mirror-property.md) as template values for calculation properties.
+
+For example, if an entity has a mirror property called `owningSquad`:
+
+```json showLineNumbers
+"mirrorProperties": {
+    "owningSquad": {
+        "path": "microservice-to-squad.$title"
+    }
+}
+```
+
+A calculation property that links to the slack channel of the squad can be:
+
+```json showLineNumbers
+"owning_squad_slack": {
+    "title": "Owning Squad Channel",
+    "calculation": "'https://slack.com/' + .properties.owningSquad",
 }
 ```
 
@@ -128,61 +148,28 @@ For example, if you want to colorize a calculation property called `status-calcu
 }
 ```
 
-:::tip
-Each key is one of the calculated values and each value is one of the following colors: `blue, turquoise, orange, purple, lightBlue, pink, yellow, green, red, darkGray`
-:::
+<br></br>
+<br></br>
 
-## Using meta properties in calculation properties
-
-It is possible to use [meta properties](../meta-properties.md) as template values for calculation properties, since the syntax is the same as user-defined properties, but without the `properties` keyword.
-
-For example, if you want to concatenate a template URL (for example `https://datadog.com`) with the `identifier` meta property:
+:::caution Parameters with special chars prefix
+Parameter contains special characters or starts with a digit (for example: @/#/$/1/2/3), should be surrounded with single quotes.
 
 ```json showLineNumbers
-{
-  "identifier": "notification-service",
-   "title": "Notification Service",
-  "properties": {
-   ...
-  },
-  "calculationProperties": {
-    "monitorUrl": {
-      "title": "Monitor url",
-      "type": "string",
-      "format": "url",
-      "calculation": "'https://datadog.com/' + .identifier"
-    }
-  }
-}
-```
 
-The value of the property `monitorUrl` will be `https://datadog.com/notification-service`
-
-## Using mirror properties in calculation properties
-
-It is possible to use mirror properties as template values for calculation properties, since the syntax is the same as user-defined properties.
-
-For example, if an entity has a mirror property called `owningSquad`:
-
-```json showLineNumbers
-"mirrorProperties": {
-    "owningSquad": {
-        "path": "microservice-to-squad.$title"
+"properties":{
+    "prop-start-with-special-char":{
+        "type": "string"
+    },
+},
+"calculationProperties": {
+    "my-calculated-prop": {
+        "title": "My Calculated Property",
+        "type": "string",
+        "calculation": ".properties.'prop-start-with-special-char'",
     }
 }
 ```
 
-A calculation property that links to the slack channel of the squad can be:
-
-```json showLineNumbers
-"owning_squad_slack": {
-    "title": "Owning Squad Channel",
-    "calculation": "'https://slack.com/' + .properties.owningSquad",
-}
-```
-
-:::note
-Remember that since mirror properties are treated as user-defined properties, when referencing them in Calculation Properties, there is no need for a preceding dollar sign (`$`).
 :::
 
 ## Examples
