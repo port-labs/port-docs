@@ -66,7 +66,8 @@ Based On:
 > Grafana Docs for [JWT Configuration](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/jwt/)
 >
 > Grafana Docs for [OAuth Configuration](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/generic-oauth/)
-> :::
+
+:::
 
 ```ini
 [security] -> Required for the embedding
