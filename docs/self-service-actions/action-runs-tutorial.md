@@ -140,7 +140,13 @@ By invoking the Self-Service Action, the following action invocation body is sen
     "trigger": {
       "by": {
         "orgId": "org_7SDeR821bunhS8es",
-        "userId": "auth0|638879fa62c686d381b36ecb"
+        "userId": "auth0|638879fa62c686d381b36ecb",
+        "user": {
+          "email": "test@test.com",
+          "firstName": "test",
+          "lastName": "test",
+          "id": "auth0|638879fa62c686d381b36ecb"
+        }
       },
       "origin": "UI",
       "at": "2022-12-07T12:53:52.916Z"
@@ -244,7 +250,13 @@ The following action invocation body is sent (existing Entity is highlighted):
     "trigger": {
       "by": {
         "orgId": "org_7SDeR821bunhS8es",
-        "userId": "auth0|638879fa62c686d381b36ecb"
+        "userId": "auth0|638879fa62c686d381b36ecb",
+        "user": {
+          "email": "test@test.com",
+          "firstName": "test",
+          "lastName": "test",
+          "id": "auth0|638879fa62c686d381b36ecb"
+        }
       },
       "origin": "UI",
       "at": "2022-12-08T10:07:09.886Z"

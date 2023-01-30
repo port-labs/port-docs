@@ -758,7 +758,13 @@ Here is an example of the request payload received from Port, inside the Kafka m
   "trigger": {
     "by": {
       "userId": "h2Mf13aRSCYQCUPIcqufoP4XRLwAt8Od@clients",
-      "orgId": "org_sYG4DOJZNGy8bYnt"
+      "orgId": "org_sYG4DOJZNGy8bYnt",
+      "user": {
+        "email": "test@test.com",
+        "firstName": "test",
+        "lastName": "test",
+        "id": "auth0|638879fa62c686d381b36ecb"
+      }
     },
     "at": "2022-07-14T11:38:10.629Z",
     "origin": "API"
