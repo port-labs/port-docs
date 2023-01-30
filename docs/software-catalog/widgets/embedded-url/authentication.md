@@ -97,3 +97,5 @@ use_pkce = true
 # Todo: do i need to talk about the iframe restrictions with cookies?
 
 # Todo: read more about pkce?
+
+# Todo: Add a gif maybe
