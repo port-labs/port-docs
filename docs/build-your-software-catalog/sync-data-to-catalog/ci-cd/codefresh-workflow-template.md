@@ -87,7 +87,7 @@ The `upsert-entity` template creates or updates an entity with the identifier ma
 - `BLUEPRINT_IDENTIFIER` - identifier of the blueprint to create an entity of;
 - `ENTITY_IDENTIFIER` - identifier of the new (or existing) entity. Leave empty to get an auto-generated identifier;
 - `ENTITY_TITLE` - Title of the new (or existing) entity;
-- `ENTITY_TEAM` - Team of the new (or existing) entity;
+- `ENTITY_TEAM` - Teams array of the new (or existing) entity;
 - `ENTITY_ICON` - Icon of the new (or existing) entity;
 - `ENTITY_PROPERTIES` - Properties of the new (or existing) entity;
 - `ENTITY_RELATIONS` - Relations of the new (or existing) entity.
