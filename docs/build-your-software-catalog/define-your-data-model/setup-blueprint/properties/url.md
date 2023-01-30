@@ -56,7 +56,11 @@ The URL property type can be used to store a link to any web resource, for examp
     "type": "string",
     "format": "url",
     // highlight-next-line
-    "enum": ["https://example.com", "https://getport.io"]
+    "enum": ["https://example.com", "https://getport.io"],
+    "enumColors": {
+      "https://example.com": "red",
+      "https://getport.io": "green"
+    }
   }
 }
 ```

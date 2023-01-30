@@ -3,6 +3,9 @@ sidebar_position: 9
 description: Team is a data type used to reference teams that exist in Port
 ---
 
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+
 # Team
 
 Team is a data type used to reference teams that exist in Port.
@@ -20,7 +23,6 @@ The team property type can be used to reference any team that exists in Port, fo
 
 <Tabs groupId="api-definition" defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Enum", value: "enum"},
 {label: "Array", value: "array"}
 ]}>
 
@@ -37,23 +39,6 @@ The team property type can be used to reference any team that exists in Port, fo
     "format": "team",
     // highlight-end
     "default": "my-team"
-  }
-}
-```
-
-</TabItem>
-<TabItem value="enum">
-
-```json showLineNumbers
-{
-  "myTeamEnum": {
-    "title": "My team enum",
-    "icon": "My icon",
-    "description": "My team enum",
-    "type": "string",
-    "format": "team",
-    // highlight-next-line
-    "enum": ["my-team", "my-other-team"]
   }
 }
 ```
@@ -85,7 +70,6 @@ The team property type can be used to reference any team that exists in Port, fo
 
 <Tabs groupId="tf-definition" defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Enum - coming soon", value: "enum"},
 {label: "Array - coming soon", value: "array"}
 ]}>
 

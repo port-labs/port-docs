@@ -55,7 +55,11 @@ The string property type can be used to store any text based data, for example:
     "description": "My string enum",
     "type": "string",
     // highlight-next-line
-    "enum": ["my-option-1", "my-option-2"]
+    "enum": ["my-option-1", "my-option-2"],
+    "enumColors": {
+      "my-option-1": "red",
+      "my-option-2": "green"
+    }
   }
 }
 ```

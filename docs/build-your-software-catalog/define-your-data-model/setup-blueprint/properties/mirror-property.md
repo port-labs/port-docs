@@ -1,5 +1,5 @@
 ---
-sidebar_position: 15
+sidebar_position: 14
 description: Mirror Property allows you to map data from related entities to your entity
 ---
 

@@ -39,7 +39,6 @@ In addition, `user` format distinguishes between users by their status:
 
 <Tabs groupId="api-definition" defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Enum", value: "enum"},
 {label: "Array", value: "array"}
 ]}>
 
@@ -56,23 +55,6 @@ In addition, `user` format distinguishes between users by their status:
     "format": "user",
     // highlight-end
     "default": "me@example.com"
-  }
-}
-```
-
-</TabItem>
-<TabItem value="enum">
-
-```json showLineNumbers
-{
-  "myUserEnum": {
-    "title": "My user enum",
-    "icon": "My icon",
-    "description": "My user enum",
-    "type": "string",
-    "format": "user",
-    // highlight-next-line
-    "enum": ["me@example.com", "example@example.com"]
   }
 }
 ```
@@ -104,7 +86,6 @@ In addition, `user` format distinguishes between users by their status:
 
 <Tabs groupId="tf-definition" defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Enum - coming soon", value: "enum"},
 {label: "Array - coming soon", value: "array"}
 ]}>
 

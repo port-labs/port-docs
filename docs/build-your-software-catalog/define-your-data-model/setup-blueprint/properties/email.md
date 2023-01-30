@@ -51,7 +51,11 @@ The Email property type can be used to store any legal email address.
     "type": "string",
     "format": "email",
     // highlight-next-line
-    "enum": ["me@example.com", "example@example.com"]
+    "enum": ["me@example.com", "example@example.com"],
+    "enumColors": {
+      "me@example.com": "red",
+      "example@example.com": "green"
+    }
   }
 }
 ```
