@@ -335,6 +335,47 @@ Now when you go to the Microservices Blueprint page, you will see 2 new buttons 
 
 </center>
 
+## Manual approval
+
+You can configure a manual approval step for your actions. This is useful when an action might be dangerous/destructive/expensive or organizational policy determines that it requires an extra pair of eyes before going through.
+
+To configure a manual approval step, add the `requiredApproval` field to your action:
+
+```json showLineNumbers
+[
+  {
+    "identifier": "create",
+    "title": "Create",
+    "userInputs": {
+      "properties": {
+        "repo-user": {
+          "type": "string",
+          "title": "Repo User",
+          "default": "port-labs"
+        },
+        "repo-name": {
+          "type": "string",
+          "title": "Repo Name",
+          "default": "*My-microservice*"
+        }
+      },
+      "required": ["repo-user"]
+    },
+    "invocationMethod": {
+      "type": "WEBHOOK",
+      "url": "https://example.com"
+    },
+    "trigger": "CREATE",
+    "requiredApproval": true,
+    "description": "This will create a new microservice repo"
+  }
+]
+```
+
+When a user clicks on the `execute` button of an action that requires approval, a new `run` object will be created in Port. The `run` object will have the status `WAITING_FOR_APPROVAL` and will be visible in the `Runs` tab of the action.
+
+To configure which users can approve the action, see [Managing permissions](/docs/software-catalog/role-based-access-control/permissions-controls.md#setting-permissions-for-a-blueprint-and-its-actions).
+
 ## Self-Service Action definition structure
 
 ### Self-Service Action JSON Structure
@@ -384,6 +425,7 @@ The basic structure of a Self-Service Action:
 | `userInputs`       | An object containing `properties` and `required` keys following the standard JSON schema format as seen in [Blueprint structure](../software-catalog/blueprint/blueprint.md#blueprint-structure) |
 | `invocationMethod` | Defines the destination where invocations of the Self-Service Action will be delivered, see [invocation method](#invocation-method) for details                                                  |
 | `trigger`          | The type of the action: `CREATE`, `DAY-2` or `DELETE`                                                                                                                                            |
+| `requiredApproval` | Whether the action requires approval or not                                                                                                                                                      |
 | `description`      | Action description                                                                                                                                                                               |
 
 ### Properties structure table
