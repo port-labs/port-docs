@@ -63,7 +63,7 @@ Here's an example of how to apply these parameters in your Blueprint:
 
 <br />
 
-**How to configure my Grafana with OAuth & Port embedding?**
+**Configure Grafana with OAuth & Port embedding**
 :::info Note
 The following example is just for illustration purposes and may not reflect the actual URLs and client IDs used in
 your Okta setup.
