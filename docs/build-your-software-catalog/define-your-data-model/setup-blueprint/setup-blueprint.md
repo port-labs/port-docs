@@ -2,6 +2,9 @@
 sidebar_position: 1
 ---
 
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+
 # Setup Blueprint
 
 To build the data model into Port's software catalog you will use the Blueprint component.
@@ -37,7 +40,7 @@ Each blueprint is represented by a [Json schema](https://json-schema.org/), as s
 
 ```json showLineNumbers
 {
-  "identifier": "myIdentifier",
+  "identifier": "myBlueprint",
   "title": "My title",
   "description": "My description",
   "icon": "My icon",
@@ -95,10 +98,52 @@ All available properties are listed in the [properties](./properties/properties.
 | `properties` | See the [`properties`](./properties/properties.md) section for more details.                                                          |
 | `required`   | A list of the **required** properties, out of the `properties` object list. <br /> These are mandatory fields to fill in the UI form. |
 
-## Apply blueprints to Port
+## Configure blueprints in Port
 
-User Interface
+<Tabs groupId="definition" defaultValue="api" values={[
+{label: "API", value: "api"},
+{label: "UI", value: "ui"},
+{label: "Terraform", value: "tf"}
+]}>
 
-API
+<TabItem value="api">
 
-Terraform
+```json showLineNumbers
+{
+  "identifier": "myIdentifier",
+  "title": "My title",
+  "description": "My description",
+  "icon": "My icon",
+  "calculationProperties": {},
+  "schema": {
+    "properties": {},
+    "required": []
+  },
+  "relations": {}
+}
+```
+
+</TabItem>
+
+<TabItem value="ui">
+
+1. Go to the [DevPortal Setup page](https://app.getport.io/dev-portal)
+2. Click on **Add blueprint** at the top right hand corner
+3. Configure your blueprint using the from:
+
+![Create New Blueprint](../../../../static/img/quickstart/newBlueprintButton.png)
+
+</TabItem>
+
+<TabItem value="tf">
+
+```hcl showLineNumbers
+resource "port-labs_blueprint" "myBlueprint" {
+  title      = "My blueprint"
+  icon       = "My icon"
+  identifier = "myBlueprint"
+}
+```
+
+</TabItem>
+</Tabs>
