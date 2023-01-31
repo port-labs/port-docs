@@ -6,15 +6,15 @@ sidebar_position: 1
 
 Every organization have a different data model representing their way architecture and way of work.
 
-## Data models usecases
+## Common data models
 
-- C4
+- C4 (Backstage Style)
 - Multi-cloud
 - x
 - y
 - z
 
-## Data Modeling Building blocks
+## Data Model Building blocks
 
 Diagram demonstrating how 2 blueprints are related
 
