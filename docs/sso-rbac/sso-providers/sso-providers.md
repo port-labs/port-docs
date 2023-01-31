@@ -1,8 +1,4 @@
----
-sidebar_position: 1
----
-
-# Single Sign-On (SSO)
+# SSO Providers
 
 Port offers several SSO integrations, allowing you to easily assign permissions and roles using your users and teams,when providing access and permissions to your developers.
 

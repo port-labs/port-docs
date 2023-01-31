@@ -25,11 +25,11 @@ In order to complete the process you will need to contact us to receive the info
 1. In the Microsoft Azure Portal, go to `Azure Active Directory`.
 2. Click on `App registrations`.
 
-   ![AzureAD new application wizard](../../static/img/sso/azure-ad/AzureADNavBar.png)
+   ![AzureAD new application wizard](../../../static/img/sso/azure-ad/AzureADNavBar.png)
 
 3. Click on `New registration` at the top of the page
 
-   ![AzureAD new application wizard](../../static/img/sso/azure-ad/AzureNewRegistration.png)
+   ![AzureAD new application wizard](../../../static/img/sso/azure-ad/AzureNewRegistration.png)
 
 4. Define the Port application settings:
 
@@ -46,7 +46,7 @@ In order to complete the process you will need to contact us to receive the info
    - Set `Platform` to `Web`.
    - Set `URL` to `https://auth.getport.io/login/callback`.
 
-   ![AzureAD new application wizard](../../static/img/sso/azure-ad/ApplicationRegistrationForm.png)
+   ![AzureAD new application wizard](../../../static/img/sso/azure-ad/ApplicationRegistrationForm.png)
 
    4.4 Click `Register`.
 
@@ -54,7 +54,7 @@ In order to complete the process you will need to contact us to receive the info
 
 1.  On the new Port App page, click `Branding & Properties`.
 
-    ![Azure navigation bar Branding and Properties](../../static/img/sso/azure-ad/AzureAppNavBranding.png)
+    ![Azure navigation bar Branding and Properties](../../../static/img/sso/azure-ad/AzureAppNavBranding.png)
 
     1.1 `Home page URL`: paste the following URL:
 
@@ -68,11 +68,11 @@ In order to complete the process you will need to contact us to receive the info
 
     1.2 Add the Port logo (optional):
 
-    ![Port's logo](../../static/img/sso/general-assets/PortLogo.png)
+    ![Port's logo](../../../static/img/sso/general-assets/PortLogo.png)
 
     1.3 `Publisher domain`: Select the domain matching **your** user emails (for example `getport.io`).
 
-    ![Azure app branding form](../../static/img/sso/azure-ad/AzureAppBrandingForm.png)
+    ![Azure app branding form](../../../static/img/sso/azure-ad/AzureAppBrandingForm.png)
 
     1.4 Click `Save`.
 
@@ -80,27 +80,27 @@ In order to complete the process you will need to contact us to receive the info
 
 1. On the Port App page, click `API Permissions`.
 
-   ![Azure navigation bar API permissions](../../static/img/sso/azure-ad/AzureAppNavAPI.png)
+   ![Azure navigation bar API permissions](../../../static/img/sso/azure-ad/AzureAppNavAPI.png)
 
 2. Click `Add a permission`:
 
-   ![Azure navigation bar API permissions](../../static/img/sso/azure-ad/AzureAppAPIPermissions.png)
+   ![Azure navigation bar API permissions](../../../static/img/sso/azure-ad/AzureAppAPIPermissions.png)
 
 3. On the `Microsoft APIs` tab:
 
    3.1 Click on `Microsoft Graph`
 
-   ![Azure API permissions Microsoft APIs](../../static/img/sso/azure-ad/AzureAppMicrosoftGraph.png)
+   ![Azure API permissions Microsoft APIs](../../../static/img/sso/azure-ad/AzureAppMicrosoftGraph.png)
 
    3.2 Click on `Delegate Permissions`
 
-   ![Azure Microsoft APIs delegate permissions](../../static/img/sso/azure-ad/AzureAppAPIdelegatePermissions.png)
+   ![Azure Microsoft APIs delegate permissions](../../../static/img/sso/azure-ad/AzureAppAPIdelegatePermissions.png)
 
    3.3 Search and mark the following permissions:
 
    - `email`, `openid`, `profile`, `User.read`.
 
-   ![Azure API set permissions](../../static/img/sso/azure-ad/AzureAppAPIPermissionsSettings.png)
+   ![Azure API set permissions](../../../static/img/sso/azure-ad/AzureAppAPIPermissionsSettings.png)
 
    3.4 Click `Add permissions`.
 
@@ -112,15 +112,15 @@ In order to complete the process you will need to contact us to receive the info
 
 1. On the Port App page, click `Token configuration`:
 
-   ![Azure application token configuration](../../static/img/sso/azure-ad/AzureAppTokenConfigurationTab.png)
+   ![Azure application token configuration](../../../static/img/sso/azure-ad/AzureAppTokenConfigurationTab.png)
 
 2. Click `Add optional claim`:
 
-   ![Azure app token adding a claim button](../../static/img/sso/azure-ad/AzureAppAddToken.png)
+   ![Azure app token adding a claim button](../../../static/img/sso/azure-ad/AzureAppAddToken.png)
 
 3. Select `ID` as the token type and then select the `email` claim, then click `Add`:
 
-   ![Azure app token adding a claim](../../static/img/sso/azure-ad/AzureAppAddingClaims.png)
+   ![Azure app token adding a claim](../../../static/img/sso/azure-ad/AzureAppAddingClaims.png)
 
    :::note
    Repeat the same process for `Access` and `SAML` (3 times total).
@@ -128,7 +128,7 @@ In order to complete the process you will need to contact us to receive the info
 
 4. Your optional claims will look like this:
 
-   ![Azure app permissions summary](../../static/img/sso/azure-ad/AzureAppPermissionsFinal.png)
+   ![Azure app permissions summary](../../../static/img/sso/azure-ad/AzureAppPermissionsFinal.png)
 
    :::info  
    If you wish to configure the `groups claim` to pull your AzureAD groups into Port, please follow [How to allow pulling AzureAD groups to Port](#how-to-allow-pulling-azuread-groups-to-port).
@@ -138,11 +138,11 @@ In order to complete the process you will need to contact us to receive the info
 
 1. On the Port App page, click `Certificates & Secrets`:
 
-   ![Azure application certification and secrets button](../../static/img/sso/azure-ad/AzureAppCertificationsSecretsNav.png)
+   ![Azure application certification and secrets button](../../../static/img/sso/azure-ad/AzureAppCertificationsSecretsNav.png)
 
 2. On the `Client secrets` tab, click the `New client secret` button:
 
-   ![Azure application client secrets button](../../static/img/sso/azure-ad/AzureAppClientSecrets.png)
+   ![Azure application client secrets button](../../../static/img/sso/azure-ad/AzureAppClientSecrets.png)
 
    2.1 `Description`: Enter a secret description, for example `Port Login Client Secret`.
 
@@ -160,7 +160,7 @@ In order to complete the process you will need to contact us to receive the info
    Be advised that your secret will never appear again after you leave this page.
    :::
 
-   ![Azure application display secrets](../../static/img/sso/azure-ad/AzureAppSecret.png)
+   ![Azure application display secrets](../../../static/img/sso/azure-ad/AzureAppSecret.png)
 
 ### Step #6: Providing the application information to Port
 
@@ -169,7 +169,7 @@ Port needs the following information for this process:
 - The `Client Secret` value that you created on [Step 5: Configuring application secret](#step-5-configuring-application-secret).
 - The `Application (Client) ID`, which appears on the Port application overview page:
 
-![Azure application display secrets](../../static/img/sso/azure-ad/AzureAppDetailsSection.png)
+![Azure application display secrets](../../../static/img/sso/azure-ad/AzureAppDetailsSection.png)
 
 :::note
 **Port** will provide you the `organization_id` needed for the homepage URL of the App, as described on [Step 2](#step-2-customize-your-port-app-with-login-url-and-logo).
@@ -185,19 +185,19 @@ Port needs the following information for this process:
 
    1.2 Go to `Enterprise Applications`:
 
-   ![Azure AD enterprise applications](../../static/img/sso/azure-ad/AzureAppEnterpriseNav.png)
+   ![Azure AD enterprise applications](../../../static/img/sso/azure-ad/AzureAppEnterpriseNav.png)
 
 2. Click on the Port app:
 
-   ![Azure all application port app](../../static/img/sso/azure-ad/AzurePortApp.png)
+   ![Azure all application port app](../../../static/img/sso/azure-ad/AzurePortApp.png)
 
 3. Click on `Users and Groups`:
 
-   ![Azure AD users and groups](../../static/img/sso/azure-ad/AzureAppUserGroupsNav.png)
+   ![Azure AD users and groups](../../../static/img/sso/azure-ad/AzureAppUserGroupsNav.png)
 
 4. Click `Add user/group`:
 
-   ![Azure AD users and groups](../../static/img/sso/azure-ad/AzureAddUserGroupButton.png)
+   ![Azure AD users and groups](../../../static/img/sso/azure-ad/AzureAddUserGroupButton.png)
 
    4.1 Select users and groups you want to grant access to Port.
 
@@ -217,7 +217,7 @@ Port needs the following information for this process:
 
    5.4 Click on `Properties`:
 
-   ![Azure application properties](../../static/img/sso/azure-ad/AzureAppProperties.png)
+   ![Azure application properties](../../../static/img/sso/azure-ad/AzureAppProperties.png)
 
    5.5 Set the application properties:
 
@@ -231,11 +231,11 @@ Port needs the following information for this process:
 
    :::
 
-   ![Azure application properties form](../../static/img/sso/azure-ad/AzureAppPropertiesValues.png)
+   ![Azure application properties form](../../../static/img/sso/azure-ad/AzureAppPropertiesValues.png)
 
    You should see the Port app on the [https://myapplications.microsoft.com](https://myapplications.microsoft.com) dashboard:
 
-   ![Azure application dashboard](../../static/img/sso/azure-ad/AzureDashboardWithPort.png)
+   ![Azure application dashboard](../../../static/img/sso/azure-ad/AzureDashboardWithPort.png)
 
    :::note
    Users can also manually access Port by going to the App Homepage URL: `https://app.getport.io/?org_id={your_organization_id}`
@@ -254,14 +254,14 @@ This stage is **OPTIONAL** and is required only if you wish to pull all of your 
 
 1. On the `Token configuration` tab, Click `Add groups claim`:
 
-   ![Azure app groups claim button](../../static/img/sso/azure-ad/AzureAppGroupsClaim.png)
+   ![Azure app groups claim button](../../../static/img/sso/azure-ad/AzureAppGroupsClaim.png)
 
 2. On the groups claim window, check the following options: `Security Groups`, `Directory roles`, `All groups`.
 
    :::note
    You can also edit the groups' ID that is provided to Port. in the following example we left it as Group ID:
 
-   ![Azure app edit group claims](../../static/img/sso/azure-ad/AzureAppEditGroupsClaim.png)
+   ![Azure app edit group claims](../../../static/img/sso/azure-ad/AzureAppEditGroupsClaim.png)
    :::
 
 3. Click `Add`.
