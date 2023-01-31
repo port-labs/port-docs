@@ -47,12 +47,15 @@ Here's an example of how to apply these parameters in your Blueprint:
 <details>
     <summary>Okta</summary>
 
-**Steps**:
+**Steps:**
 
-1. Create an SPA application.
-2. Give your users access.
-3. Allow embedding.
-4. Add http://app.getport.io to your "Sign-in redirect URIs".
+1. Follow steps in [right here on Okta documentation](https://developer.okta.com/docs/guides/implement-grant-type/authcodepkce/main/) to create an Application in your Okta Organization.
+2. Add Port Host to Trusted Origins:
+   1. Go to Security > API > Trusted Origins.
+   2. Add https://app.getport.io as a new origin. Check Cross-Origin & Redirect checkboxes.
+3. Enable IFrame for Sign-In Page:
+   1. Go to Customizations > Other
+   2. Scroll to "IFrame Embedding" and enable it.
 
 <br />
 
@@ -61,11 +64,7 @@ Here's an example of how to apply these parameters in your Blueprint:
 The following example is just for illustration purposes and may not reflect the actual URLs and client IDs used in
 your Okta setup.
 
-Based On:
-
-> Grafana Docs for [JWT Configuration](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/jwt/)
->
-> Grafana Docs for [OAuth Configuration](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/generic-oauth/)
+Based on Grafana docs for [JWT Configuration](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/jwt/) & [OAuth Configuration](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/generic-oauth/)
 
 :::
 
@@ -80,13 +79,13 @@ expected_claims = {"iss": "https://{your-okta-org}.okta.com", "aud": "https://{y
 url_login = true
 ...
 
-[auth.generic_oauth] -> regular OAuth authentication
+[auth.generic_oauth] -> Regular OAuth authentication
 ...
 client_id = {CLIENT_ID}
 client_secret = {CLIENT_SECRET}
-auth_url = https://{your-okta-org}.okta.com/oauth2/v1/authorize
-token_url = https://{your-okta-org}.okta.com/oauth2/v1/token
-api_url = https://{your-okta-org}.okta.com/oauth2/v1/userinfo
+auth_url = https://{YOUR_OKTA_ORG}.okta.com/oauth2/v1/authorize
+token_url = https://{YOUR_OKTA_ORG}.okta.com/oauth2/v1/token
+api_url = https://{YOUR_OKTA_ORG}.okta.com/oauth2/v1/userinfo
 enable_login_token = true
 use_pkce = true
 ...
@@ -94,10 +93,6 @@ use_pkce = true
 
 </details>
 
-# Todo: Improve Okta steps
-
 # Todo: do i need to talk about the iframe restrictions with cookies?
-
-# Todo: read more about pkce?
 
 # Todo: Add a gif maybe
