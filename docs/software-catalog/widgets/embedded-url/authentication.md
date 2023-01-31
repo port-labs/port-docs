@@ -56,7 +56,7 @@ Here's an example of how to apply these parameters in your Blueprint:
 1. Follow steps in [right here on Okta documentation](https://developer.okta.com/docs/guides/implement-grant-type/authcodepkce/main/) to create an Application in your Okta Organization.
 2. Make sure Port Host is in the Redirect Uris:
    1. Go to Applications > The application you just created > Login >
-   2. Add https://app.getport.io as a Sign-in redirect URI.
+   2. Add `https://app.getport.io` as a Sign-in redirect URI.
 3. Enable IFrame for Sign-In Page:
    1. Go to Customizations > Other
    2. Scroll to "IFrame Embedding" and enable it.
