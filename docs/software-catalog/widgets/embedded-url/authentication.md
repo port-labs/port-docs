@@ -3,7 +3,7 @@
 With this feature, you can embed another website that's protected by SSO authentication.
 To do this, you'll need the required parameters to create a JWT token.
 
-## Authentication Code flow + PKCE
+## Authentication code flow + PKCE
 
 1. The widget will generate a PKCE `code_verifier` & `code_challange`
 2. The widget URL is set to the `authorizationUrl` along with the `clientId` and the generated `code_challange`.
