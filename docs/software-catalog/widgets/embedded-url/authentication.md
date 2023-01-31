@@ -5,6 +5,12 @@ To do this, you'll need the required parameters to create a JWT token.
 
 ## Authentication code flow + PKCE
 
+The following diagram outlines the login scheme used to authenticate with your SSO and gain access to the private resource:
+
+![AuthorizationCodeFlow.png](../../../../static/img/software-catalog/widgets/embedded-url/AuthorizationCodeFlow.png)
+
+Here is an explanation of the login flow:
+
 1. The widget will generate a PKCE `code_verifier` & `code_challange`
 2. The widget URL is set to the `authorizationUrl` along with the `clientId` and the generated `code_challange`.
 3. The widget will then be redirected to the SSO sign-in page.
@@ -15,8 +21,6 @@ To do this, you'll need the required parameters to create a JWT token.
 8. A response will come back with an access token.
 9. The widget will pass the access token as a query parameter `auth_token={accessToken}` to the URL specified in the property value.
 10. Your page should be displayed now!
-
-![AuthorizationCodeFlow.png](../../../../static/img/software-catalog/widgets/embedded-url/AuthorizationCodeFlow.png)
 
 ## Required Parameters
 
