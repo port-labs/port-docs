@@ -142,6 +142,7 @@ resource "port-labs_blueprint" "myBlueprint" {
   title      = "My blueprint"
   icon       = "My icon"
   identifier = "myBlueprint"
+  description = "My description"
 }
 ```
 
