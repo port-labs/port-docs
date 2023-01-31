@@ -1,35 +1,11 @@
----
-sidebar_position: 1
----
+# Examples
 
-# GitHub Action
+## Basic upsert example
 
-Our GitHub action allows you to interact with Entities in Port directly from your GitHub workflows.
-
-Here you'll find a step-by-step guide for Port's GitHub action.
-
-## GitHub action benefits​
-
-- Create new Entities of existing Blueprints and Relations;
-- Update existing Entities with new information (title, properties, relations, etc...).
-- Get existing Entities.
-
-## Usage
-
-:::note Prerequisites
-
-- In order to authenticate with Port when using the GitHub action, you will need to provide a `CLIENT_ID` and `CLIENT_SECRET`.
-- In order to make use of the GitHub action, you will need an existing Blueprint(s) in your Port installation.
-  - Moreover, if you want to update related Entities, you will also need existing Relations in your Port installation.
-
-:::
-
-### Basic upsert example
-
-In this example we create a basic Blueprint and then add code that uses Port's GitHub action to create/update an Entity that belongs to the Blueprint:
+In this example we create a basic blueprint and then add code that uses Port's GitHub action to create/update an entity that belongs to the blueprint:
 
 <details>
-<summary> Example microservice Blueprint </summary>
+<summary> Example microservice blueprint </summary>
 
 ```json showLineNumbers
 {
@@ -67,7 +43,7 @@ In this example we create a basic Blueprint and then add code that uses Port's G
 
 </details>
 
-After creating the Blueprint, you can add the following to your workflow `yml` file to make use of the GitHub action:
+After creating the blueprint, you can add the following snippet to your GitHub workflow `yml` file to make use of the GitHub action:
 
 ```yaml showLineNumbers
 - uses: port-labs/port-github-action@v1
@@ -90,14 +66,13 @@ After creating the Blueprint, you can add the following to your workflow `yml` f
 
 :::tip
 For security reasons it is recommended to save the `CLIENT_ID` and `CLIENT_SECRET` as [GitHub Secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets), and access them as shown in the example above.
-
 :::
 
-### Basic get example
+## Basic get example
 
 The following example gets the `example-microservice` entity from the previous example.
 
-Add the following jobs to your workflow `yml` file:
+Add the following jobs to your GitHub workflow `yml` file:
 
 ```yaml showLineNumbers
 get-entity:
@@ -121,11 +96,11 @@ use-entity:
 ```
 
 The first job `get-entity`, uses the GitHub action to get the `example-microservice` entity.
-The second job `use-entity`, uses the output from the first job, and prints `versionInEnv.prod` property of the entity.
+The second job `use-entity`, uses the output from the first job, and prints the `versionInEnv.prod` property of the entity.
 
-### Complete example
+## Complete example
 
-The following example adds another `package` Blueprint, in addition to the `microservice` Blueprint shown in the previous example. In addition, it also adds a `microservice` Relation. The GitHub action will create or update the Relation between the 2 existing Entities:
+The following example adds another `package` blueprint, in addition to the `microservice` blueprint shown in the previous example. In addition, it also adds a `microservice` relation. The GitHub action will create or update the relation between the 2 existing entities:
 
 <details>
 <summary> A package Blueprint (including the `microservice` Relation) </summary>
@@ -180,7 +155,7 @@ The following example adds another `package` Blueprint, in addition to the `micr
 
 </details>
 
-Add the following to your workflow `yml` file:
+Add the following snippet to your GitHub workflow `yml` file:
 
 ```yaml showLineNumbers
 - uses: port-labs/port-github-action@v1
@@ -207,8 +182,6 @@ Add the following to your workflow `yml` file:
       }
 ```
 
-That's it! The Entity is created or updated and is visible in the UI.
+That's it! The entity is created or updated and is visible in the UI.
 
-![Entity](../../../../static/img/integrations/github-action/CreatedEntity.png)
-
-For more information, checkout the [public repository](https://github.com/port-labs/port-github-action).
+![Entity](../../../../../static/img/integrations/github-action/CreatedEntity.png)
