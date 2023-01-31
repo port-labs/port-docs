@@ -29,6 +29,8 @@ Blueprints can be used to represent any asset in your software catalog, for exam
 - VMs;
 - etc.
 
+In this [live demo](https://demo.getport.io/dev-portal) example, we can see the DevPortal setup page with all of the blueprints in the demo.
+
 ## Blueprint schema structure
 
 Each blueprint is represented by a [Json schema](https://json-schema.org/), as shown in the following section:
@@ -59,14 +61,15 @@ Each blueprint is represented by a [Json schema](https://json-schema.org/), as s
 
 ### Structure table
 
-| Field                   | Description                                                                                                                | Notes                                               |
-| ----------------------- | -------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
-| `identifier`            | Unique identifier                                                                                                          |
-| `title`                 | Name                                                                                                                       |
-| `description`           | Description                                                                                                                |
-| `icon`                  | Icon for the blueprint and entities of the blueprint.                                                                      | See the full icon list [below](#full-icon-list)     |
-| `calculationProperties` | Contains the properties defined using [calculation properties](./properties/calculation-property/calculation-property.md). |                                                     |
-| `schema`                | An object containing two more nested fields: `properties` and `required`.                                                  | See the schema structure [here](#blueprint-schema). |
+| Field                   | Description                                                                                                               | Notes                                                                                                     |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `identifier`            | Unique identifier                                                                                                         | The identifier is used for API calls, programmatic access and distinguishing between different blueprints |
+| `title`                 | Name                                                                                                                      | Human-readable name for the blueprint                                                                     |
+| `description`           | Description                                                                                                               | The value is visible as a tooltip to users when hovering over the info icon in the UI                     |
+| `icon`                  | Icon for the blueprint and entities of the blueprint.                                                                     | See the full icon list [below](#full-icon-list)                                                           |
+| `calculationProperties` | Contains the properties defined using [calculation properties](./properties/calculation-property/calculation-property.md) |                                                                                                           |
+| `mirrorProperties`      | Contains the properties defined using [mirror properties](./properties/mirror-property/mirror-property.md)                |                                                                                                           |
+| `schema`                | An object containing two nested fields: `properties` and `required`.                                                      | See the schema structure [here](#schema-object)                                                           |
 
 :::tip Available properties
 All available properties are listed in the [properties](./properties/properties.md) page
@@ -78,7 +81,7 @@ All available properties are listed in the [properties](./properties/properties.
 `API, Airflow, AmazonEKS, Ansible, ApiDoc, Aqua, Argo, ArgoRollouts, Aws, Azure, BitBucket, Bucket, CPU, CPlusPlus, CSharp, Clickup, Cloud, Cluster, Codefresh, Confluence, Coralogix, Crossplane, Datadog, Day2Operation, DeployedAt, Deployment, DevopsTool, EC2, EU, Environment, Falcosidekick, GKE, GPU, Git, GitLab, GitVersion, Github, GithubActions, Go, Google, GoogleCloud, GoogleCloudPlatform, GoogleComputeEngine, Grafana, Graphql, HashiCorp, Infinity, Istio, Jenkins, Jira, Kafka, Kiali, Kotlin, Lambda, Launchdarkly, Link, Lock, LucidCharts, Matlab, Microservice, MongoDb, Moon, NewRelic, Node, NodeJS, Notion, Okta, Package, Pearl, PostgreSQL, Prometheus, Pulumi, Python, R, React, RestApi, Ruby, S3, SDK, SQL, Scala, Sentry, Server, Service, Slack, Swagger, Swift, TS, Terraform, TwoUsers, Youtrack, Zipkin, checkmarx, css3, html5, java, js, kibana, logz, pagerduty, php, port, sonarqube, spinnaker`
 :::
 
-### Blueprint schema
+### Schema object
 
 ```json showLineNumbers
 "schema": {
@@ -87,10 +90,10 @@ All available properties are listed in the [properties](./properties/properties.
 }
 ```
 
-| Schema field | Type     | Description                                                                                                                           |
-| ------------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `properties` | `Object` | See the [`properties`](./properties/properties.md) section for more details.                                                          |
-| `required`   | `List`   | A list of the **required** properties, out of the `properties` object list. <br /> These are mandatory fields to fill in the UI form. |
+| Schema field | Description                                                                                                                           |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `properties` | See the [`properties`](./properties/properties.md) section for more details.                                                          |
+| `required`   | A list of the **required** properties, out of the `properties` object list. <br /> These are mandatory fields to fill in the UI form. |
 
 ## Apply blueprints to Port
 

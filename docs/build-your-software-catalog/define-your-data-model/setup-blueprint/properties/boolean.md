@@ -20,6 +20,8 @@ The boolean property type can be used to store any true/false gate, for example:
 - Is environment public;
 - etc.
 
+In this [live demo](https://demo.getport.io/packages) example, we can see the `In-House?` boolean property.
+
 ## API definition
 
 <Tabs groupId="api-definition" defaultValue="basic" values={[

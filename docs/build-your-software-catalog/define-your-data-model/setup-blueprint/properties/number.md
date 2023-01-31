@@ -20,6 +20,8 @@ The number property type can be used to store any numeric data, for example:
 - Number of open issues;
 - etc.
 
+In this [live demo](https://demo.getport.io/services) example, we can see the `JIRA Issues` number property.
+
 ## API definition
 
 <Tabs groupId="api-definition" defaultValue="basic" values={[

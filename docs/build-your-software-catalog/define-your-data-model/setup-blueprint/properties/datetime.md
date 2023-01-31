@@ -19,6 +19,8 @@ The datetime property type can be used to store any date and time, for example:
 - Creation timestamp;
 - etc.
 
+In this [live demo](https://demo.getport.io/services) example, we can see the `Last Update` datetime property.
+
 ## API definition
 
 <Tabs groupId="api-definition" defaultValue="basic" values={[

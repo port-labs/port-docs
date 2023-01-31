@@ -2,6 +2,9 @@
 sidebar_position: 3
 ---
 
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+
 # Rest - WIP
 
 Since Port is API first, even if your specific CI/CD workflow does not already have a first-class integration to Port, it is still possible to create and update entities from it using simple REST calls.
@@ -18,12 +21,12 @@ Here you'll find a step-by-step guide to use Port's REST API in your CI/CD proce
 
 :::
 
-### Basic upsert example
+### Basic example
 
 In this example we create a basic blueprint and then add code that uses Port's REST API to create/update an entity that belongs to the Blueprint:
 
 <details>
-<summary> Example microservice Blueprint </summary>
+<summary> Example microservice blueprint </summary>
 
 ```json showLineNumbers
 {
@@ -61,7 +64,18 @@ In this example we create a basic blueprint and then add code that uses Port's R
 
 </details>
 
-After creating the Blueprint, you can add one of the following code snippets to your CI/CD job to create a new microservice as part of your CI/CD:
+After creating the blueprint, you can add one of the following code snippets to your CI/CD job to create a new microservice as part of your CI/CD:
+
+<Tabs groupId="api-definition" defaultValue="basic" values={[
+{label: "Python", value: "python"},
+{label: "Groovy", value: "groovy"},
+{label: "Curl", value: "curl"}
+]}>
+
+<TabItem value="basic">
+</TabItem>
+
+</Tabs>
 
 ```yaml showLineNumbers
 - uses: port-labs/port-github-action@v1

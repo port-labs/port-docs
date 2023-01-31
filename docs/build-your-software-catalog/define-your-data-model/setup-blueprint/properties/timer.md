@@ -19,6 +19,8 @@ The timer property type can be used to store the future expiration date of catal
 - Temporary cloud resources;
 - etc.
 
+In this [live demo](https://demo.getport.io/developerEnvs) example, we can see the `TTL` timer property.
+
 ## API definition
 
 <Tabs groupId="api-definition" defaultValue="basic" values={[
