@@ -1,6 +1,6 @@
 # Authentication
 
-With this feature, you can now embed another website that's protected by SSO authentication.
+With this feature, you can embed another website that's protected by SSO authentication.
 To do this, you'll need the required parameters to create a JWT token.
 
 ## Authentication Code flow + PKCE
