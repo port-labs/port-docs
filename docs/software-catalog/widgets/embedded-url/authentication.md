@@ -98,13 +98,15 @@ use_pkce = true
 **Troubleshoot**
 
 - Okta 400 Bad Request displayed
-  - Check you used the correct tokenUrl, authorizationUrl & clientId.
+  - Check you used the correct authorizationUrl & clientId.
   - Check your application is activated.
 - Okta 400 Bad Request displayed. Your request resulted in an error. The 'redirect_uri' parameter must be a Login redirect URI in the client app settings.
 
   - Make sure you entered https://app.getport.io as a Sign-in redirect URI for your application as mentioned in the steps above.
 
 - "refused to connect." is displayed
-  - Make sure you enabled "IFrame Embedding" as mentioned in the steps above/
+  - Make sure you enabled "IFrame Embedding" as mentioned in the steps above
+- Could not fetch your auth token.
+  - Make sure your tokenUrl is the correct url.
 
 </details>
