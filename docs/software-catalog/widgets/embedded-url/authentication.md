@@ -46,7 +46,7 @@ Here's an example of how to apply these parameters in your Blueprint:
 
 ## Examples
 
-#### Okta
+### Okta
 
 <details>
     <summary>Setup</summary>
