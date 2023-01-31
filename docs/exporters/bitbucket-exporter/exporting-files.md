@@ -62,7 +62,7 @@ resources:
     port:
       entity:
         mappings:
-          identifier: ".name"
+          identifier: ".name" # The Entity identifier will be the repository name. After the Entity is created, the exporter will send `PATCH` requests to update this microservice within Port.
           title: ".name"
           blueprint: '"microservice"'
           properties:
