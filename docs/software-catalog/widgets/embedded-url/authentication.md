@@ -44,8 +44,10 @@ Here's an example of how to apply these parameters in your Blueprint:
 
 ## Examples
 
+#### Okta
+
 <details>
-    <summary>Okta</summary>
+    <summary>Setup</summary>
 
 **Steps:**
 
@@ -96,3 +98,7 @@ use_pkce = true
 # Todo: do i need to talk about the iframe restrictions with cookies?
 
 # Todo: Add a gif maybe
+
+# Trouble shooting
+
+# Read more?
