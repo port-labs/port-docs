@@ -96,11 +96,3 @@ use_pkce = true
 ```
 
 </details>
-
-# Todo: do i need to talk about the iframe restrictions with cookies?
-
-# Todo: Add a gif maybe
-
-# Trouble shooting
-
-# Read more?
