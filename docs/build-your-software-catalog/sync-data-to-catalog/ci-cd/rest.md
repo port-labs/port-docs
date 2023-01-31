@@ -66,7 +66,7 @@ In this example we create a basic blueprint and then add code that uses Port's R
 
 After creating the blueprint, you can add one of the following code snippets to your CI/CD job to create a new microservice as part of your CI/CD:
 
-<Tabs groupId="api-definition" defaultValue="basic" values={[
+<Tabs groupId="api-definition" defaultValue="python" values={[
 {label: "Python", value: "python"},
 {label: "Groovy", value: "groovy"},
 {label: "Curl", value: "curl"}
