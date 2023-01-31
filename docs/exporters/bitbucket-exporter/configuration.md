@@ -35,16 +35,4 @@ resources:
             link: ".links.html.href"
           relations:
             repository: ".destination.repository.name"
-  - kind: repository
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: ".name"
-          title: ".name"
-          blueprint: '"repository"'
-          properties:
-            readme: file://README.md
-            url: ".links.html.href"
 ```
