@@ -1,6 +1,6 @@
 # Examples
 
-## Basic upsert example
+## Basic create/update example
 
 In this example we create a basic blueprint and then add code that uses Port's GitHub action to create/update an entity that belongs to the blueprint:
 
