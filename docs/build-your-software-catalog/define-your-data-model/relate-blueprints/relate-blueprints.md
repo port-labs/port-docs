@@ -173,9 +173,73 @@ resource "port-labs_blueprint" "myBlueprint" {
 A Relation can't be configured with both `many` and `required` set to `true`
 :::
 
-## Apply Relations to Port
+## Configure relations in Port
 
-Relations are part of the structure of a Blueprint.
+Relations are part of the structure of a [blueprint](../setup-blueprint/setup-blueprint.md#blueprint-structure).
+
+<Tabs groupId="definition" defaultValue="api" values={[
+{label: "API", value: "api"},
+{label: "UI", value: "ui"},
+{label: "Terraform", value: "tf"}
+]}>
+
+<TabItem value="api">
+
+```json showLineNumbers
+{
+  "identifier": "myIdentifier",
+  "title": "My title",
+  "description": "My description",
+  "icon": "My icon",
+  "calculationProperties": {},
+  "schema": {
+    "properties": {},
+    "required": []
+  },
+  // highlight-start
+  "relations": {
+    "myRelation": {
+      "title": "My title",
+      "target": "My target blueprint",
+      "required": true,
+      "many": false
+    }
+  }
+  // highlight-end
+}
+```
+
+</TabItem>
+
+<TabItem value="ui">
+
+1. Go to the [DevPortal Setup page](https://app.getport.io/dev-portal);
+2. Click the pencil icon on the blueprint that will be the `source` blueprint of the relation:
+
+![Blueprints page with Create Relation Marked](../../../../static/img/build-your-software-catalog/define-your-data-model/relate-blueprints/editBlueprintMarked.png)
+
+</TabItem>
+
+<TabItem value="tf">
+
+```hcl showLineNumbers
+resource "port-labs_blueprint" "myBlueprint" {
+  # ...blueprint properties
+  # ...user-defined properties
+  # highlight-start
+  relations {
+    identifier = "myRelation"
+    title      = "My relation"
+    target     = "myTargetBlueprint"
+    required   = false
+    many       = true
+  }
+  # highlight-end
+}
+```
+
+</TabItem>
+</Tabs>
 
 JSON example with highlighting on the area of the relations definition
 

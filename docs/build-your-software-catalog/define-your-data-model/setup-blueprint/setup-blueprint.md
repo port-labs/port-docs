@@ -34,7 +34,7 @@ Blueprints can be used to represent any asset in your software catalog, for exam
 
 In this [live demo](https://demo.getport.io/dev-portal) example, we can see the DevPortal setup page with all of the blueprints.
 
-## Blueprint schema structure
+## Blueprint structure
 
 Each blueprint is represented by a [Json schema](https://json-schema.org/), as shown in the following section:
 
@@ -127,8 +127,8 @@ All available properties are listed in the [properties](./properties/properties.
 
 <TabItem value="ui">
 
-1. Go to the [DevPortal Setup page](https://app.getport.io/dev-portal)
-2. Click on **Add blueprint** at the top right hand corner
+1. Go to the [DevPortal Setup page](https://app.getport.io/dev-portal);
+2. Click on **Add blueprint** at the top right hand corner;
 3. Configure your blueprint using the from:
 
 ![Create New Blueprint](../../../../static/img/quickstart/newBlueprintButton.png)
