@@ -77,7 +77,7 @@ resource "port-labs_blueprint" "myBlueprint" {
 </TabItem>
 </Tabs>
 
-## Meta-property as a mirror property
+## `Meta-property` as a mirror property
 
 This is a Mirror Property created from one of Port's [meta-properties](../meta-properties.md) on the `target` blueprint.
 
@@ -113,7 +113,3 @@ Let's map the squad members using a Mirror Property called `OwningSquadMembers`:
     "path": "microservice-to-project.project-to-squad.squad_members"
 }
 ```
-
-## Examples
-
-Refer to the mirror property [examples](./examples.md) page
