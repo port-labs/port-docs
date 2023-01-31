@@ -5,14 +5,16 @@ To do this, you'll need the required parameters to create a JWT token.
 
 ## Authentication Code flow + PKCE
 
-preceding: The widget will generate a PKCE. (`code_challnage` & `code_verifier`)
-
-1. The widget URL is set to the `authorizationUrl` along with the `clientId` and the generated `code_challange`.
-2. The widget will then be redirected to the SSO sign-in page.
-3. The user will sign in using the SSO. (If the user is already signed in to the SSO, this step will happen automatically)
-4. The SSO sign-in page will redirect the widget back to https://app.getport.io with the authorization code as a URL hash parameter.
-5. The widget will send the `code`, `clientId` and the `code_verifier` to the `tokenURL`, and retrieve the access token from the response.
-6. The widget will pass the access token as a query parameter `auth_token={accessToken}` to the URL specified in the property value.
+1. The widget will generate a PKCE `code_verifier` & `code_challange`
+2. The widget URL is set to the `authorizationUrl` along with the `clientId` and the generated `code_challange`.
+3. The widget will then be redirected to the SSO sign-in page.
+4. The user will sign in using the SSO. (If the user is already signed in to the SSO, this step will happen automatically)
+5. The SSO sign-in page will redirect the widget back to https://app.getport.io with the authorization `code` as a URL hash parameter.
+6. The widget will send the `code`, `clientId` and the `code_verifier` to the `tokenURL`.
+7. The SSO will validate the PKCE code.
+8. A response will come back with an access token.
+9. The widget will pass the access token as a query parameter `auth_token={accessToken}` to the URL specified in the property value.
+10. Your page should be displayed now!
 
 ![AuthorizationCodeFlow.png](../../../../static/img/software-catalog/widgets/embedded-url/AuthorizationCodeFlow.png)
 
