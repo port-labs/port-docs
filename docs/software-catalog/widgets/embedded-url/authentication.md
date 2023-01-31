@@ -54,9 +54,9 @@ Here's an example of how to apply these parameters in your Blueprint:
 **Steps:**
 
 1. Follow steps in [right here on Okta documentation](https://developer.okta.com/docs/guides/implement-grant-type/authcodepkce/main/) to create an Application in your Okta Organization.
-2. Add Port Host to Trusted Origins:
-   1. Go to Security > API > Trusted Origins.
-   2. Add https://app.getport.io as a new origin. Check Cross-Origin & Redirect checkboxes.
+2. Make sure Port Host is in the Redirect Uris:
+   1. Go to Applications > The application you just created > Login >
+   2. Add https://app.getport.io as a Sign-in redirect URI.
 3. Enable IFrame for Sign-In Page:
    1. Go to Customizations > Other
    2. Scroll to "IFrame Embedding" and enable it.
@@ -94,5 +94,17 @@ enable_login_token = true
 use_pkce = true
 ...
 ```
+
+**Troubleshoot**
+
+- Okta 400 Bad Request displayed
+  - Check you used the correct tokenUrl, authorizationUrl & clientId.
+  - Check your application is activated.
+- Okta 400 Bad Request displayed. Your request resulted in an error. The 'redirect_uri' parameter must be a Login redirect URI in the client app settings.
+
+  - Make sure you entered https://app.getport.io as a Sign-in redirect URI for your application as mentioned in the steps above.
+
+- "refused to connect." is displayed
+  - Make sure you enabled "IFrame Embedding" as mentioned in the steps above/
 
 </details>
