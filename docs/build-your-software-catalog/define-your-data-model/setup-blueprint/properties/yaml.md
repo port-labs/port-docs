@@ -1,5 +1,5 @@
 ---
-sidebar_position: 12
+sidebar_position: 11
 description: Yaml is a data type used to save object definitions in YAML
 ---
 
