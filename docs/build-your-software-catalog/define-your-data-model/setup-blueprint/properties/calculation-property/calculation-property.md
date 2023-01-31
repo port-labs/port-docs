@@ -78,6 +78,8 @@ It is possible to use [meta properties](../meta-properties.md) as template value
 
 For example, if you want to concatenate a template URL (for example `https://datadog.com`) with the `identifier` meta property:
 
+Given the following `notification-service` entity:
+
 ```json showLineNumbers
 {
   "identifier": "notification-service",
@@ -85,6 +87,13 @@ For example, if you want to concatenate a template URL (for example `https://dat
   "properties": {
    ...
   },
+}
+```
+
+And the following calculation property definition for the blueprint:
+
+```json showLineNumbers
+{
   "calculationProperties": {
     "monitorUrl": {
       "title": "Monitor url",
@@ -148,24 +157,23 @@ For example, if you want to colorize a calculation property called `status-calcu
 }
 ```
 
-<br></br>
-<br></br>
+---
 
-:::caution Parameters with special chars prefix
-Parameter contains special characters or starts with a digit (for example: @/#/$/1/2/3), should be surrounded with single quotes.
+:::caution Parameters with special characters
+Parameter contains special characters (for example: `-`) or starts with a digit (for example: `@/#/$/1/2/3`), should be surrounded with single quotes.
 
 ```json showLineNumbers
 
 "properties":{
-    "prop-start-with-special-char":{
+    "prop-with-special-char":{
         "type": "string"
     },
 },
 "calculationProperties": {
-    "my-calculated-prop": {
+    "myCalculatedProp": {
         "title": "My Calculated Property",
         "type": "string",
-        "calculation": ".properties.'prop-start-with-special-char'",
+        "calculation": ".properties.'prop-with-special-char'",
     }
 }
 ```
