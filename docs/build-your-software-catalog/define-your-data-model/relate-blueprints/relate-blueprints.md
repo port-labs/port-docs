@@ -45,16 +45,13 @@ A relation exists under the `relations` key in the [Blueprint JSON schema](../se
 
 ## Structure table
 
-| Field      | Description                                                                                            | Notes                                                                   |
-| ---------- | ------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------- |
-| `title`    | Relation name that will be shown in the UI                                                             | Human-readable name for the relation                                    |
-| `target`   | Target blueprint identifier                                                                            | The target blueprint has to exist when defining the relation            |
-| `required` | Boolean flag to define whether the target must be provided when creating a new entity of the blueprint |
-| `many`     | Boolean flag to define whether multiple target entities can be mapped to the Relation                  | For more information refer to [X-to-many relation](#x-to-many-relation) |
-
-:::note
-A Relation can't be configured with both `many` and `required` set to `true`
-:::
+| Field        | Description                                                                                            | Notes                                                                                                                                                                                                                                                                              |
+| ------------ | ------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `identifier` | Unique identifier                                                                                      | The identifier is used for API calls, programmatic access and distinguishing between different relations. <br></br> <br></br> The identifier is the key of the relation schema object, in the [schema structure](#relation-schema-structure) above, the identifier is `myRelation` |
+| `title`      | Relation name that will be shown in the UI                                                             | Human-readable name for the relation                                                                                                                                                                                                                                               |
+| `target`     | Target blueprint identifier                                                                            | The target blueprint has to exist when defining the relation                                                                                                                                                                                                                       |
+| `required`   | Boolean flag to define whether the target must be provided when creating a new entity of the blueprint |
+| `many`       | Boolean flag to define whether multiple target entities can be mapped to the Relation                  | For more information refer to [many relation](#many)                                                                                                                                                                                                                               |
 
 ## Types of relations
 
