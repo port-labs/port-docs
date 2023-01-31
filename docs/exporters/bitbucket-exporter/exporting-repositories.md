@@ -1,5 +1,5 @@
 ---
-sidebar_position: 6
+sidebar_position: 4
 title: Exporting repositories
 ---
 
@@ -65,7 +65,7 @@ resources:
     port:
       entity:
         mappings:
-          identifier: ".name" # The Entity identifier will be the repository name + the pull request ID. After the Entity is created, the exporter will send `PATCH` requests to update this pull request within Port.
+          identifier: ".name"
           title: ".name"
           blueprint: '"microservice"'
           properties:
