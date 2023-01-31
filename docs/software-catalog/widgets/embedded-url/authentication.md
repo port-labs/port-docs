@@ -72,7 +72,7 @@ Based on Grafana docs for [JWT Configuration](https://grafana.com/docs/grafana/l
 
 :::
 
-```ini
+```ini showLineNumbers
 [security] -> Required for the embedding
 allow_embedding = true
 
