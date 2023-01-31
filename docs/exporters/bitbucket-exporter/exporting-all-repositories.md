@@ -1,6 +1,6 @@
 ---
 sidebar_position: 6
-title: Exporting all repositories
+title: Exporting repositories
 ---
 
 :::note Prerequisites
@@ -9,7 +9,7 @@ title: Exporting all repositories
 
 :::
 
-# Exporting all repositories
+# Exporting repositories
 
 In this tutorial you will learn how to create a `microservice` Blueprint that contains the properties `repository URL`, `Workspace` and `Project`, which are automatically synced from Bitbucket to Port Entity.
 
@@ -79,7 +79,7 @@ resources:
 :::info
 
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform Bitbucket objects to Port Entities.
-- Click [Here](https://support.atlassian.com/bitbucket-cloud/docs/event-payloads/#Repository) for the Bitbucket repository object structure.
+- Click [Here](https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-get) for the Bitbucket repository object structure.
 
 :::
 
