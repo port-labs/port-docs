@@ -29,7 +29,7 @@ Blueprints can be used to represent any asset in your software catalog, for exam
 - VMs;
 - etc.
 
-In this [live demo](https://demo.getport.io/dev-portal) example, we can see the DevPortal setup page with all of the blueprints in the demo.
+In this [live demo](https://demo.getport.io/dev-portal) example, we can see the DevPortal setup page with all of the blueprints.
 
 ## Blueprint schema structure
 
