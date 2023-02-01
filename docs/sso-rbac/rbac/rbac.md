@@ -23,8 +23,8 @@ Users and teams management is done from the **Users & Teams page**.
 Each user is defined by the following properties:
 
 1. Basic information - image, name, and email.
-2. Role - the user’s permissions level (see the [Permission controls](./permissions-controls) section);
-3. Teams - a `team` is a group of users that owns Entities (see the [Team](#team-system-property) section).
+2. Role - the user’s permissions level (see the [set catalog RBAC](../../build-your-software-catalog/set-catalog-rbac/set-catalog-rbac.md) section);
+3. Teams - a `team` is a group of users that owns Entities (see the [team](#team-meta-property) section).
 
 ![Teams and Users page](../../../static/img/software-catalog/role-based-access-control/users-and-teams/usersAndTeams.png)
 
