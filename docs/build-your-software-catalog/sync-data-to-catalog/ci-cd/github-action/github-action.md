@@ -7,7 +7,7 @@ import TabItem from "@theme/TabItem"
 
 # GitHub Action
 
-Our [GitHub action](https://github.com/marketplace/actions/port-github-action) allows you to interact with entities in Port directly from your GitHub workflows.
+Our [GitHub action](https://github.com/marketplace/actions/port-github-action) allows you to create/update and query entities in Port directly from your GitHub workflows.
 
 :::tip public repository
 Our GitHub action is open source - see it [**here**](https://github.com/port-labs/port-github-action)
@@ -17,34 +17,30 @@ Our GitHub action is open source - see it [**here**](https://github.com/port-lab
 
 Port's GitHub action provides a native way to integrate Port with your GitHub workflows, for example:
 
-- Create new entities of existing blueprints;
-- Update existing entities with new information (title, properties, relations, etc...).
+- Report the status of a running CI job;
+- Update the software catalog about a new build version for a microservice;
 - Get existing entities.
 
 ## Installation
 
-To install Port's GitHub action you will need to add the following line as a step in your GitHub workflow:
+To install Port's GitHub action, follow these steps:
+
+1. Add the following line as a step in your GitHub workflow:
 
 ```yaml showLineNumbers
 - uses: port-labs/port-github-action@v1
 ```
 
+2. Add your Port `CLIENT_ID` and `CLIENT_SECRET` as [GitHub secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets);
+   1. This step is not mandatory, but it is recommended in order to not pass the `CLIENT_ID` and `CLIENT_SECRET` in plaintext in your workflows;
+3. Make sure you have existing an blueprint in your Port installation to create/update entities using the GitHub action.
+
 ## Usage
-
-:::note Prerequisites
-
-- In order to authenticate with Port when using the GitHub action, you will need to provide a `CLIENT_ID` and `CLIENT_SECRET`.
-- In order to make use of the GitHub action, you will need an existing blueprint(s) in your Port installation.
-  - Moreover, if you want to update related entities, you will also need existing relations in your Port installation.
-
-:::
-
-When using Port's GitHub action you provide it with a desired method, and information to either use when creating/updating an entity, or when retrieving an existing entity and exposing it to your CI.
 
 Port's GitHub action supports the following methods:
 
-- Create/Update
-- Get
+- Create/Update - invoked with the `UPSERT` operation, receives the identifier and other properties of a new entity or an entity that needs to be updated;
+- Get - invoked with the `GET` operation, receives the identifier of an existing entity and retrieves it for use in your CI.
 
 <Tabs groupId="usage" defaultValue="upsert" values={[
 {label: "Create/Update", value: "upsert"},
@@ -58,6 +54,7 @@ Port's GitHub action supports the following methods:
   with:
     clientId: ${{ secrets.CLIENT_ID }}
     clientSecret: ${{ secrets.CLIENT_SECRET }}
+    # highlight-next-line
     operation: UPSERT
     identifier: myEntity
     icon: myIcon
@@ -86,6 +83,7 @@ get-entity:
       with:
         clientId: ${{ secrets.CLIENT_ID }}
         clientSecret: ${{ secrets.CLIENT_SECRET }}
+        # highlight-next-line
         operation: GET
         identifier: myEntity
         blueprint: myBlueprint
