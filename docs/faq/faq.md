@@ -22,10 +22,6 @@ Our blog has several articles that deal with how to set up the portal, and our d
 
 Port is both SaaS and cloud based and will support a self-hosted solution based on a K8s operator.
 
-## What’s a “builder-based” developer portal?
-
-Port’s basic approach is to provide maximum flexibility, so you will have the ability to build your asset landscape according to your needs.
-
 ## Why not backstage?
 
 Spotify’s backstage is spot-on in recognizing the need for a streamlined end-to-end development environment. It is also flexible, which lets you build your software catalog according to your data model. Yet, it requires coding, personnel to implement and domain expertise. You also need to invest in deployment, configuration and updates. You can read a detailed comparison of Port and Backstage [here](https://www.getport.io/compare/backstage-vs-port).
