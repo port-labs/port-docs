@@ -395,6 +395,6 @@ spec:
 
 That's it! The Entity is created or updated and is visible in the UI.
 
-![Entity](../../../../static/img/integrations/codefresh-workflow-template/CreatedEntity.png)
+![Entity](../../../../../static/img/integrations/codefresh-workflow-template/CreatedEntity.png)
 
 For more information, checkout the [public repository](https://github.com/port-labs/port-codefresh-workflow-template).

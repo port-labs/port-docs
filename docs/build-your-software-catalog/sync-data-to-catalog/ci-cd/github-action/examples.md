@@ -2,40 +2,32 @@
 
 ## Basic create/update example
 
-In this example we create a basic blueprint and then add code that uses Port's GitHub action to create/update an entity that belongs to the blueprint:
+In this example we create a blueprint for `microserviceBuild` and then add code that uses Port's GitHub action to create a new entity every time the GitHub workflow that creates a new build runs:
 
 <details>
-<summary> Example microservice blueprint </summary>
+<summary> Example microserviceBuild blueprint </summary>
 
 ```json showLineNumbers
 {
-  "identifier": "microservice",
-  "title": "Microservice",
+  "identifier": "microserviceBuild",
+  "title": "Microservice Build",
   "icon": "Microservice",
   "schema": {
     "properties": {
-      "description": {
-        "type": "string",
-        "title": "Description"
-      },
       "buildNumber": {
         "type": "number",
         "title": "Build Number"
       },
-      "isActive": {
-        "type": "boolean",
-        "title": "Is Active"
+      "buildVersion": {
+        "type": "string",
+        "title": "Build Version"
       },
-      "languages": {
-        "type": "array",
-        "title": "Languages"
-      },
-      "versionInEnv": {
-        "type": "object",
-        "title": "Version In Env"
+      "imageTag": {
+        "type": "string",
+        "title": "Image Tag"
       }
     },
-    "required": ["description"]
+    "required": []
   },
   "calculationProperties": {}
 }
@@ -43,7 +35,7 @@ In this example we create a basic blueprint and then add code that uses Port's G
 
 </details>
 
-After creating the blueprint, you can add the following snippet to your GitHub workflow `yml` file to make use of the GitHub action:
+After creating the blueprint, you can add the following snippet to your GitHub workflow `yml` file to create the new build entity in your GitHub workflow:
 
 ```yaml showLineNumbers
 - uses: port-labs/port-github-action@v1
@@ -51,16 +43,14 @@ After creating the blueprint, you can add the following snippet to your GitHub w
     clientId: ${{ secrets.CLIENT_ID }}
     clientSecret: ${{ secrets.CLIENT_SECRET }}
     operation: UPSERT
-    identifier: example-microservice
-    icon: GitHub
-    blueprint: microservice
+    identifier: new-ms-build
+    icon: GithubActions
+    blueprint: microserviceBuild
     properties: |
       {
-        "description": "example microservice",
         "buildNumber": 1,
-        "isActive": true,
-        "languages": ["TypeScript", "Shell"],
-        "versionInEnv": {"prod": "v1.0.0", "staging": "v1.0.1"}
+        "buildVersion": "1.1.0",
+        "imageTag": "new-ms-build:latest"
       }
 ```
 
@@ -70,7 +60,7 @@ For security reasons it is recommended to save the `CLIENT_ID` and `CLIENT_SECRE
 
 ## Basic get example
 
-The following example gets the `example-microservice` entity from the previous example.
+The following example gets the `new-ms-build` entity from the previous example, this can be useful if your CI process creates a build artifact and then references some of it's data (for example, the image tag when deploying the latest version of your service).
 
 Add the following jobs to your GitHub workflow `yml` file:
 
@@ -86,24 +76,24 @@ get-entity:
         clientId: ${{ secrets.CLIENT_ID }}
         clientSecret: ${{ secrets.CLIENT_SECRET }}
         operation: GET
-        identifier: example-microservice
-        blueprint: microservice
+        identifier: new-ms-build
+        blueprint: microserviceBuild
 use-entity:
   runs-on: ubuntu-latest
   needs: get-entity
   steps:
-    - run: echo '${{needs.get-entity.outputs.entity}}' | jq .properties.versionInEnv.prod
+    - run: echo '${{needs.get-entity.outputs.entity}}' | jq .properties.imageTag
 ```
 
-The first job `get-entity`, uses the GitHub action to get the `example-microservice` entity.
-The second job `use-entity`, uses the output from the first job, and prints the `versionInEnv.prod` property of the entity.
+The first job `get-entity`, uses the GitHub action to get the `new-ms-build` entity.
+The second job `use-entity`, uses the output from the first job, and prints the `imageTag` property of the entity.
 
 ## Complete example
 
-The following example adds another `package` blueprint, in addition to the `microservice` blueprint shown in the previous example. In addition, it also adds a `microservice` relation. The GitHub action will create or update the relation between the 2 existing entities:
+The following example adds another `package` blueprint, in addition to the `microserviceBuild` blueprint shown in the previous example. In addition, it also adds a `microserviceBuild` relation. The GitHub action will create or update the relation between the 2 existing entities, allowing you to map the package to the microservice build that uses it:
 
 <details>
-<summary> A package Blueprint (including the `microservice` Relation) </summary>
+<summary> A package blueprint (including the `microserviceBuild` relation) </summary>
 
 ```json showLineNumbers
 {
@@ -142,9 +132,9 @@ The following example adds another `package` blueprint, in addition to the `micr
     "required": []
   },
   "relations": {
-    "microservice": {
+    "microserviceBuild": {
       "title": "Used In",
-      "target": "microservice",
+      "target": "microserviceBuild",
       "required": false,
       "many": false
     }
@@ -165,7 +155,7 @@ Add the following snippet to your GitHub workflow `yml` file:
     operation: UPSERT
     identifier: example-package
     title: Example Package
-    icon: GitHub
+    icon: GithubActions
     blueprint: package
     properties: |
       {
@@ -178,10 +168,8 @@ Add the following snippet to your GitHub workflow `yml` file:
       }
     relations: |
       {
-        "microservice": "example-microservice"
+        "microserviceBuild": "new-ms-build"
       }
 ```
 
 That's it! The entity is created or updated and is visible in the UI.
-
-![Entity](../../../../../static/img/integrations/github-action/CreatedEntity.png)

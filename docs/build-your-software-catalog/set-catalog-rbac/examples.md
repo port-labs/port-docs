@@ -197,6 +197,8 @@ If both permission types are set, then the global setting will be used when eval
 
 ## Setting action permissions
 
+<!-- TODO: Move to actions pillar when ready -->
+
 ### Role examples
 
 <Tabs groupId="action-permissions" defaultValue="action-only-admin-moderator" values={[

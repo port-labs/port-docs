@@ -1,5 +1,38 @@
 # RBAC
 
+## Assigning permissions
+
+In Port, you can assign permissions by using [roles](#roles), [team ownership](../../build-your-software-catalog/set-catalog-rbac/examples.md#team-ownership-examples) and [users](../../build-your-software-catalog/set-catalog-rbac/examples.md#user-examples).
+
+### Roles
+
+There are 3 types of roles. Below are their out-of-the-box permissions:
+
+| Role                         | Description                                                                                                      |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| **Admin**                    | Perform any operation on the platform                                                                            |
+| **Moderator** of a Blueprint | Perform any operation on a specific blueprint and its entities. A user can be a moderator of multiple blueprints |
+| **Member**                   | Read-only permissions + permissions to execute actions                                                           |
+
+:::info
+The **Moderator** role is automatically created during blueprint creation.
+For example, creating the blueprint `Env` will generate a role named `Env-moderator`, which can perform any operation on the `Env` blueprint and its entities.
+:::
+
+### Hierarchy
+
+In addition to the permissions designated for each role, permissions are also inherited based on the following hierarchy:
+
+**Admin** > **Moderator** > **Member**
+
+For example, if **Members** are allowed to edit `Cluster` entities, then `Microservices` **Moderators** are also allowed to edit them (**Admins** can edit all entities under all blueprints).
+
+You can view (and edit) each user’s role in the users table:
+
+![Users page](../../../static/img/software-catalog/role-based-access-control/permissions/usersPageRolesHightlight.png)
+
+Refer to the [Users and Teams](#users-and-teams-management) section for more information about the users page
+
 ## Users and Teams management
 
 In Port, you can control and manage all your users and teams, in one place.
