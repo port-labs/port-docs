@@ -2,7 +2,7 @@
 sidebar_position: 10
 ---
 
-# API Reference 🧪
+# API Reference
 
 This page includes all of the API endpoints available in Port.
 
