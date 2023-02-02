@@ -195,4 +195,4 @@ We provide a free text search option on tables. To search on a table, click the 
 
 [Explore how to control page visibility with basic examples](./tutorial.md)
 
-[Dive into advanced operations on Pages with our API ➡️ ](../../api-reference.md)
+[Dive into advanced operations on Pages with our API ➡️ ](../../api-reference/api-reference.mdx)

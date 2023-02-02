@@ -167,4 +167,4 @@ The first tab is the `Overview` tab, which shows two widgets: the Entity details
 
 [Explore How to Create, Edit, and Delete Entities with basic examples](./tutorial)
 
-[Dive into advanced operations on Entities with our API ➡️ ](../../../api-reference.md)
+[Dive into advanced operations on Entities with our API ➡️ ](../../../api-reference/api-reference.mdx)

@@ -52,8 +52,9 @@ const config = {
         // Plugin Options for loading OpenAPI files
         specs: [
           {
+            id: "port-api",
             spec: "https://api.getport.io/yaml",
-            route: "/api-reference",
+            // route: "/api-reference/api",
           },
         ],
         // Theme Options for modifying how redoc renders them

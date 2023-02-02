@@ -141,4 +141,4 @@ It has two rules:
 
 [Explore How to Create, Edit, and Delete Scorecards with basic examples](./tutorial)
 
-[Dive into advanced operations on Scorecards with our API ➡️ ](../api-reference.md)
+[Dive into advanced operations on Scorecards with our API ➡️ ](../api-reference/api-reference.mdx)

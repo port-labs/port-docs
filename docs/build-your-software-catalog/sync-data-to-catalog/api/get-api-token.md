@@ -7,7 +7,7 @@ import TabItem from "@theme/TabItem"
 
 # Get API Token
 
-Since Port is API-first, any action can be performed using our [REST API](../../../api-reference.md).
+Since Port is API-first, any action can be performed using our [REST API](../../../api-reference/api-reference.mdx).
 
 In order to interact with the API you will need an API token.
 
