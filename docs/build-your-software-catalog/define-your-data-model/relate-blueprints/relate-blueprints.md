@@ -5,7 +5,7 @@ sidebar_position: 2
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Relate Blueprints
+# Relate Blueprints 🔀
 
 Relations allow you to model the connections between different assets in your software catalog.
 
@@ -22,7 +22,7 @@ Relations can be used to represent the logical connections between assets in you
 - The Kubernetes clusters that exist in a cloud account;
 - etc.
 
-In this [live demo](https://demo.getport.io/dev-portal) example, we can see the DevPortal setup page with all of the blueprints and their relations.
+In this [live demo](https://demo.getport.io/dev-portal) example, we can see the DevPortal setup page with all of the blueprints and their relations. 🎬
 
 ## Relation schema structure
 
@@ -66,7 +66,7 @@ A single type relation is used to map a single target entity to the source.
 - Map a Kubernetes pod to the service it is providing;
 - etc.
 
-In this [live demo](https://demo.getport.io/packageVersionEntity?identifier=AnalyticsTracker_1_2_9) example, we can see a specific package version and it's related core packages.
+In this [live demo](https://demo.getport.io/packageVersionEntity?identifier=AnalyticsTracker_1_2_9) example, we can see a specific package version and it's related core packages. 🎬
 
 #### Single Relation Structure
 
@@ -123,7 +123,7 @@ A many type relation is used to map multiple target entities to the source.
 - Map the services deployed in a developer environment;
 - etc.
 
-In this [live demo](https://demo.getport.io/developerEnvEntity?identifier=test-shizuko) example, we can see a specific developer environment and the running services it uses.
+In this [live demo](https://demo.getport.io/developerEnvEntity?identifier=test-shizuko) example, we can see a specific developer environment and the running services it uses. 🎬
 
 #### Many Relation Structure
 

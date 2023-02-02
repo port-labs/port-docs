@@ -19,7 +19,7 @@ The team property type can be used to reference any team that exists in Port, fo
 - The lead maintainers;
 - etc.
 
-In this [live demo](https://demo.getport.io/services) example, we can see the `Team` team property.
+In this [live demo](https://demo.getport.io/services) example, we can see the `Team` team property. 🎬
 
 ## API definition
 

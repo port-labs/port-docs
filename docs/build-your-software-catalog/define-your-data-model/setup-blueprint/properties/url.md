@@ -19,7 +19,7 @@ The URL property type can be used to store a link to any web resource, for examp
 - API routes;
 - etc.
 
-In this [live demo](https://demo.getport.io/domains) example, we can see the `Domain Docs` URL property.
+In this [live demo](https://demo.getport.io/domains) example, we can see the `Domain Docs` URL property. 🎬
 
 ## API definition
 

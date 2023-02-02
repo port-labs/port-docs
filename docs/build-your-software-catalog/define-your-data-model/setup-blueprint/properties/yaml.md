@@ -19,7 +19,7 @@ The yaml property type can be used to store any key/value based data, for exampl
 - Manifests;
 - etc.
 
-In this [live demo](https://demo.getport.io/services) example, we can see the `Helm Chart` yaml property.
+In this [live demo](https://demo.getport.io/services) example, we can see the `Helm Chart` yaml property. 🎬
 
 ## API definition
 

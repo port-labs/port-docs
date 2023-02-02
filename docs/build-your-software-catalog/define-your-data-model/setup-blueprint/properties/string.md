@@ -20,7 +20,7 @@ The string property type can be used to store any text based data, for example:
 - File names;
 - etc.
 
-In this [live demo](https://demo.getport.io/services) example, we can see the `Language` string property.
+In this [live demo](https://demo.getport.io/services) example, we can see the `Language` string property. 🎬
 
 ## API definition
 

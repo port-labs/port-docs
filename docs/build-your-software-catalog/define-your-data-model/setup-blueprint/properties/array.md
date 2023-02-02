@@ -18,7 +18,7 @@ The array property type can be used to store any list of data, for example:
 - Dependencies;
 - etc.
 
-In this [live demo](https://demo.getport.io/services) example, we can see the `Monitor Tooling` array property.
+In this [live demo](https://demo.getport.io/services) example, we can see the `Monitor Tooling` array property. 🎬
 
 ## API definition
 
