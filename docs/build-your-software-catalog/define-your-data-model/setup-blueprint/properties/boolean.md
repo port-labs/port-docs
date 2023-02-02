@@ -10,7 +10,7 @@ import TabItem from "@theme/TabItem"
 
 Boolean is a primitive data type that has one of two possible values - `true` and `false`
 
-## Use cases
+## Use cases 💡
 
 The boolean property type can be used to store any true/false gate, for example:
 

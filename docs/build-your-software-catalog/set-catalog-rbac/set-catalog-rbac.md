@@ -1,8 +1,8 @@
-# Set Catalog RBAC
+# Set Catalog RBAC 🔐
 
 Port provides granular control to make sure every user sees only the parts of the catalog that are relevant for him.
 
-## Use cases
+## Use cases 💡
 
 The catalog RBAC allows admins to finely control which users have access to which information from the catalog, for example:
 

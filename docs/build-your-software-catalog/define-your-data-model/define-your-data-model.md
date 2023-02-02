@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Define Your Data Model :building_construction:
+# Define Your Data Model 📋
 
 Defining your data model for the software catalog is similar to defining a database structure.
 Port provides two main building blocks to define the structure of your choice:
@@ -25,6 +25,6 @@ Port provides two main building blocks to define the structure of your choice:
 
 In this [live demo](https://demo.getport.io/dev-portal) example, we can see an example of a classic data model, using Blueprints & Relations. 🎬
 
-## Step 1 - [Setup Blueprints](./setup-blueprint/setup-blueprint.md)
+## Step 1 - [Setup Blueprints](./setup-blueprint/setup-blueprint.md) 🧱
 
-## Step 2 - [Relate Relations](./relate-blueprints/relate-blueprints.md)
+## Step 2 - [Relate Relations](./relate-blueprints/relate-blueprints.md) 🔀

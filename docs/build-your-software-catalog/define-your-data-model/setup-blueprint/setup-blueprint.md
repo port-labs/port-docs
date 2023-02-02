@@ -5,7 +5,7 @@ sidebar_position: 1
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Setup Blueprint
+# Setup Blueprint 🧱
 
 To build the data model into Port's software catalog you will use the Blueprint component.
 
@@ -15,7 +15,7 @@ A Blueprint is the generic building block in Port. It represents assets that can
 
 Blueprints are completely customizable, and they support any number of properties the user chooses, all of which can be modified as you go.
 
-## Use cases for blueprints
+## Use cases for blueprints 💡
 
 Blueprints can be used to represent any asset in your software catalog, for example:
 

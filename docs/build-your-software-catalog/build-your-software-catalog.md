@@ -2,13 +2,13 @@
 sidebar_position: 1
 ---
 
-# Build your Software Catalog
+# Build your Software Catalog 🏗️
 
 Port's Software Catalog provides a flexible and customizable solution for you to reflect your unique Software Development Life Cycle in a centralized catalog.
 
 With simple building blocks, the software catalog can be tailored to your data model, enabling it to accurately reflect your processes and requirements.
 
-## Step 1 - Define your data model 🏗️
+## Step 1 - Define your data model 📋
 
 Defining the structure of your data model is the first step in using Port's Software Catalog. This step involves determining what information should be included in the catalog and how it should be organized.
 
