@@ -28,6 +28,6 @@ Port's Software Catalog provides integrations to collect data that may be siloed
 
 By syncing data into the software catalog, you can ensure that you have a comprehensive and up-to-date view of your SDLC.
 
-![integrations](../../../static/img/../../port-docs/static/img/software-catalog/integrations.png)
-
 See how to --> [Sync data to the software catalog](./sync-data-to-catalog/sync-data-to-catalog.md)
+
+![integrations](../../../static/img/../../port-docs/static/img/software-catalog/integrations.png)
