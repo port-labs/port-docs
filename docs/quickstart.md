@@ -3,7 +3,7 @@ sidebar_position: 2
 slug: /
 ---
 
-# Quickstart
+# Quickstart ⏱️
 
 ## What is Port?
 

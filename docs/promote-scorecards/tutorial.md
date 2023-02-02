@@ -15,15 +15,17 @@ Scorecards can be created by two methods:
 - UI
 - API
 
+<!-- TODO: fix this back to some actual blueprint -->
+
 :::info
-A Scorecard is created upon Blueprint. So if you haven't created the `microservice` Blueprint in [Creating a Blueprint](../blueprint/tutorial.md#creating-a-blueprint), please make sure to do so to follow along.
+A Scorecard is created upon blueprint. So if you haven't created the `microservice` blueprint in the [Quickstart](../quickstart.md#service-blueprint), please make sure to do so to follow along.
 :::
 
 ### From the UI
 
 To create a scorecard from the UI, go to the DevPortal Setup page and click the 3 dots icon on the `microservice` Blueprint
 
-![Blueprints page with Create Scorecard](../../../static/img/software-catalog/scorecard/tutorial/MicroserviceEditScorecard.png)
+![Blueprints page with Create Scorecard](../../static/img/software-catalog/scorecard/tutorial/MicroserviceEditScorecard.png)
 
 An editor window will open with the current JSON array of the defined Scorecards. Since there is no Scorecard configured on the Blueprint at the moment, the `scorecard` arrays will be empty. Paste the following content inside the editor to create the scorecards of this example:
 
@@ -69,7 +71,7 @@ An editor window will open with the current JSON array of the defined Scorecards
 ### From the API
 
 :::note
-Remember that an access token is necessary in order to make API requests. If you need to generate a new token, refer back to [Getting an API token](../blueprint/tutorial.md#getting-an-api-token).
+Remember that an access token is necessary in order to make API requests. If you need to generate a new token, refer to [Getting an API token](../build-your-software-catalog/sync-data-to-catalog/api/get-api-token.md).
 :::
 
 In order to create a scorecard from the API, you will make a PUT request to the URL `https://api.getport.io/v1/{blueprint_identifier}/scorecards`.
@@ -202,7 +204,7 @@ const response = await axios.put(
 
 After creating the Scorecards, you will see a new tab in the profile Entity page of each of your Blueprint's Entities, showing the various scorecards levels.
 
-For example, we can [create the Entity below](../entity/tutorial.md#create-entities)
+For example, we can [create the entity below](../build-your-software-catalog/sync-data-to-catalog/understand-entities-structure/tutorial.md#create-entities)
 
 ```json showLineNumbers
 {
@@ -219,7 +221,7 @@ For example, we can [create the Entity below](../entity/tutorial.md#create-entit
 
 And then look at the [specific page](https://app.getport.io/MicroserviceEntity?identifier=cart-service&activeTab=3) of this entity, on the scorecards tab
 
-![Developer Portal Scorecards Tab](../../../static/img/software-catalog/scorecard/tutorial/ScorecardsTab.png)
+![Developer Portal Scorecards Tab](../../static/img/software-catalog/scorecard/tutorial/ScorecardsTab.png)
 
 We can see that the `hasSlackChannel` rule passed because we provided one to that entity, while the `hasTeam` failed because we didn't provide any team.
 
@@ -235,7 +237,7 @@ And just as we have shown earlier in the tutorial, you can update a Scorecard fr
 
 In order to update a Scorecard from the UI, go to the DevPortal Setup page, click on the 3 dots icon and select Scorecards:
 
-![Blueprints page with Create Scorecard](../../../static/img/software-catalog/scorecard/tutorial/MicroserviceEditScorecard.png)
+![Blueprints page with Create Scorecard](../../static/img/software-catalog/scorecard/tutorial/MicroserviceEditScorecard.png)
 
 An editor window will open with the current scorecards of the Blueprint. In order to update the Scorecard, change the wanted scorecard within the scorecards array, click on `save` at the bottom right corner of the editor and view the updated Scorecards.
 

@@ -2,7 +2,7 @@
 sidebar_position: 9
 ---
 
-# FAQ
+# FAQ ❓
 
 ## How can I get started?
 

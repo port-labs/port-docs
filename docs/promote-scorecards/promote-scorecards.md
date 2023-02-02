@@ -2,14 +2,14 @@
 sidebar_position: 1
 ---
 
-# Scorecard
+# Promote Scorecards 📊
 
 ## What is a Scorecard?
 
 **Scorecards** enable us to create a set of rules that will determine the level of our Port Entities, based on their properties.
 Each scorecard has a set of rules that affects its total level, a rule has a `level` property which is one of the following: `Gold`, `Silver` or `Bronze`. Each rule has specific conditions, and the scorecard level increases when they pass.
 
-**For example**, to keep track of your organization's `Services` maturity, we can create a set of scorecards on top of a `Service` [Blueprint](../blueprint/blueprint.md) that will keep track of their progress. here are some scorecards that we can set:
+**For example**, to keep track of your organization's `Services` maturity, we can create a set of scorecards on top of a `Service` [Blueprint](../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) that will keep track of their progress. here are some scorecards that we can set:
 
 - Ownership
   - Has a defined on-call?
@@ -24,7 +24,7 @@ Each scorecard has a set of rules that affects its total level, a rule has a `le
 
 In the end, within the specific Entity profile, we will get a tab per scorecard that shows the rules' progress and status.
 
-![Developer Portal Scorecards Tab](../../../static/img/software-catalog/scorecard/tutorial/ScorecardsTab.png)
+![Developer Portal Scorecards Tab](../../static/img/software-catalog/scorecard/tutorial/ScorecardsTab.png)
 
 ## Scorecard structure table
 
@@ -45,11 +45,11 @@ In the end, within the specific Entity profile, we will get a tab per scorecard 
 
 ## Condition structure table
 
-| Field      | Description                                                                                                                                                                                                                                                                                                                                                                                 |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `operator` | Search operator to use when evaluating this rule, for example `=` `!=` `contains` `doesNotContains` `isEmpty` `isNotEmpty` below                                                                                                                                                                                                                                                            |
-| `property` | Property to filter by according to its value. It can be a [meta-property](../../software-catalog/blueprint/mirror-properties.md#meta-property-mirror-property) such as `$identifier`, or any other standard entity property such as `slack_channel` includeing [Mirror Properties](../blueprint/mirror-properties.md) and [Calculation Properties](../blueprint//calculation-properties.md) |
-| `value`    | Value to compare to (not required in isEmpty and isNotEmpty operators)                                                                                                                                                                                                                                                                                                                      |
+| Field      | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `operator` | Search operator to use when evaluating this rule, for example `=` `!=` `contains` `doesNotContains` `isEmpty` `isNotEmpty` below                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| `property` | Property to filter by according to its value. It can be a [meta-property](../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/meta-properties.md) such as `$identifier`, or any other standard entity property such as `slack_channel` includeing [Mirror Properties](../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/mirror-property/mirror-property.md) and [Calculation Properties](../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/calculation-property/calculation-property.md) |
+| `value`    | Value to compare to (not required in isEmpty and isNotEmpty operators)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 
 ## Available operators
 
@@ -141,4 +141,4 @@ It has two rules:
 
 [Explore How to Create, Edit, and Delete Scorecards with basic examples](./tutorial)
 
-[Dive into advanced operations on Scorecards with our API ➡️ ](../../api-providers/rest.md)
+[Dive into advanced operations on Scorecards with our API ➡️ ](../api-reference.md)
