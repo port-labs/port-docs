@@ -3,9 +3,6 @@ sidebar_position: 1
 sidebar_label: Blueprint
 ---
 
-import Tabs from "@theme/Tabs"
-import TabItem from "@theme/TabItem"
-
 # Blueprint
 
 ## What is a Blueprint?
@@ -629,10 +626,10 @@ It is possible to configure widget properties that expose completely new functio
 
 The available special types and their usage examples are listed below:
 
-|                                   | Description                                                                                                                                   | Example values                                                                  |
-| --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| [`markdown`](../widgets/markdown) | String in markdown language format                                                                                                            | `An Example of **bold text**.`                                                  |
-| `spec`                            | Field with a pre-defined set of allowed values. A property with a `spec` key will be displayed as a separate tab in the Specific Entity Page. | [`open-api`](../widgets/open-api), [`embedded-url`](../widgets/embedded-url.md) |
+|                                   | Description                                                                                                                                   | Example values                                                                               |
+| --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| [`markdown`](../widgets/markdown) | String in markdown language format                                                                                                            | `An Example of **bold text**.`                                                               |
+| `spec`                            | Field with a pre-defined set of allowed values. A property with a `spec` key will be displayed as a separate tab in the Specific Entity Page. | [`open-api`](../widgets/open-api), [`embedded-url`](../widgets/embedded-url/embedded-url.md) |
 
 ### Markdown
 
@@ -721,7 +718,7 @@ Keep in mind that these 2 methods of getting an OpenAPI/AsyncAPI spec and render
 
 ### Embedded URL
 
-For more info on the `embedded-url` property, refer to the [Embedded URL Widget](../widgets/embedded-url.md) doc.
+For more info on the `embedded-url` property, refer to the [Embedded URL Widget](../widgets/embedded-url/embedded-url.md) doc.
 
 ```json showLineNumbers
 {
@@ -784,7 +781,7 @@ If you don't want to send changelog events to any destination, you can simply re
 | `agent` | `boolean` | Defines whether to use [Port Agent](../../self-service-actions/webhook/port-execution-agent/port-execution-agent.md) for execution or not. <br></br> Can only be added if `type` is set to `WEBHOOK` | Either `true` or `false`    |
 | `url`   | `string`  | Defines the webhook URL where Port sends changelog events to via HTTP POST request. <br></br> Can be added only if `type` is set to `WEBHOOK`                                                        | `https://example.com`       |
 
-For more information about Port's changelog capabilities, refer to the [Self-Service Actions deep dive](../../self-service-actions/self-service-actions-deep-dive.md) page.
+For more information about Port's changelog capabilities, refer to the [Self-Service Actions deep dive](../../self-service-actions/self-service-actions-deep-dive/self-service-actions-deep-dive.md) page.
 
 ## Mirror properties
 
