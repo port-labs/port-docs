@@ -16,7 +16,7 @@ With Port's Software Catalog, your data model can be defined using a database-li
 
 By defining the structure of your data model in this way, you can ensure that the software catalog accurately reflects your processes and is set up to meet your specific needs.
 
-DIAGRAM
+![Basic blueprints relation](../../../static/img/../../port-docs/static/img/software-catalog/blueprint/exampleBlueprintsAndRelationsLayout.png)
 
 See how to --> [Define your data model](./define-your-data-model/define-your-data-model.md)
 
@@ -28,6 +28,6 @@ Port's Software Catalog provides integrations to collect data that may be siloed
 
 By syncing data into the software catalog, you can ensure that you have a comprehensive and up-to-date view of your SDLC.
 
-DIAGRAM
+![integrations](../../../static/img/../../port-docs/static/img/software-catalog/integrations.png)
 
 See how to --> [Sync data to the software catalog](./sync-data-to-catalog/sync-data-to-catalog.md)
