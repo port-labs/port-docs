@@ -96,3 +96,7 @@ use-entity:
 
 </TabItem>
 </Tabs>
+
+## Examples
+
+Refer to the [examples](./examples.mdx) page for practical examples of Port's GitHub action.

@@ -1,0 +1,189 @@
+import ExampleMSBuildBlueprint from "../_ci_example_microservice_build_blueprint.mdx";
+import ExamplePackageBlueprint from "../_ci_example_package_blueprint.mdx";
+
+# Examples
+
+## Basic create/update example
+
+In this example we create a blueprint for `microserviceBuild` and then add code that uses Port's Codefresh workflow template to create a new entity every time the Codefresh CI workflow that creates a new build runs:
+
+<ExampleMSBuildBlueprint />
+
+After creating the blueprint, you can add the following snippet to your Codefresh workflow template `yml` file to create the new build entity in your Codefresh CI:
+
+```yaml showLineNumbers
+- name: entity-upsert
+  templateRef:
+    name: port
+    template: entity-upsert
+  arguments:
+    parameters:
+    - name: PORT_CREDENTIALS_SECRET
+       value: "port-credentials"
+    - name: PORT_CLIENT_ID_KEY
+      value: "PORT_CLIENT_ID"
+    - name: PORT_CLIENT_SECRET_KEY
+      value: "PORT_CLIENT_SECRET"
+    - name: BLUEPRINT_IDENTIFIER
+      value: "microserviceBuild"
+    - name: ENTITY_IDENTIFIER
+      value: "new-ms-build"
+    - name: ENTITY_PROPERTIES
+      value: |
+      {
+        "buildNumber": 1,
+        "buildVersion": "1.1.0",
+        "imageTag": "new-ms-build:latest"
+      }
+```
+
+## Basic get example
+
+The following example gets the `new-ms-build` entity from the previous example, this can be useful if your CI process creates a build artifact and then references some of it's data (for example, the image tag when deploying the latest version of your service).
+
+Add the following steps to your workflow `yml` file:
+
+```yaml showLineNumbers
+- name: entity-get
+  templateRef:
+    name: port
+    template: entity-get
+  arguments:
+    parameters:
+    - name: PORT_CREDENTIALS_SECRET
+       value: "port-credentials"
+    - name: PORT_CLIENT_ID_KEY
+      value: "PORT_CLIENT_ID"
+    - name: PORT_CLIENT_SECRET_KEY
+      value: "PORT_CLIENT_SECRET"
+    - name: BLUEPRINT_IDENTIFIER
+      value: "microserviceBuild"
+    - name: ENTITY_IDENTIFIER
+      value: "new-ms-build"
+```
+
+:::tip
+For an example showing how to make use of the output from the `entity-get` workflow template, go to [complete example](#complete-example).
+:::
+
+## Complete example
+
+The following example adds another `package` blueprint, in addition to the `microserviceBuild` blueprint shown in the previous example. In addition, it also adds a `microserviceBuild` relation. The Codefresh workflow template will create or update the relation between the 2 existing entities, allowing you to map the package to the microservice build that uses it:
+
+<ExamplePackageBlueprint />
+
+Here is the complete workflow `yml` to create both `microserviceBuild` entity, the `package` entity and then print the complete
+JSON of the new package entity:
+
+```yaml showLineNumbers
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: port.codefresh-complete-example.0.0.1
+  annotations:
+    port/version: "0.0.1"
+    port/description: "This Workflow Template is used to create a package entity, a microserviceBuild entity and then print the JSON of the new package"
+spec:
+  arguments:
+    parameters:
+  entrypoint: ci-tasks
+  templates:
+    - name: ci-tasks
+      metadata:
+        annotations:
+      dag:
+        tasks:
+          - name: entity-upsert-microservice-build
+            templateRef:
+              name: port
+              template: entity-upsert
+            arguments:
+              parameters:
+                - name: PORT_CREDENTIALS_SECRET
+                  value: "port-credentials"
+                - name: PORT_CLIENT_ID_KEY
+                  value: "PORT_CLIENT_ID"
+                - name: PORT_CLIENT_SECRET_KEY
+                  value: "PORT_CLIENT_SECRET"
+                - name: BLUEPRINT_IDENTIFIER
+                  value: "microserviceBuild"
+                - name: ENTITY_IDENTIFIER
+                  value: "new-ms-build"
+                - name: ENTITY_PROPERTIES
+                  value: |
+                    {
+                      "buildNumber": 1,
+                      "buildVersion": "1.1.0",
+                      "imageTag": "new-ms-build:latest"
+                    }
+          - name: entity-upsert-package
+            dependencies: [entity-upsert-microservice-build]
+            templateRef:
+              name: port
+              template: entity-upsert
+            arguments:
+              parameters:
+                - name: PORT_CREDENTIALS_SECRET
+                  value: "port-credentials"
+                - name: PORT_CLIENT_ID_KEY
+                  value: "PORT_CLIENT_ID"
+                - name: PORT_CLIENT_SECRET_KEY
+                  value: "PORT_CLIENT_SECRET"
+                - name: BLUEPRINT_IDENTIFIER
+                  value: "package"
+                - name: ENTITY_IDENTIFIER
+                  value: "example-package"
+                - name: ENTITY_TITLE
+                  value: "Example Package"
+                - name: ENTITY_PROPERTIES
+                  value: |
+                    {
+                      "version": "v1"
+                    }
+                - name: ENTITY_RELATIONS
+                  value: |
+                    {
+                      "microserviceBuild": "new-ms-build"
+                    }
+          - name: entity-get
+            dependencies:
+              [entity-upsert-microservice-build, entity-upsert-package]
+            templateRef:
+              name: port
+              template: entity-get
+            arguments:
+              parameters:
+                - name: PORT_CREDENTIALS_SECRET
+                  value: port-credentials
+                - name: PORT_CLIENT_ID_KEY
+                  value: PORT_CLIENT_ID
+                - name: PORT_CLIENT_SECRET_KEY
+                  value: PORT_CLIENT_SECRET
+                - name: BLUEPRINT_IDENTIFIER
+                  value: "package"
+                - name: ENTITY_IDENTIFIER
+                  value: "example-package"
+          - name: log-info
+            dependencies: [entity-get]
+            template: log-info
+            arguments:
+              parameters:
+                - name: INFO
+                  value: "{{workflow.outputs.parameters.PORT_COMPLETE_ENTITY}}"
+
+    - name: log-info
+      inputs:
+        parameters:
+          - name: INFO
+      script:
+        image: alpine:latest
+        command: ["/bin/sh"]
+        env:
+          - name: INFO
+            value: "{{ inputs.parameters.INFO }}"
+        source: |
+          set -e
+          echo ${INFO}
+```
+
+That's it! The Entity is created or updated and is visible in the UI.

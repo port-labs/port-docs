@@ -1,39 +1,13 @@
+import ExampleMSBuildBlueprint from "../_ci_example_microservice_build_blueprint.mdx";
+import ExamplePackageBlueprint from "../_ci_example_package_blueprint.mdx";
+
 # Examples
 
 ## Basic create/update example
 
 In this example we create a blueprint for `microserviceBuild` and then add code that uses Port's GitHub action to create a new entity every time the GitHub workflow that creates a new build runs:
 
-<details>
-<summary> Example microserviceBuild blueprint </summary>
-
-```json showLineNumbers
-{
-  "identifier": "microserviceBuild",
-  "title": "Microservice Build",
-  "icon": "Microservice",
-  "schema": {
-    "properties": {
-      "buildNumber": {
-        "type": "number",
-        "title": "Build Number"
-      },
-      "buildVersion": {
-        "type": "string",
-        "title": "Build Version"
-      },
-      "imageTag": {
-        "type": "string",
-        "title": "Image Tag"
-      }
-    },
-    "required": []
-  },
-  "calculationProperties": {}
-}
-```
-
-</details>
+<ExampleMSBuildBlueprint />
 
 After creating the blueprint, you can add the following snippet to your GitHub workflow `yml` file to create the new build entity in your GitHub workflow:
 
@@ -92,58 +66,7 @@ The second job `use-entity`, uses the output from the first job, and prints the 
 
 The following example adds another `package` blueprint, in addition to the `microserviceBuild` blueprint shown in the previous example. In addition, it also adds a `microserviceBuild` relation. The GitHub action will create or update the relation between the 2 existing entities, allowing you to map the package to the microservice build that uses it:
 
-<details>
-<summary> A package blueprint (including the `microserviceBuild` relation) </summary>
-
-```json showLineNumbers
-{
-  "identifier": "package",
-  "title": "Package",
-  "icon": "Package",
-  "schema": {
-    "properties": {
-      "version": {
-        "type": "string",
-        "title": "Version"
-      },
-      "committedBy": {
-        "type": "string",
-        "title": "Committed By"
-      },
-      "commitHash": {
-        "type": "string",
-        "title": "Commit Hash"
-      },
-      "actionJob": {
-        "type": "string",
-        "title": "Action Job"
-      },
-      "repoPushedAt": {
-        "type": "string",
-        "format": "date-time",
-        "title": "Repository Pushed At"
-      },
-      "runLink": {
-        "type": "string",
-        "format": "url",
-        "title": "Action Run Link"
-      }
-    },
-    "required": []
-  },
-  "relations": {
-    "microserviceBuild": {
-      "title": "Used In",
-      "target": "microserviceBuild",
-      "required": false,
-      "many": false
-    }
-  },
-  "calculationProperties": {}
-}
-```
-
-</details>
+<ExamplePackageBlueprint />
 
 Add the following snippet to your GitHub workflow `yml` file:
 
