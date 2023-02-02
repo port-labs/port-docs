@@ -374,7 +374,7 @@ To configure a manual approval step, add the `requiredApproval` field to your ac
 
 When a user clicks on the `execute` button of an action that requires approval, a new `run` object will be created in Port. The `run` object will have the status `WAITING_FOR_APPROVAL` and will be visible in the `Runs` tab of the action.
 
-To configure which users can approve the action, see [Managing permissions](/docs/software-catalog/role-based-access-control/permissions-controls.md#setting-permissions-for-a-blueprint-and-its-actions).
+To configure which users can approve the action, see [Managing permissions](../../build-your-software-catalog/set-catalog-rbac/examples.md#setting-action-permissions).
 
 ## Self-Service Action definition structure
 
@@ -416,36 +416,36 @@ The basic structure of a Self-Service Action:
 
 ### Structure table
 
-| Field              | Description                                                                                                                                                                                         |
-| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `id`               | Internal Action ID                                                                                                                                                                                  |
-| `identifier`       | Action identifier                                                                                                                                                                                   |
-| `title`            | Action title                                                                                                                                                                                        |
-| `icon`             | Action icon                                                                                                                                                                                         |
-| `userInputs`       | An object containing `properties` and `required` keys following the standard JSON schema format as seen in [Blueprint structure](../../software-catalog/blueprint/blueprint.md#blueprint-structure) |
-| `invocationMethod` | Defines the destination where invocations of the Self-Service Action will be delivered, see [invocation method](#invocation-method) for details                                                     |
-| `trigger`          | The type of the action: `CREATE`, `DAY-2` or `DELETE`                                                                                                                                               |
-| `requiredApproval` | Whether the action requires approval or not                                                                                                                                                         |
-| `description`      | Action description                                                                                                                                                                                  |
+| Field              | Description                                                                                                                                                                                                                                       |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`               | Internal Action ID                                                                                                                                                                                                                                |
+| `identifier`       | Action identifier                                                                                                                                                                                                                                 |
+| `title`            | Action title                                                                                                                                                                                                                                      |
+| `icon`             | Action icon                                                                                                                                                                                                                                       |
+| `userInputs`       | An object containing `properties` and `required` keys following the standard JSON schema format as seen in [Blueprint structure](../../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md#blueprint-structure) |
+| `invocationMethod` | Defines the destination where invocations of the Self-Service Action will be delivered, see [invocation method](#invocation-method) for details                                                                                                   |
+| `trigger`          | The type of the action: `CREATE`, `DAY-2` or `DELETE`                                                                                                                                                                                             |
+| `requiredApproval` | Whether the action requires approval or not                                                                                                                                                                                                       |
+| `description`      | Action description                                                                                                                                                                                                                                |
 
 ### Properties structure table
 
 The following table includes the different fields that can be specified in the `properties` key:
 
-| Field                    | Description                                                                                                                                                                                                            |
-| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `type`                   | All the [types](../../software-catalog/blueprint/blueprint.md#property-types) Port supports - `string`, `number`, `boolean`, etc...                                                                                    |
-| `title`                  | The title shown in the form when activating the Self-Service Action                                                                                                                                                    |
-| `format`                 | Specific data format to pair with some of the available types. You can explore all formats in the [String Formats](#string-formats) section                                                                            |
-| `blueprint`              | Identifier of an existing Blueprint to fetch Entities from                                                                                                                                                             |
-| `description` (Optional) | Extra description for the requested property                                                                                                                                                                           |
-| `default` (Optional)     | Default value                                                                                                                                                                                                          |
-| `enum` (Optional)        | A list of predefined values the user can choose from, same format as [enum](../../software-catalog/blueprint/blueprint.md#enum)                                                                                        |
-| `icon` (Optional)        | Icon for the user input property. Icon options: `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud,...` <br /><br />See the [full icon list](../../software-catalog/blueprint/blueprint.md#full-icon-list). |
+| Field                    | Description                                                                                                                                                                                                                                                          |
+| ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `type`                   | All the [types](../../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/properties.md#supported-properties) Port supports - `string`, `number`, `boolean`, etc...                                                                        |
+| `title`                  | The title shown in the form when activating the Self-Service Action                                                                                                                                                                                                  |
+| `format`                 | Specific data format to pair with some of the available types. You can explore all formats in the [String Formats](#string-formats) section                                                                                                                          |
+| `blueprint`              | Identifier of an existing Blueprint to fetch Entities from                                                                                                                                                                                                           |
+| `description` (Optional) | Extra description for the requested property                                                                                                                                                                                                                         |
+| `default` (Optional)     | Default value                                                                                                                                                                                                                                                        |
+| `enum` (Optional)        | A list of predefined values the user can choose from                                                                                                                                                                                                                 |
+| `icon` (Optional)        | Icon for the user input property. Icon options: `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud,...` <br /><br />See the [full icon list](../../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md#full-icon-list). |
 
 ### Special formats
 
-In addition to the formats that were introduced in [Blueprint string property formats](../../software-catalog/blueprint/blueprint.md#string-property-formats), Port's Self-Service Actions also support the following special formats:
+In addition to the formats that were introduced in [Blueprint string property formats](../../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/properties.md#supported-properties), Port's Self-Service Actions also support the following special formats:
 
 | `type`       | Description                                  | Example values                                  |
 | ------------ | -------------------------------------------- | ----------------------------------------------- |

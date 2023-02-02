@@ -2,7 +2,7 @@
 sidebar_position: 3
 ---
 
-# Entity
+# Understand entities structure 🏢
 
 ## What is an Entity?
 
@@ -30,14 +30,14 @@ This is the basic structure of an Entity:
 
 ## Structure table
 
-| Field        | Type     | Description                                                                                                                                                                                                                                     |
-| ------------ | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `identifier` | `String` | Unique identifier. <br /> Note that while the identifier is unique, it [can be changed](./tutorial.md#update-entity-identifier) after creation.                                                                                                 |
-| `title`      | `String` | Entity name that will be shown in the UI.                                                                                                                                                                                                       |
-| `team`       | `Array`  | **Optional Field.** An array of the associated teams. Only available teams can be added. <br /> Note that group permissions are handled according to this array, see [Teams and ownership](#teams-and-ownership).                               |
-| `blueprint`  | `String` | The name of the [Blueprint](../setup-blueprint/setup-blueprint.md) that this Entity is based on.                                                                                                                                                |
-| `properties` | `Object` | An object containing key-value pairs, where each key is a property **as defined in the Blueprint definition**, and each value applies the `type` of the property.                                                                               |
-| `relations`  | `object` | An object containing key-value pairs.<br /> Each key is the identifier of the [Relation](../relate-blueprints/relate-blueprints.md) that is defined on the blueprint.<br /><br />See more in the [Related entities](#related-entities) section. |
+| Field        | Type     | Description                                                                                                                                                                                                                                                               |
+| ------------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `identifier` | `String` | Unique identifier. <br /> Note that while the identifier is unique, it [can be changed](./tutorial.md#update-entity-identifier) after creation.                                                                                                                           |
+| `title`      | `String` | Entity name that will be shown in the UI.                                                                                                                                                                                                                                 |
+| `team`       | `Array`  | **Optional Field.** An array of the associated teams. Only available teams can be added. <br /> Note that group permissions are handled according to this array, see [Teams and ownership](#teams-and-ownership).                                                         |
+| `blueprint`  | `String` | The name of the [Blueprint](../../define-your-data-model/setup-blueprint/setup-blueprint.md) that this Entity is based on.                                                                                                                                                |
+| `properties` | `Object` | An object containing key-value pairs, where each key is a property **as defined in the Blueprint definition**, and each value applies the `type` of the property.                                                                                                         |
+| `relations`  | `object` | An object containing key-value pairs.<br /> Each key is the identifier of the [Relation](../../define-your-data-model/relate-blueprints/relate-blueprints.md) that is defined on the blueprint.<br /><br />See more in the [Related entities](#related-entities) section. |
 
 #### Teams and ownership
 
@@ -130,7 +130,7 @@ When a Relation between Blueprints is configured with `many = true`, you can add
 ```
 
 :::tip
-Click for more details about [**relations**](../relate-blueprints/relate-blueprints.md).
+Click for more details about [**relations**](../../define-your-data-model/relate-blueprints/relate-blueprints.md).
 :::
 
 ### Relation mapping example
@@ -149,7 +149,7 @@ In order to map this `microservice` to our `notificationServiceDeploymentV1` `de
 
 Specifying the `notificationService` under the Relation maps the connection between our `notificationServiceDeploymentV1` Entity and the `notificationService` Entity, so that when you view the `notificationServiceDeploymentV1` entity you will also see the related `notificationService` entity.
 
-In addition, you will be able to use [Mirror Properties](../setup-blueprint/properties/mirror-property/mirror-property.md) to map additional properties from the `microservice` Blueprint to the `deployment` Entity
+In addition, you will be able to use [Mirror Properties](../../define-your-data-model/setup-blueprint/properties/mirror-property/mirror-property.md) to map additional properties from the `microservice` Blueprint to the `deployment` Entity
 
 ## Entity page
 

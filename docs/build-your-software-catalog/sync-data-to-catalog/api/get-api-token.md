@@ -22,7 +22,7 @@ To find your Port API credentials go to [Port](https://app.getport.io), click on
 
 <center>
 
-![Port Developer Portal Credentials Modal](../../../static/img/software-catalog/credentials-modal.png)
+![Port Developer Portal Credentials Modal](../../../../static/img/software-catalog/credentials-modal.png)
 
 </center>
 
