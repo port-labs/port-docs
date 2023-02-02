@@ -2,36 +2,29 @@
 sidebar_position: 1
 ---
 
-# Define Your Data Model
+# Define Your Data Model :building_construction:
 
-Every organization have a different data model representing their way architecture and way of work.
+Defining your data model for the software catalog is similar to defining a database structure.
+Port provides two main building blocks to define the structure of your choice:
 
-## Common data models
+- Blueprint - Represent an **entity type**. A blueprint hold the schema of the entity you wish to represent in the software catalog. For example: a microservice or an environment blueprint
 
-- C4 (Backstage Style)
-- Multi-cloud
-- x
-- y
-- z
+- Relation - Allows you to define the dependency model between blueprints. Which makes Port's catalog a graph-oriented catalog.
 
-## Data Model Building blocks
-
-Diagram demonstrating how 2 blueprints are related
-
-<br></br>
 <br></br>
 <br></br>
 
 ![Basic blueprints relation](../../../static/img/blueprints-relation-basic-example.png)
 
-### Blueprint
+## Common data models
 
-A blueprint is xyz
+- C4 (Backstage Style)
+- Multi-cloud architecture
+- Microservice catalog
+- Kubernetes & Argo SDLC
 
-[Setup Blueprints](./setup-blueprint/setup-blueprint.md)
+In this [live demo](https://demo.getport.io/dev-portal) example, we can see an example of a classic data model, using Blueprints & Relations. 🎬
 
-### Relation
+## Step 1 - [Setup Blueprints](./setup-blueprint/setup-blueprint.md)
 
-A xyz is xyz
-
-[Relate Relations](./relate-blueprints/relate-blueprints.md)
+## Step 2 - [Relate Relations](./relate-blueprints/relate-blueprints.md)

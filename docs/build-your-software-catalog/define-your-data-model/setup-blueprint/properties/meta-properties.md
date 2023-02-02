@@ -13,7 +13,7 @@ Example meta-properties include:
 - createdAt;
 - and more.
 
-In this [live demo](https://demo.getport.io/services) example, we can see the `Title` meta-property.
+In this [live demo](https://demo.getport.io/services) example, we can see the `Title` meta-property. 🎬
 
 Meta-properties are always referenced using a dollar sign (`$`) before them, this makes it easier to tell if a property is user-defined or a meta-property.
 

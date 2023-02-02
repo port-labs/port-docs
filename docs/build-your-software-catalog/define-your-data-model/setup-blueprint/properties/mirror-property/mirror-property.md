@@ -3,7 +3,7 @@ sidebar_position: 14
 description: Mirror Property allows you to map data from related entities to your entity
 ---
 
-# Mirror Property
+# Mirror Property 🪞
 
 Mirror property allows you to map data from related entities to your entity.
 Mirror property can be used for blueprints that has [relations defined](../../../relate-blueprints/relate-blueprints.md).
@@ -27,7 +27,7 @@ Mirror properties make it possible to enrich the data visible on an entity by ma
 - Show the cloud provider of a K8s cluster;
 - etc.
 
-In this [live demo](https://demo.getport.io/k8s-clusters) example, we can see the `Cloud Provider` Property which is a mirror property of the related `Cloud Account` blueprint
+In this [live demo](https://demo.getport.io/k8s-clusters) example, we can see the `Cloud Provider` Property which is a mirror property of the related `Cloud Account` blueprint 🎬
 
 ## API definition
 

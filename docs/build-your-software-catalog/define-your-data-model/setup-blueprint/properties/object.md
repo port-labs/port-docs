@@ -20,7 +20,7 @@ The object property type can be used to store any key/value based data, for exam
 - Dictionaries/Hash maps;
 - etc.
 
-In this [live demo](https://demo.getport.io/cloudResources) example, we can see the `Tags` object property.
+In this [live demo](https://demo.getport.io/cloudResources) example, we can see the `Tags` object property. 🎬
 
 ## API definition
 
