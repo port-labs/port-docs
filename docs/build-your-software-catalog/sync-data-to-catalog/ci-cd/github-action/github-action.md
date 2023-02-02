@@ -13,7 +13,7 @@ Our [GitHub action](https://github.com/marketplace/actions/port-github-action) a
 Our GitHub action is open source - see it [**here**](https://github.com/port-labs/port-github-action)
 :::
 
-## Use cases
+## Use cases 💡
 
 Port's GitHub action provides a native way to integrate Port with your GitHub workflows, for example:
 

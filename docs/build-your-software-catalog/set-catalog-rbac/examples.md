@@ -5,7 +5,7 @@ import TabItem from "@theme/TabItem"
 
 In this section we'll show you a few examples of ways to use permissions in your organization, and how to apply them.
 
-## Use cases
+## Use cases 💡
 
 The following configurations, among others, are available when using permissions management:
 
