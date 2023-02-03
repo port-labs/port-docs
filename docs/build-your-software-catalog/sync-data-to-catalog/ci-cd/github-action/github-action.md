@@ -9,6 +9,11 @@ import TabItem from "@theme/TabItem"
 
 Our [GitHub action](https://github.com/marketplace/actions/port-github-action) allows you to create/update and query entities in Port directly from your GitHub workflows.
 
+<br></br>
+<br></br>
+
+![Github Illustration](../../../../../static/img/github-action-illustration.png)
+
 :::tip public repository
 Our GitHub action is open source - see it [**here**](https://github.com/port-labs/port-github-action)
 :::
