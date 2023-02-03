@@ -1,6 +1,6 @@
 # Sync data to Software Catalog
 
-Port offers several API Providers, allowing you to easily ingest and manage data with the tools you are already using in your infrastructure.
+Port offers several API Providers, allowing you to easily ingest and manage data with the tools you are already use in your infrastructure.
 
 ![Catalog Architecture](../../../static/img/sync-data-to-catalog/catalog-arch.jpg)
 

@@ -237,5 +237,5 @@ While these cases are valid, they might be a little counterintuitive.
 
 Here are a few examples of how can you grant a user permissions, but still not enable him to perform the operation due to other restrictions:
 
-1. If the user has permissions to edit any property, except for a required property of the blueprint - then the user will not be able to register or update entities as a whole because he can't provide a value for the required property;
-2. If the `ownedByTeam` setting is enabled for registration, and the user does not have permissions to edit the `team` property - then the user will not be able to register a new entity since he can't select a value for it's team field and mark it as owned by his team.
+1. If the user has permissions to edit any property, except for a required property of the blueprint - then the user will not be able to register or update entities as a whole because they can't provide a value for the required property;
+2. If the `ownedByTeam` setting is enabled for registration, and the user does not have permissions to edit the `team` property - then the user will not be able to register a new entity since they can't select a value for his team field and mark it as owned by their team.

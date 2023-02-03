@@ -4,17 +4,16 @@ sidebar_position: 1
 
 # Build your Software Catalog 🏗️
 
-Port's Software Catalog provides a flexible and customizable solution for you to reflect your unique Software Development Life Cycle in a centralized catalog.
-
-With simple building blocks, the software catalog can be tailored to your data model, enabling it to accurately reflect your processes and requirements.
+Port's software catalog is a central metadata store for software, environments, resources and more. Its building blocks are blueprints and relations, and you can use them to build a catalog that reflects your exact data model. You can also build the catalog with one of Port's common data models.
 
 ## Step 1 - Define your data model 📋
 
-Defining the structure of your data model is the first step in using Port's Software Catalog. This step involves determining what information should be included in the catalog and how it should be organized.
+This step begins with determining the information you would like to include for your main entity (most people begin with service), and defining the associated blueprint (in this case, a service blueprint).
 
-With Port's Software Catalog, your data model can be defined using a database-like definition, allowing for a clear and organized representation of your SDLC.
+The next steps would be defining additional blueprints, such as environment or cluster, the data it should include and its relation to other entities.
+For instance, if you want to manage packages in your software catalog, you'll define a package blueprint.
 
-By defining the structure of your data model in this way, you can ensure that the software catalog accurately reflects your processes and is set up to meet your specific needs.
+By defining the structure of your data model in this way, you can ensure that the software catalog accurately reflects your engineering organization and as a result will provide you with the centralized and opinionated software catalog you need.
 
 ![Basic blueprints relation](../../../static/img/../../port-docs/static/img/software-catalog/blueprint/exampleBlueprintsAndRelationsLayout.png)
 
