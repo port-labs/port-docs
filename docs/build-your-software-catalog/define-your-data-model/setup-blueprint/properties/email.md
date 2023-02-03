@@ -10,7 +10,7 @@ import TabItem from "@theme/TabItem"
 
 Email is a data type used to save Email addresses.
 
-## Use cases 💡
+## Common email usage 💡
 
 The Email property type can be used to store any legal email address.
 

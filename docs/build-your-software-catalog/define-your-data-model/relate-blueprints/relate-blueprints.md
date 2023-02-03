@@ -13,7 +13,7 @@ Relations define connections between blueprints results into dependency reflecti
 
 Relations enable us to make connections between blueprints, consequently connecting the entities based on these blueprints. That provides logical context to the software catalog.
 
-## Use cases for relations 💡
+## Common relations 💡
 
 Relations can be used to represent the logical connections between assets in your software catalog, for example:
 
@@ -59,7 +59,7 @@ A relation exists under the `relations` key in the [Blueprint JSON schema](../se
 
 A single type relation is used to map a single target entity to the source.
 
-#### Use cases 💡
+#### Common Single Relations 💡
 
 - Map a build job to the resulting new version;
 - Map a library version to the library repository;
@@ -116,7 +116,7 @@ resource "port-labs_blueprint" "myBlueprint" {
 
 A many type relation is used to map multiple target entities to the source.
 
-#### Use cases 💡
+#### Common Many Relations 💡
 
 - Map the packages used by a service;
 - Map the cloud resources used by a service;

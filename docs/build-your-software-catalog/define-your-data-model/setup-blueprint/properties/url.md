@@ -10,7 +10,7 @@ import TabItem from "@theme/TabItem"
 
 URL is a data type used to save links to websites.
 
-## Use cases 💡
+## Common url usage 💡
 
 The URL property type can be used to store a link to any web resource, for example:
 

@@ -10,7 +10,7 @@ import TabItem from "@theme/TabItem"
 
 User is a data type used to reference users that exist in Port.
 
-## Use cases 💡
+## Common user usage 💡
 
 The user property type can be used to reference any user that exists in Port, for example:
 

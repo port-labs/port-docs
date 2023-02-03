@@ -10,7 +10,7 @@ import TabItem from "@theme/TabItem"
 
 Timer is a data type used to define an expiration date/lifespan on a specific property.
 
-## Use cases 💡
+## Common timer usage 💡
 
 The timer property type can be used to store the future expiration date of catalog entities and properties, for example:
 

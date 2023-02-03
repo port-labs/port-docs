@@ -5,7 +5,7 @@ import TabItem from "@theme/TabItem"
 
 Port's API provides tools to query, to easily query, search and filter software catalog data.
 
-## Use cases 💡
+## Common queries usage 💡
 
 High quality search is essential to effectively track assets in your software catalog, using Port's search you can:
 

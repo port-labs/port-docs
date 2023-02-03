@@ -11,7 +11,7 @@ Calculation properties allow you to use existing properties defined on blueprint
 - Create math equations or modifications. For example, calculate required disk storage by specifying page size, and number of pages needed.
 - Merge complex properties, including deep-merge and overriding.
 
-## Use cases 💡
+## Common calculation usage 💡
 
 Calculation properties make it easier to define properties that are based on values from other properties, with the added ability to transform the data, for example:
 

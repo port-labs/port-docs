@@ -15,7 +15,7 @@ A Blueprint is the generic building block in Port. It represents assets that can
 
 Blueprints are completely customizable, and they support any number of properties the user chooses, all of which can be modified as you go.
 
-## Use cases for blueprints 💡
+## Common Blueprints 💡
 
 Blueprints can be used to represent any asset in your software catalog, for example:
 

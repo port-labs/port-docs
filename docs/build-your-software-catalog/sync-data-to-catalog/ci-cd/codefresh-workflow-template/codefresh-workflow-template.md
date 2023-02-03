@@ -9,7 +9,7 @@ import TabItem from "@theme/TabItem"
 
 Our [Codefresh workflow template](https://github.com/port-labs/port-codefresh-workflow-template) allows you to create/update and query entities in Port directly from your Codefresh workflow templates.
 
-## Use cases 💡
+## Codefresh integration usage 💡
 
 Port's Codefresh workflow template provides a native way to integrate Port with your Codefresh CI workflows, for example:
 

@@ -10,7 +10,7 @@ import TabItem from "@theme/TabItem"
 
 Object is a data type used to save object definitions in JSON.
 
-## Use cases 💡
+## Common object usage 💡
 
 The object property type can be used to store any key/value based data, for example:
 

@@ -10,7 +10,7 @@ import TabItem from "@theme/TabItem"
 
 Number is a primitive data type used to save numeric data
 
-## Use cases 💡
+## Common number usage 💡
 
 The number property type can be used to store any numeric data, for example:
 

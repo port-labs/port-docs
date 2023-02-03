@@ -10,7 +10,7 @@ import TabItem from "@theme/TabItem"
 
 Yaml is a data type used to save object definitions in YAML.
 
-## Use cases 💡
+## Common yaml usage 💡
 
 The yaml property type can be used to store any key/value based data, for example:
 

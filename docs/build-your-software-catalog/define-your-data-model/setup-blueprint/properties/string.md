@@ -10,7 +10,7 @@ import TabItem from "@theme/TabItem"
 
 String is a primitive data type used to save text data.
 
-## Use cases 💡
+## Common string usage 💡
 
 The string property type can be used to store any text based data, for example:
 
