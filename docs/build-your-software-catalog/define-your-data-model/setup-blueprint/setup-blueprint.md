@@ -7,7 +7,7 @@ import TabItem from "@theme/TabItem"
 
 # Setup Blueprint 🧱
 
-To build the data model into Port's software catalog you will use the Blueprint component.
+Define blueprint schema to begin building your software catalog.
 
 ## What is a blueprint?
 
@@ -21,7 +21,7 @@ Blueprints can be used to represent any asset in your software catalog, for exam
 
 - Microservices;
 - Packages;
-- Packages version;
+- Package versions;
 - CI jobs;
 - K8s Clusters;
 - Cloud accounts;

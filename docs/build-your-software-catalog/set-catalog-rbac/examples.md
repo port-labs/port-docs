@@ -85,7 +85,7 @@ To allow only **Admins** to change the property `slackChannelUrl`, remove the Mo
 
 <TabItem value="let-user-relation">
 
-To grant permissions for a specific user to edit the `deployedAt` relation, add him to the users array:
+To grant permissions for a specific user to edit the `deployedAt` relation, add them to the users array:
 
 ```json showLineNumbers
 {
@@ -235,7 +235,7 @@ By default, **Member** users can execute every action defined on a blueprint. In
 In some occasions, it's possible to apply permissions in a way that deadlocks users from interacting with the platform.
 While these cases are valid, they might be a little counterintuitive.
 
-Here are a few examples of how can you grant a user permissions, but still not enable him to perform the operation due to other restrictions:
+Here are a few examples of how can you grant a user permissions, but still not enable them to perform the operation due to other restrictions:
 
 1. If the user has permissions to edit any property, except for a required property of the blueprint - then the user will not be able to register or update entities as a whole because they can't provide a value for the required property;
 2. If the `ownedByTeam` setting is enabled for registration, and the user does not have permissions to edit the `team` property - then the user will not be able to register a new entity since they can't select a value for his team field and mark it as owned by their team.

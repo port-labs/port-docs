@@ -1,12 +1,12 @@
 # Set Catalog RBAC 🔐
 
-Port provides granular control to make sure every user sees only the parts of the catalog that are relevant for him.
+Port provides granular control to make sure every user sees only the parts of the catalog that are relevant for them.
 
 ## Use cases 💡
 
-The catalog RBAC allows admins to finely control which users have access to which information from the catalog, for example:
+Catalog RBAC allows admins to finely control which users have access to which information from the catalog, for example:
 
-- Show a developer only the services that he owns;
+- Show a developer only the services that they owns;
 - Allow a user to edit just a specific property on an entity;
 - Create a fully read-only view for a developer;
 - etc.
@@ -17,7 +17,7 @@ Refer to the [examples](./examples.md) page for practical examples of Port's RBA
 
 ## UI behavior
 
-Configuring user permissions is reflected in Port's UI. The UI also includes indication messages when trying to perform changes. For example:
+User permissions will be reflected in the interface presented to users. The UI also includes indication messages when trying to perform changes. For example:
 
 The `register` and `unregister` buttons will be disabled in the UI, in accordance with the blueprint permissions (unauthorized users/groups will not be able to register or unregister entities).
 

@@ -226,7 +226,7 @@ Port needs the following information for this process:
    - Mark `Visible to users?` as `Yes`.
 
    :::note
-   By default the `Assignment required?` flag is set to `No`, meaning any user with the Homepage URL to the Port app can access it, even if the app isn’t directly assigned to him.
+   By default the `Assignment required?` flag is set to `No`, meaning any user with the Homepage URL to the Port app can access it, even if the app isn’t directly assigned to them.
    Changing the flag to `Yes` means only users and groups the app is directly assigned to can use and access it.
 
    :::

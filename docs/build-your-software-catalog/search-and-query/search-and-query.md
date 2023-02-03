@@ -3,7 +3,7 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-Port's API provides tools to query, search and filter data in your software catalog with ease.
+Port's API provides tools to query, to easily query, search and filter software catalog data.
 
 ## Use cases 💡
 

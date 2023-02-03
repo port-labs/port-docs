@@ -7,11 +7,11 @@ import TabItem from "@theme/TabItem"
 
 # Relate Blueprints 🔀
 
-Relations allow you to model the connections between different assets in your software catalog.
+Relations define connections between blueprints results into dependency reflection of assets in your software catalog.
 
 ## What is a relation?
 
-Relations enable us to make connections between blueprints, consequently connecting the entities based on these blueprints. Doing so provides logical context to the software catalog.
+Relations enable us to make connections between blueprints, consequently connecting the entities based on these blueprints. That provides logical context to the software catalog.
 
 ## Use cases for relations 💡
 
@@ -66,7 +66,7 @@ A single type relation is used to map a single target entity to the source.
 - Map a Kubernetes pod to the service it is providing;
 - etc.
 
-In this [live demo](https://demo.getport.io/packageVersionEntity?identifier=AnalyticsTracker_1_2_9) example, we can see a specific package version and it's related core packages. 🎬
+In this [live demo](https://demo.getport.io/packageVersionEntity?identifier=AnalyticsTracker_1_2_9) example, we can see a specific package version and its related core packages. 🎬
 
 #### Single Relation Structure
 
@@ -241,6 +241,6 @@ resource "port-labs_blueprint" "myBlueprint" {
 </TabItem>
 </Tabs>
 
-JSON example with highlighting on the area of the relations definition
+JSON example with highlighting on the area of the relation definition.
 
 Once added to the blueprint definition, you can [apply the blueprint](../setup-blueprint/setup-blueprint.md#apply-blueprints-to-port) to Port

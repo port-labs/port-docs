@@ -21,11 +21,11 @@ See how to --> [Define your data model](./define-your-data-model/define-your-dat
 
 ## Step 2 - Sync data to catalog 🔄
 
-The next step in using Port's Software Catalog is to sync data into the catalog. This involves collecting information from various sources and integrating it into the catalog.
+The next step in setting Port's Software Catalog is to sync data into the catalog. This involves using Port's integrations and APIs to import data into the catalog, so that blueprints will be populated with the relevant data.
 
-Port's Software Catalog provides integrations to collect data that may be siloed across your devOps architecture, making it easy to centralize all relevant information in one place.
+Port's Software Catalog provides integrations to surface data that exists in various tools and repositories, creating a central metadata store across your devOps architecture, making it easy to centralize all relevant information in one place.
 
-By syncing data into the software catalog, you can ensure that you have a comprehensive and up-to-date view of your SDLC.
+By syncing data into the software catalog, you can ensure that you have a comprehensive and up-to-date view of your software, infrastructure, cloud resources, CI/CD and more.
 
 See how to --> [Sync data to the software catalog](./sync-data-to-catalog/sync-data-to-catalog.md)
 

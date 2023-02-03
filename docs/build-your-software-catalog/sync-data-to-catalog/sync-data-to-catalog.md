@@ -4,9 +4,9 @@ Port offers several API Providers, allowing you to easily ingest and manage data
 
 ![Catalog Architecture](../../../static/img/sync-data-to-catalog/catalog-arch.jpg)
 
-## Syncing principal with Port
+## Synching basics
 
-Port follows the ETL principal to sync data into the catalog.
+Port follows the ETL principle to sync data into the catalog.
 
 ### Extract
 
