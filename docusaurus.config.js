@@ -54,7 +54,6 @@ const config = {
           {
             id: "port-api",
             spec: "https://api.getport.io/yaml",
-            // route: "/api-reference/api",
           },
         ],
         // Theme Options for modifying how redoc renders them
@@ -99,49 +98,53 @@ const config = {
         links: [
           {
             title: "Documentation",
-            // items: [
-            //   {
-            //     label: "Quickstart",
-            //     to: "/",
-            //   },
-            //   {
-            //     label: "Software Catalog",
-            //     to: "/software-catalog",
-            //   },
-            //   {
-            //     label: "Self-Service Actions",
-            //     to: "/self-service-actions",
-            //   },
-            //   {
-            //     label: "API Methods",
-            //     to: "/api-providers",
-            //   },
-            //   {
-            //     label: "Exporters",
-            //     to: "/exporters",
-            //   },
-            // ],
+            items: [
+              {
+                label: "Quickstart",
+                to: "/",
+              },
+              {
+                label: "Build Software Catalog",
+                to: "/build-your-software-catalog",
+              },
+              {
+                label: "Self-Service Actions",
+                to: "/self-service-actions",
+              },
+              {
+                label: "Promote Scorecards",
+                to: "/promote-scorecards",
+              },
+              {
+                label: "API Reference",
+                to: "/api-reference",
+              },
+            ],
           },
           {
             title: "Complete Use Cases",
-            // items: [
-            //   {
-            //     label: "Software Catalog",
-            //     to: "/complete-use-cases/sdlc",
-            //   },
-            //   {
-            //     label: "Service Locking",
-            //     to: "/complete-use-cases/service-locking",
-            //   },
-            //   {
-            //     label: "Software Templates",
-            //     to: "/complete-use-cases/software-templates",
-            //   },
-            //   {
-            //     label: "IaC Templates",
-            //     to: "/complete-use-cases/iac-templates",
-            //   },
-            // ],
+            items: [
+              {
+                label: "Software Development Lifecycle (SDLC)",
+                to: "/complete-use-cases/sdlc",
+              },
+              {
+                label: "Mapping Kubernetes",
+                to: "/complete-use-cases/full-kubernetes-exporter",
+              },
+              {
+                label: "Service Locking",
+                to: "/complete-use-cases/service-locking",
+              },
+              {
+                label: "Software Templates",
+                to: "/complete-use-cases/software-templates",
+              },
+              {
+                label: "IaC Templates",
+                to: "/complete-use-cases/iac-templates",
+              },
+            ],
           },
           {
             title: "Community",
@@ -153,6 +156,10 @@ const config = {
               {
                 label: "Linkedin",
                 href: "https://www.linkedin.com/company/getport/",
+              },
+              {
+                label: "DevEx Community",
+                href: "https://join.slack.com/t/devex-community/shared_invite/zt-1bmf5621e-GGfuJdMPK2D8UN58qL4E_g",
               },
             ],
           },
