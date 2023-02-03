@@ -162,7 +162,6 @@ In order to create the service Blueprint, use the following JSON body:
       "product": {
         "title": "Product",
         "type": "string",
-        "icon": "Docs",
         "default": "Analytics",
         "enum": ["SaaS", "Control Panel", "Analytics"],
         "description": "Choose product unit related to the service"
