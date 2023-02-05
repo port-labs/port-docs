@@ -626,10 +626,10 @@ It is possible to configure widget properties that expose completely new functio
 
 The available special types and their usage examples are listed below:
 
-|                                   | Description                                                                                                                                   | Example values                                                                  |
-| --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| [`markdown`](../widgets/markdown) | String in markdown language format                                                                                                            | `An Example of **bold text**.`                                                  |
-| `spec`                            | Field with a pre-defined set of allowed values. A property with a `spec` key will be displayed as a separate tab in the Specific Entity Page. | [`open-api`](../widgets/open-api), [`embedded-url`](../widgets/embedded-url.md) |
+|                                   | Description                                                                                                                                   | Example values                                                                               |
+| --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| [`markdown`](../widgets/markdown) | String in markdown language format                                                                                                            | `An Example of **bold text**.`                                                               |
+| `spec`                            | Field with a pre-defined set of allowed values. A property with a `spec` key will be displayed as a separate tab in the Specific Entity Page. | [`open-api`](../widgets/open-api), [`embedded-url`](../widgets/embedded-url/embedded-url.md) |
 
 ### Markdown
 
@@ -718,7 +718,7 @@ Keep in mind that these 2 methods of getting an OpenAPI/AsyncAPI spec and render
 
 ### Embedded URL
 
-For more info on the `embedded-url` property, refer to the [Embedded URL Widget](../widgets/embedded-url.md) doc.
+For more info on the `embedded-url` property, refer to the [Embedded URL Widget](../widgets/embedded-url/embedded-url.md) doc.
 
 ```json showLineNumbers
 {
