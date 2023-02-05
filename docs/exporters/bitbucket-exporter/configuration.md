@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 ---
 
 # Configuration
@@ -23,7 +23,7 @@ resources:
         mappings:
           identifier: ".destination.repository.name + (.id|tostring)"
           title: ".title"
-          blueprint: '"pull-request"'
+          blueprint: '"pullRequest"'
           properties:
             creator: ".author.display_name"
             assignees: "[.participants[].user.display_name]"

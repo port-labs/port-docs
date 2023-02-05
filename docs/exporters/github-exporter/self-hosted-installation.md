@@ -101,15 +101,15 @@ docker run \
   ghcr.io/port-labs/port-self-hosted-github-app
 ```
 
-| Env variable         | Description                                                                                                                         |
-| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| `APP_ID`             | Application ID, it should show up in the edit GitHub App page in the upper section                                                  |
-| `WEBHOOK_SECRET`     | The same string that was been used to register the application in the previous step                                                 |
-| `GHE_HOST`           | Your organization's self-hosted GitHub hostname                                                                                     |
-| `PORT`               | The port that the GitHub App will listen to                                                                                         |
-| `PORT_URL`           | Port's API Base URL                                                                                                                 |
-| `PORT_CLIENT_ID`     | Port client id for interacting with the API                                                                                         |
-| `PORT_CLIENT_SECRET` | Port client secret for interacting with the API                                                                                     |
+| Env variable         | Description                                                                                           |
+| -------------------- | ----------------------------------------------------------------------------------------------------- |
+| `APP_ID`             | Application ID, it should show up in the edit GitHub App page in the upper section                    |
+| `WEBHOOK_SECRET`     | The same string that was been used to register the application in the previous step                   |
+| `GHE_HOST`           | Your organization's self-hosted GitHub hostname                                                       |
+| `PORT`               | The port that the GitHub App will listen to                                                           |
+| `PORT_URL`           | Port's API Base URL                                                                                   |
+| `PORT_CLIENT_ID`     | Port client id for interacting with the API                                                           |
+| `PORT_CLIENT_SECRET` | Port client secret for interacting with the API                                                       |
 | `PRIVATE_KEY`        | A base64 encoded private key. Recieve it by running the command `base64 -i private-key-file-path.pem` |
 
 ## Health check route
@@ -145,5 +145,5 @@ After you have the App registered in your organization and the docker is up and 
 Now that you have the GitHub app installed, you can refer to our examples for some practical use cases:
 
 - [Exporting pull requests as entities to Port](./exporting-pull-requests)
-- [Exporting repositories files and metadata as entities to Port](./exporting-all-repositories.md)
+- [Exporting repositories files and metadata as entities to Port](./exporting-repositories.md)
 - [Exporting entities via port.yml definition file](../../api-providers/gitops/github-app-gitops/quickstart.md)

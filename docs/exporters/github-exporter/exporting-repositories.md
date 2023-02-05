@@ -1,6 +1,6 @@
 ---
-sidebar_position: 9
-title: Exporting all repositories
+sidebar_position: 4
+title: Exporting repositories
 ---
 
 :::note Prerequisites
@@ -9,7 +9,7 @@ title: Exporting all repositories
 
 :::
 
-# Exporting all repositories
+# Exporting repositories
 
 IN this tutorial you will learn how to create a `microservice` Blueprint that contains the properties `repository URL` and `Description`, which are automatically synced from GitHub to Port Entity.
 
