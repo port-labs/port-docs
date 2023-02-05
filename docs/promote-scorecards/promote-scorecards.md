@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Promote Scorecards 📊
+# 📊 Promote Scorecards
 
 ## What is a Scorecard?
 

@@ -5,7 +5,7 @@ sidebar_position: 2
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Relate Blueprints 🔀
+# 🔀 Relate Blueprints
 
 Relations define connections between blueprints results into dependency reflection of assets in your software catalog.
 
@@ -13,7 +13,7 @@ Relations define connections between blueprints results into dependency reflecti
 
 Relations enable us to make connections between blueprints, consequently connecting the entities based on these blueprints. That provides logical context to the software catalog.
 
-## Common relations 💡
+## 💡 Common relations
 
 Relations can be used to represent the logical connections between assets in your software catalog, for example:
 

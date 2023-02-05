@@ -1,4 +1,4 @@
-# Sync data to Software Catalog
+# 🔌 Sync data to Software Catalog
 
 Port offers several API Providers, allowing you to easily ingest and manage data with the tools you are already use in your infrastructure.
 

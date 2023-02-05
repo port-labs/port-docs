@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Define Your Data Model 📋
+# 📋 Define Your Data Model
 
 Defining your data model for the software catalog is similar to defining a database structure.
 You can also use common data models pre-defined by Port.
@@ -20,13 +20,21 @@ There are two main building blocks in setting up the data model:
 
 ## Common data models
 
-- C4 (Backstage Style)
-- Multi-cloud architecture
-- Microservice catalog
+- Software Development Lifecycle (SDLC)
+  - Common blueprints: Service, Deployment, Environment, Package, Pipeline, Pull Request, etc.
+- Cloud
+  - Common blueprints: Lambda, EKS, Kafka, S3, Postgres, etc.
 - Kubernetes & Argo Catalog
+  - Common blueprints: Cluster, CronJob, Namespace, Pods, Replica Sets, Istio, ArgoApp, ArgoProject, etc.
+- C4 (Backstage Style)
+  - Common blueprints: System, Domain, Resource, Component, Group.
+- Multi-cloud architecture
+  - Common blueprints: Cloud Vendor, Region, Account, etc.
+- Single tenant
+  - Common blueprints: Application, Customer, Running Application, etc.
 
-In this [live demo](https://demo.getport.io/dev-portal) example, we can see an example of a classic data model, using Blueprints & Relations. 🎬
+In this [live demo](https://demo.getport.io/dev-portal) example, we can see an example of a comprehensive data model, using Blueprints & Relations. 🎬
 
-## Step 1 - [Setup Blueprints](./setup-blueprint/setup-blueprint.md) 🧱
+## 🧱 Step 1 - [Setup Blueprints](./setup-blueprint/setup-blueprint.md)
 
-## Step 2 - [Relate Relations](./relate-blueprints/relate-blueprints.md) 🔀
+## 🔀 Step 2 - [Relate Relations](./relate-blueprints/relate-blueprints.md)

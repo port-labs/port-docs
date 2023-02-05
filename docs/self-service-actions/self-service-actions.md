@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Self-Service Actions ⚡️
+# ⚡️ Self-Service Actions
 
 In Port, you can make your Software Catalog active by defining Self-Service Actions for your developers to perform, without assistance or dependency on DevOps teams.
 

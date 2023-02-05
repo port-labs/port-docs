@@ -3,7 +3,7 @@ sidebar_position: 13
 description: Calculation property allows you to construct new data from existing properties of an entity
 ---
 
-# Calculation Property
+# 🧮 Calculation Property
 
 Calculation properties allow you to use existing properties defined on blueprints, either directly or by using relations and mirror properties, in order to create new properties by using the [`jq`](https://github.com/stedolan/jq) processor for `JSON`.
 
@@ -11,7 +11,7 @@ Calculation properties allow you to use existing properties defined on blueprint
 - Create math equations or modifications. For example, calculate required disk storage by specifying page size, and number of pages needed.
 - Merge complex properties, including deep-merge and overriding.
 
-## Common calculation usage 💡
+## 💡 Common calculation usage
 
 Calculation properties make it easier to define properties that are based on values from other properties, with the added ability to transform the data, for example:
 

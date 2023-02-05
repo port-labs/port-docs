@@ -10,7 +10,7 @@ import TabItem from "@theme/TabItem"
 
 Array is a data type used to save lists of data.
 
-## Common array usage 💡
+## 💡 Common array usage
 
 The array property type can be used to store any list of data, for example:
 

@@ -3,7 +3,7 @@ sidebar_position: 14
 description: Mirror Property allows you to map data from related entities to your entity
 ---
 
-# Mirror Property 🪞
+# 🪞 Mirror Property
 
 Mirror property allows you to map data from related entities to your entity.
 Mirror property can be used for blueprints that has [relations defined](../../../relate-blueprints/relate-blueprints.md).
@@ -18,7 +18,7 @@ Mirror properties allow you to map property values from related entities, to `ke
 
 Mirror properties support both [user-defined](../properties.md#available-properties) properties, and [meta-properties](../meta-properties.md) by using similar syntax.
 
-## Common mirror usage 💡
+## 💡 Common mirror usage
 
 Mirror properties make it possible to enrich the data visible on an entity by mapping additional data and properties from other related entities in the catalog, for example:
 
