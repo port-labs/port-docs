@@ -4,39 +4,16 @@ Port offers several API Providers, allowing you to easily ingest and manage data
 
 ![Catalog Architecture](../../../static/img/sync-data-to-catalog/catalog-arch.jpg)
 
-## Synching basics
-
-Port follows the ETL principle to sync data into the catalog.
-
-### Extract
-
-With Port you can extract data spread across your infrastructure & tools.
-
-For example:
-
-- Kubernetes - xyz
-- Github - xyz
-- Jira -
-- etc
-
-### Transform
-
-Once you indicated the datapoints to collect, you can modify (using JQ) the raw data into the format of your choice. This will ensure high-quality data representation.
-
-For example:
-xyz
-
-## Load
-
-The last part is decide where to locate the transformed data point.
-
-For example:
-I want replicaset to load into the x prop for blueprint y
-
 ## Sync integration methods
 
-- REST
-- CI/CD
-- Kubernetes & ArgoCD
-- IaC
-- 3rd party Dev Tools
+Port offers a variety of data sync integrations and methods, these make it easy to ingest data to the catalog and keep it up to date.
+
+Use the links below to learn about the different data sync methods Port offers:
+
+- [REST](../../api-reference/api-reference.mdx);
+- [CI/CD](./ci-cd/ci-cd.md);
+- [Kubernetes & ArgoCD & K8s CRDs](./kubernetes/kubernetes.md);
+- [IaC](./iac/iac.md);
+- [Git providers](./git-provider/git-provider.md) and [GitOps](./gitops/gitops.md);
+- Cloud provider - coming soon;
+- 3rd party dev tools - coming soon.

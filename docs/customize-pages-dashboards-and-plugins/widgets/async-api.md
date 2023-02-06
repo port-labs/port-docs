@@ -6,7 +6,7 @@ sidebar_position: 4
 
 With Port, you can import and display [AsyncAPI](https://www.asyncapi.com/) specification files as [Swagger UI](https://swagger.io/) tabs.
 
-By using a special Async API Blueprint property), Port will display the Swagger UI matching the spec file provided in the [Specific Entity Page](../../build-your-software-catalog/sync-data-to-catalog/understand-entities-structure/understand-entities-structure.md#entity-page).
+By using a special Async API Blueprint property), Port will display the Swagger UI matching the spec file provided in the [Specific entity page](../page/entity-page.md).
 
 ## AsyncAPI property definition in Blueprint schema using URL
 
@@ -42,7 +42,7 @@ When using the object type, you will have to provide the full JSON AsyncAPI spec
 
 ## Example
 
-Here is how the Swagger tab in the Specific Entity Page appears when an AsyncAPI spec is provided:
+Here is how the Swagger tab in the specific entity page appears when an AsyncAPI spec is provided:
 
 ![AsyncAPI Example](../../../static/img/software-catalog/widgets/asyncAPI.png)
 

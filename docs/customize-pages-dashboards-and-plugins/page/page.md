@@ -51,13 +51,13 @@ This page displays a table widget that details all the Blueprints specific Entit
 Each page type has a set of operations that can be performed from the UI.  
 The table below summarizes the available operations for every type:
 
-| Page type                                                                                                                                        | Save a view | Save view as<br /> a new page | Edit page | Delete page |
-| ------------------------------------------------------------------------------------------------------------------------------------------------ | :---------: | :---------------------------: | :-------: | :---------: |
-| Blueprint page (Default Page)                                                                                                                    |     ✅      |              ✅               |    ❌     |     ❌      |
-| [Entity page](../../build-your-software-catalog/sync-data-to-catalog/understand-entities-structure/understand-entities-structure.md#entity-page) |     ✅      |              ❌               |    ❌     |     ❌      |
-| [Users page](../../sso-rbac/rbac/rbac.md#users-tab)                                                                                              |     ✅      |              ❌               |    ❌     |     ❌      |
-| Audit log page                                                                                                                                   |     ✅      |              ❌               |    ❌     |     ❌      |
-| Custom page (generated from save as new page)                                                                                                    |     ✅      |              ✅               |    ✅     |     ✅      |
+| Page type                                           | Save a view | Save view as<br /> a new page | Edit page | Delete page |
+| --------------------------------------------------- | :---------: | :---------------------------: | :-------: | :---------: |
+| Blueprint page (Default Page)                       |     ✅      |              ✅               |    ❌     |     ❌      |
+| [Entity page](./entity-page.md)                     |     ✅      |              ❌               |    ❌     |     ❌      |
+| [Users page](../../sso-rbac/rbac/rbac.md#users-tab) |     ✅      |              ❌               |    ❌     |     ❌      |
+| Audit log page                                      |     ✅      |              ❌               |    ❌     |     ❌      |
+| Custom page (generated from save as new page)       |     ✅      |              ✅               |    ✅     |     ✅      |
 
 :::info Default page
 The default page is automatically generated when a new Blueprint is created. That page is directly tied to its Blueprint and it cannot be edited or deleted.

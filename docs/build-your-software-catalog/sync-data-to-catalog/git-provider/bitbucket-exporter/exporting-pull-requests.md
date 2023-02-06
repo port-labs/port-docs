@@ -124,6 +124,6 @@ Now you can view and query all of your Pull Requests as Port Entities!
 
 ![Developer Portal Bitbucket Pull Requests](../../../../../static/img/integrations/bitbucket-app/BitbucketPullRequests.png)
 
-You can also see the description in markdown format inside the [Specific Entity Page](../../understand-entities-structure/understand-entities-structure.md#entity-page).
+You can also see the description in markdown format inside the [specific entity page](../../../../customize-pages-dashboards-and-plugins/page/entity-page.md).
 
 ![Developer Portal Bitbucket Pull Request Description](../../../../../static/img/integrations/github-app/PullRequestDescription.png)

@@ -84,11 +84,11 @@ That's it! after the push is complete, the exporter will start ingesting the Ent
 
 ![Developer Portal Microservice](../../../../../static/img/integrations/bitbucket-app/BitbucketRepositories.png)
 
-Check out the `README.md` in markdown format inside the [Specific Entity Page](../../understand-entities-structure/understand-entities-structure.md#entity-page).
+Check out the `README.md` in markdown format inside the [specific entity page](../../../../customize-pages-dashboards-and-plugins/page/entity-page.md).
 
 ![Developer Portal Bitbucket README](../../../../../static/img/integrations/github-app/GitHubReadme.png)
 
-You can also have a Swagger component within the [Specific Entity Page](../../understand-entities-structure/understand-entities-structure.md#entity-page). To achieve that all you have to do is to add a `jq` mapping of an `open-api.json` file to the `port-app-config.yml` created above.
+You can also have a Swagger component within the [specific entity page](../../../../customize-pages-dashboards-and-plugins/page/entity-page.md). To achieve that all you have to do is to add a `jq` mapping of an `open-api.json` file to the `port-app-config.yml` created above.
 
 <details>
 

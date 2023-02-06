@@ -26,7 +26,7 @@ Continue reading to learn more about our visualization types:
 
 ### Pie chart
 
-You can create a pie chart illustrating data from Entities in your software catalog divided by categories and Entity properties inside a Specific Entity Page [**Specific Entity Page**](../../build-your-software-catalog/sync-data-to-catalog/understand-entities-structure/understand-entities-structure.md#entity-page).
+You can create a pie chart illustrating data from Entities in your software catalog divided by categories and Entity properties inside a specific entity page [**specific entity page**](../page/entity-page.md).
 
 #### Visualization properties
 

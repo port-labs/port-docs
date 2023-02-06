@@ -85,6 +85,6 @@ That's it! after the push is complete, the exporter will start ingesting the Ent
 
 ![Developer Portal Microservice](../../../../../static/img/integrations/github-app/MicroserviceGitHub.png)
 
-Check out the `Description` of the repository in markdown format inside the [Specific Entity Page](../../understand-entities-structure/understand-entities-structure.md#entity-page).
+Check out the `Description` of the repository in markdown format inside the [specific entity page](../../../../customize-pages-dashboards-and-plugins/page/entity-page.md).
 
 ![Developer Portal Repository Description](../../../../../static/img/integrations/github-app/MicroserviceDescription.png)

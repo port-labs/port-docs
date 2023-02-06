@@ -40,7 +40,7 @@ Each blueprint is represented by a [Json schema](https://json-schema.org/), as s
 
 ```json showLineNumbers
 {
-  "identifier": "myBlueprint",
+  "identifier": "myIdentifier",
   "title": "My title",
   "description": "My description",
   "icon": "My icon",
@@ -131,7 +131,7 @@ All available properties are listed in the [properties](./properties/properties.
 resource "port-labs_blueprint" "myBlueprint" {
   title      = "My blueprint"
   icon       = "My icon"
-  identifier = "myBlueprint"
+  identifier = "myIdentifier"
   description = "My description"
 }
 ```

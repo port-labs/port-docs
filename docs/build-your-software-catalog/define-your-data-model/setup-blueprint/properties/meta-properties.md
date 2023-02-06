@@ -4,7 +4,7 @@ sidebar_position: 13
 
 # Meta-Properties
 
-A meta-property is a property that exists on every entity in Port, the user can control its value, but he can not choose not to add it to the entity or blueprint definition.
+A meta-property is a property that exists on every entity in Port by default.
 
 ## 💡 Common meta-property usage:
 
@@ -21,9 +21,9 @@ Meta-properties are always referenced using a dollar sign (`$`) before them, thi
 
 Here is a short table demonstrating the usage of common mirror properties:
 
-| Meta-property | Description                                                                                                         | Mirror property syntax |
-| ------------- | ------------------------------------------------------------------------------------------------------------------- | ---------------------- |
-| identifier    | **Unique** Entity identifier, used for API calls, programmatic access and distinguishing between different entities | `$identifier`          |
-| title         | Entity title, acts as a human-readable name for the entity                                                          | `$title`               |
-| createdAt     | Entity creation time                                                                                                | `$createdAt`           |
-| updatedAt     | Entity update time                                                                                                  | `$updatedAt`           |
+| Meta-property | Description                                                                                                         | Mirror property syntax | Notes     |
+| ------------- | ------------------------------------------------------------------------------------------------------------------- | ---------------------- | --------- |
+| identifier    | **Unique** Entity identifier, used for API calls, programmatic access and distinguishing between different entities | `$identifier`          |           |
+| title         | Entity title, acts as a human-readable name for the entity                                                          | `$title`               |           |
+| createdAt     | Entity creation time                                                                                                | `$createdAt`           | Immutable |
+| updatedAt     | Entity update time                                                                                                  | `$updatedAt`           | Immutable |

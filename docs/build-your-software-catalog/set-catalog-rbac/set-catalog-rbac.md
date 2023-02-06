@@ -15,7 +15,7 @@ Catalog RBAC allows admins to finely control which users have access to which in
 - Create a fully read-only view for a developer;
 - etc.
 
-## UI behavior
+## RBAC UI indications
 
 User permissions will be reflected in the interface presented to users. The UI also includes indication messages when trying to perform changes. For example:
 

@@ -44,7 +44,7 @@ To install Port's GitHub action, follow these steps:
 
 Port's GitHub action supports the following methods:
 
-- Create/Update catalog entities - invoked with the `UPSERT` operation, receives the identifier and other properties of a new entity or an entity that needs to be updated;
+- Create/Update catalog entities - invoked with the [`UPSERT`](../../understand-entities-structure/tutorial.md#post-request) operation, receives the identifier and other properties of a new entity or an entity that needs to be updated;
 - Get catalog entities - invoked with the `GET` operation, receives the identifier of an existing entity and retrieves it for use in your CI.
 
 <Tabs groupId="usage" defaultValue="upsert" values={[

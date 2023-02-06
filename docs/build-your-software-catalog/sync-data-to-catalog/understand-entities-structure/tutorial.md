@@ -244,7 +244,7 @@ There are two methods to change an entity's identifier:
 
 #### From the UI
 
-1. In either the matching Blueprint page or [entity page](./understand-entities-structure.md#entity-page), click the 3 dots (`...`) button and then click the `Edit` button;
+1. In either the matching Blueprint page or [entity page](../../../customize-pages-dashboards-and-plugins/page/entity-page.md), click the 3 dots (`...`) button and then click the `Edit` button;
 2. Update the value of the `identifier` key to the new identifier;
 3. Click `Update`.
 
@@ -417,7 +417,7 @@ To perform the deletion of an entity alongside its dependents, make an **HTTP DE
 Now that we understand **entities**, we can start creating related entities to model our related data in the infrastructure!
 
 :::tip
-Remember that each entity has a page of its own, as seen in the [entity page section](./understand-entities-structure.md#entity-page).
+Remember that each entity has a page of its own, as seen in the [entity page section](../../../customize-pages-dashboards-and-plugins/page/entity-page.md).
 :::
 
 First, let's create another `package` entity.

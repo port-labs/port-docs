@@ -1,6 +1,6 @@
 # Embedded URL
 
-You can use the embedded-url `spec` property to embed any publicly available webpage into an additional tab in the [**Specific Entity Page**](../../../build-your-software-catalog/sync-data-to-catalog/understand-entities-structure/understand-entities-structure.md#entity-page).
+You can use the embedded-url `spec` property to embed any publicly available webpage into an additional tab in the [specific entity page](../../page/entity-page.md).
 
 By using the combination of `"type": "string`, `"format": "url` and `"spec": "embedded-url"` in a [Blueprint property](../../../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/properties.md#structure), Port will display the url as a new tab matching the provided URL in the blueprint's entity.
 
@@ -10,7 +10,7 @@ Make sure the URL you want to embed in Port is publicly available (i.e. not insi
 
 ## Prerequisites
 
-In order to add an embedded view tab into your Specific Entity Page, all you need is a publicly available URL with the data you want to embed.
+In order to add an embedded view tab into your specific entity page, all you need is a publicly available URL with the data you want to embed.
 
 ## Embedded URL property definition in Blueprint schema
 
@@ -51,7 +51,7 @@ Create or edit an Entity of the Blueprint you added the `Datadog` property to, a
 
 ![Datadog Entity edit example](../../../../static/img/software-catalog/widgets/editEntityDatadog.png)
 
-Now go to the Specific Entity Page of your Entity and the Datadog dashboard will be visible in a dedicated tab:
+Now go to the specific entity page of your Entity and the Datadog dashboard will be visible in a dedicated tab:
 
 ![Datadog dashboard example](../../../../static/img/software-catalog/widgets/datadog.png)
 
@@ -84,6 +84,6 @@ Create or edit an Entity of the Blueprint you added the `cpuUsage` property to, 
 
 ![New Relic Entity edit example](../../../../static/img/software-catalog/widgets/editEntityNewRelic.png)
 
-Now go to the Specific Entity Page of your Entity and the CPU Usage chart will be visible in a dedicated tab:
+Now go to the specific entity page of your Entity and the CPU Usage chart will be visible in a dedicated tab:
 
 ![New Relic dashboard example](../../../../static/img/software-catalog/widgets/new-relic.png)

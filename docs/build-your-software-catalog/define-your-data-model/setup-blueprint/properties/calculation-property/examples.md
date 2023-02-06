@@ -57,6 +57,20 @@ The following calculation will result in `hello world`:
 If you want to provide your own string template to concatenate properties , wrap your template string with single quotes (`'`), such as `'https://' + .properties.str1'`
 :::
 
+## Calculate array length
+
+Assume you have an `array` property called `myArr` with the value `["this", "is", "port"]`.
+
+The following calculation will result in `3`:
+
+```json showLineNumbers
+{
+  "title": "Calculate array length",
+  "type": "number",
+  "calculation": ".properties.myArr | length"
+}
+```
+
 ## Slice array
 
 Assume you have an `array` property called `array1` with the value `[1,2,3,4]`. You can use the following slicing calculation to get the result `[2,3,4]`:

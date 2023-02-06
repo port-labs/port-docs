@@ -6,7 +6,7 @@ sidebar_position: 3
 
 With Port, you can import and display [OpenAPI](https://www.openapis.org/) specification files as [Swagger UI](https://swagger.io/) tabs.
 
-By using a special Open API Blueprint property, Port will display the Swagger UI matching the spec file provided in the [Specific Entity Page](../../build-your-software-catalog/sync-data-to-catalog/understand-entities-structure/understand-entities-structure.md#entity-page). In addition, it will also provide advanced functionality such as performing HTTP calls to the spec target directly from Port.
+By using a special Open API Blueprint property, Port will display the Swagger UI matching the spec file provided in the [specific entity page](../page/entity-page.md). In addition, it will also provide advanced functionality such as performing HTTP calls to the spec target directly from Port.
 
 ## OpenAPI property definition in Blueprint schema using URL
 
@@ -42,6 +42,6 @@ When using the object type, you will have to provide the full JSON OpenAPI spec 
 
 ## Example
 
-Here is how the Swagger tab in the Specific Entity Page appears when an OpenAPI spec is provided:
+Here is how the Swagger tab in the specific entity page appears when an OpenAPI spec is provided:
 
 ![OpenAPI Example](../../../static/img/software-catalog/widgets/openAPI.png)

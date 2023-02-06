@@ -133,6 +133,6 @@ Now you can view and query all of your Issues as Port Entities!
 
 ![Developer Portal GitHub Issues](../../../../../static/img/integrations/github-app/GitHubIssues.png)
 
-You can also see the description in markdown format inside the [Specific Entity Page](../../understand-entities-structure/understand-entities-structure.md#entity-page).
+You can also see the description in markdown format inside the [specific entity page](../../../../customize-pages-dashboards-and-plugins/page/entity-page.md).
 
 ![Developer Portal GitHub Issue Description](../../../../../static/img/integrations/github-app/IssueDescription.png)

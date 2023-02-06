@@ -6,7 +6,7 @@ description: Calculation property allows you to construct new data from existing
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# 🧮 Calculation Property
+# ➕ Calculation Property
 
 Calculation properties allow you to use existing properties defined on blueprints, either directly or by using relations and mirror properties, in order to create new properties by using the [`jq`](https://github.com/stedolan/jq) processor for `JSON`.
 
