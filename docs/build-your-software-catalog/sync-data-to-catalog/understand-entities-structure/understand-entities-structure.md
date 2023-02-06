@@ -68,7 +68,7 @@ In this example, you can see how a `microservice` Entity is defined:
 ```
 
 :::note
-This Entity is based on the following Blueprint definition, where the `repo-link` is mandatory.
+This Entity is based on the following Blueprint definition:
 
 ```json showLineNumbers
 {
