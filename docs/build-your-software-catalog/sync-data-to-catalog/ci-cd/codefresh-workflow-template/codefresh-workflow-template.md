@@ -52,8 +52,6 @@ Port's Codefresh workflow template supports the following methods:
 
 <TabItem value="upsert">
 
-**Inputs**
-
 ```yaml showLineNumbers
 - name: entity-upsert
   templateRef:
@@ -87,6 +85,8 @@ Port's Codefresh workflow template supports the following methods:
         "myObjectProp": {"myKey": "myVal", "myExtraKey": "myExtraVal"}
       }
 ```
+
+**Inputs**
 
 - `PORT_CREDENTIALS_SECRET` - name of the secret to get the `CLIENT_ID` and `CLIENT_SECRET` from (default: `port-credentials`)
 - `PORT_CLIENT_ID_KEY` - key in the secret where the base64 encoded `PORT_CLIENT_ID` is stored (default: `PORT_CLIENT_ID`);
