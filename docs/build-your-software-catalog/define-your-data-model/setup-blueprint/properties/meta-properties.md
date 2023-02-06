@@ -21,9 +21,9 @@ Meta-properties are always referenced using a dollar sign (`$`) before them, thi
 
 Here is a short table demonstrating the usage of common mirror properties:
 
-| Meta-property | Description                                                                                                         | Mirror property syntax | Notes     |
-| ------------- | ------------------------------------------------------------------------------------------------------------------- | ---------------------- | --------- |
-| identifier    | **Unique** Entity identifier, used for API calls, programmatic access and distinguishing between different entities | `$identifier`          |           |
-| title         | Entity title, acts as a human-readable name for the entity                                                          | `$title`               |           |
-| createdAt     | Entity creation time                                                                                                | `$createdAt`           | Immutable |
-| updatedAt     | Entity update time                                                                                                  | `$updatedAt`           | Immutable |
+| Meta-property | Description                                                                                                         | Mirror property syntax | Notes                                        |
+| ------------- | ------------------------------------------------------------------------------------------------------------------- | ---------------------- | -------------------------------------------- |
+| identifier    | **Unique** Entity identifier, used for API calls, programmatic access and distinguishing between different entities | `$identifier`          |                                              |
+| title         | Entity title, acts as a human-readable name for the entity                                                          | `$title`               |                                              |
+| createdAt     | Entity creation time                                                                                                | `$createdAt`           | Value is set upon creation and never changes |
+| updatedAt     | Entity update time                                                                                                  | `$updatedAt`           | Value is updated automatically               |
