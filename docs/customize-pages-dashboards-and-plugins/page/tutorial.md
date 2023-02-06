@@ -23,7 +23,7 @@ Pages have 4 regular CRUD permissions:
 
 :::note
 
-- Remember that an access token is needed to make API requests, refer back to [Getting an API token](../../build-your-software-catalog/sync-data-to-catalog/api/get-api-token.md) if you need to generate a new one.
+- Remember that an access token is needed to make API requests, refer back to [Getting an API token](../../build-your-software-catalog/sync-data-to-catalog/api/get-api-token.mdx) if you need to generate a new one.
 - Currently in order to see the page identifiers you can request all pages by making a  
   GET request to `https://api.getport.io/v1/pages`
 

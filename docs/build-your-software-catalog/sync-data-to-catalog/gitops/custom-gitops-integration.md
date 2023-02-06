@@ -52,5 +52,5 @@ curl --location --request POST "https://api.getport.io/v1/blueprints/${blueprint
 Now, whenever your CI/CD runs, it will report the latest definition of the Entity to Port, giving you the latest information directly in Port.
 
 :::note
-Remember that an access token is needed to make API requests, refer back to [Getting an API token](../api/get-api-token.md) if you need to generate a new one.
+Remember that an access token is needed to make API requests, refer back to [Getting an API token](../api/get-api-token.mdx) if you need to generate a new one.
 :::

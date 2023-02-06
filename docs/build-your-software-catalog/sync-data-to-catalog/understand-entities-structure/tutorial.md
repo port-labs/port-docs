@@ -56,7 +56,7 @@ Every entity has a format similar to the one we explained in the [Understanding 
 ### From the API
 
 :::note
-Remember that an access token is needed to make API requests, refer back to [Getting an API token](../../sync-data-to-catalog/api/get-api-token.md) if you need to generate a new one.
+Remember that an access token is needed to make API requests, refer back to [Getting an API token](../../sync-data-to-catalog/api/get-api-token.mdx) if you need to generate a new one.
 :::
 
 #### Creating an entity

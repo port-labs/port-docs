@@ -22,7 +22,7 @@ Here you'll find a step-by-step guide to installing the Port Terraform provider.
 
 First, require the provider in your Terraform configuration (refer [here](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/entity) for our resources schema):
 
-```hcl
+```hcl showLineNumbers
 terraform {
   required_providers {
     port-labs = {
@@ -40,7 +40,7 @@ provider "port-labs" {
 
 Run the following command to make Terraform install the Port provider:
 
-```shell
+```shell showLineNumbers
 terraform init
 ```
 
@@ -62,7 +62,7 @@ The result will be: `no changes. Your infrastructure matches the configuration.`
 
 First, we will create two Blueprints (microservice and package) and then connect a microservice to multiple packages. Add the following to your Terraform files:
 
-```hcl
+```hcl showLineNumbers
 resource "port-labs_blueprint" "microservice" {
   title      = "Microservice"
   icon       = "Microservice"
@@ -128,7 +128,7 @@ resource "port-labs_blueprint" "package" {
 
 Next, we would like to create a microservice (for example, "Golang Monolith") and connect to it a few packages. To do so, Add the following resources to your Terraform files:
 
-```hcl
+```hcl showLineNumbers
 resource "port-labs_entity" "golang_monolith" {
   title     = "Golang Monolith"
   blueprint = port-labs_blueprint.microservice.id
@@ -193,7 +193,7 @@ export `PORT_CLIENT_SECRET`=YOUR_CLIENT_SECRET
 
 To create the Blueprints and Entities above, run:
 
-```shell
+```shell showLineNumbers
 terraform apply
 ```
 
