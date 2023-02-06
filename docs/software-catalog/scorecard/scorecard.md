@@ -28,11 +28,12 @@ In the end, within the specific Entity profile, we will get a tab per scorecard 
 
 ## Scorecard structure table
 
-| Field        | Type     | Description                                                          |
-| ------------ | -------- | -------------------------------------------------------------------- |
-| `title`      | `String` | Scorecard name that will be shown in theUI                           |
-| `identifier` | `String` | The unique identifier of the `Scorecard`                             |
-| `rules`      | `Object` | The rules that we create for each scorecard to deterimate it's level |
+| Field        | Type     | Description                                                                                                                                                                                               |
+| ------------ | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `title`      | `String` | Scorecard name that will be shown in theUI                                                                                                                                                                |
+| `identifier` | `String` | The unique identifier of the `Scorecard`                                                                                                                                                                  |
+| `filter`     | `Object` | `An optional` filter for the entities that will be tested by this scorecard. <br/> Same structure as `quary` - build from array of [conditions](#condition-structure-table) and a `combinator` (or / and) |
+| `rules`      | `Object` | The rules that we create for each scorecard to deterimate it's level                                                                                                                                      |
 
 ## Scorecard structure rule table
 
@@ -98,6 +99,16 @@ It has two rules:
   {
     "title": "Ownership",
     "identifier": "ownership",
+    "filter": {
+      "combinator": "and",
+      "conditions": [
+        {
+          "property": "open_incidents",
+          "operator": "<",
+          "value": 3
+        }
+      ]
+    },
     "rules": [
       {
         "title": "Has on call?",
@@ -107,12 +118,12 @@ It has two rules:
           "combinator": "and",
           "conditions": [
             {
-              "operator": "isNotEmpty",
-              "property": "on_call"
+              "property": "on_call",
+              "operator": "isNotEmpty"
             },
             {
-              "operator": "<",
               "property": "open_incidents",
+              "operator": "<",
               "value": 5
             }
           ]
