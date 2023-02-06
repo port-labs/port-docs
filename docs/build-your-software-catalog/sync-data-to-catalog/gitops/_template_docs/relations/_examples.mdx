@@ -1,0 +1,47 @@
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<Tabs groupId="relations" defaultValue="single" values={[
+{label: "Single relation", value: "single"},
+{label: "Many relation", value: "many"},
+]}>
+
+<TabItem value="single">
+
+It is possible to map related entities under a `single` type relation, by following using the `relations` key in the `port.yml` file:
+
+```yaml showLineNumbers
+- identifier: myEntity
+  title: My Title
+  blueprint: myBlueprint
+  properties:
+    myProp: myValue
+  # highlight-start
+  relations:
+    mySingleRelation: myTargetEntity
+  # highlight-end
+```
+
+</TabItem>
+
+<TabItem value="many">
+
+It is possible to map related entities under a `many` type relation, by following using the `relations` key in the `port.yml` file:
+
+```yaml showLineNumbers
+- identifier: myEntity
+  title: My Title
+  blueprint: myBlueprint
+  properties:
+    myProp: myValue
+  # highlight-start
+  relations:
+    myManyRelation:
+      - myTargetEntity1
+      - myTargetEntity2
+      - myTargetEntity3
+  # highlight-end
+```
+
+</TabItem>
+</Tabs>
