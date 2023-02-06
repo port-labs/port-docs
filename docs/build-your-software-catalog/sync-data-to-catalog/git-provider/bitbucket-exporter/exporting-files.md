@@ -22,8 +22,8 @@ To export your Bitbucket `files` to Port, you can use the following Port Bluepri
 
 ```json showLineNumbers
 {
-  "identifier": "repository",
-  "title": "Repository",
+  "identifier": "microservice",
+  "title": "Microservice",
   "icon": "Service",
   "schema": {
     "properties": {
@@ -62,9 +62,9 @@ resources:
     port:
       entity:
         mappings:
-          identifier: ".name" # The Entity identifier will be the repository name + the pull request ID. After the Entity is created, the exporter will send `PATCH` requests to update this pull request within Port.
+          identifier: ".name" # The Entity identifier will be the repository name. After the Entity is created, the exporter will send `PATCH` requests to update this microservice within Port.
           title: ".name"
-          blueprint: '"repository"'
+          blueprint: '"microservice"'
           properties:
             readme: file://README.md # Fetch the README.md file that is within the root folder of the repository and inject it as a markdown property.
 ```
@@ -74,7 +74,7 @@ resources:
 :::info
 
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform Bitbucket objects to Port Entities.
-- Click [Here](https://support.atlassian.com/bitbucket-cloud/docs/event-payloads/#Repository) for the Bitbucket repository object structure.
+- Click [Here](https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-get) for the Bitbucket repository object structure.
 
 :::
 
@@ -102,9 +102,9 @@ resources:
     port:
       entity:
         mappings:
-          identifier: ".name" # the Entity identifier will be the repository name + the pull request ID. After the creation of the Entity, the exporter will send `PATCH` requests to update this pull request within Port.
+          identifier: ".name"
           title: ".name"
-          blueprint: '"repository"'
+          blueprint: '"microservice"'
           properties:
             swagger: file://open-api.json # fetching the open-api file that is within the root folder of the repository and injecting it as a swagger property
             readme: file://README.md # fetching the README.md file that is within the root folder of the repository and injecting it as a markdown property

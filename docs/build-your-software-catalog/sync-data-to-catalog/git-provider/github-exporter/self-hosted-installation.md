@@ -145,5 +145,5 @@ After you have the App registered in your organization and the docker is up and 
 Now that you have the GitHub app installed, you can refer to our examples for some practical use cases:
 
 - [Exporting pull requests as entities to Port](./exporting-pull-requests)
-- [Exporting repositories files and metadata as entities to Port](./exporting-all-repositories.md)
+- [Exporting repositories files and metadata as entities to Port](./exporting-repositories.md)
 - [Exporting entities via port.yml definition file](../../gitops/github-app-gitops/quickstart.md)
