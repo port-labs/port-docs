@@ -396,6 +396,25 @@ In order to delete a Blueprint you can do either of the following:
 
 ![Blueprints Graph delete button marked](../../../static/img/software-catalog/blueprint/blueprintGraphDeleteButtonMarked.png)
 
+## Delete All Entities of A Blueprint
+
+In order to delete all entities of a blueprint.
+
+- Click on the blueprint action menu (3 dots on the right side of the blueprint card)
+- Choose Delete All 'Blueprint Name'
+- Type 'DELETE' in the opened window and click on the `Delete` button.
+
+:::info
+Notice:
+
+- Only Admin users can perform this action.
+- This action applys for blueprints with no required relations.
+- This action applys for blueprints with no more then 1000 entities.
+  :::
+
+- Make an HTTP DELETE request to the URL <br/>
+  `https://api.getport.io/v1/blueprints/{blueprint_identifier}/all-entities`
+
 ## Next steps
 
 Now that we understand **Blueprints**, we can start modeling separate Entities in our infrastructure.
