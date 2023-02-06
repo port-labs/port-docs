@@ -12,7 +12,7 @@ All relevant files and resources for this guide are available [**HERE**](https:/
 
 ## Goal
 
-In this guide you will implement a service locking mechanism using Port's [GitHub Action](../build-your-software-catalog/sync-data-to-catalog/ci-cd/github-action/github-action.md).
+In this guide you will implement a service locking mechanism using Port's [GitHub Action](../build-your-software-catalog/sync-data-to-catalog/ci-cd/github-workflow/github-workflow.md).
 
 The environment we're going to use includes 2 [Blueprints](../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) with a [Relation](../build-your-software-catalog/define-your-data-model/relate-blueprints/relate-blueprints.md) between them:
 
@@ -181,7 +181,7 @@ Now let's use the deployment config Entity to lock the `Notification Service` fo
 
 ## Reading the `locked` field during deployment
 
-In order to use the `locked` field on your deployment config, you will use Port's [GitHub Action](../build-your-software-catalog/sync-data-to-catalog/ci-cd/github-action/github-action.md).
+In order to use the `locked` field on your deployment config, you will use Port's [GitHub Action](../build-your-software-catalog/sync-data-to-catalog/ci-cd/github-workflow/github-workflow.md).
 
 Here is the deployment check flow:
 
