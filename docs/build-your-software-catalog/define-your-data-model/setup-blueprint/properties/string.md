@@ -14,9 +14,9 @@ String is a primitive data type used to save text data.
 
 The string property type can be used to store any text based data, for example:
 
-- Descriptions;
+- Image tags;
 - Variable keys;
-- Unique identifiers and UUIDs;
+- Commit SHA;
 - File names;
 - etc.
 
@@ -92,7 +92,7 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `L
 
 <Tabs groupId="tf-definition" defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Enum - coming soon", value: "enum"},
+{label: "Enum", value: "enum"},
 {label: "Array - coming soon", value: "array"}
 ]}>
 
@@ -113,15 +113,39 @@ resource "port-labs_blueprint" "myBlueprint" {
 ```
 
 </TabItem>
+
+<TabItem value="enum">
+
+```hcl showLineNumbers
+resource "port-labs_blueprint" "myBlueprint" {
+  # ...blueprint properties
+  # highlight-start
+  properties {
+    identifier = "myStringProp"
+    title      = "My string"
+    required   = false
+    type       = "string"
+    enum       = ["my-option-1", "my-option-2"]
+    enum_colors = {
+      "my-option-1" = "red"
+      "my-option-2" = "green"
+    }
+  }
+  # highlight-end
+}
+
+```
+
+</TabItem>
 </Tabs>
 
 ## Validate string
 
 String validations support the following operators:
 
-- `minLength`
-- `maxLength`
-- `pattern`
+- `minLength` - enforce minimal string length;
+- `maxLength` - enforce maximal string length;
+- `pattern` - enforce Regex patterns.
 
 <Tabs groupId="validation-definition" defaultValue="basic" values={[
 {label: "Basic", value: "basic"},

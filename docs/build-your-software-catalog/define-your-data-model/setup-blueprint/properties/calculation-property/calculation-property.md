@@ -3,6 +3,9 @@ sidebar_position: 13
 description: Calculation property allows you to construct new data from existing properties of an entity
 ---
 
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+
 # 🧮 Calculation Property
 
 Calculation properties allow you to use existing properties defined on blueprints, either directly or by using relations and mirror properties, in order to create new properties by using the [`jq`](https://github.com/stedolan/jq) processor for `JSON`.
@@ -20,21 +23,23 @@ Calculation properties make it easier to define properties that are based on val
   - `https://datadog.com/ + {my_parameter}`;
   - `https://launchdarkly.com/ + {my_parameter}`;
 - Merge service configurations templates to create a real service config;
+- Calculate the number of code owners;
 - etc.
 
 In this [live demo](https://demo.getport.io/services) example, we can see the `Slack Notifications` calculation property. 🎬
 
-## API definition
+## Definition
+
+<Tabs groupId="api-definition" defaultValue="api" values={[
+{label: "API", value: "api"},
+{label: "Terraform", value: "tf"}
+]}>
+
+<TabItem value="api">
 
 The `calculationProperties` key is a top-level key in the JSON of an entity (similar to `identifier`, `title`, `properties`, etc..)
 
 You can access properties as part of the calculation by using `.properties`
-
-<Tabs groupId="api-definition" defaultValue="basic" values={[
-{label: "Basic", value: "basic"}
-]}>
-
-<TabItem value="basic">
 
 ```json showLineNumbers
 {
@@ -49,11 +54,11 @@ You can access properties as part of the calculation by using `.properties`
 ```
 
 </TabItem>
-</Tabs>
 
-## Terraform definition
-
+<TabItem value="tf">
 Coming soon
+</TabItem>
+</Tabs>
 
 ## Supported Types
 
@@ -183,3 +188,9 @@ Parameter contains special characters (for example: `-`) or starts with a digit 
 ## Examples
 
 Refer to the calculation property [examples](./examples.md) page
+
+## Pitfalls
+
+Calculation properties JQ parsing is based on the [jqts](https://github.com/kentdotn/jqts) Node library and supports the JQ operators provided by jqts, this means some functionality that is provided by the `jq` command is not supported in calculation properties.
+
+For a full list of methods, operators and syntax supported by calculation properties, look [here](https://github.com/kentdotn/jqts#supported-filters).

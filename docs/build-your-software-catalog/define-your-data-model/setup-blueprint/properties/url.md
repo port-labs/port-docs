@@ -14,9 +14,9 @@ URL is a data type used to save links to websites.
 
 The URL property type can be used to store a link to any web resource, for example:
 
-- Public websites;
-- Private websites;
-- API routes;
+- Link to Datadog dashboard;
+- Link to Sentry tracing;
+- Link to pull request;
 - etc.
 
 In this [live demo](https://demo.getport.io/domains) example, we can see the `Domain Docs` URL property. 🎬
@@ -94,7 +94,7 @@ In this [live demo](https://demo.getport.io/domains) example, we can see the `Do
 
 <Tabs groupId="tf-definition" defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Enum - coming soon", value: "enum"},
+{label: "Enum", value: "enum"},
 {label: "Array - coming soon", value: "array"}
 ]}>
 
@@ -110,6 +110,30 @@ resource "port-labs_blueprint" "myBlueprint" {
     required   = false
     type       = "string"
     format     = "url"
+  }
+  # highlight-end
+}
+```
+
+</TabItem>
+
+<TabItem value="enum">
+
+```hcl showLineNumbers
+resource "port-labs_blueprint" "myBlueprint" {
+  # ...blueprint properties
+  # highlight-start
+  properties {
+    identifier = "myUrlProp"
+    title      = "My url"
+    required   = false
+    type       = "string"
+    format     = "url"
+    enum       = ["https://example.com", "https://getport.io"]
+    enum_colors = {
+      "https://example.com" = "red",
+      "https://getport.io"  = "green"
+    }
   }
   # highlight-end
 }

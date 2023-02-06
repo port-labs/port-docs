@@ -16,6 +16,7 @@ The datetime property type can be used to store any date and time, for example:
 
 - Deployment time;
 - Release time;
+- Last incident date;
 - Creation timestamp;
 - etc.
 
@@ -39,7 +40,7 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `L
     "description": "My datetime property",
     // highlight-start
     "type": "string",
-    "format": "datetime",
+    "format": "date-time",
     // highlight-end
     "default": "2022-04-18T11:44:15.345Z"
   }
@@ -56,7 +57,7 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `L
     "icon": "My icon",
     "description": "My datetime enum",
     "type": "string",
-    "format": "datetime",
+    "format": "date-time",
     // highlight-next-line
     "enum": ["2022-04-18T11:44:15.345Z", "2022-05-18T11:44:15.345Z"]
   }
@@ -76,7 +77,7 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `L
     "type": "array",
     "items": {
       "type": "string",
-      "format": "datetime"
+      "format": "date-time"
     }
     // highlight-end
   }
@@ -90,7 +91,7 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `L
 
 <Tabs groupId="tf-definition" defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Enum - coming soon", value: "enum"},
+{label: "Enum", value: "enum"},
 {label: "Array - coming soon", value: "array"}
 ]}>
 
@@ -105,7 +106,27 @@ resource "port-labs_blueprint" "myBlueprint" {
     title      = "My datetime"
     required   = false
     type       = "string"
-    format     = "datetime"
+    format     = "date-time"
+  }
+  # highlight-end
+}
+```
+
+</TabItem>
+
+<TabItem value="enum">
+
+```hcl showLineNumbers
+resource "port-labs_blueprint" "myBlueprint" {
+  # ...blueprint properties
+  # highlight-start
+  properties {
+    identifier = "myDatetimeProp"
+    title      = "My datetime"
+    required   = false
+    type       = "string"
+    format     = "date-time"
+    enum       = ["2022-04-18T11:44:15.345Z", "2022-05-18T11:44:15.345Z"]
   }
   # highlight-end
 }

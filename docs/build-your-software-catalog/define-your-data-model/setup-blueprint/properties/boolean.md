@@ -16,7 +16,7 @@ The boolean property type can be used to store any true/false gate, for example:
 
 - Is environment locked for deployments;
 - Should environment perform nightly shutdown;
-- Should environment perform morning startup;
+- Does service handle PII;
 - Is environment public;
 - etc.
 

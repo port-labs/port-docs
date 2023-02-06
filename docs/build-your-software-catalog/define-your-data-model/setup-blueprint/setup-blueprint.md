@@ -102,8 +102,8 @@ All available properties are listed in the [properties](./properties/properties.
 
 <Tabs groupId="definition" defaultValue="api" values={[
 {label: "API", value: "api"},
-{label: "UI", value: "ui"},
-{label: "Terraform", value: "tf"}
+{label: "Terraform", value: "tf"},
+{label: "UI", value: "ui"}
 ]}>
 
 <TabItem value="api">
@@ -125,16 +125,6 @@ All available properties are listed in the [properties](./properties/properties.
 
 </TabItem>
 
-<TabItem value="ui">
-
-1. Go to the [DevPortal Setup page](https://app.getport.io/dev-portal);
-2. Click on **Add blueprint** at the top right hand corner;
-3. Configure your blueprint using the from:
-
-![Create New Blueprint](../../../../static/img/quickstart/newBlueprintButton.png)
-
-</TabItem>
-
 <TabItem value="tf">
 
 ```hcl showLineNumbers
@@ -145,6 +135,16 @@ resource "port-labs_blueprint" "myBlueprint" {
   description = "My description"
 }
 ```
+
+</TabItem>
+
+<TabItem value="ui">
+
+1. Go to the [DevPortal Setup page](https://app.getport.io/dev-portal);
+2. Click on **Add blueprint** at the top right hand corner;
+3. Configure your blueprint using the from:
+
+![Create New Blueprint](../../../../static/img/quickstart/newBlueprintButton.png)
 
 </TabItem>
 </Tabs>

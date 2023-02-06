@@ -17,6 +17,7 @@ The timer property type can be used to store the future expiration date of catal
 - Temporary development environment;
 - Countdown to next healthcheck;
 - Temporary cloud resources;
+- Add temporary permissions to resource;
 - etc.
 
 In this [live demo](https://demo.getport.io/developerEnvs) example, we can see the `TTL` timer property. 🎬
@@ -50,9 +51,7 @@ In this [live demo](https://demo.getport.io/developerEnvs) example, we can see t
 ## Terraform definition
 
 <Tabs groupId="tf-definition" defaultValue="basic" values={[
-{label: "Basic", value: "basic"},
-{label: "Enum - coming soon", value: "enum"},
-{label: "Array - coming soon", value: "array"}
+{label: "Basic", value: "basic"}
 ]}>
 
 <TabItem value="basic">
@@ -75,28 +74,39 @@ resource "port-labs_blueprint" "myBlueprint" {
 </TabItem>
 </Tabs>
 
-## Timer properties deep dive
+## Example
 
-Let's look at some examples of basic timer properties definitions to better understand how timer properties work.
+Here is an entity for a `timerExample` blueprint which has a timer property with the identifier `timer`.
 
-In the following example, we will create a timer property called locked, that will expire in 2 hours:
+In the example entity, an expiration datetime is specified:
 
 ```json showLineNumbers
-  "identifier": "e_mtLQRs6sqQOaz7QP",
+  "identifier": "entityIdentifier",
   "title": "Timer Example",
   "icon": "Microservice",
   "blueprint": "timerExample",
   "properties": {
+    // highlight-next-line
     "timer": "2022-12-01T16:50:00+02:00"
   },
   "relations": {}
 ```
 
+Looking at Port's UI, we can see that the timer we created expires in 2 hours:
+
 ![Timer entity](../../../../../static/img/software-catalog/entity/TTLCreateEntity.png)
 
-After 2 hours, the property status will change to `Expired`, and an event of `Timer Expired` will be sent to the ChangeLog.
+After 2 hours pass, the property status will change to `Expired`, and an event of `Timer Expired` will be sent to the ChangeLog:
 
-The following action invocation body will be sent to the Webhook/Kafka topic:
+![Timer entity expired](../../../../../static/img/software-catalog/entity/TTLExpiredEntity.png)
+
+The timer expiration event will also appear in Port's audit log:
+
+![Timer Audit log](../../../../../static/img/software-catalog/entity/AuditLogTTL.png)
+
+<!-- TODO: add a link to the docs about changelog destination and event listener -->
+
+In order to notify about the timer expiration, the following notification body will be sent to the Webhook/Kafka topic configured in the blueprint's `changelogDestination`:
 
 ```json showLineNumbers
 {
@@ -105,7 +115,7 @@ The following action invocation body will be sent to the Webhook/Kafka topic:
     "blueprintIdentifier": "timerExample",
     "entityId": "e_mtLQRs6sqQOaz7QP",
     "blueprintId": "bp_djjY7NcdzHdpxI1y",
-    "entityIdentifier": "e_mtLQRs6sqQOaz7QP"
+    "entityIdentifier": "entityIdentifier"
   },
   "action": "TIMER_EXPIRED",
   "trigger": {
@@ -124,7 +134,3 @@ The following action invocation body will be sent to the Webhook/Kafka topic:
   "status": "SUCCESS"
 }
 ```
-
-![Timer entity expired](../../../../../static/img/software-catalog/entity/TTLExpiredEntity.png)
-
-![Timer Audit log](../../../../../static/img/software-catalog/entity/AuditLogTTL.png)

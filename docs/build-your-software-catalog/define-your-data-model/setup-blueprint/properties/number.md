@@ -14,7 +14,7 @@ Number is a primitive data type used to save numeric data
 
 The number property type can be used to store any numeric data, for example:
 
-- Core counts;
+- Number of critical vulnerabilities;
 - Memory/storage allocations;
 - Replica counts;
 - Number of open issues;

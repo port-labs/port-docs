@@ -17,9 +17,9 @@ Relations enable us to make connections between blueprints, consequently connect
 
 Relations can be used to represent the logical connections between assets in your software catalog, for example:
 
-- The package version a microservice uses;
-- The different version releases of a library;
-- The Kubernetes clusters that exist in a cloud account;
+- The **packages** that a **microservice** uses;
+- The **run** history of a **CI job**;
+- The **Kubernetes clusters** that exist in a **cloud account**;
 - etc.
 
 In this [live demo](https://demo.getport.io/dev-portal) example, we can see the DevPortal setup page with all of the blueprints and their relations. 🎬
@@ -55,15 +55,15 @@ A relation exists under the `relations` key in the [Blueprint JSON schema](../se
 
 ## Types of relations
 
-### Single :bust_in_silhouette:
+### :bust_in_silhouette: Single
 
 A single type relation is used to map a single target entity to the source.
 
-#### Common Single Relations 💡
+#### 💡 Common Single Relations
 
-- Map a build job to the resulting new version;
-- Map a library version to the library repository;
-- Map a Kubernetes pod to the service it is providing;
+- Map a **build job** to the resulting new **version**;
+- Map a **library version** to the **library repository**;
+- Map a **Kubernetes pod** to the **service** it is providing;
 - etc.
 
 In this [live demo](https://demo.getport.io/packageVersionEntity?identifier=AnalyticsTracker_1_2_9) example, we can see a specific package version and its related core packages. 🎬
@@ -112,15 +112,16 @@ resource "port-labs_blueprint" "myBlueprint" {
 </TabItem>
 </Tabs>
 
-### Many 👥
+### 👥 Many
 
 A many type relation is used to map multiple target entities to the source.
 
-#### Common Many Relations 💡
+#### 💡 Common Many Relations
 
-- Map the packages used by a service;
-- Map the cloud resources used by a service;
-- Map the services deployed in a developer environment;
+- Map dependencies between services;
+- Map the **packages** used by a **service**;
+- Map the **cloud resources** used by a **service**;
+- Map the **services deployed** in a **developer environment**;
 - etc.
 
 In this [live demo](https://demo.getport.io/developerEnvEntity?identifier=test-shizuko) example, we can see a specific developer environment and the running services it uses. 🎬

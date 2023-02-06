@@ -16,6 +16,7 @@ The array property type can be used to store any list of data, for example:
 
 - Used packages;
 - Dependencies;
+- Badges;
 - etc.
 
 In this [live demo](https://demo.getport.io/services) example, we can see the `Monitor Tooling` array property. 🎬

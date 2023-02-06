@@ -22,7 +22,7 @@ Mirror properties support both [user-defined](../properties.md#available-propert
 
 Mirror properties make it possible to enrich the data visible on an entity by mapping additional data and properties from other related entities in the catalog, for example:
 
-- Show the chart version used by the service;
+- Show the chart version of a running service;
 - Show the environment type of a running service;
 - Show the cloud provider of a K8s cluster;
 - etc.
@@ -81,10 +81,10 @@ resource "port-labs_blueprint" "myBlueprint" {
 
 This is a Mirror Property created from one of Port's [meta-properties](../meta-properties.md) on the `target` blueprint.
 
-In the following example, we create a Mirror Property called `MicroserviceName` which is mapped to the `title` meta-property in the `target` blueprint (in this example the name of the Relation is `deployment-to-microservice`). Note how the `title` field is referenced using `$title` because it is a meta-property:
+In the following example, we create a Mirror Property called `microserviceName` which is mapped to the `title` meta-property in the `target` blueprint (in this example the name of the Relation is `deployment-to-microservice`). Note how the `title` field is referenced using `$title` because it is a meta-property:
 
 ```json showLineNumbers
-"MicroserviceName": {
+"microserviceName": {
     "title": "Microservice Name",
     "path": "deployment-to-microservice.$title"
 }
@@ -94,22 +94,22 @@ In the following example, we create a Mirror Property called `MicroserviceName` 
 
 It is possible to use mirror properties to map properties from blueprints that are not direct descendants of our `source` blueprint.
 
-For example, let's assume we have the following Relation chain: `Microservice -> Project -> Squad`.
+For example, let's assume we have the following Relation chain: `Microservice -> System -> Domain`.
 
-We want to map the members of the squad that owns the microservice directly to the `Microservice` entities.
+We want to map the members of the domain that owns the microservice directly to the `Microservice` entities.
 
-The members of the squad are listed in an [array property](../array.md) under the user-defined property `squad_members`.
+The members of the domain are listed in an [array property](../array.md) under the user-defined property `domain_members`.
 
-The names of the Relations are:
+The names of the relations are:
 
-- `Microservice -> Project`: `microservice-to-project`
-- `Project -> Squad`: `project-to-squad`
+- `Microservice -> System`: `system`
+- `System -> Domain`: `domain`
 
-Let's map the squad members using a Mirror Property called `OwningSquadMembers`:
+Let's map the squad members using a mirror property called `owningDomainMembers`:
 
 ```json showLineNumbers
-"OwningSquadMembers": {
-    "title": "Owning Squad Members",
-    "path": "microservice-to-project.project-to-squad.squad_members"
+"owningDomainMembers": {
+    "title": "Owning Domain Members",
+    "path": "system.domain.domain_members"
 }
 ```

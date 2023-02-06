@@ -87,7 +87,7 @@ The Email property type can be used to store any legal email address.
 
 <Tabs groupId="tf-definition" defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Enum - coming soon", value: "enum"},
+{label: "Enum", value: "enum"},
 {label: "Array - coming soon", value: "array"}
 ]}>
 
@@ -103,6 +103,30 @@ resource "port-labs_blueprint" "myBlueprint" {
     required   = false
     type       = "string"
     format     = "email"
+  }
+  # highlight-end
+}
+```
+
+</TabItem>
+
+<TabItem value="enum">
+
+```hcl showLineNumbers
+resource "port-labs_blueprint" "myBlueprint" {
+  # ...blueprint properties
+  # highlight-start
+  properties {
+    identifier = "myEmailProp"
+    title      = "My email"
+    required   = false
+    type       = "string"
+    format     = "email"
+    enum       = ["me@example.com", "example@example.com"]
+    enum_colors = {
+      "me@example.com" = "red",
+      "example@example.com" = "green"
+    }
   }
   # highlight-end
 }

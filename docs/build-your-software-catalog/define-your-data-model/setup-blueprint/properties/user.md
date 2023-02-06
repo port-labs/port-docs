@@ -14,7 +14,7 @@ User is a data type used to reference users that exist in Port.
 
 The user property type can be used to reference any user that exists in Port, for example:
 
-- The service owner;
+- The code owners;
 - The current on-call;
 - The lead maintainer;
 - etc.
