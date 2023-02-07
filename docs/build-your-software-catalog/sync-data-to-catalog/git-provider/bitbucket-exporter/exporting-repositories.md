@@ -32,10 +32,6 @@ To export your Bitbucket `repositories` to Port, you can use the following Port 
         "format": "url",
         "type": "string"
       },
-      "workspace": {
-        "type": "string",
-        "title": "Workspace"
-      },
       "project": {
         "type": "string",
         "title": "Project"
@@ -70,8 +66,7 @@ resources:
           blueprint: '"microservice"'
           properties:
             url: ".links.html.href" # fetch the repository URL from the Bitbucket metadata and inject it as a URL property.
-            project: ".project" # fetch the project from the Bitbucket metadata and inject it as a property.
-            workapce: ".workspace" # fetch the workspace from the Bitbucket metadata and inject it as a property.
+            project: ".project.name" # fetch the project from the Bitbucket metadata and inject it as a property.
 ```
 
 </details>
