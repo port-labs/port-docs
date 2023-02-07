@@ -93,7 +93,7 @@ resources:
       entity:
         mappings:
           identifier: ".destination.repository.name + (.id|tostring)" # The Entity identifier will be the repository name + the pull request ID. After the Entity is created, the exporter will send `PATCH` requests to update this pull request within Port.
-          title: ".title"
+          title: ".destination.repository.name + (.id|tostring)"
           blueprint: '"pullRequest"'
           properties:
             creator: ".author.display_name"
