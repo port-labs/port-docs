@@ -37,6 +37,6 @@ In this [live demo](https://demo.getport.io/dev-portal) example, we can see an e
 
 ## 🔧 Introduction - [Configuration methods](./configuration-methods/configuration-methods.mdx)
 
-## 🧱 Step 1 - [Setup blueprints](./setup-blueprint/setup-blueprint.md)
+## 🧱 Step 1 - [Setup Blueprintss](./setup-blueprint/setup-blueprint.md)
 
 ## 🔀 Step 2 - [Relate relations](./relate-blueprints/relate-blueprints.md)
