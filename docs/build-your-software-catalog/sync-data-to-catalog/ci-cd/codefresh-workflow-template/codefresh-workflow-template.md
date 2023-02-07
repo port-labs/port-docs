@@ -88,20 +88,24 @@ Port's Codefresh workflow template supports the following methods:
 
 **Inputs**
 
-- `PORT_CREDENTIALS_SECRET` - name of the secret to get the `CLIENT_ID` and `CLIENT_SECRET` from (default: `port-credentials`)
-- `PORT_CLIENT_ID_KEY` - key in the secret where the base64 encoded `PORT_CLIENT_ID` is stored (default: `PORT_CLIENT_ID`);
-- `PORT_CLIENT_SECRET_KEY` - key in the secret where the base64 encoded `PORT_CLIENT_SECRET` is stored (default `PORT_CLIENT_SECRET`);
-- `BLUEPRINT_IDENTIFIER` - identifier of the blueprint to create an entity of;
-- `ENTITY_IDENTIFIER` - identifier of the new (or existing) entity. Leave empty to get an auto-generated identifier;
-- `ENTITY_TITLE` - Title of the new (or existing) entity;
-- `ENTITY_TEAM` - Teams array of the new (or existing) entity;
-- `ENTITY_ICON` - Icon of the new (or existing) entity;
-- `ENTITY_PROPERTIES` - Properties of the new (or existing) entity;
-- `ENTITY_RELATIONS` - Relations of the new (or existing) entity.
+| Input                     | Description                                                               | Notes                                           |
+| ------------------------- | ------------------------------------------------------------------------- | ----------------------------------------------- |
+| `PORT_CREDENTIALS_SECRET` | Name of the secret to get the `CLIENT_ID` and `CLIENT_SECRET` from        | Default value: `port-credentials`               |
+| `PORT_CLIENT_ID_KEY`      | Key in the secret where the base64 encoded `PORT_CLIENT_ID` is stored     | Default value: `PORT_CLIENT_ID`                 |
+| `PORT_CLIENT_SECRET_KEY`  | key in the secret where the base64 encoded `PORT_CLIENT_SECRET` is stored | Default value: `PORT_CLIENT_SECRET`             |
+| `BLUEPRINT_IDENTIFIER`    | Identifier of the blueprint to create an entity of                        | **Required**                                    |
+| `ENTITY_IDENTIFIER`       | Identifier of the new (or existing) entity                                | Leave empty to get an auto-generated identifier |
+| `ENTITY_TITLE`            | Title of the new (or existing) entity                                     |                                                 |
+| `ENTITY_TEAM`             | Teams array of the new (or existing) entity                               |                                                 |
+| `ENTITY_ICON`             | Icon of the new (or existing) entity                                      |                                                 |
+| `ENTITY_PROPERTIES`       | Properties of the new (or existing) entity                                |                                                 |
+| `ENTITY_RELATIONS`        | Relations of the new (or existing) entity.                                |                                                 |
 
 **Outputs**
 
-- `ENTITY_IDENTIFIER` - identifier of the new (or existing) entity.
+| Output              | Description                                | Notes |
+| ------------------- | ------------------------------------------ | ----- |
+| `ENTITY_IDENTIFIER` | identifier of the new (or existing) entity |       |
 
 </TabItem>
 <TabItem value="get">
@@ -131,20 +135,24 @@ Port's Codefresh workflow template supports the following methods:
 
 **Inputs**
 
-- `PORT_CREDENTIALS_SECRET` - name of the secret to get the `CLIENT_ID` and `CLIENT_SECRET` from (default: `port-credentials`)
-- `PORT_CLIENT_ID_KEY` - key in the secret where the base64 encoded `PORT_CLIENT_ID` is stored (default: `PORT_CLIENT_ID`);
-- `PORT_CLIENT_SECRET_KEY` - key in the secret where the base64 encoded `PORT_CLIENT_SECRET` is stored (default `PORT_CLIENT_SECRET`);
-- `BLUEPRINT_IDENTIFIER` - identifier of the blueprint the target entity is from;
-- `ENTITY_IDENTIFIER` - identifier of the target entity.
+| Input                     | Description                                                               | Notes                               |
+| ------------------------- | ------------------------------------------------------------------------- | ----------------------------------- |
+| `PORT_CREDENTIALS_SECRET` | Name of the secret to get the `CLIENT_ID` and `CLIENT_SECRET` from        | Default value: `port-credentials`   |
+| `PORT_CLIENT_ID_KEY`      | Key in the secret where the base64 encoded `PORT_CLIENT_ID` is stored     | Default value: `PORT_CLIENT_ID`     |
+| `PORT_CLIENT_SECRET_KEY`  | Key in the secret where the base64 encoded `PORT_CLIENT_SECRET` is stored | Default value: `PORT_CLIENT_SECRET` |
+| `BLUEPRINT_IDENTIFIER`    | Identifier of the blueprint the target entity is from                     | **Required**                        |
+| `ENTITY_IDENTIFIER`       | Identifier of the target entity                                           |                                     |
 
 **Outputs**
 
-- `PORT_COMPLETE_ENTITY` - complete entity JSON;
-- `PORT_BLUEPRINT_IDENTIFIER` - identifier of the blueprint the target entity is from;
-- `PORT_ENTITY_IDENTIFIER` - identifier of the target entity;
-- `PORT_ENTITY_TITLE` - title of the entity;
-- `PORT_ENTITY_PROPERTIES` - all properties of the entity in JSON format;
-- `PORT_ENTITY_RELATIONS` - all relations of the entity in JSON format;
+| Output                      | Description                                           | Notes |
+| --------------------------- | ----------------------------------------------------- | ----- |
+| `PORT_COMPLETE_ENTITY`      | Complete entity JSON                                  |       |
+| `PORT_BLUEPRINT_IDENTIFIER` | Identifier of the blueprint the target entity is from |       |
+| `PORT_ENTITY_IDENTIFIER`    | Identifier of the target entity                       |       |
+| `PORT_ENTITY_TITLE`         | Title of the entity                                   |       |
+| `PORT_ENTITY_PROPERTIES`    | All properties of the entity in JSON format           |       |
+| `PORT_ENTITY_RELATIONS`     | All relations of the entity in JSON format            |       |
 
 </TabItem>
 </Tabs>
