@@ -3,6 +3,8 @@ sidebar_position: 12
 description: Yaml is a data type used to save object definitions in YAML
 ---
 
+import ApiRef from "../../../../api-reference/\_learn_more_reference.mdx"
+
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
@@ -68,6 +70,8 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `H
 
 </TabItem>
 </Tabs>
+
+<ApiRef />
 
 ## Terraform definition
 

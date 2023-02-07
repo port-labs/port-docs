@@ -3,6 +3,8 @@ sidebar_position: 8
 description: User is a data type used to reference users that exist in Port
 ---
 
+import ApiRef from "../../../../api-reference/\_learn_more_reference.mdx"
+
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
@@ -83,6 +85,8 @@ In addition, `user` format distinguishes between users by their status:
 
 </TabItem>
 </Tabs>
+
+<ApiRef />
 
 ## Terraform definition
 

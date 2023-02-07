@@ -3,6 +3,8 @@ sidebar_position: 13
 description: Calculation property allows you to construct new data from existing properties of an entity
 ---
 
+import ApiRef from "../../../../../api-reference/\_learn_more_reference.mdx"
+
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
@@ -52,6 +54,8 @@ You can access properties as part of the calculation by using `.properties`
   }
 }
 ```
+
+<ApiRef />
 
 </TabItem>
 

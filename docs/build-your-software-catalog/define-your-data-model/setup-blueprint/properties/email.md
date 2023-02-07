@@ -3,6 +3,8 @@ sidebar_position: 7
 description: Email is a data type used to save Email addresses
 ---
 
+import ApiRef from "../../../../api-reference/\_learn_more_reference.mdx"
+
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
@@ -82,6 +84,8 @@ The Email property type can be used to store any legal email address.
 
 </TabItem>
 </Tabs>
+
+<ApiRef />
 
 ## Terraform definition
 

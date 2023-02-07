@@ -3,6 +3,8 @@ sidebar_position: 2
 description: Number is a primitive data type used to save numeric data
 ---
 
+import ApiRef from "../../../../api-reference/\_learn_more_reference.mdx"
+
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
@@ -83,6 +85,8 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `J
 
 </TabItem>
 </Tabs>
+
+<ApiRef />
 
 ## Terraform definition
 

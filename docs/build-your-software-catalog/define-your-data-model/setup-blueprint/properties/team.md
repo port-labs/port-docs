@@ -3,6 +3,8 @@ sidebar_position: 9
 description: Team is a data type used to reference teams that exist in Port
 ---
 
+import ApiRef from "../../../../api-reference/\_learn_more_reference.mdx"
+
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
@@ -67,6 +69,8 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `T
 
 </TabItem>
 </Tabs>
+
+<ApiRef />
 
 ## Terraform definition
 
