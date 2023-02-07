@@ -7,7 +7,7 @@ import TabItem from "@theme/TabItem"
 
 # 🧱 Setup Blueprint
 
-Define blueprint schema to begin building your software catalog.
+Define blueprint schemas to begin building your software catalog.
 
 ## What is a blueprint?
 
