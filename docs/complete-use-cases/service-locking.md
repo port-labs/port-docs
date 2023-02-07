@@ -12,13 +12,13 @@ All relevant files and resources for this guide are available [**HERE**](https:/
 
 ## Goal
 
-In this guide you will implement a service locking mechanism using Port's [GitHub Action](../api-providers/github-action.md).
+In this guide you will implement a service locking mechanism using Port's [GitHub Action](../build-your-software-catalog/sync-data-to-catalog/ci-cd/github-workflow/github-workflow.md).
 
-The environment we're going to use includes 2 [Blueprints](../software-catalog/blueprint/blueprint.md) with a [Relation](../software-catalog/relation/relation.md) between them:
+The environment we're going to use includes 2 [Blueprints](../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) with a [Relation](../build-your-software-catalog/define-your-data-model/relate-blueprints/relate-blueprints.md) between them:
 
 ![Service locking layout](../../static/img/complete-use-cases/service-locking/service-locking-layout.png)
 
-Let's go over the different Blueprints shown above and how we'll create [Entities](../software-catalog/entity/entity.md) for each one of them:
+Let's go over the different Blueprints shown above and how we'll create [Entities](../build-your-software-catalog/sync-data-to-catalog/understand-entities-structure/understand-entities-structure.md) for each one of them:
 
 - **Deployment Config** - a deployment config is a representation of the current “live” version of a service running in a specific environment. It will include references to the service, environment, and deployment, as well as real-time information such as status, uptime, and any other relevant metadata.
   - In this example deployment configs will be reported manually.
@@ -108,10 +108,6 @@ The Blueprint JSON provided below already includes the Relations between the dif
 
 </details>
 
-:::tip
-Remember that Blueprints can be created both from the [UI](../software-catalog/blueprint/tutorial.md#from-the-ui) and from the [API](../software-catalog/blueprint/tutorial.md#from-the-api)
-:::
-
 :::note
 Our deployment config Blueprint has a property called `locked` with a boolean value. We will use the value of that field to determine whether new deployments of the service are allowed.
 :::
@@ -185,7 +181,7 @@ Now let's use the deployment config Entity to lock the `Notification Service` fo
 
 ## Reading the `locked` field during deployment
 
-In order to use the `locked` field on your deployment config, you will use Port's [GitHub Action](../api-providers/github-action.md).
+In order to use the `locked` field on your deployment config, you will use Port's [GitHub Action](../build-your-software-catalog/sync-data-to-catalog/ci-cd/github-workflow/github-workflow.md).
 
 Here is the deployment check flow:
 
@@ -330,4 +326,4 @@ If you set the value of the `locked` field to `false`, the workflow will perform
 
 This was just a single example of Port's GitHub Action value in your CI/CD pipelines. By querying and creating Entities during your CI process, you can make your CI jobs even more dynamic and responsive, without having to edit `yml` files and push new code to your repository.
 
-If you're using a different CI/CD provider, be sure to checkout the rest of our [API Providers](./../api-providers/api-providers.md) to find the integration that fits your use-case.
+If you're using a different CI/CD provider, be sure to checkout the rest of our [CI/CD integrations](../build-your-software-catalog/sync-data-to-catalog/ci-cd/ci-cd.md) to find the integration that fits your use-case.

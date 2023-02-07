@@ -23,7 +23,7 @@ All relevant files and resources for this guide are available **[here!](https://
 
 ### Creating Blueprints with Terraform
 
-To set up your Blueprints, use Port's [Terraform provider](../api-providers/terraform.md).
+To set up your Blueprints, use Port's [Terraform provider](../build-your-software-catalog/sync-data-to-catalog/iac/terraform.md).
 
 After setting up your `main.tf` file under the `terraform/` directory, create the required `.tf` files, which will represent your Port Blueprints.
 
@@ -99,7 +99,7 @@ This workflow will monitor file changes under `terraform/*.tf`, and on a change 
 Now it is time to populate you Port environment with Entities using Port's Kubernetes Exporter.
 
 :::tip
-Get to know the basics of our Kubernetes exporter [here!](../exporters/k8s-exporter/quickstart.md)
+Get to know the basics of our Kubernetes exporter [here!](../build-your-software-catalog/sync-data-to-catalog/kubernetes/quickstart.md)
 :::
 
 Create a `config.yaml` with your relevant queries and Blueprints.

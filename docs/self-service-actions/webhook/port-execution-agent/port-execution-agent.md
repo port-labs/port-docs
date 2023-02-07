@@ -8,6 +8,10 @@ Our execution agent provides you with a secure and convenient way to listen and 
 
 By using the execution agent, you don't need to expose a public endpoint for Port to contact.
 
+:::tip Public repository
+Our Port agent is open source - see it [**here**](https://github.com/port-labs/port-agent)
+:::
+
 :::note
 To use the execution agent, please contact us via Intercom to receive a dedicated Kafka topic.
 :::

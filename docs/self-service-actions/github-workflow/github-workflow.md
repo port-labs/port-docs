@@ -1,6 +1,6 @@
 # GitHub Workflow Self-Service Actions
 
-[Port's GitHub application](../../exporters/github-exporter/installation.md) can trigger a [GitHub workflow](https://docs.github.com/en/actions/using-workflows) using a customer provided input and [`port_payload`](../../self-service-actions/self-service-actions-deep-dive/self-service-actions-deep-dive.md#action-message-structure).
+[Port's GitHub application](../../build-your-software-catalog/sync-data-to-catalog/git-provider/github-exporter/installation.md) can trigger a [GitHub workflow](https://docs.github.com/en/actions/using-workflows) using a customer provided input and [`port_payload`](../../self-service-actions/self-service-actions-deep-dive/self-service-actions-deep-dive.md#action-message-structure).
 
 ![Port Kafka Architecture](../../../static/img/self-service-actions/portGithubWorkflowArchitecture.png)
 

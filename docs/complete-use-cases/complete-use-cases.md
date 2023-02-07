@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Complete Use Cases
+# ✅ Complete Use Cases
 
 In order to get started quickly with Port, we have compiled a list of common use cases to enhance your developer portal.
 

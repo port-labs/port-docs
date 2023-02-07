@@ -55,8 +55,10 @@ When using the execution agent, in the `url` field you need to provide a URL to 
 :::note
 **IMPORTANT**: To make use of the **Port execution agent**, you need to configure:
 
-- [Self-Service Action invocation method](../../self-service-actions-deep-dive/self-service-actions-deep-dive.md#invocation-method-structure-fields) / [Change Log](../../../software-catalog/blueprint/blueprint.md#changelog-destination) destination `type` field value should be equal to `WEBHOOK`.
-- [Self-Service Action invocation method](../../self-service-actions-deep-dive/self-service-actions-deep-dive.md#invocation-method-structure-fields) / [Change Log](../../../software-catalog/blueprint/blueprint.md#changelog-destination) `agent` field value should be equal to `true`.
+<!-- TODO: add back the URLs here for changelog destination -->
+
+- [Self-Service Action invocation method](../../self-service-actions-deep-dive/self-service-actions-deep-dive.md#invocation-method-structure-fields) / Change Log destination `type` field value should be equal to `WEBHOOK`.
+- [Self-Service Action invocation method](../../self-service-actions-deep-dive/self-service-actions-deep-dive.md#invocation-method-structure-fields) / Change Log `agent` field value should be equal to `true`.
 
 For example:
 

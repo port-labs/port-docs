@@ -178,10 +178,6 @@ print(response.json())
 
 </details>
 
-:::tip
-Remember that Blueprints can be created both from the [UI](../../../software-catalog/blueprint/tutorial.md#from-the-ui) and from the [API](../../../software-catalog/blueprint/tutorial.md#from-the-api)
-:::
-
 ## Create a Port action
 
 Now let’s configure a self-service action. Add a `CREATE` action that will be triggered every time a developer wants to initiate a new deployment for a service.

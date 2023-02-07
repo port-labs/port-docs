@@ -52,8 +52,8 @@ const config = {
         // Plugin Options for loading OpenAPI files
         specs: [
           {
+            id: "port-api",
             spec: "https://api.getport.io/yaml",
-            route: "/api-providers/rest",
           },
         ],
         // Theme Options for modifying how redoc renders them
@@ -104,20 +104,20 @@ const config = {
                 to: "/",
               },
               {
-                label: "Software Catalog",
-                to: "/software-catalog",
+                label: "Build Software Catalog",
+                to: "/build-your-software-catalog",
               },
               {
                 label: "Self-Service Actions",
                 to: "/self-service-actions",
               },
               {
-                label: "API Methods",
-                to: "/api-providers",
+                label: "Promote Scorecards",
+                to: "/promote-scorecards",
               },
               {
-                label: "Exporters",
-                to: "/exporters",
+                label: "API Reference",
+                to: "/api-reference",
               },
             ],
           },
@@ -125,8 +125,12 @@ const config = {
             title: "Complete Use Cases",
             items: [
               {
-                label: "Software Catalog",
+                label: "Software Development Lifecycle (SDLC)",
                 to: "/complete-use-cases/sdlc",
+              },
+              {
+                label: "Mapping Kubernetes",
+                to: "/complete-use-cases/full-kubernetes-exporter",
               },
               {
                 label: "Service Locking",
@@ -152,6 +156,10 @@ const config = {
               {
                 label: "Linkedin",
                 href: "https://www.linkedin.com/company/getport/",
+              },
+              {
+                label: "DevEx Community",
+                href: "https://join.slack.com/t/devex-community/shared_invite/zt-1bmf5621e-GGfuJdMPK2D8UN58qL4E_g",
               },
             ],
           },
@@ -244,6 +252,9 @@ const config = {
       "@docusaurus/plugin-ideal-image",
       {
         quality: 70,
+        max: 1030, // max resized image's size.
+        min: 640, // min resized image's size. if original is lower, use that size.
+        steps: 2, // the max number of images generated between min and max (inclusive)
         disableInDev: false,
       },
     ],

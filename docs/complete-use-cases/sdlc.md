@@ -14,11 +14,11 @@ You can read more about software catalogs on our [blog](https://www.getport.io/b
 
 In this guide, you will setup an initial software catalog. You will learn how to use:
 
-- Port's [Terraform provider](../api-providers/terraform.md) - to create your cloud resources;
-- Port's [REST API](../api-providers/rest.md) - to create your deployment configs;
-- Port's [GitHub Action](../api-providers/github-action.md) - to create your service deployments.
-- Port's [GitHub App](../api-providers/gitops/gitops.md) - to create your services;
-- Port's [Kubernetes Exporter](../exporters/k8s-exporter/k8s-exporter.md) - to create your deployment service pods;
+- Port's [Terraform provider](../build-your-software-catalog/sync-data-to-catalog/iac/terraform.md) - to create your cloud resources;
+- Port's [REST API](../api-reference/api-reference.mdx) - to create your deployment configs;
+- Port's [GitHub Action](../build-your-software-catalog/sync-data-to-catalog/ci-cd/github-workflow/github-workflow.md) - to create your service deployments.
+- Port's [GitHub App](../build-your-software-catalog/sync-data-to-catalog/gitops/github-app-gitops/github-app-gitops.md) - to create your services;
+- Port's [Kubernetes Exporter](../build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md) - to create your deployment service pods;
 
 By the end of this guide, you will have a _Basic Model_ of a software catalog.
 
@@ -26,7 +26,7 @@ The Basic Model covers the main SDLC intersections: from Services, to Environmen
 
 ![software catalog layout](../../static/img/complete-use-cases/software-catalog/software-catalog-layout.png)
 
-Before we dive into the details of each [Blueprint](../software-catalog/blueprint/blueprint.md) type in the software catalog, here’s a brief explanation of the ontology diagrammed below, and how will we create [Entities](../software-catalog/entity/entity.md) for each of them:
+Before we dive into the details of each [Blueprint](../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) type in the software catalog, here’s a brief explanation of the ontology diagrammed below, and how will we create [Entities](../build-your-software-catalog/sync-data-to-catalog/understand-entities-structure/understand-entities-structure.md) for each of them:
 
 - **Service** - a microservice, a software monolith, or any other software architecture.
   - In this example services will be reported by Port's GitHub App.
@@ -39,7 +39,7 @@ Before we dive into the details of each [Blueprint](../software-catalog/blueprin
 - **Deployment** - an object representing a CD job. It includes the version of the deployed service and a link to the job itself. Unlike other objects, the deployment is an immutable item in the software catalog. It is important to keep it immutable to ensure the catalog remains reliable.
   - In this example deployments will be reported using Port's GitHub Action as part of the deployment process.
 
-Now that you know the end result of this guide, let's start by creating the Blueprints and [Relations](../software-catalog/relation/relation.md) of your software catalog.
+Now that you know the end result of this guide, let's start by creating the Blueprints and [Relations](../build-your-software-catalog/define-your-data-model/relate-blueprints/relate-blueprints.md) of your software catalog.
 
 ## Blueprints and Relations
 
@@ -368,17 +368,13 @@ After creating the initial service Blueprint, return to the Blueprint and replac
 
 </details>
 
-:::tip
-Remember that Blueprints can be created both from the [UI](../software-catalog/blueprint/tutorial.md#from-the-ui) and from the [API](../software-catalog/blueprint/tutorial.md#from-the-api)
-:::
-
 Now that you have your Blueprints created, connected and ready to go, time to create your Entities:
 
 ## Entities
 
 ### Environment - Terraform provider
 
-To keep things short and simple, let's assume you only have a production environment. We'll use Port's [Terraform provider](../api-providers/terraform.md) to create an Entity for it.
+To keep things short and simple, let's assume you only have a production environment. We'll use Port's [Terraform provider](../build-your-software-catalog/sync-data-to-catalog/iac/terraform.md) to create an Entity for it.
 
 :::info
 In a real environment, this terraform file would also include actual provisioning of cloud resources, such as the kubernetes namespace corresponding to the environment Entity.
@@ -444,7 +440,7 @@ Now that you have your environment ready, it's time to create a service.
 
 ### Service - GitHub app
 
-To create your service, you will connect Port's [GitHub app](../api-providers/gitops/github-app-gitops/github-app-gitops.md) to your service repository, and add a `port.yml` file describing the service you want to create an Entity for in Port.
+To create your service, you will connect Port's [GitHub app](../build-your-software-catalog/sync-data-to-catalog/gitops/github-app-gitops/github-app-gitops.md) to your service repository, and add a `port.yml` file describing the service you want to create an Entity for in Port.
 
 Here is an example `port.yml` file for a service called `Notification Service`:
 
@@ -476,7 +472,7 @@ relations:
 :::
 
 :::tip
-`repo` is a GitHub App [auto-imported properties](../api-providers/gitops/github-app-gitops/auto-importing-properties.md), as such it will be added automatically to the `port.yml` file of the service Entity.
+`repo` is a GitHub App [auto-imported properties](../build-your-software-catalog/sync-data-to-catalog/gitops/github-app-gitops/auto-importing-properties.md), as such it will be added automatically to the `port.yml` file of the service Entity.
 :::
 
 After the commit of the `port.yml` file to your repository, you will now see your service in Port.
@@ -560,7 +556,7 @@ print(response.json())
 
 A deployment service pod represents an instance of a deployed service. A deployment service pod has a `deployment config` tied to it, which represents the deployed service that the pod is an instance of.
 
-Below is a `config.yaml` configuration file to use as the [Kubernetes Exporter](../exporters/k8s-exporter/k8s-exporter.md) config:
+Below is a `config.yaml` configuration file to use as the [Kubernetes Exporter](../build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md) config:
 
 <details>
 <summary>Click here to see the config</summary>
