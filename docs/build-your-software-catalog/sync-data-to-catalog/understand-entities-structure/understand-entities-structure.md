@@ -2,7 +2,7 @@
 sidebar_position: 3
 ---
 
-# 🏢 Understand entities structure
+# Understand entities structure
 
 ## What is an Entity?
 
