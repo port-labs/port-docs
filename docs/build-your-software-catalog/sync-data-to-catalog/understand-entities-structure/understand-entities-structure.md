@@ -16,7 +16,6 @@ This is the basic structure of an Entity:
 {
   "identifier": "unique-ID",
   "title": "Title",
-  "team": "",
   "blueprint": "blueprintName",
   "properties": {
     "property1": "",
@@ -57,7 +56,7 @@ In this example, you can see how a `microservice` Entity is defined:
 {
   "identifier": "my-service",
   "title": "My Service",
-  "team": "Infra",
+  "team": ["Infra"],
   "blueprint": "microservice",
   "properties": {
     "repo-link": "https://github.com/port-labs/my-service",

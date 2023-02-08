@@ -46,7 +46,6 @@ Every entity has a format similar to the one we explained in the Understanding t
 {
   "identifier": "requests-pkg-v2-28",
   "title": "Requests",
-  "team": "",
   "blueprint": "package",
   "properties": {
     "version": "2.28",
@@ -99,7 +98,6 @@ blueprint_id = 'package'
 entity = {
   'identifier': 'requests-pkg-v2-28',
   'title': 'Requests',
-  'team': '',
   'properties': {
     'version': '2.28',
     'inHouse': False
@@ -138,7 +136,6 @@ const config = {
 const entity = {
   identifier: "requests-pkg-v2-28",
   title: "Requests",
-  team: "",
   properties: {
     version: "2.28",
     inHouse: false,
@@ -294,7 +291,6 @@ To remove a mapped related Entity from a `"many": true` relation (for example: `
 {
   "identifier": "requests-pkg-v2-28",
   "title": "Requests",
-  "team": "",
   "properties": {
     ...
   },
@@ -310,7 +306,6 @@ To remove a mapped related Entity from a `"many": false` relation (for example: 
 {
   "identifier": "requests-pkg-v2-28",
   "title": "Requests",
-  "team": "",
   "properties": {
     ...
   },
@@ -330,7 +325,6 @@ To remove a mapped related Entity from a `"many": true` relation (for example: `
 {
   "identifier": "requests-pkg-v2-28",
   "title": "Requests",
-  "team": "",
   "properties": {
     ...
   },
@@ -346,7 +340,6 @@ To remove a mapped related Entity from a `"many": false` relation (for example: 
 {
   "identifier": "requests-pkg-v2-28",
   "title": "Requests",
-  "team": "",
   "properties": {
     ...
   },

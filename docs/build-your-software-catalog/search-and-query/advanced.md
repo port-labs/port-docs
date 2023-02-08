@@ -43,7 +43,7 @@ Here is a search response with `attach_title_to_relation=true`:
       "identifier": "e_vb9EPyW1zOamcbT1",
       "title": "cart-deployment",
       "blueprint": "deployment",
-      "team": "Team BE",
+      "team": ["Team BE"],
       "properties": {
         "version": "1.4",
         "user": "yonatan",
@@ -91,7 +91,7 @@ Here is the same search response with `attach_title_to_relation=false`:
       "identifier": "e_vb9EPyW1zOamcbT1",
       "title": "cart-deployment",
       "blueprint": "deployment",
-      "team": "Team BE",
+      "team": ["Team BE"],
       "properties": {
         "version": "1.4",
         "user": "yonatan",

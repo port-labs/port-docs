@@ -43,7 +43,6 @@ Every entity has a format similar to the one we explained in the [Understanding 
 {
   "identifier": "requests-pkg-v2-28",
   "title": "Requests",
-  "team": "",
   "blueprint": "package",
   "properties": {
     "version": "2.28",
@@ -291,7 +290,6 @@ To remove a mapped related entity from a `"many": true` relation (for example: `
 {
   "identifier": "requests-pkg-v2-28",
   "title": "Requests",
-  "team": "",
   "properties": {
     ...
   },
@@ -307,7 +305,6 @@ To remove a mapped related Entity from a `"many": false` relation (for example: 
 {
   "identifier": "requests-pkg-v2-28",
   "title": "Requests",
-  "team": "",
   "properties": {
     ...
   },
@@ -327,7 +324,6 @@ To remove a mapped related entity from a `"many": true` relation (for example: `
 {
   "identifier": "requests-pkg-v2-28",
   "title": "Requests",
-  "team": "",
   "properties": {
     ...
   },
@@ -343,7 +339,6 @@ To remove a mapped related entity from a `"many": false` relation (for example: 
 {
   "identifier": "requests-pkg-v2-28",
   "title": "Requests",
-  "team": "",
   "properties": {
     ...
   },
