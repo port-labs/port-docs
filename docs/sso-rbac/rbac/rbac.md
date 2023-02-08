@@ -128,3 +128,26 @@ Team dropdown selector in the entity create/edit page:
 :::info
 Okta and AzureAD integrations are only available after configuring SSO from the relevant identity provider, refer to the [Single Sign-On (SSO)](../sso-providers/) section for more details
 :::
+
+### Team Inheritance
+
+Team inheritance allows you to manage ownership of entities through relations.
+You can configure entities to inherite their `team` from entities they are related to.
+
+`teamInheritance` is a field of the [Blueprint Structure](../../build-your-software-catalog/sync-data-to-catalog/understand-entities-structure/#structure-table) that holds a single field - `path`, that represents the relations path that leads to the blueprint whose entities `team` we want to inherite.
+
+In the following example, we take the `Deployment` and `Service` blueprints from the [SDLC Use Case](../../complete-use-cases/sdlc.md) and configure `Deployment` entities to inherite the `team` property of the `Service` entities they are connected to.
+
+```json showLineNumbers
+{
+  "identifier": "deployment",
+  // ...blueprint properties
+  "teamInheritance": {
+    "path": "deploymentConfig.service"
+  }
+}
+```
+
+:::info
+Notice that the `path` keyword works similarly to the way `path` works for [Mirror Properties](../../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/mirror-property/mirror-property.md) (only without the property name at the end, as it is always `team`), and can only contain one-to-one relations.
+:::
