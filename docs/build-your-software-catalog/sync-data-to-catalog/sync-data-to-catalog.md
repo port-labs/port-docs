@@ -11,7 +11,7 @@ Port offers several integrations, allowing you to easily ingest and manage data 
 
 ## Introduction
 
-Port's integration methods allow you to ingest both [blueprints](../define-your-data-model/setup-blueprint/setup-blueprint.md#blueprint-structure) and [entities](./understand-entities-structure/understand-entities-structure.md).
+Port's integration methods allow you to ingest both [blueprints](../define-your-data-model/setup-blueprint/setup-blueprint.md#blueprint-structure) and [entities](#entity-json-structure).
 
 By using Port's integrations you ensure that the software catalog is always up to date, and that live data is ingested directly from your systems, which is the most reliable source-of-truth for your environment.
 

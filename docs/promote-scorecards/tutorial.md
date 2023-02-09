@@ -71,7 +71,7 @@ An editor window will open with the current JSON array of the defined Scorecards
 ### From the API
 
 :::note
-Remember that an access token is necessary in order to make API requests. If you need to generate a new token, refer to [Getting an API token](../build-your-software-catalog/sync-data-to-catalog/api/get-api-token.mdx).
+Remember that an access token is necessary in order to make API requests. If you need to generate a new token, refer to [Getting an API token](../build-your-software-catalog/sync-data-to-catalog/api/api.md#get-api-token).
 :::
 
 In order to create a scorecard from the API, you will make a PUT request to the URL `https://api.getport.io/v1/{blueprint_identifier}/scorecards`.
@@ -204,7 +204,7 @@ const response = await axios.put(
 
 After creating the Scorecards, you will see a new tab in the profile Entity page of each of your Blueprint's Entities, showing the various scorecards levels.
 
-For example, we can [create the entity below](../build-your-software-catalog/sync-data-to-catalog/understand-entities-structure/tutorial.md#create-entities)
+For example, we can [create the entity below](../build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md#creating-entities)
 
 ```json showLineNumbers
 {

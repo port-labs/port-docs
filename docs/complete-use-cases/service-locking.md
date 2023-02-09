@@ -18,7 +18,7 @@ The environment we're going to use includes 2 [Blueprints](../build-your-softwar
 
 ![Service locking layout](../../static/img/complete-use-cases/service-locking/service-locking-layout.png)
 
-Let's go over the different Blueprints shown above and how we'll create [Entities](../build-your-software-catalog/sync-data-to-catalog/understand-entities-structure/understand-entities-structure.md) for each one of them:
+Let's go over the different Blueprints shown above and how we'll create [Entities](../build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md#entity-json-structure) for each one of them:
 
 - **Deployment Config** - a deployment config is a representation of the current “live” version of a service running in a specific environment. It will include references to the service, environment, and deployment, as well as real-time information such as status, uptime, and any other relevant metadata.
   - In this example deployment configs will be reported manually.

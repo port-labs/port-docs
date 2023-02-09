@@ -122,7 +122,7 @@ Since Port is API first, even if your specific CI/CD platform does not already h
 
 To use Port's REST API in your CI/CD you need to perform the following steps:
 
-1. Find your [Port credentials](../api/get-api-token.mdx#find-your-port-credentials);
+1. Find your [Port credentials](../api/api.md#find-your-port-credentials);
 2. Save them as secrets or in some other same manner such that you can reference them in your CI/CD flow;
 3. Make sure you have an HTTP-capable client in your CI/CD environment.
    1. For example: cURL, python with the requests package, nodejs with fetch/axios, etc.
