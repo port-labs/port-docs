@@ -1,5 +1,7 @@
 ---
 sidebar_position: 1
+title: Port Overview
+sidebar_label: 👋 Port Overview
 ---
 
 # 👋 Port Overview

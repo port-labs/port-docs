@@ -1,5 +1,7 @@
 ---
 sidebar_position: 2
+title: Relate Blueprints
+sidebar_label: 🔀 Relate Blueprints
 ---
 
 import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"

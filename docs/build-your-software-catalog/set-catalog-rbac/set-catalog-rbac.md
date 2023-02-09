@@ -1,3 +1,8 @@
+---
+title: Set Catalog RBAC
+sidebar_label: 🔐 Set Catalog RBAC
+---
+
 # 🔐 Set Catalog RBAC
 
 Port provides granular control to make sure every user sees only the parts of the catalog that are relevant for them.

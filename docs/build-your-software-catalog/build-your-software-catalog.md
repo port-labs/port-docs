@@ -1,5 +1,7 @@
 ---
 sidebar_position: 1
+title: Build your Software Catalog
+sidebar_label: 🏗️ Build your Software Catalog
 ---
 
 import Image from "@theme/IdealImage";

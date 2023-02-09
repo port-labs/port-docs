@@ -1,5 +1,7 @@
 ---
 sidebar_position: 1
+title: Define Your Data Model
+sidebar_label: 📋 Define Your Data Model
 ---
 
 # 📋 Define Your Data Model
@@ -34,8 +36,6 @@ There are two main building blocks in setting up the data model:
   - Common blueprints: Application, Customer, Running Application, etc.
 
 In this [live demo](https://demo.getport.io/dev-portal) example, we can see an example of a comprehensive data model, using Blueprints & Relations. 🎬
-
-## 🔧 Introduction - [Configuration methods](./configuration-methods/configuration-methods.mdx)
 
 ## 🧱 Step 1 - [Setup Blueprintss](./setup-blueprint/setup-blueprint.md)
 

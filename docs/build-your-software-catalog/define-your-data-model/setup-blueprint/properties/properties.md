@@ -2,6 +2,8 @@
 sidebar_position: 1
 ---
 
+import DocCardList from '@theme/DocCardList';
+
 # Properties
 
 Each blueprint has a `properties` section under its `schema`. In this section, you can define all of the unique properties that describe your asset.
@@ -30,7 +32,5 @@ The different components that make up a basic property definition are listed in 
 | `default`     | Default value for this property in case an entity is created without explicitly providing a value.                                                                                 |
 
 ## Supported properties
-
-import DocCardList from '@theme/DocCardList';
 
 <DocCardList />

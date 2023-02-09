@@ -1,5 +1,7 @@
 ---
 sidebar_position: 1
+title: Setup Blueprints
+sidebar_label: 🧱 Setup Blueprints
 ---
 
 import ApiRef from "../../../api-reference/\_learn_more_reference.mdx";
@@ -102,7 +104,7 @@ All available properties are listed in the [properties](./properties/properties.
 
 ## Configure blueprints in Port
 
-<Tabs groupId="definition" defaultValue="api" values={[
+<Tabs groupId="definition" queryString defaultValue="api" values={[
 {label: "API", value: "api"},
 {label: "Terraform", value: "tf"},
 {label: "UI", value: "ui"}

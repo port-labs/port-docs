@@ -1,5 +1,7 @@
 ---
 sidebar_position: 1
+title: Complete Use Cases
+sidebar_label: ✅ Complete Use Cases
 ---
 
 # ✅ Complete Use Cases
