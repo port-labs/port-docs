@@ -1,8 +1,9 @@
 ---
 sidebar_position: 13
+title: ⚓️ Meta
 ---
 
-# Meta-Properties
+# ⚓️ Meta-Properties
 
 A meta-property is a property that exists on every entity in Port by default.
 

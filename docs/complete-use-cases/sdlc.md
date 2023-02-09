@@ -26,7 +26,7 @@ The Basic Model covers the main SDLC intersections: from Services, to Environmen
 
 ![software catalog layout](../../static/img/complete-use-cases/software-catalog/software-catalog-layout.png)
 
-Before we dive into the details of each [Blueprint](../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) type in the software catalog, here’s a brief explanation of the ontology diagrammed below, and how will we create [Entities](../build-your-software-catalog/sync-data-to-catalog/understand-entities-structure/understand-entities-structure.md) for each of them:
+Before we dive into the details of each [Blueprint](../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) type in the software catalog, here’s a brief explanation of the ontology diagrammed below, and how will we create [Entities](../build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md#entity-json-structure) for each of them:
 
 - **Service** - a microservice, a software monolith, or any other software architecture.
   - In this example services will be reported by Port's GitHub App.

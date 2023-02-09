@@ -1,4 +1,4 @@
-# 👑 Roles, Teams & Ownership
+# Roles, Teams & Ownership
 
 ## Assigning permissions
 

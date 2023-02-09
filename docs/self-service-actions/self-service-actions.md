@@ -1,5 +1,7 @@
 ---
 sidebar_position: 2
+title: Self-Service Actions
+sidebar_label: ⚡️ Self-Service Actions
 ---
 
 # ⚡️ Self-Service Actions

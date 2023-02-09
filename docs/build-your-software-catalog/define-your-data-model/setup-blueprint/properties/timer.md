@@ -3,6 +3,8 @@ sidebar_position: 11
 description: Timer is a data type used to define an expiration date/lifespan on a specific property
 ---
 
+import ApiRef from "../../../../api-reference/\_learn_more_reference.mdx"
+
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
@@ -47,6 +49,8 @@ In this [live demo](https://demo.getport.io/developerEnvs) example, we can see t
 
 </TabItem>
 </Tabs>
+
+<ApiRef />
 
 ## Terraform definition
 

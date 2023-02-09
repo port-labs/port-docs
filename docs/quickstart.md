@@ -1,6 +1,8 @@
 ---
 sidebar_position: 2
 slug: /
+title: Quickstart
+sidebar_label: ⏱️ Quickstart
 ---
 
 # ⏱️ Quickstart
@@ -364,7 +366,7 @@ blueprint = {
             "product": {
                 "title": "Product",
                 "type": "string",
-                "icon": "Docs",
+                "icon": "ApiDoc",
                 "default": "Analytics",
                 "enum": ["SaaS", "Control Panel", "Analytics"],
                 "description": "Choose product unit related to the service"

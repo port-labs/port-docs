@@ -1,6 +1,10 @@
 ---
 sidebar_position: 2
+title: Relate Blueprints
+sidebar_label: 🔀 Relate Blueprints
 ---
+
+import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
@@ -90,6 +94,8 @@ A single type relation is distinguished by the `many: false` configuration:
 }
 ```
 
+<ApiRef />
+
 </TabItem>
 <TabItem value="tf">
 
@@ -147,6 +153,8 @@ A many type relation is distinguished by the `many: true` configuration:
   }
 }
 ```
+
+<ApiRef />
 
 </TabItem>
 <TabItem value="tf">
@@ -210,6 +218,8 @@ Relations are part of the structure of a [blueprint](../setup-blueprint/setup-bl
 }
 ```
 
+<ApiRef />
+
 </TabItem>
 
 <TabItem value="ui">
@@ -241,7 +251,5 @@ resource "port-labs_blueprint" "myBlueprint" {
 
 </TabItem>
 </Tabs>
-
-JSON example with highlighting on the area of the relation definition.
 
 Once added to the blueprint definition, you can [apply the blueprint](../setup-blueprint/setup-blueprint.md#apply-blueprints-to-port) to Port

@@ -3,6 +3,8 @@ sidebar_position: 14
 description: Mirror Property allows you to map data from related entities to your entity
 ---
 
+import ApiRef from "../../../../../api-reference/\_learn_more_reference.mdx"
+
 # 🪞 Mirror Property
 
 Mirror property allows you to map data from related entities to your entity.
@@ -52,6 +54,8 @@ The `mirrorProperties` key is a top-level key in the JSON of an entity (similar 
 
 </TabItem>
 </Tabs>
+
+<ApiRef />
 
 ## Terraform definition
 

@@ -3,6 +3,8 @@ sidebar_position: 5
 description: Array is a data type used to save lists of data
 ---
 
+import ApiRef from "../../../../api-reference/\_learn_more_reference.mdx"
+
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
@@ -65,6 +67,8 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `M
 
 </TabItem>
 </Tabs>
+
+<ApiRef />
 
 ## Terraform definition
 

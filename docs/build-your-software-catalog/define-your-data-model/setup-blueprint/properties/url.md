@@ -3,6 +3,8 @@ sidebar_position: 6
 description: URL is a data type used to save links to websites
 ---
 
+import ApiRef from "../../../../api-reference/\_learn_more_reference.mdx"
+
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
@@ -89,6 +91,8 @@ In this [live demo](https://demo.getport.io/domains) example, we can see the `Do
 
 </TabItem>
 </Tabs>
+
+<ApiRef />
 
 ## Terraform definition
 

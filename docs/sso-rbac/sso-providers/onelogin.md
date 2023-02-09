@@ -1,6 +1,7 @@
 ---
 title: "Onelogin"
-sidebar_position: 1.3
+sidebar_position: 3
+description: Integrate Onelogin with Port
 ---
 
 # How to configure Onelogin

@@ -1,5 +1,7 @@
 ---
 sidebar_position: 1
+title: Build your Software Catalog
+sidebar_label: 🏗️ Build your Software Catalog
 ---
 
 import Image from "@theme/IdealImage";
@@ -31,8 +33,6 @@ Port's Software Catalog provides integrations to surface data that exists in var
 By syncing data into the software catalog, you can ensure that you have a comprehensive and up-to-date view of your software, infrastructure, cloud resources, CI/CD and more.
 
 See how to --> [Sync data to the software catalog](./sync-data-to-catalog/sync-data-to-catalog.md)
-
-<!-- ![integrations](../../static/img/software-catalog/integrations.png) -->
 
 <center>
 
