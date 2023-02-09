@@ -1,6 +1,7 @@
 ---
 title: "Okta"
-sidebar_position: 1.1
+sidebar_position: 1
+description: Integrate Okta with Port
 ---
 
 # How to configure Okta

@@ -13,10 +13,10 @@ import TabItem from "@theme/TabItem"
 
 ## What is a Scorecard?
 
-**Scorecards** enable us to create a set of rules that will determine the level of our Port Entities, based on their properties.
+**Scorecards** enable us to create a set of rules that will determine the level of our Port entities, based on their properties.
 Each scorecard has a set of rules that affects its total level, a rule has a `level` property which is one of the following: `Gold`, `Silver` or `Bronze`. Each rule has specific conditions, and the scorecard level increases when they pass.
 
-**For example**, to keep track of your organization's `Services` maturity, we can create a set of scorecards on top of a `Service` [Blueprint](../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) that will keep track of their progress. here are some scorecards that we can set:
+**For example**, to keep track of your organization's `Services` maturity, we can create a set of scorecards on top of a `Service` [blueprint](../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) that will keep track of their progress.
 
 ## 💡 Scorecard use cases
 
@@ -31,11 +31,11 @@ In this [live demo](https://demo.getport.io/serviceEntity?identifier=load-genera
 
 ## Scorecard structure table
 
-A single scorecard defines a category to group different checks, validations and evaluations, here is the structure of a single scorecard:
+A single scorecard defines a category to group different checks, validations and evaluations. Here is the structure of a single scorecard:
 
 | Field        | Type     | Description                                                                                                                                         |
 | ------------ | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `title`      | `String` | Scorecard name that will be shown in theUI                                                                                                          |
+| `title`      | `String` | Scorecard name that will be shown in the UI                                                                                                         |
 | `identifier` | `String` | The unique identifier of the `Scorecard`. The identifier is used for API calls, programmatic access and distinguishing between different scorecards |
 | `filter`     | `Object` | Optional set of conditions to filter entities that will be evaluated by the scorecard                                                               |
 | `rules`      | `Object` | The rules that we create for each scorecard to determine it's level                                                                                 |
@@ -46,7 +46,7 @@ A scorecard contains and groups multiple rules that are relevant to its specific
 
 Filters and rules enable you to generate checks inside a scorecard only for the entities and properties that you really care about.
 
-Both filters and rules follow the same querying structure:
+Both filters and rules follow the same querying structure, but since rules are actual checks to evaluate the entity against, they contain a few more fields to make them distinguishable and human-readable.
 
 <Tabs groupId="filters-and-rules" defaultValue="rules" values={[
 {label: "Rules", value: "rules"},
@@ -171,19 +171,23 @@ The available `Scorecard` levels are
 
 `Basic` -> `Bronze` -> `Silver` -> `Gold`
 
-Once an Entity passes all of the rules for a certain level, it level changes accordingly.
+Once an entity passes all of the rules for a certain level, its level changes accordingly.
 
-:::note
-You can't define a rule with a `Basic` level, the `Basic` level this level represents if an Entity hasn't passed the rules determining a `Bronze` level, it will be a `Basic` Tier.
+:::note basic level
+The lowest possible level for rules is `Bronze`. An entity's level will be `Basic` until it has a passed all rules at the `Bronze` level.
 :::
 
 ## Scorecard example
 
 Please see the following example of an ownership scorecard.
 
+It has one filter:
+
+1. Only evaluate entities that are related to production (indicated by checking that the `is_production` property is set to `true`).
+
 It has two rules:
 
-1. Check that a defined on-call exists and that the number of `open_incidents` is lower than 5
+1. Check that a defined on-call exists and that the number of `open_incidents` is lower than 5;
 2. Check if a team exists.
 
 ```json showLineNumbers
@@ -191,6 +195,16 @@ It has two rules:
   {
     "title": "Ownership",
     "identifier": "ownership",
+    "filter": {
+      "combinator": "and",
+      "conditions": [
+        {
+          "property": "is_production",
+          "operator": "=",
+          "value": true
+        }
+      ]
+    },
     "rules": [
       {
         "title": "Has on call?",

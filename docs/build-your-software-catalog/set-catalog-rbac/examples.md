@@ -18,15 +18,7 @@ The following configurations, among others, are available when using permissions
 
 ## Setting blueprint permissions
 
-To set permissions for a Blueprint, click on the permissions icon of the desired Blueprint in the DevPortal Setup page:
-
-![Permissions button for blueprint](../../../static/img/software-catalog/role-based-access-control/permissions/permissionsOfBlueprint.png)
-
-This will open the following window:
-
-![Permissions Window](../../../static/img/software-catalog/role-based-access-control/permissions/permissionsModal.png)
-
-As you can see, every operation that can be performed on the blueprint or its entities is listed in the JSON and can be controlled.
+To set permissions for a blueprint, click on the permissions button of the desired blueprint in the DevPortal Setup page. This will open a modal that contains the permissions JSON and allows you to control every operation that can be performed on the blueprint or its entities.
 
 ### Role examples
 
@@ -44,8 +36,9 @@ If you want to enable **Members** to register entities of a blueprint, you can c
   "entities": {
     "register": {
       // highlight-next-line
-      "roles": ["Env-moderator", "Member"], // changed from ["Env-moderator"]
+      "roles": ["Admin", "Env-moderator", "Member"], // changed from ["Admin", "Env-moderator"]
       "users": [],
+      "teams": [],
       "ownedByTeam": false
     }
   }
@@ -64,8 +57,9 @@ To allow only **Admins** to change the property `slackChannelUrl`, remove the Mo
     "updateProperties": {
       "slackChannelUrl": {
         // highlight-next-line
-        "roles": [], // changed from ["Env-moderator"]
+        "roles": ["Admin"], // changed from ["Admin", "Env-moderator"]
         "users": [],
+        "teams": [],
         "ownedByTeam": false
       }
     }
@@ -92,9 +86,40 @@ To grant permissions for a specific user to edit the `deployedAt` relation, add 
   "entities": {
     "updateRelations": {
       "deployedAt": {
-        "roles": ["Env-moderator"],
+        "roles": ["Admin", "Env-moderator"],
         // highlight-next-line
         "users": ["some-user@myorg.com"], // changed from []
+        "teams": [],
+        "ownedByTeam": false
+      }
+    }
+  }
+}
+```
+
+</TabItem>
+
+</Tabs>
+
+### Team examples
+
+<Tabs groupId="team-permissions" defaultValue="let-team-relation" values={[
+{label: "Let team edit relation", value: "let-team-relation"}
+]}>
+
+<TabItem value="let-team-relation">
+
+To grant permissions for a specific team to edit the `deployedAt` relation, add them to the teams array:
+
+```json showLineNumbers
+{
+  "entities": {
+    "updateRelations": {
+      "deployedAt": {
+        "roles": ["Admin", "Env-moderator"],
+        "users": [],
+        // highlight-next-line
+        "teams": ["ServiceMaintainers"], // changed from []
         "ownedByTeam": false
       }
     }
@@ -117,8 +142,9 @@ For example, the following JSON will allow **every user**, regardless of their r
   "actions": {
     "delete_env": {
       "execute": {
-        "roles": ["Env-moderator"],
+        "roles": ["Admin", "Env-moderator"],
         "users": [],
+        "teams": [],
         // highlight-next-line
         "ownedByTeam": true // changed from false
       }
@@ -136,12 +162,12 @@ When granting write permissions for entities of a blueprint, you have 2 levels o
 
 To apply granular permissions for a blueprint, use the `updateProperties` and `updateRelations` fields in the JSON, see the examples below:
 
-<Tabs groupId="global-granular-permissions" defaultValue="let-user-relation" values={[
-{label: "Let user edit relation", value: "let-user-relation"},
+<Tabs groupId="global-granular-permissions" defaultValue="let-user-property" values={[
+{label: "Let user edit property", value: "let-user-property"},
 {label: "Let user edit entity", value: "let-user-entity"}
 ]}>
 
-<TabItem value="let-user-relation">
+<TabItem value="let-user-property">
 
 The following change will allow **Member** users to update _only_ the `slackChannelUrl` property of `Env` Entities:
 
@@ -151,8 +177,9 @@ The following change will allow **Member** users to update _only_ the `slackChan
     "updateProperties": {
       "slackChannelUrl": {
         // highlight-next-line
-        "roles": ["Env-moderator", "Member"], // changed from ["Env-moderator"]
+        "roles": ["Admin", "Env-moderator", "Member"], // changed from ["Admin", "Env-moderator"]
         "users": [],
+        "teams": [],
         "ownedByTeam": false
       }
     }
@@ -172,8 +199,9 @@ The following change will allow **Member** users to update _every_ property/rela
 {
   "entities": {
     "update": {
-      "roles": ["Env-moderator"],
+      "roles": ["Admin", "Env-moderator"],
       "users": [],
+      "teams": [],
       // highlight-next-line
       "ownedByTeam": true // changed from false
     }
@@ -215,8 +243,9 @@ By default, **Member** users can execute every action defined on a blueprint. In
     "clone_env": {
       "execute": {
         // highlight-next-line
-        "roles": ["Env-moderator"], // changed from ["Env-moderator", "Member"]
+        "roles": ["Admin", "Env-moderator"], // changed from ["Admin", "Env-moderator", "Member"]
         "users": [],
+        "teams": [],
         "ownedByTeam": false
       }
     }

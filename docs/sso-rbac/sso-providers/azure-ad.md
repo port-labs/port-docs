@@ -1,6 +1,7 @@
 ---
 title: "Azure Active Directory"
-sidebar_position: 1.2
+sidebar_position: 2
+description: Integrate AzureAD with Port
 ---
 
 # How to configure AzureAD
