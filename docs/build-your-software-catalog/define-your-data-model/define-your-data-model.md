@@ -39,4 +39,4 @@ In this [live demo](https://demo.getport.io/dev-portal) example, we can see an e
 
 ## 🧱 Step 1 - [Setup blueprints](./setup-blueprint/setup-blueprint.md)
 
-## 🔀 Step 2 - [Relate relations](./relate-blueprints/relate-blueprints.md)
+## 🔀 Step 2 - [Relate blueprints](./relate-blueprints/relate-blueprints.md)
