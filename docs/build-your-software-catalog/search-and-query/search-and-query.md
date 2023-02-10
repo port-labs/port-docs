@@ -10,7 +10,7 @@ import CombinatorIntro from "./\_combinator_intro.md"
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-Port's API provides tools to query, to easily query, search and filter software catalog data.
+Port's API provides tools to easily query, search and filter software catalog data.
 
 ## 💡 Common queries usage
 
@@ -46,7 +46,7 @@ Each search request is represented by a JSON object, as shown in the following e
 }
 ```
 
-The above query searches for all entities from type `microservice` that their `identifier` contains the string `admin`
+The above query searches for all entities from the `myBlueprint` blueprint that their `identifier` contains the string `myIdentifierPart`
 
 ## Search request elements
 

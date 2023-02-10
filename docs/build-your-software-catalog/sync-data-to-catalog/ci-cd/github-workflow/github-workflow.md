@@ -22,9 +22,9 @@ Our GitHub action is open source - see it [**here**](https://github.com/port-lab
 
 Port's GitHub action provides a native way to integrate Port with your GitHub workflows, for example:
 
-- Report the status of a running CI job;
-- Update the software catalog about a new build version for a microservice;
-- Get existing entities.
+- Report the status of a running **CI job**;
+- Update the software catalog about a new **build version** for a **microservice**;
+- Get existing **entities**.
 
 ## Installation
 

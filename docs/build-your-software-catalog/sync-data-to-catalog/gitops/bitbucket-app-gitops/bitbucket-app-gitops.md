@@ -6,7 +6,7 @@ sidebar_position: 1
 
 Our Bitbucket app allows you to quickly and easily map out your Software Catalog, according to your existing code repositories and projects.
 
-You can install the our Bitbucket App by following [our installation guide](../../git-provider/bitbucket-exporter/installation.md).
+You can install our Bitbucket App by following [our installation guide](../../git-provider/bitbucket-exporter/installation.md).
 
 ## What Does Our Bitbucket Application Offer You?​
 
