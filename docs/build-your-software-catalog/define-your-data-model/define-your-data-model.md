@@ -37,6 +37,6 @@ There are two main building blocks in setting up the data model:
 
 In this [live demo](https://demo.getport.io/dev-portal) example, we can see an example of a comprehensive data model, using Blueprints & Relations. 🎬
 
-## 🧱 Step 1 - [Setup Blueprintss](./setup-blueprint/setup-blueprint.md)
+## 🧱 Step 1 - [Setup Blueprints](./setup-blueprint/setup-blueprint.md)
 
 ## 🔀 Step 2 - [Relate relations](./relate-blueprints/relate-blueprints.md)
