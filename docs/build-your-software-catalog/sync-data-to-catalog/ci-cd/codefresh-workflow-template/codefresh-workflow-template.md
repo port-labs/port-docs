@@ -13,9 +13,9 @@ Our [Codefresh workflow template](https://github.com/port-labs/port-codefresh-wo
 
 Port's Codefresh workflow template provides a native way to integrate Port with your Codefresh CI workflows, for example:
 
-- Report the status of a running CI job;
-- Update the software catalog about a new build version for a microservice;
-- Get existing entities.
+- Report the status of a running **CI job**;
+- Update the software catalog about a new **build version** for a **microservice**;
+- Get existing **entities**.
 
 ## Installation
 

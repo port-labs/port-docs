@@ -11,12 +11,12 @@ Port's [API](../../../api-reference/api-reference.mdx) is a generic interface to
 
 Since Port API is a generic interface, anything that can be done with Port is possible through the API, for example:
 
-- Create entities in a script;
-- Import entities from a CSV file
+- Update the software catalog using a script;
+- Import your existing asset inventory from a CSV file;
 - Integrate Port with your custom CI/CD;
-- Report the status of a running CI job;
-- Update the software catalog about a new build version for a microservice;
-- Get existing entities.
+- Report the status of a running **CI job**;
+- Update the software catalog about a new **build version** for a **microservice**;
+- Get existing data from your software catalog.
 
 ## Get API Token
 
