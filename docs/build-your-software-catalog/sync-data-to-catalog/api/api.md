@@ -286,16 +286,16 @@ blueprint_id='MY_BLUEPRINT'
 curl --location --request POST "https://api.getport.io/v1/blueprints/${blueprint_id}/entities" \
     --header "Authorization: Bearer $access_token" \
     --header "Content-Type: application/json" \
-    --data-raw "{
+    --data-raw '{
       # highlight-start
-    \"identifier\": \"MY_ENTITY_IDENTIFIER\",
-    \"title\": \"MY ENTITY TITLE\",
-    \"properties\": {
-            \"MY_STRING_PROP\": \"MY VALUE\",
-            \"MY_BOOLEAN_PROP\": false
+    "identifier": "MY_ENTITY_IDENTIFIER",
+    "title": "MY ENTITY TITLE",
+    "properties": {
+            "MY_STRING_PROP": "MY VALUE",
+            "MY_BOOLEAN_PROP": false
       # highlight-end
     }
-}"
+}'
 
 # The output of the command contains the content of the resulting blueprint
 ```
@@ -452,16 +452,16 @@ blueprint_id='MY_BLUEPRINT'
 curl --location --request POST "https://api.getport.io/v1/blueprints/${blueprint_id}/entities?upsert=true&merge=true" \
     --header "Authorization: Bearer $access_token" \
     --header "Content-Type: application/json" \
-    --data-raw "{
+    --data-raw '{
       # highlight-start
-    \"identifier\": \"MY_ENTITY_IDENTIFIER\",
-    \"title\": \"MY ENTITY TITLE\",
-    \"properties\": {
-            \"MY_STRING_PROP\": \"MY VALUE\",
-            \"MY_BOOLEAN_PROP\": false
+    "identifier": "MY_ENTITY_IDENTIFIER",
+    "title": "MY ENTITY TITLE",
+    "properties": {
+            "MY_STRING_PROP": "MY VALUE",
+            "MY_BOOLEAN_PROP": false
       # highlight-end
     }
-}"
+}'
 
 # The output of the command contains the content of the resulting blueprint
 ```
@@ -618,16 +618,16 @@ blueprint_id='MY_BLUEPRINT'
 curl --location --request POST "https://api.getport.io/v1/blueprints/${blueprint_id}/entities?upsert=true" \
     --header "Authorization: Bearer $access_token" \
     --header "Content-Type: application/json" \
-    --data-raw "{
+    --data-raw '{
       # highlight-start
-    \"identifier\": \"MY_ENTITY_IDENTIFIER\",
-    \"title\": \"MY ENTITY TITLE\",
-    \"properties\": {
-            \"MY_STRING_PROP\": \"MY VALUE\",
-            \"MY_BOOLEAN_PROP\": false
+    "identifier": "MY_ENTITY_IDENTIFIER",
+    "title": "MY ENTITY TITLE",
+    "properties": {
+            "MY_STRING_PROP": "MY VALUE",
+            "MY_BOOLEAN_PROP": false
       # highlight-end
     }
-}"
+}'
 
 # The output of the command contains the content of the resulting blueprint
 ```
