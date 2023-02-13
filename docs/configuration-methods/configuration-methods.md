@@ -6,6 +6,7 @@ sidebar_label: 🔧 Setup Methods
 
 import CredentialsGuide from "../build-your-software-catalog/sync-data-to-catalog/api/\_template_docs/\_find_credentials.mdx";
 import ApiRef from "../api-reference/\_learn_more_reference.mdx"
+import InstallTerraform from "../build-your-software-catalog/sync-data-to-catalog/iac/\_terraform_provider_base.mdx"
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
@@ -57,33 +58,24 @@ To learn more about the JSON structure of different API objects, refer to their 
 
 <TabItem value="tf">
 
-Port's [Terraform provider](https://registry.terraform.io/providers/port-labs/port-labs/) allows you to configure your software catalog using Infrastructure as Code (IaC).
+Port's [Terraform provider](https://registry.terraform.io/providers/port-labs/port-labs/) allows you to configure your software catalog using Infrastructure-as-Code (IaC).
 
-To install the Terraform provider create a `.tf` file specifying the provider:
+<InstallTerraform />
+
+To create a blueprint using Port's Terraform provider you need a `.tf` file defining a [`port-labs_blueprint`](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/blueprint) resource:
 
 ```hcl showLineNumbers
-terraform {
-  required_providers {
-    port-labs = {
-      source  = "port-labs/port-labs"
-      version = "~> 0.8.1"
-    }
-  }
-}
-
-provider "port-labs" {
-  client_id = "{YOUR CLIENT ID}"     # or set the env var PORT_CLIENT_ID
-  secret    = "{YOUR CLIENT SECRET}" # or set the env var PORT_CLIENT_SECRET
+resource "port-labs_blueprint" "myBlueprint" {
+  title      = "My blueprint"
+  icon       = "My icon"
+  identifier = "myIdentifier"
+  description = "My description"
 }
 ```
 
-Then run the following command to install the provider in your Terraform workspace:
+Then run `terraform plan` to view the new blueprint that will be created, and `terraform apply` to create the blueprint you defined, inside Port's software catalog.
 
-```shell showLineNumbers
-terraform init
-```
-
-To learn more about the terraform resource definition of different API objects, refer to their respective category and structure reference, for example - [configure blueprints in Port](../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md?definition=tf#configure-blueprints-in-port).
+To learn more about the Terraform resource definition of different API objects, refer to their respective category and structure reference, for example - [configure blueprints in Port](../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md?definition=tf#configure-blueprints-in-port) and [Terraform provider](../build-your-software-catalog/sync-data-to-catalog/iac/terraform.md).
 
 </TabItem>
 

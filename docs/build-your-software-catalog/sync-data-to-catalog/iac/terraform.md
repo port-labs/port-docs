@@ -2,59 +2,37 @@
 sidebar_position: 1
 ---
 
+import InstallTerraform from "./\_terraform_provider_base.mdx"
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
 # Terraform
 
-Our integration with Terraform allows you to combine the state of your infrastructure with the Entities representing them in Port. For the official documentation of the Port Terraform provider check out the [registry page](https://registry.terraform.io/providers/port-labs/port-labs/).
+Our integration with Terraform allows you to combine the state of your infrastructure with the entities representing them in Port.
 
-Here you'll find a step-by-step guide to installing the Port Terraform provider.
+Bu using Port's Terraform provider you make it easy to integrate Port with your existing IaC definitions, every resource provisioned by Terraform can also be reported to the software catalog using the same `.tf` definition file.
 
-## What does our Terraform Provider give you?
+:::info port terraform provider
+You can view the official registry page for our Terraform provider [here](https://registry.terraform.io/providers/port-labs/port-labs/)
+:::
 
-- Automatic management of Entities based on resources in Terraform files.
-- The option to define resources in yml files and reflect them in Port using the provider.
+## 💡 Terraform provider common use cases
+
+Our Terraform provider makes it easy to fill the software catalog with data directly from your IaC definitions, for example:
+
+- Report **cloud accounts**;
+- Report **databases**;
+- Report **lambdas** and **managed Kubernetes services**;
+- etc.
 
 ## Installation
 
-:::note Prerequisites
+<InstallTerraform/>
 
-[Terraform CLI](https://learn.hashicorp.com/tutorials/terraform/install-cli).
-:::
+## Sync data using the Terraform provider
 
-First, require the provider in your Terraform configuration (refer [here](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/entity) for our resources schema):
-
-```hcl showLineNumbers
-terraform {
-  required_providers {
-    port-labs = {
-      source  = "port-labs/port-labs"
-      version = "~> 0.8.1"
-    }
-  }
-}
-
-provider "port-labs" {
-  client_id = "{YOUR CLIENT ID}"     # or set the env var PORT_CLIENT_ID
-  secret    = "{YOUR CLIENT SECRET}" # or set the env var PORT_CLIENT_SECRET
-}
-```
-
-Run the following command to make Terraform install the Port provider:
-
-```shell showLineNumbers
-terraform init
-```
-
-The command will print the following when the `init` command has finished running:
-
-`Terraform has been successfully initialized!`
-
-In order to validate the module initialization works, run the command:
-
-```shell
- terraform plan
-```
-
-The result will be: `no changes. Your infrastructure matches the configuration.`
+To sync data to the software catalog using the Terraform provider, you will define [`port-labs_entity`](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/entity) resources in your Terraform definition files:
 
 ## Usage
 
