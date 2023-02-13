@@ -24,7 +24,7 @@ appprojects                       appproj,appprojs   argoproj.io/v1alpha1       
 
 Then, in order to map ArgoCD `applications`, add the matching resource kind to your `config.yaml`:
 
-```yaml
+```yaml showLineNumbers
 - kind: argoproj.io/v1alpha1/applications
   identifier: .metadata.name
   blueprint: '"argoApp"'
