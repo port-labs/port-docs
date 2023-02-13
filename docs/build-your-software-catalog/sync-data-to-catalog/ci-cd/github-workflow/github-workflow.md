@@ -64,6 +64,7 @@ Port's GitHub action supports the following methods:
     identifier: myEntity
     icon: myIcon
     blueprint: myBlueprint
+    team: "['myTeam']"
     properties: |
       {
         "myStringProp": "My value",
