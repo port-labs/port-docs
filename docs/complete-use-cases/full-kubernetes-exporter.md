@@ -99,7 +99,7 @@ This workflow will monitor file changes under `terraform/*.tf`, and on a change 
 Now it is time to populate you Port environment with Entities using Port's Kubernetes Exporter.
 
 :::tip
-Get to know the basics of our Kubernetes exporter [here!](../build-your-software-catalog/sync-data-to-catalog/kubernetes/quickstart.md)
+Get to know the basics of our Kubernetes exporter [here!](../build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md)
 :::
 
 Create a `config.yaml` with your relevant queries and Blueprints.
