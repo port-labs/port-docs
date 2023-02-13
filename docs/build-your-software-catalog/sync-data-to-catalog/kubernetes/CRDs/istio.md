@@ -1,5 +1,6 @@
 ---
 sidebar_position: 2
+description: Export Istio resources
 ---
 
 # Istio
