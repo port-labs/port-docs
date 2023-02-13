@@ -26,8 +26,8 @@ Port's Kubernetes exporter is open source, view the source code [**here**](https
 
 Our Kubernetes exporter makes it easy to fill the software catalog with live data directly from your clusters, for example:
 
-- Map all of the **namespaces** in your clusters;
-- List all of the **pods**, **replica sets**, **cluster nodes**, **deployments** and other cluster objects;
+- Map all of the resources in your clusters, including **namespaces**, **pods**, **replica sets**, **cluster nodes**, **deployments** and other cluster objects;
+- Get real-time metadata from your cluster such as _replica counts_, _deployment health_, _node health_ and more;
 - Use relations to create a complete, easily digestible map of your K8s cluster inside Port;
 - Map your Kubernetes resources from common CRDs such as ArgoCD, Istio and more;
 - etc.
