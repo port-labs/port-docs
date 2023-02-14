@@ -136,7 +136,7 @@ We will focus on two specific use cases:
 - Create/Update catalog entities - available by making HTTP POST requests to `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/`, receives the identifier and other properties of a new entity or an entity that needs to be updated;
 - Get catalog entities - available by making HTTP GET requests to `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/`, receives the identifier of an existing entity and retrieves it for use in your CI.
 
-<Tabs groupId="usage" defaultValue="create" values={[
+<Tabs groupId="usage" queryString="update-strategy" defaultValue="create" values={[
 {label: "Create", value: "create"},
 {label: "Create/Update", value: "create-update"},
 {label: "Create/Override", value: "create-override"},
