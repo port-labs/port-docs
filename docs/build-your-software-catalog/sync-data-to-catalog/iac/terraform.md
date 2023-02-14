@@ -34,6 +34,48 @@ Our Terraform provider makes it easy to fill the software catalog with data dire
 
 To sync data to the software catalog using the Terraform provider, you will define [`port-labs_entity`](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/entity) resources in your Terraform definition files:
 
+<Tabs groupId="sync-data" queryString="current-scenario" defaultValue="create" values={[
+{label: "Create", value: "create"},
+{label: "Update", value: "update"},
+{label: "Delete", value: "delete"},
+]} >
+
+<TabItem value="create">
+
+To create an entity using Terraform, add a `port-labs_entity` resource to your `.tf` definition file:
+
+```hcl showLineNumbers
+resource "port-labs_entity" "myEntity" {
+  title     = "My Entity"
+  blueprint = "myBlueprint"
+
+  properties {
+    name  = "myStringProp"
+    value = "Example microservice"
+  }
+  properties {
+    name  = "myNumberProp"
+    value = 1
+  }
+  properties {
+    name  = "myArrayProp"
+    items = ["#rnd", "#deployments"]
+  }
+  properties {
+    name  = "myObjectProp"
+    value = jsonencode({ "foo" : "bar" })
+  }
+  properties {
+    name  = "deployed"
+    value = "true"
+  }
+}
+```
+
+</TabItem>
+
+</Tabs>
+
 ## Usage
 
 ### Creating Blueprints
