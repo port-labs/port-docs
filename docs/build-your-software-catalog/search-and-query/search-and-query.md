@@ -538,6 +538,30 @@ And the result shall be:
 
 </Tabs>
 
+## Search By Schema Rule
+
+Port has the ability to search Entities by the field `type` (schema) instead of the field name.
+
+Here is an example of this rule:
+
+```json showLineNumbers
+{
+  "propertySchema": {
+    "type": "string",
+    "format": "url"
+  },
+  "operator": "=",
+  "value": "https://www.getport.io/company"
+}
+```
+
+:::note
+
+- By using this rule you will get all the entities that have a field of type string and url format.
+- Instead of the `property` field there is `propertySchema` field that contains.
+- `format` is optional.
+  :::
+
 ## Examples
 
 Refer to the [examples](./examples.md) page for practical code snippets for search.
