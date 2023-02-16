@@ -171,3 +171,7 @@ resource "port-labs_entity" "s3_bucket" {
 :::info Terraform dependencies
 Note how we use a `depends_on` block on the new s3 entity, this is required because the `s3Bucket` blueprint has to exist before the entity can be created. In addition, the entity relies on values that will only be available after the S3 bucket is created.
 :::
+
+## Result
+
+After running `terraform apply` you will see the new S3 bucket in AWS, and the matching `s3Bucket` entity in Port.
