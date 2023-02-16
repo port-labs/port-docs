@@ -359,7 +359,7 @@ Now let's take an action run and update it. All updates can be performed by send
 Our different update options are:
 
 - Set the action run status via the `status` key - `SUCCESS`, `FAILURE`;
-- Add a link to an external log of the job runner via the `link` key - AWS Cloudwatch logs, Github Workflow job, Jenkins job, etc.;
+- Add links to an external log of the job runners via the `link` key - AWS Cloudwatch logs, Github Workflow job, Jenkins job, etc.;
 - Add a message JSON object which contains additional metadata, runtime or debug information via the `message` key.
 
 :::tip
@@ -373,7 +373,10 @@ Let's update our action run with the following `PATCH` request body:
 ```json showLineNumbers
 {
   "status": "SUCCESS",
-  "link": "https://github.com/actions/toolkit/actions/runs/3617893813",
+  "link": [
+    "https://github.com/actions/toolkit/actions/runs/3617893813",
+    "https://github.com/actions/toolkit/actions/runs/4165617487"
+  ],
   "message": {
     "run_status": "Run completed successfully!"
   }
@@ -397,7 +400,7 @@ The API returns the following response:
     "endedAt": "2022-12-07T14:51:52.796Z",
     "source": "UI",
     // highlight-start
-    "link": "https://github.com/actions/toolkit/actions/runs/3617893813",
+    "link": ["https://github.com/actions/toolkit/actions/runs/3617893813"],
     "message": {
       "run_status": "Run completed successfully!"
     },
@@ -421,7 +424,7 @@ Note how our action run has updated:
 
 - `status` - has been updated to `SUCCESS`;
 - `endedAt` - now correctly shows the time that the action run was updated;
-- `link` - now includes the link we provided, and that link will also appear in the page matching the action run in Port;
+- `link` - now includes the links we provided, and those links will also appear in the page matching the action run in Port;
 - `message` - now includes the additional info we provided and it will also appear in the page matching the action run in Port.
 
 :::
@@ -500,7 +503,7 @@ def mark_action_run_as_successful(access_token, run_id, entity_id, additional_me
 
     body = {
         "status": "SUCCESS",
-        "link": "https://github.com/actions/toolkit/actions/runs/3617893813",
+        "link": ["https://github.com/actions/toolkit/actions/runs/3617893813"],
         "message": {
             "run_status": additional_message,
             "new_entity": entity_id
