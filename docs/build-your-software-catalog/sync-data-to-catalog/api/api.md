@@ -133,7 +133,7 @@ Since you are using Port's REST API directly in your CI/CD, any method that the 
 
 We will focus on three specific use cases:
 
-- **Get** catalog entities - available by making HTTP GET requests to `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/`, receives the identifier of an existing entity and retrieves it for use in your CI;
+- **Get** catalog entities - available by making HTTP GET requests to `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`, receives the identifier of an existing entity and retrieves it for use in your CI;
 - **Create/Update** catalog entities - available by making HTTP POST requests to `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/`, receives the identifier and other properties of a new entity or an entity that needs to be updated;
 - **Delete** catalog entities - available by making HTTP DELETE requests to `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`, receives the identifier of an existing entity and deletes it.
 
