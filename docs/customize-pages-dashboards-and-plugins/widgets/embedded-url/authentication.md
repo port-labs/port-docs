@@ -91,9 +91,9 @@ url_login = true
 ...
 client_id = {CLIENT_ID}
 client_secret = {CLIENT_SECRET}
-auth_url = https://{YOUR_OKTA_ORG}.okta.com/oauth2/v1/authorize
-token_url = https://{YOUR_OKTA_ORG}.okta.com/oauth2/v1/token
-api_url = https://{YOUR_OKTA_ORG}.okta.com/oauth2/v1/userinfo
+auth_url = https://{your-okta-org}.okta.com/oauth2/v1/authorize
+token_url = https://{your-okta-org}.okta.com/oauth2/v1/token
+api_url = https://{your-okta-org}.okta.com/oauth2/v1/userinfo
 enable_login_token = true
 use_pkce = true
 ...
@@ -110,6 +110,65 @@ use_pkce = true
 
 - "_refused to connect._"
   - Make sure you enabled "IFrame Embedding" as mentioned in the steps above
+- "_Could not fetch your auth token._"
+  - Make sure your tokenUrl is the correct url.
+
+</details>
+
+### Onelogin
+
+<details>
+    <summary>Setup</summary>
+
+**Steps:**
+
+1. Follow the steps 1 & 2 in [Onelogin documentation](https://onelogin.service-now.com/support?id=kb_article&sys_id=143e6c13dbfd0450ca1c400e0b9619d6#add) to add an OpenId Connect (OIDC) application in your Onelogin Organization.
+2. Make sure the Port host is in the `Redirect Uris`:
+   1. Go to Applications > The application you just added > Configuration
+   2. Add `https://app.getport.io` as a Redirect URI.
+
+<br />
+
+**Configure Grafana with OAuth & Port embedding**
+:::info Note
+The following example is just for illustration purposes and may not reflect the actual URLs and client IDs used in
+your Onelogin setup.
+
+Based on Grafana docs for [JWT Configuration](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/jwt/) & [OAuth Configuration](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/generic-oauth/)
+
+:::
+
+```ini showLineNumbers
+[security] -> Required for the embedding
+allow_embedding = true
+
+[auth.jwt] -> Required for the embedding
+...
+jwk_set_url = https://{your-onelogin-org}.onelogin.com/oidc/2/certs
+expected_claims = {"iss": "https://{your-onelogin-org}/oidc/2"}
+url_login = true
+...
+
+[auth.generic_oauth] -> Regular OAuth authentication
+...
+client_id = {CLIENT_ID}
+client_secret = {CLIENT_SECRET}
+auth_url = https://{your-onelogin-org}.onelogin.com/oidc/2/auth
+token_url = https://{your-onelogin-org}.onelogin.com/oidc/2/token
+api_url = https://{your-onelogin-org}.onelogin.com/oidc/2/me
+enable_login_token = true
+use_pkce = true
+...
+```
+
+**Troubleshoot**
+
+- "_unrecognized route or not allowed method_"
+  - Check you used the correct authorizationUrl.
+- "_client is invalid_"
+  - Check you used the correct clientId.
+- "_redirect_uri did not match any client's registered redirect_uris_".
+  - Make sure you entered https://app.getport.io as a Redirect URI for your application as mentioned in the steps above.
 - "_Could not fetch your auth token._"
   - Make sure your tokenUrl is the correct url.
 
