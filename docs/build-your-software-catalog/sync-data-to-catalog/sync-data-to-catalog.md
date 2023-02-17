@@ -27,7 +27,7 @@ This is the basic structure of an entity:
 {
   "identifier": "unique-ID",
   "title": "Title",
-  "team": "",
+  "team": [],
   "blueprint": "blueprintName",
   "properties": {
     "property1": "",
