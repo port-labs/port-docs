@@ -11,15 +11,15 @@ The following diagram outlines the login scheme used to authenticate with your S
 
 Here is an explanation of the login flow:
 
-1. The widget will generate a PKCE `code_verifier` & `code_challange`;
-2. The widget URL is set to the `authorizationUrl` along with the `clientId` and the generated `code_challange`;
-3. The widget will then be redirected to the SSO sign-in page;
-4. The user will sign in using the SSO (If the user is already signed in to the SSO, this step will happen automatically);
-5. The SSO sign-in page will redirect the widget back to https://app.getport.io with the authorization `code` as a URL hash parameter;
-6. The widget will send the `code`, `clientId` and the `code_verifier` to the `tokenURL`;
-7. The SSO will validate the PKCE code;
-8. A response will come back with an access token;
-9. The widget will pass the access token as a query parameter `auth_token={accessToken}` to the URL specified in the property value;
+1. The widget will generate a PKCE `code_verifier` & `code_challange`.
+2. The widget URL is set to the `authorizationUrl` along with the `clientId` and the generated `code_challange`.
+3. The widget will then be redirected to the SSO sign-in page.
+4. The user will sign in using the SSO (If the user is already signed in to the SSO, this step will happen automatically).
+5. The SSO sign-in page will redirect the widget back to https://app.getport.io with the authorization `code` as a URL hash parameter.
+6. The widget will send the `code`, `clientId` and the `code_verifier` to the `tokenURL`.
+7. The SSO will validate the PKCE code.
+8. A response will come back with an access token.
+9. The widget will pass the access token as a query parameter `auth_token={accessToken}` to the URL specified in the property value.
 10. Your page should be displayed now!
 
 ## Required Parameters
@@ -57,12 +57,12 @@ Here's an example of how to apply these parameters in your Blueprint:
 
 **Steps:**
 
-1. Follow the steps in [Okta's documentation](https://developer.okta.com/docs/guides/implement-grant-type/authcodepkce/main/) to create an Application in your Okta Organization;
+1. Follow the steps in [Okta's documentation](https://developer.okta.com/docs/guides/implement-grant-type/authcodepkce/main/) to create an Application in your Okta Organization.
 2. Make sure the Port host is in the `Redirect Uris`:
-   1. Go to Applications -> The application you just created -> Login;
+   1. Go to Applications -> The application you just created -> Login.
    2. Add `https://app.getport.io` as a Sign-in redirect URI.
 3. Enable IFrame for Sign-In Page:
-   1. Go to Customizations -> Other;
+   1. Go to Customizations -> Other.
    2. Scroll to "IFrame Embedding" and enable it.
 
 <br />
@@ -102,7 +102,7 @@ use_pkce = true
 **Troubleshooting**
 
 - "_Okta 400 Bad Request_"
-  - Check that you used the correct authorizationUrl & clientId;
+  - Check that you used the correct authorizationUrl & clientId.
   - Check that your application is activated.
 - "_Okta 400 Bad Request displayed. Your request resulted in an error. The 'redirect_uri' parameter must be a Login redirect URI in the client app settings_".
   - Make sure you entered https://app.getport.io as a Sign-in redirect URI for your application as mentioned in the steps above.
@@ -120,9 +120,9 @@ use_pkce = true
 
 **Steps:**
 
-1. Follow steps 1 & 2 in [Onelogin's documentation](https://onelogin.service-now.com/support?id=kb_article&sys_id=143e6c13dbfd0450ca1c400e0b9619d6#add) to add an OpenId Connect (OIDC) application in your Onelogin organization;
+1. Follow steps 1 & 2 in [Onelogin's documentation](https://onelogin.service-now.com/support?id=kb_article&sys_id=143e6c13dbfd0450ca1c400e0b9619d6#add) to add an OpenId Connect (OIDC) application in your Onelogin organization.
 2. Make sure the Port host is in the `Redirect URIs`:
-   1. Go to Applications -> The application you just added -> Configuration;
+   1. Go to Applications -> The application you just added -> Configuration.
    2. Add `https://app.getport.io` as a Redirect URI.
 
 <br />
