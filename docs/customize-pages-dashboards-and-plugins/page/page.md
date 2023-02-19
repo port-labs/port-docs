@@ -104,7 +104,7 @@ When saving a new page or editing an existing one, a set of icons is available t
 </center>
 :::
 
-### Edit, delete or lock a page
+### Edit, lock or delete a page
 
 #### Editing pages
 
@@ -120,43 +120,17 @@ Editing a page:
 
 ![Edit Page popup window](../../../static/img/software-catalog/pages/EditPageForm.png)
 
+#### Locking pages
+
+Locking a blueprints' page disables the option to hide columns or apply filters to modify the data shown in the page.
+
+Locking pages gives you a way to specifically curate pages to your developers' needs and make sure they can't modify the views, this prevents them from seeing data that isn't relevant to them.
+
+To learn how to lock pages, refer to the [tutorial](./tutorial.md#lock-pages)
+
 #### Deleting pages
 
-:::note
 An Entity page is deleted automatically when the connected Entity is deleted.
-:::
-
-### Locking pages
-
-- Users that have Permission to Update a Page (Usually users with Admin Role) can lock the page's widgets.
-- Locking the page's widgets affect widgets that have Filter and/or Hide functionality.
-- In order to lock the page with its current state you need to save it first.
-
-**Using UI**
-
-- Click on the Page Menu (see image above) and choose `Lock Page`.
-
-**Using API**
-
-- To perform a page lock, make an **HTTP PATCH** request to the following URL: `https://api.getport.io/v1/pages/{page_identifier}`.
-- Making an **HTTP PATCH** request with the following body will lock the page's widgets
-
-```json showLineNumbers
-{
-  "locked": true
-}
-```
-
-:::note
-A locked page will have the `Lock` icon next to the page's title.
-
-<center>
-
-![Locked Page](../../../static/img/software-catalog/pages/LockedPage.png)
-
-</center>
-
-:::
 
 ## Table operations
 
