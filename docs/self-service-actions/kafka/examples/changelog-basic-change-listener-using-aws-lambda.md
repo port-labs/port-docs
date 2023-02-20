@@ -557,7 +557,7 @@ Here is the JSON for this `VM` Entity:
 ```json showLineNumbers
 {
   "title": "Storage Example VM",
-  "team": "",
+  "team": [],
   "blueprint": "vm",
   "properties": {
     "region": "eu-west-1",
@@ -599,7 +599,7 @@ headers = {
 
 entity = {
     "title": "Storage Example VM",
-    "team": "",
+    "team": [],
     "properties": {
         "region": "eu-west-1",
         "cpu_cores": 2,
