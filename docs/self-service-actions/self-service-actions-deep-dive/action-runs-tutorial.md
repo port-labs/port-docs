@@ -400,7 +400,10 @@ The API returns the following response:
     "endedAt": "2022-12-07T14:51:52.796Z",
     "source": "UI",
     // highlight-start
-    "link": ["https://github.com/actions/toolkit/actions/runs/3617893813"],
+    "link": [
+      "https://github.com/actions/toolkit/actions/runs/3617893813",
+      "https://github.com/actions/toolkit/actions/runs/4165617487"
+    ],
     "message": {
       "run_status": "Run completed successfully!"
     },
