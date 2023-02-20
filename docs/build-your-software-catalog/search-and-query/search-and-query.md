@@ -150,6 +150,7 @@ Port has 2 types of search rule operators:
 {label: ">=", value: ">="},
 {label: "<", value: "<"},
 {label: "<=", value: "<="},
+{label: "Property schema", value: "property-schema"},
 {label: "Between", value: "between"},
 {label: "Contains", value: "contains"}
 ]}>
@@ -235,6 +236,59 @@ The `<=` operator checks values less than or equal to the specified value:
   "value": 7
 }
 ```
+
+</TabItem>
+
+<TabItem value="property-schema">
+
+The `propertySchema` filter can be used with any standard operator. It allows you to filter entities based on a properties matching a specific type (for example, find all string properties with a given value):
+
+<Tabs values={[
+{label: "String", value: "string"},
+{label: "URL", value: "url"}
+]}>
+
+<TabItem value="string">
+
+```json showLineNumbers
+{
+  // highlight-start
+  "propertySchema": {
+    "type": "string"
+  },
+  // highlight-end
+  "operator": "=",
+  "value": "My value"
+}
+```
+
+</TabItem>
+
+<TabItem value="url">
+
+```json showLineNumbers
+{
+  // highlight-start
+  "propertySchema": {
+    "type": "string",
+    "format": "url"
+  },
+  // highlight-end
+  "operator": "=",
+  "value": "https://example.com"
+}
+```
+
+</TabItem>
+
+</Tabs>
+
+:::tip
+
+- The `propertySchema` can be used with any Port [property](../define-your-data-model/setup-blueprint/properties/properties.md#supported-properties);
+- The `propertySchema` replaces the `property` filter when performing property schema search.
+
+:::
 
 </TabItem>
 
