@@ -187,7 +187,7 @@ resource "aws_s3_bucket_acl" "port-terraform-example-bucket-acl" {
 }
 ```
 
-## Creating the S3 bucket blueprint and the entity matching the new bucket
+## Creating the S3 bucket entity matching the new bucket
 
 This part includes configuring the `s3Bucket` blueprint and creating an entity for our new bucket:
 
@@ -220,7 +220,7 @@ After running `terraform apply` you will see the new S3 bucket in AWS, and the m
 
 Continue reading to learn how to make updates and how to cleanup.
 
-## Updating the S3 bucket the matching entity
+## Updating the S3 bucket and the matching entity
 
 Notice how we defined the `isPrivate` property of the bucket entity:
 

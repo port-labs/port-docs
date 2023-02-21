@@ -414,7 +414,7 @@ After running `terraform apply` you will see the resources in AWS, and the match
 
 Continue reading to learn how to make updates and how to cleanup.
 
-## Updating the developer environment matching entity
+## Updating the developer environment and the matching entity
 
 Since the new developer environment entity maps dynamic properties directly from the AWS resources defined in Terraform. It will also update when one of the developer environment resources change.
 
