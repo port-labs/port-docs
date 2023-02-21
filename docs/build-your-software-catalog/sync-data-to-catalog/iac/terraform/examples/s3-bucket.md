@@ -1,12 +1,84 @@
 ---
 sidebar_position: 1
-title: Create an S3 Bucket and Entity
-description: Provision an S3 bucket and reflect it in Port
+title: Manage an S3 Bucket Lifecycle
+description: Manage an S3 bucket lifecycle and reflect it in Port
 ---
 
-# Create an S3 Bucket and Entity
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+# Manage an S3 Bucket Lifecycle
 
 In this example you are going to create an AWS S3 bucket and then report its information to Port as an S3 bucket entity.
+
+## Prerequisites
+
+You will need to create a developer environment blueprint to follow this example:
+
+<Tabs groupId="blueprint" defaultValue="api" values={[
+{label: "API", value: "api"},
+{label: "Terraform", value: "terraform"}
+]}>
+
+<TabItem value="api">
+
+```json showLineNumbers
+{
+  "identifier": "s3Bucket",
+  "description": "",
+  "title": "S3 Bucket",
+  "icon": "Bucket",
+  "schema": {
+    "properties": {
+      "isPrivate": {
+        "type": "boolean",
+        "title": "Is private?"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {}
+}
+```
+
+</TabItem>
+
+<TabItem value="terraform">
+
+```hcl showLineNumbers
+terraform {
+  required_providers {
+    port-labs = {
+      source  = "port-labs/port-labs"
+      version = "~> 0.8.1"
+    }
+  }
+}
+
+provider "port-labs" {
+  client_id = "YOUR_CLIENT_ID"     # or set the environment variable PORT_CLIENT_ID
+  secret    = "YOUR_CLIENT_SECRET" # or set the environment variable PORT_CLIENT_SECRET
+}
+
+resource "port-labs_blueprint" "s3_bucket" {
+  identifier = "s3Bucket"
+  icon       = "Bucket"
+  title      = "S3 Bucket"
+
+  properties {
+    identifier = "isPrivate"
+    title      = "Is private?"
+    required   = false
+    type       = "boolean"
+  }
+}
+```
+
+</TabItem>
+
+</Tabs>
 
 Here is the complete `main.tf` file:
 
@@ -43,29 +115,14 @@ resource "aws_s3_bucket_acl" "port-terraform-example-bucket-acl" {
   acl    = "private"
 }
 
-resource "port-labs_blueprint" "s3_bucket" {
-  identifier = "s3Bucket"
-  icon       = "Bucket"
-  title      = "S3 Bucket"
-
-  properties {
-    identifier = "isPrivate"
-    title      = "Is private?"
-    required   = false
-    type       = "boolean"
-  }
-}
-
-
 resource "port-labs_entity" "s3_bucket" {
   depends_on = [
-    aws_s3_bucket.port-terraform-example-bucket,
-    port-labs_blueprint.s3_bucket
+    aws_s3_bucket.port-terraform-example-bucket
   ]
 
   identifier = aws_s3_bucket.port-terraform-example-bucket.bucket
   title      = aws_s3_bucket.port-terraform-example-bucket.bucket
-  blueprint  = port-labs_blueprint.s3_bucket.identifier
+  blueprint  = "s3Bucket"
 
   properties {
     name  = "isPrivate"
@@ -135,31 +192,16 @@ resource "aws_s3_bucket_acl" "port-terraform-example-bucket-acl" {
 This part includes configuring the `s3Bucket` blueprint and creating an entity for our new bucket:
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "s3_bucket" {
-  identifier = "s3Bucket"
-  icon       = "Bucket"
-  title      = "S3 Bucket"
-
-  properties {
-    identifier = "isPrivate"
-    title      = "Is private?"
-    required   = false
-    type       = "boolean"
-  }
-}
-
-
 resource "port-labs_entity" "s3_bucket" {
 # highlight-start
   depends_on = [
-    aws_s3_bucket.port-terraform-example-bucket,
-    port-labs_blueprint.s3_bucket
+    aws_s3_bucket.port-terraform-example-bucket
   ]
 # highlight-end
 
   identifier = aws_s3_bucket.port-terraform-example-bucket.bucket
   title      = aws_s3_bucket.port-terraform-example-bucket.bucket
-  blueprint  = port-labs_blueprint.s3_bucket.identifier
+  blueprint  = "s3Bucket"
 
   properties {
     name  = "isPrivate"
@@ -169,9 +211,40 @@ resource "port-labs_entity" "s3_bucket" {
 ```
 
 :::info Terraform dependencies
-Note how we use a `depends_on` block on the new s3 entity, this is required because the `s3Bucket` blueprint has to exist before the entity can be created. In addition, the entity relies on values that will only be available after the S3 bucket is created.
+Note how we use a `depends_on` block on the new s3 entity because the entity relies on values that will only be available after the S3 bucket is created.
 :::
 
 ## Result
 
 After running `terraform apply` you will see the new S3 bucket in AWS, and the matching `s3Bucket` entity in Port.
+
+Continue reading to learn how to make updates and how to cleanup.
+
+## Updating the S3 bucket the matching entity
+
+Notice how we defined the `isPrivate` property of the bucket entity:
+
+```hcl showLineNumbers
+properties {
+    name  = "isPrivate"
+    value = aws_s3_bucket_acl.port-terraform-example-bucket-acl.acl == "private" ? true : false
+}
+```
+
+Since the initial bucket we created was configured as `private`, the value of the property is `true`.
+
+Let's modify the bucket policy:
+
+```hcl showLineNumbers
+resource "aws_s3_bucket_acl" "port-terraform-example-bucket-acl" {
+  bucket = aws_s3_bucket.port-terraform-example-bucket.id
+  // highlight-next-line
+  acl    = "public-read" # Changed from "private"
+}
+```
+
+And now by running `terraform apply`, both the bucket policy will change, as well as the `isPrivate` property of the matching entity.
+
+## Cleanup
+
+To cleanup your environment, you can run the command `terraform destroy`, which will delete all of the resources you created in this example (including the S3 bucket and matching Port entity).
