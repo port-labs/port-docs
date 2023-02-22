@@ -27,7 +27,7 @@ Port's API allows for easy integration between Port and your Jenkins builds, for
 To interact with Port inside your Jenkins builds, follow these steps:
 
 1. Add your Port `CLIENT_ID` and `CLIENT_SECRET` as [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) and pass them to your build;
-   1. This step is not mandatory, but it is recommended in order to not pass the `CLIENT_ID` and `CLIENT_SECRET` in plaintext in your buils;
+   1. This step is not mandatory, but it is recommended in order to not pass the `CLIENT_ID` and `CLIENT_SECRET` in plaintext in your builds;
 
 ```js showLineNumbers
 pipeline {
@@ -65,7 +65,7 @@ pipeline {
             def entity_response = sh(
                 script: """
                     set +x
-                    curl -s -X GET -H 'Authorization: Bearer ${API_TOKEN}' '${env.API_URL}/v1/blueprints/${params.blueprint_id}/entities/${params.entity_id}'
+                    curl -s -X GET -H 'Authorization: Bearer ${API_TOKEN}' '${env.API_URL}/v1/blueprints/microserviceBuild/entities/new-ms-build'
                 """,
                 returnStdout: true,
             )
