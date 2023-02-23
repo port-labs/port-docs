@@ -104,7 +104,7 @@ When saving a new page or editing an existing one, a set of icons is available t
 </center>
 :::
 
-### Edit or delete a page
+### Edit, lock or delete a page
 
 #### Editing pages
 
@@ -120,11 +120,17 @@ Editing a page:
 
 ![Edit Page popup window](../../../static/img/software-catalog/pages/EditPageForm.png)
 
+#### Locking pages
+
+Locking a blueprints' page disables the option to hide columns or apply filters to modify the data shown in the page.
+
+Locking pages gives you a way to specifically curate pages to your developers' needs and make sure they can't modify the views, this prevents them from seeing data that isn't relevant to them.
+
+To learn how to lock pages, refer to the [tutorial](./tutorial.md#lock-pages)
+
 #### Deleting pages
 
-:::note
 An Entity page is deleted automatically when the connected Entity is deleted.
-:::
 
 ## Table operations
 
