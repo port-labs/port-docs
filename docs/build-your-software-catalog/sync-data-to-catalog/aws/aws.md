@@ -204,11 +204,14 @@ Here is an example snippet of the `config.json` file which demonstrates the ETL 
   ```
 
   :::info
-  The order of the resources matters when you have relations between resources.
-  The AWS Exporter will sync the resources in the same order as in the `config.json`, so make sure to sort the resources by a logical order.
+
+  - The order of the resources matters when you have relations between resources.
+    The AWS Exporter will sync the resources in the same order as in the `config.json`, so make sure to sort the resources by a logical order.
 
   For example, if you have a relation from SNS Topic to Lambda function, put the Lambda function configuration first.
-  :::
+
+  - By its nature, the AWS exporter will keep the values of unmapped properties untouched.
+    :::
 
   :::tip View a resource type schema
   To view a resource type schema, for composing a mapping, look for [this](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html) reference.
@@ -273,7 +276,7 @@ To run some optional commands in the installation guide, you will need to instal
    Use the following command to get that for a specific `<RESOURCE_TYPE>` (AWS CLI and JQ required):
 
    ```bash showLineNumbers
-   aws cloudformation describe-type --type RESOURCE --type-name <RESOURCE_TYPE> --query "Schema" | jq -c '. | fromjson | .handlers | with_entries(select([.key] | inside(["list", "read"]))) | map(.permissions) | flatten'
+   aws cloudformation describe-type --type RESOURCE --type-name <RESOURCE_TYPE> --query "Schema" | jq -c 'fromjson | .handlers | with_entries(select([.key] | inside(["list", "read"]))) | map(.permissions) | flatten'
    ```
 
    More details can be found [here](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/resource-types.html#resource-types-schemas).
@@ -419,14 +422,14 @@ To run some optional commands in the installation guide, you will need to instal
 
 ## Next steps
 
-### Examples
-
-Refer to the [examples](./examples.md) page for practical configurations and their corresponding blueprint definitions.
-
 ### Configure the AWS Exporter to run on events
 
 In addition to running it on schedule, the AWS exporter can be used to act on live events, such as create, update and delete of a resource.
 
 That way you can configure a resource to be synced as soon as it changed, when it's needed.
 
-Refer to the [events](./events.md) page for a guide and an example.
+Refer to the [events](./events.md) page for a detailed guide.
+
+### Examples
+
+Refer to the [examples](./examples.md) page for practical configurations and their corresponding blueprint definitions.
