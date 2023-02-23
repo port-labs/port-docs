@@ -208,10 +208,11 @@ Here is an example snippet of the `config.json` file which demonstrates the ETL 
   - The order of the resources matters when you have relations between resources.
     The AWS Exporter will sync the resources in the same order as in the `config.json`, so make sure to sort the resources by a logical order.
 
-  For example, if you have a relation from SNS Topic to Lambda function, put the Lambda function configuration first.
+    For example, if you have a relation from SNS Topic to Lambda function, put the Lambda function configuration first.
 
   - By its nature, the AWS exporter will keep the values of unmapped properties untouched.
-    :::
+
+  :::
 
   :::tip View a resource type schema
   To view a resource type schema, for composing a mapping, look for [this](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html) reference.
