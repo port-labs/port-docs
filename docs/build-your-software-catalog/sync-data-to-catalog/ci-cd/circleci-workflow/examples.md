@@ -89,38 +89,36 @@ print(f"Image tag is: {entity['properties']['imageTag']}")
 
 ```
 
-## Complete example
+## Relation example
 
-The following example adds another `package` blueprint, in addition to the `microserviceBuild` blueprint shown in the previous example. In addition, it also adds a `microserviceBuild` relation. The GitHub action will create or update the relation between the 2 existing entities, allowing you to map the package to the microservice build that uses it:
+The following example adds a `package` entity, in addition to the `microserviceBuild` entity shown in the previous example. In addition, it also adds a `microserviceBuild` relation. The build will create or update the relation between the 2 existing entities, allowing you to map the package to the microservice build that uses it:
 
 <ExamplePackageBlueprint />
 
 Add the following snippet to your GitHub workflow `yml` file:
 
-```yaml showLineNumbers
-- uses: port-labs/port-github-action@v1
-  with:
-    clientId: ${{ secrets.CLIENT_ID }}
-    clientSecret: ${{ secrets.CLIENT_SECRET }}
-    operation: UPSERT
-    identifier: example-package
-    title: Example Package
-    icon: GithubActions
-    blueprint: package
-    team: "['myTeam']"
-    properties: |
-      {
-        "version": "v1",
-        "committedBy": "${{ github.actor }}",
-        "commitHash": "${{ github.sha }}",
-        "actionJob": "${{ github.job }}",
-        "repoPushedAt": "${{ github.event.repository.pushed_at}}",
-        "runLink": "${{ format('{0}/actions/runs/{1}', github.event.repository.html_url, github.run_id) }}"
-      }
-    relations: |
-      {
-        "microserviceBuild": "new-ms-build"
-      }
+```python showLineNumbers
+import datetime
+...
+
+package_entity_json = {
+  "identifier": "example-package",
+  "team": [],
+  "properties": {
+    "version": "v1",
+    "committedBy": os.environ['CIRCLE_USERNAME'],
+    "commitHash": os.environ['CIRCLE_SHA1'],
+    "actionJob": os.environ['CIRCLE_JOB'],
+    "repoPushedAt": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    "runLink": os.environ['CIRCLE_BUILD_URL']
+  },
+  "relations": {},
+  "icon": "Microservice"
+}
+
+create_package_response = requests.post(f'{API_URL}/blueprints/package/entities?upsert=true', json=package_entity_json, headers=headers)
+print(create_package_response.json())
+
 ```
 
 That's it! The entity is created or updated and is visible in the UI.
