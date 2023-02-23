@@ -76,7 +76,7 @@ workflows:
 
 The following example gets the `new-ms-build` entity from the previous example, this can be useful if your CI process creates a build artifact and then references some of it's data (for example, the image tag when deploying the latest version of your service).
 
-Add the following jobs to your Python code:
+Add the following snippet to your Python code:
 
 ```python showLineNumbers
 entity_id = "new-ms-build"
@@ -95,7 +95,7 @@ The following example adds a `package` entity, in addition to the `microserviceB
 
 <ExamplePackageBlueprint />
 
-Add the following snippet to your GitHub workflow `yml` file:
+Add the following snippet to your Python code:
 
 ```python showLineNumbers
 import datetime
