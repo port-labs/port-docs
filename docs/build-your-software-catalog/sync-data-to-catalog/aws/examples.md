@@ -12,7 +12,7 @@ import AuditLogPage from "../../../../static/img/integrations/aws-exporter/Audit
 ## Mapping SNS topics and Lambda functions
 
 In the following example you will export your AWS `SNS Topics` and `Lambda Functions` to Port.
-You may use the following Port Blueprints definitions, `config.json`, and CloudFormation YAML template (trigger sync for changes in a Lambda function):
+You may use the following Port Blueprints definitions, `config.json`, IAM Policy, and CloudFormation YAML template (trigger sync for changes in a Lambda function):
 
 - **Lambda** - will represent lambda functions from the AWS account;
 - **Topic** - will represent SNS topics from the AWS account.
@@ -166,6 +166,34 @@ You may use the following Port Blueprints definitions, `config.json`, and CloudF
 </details>
 
 <details>
+<summary> IAM Policy </summary>
+
+```json showLineNumbers
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "VisualEditor0",
+      "Effect": "Allow",
+      "Action": [
+        "lambda:GetFunction",
+        "lambda:GetFunctionCodeSigningConfig",
+        "lambda:ListFunctions",
+        "sns:GetTopicAttributes",
+        "sns:ListTagsForResource",
+        "sns:ListSubscriptionsByTopic",
+        "sns:GetDataProtectionPolicy",
+        "sns:ListTopics"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+```
+
+</details>
+
+<details>
 <summary> Optional: CloudFormation YAML Template </summary>
 
 ```yaml showLineNumbers
@@ -227,7 +255,7 @@ Resources:
 
 </details>
 
-After creating the blueprints, upload the `config.json` file to the exporter's S3 bucket, and run the exporter's Lambda (manually; on schedule; or on changes, utilizing the event rule from the CloudFormation YAML Template).
+After creating the blueprints, upload the `config.json` file to the exporter's S3 bucket and update the `IAM policy`. Then, you can run the exporter's Lambda (manually; on schedule; or on changes, utilizing the event rule from the CloudFormation YAML Template).
 
 Done! For instance, you can see a `Topic` and its `Lambda` subscription, in a single Port entity page:
 
