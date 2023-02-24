@@ -1,6 +1,6 @@
 ---
 sidebar_position: 11
-description: Timer is a data type used to define an expiration date/lifespan on a specific property
+description: Timer is a data type used to define an expiration date/lifespan of a specific entity
 ---
 
 import ApiRef from "../../../../api-reference/\_learn_more_reference.mdx"
@@ -10,7 +10,7 @@ import TabItem from "@theme/TabItem"
 
 # Timer
 
-Timer is a data type used to define an expiration date/lifespan on a specific property.
+Timer is a data type used to define an expiration date/lifespan of a specific entity.
 
 ## 💡 Common timer usage
 

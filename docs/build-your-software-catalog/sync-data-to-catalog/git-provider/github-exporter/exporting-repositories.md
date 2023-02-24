@@ -11,7 +11,7 @@ title: Exporting repositories
 
 # Exporting repositories
 
-IN this tutorial you will learn how to create a `microservice` Blueprint that contains the properties `repository URL` and `Description`, which are automatically synced from GitHub to Port Entity.
+In this tutorial you will learn how to create a `microservice` Blueprint that contains the properties `repository URL` and `Description`, which are automatically synced from GitHub to Port Entity.
 
 1. Create a `microservice` Blueprint and `port-app-config.yml` configuration file.
 
