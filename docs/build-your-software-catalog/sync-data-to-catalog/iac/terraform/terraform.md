@@ -72,7 +72,7 @@ It is also possible to specify the following parameters as part of the `port-lab
 
 ### `properties` schema
 
-The [`properties`](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/entity#nested-schema-for-properties) schema assigns a specified value to one of the entity's properties:
+The [`properties`](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/entity#nested-schema-for-properties) schema assigns a specified value to one of the entity's properties.
 
 ```hcl showLineNumbers
 resource "port-labs_entity" "myEntity" {
@@ -83,7 +83,7 @@ resource "port-labs_entity" "myEntity" {
 # highlight-start
   properties {
     name  = "myStringProp"
-    value = "My value"
+    value = "My string"
   }
 
   properties {
@@ -93,7 +93,7 @@ resource "port-labs_entity" "myEntity" {
 
   properties {
     name  = "myArrayProp"
-    items = ["my", "array"]
+    items = [1,2,3]
   }
  # highlight-end
 
@@ -101,6 +101,146 @@ resource "port-labs_entity" "myEntity" {
   ...
 }
 ```
+
+#### Definition
+
+<Tabs groupId="properties" queryString="property" defaultValue="string" values={[
+{label: "String", value: "string"},
+{label: "Number", value: "number"},
+{label: "Boolean", value: "boolean"},
+{label: "Object", value: "object"},
+{label: "Array", value: "array"},
+{label: "URL", value: "url"},
+{label: "Email", value: "email"},
+{label: "User", value: "user"},
+{label: "Team", value: "team"},
+{label: "Datetime", value: "datetime"},
+{label: "Timer", value: "timer"},
+{label: "YAML", value: "yaml"}
+]}>
+
+<TabItem value="string">
+
+```hcl showLineNumbers
+properties {
+  name = "myStringProp"
+  value = "My string"
+}
+```
+
+</TabItem>
+<TabItem value="number">
+
+```hcl showLineNumbers
+properties {
+  name = "myNumberProp"
+  value = 7
+}
+```
+
+</TabItem>
+<TabItem value="boolean">
+
+```hcl showLineNumbers
+properties {
+  name = "myBooleanProp"
+  value = true
+}
+```
+
+</TabItem>
+<TabItem value="object">
+
+```hcl showLineNumbers
+properties {
+  name = "myObjectProp"
+  value = jsonencode({ "my" : "object" })
+}
+```
+
+</TabItem>
+<TabItem value="array">
+
+```hcl showLineNumbers
+properties {
+  name = "myArrayProp"
+  items = [1, 2, 3]
+}
+```
+
+</TabItem>
+<TabItem value="url">
+
+```hcl showLineNumbers
+properties {
+  name = "myUrlProp"
+  value = "https://example.com"
+}
+```
+
+</TabItem>
+<TabItem value="email">
+
+```hcl showLineNumbers
+properties {
+  name = "myEmailProp"
+  value = "me@example.com"
+}
+```
+
+</TabItem>
+<TabItem value="user">
+
+```hcl showLineNumbers
+properties {
+  name = "myUserProp"
+  value = "Admin Port"
+}
+```
+
+</TabItem>
+<TabItem value="team">
+
+```hcl showLineNumbers
+properties {
+  name = "myTeamProp"
+  value = "argo-admins"
+}
+```
+
+</TabItem>
+<TabItem value="datetime">
+
+```hcl showLineNumbers
+properties {
+  name = "myDatetimeProp"
+  value = "2022-04-18T11:44:15.345Z"
+}
+```
+
+</TabItem>
+<TabItem value="timer">
+
+```hcl showLineNumbers
+properties {
+  name = "myTimerProp"
+  value = "2023-04-18T11:44:15.345Z"
+}
+```
+
+</TabItem>
+<TabItem value="yaml">
+
+```hcl showLineNumbers
+properties {
+  name = "myYAMLProp"
+  value = "my: yaml"
+}
+```
+
+</TabItem>
+
+</Tabs>
 
 The following parameters are **required**:
 
