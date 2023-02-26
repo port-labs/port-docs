@@ -48,30 +48,30 @@ pipeline {
 2. Add the following stage to your Jenkins build:
 
 ```js showLineNumbers
+import groovy.json.JsonSlurperClassic
   #... your other stages
     stage('Get Port Entity') {
       steps {
           script {
-            def token_response = sh(
-                script: """
-                    set +x
-                    curl -s -X POST -H 'Content-Type: application/json' -d '{\"clientId\": \"${PORT_CLIENT_ID}\", \"clientSecret\": \"${PORT_CLIENT_SECRET}\"}' ${API_URL}/v1/auth/access_token
-                """,
-                returnStdout: true
-            )
-            def token_json = new groovy.json.JsonSlurperClassic().parseText(token_response)
-            def API_TOKEN = token_json.accessToken
+            auth_body = """
+                {
+                    "clientId": "${PORT_CLIENT_ID}",
+                    "clientSecret": "${PORT_CLIENT_SECRET}"
+                }
+                """
+            token_response = httpRequest contentType: 'APPLICATION_JSON',
+                httpMode: "POST",
+                requestBody: auth_body,
+                url: "${API_URL}/v1/auth/access_token"
+            def slurped_response = new JsonSlurperClassic().parseText(token_response.content)
+            def token = slurped_response.accessToken
 
-            def entity_response = sh(
-                script: """
-                    set +x
-                    curl -s -X GET -H 'Authorization: Bearer ${API_TOKEN}' '${env.API_URL}/v1/blueprints/microserviceBuild/entities/new-ms-build'
-                """,
-                returnStdout: true,
-            )
-            def entity_json = new groovy.json.JsonSlurperClassic().parseText(entity_response)
-            groovy.json.JsonOutput.prettyPrint(entity_response)
-            println(entity_json.entity)
+            response = httpRequest contentType: 'APPLICATION_JSON', httpMode: "GET",
+                    url: "${API_URL}/v1/blueprints/blueprint/entities/entity-example",
+                    customHeaders: [
+                        [name: "Authorization", value: "Bearer ${token}"],
+                    ]
+            println(response.content)
           }
       }
     }
@@ -84,23 +84,31 @@ pipeline {
 For interacting with Port, an API token is required. To acquire the token, add the following code to your stages:
 
 ```js showLineNumbers
-            ...
-            def token_response = sh(
-                script: """
-                    set +x
-                    curl -s -X POST -H 'Content-Type: application/json' -d '{\"clientId\": \"${PORT_CLIENT_ID}\", \"clientSecret\": \"${PORT_CLIENT_SECRET}\"}' ${API_URL}/v1/auth/access_token
-                """,
-                returnStdout: true
-            )
-            def token_json = new groovy.json.JsonSlurperClassic().parseText(token_response)
-            def API_TOKEN = token_json.accessToken // Use this token for accessing Port
-            ...
+import groovy.json.JsonSlurperClassic
+...
+          withCredentials([
+              string(credentialsId: 'port-client-id', variable: 'PORT_CLIENT_ID'),
+              string(credentialsId: 'port-client-secret', variable: 'PORT_CLIENT_SECRET')
+              ]){
+                    auth_body = """
+                        {
+                           "clientId": "${PORT_CLIENT_ID}",
+                           "clientSecret": "${PORT_CLIENT_SECRET}"
+                        }
+                        """
+                    token_response = httpRequest contentType: 'APPLICATION_JSON',
+                        httpMode: "POST",
+                        requestBody: auth_body,
+                        url: "${API_URL}/v1/auth/access_token"
+                    def slurped_response = new JsonSlurperClassic().parseText(token_response.content)
+                    def token = slurped_response.accessToken // Use this token for authentication with Port
 ```
 
 :::note
 For this example, the following plugin is a dependency:
 
 - Plain Credentials (>=143.v1b_df8b_d3b_e48)
+- HTTP Request (>=1.16)
 
 Also, please make sure the following methods signatures are approved:
 
@@ -111,7 +119,7 @@ method groovy.json.JsonSlurperClassic parseText java.lang.String
 
 :::
 
-3. Make sure you have an existing blueprint in your Port installation to create/update entities.
+3. Make sure you have an existing Blueprint in your Port installation to create/update entities.
 
 ## Examples
 

@@ -16,22 +16,24 @@ All of the examples assume that $API_TOKEN is already defined in your Jenkins bu
 After creating the blueprint, you can add the following snippet to your Jenkins build to create the new build entity:
 
 ```js showLineNumbers
-  def body = '''
-          {
-              "identifier": "new-ms-build",
-              "properties": {
-                  "buildNumber": 1,
-                  "buildVersion": "1.1.0",
-                  "imageTag": "new-ms-build:latest"
-              }
-          }
-          '''
-  def body_oneline = body.replaceAll("[\r\n]+", " ");
-  def entity_response = sh(
-      script: """
-          curl -X POST -H 'Authorization: Bearer ${API_TOKEN}' -H 'Content-Type: application/json' -d '$body_oneline' '${API_URL}/v1/blueprints/microserviceBuild/entities?upsert=true&validation_only=false&merge=true'
-      """,
-      returnStdout: true,
+    body = """
+        {
+            "identifier": "new-ms-build",
+            "properties": {
+                "buildNumber": "1",
+                "buildVersion": "1.1.0",
+                "imageTag": "new-ms-build:latest"
+            }
+        }
+    """
+
+    response = httpRequest contentType: "APPLICATION_JSON", httpMode: "POST",
+            url: "${API_URL}/v1/blueprints/microserviceBuild/entities?upsert=true&validation_only=false&merge=true",
+            requestBody: body,
+            customHeaders: [
+                [name: "Authorization", value: "Bearer ${token}"],
+            ]
+    println(response.content)
 ```
 
 ## Basic get example
@@ -41,15 +43,12 @@ The following example gets the `new-ms-build` entity from the previous example, 
 Add the following code to your Jenkins build:
 
 ```js showLineNumbers
-  def entity_response = sh(
-      script: """
-          set +x
-          curl -s -X GET -H 'Authorization: Bearer ${API_TOKEN}' '${API_URL}/v1/blueprints/microserviceBuild/entities/new-ms-build'
-      """,
-      returnStdout: true,
-  )
-  def entity_json = new groovy.json.JsonSlurperClassic().parseText(entity_response)
-  println(entity_json))
+    response = httpRequest contentType: "APPLICATION_JSON", httpMode: "GET",
+            url: "${API_URL}/v1/blueprints/microserviceBuild/entities/new-ms-build",
+            customHeaders: [
+                [name: "Authorization", value: "Bearer ${token}"],
+            ]
+    println(response.content)
 ```
 
 ## Relation example
@@ -61,11 +60,15 @@ The following example adds a `package` entity, in addition to the `microserviceB
 Add the following snippet to your GitHub workflow `yml` file:
 
 ```js showLineNumbers
-            wrap([$class: 'BuildUser']) {
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
+...
+        wrap([$class: 'BuildUser']) {
                 def user = env.BUILD_USER_ID
             }
             OffsetDateTime cur_time = OffsetDateTime.now();
             String formatted_time = cur_time.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX"));
+
             def body = """
                     {
                         "identifier": "package-example",
@@ -82,16 +85,13 @@ Add the following snippet to your GitHub workflow `yml` file:
                         }
                     }
                     """
-            def body_oneline = body.replaceAll("[\r\n]+", " ");
-            def entity_response = sh(
-                script: """
-                    set +x
-                    curl -s -X POST -H 'Authorization: Bearer ${API_TOKEN}' -H 'Content-Type: application/json' -d '$body_oneline' '${API_URL}/v1/blueprints/package/entities?upsert=true&validation_only=false&merge=true'
-                """,
-                returnStdout: true,
-            )
-            def entity_json = new groovy.json.JsonSlurperClassic().parseText(entity_response)
-            println(entity_json)
+            response = httpRequest contentType: "APPLICATION_JSON", httpMode: "POST",
+            url: "${API_URL}/v1/blueprints/package/entities?upsert=true&validation_only=false&merge=true",
+                requestBody: body,
+                customHeaders: [
+                    [name: "Authorization", value: "Bearer ${token}"],
+                ]
+            println(response.content)
 ```
 
 :::note
