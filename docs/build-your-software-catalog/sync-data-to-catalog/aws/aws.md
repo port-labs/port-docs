@@ -47,6 +47,7 @@ The exporter makes use of [JQ JSON processor](https://stedolan.github.io/jq/manu
 To run some optional commands in the installation guide, you will need to install:
 
 - [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+- [AWS SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html)
 - [JQ](https://stedolan.github.io/jq/download/)
 
 ### Exporter `config.json` file
@@ -180,8 +181,8 @@ Here is an example snippet of the `config.json` file which demonstrates the ETL 
     }
     ```
 
-    The table of the special resources with the required properties can be found [here](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/resource-operations-list.html#resource-operations-list-containers).
-    :::
+  The table of the special resources with the required properties can be found [here](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/resource-operations-list.html#resource-operations-list-containers).
+  :::
 
 - The `port`, `entity` and the `mappings` keys open the section used to map the AWS resource fields to Port entities, the `mappings` key is an array where each object matches the structure of an [entity](../sync-data-to-catalog.md#entity-json-structure).
 - Each mapping value is a JQ query, except for `blueprint` which have to be a static string.
@@ -303,7 +304,8 @@ The stack consists of several components:
 - [S3 Bucket](#exporter-s3-bucket) - where the [`config.json`](#exporter-configjson-file) should be saved.
 - [ASM Secret](#port-credentials-secret) - where you should save your Port credentials (client id and secret), to allow the exporter to interact with Port API.
 - [Lambda Function](https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-concepts.html#gettingstarted-concepts-function) - a resource that you can invoke to run the exporter code. The [IAM policy](#iam-policy) is attached to the execution role of the Lambda function.
-- [SQS Queue](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html) - a queue of events, to be consumed by the exporter. Read [here](./events.md) later, about how to use the exporter to consume and act on live events from different AWS services.
+- [SQS Queue](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html) - a queue of events, to be consumed by the exporter. Read [here](./run-on-events.md) later, about how to use the exporter to consume and act on live events from different AWS services.
+- [EventsBridge scheduled rule](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-create-rule-schedule.html) - a rule to run the exporter on a schedule.
 
 In order to deploy the application, you need to fill few parameters for each component:
 
@@ -405,6 +407,20 @@ In order to deploy the application, you need to fill few parameters for each com
 
    </Tabs>
 
+   :::info
+   After deployment is done, use the following AWS SAM CLI command to get a useful list of the exporter's resources:
+
+   ```bash showLineNumbers
+   sam list stack-outputs --stack-name serverlessrepo-port-aws-exporter
+   ```
+
+   The list includes:
+
+   - `Lambda Function ARN` - the ARN of the exporter's Lambda.
+   - `Port Credentials Secret ARN` - the ARN of the Port credentials secret.
+   - `ConfigBucketName` - the exporter's bucket name.
+     :::
+
    :::tip Deploy a serverless application
    For more information regarding how to deploy a serverless application, click [here](https://docs.aws.amazon.com/serverlessrepo/latest/devguide/serverlessrepo-how-to-consume.html).
    :::
@@ -437,6 +453,8 @@ If less than 5 minutes left until the timeout, and there are any resources left 
 
 ### Troubleshooting
 
+#### View the logs
+
 To view the logs of all the Lambda instances in one place, you can use [Cloudwatch Logs](https://docs.aws.amazon.com/lambda/latest/dg/monitoring-cloudwatchlogs.html#monitoring-cloudwatchlogs-console) or [AWS SAM Logs](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-logging.html):
 
 ```bash showLineNumbers
@@ -449,6 +467,11 @@ After running the exporter successfully for the first time, you probably want to
 
 - `ScheduleExpression` - Make sure to set an interval that is longer than the time it takes for the exporter to execute.
 - `ScheduleState` - Set the schedule state to `ENABLED`.
+
+:::info
+In order to determine lambda execution time, you can [view the logs](#view-the-logs), and search for the first and last log lines.
+When exporter finishes, it writes the following log: `Done handling your resources`.
+:::
 
 :::tip Update an application
 Update an application setting or version is done with the same procedure as deploying a new application, like we did in step 3 of the [installation](#installation).
@@ -465,7 +488,7 @@ In addition to running it on schedule, the AWS exporter can be used to act on li
 
 That way you can configure a resource to be synced as soon as it changed, when it's needed.
 
-Refer to the [events](./events.md) page for a detailed guide.
+Refer to the [run on events](./run-on-events.md) page for a detailed guide.
 
 ### Examples
 

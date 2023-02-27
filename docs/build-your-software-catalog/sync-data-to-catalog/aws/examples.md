@@ -11,272 +11,259 @@ import AuditLogPage from "../../../../static/img/integrations/aws-exporter/Audit
 
 ## Mapping SNS topics and Lambda functions
 
-In the following example you will export your AWS `SNS Topics` and `Lambda Functions` to Port.
-You may use the following Port Blueprints definitions, `config.json`, IAM Policy, and CloudFormation YAML template (trigger sync for changes in a Lambda function):
+In this step-by-step example, you will export your AWS `SNS Topics` and `Lambda Functions` to Port.
 
-- **Lambda** - will represent lambda functions from the AWS account;
-- **Topic** - will represent SNS topics from the AWS account.
+1. Create the following Port Blueprints:
 
-<details>
-<summary> Lambda Blueprint </summary>
+   - **Lambda** - will represent lambda functions from the AWS account;
+   - **Topic** - will represent SNS topics from the AWS account.
 
-```json showLineNumbers
-{
-  "identifier": "lambda",
-  "description": "This blueprint represents a Lambda in our software catalog",
-  "title": "Lambda",
-  "icon": "Lambda",
-  "schema": {
-    "properties": {
-      "arn": {
-        "type": "string"
-      },
-      "description": {
-        "type": "string"
-      },
-      "memorySize": {
-        "type": "number"
-      },
-      "packageType": {
-        "type": "string",
-        "enum": ["Image", "Zip"]
-      },
-      "timeout": {
-        "type": "number"
-      },
-      "runtime": {
-        "type": "string"
-      },
-      "environment": {
-        "type": "object"
-      },
-      "architectures": {
-        "type": "array"
-      },
-      "tags": {
-        "type": "array"
-      },
-      "link": {
-        "type": "string",
-        "format": "url"
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "relations": {}
-}
-```
+   You may use these definitions:
 
-</details>
+   <details>
+   <summary> Lambda Blueprint </summary>
 
-<details>
-<summary> Topic Blueprint </summary>
+   ```json showLineNumbers
+   {
+     "identifier": "lambda",
+     "description": "This blueprint represents a Lambda in our software catalog",
+     "title": "Lambda",
+     "icon": "Lambda",
+     "schema": {
+       "properties": {
+         "arn": {
+           "type": "string"
+         },
+         "description": {
+           "type": "string"
+         },
+         "memorySize": {
+           "type": "number"
+         },
+         "packageType": {
+           "type": "string",
+           "enum": ["Image", "Zip"]
+         },
+         "timeout": {
+           "type": "number"
+         },
+         "runtime": {
+           "type": "string"
+         },
+         "environment": {
+           "type": "object"
+         },
+         "architectures": {
+           "type": "array"
+         },
+         "tags": {
+           "type": "array"
+         },
+         "link": {
+           "type": "string",
+           "format": "url"
+         }
+       },
+       "required": []
+     },
+     "mirrorProperties": {},
+     "calculationProperties": {},
+     "relations": {}
+   }
+   ```
 
-```json showLineNumbers
-{
-  "identifier": "topic",
-  "description": "This blueprint represents a topic in our software catalog",
-  "title": "Topic",
-  "icon": "Aws",
-  "schema": {
-    "properties": {
-      "arn": {
-        "type": "string"
-      },
-      "link": {
-        "type": "string",
-        "format": "url"
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "relations": {
-    "lambda": {
-      "target": "lambda",
-      "required": false,
-      "many": true
-    }
-  }
-}
-```
+   </details>
 
-</details>
+   <details>
+   <summary> Topic Blueprint </summary>
 
-<details>
-<summary> Port AWS Exporter config.json </summary>
+   ```json showLineNumbers
+   {
+     "identifier": "topic",
+     "description": "This blueprint represents a topic in our software catalog",
+     "title": "Topic",
+     "icon": "Aws",
+     "schema": {
+       "properties": {
+         "arn": {
+           "type": "string"
+         },
+         "link": {
+           "type": "string",
+           "format": "url"
+         }
+       },
+       "required": []
+     },
+     "mirrorProperties": {},
+     "calculationProperties": {},
+     "relations": {
+       "lambda": {
+         "target": "lambda",
+         "required": false,
+         "many": true
+       }
+     }
+   }
+   ```
 
-```json showLineNumbers
-{
-  "resources": [
-    {
-      "kind": "AWS::Lambda::Function",
-      "port": {
-        "entity": {
-          "mappings": [
-            {
-              "identifier": ".FunctionName",
-              "title": ".FunctionName",
-              "blueprint": "lambda",
-              "properties": {
-                "link": "\"https://console.aws.amazon.com/go/view?arn=\" + .Arn",
-                "arn": ".Arn",
-                "description": ".Description",
-                "memorySize": ".MemorySize",
-                "packageType": ".PackageType",
-                "timeout": ".Timeout",
-                "runtime": ".Runtime",
-                "environment": ".Environment",
-                "architectures": ".Architectures",
-                "tags": ".Tags"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "kind": "AWS::SNS::Topic",
-      "port": {
-        "entity": {
-          "mappings": [
-            {
-              "identifier": ".TopicName",
-              "title": ".TopicName",
-              "blueprint": "topic",
-              "properties": {
-                "link": "\"https://console.aws.amazon.com/go/view?arn=\" + .TopicArn",
-                "arn": ".TopicArn"
-              },
-              "relations": {
-                "lambda": ".Subscription | map(select(.Protocol == \"lambda\") | .Endpoint[(.Endpoint | rindex(\":\"))+1:])"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ]
-}
-```
+   </details>
 
-</details>
+2. Upload the `config.json` file to the exporter's S3 bucket:
 
-<details>
-<summary> IAM Policy </summary>
+   <details>
+   <summary> Port AWS Exporter config.json </summary>
 
-```json showLineNumbers
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "VisualEditor0",
-      "Effect": "Allow",
-      "Action": [
-        "lambda:GetFunction",
-        "lambda:GetFunctionCodeSigningConfig",
-        "lambda:ListFunctions",
-        "sns:GetTopicAttributes",
-        "sns:ListTagsForResource",
-        "sns:ListSubscriptionsByTopic",
-        "sns:GetDataProtectionPolicy",
-        "sns:ListTopics"
-      ],
-      "Resource": "*"
-    }
-  ]
-}
-```
+   ```json showLineNumbers
+   {
+     "resources": [
+       {
+         "kind": "AWS::Lambda::Function",
+         "port": {
+           "entity": {
+             "mappings": [
+               {
+                 "identifier": ".FunctionName",
+                 "title": ".FunctionName",
+                 "blueprint": "lambda",
+                 "properties": {
+                   "link": "\"https://console.aws.amazon.com/go/view?arn=\" + .Arn",
+                   "arn": ".Arn",
+                   "description": ".Description",
+                   "memorySize": ".MemorySize",
+                   "packageType": ".PackageType",
+                   "timeout": ".Timeout",
+                   "runtime": ".Runtime",
+                   "environment": ".Environment",
+                   "architectures": ".Architectures",
+                   "tags": ".Tags"
+                 }
+               }
+             ]
+           }
+         }
+       },
+       {
+         "kind": "AWS::SNS::Topic",
+         "port": {
+           "entity": {
+             "mappings": [
+               {
+                 "identifier": ".TopicName",
+                 "title": ".TopicName",
+                 "blueprint": "topic",
+                 "properties": {
+                   "link": "\"https://console.aws.amazon.com/go/view?arn=\" + .TopicArn",
+                   "arn": ".TopicArn"
+                 },
+                 "relations": {
+                   "lambda": ".Subscription | map(select(.Protocol == \"lambda\") | .Endpoint[(.Endpoint | rindex(\":\"))+1:])"
+                 }
+               }
+             ]
+           }
+         }
+       }
+     ]
+   }
+   ```
 
-</details>
+   </details>
 
-<details>
-<summary> Optional: CloudFormation YAML Template </summary>
+3. Update the `IAM policy`:
 
-```yaml showLineNumbers
-AWSTemplateFormatVersion: "2010-09-09"
-Description: The template used to create event rules for the Port AWS Exporter.
+   <details>
+   <summary> IAM Policy </summary>
 
-Parameters:
-  PortAWSExporterStackName:
-    Description: Name of the Port AWS Exporter stack name
-    Type: String
-    MinLength: 1
-    MaxLength: 255
-    AllowedPattern: "^[a-zA-Z][-a-zA-Z0-9]*$"
-    Default: serverlessrepo-port-aws-exporter
+   ```json showLineNumbers
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Sid": "VisualEditor0",
+         "Effect": "Allow",
+         "Action": [
+           "lambda:GetFunction",
+           "lambda:GetFunctionCodeSigningConfig",
+           "lambda:ListFunctions",
+           "sns:GetTopicAttributes",
+           "sns:ListTagsForResource",
+           "sns:ListSubscriptionsByTopic",
+           "sns:GetDataProtectionPolicy",
+           "sns:ListTopics"
+         ],
+         "Resource": "*"
+       }
+     ]
+   }
+   ```
 
-Resources:
-  EventRule0:
-    Type: AWS::Events::Rule
-    Properties:
-      EventBusName: default
-      EventPattern:
-        source:
-          - aws.lambda
-        detail-type:
-          - AWS API Call via CloudTrail
-        detail:
-          eventSource:
-            - lambda.amazonaws.com
-          eventName:
-            - prefix: UpdateFunctionConfiguration
-            - prefix: CreateFunction
-            - prefix: DeleteFunction
-      Name: port-aws-exporter-sync-lambda-trails
-      State: ENABLED
-      Targets:
-        - Id: "PortAWSExporterEventsQueue"
-          Arn:
-            {
-              "Fn::ImportValue":
-                { "Fn::Sub": "${PortAWSExporterStackName}-EventsQueueARN" },
-            }
-          InputTransformer:
-            InputPathsMap:
-              awsRegion: $.detail.awsRegion
-              eventName: $.detail.eventName
-              requestFunctionName: $.detail.requestParameters.functionName
-              responseFunctionName: $.detail.responseElements.functionName
-            InputTemplate: |-
-              {
-                "resource_type": "AWS::Lambda::Function",
-                "requestFunctionName": "<requestFunctionName>",
-                "responseFunctionName": "<responseFunctionName>",
-                "eventName": "<eventName>",
-                "region": "\"<awsRegion>\"",
-                "identifier": "if .responseFunctionName != \"\" then .responseFunctionName else .requestFunctionName end",
-                "action": "if .eventName | startswith(\"Delete\") then \"delete\" else \"upsert\" end"
-              }
-```
+   </details>
 
-</details>
+4. Optional: Create event rule to trigger sync for changes in a Lambda function.
 
-After creating the blueprints, upload the `config.json` file to the exporter's S3 bucket and update the `IAM policy`. Then, you can run the exporter's Lambda (manually; on schedule; or on changes, utilizing the event rule from the CloudFormation YAML Template).
+   You may use this CloudFormation Template:
 
-Done! For instance, you can see a `Topic` and its `Lambda` subscription, in a single Port entity page:
+   <details>
+   <summary> Event Rule CloudFormation Template </summary>
 
-<center>
+   ```yaml showLineNumbers
+   AWSTemplateFormatVersion: "2010-09-09"
+   Description: The template used to create event rules for the Port AWS Exporter.
 
-<Image img={SpecificTopicEntityPage} style={{ width: 1000 }} />
+   Parameters:
+     PortAWSExporterStackName:
+       Description: Name of the Port AWS Exporter stack name
+       Type: String
+       MinLength: 1
+       MaxLength: 255
+       AllowedPattern: "^[a-zA-Z][-a-zA-Z0-9]*$"
+       Default: serverlessrepo-port-aws-exporter
 
-</center>
+   Resources:
+     EventRule0:
+       Type: AWS::Events::Rule
+       Properties:
+         EventBusName: default
+         EventPattern:
+           source:
+             - aws.lambda
+           detail-type:
+             - AWS API Call via CloudTrail
+           detail:
+             eventSource:
+               - lambda.amazonaws.com
+             eventName:
+               - prefix: UpdateFunctionConfiguration
+               - prefix: CreateFunction
+               - prefix: DeleteFunction
+         Name: port-aws-exporter-sync-lambda-trails
+         State: ENABLED
+         Targets:
+           - Id: "PortAWSExporterEventsQueue"
+             Arn:
+               {
+                 "Fn::ImportValue":
+                   { "Fn::Sub": "${PortAWSExporterStackName}-EventsQueueARN" },
+               }
+             InputTransformer:
+               InputPathsMap:
+                 awsRegion: $.detail.awsRegion
+                 eventName: $.detail.eventName
+                 requestFunctionName: $.detail.requestParameters.functionName
+                 responseFunctionName: $.detail.responseElements.functionName
+               InputTemplate: |-
+                 {
+                   "resource_type": "AWS::Lambda::Function",
+                   "requestFunctionName": "<requestFunctionName>",
+                   "responseFunctionName": "<responseFunctionName>",
+                   "eventName": "<eventName>",
+                   "region": "\"<awsRegion>\"",
+                   "identifier": "if .responseFunctionName != \"\" then .responseFunctionName else .requestFunctionName end",
+                   "action": "if .eventName | startswith(\"Delete\") then \"delete\" else \"upsert\" end"
+                 }
+   ```
 
-Similarly, you can see a specific `Lambda` entity page:
+   </details>
 
-<center>
-
-<Image img={SpecificLambdaEntityPage} style={{ width: 1000 }} />
-
-</center>
-
-And you can look for the respective audit logs with an indication of the AWS exporter as the source:
-
-<center>
-
-<Image img={AuditLogPage} style={{ width: 1000 }} />
-
-</center>
+Done! soon, you will be able to see any `Topic` and its `Lambda` subscriptions.

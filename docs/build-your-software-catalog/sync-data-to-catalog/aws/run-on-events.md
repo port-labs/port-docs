@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Events
+# Run on events
 
 Our AWS integration allows you to trigger a sync of your AWS resources with Port, by certain events (in addition to the scheduled sync).
 As a result, your software catalog will be updated shortly after a resource is created, updated or deleted.
