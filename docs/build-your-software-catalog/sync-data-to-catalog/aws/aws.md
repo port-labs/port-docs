@@ -36,20 +36,6 @@ The exporter is deployed using an [AWS serverless application](https://aws.amazo
 
 The exporter makes use of [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the AWS objects.
 
-## Prerequisites
-
-- You will need your [Port credentials](../api/api.md#find-your-port-credentials) to install the AWS exporter.
-
-:::tip
-<FindCredentials />
-:::
-
-To run some optional commands in the installation guide, you will need to install:
-
-- [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
-- [AWS SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html)
-- [JQ](https://stedolan.github.io/jq/download/)
-
 ### Exporter `config.json` file
 
 The `config.json` file is how you specify the exact resources you want to export from your AWS account, and also which entities and which properties in Port, you want to fill in with data.
@@ -330,6 +316,20 @@ In order to deploy the application, you need to fill few parameters for each com
   - `FunctionName` - The function name for the exporter's Lambda.
   - `ScheduleExpression` - The [schedule expression](https://docs.aws.amazon.com/lambda/latest/dg/services-cloudwatchevents-expressions.html) to define an event schedule for the exporter.
   - `ScheduleState` - The schedule initial state - `ENABLED` or `DISABLED`. We recommend to enable it only after one successful run.
+
+## Prerequisites
+
+- You will need your [Port credentials](../api/api.md#find-your-port-credentials) to install the AWS exporter.
+
+:::tip
+<FindCredentials />
+:::
+
+To run some optional commands in this guide, you will need to install:
+
+- [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+- [AWS SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html)
+- [JQ](https://stedolan.github.io/jq/download/)
 
 ## Installation
 
