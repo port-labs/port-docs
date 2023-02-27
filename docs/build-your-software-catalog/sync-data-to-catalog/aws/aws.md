@@ -229,7 +229,8 @@ Here is an example snippet of the `config.json` file which demonstrates the ETL 
     For example, if you have a relation from SNS Topic to Lambda function, put the Lambda function configuration first.
 
   - By its nature, the AWS exporter will keep the values of unmapped properties untouched. Go [here](../api/api.md?operation=create-update#usage) for further explanation about create/update of entities.
-    :::
+
+  :::
 
   :::tip View a resource type schema
   To view a resource type schema, for composing a mapping, look for [this](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html) reference.
