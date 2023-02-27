@@ -114,22 +114,22 @@ access_token=$(curl --location --request POST 'https://api.getport.io/v1/auth/ac
 
 </Tabs>
 
-## Integrate Port with your CI/CD
+## Ingest data via API
 
-Since Port is API first, even if your specific CI/CD platform does not already have a first-class integration to Port, it is still possible to create and update entities using simple REST calls.
+Since Port is API-first it is possible to create and update entities using simple REST calls from any platform you use.
 
 ### Setup
 
-To use Port's REST API in your CI/CD you need to perform the following steps:
+To use Port's REST API you need to perform the following steps:
 
 1. Find your [Port credentials](../api/api.md#find-your-port-credentials);
-2. Save them as secrets or in some other same manner such that you can reference them in your CI/CD flow;
-3. Make sure you have an HTTP-capable client in your CI/CD environment.
+2. Save them as secrets or in some other same manner such that you can reference them in your code or CI/CD flow;
+3. Make sure you have an HTTP-capable client.
    1. For example: cURL, python with the requests package, nodejs with fetch/axios, etc.
 
 ### Usage
 
-Since you are using Port's REST API directly in your CI/CD, any method that the API provides is at your disposal.
+Since you are using Port's REST API directly, any method that the API provides is at your disposal.
 
 We will focus on three specific use cases:
 
