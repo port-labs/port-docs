@@ -63,6 +63,8 @@ Add the following snippet to your GitHub workflow `yml` file:
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 ...
+
+        // Use the `build users` plugin to fetch the triggering user's ID
         wrap([$class: 'BuildUser']) {
                 def user = env.BUILD_USER_ID
             }
