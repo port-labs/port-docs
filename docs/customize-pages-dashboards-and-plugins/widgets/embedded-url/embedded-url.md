@@ -1,3 +1,6 @@
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+
 # Embedded URL
 
 You can use the embedded-url `spec` property to embed any publicly available webpage into an additional tab in the [specific entity page](../../page/entity-page.md).
@@ -14,14 +17,57 @@ In order to add an embedded view tab into your specific entity page, all you nee
 
 ## Embedded URL property definition in Blueprint schema
 
+### API definition
+
+<Tabs groupId="api-definition" defaultValue="basic" values={[
+{label: "Basic", value: "basic"},
+]}>
+
+<TabItem value="basic">
+
 ```json showLineNumbers
 {
-  "title": "Embedded URL Tab",
-  "type": "string",
-  "format": "url",
-  "spec": "embedded-url"
+  "myEmbeddedUrl": {
+    "title": "My Embedded URL",
+    // highlight-start
+    "type": "object",
+    "spec": "embedded-url",
+    // highlight-end
+    "description": "embedded-url Prop"
+  }
 }
 ```
+
+</TabItem>
+</Tabs>
+
+### Terraform definition
+
+<Tabs groupId="tf-definition" defaultValue="basic" values={[
+{label: "Basic", value: "basic"}
+]}>
+
+<TabItem value="basic">
+
+```hcl showLineNumbers
+resource "port-labs_blueprint" "myBlueprint" {
+  # ...blueprint properties
+  # highlight-start
+  properties {
+    identifier = "myOpenApi"
+    title      = "My Open Api"
+    required   = false
+    type       = "string"
+    format     = "url"
+    spec       = "embedded-url"
+  }
+  # highlight-end
+}
+```
+
+</TabItem>
+
+</Tabs>
 
 ## Examples
 

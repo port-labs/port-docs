@@ -2,6 +2,9 @@
 sidebar_position: 3
 ---
 
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+
 # OpenAPI
 
 With Port, you can import and display [OpenAPI](https://www.openapis.org/) specification files as [Swagger UI](https://swagger.io/) tabs.
@@ -12,16 +15,6 @@ By using a special Open API Blueprint property, Port will display the Swagger UI
 
 When using the URL format, Port will query the provided URL for the OpenAPI spec and expects a JSON OpenAPI spec
 
-```json showLineNumbers
-{
-  "title": "Open API",
-  "type": "string",
-  "format": "url",
-  "spec": "open-api",
-  "description": "Open-API Prop"
-}
-```
-
 :::note
 
 When using URL for the `open-api` display please make sure that your server allows cross-origin (CORS) requests from `app.getport.io`
@@ -31,14 +24,95 @@ When using URL for the `open-api` display please make sure that your server allo
 
 When using the object type, you will have to provide the full JSON OpenAPI spec as an object to the entity
 
+## API definition
+
+<Tabs groupId="api-definition" defaultValue="url" values={[
+{label: "URL", value: "url"},
+{label: "Object", value: "object"}
+]}>
+
+<TabItem value="object">
+
 ```json showLineNumbers
 {
-  "title": "Open API",
-  "type": "object",
-  "spec": "open-api",
-  "description": "Open-API Prop"
+  "myOpenApi": {
+    "title": "My Open API",
+    // highlight-start
+    "type": "object",
+    "spec": "open-api",
+    // highlight-end
+    "description": "Open-API Prop"
+  }
 }
 ```
+
+</TabItem>
+<TabItem value="url">
+
+```json showLineNumbers
+{
+  "myOpenApi": {
+    "title": "My Open API",
+    // highlight-start
+    "type": "string",
+    "format": "url",
+    "spec": "open-api",
+    // highlight-end
+    "description": "Open-API Prop"
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
+## Terraform definition
+
+<Tabs groupId="tf-definition" defaultValue="url" values={[
+{label: "URL", value: "url"},
+{label: "Object", value: "object"}
+]}>
+
+<TabItem value="object">
+
+```hcl showLineNumbers
+resource "port-labs_blueprint" "myBlueprint" {
+  # ...blueprint properties
+  # highlight-start
+  properties {
+    identifier = "myOpenApi"
+    title      = "My Open Api"
+    required   = false
+    type       = "object"
+    spec       = "open-api"
+  }
+  # highlight-end
+}
+```
+
+</TabItem>
+
+<TabItem value="url">
+
+```hcl showLineNumbers
+resource "port-labs_blueprint" "myBlueprint" {
+  # ...blueprint properties
+  # highlight-start
+  properties {
+    identifier = "myOpenApi"
+    title      = "My Open Api"
+    required   = false
+    type       = "string"
+    format     = "url"
+    spec       = "open-api"
+  }
+  # highlight-end
+}
+```
+
+</TabItem>
+
+</Tabs>
 
 ## Example
 
