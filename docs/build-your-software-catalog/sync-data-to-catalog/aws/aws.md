@@ -470,7 +470,7 @@ After running the exporter successfully for the first time, you probably want to
 
 :::info
 In order to determine lambda execution time, you can [view the logs](#view-the-logs), and search for the first and last log lines.
-When exporter finishes, it writes the following log: `Done handling your resources`.
+When the exporter finishes its syncing work, it writes the following log: `Done handling your resources`.
 :::
 
 :::tip Update an application
