@@ -429,7 +429,7 @@ resource "aws_lambda_function" "port_terraform_example_dev_env_lambda" {
   filename      = "lambda_function_payload.zip"
   function_name = "dev-env-function"
   role          = aws_iam_role.iam_for_lambda.arn
-  handler       = "index.test"
+  handler       = "index.handler"
 
   runtime = "nodejs16.x"
 
