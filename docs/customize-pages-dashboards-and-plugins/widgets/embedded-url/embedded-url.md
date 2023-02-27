@@ -48,8 +48,8 @@ resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties {
-    identifier = "myOpenApi"
-    title      = "My Open Api"
+    identifier = "myEmbeddedUrl"
+    title      = "My Embedded URL"
     required   = false
     type       = "string"
     format     = "url"
