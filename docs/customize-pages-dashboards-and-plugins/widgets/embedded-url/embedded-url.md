@@ -17,13 +17,14 @@ In order to add an embedded view tab into your specific entity page, all you nee
 
 ## Embedded URL property definition in Blueprint schema
 
-### API definition
+### Definition
 
-<Tabs groupId="api-definition" defaultValue="basic" values={[
-{label: "Basic", value: "basic"},
+<Tabs groupId="definition" defaultValue="api" values={[
+{label: "API", value: "api"},
+{label: "Terraform", value: "terraform"},
 ]}>
 
-<TabItem value="basic">
+<TabItem value="api">
 
 ```json showLineNumbers
 {
@@ -39,15 +40,8 @@ In order to add an embedded view tab into your specific entity page, all you nee
 ```
 
 </TabItem>
-</Tabs>
 
-### Terraform definition
-
-<Tabs groupId="tf-definition" defaultValue="basic" values={[
-{label: "Basic", value: "basic"}
-]}>
-
-<TabItem value="basic">
+<TabItem value="terraform">
 
 ```hcl showLineNumbers
 resource "port-labs_blueprint" "myBlueprint" {
