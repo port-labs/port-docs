@@ -32,7 +32,12 @@ To interact with Port inside your Jenkins builds, follow these steps:
 
 ### Fetching your API token
 
-1. Add your Port `CLIENT_ID` and `CLIENT_SECRET` as [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) and pass them to your build using withCredentials, which utilizes the [Plan Credentials](https://plugins.jenkins.io/credentials-binding/) plugin to bind credentials to variables. You can also set Port's API url as an environment variable.
+1. Add your Port `CLIENT_ID` and `CLIENT_SECRET` as [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) and pass them to your build using withCredentials, which utilizes the Plain Credentials plugin to bind credentials to variables. You can also set Port's API url as an environment variable.
+
+Then add the following snippet to fetch your API token:
+
+<details>
+  <summary> Get API token </summary>
 
 ```js showLineNumbers
 pipeline {
@@ -66,6 +71,8 @@ pipeline {
         }
 
 ```
+
+</details>
 
 ### Working with Port's API
 
@@ -108,7 +115,7 @@ import groovy.json.JsonSlurperClassic
     """
 
     response = httpRequest contentType: "APPLICATION_JSON", httpMode: "POST",
-            url: "${API_URL}/v1/blueprints/blueprint/entities?upsert=true&validation_only=false&merge=true",
+            url: "${API_URL}/v1/blueprints/blueprint/entities?upsert=true&merge=true",
             requestBody: entity_body,
             customHeaders: [
                 [name: "Authorization", value: "Bearer ${token}"],
@@ -146,11 +153,13 @@ import groovy.json.JsonSlurperClassic
 </TabItem>
 </Tabs>
 
-:::note
-For this example, the following plugins are dependencies:
+3. Make sure you have an existing Blueprint in your Port installation to create/update entities.
 
-- Plain Credentials (>=143.v1b_df8b_d3b_e48)
-- HTTP Request (>=1.16)
+:::note
+This example makes use of the following Plugins:
+
+- [Plain Credentials](https://plugins.jenkins.io/credentials-binding/) (>=143.v1b_df8b_d3b_e48)
+- [HTTP Request](https://plugins.jenkins.io/http_request/) (>=1.16)
 
 Also, please make sure the following methods signatures are approved:
 
@@ -160,8 +169,6 @@ method groovy.json.JsonSlurperClassic parseText java.lang.String
 ```
 
 :::
-
-3. Make sure you have an existing Blueprint in your Port installation to create/update entities.
 
 ## Examples
 

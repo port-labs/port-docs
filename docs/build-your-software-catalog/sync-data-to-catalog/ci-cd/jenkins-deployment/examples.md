@@ -10,7 +10,7 @@ In this example we create a blueprint for `microserviceBuild` and then add code 
 <ExampleMSBuildBlueprint />
 
 :::note
-All of the examples assume that $API_TOKEN is already defined in your Jenkins build as shown [here](./jenkins-deployment.md#fetching-port-api-token-in-jenkins).
+All of the examples assume that `token` is already defined in your Jenkins build as shown [here](./jenkins-deployment.md#fetching-your-api-token).
 :::
 
 After creating the blueprint, you can add the following snippet to your Jenkins build to create the new build entity:
@@ -28,7 +28,7 @@ After creating the blueprint, you can add the following snippet to your Jenkins 
     """
 
     response = httpRequest contentType: "APPLICATION_JSON", httpMode: "POST",
-            url: "${API_URL}/v1/blueprints/microserviceBuild/entities?upsert=true&validation_only=false&merge=true",
+            url: "${API_URL}/v1/blueprints/microserviceBuild/entities?upsert=true&merge=true",
             requestBody: body,
             customHeaders: [
                 [name: "Authorization", value: "Bearer ${token}"],
@@ -75,7 +75,6 @@ import java.time.format.DateTimeFormatter
                         "properties": {
                             "version": "v1",
                             "committedBy": "${user}",
-                            "commitHash": "0598e289c14b2ec93750de771a7f23e0081bc277",
                             "runLink": "${env.BUILD_URL}",
                             "repoPushedAt": "${formatted_time}",
                             "actionJob": "${env.JOB_NAME}"
@@ -86,7 +85,7 @@ import java.time.format.DateTimeFormatter
                     }
                     """
             response = httpRequest contentType: "APPLICATION_JSON", httpMode: "POST",
-            url: "${API_URL}/v1/blueprints/package/entities?upsert=true&validation_only=false&merge=true",
+            url: "${API_URL}/v1/blueprints/package/entities?upsert=true&merge=true",
                 requestBody: body,
                 customHeaders: [
                     [name: "Authorization", value: "Bearer ${token}"],
