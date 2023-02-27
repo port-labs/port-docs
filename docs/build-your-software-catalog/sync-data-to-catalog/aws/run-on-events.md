@@ -10,7 +10,6 @@ As a result, your software catalog will be updated shortly after a resource is c
 ## How it works
 
 Many AWS services emit events to [AWS EventBridge](https://aws.amazon.com/eventbridge/) service, to the account’s default event bus.
-
 Furthermore, [AWS CloudTrail](https://aws.amazon.com/cloudtrail/) service automatically emit events for API calls from most of the AWS services.
 
 A user can create an [AWS EventBridge rule](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-rules.html) to consume and transform particular events, and send them to a target, such as an [AWS SQS Queue](https://aws.amazon.com/sqs/).
@@ -20,7 +19,6 @@ A user can create an [AWS EventBridge rule](https://docs.aws.amazon.com/eventbri
 What's left to do, is to set up an event rule, that consume any events from the bus and send them to the AWS exporter's queue.
 
 Moreover, each event will have to be transformed as part of the event rule, before reaching the queue, to suit the exporter's Lambda needs.
-
 The transformation goal is to map an event to a single AWS resource, that the exporter can handle.
 
 The events in the queue are consumed automatically by the exporter's Lambda, that will sync the updated state of the relevant AWS resources with Port.
