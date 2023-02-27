@@ -431,7 +431,7 @@ In order to deploy the application, you need to fill few parameters for each com
    A reference of how to modify a secret value [here](https://docs.aws.amazon.com/secretsmanager/latest/userguide/manage_update-secret.html).
    :::
 
-5. Upload the `config.json` to the [exporter's S3 bucket](#s3-bucket);
+5. Upload the `config.json` to the [exporter's S3 bucket](#s3-bucket).
 
    :::tip Upload a file to an S3 bucket
    A reference of how to upload a file [here](https://docs.aws.amazon.com/AmazonS3/latest/userguide/upload-objects.html).
