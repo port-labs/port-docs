@@ -22,12 +22,17 @@ Port's API allows for easy integration between Port and your Jenkins builds, for
 - Update the software catalog about a new **build version** for a **microservice**;
 - Get existing **entities**.
 
-## Installation
+## Set up
+
+:::tip
+All Port API routes used in this guide can be found in Port's [API documentation](../../../../api-reference/api-reference.mdx).
+:::
 
 To interact with Port inside your Jenkins builds, follow these steps:
 
-1. Add your Port `CLIENT_ID` and `CLIENT_SECRET` as [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) and pass them to your build;
-   1. This step is not mandatory, but it is recommended in order to not pass the `CLIENT_ID` and `CLIENT_SECRET` in plaintext in your builds;
+### Fetching your API token
+
+1. Add your Port `CLIENT_ID` and `CLIENT_SECRET` as [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) and pass them to your build using withCredentials, which utilizes the [Plan Credentials](https://plugins.jenkins.io/credentials-binding/) plugin to bind credentials to variables. You can also set Port's API url as an environment variable.
 
 ```js showLineNumbers
 pipeline {
@@ -40,72 +45,109 @@ pipeline {
         string(credentialsId: 'port-client-id', variable: 'PORT_CLIENT_ID'),
         string(credentialsId: 'port-client-secret', variable: 'PORT_CLIENT_SECRET')
         ]){
-          // Your stage here
-        }
-
-```
-
-2. Add the following stage to your Jenkins build:
-
-```js showLineNumbers
-import groovy.json.JsonSlurperClassic
-  #... your other stages
-    stage('Get Port Entity') {
-      steps {
-          script {
+            // Token request body
             auth_body = """
                 {
                     "clientId": "${PORT_CLIENT_ID}",
                     "clientSecret": "${PORT_CLIENT_SECRET}"
                 }
                 """
+
+            // Make a request to fetch Port API's token
             token_response = httpRequest contentType: 'APPLICATION_JSON',
                 httpMode: "POST",
                 requestBody: auth_body,
                 url: "${API_URL}/v1/auth/access_token"
-            def slurped_response = new JsonSlurperClassic().parseText(token_response.content)
-            def token = slurped_response.accessToken
 
-            response = httpRequest contentType: 'APPLICATION_JSON', httpMode: "GET",
-                    url: "${API_URL}/v1/blueprints/blueprint/entities/entity-example",
-                    customHeaders: [
-                        [name: "Authorization", value: "Bearer ${token}"],
-                    ]
-            println(response.content)
-          }
-      }
-    }
-  }
+            // Parse the response to get the accessToken
+            def slurped_response = new JsonSlurperClassic().parseText(token_response.content)
+            def token = slurped_response.accessToken // Use this token for authentication with Port
+            ...
+        }
 
 ```
 
-## Fetching Port API token in Jenkins
+### Working with Port's API
 
-For interacting with Port, an API token is required. To acquire the token, add the following code to your stages:
+2. Add the following code to your Jenkins build, to either create/update an entity, or get an existing one:
+
+<Tabs groupId="usage" defaultValue="upsert" values={[
+{label: "Create/Update", value: "upsert"},
+{label: "Get", value: "get"}
+]}>
+
+<TabItem value="upsert">
 
 ```js showLineNumbers
 import groovy.json.JsonSlurperClassic
 ...
-          withCredentials([
-              string(credentialsId: 'port-client-id', variable: 'PORT_CLIENT_ID'),
-              string(credentialsId: 'port-client-secret', variable: 'PORT_CLIENT_SECRET')
-              ]){
-                    auth_body = """
-                        {
-                           "clientId": "${PORT_CLIENT_ID}",
-                           "clientSecret": "${PORT_CLIENT_SECRET}"
-                        }
-                        """
-                    token_response = httpRequest contentType: 'APPLICATION_JSON',
-                        httpMode: "POST",
-                        requestBody: auth_body,
-                        url: "${API_URL}/v1/auth/access_token"
-                    def slurped_response = new JsonSlurperClassic().parseText(token_response.content)
-                    def token = slurped_response.accessToken // Use this token for authentication with Port
+    auth_body = """
+        {
+            "clientId": "${PORT_CLIENT_ID}",
+            "clientSecret": "${PORT_CLIENT_SECRET}"
+        }
+        """
+    token_response = httpRequest contentType: 'APPLICATION_JSON',
+        httpMode: "POST",
+        requestBody: auth_body,
+        url: "${API_URL}/v1/auth/access_token"
+    def slurped_response = new JsonSlurperClassic().parseText(token_response.content)
+    def token = slurped_response.accessToken // Port's access token
+
+    entity_body = """
+        {
+            "identifier": "example-entity",
+            "properties": {
+              "myStringProp": "My value",
+              "myNumberProp": 1,
+              "myBooleanProp": true,
+              "myArrayProp": ["myVal1", "myVal2"],
+              "myObjectProp": {"myKey": "myVal", "myExtraKey": "myExtraVal"}
+            }
+        }
+    """
+
+    response = httpRequest contentType: "APPLICATION_JSON", httpMode: "POST",
+            url: "${API_URL}/v1/blueprints/blueprint/entities?upsert=true&validation_only=false&merge=true",
+            requestBody: entity_body,
+            customHeaders: [
+                [name: "Authorization", value: "Bearer ${token}"],
+            ]
+    println(response.content)
 ```
 
+</TabItem>
+<TabItem value="get">
+
+```js showLineNumbers
+import groovy.json.JsonSlurperClassic
+...
+    auth_body = """
+        {
+            "clientId": "${PORT_CLIENT_ID}",
+            "clientSecret": "${PORT_CLIENT_SECRET}"
+        }
+        """
+    token_response = httpRequest contentType: 'APPLICATION_JSON',
+        httpMode: "POST",
+        requestBody: auth_body,
+        url: "${API_URL}/v1/auth/access_token"
+    def slurped_response = new JsonSlurperClassic().parseText(token_response.content)
+    def token = slurped_response.accessToken // Port's access token
+
+    response = httpRequest contentType: 'APPLICATION_JSON', httpMode: "GET",
+            url: "${API_URL}/v1/blueprints/blueprint/entities/entity-example",
+            customHeaders: [
+                [name: "Authorization", value: "Bearer ${token}"],
+            ]
+    println(response.content)
+```
+
+</TabItem>
+</Tabs>
+
 :::note
-For this example, the following plugin is a dependency:
+For this example, the following plugins are dependencies:
 
 - Plain Credentials (>=143.v1b_df8b_d3b_e48)
 - HTTP Request (>=1.16)
