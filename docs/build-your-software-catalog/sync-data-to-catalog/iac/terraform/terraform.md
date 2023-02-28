@@ -32,7 +32,7 @@ Our Terraform provider makes it easy to fill the software catalog with data dire
 
 ## Terraform definition structure
 
-Port's Terraform provider supports The following resources to sync data to the catalog:
+Port's Terraform provider supports The following resources to ingest data to the catalog:
 
 ### `port-labs_entity`
 
@@ -284,9 +284,9 @@ The following parameters are **required**:
 At the moment, it is only possible to create entities with `many: true` relations using Port's Terraform provider.
 :::
 
-## Sync data using the Terraform provider
+## Ingest data using the Terraform provider
 
-To sync data to the software catalog using the Terraform provider, you will define [`port-labs_entity`](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/entity) resources in your Terraform definition files:
+To ingest data to the software catalog using the Terraform provider, you will define [`port-labs_entity`](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/entity) resources in your Terraform definition files:
 
 <Tabs groupId="sync-data" queryString="current-scenario" defaultValue="create" values={[
 {label: "Create", value: "create"},
