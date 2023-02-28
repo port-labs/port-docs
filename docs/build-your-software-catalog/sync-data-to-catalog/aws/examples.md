@@ -18,7 +18,7 @@ In this step-by-step example, you will export your AWS `SNS Topics` and `Lambda 
    - **Lambda** - will represent lambda functions from the AWS account;
    - **Topic** - will represent SNS topics from the AWS account.
 
-   You may use these definitions:
+   You may use the following definitions:
 
    <details>
    <summary> Lambda Blueprint </summary>
@@ -170,7 +170,7 @@ In this step-by-step example, you will export your AWS `SNS Topics` and `Lambda 
 
    </details>
 
-3. Update the `IAM policy`:
+3. Update the exporter's `IAM policy`:
 
    <details>
    <summary> IAM Policy </summary>
@@ -200,9 +200,9 @@ In this step-by-step example, you will export your AWS `SNS Topics` and `Lambda 
 
    </details>
 
-4. Optional: Create event rule to trigger sync for changes in a Lambda function.
+4. Optional: Create an event rule to trigger automatic syncing of changes in Lambda functions.
 
-   You may use this CloudFormation Template:
+   You may use the following CloudFormation Template:
 
    <details>
    <summary> Event Rule CloudFormation Template </summary>

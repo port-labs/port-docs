@@ -171,7 +171,7 @@ Here is an example snippet of the `config.json` file which demonstrates the ETL 
   :::
 
 - The `port`, `entity` and the `mappings` keys open the section used to map the AWS resource fields to Port entities, the `mappings` key is an array where each object matches the structure of an [entity](../sync-data-to-catalog.md#entity-json-structure).
-- Each mapping value is a JQ query, except for `blueprint` which have to be a static string.
+- Each mapping value is a JQ query, except for `blueprint` which has to be a static string.
 
   ```json showLineNumbers
   "resources": [
@@ -210,25 +210,25 @@ Here is an example snippet of the `config.json` file which demonstrates the ETL 
   :::info **IMPORTANT**
 
   - **The order of the resources matters** when you have relations between resources.
-    The AWS Exporter will sync the resources in the same order as in the `config.json`, so make sure to sort the resources by a logical order.
+    The AWS Exporter will sync the resources in the same order as they appear in the `config.json`, so make sure to sort the resources by a logical order.
 
     For example, if you have a relation from SNS Topic to Lambda function, put the Lambda function configuration first.
 
-  - By its nature, the AWS exporter will keep the values of unmapped properties untouched. Go [here](../api/api.md?operation=create-update#usage) for further explanation about create/update of entities.
+  - By its nature, the AWS exporter will keep the values of unmapped properties untouched. Go [here](../api/api.md?operation=create-update#usage) for further explanation about different entity creation strategies.
 
   :::
 
   :::tip View a resource type schema
-  To view a resource type schema, for composing a mapping, look for [this](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html) reference.
+  To view a resource type schema and use it to compose a mapping, use [this](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html) reference.
 
-  Pay attention that not all the resource types listed in the reference are available for use with Cloud Control API. A method to determine if a resource type is available discussed here earlier.
+  Pay attention that not all of the resource types listed in the reference are available for use with the Cloud Control API. A method to determine if a resource type is available discussed here earlier.
 
   For additional options and information, read [here](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/resource-types.html#resource-types-schemas).
   :::
 
 ### IAM Policy
 
-Using an [`AWS IAM Policy`](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html), you supply permissions to the exporter, to `list` and `read` the AWS resources you want to export (the ones you configured in the [`config.json`](#exporter-configjson-file)).
+The AWS exporter uses an [`AWS IAM Policy`](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html) which specifies the permissions to `list` and `read` the AWS resources you want to export (the ones you configured in the [`config.json`](#exporter-configjson-file)).
 
 For example, in order to export `Lambda Functions`, you need to create a policy with the following definition:
 
@@ -251,9 +251,9 @@ For example, in order to export `Lambda Functions`, you need to create a policy 
 ```
 
 :::tip Find resource actions for policy
-In order to find the resource actions to be added to the policy, you should view the resource type schema, and locate the permissions for the **read** and **list** `handlers`.
+In order to find the resource actions that should be added to the policy, you should view the resource type schema, and locate the permissions for the **read** and **list** `handlers`.
 
-Use the following command to get that for a specific `<RESOURCE_TYPE>` (AWS CLI and JQ required):
+Use the following command to get the resource action for a specific `<RESOURCE_TYPE>` (AWS CLI and JQ required):
 
 ```bash showLineNumbers
 aws cloudformation describe-type --type RESOURCE --type-name <RESOURCE_TYPE> --query "Schema" | jq -c 'fromjson | .handlers | with_entries(select([.key] | inside(["list", "read"]))) | map(.permissions) | flatten'
@@ -264,14 +264,14 @@ More details can be found [here](https://docs.aws.amazon.com/cloudcontrolapi/lat
 
 ### Exporter S3 Bucket
 
-Utilizing an [`AWS S3 Bucket`](https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingBucket.html), you can save the [`config.json`](#exporter-configjson-file) for the use of the exporter.
+The exporter's [`config.json`](#exporter-configjson-file) file needs to be saved to an [`AWS S3 Bucket`](https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingBucket.html).
 
 You can create and manage your own bucket or let the exporter do that for you.
 In any case, you need to upload the [`config.json`](#exporter-configjson-file) to the bucket, when it's available.
 
 ### Port Credentials Secret
 
-Make use of `AWS secret` is how you save and secure your Port credentials, for the use of the exporter.
+In order to manage entities in Port, the exporter needs access to your Port credentials, these are provided to the exporter via an [`AWS Secrets Manager`](https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html) secret.
 
 The secret value should be in the following format:
 
@@ -280,7 +280,7 @@ The secret value should be in the following format:
 ```
 
 Similarly to the bucket, you can create and manage your own secret, or delegate it to the exporter.
-Either way, you need to put the secret value by your own, when the secret is ready.
+Either way, you need to add Port's credentials to the secret on your own, when the secret is ready.
 
 ### Exporter AWS serverless application
 
@@ -288,31 +288,31 @@ The `Exporter AWS serverless application` is how you install the exporter's [Clo
 
 The stack consists of several components:
 
-- [S3 Bucket](#exporter-s3-bucket) - where the [`config.json`](#exporter-configjson-file) should be saved.
-- [ASM Secret](#port-credentials-secret) - where you should save your Port credentials (client id and secret), to allow the exporter to interact with Port API.
-- [Lambda Function](https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-concepts.html#gettingstarted-concepts-function) - a resource that you can invoke to run the exporter code. The [IAM policy](#iam-policy) is attached to the execution role of the Lambda function.
-- [SQS Queue](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html) - a queue of events, to be consumed by the exporter. Read [here](./run-on-events.md) later, about how to use the exporter to consume and act on live events from different AWS services.
+- [S3 Bucket](#exporter-s3-bucket) - where the [`config.json`](#exporter-configjson-file) should be saved;
+- [ASM Secret](#port-credentials-secret) - where you should save your Port credentials (client id and secret), to allow the exporter to interact with Port's API;
+- [Lambda Function](https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-concepts.html#gettingstarted-concepts-function) - a resource that you can invoke to run the exporter code. The [IAM policy](#iam-policy) is attached to the execution role of the Lambda function;
+- [SQS Queue](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html) - a queue of events, to be consumed by the exporter. Read [here](./run-on-events.md) to learn how to use the exporter to consume and act on live events from different AWS services;
 - [EventsBridge scheduled rule](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-create-rule-schedule.html) - a rule to run the exporter on a schedule.
 
-In order to deploy the application, you need to fill few parameters for each component:
+In order to deploy the application, you will need to fill in the following parameters:
 
-- Cloud Formation related parameters:
+- **Cloud Formation related parameters:**
   - `Application name` - The stack name of the application created via `AWS CloudFormation`.
-- Bucket related parameters:
-  - `CreateBucket` - `true` if you want the application to create and manage your bucket, or `false` if you want to do that by your own.
-  - `BucketName` - The name of your bucket, or a globally unique name for creating a new bucket.
+- **Bucket related parameters:**
+  - `CreateBucket` - `true` if you want the application to create and manage your bucket, or `false` if you want to create the bucket on your own.
+  - `BucketName` - The name of your bucket, or a globally unique name for a new bucket.
   - `ConfigJsonFileKey` - The file key (path) to the [`config.json`](#exporter-configjson-file) in the bucket.
-- IAM Policy related parameters:
+- **IAM Policy related parameters:**
   - `CustomIAMPolicyARN` - The ARN of the [IAM policy](#iam-policy).
-- Secret related parameters:
+- **Secret related parameters:**
 
-  - `CustomPortCredentialsSecretARN` - The ARN of the port credentials secret;
+  - `CustomPortCredentialsSecretARN` - The ARN of the Port credentials secret;
 
     **OR**
 
-  - `SecretName` - The name for the port credentials secret to be created for you.
+  - `SecretName` - The name for the new Port credentials secret to create.
 
-- Lambda related parameters:
+- **Lambda related parameters:**
   - `FunctionName` - The function name for the exporter's Lambda.
   - `ScheduleExpression` - The [schedule expression](https://docs.aws.amazon.com/lambda/latest/dg/services-cloudwatchevents-expressions.html) to define an event schedule for the exporter.
   - `ScheduleState` - The schedule initial state - `ENABLED` or `DISABLED`. We recommend to enable it only after one successful run.
@@ -338,10 +338,10 @@ To run some optional commands in this guide, you will need to install:
 2. Create the [`IAM policy`](#iam-policy) that provides permissions to `list` and `read` the AWS resources in the `config.json`;
 
    :::tip Create a policy
-   A reference of how to create an IAM policy [here](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_create.html).
+   An IAM policy reference is available [here](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_create.html).
    :::
 
-3. Deploy our [`serverless application`](#exporter-aws-serverless-application);
+3. Deploy our [`serverless application`](#exporter-aws-serverless-application).
 
    <Tabs groupId="deploy-options" defaultValue="AWSConsole" values={[{label: "AWS Console", value: "AWSConsole"}, {label: "AWS CLI", value: "AWSCLI"}]}>
 
@@ -409,7 +409,7 @@ To run some optional commands in this guide, you will need to install:
    </Tabs>
 
    :::info
-   After deployment is done, use the following AWS SAM CLI command to get a useful list of the exporter's resources:
+   After the deployment is complete, use the following AWS SAM CLI command to get a useful list of the exporter's resources:
 
    ```bash showLineNumbers
    sam list stack-outputs --stack-name serverlessrepo-port-aws-exporter
@@ -417,8 +417,8 @@ To run some optional commands in this guide, you will need to install:
 
    The list includes:
 
-   - `Lambda Function ARN` - the ARN of the exporter's Lambda.
-   - `Port Credentials Secret ARN` - the ARN of the Port credentials secret.
+   - `Lambda Function ARN` - the ARN of the exporter's Lambda;
+   - `Port Credentials Secret ARN` - the ARN of the Port credentials secret;
    - `ConfigBucketName` - the exporter's bucket name.
      :::
 
@@ -429,26 +429,26 @@ To run some optional commands in this guide, you will need to install:
 4. Update the [`Port credentials secret`](#port-credentials-secret) with your credentials;
 
    :::tip Modify a secret
-   A reference of how to modify a secret value [here](https://docs.aws.amazon.com/secretsmanager/latest/userguide/manage_update-secret.html).
+   To learn how to modify a secret's value, look [here](https://docs.aws.amazon.com/secretsmanager/latest/userguide/manage_update-secret.html).
    :::
 
 5. Upload the `config.json` to the [exporter's S3 bucket](#s3-bucket).
 
    :::tip Upload a file to an S3 bucket
-   A reference of how to upload a file [here](https://docs.aws.amazon.com/AmazonS3/latest/userguide/upload-objects.html).
+   To learn how to upload a file to S3, look [here](https://docs.aws.amazon.com/AmazonS3/latest/userguide/upload-objects.html).
    :::
 
 ## Test the application
 
 In order to test the deployed application, you should run the exporter's Lambda with an empty test event (`{}`), and review the execution status and logs.
 
-:::tip Invoke a function with test event
-A reference of how to invoke a Lambda function with a test event [here](https://docs.aws.amazon.com/lambda/latest/dg/testing-functions.html#invoke-with-event).
+:::tip Invoke a function with a test event
+A reference showing how to invoke a Lambda function with a test event can be found [here](https://docs.aws.amazon.com/lambda/latest/dg/testing-functions.html#invoke-with-event).
 :::
 
 :::info
-The exporter's Lambda can run more than 15 minutes (the maximum amount of time that a Lambda function can run).
-If less than 5 minutes left until the timeout, and there are any resources left to sync, a new Lambda instance will be launched to continue the syncing process.
+The exporter's Lambda can run for more than 15 minutes (the maximum amount of time that a Lambda function can run).
+If a function has been running for more than 10 minutes, and there are any resources left to sync, a new Lambda instance will be launched to continue the syncing process.
 
 :::
 
@@ -464,9 +464,9 @@ sam logs --stack-name serverlessrepo-port-aws-exporter --tail
 
 ## Update the schedule settings
 
-After running the exporter successfully for the first time, you probably want to alter the schedule related properties of the CloudFormation stack:
+After running the exporter successfully for the first time, you probably want to alter the scheduling related properties of the CloudFormation stack:
 
-- `ScheduleExpression` - Make sure to set an interval that is longer than the time it takes for the exporter to execute.
+- `ScheduleExpression` - Make sure to set an interval that is longer than the time it takes for the exporter to execute;
 - `ScheduleState` - Set the schedule state to `ENABLED`.
 
 :::info
@@ -475,8 +475,8 @@ When the exporter finishes its syncing work, it writes the following log: `Done 
 :::
 
 :::tip Update an application
-Update an application setting or version is done with the same procedure as deploying a new application, like we did in step 3 of the [installation](#installation).
-By default, the latest version will be picked when you run the update/deploy procedure.
+Updating an application's setting or version is done using the same procedure as deploying a new application, similar to step 3 of the [installation](#installation).
+By default, the latest available version of the exporter will be used when you run the update/deploy procedure.
 
 For more details, click [here](https://docs.aws.amazon.com/serverlessrepo/latest/devguide/serverlessrepo-how-to-consume-new-version.html).
 :::
@@ -487,7 +487,7 @@ For more details, click [here](https://docs.aws.amazon.com/serverlessrepo/latest
 
 In addition to running it on schedule, the AWS exporter can be used to act on live events, such as create, update and delete of a resource.
 
-That way you can configure a resource to be synced as soon as it changed, when it's needed.
+That way you can configure a resource to be synced as soon as it changed, in real time.
 
 Refer to the [run on events](./run-on-events.md) page for a detailed guide.
 
