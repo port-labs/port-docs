@@ -160,8 +160,7 @@ headers = {
 }
 
 # request url : {API_URL}/blueprints/<blueprint_id>/entities/<entity_id>
-get_response = requests.get(f"{API_URL}/blueprints/test-blueprint/entities/test-entity",
-                        headers=headers)
+get_response = requests.get(f"{API_URL}/blueprints/test-blueprint/entities/test-entity", headers=headers)
 print(json.dumps(get_response.json(), indent=4))
 ```
 
