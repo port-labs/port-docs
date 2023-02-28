@@ -293,7 +293,7 @@ To read more about input transformer in EventBridge, click [here](https://docs.a
 
 ## Setup summary
 
-1. You should prepare an [event rule](#event-rule-definition), based on any specific events;
+1. You should prepare an [event rule](#event-rule-definition), based on specific events matching resources you want the AWS exporter to update in real time;
 
 2. Create the event rule from step 1.
 
