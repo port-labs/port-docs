@@ -22,6 +22,24 @@ Port's API allows for easy integration between Port and your Jenkins builds, for
 - Update the software catalog about a new **build version** for a **microservice**;
 - Get existing **entities**.
 
+## Prerequisites
+
+1. This example makes use of the following Jenkins plugins:
+
+- [Plain Credentials](https://plugins.jenkins.io/credentials-binding/) (>=143.v1b_df8b_d3b_e48)
+- [HTTP Request](https://plugins.jenkins.io/http_request/) (>=1.16)
+
+2. The following methods are used in the example, and these signatures need to be approved:
+
+```
+new groovy.json.JsonSlurperClassic
+method groovy.json.JsonSlurperClassic parseText java.lang.String
+```
+
+3. Add your `PORT_CLIENT_ID` and `PORT_CLIENT_SECRET` as [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) to use them in your CI pipelines.
+
+4. Make sure you have an existing [Blueprint](../../../../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) in your Port installation to create/update entities.
+
 ## Set up
 
 :::tip
@@ -32,9 +50,9 @@ To interact with Port inside your Jenkins builds, follow these steps:
 
 ### Fetching your API token
 
-1. Add your Port `CLIENT_ID` and `CLIENT_SECRET` as [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) and pass them to your build using withCredentials, which utilizes the Plain Credentials plugin to bind credentials to variables. You can also set Port's API url as an environment variable.
+Using the following snippet, pass your `PORT_CLIENT_ID` and `PORT_CLIENT_SECRET` credentials to your build using `withCredentials`, which utilizes the Plain Credentials plugin to bind credentials to variables. The snippet provided also includes saving Port's API URL as an environment variable for use in future stages.
 
-Then add the following snippet to fetch your API token:
+Add the following snippet to fetch your API token:
 
 <details>
   <summary> Get API token </summary>
@@ -76,7 +94,7 @@ pipeline {
 
 ### Working with Port's API
 
-2. Add the following code to your Jenkins build, to either create/update an entity, or get an existing one:
+Add the following code to your Jenkins build, to either create/update an entity, or get an existing one:
 
 <Tabs groupId="usage" defaultValue="upsert" values={[
 {label: "Create/Update", value: "upsert"},
@@ -152,23 +170,6 @@ import groovy.json.JsonSlurperClassic
 
 </TabItem>
 </Tabs>
-
-3. Make sure you have an existing Blueprint in your Port installation to create/update entities.
-
-:::note
-This example makes use of the following Plugins:
-
-- [Plain Credentials](https://plugins.jenkins.io/credentials-binding/) (>=143.v1b_df8b_d3b_e48)
-- [HTTP Request](https://plugins.jenkins.io/http_request/) (>=1.16)
-
-Also, please make sure the following methods signatures are approved:
-
-```
-new groovy.json.JsonSlurperClassic
-method groovy.json.JsonSlurperClassic parseText java.lang.String
-```
-
-:::
 
 ## Examples
 
