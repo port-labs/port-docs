@@ -22,10 +22,9 @@ Port's API allows for easy integration between Port and your CircleCI workflows,
 - Update the software catalog about a new **build version** for a **microservice**;
 - Get existing **entities**.
 
-## Installation
+## Setup
 
-1. To interact with Port using Circle CI, you will first need to set up a [CircleCI context](https://circleci.com/docs/contexts/) in order to save your Port credentials, and pass the context to the relevant workflow.
-   1. This step is not mandatory, but it is recommended in order to not pass the `CLIENT_ID` and `CLIENT_SECRET` in plaintext in your builds;
+To interact with Port using Circle CI, you will first need to set up a [CircleCI context](https://circleci.com/docs/contexts/) in order to save your Port credentials, and pass the context to the relevant workflow.
 
 ```yaml showLineNumbers
 workflows:
@@ -33,16 +32,76 @@ workflows:
     jobs:
       - report-to-port:
           context:
+            # the CircleCI context name of the credentials
+            # highlight-next-line
             - port
 ```
 
-2. An example of how you'd interact with Port using CircleCI, is using Python. Add the following codeblock to your Python code:
+Make sure you have an existing [Blueprint](../../../../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) in your Port installation to create/update entities.
+
+## Working with Port's API
+
+An example of how you'd create/update or get entities from Port using CircleCI and Python.
+
+<br></br>
+
+Python pip Requirements file:
+
+<details>
+  <summary> port_requirements.txt </summary>
+
+```
+requests>=2.28.2
+```
+
+</details>
+
+Create the following Python script in your repository:
+
+Add the following job and workflow to your CI pipeline:
+
+<details>
+  <summary> CircleCI Pipeline YAML </summary>
+
+```yaml showLineNumbers
+  jobs:
+  # ... other jobs
+  report-to-port:
+    docker:
+      - image: cimg/python:3.11
+    environment:
+      API_URL: https://api.getport.io
+    steps:
+      - checkout
+      - run: pip install -r port_requirements.txt
+      - run: python get_port_entity.py
+
+workflows:
+  # ... other workflows
+  deploy-production-service:
+    jobs:
+      # ... other jobs
+      - report-to-port:
+        context:
+          - port
+
+```
+
+</details>
+
+<Tabs groupId="usage" defaultValue="upsert" values={[
+{label: "Create/Update", value: "upsert"},
+{label: "Get", value: "get"}
+]}>
+
+<TabItem value="upsert">
 
 ```python showLineNumbers
 import os
 import requests
 import json
 
+# These are the credentials passed by the 'port' context to your environment variables
 CLIENT_ID = os.environ['PORT_CLIENT_ID']
 CLIENT_SECRET = os.environ['PORT_CLIENT_SECRET']
 
@@ -57,10 +116,41 @@ headers = {
 	'Authorization': f'Bearer {access_token}'
 }
 
+# request url : {API_URL}/blueprints/<blueprint_name>/entities/<entity_name>
 get_response = requests.get(f"{API_URL}/blueprints/test-blueprint/entities/test-entity",
                         headers=headers)
 print(json.dumps(get_response.json(), indent=4))
 ```
+
+</TabItem>
+<TabItem value="get">
+
+```js showLineNumbers
+import groovy.json.JsonSlurperClassic
+...
+    auth_body = """
+        {
+            "clientId": "${PORT_CLIENT_ID}",
+            "clientSecret": "${PORT_CLIENT_SECRET}"
+        }
+        """
+    token_response = httpRequest contentType: 'APPLICATION_JSON',
+        httpMode: "POST",
+        requestBody: auth_body,
+        url: "${API_URL}/v1/auth/access_token"
+    def slurped_response = new JsonSlurperClassic().parseText(token_response.content)
+    def token = slurped_response.accessToken // Port's access token
+
+    response = httpRequest contentType: 'APPLICATION_JSON', httpMode: "GET",
+            url: "${API_URL}/v1/blueprints/blueprint/entities/entity-example",
+            customHeaders: [
+                [name: "Authorization", value: "Bearer ${token}"],
+            ]
+    println(response.content)
+```
+
+</TabItem>
+</Tabs>
 
 ## Examples
 

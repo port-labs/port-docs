@@ -9,7 +9,7 @@ In this example we create a blueprint for `microserviceBuild` and then add code 
 
 <ExampleMSBuildBlueprint />
 
-After creating the blueprint, you can add create a Python script for updating your Port entity:
+After creating the blueprint, you can add a Python script for creating/updating a Port entity:
 
 ```python showLineNumber
 import os
@@ -17,8 +17,10 @@ import requests
 import json
 
 # Env vars passed by the CircleCI context
+# highlight-start
 CLIENT_ID = os.environ['PORT_CLIENT_ID']
 CLIENT_SECRET = os.environ['PORT_CLIENT_SECRET']
+# highlight-end
 API_URL = 'https://api.getport.io/v1'
 
 credentials = {
@@ -26,11 +28,13 @@ credentials = {
     'clientSecret': CLIENT_SECRET
 }
 token_response = requests.post(f"{API_URL}/auth/access_token", json=credentials)
+# use this access token + header for all http requests to Port
+# highlight-start
 access_token = token_response.json()['accessToken']
-
 headers = {
 	'Authorization': f'Bearer {access_token}'
 }
+# highlight-end
 
 entity_json = {
   "identifier": "new-ms-build",
@@ -47,7 +51,7 @@ entity_json = {
 create_response = requests.post(f'{API_URL}/blueprints/{blueprint_id}/entities?upsert=true', json=entity_json, headers=headers)
 ```
 
-After creating your new Python script to your repository, add the following to your CircleCI workflow `yml` file to create the new build entity:
+After adding your new Python script to your repository, add the following code to your CircleCI workflow `yml` file to call your script and update/create a new `microserviceBuild` entity:
 
 ```yaml showLineNumbers
   jobs:
@@ -112,8 +116,10 @@ package_entity_json = {
     "repoPushedAt": datetime.datetime.now(datetime.timezone.utc).isoformat(),
     "runLink": os.environ['CIRCLE_BUILD_URL']
   },
-  "relations": {},
-  "icon": "Microservice"
+  "relations": {
+    "microserviceBuild": "new-ms-build"
+  },
+  "icon": "Package"
 }
 
 create_package_response = requests.post(f'{API_URL}/blueprints/package/entities?upsert=true', json=package_entity_json, headers=headers)

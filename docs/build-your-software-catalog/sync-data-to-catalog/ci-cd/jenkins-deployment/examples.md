@@ -10,7 +10,9 @@ In this example we create a blueprint for `microserviceBuild` and then add code 
 <ExampleMSBuildBlueprint />
 
 :::note
-All of the examples assume that `token` is already defined in your Jenkins build as shown [here](./jenkins-deployment.md#fetching-your-api-token).
+The variables `token` and `API_URL` are used in the following examples.
+Click [here](./jenkins-deployment.md#fetching-your-api-token) to see how they were defined.
+
 :::
 
 After creating the blueprint, you can add the following snippet to your Jenkins build to create the new build entity:

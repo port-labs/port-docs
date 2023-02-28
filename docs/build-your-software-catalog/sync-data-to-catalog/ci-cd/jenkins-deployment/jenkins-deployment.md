@@ -131,7 +131,7 @@ import groovy.json.JsonSlurperClassic
             }
         }
     """
-
+    // request url : {API_URL}/blueprints/<blueprint_name>/entities/<entity_name>
     response = httpRequest contentType: "APPLICATION_JSON", httpMode: "POST",
             url: "${API_URL}/v1/blueprints/blueprint/entities?upsert=true&merge=true",
             requestBody: entity_body,
