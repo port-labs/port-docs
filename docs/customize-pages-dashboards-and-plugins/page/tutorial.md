@@ -148,3 +148,50 @@ Making an **HTTP PATCH** request with the following body will give the specified
 :::info
 It is possible to update multiple permission keys (`roles`, `teams` and/or `users`) in a single `PATCH` request, just keep in mind that any `role`, `team` or `user` that is not specified and previously had permissions to the page, will lose those permissions.
 :::
+
+## Lock pages
+
+Locking the page affects widgets that have Filter and/or Hide functionality.
+
+See the section below for the different methods to lock a page:
+
+<Tabs values={[
+{label: "API", value: "api"},
+{label: "UI", value: "ui"}
+]}>
+
+<TabItem value="api">
+
+To lock a page, make an **HTTP PATCH** request to the following URL: `https://api.getport.io/v1/pages/{page_identifier}`
+
+with the following body:
+
+```json showLineNumbers
+{
+  "locked": true
+}
+```
+
+</TabItem>
+
+<TabItem value="ui">
+
+Users that have permissions to update a page (Usually users with the admin role) can lock the page's widgets.
+
+1. Save the page in the desired view by clicking the `save page` button;
+2. Open the page menu and click on `lock page`.
+
+</TabItem>
+
+</Tabs>
+
+:::note
+A locked page will have the `Lock` icon next to the page's title.
+
+<center>
+
+![Locked Page](../../../static/img/software-catalog/pages/LockedPage.png)
+
+</center>
+
+:::

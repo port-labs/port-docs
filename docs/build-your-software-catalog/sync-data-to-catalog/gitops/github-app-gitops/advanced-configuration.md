@@ -37,7 +37,7 @@ We also support putting "{{ repositoryName }}" for any config, which means the n
 | `defaultTeam` | `String` | Name of the default team to use, if one is not provided in the `port.yml` file | `null`
 | `defaultPropertiesPath` | `String` | Changes the `properties` location in the `port.yml` file, you can provide custom paths like `props`, `data` or any other key. (in order to make it a top-level key you have to provide `.`).<br/> A common use case is to reuse existing `yml` files within the repository without the need to change it to the `port.yml` default format | `properties`
 | `deleteDependentEntities` | `Boolean` | Flag to enable deletion of dependent Entities - an Entity that has a required Relation with an Entity you wish to delete | `false`
-| `enableMergeEntity` | `Boolean` | Flag to enable merging new values with the existing Entity values, instead of overriding all existing values. <br/> More info about merging entities can be found in the [Entity Tutorial](https://docs.getport.io/software-catalog/entity/tutorial/#post-request) | `false`
+| `enableMergeEntity` | `Boolean` | Flag to enable merging new values with the existing Entity values, instead of overriding all existing values. <br/> More info about merging entities can be found in the [Entity Tutorial](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#usage) | `false`
 
 :::caution
 Please make sure you don't have duplicate identifiers in different `port.yml` files when using the `defaultIdentifier` configuration.

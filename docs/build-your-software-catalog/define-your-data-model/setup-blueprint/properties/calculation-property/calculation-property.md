@@ -60,7 +60,21 @@ You can access properties as part of the calculation by using `.properties`
 </TabItem>
 
 <TabItem value="tf">
-Coming soon
+
+```hcl showLineNumbers
+resource "port-labs_blueprint" "myBlueprint" {
+  # ...blueprint properties
+  # highlight-start
+  calculation_properties {
+    identifier  = "myCalculationProp"
+    title       = "My calculation property"
+    type        = "string"
+    calculation = ".properties.myStringProp + .properties.myStringProp"
+  }
+  # highlight-end
+}
+```
+
 </TabItem>
 </Tabs>
 
