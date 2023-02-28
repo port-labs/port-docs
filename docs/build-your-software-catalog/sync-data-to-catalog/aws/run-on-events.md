@@ -30,7 +30,7 @@ The AWS Exporter's Lambda accepts a JSON event, with the following properties, f
 - `resource_type` - an hardcoded string representing the AWS resource type, that is configured in the [`config.json`](./aws.md#exporter-configjson-file) of the AWS Exporter.
 - `region` - A JQ query to get the region from the event, usually the value will be `"\"<awsRegion>\""`
 - `action` (Optional, defaults to `upsert`) - A JQ query to define the desired action: `upsert` or `delete` the Port entity of the resource. Will Usually be based on the event name, like in the example below.
-- `identifier` - A JQ query to calculate the AWS Cloud Control API resource identifier (not the Port entity identifier).
+- `identifier` - A JQ query to calculate the resource identifier. In case the action is `upsert`, it should be the AWS Cloud Control API resource identifier. Otherwise, for `delete` action, it should be the Port entity identifier. It's recommended to have a Port entity identifier identical to the Cloud Control API resource identifier (when applicable), for your convenience.
 
 An example for such a JSON event:
 
@@ -285,7 +285,7 @@ Properties:
 
 Here, the `InputTemplate` takes the information extracted in the `InputPathsMap`, and constructs a message that will be sent to the SQS queue, and will be consumed by the Exporter’s Lambda.
 The message includes the hardcoded resource type (`AWS::Lambda::Function`); the `awsRegion` from the event;
-a JQ query to figure out the action (`upsert` or `delete` the Port entity), based on the `eventName`; and a JQ query to calculate the AWS Cloud Control resource identifier, based on the function name from the API response or request.
+a JQ query to figure out the action (`upsert` or `delete` the Port entity), based on the `eventName`; and a JQ query to calculate the identifier, based on the function name from the API response or request.
 
 :::info
 To read more about input transformer in EventBridge, click [here](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-transform-target-input.html).
