@@ -30,7 +30,7 @@ The next step in setting Port's Software Catalog is to ingest data into the cata
 
 Port's Software Catalog provides integrations to surface data that exists in various tools and repositories, creating a central metadata store across your devOps architecture, making it easy to centralize all relevant information in one place.
 
-By syncing data into the software catalog, you can ensure that you have a comprehensive and up-to-date view of your software, infrastructure, cloud resources, CI/CD and more.
+By ingesting data into the software catalog, you can ensure that you have a comprehensive and up-to-date view of your software, infrastructure, cloud resources, CI/CD and more.
 
 See how to --> [Ingest data to the software catalog](./sync-data-to-catalog/sync-data-to-catalog.md)
 

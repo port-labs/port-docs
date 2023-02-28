@@ -86,11 +86,11 @@ When a relation between blueprints is configured with `many = true`, you can add
 Click for more details about [**relations**](../define-your-data-model/relate-blueprints/relate-blueprints.md).
 :::
 
-## Sync integration methods
+## Ingestion integration methods
 
-Port offers a variety of data sync integrations and methods, these make it easy to ingest data to the catalog and keep it up to date.
+Port offers a variety of data ingestion integrations and methods, these make it easy to ingest data to the catalog and keep it up to date.
 
-Use the links below to learn about the different data sync methods Port offers:
+Use the links below to learn about the different data ingestion methods Port offers:
 
 - [REST](../../api-reference/api-reference.mdx);
 - [CI/CD](./ci-cd/ci-cd.md);
