@@ -11,15 +11,6 @@ With Port, you can import and display [OpenAPI](https://www.openapis.org/) speci
 
 By using a special Open API Blueprint property, Port will display the Swagger UI matching the spec file provided in the [specific entity page](../page/entity-page.md). In addition, it will also provide advanced functionality such as performing HTTP calls to the spec target directly from Port.
 
-## OpenAPI property definition in Blueprint schema using URL
-
-When using the URL format, Port will query the provided URL for the OpenAPI spec and expects a JSON OpenAPI spec
-
-:::note
-
-When using URL for the `open-api` display please make sure that your server allows cross-origin (CORS) requests from `app.getport.io`
-:::
-
 ## Definition
 
 <Tabs groupId="definition" defaultValue="url" values={[
