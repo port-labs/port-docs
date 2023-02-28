@@ -14,18 +14,18 @@ Furthermore, the [AWS CloudTrail](https://aws.amazon.com/cloudtrail/) service au
 
 A user can create an [AWS EventBridge rule](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-rules.html) to consume and transform particular events, and send them to a target, such as an [AWS SQS Queue](https://aws.amazon.com/sqs/).
 
-[The AWS exporter application](./aws.md#exporter-aws-serverless-application) creates an SQS Queue as part of its installation process, and configures it as an event source for the exporter's Lambda.
+[The AWS exporter application](./aws.md#exporter-aws-serverless-application) creates an SQS Queue as part of its installation process, and configures it as an event source for the exporter's lambda.
 
 This allows you to set up an event rule, that consumes any events from the bus and sends them to the AWS exporter's queue.
 
-Each event will have to be transformed as part of the event rule, before reaching the queue, to suit the exporter's Lambda expected event structure.
+Each event will have to be transformed as part of the event rule, before reaching the queue, to suit the exporter's lambda expected event structure.
 The transformation goal is to map an event to a single AWS resource, that the exporter can handle.
 
-The events in the queue are consumed automatically by the exporter's Lambda, that will sync the updated state of the relevant AWS resources with Port.
+The events in the queue are consumed automatically by the exporter's lambda, that will sync the updated state of the relevant AWS resources with Port.
 
 ### Input structure for a single event
 
-The AWS exporter's Lambda accepts JSON events with the following structure:
+The AWS exporter's lambda accepts JSON events with the following structure:
 
 - `resource_type` - a hardcoded string representing the AWS resource type that is configured in the [`config.json`](./aws.md#exporter-configjson-file) of the AWS Exporter;
 - `region` - A JQ query to get the region from the event, usually the value will be `"\"<awsRegion>\""`
@@ -54,16 +54,18 @@ To get the identifier formula of a specific resource type, like `AWS::Lambda::Fu
 ```bash showLineNumbers
 aws cloudformation describe-type --type RESOURCE --type-name AWS::Lambda::Function --query "Schema" | jq 'fromjson | .primaryIdentifier | join("|")'
 
+# Result
 "/properties/FunctionName"
 ```
 
-Here you can see that the identifier of a Lambda function is the function name.
+Here you can see that the identifier of a lambda function is the function name.
 
 Another example, for the `AWS::ECS::Service` resource type:
 
 ```bash showLineNumbers
 aws cloudformation describe-type --type RESOURCE --type-name AWS::ECS::Service --query "Schema" | jq 'fromjson | .primaryIdentifier | join("|")'
 
+# Result
 "/properties/ServiceArn|/properties/Cluster"
 ```
 
@@ -82,11 +84,11 @@ Before diving deep into the [event rule properties](#event-rule-properties), her
 
 ```yaml showLineNumbers
 AWSTemplateFormatVersion: "2010-09-09"
-Description: The template used to create event rules for the Port AWS Exporter.
+Description: The template used to create event rules for the Port AWS exporter.
 
 Parameters:
   PortAWSExporterStackName:
-    Description: Name of the Port AWS Exporter stack name
+    Description: Name of the Port AWS exporter stack name
     Type: String
     MinLength: 1
     MaxLength: 255
@@ -138,7 +140,7 @@ Resources:
 ```
 
 :::info
-This example of CloudFormation stack can be used to act on changes of Lambda functions.
+This example of CloudFormation stack can be used to act on changes of lambda functions.
 Moreover, it includes a parameter called `PortAWSExporterStackName`, that refers to the main exporter's stack name. That way, we can send the events to the existing exporter's events queue, to sync relevant AWS resources.
 :::
 
@@ -156,7 +158,7 @@ Properties:
 ```
 
 - The `EventPattern` property defines which events to consume, including which event sources to process, which filters to apply based on the event structure.
-  Here, we define the event pattern to consume Cloudtrail API calls, sourced from the Lambda service; On top of that, we filter only the `UpdateFunctionConfiguration`, `CreateFunction` and `DeleteFunction` events:
+  Here, we define the event pattern to consume Cloudtrail API calls, sourced from the lambda service; On top of that, we filter only the `UpdateFunctionConfiguration`, `CreateFunction` and `DeleteFunction` events:
 
 ```yaml showLineNumbers
 Properties:
@@ -184,7 +186,7 @@ For supported services in CloudTrail, click [here](https://docs.aws.amazon.com/a
 :::
 
 - The `Targets` property defines the targets of the produced events.
- For the AWS exporter, we want to configure it's own event queue as the target:
+  For the AWS exporter, we want to configure it's own event queue as the target:
 
 ```yaml showLineNumbers
 Properties:
@@ -229,7 +231,7 @@ Properties:
         ...
 ```
 
-For instance, the event sent to the EventBridge bus for the `CreateFunction` Lambda API call has the following structure:
+For instance, the event sent to the EventBridge bus for the `CreateFunction` lambda API call has the following structure:
 
 ```json showLineNumbers
 {
@@ -255,7 +257,7 @@ For instance, the event sent to the EventBridge bus for the `CreateFunction` Lam
 
 The `InputPathsMap` in the example below will extract only the `awsRegion`, `eventName`, and `functionName` from the API request and response.
 
-- The `InputTemplate` key in `InputTransformer` defines a template of the final input that will be sent to the target queue, in the format the exporter's Lambda [expects](#input-structure-for-a-single-event). The template is rendered using the values from the `InputPathsMap`:
+- The `InputTemplate` key in `InputTransformer` defines a template of the final input that will be sent to the target queue, in the format the exporter's lambda [expects](#input-structure-for-a-single-event). The template is rendered using the values from the `InputPathsMap`:
 
 ```yaml showLineNumbers
 Properties:
@@ -283,9 +285,13 @@ Properties:
         # highlight-end
 ```
 
-Here, the `InputTemplate` takes the information extracted in the `InputPathsMap`, and constructs a message that will be sent to the SQS queue and consumed by the Exporter’s Lambda.
-The message includes the hardcoded resource type (`AWS::Lambda::Function`); the `awsRegion` from the event;
-a JQ query to figure out the action (`upsert` or `delete` the Port entity), based on the `eventName`; and a JQ query to calculate the identifier, based on the function name from the API response or request.
+Here, the `InputTemplate` takes the information extracted in the `InputPathsMap`, and constructs a message that will be sent to the SQS queue and consumed by the exporter’s lambda.
+The message includes:
+
+- The hardcoded resource type (`AWS::Lambda::Function`);
+- The `awsRegion` from the event;
+- A JQ query to figure out the action (`upsert` or `delete` the Port entity), based on the `eventName`;
+- A JQ query to calculate the identifier, based on the function name from the API response or request.
 
 :::info
 To read more about input transformer in EventBridge, click [here](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-transform-target-input.html).

@@ -3,15 +3,12 @@ sidebar_position: 2
 ---
 
 import Image from "@theme/IdealImage";
-import SpecificTopicEntityPage from "../../../../static/img/integrations/aws-exporter/TopicAndLambdas.png"
-import SpecificLambdaEntityPage from "../../../../static/img/integrations/aws-exporter/LambdaPage.png"
-import AuditLogPage from "../../../../static/img/integrations/aws-exporter/AuditLog.png"
 
 # Examples
 
-## Mapping SNS topics and Lambda functions
+## Mapping SNS topics and lambda functions
 
-In this step-by-step example, you will export your AWS `SNS Topics` and `Lambda Functions` to Port.
+In this step-by-step example, you will export your AWS `SNS topics` and `lambda functions` to Port.
 
 1. Create the following Port Blueprints:
 
@@ -26,7 +23,7 @@ In this step-by-step example, you will export your AWS `SNS Topics` and `Lambda 
    ```json showLineNumbers
    {
      "identifier": "lambda",
-     "description": "This blueprint represents a Lambda in our software catalog",
+     "description": "This blueprint represents a lambda in our software catalog",
      "title": "Lambda",
      "icon": "Lambda",
      "schema": {
@@ -112,7 +109,7 @@ In this step-by-step example, you will export your AWS `SNS Topics` and `Lambda 
 2. Upload the `config.json` file to the exporter's S3 bucket:
 
    <details>
-   <summary> Port AWS Exporter config.json </summary>
+   <summary> Port AWS exporter config.json </summary>
 
    ```json showLineNumbers
    {
@@ -200,7 +197,7 @@ In this step-by-step example, you will export your AWS `SNS Topics` and `Lambda 
 
    </details>
 
-4. Optional: Create an event rule to trigger automatic syncing of changes in Lambda functions.
+4. Optional: Create an event rule to trigger automatic syncing of changes in lambda functions.
 
    You may use the following CloudFormation Template:
 
@@ -209,11 +206,11 @@ In this step-by-step example, you will export your AWS `SNS Topics` and `Lambda 
 
    ```yaml showLineNumbers
    AWSTemplateFormatVersion: "2010-09-09"
-   Description: The template used to create event rules for the Port AWS Exporter.
+   Description: The template used to create event rules for the Port AWS exporter.
 
    Parameters:
      PortAWSExporterStackName:
-       Description: Name of the Port AWS Exporter stack name
+       Description: Name of the Port AWS exporter stack name
        Type: String
        MinLength: 1
        MaxLength: 255
