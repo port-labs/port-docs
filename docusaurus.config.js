@@ -124,10 +124,10 @@ const config = {
           {
             title: "Complete Use Cases",
             items: [
-              {
-                label: "Software Development Lifecycle (SDLC)",
-                to: "/complete-use-cases/sdlc",
-              },
+              // {
+              //   label: "Software Development Lifecycle (SDLC)",
+              //   to: "/complete-use-cases/sdlc",
+              // },
               {
                 label: "Mapping Kubernetes",
                 to: "/complete-use-cases/full-kubernetes-exporter",
@@ -140,9 +140,13 @@ const config = {
                 label: "Software Templates",
                 to: "/complete-use-cases/software-templates",
               },
+              // {
+              //   label: "A Templates",
+              //   to: "/complete-use-cases/iac-templates",
+              // },
               {
-                label: "IaC Templates",
-                to: "/complete-use-cases/iac-templates",
+                label: "Package Dependency Mapping",
+                to: "/complete-use-cases/package-dependency-mapping",
               },
             ],
           },

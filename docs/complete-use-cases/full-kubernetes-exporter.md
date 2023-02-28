@@ -23,7 +23,7 @@ All relevant files and resources for this guide are available **[here!](https://
 
 ### Creating Blueprints with Terraform
 
-To set up your Blueprints, use Port's [Terraform provider](../build-your-software-catalog/sync-data-to-catalog/iac/terraform.md).
+To set up your Blueprints, use Port's [Terraform provider](../build-your-software-catalog/sync-data-to-catalog/iac/terraform/terraform.md).
 
 After setting up your `main.tf` file under the `terraform/` directory, create the required `.tf` files, which will represent your Port Blueprints.
 

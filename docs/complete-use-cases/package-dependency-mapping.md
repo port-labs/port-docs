@@ -99,7 +99,7 @@ Let's have a look at our new relation!
 
 ![blueprints.png](../../static/img/complete-use-cases/microservice-dependency/blueprints.png)
 
-For more information about Deployment Config and it's uses, click [here](./sdlc.md#deployment-config-bp).
+<!-- For more information about Deployment Config and it's uses, click here (link to SDLC complete use case). -->
 
 As we can see in the image above, two Blueprints were created: `deploymentConfig` and `package`. Notice that the `package` property is the Relation we created. It consists of an array of packages (this is thanks to the `"many": true` property of the Relation), since each microservice, and respectively, each Deployment Config can depend on multiple Packages.
 

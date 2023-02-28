@@ -10,9 +10,10 @@ In order to get started quickly with Port, we have compiled a list of common use
 
 Select a use case from the list below to get started:
 
-- [Software Development Lifecycle (SLDC)](./sdlc.md)
+<!-- - [Software Development Lifecycle (SLDC) -->
+
 - [Mapping Kubernetes resources](./full-kubernetes-exporter.md)
 - [Service Locking](./service-locking.md)
 - [Software Templates](./software-templates.md)
-- [IaC Templates](./iac-templates.md)
+<!-- - IaC Templates -->
 - [Package Dependency Mapping](./package-dependency-mapping.md)
