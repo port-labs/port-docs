@@ -41,24 +41,10 @@ Make sure you have an existing [Blueprint](../../../../build-your-software-catal
 
 ## Working with Port's API
 
-An example of how you'd create/update or get entities from Port using CircleCI and Python.
+CircleCI pipelines are written in code a triggered by CircleCI's YAML pipelines.
+An example of how you'd create/update or get entities from Port using CircleCI and Python:
 
-<br></br>
-
-Python pip Requirements file:
-
-<details>
-  <summary> port_requirements.txt </summary>
-
-```
-requests>=2.28.2
-```
-
-</details>
-
-Create the following Python script in your repository:
-
-Add the following job and workflow to your CI pipeline:
+Add the following job and workflow to your CircleCI pipeline:
 
 <details>
   <summary> CircleCI Pipeline YAML </summary>
@@ -89,6 +75,24 @@ workflows:
 
 </details>
 
+<br></br>
+
+Create the following Python script in your repository ot either create/update or get Port entities:
+
+:::note
+In this example, we use Python modules which need to be installed. You can use the following `requirements.txt`:
+
+<details>
+  <summary> port_requirements.txt </summary>
+
+```
+requests>=2.28.2
+```
+
+</details>
+
+:::
+
 <Tabs groupId="usage" defaultValue="upsert" values={[
 {label: "Create/Update", value: "upsert"},
 {label: "Get", value: "get"}
@@ -116,37 +120,49 @@ headers = {
 	'Authorization': f'Bearer {access_token}'
 }
 
-# request url : {API_URL}/blueprints/<blueprint_name>/entities/<entity_name>
-get_response = requests.get(f"{API_URL}/blueprints/test-blueprint/entities/test-entity",
-                        headers=headers)
+entity_json = {
+        "identifier": "example-entity",
+        "properties": {
+          "myStringProp": "My value",
+          "myNumberProp": 1,
+          "myBooleanProp": true,
+          "myArrayProp": ["myVal1", "myVal2"],
+          "myObjectProp": {"myKey": "myVal", "myExtraKey": "myExtraVal"}
+      }
+}
+
+# request url : {API_URL}/blueprints/<blueprint_id>/entities
+create_response = requests.post(f'{API_URL}/blueprints/test-blueprint/entities?upsert=true', json=entity_json, headers=headers)
 print(json.dumps(get_response.json(), indent=4))
 ```
 
 </TabItem>
 <TabItem value="get">
 
-```js showLineNumbers
-import groovy.json.JsonSlurperClassic
-...
-    auth_body = """
-        {
-            "clientId": "${PORT_CLIENT_ID}",
-            "clientSecret": "${PORT_CLIENT_SECRET}"
-        }
-        """
-    token_response = httpRequest contentType: 'APPLICATION_JSON',
-        httpMode: "POST",
-        requestBody: auth_body,
-        url: "${API_URL}/v1/auth/access_token"
-    def slurped_response = new JsonSlurperClassic().parseText(token_response.content)
-    def token = slurped_response.accessToken // Port's access token
+```python showLineNumbers
+import os
+import requests
+import json
 
-    response = httpRequest contentType: 'APPLICATION_JSON', httpMode: "GET",
-            url: "${API_URL}/v1/blueprints/blueprint/entities/entity-example",
-            customHeaders: [
-                [name: "Authorization", value: "Bearer ${token}"],
-            ]
-    println(response.content)
+# These are the credentials passed by the 'port' context to your environment variables
+CLIENT_ID = os.environ['PORT_CLIENT_ID']
+CLIENT_SECRET = os.environ['PORT_CLIENT_SECRET']
+
+credentials = {
+    'clientId': CLIENT_ID,
+    'clientSecret': CLIENT_SECRET
+}
+token_response = requests.post(f"{API_URL}/auth/access_token", json=credentials)
+access_token = token_response.json()['accessToken']
+
+headers = {
+	'Authorization': f'Bearer {access_token}'
+}
+
+# request url : {API_URL}/blueprints/<blueprint_id>/entities/<entity_id>
+get_response = requests.get(f"{API_URL}/blueprints/test-blueprint/entities/test-entity",
+                        headers=headers)
+print(json.dumps(get_response.json(), indent=4))
 ```
 
 </TabItem>
