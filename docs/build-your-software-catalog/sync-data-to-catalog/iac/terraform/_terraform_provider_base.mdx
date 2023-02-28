@@ -1,0 +1,27 @@
+:::note Prerequisites
+To install and use Port's Terraform provider, you will need to install the [Terraform CLI](https://learn.hashicorp.com/tutorials/terraform/install-cli)
+:::
+
+To install the Terraform provider, create a `.tf` file specifying the provider and the required Port [credentials](../../api/api.md#find-your-port-credentials):
+
+```hcl showLineNumbers
+terraform {
+  required_providers {
+    port-labs = {
+      source  = "port-labs/port-labs"
+      version = "~> 0.8.1"
+    }
+  }
+}
+
+provider "port-labs" {
+  client_id = "{YOUR CLIENT ID}"     # or set the environment variable PORT_CLIENT_ID
+  secret    = "{YOUR CLIENT SECRET}" # or set the environment variable PORT_CLIENT_SECRET
+}
+```
+
+Then run the following command to install the provider in your Terraform workspace:
+
+```shell showLineNumbers
+terraform init
+```
