@@ -41,7 +41,6 @@ Make sure you have an existing [Blueprint](../../../../build-your-software-catal
 
 ## Working with Port's API
 
-CircleCI pipelines are written in code a triggered by CircleCI's YAML pipelines.
 An example of how you'd create/update or get entities from Port using CircleCI and Python:
 
 Add the following job and workflow to your CircleCI pipeline:
