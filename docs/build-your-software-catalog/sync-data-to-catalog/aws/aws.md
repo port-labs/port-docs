@@ -435,7 +435,7 @@ To run some optional commands in this guide, you will need to install:
    To learn how to modify a secret's value, look [here](https://docs.aws.amazon.com/secretsmanager/latest/userguide/manage_update-secret.html).
    :::
 
-5. Upload the `config.json` to the [exporter's S3 bucket](#s3-bucket).
+5. Upload the `config.json` to the [exporter's S3 bucket](#exporter-s3-bucket).
 
    :::tip Upload a file to an S3 bucket
    To learn how to upload a file to S3, look [here](https://docs.aws.amazon.com/AmazonS3/latest/userguide/upload-objects.html).
