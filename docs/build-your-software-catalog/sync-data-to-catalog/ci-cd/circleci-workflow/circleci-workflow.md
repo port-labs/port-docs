@@ -41,7 +41,7 @@ Make sure you have an existing [Blueprint](../../../../build-your-software-catal
 
 ## Working with Port's API
 
-An example of how you'd create/update or get entities from Port using CircleCI and Python:
+Here is an example snippet showing how to integrate a job that uses Port's API  with your existing CircleCI pipelines using Python:
 
 Add the following job and workflow to your CircleCI pipeline:
 
