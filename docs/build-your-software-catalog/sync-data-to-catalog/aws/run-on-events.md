@@ -80,7 +80,7 @@ For more information, read [**here**](https://docs.aws.amazon.com/cloudcontrolap
 
 The event rule is how you specify the exact events you want to consume, and define the target to send the modified event to (including the transformation to the input).
 
-Before diving deep into the [event rule properties](#event-rule-properties), here is a complete example of a `CloudFormation YAML template` to manage an event rule, for the AWS Exporter:
+Before diving deep into the [event rule properties](#properties), here is a complete example of a `CloudFormation YAML template` to manage an event rule, for the AWS Exporter:
 
 ```yaml showLineNumbers
 AWSTemplateFormatVersion: "2010-09-09"
@@ -299,7 +299,7 @@ To read more about input transformer in EventBridge, click [here](https://docs.a
 
 ## Setup summary
 
-1. You should prepare an [event rule](#event-rule-definition), based on specific events matching resources you want the AWS exporter to update in real time;
+1. You should prepare an [event rule](#definition), based on specific events matching resources you want the AWS exporter to update in real time;
 
 2. Create the event rule from step 1.
 
