@@ -38,7 +38,7 @@ The exporter makes use of [JQ JSON processor](https://stedolan.github.io/jq/manu
 
 ### Exporter `config.json` file
 
-The `config.json` file is how you specify the exact resources you want to export from your AWS account, and also which entities and which properties in Port, you want to fill in with data.
+The `config.json` file is how you specify the exact resources you want to export from your AWS account, and also which Entities and which properties in Port, you want to fill in with data.
 
 Here is an example snippet of the `config.json` file which demonstrates the ETL process for getting `lambda functions` data from the account into the software catalog:
 
@@ -170,7 +170,7 @@ Here is an example snippet of the `config.json` file which demonstrates the ETL 
   The table of the special resources with the required properties can be found [here](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/resource-operations-list.html#resource-operations-list-containers).
   :::
 
-- The `port`, `entity` and the `mappings` keys open the section used to map the AWS resource fields to Port entities, the `mappings` key is an array where each object matches the structure of an [entity](../sync-data-to-catalog.md#entity-json-structure).
+- The `port`, `entity` and the `mappings` keys open the section used to map the AWS resource fields to Port Entities, the `mappings` key is an array where each object matches the structure of an [entity](../sync-data-to-catalog.md#entity-json-structure).
 - Each mapping value is a JQ query, except for `blueprint` which has to be a static string.
 
   ```json showLineNumbers
@@ -221,7 +221,7 @@ Here is an example snippet of the `config.json` file which demonstrates the ETL 
   :::tip View a resource type schema
   To view a resource type schema and use it to compose a mapping, use [this](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html) reference.
 
-  Pay attention that not all of the resource types listed in the reference are available for use with the Cloud Control API. A method to determine if a resource type is available discussed [here](#structure).
+  Note that not all of the resource types listed in the reference are available for use with the Cloud Control API. A method to determine if a resource type is available discussed [here](#structure).
 
   For additional options and information, read [here](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/resource-types.html#resource-types-schemas).
   :::
@@ -271,7 +271,7 @@ In any case, you need to upload the [`config.json`](#exporter-configjson-file) t
 
 ### Port Credentials Secret
 
-In order to manage entities in Port, the exporter needs access to your Port credentials, these are provided to the exporter via an [`AWS Secrets Manager`](https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html) secret.
+In order to manage Entities in Port, the exporter needs access to your Port credentials, these are provided to the exporter via an [`AWS Secrets Manager`](https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html) secret.
 
 The secret value should be in the following format:
 

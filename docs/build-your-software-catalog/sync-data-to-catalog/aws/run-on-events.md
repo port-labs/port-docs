@@ -28,7 +28,7 @@ The events in the queue are consumed automatically by the exporter's lambda, tha
 The AWS exporter's lambda accepts JSON events with the following structure:
 
 - `resource_type` - a hardcoded string representing the AWS resource type that is configured in the [`config.json`](./aws.md#exporter-configjson-file) of the AWS Exporter;
-- `region` - A JQ query to get the region from the event, usually the value will be `"\"<awsRegion>\""`
+- `region` - A JQ query to get the region from the event, usually the value will be `"\"<awsRegion>\""`;
 - `action` (Optional, defaults to `upsert`) - A JQ query to define the desired action: `upsert` or `delete` the Port entity of the matching resource. Will usually be based on the event name, like in the example below;
 - `identifier` - A JQ query to calculate the resource identifier. In case the action is `upsert`, it should be the AWS Cloud Control API resource identifier. Otherwise, for `delete` actions, it should be the Port entity identifier. It is recommended to use a Port entity identifier that is identical to the Cloud Control API resource identifier (when applicable), this will make it possible to use the same event rule both for upsert and delete events (while also saving the need for complex JQ filtering patterns).
 
