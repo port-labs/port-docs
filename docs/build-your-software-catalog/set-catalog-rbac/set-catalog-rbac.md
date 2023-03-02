@@ -26,11 +26,11 @@ Catalog RBAC allows admins to finely control which users have access to which in
 - Create a fully read-only view for a developer;
 - etc.
 
-## Set access controls to catalog data
+## Set global access controls to catalog data
 
 The default permissions assigned to every blueprint upon creation specify that users with the admin role, and users with the specific blueprint moderator role, can perform any action over a blueprint.
 
-It is also possible to assign more granular permissions controls on **entities**:
+It is also possible to assign global granular permissions controls on **entities**:
 
 <Tabs groupId="permission" defaultValue="create" values={[
 {label: "Create (register)", value: "create"},
@@ -324,6 +324,231 @@ To give delete permissions to members of the owning team of an entity, change th
       "teams": [],
       // highlight-next-line
       "ownedByTeam": true // changed from false
+    }
+  }
+}
+```
+
+</TabItem>
+
+</Tabs>
+
+</TabItem>
+
+</Tabs>
+
+## Set granular access controls to catalog data
+
+It is also possible to assign more granular permissions controls on **entities**:
+
+<Tabs groupId="permission" defaultValue="updateProp" values={[
+{label: "Update specific property", value: "updateProp"},
+{label: "Update specific relation", value: "updateRel"}
+]}>
+
+<TabItem value="updateProp">
+
+To assign permissions to update a specific entity property, give the desired persona permissions under the `updateProperties -> propertyName` object as shown below:
+
+<Tabs groupId="target" defaultValue="role" values={[
+{label: "Role", value: "role"},
+{label: "User", value: "user"},
+{label: "Team", value: "team"},
+{label: "Ownership", value: "ownership"}
+]}>
+
+<TabItem value="role">
+
+To give property update permissions to another role, add it to the `roles` array:
+
+```json showLineNumbers
+{
+  "entities": {
+    ... other permissions
+    "updateProperties": {
+      "myProperty": {
+        // highlight-next-line
+        "roles": ["my-blueprint-moderator", "Admin", "my-role"], // added my-role
+        "users": [],
+        "teams": [],
+        "ownedByTeam": false
+      }
+    }
+  }
+}
+```
+
+</TabItem>
+
+<TabItem value="user">
+
+To give property update permissions to another user, add it to the `users` array:
+
+```json showLineNumbers
+{
+  "entities": {
+    ... other permissions
+    "updateProperties": {
+      "myProperty": {
+        "roles": ["my-blueprint-moderator", "Admin"],
+        // highlight-next-line
+        "users": ["my-user@example.com"], // added my-user@example.com
+        "teams": [],
+        "ownedByTeam": false
+      }
+    }
+  }
+}
+```
+
+</TabItem>
+
+<TabItem value="team">
+
+To give property update permissions to another team, add it to the `teams` array:
+
+```json showLineNumbers
+{
+  "entities": {
+    ... other permissions
+    "updateProperties": {
+      "myProperty": {
+        "roles": ["my-blueprint-moderator", "Admin"],
+        "users": [],
+        // highlight-next-line
+        "teams": ["my-team"], // added my-team
+        "ownedByTeam": false
+      }
+    }
+  }
+}
+```
+
+</TabItem>
+
+<TabItem value="ownership">
+
+To give property update permissions to members of the owning team of an entity, change the `ownedByTeam` key:
+
+```json showLineNumbers
+{
+  "entities": {
+    ... other permissions
+    "updateProperties": {
+      "myProperty": {
+        "roles": ["my-blueprint-moderator", "Admin"],
+        "users": [],
+        "teams": [],
+        // highlight-next-line
+        "ownedByTeam": true // changed from false
+      }
+    }
+  }
+}
+```
+
+</TabItem>
+
+</Tabs>
+
+</TabItem>
+
+<TabItem value="updateRel">
+
+To assign permissions to update a specific entity relation, give the desired persona permissions under the `updateRelations -> relationName` object as shown below:
+
+<Tabs groupId="target" defaultValue="role" values={[
+{label: "Role", value: "role"},
+{label: "User", value: "user"},
+{label: "Team", value: "team"},
+{label: "Ownership", value: "ownership"}
+]}>
+
+<TabItem value="role">
+
+To give relation update permissions to another role, add it to the `roles` array:
+
+```json showLineNumbers
+{
+  "entities": {
+    ... other permissions
+    "updateRelations": {
+      "myRelation": {
+        // highlight-next-line
+        "roles": ["my-blueprint-moderator", "Admin", "my-role"], // added my-role
+        "users": [],
+        "teams": [],
+        "ownedByTeam": false
+      }
+    }
+  }
+}
+```
+
+</TabItem>
+
+<TabItem value="user">
+
+To give relation update permissions to another user, add it to the `users` array:
+
+```json showLineNumbers
+{
+  "entities": {
+    ... other permissions
+    "updateRelations": {
+      "myRelation": {
+        "roles": ["my-blueprint-moderator", "Admin"],
+        // highlight-next-line
+        "users": ["my-user@example.com"], // added my-user@example.com
+        "teams": [],
+        "ownedByTeam": false
+      }
+    }
+  }
+}
+```
+
+</TabItem>
+
+<TabItem value="team">
+
+To give relation update permissions to another team, add it to the `teams` array:
+
+```json showLineNumbers
+{
+  "entities": {
+    ... other permissions
+    "updateRelations": {
+      "myRelation": {
+        "roles": ["my-blueprint-moderator", "Admin"],
+        "users": [],
+        // highlight-next-line
+        "teams": ["my-team"], // added my-team
+        "ownedByTeam": false
+      }
+    }
+  }
+}
+```
+
+</TabItem>
+
+<TabItem value="ownership">
+
+To give relation update permissions to members of the owning team of an entity, change the `ownedByTeam` key:
+
+```json showLineNumbers
+{
+  "entities": {
+    ... other permissions
+    "updateRelations": {
+      "myRelation": {
+        "roles": ["my-blueprint-moderator", "Admin"],
+        "users": [],
+        "teams": [],
+        // highlight-next-line
+        "ownedByTeam": true // changed from false
+      }
     }
   }
 }
