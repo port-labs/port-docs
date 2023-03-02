@@ -4,7 +4,7 @@ title: Promote Scorecards
 sidebar_label: 📊 Promote Scorecards
 ---
 
-import CombinatorIntro from "../build-your-software-catalog/search-and-query/\_combinator_intro.md"
+import CombinatorIntro from "../search-and-query/\_combinator_intro.md"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"

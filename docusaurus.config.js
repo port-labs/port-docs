@@ -116,6 +116,10 @@ const config = {
                 to: "/promote-scorecards",
               },
               {
+                label: "Search & Query",
+                to: "/search-and-query",
+              },
+              {
                 label: "API Reference",
                 to: "/api-reference",
               },
