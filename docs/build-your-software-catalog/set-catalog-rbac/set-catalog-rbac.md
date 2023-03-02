@@ -30,7 +30,7 @@ Catalog RBAC allows admins to finely control which users have access to which in
 
 The default permissions assigned to every blueprint upon creation specify that users with the admin role, and users with the specific blueprint moderator role, can perform any action over a blueprint.
 
-It is also possible to assign global granular permissions controls on **entities**:
+It is also possible to assign global permissions controls on **entities**:
 
 <Tabs groupId="permission" defaultValue="create" values={[
 {label: "Create (register)", value: "create"},
