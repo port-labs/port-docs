@@ -30,14 +30,14 @@ You can create a pie chart illustrating data from Entities in your software cata
 
 #### Visualization properties
 
-| Field                   | Type     | Description                                                                                                                                              | Default | Required |
-| ----------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | -------- |
-| `Title`                 | `String` | Visualization title                                                                                                                                      | `null`  | `true`   |
-| `Icon`                  | `String` | Visualization Icon                                                                                                                                       | `null`  | `false`  |
-| `Description`           | `String` | Visualization description                                                                                                                                | `null`  | `false`  |
-| `Blueprint`             | `String` | The chosen Blueprint from which related Entities data is visualized from                                                                                 | `null`  | `true`   |
-| `Breakdown by property` | `String` | Group your chart by a specific property                                                                                                                  | `null`  | `true`   |
-| `Filters`               | `Array`  | Filters to include or exclude specific data based on Port's [Search Rules](../../build-your-software-catalog/search-and-query/search-and-query.md#rules) | []      | `false`  |
+| Field                   | Type     | Description                                                                                                                  | Default | Required |
+| ----------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------- | ------- | -------- |
+| `Title`                 | `String` | Visualization title                                                                                                          | `null`  | `true`   |
+| `Icon`                  | `String` | Visualization Icon                                                                                                           | `null`  | `false`  |
+| `Description`           | `String` | Visualization description                                                                                                    | `null`  | `false`  |
+| `Blueprint`             | `String` | The chosen Blueprint from which related Entities data is visualized from                                                     | `null`  | `true`   |
+| `Breakdown by property` | `String` | Group your chart by a specific property                                                                                      | `null`  | `true`   |
+| `Filters`               | `Array`  | Filters to include or exclude specific data based on Port's [Search Rules](../../search-and-query/search-and-query.md#rules) | []      | `false`  |
 
 #### Example: filter only `Deployment` Entities from last week
 
