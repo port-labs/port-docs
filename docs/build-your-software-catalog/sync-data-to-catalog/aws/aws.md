@@ -492,7 +492,7 @@ In addition to running it on schedule, the AWS exporter can be used to act on li
 
 That way you can configure a resource to be synced as soon as it changed, in real time.
 
-Refer to the [run on events](./run-on-events.md) page for a detailed guide.
+Refer to the [real-time updates](./run-on-events.md) page for a detailed guide.
 
 ### Examples
 
