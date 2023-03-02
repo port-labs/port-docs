@@ -3,6 +3,7 @@ title: Set Catalog RBAC
 sidebar_label: 🔐 Set Catalog RBAC
 ---
 
+import OwnershipTemplate from './\_ownership_explanation_template.mdx'
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
@@ -51,7 +52,7 @@ To assign permissions to create an entity, give the desired persona permissions 
 
 <TabItem value="role">
 
-To give create permissions to another role, add it to the `roles` array:
+To give `create` permissions to another role, add it to the `roles` array:
 
 ```json showLineNumbers
 {
@@ -72,7 +73,7 @@ To give create permissions to another role, add it to the `roles` array:
 
 <TabItem value="user">
 
-To give create permissions to another user, add it to the `users` array:
+To give `create` permissions to another user, add it to the `users` array:
 
 ```json showLineNumbers
 {
@@ -93,7 +94,7 @@ To give create permissions to another user, add it to the `users` array:
 
 <TabItem value="team">
 
-To give create permissions to another team, add it to the `teams` array:
+To give `create` permissions to another team, add it to the `teams` array:
 
 ```json showLineNumbers
 {
@@ -114,7 +115,9 @@ To give create permissions to another team, add it to the `teams` array:
 
 <TabItem value="ownership">
 
-To give create permissions to members of the owning team of an entity, change the `ownedByTeam` key:
+<OwnershipTemplate/>
+
+To give `create` permissions to members of the owning team of an entity, change the `ownedByTeam` key:
 
 ```json showLineNumbers
 {
@@ -130,6 +133,10 @@ To give create permissions to members of the owning team of an entity, change th
   }
 }
 ```
+
+:::tip
+In the context of the `create` permission, owned by team means that a user can only create a new entity if he assigns to it a team that he is a member of.
+:::
 
 </TabItem>
 
@@ -150,7 +157,7 @@ To assign permissions to update an entity, give the desired persona permissions 
 
 <TabItem value="role">
 
-To give update permissions to another role, add it to the `roles` array:
+To give `update` permissions to another role, add it to the `roles` array:
 
 ```json showLineNumbers
 {
@@ -171,7 +178,7 @@ To give update permissions to another role, add it to the `roles` array:
 
 <TabItem value="user">
 
-To give update permissions to another user, add it to the `users` array:
+To give `update` permissions to another user, add it to the `users` array:
 
 ```json showLineNumbers
 {
@@ -192,7 +199,7 @@ To give update permissions to another user, add it to the `users` array:
 
 <TabItem value="team">
 
-To give update permissions to another team, add it to the `teams` array:
+To give `update` permissions to another team, add it to the `teams` array:
 
 ```json showLineNumbers
 {
@@ -213,7 +220,9 @@ To give update permissions to another team, add it to the `teams` array:
 
 <TabItem value="ownership">
 
-To give update permissions to members of the owning team of an entity, change the `ownedByTeam` key:
+<OwnershipTemplate/>
+
+To give `update` permissions to members of the owning team of an entity, change the `ownedByTeam` key:
 
 ```json showLineNumbers
 {
@@ -249,7 +258,7 @@ To assign permissions to delete an entity, give the desired persona permissions 
 
 <TabItem value="role">
 
-To give delete permissions to another role, add it to the `roles` array:
+To give `delete` permissions to another role, add it to the `roles` array:
 
 ```json showLineNumbers
 {
@@ -270,7 +279,7 @@ To give delete permissions to another role, add it to the `roles` array:
 
 <TabItem value="user">
 
-To give delete permissions to another user, add it to the `users` array:
+To give `delete` permissions to another user, add it to the `users` array:
 
 ```json showLineNumbers
 {
@@ -291,7 +300,7 @@ To give delete permissions to another user, add it to the `users` array:
 
 <TabItem value="team">
 
-To give delete permissions to another team, add it to the `teams` array:
+To give `delete` permissions to another team, add it to the `teams` array:
 
 ```json showLineNumbers
 {
@@ -312,7 +321,9 @@ To give delete permissions to another team, add it to the `teams` array:
 
 <TabItem value="ownership">
 
-To give delete permissions to members of the owning team of an entity, change the `ownedByTeam` key:
+<OwnershipTemplate/>
+
+To give `delete` permissions to members of the owning team of an entity, change the `ownedByTeam` key:
 
 ```json showLineNumbers
 {
@@ -359,7 +370,7 @@ To assign permissions to update a specific entity property, give the desired per
 
 <TabItem value="role">
 
-To give property update permissions to another role, add it to the `roles` array:
+To give property `update` permissions to another role, add it to the `roles` array:
 
 ```json showLineNumbers
 {
@@ -382,7 +393,7 @@ To give property update permissions to another role, add it to the `roles` array
 
 <TabItem value="user">
 
-To give property update permissions to another user, add it to the `users` array:
+To give property `update` permissions to another user, add it to the `users` array:
 
 ```json showLineNumbers
 {
@@ -405,7 +416,7 @@ To give property update permissions to another user, add it to the `users` array
 
 <TabItem value="team">
 
-To give property update permissions to another team, add it to the `teams` array:
+To give property `update` permissions to another team, add it to the `teams` array:
 
 ```json showLineNumbers
 {
@@ -428,7 +439,9 @@ To give property update permissions to another team, add it to the `teams` array
 
 <TabItem value="ownership">
 
-To give property update permissions to members of the owning team of an entity, change the `ownedByTeam` key:
+<OwnershipTemplate/>
+
+To give property `update` permissions to members of the owning team of an entity, change the `ownedByTeam` key:
 
 ```json showLineNumbers
 {
@@ -466,7 +479,7 @@ To assign permissions to update a specific entity relation, give the desired per
 
 <TabItem value="role">
 
-To give relation update permissions to another role, add it to the `roles` array:
+To give relation `update` permissions to another role, add it to the `roles` array:
 
 ```json showLineNumbers
 {
@@ -489,7 +502,7 @@ To give relation update permissions to another role, add it to the `roles` array
 
 <TabItem value="user">
 
-To give relation update permissions to another user, add it to the `users` array:
+To give relation `update` permissions to another user, add it to the `users` array:
 
 ```json showLineNumbers
 {
@@ -512,7 +525,7 @@ To give relation update permissions to another user, add it to the `users` array
 
 <TabItem value="team">
 
-To give relation update permissions to another team, add it to the `teams` array:
+To give relation `update` permissions to another team, add it to the `teams` array:
 
 ```json showLineNumbers
 {
@@ -535,7 +548,9 @@ To give relation update permissions to another team, add it to the `teams` array
 
 <TabItem value="ownership">
 
-To give relation update permissions to members of the owning team of an entity, change the `ownedByTeam` key:
+<OwnershipTemplate/>
+
+To give relation `update` permissions to members of the owning team of an entity, change the `ownedByTeam` key:
 
 ```json showLineNumbers
 {
@@ -572,8 +587,8 @@ Since the catalog RBAC can be very granular, in some instances it might not be p
 
 ### What happens if a user lacks the permissions to edit a required property of the blueprint?
 
-If the user has permissions to edit any property, except for a required property of the blueprint - then the user will not be able to register or update entities as a whole because they can't provide a value for the required property;
+In this case the user will not be able to register or update entities as a whole because they can't provide a value for the required property;
 
 ### What happens if the `ownedByTeam` setting is enabled for entity registration, but the user can't edit the `team` property?
 
-If the `ownedByTeam` setting is enabled for registration, and the user does not have permissions to edit the `team` property - then the user will not be able to register a new entity since they can't select a value for his team field and mark it as owned by their team.
+In this case the user will not be able to register a new entity since they can't select a value for the entity's team field and mark it as owned by their team.
