@@ -1,8 +1,8 @@
 ---
-sidebar_position: 7
+sidebar_position: 2
 ---
 
-# Package dependency mapping
+# Package Dependency Mapping
 
 Using Port, it is very easy to implement and track package dependency mapping for your microservices. That can be useful, for example, while trying to investigate a dependency related issue or bug, or while checking for security issues.
 
@@ -97,7 +97,7 @@ Please notice the `relations` section at the bottom of the Blueprint
 
 Let's have a look at our new relation!
 
-![blueprints.png](../../static/img/complete-use-cases/microservice-dependency/blueprints.png)
+![blueprints.png](../../../../../static/img/complete-use-cases/microservice-dependency/blueprints.png)
 
 <!-- For more information about Deployment Config and it's uses, click here (link to SDLC complete use case). -->
 
@@ -242,10 +242,10 @@ git push
 
 Now merge the code to main and witness the magic!
 
-![trigger_workflow.png](../../static/img/complete-use-cases/microservice-dependency/trigger_workflow.png)
+![trigger_workflow.png](../../../../../static/img/complete-use-cases/microservice-dependency/trigger_workflow.png)
 The workflow runs automatically, and when it finishes, we will see the new packages created and mapped to the relevant microservice deployment config.
 
-![new_package.png](../../static/img/complete-use-cases/microservice-dependency/new_package.png)
+![new_package.png](../../../../../static/img/complete-use-cases/microservice-dependency/new_package.png)
 
 ### Mapping NPM dependencies
 
