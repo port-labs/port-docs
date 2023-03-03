@@ -10,7 +10,7 @@ import Image from "@theme/IdealImage";
 
 In this step-by-step example, you will export your AWS `SNS topics` and `lambda functions` to Port.
 
-1. Create the following Port Blueprints:
+1. Create the following Port blueprints:
 
    - **Lambda** - will represent lambda functions from the AWS account;
    - **Topic** - will represent SNS topics from the AWS account.
@@ -18,7 +18,7 @@ In this step-by-step example, you will export your AWS `SNS topics` and `lambda 
    You may use the following definitions:
 
    <details>
-   <summary> Lambda Blueprint </summary>
+   <summary> Lambda blueprint </summary>
 
    ```json showLineNumbers
    {
@@ -72,7 +72,7 @@ In this step-by-step example, you will export your AWS `SNS topics` and `lambda 
    </details>
 
    <details>
-   <summary> Topic Blueprint </summary>
+   <summary> Topic blueprint </summary>
 
    ```json showLineNumbers
    {

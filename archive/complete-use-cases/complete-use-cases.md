@@ -12,8 +12,8 @@ Select a use case from the list below to get started:
 
 <!-- - [Software Development Lifecycle (SLDC) -->
 
-- [Mapping Kubernetes resources](./full-kubernetes-exporter.md)
-- [Service Locking](./service-locking.md)
-- [Software Templates](./software-templates.md)
+- Mapping Kubernetes resources
+- Service Locking
+- Software Templates
 <!-- - IaC Templates -->
-- [Package Dependency Mapping](./package-dependency-mapping.md)
+- Package Dependency Mapping

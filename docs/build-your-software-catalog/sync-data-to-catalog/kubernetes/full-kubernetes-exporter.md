@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Mapping Kubernetes resources
+# Map Your Complete K8s Ecosystem
 
 Kubernetes has become one of the most popular ways to deploy microservice based applications. As the number of your microservices grow, and more clusters are deployed across several regions, it becomes complicated and tedious to keep track of all of your deployments, services, and jobs.
 
@@ -23,7 +23,7 @@ All relevant files and resources for this guide are available **[here!](https://
 
 ### Creating Blueprints with Terraform
 
-To set up your Blueprints, use Port's [Terraform provider](../build-your-software-catalog/sync-data-to-catalog/iac/terraform/terraform.md).
+To set up your Blueprints, use Port's [Terraform provider](../iac/terraform/terraform.md).
 
 After setting up your `main.tf` file under the `terraform/` directory, create the required `.tf` files, which will represent your Port Blueprints.
 
@@ -90,7 +90,7 @@ jobs:
 
 This workflow will monitor file changes under `terraform/*.tf`, and on a change the workflow will run and apply the new or changed Blueprints to Port.
 
-![Blueprints outcome](../../static/img/complete-use-cases/full-kubernetes-exporter/blueprints.png)
+![Blueprints outcome](../../../../static/img/complete-use-cases/full-kubernetes-exporter/blueprints.png)
 
 ## Exporting your Kubernetes cluster
 
@@ -99,7 +99,7 @@ This workflow will monitor file changes under `terraform/*.tf`, and on a change 
 Now it is time to populate you Port environment with Entities using Port's Kubernetes Exporter.
 
 :::tip
-Get to know the basics of our Kubernetes exporter [here!](../build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md)
+Get to know the basics of our Kubernetes exporter [here!](./kubernetes.md)
 :::
 
 Create a `config.yaml` with your relevant queries and Blueprints.

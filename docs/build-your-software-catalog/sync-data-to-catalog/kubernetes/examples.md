@@ -204,4 +204,4 @@ It is also possible to export CRDs from your Kubernetes cluster, for CRD export 
 
 ## Map your complete K8s ecosystem
 
-To learn how you can visualize a complete K8s cluster, including **namespaces**, **cluster roles**, **cron jobs**, **deployments**, **pods**, and more - check out our Kubernetes mapping [complete use case](../../../complete-use-cases/full-kubernetes-exporter.md)
+To learn how you can visualize a complete K8s cluster, including **namespaces**, **cluster roles**, **cron jobs**, **deployments**, **pods**, and more - check out our Kubernetes mapping [complete use case](./full-kubernetes-exporter.md)

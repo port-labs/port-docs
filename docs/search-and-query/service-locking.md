@@ -1,10 +1,10 @@
 ---
-sidebar_position: 3
+sidebar_position: 2
 ---
 
 # Service Locking
 
-Using Port, it is very simple to implement convenient service locking for services in your different development and production environments.
+Using Port's search capabilities, it is very simple to implement convenient service locking for services in your different development and production environments.
 
 :::tip
 All relevant files and resources for this guide are available [**HERE**](https://github.com/port-labs/resource-catalog-microservice-repo/tree/docs-version)
