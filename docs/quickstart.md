@@ -141,7 +141,7 @@ In order to create the service Blueprint, use the following JSON body:
         "icon": "Okta",
         "title": "On Call",
         "format": "email",
-        "default": "develoepr@getport.io"
+        "default": "developer@getport.io"
       },
       "language": {
         "type": "string",
@@ -267,7 +267,7 @@ python -m pip install requests
 :::note
 For the next part, you will need your Port `CLIENT_ID` and `CLIENT_SECRET`.
 
-To find your Port API credentials go to [Port](https://app.getport.io), click on `Crednetials` at the bottom left corner and you will be able to view and copy your `CLIENT_ID` and `CLIENT_SECRET`:
+To find your Port API credentials go to [Port](https://app.getport.io), click on `Credentials` at the bottom left corner and you will be able to view and copy your `CLIENT_ID` and `CLIENT_SECRET`:
 
 <center>
 
@@ -343,7 +343,7 @@ blueprint = {
                 "icon": "Okta",
                 "title": "On Call",
                 "format": "email",
-                "default": "develoepr@getport.io"
+                "default": "developer@getport.io"
             },
             "language": {
                 "type": "string",
