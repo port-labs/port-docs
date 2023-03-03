@@ -126,31 +126,27 @@ const config = {
             ],
           },
           {
-            title: "Complete Use Cases",
+            title: "Ingest Data to Catalog",
             items: [
-              // {
-              //   label: "Software Development Lifecycle (SDLC)",
-              //   to: "/complete-use-cases/sdlc",
-              // },
               {
-                label: "Mapping Kubernetes",
-                to: "/complete-use-cases/full-kubernetes-exporter",
+                label: "API",
+                to: "/build-your-software-catalog/sync-data-to-catalog/api",
               },
               {
-                label: "Service Locking",
-                to: "/complete-use-cases/service-locking",
+                label: "CI/CD",
+                to: "/build-your-software-catalog/sync-data-to-catalog/ci-cd",
               },
               {
-                label: "Software Templates",
-                to: "/complete-use-cases/software-templates",
+                label: "Kubernetes",
+                to: "/build-your-software-catalog/sync-data-to-catalog/kubernetes",
               },
-              // {
-              //   label: "A Templates",
-              //   to: "/complete-use-cases/iac-templates",
-              // },
               {
-                label: "Package Dependency Mapping",
-                to: "/complete-use-cases/package-dependency-mapping",
+                label: "AWS",
+                to: "/build-your-software-catalog/sync-data-to-catalog/aws",
+              },
+              {
+                label: "Terraform",
+                to: "/build-your-software-catalog/sync-data-to-catalog/iac/terraform",
               },
             ],
           },
