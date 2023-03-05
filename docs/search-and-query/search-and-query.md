@@ -152,7 +152,8 @@ Port has 2 types of search rule operators:
 {label: "<=", value: "<="},
 {label: "Property schema", value: "property-schema"},
 {label: "Between", value: "between"},
-{label: "Contains", value: "contains"}
+{label: "Contains", value: "contains"},
+{label: "in", value: "in"}
 ]}>
 
 <TabItem value="=">
@@ -345,6 +346,31 @@ The `contains` operator checks if the specified substring exists in the specifie
   "value": "mySubString"
 }
 ```
+
+</TabItem>
+
+<TabItem value="in">
+
+The `in` operator checks if a sub group of values exist in a specified property of type array:
+
+```json showLineNumbers
+{
+  "property": "$team",
+  "operator": "in",
+  "value": ["myTeamsDynamicFilter"]
+}
+```
+
+UI:
+
+:::note
+
+- In order to filter entities that **belongs to your teams** you can use the special `myTeamsDynamicFilter` filter.
+- Choose field of type `string` format `team` or the metadata `Team` field.
+- Choose `has any of` operator
+  :::
+
+![My Teams Filter](../../static/img/software-catalog/pages/MyTeamsFilter.png)
 
 </TabItem>
 
