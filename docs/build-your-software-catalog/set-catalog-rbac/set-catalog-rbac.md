@@ -22,24 +22,18 @@ Catalog RBAC allows admins to finely control which users have access to which in
 - Create a fully read-only view for a developer;
 - etc.
 
-## RBAC UI indications
-
-User permissions will be reflected in the interface presented to users. The UI also includes indication messages when trying to perform changes. For example:
-
-The `create` and `delete` buttons will be disabled in the UI, in accordance with the blueprint permissions (unauthorized users/groups will not be able to register or unregister entities).
-
-:::tip
-When a `CREATE` self-service action is defined, the default `create` button will be replaced with the `register` button.
-:::
-
-![Create button disabled without permissions](../../../static/img/software-catalog/role-based-access-control/permissions/memberNoCreatePermission.png)
-
-The `edit property` button will be disabled according to the permissions:
-
-![Edit property disabled without permissions](../../../static/img/software-catalog/role-based-access-control/permissions/memberNoEditPermission.png)
-
-Immutable properties (restricted properties) will be hidden from users when modifying entities.
-
 ## Software catalog RBAC examples
 
 Refer to the [examples](./examples.md) page for practical examples of Port's RBAC.
+
+## FAQ
+
+Since the catalog RBAC can be very granular, in some instances it might not be perfectly clear what the resulting assigned permissions would do, this part aims to provide some real-world examples and the behavior of Port's RBAC in those instances:
+
+### What happens if a user lacks the permissions to edit a required property of the blueprint?
+
+If the user has permissions to edit any property, except for a required property of the blueprint - then the user will not be able to register or update entities as a whole because they can't provide a value for the required property;
+
+### What happens if the `ownedByTeam` setting is enabled for entity registration, but the user can't edit the `team` property?
+
+If the `ownedByTeam` setting is enabled for registration, and the user does not have permissions to edit the `team` property - then the user will not be able to register a new entity since they can't select a value for his team field and mark it as owned by their team.

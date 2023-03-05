@@ -3,11 +3,11 @@ import TabItem from "@theme/TabItem"
 
 # Examples
 
-In this section we'll show you a few examples of ways to use permissions in your organization, and how to apply them.
+In this section we'll show you a few examples of ways to use catalog permissions in your organization, and how to apply them.
 
 ## Use cases 💡
 
-The following configurations, among others, are available when using permissions management:
+The following configurations, among others, are available when using catalog permissions management:
 
 1. Entities can be made immutable/partially immutable (can only create/delete/modify) for specific users/roles. For example:
    1. `Deployment` entities are immutable for all roles, and `Cluster` entities are editable only by the blueprint **Moderators**.
@@ -222,49 +222,3 @@ If both permission types are set, then the global setting will be used when eval
 :::info
 `update`, `updateProperties` and `updateRelations` settings apply when registering new entities as well. This means that a user can't register a new entity with a property (or relation) that he doesn't have permissions to edit.  
 :::
-
-## Setting action permissions
-
-<!-- TODO: Move to actions pillar when ready -->
-
-### Role examples
-
-<Tabs groupId="action-permissions" defaultValue="action-only-admin-moderator" values={[
-{label: "Only let admins/moderators run action", value: "action-only-admin-moderator"}
-]}>
-
-<TabItem value="action-only-admin-moderator">
-
-By default, **Member** users can execute every action defined on a blueprint. In this example, we allow only **Moderators** (and **Admins**) to only execute the action `clone_env` (and disabling Member's permission to execute it):
-
-```json showLineNumbers
-{
-  "actions": {
-    "clone_env": {
-      "execute": {
-        // highlight-next-line
-        "roles": ["Admin", "Env-moderator"], // changed from ["Admin", "Env-moderator", "Member"]
-        "users": [],
-        "teams": [],
-        "ownedByTeam": false
-      }
-    }
-  }
-}
-```
-
-</TabItem>
-
-</Tabs>
-
----
-
-## Pitfalls
-
-In some occasions, it's possible to apply permissions in a way that deadlocks users from interacting with the platform.
-While these cases are valid, they might be a little counterintuitive.
-
-Here are a few examples of how can you grant a user permissions, but still not enable them to perform the operation due to other restrictions:
-
-1. If the user has permissions to edit any property, except for a required property of the blueprint - then the user will not be able to register or update entities as a whole because they can't provide a value for the required property;
-2. If the `ownedByTeam` setting is enabled for registration, and the user does not have permissions to edit the `team` property - then the user will not be able to register a new entity since they can't select a value for his team field and mark it as owned by their team.

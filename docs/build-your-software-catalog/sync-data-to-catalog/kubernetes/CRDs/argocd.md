@@ -1,10 +1,11 @@
 ---
 sidebar_position: 1
+description: Export ArgoCD resources
 ---
 
 # ArgoCD
 
-An ArgoCD application is an Argo CRD which is responsible for managing different k8s objects, while an ArgoCD project is an Argo CRD which clusters applications.
+An [ArgoCD](https://argo-cd.readthedocs.io/en/stable/) application is an Argo CRD which is responsible for managing different k8s objects, while an ArgoCD project is an Argo CRD which clusters applications.
 
 :::info
 You can find the files to this exporter template **[here](https://github.com/port-labs/port-k8s-exporter-use-cases/tree/main/argocd)**

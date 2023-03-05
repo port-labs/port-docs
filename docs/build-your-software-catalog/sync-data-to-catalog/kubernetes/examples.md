@@ -2,39 +2,19 @@
 sidebar_position: 1
 ---
 
-# Quickstart
+import Image from "@theme/IdealImage";
+import ExporterBaseInstallCommand from "./\_exporter_base_install_command.mdx"
+import SpecificEntityPage from "../../../../static/img/integrations/k8s-exporter/DeploymentConfigAndPods.png"
+import AuditLogPage from "../../../../static/img/integrations/k8s-exporter/AuditLog.png"
 
-Here you'll find a step-by-step guide to installing the K8s Exporter in your Kubernetes Cluster.
+# Examples
 
-:::info
-The helm chart with full installation & usage guide can be found [here](https://github.com/port-labs/helm-charts/tree/main/charts/port-k8s-exporter).
-:::
+## Mapping replica sets and pods
 
-:::note Prerequisites
+In the following example you will export your Kubernetes `Replica Sets` and `Pods` to Port, you may use the following Port Blueprints definitions, and `config.yaml`:
 
-- [Helm](https://helm.sh) must be installed to use the chart. Please refer to
-  Helm's [documentation](https://helm.sh/docs) to get started.
-- You will need your Port `CLIENT_ID` and `CLIENT_SECRET`. To find your Port API credentials go to [Port](https://app.getport.io), click on `Crednetials` at the bottom left corner and you will be able to view and copy your `CLIENT_ID` and `CLIENT_SECRET`:
-
-<center>
-
-![Port Developer Portal Credentials Modal](../../../../static/img/software-catalog/credentials-modal.png)
-
-</center>
-:::
-
-1. Add Port's Helm repo by using the following command:
-
-```bash showLineNumbers
-helm repo add port-labs https://port-labs.github.io/helm-charts
-```
-
-If you already added this repo earlier, run `helm repo update` to retrieve
-the latest versions of the charts. You can then run `helm search repo port-labs` to see the charts.
-
-2. Prepare Port Blueprints and Kubernetes Exporter `config.yaml` configuration file.
-
-For example, in order to export your Kubernetes `Replica Sets` and `Pods` to Port, you may use the following Port Blueprints definitions, and `config.yaml`:
+- **Deployment config** - will represent replica sets from the K8s cluster;
+- **Deployed service pod** - will represent pods from the K8s cluster.
 
 <details>
 <summary> Deployment Config Blueprint </summary>
@@ -192,32 +172,36 @@ resources: # List of K8s resources to list, watch, and export to Port.
 
 </details>
 
-:::info
+After creating the blueprints, apply the provided `config.yml` file using the installation command:
 
-- A reference of available Kubernetes Resources to list, watch, and export can be found [here](https://kubernetes.io/docs/reference/kubernetes-api/)
-- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to give you the power to map and transform K8s objects to Port Entities.
+<ExporterBaseInstallCommand />
 
-:::
+Done! the exporter will begin creating and updating objects from your Kubernetes cluster as Port entities shortly.
 
-3. After configuring the `config.yml` file from the previous step. Install the `Kubernetes Exporter` chart by using the following command:
+For instance, you can see a `Deployment Config` and its `Pods` in a single Port entity page:
 
-```bash showLineNumbers
-helm install my-port-k8s-exporter port-labs/port-k8s-exporter \
-    --create-namespace --namespace port-k8s-exporter \
-    --set secret.secrets.portClientId=CLIENT_ID --set secret.secrets.portClientSecret=CLIENT_SECRET \
-    --set-file configMap.config=config.yaml
-```
+<center>
 
-Done! the exporter will begin creating and updating objects from your Kubernetes cluster as Port Entities shortly.
+<Image img={SpecificEntityPage} style={{ width: 1000 }} />
 
-For instance, you can see a `Deployment Config` and its `Pods` in a single Port Entity page:
-
-![Developer Portal Kubernetes Exporter Deployment Config Entity](../../../../static/img/integrations/k8s-exporter/DeploymentConfigAndPods.png)
+</center>
 
 :::note
-The Kubernetes Exporter was instructed to fill in only some properties in a `Deployment Config` Entity. By its nature, it will keep the values of other properties untouched.
+The Kubernetes exporter was instructed to fill in only some properties in a `Deployment Config` Entity. By its nature, it will keep the values of other properties untouched.
 :::
 
-And you can look for the respective audit logs with an indication of the Kubernetes Exporter as the source:
+And you can look for the respective audit logs with an indication of the Kubernetes exporter as the source:
 
-![Developer Portal Kubernetes Exporter Audit Log](../../../../static/img/integrations/k8s-exporter/AuditLog.png)
+<center>
+
+<Image img={AuditLogPage} style={{ width: 1000 }} />
+
+</center>
+
+## Mapping CRDs
+
+It is also possible to export CRDs from your Kubernetes cluster, for CRD export examples, refer to the [CRDs](./CRDs/crds.md) section.
+
+## Complete example
+
+For a complete Kubernetes cluster export example, check out our Kubernetes mapping [complete use case](../../../complete-use-cases/full-kubernetes-exporter.md)

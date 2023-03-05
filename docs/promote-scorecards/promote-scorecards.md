@@ -167,14 +167,25 @@ Conditions are small boolean checks that help when determining the final status 
 
 A Scorecard is built from several rules, and each one of them has a `level` property.
 
-The available `Scorecard` levels are
+The available `Scorecard` levels are:
 
 `Basic` -> `Bronze` -> `Silver` -> `Gold`
 
-Once an entity passes all of the rules for a certain level, its level changes accordingly.
+An entity **always** starts at the `**Basic**` level.
 
-:::note basic level
-The lowest possible level for rules is `Bronze`. An entity's level will be `Basic` until it has a passed all rules at the `Bronze` level.
+A **rule's** lowest possible level is `Bronze`.
+
+Once an entity passes all of the rules for a certain level, its level changes accordingly, for example:
+
+1. An entity starts at level `Basic`;
+2. It has two rules with level `Bronze`;
+3. Once the entity passes those two rules, its level would be `Bronze`;
+4. It has four rules with level `Silver`;
+5. Once the entity passes those four rules (and the rules from `Bronze` level), its level would be `Silver`;
+6. etc.
+
+:::note multiple rules scenario
+In the example listed above, let's assume the entity passes just one of the two `Bronze` rules, but it passes all of the `Silver` rules. The `level` of the scorecard will still be `Basic`, because not all `Bronze` rules have been satisfied.
 :::
 
 ## Scorecard example

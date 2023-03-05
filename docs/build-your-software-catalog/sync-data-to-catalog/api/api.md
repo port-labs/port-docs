@@ -136,12 +136,18 @@ We will focus on two specific use cases:
 - Create/Update catalog entities - available by making HTTP POST requests to `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/`, receives the identifier and other properties of a new entity or an entity that needs to be updated;
 - Get catalog entities - available by making HTTP GET requests to `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/`, receives the identifier of an existing entity and retrieves it for use in your CI.
 
-<Tabs groupId="usage" defaultValue="upsert" values={[
-{label: "Create/Update", value: "upsert"},
+<Tabs groupId="usage" defaultValue="create" values={[
+{label: "Create", value: "create"},
+{label: "Create/Update", value: "create-update"},
+{label: "Create/Override", value: "create-override"},
 {label: "Get", value: "get"}
 ]}>
 
-<TabItem value="upsert">
+<TabItem value="create">
+
+A basic create request will create a new entity if one with the provided `identifier` doesn't exist yet, and will fail with a `409 CONFLICT` status code otherwise.
+
+A basic create request is noted by providing no query parameters, or providing the `upsert` query parameter with its value set to `false`.
 
 <Tabs groupId="code-examples" defaultValue="python" values={[
 {label: "Python", value: "python"},
@@ -243,13 +249,13 @@ const entity = {
 };
 // highlight-end
 
-const response = await axios.post(
+const postResponse = await axios.post(
   `${API_URL}/blueprints/${blueprintId}/entities`,
   entity,
   config
 );
 
-// response.data contains the content of the resulting entity
+// postResponse.data contains the content of the resulting entity
 ```
 
 </TabItem>
@@ -280,16 +286,348 @@ blueprint_id='MY_BLUEPRINT'
 curl --location --request POST "https://api.getport.io/v1/blueprints/${blueprint_id}/entities" \
     --header "Authorization: Bearer $access_token" \
     --header "Content-Type: application/json" \
-    --data-raw "{
+    --data-raw '{
       # highlight-start
-    \"identifier\": \"MY_ENTITY_IDENTIFIER\",
-    \"title\": \"MY ENTITY TITLE\",
-    \"properties\": {
-            \"MY_STRING_PROP\": \"MY VALUE\",
-            \"MY_BOOLEAN_PROP\": false
+    "identifier": "MY_ENTITY_IDENTIFIER",
+    "title": "MY ENTITY TITLE",
+    "properties": {
+            "MY_STRING_PROP": "MY VALUE",
+            "MY_BOOLEAN_PROP": false
       # highlight-end
     }
-}"
+}'
+
+# The output of the command contains the content of the resulting blueprint
+```
+
+</TabItem>
+
+</Tabs>
+
+</TabItem>
+
+<TabItem value="create-update">
+
+A create/update request will create a new entity if one with the provided `identifier` doesn't exist yet, and will only update the values of fields provided in the request, if an entity with the `identifier` already exists.
+
+A create/update request is noted by providing the query parameter: `upsert=true&merge=true`.
+
+<Tabs groupId="code-examples" defaultValue="python" values={[
+{label: "Python", value: "python"},
+{label: "Javascript", value: "js"},
+{label: "cURL", value: "curl"},
+]}>
+
+<TabItem value="python">
+
+```python showLineNumbers
+# Dependencies to install:
+# $ python -m pip install requests
+
+import requests
+
+# highlight-start
+CLIENT_ID = 'YOUR_CLIENT_ID'
+CLIENT_SECRET = 'YOUR_CLIENT_SECRET'
+# highlight-end
+
+API_URL = 'https://api.getport.io/v1'
+
+credentials = {'clientId': CLIENT_ID, 'clientSecret': CLIENT_SECRET}
+
+token_response = requests.post(f'{API_URL}/auth/access_token', json=credentials)
+
+access_token = token_response.json()['accessToken']
+
+# You can now use the value in access_token when making further requests
+
+headers = {
+    'Authorization': f'Bearer {access_token}'
+}
+
+# highlight-next-line
+blueprint_id = 'MY_BLUEPRINT'
+
+# highlight-start
+entity = {
+  'identifier': 'MY_ENTITY_IDENTIFIER',
+  'title': 'MY TITLE',
+  'properties': {
+    'MY_STRING_PROP': 'MY VALUE',
+    'MY_BOOLEAN_PROP': False
+  },
+  'relations': {}
+}
+# highlight-end
+
+# Note the ?upsert=true&merge=true query parameters
+response = requests.post(f'{API_URL}/blueprints/{blueprint_id}/entities?upsert=true&merge=true', json=entity, headers=headers)
+
+# response.json() contains the content of the resulting entity
+```
+
+</TabItem>
+
+<TabItem value="js">
+
+```javascript showLineNumbers
+// Dependencies to install:
+// $ npm install axios --save
+
+const axios = require("axios").default;
+
+// highlight-start
+const CLIENT_ID = "YOUR_CLIENT_ID";
+const CLIENT_SECRET = "YOUR_CLIENT_SECRET";
+// highlight-end
+
+const API_URL = "https://api.getport.io/v1";
+
+const response = await axios.post(`${API_URL}/auth/access_token`, {
+  clientId: CLIENT_ID,
+  clientSecret: CLIENT_SECRET,
+});
+
+const accessToken = response.data.accessToken;
+
+// You can now use the value in accessToken when making further requests
+
+// highlight-next-line
+const blueprintId = "MY_BLUEPRINT";
+
+const config = {
+  headers: {
+    Authorization: `Bearer ${accessToken}`,
+  },
+};
+
+const entity = {
+  // highlight-start
+  identifier: "MY_ENTITY_IDENTIFIER",
+  title: "MY TITLE",
+  properties: {
+    MY_STRING_PROP: "MY VALUE",
+    MY_BOOLEAN_PROP: false,
+  },
+  relations: {},
+};
+// highlight-end
+
+// Note the ?upsert=true&merge=true query parameters
+const postResponse = await axios.post(
+  `${API_URL}/blueprints/${blueprintId}/entities?upsert=true&merge=true`,
+  entity,
+  config
+);
+
+// postResponse.data contains the content of the resulting entity
+```
+
+</TabItem>
+
+<TabItem value="curl">
+
+```bash showLineNumbers
+# Dependencies to install:
+# For apt:
+# $ sudo apt-get install jq
+# For yum:
+# $ sudo yum install jq
+
+access_token=$(curl --location --request POST 'https://api.getport.io/v1/auth/access_token' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  # highlight-start
+    "clientId": "CLIENT_ID",
+    "clientSecret": "CLIENT_SECRET"
+  # highlight-end
+}' | jq '.accessToken' | sed 's/"//g')
+
+# The token will be available in the access_token variable
+
+# highlight-next-line
+blueprint_id='MY_BLUEPRINT'
+
+# Note the ?upsert=true&merge=true query parameters
+curl --location --request POST "https://api.getport.io/v1/blueprints/${blueprint_id}/entities?upsert=true&merge=true" \
+    --header "Authorization: Bearer $access_token" \
+    --header "Content-Type: application/json" \
+    --data-raw '{
+      # highlight-start
+    "identifier": "MY_ENTITY_IDENTIFIER",
+    "title": "MY ENTITY TITLE",
+    "properties": {
+            "MY_STRING_PROP": "MY VALUE",
+            "MY_BOOLEAN_PROP": false
+      # highlight-end
+    }
+}'
+
+# The output of the command contains the content of the resulting blueprint
+```
+
+</TabItem>
+
+</Tabs>
+
+</TabItem>
+
+<TabItem value="create-override">
+
+A create/override request will create a new entity if one with the provided `identifier` doesn't exist yet, and will override all existing values if an entity with the `identifier` already exists, keeping only the values of fields provided in the request.
+
+A create/override request is noted by providing the query parameter: `upsert=true`, while not including the `merge` parameter (or setting its value to `false`)
+
+<Tabs groupId="code-examples" defaultValue="python" values={[
+{label: "Python", value: "python"},
+{label: "Javascript", value: "js"},
+{label: "cURL", value: "curl"},
+]}>
+
+<TabItem value="python">
+
+```python showLineNumbers
+# Dependencies to install:
+# $ python -m pip install requests
+
+import requests
+
+# highlight-start
+CLIENT_ID = 'YOUR_CLIENT_ID'
+CLIENT_SECRET = 'YOUR_CLIENT_SECRET'
+# highlight-end
+
+API_URL = 'https://api.getport.io/v1'
+
+credentials = {'clientId': CLIENT_ID, 'clientSecret': CLIENT_SECRET}
+
+token_response = requests.post(f'{API_URL}/auth/access_token', json=credentials)
+
+access_token = token_response.json()['accessToken']
+
+# You can now use the value in access_token when making further requests
+
+headers = {
+    'Authorization': f'Bearer {access_token}'
+}
+
+# highlight-next-line
+blueprint_id = 'MY_BLUEPRINT'
+
+# highlight-start
+entity = {
+  'identifier': 'MY_ENTITY_IDENTIFIER',
+  'title': 'MY TITLE',
+  'properties': {
+    'MY_STRING_PROP': 'MY VALUE',
+    'MY_BOOLEAN_PROP': False
+  },
+  'relations': {}
+}
+# highlight-end
+
+# Note the ?upsert=true query parameter
+response = requests.post(f'{API_URL}/blueprints/{blueprint_id}/entities?upsert=true', json=entity, headers=headers)
+
+# response.json() contains the content of the resulting entity
+```
+
+</TabItem>
+
+<TabItem value="js">
+
+```javascript showLineNumbers
+// Dependencies to install:
+// $ npm install axios --save
+
+const axios = require("axios").default;
+
+// highlight-start
+const CLIENT_ID = "YOUR_CLIENT_ID";
+const CLIENT_SECRET = "YOUR_CLIENT_SECRET";
+// highlight-end
+
+const API_URL = "https://api.getport.io/v1";
+
+const response = await axios.post(`${API_URL}/auth/access_token`, {
+  clientId: CLIENT_ID,
+  clientSecret: CLIENT_SECRET,
+});
+
+const accessToken = response.data.accessToken;
+
+// You can now use the value in accessToken when making further requests
+
+// highlight-next-line
+const blueprintId = "MY_BLUEPRINT";
+
+const config = {
+  headers: {
+    Authorization: `Bearer ${accessToken}`,
+  },
+};
+
+const entity = {
+  // highlight-start
+  identifier: "MY_ENTITY_IDENTIFIER",
+  title: "MY TITLE",
+  properties: {
+    MY_STRING_PROP: "MY VALUE",
+    MY_BOOLEAN_PROP: false,
+  },
+  relations: {},
+};
+// highlight-end
+
+// Note the ?upsert=true query parameter
+const postResponse = await axios.post(
+  `${API_URL}/blueprints/${blueprintId}/entities?upsert=true`,
+  entity,
+  config
+);
+
+// postResponse.data contains the content of the resulting entity
+```
+
+</TabItem>
+
+<TabItem value="curl">
+
+```bash showLineNumbers
+# Dependencies to install:
+# For apt:
+# $ sudo apt-get install jq
+# For yum:
+# $ sudo yum install jq
+
+access_token=$(curl --location --request POST 'https://api.getport.io/v1/auth/access_token' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  # highlight-start
+    "clientId": "CLIENT_ID",
+    "clientSecret": "CLIENT_SECRET"
+  # highlight-end
+}' | jq '.accessToken' | sed 's/"//g')
+
+# The token will be available in the access_token variable
+
+# highlight-next-line
+blueprint_id='MY_BLUEPRINT'
+
+# Note the ?upsert=true query parameter
+curl --location --request POST "https://api.getport.io/v1/blueprints/${blueprint_id}/entities?upsert=true" \
+    --header "Authorization: Bearer $access_token" \
+    --header "Content-Type: application/json" \
+    --data-raw '{
+      # highlight-start
+    "identifier": "MY_ENTITY_IDENTIFIER",
+    "title": "MY ENTITY TITLE",
+    "properties": {
+            "MY_STRING_PROP": "MY VALUE",
+            "MY_BOOLEAN_PROP": false
+      # highlight-end
+    }
+}'
 
 # The output of the command contains the content of the resulting blueprint
 ```
@@ -383,12 +721,12 @@ const config = {
   },
 };
 
-const response = await axios.get(
+const getResponse = await axios.get(
   `${API_URL}/blueprints/${blueprintId}/entities/${entityId}`,
   config
 );
 
-// response.data contains the content of the resulting entity
+// getResponse.data contains the content of the resulting entity
 ```
 
 </TabItem>
@@ -397,6 +735,8 @@ const response = await axios.get(
 
 ```bash showLineNumbers
 # Dependencies to install:
+# for brew:
+# brew install jq
 # For apt:
 # $ sudo apt-get install jq
 # For yum:
