@@ -368,7 +368,8 @@ UI:
 - In order to filter entities that **belongs to your teams** you can use the special `myTeamsDynamicFilter` filter.
 - Choose field of type `string` format `team` or the metadata `Team` field.
 - Choose `has any of` operator
-  :::
+
+:::
 
 ![My Teams Filter](../../static/img/software-catalog/pages/MyTeamsFilter.png)
 
