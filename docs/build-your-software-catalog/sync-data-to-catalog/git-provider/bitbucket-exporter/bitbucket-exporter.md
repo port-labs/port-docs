@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Bitbucket Exporter
 
-Our integration with Bitbucket allows you to export Bitbucket objects to Port as Entities of existing Blueprints.
+Our integration with Bitbucket allows you to export Bitbucket objects to Port as entities of existing blueprints. The integration supports real-time event processing so Port always provides an accurate **real-time** representation of your Bitbucket resources.
 
 ## What does our Bitbucket Exporter offer you?
 

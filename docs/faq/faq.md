@@ -35,3 +35,5 @@ Yes. Anything that is free in our [pricing page](https://www.getport.io/pricing)
 ## What security does Port have in place?
 
 Port is SOC2 compliant.
+
+We make use of industry standard encryption protocols. All data is encrypted both at rest and in transit, with complete isolation between clients and data access logging and auditing.
