@@ -1,0 +1,59 @@
+.red {
+  color: red;
+}
+.red[aria-selected="true"] {
+  border-bottom-color: red;
+}
+
+.orange {
+  color: orange;
+}
+.orange[aria-selected="true"] {
+  border-bottom-color: orange;
+}
+
+.yellow {
+  color: yellow;
+}
+.yellow[aria-selected="true"] {
+  border-bottom-color: yellow;
+}
+
+.tab_primary[aria-selected="true"] {
+  color: #3ed0dd;
+  border-bottom-color: #3ed0dd;
+}
+
+.tab_primary_dark[aria-selected="true"] {
+  color: #26cad9;
+  border-bottom-color: #26cad9;
+}
+
+.tab_primary_darker[aria-selected="true"] {
+  color: #24bfcd;
+  border-bottom-color: #24bfcd;
+}
+
+.tab_primary_darkest[aria-selected="true"] {
+  color: #1e9da8;
+  border-bottom-color: #1e9da8;
+}
+.tab_primary_light {
+  color: #56d6e1;
+}
+.tab_primary_light[aria-selected="true"] {
+  border-bottom-color: #56d6e1;
+}
+
+.tab_primary_lighter {
+  color: #62d9e3;
+}
+.tab_primary_lighter[aria-selected="true"] {
+  border-bottom-color: #62d9e3;
+}
+.tab_primary_lightest {
+  color: #86e2ea;
+}
+.tab_primary_lightest[aria-selected="true"] {
+  border-bottom-color: #86e2ea;
+}

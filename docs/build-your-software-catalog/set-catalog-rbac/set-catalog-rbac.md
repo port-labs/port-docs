@@ -3,9 +3,10 @@ title: Set Catalog RBAC
 sidebar_label: 🔐 Set Catalog RBAC
 ---
 
-import OwnershipTemplate from './\_ownership_explanation_template.mdx'
-import Tabs from "@theme/Tabs"
-import TabItem from "@theme/TabItem"
+import OwnershipTemplate from "./\_ownership_explanation_template.mdx";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import styles from "./styles.module.css";
 
 # 🔐 Set Catalog RBAC
 
@@ -19,6 +20,18 @@ In order to manage who can view which pages in Port, check out [page permissions
 :::
 
 ## 💡 Common Catalog RBAC usage
+
+<Tabs>
+  <TabItem value="apple" label="Apple" attributes={{ className: styles.tab_primary }}>
+    This is an apple 🍎
+  </TabItem>
+  <TabItem value="orange" label="Orange" attributes={{ className: styles.tab_primary_dark }}>
+    This is an orange 🍊
+  </TabItem>
+  <TabItem value="banana" label="Banana" attributes={{ className: styles.tab_primary_darkest }}>
+    This is a banana 🍌
+  </TabItem>
+</Tabs>
 
 Catalog RBAC allows admins to finely control which users have access to which information from the catalog, for example:
 
@@ -115,7 +128,7 @@ To give `create` permissions to another team, add it to the `teams` array:
 
 <TabItem value="ownership">
 
-<OwnershipTemplate/>
+<OwnershipTemplate />
 
 To give `create` permissions to members of the owning team of an entity, change the `ownedByTeam` key:
 
@@ -220,7 +233,7 @@ To give `update` permissions to another team, add it to the `teams` array:
 
 <TabItem value="ownership">
 
-<OwnershipTemplate/>
+<OwnershipTemplate />
 
 To give `update` permissions to members of the owning team of an entity, change the `ownedByTeam` key:
 
@@ -321,7 +334,7 @@ To give `delete` permissions to another team, add it to the `teams` array:
 
 <TabItem value="ownership">
 
-<OwnershipTemplate/>
+<OwnershipTemplate />
 
 To give `delete` permissions to members of the owning team of an entity, change the `ownedByTeam` key:
 
@@ -439,7 +452,7 @@ To give property `update` permissions to another team, add it to the `teams` arr
 
 <TabItem value="ownership">
 
-<OwnershipTemplate/>
+<OwnershipTemplate />
 
 To give property `update` permissions to members of the owning team of an entity, change the `ownedByTeam` key:
 
@@ -548,7 +561,7 @@ To give relation `update` permissions to another team, add it to the `teams` arr
 
 <TabItem value="ownership">
 
-<OwnershipTemplate/>
+<OwnershipTemplate />
 
 To give relation `update` permissions to members of the owning team of an entity, change the `ownedByTeam` key:
 
