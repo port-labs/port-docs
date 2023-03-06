@@ -98,6 +98,8 @@ requests>=2.28.2
 
 <TabItem value="upsert">
 
+Create the following Python script in your repository to create or update Port entities as part of your pipeline:
+
 ```python showLineNumbers
 import os
 import requests
