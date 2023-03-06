@@ -12,7 +12,7 @@ Our [GitHub action](https://github.com/marketplace/actions/port-github-action) a
 <br></br>
 <br></br>
 
-![Github Illustration](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/github/github-action-illustration.png)
+![Github Illustration](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/github/github-action-illustration.jpg)
 
 :::tip public repository
 Our GitHub action is open source - see it [**here**](https://github.com/port-labs/port-github-action)
