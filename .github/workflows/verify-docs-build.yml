@@ -8,6 +8,12 @@ on:
       - "reopened"
       - "ready_for_review"
       - "converted_to_draft"
+    paths:
+      - "!.github/**"
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build-docs:
