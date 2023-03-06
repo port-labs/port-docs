@@ -78,7 +78,7 @@ workflows:
 
 
 :::note
-In this example, we use Python modules which need to be installed. You can use the following `requirements.txt`:
+In the following example, we use Python modules which need to be installed. You can use the following `requirements.txt`:
 
 <details>
   <summary> port_requirements.txt </summary>
