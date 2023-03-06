@@ -76,7 +76,6 @@ workflows:
 
 <br></br>
 
-Create the following Python script in your repository ot either create/update or get Port entities:
 
 :::note
 In this example, we use Python modules which need to be installed. You can use the following `requirements.txt`:
