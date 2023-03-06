@@ -30,18 +30,19 @@ To interact with Port using Circle CI, you will first need to set up a [CircleCI
 workflows:
   deploy-service:
     jobs:
+      # highlight-start
       - report-to-port:
           context:
             # the CircleCI context name of the credentials
-            # highlight-next-line
             - port
+            # highlight-end
 ```
 
 Make sure you have an existing [Blueprint](../../../../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) in your Port installation to create/update entities.
 
 ## Working with Port's API
 
-Here is an example snippet showing how to integrate a job that uses Port's API  with your existing CircleCI pipelines using Python:
+Here is an example snippet showing how to integrate a job that uses Port's API with your existing CircleCI pipelines using Python:
 
 Add the following job and workflow to your CircleCI pipeline:
 
@@ -75,7 +76,6 @@ workflows:
 </details>
 
 <br></br>
-
 
 :::note
 In the following example, we use Python modules which need to be installed. You can use the following `requirements.txt`:
