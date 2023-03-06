@@ -76,10 +76,9 @@ workflows:
 
 <br></br>
 
-Create the following Python script in your repository ot either create/update or get Port entities:
 
 :::note
-In this example, we use Python modules which need to be installed. You can use the following `requirements.txt`:
+In the following example, we use Python modules which need to be installed. You can use the following `requirements.txt`:
 
 <details>
   <summary> port_requirements.txt </summary>
@@ -98,6 +97,8 @@ requests>=2.28.2
 ]}>
 
 <TabItem value="upsert">
+
+Create the following Python script in your repository to create or update Port entities as part of your pipeline:
 
 ```python showLineNumbers
 import os
@@ -137,6 +138,8 @@ print(json.dumps(get_response.json(), indent=4))
 
 </TabItem>
 <TabItem value="get">
+
+Create the following Python script in your repository to get Port entities as part of your pipeline:
 
 ```python showLineNumbers
 import os
