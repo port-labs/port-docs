@@ -12,7 +12,7 @@ Our [GitHub action](https://github.com/marketplace/actions/port-github-action) a
 <br></br>
 <br></br>
 
-![Github Illustration](../../../../../static/img/github-action-illustration.png)
+![Github Illustration](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/github/github-action-illustration.jpg)
 
 :::tip public repository
 Our GitHub action is open source - see it [**here**](https://github.com/port-labs/port-github-action)
@@ -38,7 +38,7 @@ To install Port's GitHub action, follow these steps:
 
 2. Add your Port `CLIENT_ID` and `CLIENT_SECRET` as [GitHub secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets);
    1. This step is not mandatory, but it is recommended in order to not pass the `CLIENT_ID` and `CLIENT_SECRET` in plaintext in your workflows;
-3. Make sure you have existing an blueprint in your Port installation to create/update entities using the GitHub action.
+3. Make sure you have an existing blueprint in your Port installation to create/update entities using the GitHub action.
 
 ## Usage
 
@@ -105,4 +105,4 @@ use-entity:
 
 ## Examples
 
-Refer to the [examples](./examples.mdx) page for practical examples of Port's GitHub action.
+Refer to the [examples](./examples.md) page for practical examples of Port's GitHub action.
