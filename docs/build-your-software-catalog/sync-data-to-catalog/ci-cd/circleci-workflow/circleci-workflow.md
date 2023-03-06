@@ -139,6 +139,8 @@ print(json.dumps(get_response.json(), indent=4))
 </TabItem>
 <TabItem value="get">
 
+Create the following Python script in your repository to get Port entities as part of your pipeline:
+
 ```python showLineNumbers
 import os
 import requests
