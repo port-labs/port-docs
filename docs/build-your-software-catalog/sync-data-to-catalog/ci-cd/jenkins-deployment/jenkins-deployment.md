@@ -50,9 +50,10 @@ To interact with Port inside your Jenkins builds, follow these steps:
 
 ### Fetching your API token
 
-Using the following snippet, pass your `PORT_CLIENT_ID` and `PORT_CLIENT_SECRET` credentials to your build using `withCredentials`, which utilizes the Plain Credentials plugin to bind credentials to variables. The snippet provided also includes saving Port's API URL as an environment variable for use in future stages.
+The following snippet shows you how to pass your `PORT_CLIENT_ID` and `PORT_CLIENT_SECRET` credentials to your build using `withCredentials`, which utilizes the Plain Credentials plugin to bind credentials to variables.
 
-Add the following snippet to fetch your API token:
+  The snippet provided also includes saving Port's API URL as an environment variable for use in future stages and makes a request to Port's API using the credentials to get an access token:
+
 
 <details>
   <summary> Get API token </summary>
