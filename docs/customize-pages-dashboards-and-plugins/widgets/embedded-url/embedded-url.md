@@ -5,7 +5,7 @@ import TabItem from "@theme/TabItem"
 
 You can use the embedded-url `spec` property to embed any publicly available webpage into an additional tab in the [specific entity page](../../page/entity-page.md).
 
-By using the combination of `"type": "string`, `"format": "url` and `"spec": "embedded-url"` in a [Blueprint property](../../../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/properties.md#structure), Port will display the url as a new tab matching the provided URL in the blueprint's entity.
+By using the `embedded_url` spec in a [Blueprint property](../../../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/properties.md#structure), Port will display the url as a new tab matching the provided URL in the blueprint's entity.
 
 :::note
 Make sure the URL you want to embed in Port is publicly available (i.e. not inside a private VPC or only accessible using a VPN)
@@ -31,7 +31,8 @@ In order to add an embedded view tab into your specific entity page, all you nee
   "myEmbeddedUrl": {
     "title": "My Embedded URL",
     // highlight-start
-    "type": "object",
+    "type": "string",
+    "format": "url",
     "spec": "embedded-url",
     // highlight-end
     "description": "embedded-url Prop"
