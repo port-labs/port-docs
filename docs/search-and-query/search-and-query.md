@@ -362,9 +362,9 @@ The `in` operator checks if a sub group of values exist in a specified property 
 
 ```json showLineNumbers
 {
-  "property": "teamProp",
+  "property": "myArrayProperty",
   "operator": "in",
-  "value": ["Team1", "Team2"]
+  "value": ["Value1", "Value2"]
 }
 ```
 
@@ -386,16 +386,16 @@ The `in` operator checks if a sub group of values exist in a specified property 
 
 :::
 
-</TabItem>
-
-</Tabs>
-
 **UI:**
 
 - Choose field of type `string` format `team` or the metadata `Team` field;
 - Choose `has any of` operator:
 
 ![My Teams Filter](../../static/img/software-catalog/pages/MyTeamsFilter.png)
+
+</TabItem>
+
+</Tabs>
 
 </TabItem>
 
