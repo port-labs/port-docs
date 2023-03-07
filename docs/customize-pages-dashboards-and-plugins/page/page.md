@@ -53,7 +53,7 @@ The table below summarizes the available operations for every type:
 
 | Page type                                           | Save a view | Save view as<br /> a new page | Edit page | Delete page | Lock page |
 | --------------------------------------------------- | :---------: | :---------------------------: | :-------: | :---------: | :-------: |
-| Blueprint page (Default Page)                       |     ✅      |              ✅               |    ❌     |     ❌      |    ❌     |
+| Blueprint page (Default Page)                       |     ✅      |              ✅               |    ❌     |     ❌      |    ✅     |
 | [Entity page](./entity-page.md)                     |     ✅      |              ❌               |    ❌     |     ❌      |    ✅     |
 | [Users page](../../sso-rbac/rbac/rbac.md#users-tab) |     ✅      |              ❌               |    ❌     |     ❌      |    ✅     |
 | Audit log page                                      |     ✅      |              ❌               |    ❌     |     ❌      |    ✅     |
@@ -157,9 +157,9 @@ You can filter one or more values while setting the relation between each field 
 
 #### My Teams Filter
 
-This filter gives you the option to filter entities that belong to your teams (the teams you are in).
+By using the _my teams_ filter you will only see entities that belong to one of your teams. This means you will only see entities from teams that you are a member of.
 
-This filter works on `string` with format `team` fields and on the meta property `Team`.
+This filter works on `string` with format `team` fields and on the meta property `Team` [Meta Properties](../../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/meta-properties).
 
 ![My Teams Filter](../../../static/img/software-catalog/pages/MyTeamsFilter.png)
 

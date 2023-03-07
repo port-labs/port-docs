@@ -353,6 +353,25 @@ The `contains` operator checks if the specified substring exists in the specifie
 
 The `in` operator checks if a sub group of values exist in a specified property of type array:
 
+<Tabs values={[
+{label: "Standard", value: "array"},
+{label: "Dynamic Filter", value: "myTeamsDynamicFilter"}
+]}>
+
+<TabItem value="array">
+
+```json showLineNumbers
+{
+  "property": "$team",
+  "operator": "in",
+  "value": ["Team1", "Team2"]
+}
+```
+
+</TabItem>
+
+<TabItem value="myTeamsDynamicFilter">
+
 ```json showLineNumbers
 {
   "property": "$team",
@@ -361,13 +380,18 @@ The `in` operator checks if a sub group of values exist in a specified property 
 }
 ```
 
+</TabItem>
+
+</Tabs>
+
 UI:
+
+- Choose field of type `string` format `team` or the metadata `Team` field.
+- Choose `has any of` operator
 
 :::note
 
-- In order to filter entities that **belongs to your teams** you can use the special `myTeamsDynamicFilter` filter.
-- Choose field of type `string` format `team` or the metadata `Team` field.
-- Choose `has any of` operator
+- In order to filter entities that **belong to your teams** you can use the special `myTeamsDynamicFilter` filter.
 
 :::
 
