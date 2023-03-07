@@ -51,13 +51,13 @@ This page displays a table widget that details all the Blueprints specific Entit
 Each page type has a set of operations that can be performed from the UI.  
 The table below summarizes the available operations for every type:
 
-| Page type                                           | Save a view | Save view as<br /> a new page | Edit page | Delete page |
-| --------------------------------------------------- | :---------: | :---------------------------: | :-------: | :---------: |
-| Blueprint page (Default Page)                       |     ✅      |              ✅               |    ❌     |     ❌      |
-| [Entity page](./entity-page.md)                     |     ✅      |              ❌               |    ❌     |     ❌      |
-| [Users page](../../sso-rbac/rbac/rbac.md#users-tab) |     ✅      |              ❌               |    ❌     |     ❌      |
-| Audit log page                                      |     ✅      |              ❌               |    ❌     |     ❌      |
-| Custom page (generated from save as new page)       |     ✅      |              ✅               |    ✅     |     ✅      |
+| Page type                                           | Save a view | Save view as<br /> a new page | Edit page | Delete page | Lock page |
+| --------------------------------------------------- | :---------: | :---------------------------: | :-------: | :---------: | :-------: |
+| Blueprint page (Default Page)                       |     ✅      |              ✅               |    ❌     |     ❌      |    ✅     |
+| [Entity page](./entity-page.md)                     |     ✅      |              ❌               |    ❌     |     ❌      |    ✅     |
+| [Users page](../../sso-rbac/rbac/rbac.md#users-tab) |     ✅      |              ❌               |    ❌     |     ❌      |    ✅     |
+| Audit log page                                      |     ✅      |              ❌               |    ❌     |     ❌      |    ✅     |
+| Custom page (generated from save as new page)       |     ✅      |              ✅               |    ✅     |     ✅      |    ✅     |
 
 :::info Default page
 The default page is automatically generated when a new Blueprint is created. That page is directly tied to its Blueprint and it cannot be edited or deleted.
@@ -154,6 +154,17 @@ You can filter a table by using the following menu:
 To filter, you can define any filtering operator with a suitable value.
 
 You can filter one or more values while setting the relation between each field filter with a: `And/Or`.
+
+#### My Teams Filter
+
+By using the _my teams_ filter you will only see entities that belong to one of your teams. This means you will only see entities from teams that you are a member of.
+
+This filter works on:
+
+- `string` properties with the format `team`;
+- The [meta property](../../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/meta-properties) `Team`.
+
+![My Teams Filter](../../../static/img/software-catalog/pages/MyTeamsFilter.png)
 
 ### Sort
 
