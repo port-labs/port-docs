@@ -153,7 +153,7 @@ Port has 2 types of search rule operators:
 {label: "Property schema", value: "property-schema"},
 {label: "Between", value: "between"},
 {label: "Contains", value: "contains"},
-{label: "in", value: "in"}
+{label: "In", value: "in"}
 ]}>
 
 <TabItem value="=">
