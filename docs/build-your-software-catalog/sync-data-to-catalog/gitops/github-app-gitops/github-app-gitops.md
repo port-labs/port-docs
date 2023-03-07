@@ -11,7 +11,6 @@ You can install the our GitHub App by following [our installation guide](../../g
 ## What Does Our GitHub Application Offer You?​
 
 - Automatic updates to Entities mapped from GitHub, based on updates to the `port.yml` file.
-- Additional metadata provided by GitHub. See [Auto Importing Properties](./auto-importing-properties), available directly from Port
 
 ## How does it Work?
 
