@@ -159,7 +159,10 @@ You can filter one or more values while setting the relation between each field 
 
 By using the _my teams_ filter you will only see entities that belong to one of your teams. This means you will only see entities from teams that you are a member of.
 
-This filter works on `string` with format `team` fields and on the meta property `Team` [Meta Properties](../../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/meta-properties).
+This filter works on:
+
+- `string` properties with the format `team`;
+- The [meta property](../../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/meta-properties) `Team`.
 
 ![My Teams Filter](../../../static/img/software-catalog/pages/MyTeamsFilter.png)
 

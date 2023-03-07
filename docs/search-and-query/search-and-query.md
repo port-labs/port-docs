@@ -362,7 +362,7 @@ The `in` operator checks if a sub group of values exist in a specified property 
 
 ```json showLineNumbers
 {
-  "property": "$team",
+  "property": "teamProp",
   "operator": "in",
   "value": ["Team1", "Team2"]
 }
@@ -380,20 +380,20 @@ The `in` operator checks if a sub group of values exist in a specified property 
 }
 ```
 
-</TabItem>
-
-</Tabs>
-
-UI:
-
-- Choose field of type `string` format `team` or the metadata `Team` field.
-- Choose `has any of` operator
-
 :::note
 
 - In order to filter entities that **belong to your teams** you can use the special `myTeamsDynamicFilter` filter.
 
 :::
+
+</TabItem>
+
+</Tabs>
+
+**UI:**
+
+- Choose field of type `string` format `team` or the metadata `Team` field;
+- Choose `has any of` operator:
 
 ![My Teams Filter](../../static/img/software-catalog/pages/MyTeamsFilter.png)
 
