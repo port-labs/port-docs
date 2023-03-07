@@ -12,6 +12,8 @@ import FindCredentials from "../api/\_template_docs/\_find_credentials_collapsed
 Our integration with AWS provides the ability to export your AWS resources to Port, according to your configuration.
 You can define the integration to run both on schedule and on events.
 
+Our integration with Kubernetes supports real-time event processing, this allows for an accurate **real-time** representation of your AWS infrastructure inside Port.
+
 :::tip
 Port's AWS exporter is open source, view the source code [**here**](https://github.com/port-labs/port-aws-exporter).
 :::

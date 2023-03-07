@@ -12,6 +12,8 @@ import FindCredentials from "../api/\_template_docs/\_find_credentials_collapsed
 
 Our integration with Kubernetes queries your Kubernetes clusters directly according to your definition. By using our Kubernetes integration you can ingest live data, directly from your K8s clusters into Port in a transparent, efficient and precise manner, thus making sure only the information you need appears in the software catalog, and remains up to date.
 
+Our integration with Kubernetes provides real-time event processing, this allows for an accurate **real-time** representation of your K8s cluster inside Port.
+
 <center>
 
 <Image img={KubernetesIllustration} style={{ width: 700 }} />
