@@ -1,9 +1,9 @@
 ---
-title: Ingest data to Software Catalog
-sidebar_label: 🔌 Ingest data to Software Catalog
+title: Ingest Data Into The Software Catalog
+sidebar_label: 🔌 Ingest data into the Software Catalog
 ---
 
-# 🔌 Ingest data to the Software Catalog
+# 🔌 Ingest Data Into The Software Catalog
 
 Port offers several integrations, allowing you to easily ingest and manage data with the tools you are already use in your infrastructure.
 
