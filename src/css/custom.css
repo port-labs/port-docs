@@ -40,7 +40,7 @@ h6::first-letter {
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme="dark"] {
   --ifm-color-primary: #3ed0dd;
-  --ifm-color-primary-dark: ##26cad9;
+  --ifm-color-primary-dark: #26cad9;
   --ifm-color-primary-darker: #24bfcd;
   --ifm-color-primary-darkest: #1e9da8;
   --ifm-color-primary-light: #56d6e1;

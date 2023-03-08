@@ -152,7 +152,8 @@ Port has 2 types of search rule operators:
 {label: "<=", value: "<="},
 {label: "Property schema", value: "property-schema"},
 {label: "Between", value: "between"},
-{label: "Contains", value: "contains"}
+{label: "Contains", value: "contains"},
+{label: "In", value: "in"}
 ]}>
 
 <TabItem value="=">
@@ -345,6 +346,56 @@ The `contains` operator checks if the specified substring exists in the specifie
   "value": "mySubString"
 }
 ```
+
+</TabItem>
+
+<TabItem value="in">
+
+The `in` operator checks if a sub group of values exist in a specified property of type array:
+
+<Tabs values={[
+{label: "Standard", value: "array"},
+{label: "Dynamic Filter", value: "myTeamsDynamicFilter"}
+]}>
+
+<TabItem value="array">
+
+```json showLineNumbers
+{
+  "property": "myArrayProperty",
+  "operator": "in",
+  "value": ["Value1", "Value2"]
+}
+```
+
+</TabItem>
+
+<TabItem value="myTeamsDynamicFilter">
+
+```json showLineNumbers
+{
+  "property": "$team",
+  "operator": "in",
+  "value": ["myTeamsDynamicFilter"]
+}
+```
+
+:::note
+
+- In order to filter entities that **belong to your teams** you can use the special `myTeamsDynamicFilter` filter.
+
+:::
+
+**UI:**
+
+- Choose field of type `string` format `team` or the metadata `Team` field;
+- Choose `has any of` operator:
+
+![My Teams Filter](../../static/img/software-catalog/pages/MyTeamsFilter.png)
+
+</TabItem>
+
+</Tabs>
 
 </TabItem>
 

@@ -1,9 +1,5 @@
----
-sidebar_position: 1
----
-
-import ExampleMSBuildBlueprint from "../_ci_example_microservice_build_blueprint.mdx";
-import ExamplePackageBlueprint from "../_ci_example_package_blueprint.mdx";
+import ExampleMSBuildBlueprint from "../\_ci_example_microservice_build_blueprint.mdx";
+import ExamplePackageBlueprint from "../\_ci_example_package_blueprint.mdx";
 
 # Examples
 
@@ -66,9 +62,9 @@ use-entity:
 The first job `get-entity`, uses the GitHub action to get the `new-ms-build` entity.
 The second job `use-entity`, uses the output from the first job, and prints the `imageTag` property of the entity.
 
-## Complete example
+## Relation example
 
-The following example adds another `package` blueprint, in addition to the `microserviceBuild` blueprint shown in the previous example. In addition, it also adds a `microserviceBuild` relation. The GitHub action will create or update the relation between the 2 existing entities, allowing you to map the package to the microservice build that uses it:
+The following example adds a `package` entity, in addition to the `microserviceBuild` entity shown in the previous example. In addition, it also adds a `microserviceBuild` relation. The GitHub action will create or update the relation between the 2 existing entities, allowing you to map the package to the microservice build that uses it:
 
 <ExamplePackageBlueprint />
 
