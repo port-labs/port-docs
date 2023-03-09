@@ -21,11 +21,8 @@ deleteDependentEntities: false
 
 ### `port-app-config.yml` structure
 
-:::note
-We also support putting "{{ repositoryName }}" for any config, which means the name will be taken from the repository name.
-:::
-| Field | Type | Description | Default |
-| ----------- | ----------- | ----------- | ----------- |
-| `specPath` | [globPatterns](https://www.malikbrowne.com/blog/a-beginners-guide-glob-patterns)[] | List of file path patterns that the app will search for `port.yml` files in it | `**/port.yml`
-| `deleteDependentEntities` | `Boolean` | Flag to enable deletion of dependent Entities - an Entity that has a required Relation with an Entity you wish to delete | `false`
-| `enableMergeEntity` | `Boolean` | Flag to enable merging new values with the existing Entity values, instead of overriding all existing values. <br/> More info about merging entities can be found in the [Entity Tutorial](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#usage) | `false`
+| Field                     | Type                                                                               | Description                                                                                                                                                                                                                                                                     | Default       |
+| ------------------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| `specPath`                | [globPatterns](https://www.malikbrowne.com/blog/a-beginners-guide-glob-patterns)[] | List of file path patterns that the app will search for `port.yml` files in it                                                                                                                                                                                                  | `**/port.yml` |
+| `deleteDependentEntities` | `Boolean`                                                                          | Flag to enable deletion of dependent Entities - an Entity that has a required Relation with an Entity you wish to delete                                                                                                                                                        | `false`       |
+| `enableMergeEntity`       | `Boolean`                                                                          | Flag to enable merging new values with the existing Entity values, instead of overriding all existing values. <br/> More info about merging entities can be found in the [Entity Tutorial](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#usage) | `false`       |
