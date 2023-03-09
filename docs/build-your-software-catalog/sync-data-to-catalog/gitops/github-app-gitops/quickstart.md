@@ -6,7 +6,7 @@ sidebar_position: 1
 
 :::note Prerequisites
 
-[Please install our GitHub app](../../git-provider/github-exporter/installation.md).
+[Please install our GitHub app](../../git/github/installation.md).
 :::
 
 1. Clone our example repo: [github-app-setup-example](https://github.com/port-labs/github-app-setup-example).

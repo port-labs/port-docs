@@ -4,16 +4,12 @@ sidebar_position: 2
 
 # Installation
 
-## Installing Port's GitHub application
-
 :::note Prerequisites
 
 - A registered organization in Port;
 - Your Port user role is set to `Admin`.
 
 :::
-
-### Installation
 
 1. Go to the [GitHub App page](https://github.com/apps/getport-io).
 

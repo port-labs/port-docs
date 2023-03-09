@@ -88,7 +88,7 @@ To export your Bitbucket `Pull Requests` to Port, you can use the following Port
 resources:
   - kind: pull-request
     selector:
-      query: "true" # a JQ expression that it's output (boolean) determinating wheter to report the current resource or not
+      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
     port:
       entity:
         mappings:
@@ -193,7 +193,7 @@ resources:
 resources:
   - kind: pull-request
     selector:
-      query: "true" # a JQ expression that it's output (boolean) determinating wheter to report the current resource or not
+      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
     port:
       entity:
         mappings:

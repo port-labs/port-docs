@@ -5,7 +5,7 @@ title: Exporting pull requests
 
 :::note Prerequisites
 
-[Please install our GitHub app](./installation).
+[Please install our GitHub app](../../git/github/installation.md).
 :::
 
 # Exporting pull requests
@@ -92,7 +92,7 @@ You have to place the `port-app-config.yml` inside the `.github` folder or withi
 resources:
   - kind: pull-request
     selector:
-      query: "true" # a JQ expression that it's output (boolean) determinating wheter to report the current resource or not
+      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
     port:
       entity:
         mappings:

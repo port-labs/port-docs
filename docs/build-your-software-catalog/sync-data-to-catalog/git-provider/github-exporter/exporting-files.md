@@ -5,7 +5,7 @@ title: Exporting files
 
 :::note Prerequisites
 
-- [Please install our GitHub app](./installation).
+- [Please install our GitHub app](../../git/github/installation.md).
 
 :::
 
@@ -64,7 +64,7 @@ In order to apply the `port-app-config.yml` in the whole organization, place it 
 resources:
   - kind: repository
     selector:
-      query: "true" # a JQ expression that it's output (boolean) determinating wheter to report the current resource or not
+      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
     port:
       entity:
         mappings:
@@ -104,7 +104,7 @@ You can also have a Swagger component within the [specific entity page](../../..
 resources:
   - kind: repository
     selector:
-      query: "true" # a JQ expression that it's output (boolean) determinating wheter to report the current resource or not
+      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
     port:
       entity:
         mappings:
