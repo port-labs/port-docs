@@ -200,4 +200,4 @@ Refer to the [examples](./examples.md) page for practical configurations and the
 
 ## Advanced
 
-Refer to the [advanced](./advanced.md) page for advanced search use cases and outputs.
+Refer to the [advanced](./advanced.md) page for advanced use cases and outputs.

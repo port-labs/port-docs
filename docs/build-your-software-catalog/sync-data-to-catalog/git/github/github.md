@@ -28,6 +28,7 @@ Here is an example snippet from the `port-app-config.yml` file which demonstrate
 
 ```yaml showLineNumbers
 resources:
+  # Extract
   # highlight-start
   - kind: pull-request
     selector:
@@ -36,6 +37,7 @@ resources:
     port:
       entity:
         mappings:
+          # Transform & Load
           # highlight-start
           identifier: ".head.repo.name + (.id|tostring)" # The Entity identifier will be the repository name + the pull request ID. After the Entity is created, the exporter will send `PATCH` requests to update this pull request within Port.
           title: ".title"
@@ -100,30 +102,24 @@ resources:
         ...
   ```
 
-  :::tip
+  :::tip Available GitHub resources
 
-    <details>
-    <summary>List of GitHub resources that can be parsed</summary>
+  - `repository`
+  - `pull-request`
+  - `workflow`
+  - `workflow-run`
+  - `issue`
 
-  repository
-  pull-request
-  workflow
-  workflow-run
-  issue
-
-    </details>
-
-  A reference of available Kubernetes Resources to list, watch, and export can be found [**here**](https://kubernetes.io/docs/reference/kubernetes-api/)
   :::
 
 - The `selector` and the `query` keys let you filter exactly which objects from the specified `kind` will be ingested to the software catalog
 
   ```yaml showLineNumbers
   resources:
-    - kind: apps/v1/replicasets
+    - kind: repository
       # highlight-start
       selector:
-        query: .metadata.namespace | startswith("kube") | not # JQ boolean query. If evaluated to false - skip syncing the object.
+        query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
       # highlight-end
       port:
   ```
@@ -131,39 +127,59 @@ resources:
   Some example use cases:
 
   - To sync all objects from the specified `kind`: do not specify a `selector` and `query` key;
-  - To sync all objects from the specified `kind` that are not related to the internal Kubernetes system, use:
+  - To sync all objects from the specified `kind` that start with `service`, use:
 
     ```yaml showLineNumbers
-    query: .metadata.namespace | startswith("kube") | not
-    ```
-
-  - To sync all objects from the specified `kind` that start with `production`, use:
-
-    ```yaml showLineNumbers
-    query: .metadata.namespace | startswith("production")
+    query: .name | startswith("service")
     ```
 
   - etc.
 
-- The `port`, `entity` and the `mappings` keys open the section used to map the Kubernetes object fields to Port entities, the `mappings` key is an array where each object matches the structure of an [entity](../../../sync-data-to-catalog/sync-data-to-catalog.md#entity-json-structure)
+- The `port`, `entity` and the `mappings` keys open the section used to map the GitHub API object fields to Port entities. The `mappings` key can either be an object or an array of objects that matches the structure of an [entity](../../../sync-data-to-catalog/sync-data-to-catalog.md#entity-json-structure)
 
   ```yaml showLineNumbers
   resources:
-    - kind: apps/v1/replicasets
+    - kind: repository
       selector:
-        query: .metadata.namespace | startswith("kube") | not
+        query: "true"
       # highlight-start
       port:
         entity:
-          mappings: # Mappings between one K8s object to one or many Port Entities. Each value is a JQ query.
-            - identifier: .metadata.name
-              title: .metadata.name
-              blueprint: '"myBlueprint"'
-              properties:
-                creationTimestamp: .metadata.creationTimestamp
-                annotations: .metadata.annotations
-                status: .status
-              relations:
-                myRelation: .metadata.namespace
+          mappings: # Mappings between one GitHub API object to a Port entity. Each value is a JQ query.
+            identifier: ".name"
+            title: ".name"
+            blueprint: '"microservice"'
+            properties:
+              url: ".html_url"
+              description: ".description"
       # highlight-end
   ```
+
+  :::tip
+  Pay attention to the value of the `blueprint` key, if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
+  :::
+
+### Setup
+
+To ingest GitHub objects using the [`port-app-config.yml` file](#port-app-configyml-file), you can use one of the following methods:
+
+- Global configuration: create a `.github-private` repository in your organization and add the `port-app-config.yml` file to the repository;
+  - Using this method applies the configuration to all repositories that the GitHub app has permissions to (unless it is overridden by a granular `port-app-config.yml` in a repository);
+- Granular configuration: add the `port-app-config.yml` file to your desired repository;
+  - Using this method applies the configuration only to the repository where the `port-app-config.yml` file exists.
+
+:::info Important
+The configuration specified in the `port-app-config.yml` file will only be applied if the file is in the **default branch** of the repository (usually `main`)
+:::
+
+## Examples
+
+Refer to the [examples](./examples.md) page for practical configurations and their corresponding blueprint definitions.
+
+## GitOps
+
+Port's GitHub app also provides GitOps capabilities, refer to the [GitOps](./gitops/gitops.md) page to learn more.
+
+## Advanced
+
+Refer to the [advanced](./advanced.md) page for advanced use cases and examples.

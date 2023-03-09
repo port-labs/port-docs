@@ -54,9 +54,9 @@ If you don't have a `README.md` file within the selected example repository for 
 
 </details>
 
-In order to apply the `port-app-config.yml` in the whole organization, place it in the `.github` folder or in the `.github-private` repository in the root directory.
-
 <details>
+
+In order to apply the `port-app-config.yml` in the whole organization, place it in the `.github` folder or in the `.github-private` repository in the root directory.
 
 <summary> Port port-app-config.yml </summary>
 
@@ -84,7 +84,7 @@ resources:
 
 :::
 
-2. Push `port-app-config.yml` to your default branch.
+1. Push `port-app-config.yml` to your default branch.
 
 That's it! after the push is complete, the exporter will start ingesting the Entities on the next commit to the repository.
 

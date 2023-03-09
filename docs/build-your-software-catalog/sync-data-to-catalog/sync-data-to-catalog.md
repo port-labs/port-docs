@@ -15,7 +15,7 @@ Port's integration methods allow you to ingest both [blueprints](../define-your-
 
 By using Port's integrations you ensure that the software catalog is always up to date, and that live data is ingested directly from your systems, which is the most reliable source-of-truth for your environment.
 
-## Creating Entities
+## Creating entities
 
 An entity is an object that matches the type defined by a blueprint, and it represents the data of the software components which is defined by the blueprint properties.
 

@@ -202,7 +202,7 @@ To apply granular permissions for a blueprint, use the `updateProperties` and `u
 
 <TabItem value="let-user-property">
 
-The following change will allow **Member** users to update _only_ the `slackChannelUrl` property of `Env` Entities:
+The following change will allow **Member** users to update _only_ the `slackChannelUrl` property of `Env` entities:
 
 ```json showLineNumbers
 {
