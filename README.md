@@ -15,7 +15,7 @@ Port is a Developer Platform made to make life easier for developers and DevOps 
 
 ## Port's documentation
 
-This is the repository for Port's documentation website (available at [https://docs.getport.io](https://docs.getort.io))
+This is the repository for Port's documentation website (available at [https://docs.getport.io](https://docs.getport.io))
 
 Port's documentation is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
 
