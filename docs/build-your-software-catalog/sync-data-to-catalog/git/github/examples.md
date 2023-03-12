@@ -4,12 +4,13 @@ sidebar_position: 2
 
 import MicroserviceBlueprint from '../\_git_exporter_example_microservice_blueprint.mdx'
 import PortAppConfig from '../\github/\_github_exporter_example_port_app_config.mdx'
+import GitHubResources from './\_github_exporter_supported_resources.mdx'
 
 # Examples
 
-## Mapping repositories and file contents
+## Mapping repositories, file contents pull requests
 
-In the following example you will ingest your GitHub repositories and their README.md files to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+In the following example you will ingest your GitHub repositories, their README.md file contents and pull requests to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
 
 <MicroserviceBlueprint/>
 
@@ -23,4 +24,12 @@ In the following example you will ingest your GitHub repositories and their READ
 
 :::
 
-After creating the blueprint and committing the `port-app-config.yml` file to your `.github-private` or to a specific repository, you will see new entities in Port matching your repositories alongside their README.md file contents.
+After creating the blueprints and committing the `port-app-config.yml` file to your `.github-private` or to a specific repository, you will see new entities in Port matching your repositories alongside their README.md file contents and pull requests.
+
+## Mapping supported resources
+
+The above example shows a specific use case, but Port's GitHub app supports the ingestion of many other GitHub objects, to adapt the example above, use the GitHub API reference to learn about the available fields for the different supported objects:
+
+<GitHubResources/>
+
+When adding the ingestion of other resources, remember to add a new `resource` key and change the value provided to the `kind` key accordingly.

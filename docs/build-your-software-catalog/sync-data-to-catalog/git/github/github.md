@@ -1,3 +1,5 @@
+import GitHubResources from './\_github_exporter_supported_resources.mdx'
+
 # GitHub
 
 Our integration with GitHub allows you to export GitHub objects to Port as entities of existing blueprints. The integration supports real-time event processing so Port always provides an accurate real-time representation of your GitHub resources.
@@ -102,15 +104,7 @@ resources:
         ...
   ```
 
-  :::tip Available GitHub resources
-
-  - `repository`
-  - `pull-request`
-  - `workflow`
-  - `workflow-run`
-  - `issue`
-
-  :::
+  <GitHubResources/>
 
 - The `selector` and the `query` keys let you filter exactly which objects from the specified `kind` will be ingested to the software catalog
 
