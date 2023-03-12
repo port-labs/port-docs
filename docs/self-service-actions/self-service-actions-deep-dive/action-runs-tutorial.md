@@ -195,7 +195,7 @@ Note that the `runId` of the invoked Self-Service Action is: `r_QOz6WoOB1Q2lmhZZ
 
 #### Interacting with runs
 
-<Tabs groupId="interact">
+<Tabs groupId="interact" queryString="interact">
 
 <TabItem value="info" label="Run info">
 
@@ -348,7 +348,7 @@ Note that the `runId` of the invoked Self-Service Action is: `r_z0nJYJv0wCm2ASTR
 
 #### Interacting with runs
 
-<Tabs groupId="interact">
+<Tabs groupId="interact" queryString="interact">
 
 <TabItem value="info" label="Run info">
 
@@ -405,7 +405,7 @@ By making a `GET` request to `https://api.getport.io/v1/actions/runs/{run_id}/lo
 
 Now let's take an action run and update it. The following updates can be performed:
 
-<Tabs groupId="interact">
+<Tabs groupId="interact" queryString="interact">
 
 <TabItem value="info" label="Run info">
 
