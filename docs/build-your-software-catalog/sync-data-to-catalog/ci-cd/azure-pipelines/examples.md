@@ -16,7 +16,7 @@ import os
 import requests
 import json
 
-# Env vars passed by the CircleCI context
+# Env vars passed by the pipeline variables
 # highlight-start
 CLIENT_ID = os.environ['PORT_CLIENT_ID']
 CLIENT_SECRET = os.environ['PORT_CLIENT_SECRET']
@@ -51,7 +51,7 @@ entity_json = {
 create_response = requests.post(f'{API_URL}/blueprints/{blueprint_id}/entities?upsert=true', json=entity_json, headers=headers)
 ```
 
-After adding your new Python script to your repository, add the following code to your CircleCI workflow `yml` file to call your script and update/create a new `microserviceBuild` entity:
+After adding your new Python script to your repository, add the following code to your Azure Pipeline `yml` file to call your script and update/create a new `microserviceBuild` entity:
 
 ```yaml showLineNumbers
 steps:

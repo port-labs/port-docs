@@ -43,10 +43,10 @@ Make sure you have an existing [Blueprint](../../../../build-your-software-catal
 
 Here is an example snippet showing how to integrate a job that uses Port's API with your existing Azure pipelines using Python:
 
-Add the following job and workflow to your CircleCI pipeline:
+Add the following task to your Azure pipeline:
 
 <details>
-  <summary> CircleCI Pipeline YAML </summary>
+  <summary> Azure Pipeline YAML </summary>
 
 ```yaml showLineNumbers
 - script: |
@@ -92,7 +92,7 @@ import os
 import requests
 import json
 
-# These are the credentials passed by the 'port' context to your environment variables
+# These are the credentials passed by the variables of your pipeline to your tasks and in to your env
 CLIENT_ID = os.environ['PORT_CLIENT_ID']
 CLIENT_SECRET = os.environ['PORT_CLIENT_SECRET']
 
@@ -133,7 +133,7 @@ import os
 import requests
 import json
 
-# These are the credentials passed by the 'port' context to your environment variables
+# These are the credentials passed by the variables of your pipeline to your tasks and in to your env
 CLIENT_ID = os.environ['PORT_CLIENT_ID']
 CLIENT_SECRET = os.environ['PORT_CLIENT_SECRET']
 
