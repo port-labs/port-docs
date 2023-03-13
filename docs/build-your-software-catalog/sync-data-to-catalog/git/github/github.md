@@ -159,7 +159,7 @@ To ingest GitHub objects using the [`port-app-config.yml` file](#port-app-config
 
 - Global configuration: create a `.github-private` repository in your organization and add the `port-app-config.yml` file to the repository;
   - Using this method applies the configuration to all repositories that the GitHub app has permissions to (unless it is overridden by a granular `port-app-config.yml` in a repository);
-- Granular configuration: add the `port-app-config.yml` file to your desired repository;
+- Granular configuration: add the `port-app-config.yml` file to the `.github` directory in your desired repository;
   - Using this method applies the configuration only to the repository where the `port-app-config.yml` file exists.
 
 :::info Important
