@@ -166,6 +166,20 @@ To ingest GitHub objects using the [`port-app-config.yml`](#port-app-configyml-f
 The configuration specified in the `port-app-config.yml` file will only be applied if the file is in the **default branch** of the repository (usually `main`)
 :::
 
+## Permissions
+
+Port's GitHub integration requires the following permissions:
+
+- **Read** access to code and metadata;
+- **Read** and **write** access to checks and pull requests.
+
+:::note
+You will be prompted to confirm these permissions when first installing the App.
+
+Permissions can be given to select repositories in your organization, or to all repositories. You can reconfigure the app at any time, giving it access to new repositories, or removing access.
+
+:::
+
 ## Examples
 
 Refer to the [examples](./examples.md) page for practical configurations and their corresponding blueprint definitions.
