@@ -159,7 +159,7 @@ To ingest GitHub objects using the [`port-app-config.yml`](#port-app-configyml-f
 
 - Global configuration: create a `.github-private` repository in your organization and add the `port-app-config.yml` file to the repository;
   - Using this method applies the configuration to all repositories that the GitHub app has permissions to (unless it is overridden by a granular `port-app-config.yml` in a repository);
-- Granular configuration: add the `port-app-config.yml` file to the `.github` directory in your desired repository;
+- Granular configuration: add the `port-app-config.yml` file to the root of your desired repository;
   - Using this method applies the configuration only to the repository where the `port-app-config.yml` file exists.
 
 :::info Important
@@ -170,8 +170,20 @@ The configuration specified in the `port-app-config.yml` file will only be appli
 
 Port's GitHub integration requires the following permissions:
 
-- **Read** access to code and metadata;
-- **Read** and **write** access to checks and pull requests.
+- Repository permissions:
+
+  - **Actions:** Read and Write (for executing self-service action using GitHub workflow);
+  - **Checks:** Read and Write (for validating `port.yml`);
+  - **Contents:** Readonly;
+  - **Metadata:** Readonly;
+  - **Issues:** Readonly;
+  - **Pull requests:** Read and write;
+
+- Repository events (required to receive changes via webhook from GitHub and apply the `port-app-config.yml` configuration on them):
+  - Issues;
+  - Pull requests;
+  - Push;
+  - Workflow run.
 
 :::note
 You will be prompted to confirm these permissions when first installing the App.

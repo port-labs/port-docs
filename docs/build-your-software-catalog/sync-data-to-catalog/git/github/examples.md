@@ -4,7 +4,7 @@ sidebar_position: 2
 
 import MicroserviceBlueprint from '../\_git_exporter_example_microservice_blueprint.mdx'
 import PRBlueprint from '../\_git_exporter_example_pull_request_blueprint.mdx'
-import PortAppConfig from '../\github/\_github_exporter_example_port_app_config.mdx'
+import PortAppConfig from './\_github_exporter_example_port_app_config.mdx'
 import GitHubResources from './\_github_exporter_supported_resources.mdx'
 
 # Examples
