@@ -182,3 +182,11 @@ relations:
 </TabItem>
 
 </Tabs>
+
+## Examples
+
+Check out the [example repository](https://github.com/port-labs/github-app-setup-example) for a microservice blueprint and a matching `port.yml` file which specifies a microservice entity.
+
+## Advanced
+
+Refer to the [advanced](../advanced.md) page for advanced use cases and configurations.
