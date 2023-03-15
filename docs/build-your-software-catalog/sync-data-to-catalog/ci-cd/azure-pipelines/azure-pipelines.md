@@ -46,7 +46,7 @@ Here is an example snippet showing how to integrate a job that uses Port's API w
 Add the following task to your Azure pipeline:
 
 <details>
-  <summary> Azure Pipeline YAML </summary>
+  <summary> Azure pipeline YAML </summary>
 
 ```yaml showLineNumbers
 - script: |
