@@ -5,7 +5,7 @@ title: Exporting workflows runs
 
 :::note Prerequisites
 
-[Please install our GitHub app](./installation).
+[Please install our GitHub app](../../git/github/installation.md).
 :::
 
 In this tutorial, we will export workflows runs from GitHub and create matching Port Entities!
@@ -133,7 +133,7 @@ You have to place the `port-app-config.yml` inside the `.github` folder or withi
 resources:
   - kind: workflow-run
     selector:
-      query: "true" # a JQ expression that it's output (boolean) determinating wheter to report the current resource or not
+      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
     port:
       entity:
         mappings:

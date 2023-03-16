@@ -50,7 +50,7 @@ Here is an example snippet from the `config.yml` file which demonstrates the ETL
 
 </center>
 
-The exporter makes use of [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the Kubernetes objects.
+The exporter makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the Kubernetes objects.
 
 ### Exporter `config.yml` file
 
@@ -200,4 +200,4 @@ Refer to the [examples](./examples.md) page for practical configurations and the
 
 ## Advanced
 
-Refer to the [advanced](./advanced.md) page for advanced search use cases and outputs.
+Refer to the [advanced](./advanced.md) page for advanced use cases and outputs.

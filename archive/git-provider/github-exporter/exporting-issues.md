@@ -5,7 +5,7 @@ title: Exporting issues
 
 :::note Prerequisites
 
-[Please install our GitHub app](./installation).
+[Please install our GitHub app](../../git/github/installation.md).
 :::
 
 In this tutorial, we will export issues from GitHub and create matching Port Entities!
@@ -95,7 +95,7 @@ You have to place the `port-app-config.yml` inside the `.github` folder or withi
 resources:
   - kind: issue
     selector:
-      query: ".pull_request == null" # a JQ expression that it's output (boolean) determinating wheter to report the current resource or not
+      query: ".pull_request == null" # JQ boolean query. If evaluated to false - skip syncing the object.
     port:
       entity:
         mappings:

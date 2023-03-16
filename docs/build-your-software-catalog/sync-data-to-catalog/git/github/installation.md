@@ -1,10 +1,8 @@
 ---
-sidebar_position: 2
+sidebar_position: 1
 ---
 
 # Installation
-
-## Installing Port's GitHub application
 
 :::note Prerequisites
 
@@ -12,8 +10,6 @@ sidebar_position: 2
 - Your Port user role is set to `Admin`.
 
 :::
-
-### Installation
 
 1. Go to the [GitHub App page](https://github.com/apps/getport-io).
 

@@ -4,6 +4,7 @@ sidebar_position: 4
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import DeleteDependents from '../../../generalTemplates/\_delete_dependents_kubernetes_explanation_template.md'
 
 # Advanced
 
@@ -52,7 +53,7 @@ The `stateKey` parameter specifies a unique state key per K8s exporter installat
 
 <TabItem value="deleteDependents">
 
-The `deleteDependents` parameter is used to enable deletion of dependent Port entities. This is useful when you have two blueprints with a required relation, and the target entity in the relation should be deleted. In this scenario, the delete operation will fail if this flag is set to `false` if the flag is set to `true`, the source entity will be deleted as well.
+<DeleteDependents/>
 
 - Default: `false` (disabled)
 - Use case: Deletion of dependent Port entities. Must be enabled, if you want to delete a target entity (and its source entities) in a required relation.

@@ -1,0 +1,37 @@
+<details>
+
+<summary> Port port-app-config.yml </summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: repository
+    selector:
+      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
+    port:
+      entity:
+        mappings:
+          identifier: ".name" # The Entity identifier will be the repository name. After the Entity is created, the exporter will send `PATCH` requests to update this microservice within Port.
+          title: ".name"
+          blueprint: '"microservice"'
+          properties:
+            readme: file://README.md # fetching the README.md file that is within the root folder of the repository and ingesting its contents as a markdown property
+            repositoryUrl: ".links.html.href"
+  - kind: pull-request
+    selector:
+      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
+    port:
+      entity:
+        mappings:
+          identifier: ".destination.repository.name + (.id|tostring)" # The Entity identifier will be the repository name + the pull request ID. After the Entity is created, the exporter will send `PATCH` requests to update this pull request within Port.
+          title: ".title"
+          blueprint: '"pullRequest"'
+          properties:
+            creator: ".author.display_name"
+            assignees: "[.participants[].user.display_name]"
+            reviewers: "[.reviewers[].user.display_name]"
+            status: ".state"
+            updatedAt: ".updated_on"
+            link: ".links.html.href"
+```
+
+</details>

@@ -57,7 +57,7 @@ Place the `port-app-config.yml` in the repository's root folder.
 resources:
   - kind: repository
     selector:
-      query: "true" # a JQ expression that it's output (boolean) determinating wheter to report the current resource or not
+      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
     port:
       entity:
         mappings:

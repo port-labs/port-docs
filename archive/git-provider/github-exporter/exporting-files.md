@@ -5,7 +5,7 @@ title: Exporting files
 
 :::note Prerequisites
 
-- [Please install our GitHub app](./installation).
+- [Please install our GitHub app](../../git/github/installation.md).
 
 :::
 
@@ -54,9 +54,9 @@ If you don't have a `README.md` file within the selected example repository for 
 
 </details>
 
-In order to apply the `port-app-config.yml` in the whole organization, place it in the `.github` folder or in the `.github-private` repository in the root directory.
-
 <details>
+
+In order to apply the `port-app-config.yml` in the whole organization, place it in the `.github` folder or in the `.github-private` repository in the root directory.
 
 <summary> Port port-app-config.yml </summary>
 
@@ -64,7 +64,7 @@ In order to apply the `port-app-config.yml` in the whole organization, place it 
 resources:
   - kind: repository
     selector:
-      query: "true" # a JQ expression that it's output (boolean) determinating wheter to report the current resource or not
+      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
     port:
       entity:
         mappings:
@@ -84,7 +84,7 @@ resources:
 
 :::
 
-2. Push `port-app-config.yml` to your default branch.
+1. Push `port-app-config.yml` to your default branch.
 
 That's it! after the push is complete, the exporter will start ingesting the Entities on the next commit to the repository.
 
@@ -104,7 +104,7 @@ You can also have a Swagger component within the [specific entity page](../../..
 resources:
   - kind: repository
     selector:
-      query: "true" # a JQ expression that it's output (boolean) determinating wheter to report the current resource or not
+      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
     port:
       entity:
         mappings:
