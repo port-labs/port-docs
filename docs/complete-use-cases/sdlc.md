@@ -17,7 +17,7 @@ In this guide, you will setup an initial software catalog. You will learn how to
 - Port's [Terraform provider](../build-your-software-catalog/sync-data-to-catalog/iac/terraform/terraform.md) - to create your cloud resources;
 - Port's [REST API](../api-reference/api-reference.mdx) - to create your deployment configs;
 - Port's [GitHub Action](../build-your-software-catalog/sync-data-to-catalog/ci-cd/github-workflow/github-workflow.md) - to create your service deployments.
-- Port's [GitHub App](../build-your-software-catalog/sync-data-to-catalog/gitops/github-app-gitops/github-app-gitops.md) - to create your services;
+- Port's [GitHub App](../build-your-software-catalog/sync-data-to-catalog/git/github/gitops/gitops.md) - to create your services;
 - Port's [Kubernetes Exporter](../build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md) - to create your deployment service pods;
 
 By the end of this guide, you will have a _Basic Model_ of a software catalog.
@@ -440,7 +440,7 @@ Now that you have your environment ready, it's time to create a service.
 
 ### Service - GitHub app
 
-To create your service, you will connect Port's [GitHub app](../build-your-software-catalog/sync-data-to-catalog/gitops/github-app-gitops/github-app-gitops.md) to your service repository, and add a `port.yml` file describing the service you want to create an Entity for in Port.
+To create your service, you will connect Port's [GitHub app](../build-your-software-catalog/sync-data-to-catalog/git/github/gitops/gitops.md) to your service repository, and add a `port.yml` file describing the service you want to create an Entity for in Port.
 
 Here is an example `port.yml` file for a service called `Notification Service`:
 
@@ -469,10 +469,6 @@ relations:
     - mailer-service
 ```
 
-:::
-
-:::tip
-`repo` is a GitHub App [auto-imported properties](../build-your-software-catalog/sync-data-to-catalog/gitops/github-app-gitops/auto-importing-properties.md), as such it will be added automatically to the `port.yml` file of the service Entity.
 :::
 
 After the commit of the `port.yml` file to your repository, you will now see your service in Port.
