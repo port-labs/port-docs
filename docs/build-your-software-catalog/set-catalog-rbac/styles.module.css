@@ -1,0 +1,31 @@
+.admonition_tip[aria-selected="true"] {
+  color: rgb(0, 148, 0);
+  border-bottom-color: rgb(0, 148, 0);
+  /* color: #96440e;
+    border-bottom-color: #96440e; */
+}
+
+[data-theme="dark"] .admonition_tip[aria-selected="true"] {
+  color: rgb(0, 148, 0);
+  border-bottom-color: rgb(0, 148, 0);
+}
+
+.admonition_info[aria-selected="true"] {
+  color: rgb(76, 179, 212);
+  border-bottom-color: rgb(76, 179, 212);
+}
+
+[data-theme="dark"] .admonition_info[aria-selected="true"] {
+  color: rgb(76, 179, 212);
+  border-bottom-color: rgb(76, 179, 212);
+}
+
+.admonition_caution[aria-selected="true"] {
+  color: rgb(230, 167, 0);
+  border-bottom-color: rgb(230, 167, 0);
+}
+
+[data-theme="dark"] .admonition_caution[aria-selected="true"] {
+  color: rgb(230, 167, 0);
+  border-bottom-color: rgb(230, 167, 0);
+}

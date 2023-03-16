@@ -1,6 +1,6 @@
 # GitHub Workflow Self-Service Actions
 
-[Port's GitHub application](../../build-your-software-catalog/sync-data-to-catalog/git-provider/github-exporter/installation.md) can trigger a [GitHub workflow](https://docs.github.com/en/actions/using-workflows) using a customer provided input and [`port_payload`](../../self-service-actions/self-service-actions-deep-dive/self-service-actions-deep-dive.md#action-message-structure).
+[Port's GitHub application](../../build-your-software-catalog/sync-data-to-catalog/git/github/installation.md) can trigger a [GitHub workflow](https://docs.github.com/en/actions/using-workflows) using a customer provided input and [`port_payload`](../../self-service-actions/self-service-actions-deep-dive/self-service-actions-deep-dive.md#action-message-structure).
 
 ![Port Kafka Architecture](../../../static/img/self-service-actions/portGithubWorkflowArchitecture.png)
 
@@ -18,6 +18,16 @@ An example flow would be:
 4. Port's GitHub application triggers the GitHub workflow that deploys a new version of the service;
 5. As part of the workflow, the new microservice `Deployment` is reported back to Port;
 6. When the workflow is done, Port's GitHub application reports back to Port about the status of the action run (`SUCCESS` or `FAILURE`), according to workflow's `conclusion`.
+
+:::info triggering workflow chains
+A workflow triggered using the `workflow_dispatch` trigger is self-contained. This means its actions and effects over the repository cannot trigger other automatic workflows.
+
+1. A developer invokes a "provision new microservice in monorepo" workflow;
+2. The workflow opens a new PR in the target repository based on a pre-defined template;
+3. The repository also has a workflow which is automatically triggered using the `on: pull_request: types: "opened"` trigger;
+4. In this instance, the automatic PR workflow will not be triggered.
+
+:::
 
 ## Next step
 

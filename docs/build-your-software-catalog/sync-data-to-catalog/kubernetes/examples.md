@@ -11,7 +11,7 @@ import AuditLogPage from "../../../../static/img/integrations/k8s-exporter/Audit
 
 ## Mapping replica sets and pods
 
-In the following example you will export your Kubernetes `Replica Sets` and `Pods` to Port, you may use the following Port Blueprints definitions, and `config.yaml`:
+In the following example you will export your Kubernetes `Replica Sets` and `Pods` to Port, you may use the following Port blueprint definitions, and `config.yaml`:
 
 - **Deployment config** - will represent replica sets from the K8s cluster;
 - **Deployed service pod** - will represent pods from the K8s cluster.

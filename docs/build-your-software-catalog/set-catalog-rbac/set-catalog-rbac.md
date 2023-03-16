@@ -3,9 +3,10 @@ title: Set Catalog RBAC
 sidebar_label: 🔐 Set Catalog RBAC
 ---
 
-import OwnershipTemplate from './\_ownership_explanation_template.mdx'
-import Tabs from "@theme/Tabs"
-import TabItem from "@theme/TabItem"
+import OwnershipTemplate from "./\_ownership_explanation_template.mdx";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import styles from "./styles.module.css";
 
 # 🔐 Set Catalog RBAC
 
@@ -33,24 +34,15 @@ The default permissions assigned to every blueprint upon creation specify that u
 
 It is also possible to assign global permissions controls on **entities**:
 
-<Tabs groupId="permission" defaultValue="create" values={[
-{label: "Create (register)", value: "create"},
-{label: "Update", value: "update"},
-{label: "Delete (unregister)", value: "delete"}
-]}>
+<Tabs groupId="permission" defaultValue="create">
 
-<TabItem value="create">
+<TabItem value="create" label="Create (register)">
 
 To assign permissions to create an entity, give the desired persona permissions under the `register` object as shown below:
 
-<Tabs groupId="target" defaultValue="role" values={[
-{label: "Role", value: "role"},
-{label: "User", value: "user"},
-{label: "Team", value: "team"},
-{label: "Ownership", value: "ownership"}
-]}>
+<Tabs groupId="target" defaultValue="role">
 
-<TabItem value="role">
+<TabItem value="role" label="Role">
 
 To give `create` permissions to another role, add it to the `roles` array:
 
@@ -71,7 +63,7 @@ To give `create` permissions to another role, add it to the `roles` array:
 
 </TabItem>
 
-<TabItem value="user">
+<TabItem value="user" label="User">
 
 To give `create` permissions to another user, add it to the `users` array:
 
@@ -92,7 +84,7 @@ To give `create` permissions to another user, add it to the `users` array:
 
 </TabItem>
 
-<TabItem value="team">
+<TabItem value="team" label="Team">
 
 To give `create` permissions to another team, add it to the `teams` array:
 
@@ -113,9 +105,9 @@ To give `create` permissions to another team, add it to the `teams` array:
 
 </TabItem>
 
-<TabItem value="ownership">
+<TabItem value="ownership" label="Ownership">
 
-<OwnershipTemplate/>
+<OwnershipTemplate />
 
 To give `create` permissions to members of the owning team of an entity, change the `ownedByTeam` key:
 
@@ -144,18 +136,13 @@ In the context of the `create` permission, owned by team means that a user can o
 
 </TabItem>
 
-<TabItem value="update">
+<TabItem value="update" label="Update" attributes={{ className: styles.admonition_tip }}>
 
 To assign permissions to update an entity, give the desired persona permissions under the `update` object as shown below:
 
-<Tabs groupId="target" defaultValue="role" values={[
-{label: "Role", value: "role"},
-{label: "User", value: "user"},
-{label: "Team", value: "team"},
-{label: "Ownership", value: "ownership"}
-]}>
+<Tabs groupId="target" defaultValue="role">
 
-<TabItem value="role">
+<TabItem value="role" label="Role" attributes={{ className: styles.admonition_tip }}>
 
 To give `update` permissions to another role, add it to the `roles` array:
 
@@ -176,7 +163,7 @@ To give `update` permissions to another role, add it to the `roles` array:
 
 </TabItem>
 
-<TabItem value="user">
+<TabItem value="user" label="User" attributes={{ className: styles.admonition_tip }}>
 
 To give `update` permissions to another user, add it to the `users` array:
 
@@ -197,7 +184,7 @@ To give `update` permissions to another user, add it to the `users` array:
 
 </TabItem>
 
-<TabItem value="team">
+<TabItem value="team" label="Team" attributes={{ className: styles.admonition_tip }}>
 
 To give `update` permissions to another team, add it to the `teams` array:
 
@@ -218,9 +205,9 @@ To give `update` permissions to another team, add it to the `teams` array:
 
 </TabItem>
 
-<TabItem value="ownership">
+<TabItem value="ownership" label="Ownership" attributes={{ className: styles.admonition_tip }}>
 
-<OwnershipTemplate/>
+<OwnershipTemplate />
 
 To give `update` permissions to members of the owning team of an entity, change the `ownedByTeam` key:
 
@@ -245,18 +232,13 @@ To give `update` permissions to members of the owning team of an entity, change 
 
 </TabItem>
 
-<TabItem value="delete">
+<TabItem value="delete" label="Delete (unregister)" attributes={{ className: styles.admonition_caution }}>
 
 To assign permissions to delete an entity, give the desired persona permissions under the `delete` object as shown below:
 
-<Tabs groupId="target" defaultValue="role" values={[
-{label: "Role", value: "role"},
-{label: "User", value: "user"},
-{label: "Team", value: "team"},
-{label: "Ownership", value: "ownership"}
-]}>
+<Tabs groupId="target" default ="role">
 
-<TabItem value="role">
+<TabItem value="role" label="Role" attributes={{ className: styles.admonition_caution }}>
 
 To give `delete` permissions to another role, add it to the `roles` array:
 
@@ -277,7 +259,7 @@ To give `delete` permissions to another role, add it to the `roles` array:
 
 </TabItem>
 
-<TabItem value="user">
+<TabItem value="user" label="User" attributes={{ className: styles.admonition_caution }}>
 
 To give `delete` permissions to another user, add it to the `users` array:
 
@@ -298,7 +280,7 @@ To give `delete` permissions to another user, add it to the `users` array:
 
 </TabItem>
 
-<TabItem value="team">
+<TabItem value="team" label="Team" attributes={{ className: styles.admonition_caution }}>
 
 To give `delete` permissions to another team, add it to the `teams` array:
 
@@ -319,9 +301,9 @@ To give `delete` permissions to another team, add it to the `teams` array:
 
 </TabItem>
 
-<TabItem value="ownership">
+<TabItem value="ownership" label="Ownership" attributes={{ className: styles.admonition_caution }}>
 
-<OwnershipTemplate/>
+<OwnershipTemplate />
 
 To give `delete` permissions to members of the owning team of an entity, change the `ownedByTeam` key:
 
@@ -352,23 +334,15 @@ To give `delete` permissions to members of the owning team of an entity, change 
 
 It is also possible to assign more granular permissions controls on **entities**:
 
-<Tabs groupId="permission" defaultValue="updateProp" values={[
-{label: "Update specific property", value: "updateProp"},
-{label: "Update specific relation", value: "updateRel"}
-]}>
+<Tabs groupId="permission" defaultValue="updateProp">
 
-<TabItem value="updateProp">
+<TabItem value="updateProp" label="Update specific property">
 
 To assign permissions to update a specific entity property, give the desired persona permissions under the `updateProperties -> propertyName` object as shown below:
 
-<Tabs groupId="target" defaultValue="role" values={[
-{label: "Role", value: "role"},
-{label: "User", value: "user"},
-{label: "Team", value: "team"},
-{label: "Ownership", value: "ownership"}
-]}>
+<Tabs groupId="target" defaultValue="role">
 
-<TabItem value="role">
+<TabItem value="role" label="Role">
 
 To give property `update` permissions to another role, add it to the `roles` array:
 
@@ -391,7 +365,7 @@ To give property `update` permissions to another role, add it to the `roles` arr
 
 </TabItem>
 
-<TabItem value="user">
+<TabItem value="user" label="User">
 
 To give property `update` permissions to another user, add it to the `users` array:
 
@@ -414,7 +388,7 @@ To give property `update` permissions to another user, add it to the `users` arr
 
 </TabItem>
 
-<TabItem value="team">
+<TabItem value="team" label="Team">
 
 To give property `update` permissions to another team, add it to the `teams` array:
 
@@ -437,9 +411,9 @@ To give property `update` permissions to another team, add it to the `teams` arr
 
 </TabItem>
 
-<TabItem value="ownership">
+<TabItem value="ownership" label="Ownership">
 
-<OwnershipTemplate/>
+<OwnershipTemplate />
 
 To give property `update` permissions to members of the owning team of an entity, change the `ownedByTeam` key:
 
@@ -466,18 +440,13 @@ To give property `update` permissions to members of the owning team of an entity
 
 </TabItem>
 
-<TabItem value="updateRel">
+<TabItem value="updateRel" label="Update specific relation" attributes={{ className: styles.admonition_tip }}>
 
 To assign permissions to update a specific entity relation, give the desired persona permissions under the `updateRelations -> relationName` object as shown below:
 
-<Tabs groupId="target" defaultValue="role" values={[
-{label: "Role", value: "role"},
-{label: "User", value: "user"},
-{label: "Team", value: "team"},
-{label: "Ownership", value: "ownership"}
-]}>
+<Tabs groupId="target" defaultValue="role">
 
-<TabItem value="role">
+<TabItem value="role" label="Role" attributes={{ className: styles.admonition_tip }}>
 
 To give relation `update` permissions to another role, add it to the `roles` array:
 
@@ -500,7 +469,7 @@ To give relation `update` permissions to another role, add it to the `roles` arr
 
 </TabItem>
 
-<TabItem value="user">
+<TabItem value="user" label="User" attributes={{ className: styles.admonition_tip }}>
 
 To give relation `update` permissions to another user, add it to the `users` array:
 
@@ -523,7 +492,7 @@ To give relation `update` permissions to another user, add it to the `users` arr
 
 </TabItem>
 
-<TabItem value="team">
+<TabItem value="team" label="Team" attributes={{ className: styles.admonition_tip }}>
 
 To give relation `update` permissions to another team, add it to the `teams` array:
 
@@ -546,9 +515,9 @@ To give relation `update` permissions to another team, add it to the `teams` arr
 
 </TabItem>
 
-<TabItem value="ownership">
+<TabItem value="ownership" label="Ownership" attributes={{ className: styles.admonition_tip }}>
 
-<OwnershipTemplate/>
+<OwnershipTemplate />
 
 To give relation `update` permissions to members of the owning team of an entity, change the `ownedByTeam` key:
 
