@@ -203,3 +203,7 @@ Port's GitHub app also provides GitOps capabilities, refer to the [GitOps](./git
 ## Advanced
 
 Refer to the [advanced](./advanced.md) page for advanced use cases and examples.
+
+## Self-hosted installation
+
+Port's GitHub app also supports a self-hosted installation, refer to the [self-hosted installation](./self-hosted-installation.md) page to learn more.
