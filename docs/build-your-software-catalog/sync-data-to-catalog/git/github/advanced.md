@@ -4,7 +4,7 @@ sidebar_position: 4
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import DeleteDependents from '../../../../generalTemplates/\_delete_dependents_explanation_template.md'
+import DeleteDependents from '../../../../generalTemplates/\_delete_dependents_git_explanation_template.md'
 
 # Advanced
 
@@ -23,7 +23,7 @@ The `specPath` parameter specifies a list of [globPatterns](https://www.malikbro
 - Default value: `**/port.yml`
 - Use case:
   - If you want the app to scan a different file than `port.yml` (for example, change configure the app to scan files named `my-port-config.yml` using the pattern `**/my-port-config.yml`);
-  - If you want to limit Port's GitHub app repository traversal to prevent it from scanning sensitive paths in your repository.
+  - If you want the app to ignore `port.yml` files in certain paths.
 
 </TabItem>
 

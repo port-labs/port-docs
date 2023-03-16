@@ -21,7 +21,7 @@ To install Port's Bitbucket app, follow the [installation](./installation.md) gu
 
 By using Port's Bitbucket app, you can automatically ingest Bitbucket resources into Port based on real-time events.
 
-Port's Bitbucket app allows you to ingest a variety of objects resources provided by the Bitbucket API, including repositories, pull requests, workflows and more. The Bitbucket app allows you to perform extract, transform, load (ETL) on data from the Bitbucket API into the desired software catalog data model.
+Port's Bitbucket app allows you to ingest a variety of objects resources provided by the Bitbucket API, including repositories, pull requests and more. The Bitbucket app allows you to perform extract, transform, load (ETL) on data from the Bitbucket API into the desired software catalog data model.
 
 The Bitbucket app uses a YAML configuration file to describe the ETL process to load data into the developer portal. The approach reflects a golden middle between an overly opinionated Git visualization that might not work for everyone and a too-broad approach that could introduce unneeded complexity into the developer portal.
 

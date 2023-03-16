@@ -3,7 +3,7 @@ sidebar_position: 2
 ---
 
 import MicroserviceBlueprint from '../\_git_exporter_example_microservice_blueprint.mdx'
-import PRBlueprint from '../\_git_exporter_example_pull_request_blueprint.mdx'
+import PRBlueprint from './\_bitbucket_exporter_example_pull_request_blueprint.mdx'
 import PortAppConfig from './\_bitbucket_exporter_example_port_app_config.mdx'
 import BitbucketResources from './\_bitbucket_exporter_supported_resources.mdx'
 

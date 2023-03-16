@@ -96,5 +96,5 @@ Use the links below to learn about the different data ingestion methods Port off
 - [CI/CD](./ci-cd/ci-cd.md);
 - [Kubernetes & ArgoCD & K8s CRDs](./kubernetes/kubernetes.md);
 - [IaC](./iac/iac.md);
-- [Git providers](./git-provider/git-provider.md) and [GitOps](./gitops/gitops.md);
+- [Git providers](./git/git.md);
 - Cloud provider - coming soon;

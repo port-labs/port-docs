@@ -4,7 +4,7 @@ sidebar_position: 4
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import DeleteDependents from '../../../../generalTemplates/\_delete_dependents_explanation_template.md'
+import DeleteDependents from '../../../../generalTemplates/\_delete_dependents_git_explanation_template.md'
 
 # Advanced
 
@@ -18,12 +18,12 @@ The following advanced configuration parameters are available:
 
 <TabItem label="Spec path" value="specPath">
 
-The `specPath` parameter specifies a list of [globPatterns](https://www.malikbrowne.com/blog/a-beginners-guide-glob-patterns)[] that Port's Bitbucket app will search for `port.yml` files in.
+The `specPath` parameter specifies a string that Port's Bitbucket app will use when constructing search paths leading to a `yml` file, every path in the repository which ends with the `specPath` value will be scanned.
 
-- Default value: `**/port.yml`
+- Default value: `port.yml`
 - Use case:
-  - If you want the app to scan a different file than `port.yml` (for example, change configure the app to scan files named `my-port-config.yml` using the pattern `**/my-port-config.yml`);
-  - If you want to limit Port's Bitbucket app repository traversal to prevent it from scanning sensitive paths in your repository.
+  - If you want the app to scan a different file than `port.yml` (for example, change configure the app to scan files named `my-port-config.yml` using the pattern `my-port-config.yml`);
+  - If you want the app to ignore `port.yml` files in certain paths.
 
 </TabItem>
 

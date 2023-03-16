@@ -141,6 +141,10 @@ const config = {
                 to: "/build-your-software-catalog/sync-data-to-catalog/kubernetes",
               },
               {
+                label: "Git",
+                to: "/build-your-software-catalog/sync-data-to-catalog/git",
+              },
+              {
                 label: "AWS",
                 to: "/build-your-software-catalog/sync-data-to-catalog/aws",
               },
