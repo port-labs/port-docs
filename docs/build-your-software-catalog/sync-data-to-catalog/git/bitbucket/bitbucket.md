@@ -1,3 +1,6 @@
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+
 # Bitbucket
 
 import BitbucketResources from './\_bitbucket_exporter_supported_resources.mdx'
@@ -154,13 +157,43 @@ resources:
 
 To ingest Bitbucket objects using the [`port-app-config.yml`](#port-app-configyml-file) file, you can use one of the following methods:
 
-- Global configuration: create a `.bitbucket-private` repository in your workspace and add the `port-app-config.yml` file to the repository;
+<Tabs queryString="method">
+
+<TabItem label="Using Port" value="port">
+
+To manage your Bitbucket integration configuration using Port:
+
+1. Go to the DevPortal Setup page;
+2. Select a blueprint you want to ingest using Bitbucket;
+3. Choose the **Ingest Data** option from the menu;
+4. Select Bitbucket under the Git providers category;
+5. Add the contents of your `port-app-config.yml` file to the editor;
+6. Click save configuration.
+
+Using this method applies the configuration to all repositories in your Bitbucket workspace.
+
+When configuring the integration **using Port**, the configuration specified in the ingest data window is global, allowing you to specify in the editor mappings for multiple Port blueprints, regardless of the blueprint you selected.
+
+</TabItem>
+
+<TabItem label="Using Bitbucket" value="bitbucket">
+
+To manage your Bitbucket integration configuration using Bitbucket, you can choose either a global or granular configuration:
+
+- **Global configuration:** create a `.bitbucket-private` repository in your workspace and add the `port-app-config.yml` file to the repository;
   - Using this method applies the configuration to all repositories in your Bitbucket workspace (unless it is overridden by a granular `port-app-config.yml` in a repository);
-- Granular configuration: add the `port-app-config.yml` file to the root of your desired repository;
+- **Granular configuration:** add the `port-app-config.yml` file to the root of your desired repository;
   - Using this method applies the configuration only to the repository where the `port-app-config.yml` file exists.
 
+When using global configuration **using Bitbucket**, the configuration specified in the `port-app-config.yml` file will only be applied if the file is in the **default branch** of the repository (usually `main`).
+
+</TabItem>
+
+</Tabs>
+
 :::info Important
-The configuration specified in the `port-app-config.yml` file will only be applied if the file is in the **default branch** of the repository (usually `main`)
+
+When using global configuration **using Port**, the configuration specified will override any other configuration source (both global configuration using Bitbucket and granular configuration using Bitbucket);
 :::
 
 ## Permissions
