@@ -11,7 +11,7 @@ import AuditLogPage from "../../../../static/img/integrations/k8s-exporter/Audit
 
 ## Mapping replica sets and pods
 
-In the following example you will export your Kubernetes `Replica Sets` and `Pods` to Port, you may use the following Port Blueprints definitions, and `config.yaml`:
+In the following example you will export your Kubernetes `Replica Sets` and `Pods` to Port, you may use the following Port blueprint definitions, and `config.yaml`:
 
 - **Deployment config** - will represent replica sets from the K8s cluster;
 - **Deployed service pod** - will represent pods from the K8s cluster.
@@ -202,6 +202,6 @@ And you can look for the respective audit logs with an indication of the Kuberne
 
 It is also possible to export CRDs from your Kubernetes cluster, for CRD export examples, refer to the [CRDs](./CRDs/crds.md) section.
 
-## Complete example
+## Map your complete K8s ecosystem
 
-For a complete Kubernetes cluster export example, check out our Kubernetes mapping [complete use case](../../../complete-use-cases/full-kubernetes-exporter.md)
+To learn how you can visualize a complete K8s cluster, including **namespaces**, **cluster roles**, **cron jobs**, **deployments**, **pods**, and more - check out our Kubernetes mapping [complete use case](./full-kubernetes-exporter.md)

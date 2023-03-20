@@ -116,33 +116,41 @@ const config = {
                 to: "/promote-scorecards",
               },
               {
+                label: "Search & Query",
+                to: "/search-and-query",
+              },
+              {
                 label: "API Reference",
                 to: "/api-reference",
               },
             ],
           },
           {
-            title: "Complete Use Cases",
+            title: "Ingest Data to Catalog",
             items: [
               {
-                label: "Software Development Lifecycle (SDLC)",
-                to: "/complete-use-cases/sdlc",
+                label: "API",
+                to: "/build-your-software-catalog/sync-data-to-catalog/api",
               },
               {
-                label: "Mapping Kubernetes",
-                to: "/complete-use-cases/full-kubernetes-exporter",
+                label: "CI/CD",
+                to: "/build-your-software-catalog/sync-data-to-catalog/ci-cd",
               },
               {
-                label: "Service Locking",
-                to: "/complete-use-cases/service-locking",
+                label: "Kubernetes",
+                to: "/build-your-software-catalog/sync-data-to-catalog/kubernetes",
               },
               {
-                label: "Software Templates",
-                to: "/complete-use-cases/software-templates",
+                label: "Git",
+                to: "/build-your-software-catalog/sync-data-to-catalog/git",
               },
               {
-                label: "IaC Templates",
-                to: "/complete-use-cases/iac-templates",
+                label: "AWS",
+                to: "/build-your-software-catalog/sync-data-to-catalog/aws",
+              },
+              {
+                label: "Terraform",
+                to: "/build-your-software-catalog/sync-data-to-catalog/iac/terraform",
               },
             ],
           },

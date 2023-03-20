@@ -114,34 +114,170 @@ access_token=$(curl --location --request POST 'https://api.getport.io/v1/auth/ac
 
 </Tabs>
 
-## Integrate Port with your CI/CD
+## Ingest data via API
 
-Since Port is API first, even if your specific CI/CD platform does not already have a first-class integration to Port, it is still possible to create and update entities using simple REST calls.
+Since Port is API-first it is possible to create and update entities using simple REST calls from any platform you use.
 
 ### Setup
 
-To use Port's REST API in your CI/CD you need to perform the following steps:
+To use Port's REST API you need to perform the following steps:
 
 1. Find your [Port credentials](../api/api.md#find-your-port-credentials);
-2. Save them as secrets or in some other same manner such that you can reference them in your CI/CD flow;
-3. Make sure you have an HTTP-capable client in your CI/CD environment.
+2. Save them as secrets or in some other same manner such that you can reference them in your code or CI/CD flow;
+3. Make sure you have an HTTP-capable client.
    1. For example: cURL, python with the requests package, nodejs with fetch/axios, etc.
 
 ### Usage
 
-Since you are using Port's REST API directly in your CI/CD, any method that the API provides is at your disposal.
+Since you are using Port's REST API directly, any method that the API provides is at your disposal.
 
-We will focus on two specific use cases:
+We will focus on three specific use cases:
 
-- Create/Update catalog entities - available by making HTTP POST requests to `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/`, receives the identifier and other properties of a new entity or an entity that needs to be updated;
-- Get catalog entities - available by making HTTP GET requests to `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/`, receives the identifier of an existing entity and retrieves it for use in your CI.
+- **Get** catalog entities - available by making HTTP GET requests to `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`, receives the identifier of an existing entity and retrieves it for use in your CI;
+- **Create/Update** catalog entities - available by making HTTP POST requests to `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/`, receives the identifier and other properties of a new entity or an entity that needs to be updated;
+- **Delete** catalog entities - available by making HTTP DELETE requests to `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`, receives the identifier of an existing entity and deletes it.
 
-<Tabs groupId="usage" defaultValue="create" values={[
+<Tabs groupId="usage" queryString="operation" defaultValue="get" values={[
+{label: "Get", value: "get"},
 {label: "Create", value: "create"},
 {label: "Create/Update", value: "create-update"},
 {label: "Create/Override", value: "create-override"},
-{label: "Get", value: "get"}
+{label: "Delete", value: "delete"},
+{label: "Delete All", value: "delete-all"},
 ]}>
+
+<TabItem value="get">
+
+<Tabs groupId="code-examples" defaultValue="python" values={[
+{label: "Python", value: "python"},
+{label: "Javascript", value: "js"},
+{label: "cURL", value: "curl"},
+]}>
+
+<TabItem value="python">
+
+```python showLineNumbers
+# Dependencies to install:
+# $ python -m pip install requests
+
+import requests
+
+# highlight-start
+CLIENT_ID = 'YOUR_CLIENT_ID'
+CLIENT_SECRET = 'YOUR_CLIENT_SECRET'
+# highlight-end
+
+API_URL = 'https://api.getport.io/v1'
+
+credentials = {'clientId': CLIENT_ID, 'clientSecret': CLIENT_SECRET}
+
+token_response = requests.post(f'{API_URL}/auth/access_token', json=credentials)
+
+access_token = token_response.json()['accessToken']
+
+# You can now use the value in access_token when making further requests
+
+headers = {
+    'Authorization': f'Bearer {access_token}'
+}
+
+# highlight-start
+blueprint_id = 'MY_BLUEPRINT'
+entity_id = 'MY_ENTITY_IDENTIFIER'
+# highlight-end
+
+response = requests.get(f'{API_URL}/blueprints/{blueprint_id}/entities/{entity_id}', headers=headers)
+
+# response.json() contains the content of the resulting entity
+
+```
+
+</TabItem>
+
+<TabItem value="js">
+
+```javascript showLineNumbers
+// Dependencies to install:
+// $ npm install axios --save
+
+const axios = require("axios").default;
+
+// highlight-start
+const CLIENT_ID = "YOUR_CLIENT_ID";
+const CLIENT_SECRET = "YOUR_CLIENT_SECRET";
+// highlight-end
+
+const API_URL = "https://api.getport.io/v1";
+
+const response = await axios.post(`${API_URL}/auth/access_token`, {
+  clientId: CLIENT_ID,
+  clientSecret: CLIENT_SECRET,
+});
+
+const accessToken = response.data.accessToken;
+
+// You can now use the value in accessToken when making further requests
+
+// highlight-start
+const blueprintId = "MY_BLUEPRINT";
+const entityId = "MY_ENTITY_IDENTIFIER";
+// highlight-end
+
+const config = {
+  headers: {
+    Authorization: `Bearer ${accessToken}`,
+  },
+};
+
+const getResponse = await axios.get(
+  `${API_URL}/blueprints/${blueprintId}/entities/${entityId}`,
+  config
+);
+
+// getResponse.data contains the content of the resulting entity
+```
+
+</TabItem>
+
+<TabItem value="curl">
+
+```bash showLineNumbers
+# Dependencies to install:
+# for brew:
+# brew install jq
+# For apt:
+# $ sudo apt-get install jq
+# For yum:
+# $ sudo yum install jq
+
+access_token=$(curl --location --request POST 'https://api.getport.io/v1/auth/access_token' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  # highlight-start
+    "clientId": "CLIENT_ID",
+    "clientSecret": "CLIENT_SECRET"
+  # highlight-end
+}' | jq '.accessToken' | sed 's/"//g')
+
+# The token will be available in the access_token variable
+
+# highlight-start
+blueprint_id='MY_BLUEPRINT'
+entity_id='MY_ENTITY_IDENTIFIER'
+# highlight-end
+
+curl --location --request GET "https://api.getport.io/v1/blueprints/${blueprint_id}/entities/${entity_id}" \
+    --header "Authorization: Bearer $access_token" \
+    --header "Content-Type: application/json"
+
+# The output of the command contains the content of the resulting entity
+```
+
+</TabItem>
+
+</Tabs>
+
+</TabItem>
 
 <TabItem value="create">
 
@@ -638,7 +774,7 @@ curl --location --request POST "https://api.getport.io/v1/blueprints/${blueprint
 
 </TabItem>
 
-<TabItem value="get">
+<TabItem value="delete">
 
 <Tabs groupId="code-examples" defaultValue="python" values={[
 {label: "Python", value: "python"},
@@ -673,15 +809,15 @@ headers = {
     'Authorization': f'Bearer {access_token}'
 }
 
-# highlight-start
+# highlight-next-line
 blueprint_id = 'MY_BLUEPRINT'
-entity_id = 'MY_ENTITY_IDENTIFIER'
-# highlight-end
 
-response = requests.get(f'{API_URL}/blueprints/{blueprint_id}/entities/{entity_id}', headers=headers)
+# highlight-next-line
+entity_id = 'MY_ENTITY'
+
+response = requests.delete(f'{API_URL}/blueprints/{blueprint_id}/entities/{entity_id}', headers=headers)
 
 # response.json() contains the content of the resulting entity
-
 ```
 
 </TabItem>
@@ -710,10 +846,11 @@ const accessToken = response.data.accessToken;
 
 // You can now use the value in accessToken when making further requests
 
-// highlight-start
+// highlight-next-line
 const blueprintId = "MY_BLUEPRINT";
-const entityId = "MY_ENTITY_IDENTIFIER";
-// highlight-end
+
+// highlight-next-line
+const entityId = "MY_ENTITY";
 
 const config = {
   headers: {
@@ -721,12 +858,12 @@ const config = {
   },
 };
 
-const getResponse = await axios.get(
+const deleteResponse = await axios.delete(
   `${API_URL}/blueprints/${blueprintId}/entities/${entityId}`,
   config
 );
 
-// getResponse.data contains the content of the resulting entity
+// deleteResponse.data contains the content of the resulting entity
 ```
 
 </TabItem>
@@ -735,8 +872,6 @@ const getResponse = await axios.get(
 
 ```bash showLineNumbers
 # Dependencies to install:
-# for brew:
-# brew install jq
 # For apt:
 # $ sudo apt-get install jq
 # For yum:
@@ -753,21 +888,165 @@ access_token=$(curl --location --request POST 'https://api.getport.io/v1/auth/ac
 
 # The token will be available in the access_token variable
 
-# highlight-start
+# highlight-next-line
 blueprint_id='MY_BLUEPRINT'
-entity_id='MY_ENTITY_IDENTIFIER'
-# highlight-end
 
-curl --location --request GET "https://api.getport.io/v1/blueprints/${blueprint_id}/entities/${entity_id}" \
-    --header "Authorization: Bearer $access_token" \
-    --header "Content-Type: application/json"
+# highlight-next-line
+entity_id='MY_ENTITY'
 
-# The output of the command contains the content of the resulting entity
+curl --location --request DELETE "https://api.getport.io/v1/blueprints/${blueprint_id}/entities/${entity_id}" \
+    --header "Authorization: Bearer $access_token"
+
+# The output of the command contains the content of the resulting blueprint
 ```
 
 </TabItem>
 
 </Tabs>
+
+</TabItem>
+
+<TabItem value="delete-all">
+
+It is possible to delete all entities of a blueprint with a single request using a dedicated route.
+
+:::note limitations
+The delete all route can be used if the blueprint meets the following conditions:
+
+- The blueprint does not have required relations;
+- There are fewer than 1000 entities for the blueprint.
+
+:::
+
+<Tabs groupId="code-examples" defaultValue="python" values={[
+{label: "Python", value: "python"},
+{label: "Javascript", value: "js"},
+{label: "cURL", value: "curl"},
+]}>
+
+<TabItem value="python">
+
+```python showLineNumbers
+# Dependencies to install:
+# $ python -m pip install requests
+
+import requests
+
+# highlight-start
+CLIENT_ID = 'YOUR_CLIENT_ID'
+CLIENT_SECRET = 'YOUR_CLIENT_SECRET'
+# highlight-end
+
+API_URL = 'https://api.getport.io/v1'
+
+credentials = {'clientId': CLIENT_ID, 'clientSecret': CLIENT_SECRET}
+
+token_response = requests.post(f'{API_URL}/auth/access_token', json=credentials)
+
+access_token = token_response.json()['accessToken']
+
+# You can now use the value in access_token when making further requests
+
+headers = {
+    'Authorization': f'Bearer {access_token}'
+}
+
+# highlight-next-line
+blueprint_id = 'MY_BLUEPRINT'
+
+response = requests.delete(f'{API_URL}/blueprints/{blueprint_id}/all-entities', headers=headers)
+
+# response.json() contains the content of the resulting entity
+```
+
+</TabItem>
+
+<TabItem value="js">
+
+```javascript showLineNumbers
+// Dependencies to install:
+// $ npm install axios --save
+
+const axios = require("axios").default;
+
+// highlight-start
+const CLIENT_ID = "YOUR_CLIENT_ID";
+const CLIENT_SECRET = "YOUR_CLIENT_SECRET";
+// highlight-end
+
+const API_URL = "https://api.getport.io/v1";
+
+const response = await axios.post(`${API_URL}/auth/access_token`, {
+  clientId: CLIENT_ID,
+  clientSecret: CLIENT_SECRET,
+});
+
+const accessToken = response.data.accessToken;
+
+// You can now use the value in accessToken when making further requests
+
+// highlight-next-line
+const blueprintId = "MY_BLUEPRINT";
+
+const config = {
+  headers: {
+    Authorization: `Bearer ${accessToken}`,
+  },
+};
+
+const deleteResponse = await axios.delete(
+  `${API_URL}/blueprints/${blueprintId}/all-entities`,
+  config
+);
+
+// deleteResponse.data contains the content of the resulting entity
+```
+
+</TabItem>
+
+<TabItem value="curl">
+
+```bash showLineNumbers
+# Dependencies to install:
+# For apt:
+# $ sudo apt-get install jq
+# For yum:
+# $ sudo yum install jq
+
+access_token=$(curl --location --request POST 'https://api.getport.io/v1/auth/access_token' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  # highlight-start
+    "clientId": "CLIENT_ID",
+    "clientSecret": "CLIENT_SECRET"
+  # highlight-end
+}' | jq '.accessToken' | sed 's/"//g')
+
+# The token will be available in the access_token variable
+
+# highlight-next-line
+blueprint_id='MY_BLUEPRINT'
+
+curl --location --request DELETE "https://api.getport.io/v1/blueprints/${blueprint_id}/all-entities" \
+    --header "Authorization: Bearer $access_token"
+
+# The output of the command contains the content of the resulting blueprint
+```
+
+</TabItem>
+
+</Tabs>
+
+:::tip
+It is also possible to delete all entities using Port's web UI:
+
+1. Go to the [DevPortal Setup page](https://app.getport.io/dev-portal);
+2. Click on the "Delete All `BLUEPRINT_NAME`" button on the desired blueprint;
+3. Follow the instructions.
+
+**Note:** only users with the [admin](../../../sso-rbac/rbac/rbac.md#roles) role can use Port's UI to perform the delete all operation.
+
+:::
 
 </TabItem>
 

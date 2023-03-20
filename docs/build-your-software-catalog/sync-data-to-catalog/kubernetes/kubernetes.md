@@ -12,6 +12,8 @@ import FindCredentials from "../api/\_template_docs/\_find_credentials_collapsed
 
 Our integration with Kubernetes queries your Kubernetes clusters directly according to your definition. By using our Kubernetes integration you can ingest live data, directly from your K8s clusters into Port in a transparent, efficient and precise manner, thus making sure only the information you need appears in the software catalog, and remains up to date.
 
+Our integration with Kubernetes provides real-time event processing, this allows for an accurate **real-time** representation of your K8s cluster inside Port.
+
 <center>
 
 <Image img={KubernetesIllustration} style={{ width: 700 }} />
@@ -48,7 +50,7 @@ Here is an example snippet from the `config.yml` file which demonstrates the ETL
 
 </center>
 
-The exporter makes use of [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the Kubernetes objects.
+The exporter makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the Kubernetes objects.
 
 ### Exporter `config.yml` file
 
@@ -198,4 +200,4 @@ Refer to the [examples](./examples.md) page for practical configurations and the
 
 ## Advanced
 
-Refer to the [advanced](./advanced.md) page for advanced search use cases and outputs.
+Refer to the [advanced](./advanced.md) page for advanced use cases and outputs.

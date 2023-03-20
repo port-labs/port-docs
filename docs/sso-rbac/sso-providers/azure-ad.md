@@ -173,7 +173,7 @@ Port needs the following information for this process:
 ![Azure application display secrets](../../../static/img/sso/azure-ad/AzureAppDetailsSection.png)
 
 :::note
-**Port** will provide you the `organization_id` needed for the homepage URL of the App, as described on [Step 2](#step-2-customize-your-port-app-with-login-url-and-logo).
+**Port** will provide you the `CONNECTION_NAME` needed for the homepage URL of the App, as described on [Step 2](#step-2-customize-your-port-app-with-login-url-and-logo).
 :::
 
 ### Step #7: Exposing the application to your organization
@@ -239,7 +239,7 @@ Port needs the following information for this process:
    ![Azure application dashboard](../../../static/img/sso/azure-ad/AzureDashboardWithPort.png)
 
    :::note
-   Users can also manually access Port by going to the App Homepage URL: `https://app.getport.io/?org_id={your_organization_id}`
+   Users can also manually access Port by going to the App Homepage URL: `https://auth.getport.io/authorize?response_type=token&client_id=96IeqL36Q0UIBxIfV1oqOkDWU6UslfDj&connection={CONNECTION_NAME}&redirect_uri=https%3A%2F%2Fapp.getport.io`
    :::
 
 ---

@@ -141,7 +141,7 @@ In order to create the service Blueprint, use the following JSON body:
         "icon": "Okta",
         "title": "On Call",
         "format": "email",
-        "default": "develoepr@getport.io"
+        "default": "developer@getport.io"
       },
       "language": {
         "type": "string",
@@ -267,7 +267,7 @@ python -m pip install requests
 :::note
 For the next part, you will need your Port `CLIENT_ID` and `CLIENT_SECRET`.
 
-To find your Port API credentials go to [Port](https://app.getport.io), click on `Crednetials` at the bottom left corner and you will be able to view and copy your `CLIENT_ID` and `CLIENT_SECRET`:
+To find your Port API credentials go to [Port](https://app.getport.io), click on `Credentials` at the bottom left corner and you will be able to view and copy your `CLIENT_ID` and `CLIENT_SECRET`:
 
 <center>
 
@@ -343,7 +343,7 @@ blueprint = {
                 "icon": "Okta",
                 "title": "On Call",
                 "format": "email",
-                "default": "develoepr@getport.io"
+                "default": "developer@getport.io"
             },
             "language": {
                 "type": "string",
@@ -1270,16 +1270,16 @@ These suggestions show the basic steps in creating your very own Developer Porta
 
 If you want to learn more about Port's capabilities in a specific area, you can check out any of these resources:
 
-- Blueprints deep dive;
-- Relations deep dive;
-- Entities deep dive;
-- Self-Service Actions deep dive.
+- [Build your software catalog](./build-your-software-catalog/build-your-software-catalog.md)
+- [Define your data model](./build-your-software-catalog/define-your-data-model/define-your-data-model.md)
+- [Setup blueprints](./build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md)
+- [Relate blueprints](./build-your-software-catalog/define-your-data-model/relate-blueprints/relate-blueprints.md)
+- [Ingest data to catalog](./build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md)
+- [Self-service actions](./self-service-actions/self-service-actions.md)
 
 ### Using the API
 
-If you want to continue utilizing Port's REST API Interface, take a look at these resources:
+If you want to continue utilizing Port's REST API, take a look at these resources:
 
-- Blueprint Tutorial;
-- Relation Tutorial;
-- Entity Tutorial;
-- Port API Reference.
+- [API guide](./build-your-software-catalog/sync-data-to-catalog/api/api.md)
+- [API Reference](./api-reference/api-reference.mdx)

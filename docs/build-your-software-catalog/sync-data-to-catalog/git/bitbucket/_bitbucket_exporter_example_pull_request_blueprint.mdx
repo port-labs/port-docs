@@ -1,0 +1,63 @@
+<details>
+<summary>Pull request blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "pullRequest",
+  "title": "Pull Request",
+  "icon": "GitVersion",
+  "schema": {
+    "properties": {
+      "creator": {
+        "title": "Creator",
+        "type": "string",
+        "format": "user"
+      },
+      "assignees": {
+        "title": "Assignees",
+        "type": "array"
+      },
+      "reviewers": {
+        "title": "Reviewers",
+        "type": "array"
+      },
+      "status": {
+        "title": "Status",
+        "type": "string",
+        "enum": ["MERGED", "OPEN", "DECLINED"],
+        "enumColors": {
+          "MERGED": "purple",
+          "OPEN": "green",
+          "DECLINED": "red"
+        }
+      },
+      "createdAt": {
+        "title": "Create At",
+        "type": "string",
+        "format": "date-time"
+      },
+      "updatedAt": {
+        "title": "Updated At",
+        "type": "string",
+        "format": "date-time"
+      },
+      "description": {
+        "title": "Description",
+        "type": "string",
+        "format": "markdown"
+      },
+      "link": {
+        "title": "Link",
+        "format": "url",
+        "type": "string"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {}
+}
+```
+
+</details>

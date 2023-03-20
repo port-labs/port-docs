@@ -2,6 +2,9 @@
 sidebar_position: 2
 ---
 
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+
 # Action Runs Tutorial
 
 Invoking a Port Self-Service Action creates an `actionRun` object inside Port.
@@ -190,7 +193,13 @@ By invoking the Self-Service Action, the following action invocation body is sen
 
 Note that the `runId` of the invoked Self-Service Action is: `r_QOz6WoOB1Q2lmhZZ`.
 
-By making a request to `https://api.getport.io/v1/actions/runs/{run_id}` where `run_id=r_QOz6WoOB1Q2lmhZZ`, you get the following response:
+#### Interacting with runs
+
+<Tabs groupId="interact" queryString="interact">
+
+<TabItem value="info" label="Run info">
+
+By making a GET request to `https://api.getport.io/v1/actions/runs/{run_id}` where `run_id=r_QOz6WoOB1Q2lmhZZ`, you get the following response:
 
 ```json showLineNumbers
 {
@@ -226,6 +235,23 @@ In the action run object, pay attention to the following:
 - `endedAt` - shows `null` because the action run status is `IN_PROGRESS`, but it will automatically update when the status of the action run is changed to either `SUCCESS` or `FAILURE`.
 
 :::
+
+</TabItem>
+
+<TabItem value="logs" label="Run logs">
+
+By making a GET request to `https://api.getport.io/v1/actions/runs/{run_id}/logs` where `run_id=r_QOz6WoOB1Q2lmhZZ`, you get the following response:
+
+```json showLineNumbers
+{
+  "ok": true,
+  "runLogs": []
+}
+```
+
+</TabItem>
+
+</Tabs>
 
 ### `DAY-2` action trigger
 
@@ -320,6 +346,12 @@ The following action invocation body is sent (existing Entity is highlighted):
 
 Note that the `runId` of the invoked Self-Service Action is: `r_z0nJYJv0wCm2ASTR`.
 
+#### Interacting with runs
+
+<Tabs groupId="interact" queryString="interact">
+
+<TabItem value="info" label="Run info">
+
 By making a `GET` request to `https://api.getport.io/v1/actions/runs/{run_id}` where `run_id=r_z0nJYJv0wCm2ASTR`, you receive the following response:
 
 ```json showLineNumbers
@@ -352,15 +384,37 @@ By making a `GET` request to `https://api.getport.io/v1/actions/runs/{run_id}` w
 }
 ```
 
+</TabItem>
+
+<TabItem value="logs" label="Run Logs">
+
+By making a `GET` request to `https://api.getport.io/v1/actions/runs/{run_id}/logs` where `run_id=r_z0nJYJv0wCm2ASTR`, you receive the following response:
+
+```json showLineNumbers
+{
+  "ok": true,
+  "runLogs": []
+}
+```
+
+</TabItem>
+
+</Tabs>
+
 ## Updating an action run
 
-Now let's take an action run and update it. All updates can be performed by sending a `PATCH` request to the `https://api.getport.io/v1/actions/runs/{run_id}` endpoint.
+Now let's take an action run and update it. The following updates can be performed:
 
-Our different update options are:
+<Tabs groupId="interact" queryString="interact">
+
+<TabItem value="info" label="Run info">
+
+By sending a `PATCH` request to the `https://api.getport.io/v1/actions/runs/{run_id}` endpoint, you can update the status, or list of links of a run.
+
+The different update options are:
 
 - Set the action run status via the `status` key - `SUCCESS`, `FAILURE`;
-- Add a link to an external log of the job runner via the `link` key - AWS Cloudwatch logs, Github Workflow job, Jenkins job, etc.;
-- Add a message JSON object which contains additional metadata, runtime or debug information via the `message` key.
+- Add links to an external log of the job runners via the `link` key - AWS Cloudwatch logs, Github Workflow job, Jenkins job, etc.
 
 :::tip
 You don't have to provide all of the different updates in one request, you can make a `PATCH` request to the endpoint as many times as you need until the action run has finished.
@@ -373,7 +427,10 @@ Let's update our action run with the following `PATCH` request body:
 ```json showLineNumbers
 {
   "status": "SUCCESS",
-  "link": "https://github.com/actions/toolkit/actions/runs/3617893813",
+  "link": [
+    "https://github.com/actions/toolkit/actions/runs/3617893813",
+    "https://github.com/actions/toolkit/actions/runs/4165617487"
+  ],
   "message": {
     "run_status": "Run completed successfully!"
   }
@@ -397,7 +454,10 @@ The API returns the following response:
     "endedAt": "2022-12-07T14:51:52.796Z",
     "source": "UI",
     // highlight-start
-    "link": "https://github.com/actions/toolkit/actions/runs/3617893813",
+    "link": [
+      "https://github.com/actions/toolkit/actions/runs/3617893813",
+      "https://github.com/actions/toolkit/actions/runs/4165617487"
+    ],
     "message": {
       "run_status": "Run completed successfully!"
     },
@@ -421,10 +481,76 @@ Note how our action run has updated:
 
 - `status` - has been updated to `SUCCESS`;
 - `endedAt` - now correctly shows the time that the action run was updated;
-- `link` - now includes the link we provided, and that link will also appear in the page matching the action run in Port;
+- `link` - now includes the links we provided, and those links will also appear in the page matching the action run in Port;
 - `message` - now includes the additional info we provided and it will also appear in the page matching the action run in Port.
 
 :::
+
+</TabItem>
+
+<TabItem value="logs" label="Run logs">
+
+By sending a `POST` request to the `https://api.getport.io/v1/actions/runs/{run_id}/logs` endpoint, you can add a new log message to the run log.
+
+The different update options are:
+
+- Set the action run status via the `terminationStatus` key - `SUCCESS`, `FAILURE`;
+- Add an additional log entry to the run's log.
+
+Let's update our action run log with the following `POST` request body:
+
+```json showLineNumbers
+{
+  "message": "my new log message"
+}
+```
+
+The API returns the following response:
+
+```json showLineNumbers
+{
+  "ok": true,
+  "runLog": {
+    "id": "log_Wo7cIcCftqhj4lNy",
+    "runId": "r_z0nJYJv0wCm2ASTR",
+    "message": "my new log message",
+    "createdAt": "2023-03-12T15:27:25.394Z",
+    "createdBy": "KZ5zDPudPshQMShUb4cLopBEE1fNSJGE"
+  }
+}
+```
+
+And if we send a `GET` request to `https://api.getport.io/v1/actions/runs/{run_id}/logs` endpoint, the entire action run log will be returned:
+
+```json showLineNumbers
+{
+  "ok": true,
+  "runLogs": [
+    {
+      "id": "log_Wo7cIcCftqhj4lNy",
+      "runId": "r_z0nJYJv0wCm2ASTR",
+      "message": "my new log message",
+      "createdAt": "2023-03-12T15:27:25.394Z",
+      "createdBy": "KZ5zDPudPshQMShUb4cLopBEE1fNSJGE"
+    }
+  ]
+}
+```
+
+If we want to add a final log entry and also mark the action run as successful, we can use the following request body:
+
+```json showLineNumbers
+{
+  "message": "my new log message with final status",
+  "terminationStatus": "SUCCESS"
+}
+```
+
+A log message with the `terminationStatus` key can only be sent once for an action run. After the `terminationStatus` is sent, the run status is marked accordingly and the run can no longer be modified.
+
+</TabItem>
+
+</Tabs>
 
 ## Tying Entities to an action run
 
@@ -492,19 +618,26 @@ def create_entity(access_token, run_id, properties):
     pprint(entity_resp.json()['entity'])
     return entity_resp.json()['entity']['identifier']
 
+def add_action_run_log_entry(access_token, run_id, message):
+    headers = {
+        'Authorization': f'Bearer {access_token}'
+    }
 
-def mark_action_run_as_successful(access_token, run_id, entity_id, additional_message):
+    body = {
+        "message": message
+    }
+
+    action_update_resp = requests.post(f'{API_URL}/actions/runs/{run_id}/logs', headers=headers, json=body)
+
+
+def mark_action_run_as_successful(access_token, run_id):
     headers = {
         'Authorization': f'Bearer {access_token}'
     }
 
     body = {
         "status": "SUCCESS",
-        "link": "https://github.com/actions/toolkit/actions/runs/3617893813",
-        "message": {
-            "run_status": additional_message,
-            "new_entity": entity_id
-        }
+        "link": ["https://github.com/actions/toolkit/actions/runs/3617893813"]
     }
 
     action_update_resp = requests.patch(f'{API_URL}/actions/runs/{run_id}', headers=headers, json=body)
@@ -517,7 +650,9 @@ def main():
     run = get_run_id(access_token, RUN_ID)
     props = run['properties']
     entity_id = create_entity(access_token, RUN_ID, props)
-    mark_action_run_as_successful(access_token, RUN_ID, entity_id, 'New Entity created!')
+    add_action_run_log_entry(access_token, RUN_ID, f'new entity: {entity_id}')
+    add_action_run_log_entry(access_token, RUN_ID, f'New entity created!')
+    mark_action_run_as_successful(access_token, RUN_ID)
 
 
 if __name__ == '__main__':

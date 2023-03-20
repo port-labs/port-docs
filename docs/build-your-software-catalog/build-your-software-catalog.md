@@ -24,15 +24,15 @@ By defining the structure of your data model in this way, you can ensure that th
 
 See how to --> [Define your data model](./define-your-data-model/define-your-data-model.md)
 
-## 🔄 Step 2 - Sync data to catalog
+## 🔄 Step 2 - Ingest data to catalog
 
-The next step in setting Port's Software Catalog is to sync data into the catalog. This involves using Port's integrations and APIs to import data into the catalog, so that blueprints will be populated with the relevant data.
+The next step in setting Port's Software Catalog is to ingest data into the catalog. This involves using Port's integrations and APIs to import data into the catalog, so that blueprints will be populated with the relevant data.
 
 Port's Software Catalog provides integrations to surface data that exists in various tools and repositories, creating a central metadata store across your devOps architecture, making it easy to centralize all relevant information in one place.
 
-By syncing data into the software catalog, you can ensure that you have a comprehensive and up-to-date view of your software, infrastructure, cloud resources, CI/CD and more.
+By ingesting data into the software catalog, you can ensure that you have a comprehensive and up-to-date view of your software, infrastructure, cloud resources, CI/CD and more.
 
-See how to --> [Sync data to the software catalog](./sync-data-to-catalog/sync-data-to-catalog.md)
+See how to --> [Ingest data to the software catalog](./sync-data-to-catalog/sync-data-to-catalog.md)
 
 <center>
 

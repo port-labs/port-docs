@@ -57,6 +57,10 @@ The `mirrorProperties` key is a top-level key in the JSON of an entity (similar 
 
 <ApiRef />
 
+:::info
+The `path` key receives a path of chained relations, which lead up to a blueprint property or [meta-property](#meta-property-as-a-mirror-property)
+:::
+
 ## Terraform definition
 
 <Tabs groupId="tf-definition" defaultValue="basic" values={[
@@ -83,9 +87,9 @@ resource "port-labs_blueprint" "myBlueprint" {
 
 ## `Meta-property` as a mirror property
 
-This is a Mirror Property created from one of Port's [meta-properties](../meta-properties.md) on the `target` blueprint.
+This is a mirror property created from one of Port's [meta-properties](../meta-properties.md) on the `target` blueprint.
 
-In the following example, we create a Mirror Property called `microserviceName` which is mapped to the `title` meta-property in the `target` blueprint (in this example the name of the Relation is `deployment-to-microservice`). Note how the `title` field is referenced using `$title` because it is a meta-property:
+In the following example, we create a mirror property called `microserviceName` which is mapped to the `title` meta-property in the `target` blueprint (in this example the name of the relation is `deployment-to-microservice`). Note how the `title` field is referenced using `$title` because it is a meta-property:
 
 ```json showLineNumbers
 "microserviceName": {

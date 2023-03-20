@@ -153,6 +153,39 @@ For example, the following JSON will allow **every user**, regardless of their r
 }
 ```
 
+### Team inheritance
+
+Team inheritance allows you to utilize relations to automatically assign and manage entity ownership.
+
+By using team inheritance, you can configure entities to automatically inherit their `team` from entities they are related to.
+
+Team inheritance can be configured by adding the `teamInheritance` key to the [blueprint structure](../define-your-data-model/relate-blueprints/relate-blueprints.md#structure-table). The `teamInheritance` object has a `path` key that represents the relation path to the blueprint whose entity's teams we want to inherit.
+
+:::info Path
+
+- The `path` key works similarly to the `path` key in [mirror properties](../define-your-data-model/setup-blueprint/properties/mirror-property/mirror-property.md#api-definition);
+- The `path` does not need to end with the `$team` meta-property since it is inferred;
+- Team inheritance can only be configured using a path of [`single`](../define-your-data-model/relate-blueprints/relate-blueprints.md#single-relation-structure) type relations.
+
+:::
+
+For example, the following JSON (added to the **blueprint definition**) will configure the `myBlueprint` blueprint's entities to inherit their teams from the `myExtraRelatedBlueprint` blueprint's entities:
+
+```json showLineNumbers
+{
+  "identifier": "myBlueprint",
+  // ...blueprint properties
+  "teamInheritance": {
+    "path": "myRelatedBlueprint.myExtraRelatedBlueprint"
+  }
+}
+```
+
+:::note
+In the example above, the relation chain is:
+myBlueprint -> myRelatedBlueprint -> myExtraRelatedBlueprint
+:::
+
 ### Global VS granular permissions
 
 When granting write permissions for entities of a blueprint, you have 2 levels of control:
@@ -169,7 +202,7 @@ To apply granular permissions for a blueprint, use the `updateProperties` and `u
 
 <TabItem value="let-user-property">
 
-The following change will allow **Member** users to update _only_ the `slackChannelUrl` property of `Env` Entities:
+The following change will allow **Member** users to update _only_ the `slackChannelUrl` property of `Env` entities:
 
 ```json showLineNumbers
 {

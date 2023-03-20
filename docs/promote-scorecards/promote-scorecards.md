@@ -4,7 +4,7 @@ title: Promote Scorecards
 sidebar_label: 📊 Promote Scorecards
 ---
 
-import CombinatorIntro from "../build-your-software-catalog/search-and-query/\_combinator_intro.md"
+import CombinatorIntro from "../search-and-query/\_combinator_intro.md"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
@@ -33,51 +33,27 @@ In this [live demo](https://demo.getport.io/serviceEntity?identifier=load-genera
 
 A single scorecard defines a category to group different checks, validations and evaluations. Here is the structure of a single scorecard:
 
-| Field        | Type     | Description                                                                                                                                         |
-| ------------ | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `title`      | `String` | Scorecard name that will be shown in the UI                                                                                                         |
-| `identifier` | `String` | The unique identifier of the `Scorecard`. The identifier is used for API calls, programmatic access and distinguishing between different scorecards |
-| `filter`     | `Object` | Optional set of conditions to filter entities that will be evaluated by the scorecard                                                               |
-| `rules`      | `Object` | The rules that we create for each scorecard to determine it's level                                                                                 |
+| Field                        | Type     | Description                                                                                                                                         |
+| ---------------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `title`                      | `String` | Scorecard name that will be shown in the UI                                                                                                         |
+| `identifier`                 | `String` | The unique identifier of the `Scorecard`. The identifier is used for API calls, programmatic access and distinguishing between different scorecards |
+| [`filter`](#filter-elements) | `Object` | Optional set of [conditions](#conditions) to filter entities that will be evaluated by the scorecard                                                |
+| [`rules`](#rule-elements)    | `Object` | The rules that we create for each scorecard to determine it's level                                                                                 |
 
 A scorecard contains and groups multiple rules that are relevant to its specific category, for example a scorecard for _service maturity_ can contain 3 rules, while the _production readiness_ scorecard can contain 2 completely different rules.
 
-## Filter and rule elements
+## Rule elements
 
-Filters and rules enable you to generate checks inside a scorecard only for the entities and properties that you really care about.
-
-Both filters and rules follow the same querying structure, but since rules are actual checks to evaluate the entity against, they contain a few more fields to make them distinguishable and human-readable.
-
-<Tabs groupId="filters-and-rules" defaultValue="rules" values={[
-{label: "Rules", value: "rules"},
-{label: "Filters", value: "filter"}
-]}>
-
-<TabItem value="rules">
+Rules enable you to generate checks inside a scorecard only for entities and properties.
 
 A scorecard rule is a single evaluation consisting of multiple checks, each rule has a level which directly translates to how important it is for the check to pass (the more basic the check, the lower its level):
 
-| Field        | Type     | Description                                                                                                                                      |
-| ------------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `title`      | `String` | `Rule` name that will be shown in the UI                                                                                                         |
-| `identifier` | `String` | The unique identifier of the `Rule`                                                                                                              |
-| `level`      | `String` | one of `Gold` `Silver` `Bronze`                                                                                                                  |
-| `query`      | `Object` | The query is built from an array of [`conditions`](#condition-structure-table) and a [`combinator`](#combinator) (or / and) that will define the |
-
-</TabItem>
-
-<TabItem value="filter">
-
-A scorecard filter is used to make sure only relevant entities are evaluated, only entities that the filter evaluates to `true` on will have the specified rule checked:
-
-| Field                                      | Description                                               |
-| ------------------------------------------ | --------------------------------------------------------- |
-| [`combinator`](#combinator)                | Defines the logical operation to apply to the query rules |
-| [`conditions`](#condition-structure-table) | An array of boolean conditions to filter entities with    |
-
-</TabItem>
-
-</Tabs>
+| Field        | Type     | Description                                                                                                                       |
+| ------------ | -------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `title`      | `String` | `Rule` name that will be shown in the UI                                                                                          |
+| `identifier` | `String` | The unique identifier of the `Rule`                                                                                               |
+| `level`      | `String` | one of `Gold` `Silver` `Bronze`                                                                                                   |
+| `query`      | `Object` | The query is built from an array of [`conditions`](#conditions) and a [`combinator`](#combinator) (or / and) that will define the |
 
 ### Combinator
 
@@ -171,7 +147,7 @@ The available `Scorecard` levels are:
 
 `Basic` -> `Bronze` -> `Silver` -> `Gold`
 
-An entity **always** starts at the `**Basic**` level.
+An entity **always** starts at the **`Basic`** level.
 
 A **rule's** lowest possible level is `Bronze`.
 
@@ -187,6 +163,19 @@ Once an entity passes all of the rules for a certain level, its level changes ac
 :::note multiple rules scenario
 In the example listed above, let's assume the entity passes just one of the two `Bronze` rules, but it passes all of the `Silver` rules. The `level` of the scorecard will still be `Basic`, because not all `Bronze` rules have been satisfied.
 :::
+
+## Filter elements
+
+Filters enable you to apply scorecard checks only for the entities and properties that you really care about.
+
+Filters follow the same querying structure as [rules](#rule-elements).
+
+A scorecard filter is used to make sure only relevant entities are evaluated, only entities that the filter evaluates to `true` on will have the specified rule checked:
+
+| Field                       | Description                                               |
+| --------------------------- | --------------------------------------------------------- |
+| [`combinator`](#combinator) | Defines the logical operation to apply to the query rules |
+| [`conditions`](#conditions) | An array of boolean conditions to filter entities with    |
 
 ## Scorecard example
 

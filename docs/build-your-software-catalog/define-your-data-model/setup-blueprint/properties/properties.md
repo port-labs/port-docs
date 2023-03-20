@@ -25,11 +25,15 @@ The different components that make up a basic property definition are listed in 
 
 | Field         | Description                                                                                                                                                                        |
 | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `title`       | Property name                                                                                                                                                                      |
+| `title`       | Property title                                                                                                                                                                     |
 | `type`        | **Mandatory field.** The data type of the property.                                                                                                                                |
 | `icon`        | Icon for the property <br /><br />See the [full icon list](../setup-blueprint.md#full-icon-list).                                                                                  |
 | `description` | Description of the property.<br /> This value is visible to users when hovering on the info icon in the UI. It provides detailed information about the use of a specific property. |
 | `default`     | Default value for this property in case an entity is created without explicitly providing a value.                                                                                 |
+
+:::tip
+The name of the property is the key of the property object. For example, in the code block above, the name of the property is `myProp`
+:::
 
 ## Supported properties
 

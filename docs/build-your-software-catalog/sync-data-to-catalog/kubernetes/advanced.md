@@ -1,9 +1,10 @@
 ---
-sidebar_position: 3
+sidebar_position: 4
 ---
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import DeleteDependents from '../../../generalTemplates/\_delete_dependents_kubernetes_explanation_template.md'
 
 # Advanced
 
@@ -52,7 +53,7 @@ The `stateKey` parameter specifies a unique state key per K8s exporter installat
 
 <TabItem value="deleteDependents">
 
-The `deleteDependents` parameter is used to enable deletion of dependent Port entities. This is useful when you have two blueprints with a required relation, and the target entity in the relation should be deleted. In this scenario, the delete operation will fail if this flag is set to `false` if the flag is set to `true`, the source entity will be deleted as well.
+<DeleteDependents/>
 
 - Default: `false` (disabled)
 - Use case: Deletion of dependent Port entities. Must be enabled, if you want to delete a target entity (and its source entities) in a required relation.
@@ -72,14 +73,7 @@ The following security parameters can be modified to give the K8s exporter more 
 
 ## Overriding configurations
 
-When installing the K8s exporter, you can override values in the `helm install` command by using one of the following methods:
-
-<Tabs groupId="override" defaultValue="setFlag" values={[
-{label: "--set flag", value: "setFlag"},
-{label: "config.yml file", value: "setFile"}
-]} >
-
-<TabItem value="setFlag">
+When installing the K8s exporter, it is possible to override default values in the `helm upgrade` command:
 
 By using the `--set` flag, you can override specific exporter configuration parameters during exporter installation/upgrade:
 
@@ -99,31 +93,7 @@ For example, to set the parameters from the [security configuration](#security-c
 --set clusterRole.resources="{rollouts,pods,replicasets}"
 ```
 
-</TabItem>
-
-<TabItem value="setFile">
-
-In addition to the basic resource mapping specified in the `config.yml` file, it is also possible to specify additional advanced configuration and security parameters.
-
-For example, take a look at this extended `config.yml` file:
-
-```yaml showLineNumbers
-resources:
-  - kind: apps/v1/replicasets
-  ...
-
-# highlight-start
-deleteDependents: false
-resyncInterval: 5
-# additional advanced parameters
-# highlight-end
-```
-
-</TabItem>
-
-</Tabs>
-
 ## All configuration parameters
 
 - A complete list of configuration parameters available when using the helm chart is available [here](https://github.com/port-labs/helm-charts/tree/main/charts/port-k8s-exporter#chart);
-- An example skeleton `config.yml` file is available [here](https://github.com/port-labs/helm-charts/blob/main/charts/port-k8s-exporter/values.yaml)
+- An example skeleton `config.yml` file is available [here](https://github.com/port-labs/helm-charts/blob/main/charts/port-k8s-exporter/values.yaml).

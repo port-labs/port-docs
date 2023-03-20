@@ -105,7 +105,7 @@ Entity JSON example with `team` field:
 {
   "identifier": "unique-ID",
   "title": "Entity Title",
-  "team": "",
+  "team": [],
   "blueprint": "testBlueprint",
   "properties": {
     "prop1": "value"
@@ -124,6 +124,7 @@ Team dropdown selector in the entity create/edit page:
 
 - We support the manual creation of teams on Port, as well as integrating with identity providers, such as [Okta](../sso-providers/okta.md) and [AzureAD](../sso-providers/azure-ad.md), to import existing teams.
 - When users log in to Port, their groups will be pulled automatically from their identity provider, and the allowed team values will be updated accordingly.
+- It is also possible to configure [team inheritance](../../build-your-software-catalog/set-catalog-rbac/examples.md#team-inheritance) and utilize relations to auto-populate the `team` key of entities.
 
 :::info
 Okta and AzureAD integrations are only available after configuring SSO from the relevant identity provider, refer to the [Single Sign-On (SSO)](../sso-providers/) section for more details

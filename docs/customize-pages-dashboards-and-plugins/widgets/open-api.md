@@ -2,43 +2,128 @@
 sidebar_position: 3
 ---
 
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+
 # OpenAPI
 
 With Port, you can import and display [OpenAPI](https://www.openapis.org/) specification files as [Swagger UI](https://swagger.io/) tabs.
 
 By using a special Open API Blueprint property, Port will display the Swagger UI matching the spec file provided in the [specific entity page](../page/entity-page.md). In addition, it will also provide advanced functionality such as performing HTTP calls to the spec target directly from Port.
 
-## OpenAPI property definition in Blueprint schema using URL
+## Definition
+
+<Tabs groupId="definition" defaultValue="url" values={[
+{label: "URL", value: "url"},
+{label: "Object", value: "object"}
+]}>
+
+<TabItem value="url">
 
 When using the URL format, Port will query the provided URL for the OpenAPI spec and expects a JSON OpenAPI spec
-
-```json showLineNumbers
-{
-  "title": "Open API",
-  "type": "string",
-  "format": "url",
-  "spec": "open-api",
-  "description": "Open-API Prop"
-}
-```
 
 :::note
 
 When using URL for the `open-api` display please make sure that your server allows cross-origin (CORS) requests from `app.getport.io`
 :::
 
-## OpenAPI property definition in Blueprint schema using object
+<Tabs groupId="lang" defaultValue="api" values={[
+{label: "API", value: "api"},
+{label: "Terraform", value: "terraform"}
+]}>
 
-When using the object type, you will have to provide the full JSON OpenAPI spec as an object to the entity
+<TabItem value="api">
 
 ```json showLineNumbers
 {
-  "title": "Open API",
-  "type": "object",
-  "spec": "open-api",
-  "description": "Open-API Prop"
+  "myOpenApi": {
+    "title": "My Open API",
+    // highlight-start
+    "type": "string",
+    "format": "url",
+    "spec": "open-api",
+    // highlight-end
+    "description": "Open-API Prop"
+  }
 }
 ```
+
+</TabItem>
+
+<TabItem value="terraform">
+
+```hcl showLineNumbers
+resource "port-labs_blueprint" "myBlueprint" {
+  # ...blueprint properties
+  # highlight-start
+  properties {
+    identifier = "myOpenApi"
+    title      = "My Open Api"
+    required   = false
+    type       = "string"
+    format     = "url"
+    spec       = "open-api"
+  }
+  # highlight-end
+}
+```
+
+</TabItem>
+
+</Tabs>
+
+</TabItem>
+
+<TabItem value="object">
+
+When using the object type, you will have to provide the full JSON OpenAPI spec as an object to the entity
+
+<Tabs groupId="lang" defaultValue="api" values={[
+{label: "API", value: "api"},
+{label: "Terraform", value: "terraform"}
+]}>
+
+<TabItem value="api">
+
+```json showLineNumbers
+{
+  "myOpenApi": {
+    "title": "My Open API",
+    // highlight-start
+    "type": "object",
+    "spec": "open-api",
+    // highlight-end
+    "description": "Open-API Prop"
+  }
+}
+```
+
+</TabItem>
+
+<TabItem value="terraform">
+
+```hcl showLineNumbers
+resource "port-labs_blueprint" "myBlueprint" {
+  # ...blueprint properties
+  # highlight-start
+  properties {
+    identifier = "myOpenApi"
+    title      = "My Open Api"
+    required   = false
+    type       = "object"
+    spec       = "open-api"
+  }
+  # highlight-end
+}
+```
+
+</TabItem>
+
+</Tabs>
+
+</TabItem>
+
+</Tabs>
 
 ## Example
 
