@@ -28,7 +28,7 @@ Our AWS exporter allows you to easily enrich your software catalog with data fro
 
 ## How it works
 
-Port's AWS exporter can retrieve all the resources supported by the [AWS Cloud Control API](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/what-is-cloudcontrolapi.html).
+Port's AWS exporter can retrieve all the resources supported by the [AWS Cloud Control API](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/supported-resources.html).
 
 The open source AWS exporter allows you to perform extract, transform, load (ETL) on data from AWS into the desired software catalog data model.
 
