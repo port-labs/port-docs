@@ -267,7 +267,7 @@ python -m pip install requests
 :::note
 For the next part, you will need your Port `CLIENT_ID` and `CLIENT_SECRET`.
 
-To find your Port API credentials go to [Port](https://app.getport.io), click on `Help` at the bottom left corner, and select `Credentials` then you will be able to view and copy your `CLIENT_ID` and `CLIENT_SECRET`:
+To find your Port API credentials go to [Port](https://app.getport.io), click on `Help` at the bottom left corner, select `Credentials` and then you will be able to view and copy your `CLIENT_ID` and `CLIENT_SECRET`:
 
 <center>
 
