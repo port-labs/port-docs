@@ -47,7 +47,7 @@ This response body indicates that those roles, users and teams have permissions 
 In addition, every role, user and team which does not appear in this request body does not have permission to view the page.
 
 :::note
-Only page permissions of software catalog pages can be requested. For example, the permissions for the DevPortal Setup page and the audit log page cannot be changed.
+Only page permissions of software catalog pages can be requested. For example, the permissions for the DevPortal Builder page and the audit log page cannot be changed.
 :::
 
 ## Update page permissions

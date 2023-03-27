@@ -26,7 +26,7 @@ Relations can be used to represent the logical connections between assets in you
 - The **Kubernetes clusters** that exist in a **cloud account**;
 - etc.
 
-In this [live demo](https://demo.getport.io/dev-portal) example, we can see the DevPortal setup page with all of the blueprints and their relations. 🎬
+In this [live demo](https://demo.getport.io/dev-portal) example, we can see the DevPortal Builder page with all of the blueprints and their relations. 🎬
 
 ## Relation schema structure
 
@@ -224,7 +224,7 @@ Relations are part of the structure of a [blueprint](../setup-blueprint/setup-bl
 
 <TabItem value="ui">
 
-1. Go to the [DevPortal Setup page](https://app.getport.io/dev-portal);
+1. Go to the [DevPortal Builder page](https://app.getport.io/dev-portal);
 2. Click the pencil icon on the blueprint that will be the `source` blueprint of the relation:
 
 ![Blueprints page with Create Relation Marked](../../../../static/img/build-your-software-catalog/define-your-data-model/relate-blueprints/editBlueprintMarked.png)

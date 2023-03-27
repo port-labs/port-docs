@@ -129,7 +129,7 @@ For example, let’s create 2 Blueprints and connect them to each other:
 
 ### Creating the blueprint self-service action
 
-In order to create a Self-Service Action, go to the DevPortal Setup page, expand the Microservice Blueprint and click on the `Create action` button as shown below:
+In order to create a Self-Service Action, go to the DevPortal Builder page, expand the Microservice Blueprint and click on the `Create action` button as shown below:
 
 ![Create action button on blueprint marked](../../../static/img/self-service-actions/setting-self-service-actions-in-port/createActionOnBlueprintButtonMarked.png)
 
