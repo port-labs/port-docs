@@ -165,7 +165,7 @@ To ingest GitHub objects using the [`port-app-config.yml`](#port-app-configyml-f
 
 To manage your GitHub integration configuration using Port:
 
-1. Go to the DevPortal Setup page;
+1. Go to the DevPortal Builder page;
 2. Select a blueprint you want to ingest using GitHub;
 3. Choose the **Ingest Data** option from the menu;
 4. Select GitHub under the Git providers category;

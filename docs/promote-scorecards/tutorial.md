@@ -23,7 +23,7 @@ A Scorecard is created upon blueprint. So if you haven't created the `microservi
 
 ### From the UI
 
-To create a scorecard from the UI, go to the DevPortal Setup page and click the 3 dots icon on the `microservice` Blueprint.
+To create a scorecard from the UI, go to the DevPortal Builder page and click the 3 dots icon on the `microservice` Blueprint.
 
 An editor window will open with the current JSON array of the defined Scorecards. Since there is no Scorecard configured on the Blueprint at the moment, the `scorecard` arrays will be empty. Paste the following content inside the editor to create the scorecards of this example:
 
@@ -233,7 +233,7 @@ And just as we have shown earlier in the tutorial, you can update a Scorecard fr
 
 ### From the UI
 
-In order to update a Scorecard from the UI, go to the DevPortal Setup page, click on the 3 dots icon and select Scorecards.
+In order to update a Scorecard from the UI, go to the DevPortal Builder page, click on the 3 dots icon and select Scorecards.
 
 An editor window will open with the current scorecards of the Blueprint. In order to update the Scorecard, change the wanted scorecard within the scorecards array, click on `save` at the bottom right corner of the editor and view the updated Scorecards.
 

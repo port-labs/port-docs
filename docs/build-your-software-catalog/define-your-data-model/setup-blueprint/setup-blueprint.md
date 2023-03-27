@@ -36,7 +36,7 @@ Blueprints can be used to represent any asset in your software catalog, for exam
 - VMs;
 - etc.
 
-In this [live demo](https://demo.getport.io/dev-portal) example, we can see the DevPortal setup page with all of the blueprints. 🎬
+In this [live demo](https://demo.getport.io/dev-portal) example, we can see the DevPortal Builder page with all of the blueprints. 🎬
 
 ## Blueprint structure
 
@@ -140,7 +140,7 @@ resource "port-labs_blueprint" "myBlueprint" {
 
 <TabItem value="ui">
 
-1. Go to the [DevPortal Setup page](https://app.getport.io/dev-portal);
+1. Go to the [DevPortal Builder page](https://app.getport.io/dev-portal);
 2. Click on **Add blueprint** at the top right hand corner;
 3. Configure your blueprint using the from:
 
