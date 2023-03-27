@@ -42,3 +42,6 @@ Remember to replace the `WEBHOOK_SECRET` with the real secret you specify when c
    3. Secret - enter the secret value you specified when creating the webhook;
    4. Under "Which events would you like to trigger this webhook?" - select "Let me select individual events" and select **Pull requests**;
    5. Be sure to keep the "Active" checkbox checked.
+6. Click **Add webhook**
+
+Done! if you the exporter will begin creating and updating objects from your Kubernetes cluster as Port entities shortly.
