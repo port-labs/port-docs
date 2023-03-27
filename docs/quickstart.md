@@ -5,6 +5,11 @@ title: Quickstart
 sidebar_label: ⏱️ Quickstart
 ---
 
+import Image from "@theme/IdealImage";
+import CompleteVision from "../static/img/quickstart/platform-vision.png";
+import EnvironmentRunningServicesPage from "../static/img/quickstart/EndResultEnvironmentPage.png";
+import ServiceRunningServicesPage from "../static/img/quickstart/EndResultServicePage.png";
+
 # ⏱️ Quickstart
 
 ## What is Port?
@@ -18,7 +23,11 @@ Port then allows engineers to perform actions on these assets in a self-service 
 - Create a comprehensive **Software Catalog** by mapping all your software and infrastructure components in one place: microservices, monoliths, deployments, repos, databases, and more.
 - Let your developers provision, terminate and perform day 2 operations on any asset exposed (microservice or not) in your catalog, within the policies and guardrails you’ve set, ensuring unified standards and governance over the processes inside your organization.
 
-![Developer Platform complete vision](../static/img/quickstart/platform-vision.png)
+<center>
+
+<Image img={CompleteVision} style={{ width: 800 }}></Image>
+
+</center>
 
 Port's three core building blocks are _Blueprints_, _Entities_ and _Relations_. This tutorial will walk you through your first steps on the platform and get you started on your Developer Portal journey!🚢
 
@@ -35,11 +44,19 @@ This guide will give you a foundation to start building your software catalog in
 
 Your developers will be able to see all the services in a given environment and their status:
 
-![Developer Portal Environment View for running services](../static/img/quickstart/EndResultEnvironmentPage.png)
+<center>
+
+<Image img={EnvironmentRunningServicesPage} style={{ width: 800 }}></Image>
+
+</center>
 
 In addition, your developers will be able to see all the environments that a specific microservice is deployed at, and which version is deployed where:
 
-![Developer Portal Service View for environments](../static/img/quickstart/EndResultServicePage.png)
+<center>
+
+<Image img={ServiceRunningServicesPage} style={{ width: 800 }}></Image>
+
+</center>
 
 Let's get started! 🚢
 
@@ -115,7 +132,7 @@ In addition, the `on-call` field is marked as `required`, so that we always know
 
 #### From the UI
 
-Let's head to [Port](https://app.getport.io/dev-portal) and look at the DevPortal Setup page, at the top right corner let's click on **Add Blueprint** and configure our first Blueprint - **Service** as shown in the image below:
+Let's head to [Port](https://app.getport.io/dev-portal) and look at the DevPortal Builder page, at the top right corner let's click on **Add Blueprint** and configure our first Blueprint - **Service** as shown in the image below:
 
 ![Developer PortalCreate New Blueprint](../static/img/quickstart/newBlueprintButton.png)
 
@@ -254,7 +271,7 @@ In order to create the service Blueprint, use the following JSON body:
 
 </details>
 
-Click on the `save` button, and [you will see](#the-results) your new Blueprint in the DevPortal Setup page.
+Click on the `save` button, and [you will see](#the-results) your new Blueprint in the DevPortal Builder page.
 
 #### From the API
 
@@ -1089,7 +1106,7 @@ print(json.dumps(response.json(), indent=2))
 
 ### The results
 
-After you're done, your DevPortal Setup page will look like this:
+After you're done, your DevPortal Builder page will look like this:
 
 ![Developer Portal Blueprints Page with service, environment and running service](../static/img/quickstart/blueprintsGraphWithRunningServiceEnvironmentServiceRelation.png)
 

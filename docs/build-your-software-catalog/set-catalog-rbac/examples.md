@@ -18,7 +18,7 @@ The following configurations, among others, are available when using catalog per
 
 ## Setting blueprint permissions
 
-To set permissions for a blueprint, click on the permissions button of the desired blueprint in the DevPortal Setup page. This will open a modal that contains the permissions JSON and allows you to control every operation that can be performed on the blueprint or its entities.
+To set permissions for a blueprint, click on the permissions button of the desired blueprint in the DevPortal Builder page. This will open a modal that contains the permissions JSON and allows you to control every operation that can be performed on the blueprint or its entities.
 
 ### Role examples
 

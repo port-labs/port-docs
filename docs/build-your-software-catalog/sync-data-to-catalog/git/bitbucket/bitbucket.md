@@ -163,7 +163,7 @@ To ingest Bitbucket objects using the [`port-app-config.yml`](#port-app-configym
 
 To manage your Bitbucket integration configuration using Port:
 
-1. Go to the DevPortal Setup page;
+1. Go to the DevPortal Builder page;
 2. Select a blueprint you want to ingest using Bitbucket;
 3. Choose the **Ingest Data** option from the menu;
 4. Select Bitbucket under the Git providers category;
