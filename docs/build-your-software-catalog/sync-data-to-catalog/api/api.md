@@ -1040,7 +1040,7 @@ curl --location --request DELETE "https://api.getport.io/v1/blueprints/${bluepri
 :::tip
 It is also possible to delete all entities using Port's web UI:
 
-1. Go to the [DevPortal Setup page](https://app.getport.io/dev-portal);
+1. Go to the [DevPortal Builder page](https://app.getport.io/dev-portal);
 2. Click on the "Delete All `BLUEPRINT_NAME`" button on the desired blueprint;
 3. Follow the instructions.
 

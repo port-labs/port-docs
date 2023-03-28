@@ -72,8 +72,8 @@ workflows:
     jobs:
       # ... other jobs
       - report-to-port:
-        context:
-          - port
+          context:
+            - port
 ```
 
 ## Basic get example

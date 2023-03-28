@@ -52,15 +52,15 @@ Add the following job and workflow to your CircleCI pipeline:
 ```yaml showLineNumbers
   jobs:
   # ... other jobs
-  report-to-port:
-    docker:
-      - image: cimg/python:3.11
-    environment:
-      API_URL: https://api.getport.io
-    steps:
-      - checkout
-      - run: pip install -r port_requirements.txt
-      - run: python get_port_entity.py
+    report-to-port:
+      docker:
+        - image: cimg/python:3.11
+      environment:
+        API_URL: https://api.getport.io
+      steps:
+        - checkout
+        - run: pip install -r port_requirements.txt
+        - run: python get_port_entity.py
 
 workflows:
   # ... other workflows

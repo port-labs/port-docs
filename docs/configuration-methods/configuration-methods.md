@@ -81,7 +81,7 @@ To learn more about the Terraform resource definition of different API objects, 
 
 <TabItem value="ui">
 
-To configure your software catalog using the UI, go to the [DevPortal Setup](https://app.getport.io/dev-portal) page and follow the `add blueprint` UI, `ingest data` modal and other visual tools that help you configure Port.
+To configure your software catalog using the UI, go to the [DevPortal Builder](https://app.getport.io/dev-portal) page and follow the `add blueprint` UI, `ingest data` modal and other visual tools that help you configure Port.
 
 </TabItem>
 
