@@ -4,7 +4,7 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import Image from "@theme/IdealImage";
 import WebhookArchitecture from '../../../../static/img/build-your-software-catalog/sync-data-to-catalog/webhook/webhook-architecture.png';
-import ExampleGithubPRWebhook from './examples/resources/\_example_github_pr_configuration.mdx';
+import ExampleGithubPRWebhook from './examples/resources/github/\_example_github_pr_configuration.mdx';
 
 By using Port's generic webhook integration you can ingest data into the software catalog from any source or service that provides outgoing webhooks, even if Port doesn't provide a native integration for that source.
 

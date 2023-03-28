@@ -1,18 +1,18 @@
 ---
 sidebar_position: 2
-description: Ingest issues, errors and comments into your catalog
+description: Ingest issue events and comments into your catalog
 ---
 
 # Sentry
 
-In this example you are going to create a webhook integration between [Sentry](https://sentry.io) and Port, which will ingest issues, errors and comment entities.
+In this example you are going to create a webhook integration between [Sentry](https://sentry.io) and Port, which will ingest issue events and comment entities.
 
 ## Prerequisites
 
 Create the following blueprint definitions and webhook configuration:
 
 <details>
-<summary> Issue blueprint </summary>
+<summary> Issue event blueprint </summary>
 
 </details>
 
@@ -27,9 +27,15 @@ Create the following blueprint definitions and webhook configuration:
 </details>
 
 <details>
-<summary> Complete webhook configuration </summary>
+<summary> Complete Sentry webhook configuration </summary>
 
 Remember to update the `WEBHOOK_SECRET` with the real secret Sentry generates after you create the webhook integration.
+
+:::info
+Note that in this example, we create a mapping that includes 2 different possible entities, and we use the `filter` key to make sure that the correct mapping is used for each payload type.
+
+If you want to create 2 different webhook integrations, that is also possible, simply create 2 separate configurations, each one with a single mapping from the `mappings` array.
+:::
 
 </details>
 

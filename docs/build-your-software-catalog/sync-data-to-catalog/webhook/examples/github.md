@@ -3,8 +3,8 @@ sidebar_position: 1
 description: Keep pull requests up to date using webhooks
 ---
 
-import PullRequestBlueprint from './resources/\_example_github_pr_blueprint.mdx'
-import PullRequestWebhookConfig from './resources/\_example_github_pr_configuration.mdx'
+import PullRequestBlueprint from './resources/github/\_example_github_pr_blueprint.mdx'
+import PullRequestWebhookConfig from './resources/github/\_example_github_pr_configuration.mdx'
 
 # GitHub
 
