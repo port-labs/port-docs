@@ -30,7 +30,7 @@ Create the following blueprint definition and webhook configuration:
 
 ## Create the Jira webhook
 
-1. Log in as a user with the Administer Jira global permission;
+1. Log in to Jira as a user with the Administer Jira global permission;
 2. Click the gear icon at the top right corner;
 3. Choose **System**;
 4. At the bottom of the sidebar on the left, under **Avanced**, choose **WebHooks**;
@@ -44,4 +44,4 @@ Create the following blueprint definition and webhook configuration:
    6. Under `Issue` - mark created, updated and delete;
 7. Click **Create** at the bottom of the page.
 
-Done! any change you make to an issue (open, close, edit, etc.) will trigger a webhook event which Jira will send to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+Done! any change you make to an issue (open, close, edit, etc.) will trigger a webhook event that Jira will send to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
