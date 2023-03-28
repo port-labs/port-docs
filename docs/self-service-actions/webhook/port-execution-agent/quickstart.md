@@ -36,7 +36,7 @@ Remember to replace the placeholders for `YOUR_ORG_ID`, `YOUR_KAFKA_CONSUMER_GRO
 ```bash showLineNumbers
 helm install my-port-agent port-labs/port-agent \
     --create-namespace --namespace port-agent \
-    --set env.normal.PORT_ORG_ID=YOUR_ORG_ID
+    --set env.normal.PORT_ORG_ID=YOUR_ORG_ID \
     --set env.normal.KAFKA_CONSUMER_GROUP_ID=YOUR_KAFKA_CONSUMER_GROUP \
     --set env.secret.KAFKA_CONSUMER_USERNAME=YOUR_KAFKA_USERNAME \
     --set env.secret.KAFKA_CONSUMER_PASSWORD=YOUR_KAFKA_PASSWORD
