@@ -1,13 +1,16 @@
-# Azure Pipeline Self-Service Actions
+# Azure Pipelines Self-Service Actions
 
-Port can trigger Azure pipeline based on a customer incoming webhook provided and the organization name.
+import Image from "@theme/IdealImage";
+import AzurePipelinesArchitecture from "../../../static/img/self-service-actions/portAzurePipelineArchitecture.png";
 
-![Port Azure pipeline Architecture](../../../static/img/self-service-actions/portAzurePipelineArchitecture.png)
+Port can trigger [Azure pipelines](https://azure.microsoft.com/en-us/products/devops/pipelines) using [incoming webhooks triggers](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/resources?view=azure-devops&tabs=schema#define-a-webhooks-resource).
+
+<Image img={AzurePipelinesArchitecture}></Image>
 
 The steps shown in the image above are as follows:
 
-1. Port generates an invocation of Action.
-2. Port signs the payload using SHA-1 with the `clientSecret` value and puts it in the request header called `X-Port-Signature`.
+1. An action is invoked in Port;
+2. Port signs the action payload using SHA-1 with the [`clientSecret`](../../build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials) value and puts it in the `X-Port-Signature` request header.
 
    :::info WEBHOOK SECURITY
    Verifying the webhook request using the request headers provides the following benefits:
@@ -22,20 +25,10 @@ The steps shown in the image above are as follows:
 
 An example flow would be:
 
-4. A developer asks to run a azure pipeline by triggering a webhook;
-5. The action is sent a `POST` request to the azure webhook `URL`;
-6. An Azure webhook is triggered by this new action message;
-7. The Azure webhook runs the pipeline;
-
-:::info triggering workflow chains
-A workflow triggered using the `workflow_dispatch` trigger is self-contained. This means its actions and effects over the repository cannot trigger other automatic workflows.
-
-1. A developer invokes a "provision new microservice in monorepo" workflow;
-2. The workflow opens a new PR in the target repository based on a pre-defined template;
-3. The repository also has a workflow which is automatically triggered using the `on: pull_request: types: "opened"` trigger;
-4. In this instance, the automatic PR workflow will not be triggered.
-
-:::
+1. A developer asks to run an Azure pipeline;
+2. Port sends a `POST` request with the action payload to the Azure webhook `URL`;
+3. The Azure webhook is receives the new action request;
+4. The Azure webhook triggers the pipeline;
 
 ## Define Incoming Webhook in Azure
 
@@ -53,3 +46,40 @@ To define an incoming webhook in Azure, follow the steps below:
         connection: {Service connection name}
    ```
    The full docs of setting Azure incoming webhook can be found [here](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/resources?view=azure-devops&tabs=schema#define-a-webhooks-resource).
+
+## Define Azure pipeline actions in Port
+
+To define the Azure pipelines invocation method in Port, follow the steps below:
+
+1. Go to the blueprint you want to configure an action on;
+2. Add the standard action body, including your inputs, action trigger, etc;
+3. In the `invocationMethod` key, add the following information:
+
+```json showLineNumbers
+{
+  ...
+  "userInputs": {
+    ...
+  },
+  // highlight-start
+  "invocationMethod": {
+    "type": "AZURE_DEVOPS",
+    "org": "<AZURE_DEVOPS_ORG>",
+    "webhook": "<AZURE_DEVOPS_WEBHOOK_NAME>"
+  },
+  // highlight-end
+  "trigger": "CREATE"
+  ...
+}
+```
+
+:::tip
+
+- `<AZURE_DEVOPS_ORG>` - your Azure DevOps organization name, can be found in your Azure DevOps URL: `https://dev.azure.com/{AZURE_DEVOPS_ORG}`;
+- `<AZURE_DEVOPS_WEBHOOK_NAME>` - the name you gave to the webhook resource in the Azure yaml pipeline file.
+
+:::
+
+## Examples
+
+Refer to the [examples](./examples/examples.md) page for practical self-service actions using Azure pipelines.

@@ -2,18 +2,25 @@
 sidebar_position: 1
 ---
 
-# Run a deployment for a service
+import FindCredentials from "../../../build-your-software-catalog/sync-data-to-catalog/api/\_template_docs/\_find_credentials_collapsed.mdx";
 
-In the following guide, you are going to build a self-service action in Port, that executes a Azure pipeline behind the scenes.
+# Examples
 
-The Azure pipeline in this example, will run a new deployment and report back a deployment entity to Port.
+## Run a deployment for a service
 
-## Prerequisites
+In the following guide, you are going to build a self-service action in Port that executes an Azure pipeline behind the scenes.
 
-- A Port API `CLIENT_ID` + `CLIENT_SECRET`.
-- The organization + the webhook name in Azure.
+### Prerequisites
 
-## Create a Azure pipeline
+- You will need your [Port credentials](../../../build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials) to create the action;
+- You will need your Azure DevOps organization;
+- You will need the webhook name that your configure in your Azure pipeline yaml;
+
+:::tip
+<FindCredentials />
+:::
+
+### Create a Azure pipeline
 
 First, we need to set up a Azure pipeline that implements our business logic for deployment.
 
@@ -245,7 +252,7 @@ print(response.json())
 
 Now that the Self-Service Action configured, you can begin invoking it.
 
-## Trigger the action
+### Trigger the action
 
 Let's invoke the self-service action using Port API.
 
@@ -291,7 +298,3 @@ print(response.json())
 When the action is finished, it will mark the action run as successful. That way, your developers can understand your deployment has finished successfully.
 
 ![Action run audit log](../../../../static/img/self-service-actions/run-service-deployment/azure-runs-audit-log.png)
-
-## Next step
-
-This was a very basic example on how to trigger a Azure pipeline using Port's self-service action. We left placeholder code for you to insert your own custom logic that fits your infrastructure.
