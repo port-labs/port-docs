@@ -34,7 +34,7 @@ Create the following blueprint definition and webhook configuration:
 2. Click the gear icon at the top right corner;
 3. Choose **System**;
 4. At the bottom of the sidebar on the left, under **Avanced**, choose **WebHooks**;
-5. Click **Create a WebHook**
+5. Click on **Create a WebHook**
 6. Input the following details:
    1. `Name` - use a meaningful name such as Port Webhook;
    2. `Status` - be sure to keep the webhook **Enabled**;

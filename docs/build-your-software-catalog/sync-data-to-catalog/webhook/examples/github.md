@@ -35,13 +35,13 @@ Remember to replace the `WEBHOOK_SECRET` with the real secret you specify when c
 1. Go to your desired organization/repository in GitHub;
 2. Select **Settings**;
 3. Select **Webhooks**;
-4. Click **Add webhook**;
+4. Click on **Add webhook**;
 5. Input the following details:
    1. `Payload URL` - enter the value of the `url` key you received after creating the webhook configuration;
    2. `Content type` - `application/json`;
    3. `Secret` - enter the secret value you specified when creating the webhook;
    4. Under "Which events would you like to trigger this webhook?" - select "Let me select individual events" and select **Pull requests**;
    5. Be sure to keep the "Active" checkbox checked.
-6. Click **Add webhook**
+6. Click on **Add webhook**
 
 Done! any change you make to a pull request (open, close, edit, etc.) will trigger a webhook event that GitHub will send to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
