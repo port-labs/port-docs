@@ -27,8 +27,8 @@ trigger: none
 
 resources:
   webhooks:
-    - webhook: { webhook name }
-      connection: { webhook connection name }
+    - webhook: { WEBHOOK_NAME }
+      connection: { SERVICE_CONNECTION_NAME }
 stages:
   # ADD YOUR DEPLOYMENT LOGIC HERE!!!
 ```
