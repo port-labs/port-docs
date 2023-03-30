@@ -5,6 +5,7 @@ sidebar_position: 4
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import DeleteDependents from '../../../generalTemplates/\_delete_dependents_kubernetes_explanation_template.md'
+import CreateMissingRelatedEntities from '../../../generalTemplates/\_create_missing_related_entities_kubernetes_explanation_template.md'
 
 # Advanced
 
@@ -28,6 +29,8 @@ The following advanced configuration parameters are available:
 {label: "Resync Interval", value: "resyncInterval"},
 {label: "State Key", value: "stateKey"},
 {label: "Delete Dependents", value: "deleteDependents"},
+{label: "Create Missing Related Entities", value: "createMissingRelatedEntities"},
+{label: "Verbosity (Level)", value: "verbosity"},
 ]} >
 
 <TabItem value="resyncInterval">
@@ -57,6 +60,26 @@ The `stateKey` parameter specifies a unique state key per K8s exporter installat
 
 - Default: `false` (disabled)
 - Use case: Deletion of dependent Port entities. Must be enabled, if you want to delete a target entity (and its source entities) in a required relation.
+
+</TabItem>
+
+<TabItem value="createMissingRelatedEntities">
+
+<CreateMissingRelatedEntities/>
+
+- Default: `false` (disabled)
+- Use case: Creation of missing related Port entities. For example:
+  - Creation of related entity that has no matching resource kind in K8s, like `cluster`.
+  - Creation of an entity and its related entity, even though the related entity doesn't exist yet in Port.
+
+</TabItem>
+
+<TabItem value="verbosity">
+
+The `verbosity` parameter is used to control the verbosity level of info logs in K8s exporter pod.
+
+- Default: `0` (show all info and error logs, including info logs of successful updates)
+- Use case: Clear out info logs of successful updates (set the value to `-1`).
 
 </TabItem>
 
