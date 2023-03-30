@@ -1,0 +1,70 @@
+```json showLineNumbers
+{
+  "identifier": "opsGenieAlert",
+  "description": "This blueprint represents an OpsGenie alert in our software catalog",
+  "title": "OpsGenie Alert",
+  "icon": "OpsGenie",
+  "schema": {
+    "properties": {
+      "description": {
+        "type": "string",
+        "title": "Description"
+      },
+      "lastChangeType": {
+        "type": "string",
+        "title": "Last Change Type",
+        "description": "The type of the last change made to the alert"
+      },
+      "tags": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "title": "Tags"
+      },
+      "responders": {
+        "type": "array",
+        "title": "Responders",
+        "description": "Responders to the alert"
+      },
+      "teams": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "title": "Teams",
+        "description": "IDs of teams assigned to the alert"
+      },
+      "priority": {
+        "type": "string",
+        "title": "Priority"
+      },
+      "sourceName": {
+        "type": "string",
+        "title": "Source Name",
+        "description": "Alert source name"
+      },
+      "sourceType": {
+        "type": "string",
+        "title": "Source Type",
+        "description": "Alert source type"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {
+    "status": {
+      "title": "Status",
+      "calculation": "if .properties.lastChangeType == \"Close\" then \"Closed\" else \"Active\" end",
+      "type": "string",
+      "colorized": true,
+      "colors": {
+        "Closed": "green",
+        "Active": "red"
+      }
+    }
+  },
+  "relations": {}
+}
+```

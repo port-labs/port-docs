@@ -1,7 +1,10 @@
 ---
-sidebar_position: 1
+sidebar_position: 3
 description: Get OpsGenie alerts directly into Port
 ---
+
+import OpsGenieAlertBlueprint from "./resources/opsgenie/\_example_opsgenie_alert_blueprint.mdx";
+import OpsGenieAlertConfiguration from "./resources/opsgenie/\_example_opsgenie_alert_configuration.mdx";
 
 # OpsGenie
 
@@ -14,12 +17,16 @@ Create the following blueprint definition and webhook configuration:
 <details>
 <summary>Pull request blueprint</summary>
 
+<OpsGenieAlertBlueprint/>
+
 </details>
 
 <details>
 <summary>Pull request webhook configuration</summary>
 
 Remember to replace the `WEBHOOK_SECRET` with the real secret you specify when creating the webhook in GitHub.
+
+<OpsGenieAlertConfiguration/>
 
 </details>
 
@@ -40,6 +47,10 @@ Remember to replace the `WEBHOOK_SECRET` with the real secret you specify when c
       2. If _alert's description is updated_ in Opsgenie, _post to url_ in Webhook;
       3. If _alert's message is updated_ in Opsgenie, _post to url_ in Webhook;
       4. If _alert's priority is updated_ in Opsgenie, _post to url_ in Webhook;
+      5. If _a responder is added to the alert_ in Opsgenie, _post to url_ in Webhook;
+      6. if _a user executes "Assign Ownership_ in Opsgenie, _post to url_ in Webhook;
+      7. if _a tag is added to the alert_ in Opsgenie, _post to url_ in Webhook;
+      8. .if _a tag is removed from the alert_ in Opsgenie, _post to url_ in Webhook;
    6. `Webhook URL` - enter the value of the `url` key you received after creating the webhook configuration;
 7. Click **Save integration**
 

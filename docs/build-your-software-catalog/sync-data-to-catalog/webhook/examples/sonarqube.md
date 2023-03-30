@@ -24,6 +24,8 @@ Create the following blueprint definition and webhook configuration:
 <details>
 <summary>SonarQube analysis webhook configuration</summary>
 
+Remember to replace the `WEBHOOK_SECRET` with the real secret you specify when creating the webhook in SonarCloud.
+
 <SonarcloudAnalysisConfiguration/>
 
 </details>
