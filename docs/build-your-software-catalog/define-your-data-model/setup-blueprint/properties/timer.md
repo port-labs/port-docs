@@ -114,26 +114,19 @@ In order to notify about the timer expiration, the following notification body w
 
 ```json showLineNumbers
 {
-  "identifier": "event_4QyQDmuzaAhY8lM2",
   "context": {
-    "blueprintIdentifier": "timerExample",
-    "entityId": "e_mtLQRs6sqQOaz7QP",
-    "blueprintId": "bp_djjY7NcdzHdpxI1y",
+    "blueprint": "timerExample",
     "entityIdentifier": "entityIdentifier"
   },
   "action": "TIMER_EXPIRED",
   "trigger": {
     "at": "2022-12-01T16:50:00+02:00",
     "by": {
-      "port": true,
+      "byPort": true,
       "orgId": "org_example"
     },
     "origin": "API"
   },
-  "additionalData": {
-    "property": "timer"
-  },
-  "_orgId": "org_example",
   "resourceType": "entity",
   "status": "SUCCESS"
 }
