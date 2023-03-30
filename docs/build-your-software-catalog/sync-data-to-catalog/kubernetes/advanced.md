@@ -76,7 +76,7 @@ The `stateKey` parameter specifies a unique state key per K8s exporter installat
 
 <TabItem value="verbosity">
 
-The `verbosity` parameter is used to control the verbosity level of info logs in K8s exporter pod.
+The `verbosity` parameter is used to control the verbosity level of info logs in K8s exporter's pod.
 
 - Default: `0` (show all info and error logs, including info logs of successful updates)
 - Use case: Clear out info logs of successful updates (set the value to `-1`).
