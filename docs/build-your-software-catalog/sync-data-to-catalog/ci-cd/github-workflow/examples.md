@@ -5,11 +5,13 @@ import ExampleCiJobBlueprint from "../\_ci_example_ci_job_blueprint.mdx";
 
 ## Basic create/update example
 
-In this example we create a blueprint for `ciJob`. Using Port's GitHub action we will create a new entity every time the GitHub workflow runs:
+In this example we create blueprints for `ciJob` and `image`, and a relation between them. Using Port's GitHub action we will create new entities every time the GitHub workflow runs:
+
+<ExampleImageBlueprint />
 
 <ExampleCiJobBlueprint />
 
-After creating the blueprint, you can add the following snippet to your GitHub workflow `yml` file to create the new build entity in your GitHub workflow:
+After creating the blueprints, you can add the following snippet to your GitHub workflow `yml` file to create the `ciJob` entity in your GitHub workflow:
 
 ```yaml showLineNumbers
 - uses: port-labs/port-github-action@v1
@@ -35,7 +37,7 @@ For security reasons it is recommended to save the `CLIENT_ID` and `CLIENT_SECRE
 
 ## Basic get example
 
-The following example gets the `ciJob` entity from the previous example, this can be useful if your CI process a needs to reference data from the ciJob (for example, the user who triggered the last job) when deploying the latest version of your service.
+The following example gets the `ciJob` entity from the previous example. This can be useful if your CI process needs to reference data from the ciJob (for example, the user who triggered the last job) when deploying the latest version of your service.
 
 Add the following jobs to your GitHub workflow `yml` file:
 
@@ -53,6 +55,7 @@ get-entity:
         operation: GET
         identifier: new-cijob-run
         blueprint: ciJob
+
 use-entity:
   runs-on: ubuntu-latest
   needs: get-entity
@@ -67,8 +70,6 @@ The second job `use-entity`, uses the output from the first job, and prints the 
 
 The following example adds a `image` entity, in addition to the `ciJob` entity shown in the previous example. The `image` entity represents a byproduct of the ciJob run.
 
-<ExampleImageBlueprint />
-
 Add the following snippet to your GitHub workflow `yml` file:
 
 ```yaml showLineNumbers
@@ -80,8 +81,7 @@ Add the following snippet to your GitHub workflow `yml` file:
     identifier: example-image
     title: Example Image
     icon: Docker
-    blueprint: package
-    team: "['myTeam']"
+    blueprint: image
     properties: |
       {
         "version": "v1",
@@ -93,7 +93,7 @@ Add the following snippet to your GitHub workflow `yml` file:
       }
 ```
 
-All that is left is to update the `ciJob` entity of his new `image` relation, which in turn will document the image related it's relevant CI Job.
+All that is left is to update the `ciJob` entity of his new `image` relation, which in turn will document which image was created by the ciJob.
 
 ```yaml
 - uses: port-labs/port-github-action@v1
@@ -110,4 +110,4 @@ All that is left is to update the `ciJob` entity of his new `image` relation, wh
       }
 ```
 
-That's it! The entities are created or updated and visible in the UI.
+That's it! The entities are updated and visible in the UI.
