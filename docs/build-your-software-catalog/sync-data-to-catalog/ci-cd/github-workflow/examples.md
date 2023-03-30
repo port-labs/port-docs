@@ -1,4 +1,4 @@
-import ExampleCiJobBlueprint from "../\_ci_example_image_blueprint";
+import ExampleCiJobBlueprint from "../\_ci_example_image_blueprint.mdx";
 import ExampleImageBlueprint from "../\_ci_example_ci_job_blueprint.mdx";
 
 # Examples
