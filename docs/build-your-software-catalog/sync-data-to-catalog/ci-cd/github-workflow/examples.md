@@ -89,6 +89,7 @@ Add the following snippet to your GitHub workflow `yml` file:
         "synkMediumVulnerabilities": "0",
         "gitRepoUrl": "https://github.com/my-org/my-cool-repo",
         "imageRegistry": "docker.io/cool-image",
+        "size": "0.71",
         "unitTestCoverage": "20",
         "unitTestCoverage": "50",
       }
