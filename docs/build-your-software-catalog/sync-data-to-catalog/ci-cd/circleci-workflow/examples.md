@@ -5,7 +5,9 @@ import ExampleCiJobBlueprint from "../\_ci_example_ci_job_blueprint.mdx";
 
 ## Basic create/update example
 
-In this example we create a blueprint for `ciJob` and then add code that uses Python to create a new entity in Port every time the CircleCI workflow is triggered:
+In this example you will create blueprints for `ciJob` and `image` entities, and a relation between them. Then you will some Python code to create new entities in Port every time the CircleCI workflow is triggered:
+
+<ExampleImageBlueprint />
 
 <ExampleCiJobBlueprint />
 
@@ -37,7 +39,7 @@ headers = {
 # highlight-end
 
 entity_json = {
-  "identifier": "new-ms-build",
+  "identifier": "new-cijob-run",
   "team": [],
   "properties": {
     "buildNumber": 1,
