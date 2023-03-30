@@ -4,9 +4,6 @@ title: Build your Software Catalog
 sidebar_label: 🏗️ Build your Software Catalog
 ---
 
-import Image from "@theme/IdealImage";
-import Integrations from "../../static/img/software-catalog/integrations.png";
-
 # 🏗️ Build your Software Catalog
 
 Port's software catalog is a central metadata store for software, environments, resources and more. Its building blocks are blueprints and relations, and you can use them to build a catalog that reflects your exact data model. You can also build the catalog with one of Port's common data models.
@@ -34,8 +31,4 @@ By ingesting data into the software catalog, you can ensure that you have a comp
 
 See how to --> [Ingest data to the software catalog](./sync-data-to-catalog/sync-data-to-catalog.md)
 
-<center>
-
-<Image img={Integrations} style={{ width: 700 }} />
-
-</center>
+![Port integrations](../../static/img/software-catalog/integrations.png)
