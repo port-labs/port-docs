@@ -84,12 +84,13 @@ Add the following snippet to your GitHub workflow `yml` file:
     blueprint: image
     properties: |
       {
-        "version": "v1",
-        "committedBy": "${{ github.actor }}",
-        "commitHash": "${{ github.sha }}",
-        "actionJob": "${{ github.job }}",
-        "repoPushedAt": "${{ github.event.repository.pushed_at}}",
-        "runLink": "${{ format('{0}/actions/runs/{1}', github.event.repository.html_url, github.run_id) }}"
+        "imageTag": "v1",
+        "synkHighVulnerabilities": "0",
+        "synkMediumVulnerabilities": "0",
+        "gitRepoUrl": "https://github.com/my-org/my-cool-repo",
+        "imageRegistry": "docker.io/cool-image",
+        "unitTestCoverage": "20",
+        "unitTestCoverage": "50",
       }
 ```
 

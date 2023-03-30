@@ -5,7 +5,9 @@ import ExampleCiJobBlueprint from "../_ci_example_ci_job_blueprint.mdx";
 
 ## Basic create/update example
 
-In this example we create a blueprint for `ciJob` and then add code that uses Port's Codefresh workflow template to create a new entity every time the Codefresh CI workflow that creates a new build runs:
+In this example you will create blueprints for `ciJob` and `image` entities, and a relation between them. Then you will add code that uses Port's Codefresh workflow template to create new entities every time the Codefresh CI workflow runs:
+
+<ExampleImageBlueprint />
 
 <ExampleCiJobBlueprint />
 
@@ -27,19 +29,18 @@ After creating the blueprint, you can add the following snippet to your Codefres
     - name: BLUEPRINT_IDENTIFIER
       value: "ciJob"
     - name: ENTITY_IDENTIFIER
-      value: "new-ms-build"
+      value: "new-cijob-run"
     - name: ENTITY_PROPERTIES
       value: |
       {
-        "buildNumber": 1,
-        "buildVersion": "1.1.0",
-        "imageTag": "new-ms-build:latest"
+        "runLink": "${{CF_BUILD_URL}}",
+        "triggeredBy": "${{CF_BUILD_INITIATOR}}"
       }
 ```
 
 ## Basic get example
 
-The following example gets the `new-ms-build` entity from the previous example, this can be useful if your CI process creates a build artifact and then references some of it's data (for example, the image tag when deploying the latest version of your service).
+The following example gets the `ciJob` entity from the previous example. This can be useful if your CI process needs to reference data from the ciJob (for example, the user who triggered the last job) when deploying the latest version of your service.
 
 Add the following steps to your workflow `yml` file:
 
@@ -59,7 +60,7 @@ Add the following steps to your workflow `yml` file:
     - name: BLUEPRINT_IDENTIFIER
       value: "ciJob"
     - name: ENTITY_IDENTIFIER
-      value: "new-ms-build"
+      value: "new-cijob-run"
 ```
 
 :::tip
@@ -68,12 +69,10 @@ For an example showing how to make use of the output from the `entity-get` workf
 
 ## Complete example
 
-The following example adds another `package` blueprint, in addition to the `ciJob` blueprint shown in the previous example. In addition, it also adds a `ciJob` relation. The Codefresh workflow template will create or update the relation between the 2 existing entities, allowing you to map the package to the microservice build that uses it:
+The following example adds another `image` blueprint, in addition to the `ciJob` blueprint shown in the previous example. In addition, it also adds a `image` relation. The Codefresh workflow template will create or update the relation between the 2 existing entities, allowing you to map the image to the ciJob that created it:
 
-<ExampleImageBlueprint />
-
-Here is the complete workflow `yml` to create both `ciJob` entity, the `package` entity and then print the complete
-JSON of the new package entity:
+Here is the complete workflow `yml` to create both `image` entity, the `cijob` entity with a relation between them, and then print the complete
+JSON of the new `image` entity:
 
 ```yaml showLineNumbers
 apiVersion: argoproj.io/v1alpha1
@@ -82,7 +81,7 @@ metadata:
   name: port.codefresh-complete-example.0.0.1
   annotations:
     port/version: "0.0.1"
-    port/description: "This Workflow Template is used to create a package entity, a ciJob entity and then print the JSON of the new package"
+    port/description: "This Workflow Template is used to create a image entity, a ciJob entity and then print the JSON of the new image"
 spec:
   arguments:
     parameters:
@@ -93,61 +92,63 @@ spec:
         annotations:
       dag:
         tasks:
-          - name: entity-upsert-microservice-build
+          - name: entity-upsert-image
             templateRef:
               name: port
               template: entity-upsert
             arguments:
               parameters:
-                - name: PORT_CREDENTIALS_SECRET
-                  value: "port-credentials"
-                - name: PORT_CLIENT_ID_KEY
-                  value: "PORT_CLIENT_ID"
-                - name: PORT_CLIENT_SECRET_KEY
-                  value: "PORT_CLIENT_SECRET"
-                - name: BLUEPRINT_IDENTIFIER
-                  value: "ciJob"
-                - name: ENTITY_IDENTIFIER
-                  value: "new-ms-build"
-                - name: ENTITY_PROPERTIES
-                  value: |
-                    {
-                      "buildNumber": 1,
-                      "buildVersion": "1.1.0",
-                      "imageTag": "new-ms-build:latest"
-                    }
-          - name: entity-upsert-package
-            dependencies: [entity-upsert-microservice-build]
+              - name: PORT_CREDENTIALS_SECRET
+                value: "port-credentials"
+              - name: PORT_CLIENT_ID_KEY
+                value: "PORT_CLIENT_ID"
+              - name: PORT_CLIENT_SECRET_KEY
+                value: "PORT_CLIENT_SECRET"
+              - name: BLUEPRINT_IDENTIFIER
+                value: "image"
+              - name: ENTITY_IDENTIFIER
+                value: "example-image"
+              - name: ENTITY_PROPERTIES
+                value: |
+                {
+                  "imageTag": "v1",
+                  "synkHighVulnerabilities": "0",
+                  "synkMediumVulnerabilities": "0",
+                  "gitRepoUrl": "https://github.com/my-org/my-cool-repo",
+                  "imageRegistry": "docker.io/cool-image",
+                  "unitTestCoverage": "20",
+                  "unitTestCoverage": "50",
+                }
+          - name: entity-upsert-cijob
             templateRef:
               name: port
               template: entity-upsert
             arguments:
               parameters:
-                - name: PORT_CREDENTIALS_SECRET
-                  value: "port-credentials"
-                - name: PORT_CLIENT_ID_KEY
-                  value: "PORT_CLIENT_ID"
-                - name: PORT_CLIENT_SECRET_KEY
-                  value: "PORT_CLIENT_SECRET"
-                - name: BLUEPRINT_IDENTIFIER
-                  value: "package"
-                - name: ENTITY_IDENTIFIER
-                  value: "example-package"
-                - name: ENTITY_TITLE
-                  value: "Example Package"
-                - name: ENTITY_PROPERTIES
-                  value: |
-                    {
-                      "version": "v1"
-                    }
-                - name: ENTITY_RELATIONS
-                  value: |
-                    {
-                      "ciJob": "new-ms-build"
-                    }
+              - name: PORT_CREDENTIALS_SECRET
+                value: "port-credentials"
+              - name: PORT_CLIENT_ID_KEY
+                value: "PORT_CLIENT_ID"
+              - name: PORT_CLIENT_SECRET_KEY
+                value: "PORT_CLIENT_SECRET"
+              - name: BLUEPRINT_IDENTIFIER
+                value: "ciJob"
+              - name: ENTITY_IDENTIFIER
+                value: "new-cijob-run"
+              - name: ENTITY_PROPERTIES
+                value: |
+                {
+                  "runLink": "${{CF_BUILD_URL}}",
+                  "triggeredBy": "${{CF_BUILD_INITIATOR}}"
+                }
+              - name: ENTITY_RELATIONS
+                value: |
+                {
+                  "image": ["example-image"]
+                }
           - name: entity-get
             dependencies:
-              [entity-upsert-microservice-build, entity-upsert-package]
+              [entity-upsert-image, entity-upsert-cijob]
             templateRef:
               name: port
               template: entity-get
@@ -160,9 +161,9 @@ spec:
                 - name: PORT_CLIENT_SECRET_KEY
                   value: PORT_CLIENT_SECRET
                 - name: BLUEPRINT_IDENTIFIER
-                  value: "package"
+                  value: "image"
                 - name: ENTITY_IDENTIFIER
-                  value: "example-package"
+                  value: "example-image"
           - name: log-info
             dependencies: [entity-get]
             template: log-info
