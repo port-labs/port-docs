@@ -116,7 +116,7 @@ In order to notify about the timer expiration, the following notification body w
 {
   "context": {
     "blueprint": "timerExample",
-    "entityIdentifier": "entityIdentifier"
+    "entity": "entityIdentifier"
   },
   "action": "TIMER_EXPIRED",
   "trigger": {
