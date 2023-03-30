@@ -30,7 +30,7 @@ The following advanced configuration parameters are available:
 {label: "State Key", value: "stateKey"},
 {label: "Delete Dependents", value: "deleteDependents"},
 {label: "Create Missing Related Entities", value: "createMissingRelatedEntities"},
-{label: "Verbosity (Level)", value: "verbosity"},
+{label: "Verbosity (Log Level)", value: "verbosity"},
 ]} >
 
 <TabItem value="resyncInterval">
