@@ -1,6 +1,6 @@
 ---
 sidebar_position: 3
-description: Get OpsGenie alerts directly into Port
+description: Ingest OpsGenie alerts into Port
 ---
 
 import OpsGenieAlertBlueprint from "./resources/opsgenie/\_example_opsgenie_alert_blueprint.mdx";
@@ -8,23 +8,21 @@ import OpsGenieAlertConfiguration from "./resources/opsgenie/\_example_opsgenie_
 
 # OpsGenie
 
-In this example you are going to create a webhook integration between [GitHub](https://github.com) and Port, which will ingest pull request entities.
+In this example you are going to create a webhook integration between [OpsGenie](https://www.atlassian.com/software/opsgenie) and Port, which will ingest alert entities.
 
 ## Prerequisites
 
 Create the following blueprint definition and webhook configuration:
 
 <details>
-<summary>Pull request blueprint</summary>
+<summary>OpsGenie alert blueprint</summary>
 
 <OpsGenieAlertBlueprint/>
 
 </details>
 
 <details>
-<summary>Pull request webhook configuration</summary>
-
-Remember to replace the `WEBHOOK_SECRET` with the real secret you specify when creating the webhook in GitHub.
+<summary>OpsGenie alert webhook configuration</summary>
 
 <OpsGenieAlertConfiguration/>
 
