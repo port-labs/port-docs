@@ -1,13 +1,13 @@
-import ExampleMSBuildBlueprint from "../\_ci_example_microservice_build_blueprint.mdx";
-import ExamplePackageBlueprint from "../\_ci_example_package_blueprint.mdx";
+import ExampleCiJobBlueprint from "../\_ci_example_image_blueprint";
+import ExampleImageBlueprint from "../\_ci_example_ci_job_blueprint.mdx";
 
 # Examples
 
 ## Basic create/update example
 
-In this example we create a blueprint for `microserviceBuild` and then add code to the Jenkins build to create a new entity every build run:
+In this example we create a blueprint for `ciJob` and then add code to the Jenkins build to create a new entity every build run:
 
-<ExampleMSBuildBlueprint />
+<ExampleCiJobBlueprint />
 
 :::note
 The variables `token` and `API_URL` are used in the following examples.
@@ -30,7 +30,7 @@ After creating the blueprint, you can add the following snippet to your Jenkins 
     """
 
     response = httpRequest contentType: "APPLICATION_JSON", httpMode: "POST",
-            url: "${API_URL}/v1/blueprints/microserviceBuild/entities?upsert=true&merge=true",
+            url: "${API_URL}/v1/blueprints/ciJob/entities?upsert=true&merge=true",
             requestBody: body,
             customHeaders: [
                 [name: "Authorization", value: "Bearer ${token}"],
@@ -46,7 +46,7 @@ Add the following code to your Jenkins build:
 
 ```js showLineNumbers
     response = httpRequest contentType: "APPLICATION_JSON", httpMode: "GET",
-            url: "${API_URL}/v1/blueprints/microserviceBuild/entities/new-ms-build",
+            url: "${API_URL}/v1/blueprints/ciJob/entities/new-ms-build",
             customHeaders: [
                 [name: "Authorization", value: "Bearer ${token}"],
             ]
@@ -55,9 +55,9 @@ Add the following code to your Jenkins build:
 
 ## Relation example
 
-The following example adds a `package` entity, in addition to the `microserviceBuild` entity shown in the previous example. In addition, it also adds a `microserviceBuild` relation. The build will create or update the relation between the 2 existing entities, allowing you to map the package to the microservice build that uses it:
+The following example adds a `package` entity, in addition to the `ciJob` entity shown in the previous example. In addition, it also adds a `ciJob` relation. The build will create or update the relation between the 2 existing entities, allowing you to map the package to the microservice build that uses it:
 
-<ExamplePackageBlueprint />
+<ExampleImageBlueprint />
 
 Add the following snippet to your GitHub workflow `yml` file:
 
@@ -84,7 +84,7 @@ import java.time.format.DateTimeFormatter
                             "actionJob": "${env.JOB_NAME}"
                         },
                         "relations": {
-                            "microserviceBuild": "new-ms-build"
+                            "ciJob": "new-ms-build"
                         }
                     }
                     """

@@ -1,13 +1,13 @@
-import ExampleMSBuildBlueprint from "../\_ci_example_microservice_build_blueprint.mdx";
-import ExamplePackageBlueprint from "../\_ci_example_package_blueprint.mdx";
+import ExampleCiJobBlueprint from "../\_ci_example_image_blueprint";
+import ExampleImageBlueprint from "../\_ci_example_ci_job_blueprint.mdx";
 
 # Examples
 
 ## Basic create/update example
 
-In this example we create a blueprint for `microserviceBuild` and then add code that uses Python to create a new entity in Port every time the Azure pipeline is triggered:
+In this example we create a blueprint for `ciJob` and then add code that uses Python to create a new entity in Port every time the Azure pipeline is triggered:
 
-<ExampleMSBuildBlueprint />
+<ExampleCiJobBlueprint />
 
 After creating the blueprint, you can add a Python script for creating/updating a Port entity:
 
@@ -51,7 +51,7 @@ entity_json = {
 create_response = requests.post(f'{API_URL}/blueprints/{blueprint_id}/entities?upsert=true', json=entity_json, headers=headers)
 ```
 
-After adding your new Python script to your repository, add the following code to your Azure pipeline `yml` file to call your script and update/create a new `microserviceBuild` entity:
+After adding your new Python script to your repository, add the following code to your Azure pipeline `yml` file to call your script and update/create a new `ciJob` entity:
 
 ```yaml showLineNumbers
 steps:
@@ -81,7 +81,7 @@ Add the following snippet to your Python code:
 
 ```python showLineNumbers
 entity_id = "new-ms-build"
-blueprint_id = "microserviceBuild"
+blueprint_id = "ciJob"
 
 get_response = requests.get(f"{API_URL}/blueprints/{blueprint_id}/entities/{entity_id}",
                         headers=headers)
@@ -92,9 +92,9 @@ print(f"Image tag is: {entity['properties']['imageTag']}")
 
 ## Relation example
 
-The following example adds a `package` entity, in addition to the `microserviceBuild` entity shown in the previous example. In addition, it also adds a `microserviceBuild` relation. The build will create or update the relation between the 2 existing entities, allowing you to map the package to the microservice build that uses it:
+The following example adds a `package` entity, in addition to the `ciJob` entity shown in the previous example. In addition, it also adds a `ciJob` relation. The build will create or update the relation between the 2 existing entities, allowing you to map the package to the microservice build that uses it:
 
-<ExamplePackageBlueprint />
+<ExampleImageBlueprint />
 
 Add the following snippet to your Python code:
 

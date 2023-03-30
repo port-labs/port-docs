@@ -1,13 +1,13 @@
-import ExampleMSBuildBlueprint from "../_ci_example_microservice_build_blueprint.mdx";
-import ExamplePackageBlueprint from "../_ci_example_package_blueprint.mdx";
+import ExampleCiJobBlueprint from "../_ci_example_image_blueprint";
+import ExampleImageBlueprint from "../_ci_example_ci_job_blueprint.mdx";
 
 # Examples
 
 ## Basic create/update example
 
-In this example we create a blueprint for `microserviceBuild` and then add code that uses Port's Codefresh workflow template to create a new entity every time the Codefresh CI workflow that creates a new build runs:
+In this example we create a blueprint for `ciJob` and then add code that uses Port's Codefresh workflow template to create a new entity every time the Codefresh CI workflow that creates a new build runs:
 
-<ExampleMSBuildBlueprint />
+<ExampleCiJobBlueprint />
 
 After creating the blueprint, you can add the following snippet to your Codefresh workflow template `yml` file to create the new build entity in your Codefresh CI:
 
@@ -25,7 +25,7 @@ After creating the blueprint, you can add the following snippet to your Codefres
     - name: PORT_CLIENT_SECRET_KEY
       value: "PORT_CLIENT_SECRET"
     - name: BLUEPRINT_IDENTIFIER
-      value: "microserviceBuild"
+      value: "ciJob"
     - name: ENTITY_IDENTIFIER
       value: "new-ms-build"
     - name: ENTITY_PROPERTIES
@@ -57,7 +57,7 @@ Add the following steps to your workflow `yml` file:
     - name: PORT_CLIENT_SECRET_KEY
       value: "PORT_CLIENT_SECRET"
     - name: BLUEPRINT_IDENTIFIER
-      value: "microserviceBuild"
+      value: "ciJob"
     - name: ENTITY_IDENTIFIER
       value: "new-ms-build"
 ```
@@ -68,11 +68,11 @@ For an example showing how to make use of the output from the `entity-get` workf
 
 ## Complete example
 
-The following example adds another `package` blueprint, in addition to the `microserviceBuild` blueprint shown in the previous example. In addition, it also adds a `microserviceBuild` relation. The Codefresh workflow template will create or update the relation between the 2 existing entities, allowing you to map the package to the microservice build that uses it:
+The following example adds another `package` blueprint, in addition to the `ciJob` blueprint shown in the previous example. In addition, it also adds a `ciJob` relation. The Codefresh workflow template will create or update the relation between the 2 existing entities, allowing you to map the package to the microservice build that uses it:
 
-<ExamplePackageBlueprint />
+<ExampleImageBlueprint />
 
-Here is the complete workflow `yml` to create both `microserviceBuild` entity, the `package` entity and then print the complete
+Here is the complete workflow `yml` to create both `ciJob` entity, the `package` entity and then print the complete
 JSON of the new package entity:
 
 ```yaml showLineNumbers
@@ -82,7 +82,7 @@ metadata:
   name: port.codefresh-complete-example.0.0.1
   annotations:
     port/version: "0.0.1"
-    port/description: "This Workflow Template is used to create a package entity, a microserviceBuild entity and then print the JSON of the new package"
+    port/description: "This Workflow Template is used to create a package entity, a ciJob entity and then print the JSON of the new package"
 spec:
   arguments:
     parameters:
@@ -106,7 +106,7 @@ spec:
                 - name: PORT_CLIENT_SECRET_KEY
                   value: "PORT_CLIENT_SECRET"
                 - name: BLUEPRINT_IDENTIFIER
-                  value: "microserviceBuild"
+                  value: "ciJob"
                 - name: ENTITY_IDENTIFIER
                   value: "new-ms-build"
                 - name: ENTITY_PROPERTIES
@@ -143,7 +143,7 @@ spec:
                 - name: ENTITY_RELATIONS
                   value: |
                     {
-                      "microserviceBuild": "new-ms-build"
+                      "ciJob": "new-ms-build"
                     }
           - name: entity-get
             dependencies:

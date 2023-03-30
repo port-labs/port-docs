@@ -1,13 +1,13 @@
-import ExampleMSBuildBlueprint from "../\_ci_example_microservice_build_blueprint.mdx";
-import ExamplePackageBlueprint from "../\_ci_example_package_blueprint.mdx";
+import ExampleCiJobBlueprint from "../\_ci_example_image_blueprint";
+import ExampleImageBlueprint from "../\_ci_example_ci_job_blueprint.mdx";
 
 # Examples
 
 ## Basic create/update example
 
-In this example we create a blueprint for `microserviceBuild` and then add code that uses Port's GitHub action to create a new entity every time the GitHub workflow that creates a new build runs:
+In this example we create a blueprint for `ciJob` and then add code that uses Port's GitHub action to create a new entity every time the GitHub workflow that creates a new build runs:
 
-<ExampleMSBuildBlueprint />
+<ExampleCiJobBlueprint />
 
 After creating the blueprint, you can add the following snippet to your GitHub workflow `yml` file to create the new build entity in your GitHub workflow:
 
@@ -17,14 +17,15 @@ After creating the blueprint, you can add the following snippet to your GitHub w
     clientId: ${{ secrets.CLIENT_ID }}
     clientSecret: ${{ secrets.CLIENT_SECRET }}
     operation: UPSERT
-    identifier: new-ms-build
+    identifier: new-cijob-run
     icon: GithubActions
-    blueprint: microserviceBuild
+    blueprint: ciJob
     properties: |
       {
-        "buildNumber": 1,
-        "buildVersion": "1.1.0",
-        "imageTag": "new-ms-build:latest"
+        "commitHash": "${{ env.GITHUB_SHA }}",
+        "jobBranch": "${{ env.GITHUB_SERVER_URL }}/${{ env.GITHUB_REPOSITORY }}/tree/${{ env.GITHUB_REF_NAME }}",
+        "runLink": "${{ env.GITHUB_SERVER_URL }}/${{ env.GITHUB_REPOSITORY }}/actions/runs/${{ env.GITHUB_RUN_ID }}",
+        "triggeredBy": "${{ env.GITHUB_ACTOR }}"
       }
 ```
 
@@ -34,7 +35,7 @@ For security reasons it is recommended to save the `CLIENT_ID` and `CLIENT_SECRE
 
 ## Basic get example
 
-The following example gets the `new-ms-build` entity from the previous example, this can be useful if your CI process creates a build artifact and then references some of it's data (for example, the image tag when deploying the latest version of your service).
+The following example gets the `ciJob` entity from the previous example, this can be useful if your CI process a needs to reference data from the ciJob (for example, the user who triggered the last job) when deploying the latest version of your service.
 
 Add the following jobs to your GitHub workflow `yml` file:
 
@@ -50,23 +51,23 @@ get-entity:
         clientId: ${{ secrets.CLIENT_ID }}
         clientSecret: ${{ secrets.CLIENT_SECRET }}
         operation: GET
-        identifier: new-ms-build
-        blueprint: microserviceBuild
+        identifier: new-cijob-run
+        blueprint: ciJob
 use-entity:
   runs-on: ubuntu-latest
   needs: get-entity
   steps:
-    - run: echo '${{needs.get-entity.outputs.entity}}' | jq .properties.imageTag
+    - run: echo '${{needs.get-entity.outputs.entity}}' | jq .properties.triggeredBy
 ```
 
-The first job `get-entity`, uses the GitHub action to get the `new-ms-build` entity.
-The second job `use-entity`, uses the output from the first job, and prints the `imageTag` property of the entity.
+The first job `get-entity`, uses the GitHub action to get the `new-cijob-run` entity.
+The second job `use-entity`, uses the output from the first job, and prints the `triggeredBy` property of the entity.
 
 ## Relation example
 
-The following example adds a `package` entity, in addition to the `microserviceBuild` entity shown in the previous example. In addition, it also adds a `microserviceBuild` relation. The GitHub action will create or update the relation between the 2 existing entities, allowing you to map the package to the microservice build that uses it:
+The following example adds a `image` entity, in addition to the `ciJob` entity shown in the previous example. The `image` entity represents a byproduct of the ciJob run.
 
-<ExamplePackageBlueprint />
+<ExampleImageBlueprint />
 
 Add the following snippet to your GitHub workflow `yml` file:
 
@@ -76,9 +77,9 @@ Add the following snippet to your GitHub workflow `yml` file:
     clientId: ${{ secrets.CLIENT_ID }}
     clientSecret: ${{ secrets.CLIENT_SECRET }}
     operation: UPSERT
-    identifier: example-package
-    title: Example Package
-    icon: GithubActions
+    identifier: example-image
+    title: Example Image
+    icon: Docker
     blueprint: package
     team: "['myTeam']"
     properties: |
@@ -90,10 +91,23 @@ Add the following snippet to your GitHub workflow `yml` file:
         "repoPushedAt": "${{ github.event.repository.pushed_at}}",
         "runLink": "${{ format('{0}/actions/runs/{1}', github.event.repository.html_url, github.run_id) }}"
       }
+```
+
+All that is left is to update the `ciJob` entity of his new `image` relation, which in turn will document the image related it's relevant CI Job.
+
+```yaml
+- uses: port-labs/port-github-action@v1
+  with:
+    clientId: ${{ secrets.CLIENT_ID }}
+    clientSecret: ${{ secrets.CLIENT_SECRET }}
+    operation: UPSERT
+    identifier: new-cijob-run
+    icon: GithubActions
+    blueprint: ciJob
     relations: |
       {
-        "microserviceBuild": "new-ms-build"
+        "image": ["example-image"]
       }
 ```
 
-That's it! The entity is created or updated and is visible in the UI.
+That's it! The entities are created or updated and visible in the UI.
