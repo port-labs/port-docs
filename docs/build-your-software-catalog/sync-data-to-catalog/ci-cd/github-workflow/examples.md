@@ -1,11 +1,11 @@
-import ExampleCiJobBlueprint from "../\_ci_example_image_blueprint.mdx";
-import ExampleImageBlueprint from "../\_ci_example_ci_job_blueprint.mdx";
+import ExampleImageBlueprint from "../\_ci_example_image_blueprint.mdx";
+import ExampleCiJobBlueprint from "../\_ci_example_ci_job_blueprint.mdx";
 
 # Examples
 
 ## Basic create/update example
 
-In this example we create a blueprint for `ciJob` and then add code that uses Port's GitHub action to create a new entity every time the GitHub workflow that creates a new build runs:
+In this example we create a blueprint for `ciJob`. Using Port's GitHub action we will create a new entity every time the GitHub workflow runs:
 
 <ExampleCiJobBlueprint />
 
