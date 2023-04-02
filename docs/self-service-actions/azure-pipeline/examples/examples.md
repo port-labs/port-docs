@@ -37,7 +37,7 @@ resources:
     - webhook: { WEBHOOK_NAME }
       connection: { SERVICE_CONNECTION_NAME }
 stages:
-  # ADD YOUR DEPLOYMENT LOGIC HERE!!!
+  # ADD YOUR DEPLOYMENT LOGIC HERE!
 ```
 
 </details>
@@ -114,11 +114,23 @@ Here is the JSON of the action:
 ```
 
 :::note
-Note how the `deployment` Blueprint identifier is used to add the action to the new Blueprint.
-
-Moreover, don't forget to replace the placeholders for `YOUR_AZURE_DEVOPS_ORG`, `YOUR_AZURE_DEVOPS_WEBHOOK_NAME`.
+Don't forget to replace the placeholders for `YOUR_AZURE_DEVOPS_ORG`, `YOUR_AZURE_DEVOPS_WEBHOOK_NAME`.
 :::
 
-When the action is finished, it will mark the action run as successful. That way, your developers can understand your deployment has finished successfully.
+To update the status of the action in Port, use the following API call in your Azure pipeline:
+
+````bash
+
+```bash
+curl -X PATCH \
+ -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
+ -H "Content-Type: application/json" \
+ -d '{"status": "SUCCESS"}' \
+ https://api.getport.io/v1/actions/runs/YOUR_RUN_ID
+````
 
 ![Action run audit log](../../../../static/img/self-service-actions/run-service-deployment/azure-runs-audit-log.png)
+
+```
+
+```
