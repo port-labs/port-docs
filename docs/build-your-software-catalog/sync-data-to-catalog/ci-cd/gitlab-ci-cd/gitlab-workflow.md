@@ -13,7 +13,7 @@ Using Gitlab CI/CD workflows, you can easily create/update and query entities in
 <br></br>
 <br></br>
 
-![Github Illustration](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/github/github-action-illustration.jpg)
+![Github Illustration](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/gitlab/gitlabci-illustration.jpg)
 
 :::tip public repository
 Our GitLab action is open source - see it [**here**](https://github.com/port-labs/port-github-action)
