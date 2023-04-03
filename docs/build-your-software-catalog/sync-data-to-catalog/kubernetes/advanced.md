@@ -69,7 +69,7 @@ The `stateKey` parameter specifies a unique state key per K8s exporter installat
 
 - Default: `false` (disabled)
 - Use case: Creation of missing related Port entities. For example:
-  - Creation of related entity that has no matching resource kind in K8s, like `cluster`.
+  - Creation of related entity that has no matching resource kind in K8s, like `cluster`;
   - Creation of an entity and its related entity, even though the related entity doesn't exist yet in Port.
 
 </TabItem>

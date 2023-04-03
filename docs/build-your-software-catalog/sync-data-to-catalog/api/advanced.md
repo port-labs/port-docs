@@ -21,7 +21,7 @@ The following advanced query parameters are available:
 <DeleteDependents/>
 
 - Default: `false` (disabled)
-- Use case: Deletion of dependent Port entities. Must be enabled, if you want to delete a target entity (and its source entities) in a required relation.
+- Use case: deletion of dependent Port entities. Must be enabled if you want to delete a target entity (and its source entities) when the entity's blueprint has required relations.
 - Available at `DELETE` API endpoint of a specific entity.
 
 </TabItem>
@@ -31,7 +31,7 @@ The following advanced query parameters are available:
 <CreateMissingRelatedEntities/>
 
 - Default: `false` (disabled)
-- Use case: Creation of missing related Port entities. Must be enabled, if you want to create a source entity (and the target entity) even though the target entity doesn't exist.
+- Use case: Creation of missing related Port entities. Must be enabled, if you want to create a source entity (and its target related entity) even though the target entity doesn't exist.
 - Available at `POST`, `PUT`, `PATCH` API endpoints of a specific entity.
 
 </TabItem>
