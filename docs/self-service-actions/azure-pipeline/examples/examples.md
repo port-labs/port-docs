@@ -14,7 +14,7 @@ In the following guide, you are going to build a self-service action in Port tha
 
 - You will need your [Port credentials](../../../build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials) to create the action;
 - You will need your Azure DevOps organization;
-- You will need the webhook name that your configure in your Azure pipeline yaml;
+- You will need the name of the webhook that you configured in your Azure pipelines yaml;
 
 :::tip
 <FindCredentials />
