@@ -8,7 +8,7 @@ import ApiRef from "../../../../../api-reference/\_learn_more_reference.mdx"
 # 🪞 Mirror Property
 
 Mirror property allows you to map data from related entities to your entity.
-Mirror property can be used for blueprints that has [relations defined](../../../relate-blueprints/relate-blueprints.md).
+Mirror property can be used for blueprints that have [relations defined](../../../relate-blueprints/relate-blueprints.md).
 
 When two blueprints are connected via a relation, a new set of properties becomes available to entities in the `source` blueprint.
 
