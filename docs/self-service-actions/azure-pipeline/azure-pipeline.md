@@ -27,7 +27,7 @@ An example flow would be:
 
 1. A developer asks to run an Azure pipeline;
 2. Port sends a `POST` request with the action payload to the Azure webhook `URL`;
-3. The Azure webhook is receives the new action request;
+3. The Azure webhook receives the new action request;
 4. The Azure webhook triggers the pipeline;
 
 ## Define Incoming Webhook in Azure
