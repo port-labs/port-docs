@@ -42,6 +42,8 @@ stages:
 
 </details>
 
+You can view [here](../../../build-your-software-catalog/sync-data-to-catalog/api/#generate-an-api-token) how to generate an API token to interact with Port.
+
 ## Create a deployment Blueprint
 
 Let’s configure a `Deployment` Blueprint. Its base structure is:
@@ -119,18 +121,14 @@ Don't forget to replace the placeholders for `YOUR_AZURE_DEVOPS_ORG`, `YOUR_AZUR
 
 To update the status of the action in Port, use the following API call in your Azure pipeline:
 
-````bash
-
 ```bash
 curl -X PATCH \
  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
  -H "Content-Type: application/json" \
  -d '{"status": "SUCCESS"}' \
  https://api.getport.io/v1/actions/runs/YOUR_RUN_ID
-````
-
-![Action run audit log](../../../../static/img/self-service-actions/run-service-deployment/azure-runs-audit-log.png)
-
 ```
 
-```
+## Summary
+
+In this example, you were introduced to the concept of self-service actions and how to create a simple action that triggers an Azure pipeline. You can use this example as a starting point for your own self-service actions.

@@ -1,11 +1,8 @@
 # Azure Pipelines Self-Service Actions
 
-import Image from "@theme/IdealImage";
-import AzurePipelinesArchitecture from "../../../static/img/self-service-actions/portAzurePipelineArchitecture.png";
-
 Port can trigger [Azure pipelines](https://azure.microsoft.com/en-us/products/devops/pipelines) using [incoming webhooks triggers](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/resources?view=azure-devops&tabs=schema#define-a-webhooks-resource).
 
-<Image img={AzurePipelinesArchitecture}></Image>
+![AzurePipelinesArchitecture](../../../static/img/self-service-actions/portAzurePipelineArchitecture.png)
 
 The steps shown in the image above are as follows:
 
