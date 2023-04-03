@@ -59,7 +59,7 @@ The `stateKey` parameter specifies a unique state key per K8s exporter installat
 <DeleteDependents/>
 
 - Default: `false` (disabled)
-- Use case: Deletion of dependent Port entities. Must be enabled, if you want to delete a target entity (and its source entities) in a required relation.
+- Use case: Deletion of dependent Port entities. Must be enabled if you want to delete a target entity (and its source entities) when the entity's blueprint has required relations.
 
 </TabItem>
 
@@ -79,7 +79,7 @@ The `stateKey` parameter specifies a unique state key per K8s exporter installat
 The `verbosity` parameter is used to control the verbosity level of info logs in K8s exporter's pod.
 
 - Default: `0` (show all info and error logs, including info logs of successful updates)
-- Use case: Clear out info logs of successful updates (set the value to `-1`).
+- Use case: Set the value to `-1`, if you want to clear out info logs of successful entities' updates. Error logs and some info logs (initialization and teardown logs), will be reported.
 
 </TabItem>
 
