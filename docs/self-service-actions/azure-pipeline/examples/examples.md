@@ -22,7 +22,7 @@ In the following guide, you are going to build a self-service action in Port tha
 
 ### Create an Azure pipeline
 
-First, we need to set up a Azure pipeline that implements our business logic for deployment.
+First, we need to set up an Azure pipeline that implements our business logic to create a new deployment.
 
 Here is a skeleton for the workflow - `deploy.yml` (including a placeholder for deployment logic):
 
