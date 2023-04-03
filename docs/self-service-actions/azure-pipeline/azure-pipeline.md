@@ -38,7 +38,7 @@ To define an incoming webhook in Azure, follow the steps below:
 2. Put your Port `clientSecret` value in the **Secret** key field;
 3. Put the header `X-Port-Signature` in the `Headers` field;
 4. Enter the service connection name in the `Service connection name` field;
-5. Add service connection resources in the Azure yaml pipeline:
+5. Add the service connection resources in the Azure pipeline yaml:
    ```yaml
     resources:
       webhooks:
