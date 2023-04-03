@@ -45,7 +45,7 @@ To define an incoming webhook in Azure, follow the steps below:
         - webhook: {webhookName}
         connection: {Service connection name}
    ```
-   The full docs of setting Azure incoming webhook can be found [here](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/resources?view=azure-devops&tabs=schema#define-a-webhooks-resource).
+   The complete documentation showing how to configure Azure incoming webhooks can be found [here](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/resources?view=azure-devops&tabs=schema#define-a-webhooks-resource).
 
 ## Define Azure pipeline actions in Port
 
