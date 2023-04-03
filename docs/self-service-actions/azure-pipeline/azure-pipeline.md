@@ -37,10 +37,10 @@ To define an incoming webhook in Azure, follow the steps below:
 4. Enter the service connection name in the `Service connection name` field;
 5. Add the service connection resources in the Azure pipeline yaml:
    ```yaml
-    resources:
-      webhooks:
-        - webhook: {webhookName}
-        connection: {Service connection name}
+   resources:
+     webhooks:
+       - webhook: { webhookName }
+         connection: { Service connection name }
    ```
    The complete documentation showing how to configure Azure incoming webhooks can be found [here](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/resources?view=azure-devops&tabs=schema#define-a-webhooks-resource).
 
