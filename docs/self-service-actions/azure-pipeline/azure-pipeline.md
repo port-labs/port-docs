@@ -34,7 +34,7 @@ An example flow would be:
 
 To define an incoming webhook in Azure, follow the steps below:
 
-1. Create Service connection Incoming WebHook;
+1. Create a **Service connection** of type **Incoming WebHook**;
 2. Put `clientSecret` value the Secret key field;
 3. Put the header `X-Port-Signature` in the `Headers` field;
 4. Enter the service connection name in the `Service connection name` field;
