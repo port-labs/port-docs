@@ -1,5 +1,5 @@
 ---
-sidebar_position: 4
+sidebar_position: 5
 description: Ingest SonarQube analysis into your catalog
 ---
 
@@ -24,6 +24,8 @@ Create the following blueprint definition and webhook configuration:
 <details>
 <summary>SonarQube analysis webhook configuration</summary>
 
+Remember to replace the `WEBHOOK_SECRET` with the real secret you specify when creating the webhook in SonarCloud.
+
 <SonarcloudAnalysisConfiguration/>
 
 </details>
@@ -32,7 +34,7 @@ Create the following blueprint definition and webhook configuration:
 
 1. Go to [SonarCloud](https://sonarcloud.io/projects) and select a project you want to configure a webhook for;
 2. Click on **Administration** at the bottom left of the page and select **Webhooks**;
-3. Click **Create**
+3. Click on **Create**
 4. Input the following details:
    1. `Name` - use a meaningful name such as Port Webhook;
    2. `URL` - enter the value of the `url` key you received after creating the webhook configuration;
