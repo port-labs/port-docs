@@ -42,8 +42,6 @@ stages:
 
 </details>
 
-To learn how to generate an API token to interact with Port, look [here](../../../build-your-software-catalog/sync-data-to-catalog/api/#generate-an-api-token).
-
 ## Create a deployment Blueprint
 
 Let’s configure a `Deployment` Blueprint. Its base structure is:
@@ -118,6 +116,8 @@ Here is the JSON of the action:
 :::note
 Don't forget to replace the placeholders for `YOUR_AZURE_DEVOPS_ORG`, `YOUR_AZURE_DEVOPS_WEBHOOK_NAME`.
 :::
+
+To learn how to generate an API token to interact with Port, look [here](../../../build-your-software-catalog/sync-data-to-catalog/api/#generate-an-api-token).
 
 To update the status of the action in Port, use the following API call in your Azure pipeline:
 
