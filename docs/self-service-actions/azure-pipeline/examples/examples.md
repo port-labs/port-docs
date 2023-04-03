@@ -20,7 +20,7 @@ In the following guide, you are going to build a self-service action in Port tha
 <FindCredentials />
 :::
 
-### Create a Azure pipeline
+### Create an Azure pipeline
 
 First, we need to set up a Azure pipeline that implements our business logic for deployment.
 
