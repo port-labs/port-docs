@@ -79,7 +79,7 @@ The `stateKey` parameter specifies a unique state key per K8s exporter installat
 The `verbosity` parameter is used to control the verbosity level of info logs in K8s exporter's pod.
 
 - Default: `0` (show all info and error logs, including info logs of successful updates)
-- Use case: Set the value to `-1`, if you want to clear out info logs of successful entities' updates. Error logs and some info logs (initialization and teardown logs), will be reported.
+- Use case: Set the value to `-1`, if you want to clear out info logs of successful entity updates. Error logs and some info logs (initialization and teardown logs), will be reported.
 
 </TabItem>
 
