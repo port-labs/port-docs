@@ -42,7 +42,7 @@ stages:
 
 </details>
 
-You can view [here](../../../build-your-software-catalog/sync-data-to-catalog/api/#generate-an-api-token) how to generate an API token to interact with Port.
+To learn how to generate an API token to interact with Port, look [here](../../../build-your-software-catalog/sync-data-to-catalog/api/#generate-an-api-token).
 
 ## Create a deployment Blueprint
 
