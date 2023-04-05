@@ -73,8 +73,6 @@ Each action is represented by a [Json schema](https://json-schema.org/), as show
 
 ### Structure table
 
-@Mor, please add a column of Notes describing the use of Id (by API), and the fact that indicating the type of the action, Port will automatically place the action in the right place in the Developer Portal to make it accessible and indicative for the user. The type of the action is part of the metadata provided by Port to the backend implementing the action to know either to Create a new resource, deleting it or affect an existing resource. END COMMENT FOR MOR
-
 An action consist of several properties:
 
 | Field              | Description                                                                                                                                                                                                                                                                                                                                             | Notes                                                                                                                                                                                                                                  |
