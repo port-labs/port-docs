@@ -47,7 +47,7 @@ jobs:
       - id: echo-deploy
         run: echo "deploy"
 
-      # ADD YOUR DEPLOYMENT LOGIC HERE!!!
+      # ADD YOUR DEPLOYMENT LOGIC HERE!
 
   report-deployment:
     name: Report new deployment Entity

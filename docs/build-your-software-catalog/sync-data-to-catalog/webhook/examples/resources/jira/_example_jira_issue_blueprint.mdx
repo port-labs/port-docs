@@ -1,0 +1,50 @@
+```json showLineNumbers
+{
+  "identifier": "jiraIssue",
+  "description": "This blueprint represents issues from Jira",
+  "title": "Jira Issue",
+  "icon": "Jira",
+  "schema": {
+    "properties": {
+      "summary": {
+        "type": "string",
+        "title": "Summary"
+      },
+      "description": {
+        "type": "string",
+        "title": "Description"
+      },
+      "lastChangeType": {
+        "type": "string",
+        "title": "Last change type",
+        "description": "The type of the latest change made to this issue"
+      },
+      "changingUser": {
+        "type": "string",
+        "title": "Changing user",
+        "description": "The user that madet the latest change"
+      },
+      "issueUrl": {
+        "type": "string",
+        "title": "Issue URL",
+        "format": "url",
+        "description": "URL to the issue"
+      },
+      "issueType": {
+        "type": "string",
+        "title": "Type",
+        "description": "The type of the issue"
+      },
+      "status": {
+        "type": "string",
+        "title": "Status",
+        "description": "The status of the issue"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {}
+}
+```

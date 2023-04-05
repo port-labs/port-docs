@@ -4,7 +4,7 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import Image from "@theme/IdealImage";
 import WebhookArchitecture from '../../../../static/img/build-your-software-catalog/sync-data-to-catalog/webhook/webhook-architecture.png';
-import ExampleGithubPRWebhook from './examples/resources/\_example_github_pr_configuration.mdx';
+import ExampleGithubPRWebhook from './examples/resources/github/\_example_github_pr_configuration.mdx';
 
 By using Port's generic webhook integration you can ingest data into the software catalog from any source or service that provides outgoing webhooks, even if Port doesn't provide a native integration for that source.
 
@@ -19,6 +19,7 @@ By using Port's generic webhook integration you can ingest data into the softwar
 Our generic webhook makes it easy to fill the software catalog with live data directly from your 3rd-party services, for example:
 
 - Map all of your **Snyk vulnerabilities**, **Jira issues**, **SonarQube reports** and other data sources;
+- Make single property updates - update the current on-call of a service based on an event from **Pager Duty** or **OpsGenie**;
 - Make event-based real-time updates to the software catalog;
 - Create a single view for all of the data provided by the 3rd-party services you use;
 - etc.
@@ -30,6 +31,10 @@ Port provides you with custom webhook endpoints, which you can use as the target
 Each webhook endpoint can receive a [custom mapping](#mapping-configuration), making it easy to turn the payload of events from your 3rd-party services into entities inside your software catalog.
 
 The custom mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the webhook payload.
+
+:::tip
+By using the webhook mapping you can create/update a complete entity, or choose to update just a single property on an entity.
+:::
 
 ## Webhook configuration
 
@@ -132,7 +137,7 @@ Here is an example mapping configuration:
 }
 ```
 
-The mappings key stores an **array** of mappings, making it possible to create multiple entities in multiple blueprints from the same payload.
+The mappings key stores an **array** of mappings, making it possible to create/update multiple entities in multiple blueprints from the same payload.
 
 Now let's explore the structure of a single mapping object:
 
