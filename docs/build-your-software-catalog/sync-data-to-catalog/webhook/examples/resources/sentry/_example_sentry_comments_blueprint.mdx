@@ -1,0 +1,43 @@
+```json showLineNumbers
+{
+    "identifier": "SentryComments",
+    "description": "This blueprint represents a Sentry comment webhook in our software catalog",
+    "title": "Sentry Comments Issues",
+    "icon": "Deployment",
+    "schema": {
+      "properties": {
+        "action": {
+          "type": "string",
+          "title": "action"
+          "enum": ["created", "updated", "deleted"]
+
+        },
+        "comment": {
+          "type": "string",
+          "title": "comment"
+        },
+        "project": {
+          "type": "string",
+          "title": "project slug"
+        },
+        "comment_id": {
+          "type": "string",
+          "title": "comment id"
+        },
+        "issue_id": {
+          "type": "string",
+          "title": "ID of Issue"
+        },
+        "timestamp": {
+          "type": "string",
+          "title": "Timestamp of comment"
+        }
+      },
+      "required": []
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "relations": {}
+  }
+
+```
