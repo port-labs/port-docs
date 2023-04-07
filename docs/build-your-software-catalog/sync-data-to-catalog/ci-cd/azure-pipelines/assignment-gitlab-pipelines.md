@@ -5,9 +5,9 @@ sidebar_position: 1
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Azure Pipelines
+# Gitlab Pipelines
 
-Using Azure Pipelines, you can easily create/update and query entities in Port.
+Using Gitlab Pipelines, you can easily create/update and query entities in Port.
 
 <br></br>
 <br></br>
@@ -16,7 +16,7 @@ Using Azure Pipelines, you can easily create/update and query entities in Port.
 
 ## 💡 Common Azure Pipelines usage
 
-Port's API allows for easy integration between Port and your Azure Pipeline jobs, for example:
+Port's API allows for easy integration between Port and your Gitlab Pipeline jobs, for example:
 
 - Report the status of a running **CI job**;
 - Update the software catalog about a new **build version** for a **microservice**;
@@ -24,40 +24,45 @@ Port's API allows for easy integration between Port and your Azure Pipeline jobs
 
 ## Setup
 
-To interact with Port using Azure Pipelines, you will first need to [define your Port credentials](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/set-secret-variables?view=azure-devops&tabs=yaml%2Cbash#secret-variable-in-the-ui) as variables for your pipeline.
+To interact with Port using Gitlab Pipelines, you will first need to [define your Port credentials](https://docs.gitlab.com/ee/ci/secrets/) as variables for your pipeline.
 Then, pass the defined variables to your pipeline script, for example, `Python`:
 
 ```yaml showLineNumbers
-- task: PythonScript@0
-  env:
-    PORT_CLIENT_ID: $(PORT_CLIENT_ID) # The variable name for your Port clientId
-    PORT_CLIENT_SECRET: $(PORT_CLIENT_SECRET) # The variable name for your Port clientSecret
-  inputs:
-    scriptSource: "filePath"
-    scriptPath: "main.py"
+variables:
+  PORT_CLIENT_ID: $(PORT_CLIENT_ID) # The variable name for your Port clientId
+  PORT_CLIENT_SECRET: $(PORT_CLIENT_SECRET) # The variable name for your Port clientSecret
+stage:
+  - build
+task:
+  stage: build
+  script:
+    - pip install -r port_requirements.txt
+    - python main.py
 ```
 
 Make sure you have an existing [Blueprint](../../../../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) in your Port installation to create/update entities.
 
 ## Working with Port's API
 
-Here is an example snippet showing how to integrate a job that uses Port's API with your existing Azure pipelines using Python:
+Here is an example snippet showing how to integrate a job that uses Port's API with your existing Gitlab pipelines using Python:
 
-Add the following task to your Azure pipeline:
+Add the following task to your Gitlab pipeline:
 
 <details>
   <summary> Azure pipeline YAML </summary>
 
 ```yaml showLineNumbers
-- script: |
-    pip install -r port_requirements.txt
-- task: PythonScript@0
-  env:
-    PORT_CLIENT_ID: $(PORT_CLIENT_ID)
-    PORT_CLIENT_SECRET: $(PORT_CLIENT_SECRET)
-  inputs:
-    scriptSource: "filePath"
-    scriptPath: "port.py"
+variables:
+  PORT_CLIENT_ID: $(PORT_CLIENT_ID) # The variable name for your Port clientId
+  PORT_CLIENT_SECRET: $(PORT_CLIENT_SECRET) # The variable name for your Port clientSecret
+stage:
+  - build
+task:
+  image: cimg/python:3.11
+  stage: build
+  script:
+    - pip install -r port_requirements.txt
+    - python main.py
 ```
 
 </details>
