@@ -12,7 +12,7 @@ In addition, as cookiecutter is an open source project you can make your own pro
 
 Follow these steps to get started with the Golang template:
 
-1. Create the following GitHub action secrets
+1. Create the following GitHub action secrets:
 * `ORG_TOKEN` - a PAT (Personal Access Token) with permissions to create repositories
 * `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
 * `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token) 
@@ -51,8 +51,8 @@ Follow these steps to get started with the Golang template:
 }
 ```
 
-4. Create an action at Port with the following JSON file:
->**Note** Keep in mind that any field started with `cookiecutter` will automtically be injected into the cookiecutter inputs as a variable here for example we  are using the `cookiecutter_app_name` input of the [Golang Template](https://github.com/lacion/cookiecutter-golang)
+4. Create Port action using the following JSON definition:
+>**Note** Keep in mind that any input that starts with `cookiecutter_` will automatically be injected into the cookiecutter action as a variable. He we are using the `cookiecutter_app_name` input of the [Golang Template](https://github.com/lacion/cookiecutter-golang)
 
 
 ```json
@@ -84,12 +84,12 @@ Follow these steps to get started with the Golang template:
       "omitUserInputs": true
     },
     "trigger": "CREATE",
-    "description": "Scaffolding a new Microservice from a set of templates using Cookiecutter"
+    "description": "Scaffold a new Microservice from a Cookiecutter teplate"
   }
 ]
 ```
-5. Create a workflow file under .github/workflows/scaffold-golang.yml with the following content:
-```yml
+5. Create a workflow file under `.github/workflows/scaffold-golang.yml` with the following content:
+```yml showLineNumbers
 on:
   workflow_dispatch:
     inputs:
