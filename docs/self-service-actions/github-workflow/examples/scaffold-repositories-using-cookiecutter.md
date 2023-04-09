@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Scaffold repositories using cookiecutter
+# Scaffold Repositories Using Cookiecutter
 
 [This GitHub action](https://github.com/port-labs/cookiecutter-gha) allows you to quickly scaffold repositories using any selected [Cookiecutter Template](https://www.cookiecutter.io/templates) via Port Actions.
 
