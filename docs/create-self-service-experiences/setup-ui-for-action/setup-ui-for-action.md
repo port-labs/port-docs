@@ -2,6 +2,8 @@
 title: 🧱 Setup Actions
 ---
 
+import ApiRef from "../../api-reference/\_learn_more_reference.mdx";
+
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
@@ -16,7 +18,7 @@ Setting up an action includes the following steps:
 1. **Define [action information](#structure-table)** - the title, icon, description and associated [blueprint](../../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md);
 2. **Select the [user inputs](#userinputs---form--wizard-ui)** - create a wizard-like experience by specifying the input types users need to fill in, while also including input validations;
 3. **Configure the [action type](#trigger--action-type)** - Create/Day-2/Delete;
-4. **Connect the action to a [backend](#invocationmethod---connect-to-a-backend** - for every action you define in Port, you tell Port what component is responsible to handle the action's invocation. This is called the **invocation method**, Port supports various invocation methods for different use cases and environments;
+4. **Connect the action to a [backend](#invocationmethod---connect-to-a-backend)** - for every action you define in Port, you tell Port what component is responsible to handle the action's invocation. This is called the **invocation method**, Port supports various invocation methods for different use cases and environments;
 5. **Configure RBAC and guardrails** - this optional step lets you choose who can trigger an action, does the action require manual approval from an admin, and who has the permissions to approve or dismiss requests.
 
 ## 💡 Common actions
@@ -136,3 +138,57 @@ refer to the [self-service actions RBAC](../set-self-service-action-rbac/set-sel
 ## Configuring actions in Port
 
 TABS for API, TF, UI
+
+<Tabs groupId="configure" queryString>
+
+<TabItem value="api" label="API">
+
+```json showLineNumbers
+{
+  "identifier": "myIdentifier",
+  "title": "My title",
+  "description": "My description",
+  "icon": "My icon",
+  "userInputs": {
+    "properties": {},
+    "required": []
+  },
+  "invocationMethod": {
+    "type": "myInvocationType"
+  },
+  "trigger": "myActionTrigger",
+  "requiredApproval": false
+}
+```
+
+:::note
+The JSON shown above is for a single blueprint action, the actions of a blueprint are stored in an array (`[]`)
+:::
+
+<ApiRef />
+
+</TabItem>
+
+<TabItem value="terraform" label="Terraform">
+
+```hcl showLineNumbers
+resource "port-labs_blueprint" "myBlueprint" {
+  title      = "My blueprint"
+  icon       = "My icon"
+  identifier = "myIdentifier"
+  description = "My description"
+}
+```
+
+</TabItem>
+
+<TabItem value="ui" label="UI">
+
+1. Go to the [DevPortal Builder page](https://app.getport.io/dev-portal);
+2. Expand the blueprint you want to add an action to;
+3. Select the actions button from the 3 dots menu;
+4. Enter the JSON specification of your desired action.
+
+</TabItem>
+
+</Tabs>
