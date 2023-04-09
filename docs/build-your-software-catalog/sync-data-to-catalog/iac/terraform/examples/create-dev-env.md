@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 title: Manage a Developer Environment Lifecycle
 description: Manage a developer environment and reflect it in Port
 ---
