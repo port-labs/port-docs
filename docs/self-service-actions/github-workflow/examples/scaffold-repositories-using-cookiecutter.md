@@ -120,7 +120,7 @@ jobs:
           blueprintIdentifier: 'microservice'
           organizationName: INSERT_ORG_NAME
 ```
-6. Trigger the action from Port UI.
+6. Trigger the action from Port's UI.
 ![gif](https://user-images.githubusercontent.com/51213812/230777057-081adf0c-f792-447e-bdec-35c99d73ba02.gif)
 
 ## Next steps 
