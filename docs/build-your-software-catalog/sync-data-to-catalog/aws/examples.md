@@ -166,7 +166,7 @@ In this step-by-step example, you will export your `Lambda functions` to Port.
 
    </details>
 
-4. Optional: Create an event rule to trigger automatic syncing of changes in SNS topics and SNS queues.
+4. Optional: Create an event rule to trigger automatic syncing of changes in Lambda functions.
 
    You may use the following CloudFormation Template:
 
@@ -691,7 +691,7 @@ In this step-by-step example, you will export your `S3 buckets` to Port.
 
     </details>
 
-4.  Optional: Create an event rule to trigger automatic syncing of changes in SNS topics and SNS queues.
+4.  Optional: Create an event rule to trigger automatic syncing of changes in S3 buckets.
 
     You may use the following CloudFormation Template:
 
