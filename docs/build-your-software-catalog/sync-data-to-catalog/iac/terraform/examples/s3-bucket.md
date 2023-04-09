@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 title: Manage an S3 Bucket Lifecycle
 description: Manage an S3 bucket lifecycle and reflect it in Port
 ---
@@ -52,7 +52,7 @@ terraform {
   required_providers {
     port-labs = {
       source  = "port-labs/port-labs"
-      version = "~> 0.8.3"
+      version = "~> 0.9.0"
     }
   }
 }
@@ -90,7 +90,7 @@ terraform {
   required_providers {
     port-labs = {
       source  = "port-labs/port-labs"
-      version = "~> 0.8.3"
+      version = "~> 0.9.0"
     }
   }
 }
@@ -155,7 +155,7 @@ terraform {
   required_providers {
     port-labs = {
       source  = "port-labs/port-labs"
-      version = "~> 0.8.3"
+      version = "~> 0.9.0"
     }
   }
 }

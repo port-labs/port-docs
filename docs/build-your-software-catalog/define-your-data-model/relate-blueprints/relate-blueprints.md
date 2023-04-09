@@ -186,7 +186,7 @@ A Relation can't be configured with both `many` and `required` set to `true`
 
 Relations are part of the structure of a [blueprint](../setup-blueprint/setup-blueprint.md#blueprint-structure).
 
-<Tabs groupId="definition" defaultValue="api" values={[
+<Tabs groupId="definition" queryString defaultValue="api" values={[
 {label: "API", value: "api"},
 {label: "UI", value: "ui"},
 {label: "Terraform", value: "tf"}
