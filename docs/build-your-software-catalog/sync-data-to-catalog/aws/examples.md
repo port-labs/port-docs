@@ -749,4 +749,4 @@ In this step-by-step example, you will export your `S3 buckets` to Port.
 
        </details>
 
-Done! soon, you will be able to see any `Lambda functions`.
+Done! soon, you will be able to see any `S3 buckets`.
