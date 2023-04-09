@@ -18,7 +18,7 @@ Follow these steps to get started with the Golang template:
 * `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token) 
 
 2. Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new);
-3. Create a blueprint at Port with the following properties:
+3. Create a Port blueprint with the following properties:
 >**Note** Keep in mind this can be any blueprint you would like and this is just an example
 ```json
 {
