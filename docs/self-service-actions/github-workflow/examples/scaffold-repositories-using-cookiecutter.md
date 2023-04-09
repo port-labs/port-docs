@@ -124,5 +124,5 @@ jobs:
 ![gif](https://user-images.githubusercontent.com/51213812/230777057-081adf0c-f792-447e-bdec-35c99d73ba02.gif)
 
 ## Next steps 
-- [Connecting Port's GitHub exporter](.././../../build-your-software-catalog/sync-data-to-catalog/git/github/examples#mapping-repositories-and-issues)
+- [Connect Port's GitHub exporter](.././../../build-your-software-catalog/sync-data-to-catalog/git/github/examples#mapping-repositories-and-issues)
 To make sure all of the properties (like url, readme etc..) come directly from Github in a seamless way, you can connect our GitHub exporter next [here](https://docs.getport.io/) you can find more information about it.
