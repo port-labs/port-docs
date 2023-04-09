@@ -6,59 +6,285 @@ import Image from "@theme/IdealImage";
 
 # Examples
 
-## Mapping SNS topics and lambda functions
+## Mapping Lambda functions
 
-In this step-by-step example, you will export your AWS `SNS topics` and `lambda functions` to Port.
+In this step-by-step example, you will export your `Lambda functions` to Port.
 
-1. Create the following Port blueprints:
+1. Create the following Port blueprint:
 
-   - **Lambda** - will represent lambda functions from the AWS account;
-   - **Topic** - will represent SNS topics from the AWS account.
+   - **Lambda** - will represent Lambda functions from the AWS account.
 
-   You may use the following definitions:
+   You may use the following definition:
 
-   <details>
-   <summary> Lambda blueprint </summary>
+      <details>
+      <summary> Lambda blueprint </summary>
 
    ```json showLineNumbers
    {
      "identifier": "lambda",
-     "description": "This blueprint represents a lambda in our software catalog",
+     "description": "This blueprint represents an AWS Lambda function in our software catalog",
      "title": "Lambda",
      "icon": "Lambda",
      "schema": {
        "properties": {
-         "arn": {
-           "type": "string"
+         "link": {
+           "type": "string",
+           "format": "url",
+           "title": "Link"
          },
          "description": {
-           "type": "string"
+           "type": "string",
+           "title": "Description"
          },
          "memorySize": {
-           "type": "number"
+           "type": "number",
+           "title": "Memory Size"
+         },
+         "ephemeralStorageSize": {
+           "type": "number",
+           "title": "Ephemeral Storage Size"
+         },
+         "timeout": {
+           "type": "number",
+           "title": "Timeout"
+         },
+         "runtime": {
+           "type": "string",
+           "title": "Runtime"
          },
          "packageType": {
            "type": "string",
-           "enum": ["Image", "Zip"]
-         },
-         "timeout": {
-           "type": "number"
-         },
-         "runtime": {
-           "type": "string"
+           "enum": ["Image", "Zip"],
+           "title": "Package Type"
          },
          "environment": {
-           "type": "object"
+           "type": "object",
+           "title": "Environment"
          },
          "architectures": {
-           "type": "array"
+           "type": "array",
+           "items": {
+             "type": "string",
+             "enum": ["x86_64", "arm64"]
+           },
+           "title": "Architectures"
+         },
+         "layers": {
+           "type": "array",
+           "title": "Layers"
          },
          "tags": {
-           "type": "array"
+           "type": "array",
+           "title": "Tags"
          },
+         "arn": {
+           "type": "string",
+           "title": "ARN"
+         },
+         "iamRole": {
+           "type": "string",
+           "format": "url",
+           "title": "Iam Role",
+           "icon": "Unlock"
+         }
+       },
+       "required": []
+     },
+     "mirrorProperties": {},
+     "calculationProperties": {},
+     "relations": {}
+   }
+   ```
+
+      </details>
+
+2. Upload the `config.json` file to the exporter's S3 bucket:
+
+      <details>
+      <summary> Port AWS exporter config.json </summary>
+
+   ```json showLineNumbers
+   {
+     "resources": [
+       {
+         "kind": "AWS::Lambda::Function",
+         "port": {
+           "entity": {
+             "mappings": [
+               {
+                 "identifier": ".FunctionName",
+                 "title": ".FunctionName",
+                 "blueprint": "lambda",
+                 "properties": {
+                   "link": "\"https://console.aws.amazon.com/go/view?arn=\" + .Arn",
+                   "description": ".Description",
+                   "memorySize": ".MemorySize",
+                   "ephemeralStorageSize": ".EphemeralStorage.Size",
+                   "timeout": ".Timeout",
+                   "runtime": ".Runtime",
+                   "packageType": ".PackageType",
+                   "environment": ".Environment",
+                   "architectures": ".Architectures",
+                   "layers": ".Layers",
+                   "tags": ".Tags",
+                   "iamRole": "\"https://console.aws.amazon.com/go/view?arn=\" + .Role",
+                   "arn": ".Arn"
+                 }
+               }
+             ]
+           }
+         }
+       }
+     ]
+   }
+   ```
+
+      </details>
+
+3. Update the exporter's `IAM policy`:
+
+   <details>
+   <summary> IAM Policy </summary>
+
+   ```json showLineNumbers
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Sid": "VisualEditor0",
+         "Effect": "Allow",
+         "Action": [
+           "lambda:ListFunctions",
+           "lambda:GetFunction",
+           "lambda:GetFunctionCodeSigningConfig"
+         ],
+         "Resource": "*"
+       }
+     ]
+   }
+   ```
+
+   </details>
+
+4. Optional: Create an event rule to trigger automatic syncing of changes in SNS topics and SNS queues.
+
+   You may use the following CloudFormation Template:
+
+      <details>
+      <summary> Event Rule CloudFormation Template </summary>
+
+   ```yaml showLineNumbers
+   AWSTemplateFormatVersion: "2010-09-09"
+   Description: The template used to create event rules for the Port AWS exporter.
+   Parameters:
+     PortAWSExporterStackName:
+       Description: Name of the Port AWS exporter stack name
+       Type: String
+       MinLength: 1
+       MaxLength: 255
+       AllowedPattern: ^[a-zA-Z][-a-zA-Z0-9]*$
+       Default: serverlessrepo-port-aws-exporter
+   Resources:
+     EventRule0:
+       Type: AWS::Events::Rule
+       Properties:
+         EventBusName: default
+         EventPattern:
+           detail-type:
+             - AWS API Call via CloudTrail
+           source:
+             - aws.lambda
+           detail:
+             eventSource:
+               - lambda.amazonaws.com
+             eventName:
+               - prefix: UpdateFunctionConfiguration
+               - prefix: CreateFunction
+               - prefix: DeleteFunction
+         Name: port-aws-exporter-sync-lambda-trails
+         State: ENABLED
+         Targets:
+           - Id: PortAWSExporterEventsQueue
+             Arn:
+               Fn::ImportValue:
+                 Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+             InputTransformer:
+               InputPathsMap:
+                 awsRegion: $.detail.awsRegion
+                 eventName: $.detail.eventName
+                 requestFunctionName: $.detail.requestParameters.functionName
+                 responseFunctionName: $.detail.responseElements.functionName
+               InputTemplate: |-
+                 {
+                   "resource_type": "AWS::Lambda::Function",
+                   "region": "\"<awsRegion>\"",
+                   "identifier": "if \"<responseFunctionName>\" != \"\" then \"<responseFunctionName>\" else \"<requestFunctionName>\" end",
+                   "action": "if \"<eventName>\" | test(\"DeleteFunction[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
+                 }
+   ```
+
+      </details>
+
+Done! soon, you will be able to see any `Lambda functions`.
+
+## Mapping SNS topics and SQS queues
+
+In this step-by-step example, you will export your `SNS topics` and `SQS queues` to Port.
+
+1. Create the following Port blueprints:
+
+   - **SNS** - will represent SNS topics from the AWS account.
+   - **SQS** - will represent SQS queues from the AWS account;
+
+   You may use the following definitions:
+
+   <details>
+   <summary> SQS blueprint </summary>
+
+   ```json showLineNumbers
+   {
+     "identifier": "sqs",
+     "description": "This blueprint represents an AWS SQS service in our software catalog",
+     "title": "SQS",
+     "icon": "AWS",
+     "schema": {
+       "properties": {
          "link": {
            "type": "string",
-           "format": "url"
+           "format": "url",
+           "title": "Link"
+         },
+         "fifoQueue": {
+           "type": "boolean",
+           "title": "Fifo Queue"
+         },
+         "visibilityTimeout": {
+           "type": "number",
+           "title": "Visibility Timeout"
+         },
+         "messageRetentionPeriod": {
+           "type": "number",
+           "title": "Message Retention Period"
+         },
+         "maximumMessageSize": {
+           "type": "number",
+           "title": "Maximum Message Size"
+         },
+         "receiveMessageWaitTimeSeconds": {
+           "type": "number",
+           "title": "Receive Message Wait Time Seconds"
+         },
+         "delaySeconds": {
+           "type": "number",
+           "title": "Delay Seconds"
+         },
+         "tags": {
+           "type": "array",
+           "title": "Tags"
+         },
+         "arn": {
+           "type": "string",
+           "title": "ARN"
          }
        },
        "required": []
@@ -72,22 +298,36 @@ In this step-by-step example, you will export your AWS `SNS topics` and `lambda 
    </details>
 
    <details>
-   <summary> Topic blueprint </summary>
+   <summary> SNS blueprint </summary>
 
    ```json showLineNumbers
    {
-     "identifier": "topic",
-     "description": "This blueprint represents a topic in our software catalog",
-     "title": "Topic",
-     "icon": "Aws",
+     "identifier": "sns",
+     "description": "This blueprint represents an AWS SNS topic in our software catalog",
+     "title": "SNS",
+     "icon": "SNS",
      "schema": {
        "properties": {
-         "arn": {
-           "type": "string"
-         },
          "link": {
            "type": "string",
-           "format": "url"
+           "format": "url",
+           "title": "Link"
+         },
+         "fifoTopic": {
+           "type": "boolean",
+           "title": "Fifo Topic"
+         },
+         "subscriptions": {
+           "type": "array",
+           "title": "Subscriptions"
+         },
+         "tags": {
+           "type": "array",
+           "title": "Tags"
+         },
+         "arn": {
+           "type": "string",
+           "title": "ARN"
          }
        },
        "required": []
@@ -95,8 +335,8 @@ In this step-by-step example, you will export your AWS `SNS topics` and `lambda 
      "mirrorProperties": {},
      "calculationProperties": {},
      "relations": {
-       "lambda": {
-         "target": "lambda",
+       "sqs": {
+         "target": "sqs",
          "required": false,
          "many": true
        }
@@ -115,25 +355,27 @@ In this step-by-step example, you will export your AWS `SNS topics` and `lambda 
    {
      "resources": [
        {
-         "kind": "AWS::Lambda::Function",
+         "kind": "AWS::SQS::Queue",
          "port": {
            "entity": {
              "mappings": [
                {
-                 "identifier": ".FunctionName",
-                 "title": ".FunctionName",
-                 "blueprint": "lambda",
+                 "identifier": ".QueueName",
+                 "title": ".QueueName",
+                 "blueprint": "sqs",
                  "properties": {
                    "link": "\"https://console.aws.amazon.com/go/view?arn=\" + .Arn",
-                   "arn": ".Arn",
-                   "description": ".Description",
-                   "memorySize": ".MemorySize",
-                   "packageType": ".PackageType",
-                   "timeout": ".Timeout",
-                   "runtime": ".Runtime",
-                   "environment": ".Environment",
-                   "architectures": ".Architectures",
-                   "tags": ".Tags"
+                   "fifoQueue": ".FifoQueue // false",
+                   "visibilityTimeout": ".VisibilityTimeout",
+                   "messageRetentionPeriod": ".MessageRetentionPeriod",
+                   "maximumMessageSize": ".MaximumMessageSize",
+                   "receiveMessageWaitTimeSeconds": ".ReceiveMessageWaitTimeSeconds",
+                   "delaySeconds": ".DelaySeconds",
+                   "tags": ".Tags",
+                   "arn": ".Arn"
+                 },
+                 "relations": {
+                   "region": ".Arn | split(\":\")[3]"
                  }
                }
              ]
@@ -148,13 +390,16 @@ In this step-by-step example, you will export your AWS `SNS topics` and `lambda 
                {
                  "identifier": ".TopicName",
                  "title": ".TopicName",
-                 "blueprint": "topic",
+                 "blueprint": "sns",
                  "properties": {
                    "link": "\"https://console.aws.amazon.com/go/view?arn=\" + .TopicArn",
+                   "fifoTopic": ".FifoTopic // false",
+                   "subscriptions": ".Subscription",
+                   "tags": ".Tags",
                    "arn": ".TopicArn"
                  },
                  "relations": {
-                   "lambda": ".Subscription | map(select(.Protocol == \"lambda\") | .Endpoint[(.Endpoint | rindex(\":\"))+1:])"
+                   "sqs": ".Subscription // [] | map(select(.Protocol == \"sqs\") | .Endpoint | split(\":\")[-1])"
                  }
                }
              ]
@@ -180,13 +425,13 @@ In this step-by-step example, you will export your AWS `SNS topics` and `lambda 
          "Sid": "VisualEditor0",
          "Effect": "Allow",
          "Action": [
-           "lambda:GetFunction",
-           "lambda:GetFunctionCodeSigningConfig",
-           "lambda:ListFunctions",
-           "sns:GetTopicAttributes",
-           "sns:ListTagsForResource",
-           "sns:ListSubscriptionsByTopic",
+           "sqs:GetQueueAttributes",
+           "sqs:ListQueueTags",
+           "sqs:ListQueues",
            "sns:GetDataProtectionPolicy",
+           "sns:GetTopicAttributes",
+           "sns:ListSubscriptionsByTopic",
+           "sns:ListTagsForResource",
            "sns:ListTopics"
          ],
          "Resource": "*"
@@ -197,7 +442,7 @@ In this step-by-step example, you will export your AWS `SNS topics` and `lambda 
 
    </details>
 
-4. Optional: Create an event rule to trigger automatic syncing of changes in lambda functions.
+4. Optional: Create an event rule to trigger automatic syncing of changes in SNS topics and SNS queues.
 
    You may use the following CloudFormation Template:
 
@@ -205,18 +450,16 @@ In this step-by-step example, you will export your AWS `SNS topics` and `lambda 
    <summary> Event Rule CloudFormation Template </summary>
 
    ```yaml showLineNumbers
-   AWSTemplateFormatVersion: "2010-09-09"
+   AWSTemplateFormatVersion: 2010-09-09
    Description: The template used to create event rules for the Port AWS exporter.
-
    Parameters:
      PortAWSExporterStackName:
        Description: Name of the Port AWS exporter stack name
        Type: String
        MinLength: 1
        MaxLength: 255
-       AllowedPattern: "^[a-zA-Z][-a-zA-Z0-9]*$"
+       AllowedPattern: ^[a-zA-Z][-a-zA-Z0-9]*$
        Default: serverlessrepo-port-aws-exporter
-
    Resources:
      EventRule0:
        Type: AWS::Events::Rule
@@ -224,43 +467,286 @@ In this step-by-step example, you will export your AWS `SNS topics` and `lambda 
          EventBusName: default
          EventPattern:
            source:
-             - aws.lambda
+             - aws.sns
            detail-type:
              - AWS API Call via CloudTrail
            detail:
              eventSource:
-               - lambda.amazonaws.com
+               - sns.amazonaws.com
              eventName:
-               - prefix: UpdateFunctionConfiguration
-               - prefix: CreateFunction
-               - prefix: DeleteFunction
-         Name: port-aws-exporter-sync-lambda-trails
+               - prefix: CreateTopic
+               - prefix: Subscribe
+               - prefix: Unsubscribe
+               - prefix: TagResource
+               - prefix: UntagResource
+               - prefix: DeleteTopic
+         Name: port-aws-exporter-sync-sns-trails
          State: ENABLED
          Targets:
-           - Id: "PortAWSExporterEventsQueue"
+           - Id: PortAWSExporterEventsQueue
              Arn:
-               {
-                 "Fn::ImportValue":
-                   { "Fn::Sub": "${PortAWSExporterStackName}-EventsQueueARN" },
-               }
+               Fn::ImportValue:
+                 Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
              InputTransformer:
                InputPathsMap:
                  awsRegion: $.detail.awsRegion
                  eventName: $.detail.eventName
-                 requestFunctionName: $.detail.requestParameters.functionName
-                 responseFunctionName: $.detail.responseElements.functionName
+                 requestResourceArn: $.detail.requestParameters.resourceArn
+                 requestSubscriptionArn: $.detail.requestParameters.subscriptionArn
+                 requestTopicArn: $.detail.requestParameters.topicArn
+                 responseTopicArn: $.detail.responseElements.topicArn
                InputTemplate: |-
                  {
-                   "resource_type": "AWS::Lambda::Function",
-                   "requestFunctionName": "<requestFunctionName>",
-                   "responseFunctionName": "<responseFunctionName>",
-                   "eventName": "<eventName>",
+                   "resource_type": "AWS::SNS::Topic",
                    "region": "\"<awsRegion>\"",
-                   "identifier": "if .responseFunctionName != \"\" then .responseFunctionName else .requestFunctionName end",
-                   "action": "if .eventName | startswith(\"Delete\") then \"delete\" else \"upsert\" end"
+                   "identifier": "\"<eventName>\" | if test(\"CreateTopic[^a-zA-Z]*$\") then \"<responseTopicArn>\" elif test(\"Unsubscribe[^a-zA-Z]*$\") then \"<requestSubscriptionArn>\"[:\"<requestSubscriptionArn>\" | rindex(\":\")] elif test(\"TagResource|UntagResource[^a-zA-Z]*$\") then \"<requestResourceArn>\" elif test(\"DeleteTopic[^a-zA-Z]*$\") then \"<requestTopicArn>\" | split(\":\")[-1] else \"<requestTopicArn>\" end",
+                   "action": "if \"<eventName>\" | test(\"DeleteTopic[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
+                 }
+     EventRule1:
+       Type: AWS::Events::Rule
+       Properties:
+         EventBusName: default
+         EventPattern:
+           source:
+             - aws.sqs
+           detail-type:
+             - AWS API Call via CloudTrail
+           detail:
+             eventSource:
+               - sqs.amazonaws.com
+             eventName:
+               - prefix: CreateQueue
+               - prefix: SetQueueAttributes
+               - prefix: TagQueue
+               - prefix: UntagQueue
+               - prefix: DeleteQueue
+         Name: port-aws-exporter-sync-sqs-trails
+         State: ENABLED
+         Targets:
+           - Id: PortAWSExporterEventsQueue
+             Arn:
+               Fn::ImportValue:
+                 Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+             InputTransformer:
+               InputPathsMap:
+                 awsRegion: $.detail.awsRegion
+                 eventName: $.detail.eventName
+                 requestQueueUrl: $.detail.requestParameters.queueUrl
+                 responseQueueUrl: $.detail.responseElements.queueUrl
+               InputTemplate: |-
+                 {
+                   "resource_type": "AWS::SQS::Queue",
+                   "region": "\"<awsRegion>\"",
+                   "identifier": "\"<eventName>\" | if test(\"CreateQueue[^a-zA-Z]*$\") then \"<responseQueueUrl>\" elif test(\"DeleteQueue[^a-zA-Z]*$\") then \"<requestQueueUrl>\" | split(\"/\")[-1] else \"<requestQueueUrl>\" end",
+                   "action": "if \"<eventName>\" | test(\"DeleteQueue[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
                  }
    ```
 
    </details>
 
-Done! soon, you will be able to see any `Topic` and its `Lambda` subscriptions.
+Done! soon, you will be able to see any `SNS queue` and its `SQS queues` subscriptions.
+
+## Mapping S3 buckets
+
+In this step-by-step example, you will export your `S3 buckets` to Port.
+
+1.  Create the following Port blueprint:
+
+    - **S3** - will represent S3 buckets from the AWS account.
+
+    You may use the following definition:
+
+          <details>
+          <summary> S3 blueprint </summary>
+
+    ```json showLineNumbers
+    {
+      "identifier": "s3",
+      "description": "This blueprint represents an AWS S3 bucket in our software catalog",
+      "title": "S3",
+      "icon": "Bucket",
+      "schema": {
+        "properties": {
+          "link": {
+            "type": "string",
+            "format": "url",
+            "title": "Link"
+          },
+          "regionalDomainName": {
+            "type": "string",
+            "title": "Regional Domain Name"
+          },
+          "versioningStatus": {
+            "type": "string",
+            "title": "Versioning Status",
+            "enum": ["Enabled", "Suspended"]
+          },
+          "encryption": {
+            "type": "array",
+            "title": "Encryption"
+          },
+          "lifecycleRules": {
+            "type": "array",
+            "title": "Lifecycle Rules"
+          },
+          "publicAccess": {
+            "type": "object",
+            "title": "Public Access"
+          },
+          "tags": {
+            "type": "array",
+            "title": "Tags"
+          },
+          "arn": {
+            "type": "string",
+            "title": "ARN"
+          }
+        },
+        "required": []
+      },
+      "mirrorProperties": {},
+      "calculationProperties": {},
+      "relations": {}
+    }
+    ```
+
+          </details>
+
+2.  Upload the `config.json` file to the exporter's S3 bucket:
+
+       <details>
+       <summary> Port AWS exporter config.json </summary>
+
+    ```json showLineNumbers
+    {
+      "resources": [
+        {
+          "kind": "AWS::S3::Bucket",
+          "port": {
+            "entity": {
+              "mappings": [
+                {
+                  "identifier": ".BucketName",
+                  "title": ".BucketName",
+                  "blueprint": "s3",
+                  "properties": {
+                    "link": "\"https://console.aws.amazon.com/go/view?arn=\" + .Arn",
+                    "regionalDomainName": ".RegionalDomainName",
+                    "versioningStatus": ".VersioningConfiguration.Status",
+                    "encryption": ".BucketEncryption.ServerSideEncryptionConfiguration",
+                    "lifecycleRules": ".LifecycleConfiguration.Rules",
+                    "publicAccess": ".PublicAccessBlockConfiguration",
+                    "tags": ".Tags",
+                    "arn": ".Arn"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+    ```
+
+       </details>
+
+3.  Update the exporter's `IAM policy`:
+
+    <details>
+    <summary> IAM Policy </summary>
+
+    ```json showLineNumbers
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Sid": "VisualEditor0",
+          "Effect": "Allow",
+          "Action": [
+            "S3:GetBucketWebsite",
+            "s3:GetAccelerateConfiguration",
+            "s3:GetAnalyticsConfiguration",
+            "s3:GetBucketCORS",
+            "s3:GetBucketLogging",
+            "s3:GetBucketNotification",
+            "s3:GetBucketObjectLockConfiguration",
+            "s3:GetBucketOwnershipControls",
+            "s3:GetBucketPublicAccessBlock",
+            "s3:GetBucketTagging",
+            "s3:GetBucketVersioning",
+            "s3:GetEncryptionConfiguration",
+            "s3:GetIntelligentTieringConfiguration",
+            "s3:GetInventoryConfiguration",
+            "s3:GetLifecycleConfiguration",
+            "s3:GetMetricsConfiguration",
+            "s3:GetReplicationConfiguration",
+            "s3:ListAllMyBuckets",
+            "s3:ListBucket"
+          ],
+          "Resource": "*"
+        }
+      ]
+    }
+    ```
+
+    </details>
+
+4.  Optional: Create an event rule to trigger automatic syncing of changes in SNS topics and SNS queues.
+
+    You may use the following CloudFormation Template:
+
+       <details>
+       <summary> Event Rule CloudFormation Template </summary>
+
+    ```yaml showLineNumbers
+    AWSTemplateFormatVersion: "2010-09-09"
+    Description: The template used to create event rules for the Port AWS exporter.
+    Parameters:
+      PortAWSExporterStackName:
+        Description: Name of the Port AWS exporter stack name
+        Type: String
+        MinLength: 1
+        MaxLength: 255
+        AllowedPattern: ^[a-zA-Z][-a-zA-Z0-9]*$
+        Default: serverlessrepo-port-aws-exporter
+    Resources:
+      EventRule0:
+        Type: AWS::Events::Rule
+        Properties:
+          EventBusName: default
+          EventPattern:
+            source:
+              - aws.s3
+            detail-type:
+              - AWS API Call via CloudTrail
+            detail:
+              eventSource:
+                - s3.amazonaws.com
+              eventName:
+                - prefix: CreateBucket
+                - prefix: PutBucket
+                - prefix: DeleteBucket
+          Name: port-aws-exporter-sync-s3-trails
+          State: ENABLED
+          Targets:
+            - Id: PortAWSExporterEventsQueue
+              Arn:
+                Fn::ImportValue:
+                  Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+              InputTransformer:
+                InputPathsMap:
+                  awsRegion: $.detail.awsRegion
+                  eventName: $.detail.eventName
+                  requestBucketName: $.detail.requestParameters.bucketName
+                InputTemplate: |-
+                  {
+                    "resource_type": "AWS::S3::Bucket",
+                    "region": "\"<awsRegion>\"",
+                    "identifier": "\"<requestBucketName>\"",
+                    "action": "if \"<eventName>\" | test(\"DeleteBucket[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
+                  }
+    ```
+
+       </details>
+
+Done! soon, you will be able to see any `Lambda functions`.
