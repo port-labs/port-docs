@@ -1,0 +1,41 @@
+```json showLineNumbers
+{
+  "identifier": "sentryIssues",
+  "description": "The purpose of these Blueprints is to demonstrate how to map Sentry Webhooks Issues to the Port Platform.",
+  "title": "Sentry Issues",
+  "icon": "Sentry",
+  "schema": {
+    "properties": {
+      "action": {
+        "type": "string",
+        "title": "This can be created, resolved, assigned, or ignored",
+        "enum": ["created", "resolved", "assigned", "ignored"]
+      },
+      "issue": {
+        "type": "object",
+        "title": "The Issue"
+      },
+      "issueUrl": {
+        "type": "string",
+        "title": "Issue_Url",
+        "format": "url"
+      },
+      "webUrl": {
+        "type": "string",
+        "title": "Web Url",
+        "description": "the web url for the issue",
+        "format": "url"
+      },
+      "projectUrl": {
+        "type": "string",
+        "format": "url",
+        "title": "Project URL"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {}
+}
+```

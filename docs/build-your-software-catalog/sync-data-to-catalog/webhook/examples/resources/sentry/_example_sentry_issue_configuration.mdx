@@ -1,0 +1,32 @@
+```json showLineNumbers
+{
+  "identifier": "sentryMapper",
+  "title": "Sentry mapper",
+  "description": "The purpose of these Blueprints is to demonstrate how to map Sentry Webhooks Issues to the Port Platform.",
+  "icon": "Sentry",
+  "mappings": [
+    {
+      "blueprint": "sentryIssues",
+      "entity": {
+        "identifier": ".body.data.issue.id",
+        "title": ".body.data.issues.title",
+        "properties": {
+          "action": ".body.action",
+          "issue": ".body.data.issue",
+          "issueUrl": ".body.data.issue.url",
+          "webUrl": ".body.data.issue.web_url",
+          "projectUrl": ".body.data.issue.project_url"
+        }
+      }
+    }
+  ],
+  "enabled": true,
+  "security": {
+    "secret": "WEBHOOK_SECRET",
+    "signatureHeaderName": "sentry-hook-signature",
+    "signatureAlgorithm": "sha256",
+    "signaturePrefix":""
+
+  }
+}
+```
