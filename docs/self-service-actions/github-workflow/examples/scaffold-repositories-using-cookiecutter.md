@@ -8,7 +8,7 @@ sidebar_position: 2
 
 In addition, as cookiecutter is an open source project you can make your own project template, learn more about it [here](https://cookiecutter.readthedocs.io/en/2.0.2/tutorials.html#create-your-very-own-cookiecutter-project-template)
 
-## Example Scaffolding Golang Template
+## Example - scaffolding golang template
 
 Follow these steps to get started with the Golang template
 
