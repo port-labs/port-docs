@@ -10,7 +10,7 @@ In addition, as cookiecutter is an open source project you can make your own pro
 
 ## Example - scaffolding golang template
 
-Follow these steps to get started with the Golang template
+Follow these steps to get started with the Golang template:
 
 1. Create the following GitHub action secrets
 * `ORG_TOKEN` - a PAT (Personal Access Token) with permissions to create repositories
