@@ -27,28 +27,14 @@ credentials = {
     'clientId': CLIENT_ID,
     'clientSecret': CLIENT_SECRET
 }
-
-try:
-
-    token_response = requests.post(f"{API_URL}/auth/access_token", json=credentials)
-    # use this access token + header for all http requests to Port
-    # highlight-start
-    access_token = token_response.json()['accessToken']
-    headers = {
-        'Authorization': f'Bearer {access_token}'
-    }
-    # highlight-end
-
-# Handle any HTTP error that may occur
-except requests.exceptions.HTTPError as err:
-    print(f'HTTP error occurred: {err}')
-    raise SystemExit(err)
-
-# Handle any other error that may occur
-except Exception as err:
-    print(f'Other error occurred: {err}')
-    raise SystemExit(err)
-
+token_response = requests.post(f"{API_URL}/auth/access_token", json=credentials)
+# use this access token + header for all http requests to Port
+# highlight-start
+access_token = token_response.json()['accessToken']
+headers = {
+    'Authorization': f'Bearer {access_token}'
+}
+# highlight-end
 
 entity_json = {
   "identifier": "new-ms-build",
@@ -81,20 +67,16 @@ variables:
   BUILD_ID: $CI_PIPELINE_ID
 
 stages:
-  - analytics
+  - build
 
 report_to_port:
-  stage: analytics
+  stage: build
   before_script:
     - python -m pip install --upgrade pip
     - pip install -r requirements.txt
   script:
     - python main.py
 ```
-
-### Hint
-
-It is important to store your `PORT_CLIENT_ID` and `PORT_CLIENT_SECRET` secretely in your [Gitlab CI/CD variables](https://docs.gitlab.com/ee/ci/variables/index.html#define-a-cicd-variable-in-the-ui) section.
 
 ## Basic get example
 

@@ -24,7 +24,7 @@ Port's API allows for easy integration between Port and your Gitlab CI Pipeline 
 
 ## Setup
 
-To interact with Port using Gitlab CI Pipeline, you will first need to [define your Port credentials](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/set-secret-variables?view=azure-devops&tabs=yaml%2Cbash#secret-variable-in-the-ui) as variables for your pipeline.
+To interact with Port using Gitlab CI Pipeline, you will first need to [define your Port credentials](https://docs.gitlab.com/ee/ci/variables/index.html#define-a-cicd-variable-in-the-ui) as variables for your pipeline.
 Then, pass the defined variables to your ci pipeline script, for example, `Python`:
 
 ```yaml showLineNumbers
@@ -35,7 +35,7 @@ variables:
   PORT_CLIENT_SECRET: $PORT_CLIENT_SECRET # The variable name for your Port clientSecret
 
 report_to_port:
-  stage: analytics
+  stage: build
   script:
     - python main.py
 ```
@@ -59,10 +59,10 @@ variables:
   PORT_CLIENT_SECRET: $PORT_CLIENT_SECRET
 
 stages:
-  - analytics
+  - build
 
 report_to_port:
-  stage: analytics
+  stage: build
   before_script:
     - python -m pip install --upgrade pip
     - pip install -r requirements.txt
@@ -112,24 +112,13 @@ credentials = {
     'clientId': CLIENT_ID,
     'clientSecret': CLIENT_SECRET
 }
-try:
-    token_response = requests.post(f'{API_URL}/auth/access_token', json=credentials)
-    token_response.raise_for_status() # This will raise an exception for HTTP status codes >= 400
-    access_token = token_response.json()['accessToken']
-    headers = {
-	    'Authorization': f'Bearer {access_token}'
-    }
+token_response = requests.post(f"{API_URL}/auth/access_token", json=credentials)
+# use this access token + header for all http requests to Port
+access_token = token_response.json()['accessToken']
 
-# Handle any HTTP error that may occur
-except requests.exceptions.HTTPError as err:
-    print(f'HTTP error occurred: {err}')
-    raise SystemExit(err) # Stop further execution in case of error
-
-# Handle any other error that may occur
-except Exception as err:
-    print(f'Other error occurred: {err}')
-    raise SystemExit(err) # Stop further execution in case of error
-
+headers = {
+    'Authorization': f'Bearer {access_token}'
+}
 
 entity_json = {
         "identifier": "example-entity",
@@ -167,24 +156,12 @@ credentials = {
     'clientSecret': CLIENT_SECRET
 }
 
-try:
-    token_response = requests.post(f'{API_URL}/auth/access_token', json=credentials)
-    token_response.raise_for_status() # This will raise an exception for HTTP status codes >= 400
-    access_token = token_response.json()['accessToken']
-    headers = {
-	    'Authorization': f'Bearer {access_token}'
-    }
-
-# Handle any HTTP error that may occur
-except requests.exceptions.HTTPError as err:
-    print(f'HTTP error occurred: {err}')
-    raise SystemExit(err) # Stop further execution in case of error
-
-# Handle any other error that may occur
-except Exception as err:
-    print(f'Other error occurred: {err}')
-    raise SystemExit(err) # Stop further execution in case of error
-
+token_response = requests.post(f'{API_URL}/auth/access_token', json=credentials)
+# use this access token + header for all http requests to Port
+access_token = token_response.json()['accessToken']
+headers = {
+  'Authorization': f'Bearer {access_token}'
+}
 
 # request url : {API_URL}/blueprints/<blueprint_id>/entities/<entity_id>
 get_response = requests.get(f"{API_URL}/blueprints/test-blueprint/entities/test-entity", headers=headers)
@@ -196,4 +173,4 @@ print(json.dumps(get_response.json(), indent=4))
 
 ## Examples
 
-Refer to the [examples](./examples.md) page for practical examples of working with Port using Gitlab CI Pipeline.
+Refer to the [examples](./examples.md) page for practical examples of working with Port using Gitlab CI Pipelines.
