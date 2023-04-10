@@ -12,9 +12,9 @@ Drive developer productivity by allowing developers to run free and use self-ser
 5. **Stateful** - every invoked action affects the software catalog by adding/modifying/deleting one or more entities;
 6. **Secured by design** - does not require keys to sensitive infrastructure by using an in event-based model, all actions are audited, embedded guardrails like manual approval and TTL are baked inside.
 
-<div style={{position: "relative", "padding-bottom": "62.5%", height:"0"}}><iframe src="https://www.loom.com/embed/fee8fe438f00483981ea9368bb10385b" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style={{position: "absolute", top:"0", left:"0", width:"100%", height:"100%"}} ></iframe></div>
+<!-- <div style={{position: "relative", "padding-bottom": "62.5%", height:"0"}}><iframe src="https://www.loom.com/embed/fee8fe438f00483981ea9368bb10385b" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style={{position: "absolute", top:"0", left:"0", width:"100%", height:"100%"}} ></iframe></div> -->
 
-<br></br>
+<!-- <br></br> -->
 
 ## 💡 Common self-service actions
 
