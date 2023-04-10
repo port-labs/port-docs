@@ -16,8 +16,8 @@ In this step-by-step example, you will export your `Lambda functions` to Port.
 
    You may use the following definition:
 
-      <details>
-      <summary> Lambda blueprint </summary>
+   <details>
+   <summary> Lambda blueprint </summary>
 
    ```json showLineNumbers
    {
@@ -96,50 +96,50 @@ In this step-by-step example, you will export your `Lambda functions` to Port.
    }
    ```
 
-      </details>
+   </details>
 
 2. Upload the `config.json` file to the exporter's S3 bucket:
 
-      <details>
-      <summary> Port AWS exporter config.json </summary>
+  <details>
+  <summary> Port AWS exporter config.json </summary>
 
-   ```json showLineNumbers
-   {
-     "resources": [
-       {
-         "kind": "AWS::Lambda::Function",
-         "port": {
-           "entity": {
-             "mappings": [
-               {
-                 "identifier": ".FunctionName",
-                 "title": ".FunctionName",
-                 "blueprint": "lambda",
-                 "properties": {
-                   "link": "\"https://console.aws.amazon.com/go/view?arn=\" + .Arn",
-                   "description": ".Description",
-                   "memorySize": ".MemorySize",
-                   "ephemeralStorageSize": ".EphemeralStorage.Size",
-                   "timeout": ".Timeout",
-                   "runtime": ".Runtime",
-                   "packageType": ".PackageType",
-                   "environment": ".Environment",
-                   "architectures": ".Architectures",
-                   "layers": ".Layers",
-                   "tags": ".Tags",
-                   "iamRole": "\"https://console.aws.amazon.com/go/view?arn=\" + .Role",
-                   "arn": ".Arn"
-                 }
-               }
-             ]
-           }
-         }
-       }
-     ]
-   }
-   ```
+```json showLineNumbers
+{
+  "resources": [
+    {
+      "kind": "AWS::Lambda::Function",
+      "port": {
+        "entity": {
+          "mappings": [
+            {
+              "identifier": ".FunctionName",
+              "title": ".FunctionName",
+              "blueprint": "lambda",
+              "properties": {
+                "link": "\"https://console.aws.amazon.com/go/view?arn=\" + .Arn",
+                "description": ".Description",
+                "memorySize": ".MemorySize",
+                "ephemeralStorageSize": ".EphemeralStorage.Size",
+                "timeout": ".Timeout",
+                "runtime": ".Runtime",
+                "packageType": ".PackageType",
+                "environment": ".Environment",
+                "architectures": ".Architectures",
+                "layers": ".Layers",
+                "tags": ".Tags",
+                "iamRole": "\"https://console.aws.amazon.com/go/view?arn=\" + .Role",
+                "arn": ".Arn"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
+```
 
-      </details>
+  </details>
 
 3. Update the exporter's `IAM policy`:
 
@@ -170,60 +170,60 @@ In this step-by-step example, you will export your `Lambda functions` to Port.
 
    You may use the following CloudFormation Template:
 
-      <details>
-      <summary> Event Rule CloudFormation Template </summary>
+  <details>
+  <summary> Event Rule CloudFormation Template </summary>
 
-   ```yaml showLineNumbers
-   AWSTemplateFormatVersion: "2010-09-09"
-   Description: The template used to create event rules for the Port AWS exporter.
-   Parameters:
-     PortAWSExporterStackName:
-       Description: Name of the Port AWS exporter stack name
-       Type: String
-       MinLength: 1
-       MaxLength: 255
-       AllowedPattern: ^[a-zA-Z][-a-zA-Z0-9]*$
-       Default: serverlessrepo-port-aws-exporter
-   Resources:
-     EventRule0:
-       Type: AWS::Events::Rule
-       Properties:
-         EventBusName: default
-         EventPattern:
-           detail-type:
-             - AWS API Call via CloudTrail
-           source:
-             - aws.lambda
-           detail:
-             eventSource:
-               - lambda.amazonaws.com
-             eventName:
-               - prefix: UpdateFunctionConfiguration
-               - prefix: CreateFunction
-               - prefix: DeleteFunction
-         Name: port-aws-exporter-sync-lambda-trails
-         State: ENABLED
-         Targets:
-           - Id: PortAWSExporterEventsQueue
-             Arn:
-               Fn::ImportValue:
-                 Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
-             InputTransformer:
-               InputPathsMap:
-                 awsRegion: $.detail.awsRegion
-                 eventName: $.detail.eventName
-                 requestFunctionName: $.detail.requestParameters.functionName
-                 responseFunctionName: $.detail.responseElements.functionName
-               InputTemplate: |-
-                 {
-                   "resource_type": "AWS::Lambda::Function",
-                   "region": "\"<awsRegion>\"",
-                   "identifier": "if \"<responseFunctionName>\" != \"\" then \"<responseFunctionName>\" else \"<requestFunctionName>\" end",
-                   "action": "if \"<eventName>\" | test(\"DeleteFunction[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
-                 }
-   ```
+```yaml showLineNumbers
+AWSTemplateFormatVersion: "2010-09-09"
+Description: The template used to create event rules for the Port AWS exporter.
+Parameters:
+  PortAWSExporterStackName:
+    Description: Name of the Port AWS exporter stack name
+    Type: String
+    MinLength: 1
+    MaxLength: 255
+    AllowedPattern: ^[a-zA-Z][-a-zA-Z0-9]*$
+    Default: serverlessrepo-port-aws-exporter
+Resources:
+  EventRule0:
+    Type: AWS::Events::Rule
+    Properties:
+      EventBusName: default
+      EventPattern:
+        detail-type:
+          - AWS API Call via CloudTrail
+        source:
+          - aws.lambda
+        detail:
+          eventSource:
+            - lambda.amazonaws.com
+          eventName:
+            - prefix: UpdateFunctionConfiguration
+            - prefix: CreateFunction
+            - prefix: DeleteFunction
+      Name: port-aws-exporter-sync-lambda-trails
+      State: ENABLED
+      Targets:
+        - Id: PortAWSExporterEventsQueue
+          Arn:
+            Fn::ImportValue:
+              Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+          InputTransformer:
+            InputPathsMap:
+              awsRegion: $.detail.awsRegion
+              eventName: $.detail.eventName
+              requestFunctionName: $.detail.requestParameters.functionName
+              responseFunctionName: $.detail.responseElements.functionName
+            InputTemplate: |-
+              {
+                "resource_type": "AWS::Lambda::Function",
+                "region": "\"<awsRegion>\"",
+                "identifier": "if \"<responseFunctionName>\" != \"\" then \"<responseFunctionName>\" else \"<requestFunctionName>\" end",
+                "action": "if \"<eventName>\" | test(\"DeleteFunction[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
+              }
+```
 
-      </details>
+  </details>
 
 Done! soon, you will be able to see any `Lambda functions`.
 
@@ -556,8 +556,8 @@ In this step-by-step example, you will export your `S3 buckets` to Port.
 
     You may use the following definition:
 
-          <details>
-          <summary> S3 blueprint </summary>
+      <details>
+      <summary> S3 blueprint </summary>
 
     ```json showLineNumbers
     {
@@ -610,7 +610,7 @@ In this step-by-step example, you will export your `S3 buckets` to Port.
     }
     ```
 
-          </details>
+      </details>
 
 2.  Upload the `config.json` file to the exporter's S3 bucket:
 
@@ -750,3 +750,264 @@ In this step-by-step example, you will export your `S3 buckets` to Port.
        </details>
 
 Done! soon, you will be able to see any `S3 buckets`.
+
+## Mapping API Gateway APIs
+
+In this step-by-step example, you will export your `API Gateway APIs` to Port.
+
+1.  Create the following Port blueprint:
+
+    - **API Gateway** - will represent API Gateway APIs from the AWS account.
+
+    You may use the following definition:
+
+      <details>
+      <summary> API Gateway blueprint </summary>
+
+    ```json showLineNumbers
+    {
+      "identifier": "apigateway",
+      "description": "This blueprint represents an AWS API Gateway API in our software catalog",
+      "title": "API Gateway",
+      "icon": "RestApi",
+      "schema": {
+        "properties": {
+          "link": {
+            "type": "string",
+            "format": "url",
+            "title": "Link"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "protocolType": {
+            "type": "string",
+            "title": "Protocol Type",
+            "enum": ["HTTP", "WEBSOCKET", "REST"]
+          },
+          "apiKeySourceType": {
+            "type": "string",
+            "title": "Api Key Source Type",
+            "enum": ["HEADER", "AUTHORIZER"]
+          },
+          "routeSelection": {
+            "type": "string",
+            "title": "Route Selection"
+          },
+          "apiEndpoint": {
+            "type": "string",
+            "title": "Api Endpoint"
+          },
+          "disableExecuteApi": {
+            "type": "boolean",
+            "title": "Disable Execute Api"
+          },
+          "cors": {
+            "type": "object",
+            "title": "Cors Configuration"
+          },
+          "endpointTypes": {
+            "type": "array",
+            "title": "Endpoint Types",
+            "items": {
+              "type": "string",
+              "enum": ["EDGE", "REGIONAL", "PRIVATE"]
+            }
+          },
+          "tags": {
+            "type": "array",
+            "title": "Tags"
+          }
+        },
+        "required": []
+      },
+      "mirrorProperties": {},
+      "calculationProperties": {},
+      "relations": {}
+    }
+    ```
+
+      </details>
+
+2.  Upload the `config.json` file to the exporter's S3 bucket:
+
+       <details>
+       <summary> Port AWS exporter config.json </summary>
+
+    ```json showLineNumbers
+    {
+      "resources": [
+        {
+          "kind": "AWS::ApiGateway::RestApi",
+          "port": {
+            "entity": {
+              "mappings": [
+                {
+                  "identifier": ".RestApiId",
+                  "title": ".Name",
+                  "blueprint": "apigateway",
+                  "properties": {
+                    "description": ".Description",
+                    "protocolType": "\"REST\"",
+                    "apiKeySourceType": ".ApiKeySourceType",
+                    "disableExecuteApi": ".DisableExecuteApiEndpoint",
+                    "endpointTypes": ".EndpointConfiguration.Types",
+                    "tags": ".Tags"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "kind": "AWS::ApiGatewayV2::Api",
+          "port": {
+            "entity": {
+              "mappings": [
+                {
+                  "identifier": ".ApiId",
+                  "title": ".Name",
+                  "blueprint": "apigateway",
+                  "properties": {
+                    "link": "\"https://console.aws.amazon.com/go/view?arn=arn:aws:apigateway:\" + (.ApiEndpoint | split(\".\")[-3]) + \"::/apis/\" + .ApiId",
+                    "description": ".Description",
+                    "protocolType": ".ProtocolType",
+                    "routeSelection": ".RouteSelectionExpression",
+                    "apiEndpoint": ".ApiEndpoint",
+                    "disableExecuteApi": ".DisableExecuteApiEndpoint",
+                    "cors": ".CorsConfiguration",
+                    "tags": ".Tags | to_entries"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+    ```
+
+       </details>
+
+3.  Update the exporter's `IAM policy`:
+
+    <details>
+    <summary> IAM Policy </summary>
+
+    ```json showLineNumbers
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Sid": "VisualEditor0",
+          "Effect": "Allow",
+          "Action": ["apigateway:GET"],
+          "Resource": "*"
+        }
+      ]
+    }
+    ```
+
+    </details>
+
+4.  Optional: Create an event rule to trigger automatic syncing of changes in API Gateway APIs.
+
+    You may use the following CloudFormation Template:
+
+       <details>
+       <summary> Event Rule CloudFormation Template </summary>
+
+    ```yaml showLineNumbers
+    AWSTemplateFormatVersion: "2010-09-09"
+    Description: The template used to create event rules for the Port AWS exporter.
+    Parameters:
+      PortAWSExporterStackName:
+        Description: Name of the Port AWS exporter stack name
+        Type: String
+        MinLength: 1
+        MaxLength: 255
+        AllowedPattern: ^[a-zA-Z][-a-zA-Z0-9]*$
+        Default: serverlessrepo-port-aws-exporter
+    Resources:
+      EventRule0:
+        Type: AWS::Events::Rule
+        Properties:
+          EventBusName: default
+          EventPattern:
+            source:
+              - aws.apigateway
+            detail-type:
+              - AWS API Call via CloudTrail
+            detail:
+              eventSource:
+                - apigateway.amazonaws.com
+              eventName:
+                - prefix: CreateRestApi
+                - prefix: ImportRestApi
+                - prefix: PutRestApi
+                - prefix: UpdateRestApi
+                - prefix: DeleteRestApi
+          Name: port-aws-exporter-sync-apigateway-restapi-trails
+          State: ENABLED
+          Targets:
+            - Id: PortAWSExporterEventsQueue
+              Arn:
+                Fn::ImportValue:
+                  Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+              InputTransformer:
+                InputPathsMap:
+                  awsRegion: $.detail.awsRegion
+                  eventName: $.detail.eventName
+                  requestRestApiId: $.detail.requestParameters.restApiId
+                  responseRestApiId: $.detail.responseElements.id
+                InputTemplate: |-
+                  {
+                    "resource_type": "AWS::ApiGateway::RestApi",
+                    "region": "\"<awsRegion>\"",
+                    "identifier": "if \"<responseRestApiId>\" != \"\" then \"<responseRestApiId>\" else \"<requestRestApiId>\" end",
+                    "action": "if \"<eventName>\" | test(\"DeleteRestApi[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
+                  }
+      EventRule1:
+        Type: AWS::Events::Rule
+        Properties:
+          EventBusName: default
+          EventPattern:
+            source:
+              - aws.apigateway
+            detail-type:
+              - AWS API Call via CloudTrail
+            detail:
+              eventSource:
+                - apigateway.amazonaws.com
+              eventName:
+                - prefix: CreateApi
+                - prefix: ImportApi
+                - prefix: ReimportApi
+                - prefix: UpdateApi
+                - prefix: DeleteApi
+          Name: port-aws-exporter-sync-apigateway-api-trails
+          State: ENABLED
+          Targets:
+            - Id: PortAWSExporterEventsQueue
+              Arn:
+                Fn::ImportValue:
+                  Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+              InputTransformer:
+                InputPathsMap:
+                  awsRegion: $.detail.awsRegion
+                  eventName: $.detail.eventName
+                  requestApiId: $.detail.requestParameters.apiId
+                  responseApiId: $.detail.responseElements.apiId
+                InputTemplate: |-
+                  {
+                    "resource_type": "AWS::ApiGatewayV2::Api",
+                    "region": "\"<awsRegion>\"",
+                    "identifier": "if \"<responseApiId>\" != \"\" then \"<responseApiId>\" else \"<requestApiId>\" end",
+                    "action": "if \"<eventName>\" | test(\"DeleteApi[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
+                  }
+    ```
+
+       </details>
+
+Done! soon, you will be able to see any `API Gateway APIs`.
