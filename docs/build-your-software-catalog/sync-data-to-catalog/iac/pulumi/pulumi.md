@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-import InstallTerraform from "./\_pulumi_provider_base.mdx"
+import InstallPulumi from "./\_pulumi_provider_base.mdx"
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
@@ -28,11 +28,11 @@ Our Pulumi provider makes it easy to fill the software catalog with data directl
 
 ## Installation
 
-<InstallTerraform/>
+<InstallPulumi/>
 
-## Terraform definition structure
+## Pulumi definition structure
 
-Port's Terraform provider supports The following resources to ingest data to the catalog:
+Port's Pulumi provider supports The following resources to ingest data to the catalog:
 
 ### `Entity`
 
@@ -178,7 +178,1311 @@ The `properties` schema assigns a specified value to one of the entity's propert
 import pulumi
 from port_pulumi import Entity
 
-entity = Entity("myEntity", title="My Entity", blueprint="myBlueprint", properties=[{"string"}], relations=[])
+entity = Entity("myEntity", identifier="myEntity", title="My Entity", blueprint="myBlueprint", properties=[{"name": "myStringProp", "value": "My string"}], relations=[])
+
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript showLineNumbers
+import * as pulumi from "@pulumi/pulumi";
+import { Entity } from "@port-labs/pulumi";
+
+export const entity = new Entity("myEntity", {
+  identifier: "myEntity",
+  title: "My Entity",
+  blueprint: "myBlueprint",
+  properties: [{ name: "myStringProp", value: "My string" }],
+  relations: [],
+});
+```
+
+</TabItem>
+
+<TabItem value="javascript">
+
+```javascript showLineNumbers
+"use strict";
+const pulumi = require("@pulumi/pulumi");
+const port = require("@port-labs/pulumi");
+
+const entity = new port.Entity("myEntity", {
+  identifier: "myEntity",
+  title: "My Entity",
+  blueprint: "myBlueprint",
+  properties: [{ name: "myStringProp", value: "My string" }],
+  relations: [],
+});
+
+exports.title = entity.title;
+```
+
+</TabItem>
+<TabItem value="go">
+
+```go showLineNumbers
+package main
+
+import (
+	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		entity, err := port.NewEntity(ctx, "entity", &port.EntityArgs{
+			Identifier: pulumi.String("myEntity"),
+			Title:      pulumi.String("My Entity"),
+			Blueprint:  pulumi.String("myBlueprint"),
+			Properties: port.EntityPropertyArray{
+				&port.EntityPropertyArgs{
+					Name:  pulumi.String("myStringProp"),
+					Value: pulumi.String("My String"),
+				},
+			},
+		})
+		ctx.Export("entity", entity.Title)
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+```
+
+</TabItem>
+
+</Tabs>
+</TabItem>
+<TabItem value="number">
+
+<Tabs groupId="number-definition" defaultValue="python" values={[
+{label: "Python", value: "python"},
+{label: "TypeScript", value: "typescript"},
+{label: "JavaScript", value: "javascript"},
+{label: "GO", value: "go"}
+]}>
+
+<TabItem value="python">
+
+```python showLineNumbers
+"""A Python Pulumi program"""
+
+import pulumi
+from port_pulumi import Entity
+
+entity = Entity("myEntity", identifier="myEntity", title="My Entity", blueprint="myBlueprint", properties=[{"name": "myNumberProp", "value": 7}], relations=[])
+
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript showLineNumbers
+import * as pulumi from "@pulumi/pulumi";
+import { Entity } from "@port-labs/pulumi";
+
+export const entity = new Entity("myEntity", {
+  identifier: "myEntity",
+  title: "My Entity",
+  blueprint: "myBlueprint",
+  properties: [{ name: "myNumberProp", value: 7 }],
+  relations: [],
+});
+```
+
+</TabItem>
+
+<TabItem value="javascript">
+
+```javascript showLineNumbers
+"use strict";
+const pulumi = require("@pulumi/pulumi");
+const port = require("@port-labs/pulumi");
+
+const entity = new Entity("myEntity", {
+  identifier: "myEntity",
+  title: "My Entity",
+  blueprint: "myBlueprint",
+  properties: [{ name: "myNumberProp", value: 7 }],
+  relations: [],
+});
+
+exports.title = entity.title;
+```
+
+</TabItem>
+<TabItem value="go">
+
+```go showLineNumbers
+package main
+
+import (
+	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		entity, err := port.NewEntity(ctx, "entity", &port.EntityArgs{
+			Identifier: pulumi.String("myEntity"),
+			Title:      pulumi.String("My Entity"),
+			Blueprint:  pulumi.String("myBlueprint"),
+			Properties: port.EntityPropertyArray{
+				&port.EntityPropertyArgs{
+					Name:  pulumi.String("myNumberProp"),
+					Value: pulumi.String("7"),
+				},
+			},
+		})
+		ctx.Export("entity", entity.Title)
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+```
+
+</TabItem>
+
+</Tabs>
+
+</TabItem>
+<TabItem value="boolean">
+
+<Tabs groupId="boolean-definition" defaultValue="python" values={[
+{label: "Python", value: "python"},
+{label: "TypeScript", value: "typescript"},
+{label: "JavaScript", value: "javascript"},
+{label: "GO", value: "go"}
+]}>
+
+<TabItem value="python">
+
+```python showLineNumbers
+"""A Python Pulumi program"""
+
+import pulumi
+from port_pulumi import Entity
+
+entity = Entity("myEntity", identifier="myEntity", title="My Entity", blueprint="myBlueprint", properties=[{"name": "myBooleanProp", "value": "true"}], relations=[])
+
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript showLineNumbers
+import * as pulumi from "@pulumi/pulumi";
+import { Entity } from "@port-labs/pulumi";
+
+export const entity = new Entity("myEntity", {
+  identifier: "myEntity",
+  title: "My Entity",
+  blueprint: "myBlueprint",
+  properties: [{ name: "myBooleanProp", value: "true" }],
+  relations: [],
+});
+```
+
+</TabItem>
+
+<TabItem value="javascript">
+
+```javascript showLineNumbers
+"use strict";
+const pulumi = require("@pulumi/pulumi");
+const port = require("@port-labs/pulumi");
+
+const entity = new Entity("myEntity", {
+  identifier: "myEntity",
+  title: "My Entity",
+  blueprint: "myBlueprint",
+  properties: [{ name: "myBooleanProp", value: "true" }],
+  relations: [],
+});
+
+exports.title = entity.title;
+```
+
+</TabItem>
+<TabItem value="go">
+
+```go showLineNumbers
+package main
+
+import (
+	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		entity, err := port.NewEntity(ctx, "entity", &port.EntityArgs{
+			Identifier: pulumi.String("myEntity"),
+			Title:      pulumi.String("My Entity"),
+			Blueprint:  pulumi.String("myBlueprint"),
+			Properties: port.EntityPropertyArray{
+				&port.EntityPropertyArgs{
+					Name:  pulumi.String("myBooleanProp"),
+					Value: pulumi.String("true"),
+				},
+			},
+		})
+		ctx.Export("entity", entity.Title)
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+```
+
+</TabItem>
+
+</Tabs>
+
+</TabItem>
+<TabItem value="object">
+
+<Tabs groupId="object-definition" defaultValue="python" values={[
+{label: "Python", value: "python"},
+{label: "TypeScript", value: "typescript"},
+{label: "JavaScript", value: "javascript"},
+{label: "GO", value: "go"}
+]}>
+
+<TabItem value="python">
+
+```python showLineNumbers
+"""A Python Pulumi program"""
+
+import json
+import pulumi
+from port_pulumi import Entity
+
+entity = Entity("myEntity", identifier="myEntity", title="My Entity", blueprint="myBlueprint", properties=[{"name": "myObjectProp", "value": json.dumps({"hello": "world"})}], relations=[])
+
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript showLineNumbers
+import * as pulumi from "@pulumi/pulumi";
+import { Entity } from "@port-labs/pulumi";
+
+export const entity = new Entity("myEntity", {
+  identifier: "myEntity",
+  title: "My Entity",
+  blueprint: "myBlueprint",
+  properties: [
+    { name: "myObjectProp", value: JSON.stringify({ hello: "world" }) },
+  ],
+  relations: [],
+});
+```
+
+</TabItem>
+
+<TabItem value="javascript">
+
+```javascript showLineNumbers
+"use strict";
+const pulumi = require("@pulumi/pulumi");
+const port = require("@port-labs/pulumi");
+
+const entity = new Entity("myEntity", {
+  identifier: "myEntity",
+  title: "My Entity",
+  blueprint: "myBlueprint",
+  properties: [
+    { name: "myObjectProp", value: JSON.stringify({ hello: "world" }) },
+  ],
+  relations: [],
+});
+
+exports.title = entity.title;
+```
+
+</TabItem>
+<TabItem value="go">
+
+```go showLineNumbers
+package main
+
+import (
+	"encoding/json"
+
+	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	obj := map[string]string{"hello": "world"}
+	objStr, err := json.Marshal(obj)
+
+	if err != nil {
+		panic(err)
+	}
+
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		entity, err := port.NewEntity(ctx, "entity", &port.EntityArgs{
+			Identifier: pulumi.String("myEntity"),
+			Title:      pulumi.String("My Entity"),
+			Blueprint:  pulumi.String("myBlueprint"),
+			Properties: port.EntityPropertyArray{
+				&port.EntityPropertyArgs{
+					Name:  pulumi.String("myObjectProperty"),
+					Value: pulumi.String(objStr),
+				},
+			},
+		})
+		ctx.Export("entity", entity.Title)
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+```
+
+</TabItem>
+
+</Tabs>
+
+</TabItem>
+<TabItem value="array">
+
+<Tabs groupId="array-definition" defaultValue="python" values={[
+{label: "Python", value: "python"},
+{label: "TypeScript", value: "typescript"},
+{label: "JavaScript", value: "javascript"},
+{label: "GO", value: "go"}
+]}>
+
+<TabItem value="python">
+
+```python showLineNumbers
+"""A Python Pulumi program"""
+
+import json
+import pulumi
+from port_pulumi import Entity
+
+entity = Entity("myEntity", identifier="myEntity", title="My Entity", blueprint="myBlueprint", properties=[{"name": "myArrayProp", "items": ["hello", "world"]}], relations=[])
+
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript showLineNumbers
+import * as pulumi from "@pulumi/pulumi";
+import { Entity } from "@port-labs/pulumi";
+
+export const entity = new Entity("myEntity", {
+  identifier: "myEntity",
+  title: "My Entity",
+  blueprint: "myBlueprint",
+  properties: [{ name: "myArrayProp", items: ["hello", "world"] }],
+  relations: [],
+});
+```
+
+</TabItem>
+
+<TabItem value="javascript">
+
+```javascript showLineNumbers
+"use strict";
+const pulumi = require("@pulumi/pulumi");
+const port = require("@port-labs/pulumi");
+
+const entity = new Entity("myEntity", {
+  identifier: "myEntity",
+  title: "My Entity",
+  blueprint: "myBlueprint",
+  properties: [{ name: "myArrayProp", items: ["hello", "world"] }],
+  relations: [],
+});
+
+exports.title = entity.title;
+```
+
+</TabItem>
+<TabItem value="go">
+
+```go showLineNumbers
+package main
+
+import (
+	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		entity, err := port.NewEntity(ctx, "entity", &port.EntityArgs{
+			Identifier: pulumi.String("myEntity"),
+			Title:      pulumi.String("My Entity"),
+			Blueprint:  pulumi.String("myBlueprint"),
+			Properties: port.EntityPropertyArray{
+				&port.EntityPropertyArgs{
+					Name:  pulumi.String("myArrayProp"),
+					Items: pulumi.ToStringArray([]string{"hello", "world", "!"}),
+				},
+			},
+		})
+		ctx.Export("entity", entity.Title)
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+```
+
+</TabItem>
+
+</Tabs>
+
+</TabItem>
+<TabItem value="url">
+
+<Tabs groupId="url-definition" defaultValue="python" values={[
+{label: "Python", value: "python"},
+{label: "TypeScript", value: "typescript"},
+{label: "JavaScript", value: "javascript"},
+{label: "GO", value: "go"}
+]}>
+
+<TabItem value="python">
+
+```python showLineNumbers
+"""A Python Pulumi program"""
+
+import json
+import pulumi
+from port_pulumi import Entity
+
+entity = Entity("myEntity", identifier="myEntity", title="My Entity", blueprint="myBlueprint", properties=[{"name": "myUrlProp", "value": "https://example.com"}], relations=[])
+
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript showLineNumbers
+import * as pulumi from "@pulumi/pulumi";
+import { Entity } from "@port-labs/pulumi";
+
+export const entity = new Entity("myEntity", {
+  identifier: "myEntity",
+  title: "My Entity",
+  blueprint: "myBlueprint",
+  properties: [{ name: "myUrlProp", value: "https://example.com" }],
+  relations: [],
+});
+```
+
+</TabItem>
+
+<TabItem value="javascript">
+
+```javascript showLineNumbers
+"use strict";
+const pulumi = require("@pulumi/pulumi");
+const port = require("@port-labs/pulumi");
+
+const entity = new Entity("myEntity", {
+  identifier: "myEntity",
+  title: "My Entity",
+  blueprint: "myBlueprint",
+  properties: [{ name: "myUrlProp", value: "https://example.com" }],
+  relations: [],
+});
+
+exports.title = entity.title;
+```
+
+</TabItem>
+<TabItem value="go">
+
+```go showLineNumbers
+package main
+
+import (
+	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		entity, err := port.NewEntity(ctx, "entity", &port.EntityArgs{
+			Identifier: pulumi.String("myEntity"),
+			Title:      pulumi.String("My Entity"),
+			Blueprint:  pulumi.String("myBlueprint"),
+			Properties: port.EntityPropertyArray{
+				&port.EntityPropertyArgs{
+					Name:  pulumi.String("myUrlProp"),
+					Value: pulumi.String("https://example.com"),
+				},
+			},
+		})
+		ctx.Export("entity", entity.Title)
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+```
+
+</TabItem>
+
+</Tabs>
+
+</TabItem>
+<TabItem value="email">
+
+<Tabs groupId="email-definition" defaultValue="python" values={[
+{label: "Python", value: "python"},
+{label: "TypeScript", value: "typescript"},
+{label: "JavaScript", value: "javascript"},
+{label: "GO", value: "go"}
+]}>
+
+<TabItem value="python">
+
+```python showLineNumbers
+"""A Python Pulumi program"""
+
+import json
+import pulumi
+from port_pulumi import Entity
+
+entity = Entity("myEntity", identifier="myEntity", title="My Entity", blueprint="myBlueprint", properties=[{"name": "myEmailProp", "value": "me@example.com"}], relations=[])
+
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript showLineNumbers
+import * as pulumi from "@pulumi/pulumi";
+import { Entity } from "@port-labs/pulumi";
+
+export const entity = new Entity("myEntity", {
+  identifier: "myEntity",
+  title: "My Entity",
+  blueprint: "myBlueprint",
+  properties: [{ name: "myEmailProp", value: "me@example.com" }],
+  relations: [],
+});
+```
+
+</TabItem>
+
+<TabItem value="javascript">
+
+```javascript showLineNumbers
+"use strict";
+const pulumi = require("@pulumi/pulumi");
+const port = require("@port-labs/pulumi");
+
+const entity = new Entity("myEntity", {
+  identifier: "myEntity",
+  title: "My Entity",
+  blueprint: "myBlueprint",
+  properties: [{ name: "myEmailProp", value: "me@example.com" }],
+  relations: [],
+});
+
+exports.title = entity.title;
+```
+
+</TabItem>
+<TabItem value="go">
+
+```go showLineNumbers
+package main
+
+import (
+	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		entity, err := port.NewEntity(ctx, "entity", &port.EntityArgs{
+			Identifier: pulumi.String("myEntity"),
+			Title:      pulumi.String("My Entity"),
+			Blueprint:  pulumi.String("myBlueprint"),
+			Properties: port.EntityPropertyArray{
+				&port.EntityPropertyArgs{
+					Name:  pulumi.String("myEmailProp"),
+					Value: pulumi.String("me@example.com"),
+				},
+			},
+		})
+		ctx.Export("entity", entity.Title)
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+```
+
+</TabItem>
+
+</Tabs>
+
+</TabItem>
+<TabItem value="user">
+
+<Tabs groupId="user-definition" defaultValue="python" values={[
+{label: "Python", value: "python"},
+{label: "TypeScript", value: "typescript"},
+{label: "JavaScript", value: "javascript"},
+{label: "GO", value: "go"}
+]}>
+
+<TabItem value="python">
+
+```python showLineNumbers
+"""A Python Pulumi program"""
+
+import json
+import pulumi
+from port_pulumi import Entity
+
+entity = Entity("myEntity", identifier="myEntity", title="My Entity", blueprint="myBlueprint", properties=[{"name": "myUserProp", "value": "user@example.com"}], relations=[])
+
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript showLineNumbers
+import * as pulumi from "@pulumi/pulumi";
+import { Entity } from "@port-labs/pulumi";
+
+export const entity = new Entity("myEntity", {
+  identifier: "myEntity",
+  title: "My Entity",
+  blueprint: "myBlueprint",
+  properties: [{ name: "myUserProp", value: "user@example.com" }],
+  relations: [],
+});
+```
+
+</TabItem>
+
+<TabItem value="javascript">
+
+```javascript showLineNumbers
+"use strict";
+const pulumi = require("@pulumi/pulumi");
+const port = require("@port-labs/pulumi");
+
+const entity = new Entity("myEntity", {
+  identifier: "myEntity",
+  title: "My Entity",
+  blueprint: "myBlueprint",
+  properties: [{ name: "myUserProp", value: "user@example.com" }],
+  relations: [],
+});
+
+exports.title = entity.title;
+```
+
+</TabItem>
+<TabItem value="go">
+
+```go showLineNumbers
+package main
+
+import (
+	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		entity, err := port.NewEntity(ctx, "entity", &port.EntityArgs{
+			Identifier: pulumi.String("myEntity"),
+			Title:      pulumi.String("My Entity"),
+			Blueprint:  pulumi.String("myBlueprint"),
+			Properties: port.EntityPropertyArray{
+				&port.EntityPropertyArgs{
+					Name:  pulumi.String("myUserProp"),
+					Value: pulumi.String("user@example.com"),
+				},
+			},
+		})
+		ctx.Export("entity", entity.Title)
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+```
+
+</TabItem>
+
+</Tabs>
+
+</TabItem>
+<TabItem value="team">
+
+<Tabs groupId="team-definition" defaultValue="python" values={[
+{label: "Python", value: "python"},
+{label: "TypeScript", value: "typescript"},
+{label: "JavaScript", value: "javascript"},
+{label: "GO", value: "go"}
+]}>
+
+<TabItem value="python">
+
+```python showLineNumbers
+"""A Python Pulumi program"""
+
+import json
+import pulumi
+from port_pulumi import Entity
+
+entity = Entity("myEntity", identifier="myEntity", title="My Entity", blueprint="myBlueprint", properties=[{"name": "myTeamProp", "value": "argo-admins"}], relations=[])
+
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript showLineNumbers
+import * as pulumi from "@pulumi/pulumi";
+import { Entity } from "@port-labs/pulumi";
+
+export const entity = new Entity("myEntity", {
+  identifier: "myEntity",
+  title: "My Entity",
+  blueprint: "myBlueprint",
+  properties: [{ name: "myTeamProp", value: "argo-admins" }],
+  relations: [],
+});
+```
+
+</TabItem>
+
+<TabItem value="javascript">
+
+```javascript showLineNumbers
+"use strict";
+const pulumi = require("@pulumi/pulumi");
+const port = require("@port-labs/pulumi");
+
+const entity = new Entity("myEntity", {
+  identifier: "myEntity",
+  title: "My Entity",
+  blueprint: "myBlueprint",
+  properties: [{ name: "myTeamProp", value: "argo-admins" }],
+  relations: [],
+});
+
+exports.title = entity.title;
+```
+
+</TabItem>
+<TabItem value="go">
+
+```go showLineNumbers
+package main
+
+import (
+	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		entity, err := port.NewEntity(ctx, "entity", &port.EntityArgs{
+			Identifier: pulumi.String("myEntity"),
+			Title:      pulumi.String("My Entity"),
+			Blueprint:  pulumi.String("myBlueprint"),
+			Properties: port.EntityPropertyArray{
+				&port.EntityPropertyArgs{
+					Name:  pulumi.String("myTeamProp"),
+					Value: pulumi.String("argo-admins"),
+				},
+			},
+		})
+		ctx.Export("entity", entity.Title)
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+```
+
+</TabItem>
+
+</Tabs>
+
+</TabItem>
+<TabItem value="datetime">
+
+<Tabs groupId="datetime-definition" defaultValue="python" values={[
+{label: "Python", value: "python"},
+{label: "TypeScript", value: "typescript"},
+{label: "JavaScript", value: "javascript"},
+{label: "GO", value: "go"}
+]}>
+
+<TabItem value="python">
+
+```python showLineNumbers
+"""A Python Pulumi program"""
+
+import json
+import pulumi
+from port_pulumi import Entity
+
+entity = Entity("myEntity", identifier="myEntity", title="My Entity", blueprint="myBlueprint", properties=[{"name": "myDatetimeProp", "value": "2022-04-18T11:44:15.345Z"}], relations=[])
+
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript showLineNumbers
+import * as pulumi from "@pulumi/pulumi";
+import { Entity } from "@port-labs/pulumi";
+
+export const entity = new Entity("myEntity", {
+  identifier: "myEntity",
+  title: "My Entity",
+  blueprint: "myBlueprint",
+  properties: [{ name: "myDatetimeProp", value: "2022-04-18T11:44:15.345Z" }],
+  relations: [],
+});
+```
+
+</TabItem>
+
+<TabItem value="javascript">
+
+```javascript showLineNumbers
+"use strict";
+const pulumi = require("@pulumi/pulumi");
+const port = require("@port-labs/pulumi");
+
+const entity = new Entity("myEntity", {
+  identifier: "myEntity",
+  title: "My Entity",
+  blueprint: "myBlueprint",
+  properties: [{ name: "myDatetimeProp", value: "2022-04-18T11:44:15.345Z" }],
+  relations: [],
+});
+
+exports.title = entity.title;
+```
+
+</TabItem>
+<TabItem value="go">
+
+```go showLineNumbers
+package main
+
+import (
+	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		entity, err := port.NewEntity(ctx, "entity", &port.EntityArgs{
+			Identifier: pulumi.String("myEntity"),
+			Title:      pulumi.String("My Entity"),
+			Blueprint:  pulumi.String("myBlueprint"),
+			Properties: port.EntityPropertyArray{
+				&port.EntityPropertyArgs{
+					Name:  pulumi.String("myDatetimeProp"),
+					Value: pulumi.String("2022-04-18T11:44:15.345Z"),
+				},
+			},
+		})
+		ctx.Export("entity", entity.Title)
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+```
+
+</TabItem>
+
+</Tabs>
+
+</TabItem>
+<TabItem value="timer">
+
+<Tabs groupId="timer-definition" defaultValue="python" values={[
+{label: "Python", value: "python"},
+{label: "TypeScript", value: "typescript"},
+{label: "JavaScript", value: "javascript"},
+{label: "GO", value: "go"}
+]}>
+
+<TabItem value="python">
+
+```python showLineNumbers
+"""A Python Pulumi program"""
+
+import json
+import pulumi
+from port_pulumi import Entity
+
+entity = Entity("myEntity", identifier="myEntity", title="My Entity", blueprint="myBlueprint", properties=[{"name": "myTimerProp", "value": "2022-04-18T11:44:15.345Z"}], relations=[])
+
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript showLineNumbers
+import * as pulumi from "@pulumi/pulumi";
+import { Entity } from "@port-labs/pulumi";
+
+export const entity = new Entity("myEntity", {
+  identifier: "myEntity",
+  title: "My Entity",
+  blueprint: "myBlueprint",
+  properties: [{ name: "myTimerProp", value: "2022-04-18T11:44:15.345Z" }],
+  relations: [],
+});
+```
+
+</TabItem>
+
+<TabItem value="javascript">
+
+```javascript showLineNumbers
+"use strict";
+const pulumi = require("@pulumi/pulumi");
+const port = require("@port-labs/pulumi");
+
+const entity = new Entity("myEntity", {
+  identifier: "myEntity",
+  title: "My Entity",
+  blueprint: "myBlueprint",
+  properties: [{ name: "myTimerProp", value: "2022-04-18T11:44:15.345Z" }],
+  relations: [],
+});
+
+exports.title = entity.title;
+```
+
+</TabItem>
+<TabItem value="go">
+
+```go showLineNumbers
+package main
+
+import (
+	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		entity, err := port.NewEntity(ctx, "entity", &port.EntityArgs{
+			Identifier: pulumi.String("myEntity"),
+			Title:      pulumi.String("My Entity"),
+			Blueprint:  pulumi.String("myBlueprint"),
+			Properties: port.EntityPropertyArray{
+				&port.EntityPropertyArgs{
+					Name:  pulumi.String("myTimerProp"),
+					Value: pulumi.String("2022-04-18T11:44:15.345Z"),
+				},
+			},
+		})
+		ctx.Export("entity", entity.Title)
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+```
+
+</TabItem>
+
+</Tabs>
+
+</TabItem>
+<TabItem value="yaml">
+
+<Tabs groupId="yaml-definition" defaultValue="python" values={[
+{label: "Python", value: "python"},
+{label: "TypeScript", value: "typescript"},
+{label: "JavaScript", value: "javascript"},
+{label: "GO", value: "go"}
+]}>
+
+<TabItem value="python">
+
+```python showLineNumbers
+"""A Python Pulumi program"""
+
+import json
+import pulumi
+from port_pulumi import Entity
+
+entity = Entity("myEntity", identifier="myEntity", title="My Entity", blueprint="myBlueprint", properties=[{"name": "myYAMLProp", "value": "my: yaml"}], relations=[])
+
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript showLineNumbers
+import * as pulumi from "@pulumi/pulumi";
+import { Entity } from "@port-labs/pulumi";
+
+export const entity = new Entity("myEntity", {
+  identifier: "myEntity",
+  title: "My Entity",
+  blueprint: "myBlueprint",
+  properties: [{ name: "myYAMLProp", value: "my: yaml" }],
+  relations: [],
+});
+```
+
+</TabItem>
+
+<TabItem value="javascript">
+
+```javascript showLineNumbers
+"use strict";
+const pulumi = require("@pulumi/pulumi");
+const port = require("@port-labs/pulumi");
+
+const entity = new Entity("myEntity", {
+  identifier: "myEntity",
+  title: "My Entity",
+  blueprint: "myBlueprint",
+  properties: [{ name: "myYAMLProp", value: "my: yaml" }],
+  relations: [],
+});
+
+exports.title = entity.title;
+```
+
+</TabItem>
+<TabItem value="go">
+
+```go showLineNumbers
+package main
+
+import (
+	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		entity, err := port.NewEntity(ctx, "entity", &port.EntityArgs{
+			Identifier: pulumi.String("myEntity"),
+			Title:      pulumi.String("My Entity"),
+			Blueprint:  pulumi.String("myBlueprint"),
+			Properties: port.EntityPropertyArray{
+				&port.EntityPropertyArgs{
+					Name:  pulumi.String("myYAMLProp"),
+					Value: pulumi.String("my: yaml"),
+				},
+			},
+		})
+		ctx.Export("entity", entity.Title)
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+```
+
+</TabItem>
+
+</Tabs>
+
+</TabItem>
+
+</Tabs>
+
+The following parameters are **required**:
+
+- `name` - the name of the property in the [blueprint definition](../../../define-your-data-model/setup-blueprint/properties/properties.md#structure);
+- `value` - the value of the property (for non-array properties);
+- `items` - an array of values (for array properties).
+
+### `relations` schema
+
+The `relations` schema maps a target entity to the source entity definition:
+
+<Tabs groupId="yaml-definition" defaultValue="python" values={[
+{label: "Python", value: "python"},
+{label: "TypeScript", value: "typescript"},
+{label: "JavaScript", value: "javascript"},
+{label: "GO", value: "go"}
+]}>
+
+<TabItem value="python">
+
+```python showLineNumbers
+"""A Python Pulumi program"""
+
+import json
+import pulumi
+from port_pulumi import Entity
+
+entity = Entity("myEntity", identifier="myEntity", title="My Entity", blueprint="myBlueprint", properties=[], relations=[{ "name": "myRelation", "identifier": "targetEntityIdentifier" }])
+
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript showLineNumbers
+import * as pulumi from "@pulumi/pulumi";
+import { Entity } from "@port-labs/pulumi";
+
+export const entity = new Entity("myEntity", {
+  identifier: "myEntity",
+  title: "My Entity",
+  blueprint: "myBlueprint",
+  properties: [],
+  relations: [{ name: "myRelation", identifier: "targetEntityIdentifier" }],
+});
+```
+
+</TabItem>
+
+<TabItem value="javascript">
+
+```javascript showLineNumbers
+"use strict";
+const pulumi = require("@pulumi/pulumi");
+const port = require("@port-labs/pulumi");
+
+const entity = new Entity("myEntity", {
+  identifier: "myEntity",
+  title: "My Entity",
+  blueprint: "myBlueprint",
+  properties: [],
+  relations: [{ name: "myRelation", identifier: "targetEntityIdentifier" }],
+});
+
+exports.title = entity.title;
+```
+
+</TabItem>
+<TabItem value="go">
+
+```go showLineNumbers
+package main
+
+import (
+	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		entity, err := port.NewEntity(ctx, "entity", &port.EntityArgs{
+			Identifier: pulumi.String("myEntity"),
+			Title:      pulumi.String("My Entity"),
+			Blueprint:  pulumi.String("myBlueprint"),
+			Relations: port.EntityRelationArray{
+				&port.EntityRelationArgs{
+					Name:       pulumi.String("myRelation"),
+					Identifier: pulumi.String("targetEntityIdentifier"),
+				},
+			},
+			Properties: port.EntityPropertyArray{
+				// ..properties
+			},
+		})
+		ctx.Export("entity", entity.Title)
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+```
+
+</TabItem>
+
+</Tabs>
+
+The following parameters are **required**:
+
+- `name` - the name of the [relation](../../../define-your-data-model/relate-blueprints/relate-blueprints.md#structure-table) in the blueprint definition;
+- `identifier` - the identifier of the target entity.
+
+:::note
+At the moment, it is only possible to create entities with `many: false` relations using Port's Pulumi provider.
+:::
+
+## Ingest data using the Pulumi provider
+
+To ingest data to the software catalog using the Pulumi provider, you will create an instance of `port.Entity` resource in your preferred langauge:
+
+<Tabs groupId="sync-data" queryString="current-scenario" defaultValue="create" values={[
+{label: "Create", value: "create"},
+{label: "Update", value: "update"},
+{label: "Delete", value: "delete"},
+]} >
+
+<TabItem value="create">
+
+To create an entity using Pulumi, create a file in your prefered languague from and insert the following:
+
+<Tabs groupId="create-resource-examples" defaultValue="python" values={[
+{label: "Python", value: "python"},
+{label: "TypeScript", value: "typescript"},
+{label: "JavaScript", value: "javascript"},
+{label: "GO", value: "go"}
+]}>
+
+<TabItem value="python">
+
+```python showLineNumbers
+"""A Python Pulumi program"""
+
+import pulumi
+from port_pulumi import Entity
+
+entity = Entity("myEntity", title="My Entity", blueprint="myBlueprint", properties=[], relations=[])
 
 ```
 
@@ -250,212 +1554,11 @@ func main() {
 </TabItem>
 
 </Tabs>
-</TabItem>
-<TabItem value="number">
 
-```hcl showLineNumbers
-properties {
-  name = "myNumberProp"
-  value = 7
-}
-```
-
-</TabItem>
-<TabItem value="boolean">
-
-```hcl showLineNumbers
-properties {
-  name = "myBooleanProp"
-  value = true
-}
-```
-
-</TabItem>
-<TabItem value="object">
-
-```hcl showLineNumbers
-properties {
-  name = "myObjectProp"
-  value = jsonencode({ "my" : "object" })
-}
-```
-
-</TabItem>
-<TabItem value="array">
-
-```hcl showLineNumbers
-properties {
-  name = "myArrayProp"
-  items = [1, 2, 3]
-}
-```
-
-</TabItem>
-<TabItem value="url">
-
-```hcl showLineNumbers
-properties {
-  name = "myUrlProp"
-  value = "https://example.com"
-}
-```
-
-</TabItem>
-<TabItem value="email">
-
-```hcl showLineNumbers
-properties {
-  name = "myEmailProp"
-  value = "me@example.com"
-}
-```
-
-</TabItem>
-<TabItem value="user">
-
-```hcl showLineNumbers
-properties {
-  name = "myUserProp"
-  value = "Admin Port"
-}
-```
-
-</TabItem>
-<TabItem value="team">
-
-```hcl showLineNumbers
-properties {
-  name = "myTeamProp"
-  value = "argo-admins"
-}
-```
-
-</TabItem>
-<TabItem value="datetime">
-
-```hcl showLineNumbers
-properties {
-  name = "myDatetimeProp"
-  value = "2022-04-18T11:44:15.345Z"
-}
-```
-
-</TabItem>
-<TabItem value="timer">
-
-```hcl showLineNumbers
-properties {
-  name = "myTimerProp"
-  value = "2023-04-18T11:44:15.345Z"
-}
-```
-
-</TabItem>
-<TabItem value="yaml">
-
-```hcl showLineNumbers
-properties {
-  name = "myYAMLProp"
-  value = "my: yaml"
-}
-```
-
-</TabItem>
-
-</Tabs>
-
-The following parameters are **required**:
-
-- `name` - the name of the property in the [blueprint definition](../../../define-your-data-model/setup-blueprint/properties/properties.md#structure);
-- `value` - the value of the property (for non-array properties);
-- `items` - an array of values (for array properties).
-
-### `relations` schema
-
-The [`relations`](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/entity#relations) schema maps a target entity to the source entity definition:
-
-```hcl showLineNumbers
-resource "port-labs_entity" "myEntity" {
-  identifier = "myEntity" # Entity identifier
-  title      = "My Entity" # Entity title
-  blueprint  = "myBlueprint" # Identifier of the blueprint to create this entity from
-
-  # Entity properties
-  ...
-
-# highlight-start
-  relations {
-    name  = "myRelation"
-    identifier = "myTargetEntityIdentifier"
-  }
-
-  relations {
-    name  = "myAdditionalRelation"
-    identifier = "myAdditionalTargetEntityIdentifier"
-  }
- # highlight-end
-}
-```
-
-The following parameters are **required**:
-
-- `name` - the name of the [relation](../../../define-your-data-model/relate-blueprints/relate-blueprints.md#structure-table) in the blueprint definition;
-- `identifier` - the identifier of the target entity.
-
-:::note
-At the moment, it is only possible to create entities with `many: true` relations using Port's Terraform provider.
-:::
-
-## Ingest data using the Terraform provider
-
-To ingest data to the software catalog using the Terraform provider, you will define [`port-labs_entity`](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/entity) resources in your Terraform definition files:
-
-<Tabs groupId="sync-data" queryString="current-scenario" defaultValue="create" values={[
-{label: "Create", value: "create"},
-{label: "Update", value: "update"},
-{label: "Delete", value: "delete"},
-]} >
-
-<TabItem value="create">
-
-To create an entity using Terraform, add a `port-labs_entity` resource to your `.tf` definition file:
-
-```hcl showLineNumbers
-resource "port-labs_entity" "myEntity" {
-  identifier = "myEntity"
-  title      = "My Entity"
-  blueprint  = "myBlueprint"
-
-  properties {
-    name  = "myStringProp"
-    value = "Example microservice"
-  }
-  properties {
-    name  = "myNumberProp"
-    value = 1
-  }
-  properties {
-    name  = "myArrayProp"
-    items = ["#rnd", "#deployments"]
-  }
-  properties {
-    name  = "myObjectProp"
-    value = jsonencode({ "foo" : "bar" })
-  }
-  properties {
-    name  = "myBoolProp"
-    value = true
-  }
-}
-```
-
-Then run the following commands to apply your changes and update the catalog:
+Then run the following command to apply your changes and update the catalog:
 
 ```shell showLineNumbers
-# To view Terraform's planned changes based on your .tf definition file:
-terraform plan
-# To apply the changes and update the catalog
-terraform apply
+pulumi up -y
 ```
 
 After running these commands, you will see your catalog updated with the new entities.
@@ -464,40 +1567,23 @@ After running these commands, you will see your catalog updated with the new ent
 
 <TabItem value="update">
 
-To update an entity using Terraform, update the existing `port-labs_entity` resource in your `.tf` definition file and then run `terraform apply`.
+To update an entity using Pulumi, update the existing `port.Entity` resource in code file and then run `pulumi up -y`.
 
-It is also possible to start managing existing entities using Port's Terraform provider, to begin managing an existing entity, add a new `port-labs_entity` resource to your `.tf` definition file and make the desired changes:
-
-```hcl showLineNumbers
-resource "port-labs_entity" "myExistingEntity" {
-  # highlight-next-line
-  identifier = "myExistingEntity"
-  title      = "My Entity"
-  blueprint  = "myBlueprint"
-
-  # Entity properties and relations
-  ...
-}
-```
+It is also possible to start managing existing entities using Port's Pulumi provider, to begin managing an existing entity, add a new `port.Entity` resource to your code file and make the desired changes
 
 :::info
-Important notes about adding existing entities to the Terraform provider:
+Important notes about adding existing entities to the Pulumi provider:
 
-- It is important to specify the `identifier` of the entity, otherwise terraform will create a new entity with an autogenerated identifier.
-- Port's Terraform provider uses the [create/override](../../api/api.md?update-strategy=create-override#usage) strategy, meaning for an existing entity, any properties not defined in the resource definition will be overridden with empty values.
-
-:::
+- It is important to specify the `identifier` of the entity, otherwise Pulumi will create a new entity with an autogenerated identifier.
+- Port's Pulumi provider uses the [create/override](../../api/api.md?update-strategy=create-override#usage) strategy, meaning for an existing entity, any properties not defined in the resource definition will be overridden with empty values.
+  :::
 
 </TabItem>
 
 <TabItem value="delete">
 
-To delete an entity using Terraform, simply remove the `port-labs_entity` resource defined in your `.tf` definition file and then run `terraform apply`.
+To delete an entity using Pulumi, simply remove the `port.Entity` resource defined in code file and then run `pulumi up -y`.
 
 </TabItem>
 
 </Tabs>
-
-## Examples
-
-Refer to the [examples](./examples/examples.md) page for practical configurations and their corresponding blueprint definitions.
