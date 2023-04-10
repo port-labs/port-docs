@@ -17,6 +17,9 @@
           "comment_id": ".body.data.comment_id",
           "issue_id": ".body.data.issue_id",
           "timestamp": ".body.data.timestamp"
+        },
+        "relations": {
+          "sentryIssuesEvent": ".body.data.issue_id | tostring"
         }
       }
     }

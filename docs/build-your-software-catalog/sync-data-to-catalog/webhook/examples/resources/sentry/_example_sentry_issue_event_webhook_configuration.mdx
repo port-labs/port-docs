@@ -1,0 +1,30 @@
+```json showLineNumbers
+{
+  "identifier": "sentryIssuesMapper",
+  "title": "Sentry mapper",
+  "description": "A webhook configuration to map Sentry Issues to Port",
+  "icon": "Sentry",
+  "mappings": [
+    {
+      "blueprint": "sentryIssuesEvent",
+      "entity": {
+        "identifier": ".body.data.issue.id",
+        "title": "Issues Event",
+        "properties": {
+          "action": ".body.data.action",
+          "issueID": ".body.data.issue.id",
+          "level": ".body.data.issue.level",
+          "issueUrl": ".body.data.issue.url",
+          "issueStatus": ".body.data.issue.status",
+          "projectUrl": ".body.data.issue.project_url"
+        }
+      }
+    }
+  ],
+  "enabled": true,
+  "security": {
+    "signatureHeaderName": "sentry-hook-signature",
+    "signatureAlgorithm": "sha256"
+  }
+}
+```

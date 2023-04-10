@@ -1,11 +1,15 @@
 ```json showLineNumbers
 {
-  "identifier": "sentryIssueEvent",
+  "identifier": "sentryIssuesEvent",
   "description": "This blueprint represents an issue trigger event from Sentry",
   "title": "Sentry Issue Event",
   "icon": "Sentry",
   "schema": {
     "properties": {
+      "issueID": {
+        "type": "string",
+        "title": "Issue ID"
+      },
       "level": {
         "type": "string",
         "title": "Level",
@@ -16,6 +20,21 @@
         "title": "Issue URL",
         "format": "url",
         "description": "the link to the issue in Sentry"
+      },
+      "issueStatus": {
+        "type": "string",
+        "title": "Issue Status"
+      },
+      "projectUrl": {
+        "type": "string",
+        "title": "Project URL",
+        "format": "url",
+        "description": "the link to the project url in Sentry"
+      },
+      "action": {
+        "type": "string",
+        "title": "Action",
+        "enum": ["created", "resolved", "assigned", "ignored"]
       }
     },
     "required": []
