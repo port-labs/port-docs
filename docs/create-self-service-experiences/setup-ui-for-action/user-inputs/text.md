@@ -37,7 +37,7 @@ In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we
 ```json showLineNumbers
 {
   "myTextInput": {
-    "title": "My Text Input",
+    "title": "My text input",
     "icon": "My icon",
     "description": "My text input",
     // highlight-start
@@ -70,7 +70,7 @@ In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we
 ```json showLineNumbers
 {
   "myTextArrayInput": {
-    "title": "My Text Array Input",
+    "title": "My text array input",
     "icon": "My icon",
     "description": "My text array input",
     // highlight-start
@@ -104,7 +104,7 @@ resource "port-labs_action" "myAction" {
   # highlight-start
   user_properties {
     identifier  = "myTextInput"
-    title       = "My Text Input"
+    title       = "My text input"
     description = "My text input"
     required    = false
     type        = "string"
@@ -123,7 +123,7 @@ resource "port-labs_action" "myAction" {
   # highlight-start
   user_properties {
     identifier  = "myTextSelectInput"
-    title       = "My Text Select Input"
+    title       = "My text Select input"
     description = "My text select input"
     required    = false
     type        = "string"
@@ -156,7 +156,7 @@ Text validations support the following operators:
 ```json showLineNumbers
 {
   "myTextInput": {
-    "title": "My Text Input",
+    "title": "My text input",
     "icon": "My icon",
     "description": "My text input",
     "type": "string",
@@ -176,7 +176,7 @@ Text validations support the following operators:
 ```json showLineNumbers
 {
   "myTextArrayInput": {
-    "title": "My Text Array Input",
+    "title": "My text array input",
     "icon": "My icon",
     "description": "My text array input",
     // highlight-start
