@@ -233,8 +233,8 @@ In this step-by-step example, you will export your `SNS topics` and `SQS queues`
 
 1. Create the following Port blueprints:
 
-   - **SNS** - will represent SNS topics from the AWS account.
-   - **SQS** - will represent SQS queues from the AWS account;
+   - **SNS** - will represent SNS topics from the AWS account;
+   - **SQS** - will represent SQS queues from the AWS account.
 
    You may use the following definitions:
 
