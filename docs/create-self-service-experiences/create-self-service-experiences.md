@@ -3,11 +3,6 @@ title: ⚡️ Create Self-Service Experiences
 sidebar_label: ⚡️ Create Self-Service Experiences
 ---
 
-import Image from "@theme/IdealImage";
-import SelfServiceArchitecture from "../../static/img/self-service-actions/selfserviceHLarch.png";
-import CreateUIForm from "../../static/img/self-service-actions/setup_ui.png";
-import BackendIntegrations from "../../static/img/self-service-actions/backend-integrations.png";
-
 Drive developer productivity by allowing developers to run free and use self-service actions like scaffolding a service or provisioning a cloud resource. Developer self-service brings consistency and repeatability and ensures that developers do the right thing because it’s intuitive and clear, all with guardrails like manual approvals or consumption policies to comply with organizational standards.
 
 1. **Not Opinionated** - set any Self-Service action UI with low-code UI components;
@@ -39,11 +34,12 @@ In this [live demo](https://demo.getport.io/self-serve) example, we can see exam
 
 1. A user **performs an action** from Port's UI interface;
 2. **A payload** that includes the user inputs and relevant action metadata is **sent** to your infrastructure;
-3. **A job is triggered** and the **user gets a continuous indication** about its progress.
+3. **A job is triggered** and the **user gets a continuous indication** about its progress;
+4. Once the action is running, you can use Port's API to update Port on its status and provide information such as logs and links to the resulting handlers.
 
 <center>
 
-<Image img={SelfServiceArchitecture} />
+![](../../static/img/self-service-actions/selfserviceHLarch.png)
 
 </center>
 
@@ -59,7 +55,7 @@ Port supports various input types, including constructing wizards with condition
 
 <center>
 
-<Image img={CreateUIForm}  />
+![](../../static/img/self-service-actions/setup_ui.png)
 
 </center>
 
@@ -80,7 +76,7 @@ As part of your backend and its logic implementation, you are able to keep the s
 
 <center>
 
-<Image img={BackendIntegrations}  />
+![](../../static/img/self-service-actions/backend-integrations.png)
 
 </center>
 

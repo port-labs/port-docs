@@ -19,6 +19,7 @@ Setting up an action includes the following steps:
 2. **Select the [user inputs](#userinputs---form--wizard-ui)** - create a wizard-like experience by specifying the input types users need to fill in, while also including input validations;
 3. **Configure the [action type](#trigger--action-type)** - Create/Day-2/Delete;
 4. **Connect the action to a [backend](#invocationmethod---connect-to-a-backend)** - for every action you define in Port, you tell Port what component is responsible to handle the action's invocation. This is called the **invocation method**, Port supports various invocation methods for different use cases and environments;
+<!-- 5. **Reflect the action's progress** by making requests to Port's API from your action backend. You can provide additional information such as status, logs and links to job runners and pipelines that the action triggers; -->
 5. **Configure RBAC and guardrails** - this optional step lets you choose who can trigger an action, does the action require manual approval from an admin, and who has the permissions to approve or dismiss requests.
 
 ## 💡 Common actions
@@ -137,8 +138,6 @@ refer to the [self-service actions RBAC](../set-self-service-action-rbac/set-sel
 
 ## Configuring actions in Port
 
-TABS for API, TF, UI
-
 <Tabs groupId="configure" queryString>
 
 <TabItem value="api" label="API">
@@ -172,11 +171,31 @@ The JSON shown above is for a single blueprint action, the actions of a blueprin
 <TabItem value="terraform" label="Terraform">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
-  title      = "My blueprint"
-  icon       = "My icon"
-  identifier = "myIdentifier"
-  description = "My description"
+resource "port-labs_action" "myAction" {
+  blueprint_identifier = "myBlueprint"
+  title                = "My Action"
+  identifier           = "myAction"
+  description          = "My self-service action"
+
+  user_properties {
+    identifier  = "myInput"
+    type        = "myType"
+    title       = "My Input"
+    description = "My user input"
+  }
+
+  user_properties {
+    identifier  = "mySpecialInput"
+    type        = "myType"
+    title       = "My Special Input"
+    description = "My special user input"
+  }
+
+  trigger = "myActionTrigger"
+
+  invocation_method {
+    type = "myInvocationType"
+  }
 }
 ```
 
