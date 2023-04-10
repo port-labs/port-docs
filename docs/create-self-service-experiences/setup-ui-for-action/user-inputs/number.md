@@ -10,7 +10,7 @@ import TabItem from "@theme/TabItem"
 
 # Number
 
-Number is a basic input for numeric data
+Number is a basic input for numeric data.
 
 ## 💡 Common number usage
 
@@ -25,7 +25,7 @@ In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we
 
 ## API definition
 
-<Tabs groupId="api-definition" defaultValue="basic" values={[
+<Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Select (Enum)", value: "enum"},
 {label: "Array", value: "array"}
@@ -89,7 +89,7 @@ In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we
 
 ## Terraform definition
 
-<Tabs groupId="tf-definition" defaultValue="basic" values={[
+<Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Select (Enum) - coming soon", value: "enum"},
 {label: "Array - coming soon", value: "array"}
@@ -130,7 +130,7 @@ If _x_ is the value being validated, the following must hold true:
 - _x_ ≤ `maximum`
 - _x_ < `exclusiveMaximum`
 
-<Tabs groupId="validation-definition" defaultValue="basic" values={[
+<Tabs groupId="validation-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Array", value: "array"},
 {label: "Terraform - coming soon", value: "tf"}

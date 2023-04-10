@@ -10,7 +10,7 @@ import TabItem from "@theme/TabItem"
 
 # Number
 
-Number is a primitive data type used to save numeric data
+Number is a primitive data type used to save numeric data.
 
 ## 💡 Common number usage
 
