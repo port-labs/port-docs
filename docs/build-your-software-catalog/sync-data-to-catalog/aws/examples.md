@@ -102,42 +102,42 @@ In this step-by-step example, you will export your `Lambda functions` to Port.
 
   <details>
   <summary> Port AWS exporter config.json </summary>
-
-```json showLineNumbers
-{
-  "resources": [
+  
+  ```json showLineNumbers
     {
-      "kind": "AWS::Lambda::Function",
-      "port": {
-        "entity": {
-          "mappings": [
-            {
-              "identifier": ".FunctionName",
-              "title": ".FunctionName",
-              "blueprint": "lambda",
-              "properties": {
-                "link": "\"https://console.aws.amazon.com/go/view?arn=\" + .Arn",
-                "description": ".Description",
-                "memorySize": ".MemorySize",
-                "ephemeralStorageSize": ".EphemeralStorage.Size",
-                "timeout": ".Timeout",
-                "runtime": ".Runtime",
-                "packageType": ".PackageType",
-                "environment": ".Environment",
-                "architectures": ".Architectures",
-                "layers": ".Layers",
-                "tags": ".Tags",
-                "iamRole": "\"https://console.aws.amazon.com/go/view?arn=\" + .Role",
-                "arn": ".Arn"
-              }
+      "resources": [
+        {
+          "kind": "AWS::Lambda::Function",
+          "port": {
+            "entity": {
+              "mappings": [
+                {
+                  "identifier": ".FunctionName",
+                  "title": ".FunctionName",
+                  "blueprint": "lambda",
+                  "properties": {
+                    "link": "\"https://console.aws.amazon.com/go/view?arn=\" + .Arn",
+                    "description": ".Description",
+                    "memorySize": ".MemorySize",
+                    "ephemeralStorageSize": ".EphemeralStorage.Size",
+                    "timeout": ".Timeout",
+                    "runtime": ".Runtime",
+                    "packageType": ".PackageType",
+                    "environment": ".Environment",
+                    "architectures": ".Architectures",
+                    "layers": ".Layers",
+                    "tags": ".Tags",
+                    "iamRole": "\"https://console.aws.amazon.com/go/view?arn=\" + .Role",
+                    "arn": ".Arn"
+                  }
+                }
+              ]
             }
-          ]
+          }
         }
-      }
+      ]
     }
-  ]
-}
-```
+  ```
 
   </details>
 
@@ -170,60 +170,60 @@ In this step-by-step example, you will export your `Lambda functions` to Port.
 
    You may use the following CloudFormation Template:
 
-  <details>
-  <summary> Event Rule CloudFormation Template </summary>
+   <details>
+   <summary> Event Rule CloudFormation Template </summary>
 
-```yaml showLineNumbers
-AWSTemplateFormatVersion: "2010-09-09"
-Description: The template used to create event rules for the Port AWS exporter.
-Parameters:
-  PortAWSExporterStackName:
-    Description: Name of the Port AWS exporter stack name
-    Type: String
-    MinLength: 1
-    MaxLength: 255
-    AllowedPattern: ^[a-zA-Z][-a-zA-Z0-9]*$
-    Default: serverlessrepo-port-aws-exporter
-Resources:
-  EventRule0:
-    Type: AWS::Events::Rule
-    Properties:
-      EventBusName: default
-      EventPattern:
-        detail-type:
-          - AWS API Call via CloudTrail
-        source:
-          - aws.lambda
-        detail:
-          eventSource:
-            - lambda.amazonaws.com
-          eventName:
-            - prefix: UpdateFunctionConfiguration
-            - prefix: CreateFunction
-            - prefix: DeleteFunction
-      Name: port-aws-exporter-sync-lambda-trails
-      State: ENABLED
-      Targets:
-        - Id: PortAWSExporterEventsQueue
-          Arn:
-            Fn::ImportValue:
-              Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
-          InputTransformer:
-            InputPathsMap:
-              awsRegion: $.detail.awsRegion
-              eventName: $.detail.eventName
-              requestFunctionName: $.detail.requestParameters.functionName
-              responseFunctionName: $.detail.responseElements.functionName
-            InputTemplate: |-
-              {
-                "resource_type": "AWS::Lambda::Function",
-                "region": "\"<awsRegion>\"",
-                "identifier": "if \"<responseFunctionName>\" != \"\" then \"<responseFunctionName>\" else \"<requestFunctionName>\" end",
-                "action": "if \"<eventName>\" | test(\"DeleteFunction[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
-              }
-```
+   ```yaml showLineNumbers
+   AWSTemplateFormatVersion: "2010-09-09"
+   Description: The template used to create event rules for the Port AWS exporter.
+   Parameters:
+     PortAWSExporterStackName:
+       Description: Name of the Port AWS exporter stack name
+       Type: String
+       MinLength: 1
+       MaxLength: 255
+       AllowedPattern: ^[a-zA-Z][-a-zA-Z0-9]*$
+       Default: serverlessrepo-port-aws-exporter
+   Resources:
+     EventRule0:
+       Type: AWS::Events::Rule
+       Properties:
+         EventBusName: default
+         EventPattern:
+           detail-type:
+             - AWS API Call via CloudTrail
+           source:
+             - aws.lambda
+           detail:
+             eventSource:
+               - lambda.amazonaws.com
+             eventName:
+               - prefix: UpdateFunctionConfiguration
+               - prefix: CreateFunction
+               - prefix: DeleteFunction
+         Name: port-aws-exporter-sync-lambda-trails
+         State: ENABLED
+         Targets:
+           - Id: PortAWSExporterEventsQueue
+             Arn:
+               Fn::ImportValue:
+                 Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+             InputTransformer:
+               InputPathsMap:
+                 awsRegion: $.detail.awsRegion
+                 eventName: $.detail.eventName
+                 requestFunctionName: $.detail.requestParameters.functionName
+                 responseFunctionName: $.detail.responseElements.functionName
+               InputTemplate: |-
+                 {
+                   "resource_type": "AWS::Lambda::Function",
+                   "region": "\"<awsRegion>\"",
+                   "identifier": "if \"<responseFunctionName>\" != \"\" then \"<responseFunctionName>\" else \"<requestFunctionName>\" end",
+                   "action": "if \"<eventName>\" | test(\"DeleteFunction[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
+                 }
+   ```
 
-  </details>
+    </details>
 
 Done! soon, you will be able to see any `Lambda functions`.
 
@@ -556,8 +556,8 @@ In this step-by-step example, you will export your `S3 buckets` to Port.
 
     You may use the following definition:
 
-      <details>
-      <summary> S3 blueprint </summary>
+    <details>
+    <summary> S3 blueprint </summary>
 
     ```json showLineNumbers
     {
@@ -610,12 +610,12 @@ In this step-by-step example, you will export your `S3 buckets` to Port.
     }
     ```
 
-      </details>
+    </details>
 
 2.  Upload the `config.json` file to the exporter's S3 bucket:
 
-       <details>
-       <summary> Port AWS exporter config.json </summary>
+    <details>
+    <summary> Port AWS exporter config.json </summary>
 
     ```json showLineNumbers
     {
@@ -648,7 +648,7 @@ In this step-by-step example, you will export your `S3 buckets` to Port.
     }
     ```
 
-       </details>
+    </details>
 
 3.  Update the exporter's `IAM policy`:
 
@@ -695,8 +695,8 @@ In this step-by-step example, you will export your `S3 buckets` to Port.
 
     You may use the following CloudFormation Template:
 
-       <details>
-       <summary> Event Rule CloudFormation Template </summary>
+    <details>
+    <summary> Event Rule CloudFormation Template </summary>
 
     ```yaml showLineNumbers
     AWSTemplateFormatVersion: "2010-09-09"
@@ -747,7 +747,7 @@ In this step-by-step example, you will export your `S3 buckets` to Port.
                   }
     ```
 
-       </details>
+    </details>
 
 Done! soon, you will be able to see any `S3 buckets`.
 
@@ -761,8 +761,8 @@ In this step-by-step example, you will export your `API Gateway APIs` to Port.
 
     You may use the following definition:
 
-      <details>
-      <summary> API Gateway blueprint </summary>
+    <details>
+    <summary> API Gateway blueprint </summary>
 
     ```json showLineNumbers
     {
@@ -828,12 +828,12 @@ In this step-by-step example, you will export your `API Gateway APIs` to Port.
     }
     ```
 
-      </details>
+    </details>
 
 2.  Upload the `config.json` file to the exporter's S3 bucket:
 
-       <details>
-       <summary> Port AWS exporter config.json </summary>
+    <details>
+    <summary> Port AWS exporter config.json </summary>
 
     ```json showLineNumbers
     {
@@ -888,7 +888,7 @@ In this step-by-step example, you will export your `API Gateway APIs` to Port.
     }
     ```
 
-       </details>
+    </details>
 
 3.  Update the exporter's `IAM policy`:
 
@@ -915,8 +915,8 @@ In this step-by-step example, you will export your `API Gateway APIs` to Port.
 
     You may use the following CloudFormation Template:
 
-       <details>
-       <summary> Event Rule CloudFormation Template </summary>
+    <details>
+    <summary> Event Rule CloudFormation Template </summary>
 
     ```yaml showLineNumbers
     AWSTemplateFormatVersion: "2010-09-09"
@@ -1008,6 +1008,217 @@ In this step-by-step example, you will export your `API Gateway APIs` to Port.
                   }
     ```
 
-       </details>
+    </details>
 
 Done! soon, you will be able to see any `API Gateway APIs`.
+
+## Mapping Cloudfront distributions
+
+In this step-by-step example, you will export your `Cloudfront distributions` to Port.
+
+1.  Create the following Port blueprint:
+
+    - **Cloudfront** - will represent Cloudfront distributions from the AWS account.
+
+    You may use the following definition:
+
+    <details>
+    <summary> Cloudfront blueprint </summary>
+
+    ```json showLineNumbers
+    {
+      "identifier": "cloudfront",
+      "description": "This blueprint represents an AWS Cloudfront distribution in our software catalog",
+      "title": "Cloudfront",
+      "icon": "Cloud",
+      "schema": {
+        "properties": {
+          "link": {
+            "type": "string",
+            "title": "Link",
+            "format": "url"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "staging": {
+            "type": "boolean",
+            "title": "Staging"
+          },
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled"
+          },
+          "httpVersion": {
+            "type": "string",
+            "title": "Http Version",
+            "enum": ["http1.1", "http2", "http2and3", "http3"]
+          },
+          "priceClass": {
+            "type": "string",
+            "title": "Price Class",
+            "enum": ["PriceClass_100", "PriceClass_200", "PriceClass_All"]
+          },
+          "domainName": {
+            "type": "string",
+            "title": "Domain Name"
+          },
+          "aliases": {
+            "type": "array",
+            "title": "Aliases"
+          },
+          "origins": {
+            "type": "array",
+            "title": "Origins"
+          },
+          "viewerCertificate": {
+            "type": "object",
+            "title": "Viewer Certificate"
+          },
+          "defaultCacheBehavior": {
+            "type": "object",
+            "title": "Default Cache Behavior"
+          },
+          "tags": {
+            "type": "array",
+            "title": "Tags"
+          }
+        },
+        "required": []
+      },
+      "mirrorProperties": {},
+      "calculationProperties": {},
+      "relations": {}
+    }
+    ```
+
+    </details>
+
+2.  Upload the `config.json` file to the exporter's S3 bucket:
+
+    <details>
+    <summary> Port AWS exporter config.json </summary>
+
+    ```json showLineNumbers
+    {
+      "resources": [
+        {
+          "kind": "AWS::CloudFront::Distribution",
+          "port": {
+            "entity": {
+              "mappings": [
+                {
+                  "identifier": ".Id",
+                  "title": ".Id",
+                  "blueprint": "cloudfront",
+                  "properties": {
+                    "link": "\"https://console.aws.amazon.com/go/view?arn=arn:aws:cloudfront:::distribution/\" + .Id",
+                    "description": ".DistributionConfig.Comment",
+                    "staging": ".DistributionConfig.Staging",
+                    "enabled": ".DistributionConfig.Enabled",
+                    "httpVersion": ".DistributionConfig.HttpVersion",
+                    "priceClass": ".DistributionConfig.PriceClass",
+                    "domainName": ".DomainName",
+                    "aliases": ".DistributionConfig.Aliases",
+                    "origins": ".DistributionConfig.Origins",
+                    "viewerCertificate": ".DistributionConfig.ViewerCertificate",
+                    "defaultCacheBehavior": ".DistributionConfig.DefaultCacheBehavior",
+                    "tags": ".Tags"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+    ```
+
+    </details>
+
+3.  Update the exporter's `IAM policy`:
+
+    <details>
+    <summary> IAM Policy </summary>
+
+    ```json showLineNumbers
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Sid": "VisualEditor0",
+          "Effect": "Allow",
+          "Action": [
+            "cloudfront:GetDistribution*",
+            "cloudfront:ListDistributions*"
+          ],
+          "Resource": "*"
+        }
+      ]
+    }
+    ```
+
+    </details>
+
+4.  Optional: Create an event rule to trigger automatic syncing of changes in Cloudfront distributions.
+
+    You may use the following CloudFormation Template:
+
+    <details>
+    <summary> Event Rule CloudFormation Template </summary>
+
+    ```yaml showLineNumbers
+    AWSTemplateFormatVersion: "2010-09-09"
+    Description: The template used to create event rules for the Port AWS exporter.
+    Parameters:
+      PortAWSExporterStackName:
+        Description: Name of the Port AWS exporter stack name
+        Type: String
+        MinLength: 1
+        MaxLength: 255
+        AllowedPattern: ^[a-zA-Z][-a-zA-Z0-9]*$
+        Default: serverlessrepo-port-aws-exporter
+    Resources:
+      EventRule0:
+        Type: AWS::Events::Rule
+        Properties:
+          EventBusName: default
+          EventPattern:
+            source:
+              - aws.cloudfront
+            detail-type:
+              - AWS API Call via CloudTrail
+            detail:
+              eventSource:
+                - cloudfront.amazonaws.com
+              eventName:
+                - prefix: CreateDistribution
+                - prefix: CopyDistribution
+                - prefix: UpdateDistribution
+                - prefix: DeleteDistribution
+          Name: port-aws-exporter-sync-cloudfront-trails
+          State: ENABLED
+          Targets:
+            - Id: PortAWSExporterEventsQueue
+              Arn:
+                Fn::ImportValue:
+                  Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+              InputTransformer:
+                InputPathsMap:
+                  awsRegion: $.detail.awsRegion
+                  eventName: $.detail.eventName
+                  requestDistributionId: $.detail.requestParameters.id
+                  responseDistributionId: $.detail.responseElements.distribution.id
+                InputTemplate: |-
+                  {
+                    "resource_type": "AWS::CloudFront::Distribution",
+                    "region": "\"<awsRegion>\"",
+                    "identifier": "if \"<responseDistributionId>\" != \"\" then \"<responseDistributionId>\" else \"<requestDistributionId>\" end",
+                    "action": "if \"<eventName>\" | test(\"DeleteDistribution[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
+                  }
+    ```
+
+    </details>
+
+Done! soon, you will be able to see any `Cloudfront distributions`.
