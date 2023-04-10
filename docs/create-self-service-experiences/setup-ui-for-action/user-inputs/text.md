@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-description: Textbox is a basic input for text
+description: Text is a basic input for textual information
 ---
 
 import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"
@@ -8,13 +8,13 @@ import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Textbox
+# Text
 
-Textbox is a basic input for text.
+Text is a basic input for textual information.
 
-## 💡 Common textbox usage
+## 💡 Common text usage
 
-The textbox input type can be used to store any text based data, for example:
+The text input type can be used to store any text based data, for example:
 
 - Image tags;
 - Variable keys;
@@ -22,13 +22,13 @@ The textbox input type can be used to store any text based data, for example:
 - File names;
 - etc.
 
-In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we can see the **scaffold new service** action whose `Service Name` input is a textbox input. 🎬
+In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we can see the **scaffold new service** action whose `Service Name` input is a text input. 🎬
 
 ## API definition
 
 <Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Enum", value: "enum"},
+{label: "Select (Enum)", value: "enum"},
 {label: "Array", value: "array"}
 ]}>
 
@@ -36,10 +36,10 @@ In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we
 
 ```json showLineNumbers
 {
-  "myTextboxInput": {
-    "title": "My Textbox",
+  "myTextInput": {
+    "title": "My Text Input",
     "icon": "My icon",
-    "description": "My textbox input",
+    "description": "My text input",
     // highlight-start
     "type": "string",
     // highlight-end
@@ -53,17 +53,13 @@ In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we
 
 ```json showLineNumbers
 {
-  "myTextboxInputEnum": {
-    "title": "My textbox input enum",
+  "myTextSelectInput": {
+    "title": "My text select input",
     "icon": "My icon",
-    "description": "My textbox input enum",
+    "description": "My text select input",
     "type": "string",
     // highlight-next-line
-    "enum": ["my-option-1", "my-option-2"],
-    "enumColors": {
-      "my-option-1": "red",
-      "my-option-2": "green"
-    }
+    "enum": ["my-option-1", "my-option-2"]
   }
 }
 ```
@@ -73,10 +69,10 @@ In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we
 
 ```json showLineNumbers
 {
-  "myTextboxInputArray": {
-    "title": "My textbox array",
+  "myTextArrayInput": {
+    "title": "My Text Array Input",
     "icon": "My icon",
-    "description": "My textbox array",
+    "description": "My text array input",
     // highlight-start
     "type": "array",
     "items": {
@@ -94,9 +90,9 @@ In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we
 
 ## Terraform definition
 
-<Tabs groupId="tf-definition" defaultValue="basic" values={[
+<Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Enum", value: "enum"},
+{label: "Select (Enum)", value: "enum"},
 {label: "Array - coming soon", value: "array"}
 ]}>
 
@@ -106,11 +102,12 @@ In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we
 resource "port-labs_action" "myAction" {
   # ...action properties
   # highlight-start
-  properties {
-    identifier = "myTextboxInput"
-    title      = "My textbox input"
-    required   = false
-    type       = "string"
+  user_properties {
+    identifier  = "myTextInput"
+    title       = "My Text Input"
+    description = "My text input"
+    required    = false
+    type        = "string"
   }
   # highlight-end
 }
@@ -124,16 +121,13 @@ resource "port-labs_action" "myAction" {
 resource "port-labs_action" "myAction" {
   # ...action properties
   # highlight-start
-  properties {
-    identifier = "myStringProp"
-    title      = "My string"
-    required   = false
-    type       = "string"
-    enum       = ["my-option-1", "my-option-2"]
-    enum_colors = {
-      "my-option-1" = "red"
-      "my-option-2" = "green"
-    }
+  user_properties {
+    identifier  = "myTextSelectInput"
+    title       = "My Text Select Input"
+    description = "My text select input"
+    required    = false
+    type        = "string"
+    enum        = ["my-option-1", "my-option-2"]
   }
   # highlight-end
 }
@@ -143,15 +137,15 @@ resource "port-labs_action" "myAction" {
 </TabItem>
 </Tabs>
 
-## Validate textbox
+## Validate text
 
-Textbox validations support the following operators:
+Text validations support the following operators:
 
 - `minLength` - enforce minimal string length;
 - `maxLength` - enforce maximal string length;
 - `pattern` - enforce Regex patterns.
 
-<Tabs groupId="validation-definition" defaultValue="basic" values={[
+<Tabs groupId="validation-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Array", value: "array"},
 {label: "Terraform - coming soon", value: "tf"}
@@ -161,10 +155,10 @@ Textbox validations support the following operators:
 
 ```json showLineNumbers
 {
-  "myStringProp": {
-    "title": "My string",
+  "myTextInput": {
+    "title": "My Text Input",
     "icon": "My icon",
-    "description": "My string property",
+    "description": "My text input",
     "type": "string",
     // highlight-start
     "minLength": 1,
@@ -181,10 +175,10 @@ Textbox validations support the following operators:
 
 ```json showLineNumbers
 {
-  "myStringArray": {
-    "title": "My string array",
+  "myTextArrayInput": {
+    "title": "My Text Array Input",
     "icon": "My icon",
-    "description": "My string array",
+    "description": "My text array input",
     // highlight-start
     "type": "array",
     "items": {
