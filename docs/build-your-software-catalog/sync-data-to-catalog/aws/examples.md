@@ -100,46 +100,46 @@ In this step-by-step example, you will export your `Lambda functions` to Port.
 
 2. Upload the `config.json` file to the exporter's S3 bucket:
 
-  <details>
-  <summary> Port AWS exporter config.json </summary>
-  
-  ```json showLineNumbers
-    {
-      "resources": [
-        {
-          "kind": "AWS::Lambda::Function",
-          "port": {
-            "entity": {
-              "mappings": [
-                {
-                  "identifier": ".FunctionName",
-                  "title": ".FunctionName",
-                  "blueprint": "lambda",
-                  "properties": {
-                    "link": "\"https://console.aws.amazon.com/go/view?arn=\" + .Arn",
-                    "description": ".Description",
-                    "memorySize": ".MemorySize",
-                    "ephemeralStorageSize": ".EphemeralStorage.Size",
-                    "timeout": ".Timeout",
-                    "runtime": ".Runtime",
-                    "packageType": ".PackageType",
-                    "environment": ".Environment",
-                    "architectures": ".Architectures",
-                    "layers": ".Layers",
-                    "tags": ".Tags",
-                    "iamRole": "\"https://console.aws.amazon.com/go/view?arn=\" + .Role",
-                    "arn": ".Arn"
-                  }
-                }
-              ]
-            }
-          }
-        }
-      ]
-    }
-  ```
+   <details>
+   <summary> Port AWS exporter config.json </summary>
 
-  </details>
+   ```json showLineNumbers
+   {
+     "resources": [
+       {
+         "kind": "AWS::Lambda::Function",
+         "port": {
+           "entity": {
+             "mappings": [
+               {
+                 "identifier": ".FunctionName",
+                 "title": ".FunctionName",
+                 "blueprint": "lambda",
+                 "properties": {
+                   "link": "\"https://console.aws.amazon.com/go/view?arn=\" + .Arn",
+                   "description": ".Description",
+                   "memorySize": ".MemorySize",
+                   "ephemeralStorageSize": ".EphemeralStorage.Size",
+                   "timeout": ".Timeout",
+                   "runtime": ".Runtime",
+                   "packageType": ".PackageType",
+                   "environment": ".Environment",
+                   "architectures": ".Architectures",
+                   "layers": ".Layers",
+                   "tags": ".Tags",
+                   "iamRole": "\"https://console.aws.amazon.com/go/view?arn=\" + .Role",
+                   "arn": ".Arn"
+                 }
+               }
+             ]
+           }
+         }
+       }
+     ]
+   }
+   ```
+
+   </details>
 
 3. Update the exporter's `IAM policy`:
 
@@ -223,7 +223,7 @@ In this step-by-step example, you will export your `Lambda functions` to Port.
                  }
    ```
 
-    </details>
+   </details>
 
 Done! soon, you will be able to see any `Lambda functions`.
 
@@ -1234,3 +1234,220 @@ For more information, read [here](https://docs.aws.amazon.com/awscloudtrail/late
     </details>
 
 Done! soon, you will be able to see any `Cloudfront distributions`.
+
+## Mapping DynamoDB tables
+
+In this step-by-step example, you will export your `DynamoDB tables` to Port.
+
+1. Create the following Port blueprint:
+
+   - **DynamoDB** - will represent DynamoDB tables from the AWS account.
+
+   You may use the following definition:
+
+   <details>
+   <summary> DynamoDB blueprint </summary>
+
+   ```json showLineNumbers
+   {
+     "identifier": "dynamodb",
+     "description": "This blueprint represents an AWS DynamoDB table in our software catalog",
+     "title": "DynamoDB",
+     "icon": "SQL",
+     "schema": {
+       "properties": {
+         "link": {
+           "type": "string",
+           "title": "Link",
+           "format": "url"
+         },
+         "writeCapacityUnits": {
+           "type": "number",
+           "title": "Write Capacity Units"
+         },
+         "readCapacityUnits": {
+           "type": "number",
+           "title": "Read Capacity Units"
+         },
+         "deletionProtectionEnabled": {
+           "type": "boolean",
+           "title": "Deletion Protection Enabled"
+         },
+         "pointInTimeRecoveryEnabled": {
+           "type": "boolean",
+           "title": "Point In Time Recovery Enabled"
+         },
+         "ttlEnabled": {
+           "type": "boolean",
+           "title": "TTL Enabled"
+         },
+         "ttlAttributeName": {
+           "type": "string",
+           "title": "TTL Attribute Name"
+         },
+         "billingMode": {
+           "type": "string",
+           "title": "Billing Mode",
+           "enum": ["PAY_PER_REQUEST", "PROVISIONED"]
+         },
+         "attributeDefinitions": {
+           "type": "array",
+           "title": "Attribute Definitions"
+         },
+         "keySchema": {
+           "type": "array",
+           "title": "Key Schema"
+         },
+         "tags": {
+           "type": "array",
+           "title": "Tags"
+         },
+         "arn": {
+           "type": "string",
+           "title": "ARN"
+         }
+       },
+       "required": []
+     },
+     "mirrorProperties": {},
+     "calculationProperties": {},
+     "relations": {}
+   }
+   ```
+
+   </details>
+
+2. Upload the `config.json` file to the exporter's S3 bucket:
+
+   <details>
+   <summary> Port AWS exporter config.json </summary>
+
+   ```json showLineNumbers
+   {
+     "resources": [
+       {
+         "kind": "AWS::DynamoDB::Table",
+         "port": {
+           "entity": {
+             "mappings": [
+               {
+                 "identifier": ".TableName",
+                 "title": ".TableName",
+                 "blueprint": "dynamodb",
+                 "properties": {
+                   "link": "\"https://console.aws.amazon.com/go/view?arn=\" + .Arn",
+                   "writeCapacityUnits": ".ProvisionedThroughput.WriteCapacityUnits",
+                   "readCapacityUnits": ".ProvisionedThroughput.ReadCapacityUnits",
+                   "deletionProtectionEnabled": ".DeletionProtectionEnabled",
+                   "pointInTimeRecoveryEnabled": ".PointInTimeRecoverySpecification.PointInTimeRecoveryEnabled",
+                   "ttlEnabled": ".TimeToLiveSpecification.Enabled",
+                   "ttlAttributeName": ".TimeToLiveSpecification.AttributeName",
+                   "billingMode": ".BillingMode",
+                   "attributeDefinitions": ".AttributeDefinitions",
+                   "keySchema": ".KeySchema",
+                   "tags": ".Tags",
+                   "arn": ".Arn"
+                 }
+               }
+             ]
+           }
+         }
+       }
+     ]
+   }
+   ```
+
+   </details>
+
+3. Update the exporter's `IAM policy`:
+
+   <details>
+   <summary> IAM Policy </summary>
+
+   ```json showLineNumbers
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Sid": "VisualEditor0",
+         "Effect": "Allow",
+         "Action": [
+           "dynamodb:DescribeContinuousBackups",
+           "dynamodb:DescribeContributorInsights",
+           "dynamodb:DescribeTable",
+           "dynamodb:DescribeTimeToLive",
+           "dynamodb:ListTables",
+           "dynamodb:ListTagsOfResource"
+         ],
+         "Resource": "*"
+       }
+     ]
+   }
+   ```
+
+   </details>
+
+4. Optional: Create an event rule to trigger automatic syncing of changes in DynamoDB tables.
+
+   You may use the following CloudFormation Template:
+
+   <details>
+   <summary> Event Rule CloudFormation Template </summary>
+
+   ```yaml showLineNumbers
+   AWSTemplateFormatVersion: "2010-09-09"
+   Description: The template used to create event rules for the Port AWS exporter.
+   Parameters:
+     PortAWSExporterStackName:
+       Description: Name of the Port AWS exporter stack name
+       Type: String
+       MinLength: 1
+       MaxLength: 255
+       AllowedPattern: ^[a-zA-Z][-a-zA-Z0-9]*$
+       Default: serverlessrepo-port-aws-exporter
+   Resources:
+     EventRule0:
+       Type: AWS::Events::Rule
+       Properties:
+         EventBusName: default
+         EventPattern:
+           source:
+             - aws.dynamodb
+           detail-type:
+             - AWS API Call via CloudTrail
+           detail:
+             eventSource:
+               - dynamodb.amazonaws.com
+             eventName:
+               - prefix: CreateTable
+               - prefix: UpdateTable
+               - prefix: UpdateTimeToLive
+               - prefix: UpdateContinuousBackups
+               - prefix: TagResource
+               - prefix: UntagResource
+               - prefix: DeleteTable
+         Name: port-aws-exporter-sync-dynamodb-trails
+         State: ENABLED
+         Targets:
+           - Id: PortAWSExporterEventsQueue
+             Arn:
+               Fn::ImportValue:
+                 Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+             InputTransformer:
+               InputPathsMap:
+                 awsRegion: $.detail.awsRegion
+                 eventName: $.detail.eventName
+                 requestResourceArn: $.detail.requestParameters.resourceArn
+                 requestTableName: $.detail.requestParameters.tableName
+               InputTemplate: |-
+                 {
+                   "resource_type": "AWS::DynamoDB::Table",
+                   "region": "\"<awsRegion>\"",
+                   "identifier": "if \"<requestTableName>\" != \"\" then \"<requestTableName>\" else \"<requestResourceArn>\" | split(\"/\")[-1] end",
+                   "action": "if \"<eventName>\" | test(\"DeleteTable[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
+                 }
+   ```
+
+   </details>
+
+Done! soon, you will be able to see any `DynamoDB tables`.
