@@ -1016,6 +1016,18 @@ Done! soon, you will be able to see any `API Gateway APIs`.
 
 In this step-by-step example, you will export your `Cloudfront distributions` to Port.
 
+:::info Important
+
+Cloudfront is a global (not regional) service in AWS, that its events are recorded by AWS CloudTrail in the `us-east-1` region.
+Therefore, in order to automatically sync changes in Cloudfront distributions with an event rule (step 4 of this example), you need to choose one of the following methods:
+
+1. Deploy the Port AWS exporter and the event rule in the `us-east-1` region.
+2. Create a trail that will capture global service events in the same region that you've deployed the Port AWS exporter.
+
+For more information, read [here](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-concepts.html#cloudtrail-concepts-global-service-events).
+
+:::
+
 1.  Create the following Port blueprint:
 
     - **Cloudfront** - will represent Cloudfront distributions from the AWS account.
