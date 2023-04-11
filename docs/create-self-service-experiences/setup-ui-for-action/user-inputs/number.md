@@ -98,8 +98,8 @@ In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we
 <TabItem value="basic">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
-  # ...blueprint properties
+resource "port-labs_action" "myAction" {
+  # ...action properties
   # highlight-start
   user_properties {
     identifier  = "myNumberInput"
@@ -107,6 +107,7 @@ resource "port-labs_blueprint" "myBlueprint" {
     description = "My number input"
     required    = false
     type        = "number"
+    default     = 7
   }
   # highlight-end
 }

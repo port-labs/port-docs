@@ -28,7 +28,6 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `L
 
 <Tabs groupId="api-definition" defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Enum", value: "enum"},
 {label: "Array", value: "array"}
 ]}>
 
@@ -50,23 +49,7 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `L
 ```
 
 </TabItem>
-<TabItem value="enum">
 
-```json showLineNumbers
-{
-  "myDatetimeEnum": {
-    "title": "My datetime enum",
-    "icon": "My icon",
-    "description": "My datetime enum",
-    "type": "string",
-    "format": "date-time",
-    // highlight-next-line
-    "enum": ["2022-04-18T11:44:15.345Z", "2022-05-18T11:44:15.345Z"]
-  }
-}
-```
-
-</TabItem>
 <TabItem value="array">
 
 ```json showLineNumbers
@@ -95,7 +78,6 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `L
 
 <Tabs groupId="tf-definition" defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Enum", value: "enum"},
 {label: "Array - coming soon", value: "array"}
 ]}>
 
@@ -111,26 +93,6 @@ resource "port-labs_blueprint" "myBlueprint" {
     required   = false
     type       = "string"
     format     = "date-time"
-  }
-  # highlight-end
-}
-```
-
-</TabItem>
-
-<TabItem value="enum">
-
-```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
-  # ...blueprint properties
-  # highlight-start
-  properties {
-    identifier = "myDatetimeProp"
-    title      = "My datetime"
-    required   = false
-    type       = "string"
-    format     = "date-time"
-    enum       = ["2022-04-18T11:44:15.345Z", "2022-05-18T11:44:15.345Z"]
   }
   # highlight-end
 }

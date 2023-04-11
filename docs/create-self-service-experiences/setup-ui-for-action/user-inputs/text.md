@@ -108,6 +108,7 @@ resource "port-labs_action" "myAction" {
     description = "My text input"
     required    = false
     type        = "string"
+    default     = "My default"
   }
   # highlight-end
 }
