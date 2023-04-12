@@ -11,11 +11,13 @@
         "identifier": ".body.build.number",
         "title": ".body.build.notes",
         "properties": {
-          "projectName": ".body.display_name",
           "buildStatus": ".body.build.status",
           "buildUrl": ".body.build.full_url",
-          "jobPhase": ".body.build.phase",
+          "jobName": ".body.build.phase",
           "timestamp": ".body.build.timestamp"
+        },
+        "relations": {
+          "belongsTo": ".body.name | tostring"
         }
       }
     }

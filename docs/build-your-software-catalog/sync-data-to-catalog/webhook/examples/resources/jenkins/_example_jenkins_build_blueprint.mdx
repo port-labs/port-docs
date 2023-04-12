@@ -6,10 +6,6 @@
   "icon": "Jenkins",
   "schema": {
     "properties": {
-      "projectName": {
-        "type": "string",
-        "title": "Project name"
-      },
       "buildStatus": {
         "type": "string",
         "title": "Build status"
@@ -17,10 +13,9 @@
       "buildUrl": {
         "type": "string",
         "title": "Build URL",
-        "format": "url",
         "description": "URL to the build"
       },
-      "jobPhase": {
+      "jobName": {
         "type": "string",
         "title": "Job phase",
         "description": "The stage of the job"
@@ -35,6 +30,13 @@
   },
   "mirrorProperties": {},
   "calculationProperties": {},
-  "relations": {}
+  "relations": {
+    "belongsTo": {
+      "title": "Belongs to",
+      "target": "jenkinsJob",
+      "required": false,
+      "many": false
+    }
+  }
 }
 ```
