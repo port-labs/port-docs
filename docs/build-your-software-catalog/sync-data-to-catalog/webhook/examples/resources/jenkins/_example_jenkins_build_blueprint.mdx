@@ -1,0 +1,40 @@
+```json showLineNumbers
+{
+  "identifier": "jenkinsBuild",
+  "description": "This blueprint represents a build event from Jenkins",
+  "title": "Jenkins Build",
+  "icon": "Jenkins",
+  "schema": {
+    "properties": {
+      "projectName": {
+        "type": "string",
+        "title": "Project name"
+      },
+      "buildStatus": {
+        "type": "string",
+        "title": "Build status"
+      },
+      "buildUrl": {
+        "type": "string",
+        "title": "Build URL",
+        "format": "url",
+        "description": "URL to the build"
+      },
+      "jobPhase": {
+        "type": "string",
+        "title": "Job phase",
+        "description": "The stage of the job"
+      },
+      "timestamp": {
+        "type": "string",
+        "title": "Timestamp",
+        "description": "The timestamp of the build"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {}
+}
+```
