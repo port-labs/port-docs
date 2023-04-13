@@ -6,6 +6,442 @@ import Image from "@theme/IdealImage";
 
 # Examples
 
+## Mapping ECS services
+
+In this step-by-step example, you will export your `ECS service` to Port.
+
+1. Create the following Port blueprint:
+
+   - **ECS** - will represent ECS services from the AWS account.
+
+   You may use the following definition:
+
+    <details>
+    <summary> ECS blueprint </summary>
+
+   ```json showLineNumbers
+   {
+     "identifier": "ecs",
+     "description": "This blueprint represents an AWS ECS service in our software catalog",
+     "title": "ECS",
+     "icon": "Service",
+     "schema": {
+       "properties": {
+         "link": {
+           "type": "string",
+           "format": "url",
+           "title": "Link"
+         },
+         "desiredCount": {
+           "type": "number",
+           "title": "Desired Count"
+         },
+         "cluster": {
+           "type": "string",
+           "title": "Cluster"
+         },
+         "taskDefinition": {
+           "type": "string",
+           "title": "Task Definition"
+         },
+         "launchType": {
+           "type": "string",
+           "enum": ["EC2", "FARGATE", "EXTERNAL"],
+           "title": "Launch Type"
+         },
+         "schedulingStrategy": {
+           "type": "string",
+           "enum": ["REPLICA", "DAEMON"],
+           "title": "Scheduling Strategy"
+         },
+         "loadBalancers": {
+           "type": "array",
+           "title": "Load Balancers"
+         },
+         "securityGroups": {
+           "type": "array",
+           "title": "Security Groups"
+         },
+         "subnets": {
+           "type": "array",
+           "title": "Subnets"
+         },
+         "iamRole": {
+           "type": "string",
+           "format": "url",
+           "title": "IAM Role"
+         },
+         "arn": {
+           "type": "string",
+           "title": "ARN"
+         }
+       },
+       "required": []
+     },
+     "mirrorProperties": {},
+     "calculationProperties": {}
+   }
+   ```
+
+    </details>
+
+2. Upload the `config.json` file to the exporter's S3 bucket:
+
+   <details>
+   <summary> Port AWS exporter config.json </summary>
+
+   ```json showLineNumbers
+   {
+     "resources": [
+       {
+         "kind": "AWS::ECS::Service",
+         "port": {
+           "entity": {
+             "mappings": [
+               {
+                 "identifier": ".ServiceName",
+                 "title": ".ServiceName",
+                 "blueprint": "ecs",
+                 "properties": {
+                   "link": "\"https://console.aws.amazon.com/go/view?arn=\" + .ServiceArn",
+                   "desiredCount": ".DesiredCount",
+                   "launchType": ".LaunchType",
+                   "cluster": ".Cluster | split(\"/\")[-1]",
+                   "schedulingStrategy": ".SchedulingStrategy",
+                   "loadBalancers": ".LoadBalancers",
+                   "securityGroups": ".NetworkConfiguration.AwsvpcConfiguration.SecurityGroups",
+                   "subnets": ".NetworkConfiguration.AwsvpcConfiguration.Subnets",
+                   "taskDefinition": ".TaskDefinition | split(\"/\")[-1]",
+                   "iamRole": ".Role | if . == null then null else \"https://console.aws.amazon.com/go/view?arn=\" + . end",
+                   "arn": ".ServiceArn"
+                 }
+               }
+             ]
+           }
+         }
+       }
+     ]
+   }
+   ```
+
+   </details>
+
+3. Update the exporter's `IAM policy`:
+
+   <details>
+   <summary> IAM Policy </summary>
+
+   ```json showLineNumbers
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Sid": "VisualEditor0",
+         "Effect": "Allow",
+         "Action": [
+           "ecs:DescribeServices",
+           "ecs:ListClusters",
+           "ecs:ListServices"
+         ],
+         "Resource": "*"
+       }
+     ]
+   }
+   ```
+
+   </details>
+
+4. Optional: Create an event rule to trigger automatic syncing of changes in App Runner services.
+
+   You may use the following CloudFormation Template:
+
+   <details>
+   <summary> Event Rule CloudFormation Template </summary>
+
+   ```yaml showLineNumbers
+   AWSTemplateFormatVersion: 2010-09-09
+   Description: The template used to create event rules for the Port AWS exporter.
+   Parameters:
+     PortAWSExporterStackName:
+       Description: Name of the Port AWS exporter stack name
+       Type: String
+       MinLength: 1
+       MaxLength: 255
+       AllowedPattern: ^[a-zA-Z][-a-zA-Z0-9]*$
+       Default: serverlessrepo-port-aws-exporter
+   Resources:
+     EventRule0:
+       Type: AWS::Events::Rule
+       Properties:
+         EventBusName: default
+         EventPattern:
+           detail-type:
+             - AWS API Call via CloudTrail
+           source:
+             - aws.ecs
+           detail:
+             eventSource:
+               - ecs.amazonaws.com
+             eventName:
+               - prefix: CreateService
+               - prefix: UpdateService
+               - prefix: DeleteService
+         Name: port-aws-exporter-sync-ecs-trails
+         State: ENABLED
+         Targets:
+           - Id: PortAWSExporterEventsQueue
+             Arn:
+               Fn::ImportValue:
+                 Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+             InputTransformer:
+               InputPathsMap:
+                 awsRegion: $.detail.awsRegion
+                 clusterArn: $.detail.responseElements.service.clusterArn
+                 eventName: $.detail.eventName
+                 serviceArn: $.detail.responseElements.service.serviceArn
+                 serviceName: $.detail.responseElements.service.serviceName
+               InputTemplate: >-
+                 {
+                   "resource_type": "AWS::ECS::Service",
+                   "region": "\"<awsRegion>\"",
+                   "identifier": "if \"<eventName>\" | startswith(\"Delete\") then \"<serviceName>\" else \"<serviceArn>|<clusterArn>\" end",
+                   "action": "if \"<eventName>\" | startswith(\"Delete\") then \"delete\" else \"upsert\" end"
+                 }
+   ```
+
+   </details>
+
+Done! soon, you will be able to see any `App Runner services`.
+
+## Mapping App Runner services
+
+In this step-by-step example, you will export your `App Runner service` to Port.
+
+1. Create the following Port blueprint:
+
+   - **App Runner** - will represent App Runner services from the AWS account.
+
+   You may use the following definition:
+
+   <details>
+   <summary> App Runner blueprint </summary>
+
+   ```json showLineNumbers
+   {
+     "identifier": "apprunner",
+     "description": "This blueprint represents an AWS App Runner service in our software catalog",
+     "title": "AppRunner",
+     "icon": "Service",
+     "schema": {
+       "properties": {
+         "link": {
+           "type": "string",
+           "format": "url",
+           "title": "Link"
+         },
+         "status": {
+           "type": "string",
+           "enum": [
+             "CREATE_FAILED",
+             "RUNNING",
+             "DELETED",
+             "DELETE_FAILED",
+             "PAUSED",
+             "OPERATION_IN_PROGRESS"
+           ],
+           "enumColors": {
+             "CREATE_FAILED": "red",
+             "RUNNING": "green",
+             "DELETED": "red",
+             "DELETE_FAILED": "red",
+             "PAUSED": "yellow",
+             "OPERATION_IN_PROGRESS": "blue"
+           },
+           "title": "Status"
+         },
+         "memory": {
+           "type": "number",
+           "title": "Memory"
+         },
+         "cpu": {
+           "type": "number",
+           "title": "CPU"
+         },
+         "serviceUrl": {
+           "type": "string",
+           "format": "url",
+           "title": "Service URL"
+         },
+         "egressType": {
+           "type": "string",
+           "enum": ["DEFAULT", "VPC"],
+           "title": "Egress Type"
+         },
+         "isPubliclyAccessible": {
+           "type": "boolean",
+           "title": "Is Publicly Accessible"
+         },
+         "observabilityEnabled": {
+           "type": "boolean",
+           "title": "Observability Enabled"
+         },
+         "autoDeploymentsEnabled": {
+           "type": "boolean",
+           "title": "Auto Deployments Enabled"
+         },
+         "healthCheckConfiguration": {
+           "type": "object",
+           "title": "Health Check Configuration"
+         },
+         "imageConfiguration": {
+           "type": "object",
+           "title": "Image Configuration"
+         },
+         "imageIdentifier": {
+           "type": "string",
+           "title": "Image Identifier"
+         },
+         "iamRole": {
+           "type": "string",
+           "format": "url",
+           "title": "Iam Role"
+         },
+         "arn": {
+           "type": "string",
+           "title": "ARN"
+         }
+       },
+       "required": []
+     },
+     "mirrorProperties": {},
+     "calculationProperties": {}
+   }
+   ```
+
+   </details>
+
+2. Upload the `config.json` file to the exporter's S3 bucket:
+
+   <details>
+   <summary> Port AWS exporter config.json </summary>
+
+   ```json showLineNumbers
+   {
+     "resources": [
+       {
+         "kind": "AWS::AppRunner::Service",
+         "port": {
+           "entity": {
+             "mappings": [
+               {
+                 "identifier": ".ServiceId",
+                 "title": ".ServiceName",
+                 "blueprint": "apprunner",
+                 "properties": {
+                   "link": "\"https://console.aws.amazon.com/go/view?arn=\" + .ServiceArn",
+                   "status": ".Status",
+                   "memory": ".InstanceConfiguration.Memory",
+                   "cpu": ".InstanceConfiguration.Cpu",
+                   "egressType": ".NetworkConfiguration.EgressConfiguration.EgressType",
+                   "isPubliclyAccessible": ".NetworkConfiguration.IngressConfiguration.IsPubliclyAccessible",
+                   "observabilityEnabled": ".ObservabilityConfiguration.ObservabilityEnabled",
+                   "autoDeploymentsEnabled": ".SourceConfiguration.AutoDeploymentsEnabled",
+                   "healthCheckConfiguration": ".HealthCheckConfiguration",
+                   "imageConfiguration": ".SourceConfiguration.ImageRepository.ImageConfiguration",
+                   "imageIdentifier": ".SourceConfiguration.ImageRepository.ImageIdentifier",
+                   "serviceUrl": "\"https://\" + .ServiceUrl",
+                   "iamRole": ".InstanceConfiguration.InstanceRoleArn | if . == null then null else \"https://console.aws.amazon.com/go/view?arn=\" + . end",
+                   "arn": ".ServiceArn"
+                 },
+                 "relations": {
+                   "region": ".ServiceArn | split(\":\")[3]"
+                 }
+               }
+             ]
+           }
+         }
+       }
+     ]
+   }
+   ```
+
+   </details>
+
+3. Update the exporter's `IAM policy`:
+
+   <details>
+   <summary> IAM Policy </summary>
+
+   ```json showLineNumbers
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Sid": "VisualEditor0",
+         "Effect": "Allow",
+         "Action": ["apprunner:DescribeService", "apprunner:ListServices"],
+         "Resource": "*"
+       }
+     ]
+   }
+   ```
+
+   </details>
+
+4. Optional: Create an event rule to trigger automatic syncing of changes in App Runner services.
+
+   You may use the following CloudFormation Template:
+
+   <details>
+   <summary> Event Rule CloudFormation Template </summary>
+
+   ```yaml showLineNumbers
+   AWSTemplateFormatVersion: 2010-09-09
+   Description: The template used to create event rules for the Port AWS exporter.
+   Parameters:
+     PortAWSExporterStackName:
+       Description: Name of the Port AWS exporter stack name
+       Type: String
+       MinLength: 1
+       MaxLength: 255
+       AllowedPattern: ^[a-zA-Z][-a-zA-Z0-9]*$
+       Default: serverlessrepo-port-aws-exporter
+   Resources:
+     EventRule0:
+       Type: AWS::Events::Rule
+       Properties:
+         EventBusName: default
+         EventPattern:
+           detail-type:
+             - AppRunner Service Operation Status Change
+           source:
+             - aws.apprunner
+         Name: port-aws-exporter-sync-apprunner-events
+         State: ENABLED
+         Targets:
+           - Id: PortAWSExporterEventsQueue
+             Arn:
+               Fn::ImportValue:
+                 Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+             InputTransformer:
+               InputPathsMap:
+                 operationStatus: $.detail.operationStatus
+                 region: $.region
+                 resource: $.resources[0]
+                 serviceId: $.detail.serviceId
+               InputTemplate: >-
+                 {
+                   "resource_type": "AWS::AppRunner::Service",
+                   "region": "\"<region>\"",
+                   "identifier": "if \"<operationStatus>\" == \"DeleteServiceCompletedSuccessfully\" then \"<serviceId>\" else \"<resource>\" end",
+                   "action": "if \"<operationStatus>\" == \"DeleteServiceCompletedSuccessfully\" then \"delete\" else \"upsert\" end"
+                 }
+   ```
+
+   </details>
+
+Done! soon, you will be able to see any `App Runner services`.
+
 ## Mapping Lambda functions
 
 In this step-by-step example, you will export your `Lambda functions` to Port.
