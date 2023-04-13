@@ -8,7 +8,7 @@ import Image from "@theme/IdealImage";
 
 ## Mapping ECS services
 
-In this step-by-step example, you will export your `ECS service` to Port.
+In this step-by-step example, you will export your `ECS services` to Port.
 
 1. Create the following Port blueprint:
 
@@ -151,7 +151,7 @@ In this step-by-step example, you will export your `ECS service` to Port.
 
    </details>
 
-4. Optional: Create an event rule to trigger automatic syncing of changes in App Runner services.
+4. Optional: Create an event rule to trigger automatic syncing of changes in ECS services.
 
    You may use the following CloudFormation Template:
 
@@ -211,11 +211,11 @@ In this step-by-step example, you will export your `ECS service` to Port.
 
    </details>
 
-Done! soon, you will be able to see any `App Runner services`.
+Done! soon, you will be able to see any `ECS services`.
 
 ## Mapping App Runner services
 
-In this step-by-step example, you will export your `App Runner service` to Port.
+In this step-by-step example, you will export your `App Runner services` to Port.
 
 1. Create the following Port blueprint:
 
