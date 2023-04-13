@@ -5,26 +5,28 @@ description: Ingest Jenkins build and job events into your catalog
 
 import JenkinsBuildBlueprint from './resources/jenkins/\_example_jenkins_build_blueprint.mdx'
 import JenkinsBuildWebhookConfig from './resources/jenkins/\_example_jenkins_build_webhook_configuration.mdx'
+import JenkinsJobBlueprint from './resources/jenkins/\_example_jenkins_job_blueprint.mdx'
+import JenkinsJobWebhookConfig from './resources/jenkins/\_example_jenkins_job_webhook_configuration.mdx'
 
 # Jenkins
 
-In this example you are going to create a webhook integration between [Jenkins](https://www.jenkins.io/) and Port, which will ingest build entities.
+In this example you are going to create a webhook integration between [Jenkins](https://www.jenkins.io/) and Port, which will ingest job and build entities.
 
 ## Prerequisites
 
 Create the following blueprint definition and webhook configuration:
 
 <details>
-<summary>Build blueprint</summary>
+<summary>Jenkins job blueprint</summary>
 
-<JenkinsBuildBlueprint/>
+<JenkinsJobBlueprint/>
 
 </details>
 
 <details>
-<summary>Build webhook configuration</summary>
+<summary>Jenkins job webhook configuration</summary>
 
-<JenkinsBuildWebhookConfig/>
+<JenkinsJobWebhookConfig/>
 
 </details>
 
@@ -32,7 +34,7 @@ Create the following blueprint definition and webhook configuration:
 
 1. Go to your Jenkins dashboard;
 2. At the sidebar on the left side of the page select **Manage Jenkins** and click on **Manage Plugins**;
-3. Navigate to the **Available Plugins** tab and search for **Notifications** in the search bar. Install the [Extreme Notification Plugin](https://plugins.jenkins.io/notification/) or a suitable plugin that can notify some endpoints about events that occur in Jenkins;
+3. Navigate to the **Available Plugins** tab and search for **Notifications** in the search bar. Install the [Notification Plugin](https://plugins.jenkins.io/notification/) or a suitable plugin that can notify some endpoints about events that occur in Jenkins;
 4. Go back to your Jenkins dashboard and select your desired project;
 5. Click on the **Configure** tab and scroll down to the **Job Notifications** section;
 6. Click on **Add Endpoint** and input the following details:
@@ -43,4 +45,22 @@ Create the following blueprint definition and webhook configuration:
 7. Scroll down to the **Build Triggers** section and select your preferred trigger type;
 8. Click on **Save** at the buttom of the page;
 
-Done! any changes to a build process (queued, started, completed, finalized etc.) will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+## Relation example
+
+The following example adds a `buid` blueprint, in addition to the `job` blueprint shown in the previous example. In addition, it also adds a `belongsTo` relation. The webhook will create or update the relation between the 2 existing entities, allowing you to map a build to its parent job:
+
+<details>
+
+<summary>Jenkins build blueprint (including the belongsTo relation)</summary>
+<JenkinsBuildBlueprint/>
+
+</details>
+
+<details>
+
+<summary>Jenkins build webhook configuration</summary>
+<JenkinsBuildWebhookConfig/>
+
+</details>
+
+Done! any changes to a job process (queued, started, completed, finalized etc.) will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
