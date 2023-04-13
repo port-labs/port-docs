@@ -42,6 +42,7 @@ Create the following blueprint definition and webhook configuration:
    2. `Protocol` - choose HTTP;
    3. `Event` - Be sure to choose the appropriate event you want to catalog. Or you can use the default value which notifies your webhook with **All Events**;
    4. `URL` - Choose **Plain Text** and enter the value of the `url` key you received after creating the webhook configuration;
+   5. `Notes` - Add additional information about this webhook. You can then use this field as the title for your job;
 7. Scroll down to the **Build Triggers** section and select your preferred trigger type;
 8. Click on **Save** at the buttom of the page;
 

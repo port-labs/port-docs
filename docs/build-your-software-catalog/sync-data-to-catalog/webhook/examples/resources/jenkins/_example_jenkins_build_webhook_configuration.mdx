@@ -2,14 +2,14 @@
 {
   "identifier": "jenkinsMapper",
   "title": "Jenkins mapper",
-  "description": "A webhook configuration to map Jenkins build to Port",
+  "description": "A webhook configuration to map Jenkins builds to Port",
   "icon": "Jenkins",
   "mappings": [
     {
       "blueprint": "jenkinsBuild",
       "entity": {
         "identifier": ".body.build.number",
-        "title": ".body.build.notes",
+        "title": ".body.name + \"-\" + .body.build.number | tostring",
         "properties": {
           "buildStatus": ".body.build.status",
           "buildUrl": ".body.build.full_url",

@@ -8,7 +8,13 @@
     "properties": {
       "buildStatus": {
         "type": "string",
-        "title": "Build status"
+        "title": "Build status",
+        "enum": ["SUCCESS", "FAILURE", "UNSTABLE"],
+        "enumColors": {
+          "SUCCESS": "green",
+          "FAILURE": "red",
+          "UNSTABLE": "yellow"
+        }
       },
       "buildUrl": {
         "type": "string",
