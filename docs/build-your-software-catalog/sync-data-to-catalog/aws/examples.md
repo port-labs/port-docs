@@ -198,8 +198,10 @@ In this step-by-step example, you will export your `Lambda functions` to Port.
              eventSource:
                - lambda.amazonaws.com
              eventName:
-               - prefix: UpdateFunctionConfiguration
                - prefix: CreateFunction
+               - prefix: UpdateFunctionConfiguration
+               - prefix: TagResource
+               - prefix: UntagResource
                - prefix: DeleteFunction
          Name: port-aws-exporter-sync-lambda-trails
          State: ENABLED
@@ -213,12 +215,13 @@ In this step-by-step example, you will export your `Lambda functions` to Port.
                  awsRegion: $.detail.awsRegion
                  eventName: $.detail.eventName
                  requestFunctionName: $.detail.requestParameters.functionName
+                 requestResource: $.detail.requestParameters.resource
                  responseFunctionName: $.detail.responseElements.functionName
                InputTemplate: |-
                  {
                    "resource_type": "AWS::Lambda::Function",
                    "region": "\"<awsRegion>\"",
-                   "identifier": "if \"<responseFunctionName>\" != \"\" then \"<responseFunctionName>\" else \"<requestFunctionName>\" end",
+                   "identifier": "if \"<responseFunctionName>\" != \"\" then \"<responseFunctionName>\" elif \"<requestResource>\" != \"\" then \"<requestResource>\" | split(\":\")[-1] else \"<requestFunctionName>\" end",
                    "action": "if \"<eventName>\" | test(\"DeleteFunction[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
                  }
    ```
