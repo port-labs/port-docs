@@ -9,11 +9,11 @@
       "blueprint": "jenkinsBuild",
       "entity": {
         "identifier": ".body.build.number",
-        "title": ".body.name + \"-\" + .body.build.number | tostring",
+        "title": ".body.name + \"-\" + .body.build.number",
         "properties": {
           "buildStatus": ".body.build.status",
           "buildUrl": ".body.build.full_url",
-          "jobName": ".body.build.phase",
+          "buildDuration": ".body.build.duration",
           "timestamp": ".body.build.timestamp"
         },
         "relations": {
