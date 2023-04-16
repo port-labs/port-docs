@@ -5,11 +5,13 @@ import ExampleCiJobBlueprint from "../\_ci_example_ci_job_blueprint.mdx";
 
 ## Basic create/update example
 
-In this example we create a blueprint for `ciJob` and then add code that uses Python to create a new entity in Port every time the Azure pipeline is triggered:
+In this example you will create blueprints for `ciJob` and `image` entities, and a relation between them. Then you will add some Python code to create new entities in Port every time the CircleCI workflow is triggered:
+
+<ExampleImageBlueprint />
 
 <ExampleCiJobBlueprint />
 
-After creating the blueprint, you can add a Python script for creating/updating a Port entity:
+After creating the blueprints, you can add a Python script for creating/updating a Port entity:
 
 ```python showLineNumber
 import os
@@ -37,19 +39,25 @@ headers = {
 # highlight-end
 
 entity_json = {
-  "identifier": "new-ms-build",
-  "team": [],
+  "identifier": "new-cijob-run",
   "properties": {
-    "buildNumber": 1,
-    "buildVersion": "1.1.0",
-    "imageTag": "new-ms-build:latest"
+    "triggeredBy": os.environ['QUEUED_BY'],
+    "commitHash": os.environ['GIT_SHA'],
+    "actionJob": os.environ['JOB_NAME'],
+    "jobLink": os.environ['JOB_URL']
   },
-  "relations": {},
-  "icon": "Microservice"
+  "relations": {
+      "image": ["example-image"]
+  }
 }
 
-create_response = requests.post(f'{API_URL}/blueprints/{blueprint_id}/entities?upsert=true', json=entity_json, headers=headers)
+create_response = requests.post(f'{API_URL}/blueprints/{blueprint_id}/entities?upsert=true&create_missing_related_entities=true', json=entity_json, headers=headers)
 ```
+
+:::note
+Please notice that you have also created the `image` relation, and added a related image entity called `example-image`. This is the artifact of the ciJob, and you will update it later.
+The creation was done using the `create_missing_related_entities=true` flag in the API url, allowing the relation to be created even though the `example-image` entity doesn't exist yet.
+:::
 
 After adding your new Python script to your repository, add the following code to your Azure pipeline `yml` file to call your script and update/create a new `ciJob` entity:
 
@@ -65,9 +73,7 @@ steps:
       QUEUED_BY: $(Build.QueuedBy)
       GIT_SHA: $(Build.SourceVersion)
       JOB_NAME: $(Build.DefinitionName)
-      COLLECTION_URL: $(System.TeamFoundationCollectionUri)
-      TEAM_PROJECT: $(System.TeamProject)
-      BUILD_ID: $(Build.BuildId)
+      JOB_URL: "$(System.TeamFoundationCollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId)"
     inputs:
       scriptSource: "filePath"
       scriptPath: "main.py"
@@ -75,26 +81,24 @@ steps:
 
 ## Basic get example
 
-The following example gets the `new-ms-build` entity from the previous example, this can be useful if your CI process creates a build artifact and then references some of it's data (for example, the image tag when deploying the latest version of your service).
+The following example gets the `new-cijob-run` entity from the previous example, this can be useful if your CI process creates a build artifact and then references some of it's data (for example, the run link of the latest `ciJob`).
 
 Add the following snippet to your Python code:
 
 ```python showLineNumbers
-entity_id = "new-ms-build"
+entity_id = "new-cijob-run"
 blueprint_id = "ciJob"
 
 get_response = requests.get(f"{API_URL}/blueprints/{blueprint_id}/entities/{entity_id}",
                         headers=headers)
 entity = get_response.json()['entity']
-print(f"Image tag is: {entity['properties']['imageTag']}")
+print(f"Image tag is: {entity['properties']['runLink']}")
 
 ```
 
 ## Relation example
 
-The following example adds a `package` entity, in addition to the `ciJob` entity shown in the previous example. In addition, it also adds a `ciJob` relation. The build will create or update the relation between the 2 existing entities, allowing you to map the package to the microservice build that uses it:
-
-<ExampleImageBlueprint />
+In the following example you will update the `example-image` entity which you created when creating the `ciJob` entity shown in the previous example.
 
 Add the following snippet to your Python code:
 
@@ -102,23 +106,24 @@ Add the following snippet to your Python code:
 import datetime
 ...
 
-package_entity_json = {
-  "identifier": "example-package",
+image_entity_json = {
+  "identifier": "example-image",
   "team": [],
   "properties": {
-    "version": "v1",
-    "committedBy": os.environ['QUEUED_BY'],
-    "commitHash": os.environ['GIT_SHA'],
-    "actionJob": os.environ['JOB_NAME'],
-    "repoPushedAt": datetime.datetime.now(datetime.timezone.utc).isoformat(),
-    "runLink": buildUrl
+    "imageTag": "v1",
+    "synkHighVulnerabilities": "0",
+    "synkMediumVulnerabilities": "0",
+    "gitRepoUrl": "https://github.com/my-org/my-cool-repo",
+    "imageRegistry": "docker.io/cool-image",
+    "size": "0.71",
+    "unitTestCoverage": "20",
+    "unitTestCoverage": "50"
   },
-  "relations": {},
-  "icon": "Package"
+  "relations": {}
 }
 
-create_package_response = requests.post(f'{API_URL}/blueprints/package/entities?upsert=true', json=package_entity_json, headers=headers)
-print(create_package_response.json())
+create_image_response = requests.post(f'{API_URL}/blueprints/image/entities?upsert=true', json=image_entity_json, headers=headers)
+print(create_image_response.json())
 
 ```
 
