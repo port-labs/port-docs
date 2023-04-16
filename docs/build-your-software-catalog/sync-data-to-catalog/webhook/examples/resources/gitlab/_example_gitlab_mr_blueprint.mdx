@@ -1,0 +1,69 @@
+```json showLineNumbers
+{
+  "identifier": "gitlabMergeRequest",
+  "description": "This blueprint represents a Gitlab merge request in our software catalog",
+  "title": "Gitlab Merge Request",
+  "icon": "GitLab",
+  "schema": {
+    "properties": {
+      "description": {
+        "type": "string",
+        "title": "Description"
+      },
+      "state": {
+        "type": "string",
+        "title": "State"
+      },
+      "mergeStatus": {
+        "type": "string",
+        "title": "Merge Status"
+      },
+      "lastChangeType": {
+        "type": "string",
+        "title": "Last Change Type",
+        "description": "The type of the latest change made to this issue"
+      },
+      "repositoryUrl": {
+        "type": "string",
+        "title": "Repository URL",
+        "format": "url"
+      },
+      "sourceBranch": {
+        "type": "string",
+        "title": "Source Branch"
+      },
+      "targetBranch": {
+        "type": "string",
+        "title": "Target Branch"
+      },
+      "mergeRequestUrl": {
+        "type": "string",
+        "format": "url",
+        "title": "Merge Request URL"
+      },
+      "labels": {
+        "type": "array",
+        "title": "Labels"
+      },
+      "lastCommitUrl": {
+        "type": "string",
+        "format": "url",
+        "title": "Last Commit URL"
+      },
+      "projectName": {
+        "type": "string",
+        "title": "Project name"
+      },
+      "projectUrl": {
+        "type": "string",
+        "format": "url",
+        "title": "Project URL"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {}
+}
+```

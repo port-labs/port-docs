@@ -5,11 +5,6 @@ title: Quickstart
 sidebar_label: ⏱️ Quickstart
 ---
 
-import Image from "@theme/IdealImage";
-import CompleteVision from "../static/img/quickstart/platform-vision.png";
-import EnvironmentRunningServicesPage from "../static/img/quickstart/EndResultEnvironmentPage.png";
-import ServiceRunningServicesPage from "../static/img/quickstart/EndResultServicePage.png";
-
 # ⏱️ Quickstart
 
 ## What is Port?
@@ -23,11 +18,7 @@ Port then allows engineers to perform actions on these assets in a self-service 
 - Create a comprehensive **Software Catalog** by mapping all your software and infrastructure components in one place: microservices, monoliths, deployments, repos, databases, and more.
 - Let your developers provision, terminate and perform day 2 operations on any asset exposed (microservice or not) in your catalog, within the policies and guardrails you’ve set, ensuring unified standards and governance over the processes inside your organization.
 
-<center>
-
-<Image img={CompleteVision} style={{ width: 800 }}></Image>
-
-</center>
+![Developer Platform complete vision](../static/img/quickstart/platform-vision.png)
 
 Port's three core building blocks are _Blueprints_, _Entities_ and _Relations_. This tutorial will walk you through your first steps on the platform and get you started on your Developer Portal journey!🚢
 
@@ -44,19 +35,11 @@ This guide will give you a foundation to start building your software catalog in
 
 Your developers will be able to see all the services in a given environment and their status:
 
-<center>
-
-<Image img={EnvironmentRunningServicesPage} style={{ width: 800 }}></Image>
-
-</center>
+![Developer Portal Environment View for running services](../static/img/quickstart/EndResultEnvironmentPage.png)
 
 In addition, your developers will be able to see all the environments that a specific microservice is deployed at, and which version is deployed where:
 
-<center>
-
-<Image img={ServiceRunningServicesPage} style={{ width: 800 }}></Image>
-
-</center>
+![Developer Portal Service View for environments](../static/img/quickstart/EndResultServicePage.png)
 
 Let's get started! 🚢
 
