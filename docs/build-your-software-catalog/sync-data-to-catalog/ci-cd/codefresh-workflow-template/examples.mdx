@@ -121,6 +121,8 @@ spec:
                   "unitTestCoverage": "50",
                 }
           - name: entity-upsert-cijob
+            dependencies:
+              [entity-upsert-image]
             templateRef:
               name: port
               template: entity-upsert
