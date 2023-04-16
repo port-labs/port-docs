@@ -5,7 +5,7 @@ import ExampleCiJobBlueprint from "../\_ci_example_ci_job_blueprint.mdx";
 
 ## Basic create/update example
 
-In this example you will create blueprints for `ciJob` and `image` entities, and a relation between them. Then you will add some Python code to create new entities in Port every time the CircleCI workflow is triggered:
+In this example you will create blueprints for `ciJob` and `image` entities, and a relation between them. Then you will add some Python code to create new entities in Port every time the Azure Pipeline is triggered:
 
 <ExampleImageBlueprint />
 
@@ -103,9 +103,6 @@ In the following example you will update the `example-image` entity which you cr
 Add the following snippet to your Python code:
 
 ```python showLineNumbers
-import datetime
-...
-
 image_entity_json = {
   "identifier": "example-image",
   "team": [],
@@ -123,7 +120,6 @@ image_entity_json = {
 }
 
 create_image_response = requests.post(f'{API_URL}/blueprints/image/entities?upsert=true', json=image_entity_json, headers=headers)
-print(create_image_response.json())
 
 ```
 
