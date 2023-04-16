@@ -69,7 +69,8 @@ In this step-by-step example, you will export your `ECS services` to Port.
          "iamRole": {
            "type": "string",
            "format": "url",
-           "title": "IAM Role"
+           "title": "IAM Role",
+           "icon": "Unlock"
          },
          "arn": {
            "type": "string",
@@ -304,7 +305,8 @@ In this step-by-step example, you will export your `App Runner services` to Port
          "iamRole": {
            "type": "string",
            "format": "url",
-           "title": "Iam Role"
+           "title": "IAM Role",
+           "icon": "Unlock"
          },
          "arn": {
            "type": "string",
@@ -513,15 +515,15 @@ In this step-by-step example, you will export your `Lambda functions` to Port.
            "type": "array",
            "title": "Tags"
          },
-         "arn": {
-           "type": "string",
-           "title": "ARN"
-         },
          "iamRole": {
            "type": "string",
            "format": "url",
-           "title": "Iam Role",
+           "title": "IAM Role",
            "icon": "Unlock"
+         },
+         "arn": {
+           "type": "string",
+           "title": "ARN"
          }
        },
        "required": []
@@ -2044,27 +2046,42 @@ In this step-by-step example, you will export your `RDS instances` to Port.
    {
      "resources": [
        {
-         "kind": "AWS::DynamoDB::Table",
+         "kind": "AWS::RDS::DBInstance",
          "port": {
            "entity": {
              "mappings": [
                {
-                 "identifier": ".TableName",
-                 "title": ".TableName",
-                 "blueprint": "dynamodb",
+                 "identifier": ".DBInstanceIdentifier",
+                 "title": ".DBInstanceIdentifier",
+                 "blueprint": "rds",
                  "properties": {
-                   "link": "\"https://console.aws.amazon.com/go/view?arn=\" + .Arn",
-                   "writeCapacityUnits": ".ProvisionedThroughput.WriteCapacityUnits",
-                   "readCapacityUnits": ".ProvisionedThroughput.ReadCapacityUnits",
-                   "deletionProtectionEnabled": ".DeletionProtectionEnabled",
-                   "pointInTimeRecoveryEnabled": ".PointInTimeRecoverySpecification.PointInTimeRecoveryEnabled",
-                   "ttlEnabled": ".TimeToLiveSpecification.Enabled",
-                   "ttlAttributeName": ".TimeToLiveSpecification.AttributeName",
-                   "billingMode": ".BillingMode",
-                   "attributeDefinitions": ".AttributeDefinitions",
-                   "keySchema": ".KeySchema",
+                   "link": "if .Engine == \"docdb\" then \"https://console.aws.amazon.com/docdb/home?region=\" + (.DBInstanceIdentifier | split(\":\")[3])  + \"#instance-details/\" + .DBInstanceIdentifier else \"https://console.aws.amazon.com/go/view?arn=\" + .DBInstanceArn end",
+                   "engine": ".Engine",
+                   "engineVersion": ".EngineVersion",
+                   "storageType": ".StorageType",
+                   "dbInstanceClass": ".DBInstanceClass",
+                   "availabilityZone": ".AvailabilityZone",
+                   "dbParameterGroup": ".DBParameterGroupName",
+                   "optionGroup": ".OptionGroupName",
+                   "dbSubnetGroup": ".DBSubnetGroupName",
+                   "masterUsername": ".MasterUsername",
+                   "allocatedStorage": ".AllocatedStorage",
+                   "maxAllocatedStorage": ".MaxAllocatedStorage",
+                   "backupRetentionPeriod": ".BackupRetentionPeriod",
+                   "monitoringInterval": ".MonitoringInterval",
+                   "multiAZ": ".MultiAZ",
+                   "storageEncrypted": ".StorageEncrypted",
+                   "enablePerformanceInsights": ".EnablePerformanceInsights",
+                   "autoMinorVersionUpgrade": ".AutoMinorVersionUpgrade",
+                   "deletionProtection": ".DeletionProtection",
+                   "publiclyAccessible": ".PubliclyAccessible",
+                   "certificateValidTill": ".CertificateDetails.ValidTill",
+                   "certificateCA": ".CertificateDetails.CAIdentifier",
+                   "preferredBackupWindow": ".PreferredBackupWindow",
+                   "preferredMaintenanceWindow": ".PreferredMaintenanceWindow",
+                   "endpoint": ".Endpoint",
                    "tags": ".Tags",
-                   "arn": ".Arn"
+                   "arn": ".DBInstanceArn"
                  }
                }
              ]
@@ -2174,3 +2191,198 @@ In this step-by-step example, you will export your `RDS instances` to Port.
    </details>
 
 Done! soon, you will be able to see any `RDS instances`.
+
+## Mapping Step Functions state machines
+
+In this step-by-step example, you will export your `Step Functions state machines` to Port.
+
+1. Create the following Port blueprint:
+
+   - **Step Functions** - will represent Step Functions state machines from the AWS account.
+
+   You may use the following definition:
+
+   <details>
+   <summary> Step Functions blueprint </summary>
+
+   ```json showLineNumbers
+   {
+     "identifier": "stepfunctions",
+     "description": "This blueprint represents an AWS Step Functions state machine in our software catalog",
+     "title": "Step Functions",
+     "icon": "AWS",
+     "schema": {
+       "properties": {
+         "link": {
+           "type": "string",
+           "title": "Link",
+           "format": "url"
+         },
+         "type": {
+           "type": "string",
+           "title": "Type",
+           "enum": ["STANDARD", "EXPRESS"]
+         },
+         "definitionS3Location": {
+           "type": "string",
+           "title": "Definition S3 Location"
+         },
+         "definitionObject": {
+           "type": "object",
+           "title": "Definition Object"
+         },
+         "definitionSubstitutions": {
+           "type": "object",
+           "title": "Definition Substitutions"
+         },
+         "tags": {
+           "type": "array",
+           "title": "Tags"
+         },
+         "iamRole": {
+           "type": "string",
+           "title": "IAM Role",
+           "format": "url",
+           "icon": "Unlock"
+         },
+         "arn": {
+           "type": "string",
+           "title": "ARN"
+         }
+       },
+       "required": []
+     },
+     "mirrorProperties": {},
+     "calculationProperties": {},
+     "relations": {}
+   }
+   ```
+
+   </details>
+
+2. Upload the `config.json` file to the exporter's S3 bucket:
+
+   <details>
+   <summary> Port AWS exporter config.json </summary>
+
+   ```json showLineNumbers
+   {
+     "resources": [
+       {
+         "kind": "AWS::StepFunctions::StateMachine",
+         "port": {
+           "entity": {
+             "mappings": [
+               {
+                 "identifier": ".StateMachineName",
+                 "title": ".StateMachineName",
+                 "blueprint": "stepfunctions",
+                 "properties": {
+                   "link": "\"https://console.aws.amazon.com/go/view?arn=\" + .Arn",
+                   "type": ".StateMachineType",
+                   "definitionS3Location": ".DefinitionS3Location",
+                   "definitionObject": ".DefinitionString | fromjson",
+                   "definitionSubstitutions": ".DefinitionSubstitutions",
+                   "tags": ".Tags",
+                   "iamRole": ".RoleArn | if . == null then null else \"https://console.aws.amazon.com/go/view?arn=\" + . end",
+                   "arn": ".Arn"
+                 }
+               }
+             ]
+           }
+         }
+       }
+     ]
+   }
+   ```
+
+   </details>
+
+3. Update the exporter's `IAM policy`:
+
+   <details>
+   <summary> IAM Policy </summary>
+
+   ```json showLineNumbers
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Sid": "VisualEditor0",
+         "Effect": "Allow",
+         "Action": [
+           "states:DescribeStateMachine",
+           "states:ListStateMachines",
+           "states:ListTagsForResource"
+         ],
+         "Resource": "*"
+       }
+     ]
+   }
+   ```
+
+   </details>
+
+4. Optional: Create an event rule to trigger automatic syncing of changes in Step Functions state machines.
+
+   You may use the following CloudFormation Template:
+
+   <details>
+   <summary> Event Rule CloudFormation Template </summary>
+
+   ```yaml showLineNumbers
+   AWSTemplateFormatVersion: "2010-09-09"
+   Description: The template used to create event rules for the Port AWS exporter.
+   Parameters:
+     PortAWSExporterStackName:
+       Description: Name of the Port AWS exporter stack name
+       Type: String
+       MinLength: 1
+       MaxLength: 255
+       AllowedPattern: ^[a-zA-Z][-a-zA-Z0-9]*$
+       Default: serverlessrepo-port-aws-exporter
+   Resources:
+     EventRule0:
+       Type: AWS::Events::Rule
+       Properties:
+         EventBusName: default
+         EventPattern:
+           source:
+             - aws.states
+           detail-type:
+             - AWS API Call via CloudTrail
+           detail:
+             eventSource:
+               - states.amazonaws.com
+             eventName:
+               - prefix: CreateStateMachine
+               - prefix: UpdateStateMachine
+               - prefix: TagResource
+               - prefix: UntagResource
+               - prefix: DeleteStateMachine
+         Name: port-aws-exporter-sync-stepfunctions-trails
+         State: ENABLED
+         Targets:
+           - Id: PortAWSExporterEventsQueue
+             Arn:
+               Fn::ImportValue:
+                 Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+             InputTransformer:
+               InputPathsMap:
+                 awsRegion: $.detail.awsRegion
+                 eventName: $.detail.eventName
+                 requestResourceArn: $.detail.requestParameters.resourceArn
+                 requestStateMachineArn: $.detail.requestParameters.stateMachineArn
+                 responseStateMachineArn: $.detail.responseElements.stateMachineArn
+               InputTemplate: |-
+                 {
+                   "resource_type": "AWS::StepFunctions::StateMachine",
+                   "region": "\"<awsRegion>\"",
+                   "identifier": "\"<eventName>\" | if test(\"DeleteStateMachine[^a-zA-Z]*$\") then \"<requestStateMachineArn>\" | split(\":\")[-1] elif \"<responseStateMachineArn>\" != \"\" then \"<responseStateMachineArn>\" elif \"<requestStateMachineArn>\" != \"\" then \"<requestStateMachineArn>\" else \"<requestResourceArn>\" end",
+                   "action": "if \"<eventName>\" | test(\"DeleteStateMachine[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
+                 }
+   ```
+
+   </details>
+
+Done! soon, you will be able to see any `Step Functions state machines`.
