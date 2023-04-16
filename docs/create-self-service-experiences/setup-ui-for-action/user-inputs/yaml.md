@@ -1,6 +1,6 @@
 ---
 sidebar_position: 12
-description: Yaml is a data type used to save object definitions in YAML
+description: Yaml is an input used to save object definitions in YAML
 ---
 
 import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"
@@ -10,11 +10,11 @@ import TabItem from "@theme/TabItem"
 
 # Yaml
 
-Yaml is a data type used to save object definitions in YAML.
+Yaml is an input used to save object definitions in YAML.
 
 ## 💡 Common yaml usage
 
-The yaml property type can be used to store any key/value based data, for example:
+The yaml input type can be used to store any key/value based data, for example:
 
 - Configurations;
 - Helm charts;
@@ -23,11 +23,9 @@ The yaml property type can be used to store any key/value based data, for exampl
 - `values.yml`;
 - etc.
 
-In this [live demo](https://demo.getport.io/services) example, we can see the `Helm Chart` yaml property. 🎬
-
 ## API definition
 
-<Tabs groupId="api-definition" defaultValue="basic" values={[
+<Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Array", value: "array"}
 ]}>
@@ -36,10 +34,10 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `H
 
 ```json showLineNumbers
 {
-  "myYamlProp": {
-    "title": "My yaml",
+  "myYamlInput": {
+    "title": "My yaml input",
     "icon": "My icon",
-    "description": "My yaml property",
+    "description": "My yaml input",
     // highlight-start
     "type": "string",
     "format": "yaml"
@@ -53,10 +51,10 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `H
 
 ```json showLineNumbers
 {
-  "myYamlArray": {
-    "title": "My yaml array",
+  "myYamlArrayInput": {
+    "title": "My yaml array input",
     "icon": "My icon",
-    "description": "My yaml array",
+    "description": "My yaml array input",
     // highlight-start
     "type": "array",
     "items": {
@@ -75,7 +73,7 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `H
 
 ## Terraform definition
 
-<Tabs groupId="tf-definition" defaultValue="basic" values={[
+<Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Array - coming soon", value: "array"}
 ]}>
@@ -83,15 +81,16 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `H
 <TabItem value="basic">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
-  # ...blueprint properties
+resource "port-labs_action" "myAction" {
+  # ...action properties
   # highlight-start
-  properties {
-    identifier = "myYAMLProp"
-    title      = "My yaml"
-    required   = false
-    type       = "string"
-    format     = "yaml"
+  user_properties {
+    identifier  = "myYamlInput"
+    title       = "My yaml input"
+    description = "My yaml input"
+    required    = false
+    type        = "string"
+    format      = "yaml"
   }
   # highlight-end
 }
