@@ -1890,3 +1890,287 @@ In this step-by-step example, you will export your `DynamoDB tables` to Port.
    </details>
 
 Done! soon, you will be able to see any `DynamoDB tables`.
+
+## Mapping RDS instances
+
+In this step-by-step example, you will export your `RDS instances` to Port.
+
+1. Create the following Port blueprint:
+
+   - **RDS** - will represent RDS instances from the AWS account.
+
+   You may use the following definition:
+
+   <details>
+   <summary> RDS blueprint </summary>
+
+   ```json showLineNumbers
+   {
+     "identifier": "rds",
+     "description": "This blueprint represents an AWS RDS instance in our software catalog",
+     "title": "RDS",
+     "icon": "SQL",
+     "schema": {
+       "properties": {
+         "link": {
+           "type": "string",
+           "title": "Link",
+           "format": "url"
+         },
+         "engine": {
+           "type": "string",
+           "title": "Engine"
+         },
+         "engineVersion": {
+           "type": "string",
+           "title": "Engine Version"
+         },
+         "storageType": {
+           "type": "string",
+           "title": "Storage Type",
+           "enum": ["gp2", "gp3", "io1", "standard", "aurora"]
+         },
+         "dbInstanceClass": {
+           "type": "string",
+           "title": "DB Instance Class"
+         },
+         "availabilityZone": {
+           "type": "string",
+           "title": "Availability Zone"
+         },
+         "dbParameterGroup": {
+           "type": "string",
+           "title": "DB Parameter Group"
+         },
+         "optionGroup": {
+           "type": "string",
+           "title": "Option Group"
+         },
+         "dbSubnetGroup": {
+           "type": "string",
+           "title": "DB Subnet Group"
+         },
+         "masterUsername": {
+           "type": "string",
+           "title": "Master Username"
+         },
+         "allocatedStorage": {
+           "type": "string",
+           "title": "Allocated Storage"
+         },
+         "maxAllocatedStorage": {
+           "type": "number",
+           "title": "Max Allocated Storage"
+         },
+         "backupRetentionPeriod": {
+           "type": "number",
+           "title": "Backup Retention Period"
+         },
+         "monitoringInterval": {
+           "type": "number",
+           "title": "Monitoring Interval",
+           "enum": [0, 1, 5, 10, 15, 30, 60]
+         },
+         "multiAZ": {
+           "type": "boolean",
+           "title": "Multi AZ"
+         },
+         "storageEncrypted": {
+           "type": "boolean",
+           "title": "Storage Encrypted"
+         },
+         "enablePerformanceInsights": {
+           "type": "boolean",
+           "title": "Enable Performance Insights"
+         },
+         "autoMinorVersionUpgrade": {
+           "type": "boolean",
+           "title": "Auto Minor Version Upgrade"
+         },
+         "deletionProtection": {
+           "type": "boolean",
+           "title": "Deletion Protection"
+         },
+         "publiclyAccessible": {
+           "type": "boolean",
+           "title": "Publicly Accessible"
+         },
+         "certificateValidTill": {
+           "type": "string",
+           "title": "Certificate Valid Till",
+           "format": "date-time"
+         },
+         "certificateCA": {
+           "type": "string",
+           "title": "Certificate CA"
+         },
+         "preferredBackupWindow": {
+           "type": "string",
+           "title": "Preferred Backup Window"
+         },
+         "preferredMaintenanceWindow": {
+           "type": "string",
+           "title": "Preferred Maintenance Window"
+         },
+         "endpoint": {
+           "type": "object",
+           "title": "Endpoint"
+         },
+         "tags": {
+           "type": "array",
+           "title": "Tags"
+         },
+         "arn": {
+           "type": "string",
+           "title": "ARN"
+         }
+       },
+       "required": []
+     },
+     "mirrorProperties": {},
+     "calculationProperties": {},
+     "relations": {}
+   }
+   ```
+
+   </details>
+
+2. Upload the `config.json` file to the exporter's S3 bucket:
+
+   <details>
+   <summary> Port AWS exporter config.json </summary>
+
+   ```json showLineNumbers
+   {
+     "resources": [
+       {
+         "kind": "AWS::DynamoDB::Table",
+         "port": {
+           "entity": {
+             "mappings": [
+               {
+                 "identifier": ".TableName",
+                 "title": ".TableName",
+                 "blueprint": "dynamodb",
+                 "properties": {
+                   "link": "\"https://console.aws.amazon.com/go/view?arn=\" + .Arn",
+                   "writeCapacityUnits": ".ProvisionedThroughput.WriteCapacityUnits",
+                   "readCapacityUnits": ".ProvisionedThroughput.ReadCapacityUnits",
+                   "deletionProtectionEnabled": ".DeletionProtectionEnabled",
+                   "pointInTimeRecoveryEnabled": ".PointInTimeRecoverySpecification.PointInTimeRecoveryEnabled",
+                   "ttlEnabled": ".TimeToLiveSpecification.Enabled",
+                   "ttlAttributeName": ".TimeToLiveSpecification.AttributeName",
+                   "billingMode": ".BillingMode",
+                   "attributeDefinitions": ".AttributeDefinitions",
+                   "keySchema": ".KeySchema",
+                   "tags": ".Tags",
+                   "arn": ".Arn"
+                 }
+               }
+             ]
+           }
+         }
+       }
+     ]
+   }
+   ```
+
+   </details>
+
+3. Update the exporter's `IAM policy`:
+
+   <details>
+   <summary> IAM Policy </summary>
+
+   ```json showLineNumbers
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Sid": "VisualEditor0",
+         "Effect": "Allow",
+         "Action": [
+           "ec2:DescribeAccountAttributes",
+           "ec2:DescribeAvailabilityZones",
+           "ec2:DescribeInternetGateways",
+           "ec2:DescribeSecurityGroups",
+           "ec2:DescribeSubnets",
+           "ec2:DescribeVpcAttribute",
+           "ec2:DescribeVpcs",
+           "rds:DescribeDBInstances"
+         ],
+         "Resource": "*"
+       }
+     ]
+   }
+   ```
+
+   </details>
+
+4. Optional: Create an event rule to trigger automatic syncing of changes in RDS instances.
+
+   You may use the following CloudFormation Template:
+
+   <details>
+   <summary> Event Rule CloudFormation Template </summary>
+
+   ```yaml showLineNumbers
+   AWSTemplateFormatVersion: "2010-09-09"
+   Description: The template used to create event rules for the Port AWS exporter.
+   Parameters:
+     PortAWSExporterStackName:
+       Description: Name of the Port AWS exporter stack name
+       Type: String
+       MinLength: 1
+       MaxLength: 255
+       AllowedPattern: ^[a-zA-Z][-a-zA-Z0-9]*$
+       Default: serverlessrepo-port-aws-exporter
+   Resources:
+     EventRule0:
+       Type: AWS::Events::Rule
+       Properties:
+         EventBusName: default
+         EventPattern:
+           source:
+             - aws.rds
+           detail-type:
+             - AWS API Call via CloudTrail
+           detail:
+             eventSource:
+               - rds.amazonaws.com
+             eventName:
+               - prefix: CreateDBInstance
+               - prefix: CreateDBInstanceReadReplica
+               - prefix: RestoreDBInstanceFromDBSnapshot
+               - prefix: RestoreDBInstanceFromS3
+               - prefix: RestoreDBInstanceToPointInTime
+               - prefix: ModifyDBInstance
+               - prefix: AddTagsToResource
+               - prefix: RemoveTagsFromResource
+               - prefix: DeleteDBInstance
+         Name: port-aws-exporter-sync-rds-trails
+         State: ENABLED
+         Targets:
+           - Id: PortAWSExporterEventsQueue
+             Arn:
+               Fn::ImportValue:
+                 Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+             InputTransformer:
+               InputPathsMap:
+                 awsRegion: $.detail.awsRegion
+                 eventName: $.detail.eventName
+                 requestDBInstanceIdentifier: $.detail.requestParameters.dBInstanceIdentifier
+                 requestResourceName: $.detail.requestParameters.resourceName
+                 requestTargetDBInstanceIdentifier: $.detail.requestParameters.targetDBInstanceIdentifier
+               InputTemplate: |-
+                 {
+                   "resource_type": "AWS::RDS::DBInstance",
+                   "region": "\"<awsRegion>\"",
+                   "identifier": "if \"<requestTargetDBInstanceIdentifier>\" != \"\" then \"<requestTargetDBInstanceIdentifier>\" elif \"<requestDBInstanceIdentifier>\" != \"\" then \"<requestDBInstanceIdentifier>\" else \"<requestResourceName>\" | split(\":\")[-1] end",
+                   "action": "if \"<eventName>\" | test(\"DeleteDBInstance[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
+                 }
+   ```
+
+   </details>
+
+Done! soon, you will be able to see any `RDS instances`.
