@@ -1,6 +1,6 @@
 ```json showLineNumbers
 {
-  "identifier": "sentryIssuesEvent",
+  "identifier": "sentryIssue",
   "description": "This blueprint represents an issue trigger event from Sentry",
   "title": "Sentry Issue Event",
   "icon": "Sentry",
@@ -11,21 +11,19 @@
         "title": "Level",
         "enum": ["error", "info", "fatal", "warning", "debug", "sample"]
       },
-      "issueUrl": {
+      "platform": {
         "type": "string",
-        "title": "Issue URL",
-        "format": "url",
-        "description": "the link to the issue in Sentry"
+        "title": "Platform",
+        "description": "the platform name in Sentry"
       },
-      "issueStatus": {
+      "status": {
         "type": "string",
         "title": "Issue Status"
       },
-      "projectUrl": {
+      "projectID": {
         "type": "string",
-        "title": "Project URL",
-        "format": "url",
-        "description": "the link to the project url in Sentry"
+        "title": "Project ID",
+        "description": "the ID of the project in Sentry"
       },
       "action": {
         "type": "string",
@@ -36,14 +34,7 @@
     "required": []
   },
   "mirrorProperties": {},
-  "calculationProperties": {
-    "eventUrl": {
-      "title": "Event URL",
-      "calculation": ".properties.issueUrl + \"events\" + .identifier",
-      "type": "string",
-      "format": "url"
-    }
-  },
+  "calculationProperties": {},
   "relations": {}
 }
 ```

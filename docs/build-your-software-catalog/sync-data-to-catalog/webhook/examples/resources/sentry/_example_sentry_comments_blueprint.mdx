@@ -1,8 +1,8 @@
 ```json showLineNumbers
 {
-  "identifier": "sentryComments",
-  "description": "This blueprint represents a Sentry comment webhook in our software catalog",
-  "title": "Sentry Issue Comments",
+  "identifier": "sentryComment",
+  "description": "This blueprint represents a Sentry comment in our software catalog",
+  "title": "Sentry Comment",
   "icon": "Sentry",
   "schema": {
     "properties": {
@@ -33,9 +33,9 @@
   "mirrorProperties": {},
   "calculationProperties": {},
   "relations": {
-    "sentryIssuesEvent": {
+    "sentryIssue": {
       "title": "Issue",
-      "target": "sentryIssuesEvent",
+      "target": "sentryIssue",
       "required": false,
       "many": false
     }

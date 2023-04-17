@@ -6,7 +6,7 @@
   "icon": "Sentry",
   "mappings": [
     {
-      "blueprint": "sentryComments",
+      "blueprint": "sentryComment",
       "entity": {
         "identifier": ".body.data.comment_id",
         "title": "Comment Event",
@@ -18,7 +18,7 @@
           "timestamp": ".body.data.timestamp"
         },
         "relations": {
-          "sentryIssuesEvent": ".body.data.issue_id | tostring"
+          "sentryIssue": ".body.data.issue_id | tostring"
         }
       }
     }

@@ -6,16 +6,16 @@
   "icon": "Sentry",
   "mappings": [
     {
-      "blueprint": "sentryIssuesEvent",
+      "blueprint": "sentryIssue",
       "entity": {
         "identifier": ".body.data.issue.id",
-        "title": "Issues Event",
+        "title": ".body.data.issue.title",
         "properties": {
-          "action": ".body.data.action",
+          "action": ".body.action",
           "level": ".body.data.issue.level",
-          "issueUrl": ".body.data.issue.url",
-          "issueStatus": ".body.data.issue.status",
-          "projectUrl": ".body.data.issue.project_url"
+          "platform": ".body.data.issue.platform",
+          "status": ".body.data.issue.status",
+          "projectID": ".body.data.issue.project.id"
         }
       }
     }
