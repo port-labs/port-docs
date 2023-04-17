@@ -1,0 +1,29 @@
+```json showLineNumbers
+{
+  "identifier": "dynatraceProblemMapper",
+  "title": "Problem Mapper",
+  "description": "A webhook configuration for problem events from Dynatrace",
+  "icon": "Deployment",
+  "mappings": [
+    {
+      "blueprint": "dynatraceProblem",
+      "entity": {
+        "identifier": ".body.ProblemID | tostring",
+        "title": ".body.ProblemTitle",
+        "properties": {
+          "state": ".body.State",
+          "url": ".body.ProblemURL",
+          "details": ".body.ProblemDetailsText",
+          "impact": ".body.ProblemImpact",
+          "impactedEntity": ".body.ImpactedEntity",
+          "severity": ".body.ProblemSeverity"
+        }
+      }
+    }
+  ],
+  "enabled": true,
+  "security": {
+    "secret": "WEBHOOK_SECRET"
+  }
+}
+```
