@@ -61,7 +61,7 @@ The following example adds a `sentryComment` blueprint, in addition to the `sent
 
 <details>
 
-<summary>Sentry comments blueprint (including the sentryIssuesEvent relation)</summary>
+<summary>Sentry comments blueprint (including the sentryIssue relation)</summary>
 <SentryCommentsBlueprint/>
 
 </details>
