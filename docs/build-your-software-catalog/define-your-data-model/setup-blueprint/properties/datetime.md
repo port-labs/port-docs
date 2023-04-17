@@ -168,6 +168,7 @@ blueprint = Blueprint(
     "myBlueprint",
     identifier="myBlueprint",
     title="My Blueprint",
+    # highlight-start
     properties=[
       {
         "type": "string",
@@ -177,6 +178,7 @@ blueprint = Blueprint(
         "format": "date-time"
       }
     ],
+    # highlight-end
     relations=[]
 )
 ```
@@ -192,6 +194,7 @@ import * as port from "@port-labs/pulumi";
 export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
+  // highlight-start
   properties: [
     {
       identifier: "myDatetimeProp",
@@ -201,6 +204,7 @@ export const blueprint = new port.Blueprint("myBlueprint", {
       format: "date-time",
     },
   ],
+  // highlight-end
 });
 ```
 
@@ -216,6 +220,7 @@ const port = require("@port-labs/pulumi");
 const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
+  // highlight-start
   properties: [
     {
       identifier: "myDatetimeProp",
@@ -225,6 +230,7 @@ const entity = new port.Blueprint("myBlueprint", {
       format: "date-time",
     },
   ],
+  // highlight-end
   relations: [],
 });
 
@@ -247,6 +253,7 @@ func main() {
 		blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
 			Identifier: pulumi.String("myBlueprint"),
 			Title:      pulumi.String("My Blueprint"),
+      // highlight-start
 			Properties: port.BlueprintPropertyArray{
 				&port.BlueprintPropertyArgs{
 					Identifier: pulumi.String("myDatetimeProp"),
@@ -256,6 +263,7 @@ func main() {
 					Format:     pulumi.String("date-time"),
 				},
 			},
+      // highlight-end
 		})
 		ctx.Export("blueprint", blueprint.Title)
 		if err != nil {
@@ -293,6 +301,7 @@ blueprint = Blueprint(
     "myBlueprint",
     identifier="myBlueprint",
     title="My Blueprint",
+    # highlight-start
     properties=[{
       "type": "string",
       "identifier": "myDatetimeProp",
@@ -305,6 +314,7 @@ blueprint = Blueprint(
         "2022-05-18T11:44:15.345Z": "green"
       }
     }],
+    # highlight-end
     relations=[]
 )
 ```
@@ -320,6 +330,7 @@ import * as port from "@port-labs/pulumi";
 export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
+  // highlight-start
   properties: [
     {
       identifier: "myDatetimeProp",
@@ -334,6 +345,7 @@ export const blueprint = new port.Blueprint("myBlueprint", {
       },
     },
   ],
+  // highlight-end
 });
 ```
 
@@ -349,6 +361,7 @@ const port = require("@port-labs/pulumi");
 const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
+  // highlight-start
   properties: [
     {
       identifier: "myDatetimeProp",
@@ -363,6 +376,7 @@ const entity = new port.Blueprint("myBlueprint", {
       },
     },
   ],
+  // highlight-end
   relations: [],
 });
 
@@ -385,6 +399,7 @@ func main() {
 		blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
 			Identifier: pulumi.String("myBlueprint"),
 			Title:      pulumi.String("My Blueprint"),
+      // highlight-start
 			Properties: port.BlueprintPropertyArray{
 				&port.BlueprintPropertyArgs{
 					Identifier: pulumi.String("myDatetimeProp"),
@@ -402,6 +417,7 @@ func main() {
 					},
 				},
 			},
+      // highlight-end
 		})
 		ctx.Export("blueprint", blueprint.Title)
 		if err != nil {

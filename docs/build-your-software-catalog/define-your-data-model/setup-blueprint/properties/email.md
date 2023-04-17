@@ -168,7 +168,17 @@ blueprint = Blueprint(
     "myBlueprint",
     identifier="myBlueprint",
     title="My Blueprint",
-    properties=[{ "type": "string", "identifier": "myEmailProp", "title": "My email", "required": True, "format": "email"}],
+    # highlight-start
+    properties=[
+      {
+        "type": "string",
+        "identifier": "myEmailProp",
+        "title": "My email",
+        "required": True,
+        "format": "email"
+      }
+    ],
+    # highlight-end
     relations=[]
 )
 ```
@@ -184,6 +194,7 @@ import * as port from "@port-labs/pulumi";
 export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
+  // highlight-start
   properties: [
     {
       identifier: "myEmailProp",
@@ -193,6 +204,7 @@ export const blueprint = new port.Blueprint("myBlueprint", {
       format: "email",
     },
   ],
+  // highlight-end
 });
 ```
 
@@ -208,6 +220,7 @@ const port = require("@port-labs/pulumi");
 const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
+  // highlight-start
   properties: [
     {
       identifier: "myEmailProp",
@@ -217,6 +230,7 @@ const entity = new port.Blueprint("myBlueprint", {
       format: "email",
     },
   ],
+  // highlight-end
   relations: [],
 });
 
@@ -239,6 +253,7 @@ func main() {
 		blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
 			Identifier: pulumi.String("myBlueprint"),
 			Title:      pulumi.String("My Blueprint"),
+      // highlight-start
 			Properties: port.BlueprintPropertyArray{
 				&port.BlueprintPropertyArgs{
 					Identifier: pulumi.String("myEmailProp"),
@@ -248,6 +263,7 @@ func main() {
 					Format:     pulumi.String("email"),
 				},
 			},
+      // highlight-end
 		})
 		ctx.Export("blueprint", blueprint.Title)
 		if err != nil {
@@ -285,6 +301,7 @@ blueprint = Blueprint(
     "myBlueprint",
     identifier="myBlueprint",
     title="My Blueprint",
+    # highlight-start
     properties=[{
       "type": "string",
       "identifier": "myEmailProp",
@@ -297,6 +314,7 @@ blueprint = Blueprint(
         "other@example.com": "green"
       }
     }],
+    # highlight-end
     relations=[]
 )
 ```
@@ -312,6 +330,7 @@ import * as port from "@port-labs/pulumi";
 export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
+  // highlight-start
   properties: [
     {
       identifier: "myEmailProp",
@@ -326,6 +345,7 @@ export const blueprint = new port.Blueprint("myBlueprint", {
       },
     },
   ],
+  // highlight-end
 });
 ```
 
@@ -341,6 +361,7 @@ const port = require("@port-labs/pulumi");
 const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
+  // highlight-start
   properties: [
     {
       identifier: "myEmailProp",
@@ -355,6 +376,7 @@ const entity = new port.Blueprint("myBlueprint", {
       },
     },
   ],
+  // highlight-end
   relations: [],
 });
 
@@ -377,6 +399,7 @@ func main() {
 		blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
 			Identifier: pulumi.String("myBlueprint"),
 			Title:      pulumi.String("My Blueprint"),
+      // highlight-start
 			Properties: port.BlueprintPropertyArray{
 				&port.BlueprintPropertyArgs{
 					Identifier: pulumi.String("myEmailProp"),
@@ -394,6 +417,7 @@ func main() {
 					Format:     pulumi.String("email"),
 				},
 			},
+      // highlight-end
 		})
 		ctx.Export("blueprint", blueprint.Title)
 		if err != nil {

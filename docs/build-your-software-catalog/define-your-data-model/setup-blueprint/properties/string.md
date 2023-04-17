@@ -172,7 +172,16 @@ blueprint = Blueprint(
     "myBlueprint",
     identifier="myBlueprint",
     title="My Blueprint",
-    properties=[{ "type": "string", "identifier": "myStringProp", "title": "My String", "required": True }],
+    # highlight-start
+    properties=[
+      {
+        "type": "string",
+        "identifier": "myStringProp",
+        "title": "My String",
+        "required": True
+      }
+    ],
+    # highlight-end
     relations=[]
 )
 ```
@@ -188,6 +197,7 @@ import * as port from "@port-labs/pulumi";
 export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
+  // highlight-start
   properties: [
     {
       identifier: "myStringProp",
@@ -196,6 +206,7 @@ export const blueprint = new port.Blueprint("myBlueprint", {
       required: true,
     },
   ],
+  // highlight-end
 });
 ```
 
@@ -211,6 +222,7 @@ const port = require("@port-labs/pulumi");
 const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
+  // highlight-start
   properties: [
     {
       identifier: "myStringProp",
@@ -219,6 +231,7 @@ const entity = new port.Blueprint("myBlueprint", {
       required: true,
     },
   ],
+  // highlight-end
   relations: [],
 });
 
@@ -241,6 +254,7 @@ func main() {
 		blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
 			Identifier: pulumi.String("myBlueprint"),
 			Title:      pulumi.String("My Blueprint"),
+      // highlight-start
 			Properties: port.BlueprintPropertyArray{
 				&port.BlueprintPropertyArgs{
 					Identifier: pulumi.String("myStringProp"),
@@ -249,6 +263,7 @@ func main() {
 					Type:       pulumi.String("string"),
 				},
 			},
+      // highlight-end
 		})
 		ctx.Export("blueprint", blueprint.Title)
 		if err != nil {
@@ -286,6 +301,7 @@ blueprint = Blueprint(
     "myBlueprint",
     identifier="myBlueprint",
     title="My Blueprint",
+    # highlight-start
     properties=[{
       "type": "string",
       "identifier": "myStringProp",
@@ -297,6 +313,7 @@ blueprint = Blueprint(
         "my-option-2": "green"
       }
     }],
+    # highlight-end
     relations=[]
 )
 ```
@@ -312,6 +329,7 @@ import * as port from "@port-labs/pulumi";
 export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
+  // highlight-start
   properties: [
     {
       identifier: "myStringProp",
@@ -325,6 +343,7 @@ export const blueprint = new port.Blueprint("myBlueprint", {
       },
     },
   ],
+  // highlight-end
 });
 ```
 
@@ -340,6 +359,7 @@ const port = require("@port-labs/pulumi");
 const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
+  // highlight-start
   properties: [
     {
       identifier: "myStringProp",
@@ -353,6 +373,7 @@ const entity = new port.Blueprint("myBlueprint", {
       },
     },
   ],
+  // highlight-end
   relations: [],
 });
 
@@ -375,6 +396,7 @@ func main() {
 		blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
 			Identifier: pulumi.String("myBlueprint"),
 			Title:      pulumi.String("My Blueprint"),
+      // highlight-start
 			Properties: port.BlueprintPropertyArray{
 				&port.BlueprintPropertyArgs{
 					Identifier: pulumi.String("myStringProp"),
@@ -391,6 +413,7 @@ func main() {
 					},
 				},
 			},
+      // highlight-end
 		})
 		ctx.Export("blueprint", blueprint.Title)
 		if err != nil {
