@@ -11,7 +11,8 @@ This example includes a complete blueprint resource definition in terraform, whi
 - [Blueprint](../../../../define-your-data-model/setup-blueprint/setup-blueprint.md?definition=tf#configure-blueprints-in-port) definition examples;
 - All [property](../../../../define-your-data-model/setup-blueprint/properties/properties.md) type definitions;
 - [Relation](../../../../define-your-data-model/relate-blueprints/relate-blueprints.md?definition=tf#configure-relations-in-port) definition example;
-- [Mirror property](../../../../define-your-data-model/setup-blueprint/properties/mirror-property/mirror-property.md) definition example.
+- [Mirror property](../../../../define-your-data-model/setup-blueprint/properties/mirror-property/mirror-property.md) definition example;
+- [Calculation property](../../../../define-your-data-model/setup-blueprint/properties/calculation-property/calculation-property.md) definition example.
 
 Here is the example definition:
 
@@ -29,7 +30,6 @@ provider "port-labs" {
   client_id = "PORT_CLIENT_ID"     # or set the env var PORT_CLIENT_ID
   secret    = "PORT_CLIENT_SECRET" # or set the env var PORT_CLIENT_SECRET
 }
-
 
 resource "port-labs_blueprint" "myBlueprint" {
   depends_on = [
@@ -137,10 +137,25 @@ resource "port-labs_blueprint" "myBlueprint" {
     path       = "myRelation.myStringProp"
   }
 
+  # Mirror property of a meta-property
+  mirror_properties {
+    identifier = "myMirrorPropWithMeta"
+    title      = "My mirror property of meta property"
+    path       = "myRelation.$identifier"
+  }
+
   calculation_properties {
     identifier  = "myCalculation"
     title       = "My calculation property"
     calculation = ".properties.myStringProp + .properties.myStringProp"
+    type        = "string"
+  }
+
+  # Calculation property making use of meta-properties
+  calculation_properties {
+    identifier  = "myCalculationWithMeta"
+    title       = "My calculation property with meta properties"
+    calculation = ".identifier + \"-\" + .title + \"-\" + .properties.myStringProp"
     type        = "string"
   }
 
