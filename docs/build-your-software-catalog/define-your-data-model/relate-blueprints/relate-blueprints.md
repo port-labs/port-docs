@@ -175,6 +175,12 @@ resource "port-labs_blueprint" "myBlueprint" {
 }
 ```
 
+:::danger
+At the moment, Port's Terraform provider does not support reporting entities from a blueprint that has a many relation configured.
+
+If you plan on using Port's Terraform provider to report entities, please do not define blueprints with many relations in your Terraform definitions.
+:::
+
 </TabItem>
 </Tabs>
 
