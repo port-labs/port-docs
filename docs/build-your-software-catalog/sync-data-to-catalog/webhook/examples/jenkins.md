@@ -24,9 +24,16 @@ Create the following blueprint definition and webhook configuration:
 </details>
 
 <details>
-<summary>Jenkins job webhook configuration</summary>
 
-<JenkinsJobWebhookConfig/>
+<summary>Jenkins build blueprint (including the jenkinsJob relation)</summary>
+<JenkinsBuildBlueprint/>
+
+</details>
+
+<details>
+
+<summary>Jenkins job and build webhook configuration</summary>
+<JenkinsBuildWebhookConfig/>
 
 </details>
 
@@ -45,23 +52,5 @@ Create the following blueprint definition and webhook configuration:
    5. `Notes` - Add additional information about this webhook. You can then use this field as the title for your job;
 7. Scroll down to the **Build Triggers** section and select your preferred trigger type;
 8. Click on **Save** at the buttom of the page;
-
-## Relation example
-
-The following example adds a `build` blueprint, in addition to the `job` blueprint shown in the previous example. In addition, it also adds a `jenkinsJob` relation. The webhook will create or update the relation between the 2 existing entities, allowing you to map a build to its parent job:
-
-<details>
-
-<summary>Jenkins build blueprint (including the jenkinsJob relation)</summary>
-<JenkinsBuildBlueprint/>
-
-</details>
-
-<details>
-
-<summary>Jenkins build webhook configuration</summary>
-<JenkinsBuildWebhookConfig/>
-
-</details>
 
 Done! any changes to a job or build process (queued, started, completed, finalized etc.) will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
