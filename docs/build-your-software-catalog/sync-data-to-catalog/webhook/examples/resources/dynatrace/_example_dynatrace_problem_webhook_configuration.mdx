@@ -15,15 +15,15 @@
           "url": ".body.ProblemURL",
           "details": ".body.ProblemDetailsText",
           "impact": ".body.ProblemImpact",
-          "impactedEntity": ".body.ImpactedEntity",
           "severity": ".body.ProblemSeverity"
+        },
+        "relations": {
+          "microservice": ".body.ImpactedEntities[].entity"
         }
       }
     }
   ],
   "enabled": true,
-  "security": {
-    "secret": "WEBHOOK_SECRET"
-  }
+  "security": {}
 }
 ```

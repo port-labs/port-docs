@@ -17,25 +17,28 @@
       },
       "details": {
         "type": "string",
-        "title": "Detail text"
+        "title": "Detail Text"
       },
       "impact": {
         "type": "string",
-        "title": "Problem impact"
+        "title": "Problem Impact"
       },
       "severity": {
         "type": "string",
-        "title": "Problem severity"
-      },
-      "impactedEntity": {
-        "type": "array",
-        "title": "Impacted Entities"
+        "title": "Problem Severity"
       }
     },
     "required": []
   },
   "mirrorProperties": {},
   "calculationProperties": {},
-  "relations": {}
+  "relations": {
+    "microservice": {
+      "title": "Impacted Services",
+      "target": "microservice",
+      "required": false,
+      "many": true
+    }
+  }
 }
 ```
