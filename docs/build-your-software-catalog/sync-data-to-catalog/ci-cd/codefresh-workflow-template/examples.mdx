@@ -69,8 +69,7 @@ For an example showing how to make use of the output from the `entity-get` workf
 
 ## Complete example
 
-Here is a complete workflow `yml` to create both `image` entity, and a `cijob` entity with a relation between them, and then print the complete
-JSON of the new `image` entity:
+Here is a complete workflow `yml` to create both `image` entity, and a `cijob` entity with a relation between them, and then print the complete JSON of the new `image` entity:
 
 ```yaml showLineNumbers
 apiVersion: argoproj.io/v1alpha1
@@ -79,7 +78,7 @@ metadata:
   name: port.codefresh-complete-example.0.0.1
   annotations:
     port/version: "0.0.1"
-    port/description: "This Workflow Template is used to create a image entity, a ciJob entity and then print the JSON of the new image"
+    port/description: "This Workflow Template is used to create an image entity, a ciJob entity and then print the JSON of the new image"
 spec:
   arguments:
     parameters:
