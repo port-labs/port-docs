@@ -28,6 +28,7 @@
       },
       "timestamp": {
         "type": "string",
+        "format": "date-time",
         "title": "Timestamp",
         "description": "Last updated timestamp of the build"
       }
@@ -37,7 +38,7 @@
   "mirrorProperties": {},
   "calculationProperties": {},
   "relations": {
-    "belongsTo": {
+    "jenkinsJob": {
       "title": "Belongs to",
       "target": "jenkinsJob",
       "required": false,

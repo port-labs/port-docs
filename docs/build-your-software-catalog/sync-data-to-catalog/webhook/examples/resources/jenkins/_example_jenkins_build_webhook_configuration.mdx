@@ -1,7 +1,7 @@
 ```json showLineNumbers
 {
-  "identifier": "jenkinsMapper",
-  "title": "Jenkins mapper",
+  "identifier": "jenkinsBuildMapper",
+  "title": "Jenkins Build Mapper",
   "description": "A webhook configuration to map Jenkins builds to Port",
   "icon": "Jenkins",
   "mappings": [
@@ -9,7 +9,7 @@
       "blueprint": "jenkinsBuild",
       "entity": {
         "identifier": ".body.build.number",
-        "title": ".body.name + \"-\" + .body.build.number",
+        "title": ".body.name + \" - \" + (.body.build.number | tostring)",
         "properties": {
           "buildStatus": ".body.build.status",
           "buildUrl": ".body.build.full_url",
@@ -17,7 +17,7 @@
           "timestamp": ".body.build.timestamp"
         },
         "relations": {
-          "belongsTo": ".body.name | tostring"
+          "jenkinsJob": ".body.name | tostring"
         }
       }
     }

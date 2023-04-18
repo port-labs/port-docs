@@ -48,11 +48,11 @@ Create the following blueprint definition and webhook configuration:
 
 ## Relation example
 
-The following example adds a `buid` blueprint, in addition to the `job` blueprint shown in the previous example. In addition, it also adds a `belongsTo` relation. The webhook will create or update the relation between the 2 existing entities, allowing you to map a build to its parent job:
+The following example adds a `build` blueprint, in addition to the `job` blueprint shown in the previous example. In addition, it also adds a `jenkinsJob` relation. The webhook will create or update the relation between the 2 existing entities, allowing you to map a build to its parent job:
 
 <details>
 
-<summary>Jenkins build blueprint (including the belongsTo relation)</summary>
+<summary>Jenkins build blueprint (including the jenkinsJob relation)</summary>
 <JenkinsBuildBlueprint/>
 
 </details>
@@ -64,4 +64,4 @@ The following example adds a `buid` blueprint, in addition to the `job` blueprin
 
 </details>
 
-Done! any changes to a job process (queued, started, completed, finalized etc.) will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+Done! any changes to a job or build process (queued, started, completed, finalized etc.) will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
