@@ -103,7 +103,7 @@ print(f"Image tag is: {entity['properties']['runLink']}")
 
 ## Relation example
 
-In the following example you will update the `example-image` entity which you created when creating the `ciJob` entity shown in the previous example.
+In the following example you will update the `example-image` entity that was automatically created when creating the `ciJob` entity shown in the previous example.
 
 Add the following snippet to your Python code:
 
