@@ -10,7 +10,7 @@ import TabItem from "@theme/TabItem"
 
 # Entity
 
-Entity is an input type used to reference existing entities from the software catalog when triggering actions.
+Entity is an input type used to reference existing [entities](../../../build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md#creating-entities) from the software catalog when triggering actions.
 
 ## 💡 Common entity usage
 
