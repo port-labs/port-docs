@@ -8,17 +8,17 @@
     "properties": {
       "jobName": {
         "type": "string",
-        "title": "Project name"
+        "title": "Project Name"
       },
       "jobStatus": {
         "type": "string",
-        "title": "Job status",
-        "enum": ["QUEUED", "STARTED", "COMPLETED", "FINALIZED"]
-      },
-      "jobUrl": {
-        "type": "string",
-        "title": "Job URL",
-        "description": "URL of the job"
+        "title": "Job Status",
+        "enum": ["created", "updated", "deleted"],
+        "enumColors": {
+          "created": "green",
+          "updated": "yellow",
+          "deleted": "red"
+        }
       },
       "timestamp": {
         "type": "string",
@@ -30,7 +30,14 @@
     "required": []
   },
   "mirrorProperties": {},
-  "calculationProperties": {},
+  "calculationProperties": {
+    "jobUrl": {
+      "title": "Job URL",
+      "calculation": "'https://your_jenkins_url/' + .identifier",
+      "type": "string",
+      "format": "url"
+    }
+  },
   "relations": {}
 }
 ```
