@@ -1,0 +1,36 @@
+```json showLineNumbers
+{
+  "identifier": "jenkinsJob",
+  "description": "This blueprint represents a job event from Jenkins",
+  "title": "Jenkins Job",
+  "icon": "Jenkins",
+  "schema": {
+    "properties": {
+      "jobName": {
+        "type": "string",
+        "title": "Project name"
+      },
+      "jobStatus": {
+        "type": "string",
+        "title": "Job status",
+        "enum": ["QUEUED", "STARTED", "COMPLETED", "FINALIZED"]
+      },
+      "jobUrl": {
+        "type": "string",
+        "title": "Job URL",
+        "description": "URL of the job"
+      },
+      "timestamp": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Timestamp",
+        "description": "Last updated timestamp of the job"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {}
+}
+```
