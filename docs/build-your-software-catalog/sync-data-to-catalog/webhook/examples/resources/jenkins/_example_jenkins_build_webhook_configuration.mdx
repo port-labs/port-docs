@@ -1,49 +1,43 @@
 ```json showLineNumbers
 {
-  "identifier": "jenkinsBuild",
-  "description": "This blueprint represents a build event from Jenkins",
-  "title": "Jenkins Build",
+  "identifier": "jenkinsMapper",
+  "title": "Jenkins Mapper",
+  "description": "A webhook configuration to map Jenkins builds and jobs to Port",
   "icon": "Jenkins",
-  "schema": {
-    "properties": {
-      "buildStatus": {
-        "type": "string",
-        "title": "Build status",
-        "enum": ["SUCCESS", "FAILURE", "UNSTABLE"],
-        "enumColors": {
-          "SUCCESS": "green",
-          "FAILURE": "red",
-          "UNSTABLE": "yellow"
+  "mappings": [
+    {
+      "blueprint": "jenkinsJob",
+      "filter": ".body.type | startswith(\"item\")",
+      "entity": {
+        "identifier": ".body.url",
+        "title": ".body.data.displayName",
+        "properties": {
+          "jobName": ".body.data.fullName",
+          "jobUrl": ".body.url",
+          "jobStatus": ".body.type | split(\".\") | last",
+          "timestamp": ".body.time"
         }
-      },
-      "buildUrl": {
-        "type": "string",
-        "title": "Build URL",
-        "description": "URL to the build"
-      },
-      "timestamp": {
-        "type": "string",
-        "format": "date-time",
-        "title": "Timestamp",
-        "description": "Last updated timestamp of the build"
-      },
-      "buildDuration": {
-        "type": "number",
-        "title": "Build duration",
-        "description": "Duration of the build"
       }
     },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "relations": {
-    "jenkinsJob": {
-      "title": "Belongs to",
-      "target": "jenkinsJob",
-      "required": false,
-      "many": false
+    {
+      "blueprint": "jenkinsBuild",
+      "filter": ".body.type | startswith(\"run\")",
+      "entity": {
+        "identifier": ".body.data.id",
+        "title": ".body.data.fullDisplayName",
+        "properties": {
+          "buildStatus": ".body.data.result",
+          "buildUrl": ".body.url",
+          "buildDuration": ".body.data.duration",
+          "timestamp": ".body.data.timestamp"
+        },
+        "relations": {
+          "jenkinsJob": ".body.source | tostring"
+        }
+      }
     }
-  }
+  ],
+  "enabled": true,
+  "security": {}
 }
 ```
