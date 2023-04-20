@@ -98,3 +98,144 @@ resource "port-labs_blueprint" "myBlueprint" {
 
 </TabItem>
 </Tabs>
+
+## Pulumi definition
+
+<Tabs groupId="pulumi-definition" defaultValue="basic" values={[
+{label: "Basic", value: "basic"},
+{label: "Enum - coming soon", value: "enum"}
+]}>
+
+<TabItem value="basic">
+
+<Tabs groupId="pulumi-definition-team-basic" defaultValue="python" values={[
+{label: "Python", value: "python"},
+{label: "TypeScript", value: "typescript"},
+{label: "JavaScript", value: "javascript"},
+{label: "GO", value: "go"}
+]}>
+
+<TabItem value="python">
+
+```python showLineNumbers
+"""A Python Pulumi program"""
+
+import pulumi
+from port_pulumi import Blueprint
+
+blueprint = Blueprint(
+    "myBlueprint",
+    identifier="myBlueprint",
+    title="My Blueprint",
+    # highlight-start
+    properties=[
+      {
+         "type": "string",
+         "format": "team",
+         "identifier": "myTeamProp",
+         "title": "My team",
+         "required": True
+      }
+    ],
+    # highlight-end
+    relations=[]
+)
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript showLineNumbers
+import * as pulumi from "@pulumi/pulumi";
+import * as port from "@port-labs/pulumi";
+
+export const blueprint = new port.Blueprint("myBlueprint", {
+  identifier: "myBlueprint",
+  title: "My Blueprint",
+  // highlight-start
+  properties: [
+    {
+      identifier: "myTeamProp",
+      title: "My team",
+      type: "string",
+      format: "team",
+      required: true,
+    },
+  ],
+  // highlight-end
+});
+```
+
+</TabItem>
+
+<TabItem value="javascript">
+
+```javascript showLineNumbers
+"use strict";
+const pulumi = require("@pulumi/pulumi");
+const port = require("@port-labs/pulumi");
+
+const entity = new port.Blueprint("myBlueprint", {
+  title: "My Blueprint",
+  identifier: "myBlueprint",
+  // highlight-start
+  properties: [
+    {
+      identifier: "myTeamProp",
+      title: "My team",
+      type: "string",
+      format: "team",
+      required: true,
+    },
+  ],
+  // highlight-end
+  relations: [],
+});
+
+exports.title = entity.title;
+```
+
+</TabItem>
+<TabItem value="go">
+
+```go showLineNumbers
+package main
+
+import (
+	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
+			Identifier: pulumi.String("myBlueprint"),
+			Title:      pulumi.String("My Blueprint"),
+      // highlight-start
+			Properties: port.BlueprintPropertyArray{
+				&port.BlueprintPropertyArgs{
+					Identifier: pulumi.String("myTeamProp"),
+					Title:      pulumi.String("My team"),
+					Required:   pulumi.Bool(false),
+					Type:       pulumi.String("string"),
+					Format:     pulumi.String("team"),
+				},
+			},
+      // highlight-end
+		})
+		ctx.Export("blueprint", blueprint.Title)
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+```
+
+</TabItem>
+
+</Tabs>
+
+</TabItem>
+</Tabs>
