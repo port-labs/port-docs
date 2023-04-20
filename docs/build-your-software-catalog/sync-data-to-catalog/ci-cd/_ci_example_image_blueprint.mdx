@@ -1,0 +1,59 @@
+<details>
+<summary> Image blueprint </summary>
+
+```json showLineNumbers
+{
+  "identifier": "image",
+  "title": "Image",
+  "icon": "Docker",
+  "schema": {
+    "properties": {
+      "synkHighVulnerabilities": {
+        "type": "string",
+        "icon": "Snyk",
+        "title": "Synk High Vaulnerabilities"
+      },
+      "synkMediumVulnerabilities": {
+        "type": "string",
+        "icon": "Snyk",
+        "title": "Synk Medium Vaulnerabilities"
+      },
+      "imageTag": {
+        "type": "string",
+        "title": "Image Tag"
+      },
+      "gitRepoUrl": {
+        "type": "string",
+        "format": "url",
+        "title": "Git Url",
+        "description": "Git Url for the sourcecode"
+      },
+      "imageRegistry": {
+        "type": "string",
+        "format": "url",
+        "title": "Image Registry",
+        "description": "Docker registry"
+      },
+      "unitTestCoverage": {
+        "type": "number",
+        "title": "Unit Test coverage (%)",
+        "description": "The unit test coverage pecentage"
+      },
+      "integTestCoverage": {
+        "type": "number",
+        "title": "Integ Test coverage (%)",
+        "description": "The integration test coverage pecentage"
+      },
+      "size": {
+        "type": "number",
+        "title": "Image Size (GB)",
+        "description": "The image size in Gigabyte"
+      }
+    },
+    "required": []
+  },
+  "calculationProperties": {}
+}
+```
+
+</details>

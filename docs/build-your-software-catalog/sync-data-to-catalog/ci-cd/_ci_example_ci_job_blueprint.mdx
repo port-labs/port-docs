@@ -1,0 +1,47 @@
+<details>
+<summary> CI Job blueprint (including the image relation) </summary>
+
+```json showLineNumbers
+{
+  "identifier": "ciJob",
+  "title": "CI Job",
+  "icon": "CICD",
+  "schema": {
+    "properties": {
+      "triggeredBy": {
+        "type": "string",
+        "icon": "TwoUsers",
+        "title": "Triggered By",
+        "description": "The user who triggered the run"
+      },
+      "commitHash": {
+        "type": "string",
+        "title": "Commit Hash"
+      },
+      "jobBranch": {
+        "type": "string",
+        "icon": "Git",
+        "format": "url",
+        "title": "Job branch"
+      },
+      "runLink": {
+        "type": "string",
+        "format": "url",
+        "title": "Action Run Link"
+      }
+    },
+    "required": []
+  },
+  "relations": {
+    "image": {
+      "title": "Job Images",
+      "target": "image",
+      "required": false,
+      "many": true
+    }
+  },
+  "calculationProperties": {}
+}
+```
+
+</details>
