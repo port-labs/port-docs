@@ -141,7 +141,7 @@ resource "port-labs_blueprint" "myBlueprint" {
 
 <TabItem value="pulumi">
 
-<Tabs groupId="pulumi-definition" defaultValue="python" values={[
+<Tabs groupId="pulumi-definition" queryString defaultValue="python" values={[
 {label: "Python", value: "python"},
 {label: "TypeScript", value: "typescript"},
 {label: "JavaScript", value: "javascript"},
