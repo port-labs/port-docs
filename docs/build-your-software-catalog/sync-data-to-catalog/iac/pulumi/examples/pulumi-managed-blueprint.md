@@ -17,7 +17,7 @@ This example includes a complete blueprint resource definition in Pulumi, which 
 - [Mirror property](../../../../define-your-data-model/setup-blueprint/properties/mirror-property/mirror-property.md) definition example;
 - [Calculation property](../../../../define-your-data-model/setup-blueprint/properties/calculation-property/calculation-property.md) definition example.
 
-Here is the example definition in all the different languages supported:
+Here is the example definition in all the supported languages:
 
 <Tabs groupId="pulumi-definition" queryString defaultValue="python" values={[
 {label: "Python", value: "python"},
