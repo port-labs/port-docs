@@ -9,7 +9,7 @@ import DynatraceMicroserviceBlueprint from "./resources/dynatrace/\_example_dyna
 
 # Dynatrace
 
-In this example you are going to create a webhook integration between [Dynatrace](https://www.dynatrace.com/) and Port, which will ingest problems entities to your microservices.
+In this example you are going to create a webhook integration between [Dynatrace](https://www.dynatrace.com/) and Port, which will ingest problem entities to Port and map them to your microservice entities.
 
 ## Prerequisites
 
@@ -30,6 +30,10 @@ Create the following blueprint definitions and webhook configuration:
 <DynatraceProblemConfiguration/>
 </details>
 
+:::note
+The relation mapping in the webhook configuration will only work if the identifiers of Port microservice entities matches the names of entities in your dynatrace.
+:::
+
 ## Create the Dynatrace webhook
 
 1. Log in to Dynatrace with your credentials;
@@ -45,13 +49,14 @@ Create the following blueprint definitions and webhook configuration:
    ```json showLineNumbers
    {
    "State":"{State}",
-   "ProblemID":"{ProblemID}",
+   "ProblemID":"{PID}",
    "ProblemTitle":"{ProblemTitle}",
    "ImpactedEntity": "{ImpactedEntity}",
    "ProblemDetailsText": "{ProblemDetailsText}",
    "ProblemImpact": "{ProblemImpact}",
    "ProblemSeverity": "{ProblemSeverity}",
    "ProblemURL": "{ProblemURL}",
+   "ProblemTags": "{Tags}",
    "ImpactedEntities": {ImpactedEntities}
    }
    ```

@@ -15,10 +15,11 @@
           "url": ".body.ProblemURL",
           "details": ".body.ProblemDetailsText",
           "impact": ".body.ProblemImpact",
-          "severity": ".body.ProblemSeverity"
+          "severity": ".body.ProblemSeverity",
+          "tags": ".body.ProblemTags | split(\", \")"
         },
         "relations": {
-          "microservice": ".body.ImpactedEntities[].entity"
+          "microservice": "[.body.ImpactedEntities[].entity]"
         }
       }
     }
