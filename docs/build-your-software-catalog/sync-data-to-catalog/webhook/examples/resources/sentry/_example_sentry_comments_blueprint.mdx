@@ -1,0 +1,44 @@
+```json showLineNumbers
+{
+  "identifier": "sentryComment",
+  "description": "This blueprint represents a Sentry comment in our software catalog",
+  "title": "Sentry Comment",
+  "icon": "Sentry",
+  "schema": {
+    "properties": {
+      "action": {
+        "type": "string",
+        "title": "action",
+        "enum": ["created", "updated", "deleted"]
+      },
+      "comment": {
+        "type": "string",
+        "title": "Comment"
+      },
+      "project": {
+        "type": "string",
+        "title": "Project Slug"
+      },
+      "issue_id": {
+        "type": "string",
+        "title": "Issue ID"
+      },
+      "timestamp": {
+        "type": "string",
+        "title": "Comment Timestamp"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "sentryIssue": {
+      "title": "Issue",
+      "target": "sentryIssue",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```

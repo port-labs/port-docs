@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # API
 
 import FindCredentials from "./\_template_docs/\_find_credentials.mdx";

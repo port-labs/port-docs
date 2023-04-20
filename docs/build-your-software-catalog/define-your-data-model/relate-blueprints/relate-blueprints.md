@@ -175,6 +175,12 @@ resource "port-labs_blueprint" "myBlueprint" {
 }
 ```
 
+:::danger
+At the moment, Port's Terraform provider does not support reporting entities from a blueprint that has a many relation configured.
+
+If you plan on using Port's Terraform provider to report entities, please do not define blueprints with many relations in your Terraform definitions.
+:::
+
 </TabItem>
 </Tabs>
 
@@ -186,7 +192,7 @@ A Relation can't be configured with both `many` and `required` set to `true`
 
 Relations are part of the structure of a [blueprint](../setup-blueprint/setup-blueprint.md#blueprint-structure).
 
-<Tabs groupId="definition" defaultValue="api" values={[
+<Tabs groupId="definition" queryString defaultValue="api" values={[
 {label: "API", value: "api"},
 {label: "UI", value: "ui"},
 {label: "Terraform", value: "tf"}

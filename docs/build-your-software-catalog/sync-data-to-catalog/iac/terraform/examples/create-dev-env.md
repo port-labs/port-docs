@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 title: Manage a Developer Environment Lifecycle
 description: Manage a developer environment and reflect it in Port
 ---
@@ -75,7 +75,7 @@ terraform {
   required_providers {
     port-labs = {
       source  = "port-labs/port-labs"
-      version = "~> 0.8.3"
+      version = "~> 0.9.0"
     }
   }
 }
@@ -137,7 +137,7 @@ terraform {
   required_providers {
     port-labs = {
       source  = "port-labs/port-labs"
-      version = "~> 0.8.3"
+      version = "~> 0.9.0"
     }
   }
 }
@@ -277,7 +277,7 @@ terraform {
   required_providers {
     port-labs = {
       source  = "port-labs/port-labs"
-      version = "~> 0.8.3"
+      version = "~> 0.9.0"
     }
   }
 }

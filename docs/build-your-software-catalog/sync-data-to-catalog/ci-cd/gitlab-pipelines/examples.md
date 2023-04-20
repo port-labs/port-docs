@@ -5,7 +5,7 @@ import ExampleCiJobBlueprint from "../\_ci_example_ci_job_blueprint.mdx";
 
 ## Basic create/update example
 
-In this example you will create blueprints for `ciJob` and `image` entities, and a relation between them. Then you will add some Python code to create new entities in Port every time the CircleCI workflow is triggered:
+In this example you will create blueprints for `ciJob` and `image` entities, and a relation between them. Then you will add some Python code to create new entities in Port every time the Gitlab Pipeline is triggered:
 
 <ExampleImageBlueprint />
 
@@ -18,7 +18,7 @@ import os
 import requests
 import json
 
-# Env vars passed by the CircleCI context
+# Env vars passed by the pipeline variables
 # highlight-start
 CLIENT_ID = os.environ['PORT_CLIENT_ID']
 CLIENT_SECRET = os.environ['PORT_CLIENT_SECRET']
@@ -34,17 +34,17 @@ token_response = requests.post(f"{API_URL}/auth/access_token", json=credentials)
 # highlight-start
 access_token = token_response.json()['accessToken']
 headers = {
-	'Authorization': f'Bearer {access_token}'
+    'Authorization': f'Bearer {access_token}'
 }
 # highlight-end
 
 entity_json = {
   "identifier": "new-cijob-run",
   "properties": {
-    "triggeredBy": os.environ['CIRCLE_USERNAME'],
-    "commitHash": os.environ['CIRCLE_SHA1'],
-    "actionJob": os.environ['CIRCLE_JOB'],
-    "runLink": os.environ['CIRCLE_BUILD_URL']
+    "triggeredBy": os.environ['QUEUED_BY'],
+    "commitHash": os.environ['GIT_SHA'],
+    "actionJob": os.environ['JOB_NAME'],
+    "jobLink": os.environ['JOB_URL']
   },
   "relations": {
       "image": ["example-image"]
@@ -59,29 +59,29 @@ Please notice that you have also created the `image` relation, and added a relat
 The creation was done using the `create_missing_related_entities=true` flag in the API url, allowing the relation to be created even though the `example-image` entity doesn't exist yet.
 :::
 
-After adding your new Python script to your repository, add the following code to your CircleCI workflow `yml` file to call your script and update/create a new `ciJob` entity:
+After adding your new Python script to your repository, add the following code to your Gitlab pipeline `yml` file to call your script and update/create a new `ciJob` entity:
 
 ```yaml showLineNumbers
-  jobs:
-  # ... other jobs
-  report-to-port:
-    docker:
-      - image: cimg/python:3.11
-    environment:
-      API_URL: https://api.getport.io
-    steps:
-      - checkout
-      - run: pip install -r port_requirements.txt
-      - run: python update_deployment_port.py
+image: python:3.9
 
-workflows:
-  # ... other workflows
-  deploy-production-service:
-    jobs:
-      # ... other jobs
-      - report-to-port:
-          context:
-            - port
+variables:
+  PORT_CLIENT_ID: $PORT_CLIENT_ID
+  PORT_CLIENT_SECRET: $PORT_CLIENT_SECRET
+  QUEUED_BY: $CI_COMMIT_AUTHOR
+  GIT_SHA: $CI_COMMIT_SHA
+  JOB_NAME: $CI_JOB_NAME
+  RUN_LINK: $CI_PIPELINE_URL
+
+stages:
+  - build
+
+report_to_port:
+  stage: build
+  before_script:
+    - python -m pip install --upgrade pip
+    - pip install -r requirements.txt
+  script:
+    - python main.py
 ```
 
 ## Basic get example
@@ -97,7 +97,7 @@ blueprint_id = "ciJob"
 get_response = requests.get(f"{API_URL}/blueprints/{blueprint_id}/entities/{entity_id}",
                         headers=headers)
 entity = get_response.json()['entity']
-print(f"Run link is: {entity['properties']['runLink']}")
+print(f"Image tag is: {entity['properties']['runLink']}")
 
 ```
 
@@ -108,7 +108,6 @@ In the following example you will update the `example-image` entity that was aut
 Add the following snippet to your Python code:
 
 ```python showLineNumbers
-
 image_entity_json = {
   "identifier": "example-image",
   "team": [],
@@ -126,7 +125,6 @@ image_entity_json = {
 }
 
 create_image_response = requests.post(f'{API_URL}/blueprints/image/entities?upsert=true', json=image_entity_json, headers=headers)
-print(create_image_response.json())
 
 ```
 
