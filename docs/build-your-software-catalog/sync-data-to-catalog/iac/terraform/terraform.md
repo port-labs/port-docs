@@ -194,7 +194,7 @@ properties {
 ```hcl showLineNumbers
 properties {
   name = "myUserProp"
-  value = "Admin Port"
+  value = "user@example.com"
 }
 ```
 
@@ -281,7 +281,7 @@ The following parameters are **required**:
 - `identifier` - the identifier of the target entity.
 
 :::note
-At the moment, it is only possible to create entities with `many: true` relations using Port's Terraform provider.
+At the moment, it is only possible to create entities with `many: false` relations using Port's Terraform provider.
 :::
 
 ## Ingest data using the Terraform provider
