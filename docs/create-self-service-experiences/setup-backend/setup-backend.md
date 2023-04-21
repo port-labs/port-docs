@@ -1,1 +1,13 @@
 # Setup Backend
+
+Port's self-service actions support a variety of backends that can be triggered when a user invokes an action.
+
+Here is the basic backend model:
+
+![self-service action backend diagram](../../../static/img/self-service-actions/setup-backend/backend-flow-diagram.png)
+
+The Port-backend integration includes the following steps:
+
+1. **The action is triggered in Port** - the trigger can be either a user interacting with the self-service actions UI, or an automation triggering an action via the API;
+2. **Port generates the event payload** - the payload includes metadata about the invoked action and the user inputs;
+3. **The payload is sent to your backend** -

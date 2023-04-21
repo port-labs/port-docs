@@ -1,11 +1,13 @@
 ---
-title: 🧱 Setup Actions
+title: Setup Actions
 ---
 
 import ApiRef from "../../api-reference/\_learn_more_reference.mdx";
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+
+# 🧱 Setup Actions
 
 Choose the name, description and icon of the action to make it recognizable.
 
@@ -134,7 +136,7 @@ To learn more about the different available invocation methods and backends, ref
 
 Port actions support a manual approval process. Manual approvals let you control who can approve an action invocation request, and also handle notifying the relevant personas when an action request is awaiting their review.
 
-refer to the [self-service actions RBAC](../set-self-service-action-rbac/set-self-service-action-rbac.md) page to learn more.
+refer to the [self-service actions RBAC](../set-self-service-actions-rbac/set-self-service-actions-rbac.md) page to learn more.
 
 ## Configuring actions in Port
 
