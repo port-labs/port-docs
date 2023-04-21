@@ -31,7 +31,7 @@ Create the following blueprint definitions and webhook configuration:
 </details>
 
 :::note
-The relation mapping in the webhook configuration will only work if the identifiers of Port microservice entities matches the names of entities in your dynatrace.
+The relation mapping in the webhook configuration will only work if the identifiers of Port microservice entities matches the names of entities in your Dynatrace.
 :::
 
 ## Create the Dynatrace webhook
@@ -49,7 +49,7 @@ The relation mapping in the webhook configuration will only work if the identifi
    ```json showLineNumbers
    {
    "State":"{State}",
-   "ProblemID":"{PID}",
+   "PID":"{PID}",
    "ProblemTitle":"{ProblemTitle}",
    "ImpactedEntity": "{ImpactedEntity}",
    "ProblemDetailsText": "{ProblemDetailsText}",
