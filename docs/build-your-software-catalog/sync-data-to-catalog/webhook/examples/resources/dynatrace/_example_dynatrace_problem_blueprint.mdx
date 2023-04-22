@@ -1,0 +1,51 @@
+```json showLineNumbers
+{
+  "identifier": "dynatraceProblem",
+  "description": "This blueprint represents a Dynatrace problem in our software catalog",
+  "title": "Dynatrace Problem",
+  "icon": "Deployment",
+  "schema": {
+    "properties": {
+      "state": {
+        "type": "string",
+        "title": "Problem State"
+      },
+      "url": {
+        "type": "string",
+        "format": "url",
+        "title": "Problem URL"
+      },
+      "details": {
+        "type": "string",
+        "title": "Details"
+      },
+      "impact": {
+        "type": "string",
+        "title": "Problem Impact"
+      },
+      "severity": {
+        "type": "string",
+        "title": "Problem Severity"
+      },
+      "tags": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "title": "Tags"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "microservice": {
+      "title": "Impacted Services",
+      "target": "microservice",
+      "required": false,
+      "many": true
+    }
+  }
+}
+```
