@@ -25,6 +25,10 @@
         "format": "date-time",
         "title": "Timestamp",
         "description": "Last updated timestamp of the job"
+      },
+      "url": {
+        "type": "string",
+        "title": "Project URL"
       }
     },
     "required": []
@@ -32,8 +36,8 @@
   "mirrorProperties": {},
   "calculationProperties": {
     "jobUrl": {
-      "title": "Job URL",
-      "calculation": "'https://your_jenkins_url/' + .identifier",
+      "title": "Job Full URL",
+      "calculation": "'https://your_jenkins_url/' + .properties.url",
       "type": "string",
       "format": "url"
     }

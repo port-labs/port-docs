@@ -9,10 +9,11 @@
       "blueprint": "jenkinsJob",
       "filter": ".body.type | startswith(\"item\")",
       "entity": {
-        "identifier": ".body.url",
+        "identifier": ".body.url | sub(\"%20\"; \"-\"; \"g\") | sub(\"/\"; \"-\"; \"g\") | .[:-1]",
         "title": ".body.data.displayName",
         "properties": {
           "jobName": ".body.data.fullName",
+          "url": ".body.url",
           "jobStatus": ".body.type | split(\".\") | last",
           "timestamp": ".body.time"
         }
@@ -22,8 +23,8 @@
       "blueprint": "jenkinsBuild",
       "filter": ".body.type | startswith(\"run\")",
       "entity": {
-        "identifier": ".body.data.id",
-        "title": ".body.data.fullDisplayName",
+        "identifier": ".body.data.fullDisplayName | sub(\"#\"; \" \"; \"g\")",
+        "title": ".body.data.displayName",
         "properties": {
           "buildStatus": ".body.data.result",
           "buildUrl": ".body.url",
@@ -31,7 +32,7 @@
           "timestamp": ".body.data.timestamp"
         },
         "relations": {
-          "jenkinsJob": ".body.source | tostring"
+          "jenkinsJob": ".body.source | tostring | sub(\"%20\"; \"-\"; \"g\") | sub(\"/\"; \"-\"; \"g\") | .[:-1]"
         }
       }
     }
