@@ -5,6 +5,10 @@ sidebar_label: 🔌 Ingest data into the Software Catalog
 
 # 🔌 Ingest Data Into The Software Catalog
 
+<div style={{position: "relative", "padding-bottom": "62.5%", height:"0"}}><iframe src="https://www.loom.com/embed/e747f1cc99e84beb8a2c0cbde3c436fc" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style={{position: "absolute", top:"0", left:"0", width:"100%", height:"100%"}} ></iframe></div>
+
+<br></br>
+
 Port offers several integrations, allowing you to easily ingest and manage data with the tools you are already use in your infrastructure.
 
 ![Catalog Architecture](../../../static/img/sync-data-to-catalog/catalog-arch.jpg)
