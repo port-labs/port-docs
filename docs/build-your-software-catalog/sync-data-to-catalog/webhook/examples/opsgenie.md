@@ -53,3 +53,8 @@ Create the following blueprint definition and webhook configuration:
 7. Click **Save integration**
 
 Done! any change that happens to an OpsGenie alert (created, acknowledged, etc.) will trigger a webhook event that OpsGenie will send to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+
+## Ingest who is on-call
+In this example you will create a blueprint for `service` entity that ingests who is on call data from OpsGenie using REST API. Then you will add some Python code to create new entities in Port every time a Github Action or GitLab Pipeline is triggered by a schedule. The links below guide you on how to accomplish this task on your preferred environment.
+[Github Action](https://github.com/PeyGis/OpsGenie)
+[GitLab CI Pipeline](https://gitlab.com/pages_coffy/opsgenie_port)
