@@ -100,8 +100,12 @@ const config = {
             title: "Documentation",
             items: [
               {
-                label: "Quickstart",
+                label: "Port Overview",
                 to: "/",
+              },
+              {
+                label: "Quickstart",
+                to: "/quickstart",
               },
               {
                 label: "Build Software Catalog",
