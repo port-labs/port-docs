@@ -10,6 +10,10 @@ import styles from "./styles.module.css";
 
 # 🔐 Set Catalog RBAC
 
+<div style={{position: "relative", "padding-bottom": "62.5%", height:"0"}}><iframe src="https://www.loom.com/embed/f4e00c32fab24e65a60fd679694e545e" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style={{position: "absolute", top:"0", left:"0", width:"100%", height:"100%"}} ></iframe></div>
+
+<br></br>
+
 Port provides granular control to make sure every user sees only the parts of the catalog that are relevant for them.
 
 Port's catalog RBAC capabilities are enabled by Port's [permissions controls](../../sso-rbac/rbac/rbac.md).
