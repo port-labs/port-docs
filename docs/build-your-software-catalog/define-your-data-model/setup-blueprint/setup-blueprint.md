@@ -11,6 +11,10 @@ import TabItem from "@theme/TabItem"
 
 # 🧱 Setup Blueprints
 
+<div style={{position: "relative", "padding-bottom": "62.5%", height:"0"}}><iframe src="https://www.loom.com/embed/769f363d301e409ba8f6092c8f0cd204" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style={{position: "absolute", top:"0", left:"0", width:"100%", height:"100%"}} ></iframe></div>
+
+<br></br>
+
 Define blueprint schemas to begin building your software catalog.
 
 ## What is a blueprint?
@@ -101,6 +105,7 @@ All available properties are listed in the [properties](./properties/properties.
 <Tabs groupId="definition" queryString defaultValue="api" values={[
 {label: "API", value: "api"},
 {label: "Terraform", value: "tf"},
+{label: "Pulumi", value: "pulumi"},
 {label: "UI", value: "ui"}
 ]}>
 
@@ -135,6 +140,101 @@ resource "port-labs_blueprint" "myBlueprint" {
   description = "My description"
 }
 ```
+
+</TabItem>
+
+<TabItem value="pulumi">
+
+<Tabs groupId="pulumi-definition" queryString defaultValue="python" values={[
+{label: "Python", value: "python"},
+{label: "TypeScript", value: "typescript"},
+{label: "JavaScript", value: "javascript"},
+{label: "GO", value: "go"}
+]}>
+
+<TabItem value="python">
+
+```python showLineNumbers
+"""A Python Pulumi program"""
+
+import pulumi
+from port_pulumi import Blueprint
+
+blueprint = Blueprint(
+    "myBlueprint",
+    identifier="myBlueprint",
+    title="My Blueprint",
+    icon="My icon",
+    description="My description",
+)
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript showLineNumbers
+import * as pulumi from "@pulumi/pulumi";
+import * as port from "@port-labs/pulumi";
+
+export const blueprint = new port.Blueprint("myBlueprint", {
+  identifier: "myBlueprint",
+  title: "My Blueprint",
+  icon: "My icon",
+  description: "My description",
+});
+```
+
+</TabItem>
+
+<TabItem value="javascript">
+
+```javascript showLineNumbers
+"use strict";
+const pulumi = require("@pulumi/pulumi");
+const port = require("@port-labs/pulumi");
+
+const entity = new port.Blueprint("myBlueprint", {
+  title: "My Blueprint",
+  identifier: "myBlueprint",
+  icon: "My icon",
+  description: "My description",
+});
+
+exports.title = entity.title;
+```
+
+</TabItem>
+<TabItem value="go">
+
+```go showLineNumbers
+package main
+
+import (
+	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
+			Identifier:  pulumi.String("myBlueprint"),
+			Title:       pulumi.String("My Blueprint"),
+			Icon:        pulumi.String("My icon"),
+			Description: pulumi.String("My description"),
+		})
+		ctx.Export("blueprint", blueprint.Title)
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+```
+
+</TabItem>
+
+</Tabs>
 
 </TabItem>
 

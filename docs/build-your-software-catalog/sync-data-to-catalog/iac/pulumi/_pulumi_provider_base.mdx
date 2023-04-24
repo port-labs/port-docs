@@ -1,0 +1,61 @@
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import FindCredentials from "../../api/_template_docs/_find_credentials_collapsed.mdx";
+
+:::note Prerequisites
+To install and use Port's Pulumi provider, you will need to install the [Pulumi CLI](https://www.pulumi.com/docs/get-started/install/)
+:::
+
+To install the Pulumi provider, use your preferred method of installing Pulumi providers.
+
+<Tabs groupId="install" defaultValue="pip" values={[
+{label: "Pip", value: "pip"},
+{label: "Yarn", value: "yarn"},
+{label: "NPM", value: "npm"},
+{label: "GO", value: "go"}
+]}>
+
+<TabItem value="pip">
+
+```bash showLineNumbers
+pip install port_pulumi
+```
+
+</TabItem>
+
+<TabItem value="yarn">
+
+```bash showLineNumbers
+yarn add @port-labs/pulumi
+```
+
+</TabItem>
+
+<TabItem value="npm">
+
+```bash showLineNumbers
+npm install @port-labs/pulumi
+```
+
+</TabItem>
+
+<TabItem value="go">
+
+```bash showLineNumbers
+go get github.com/port-labs/pulumi/sdk
+```
+
+</TabItem>
+
+</Tabs>
+
+## Configuration
+
+Please make sure to configure the clientId and secret to Port using the commands
+
+<FindCredentials />
+
+```bash showLineNumbers
+pulumi config set port:clientId <clientId>
+pulumi config set port:clientSecret <clientSecret> --secret
+```

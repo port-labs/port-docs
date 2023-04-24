@@ -6,6 +6,10 @@ sidebar_label: 📋 Define Your Data Model
 
 # 📋 Define Your Data Model
 
+<div style={{position: "relative", "padding-bottom": "62.5%", height:"0"}}><iframe src="https://www.loom.com/embed/edcb8fde6b65480fb650ad4715454689" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style={{position: "absolute", top:"0", left:"0", width:"100%", height:"100%"}} ></iframe></div>
+
+<br></br>
+
 Defining your data model for the software catalog is similar to defining a database structure.
 You can also use common data models pre-defined by Port.
 

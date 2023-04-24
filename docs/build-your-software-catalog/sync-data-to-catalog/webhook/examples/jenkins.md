@@ -41,16 +41,10 @@ Create the following blueprint definition and webhook configuration:
 
 1. Go to your Jenkins dashboard;
 2. At the sidebar on the left side of the page select **Manage Jenkins** and click on **Manage Plugins**;
-3. Navigate to the **Available Plugins** tab and search for **Notifications** in the search bar. Install the [Notification Plugin](https://plugins.jenkins.io/notification/) or a suitable plugin that can notify some endpoints about events that occur in Jenkins;
-4. Go back to your Jenkins dashboard and select your desired project;
-5. Click on the **Configure** tab and scroll down to the **Job Notifications** section;
-6. Click on **Add Endpoint** and input the following details:
-   1. `Format` - choose JSON;
-   2. `Protocol` - choose HTTP;
-   3. `Event` - Be sure to choose the appropriate event you want to catalog. Or you can use the default value which notifies your webhook with **All Events**;
-   4. `URL` - Choose **Plain Text** and enter the value of the `url` key you received after creating the webhook configuration;
-   5. `Notes` - Add additional information about this webhook. You can then use this field as the title for your job;
-7. Scroll down to the **Build Triggers** section and select your preferred trigger type;
-8. Click on **Save** at the buttom of the page;
+3. Navigate to the **Available Plugins** tab and search for **Generic Event** in the search bar. Install the [Generic Event](https://plugins.jenkins.io/generic-event/) or a suitable plugin that can notify some endpoints about all events that happen in Jenkins;
+4. Go back to your Jenkins dashboard and click on **Manage Jenkins** at the left side menu;
+5. Click on the **Configure System** tab and scroll down to the **Event Dispatcher** section;
+6. Enter the value of the `url` key you received after creating the webhook configuration in the textbox;
+7. Click on **Save** at the buttom of the page;
 
 Done! any changes to a job or build process (queued, started, completed, finalized etc.) will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
