@@ -1,16 +1,12 @@
----
-sidebar_position: 2
----
+# Reflect Action Progress
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Action Runs Tutorial
-
 Invoking a Port Self-Service Action creates an `actionRun` object inside Port.
 
 :::tip
-To learn more about configuring Self-Service Actions, refer to the [Deep Dive](./self-service-actions-deep-dive.md). After configuring a Self-Service Action, invoking it will generate an `actionRun` which you can learn more about in this tutorial.
+To learn more about configuring Self-Service Actions, refer to the [setup UI for actions](../setup-ui-for-action/setup-ui-for-action.md) page. After configuring a Self-Service Action, invoking it will generate an `actionRun` which you can learn more about in this tutorial.
 :::
 
 You can find all existing action runs in one of the following methods:
