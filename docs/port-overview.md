@@ -5,9 +5,6 @@ title: Port Overview
 sidebar_label: 👋 Port Overview
 ---
 
-import LiteYouTubeEmbed from 'react-lite-youtube-embed';
-import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
-
 # 👋 Port Overview
 
 <iframe width="100%" height="600" src="https://www.youtube.com/embed/z2kR9HSRIpQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
