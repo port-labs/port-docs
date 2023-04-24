@@ -1,33 +1,103 @@
-# Filter and Dependencies
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
-In Port, You can create actions with dependencies between inputs, based on the values of other inputs, the entity, or the user. This allows you to create a more dynamic and interactive experience for your users and also to create more complex actions.
+# Advanced Form Configurations
 
-For inputs that lets the user select an entity, you can define a filter to limit the entities that are available to the user. For example, you can create an action that lets the user select a Kubernetes cluster and then select a namespace in that cluster. You can use a filter to limit the namespaces that are available to the user to only those that are in the selected cluster.
+In Port, You can create actions with dependencies between inputs, based on the values of other inputs, the entity, or the logged-in user properties. This allows you to create a more dynamic and interactive experience for your users and also to create more complex actions.
 
-## Common Use Cases
+### Common Use Cases
 
-- Create a filter to limit the entities that the user can choose, for example to limit the namespaces that the user can choose to only those in the selected cluster.
-- Create a dependency between inputs to allow the user to select a value based on the value of another input, for example to allow the user to select a SDK version based on the selected language.
-- Create filter based on the user's properties, such as the user's teams. For example to allow the user to select a namespace based on the teams that the user is a member of.
-- Create a filter based on the entity's properties, such as the entity's tags. For example to allow the user to select a namespace based on the tags that are assigned to the namespace.(for DAY-2 and DELETE actions only)
+- Create a filter to limit the entities that the user can choose
+- Create a dependency between inputs to allow the user to select a value based on the value of another input.
+- Set default values for input based on logged-in user properties or the entity that the action is being executed on (for day-2 or delete actions only)
 
-### Reusing data from the form in a different input
+#### building such actions can be done by leveraging 3 keys in the action's schema:
 
-Let's say that we have an action that lets the user select a language and then select a SDK version based on the selected language. The SDK versions are different for each language. We can use a "JqQuery" object to define a query that will extract the selected language from the form and then use it to filter the SDK versions that are available to the user. We can also define a default value for the language version input, so that the user will see a value in the input based on the entity in the context.
+<Tabs
+defaultValue="DependsOn"
+values={[
+{ label: 'dependsOn', value: 'DependsOn', },
+{ label: 'dataset', value: 'Dataset', },
+{ label: 'jqQuery', value: 'jqQuery', },
+]}
+
+> <TabItem value="DependsOn">
+> the dependsOn property is used to create a dependency between inputs. The input will only be enabled if the inputs that it depends on have a value. The input will also have a default value based on the value of the inputs that it depends on.
+
+```json
+{
+  "language": {
+    "type": "string",
+    "enum": ["javascript", "python"]
+  },
+  "SDK": {
+    "type": "string",
+    "dependsOn": ["language"]
+  }
+}
+```
+
+</TabItem>
+<TabItem value="Dataset">
+the dataset property is used to create a filter that will limit the options that the user can choose from. The filter can be based a value or a "jqQuery" object
+
+```json
+{
+  "namespace": {
+    "type": "string",
+    "format": "entity",
+    "blueprint": "namespace",
+    "dataset": {
+      "combinator": "and",
+      "rules": [
+        {
+          "property": "$team",
+          "operator": "containsAny",
+          "value": "value here. this can also be a 'jqQuery' object"
+        }
+      ]
+    }
+  }
+}
+```
+
+</TabItem>
+<TabItem value="jqQuery">
+the jqQuery property is used to create a query that can be used to extract data from the entity, the user, or the current form. The query can also be used to perform data manipulations.
 
 ```json
 {
   "language": {
     "type": "string",
     "enum": ["javascript", "python"],
-    "default": {
-      "jqQuery": ".entity.properties.language"
-    }
+  }
+},
+{
+  "SDK": {
+    "type": "string",
+    "enum": {
+      "jqQuery": "if .form.language == \"javascript\" then [\"Node 16\", \"Node 18\"] else [\"Python 3.8\"] end"
+    },
   }
 }
 ```
 
+</TabItem>
+</Tabs>
+
+### basic usage
+
+#### using data from the current form values in a different input
+
+this creates a dependency between the "language" input and the "SDK" input. The "SDK" input will only show the options that are available for the selected language. The "SDK" input will also have a default value based on the selected language. In action with "trigger" equals to "CREATE" the 'entity' object will not be available.
+
 ```json
+{
+  "language": {
+    "type": "string",
+    "enum": ["javascript", "python"],
+  }
+}
 {
   "SDK": {
     "type": "string",
@@ -39,9 +109,11 @@ Let's say that we have an action that lets the user select a language and then s
 }
 ```
 
-### Reusing data from the logged in user
+![Cluster And Namespace Action](../../../static/img/software-catalog/blueprint/javascriptSDK.png)
 
-lets say that we have an action that lets the user select a namespace based on the teams that the user is a member of. We can use a "JqQuery" object to define a query that will extract the user's teams from the user object and then use it to filter the namespaces that are available to the user.
+#### creating an input based on the logged in user properties
+
+this creates a filter that will only show the namespaces that the user is a member of.
 
 ```json
 {
@@ -60,16 +132,18 @@ lets say that we have an action that lets the user select a namespace based on t
           }
         }
       ]
-    },
-    "title": "namespace",
-    "description": "The namespace to create the cluster in"
+    }
   }
 }
 ```
 
-### Reusing data from the entity that is being acted upon
+![Cluster And Namespace Action](../../../static/img/software-catalog/blueprint/userPropertiesModal.png)
 
-lets say that we have an action that lets the user select a namespace based on the tags that are assigned to the namespace. We can use a "JqQuery" object to define a query that will extract the tags from the entity object and then use it to filter the namespaces that are available to the user.
+:point_up: these are only the namespaces that associated with the logged in user's teams. :point_up:
+
+#### Using data from the entity that the action is being executed on (for day-2 or delete actions only)
+
+this creates a filter that will only show the namespaces that the entity is tagged with.
 
 ```json
 {
@@ -88,12 +162,33 @@ lets say that we have an action that lets the user select a namespace based on t
           }
         }
       ]
-    },
-    "title": "namespace",
-    "description": "The namespace to create the cluster in"
+    }
   }
 }
 ```
+
+![entity tags action](../../../static/img/software-catalog/blueprint/actionWithEntityTags.png)
+
+:point_up: this is a dropdown with the tags of the selected entity(namespace1). :point_up:
+
+#### Setting a default value with the jqQuery
+
+this creates a filter that will only show the namespaces that the entity is tagged with.
+
+```json
+{
+  "some_input": {
+    "type": "array",
+    "default" {
+      "jqQuery": ".entity.properties.tags"
+    }
+  }
+}
+```
+
+![entity tags action](../../../static/img/software-catalog/blueprint/defaultEntityTags.png)
+
+:point_up: the tags of the namespace are already inserted to the form. :point_up:
 
 ## The "JqQuery" object
 
@@ -101,17 +196,16 @@ The "JqQuery" object is used to define a query that will be executed when the ac
 
 ### All the properties you can access using the "JqQuery" object
 
-#### The "form" object
+<Tabs
+defaultValue="form"
+values={[
+{label: 'form', value: 'form'},
+{label: 'entity', value: 'entity'},
+{label: 'user', value: 'user'},
+]}>
+<TabItem value="form">
 
-```json
-{
-    "input1": "...",
-    "input2": "..."
-    "input3": "...",
-}
-```
-
-selecting the value of "input1" from the form
+Usage:
 
 ```json
 {
@@ -119,7 +213,28 @@ selecting the value of "input1" from the form
 }
 ```
 
-#### The "entity" object
+The available form object(each input as a property in the action's `userInputs` object)):
+
+```json
+{
+  "input1": "...",
+  "input2": "...",
+  "input3": "..."
+}
+```
+
+  </TabItem>
+  <TabItem value="entity">
+  
+  Usage:
+
+```json
+{
+  "jqQuery": ".entity.properties.property1"
+}
+```
+
+The available entity object:
 
 ```json
 {
@@ -176,23 +291,17 @@ selecting the value of "input1" from the form
 }
 ```
 
-selecting the value of "property1" from the entity
+  </TabItem>
+  <TabItem value="user">
+  Usage:
 
 ```json
 {
-  "jqQuery": ".entity.properties.property1"
+  "jqQuery": ".user.email"
 }
 ```
 
-selecting the identifier from the entity
-
-```json
-{
-  "jqQuery": ".entity.identifier"
-}
-```
-
-#### The "user" object
+The available logged-in user object:
 
 ```json
 {
@@ -219,41 +328,8 @@ selecting the identifier from the entity
 }
 ```
 
-selecting the names of the teams from the user
-
-```json
-{
-  "jqQuery": "[.user.teams[].name]"
-}
-```
-
-selecting the email of the user
-
-```json
-{
-  "jqQuery": ".user.email"
-}
-```
-
-## The "dependsOn" key
-
-the "dependsOn" key is used to define a dependency between inputs. When an input has a dependency, the input will only be available to the user when the dependency is met. For example, if you have an input that lets the user select a language and another input that lets the user select a SDK version based on the selected language, you can use the "dependsOn" key to define a dependency between the two inputs. The SDK version input will only be available to the user when the language input is selected.
-
-```json
-{
-  "language": {
-    ...
-  },
-  "SDK": {
-    "dependsOn": ["language"]
-    ...
-  }
-}
-```
-
-## the "dataset" key
-
-The "dataset" key consists of rules that are combined using a combinator. The combinator can be "and" or "or". The rules can be used to filter entities based on the user's teams, roles, or any other property that is available on the entity. The rules can also be used to combine data from multiple sources. You can read more about the rules in the [Search & Query](/search-and-query/) section.
+  </TabItem>
+</Tabs>
 
 ## Example: Create an action to deploy a running service to a cluster
 
