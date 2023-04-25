@@ -7,9 +7,9 @@ In Port, You can create actions with dependencies between inputs, based on the v
 
 ### Common Use Cases
 
-- Create a filter to limit the entities that the user can choose
+- Create a filter to limit the entities that the user can choose in a dropdown.
 - Create a dependency between inputs to allow the user to select a value based on the value of another input.
-- Set default values for input based on logged-in user properties or the entity that the action is being executed on (for day-2 or delete actions only)
+- Create inputs based on the logged-in user properties(such as teams, email, role etc`) or the entity that the action is being executed on (for day-2 or delete actions only).
 
 #### building such actions can be done by leveraging 3 keys in the action's schema:
 
