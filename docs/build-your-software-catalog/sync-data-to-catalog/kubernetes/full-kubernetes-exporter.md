@@ -29,6 +29,9 @@ In this use-case, you will use a custom bash script which will assist you in the
 
 ## K8s exporter installation script
 
+<details>
+  <summary>Installation script documentation</summary>
+
 :::tip
 You can view the bash script [here](https://github.com/port-labs/template-assets/blob/main/kubernetes/install.sh).
 :::
@@ -45,6 +48,7 @@ The script supports configuration via environment variables
 | `DEPLOYMENT_NAME`    | The Kubernetes deployment name the exporter will be installed as                                                                                                                                                                                                                                                                                                                                                                                      | `port-k8s-exporter` |
 | `CLUSTER_NAME`       | The cluster's name as it will be exported to Port                                                                                                                                                                                                                                                                                                                                                                                                     | `my-cluster`        |
 | `CUSTOM_BP_PATH`     | The URL/path to a json file with an array of blueprint objects to create. Can be either a `https://domain.com/path/to/blueprint.json` format URL, or a local path to a file `envs/production/blueprint.json`. It is important to order the blueprints while taking in to account the necessary relations for each blueprint. Once a blueprint was created, attempting to recreate it using the script will fail. To do so, first delete the blueprint |                     |
+| `TEMPLATE_NAME`      | A list of pre-made templates to install on top of the base `kubernetes_config.yaml` defined in the default `CONFIG_YAML_URL`. This parameter is only relevant if a custom `CONFIG_YAML_URL` was not configured. It adds the associated `.tmpl` files the can be found [here](https://github.com/port-labs/template-assets/tree/main/kubernetes)                                                                                                       |                     |
 
 :::note
 The script replaces all occurrences of the string `{CLUSTER_NAME}` from the `config.yaml` set in the `CONFIG_YAML_URL`([defined here](./full-kubernetes-exporter.md#helm-chart-installation-configuration)) with the value of the environment variable `CLUSTER_NAME`. This is useful for when creating a generic `config.yaml` which has no static cluster name.
@@ -54,18 +58,19 @@ The script replaces all occurrences of the string `{CLUSTER_NAME}` from the `con
 
 Required configuration as defined in the exporter's [advanced configuration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/kubernetes/advanced#required-configuration) section.
 
-| Environment Variable | Description                                                                                                                                                                                                                                                                                                                                     | Default                                                                                    |
-| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
-| `PORT_CLIENT_ID`     | **Required** - Your Port organization's Client ID used to authenticate the exporter to Port                                                                                                                                                                                                                                                     |                                                                                            |
-| `PORT_CLIENT_SECRET` | **Required** - Your Port organization's Client Secret used to authenticate the exporter to Port                                                                                                                                                                                                                                                 |                                                                                            |
-| `CONFIG_YAML_URL`    | The URL/path to the `config.yaml` file. Can be either an https format URL`https://domain.com/path/to/config.yaml`, or a local path to a file `envs/production/config.yaml`                                                                                                                                                                      | `https://github.com/port-labs/template-assets/blob/main/kubernetes/kubernetes_config.yaml` |
-| `TEMPLATE_NAME`      | A list of pre-made templates to install on top of the base `kubernetes_config.yaml` defined in the default `CONFIG_YAML_URL`. This parameter is only relevant if a custom `CONFIG_YAML_URL` was not configured. It adds the associated `.tmpl` files the can be found [here](https://github.com/port-labs/template-assets/tree/main/kubernetes) |                                                                                            |
+| Environment Variable | Description                                                                                                                                                                | Default                                                                                    |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| `PORT_CLIENT_ID`     | **Required** - Your Port organization's Client ID used to authenticate the exporter to Port                                                                                |                                                                                            |
+| `PORT_CLIENT_SECRET` | **Required** - Your Port organization's Client Secret used to authenticate the exporter to Port                                                                            |                                                                                            |
+| `CONFIG_YAML_URL`    | The URL/path to the `config.yaml` file. Can be either an https format URL`https://domain.com/path/to/config.yaml`, or a local path to a file `envs/production/config.yaml` | `https://github.com/port-labs/template-assets/blob/main/kubernetes/kubernetes_config.yaml` |
+
+</details>
 
 ## Setting up your Blueprints
 
 ### Creating Blueprints using the installation script
 
-The [installation script](./full-kubernetes-exporter.md#k8s-exporter-installation-script) provides a convenient way to create your blueprints. Using the `CUSTOM_BP_PATH` environment variable, you can fetch a pre-defined `blueprints.json` to create your blueprints. For this use-case, you will use [this](https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/kubernetes_bps.json) for defining your blueprints. Do this by running:
+The [installation script](./full-kubernetes-exporter.md#k8s-exporter-installation-script) provides a convenient way to create your blueprints. Using the `CUSTOM_BP_PATH` environment variable, you can fetch a pre-defined `blueprints.json` to create your blueprints. For this use-case, you will use [this file](https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/kubernetes_bps.json) to define your blueprints. Do this by running:
 
 ```
 export CUSTOM_BP_PATH="https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/kubernetes_bps.json"
@@ -93,11 +98,9 @@ This `blueprints.json` file defines the following blueprints:
 * DaemonSet
 * Job
 
-- `Service` uses selectors to route traffic to pods. Since this is not a direct mapping, relating a service to a workload is usually done using a strict naming convention. This use-case assumes a naming convention where the `Workload`'s name is equal to its associated `service`.
+- `Service` uses selectors to route traffic to pods. Since this is not a direct mapping, relating a service to a workload is usually done using a strict naming convention. This use-case assumes a naming convention where the `workload`'s name is equal to its associated `service`.
 
 :::
-
-![Blueprints outcome](../../../../static/img/complete-use-cases/full-kubernetes-exporter/blueprints.png)
 
 ## Exporting your Kubernetes cluster
 
