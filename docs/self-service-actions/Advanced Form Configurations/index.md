@@ -19,10 +19,10 @@ values={[
 { label: 'dependsOn', value: 'DependsOn', },
 { label: 'dataset', value: 'Dataset', },
 { label: 'jqQuery', value: 'jqQuery', },
-]}
+]}>
 
-> <TabItem value="DependsOn">
-> the dependsOn property is used to create a dependency between inputs. The input will only be enabled if the inputs that it depends on have a value. The input will also have a default value based on the value of the inputs that it depends on.
+<TabItem value="DependsOn">
+the dependsOn property is used to create a dependency between inputs. The input will only be enabled if the inputs that it depends on have a value. The input will also have a default value based on the value of the inputs that it depends on.
 
 ```json
 {
@@ -89,7 +89,7 @@ the jqQuery property is used to create a query that can be used to extract data 
 
 #### using data from the current form values in a different input
 
-this creates a dependency between the "language" input and the "SDK" input. The "SDK" input will only show the options that are available for the selected language. The "SDK" input will also have a default value based on the selected language. In action with "trigger" equals to "CREATE" the 'entity' object will not be available.
+this json creates a dependency between the "language" input and the "SDK" input. The "SDK" input will only show the options that are available for the selected language.
 
 ```json
 {
@@ -111,9 +111,9 @@ this creates a dependency between the "language" input and the "SDK" input. The 
 
 ![Cluster And Namespace Action](../../../static/img/software-catalog/blueprint/javascriptSDK.png)
 
-#### creating an input based on the logged in user properties
+#### creating an input based on the logged-in user properties
 
-this creates a filter that will only show the namespaces that the user is a member of.
+this json creates a filter that will only show the namespaces that the user is a member of (notice the value key in the rules object)
 
 ```json
 {
@@ -139,7 +139,7 @@ this creates a filter that will only show the namespaces that the user is a memb
 
 ![Cluster And Namespace Action](../../../static/img/software-catalog/blueprint/userPropertiesModal.png)
 
-:point_up: these are only the namespaces that associated with the logged in user's teams. :point_up:
+:point_up: these are only the namespaces that associated with the logged-in user's teams. :point_up:
 
 #### Using data from the entity that the action is being executed on (for day-2 or delete actions only)
 
@@ -192,7 +192,7 @@ this creates a filter that will only show the namespaces that the entity is tagg
 
 ## The "JqQuery" object
 
-The "JqQuery" object is used to define a query that will be executed when the action's UI is loaded or when executing the action against the data being sent to Port. The query is executed using the [jq](https://stedolan.github.io/jq/) library. The query can be used to extract data from the entity, the user, or the form. The query can also be used to combine data from multiple sources.
+The "JqQuery" object is used to define a query that will be executed when the action's UI is loaded or when executing the action against the data being sent to Port(thus, triggering a run). The query is executed using the [jq](https://stedolan.github.io/jq/) library. The query can be used to extract data from the entity, the user, or the form inputs. The query can also be used to manipulate json.
 
 ### All the properties you can access using the "JqQuery" object
 
@@ -331,7 +331,7 @@ The available logged-in user object:
   </TabItem>
 </Tabs>
 
-## Example: Create an action to deploy a running service to a cluster
+## Example: create an action to deploy a running service to a cluster
 
 In this example, we will create an action that lets the user select a cluster and a namespace in that cluster. The user will also be able to select a service that is already running in the cluster. The action will then deploy the selected service to the selected namespace in the cluster. The user will only be able to select a service that is linked to his team.
 
