@@ -47,7 +47,7 @@ The script supports configuration via environment variables
 | `CUSTOM_BP_PATH`     | The URL/path to a json file with an array of blueprint objects to create. Can be either a `https://domain.com/path/to/blueprint.json` format URL, or a local path to a file `envs/production/blueprint.json`. It is important to order the blueprints while taking in to account the necessary relations for each blueprint. Once a blueprint was created, attempting to recreate it using the script will fail. To do so, first delete the blueprint |                     |
 
 :::note
-The script replaces all occurrences of the string `{CLUSTER_NAME}` from the config yaml set in the `CONFIG_YAML_URL`([defined here](./full-kubernetes-exporter.md#helm-chart-installation-configuration)) with the value of the environment variable `CLUSTER_NAME`. This is useful for when creating a generic `config.yaml` which has no static cluster name.
+The script replaces all occurrences of the string `{CLUSTER_NAME}` from the `config.yaml` set in the `CONFIG_YAML_URL`([defined here](./full-kubernetes-exporter.md#helm-chart-installation-configuration)) with the value of the environment variable `CLUSTER_NAME`. This is useful for when creating a generic `config.yaml` which has no static cluster name.
 :::
 
 #### Helm Chart Installation configuration
