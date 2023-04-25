@@ -56,8 +56,8 @@ Required configuration as defined in the exporter's [advanced configuration](htt
 
 | Environment Variable | Description                                                                                                                                                                                                                                                                                                                                     | Default                                                                                    |
 | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
-| `PORT_CLIENT_ID`     | Your Port organization's Client ID used to authenticate the exporter to Port                                                                                                                                                                                                                                                                    |                                                                                            |
-| `PORT_CLIENT_SECRET` | Your Port organization's Client Secret used to authenticate the exporter to Port                                                                                                                                                                                                                                                                |                                                                                            |
+| `PORT_CLIENT_ID`     | **Required** - Your Port organization's Client ID used to authenticate the exporter to Port                                                                                                                                                                                                                                                     |                                                                                            |
+| `PORT_CLIENT_SECRET` | **Required** - Your Port organization's Client Secret used to authenticate the exporter to Port                                                                                                                                                                                                                                                 |                                                                                            |
 | `CONFIG_YAML_URL`    | The URL/path to the `config.yaml` file. Can be either an https format URL`https://domain.com/path/to/config.yaml`, or a local path to a file `envs/production/config.yaml`                                                                                                                                                                      | `https://github.com/port-labs/template-assets/blob/main/kubernetes/kubernetes_config.yaml` |
 | `TEMPLATE_NAME`      | A list of pre-made templates to install on top of the base `kubernetes_config.yaml` defined in the default `CONFIG_YAML_URL`. This parameter is only relevant if a custom `CONFIG_YAML_URL` was not configured. It adds the associated `.tmpl` files the can be found [here](https://github.com/port-labs/template-assets/tree/main/kubernetes) |                                                                                            |
 
@@ -104,70 +104,27 @@ This `blueprints.json` file defines the following blueprints:
 ### Installing the Kubernetes exporter using the script
 
 Now it is time to run the installation script and deploy Port's Kubernetes Exporter.
+By default (unless a custom `CONFIG_YAML_URL` is set), the installation script fetches a `config.yaml` which as support for core k8s resources - Cluster, Namespace, Workload, Pod, Node. If the default `config.yaml` is used, you can use custom pre-built templates to add on to the `config.yaml` using the `TEMPLATE_NAME` environment variable. In this use-case you will be using the `basic_expansion` template. To achieve this, run:
 
-Create a `config.yaml` with your relevant queries and Blueprints.
-In the Git repository under `exporter-config/config.yaml`, you can find a pre-made `config.yaml` which is configured to match the Blueprints we created earlier using Terraform. This `config.yaml` maps resources from all of the namespaces which dont start with "kube", and some cluster-scope resources.
-
-### Updating the exporter using Github Workflows
-
-To keep the mapping of cluster resources to Port up-to-date, you can use a GitHub Workflow to update the `config.yml` file applied to your K8s cluster whenever you make an update. On change to the `config.yml` file, the GitHub workflow will update the K8s exporter config deployed to your cluster.
-This can be achieved by using the following workflow:
-
-```yaml showLineNumbers
-name: Update K8s Exporter
-
-on:
-  push:
-    paths:
-      - "exporter-config/config.yaml"
-  workflow_dispatch:
-
-jobs:
-  update-k8s-exporter:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          persist-credentials: true
-      - uses: azure/setup-helm@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }} # only needed if version is 'latest'
-      - uses: azure/setup-kubectl@v3
-        with:
-          version: "v1.24.0" # default is latest stable
-      - name: Configure AWS Credentials 🔒
-        id: aws-credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
-      - name: Update Exporter
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
-          AWS_DEFAULT_OUTPUT: json
-        run: |
-          // highlight-next-line
-          # Replace this command with your method of fetching the kubeconfig file for your cluster
-          aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }}
-
-          helm repo add port-labs https://port-labs.github.io/helm-charts
-          helm repo update
-
-          helm upgrade my-port-k8s-exporter port-labs/port-k8s-exporter \
-          --create-namespace --namespace port-k8s-exporter \
-          --set secret.secrets.portClientId=${{ secrets.PORT_CLIENT_ID }} --set secret.secrets.portClientSecret=${{ secrets.PORT_CLIENT_SECRET }} \
-          --set-file configMap.config=./exporter-config/config.yaml --install
+```
+export TEMPLATE_NAME="basic_expansion"
 ```
 
-:::note
-The example above is for K8s clusters managed using AWS EKS, if you’re using a different K8s provider, you will need to change the method used to fetch your kubeconfig file inside the workfow
-:::
+Now you are ready to run the installation script:
 
-This workflow will check for changes in the `exporter-config/config.yaml` file, whenever a change occurs the updated Kubernetes exporter config will be deployed to your cluster.
+```
+export CLUSTER_NAME="my-cluster"
+export PORT_CLIENT_ID="my-port-client-id"
+export PORT_CLIENT_SECRET="my-port-client-secret"
+curl -s https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/install.sh | bash
+```
+
+That's it! You can now browse to your Port environment to see that your blueprints have been created, and entities are being reported to Port using the freshly installed k8s exporter.
 
 ## Summary
 
-In this use-case, you implemented a complete GitOps based flow for exporting data from a Kubernetes cluster to Port, using Port's K8s Exporter and Terraform provider. You now have a comprehensive mapping of your Kubernetes cluster in Port, that updates in real-time according to the state of your Kubernetes cluster and allowes you to view information directly from Port such as replica counts for your deployments, node readiness and job run statuses.
+In this use-case, using the installation script, you:
+
+- set up your Port environment by creating blueprints defining different k8s resources;
+- installed Port's k8s exporter with a configuration allowing you to export important data from your cluster;
+- fetched k8s resources from you cluster as entities to your Port environment
