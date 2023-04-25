@@ -10,7 +10,6 @@ Using Port's Kubernetes Exporter, you can keep track of your K8s resources and e
 
 ## Prerequisites
 
-- [Terraform CLI](https://learn.hashicorp.com/tutorials/terraform/install-cli);
 - [Helm](https://helm.sh) must be installed to use the chart. Please refer to
   Helm's [documentation](https://helm.sh/docs) to get started;
 - Create `PORT_CLIENT_ID` and `PORT_CLIENT_SECRET` secrets in your Github Repo, to use in your Github Workflows.
@@ -18,6 +17,40 @@ Using Port's Kubernetes Exporter, you can keep track of your K8s resources and e
 :::tip
 All relevant files and resources for this guide are available **[here!](https://github.com/port-labs/k8s-exporter-example)**
 :::
+
+## K8s exporter installation script
+
+In this use-case, you will use a custom bash script which will assist you in the process of installing Port's K8s exporter. This will be done by fetching relevant files, setting up your Port [blueprints](../../define-your-data-model/setup-blueprint/) and passing the necessary flags to the exporter's helm chart using the [installation](./kubernetes.md#installation) commands.
+
+The script will install the helm chart to the Kubernetes cluster which is currently in kubectl context.
+To view the context name of the cluster the exporter will be installed in, run:
+
+`kubectl config current-context`
+
+:::tip
+Link to the bash script [here](https://github.com/port-labs/template-assets/blob/main/kubernetes/install.sh).
+:::
+
+### Script configuration
+
+The script supports configuration via environment variables
+
+#### Helm Chart Kubernetes configuration
+
+`TARGET_NAMESPACE` - The Kubernetes namespace in which the exporter will be installed (Default: `port-k8s-exporter`)
+
+`DEPLOYMENT_NAME` - The Kubernetes deployment name the exporter will be installed as (Default: `port-k8s-exporter`)
+
+`CLUSTER_NAME` - The cluster's name as it will be exported to Port (Default: `my-cluster`)
+:::tip
+The script replaces the string `{CLUSTER_NAME}` from the config yaml and with the value of the environment variable `CLUSTER_NAME`. This is useful for when creating a generic `config.yaml`.
+:::
+
+#### Helm Chart Installation configuration
+
+`CONFIG_YAML_URL` - supports raw text file URLs in https format `https://domain.com/file/path/config.yaml` and also local paths `clusters/production/config.yaml` (Default: `https://github.com/port-labs/template-assets/blob/main/kubernetes/kubernetes_config.yaml`)
+
+``
 
 ## Setting up your Blueprints
 
@@ -35,26 +68,26 @@ In the Git repository, you can find 10 `.tf` files which will create the followi
 
 - Cluster
 - ClusterRole
-- CronJob
-- Deployment
+- Role
 - Namespace
 - Node
 - Pod
-- PodOwner \*
-- Role
+- Workload \*
 - Service \*
 
 :::note
-`PodOwner` is an abstraction of Kubernetes objects which create and manage pods. By creating this Blueprint, we can avoid creating a dedicated Blueprint per Pod Owner type, all of which will likely look pretty similar.
-Here is the list of kubernetes objects `PodOwner` will replace:
 
-- ReplicaSet
-- StatefulSet
-- DaemonSet
-- Job
+- `Workload` is an abstraction of Kubernetes objects which create and manage pods. By creating this Blueprint, we can avoid creating a dedicated Blueprint per Workload type, all of which will likely look pretty similar.
+  Here is the list of kubernetes objects `Workload` will represent:
 
-`Service` uses selectors to route traffic to pods. Since this is not a direct mapping, relating a service to a specific pod is only possible either by activley mapping pods to their service, or using a strict naming convention. In this use case, you we will only map the service's selectors.
-:::
+* Deployment
+* ReplicaSet
+* StatefulSet
+* DaemonSet
+* Job
+
+- `Service` uses selectors to route traffic to pods. Since this is not a direct mapping, relating a service to a workload is usually done using a strict naming convention. This use-case assumes a naming convention where the `Workload`'s name is equal to its associated `service`.
+  :::
 
 ### Updating Blueprints using Github Workflows
 
