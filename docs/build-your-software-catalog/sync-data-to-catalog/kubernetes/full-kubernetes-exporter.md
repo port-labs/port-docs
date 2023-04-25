@@ -73,7 +73,7 @@ Required configuration as defined in the exporter's [advanced configuration](htt
 The [installation script](./full-kubernetes-exporter.md#k8s-exporter-installation-script) provides a convenient way to create your blueprints. Using the `CUSTOM_BP_PATH` environment variable, you can fetch a pre-defined `blueprints.json` to create your blueprints. For this use-case, you will use [this file](https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/kubernetes_bps.json) to define your blueprints. Do this by running:
 
 ```
-export CUSTOM_BP_PATH="https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/kubernetes_bps.json"
+export CUSTOM_BP_PATH="https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/kubernetes_complete_usecase_bps.json"
 ```
 
 This `blueprints.json` file defines the following blueprints:
@@ -98,7 +98,7 @@ This `blueprints.json` file defines the following blueprints:
 * DaemonSet
 * Job
 
-- `Service` uses selectors to route traffic to pods. Since this is not a direct mapping, relating a service to a workload is usually done using a strict naming convention. This use-case assumes a naming convention where the `workload`'s name is equal to its associated `service`.
+- `Service` uses selectors to route traffic to pods, which complicates mapping a `service` entity to it's `workload` entity. For simplicity, we will map `Service` to `Namespace`
 
 :::
 
