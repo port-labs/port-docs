@@ -334,7 +334,7 @@ This example contains an array input with a default value that will be equal to 
 
 ![entity tags action](../../../static/img/software-catalog/blueprint/defaultEntityTags.png)
 
-:point_up: the tags of the namespace are already inserted to the form. :point_up:
+:point_up: The namespace tags are already inserted to the form. :point_up:
 
 <!-- this is commented out for now -->
 <!-- ## Complete Example
