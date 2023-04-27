@@ -185,7 +185,7 @@ The available entity object:
 
   </TabItem>
   <TabItem value="user">
-  The properties of the user that execute the action.
+  The properties of the user that executed the action.
 
 Usage:
 
