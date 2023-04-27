@@ -74,7 +74,7 @@ Required configuration as defined in the exporter's [advanced configuration](htt
 
 The [installation script](./full-kubernetes-exporter.md#k8s-exporter-installation-script) provides a convenient way to create your blueprints. Using the `CUSTOM_BP_PATH` environment variable, you can fetch a pre-defined `blueprints.json` to create your blueprints. For this use-case, you will use [this file](https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/kubernetes_complete_usecase_bps.json) to define your blueprints. Do this by running:
 
-```
+```bash showLineNumbers
 export CUSTOM_BP_PATH="https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/kubernetes_complete_usecase_bps.json"
 ```
 
@@ -113,13 +113,13 @@ By default (unless a custom `CONFIG_YAML_URL` is set), the installation script f
 
 If no custom `CONFIG_YAML_URL` is defined, you can use custom pre-built templates to add on to the `config.yaml` using the `TEMPLATE_NAME` environment variable. In this use-case you will be using the `basic_expansion` template. To achieve this, run:
 
-```
+```bash showLineNumbers
 export TEMPLATE_NAME="basic_expansion"
 ```
 
 Now you are ready to run the installation script:
 
-```
+```bash showLineNumbers
 export CLUSTER_NAME="my-cluster"
 export PORT_CLIENT_ID="my-port-client-id"
 export PORT_CLIENT_SECRET="my-port-client-secret"
