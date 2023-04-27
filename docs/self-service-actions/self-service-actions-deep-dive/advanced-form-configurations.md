@@ -7,7 +7,7 @@ Advanced user form settings allow you to create more customizable experiences fo
 
 ### Common Use Cases
 
-- Filter the available options in a dropdown input
+- Filter the available options in a dropdown input.
 - Create a dependency between inputs to allow the user to select a value based on the value of another input.
 - Define dynamic default values based on the logged-in user properties(such as teams, email, role etc`) or the entity that the action is being executed on (for day-2 or delete actions only).
 
