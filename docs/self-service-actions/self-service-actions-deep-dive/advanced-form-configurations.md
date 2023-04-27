@@ -311,24 +311,31 @@ This example contains a filter that will only display the namespaces that belong
 
 :point_up: these are only the namespaces that associated with the logged-in user's teams. :point_up:
 
-### Setting a dropdown based on the properties of the entity on which the action is performed (for day-2 or delete actions only)
+### Filter the dropdown's available options based on the properties of the entity on which the action is performed (for day-2 or delete actions only)
 
-This example contains a dropdown that will only display the tags of the entity on which the action is performed.
+This example contains a filter that will only display the namespaces that have similar tags to the tags of the entity on which the action is performed.
 
 ```json
 {
-  "some_input": {
+  "namespace": {
     "type": "string",
-    "enum": {
-      "jqQuery": "[.entity.properties.tags[]]"
+    "format": "entity",
+    "blueprint": "namespace",
+    "dataset": {
+      "combinator": "and",
+      "rules": [
+        {
+          "property": "tags",
+          "operator": "containsAny",
+          "value": {
+            "jqQuery": "[.entity.properties.tags[]]"
+          }
+        }
+      ]
     }
   }
 }
 ```
-
-![entity tags action](../../../static/img/software-catalog/blueprint/actionWithEntityTags.png)
-
-:point_up: this is a dropdown with the tags of the selected entity(namespace1). :point_up:
 
 ### Setting a default value with the jqQuery
 
