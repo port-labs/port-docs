@@ -55,7 +55,7 @@ Create the following blueprint definition and webhook configuration:
 Done! any change that happens to an OpsGenie alert (created, acknowledged, etc.) will trigger a webhook event that OpsGenie will send to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
 
 ## Ingest who is on-call
-In this example we will create a blueprint for `service` entities with a `on-call` property that will be ingested directly from OpsGenie. 
-The exmaples below are pulling data from the OpsGenie REST Api, in a defined scheduled period using GitLab Pipelines or GitHub Workflows, and reports the data to Port as a property to the `service` blueprint.
+In this example we will create a blueprint for `service` entities with an `on-call` property that will be ingested directly from OpsGenie. 
+The examples below pull data from the OpsGenie REST Api, in a defined scheduled period using GitLab Pipelines or GitHub Workflows, and report the data to Port as a property to the `service` blueprint.
 - [Github Workflow](https://github.com/port-labs/opsgenie-oncall-example)
 - [GitLab CI Pipeline](https://gitlab.com/getport-labs/opsgenie-oncall-example)
