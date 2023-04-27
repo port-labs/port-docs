@@ -3,13 +3,13 @@ import TabItem from '@theme/TabItem';
 
 # Advanced Form Configurations
 
-In Port, You can create actions with dependencies between inputs, based on the values of other inputs, the entity, or the logged-in user properties. This allows you to create a more dynamic and interactive experience for your users and also to create more complex actions.
+Advanced user form settings allow you to create more customizable experiences for users who perform self-service actions. This is done by creating an adaptive user form that changes according to data about the entity, the user, and the user form inputs.
 
 ### Common Use Cases
 
-- Create a filter to limit the entities that the user can choose in a dropdown.
+- Filter the available options in a dropdown input
 - Create a dependency between inputs to allow the user to select a value based on the value of another input.
-- Create inputs based on the logged-in user properties(such as teams, email, role etc`) or the entity that the action is being executed on (for day-2 or delete actions only).
+- Define dynamic default values based on the logged-in user properties(such as teams, email, role etc`) or the entity that the action is being executed on (for day-2 or delete actions only).
 
 #### building such actions can be done by leveraging 3 keys in the action's schema:
 
@@ -22,7 +22,8 @@ values={[
 ]}>
 
 <TabItem value="DependsOn">
-the dependsOn property is used to create a dependency between inputs. The input will only be enabled if the inputs that it depends on have a value. The input will also have a default value based on the value of the inputs that it depends on.
+The dependsOn property is used to create a dependency between inputs. Input dependency means that if input X depends on input Y, input X will be disabled until input Y is filled.
+In the example below, the "SDK" input is depends on the "Language" input
 
 ```json
 {
@@ -39,8 +40,8 @@ the dependsOn property is used to create a dependency between inputs. The input 
 
 </TabItem>
 <TabItem value="Dataset">
-the dataset property is used to create a filter that will limit the entities that the user can choose from. The filter can be a value(string, number, etc') or a "jqQuery" object.
-You can read more about the "dataset" configurations <a href="http://localhost:4000/search-and-query/#combinator">here</a>
+The dataset property is used to filter the available options in an "entity" format input.
+The "value" key in the dataset can be a constant (String, number, etc) or a "jqQuery" object. Read more on how to use the "dataset" <a href="http://localhost:4000/search-and-query/#combinator">here</a>
 
 ```json
 {
@@ -113,6 +114,7 @@ values={[
 {label: 'user', value: 'user'},
 ]}>
 <TabItem value="form">
+The value of the input that inserted by the user in the action form.
 
 Usage:
 
@@ -122,7 +124,7 @@ Usage:
 }
 ```
 
-The available form object(each input as a property in the action's `userInputs` object)):
+The available form object(each input is a key in the action's `userInputs` object):
 
 ```json
 {
@@ -134,8 +136,9 @@ The available form object(each input as a property in the action's `userInputs` 
 
   </TabItem>
   <TabItem value="entity">
-  
-  Usage:
+  The properties of the entity on which the action is performed. Entity data is only available in "day-2" and "delete" actions.
+
+Usage:
 
 ```json
 {
@@ -202,7 +205,9 @@ The available entity object:
 
   </TabItem>
   <TabItem value="user">
-  Usage:
+  The properties of the user that execute the action.
+
+Usage:
 
 ```json
 {
@@ -239,23 +244,22 @@ The available logged-in user object:
 
   </TabItem>
 </Tabs>
+Keys that are supported with jqQuery expressions:
+
+| Key     | Description                       |
+| ------- | --------------------------------- |
+| enum    | any enum of a property            |
+| value   | the value inside a "dataset" rule |
+| default | the default value of any property |
 
 </TabItem>
 </Tabs>
 
-#### Properties that are supported with jqQuery expressions
+## Usage examples
 
-| Property | Description                       |
-| -------- | --------------------------------- |
-| enum     | any enum of a property            |
-| value    | the value inside a "dataset" rule |
-| default  | the default value of any property |
+### Creating a dependency between two form inputs
 
-## basic usage
-
-### using data from the current form values in a different input
-
-this json creates a dependency between the "language" input and the "SDK" input. The "SDK" input will only show the options that are available for the selected language.
+This example contains a dependency between the "language" input and the "SDK" input. The "SDK" input's available options are defined according to the selected language (see the jqQuery key).
 
 ```json
 {
@@ -277,9 +281,9 @@ this json creates a dependency between the "language" input and the "SDK" input.
 
 ![Cluster And Namespace Action](../../../static/img/software-catalog/blueprint/javascriptSDK.png)
 
-### creating an input based on the logged-in user properties
+### Filter the dropdown's available options based on properties of the user that execute the action
 
-this json creates a filter that will only show the namespaces that the user is a member of (notice the value key in the rules object)
+This example contains a filter that will only display the namespaces that belong to the user's teams (notice the value key in the rules object).
 
 ```json
 {
@@ -307,9 +311,9 @@ this json creates a filter that will only show the namespaces that the user is a
 
 :point_up: these are only the namespaces that associated with the logged-in user's teams. :point_up:
 
-### Using data from the entity that the action is being executed on (for day-2 or delete actions only)
+### Filter the dropdown's available options based on the properties of the entity on which the action is performed (for day-2 or delete actions only)
 
-this creates a filter that will only show the namespaces that the entity is tagged with.
+This example contains a filter that will only display the namespaces that have similar tags to the tags of the entity on which the action is performed.
 
 ```json
 {
@@ -339,7 +343,7 @@ this creates a filter that will only show the namespaces that the entity is tagg
 
 ### Setting a default value with the jqQuery
 
-this creates a filter that will only show the namespaces that the entity is tagged with.
+This example contains an array input with a default value that will be equal to the tags of the entity on which the action is performed
 
 ```json
 {
@@ -356,7 +360,8 @@ this creates a filter that will only show the namespaces that the entity is tagg
 
 :point_up: the tags of the namespace are already inserted to the form. :point_up:
 
-## Complete Example
+<!-- this is commented out for now -->
+<!-- ## Complete Example
 
 In this example, we will create an action that lets the user select a cluster and a namespace in that cluster. The user will also be able to select a service that is already running in the cluster. The action will then deploy the selected service to the selected namespace in the cluster. The user will only be able to select a service that is linked to his team.
 
@@ -434,4 +439,4 @@ In this example, we will create an action that lets the user select a cluster an
 
 ![Cluster And Namespace Action](../../../static/img/software-catalog/blueprint/clusterNamespaceAction.png)
 
-:point_up: The user will be required to choose a cluster, then a namespace from the selected cluster. And will be able to deploy only services associated with his team
+:point_up: The user will be required to choose a cluster, then a namespace from the selected cluster. And will be able to deploy only services associated with his team -->
