@@ -40,7 +40,7 @@ the dependsOn property is used to create a dependency between inputs. The input 
 </TabItem>
 <TabItem value="Dataset">
 the dataset property is used to create a filter that will limit the entities that the user can choose from. The filter can be a value(string, number, etc') or a "jqQuery" object.
-You can read more about the "dataset" [here](http://localhost:4000/search-and-query/#combinator).
+You can read more about the "dataset" configurations <a href="http://localhost:4000/search-and-query/#combinator">here</a>
 
 ```json
 {
