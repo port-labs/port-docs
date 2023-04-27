@@ -94,7 +94,7 @@ values={[
 {label: 'user', value: 'user'},
 ]}>
 <TabItem value="form">
-The value of the input that inserted by the user in the action form.
+The value of the input that was inserted by the user in the action form.
 
 Usage:
 
