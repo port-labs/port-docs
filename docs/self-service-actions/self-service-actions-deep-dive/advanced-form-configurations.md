@@ -267,7 +267,7 @@ This example contains a dependency between the "language" input and the "SDK" in
     "type": "string",
     "enum": ["javascript", "python"],
   }
-}
+},
 {
   "SDK": {
     "type": "string",
@@ -317,21 +317,10 @@ This example contains a filter that will only display the namespaces that have s
 
 ```json
 {
-  "namespace": {
+  "some_input": {
     "type": "string",
-    "format": "entity",
-    "blueprint": "namespace",
-    "dataset": {
-      "combinator": "and",
-      "rules": [
-        {
-          "property": "tags",
-          "operator": "containsAny",
-          "value": {
-            "jqQuery": "[.entity.tags[].name]"
-          }
-        }
-      ]
+    "enum": {
+      "jqQuery": "[.entity.properties.tags[]]"
     }
   }
 }
