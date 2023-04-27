@@ -6,9 +6,7 @@ sidebar_label: 🏗️ Build your Software Catalog
 
 # 🏗️ Build your Software Catalog
 
-<div style={{position: "relative", "padding-bottom": "62.5%", height:"0"}}><iframe src="https://www.loom.com/embed/80fdb60b24ab46e1aa718bdf581e1ec0" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style={{position: "absolute", top:"0", left:"0", width:"100%", height:"100%"}} ></iframe></div>
-
-<br></br>
+<iframe width="100%" height="600" src="https://www.youtube.com/embed/-ir4YG-XMPU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
 
 Port's software catalog is a central metadata store for software, environments, resources and more. Its building blocks are blueprints and relations, and you can use them to build a catalog that reflects your exact data model. You can also build the catalog with one of Port's common data models.
 
