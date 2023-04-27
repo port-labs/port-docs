@@ -311,9 +311,9 @@ This example contains a filter that will only display the namespaces that belong
 
 :point_up: these are only the namespaces that associated with the logged-in user's teams. :point_up:
 
-### Filter the dropdown's available options based on the properties of the entity on which the action is performed (for day-2 or delete actions only)
+### Setting a dropdown based on the properties of the entity on which the action is performed (for day-2 or delete actions only)
 
-This example contains a filter that will only display the namespaces that have similar tags to the tags of the entity on which the action is performed.
+This example contains a dropdown that will only display the tags of the entity on which the action is performed.
 
 ```json
 {
