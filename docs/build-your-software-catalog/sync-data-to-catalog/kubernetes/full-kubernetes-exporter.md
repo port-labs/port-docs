@@ -16,7 +16,9 @@ Get to know the basics of our Kubernetes exporter [here!](./kubernetes.md)
 
 - [Helm](https://helm.sh) must be installed to use the chart. Please refer to
   Helm's [documentation](https://helm.sh/docs) to get started;
-- The `jq` command must installed on your system
+- The `jq` command must installed
+- The `yq` command must installed
+- The `kubectl` command must be installed
 
 The script will install the helm chart to the Kubernetes cluster which is currently in kubectl context.
 To view the context name of the cluster the exporter will be installed on, run:
@@ -107,7 +109,9 @@ This `blueprints.json` file defines the following blueprints:
 ### Installing the Kubernetes exporter using the script
 
 Now it is time to run the installation script and deploy Port's Kubernetes Exporter.
-By default (unless a custom `CONFIG_YAML_URL` is set), the installation script fetches a `config.yaml` which as support for core k8s resources - Cluster, Namespace, Workload, Pod, Node. If the default `config.yaml` is used, you can use custom pre-built templates to add on to the `config.yaml` using the `TEMPLATE_NAME` environment variable. In this use-case you will be using the `basic_expansion` template. To achieve this, run:
+By default (unless a custom `CONFIG_YAML_URL` is set), the installation script fetches a `config.yaml` which has support for core k8s resources - Cluster, Namespace, Workload, Pod, Node.
+
+If no custom `CONFIG_YAML_URL` is defined, you can use custom pre-built templates to add on to the `config.yaml` using the `TEMPLATE_NAME` environment variable. In this use-case you will be using the `basic_expansion` template. To achieve this, run:
 
 ```
 export TEMPLATE_NAME="basic_expansion"
