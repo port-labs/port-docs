@@ -65,7 +65,7 @@ The "value" key in the dataset can be a constant (String, number, etc) or a "jqQ
 
 </TabItem>
 <TabItem value="jqQuery">
-the jqQuery property is used to create a query that can be used to extract data from the entity, the logged-in user, or the current action's form inputs. The query can also be used to perform data manipulations.
+The jqQuery property is used to create a query that can be used to extract data from the entity, the logged-in user, or the current action's form inputs. The query can also be used to perform data manipulations.
 
 ```json
 {
