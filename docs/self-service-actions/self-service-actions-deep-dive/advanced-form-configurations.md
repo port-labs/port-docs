@@ -289,7 +289,7 @@ This example contains a filter that will only display the namespaces that belong
 
 ![Cluster And Namespace Action](../../../static/img/software-catalog/blueprint/userPropertiesModal.png)
 
-:point_up: these are only the namespaces that associated with the logged-in user's teams. :point_up:
+:point_up: these are only the namespaces that are associated with the logged-in user's teams. :point_up:
 
 ### Filter the dropdown's available options based on the properties of the entity on which the action is performed (for day-2 or delete actions only)
 
