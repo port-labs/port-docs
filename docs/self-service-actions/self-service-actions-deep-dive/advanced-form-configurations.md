@@ -41,7 +41,7 @@ In the example below, the "SDK" input is depends on the "Language" input
 </TabItem>
 <TabItem value="Dataset">
 The dataset property is used to filter the available options in an "entity" format input.
-The "value" key in the dataset can be a constant (String, number, etc) or a "jqQuery" object. Read more on how to use the "dataset" <a href="http://localhost:4000/search-and-query/#combinator">here</a>
+The "value" key in the dataset can be a constant (String, number, etc) or a "jqQuery" object. Read more on how to use the "dataset" <a href="/search-and-query/#combinator">here</a>
 
 ```json
 {
