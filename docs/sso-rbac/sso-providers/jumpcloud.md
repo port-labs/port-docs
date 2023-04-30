@@ -68,11 +68,7 @@ Most of the following steps involve editing the initial Port app you created. Ke
 
 In the Port app, go to the `SSO` menu and follow these steps:
 
-1. Under `IdP Entity ID:` paste the following URL:
-
-```text showLineNumbers
-https://auth.getport.io
-```
+1. Under `IdP Entity ID:` paste the following URL: `https://auth.getport.io`
 
 2. Under `SP Entity ID:` set: `urn:auth0:port-prod:{CONNECTION_NAME}`.
 
@@ -82,7 +78,7 @@ https://auth.getport.io
 
 Click `Save`.
 
-### Step #3: Set `email_verified` custom attribute to the Port App
+### Step #3: Set `email_verified` constant attribute to the Port App
 
 The use of Auth0 requires that JumpCloud passes to Port an `email_verified` field upon user login. JumpCloud does not store and expose that field by default, so in this step, you are going to configure that field and apply it to all users in your JumpCloud account.
 
@@ -109,34 +105,29 @@ It is also possible to manually change the value of the `email_verified` field t
 
 After completing these steps, users with roles that the Port app was assigned to, will see the Port app in their Portal and upon clicking it, will be logged in to Port:
 
-[Onelogin Portal With Port App](../../../static/img/sso/onelogin/OneloginPortalWithApp.png)
+[JumpCloud Portal With Port App](../../../static/img/sso/jumpcloud/JumpcloudPortApplication.png)
 
 ---
 
-## How to allow pulling Onelogin roles to Port
+## How to allow pulling JumpCloud Groups to Port
 
 :::note
-This stage is **OPTIONAL** and is required only if you wish to pull all of your Onelogin roles into Port inherently.
+This stage is **OPTIONAL** and is required only if you wish to pull all of your JumpCloud Groups into Port inherently.
 
 **Benefit:** managing permissions and user access on Port.  
-**Outcome:** for every user that logs in, we will automatically get their associated Onelogin roles, according to your definition in the settings below.
+**Outcome:** for every user that logs in, we will automatically get their associated JumpCloud Groups, according to your definition in the settings below.
 :::
 
-To allow automatic Onelogin roles support in Port, please follow these steps:
+To allow automatic Groups Groups support in Port, please follow these steps:
 
-1. In the `Application` page, select the Port app and go to the `Parameters` menu;
+1. In the Port app, go to the `SSO` tab, under the **Group Attributes** section
 
-2. Click on the `Groups` claim:
+2. Check the `include group attributes` box
 
    ![Onelogin App Parameters Setting](../../../static/img/sso/onelogin/OneloginParametersSetting.png)
 
-3. Update the groups claim:
+3. Set the group attributes' name: `memberOf`
 
-   1. Change the value of `Default if no value selected` to `User Roles`;
-   2. From the dropdown, select `Semicolon delimited input`:
-
-   ![Onelogin App Groups Claim Setting](../../../static/img/sso/onelogin/OneloginGroupsClaim.png)
-
-   3. Click `Save`.
+![JumpCloud Group configuration](../../../static/img/sso/jumpcloud/JumpcloudGroupConfig.png)
 
 4. Click `Save`.
