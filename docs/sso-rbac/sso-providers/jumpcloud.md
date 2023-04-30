@@ -75,10 +75,6 @@ https://auth.getport.io
 
 Click `Save`.
 
-:::caution
-Be sure to click save before moving on to the next step because without the `Redirect URI's` filled in, trying to save any other application parameter will result in an error.
-:::
-
 ### Step #3: Set `email_verified` custom attribute to the Port App
 
 The use of Auth0 requires that JumpCloud passes to Port an `email_verified` field upon user login. JumpCloud does not store and expose that field by default, so in this step, you are going to configure that field and apply it to all users in your JumpCloud account.
