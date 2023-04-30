@@ -27,7 +27,7 @@ In order to complete the process you will need to contact Port to deliver and re
 
 ![JumpCloud new application wizard](../../../static/img/sso/jumpcloud/JumpcloudAddApplication.png)
 
-3. In the search box type **Auth0**, then select `OpenId Connect (OIDC)`:
+3. In the search box type **Auth0**:
 
 ![JumpCloud new application](../../../static/img/sso/jumpcloud/JumpcloudAuth0Search.png)
 
@@ -42,9 +42,11 @@ In order to complete the process you will need to contact Port to deliver and re
 Click `activate`.
 
 5. Click on the newly created application.
+
    1. Download the IDP Certificate:
       ![Jumpcloud download certificate](../../../static/img/sso/jumpcloud/JumpcloudDownloadCert.png)
    2. Copy the `IDP URL` from the SSO tab
+
 6. Via intercom/slack, provide Port with the downloaded `certificate.pem` file, and the IDP URL.
 
 Port will then provide you with your `{CONNECTION_NAME}`. Replace the following occurrences with the provided value.
