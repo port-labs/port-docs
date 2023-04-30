@@ -124,8 +124,6 @@ To allow automatic Groups Groups support in Port, please follow these steps:
 
 2. Check the `include group attributes` box
 
-   ![Onelogin App Parameters Setting](../../../static/img/sso/onelogin/OneloginParametersSetting.png)
-
 3. Set the group attributes' name: `memberOf`
 
 ![JumpCloud Group configuration](../../../static/img/sso/jumpcloud/JumpcloudGroupConfig.png)
