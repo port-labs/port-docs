@@ -41,4 +41,8 @@ Remember to replace the `WEBHOOK_SECRET` with the real secret you specify when c
    3. `Secret` - enter the secret value you specified when creating the webhook;
 5. Click **Create** at the bottom of the page.
 
+:::tip
+In order to view the different payloads and events available in SonarQube webhooks, [look here](https://docs.sonarqube.org/latest/project-administration/webhooks/)
+:::
+
 Done! any new analysis you run (for example, on new PRs or changes to PRs) will trigger a webhook event that SonarCloud will send to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.

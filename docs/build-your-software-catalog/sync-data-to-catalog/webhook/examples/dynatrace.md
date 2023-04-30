@@ -48,19 +48,23 @@ The relation mapping in the webhook configuration will only work if the identifi
    4. `Custom payload` - When a problem is detected or resolved on your entity, this payload will be sent to the webhook URL. You can enter this JSON placeholder in the textbox;
    ```json showLineNumbers
    {
-   "State":"{State}",
-   "PID":"{PID}",
-   "ProblemTitle":"{ProblemTitle}",
-   "ImpactedEntity": "{ImpactedEntity}",
-   "ProblemDetailsText": "{ProblemDetailsText}",
-   "ProblemImpact": "{ProblemImpact}",
-   "ProblemSeverity": "{ProblemSeverity}",
-   "ProblemURL": "{ProblemURL}",
-   "ProblemTags": "{Tags}",
-   "ImpactedEntities": {ImpactedEntities}
+     "State": "{State}",
+     "PID": "{PID}",
+     "ProblemTitle": "{ProblemTitle}",
+     "ImpactedEntity": "{ImpactedEntity}",
+     "ProblemDetailsText": "{ProblemDetailsText}",
+     "ProblemImpact": "{ProblemImpact}",
+     "ProblemSeverity": "{ProblemSeverity}",
+     "ProblemURL": "{ProblemURL}",
+     "ProblemTags": "{Tags}",
+     "ImpactedEntities": "{ImpactedEntities}"
    }
    ```
    5. `Alerting profile` - configure your preferred alerting rule or use the default one;
 7. Click **Save changes** at the bottom of the page;
+
+:::tip
+In order to view the different payloads and events available in Dynatrace webhooks, [look here](https://www.dynatrace.com/support/help/observe-and-explore/notifications-and-alerting/problem-notifications/webhook-integration)
+:::
 
 Done! any problem detected on your Dynatrace entity will trigger a webhook event. Port will parse the events according to the mapping and update the catalog entities accordingly.
