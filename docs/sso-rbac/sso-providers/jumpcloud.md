@@ -36,8 +36,15 @@ In order to complete the process you will need to contact Port to deliver and re
    1. `Display Label`: Insert a name of your choice for the Port app, like `Port`.
    2. Add an icon (optional):
 
-   ![Port's logo](../../../static/img/sso/general-assets/PortLogo.png) 3. In the SSO tab, change the default IDP URL suffix (optional, default is `auth0`).
-   ![JumpCloud initial new application](../../../static/img/sso/jumpcloud/JumpcloudNewSSO.png)
+   <details>
+   <summary>Port Logo</summary>
+
+   ![Port's logo](../../../static/img/sso/general-assets/PortLogoLarge.png)
+
+   </details>
+
+   3. In the SSO tab, change the default IDP URL suffix (optional, default is `auth0`).
+      ![JumpCloud initial new application](../../../static/img/sso/jumpcloud/JumpcloudNewSSO.png)
 
 Click `activate`.
 
@@ -87,18 +94,16 @@ The use of Auth0 requires that JumpCloud passes to Port an `email_verified` fiel
 
 ![JumpCloud email verified attribute](../../../static/img/sso/jumpcloud/JumpCloudEmailVerified.png)
 
-The custom field is `null` by default, in order to change its value to `true` you will create a custom mapping rule:
-
 :::note
 It is also possible to manually change the value of the `email_verified` field to `true` for each user that requires access to Port in your organization. However, granting access manually to a large number of users is not scalable.
 :::
 
 ### Step #4: Exposing the application to your organization
 
-1. In the `Application` page, select the Port app and go to the `Access` menu.
-2. In the `Roles` section, select the roles you want to expose the Port app to:
+1. In the Port app, go to the `User Groups` tab.
+2. Select the user groups you want to expose the Port app to:
 
-   ![Onelogin Assign App Roles](../../../static/img/sso/onelogin/OneloginAssignAppRoles.png)
+   ![JumpCloud add user groups](../../../static/img/sso/jumpcloud/JumpcloudAddUserGroups.png)
 
 3. Click `Save`.
 
