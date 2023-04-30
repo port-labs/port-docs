@@ -105,7 +105,7 @@ It is also possible to manually change the value of the `email_verified` field t
 
 After completing these steps, users with roles that the Port app was assigned to, will see the Port app in their Portal and upon clicking it, will be logged in to Port:
 
-[JumpCloud Portal With Port App](../../../static/img/sso/jumpcloud/JumpcloudPortApplication.png)
+![JumpCloud Portal With Port App](../../../static/img/sso/jumpcloud/JumpcloudPortApplication.png)
 
 ---
 
