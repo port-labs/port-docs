@@ -31,7 +31,19 @@ Create the following blueprint definitions and webhook configuration:
 </details>
 
 :::note
-The relation mapping in the webhook configuration will only work if the identifiers of Port microservice entities matches the names of entities in your Dynatrace.
+The webhook configuration's relation mapping will function properly only when the identifiers of the Port microservice entities match the names of the entities in your Dynatrace. If there is a mismatch, you can utilize [Dynatrace Tags](https://www.dynatrace.com/support/help/manage/tags-and-metadata) to align the actual identifier in Port. To do this, create a tag with the key proj and value <microservice_identifier>. Then, update the relation JQ syntax to establish a connection between the Dynatrace problem and the Port microservice. Here is the updated JQ Mappings:
+
+```json showLineNumbers
+{
+    "blueprint": "dynatraceProblem",
+    "entity": {
+     ...Properties mappings
+      "relations": {
+         "microservice": ".body.ProblemTags | split(\", \") | map(select(test(\"proj:\")) | sub(\"proj:\";\"\"))"
+      }
+    }
+}
+```
 :::
 
 ## Create the Dynatrace webhook
