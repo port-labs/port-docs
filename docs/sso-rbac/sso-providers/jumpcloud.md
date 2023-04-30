@@ -16,7 +16,7 @@ In order to complete the process you will need to contact Port to deliver and re
 
 - Connect to the Port application via a JumpCloud app;
 - Your JumpCloud teams will be automatically synced with Port, upon user sign-in;
-- Set granular permissions on Port according to your Onelogin roles.
+- Set granular permissions on Port according to your JumpCloud user groups.
 
 ## How to configure the JumpCloud app integration for Port​
 
@@ -93,26 +93,7 @@ The custom field is `null` by default, in order to change its value to `true` yo
 It is also possible to manually change the value of the `email_verified` field to `true` for each user that requires access to Port in your organization. However, granting access manually to a large number of users is not scalable.
 :::
 
-### Step #5: Configure OpenID Claims
-
-In the Port app, go to the `Parameters` menu and follow these steps:
-
-1. Click on the `+` button;
-2. In the form that appears, under `Field Name` write: `openid` and click `save`;
-3. In the value drop down that appears, select `OpenID name`.
-
-Repeat the process two more times and add the following additional parameters:
-
-1. `Field Name`: email, `Value`: Email
-2. `Field Name`: email_verified, `Value`: Email Verified (Custom)
-
-At the end of the process, your `Parameters` section will look like this:
-
-![Onelogin App Parameters Setting](../../../static/img/sso/onelogin/OneloginParametersSetting.png)
-
-Click `Save`.
-
-### Step #6: Exposing the application to your organization
+### Step #4: Exposing the application to your organization
 
 1. In the `Application` page, select the Port app and go to the `Access` menu.
 2. In the `Roles` section, select the roles you want to expose the Port app to:
