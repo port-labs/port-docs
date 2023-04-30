@@ -49,7 +49,9 @@ Click `activate`.
 
 6. Via intercom/slack, provide Port with the downloaded `certificate.pem` file, and the copied `IDP URL`.
 
-Port will then provide you with your `{CONNECTION_NAME}`. Replace the following occurrences with the provided value.
+:::note
+After providing the `certificate.pem` file and the the `IDP URL` to Port, you will be provided with you with your `{CONNECTION_NAME}`. Replace the following occurrences with the provided value.
+:::
 
 :::tip
 Most of the following steps involve editing the initial Port app you created. Keep in mind you can always go back to it by opening the admin console and going to User Authentication -> SSO, the Port app will appear in the application list.
