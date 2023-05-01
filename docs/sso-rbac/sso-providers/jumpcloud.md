@@ -6,13 +6,13 @@ description: Integrate JumpCloud with Port
 
 # How to configure JumpCloud
 
-This is a step-by-step guide to configuring the integration between Port and JumpCloud.
+Follow this step-by-step guide to configure the integration between Port and JumpCloud.
 
 :::info
 In order to complete the process you will need to contact Port to deliver and receive information, as detailed in the guide below.
 :::
 
-## Port-JumpCloud Integration Benefits ​
+## Port-JumpCloud integration benefits ​
 
 - Connect to the Port application via a JumpCloud app;
 - Your JumpCloud teams will be automatically synced with Port, upon user sign-in;
@@ -43,7 +43,7 @@ In order to complete the process you will need to contact Port to deliver and re
 
    </details>
 
-   3. In the SSO tab, change the default IDP URL suffix (optional, default is `auth0`).
+   3. **(Optional)** In the SSO tab, change the default IDP URL suffix.
       ![JumpCloud initial new application](../../../static/img/sso/jumpcloud/JumpcloudNewSSO.png)
 
 Click `activate`.
@@ -52,7 +52,9 @@ Click `activate`.
 
    1. Download the IDP Certificate:
       ![Jumpcloud download certificate](../../../static/img/sso/jumpcloud/JumpcloudDownloadCert.png)
+
    2. Copy the `IDP URL` from the SSO tab
+      ![Jumpcloud IDP URL](../../../static/img/sso/jumpcloud/JumpcloudIDPUrl.png)
 
 6. Via intercom/slack, provide Port with the downloaded `certificate.pem` file, and the copied `IDP URL`.
 
@@ -78,15 +80,13 @@ In the Port app, go to the `SSO` menu and follow these steps:
 
 Click `Save`.
 
-### Step #3: Set `email_verified` constant attribute to the Port App
+### Step #3: Add `email_verified` constant attribute to the Port App
 
 The use of Auth0 requires that JumpCloud passes to Port an `email_verified` field upon user login. JumpCloud does not store and expose that field by default, so in this step, you are going to configure that field and apply it to all users in your JumpCloud account.
 
 1. In the Port app, go to the `SSO` tab, under the **Constant Attributes** section:
 2. Click on `add attribute`.
-3. Enter the following details:
-   1. `Service Provider Attribute Name`: email_verified
-   2. `Value`: true
+3. In the _include group attribute_ field enter the value: `memberOf`
 
 ![JumpCloud email verified attribute](../../../static/img/sso/jumpcloud/JumpCloudEmailVerified.png)
 
