@@ -2,6 +2,9 @@
 sidebar_position: 4
 ---
 
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+
 # Software Templates
 
 A software template allows you to generate a customized skeleton of a new resource (e.g. service), usually based on community best practices.
@@ -11,7 +14,7 @@ There are a few open source projects out there that enable you to create a proje
 In the next section we are going to present an example.
 
 :::tip
-All relevant files and resources for this guide are available [**HERE**](https://github.com/port-labs/port-cookiecutter-example)
+All relevant files and resources for this guide are available [**Here for GitHub**](https://github.com/port-labs/port-cookiecutter-example), and [**Here for GitLab**](https://github.com/port-labs/port-cookiecutter-gitlab-example).
 :::
 
 ## Example - create a new service repository
@@ -53,6 +56,13 @@ Then, add `Create` Self-Service Actions to the Blueprint, in order to support th
 In this case, we add actions to provision [Django](https://github.com/cookiecutter/cookiecutter-django), [C++](https://github.com/DerThorsten/cpp_cookiecutter) and [Go](https://github.com/lacion/cookiecutter-golang) services.
 
 The action will receive the following user inputs:
+
+<Tabs groupId="actions" defaultValue="github" values={[
+{label: "GitHub", value: "github"},
+{label: "GitLab", value: "gitlab"}
+]}>
+
+<TabItem value="github">
 
 - GitHub organization and repository to host the created service project;
 - Template specific parameters, such as `project_name` and `description`.
@@ -157,11 +167,113 @@ For local setup, look at this [example](../local-debugging-webhook.md#creating-t
 
 </details>
 
+</TabItem>
+
+<TabItem value="gitlab">
+
+- Repository to host the created service project;
+- Template specific parameters, such as `project_name` and `description`.
+
+:::note
+In the following JSON, you need to replace the `<WEBHOOK_URL>` placeholders with your URL.
+
+For local setup, look at this [example](../local-debugging-webhook.md#creating-the-vm-create-action).
+:::
+
+<details>
+<summary>Self-Service Actions JSON</summary>
+
+```json showLineNumbers
+[
+  {
+    "identifier": "CreateDjangoService",
+    "title": "Create Django",
+    "icon": "Service",
+    "userInputs": {
+      "properties": {
+        "repository_name": {
+          "type": "string"
+        },
+        "project_name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": ["repository_name"]
+    },
+    "invocationMethod": {
+      "type": "WEBHOOK",
+      "url": "<WEBHOOK_URL>"
+    },
+    "trigger": "CREATE",
+    "description": "Creates a new Django service"
+  },
+  {
+    "identifier": "CreateCPPService",
+    "title": "Create C++",
+    "icon": "Service",
+    "userInputs": {
+      "properties": {
+        "repository_name": {
+          "type": "string"
+        },
+        "project_name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": ["repository_name"]
+    },
+    "invocationMethod": {
+      "type": "WEBHOOK",
+      "url": "<WEBHOOK_URL>"
+    },
+    "trigger": "CREATE",
+    "description": "Creates a new C++ service"
+  },
+  {
+    "identifier": "CreateGoService",
+    "title": "Create Go",
+    "icon": "Service",
+    "userInputs": {
+      "properties": {
+        "repository_name": {
+          "type": "string"
+        },
+        "app_name": {
+          "type": "string"
+        },
+        "project_short_description": {
+          "type": "string"
+        }
+      },
+      "required": ["repository_name"]
+    },
+    "invocationMethod": {
+      "type": "WEBHOOK",
+      "url": "<WEBHOOK_URL>"
+    },
+    "trigger": "CREATE",
+    "description": "Creates a new Go service"
+  }
+]
+```
+
+</details>
+
+</TabItem>
+
+</Tabs>
+
 Next, in order to listen to the webhook events, you need to set up a simple backend.
 
 Within the backend, you are going to generate the project from the Cookiecutter template (with the provided user parameters), and push it to the GitHub repository you specified.
 
-A full example with a backend, can be found [here](https://github.com/port-labs/port-cookiecutter-example).
+A full example with a backend, can be found [here for GitHub](https://github.com/port-labs/port-cookiecutter-example) or [here for GitLab](https://github.com/port-labs/port-cookiecutter-gitlab-example).
 
 :::info
 The above example also creates a new Service Entity in Port, and updates the action run details.
