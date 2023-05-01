@@ -6,13 +6,13 @@ description: Integrate Okta with Port
 
 # How to configure Okta
 
-This is a step-by-step guide to configuring the integration between Port and Okta.
+Follow this step-by-step guide to configure the integration between Port and Okta.
 
 :::info
 In order to complete the process you will need to contact us, the exact information we need to provide, as well as the information Port requires from you is listed in this doc.
 :::
 
-## Port-Okta Integration Benefits ​
+## Port-Okta integration benefits
 
 - Connect to the Port application via an Okta app.
 - Your Okta teams will be synced with Port, automatically upon user sign-in.
