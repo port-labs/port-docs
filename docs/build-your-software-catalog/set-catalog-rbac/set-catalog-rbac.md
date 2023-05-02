@@ -10,6 +10,8 @@ import styles from "./styles.module.css";
 
 # 🔐 Set Catalog RBAC
 
+<iframe width="100%" height="600" src="https://www.youtube.com/embed/p-pNcvVfdUE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+
 Port provides granular control to make sure every user sees only the parts of the catalog that are relevant for them.
 
 Port's catalog RBAC capabilities are enabled by Port's [permissions controls](../../sso-rbac/rbac/rbac.md).

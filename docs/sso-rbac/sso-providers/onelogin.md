@@ -6,13 +6,13 @@ description: Integrate Onelogin with Port
 
 # How to configure Onelogin
 
-This is a step-by-step guide to configuring the integration between Port and Onelogin.
+Follow this step-by-step guide to configure the integration between Port and Onelogin.
 
 :::info
 In order to complete the process you will need to contact Port to deliver and receive information, as detailed in the guide below.
 :::
 
-## Port-Onelogin Integration Benefits ​
+## Port-Onelogin integration benefits
 
 - Connect to the Port application via a Onelogin app;
 - Your Onelogin roles will be automatically synced with Port, upon user sign-in;

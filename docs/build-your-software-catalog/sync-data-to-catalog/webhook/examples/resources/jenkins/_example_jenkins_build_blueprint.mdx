@@ -8,7 +8,7 @@
     "properties": {
       "buildStatus": {
         "type": "string",
-        "title": "Build status",
+        "title": "Build Status",
         "enum": ["SUCCESS", "FAILURE", "UNSTABLE"],
         "enumColors": {
           "SUCCESS": "green",
@@ -21,16 +21,16 @@
         "title": "Build URL",
         "description": "URL to the build"
       },
-      "buildDuration": {
-        "type": "number",
-        "title": "Build duration",
-        "description": "Duration of the build"
-      },
       "timestamp": {
         "type": "string",
         "format": "date-time",
         "title": "Timestamp",
         "description": "Last updated timestamp of the build"
+      },
+      "buildDuration": {
+        "type": "number",
+        "title": "Build Duration",
+        "description": "Duration of the build"
       }
     },
     "required": []
@@ -39,7 +39,7 @@
   "calculationProperties": {},
   "relations": {
     "jenkinsJob": {
-      "title": "Belongs to",
+      "title": "Jenkins Job",
       "target": "jenkinsJob",
       "required": false,
       "many": false
