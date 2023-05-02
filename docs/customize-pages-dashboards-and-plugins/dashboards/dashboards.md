@@ -39,7 +39,27 @@ You can create a pie chart illustrating data from Entities in your software cata
 | `Breakdown by property` | `String` | Group your chart by a specific property                                                                                      | `null`  | `true`   |
 | `Filters`               | `Array`  | Filters to include or exclude specific data based on Port's [Search Rules](../../search-and-query/search-and-query.md#rules) | []      | `false`  |
 
-#### Example: filter only `Deployment` Entities from last week
+### Metric chart
+
+You can create a number metric from entities in your software catalog. You can aggregate entities or their properties(only number properties) by count, sum, average, min, max or median. You can also filter the entities with Port's [Search Rules](../../search-and-query/search-and-query.md#rules)
+
+#### Visualization properties
+
+| Field              | Type     | Description                                                                                                                  | Default | Required |
+| ------------------ | -------- | ---------------------------------------------------------------------------------------------------------------------------- | ------- | -------- |
+| `Title`            | `String` | Visualization title                                                                                                          | `null`  | `true`   |
+| `Icon`             | `String` | Visualization Icon                                                                                                           | `null`  | `false`  |
+| `Description`      | `String` | Visualization description                                                                                                    | `null`  | `false`  |
+| `Blueprint`        | `String` | The chosen Blueprint from which related Entities data is visualized from                                                     | `null`  | `true`   |
+| `Calculation Type` | `String` | Aggregate the metric by either count the entities or perform a function a property                                           | `count` | `true`   |
+| `Property`         | `String` | Visualization                                                                                                                | `null`  | `true`   |
+| `Function`         | `String` | sum, min, max, average, median                                                                                               | `null`  | `true`   |
+| `Filters`          | `Array`  | Filters to include or exclude specific data based on Port's [Search Rules](../../search-and-query/search-and-query.md#rules) | []      | `false`  |
+| `unit`             | `String` | The unit of the metric. Possible Values: `%`, `$`, `£`, `€`, `none`, `custom`                                                | `null`  | `true`   |
+| `unitCustom`       | `String` | Text to appear below the number                                                                                              | `null`  | `true`   |
+| `unitAlignment`    | `String` | `left`, `right`, `bottom`                                                                                                    | `null`  | `true`   |
+
+### Example: filter only `Deployment` Entities from last week
 
 Let's assume we have a [Blueprint](../../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) that is called `Service` which is related to another Blueprint called `Deployment`, and we want to create visualizations on top of the last week's deployments of this service.
 
