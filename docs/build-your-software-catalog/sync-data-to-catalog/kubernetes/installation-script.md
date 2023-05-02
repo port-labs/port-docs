@@ -26,7 +26,7 @@ You can view the bash script [here](https://github.com/port-labs/template-assets
 
 The script supports configuration via environment variables.
 
-For each variable you'd like to set, run the following before running the script:
+For each variable you'd like to set, run the following command before running the script:
 
 ```
 export {VARIABLE_NAME}={value}
