@@ -14,7 +14,7 @@ sidebar_label: Self-Service Actions Deep Dive
 :::info
 This deep dive's purpose is to teach you how to configure Self-Service Actions, understand their structure and the different options they offer you.
 
-To learn how to update the status of an existing Self-Service Action invocation, refer to the [Action Runs Tutorial](./action-runs-tutorial)
+To learn how to update the status of an existing Self-Service Action invocation, refer to the [reflect action progress](../reflect-action-progress/reflect-action-progress.md) page
 :::
 
 ## Configuring a new self-service action
