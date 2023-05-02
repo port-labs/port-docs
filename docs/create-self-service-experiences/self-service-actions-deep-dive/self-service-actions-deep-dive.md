@@ -672,10 +672,3 @@ Here is an example `payload` object for a `CREATE` action:
     }
 }
 ```
-
-## Next Steps
-
-Now that you have the basics of Self-Service Actions, you can:
-
-- Learn about how to update a Self-Service Action after it started, by interacting with the [action run](./action-runs-tutorial) object;
-- Refer to our examples for some practical use-cases - [Setting up a basic execution runner using AWS Lambda](../setup-backend//kafka/examples/execution-basic-runner-using-aws-lambda.md).
