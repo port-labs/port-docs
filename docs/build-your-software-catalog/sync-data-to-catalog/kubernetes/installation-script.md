@@ -28,7 +28,7 @@ The script supports configuration via environment variables.
 
 For each variable you'd like to set, run the following command before running the script:
 
-```
+```bash showLineNumbers
 export {VARIABLE_NAME}={value}
 ```
 
