@@ -31,7 +31,30 @@ Create the following blueprint definitions and webhook configuration:
 </details>
 
 :::note
-The relation mapping in the webhook configuration will only work if the identifiers of Port microservice entities matches the names of entities in your Dynatrace.
+The webhook configuration's relation mapping will function properly only when the identifiers of the Port microservice entities match the names of the entities in your Dynatrace.
+
+If there is a mismatch, you can utilize [Dynatrace Tags](https://www.dynatrace.com/support/help/manage/tags-and-metadata) to align the actual identifier in Port.
+
+To do this, create a tag with the key proj and value <microservice_identifier>.
+
+Then, update the relation JQ syntax to establish a connection between the Dynatrace problem and the Port microservice. Here is the updated JQ Mappings:
+
+```json showLineNumbers
+{
+    "blueprint": "dynatraceProblem",
+    "entity": {
+     ...Properties mappings
+      "relations": {
+         "microservice": ".body.ProblemTags | split(\", \") | map(select(test(\"proj:\")) | sub(\"proj:\";\"\"))"
+      }
+    }
+}
+```
+
+<details>
+<summary>JQ expression explained</summary>
+The above JQ expression will split the tags by comma and space, then filter the tags that start with `proj:` and remove the `proj:` prefix from the tag value.
+</details>
 :::
 
 ## Create the Dynatrace webhook
@@ -46,20 +69,20 @@ The relation mapping in the webhook configuration will only work if the identifi
    2. `Webhook URL` - enter the value of the `url` key you received after creating the webhook configuration;
    3. `Overview` - you can add an optional HTTP header to your webhook request;
    4. `Custom payload` - When a problem is detected or resolved on your entity, this payload will be sent to the webhook URL. You can enter this JSON placeholder in the textbox;
-   ```json showLineNumbers
-   {
-     "State": "{State}",
-     "PID": "{PID}",
-     "ProblemTitle": "{ProblemTitle}",
-     "ImpactedEntity": "{ImpactedEntity}",
-     "ProblemDetailsText": "{ProblemDetailsText}",
-     "ProblemImpact": "{ProblemImpact}",
-     "ProblemSeverity": "{ProblemSeverity}",
-     "ProblemURL": "{ProblemURL}",
-     "ProblemTags": "{Tags}",
-     "ImpactedEntities": "{ImpactedEntities}"
-   }
-   ```
+      ```json showLineNumbers
+      {
+         "State":"{State}",
+         "PID":"{PID}",
+         "ProblemTitle":"{ProblemTitle}",
+         "ImpactedEntity": "{ImpactedEntity}",
+         "ProblemDetailsText": "{ProblemDetailsText}",
+         "ProblemImpact": "{ProblemImpact}",
+         "ProblemSeverity": "{ProblemSeverity}",
+         "ProblemURL": "{ProblemURL}",
+         "ProblemTags": "{Tags}",
+         "ImpactedEntities": {ImpactedEntities}
+      }
+      ```
    5. `Alerting profile` - configure your preferred alerting rule or use the default one;
 7. Click **Save changes** at the bottom of the page;
 

@@ -6,14 +6,14 @@ description: Integrate AzureAD with Port
 
 # How to configure AzureAD
 
-This is a step-by-step guide to configuring the integration between Port and Azure Active Directory.
+Follow this step-by-step guide to configure the integration between Port and Azure Active Directory.
 
 :::info
 In order to complete the process you will need to contact us to receive the information you require, as well as the information Port requires from you. All is elaborated below in the following section.
 
 :::
 
-## Port-AzureAd Integration Benefits
+## Port-AzureAd integration benefits
 
 - Connect to the Port application via an AzureAD app.
 - Your AzureAD teams will be automatically synced with Port upon a user sign-in.
