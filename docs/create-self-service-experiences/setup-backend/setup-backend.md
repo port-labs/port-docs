@@ -1,4 +1,8 @@
-# Setup Backend
+---
+title: Setup Backend
+---
+
+# ⚙️ Setup Backend
 
 import DocCardList from '@theme/DocCardList';
 
