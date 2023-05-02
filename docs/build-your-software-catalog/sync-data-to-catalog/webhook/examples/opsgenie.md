@@ -52,10 +52,16 @@ Create the following blueprint definition and webhook configuration:
    6. `Webhook URL` - enter the value of the `url` key you received after creating the webhook configuration;
 7. Click **Save integration**
 
+:::tip
+In order to view the different payloads and events available in Opsgenie webhooks, [look here](https://support.atlassian.com/opsgenie/docs/opsgenie-edge-connector-alert-action-data/)
+:::
+
 Done! any change that happens to an OpsGenie alert (created, acknowledged, etc.) will trigger a webhook event that OpsGenie will send to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
 
 ## Ingest who is on-call
-In this example we will create a blueprint for `service` entities with an `on-call` property that will be ingested directly from OpsGenie. 
+
+In this example we will create a blueprint for `service` entities with an `on-call` property that will be ingested directly from OpsGenie.
 The examples below pull data from the OpsGenie REST Api, in a defined scheduled period using GitLab Pipelines or GitHub Workflows, and report the data to Port as a property to the `service` blueprint.
+
 - [Github Workflow](https://github.com/port-labs/opsgenie-oncall-example)
 - [GitLab CI Pipeline](https://gitlab.com/getport-labs/opsgenie-oncall-example)
