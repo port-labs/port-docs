@@ -44,4 +44,8 @@ Remember to replace the `WEBHOOK_SECRET` with the real secret you specify when c
    5. Be sure to keep the "Active" checkbox checked.
 6. Click on **Add webhook**
 
+:::tip
+In order to view the different payloads and events available in GitHub webhooks, [look here](https://docs.github.com/en/webhooks-and-events/webhooks/webhook-events-and-payloads)
+:::
+
 Done! any change you make to a pull request (open, close, edit, etc.) will trigger a webhook event that GitHub will send to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.

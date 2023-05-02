@@ -86,4 +86,8 @@ The above JQ expression will split the tags by comma and space, then filter the 
    5. `Alerting profile` - configure your preferred alerting rule or use the default one;
 7. Click **Save changes** at the bottom of the page;
 
+:::tip
+In order to view the different payloads and events available in Dynatrace webhooks, [look here](https://www.dynatrace.com/support/help/observe-and-explore/notifications-and-alerting/problem-notifications/webhook-integration)
+:::
+
 Done! any problem detected on your Dynatrace entity will trigger a webhook event. Port will parse the events according to the mapping and update the catalog entities accordingly.
