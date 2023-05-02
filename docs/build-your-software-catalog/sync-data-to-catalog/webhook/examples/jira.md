@@ -44,4 +44,8 @@ Create the following blueprint definition and webhook configuration:
    6. Under `Issue` - mark created, updated and delete;
 7. Click **Create** at the bottom of the page.
 
+:::tip
+In order to view the different payloads and events available in Jira webhooks, [look here](https://developer.atlassian.com/server/jira/platform/webhooks/)
+:::
+
 Done! any change you make to an issue (open, close, edit, etc.) will trigger a webhook event that Jira will send to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
