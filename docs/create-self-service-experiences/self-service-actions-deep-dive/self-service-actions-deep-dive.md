@@ -499,16 +499,16 @@ The `invocationMethod` object controls where Self-Service Actions are reported t
 
 The `invocationMethod` supports 3 configurations:
 
-- [Webhook](../webhook/webhook.md)
-- [Kafka](../kafka/kafka.md)
-- [GitHub](../github-workflow/github-workflow.md)
+- [Webhook](../setup-backend/webhook/webhook.md)
+- [Kafka](../setup-backend/kafka/kafka.md)
+- [GitHub](../setup-backend/github-workflow/github-workflow.md)
 
 ### Invocation method structure fields
 
 | Field                  | Type      | Description                                                                                                                                                                                                                                                                                  | Example values                      |
 | ---------------------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------- |
 | `type`                 | `string`  | Defines the self-service action destination type                                                                                                                                                                                                                                             | Either `WEBHOOK`, `KAFKA`, `GITHUB` |
-| `agent`                | `boolean` | Defines whether to use [Port Agent](../webhook/port-execution-agent/port-execution-agent.md) for execution or not. <br></br> Can only be added if `type` is set to `WEBHOOK`                                                                                                                 | Either `true` or `false`            |
+| `agent`                | `boolean` | Defines whether to use [Port Agent](../setup-backend/webhook/port-execution-agent/port-execution-agent.md) for execution or not. <br></br> Can only be added if `type` is set to `WEBHOOK`                                                                                                   | Either `true` or `false`            |
 | `url`                  | `string`  | Defines the webhook URL to which Port sends self-service actions to via HTTP POST request. <br></br> Can be added only if `type` is set to `WEBHOOK`                                                                                                                                         | `https://example.com`               |
 | `org`                  | `string`  | Defines the GitHub organization name. <br></br> Can be added only if `type` is set to `GITHUB`                                                                                                                                                                                               | `port-labs`                         |
 | `repo`                 | `string`  | Defines the GitHub repository name. <br></br> Can be added only if `type` is set to `GITHUB`                                                                                                                                                                                                 | `port-docs`                         |
@@ -678,4 +678,4 @@ Here is an example `payload` object for a `CREATE` action:
 Now that you have the basics of Self-Service Actions, you can:
 
 - Learn about how to update a Self-Service Action after it started, by interacting with the [action run](./action-runs-tutorial) object;
-- Refer to our examples for some practical use-cases - [Setting up a basic execution runner using AWS Lambda](../../self-service-actions/kafka/examples/execution-basic-runner-using-aws-lambda.md).
+- Refer to our examples for some practical use-cases - [Setting up a basic execution runner using AWS Lambda](../setup-backend//kafka/examples/execution-basic-runner-using-aws-lambda.md).

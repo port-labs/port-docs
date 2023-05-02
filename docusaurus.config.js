@@ -112,8 +112,8 @@ const config = {
                 to: "/build-your-software-catalog",
               },
               {
-                label: "Self-Service Actions",
-                to: "/self-service-actions",
+                label: "Create Self-Service Experiences",
+                to: "/create-self-service-experiences",
               },
               {
                 label: "Promote Scorecards",

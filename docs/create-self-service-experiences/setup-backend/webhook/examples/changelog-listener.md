@@ -331,7 +331,7 @@ To see the result of your API, update the `healthStatus` field of a deployment c
 
 When the **health status** of a `deployment config` Entity changes, you should see a new message in the slack channel you chose when you created the slack webhook:
 
-![Software catalog changelog slack message](../../../../static/img/self-service-actions/changelog-slack-message.png)
+![Software catalog changelog slack message](../../../../../static/img/self-service-actions/changelog-slack-message.png)
 
 ## Summary
 

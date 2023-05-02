@@ -76,9 +76,9 @@ jobs:
 
 :::note
 Pay attention to the additional parameter in the workflow called `port_payload`.
-This parameter is completed by default with [Port's action message](../../self-service-actions-deep-dive/self-service-actions-deep-dive.md#action-message-structure).
+This parameter is completed by default with [Port's action message](../../../self-service-actions-deep-dive/self-service-actions-deep-dive.md#action-message-structure).
 You can disable it by specifying `"omitPayload": true` in Port's action definition.
-For more details click [here](../../self-service-actions-deep-dive/self-service-actions-deep-dive.md#invocation-method-structure-fields)
+For more details click [here](../../../self-service-actions-deep-dive/self-service-actions-deep-dive.md#invocation-method-structure-fields)
 :::
 
 ## Create a deployment Blueprint
@@ -339,7 +339,7 @@ print(response.json())
 
 When the action is finished, it will mark the action run as successful. That way, your developers can understand your deployment has finished successfully.
 
-![Action run audit log](../../../../static/img/self-service-actions/run-service-deployment/runs-audit-log.png)
+![Action run audit log](../../../../../static/img/self-service-actions/run-service-deployment/runs-audit-log.png)
 
 ## Next step
 

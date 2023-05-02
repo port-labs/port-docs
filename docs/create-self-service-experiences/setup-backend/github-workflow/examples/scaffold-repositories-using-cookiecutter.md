@@ -15,8 +15,8 @@ Follow these steps to get started with the Golang template:
 1. Create the following GitHub action secrets:
 
    1. `ORG_TOKEN` - a PAT (Personal Access Token) with permissions to create repositories;
-   2. `PORT_CLIENT_ID` - Port Client ID [learn more](.././../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token);
-   3. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](.././../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token);
+   2. `PORT_CLIENT_ID` - Port Client ID [learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token);
+   3. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token);
 
 2. Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new);
 
@@ -131,9 +131,9 @@ jobs:
 
 6. Trigger the action from Port's UI.
 
-![gif](../../../../static/img/self-service-actions/ScaffoldGolang.gif)
+![gif](../../../../../static/img/self-service-actions/ScaffoldGolang.gif)
 
 ## Next steps
 
-- [Connect Port's GitHub exporter](.././../../build-your-software-catalog/sync-data-to-catalog/git/github/examples)
-  to make sure all of the properties (like URL, readme etc..) are automatically ingested from GitHub. You can learn how to setup Port's GitHub exporter [here](.././../../build-your-software-catalog/sync-data-to-catalog/git/github/examples#mapping-repositories-and-issues) you can find more information about it.
+- [Connect Port's GitHub exporter](../../../../build-your-software-catalog/sync-data-to-catalog/git/github/examples)
+  to make sure all of the properties (like URL, readme etc..) are automatically ingested from GitHub. You can learn how to setup Port's GitHub exporter [here](../../../../build-your-software-catalog/sync-data-to-catalog/git/github/examples#mapping-repositories-and-issues) you can find more information about it.
