@@ -1,0 +1,100 @@
+---
+sidebar_position: 12
+description: Yaml is an input used to save object definitions in YAML
+---
+
+import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"
+
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+
+# Yaml
+
+Yaml is an input used to save object definitions in YAML.
+
+## 💡 Common yaml usage
+
+The yaml input type can be used to store any key/value based data, for example:
+
+- Configurations;
+- Helm charts;
+- Dictionaries/Hash maps;
+- Manifests;
+- `values.yml`;
+- etc.
+
+## API definition
+
+<Tabs groupId="api-definition" queryString defaultValue="basic" values={[
+{label: "Basic", value: "basic"},
+{label: "Array", value: "array"}
+]}>
+
+<TabItem value="basic">
+
+```json showLineNumbers
+{
+  "myYamlInput": {
+    "title": "My yaml input",
+    "icon": "My icon",
+    "description": "My yaml input",
+    // highlight-start
+    "type": "string",
+    "format": "yaml"
+    // highlight-end
+  }
+}
+```
+
+</TabItem>
+<TabItem value="array">
+
+```json showLineNumbers
+{
+  "myYamlArrayInput": {
+    "title": "My yaml array input",
+    "icon": "My icon",
+    "description": "My yaml array input",
+    // highlight-start
+    "type": "array",
+    "items": {
+      "type": "string",
+      "format": "yaml"
+    }
+    // highlight-end
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
+<ApiRef />
+
+## Terraform definition
+
+<Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
+{label: "Basic", value: "basic"},
+{label: "Array - coming soon", value: "array"}
+]}>
+
+<TabItem value="basic">
+
+```hcl showLineNumbers
+resource "port-labs_action" "myAction" {
+  # ...action properties
+  # highlight-start
+  user_properties {
+    identifier  = "myYamlInput"
+    title       = "My yaml input"
+    description = "My yaml input"
+    required    = false
+    type        = "string"
+    format      = "yaml"
+  }
+  # highlight-end
+}
+```
+
+</TabItem>
+</Tabs>
