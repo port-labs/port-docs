@@ -41,23 +41,23 @@ You can create a pie chart illustrating data from Entities in your software cata
 
 ### Metric chart
 
-You can create a number metric from entities in your software catalog. You can aggregate entities or their properties(only number properties) by count, sum, average, min, max or median. You can also filter the entities with Port's [Search Rules](../../search-and-query/search-and-query.md#rules)
+You can create a metric visualization from related entities in the [**specific entity page**](../page/entity-page.md). You can either count the entities or perform an aggregation function on a number property. You can also filter entities so the aggregation metric will only apply to a limited set of entities with Port's [Search Rules](../../search-and-query/search-and-query.md#rules)
 
-#### Visualization properties
+#### Metric properties
 
 | Field              | Type     | Description                                                                                                                  | Default | Required |
 | ------------------ | -------- | ---------------------------------------------------------------------------------------------------------------------------- | ------- | -------- |
-| `Title`            | `String` | Visualization title                                                                                                          | `null`  | `true`   |
-| `Icon`             | `String` | Visualization Icon                                                                                                           | `null`  | `false`  |
-| `Description`      | `String` | Visualization description                                                                                                    | `null`  | `false`  |
+| `Title`            | `String` | Metric title                                                                                                                 | `null`  | `true`   |
+| `Icon`             | `String` | Metric Icon                                                                                                                  | `null`  | `false`  |
+| `Description`      | `String` | Metric description                                                                                                           | `null`  | `false`  |
 | `Blueprint`        | `String` | The chosen Blueprint from which related Entities data is visualized from                                                     | `null`  | `true`   |
-| `Calculation Type` | `String` | Aggregate the metric by either count the entities or perform a function a property                                           | `count` | `true`   |
-| `Property`         | `String` | Visualization                                                                                                                | `null`  | `true`   |
+| `Calculation Type` | `String` | Aggregate by either counting the entities or perform a function on a property                                                | `count` | `true`   |
+| `Property`         | `String` | Metric                                                                                                                       | `null`  | `true`   |
 | `Function`         | `String` | sum, min, max, average, median                                                                                               | `null`  | `true`   |
 | `Filters`          | `Array`  | Filters to include or exclude specific data based on Port's [Search Rules](../../search-and-query/search-and-query.md#rules) | []      | `false`  |
 | `unit`             | `String` | The unit of the metric. Possible Values: `%`, `$`, `£`, `€`, `none`, `custom`                                                | `null`  | `true`   |
-| `unitCustom`       | `String` | Text to appear below the number                                                                                              | `null`  | `true`   |
-| `unitAlignment`    | `String` | `left`, `right`, `bottom`                                                                                                    | `null`  | `true`   |
+| `unitCustom`       | `String` | Text to appear below the number. unit equals to `custom` is required                                                         | `null`  | `true`   |
+| `unitAlignment`    | `String` | `left`, `right`, `bottom`.                                                                                                   | `null`  | `true`   |
 
 ### Example: filter only `Deployment` Entities from last week
 
