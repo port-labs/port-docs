@@ -1,12 +1,12 @@
 ---
 sidebar_position: 1
-title: Export GCP Assets using Terraform
-description: Bring your assets using the Port's terraform provider
+title: GCP Assets Inventory
+description: Bring generic information of assets using terraform
 ---
 
-# Export GCP Assets using Terraform
+# GCP Assets Inventory
 
-In this example you are going to export some general information about a GCP project and all of its assets, to Port.
+In this example you are going to export some generic information about a GCP project and all of its assets, to Port.
 
 Here is the complete `main.tf` file:
 
