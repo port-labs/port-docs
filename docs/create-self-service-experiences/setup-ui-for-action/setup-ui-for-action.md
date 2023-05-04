@@ -49,7 +49,7 @@ In this [live demo](https://demo.getport.io/self-serve) example, we can see the 
 Each action is represented by a [Json schema](https://json-schema.org/), as shown in the following section:
 
 ```json showLineNumbers
-{
+[{
   "id": "internalID",
   "identifier": "myIdentifier",
   "title": "My title",
@@ -73,7 +73,7 @@ Each action is represented by a [Json schema](https://json-schema.org/), as show
   },
   "trigger": "myActionTrigger",
   "requiredApproval": false
-}
+}]
 ```
 
 ### Structure table
