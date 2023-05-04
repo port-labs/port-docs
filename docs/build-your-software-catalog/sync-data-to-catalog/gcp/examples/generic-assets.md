@@ -173,7 +173,7 @@ resource "port-labs_entity" "gcp_asset_entity" {
   }
   properties {
     name  = "assetType"
-    value = reverse(split("/", each.value.asset_type))[0]
+    value = each.value.asset_type
   }
   properties {
     name  = "description"
