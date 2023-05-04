@@ -9,7 +9,7 @@ import TabItem from "@theme/TabItem";
 
 # Terraform
 
-Our integration with Terraform allows you to combine the state of your infrastructure with the entities representing them in Port.
+Our integration with [Terraform](https://www.terraform.io/) allows you to combine the state of your infrastructure with the entities representing them in Port.
 
 By using Port's Terraform provider you make it easy to integrate Port with your existing IaC definitions, every resource provisioned by Terraform can also be reported to the software catalog using the same `.tf` definition file.
 
