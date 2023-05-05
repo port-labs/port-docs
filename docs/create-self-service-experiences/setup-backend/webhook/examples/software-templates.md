@@ -21,10 +21,10 @@ All relevant files and resources for this guide are available [**Here for GitHub
 
 The following example utilizes Port [webhook-actions](../webhook.md) to create a new service repository from a software template.
 
-First, you need to create a simple `Service` Blueprint.
+First, you need to create a simple `Service` blueprint.
 
 <details>
-<summary>Service Blueprint JSON</summary>
+<summary>Service blueprint JSON</summary>
 
 ```json showLineNumbers
 {
@@ -51,7 +51,7 @@ First, you need to create a simple `Service` Blueprint.
 
 </details>
 
-Then, add `Create` Self-Service Actions to the Blueprint, in order to support the creation of multiple services from different frameworks.
+Then, add `Create` Self-Service Actions to the blueprint, in order to support the creation of multiple services from different frameworks.
 
 In this case, we add actions to provision [Django](https://github.com/cookiecutter/cookiecutter-django), [C++](https://github.com/DerThorsten/cpp_cookiecutter) and [Go](https://github.com/lacion/cookiecutter-golang) services.
 
@@ -276,12 +276,12 @@ Within the backend, you are going to generate the project from the Cookiecutter 
 A full example with a backend, can be found [here for GitHub](https://github.com/port-labs/port-cookiecutter-example) or [here for GitLab](https://github.com/port-labs/port-cookiecutter-gitlab-example).
 
 :::info
-The above example also creates a new Service Entity in Port, and updates the action run details.
+The above example also creates a new Service entity in Port, and updates the action run details.
 
-These steps are highly recommended to keep track, over time, of the Self-Service Action run and created resources.
+These steps are highly recommended to keep track over time, of the action run, its logs the resulting resources.
 :::
 
-That's it! You should be ready to use the provisioned actions, as shown here:
+That's it! You can now use the provisioned actions, as shown here:
 
 ![create-service.png](../../../../../static/img/complete-use-cases/software-templates/create-service.png)
 
