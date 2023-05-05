@@ -10,7 +10,7 @@ import TabItem from "@theme/TabItem"
 
 # Boolean
 
-Boolean is a primitive data type that has one of two possible values - `true` and `false`
+Boolean is a primitive data type that has one of two possible values - `true` and `false`.
 
 ## 💡 Common boolean usage
 

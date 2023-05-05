@@ -73,4 +73,8 @@ The following example adds a `sentryComment` blueprint, in addition to the `sent
 
 </details>
 
+:::tip
+In order to view the different payloads and events available in Sentry webhooks, [look here](https://docs.sentry.io/product/integrations/integration-platform/webhooks/)
+:::
+
 Done! any issue and comment in Sentry will trigger a webhook event. Port will parse the events according to the mapping and update the catalog entities accordingly.
