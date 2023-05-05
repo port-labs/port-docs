@@ -699,7 +699,7 @@ const CLIENT_SECRET = "YOUR_CLIENT_SECRET";
 
 const API_URL = "https://api.getport.io/v1";
 
-async () => {
+(async () => {
   const response = await axios.post(`${API_URL}/auth/access_token`, {
     clientId: CLIENT_ID,
     clientSecret: CLIENT_SECRET,
@@ -738,7 +738,7 @@ async () => {
   );
 
   // postResponse.data contains the content of the resulting entity
-};
+})();
 ```
 
 </TabItem>
