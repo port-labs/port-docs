@@ -220,7 +220,14 @@ func main() {
 
 ## Supported Types
 
-Calculation properties support the following output types `string`, `number`, `object`, `array`, `boolean`, and `yaml`, for example:
+<Tabs groupId="calculation-definition" defaultValue="basic" values={[
+{label: "Basic", value: "basic"},
+{label: "Format", value: "format"},
+{label: "Spec", value: "spec"}
+]}>
+<TabItem value="basic">
+
+Calculation properties support the following output types `string`, `number`, `object`, `array`, `boolean`, and `yaml`. For example:
 
 ```json showLineNumbers
 {
@@ -234,6 +241,48 @@ Calculation properties support the following output types `string`, `number`, `o
   }
 }
 ```
+
+</TabItem>
+
+<TabItem value = "format">
+
+Calculation properties support the following output formats `yaml`, `team`, `user`, `ipv6`, and `url`. For example:
+
+```json showLineNumbers
+{
+  "calculationProperties": {
+    "myCalculationProp": {
+      "title": "My calculation property",
+      // highlight-next-line
+      "user": "my_user",
+      "calculation": ".properties.user"
+    }
+  }
+}
+```
+
+</TabItem>
+
+<TabItem value = "spec">
+
+Calculation properties support the following output specs `markdown`, `open-api` and `async-api` for example:
+
+```json showLineNumbers
+{
+  "calculationProperties": {
+    "myCalculationProp": {
+      "title": "My calculation property",
+      // highlight-next-line
+      "text": "markdown",
+      "calculation": ".properties.text"
+    }
+  }
+}
+```
+
+</TabItem>
+
+</Tabs>
 
 ## Using `meta properties` in calculation properties
 
