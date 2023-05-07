@@ -265,7 +265,7 @@ Calculation properties support the following output formats: `yaml`, `team`, `us
 
 <TabItem value = "spec">
 
-Calculation properties support the following output specs `markdown`, `open-api` and `async-api` for example:
+Calculation properties support the following output specs: `markdown`, `open-api` and `async-api`. For example:
 
 ```json showLineNumbers
 {
