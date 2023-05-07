@@ -246,7 +246,7 @@ Calculation properties support the following output types: `string`, `number`, `
 
 <TabItem value = "format">
 
-Calculation properties support the following output formats `yaml`, `team`, `user`, `ipv6`, and `url`. For example:
+Calculation properties support the following output formats: `yaml`, `team`, `user`, `ipv6`, and `url`. For example:
 
 ```json showLineNumbers
 {
