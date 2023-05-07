@@ -254,7 +254,9 @@ Calculation properties support the following output formats `yaml`, `team`, `use
     "myCalculationProp": {
       "title": "My calculation property",
       // highlight-next-line
-      "user": "my_user",
+      "type": "string",
+      // highlight-next-line
+      "format": "user",
       "calculation": ".properties.user"
     }
   }
@@ -273,7 +275,11 @@ Calculation properties support the following output specs `markdown`, `open-api`
     "myCalculationProp": {
       "title": "My calculation property",
       // highlight-next-line
-      "text": "markdown",
+      "type": "string",
+      // highlight-next-line
+      "format": "url",
+      // highlight-next-line
+      "spec": "embedded-url"
       "calculation": ".properties.text"
     }
   }
