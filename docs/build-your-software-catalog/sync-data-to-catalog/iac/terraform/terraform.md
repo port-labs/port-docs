@@ -250,7 +250,7 @@ The following parameters are **required**:
 
 :::note
 
-To set a default value, use the object keyword `default_value` with the desired value as the key. For instance:
+To set a default value, use the object keyword `default_value` with the desired value as the key. For example:
 
 ```hcl showLineNumbers
 properties {
