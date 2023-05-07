@@ -248,6 +248,30 @@ The following parameters are **required**:
 - `value` - the value of the property (for non-array properties);
 - `items` - an array of values (for array properties).
 
+:::note
+
+To set a default value, use the object keyword `default_value` with the desired value as the key. For example:
+
+```hcl showLineNumbers
+properties {
+  name = "myStringProp"
+  default_value = {
+    "value": "My string"
+  }
+}
+```
+
+To set default values for array properties, use the `default_items` keyword with the desired array as its value. For example:
+
+```hcl showLineNumbers
+properties {
+name = "myArrayProp"
+default_items = [1,2,3]
+}
+```
+
+:::
+
 ### `relations` schema
 
 The [`relations`](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/entity#relations) schema maps a target entity to the source entity definition:
