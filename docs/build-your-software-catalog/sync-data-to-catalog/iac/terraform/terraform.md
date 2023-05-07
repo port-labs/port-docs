@@ -261,7 +261,7 @@ properties {
 }
 ```
 
-To set default values for array properties, use the default_items keyword as a desired array as its value.
+To set default values for array properties, use the `default_items` keyword with the desired array as its value. For example:
 
 ```hcl showLineNumbers
 properties {
