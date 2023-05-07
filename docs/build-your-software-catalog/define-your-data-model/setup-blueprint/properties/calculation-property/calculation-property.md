@@ -227,7 +227,7 @@ func main() {
 ]}>
 <TabItem value="basic">
 
-Calculation properties support the following output types `string`, `number`, `object`, `array`, `boolean`, and `yaml`. For example:
+Calculation properties support the following output types: `string`, `number`, `object`, `array`, and `boolean`. For example:
 
 ```json showLineNumbers
 {
