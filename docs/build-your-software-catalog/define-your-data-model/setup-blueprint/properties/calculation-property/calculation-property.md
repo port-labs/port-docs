@@ -227,7 +227,7 @@ func main() {
 ]}>
 <TabItem value="basic">
 
-Calculation properties support the following output types `string`, `number`, `object`, `array`, `boolean`, and `yaml`. For example:
+Calculation properties support the following output types: `string`, `number`, `object`, `array`, and `boolean`. For example:
 
 ```json showLineNumbers
 {
@@ -246,7 +246,7 @@ Calculation properties support the following output types `string`, `number`, `o
 
 <TabItem value = "format">
 
-Calculation properties support the following output formats `yaml`, `team`, `user`, `ipv6`, and `url`. For example:
+Calculation properties support the following output formats: `yaml`, `team`, `user`, `ipv6`, and `url`. For example:
 
 ```json showLineNumbers
 {
@@ -267,7 +267,7 @@ Calculation properties support the following output formats `yaml`, `team`, `use
 
 <TabItem value = "spec">
 
-Calculation properties support the following output specs `markdown`, `open-api` and `async-api` for example:
+Calculation properties support the following output specs: `markdown`, `open-api` and `async-api`. For example:
 
 ```json showLineNumbers
 {
