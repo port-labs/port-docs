@@ -28,6 +28,8 @@ Continue reading to learn more about our visualization types:
 
 You can create a pie chart illustrating data from entities in your software catalog divided by categories and entity properties inside a specific entity page [**specific entity page**](../page/entity-page.md).
 
+![Pie Chart](../../../static/img/software-catalog/widgets/pieChartExample.png)
+
 #### Visualization properties
 
 | Field                   | Type     | Description                                                                                                                  | Default | Required |
@@ -42,6 +44,8 @@ You can create a pie chart illustrating data from entities in your software cata
 ### Metric chart
 
 You can create a metric visualization from related entities in the [**specific entity page**](../page/entity-page.md). You can either count the entities or perform an aggregation function on a number property. You can also filter entities so the aggregation metric will only apply to a limited set of entities with Port's [Search Rules](../../search-and-query/search-and-query.md#rules)
+
+![Number Chart](../../../static/img/software-catalog/widgets/numberChartExample.png)
 
 #### Metric properties
 
