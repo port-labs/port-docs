@@ -9,7 +9,7 @@ import TabItem from "@theme/TabItem";
 
 # Pulumi
 
-Our integration with Pulumi allows you to combine the state of your infrastructure with the entities representing them in Port.
+Our integration with [Pulumi](https://www.pulumi.com/) allows you to combine the state of your infrastructure with the entities representing them in Port.
 
 By using Port's Pulumi provider you make it easy to integrate Port with your existing IaC definitions, every resource provisioned by Pulumi can also be reported to the software catalog using the same definition file.
 

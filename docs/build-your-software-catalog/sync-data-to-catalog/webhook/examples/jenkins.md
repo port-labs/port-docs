@@ -47,4 +47,8 @@ Create the following blueprint definition and webhook configuration:
 6. Enter the value of the `url` key you received after creating the webhook configuration in the textbox;
 7. Click on **Save** at the buttom of the page;
 
+:::tip
+In order to view the different payloads and events available in Jenkins webhooks, [look here](https://plugins.jenkins.io/generic-event/)
+:::
+
 Done! any changes to a job or build process (queued, started, completed, finalized etc.) will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.

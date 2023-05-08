@@ -9,7 +9,7 @@ import TabItem from "@theme/TabItem";
 
 # Terraform
 
-Our integration with Terraform allows you to combine the state of your infrastructure with the entities representing them in Port.
+Our integration with [Terraform](https://www.terraform.io/) allows you to combine the state of your infrastructure with the entities representing them in Port.
 
 By using Port's Terraform provider you make it easy to integrate Port with your existing IaC definitions, every resource provisioned by Terraform can also be reported to the software catalog using the same `.tf` definition file.
 
@@ -247,6 +247,30 @@ The following parameters are **required**:
 - `name` - the name of the property in the [blueprint definition](../../../define-your-data-model/setup-blueprint/properties/properties.md#structure);
 - `value` - the value of the property (for non-array properties);
 - `items` - an array of values (for array properties).
+
+:::note
+
+To set a default value, use the object keyword `default_value` with the desired value as the key. For example:
+
+```hcl showLineNumbers
+properties {
+  name = "myStringProp"
+  default_value = {
+    "value": "My string"
+  }
+}
+```
+
+To set default values for array properties, use the `default_items` keyword with the desired array as its value. For example:
+
+```hcl showLineNumbers
+properties {
+name = "myArrayProp"
+default_items = [1,2,3]
+}
+```
+
+:::
 
 ### `relations` schema
 

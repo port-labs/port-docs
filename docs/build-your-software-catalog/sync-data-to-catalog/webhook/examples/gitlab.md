@@ -42,4 +42,8 @@ Webhooks can be created at the group level and at the project level, this exampl
    3. Be sure to keep the "Enable SSL verification" checkbox checked.
 4. Click on **Add webhook**
 
+:::tip
+In order to view the different payloads and events available in GitLab webhooks, [look here](https://docs.gitlab.com/ee/user/project/integrations/webhook_events.html)
+:::
+
 Done! any change you make to a merge request (open, close, edit, etc.) will trigger a webhook event that GitLab will send to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
