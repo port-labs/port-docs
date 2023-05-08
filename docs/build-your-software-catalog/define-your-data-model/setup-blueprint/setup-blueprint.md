@@ -11,6 +11,8 @@ import TabItem from "@theme/TabItem"
 
 # 🧱 Setup Blueprints
 
+<iframe width="100%" height="600" src="https://www.youtube.com/embed/ssBKpPiENQA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+
 Define blueprint schemas to begin building your software catalog.
 
 ## What is a blueprint?
@@ -19,7 +21,7 @@ A Blueprint is the generic building block in Port. It represents assets that can
 
 Blueprints are completely customizable, and they support any number of properties the user chooses, all of which can be modified as you go.
 
-## 💡 Common Blueprints
+## 💡 Common blueprints
 
 Blueprints can be used to represent any asset in your software catalog, for example:
 
@@ -101,6 +103,7 @@ All available properties are listed in the [properties](./properties/properties.
 <Tabs groupId="definition" queryString defaultValue="api" values={[
 {label: "API", value: "api"},
 {label: "Terraform", value: "tf"},
+{label: "Pulumi", value: "pulumi"},
 {label: "UI", value: "ui"}
 ]}>
 
@@ -138,6 +141,101 @@ resource "port-labs_blueprint" "myBlueprint" {
 
 </TabItem>
 
+<TabItem value="pulumi">
+
+<Tabs groupId="pulumi-definition" queryString defaultValue="python" values={[
+{label: "Python", value: "python"},
+{label: "TypeScript", value: "typescript"},
+{label: "JavaScript", value: "javascript"},
+{label: "GO", value: "go"}
+]}>
+
+<TabItem value="python">
+
+```python showLineNumbers
+"""A Python Pulumi program"""
+
+import pulumi
+from port_pulumi import Blueprint
+
+blueprint = Blueprint(
+    "myBlueprint",
+    identifier="myBlueprint",
+    title="My Blueprint",
+    icon="My icon",
+    description="My description",
+)
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript showLineNumbers
+import * as pulumi from "@pulumi/pulumi";
+import * as port from "@port-labs/pulumi";
+
+export const blueprint = new port.Blueprint("myBlueprint", {
+  identifier: "myBlueprint",
+  title: "My Blueprint",
+  icon: "My icon",
+  description: "My description",
+});
+```
+
+</TabItem>
+
+<TabItem value="javascript">
+
+```javascript showLineNumbers
+"use strict";
+const pulumi = require("@pulumi/pulumi");
+const port = require("@port-labs/pulumi");
+
+const entity = new port.Blueprint("myBlueprint", {
+  title: "My Blueprint",
+  identifier: "myBlueprint",
+  icon: "My icon",
+  description: "My description",
+});
+
+exports.title = entity.title;
+```
+
+</TabItem>
+<TabItem value="go">
+
+```go showLineNumbers
+package main
+
+import (
+	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
+			Identifier:  pulumi.String("myBlueprint"),
+			Title:       pulumi.String("My Blueprint"),
+			Icon:        pulumi.String("My icon"),
+			Description: pulumi.String("My description"),
+		})
+		ctx.Export("blueprint", blueprint.Title)
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+```
+
+</TabItem>
+
+</Tabs>
+
+</TabItem>
+
 <TabItem value="ui">
 
 1. Go to the [DevPortal Builder page](https://app.getport.io/dev-portal);
@@ -151,4 +249,4 @@ resource "port-labs_blueprint" "myBlueprint" {
 
 ## Full icon list
 
-`API, Airflow, AmazonEKS, Ansible, ApiDoc, Aqua, Argo, ArgoRollouts, Aws, Azure, BitBucket, Bucket, CPU, CPlusPlus, CSharp, Clickup, Cloud, Cluster, Codefresh, Confluence, Coralogix, Crossplane, Datadog, Day2Operation, DeployedAt, Deployment, DevopsTool, EC2, EU, Environment, Falcosidekick, GKE, GPU, Git, GitLab, GitVersion, Github, GithubActions, Go, Google, GoogleCloud, GoogleCloudPlatform, GoogleComputeEngine, Grafana, Graphql, HashiCorp, Infinity, Istio, Jenkins, Jira, Kafka, Kiali, Kotlin, Lambda, Launchdarkly, Link, Lock, LucidCharts, Matlab, Microservice, MongoDb, Moon, NewRelic, Node, NodeJS, Notion, Okta, Package, Pearl, PostgreSQL, Prometheus, Pulumi, Python, R, React, RestApi, Ruby, S3, SDK, SQL, Scala, Sentry, Server, Service, Slack, Swagger, Swift, TS, Terraform, TwoUsers, Youtrack, Zipkin, checkmarx, css3, html5, java, js, kibana, logz, pagerduty, php, port, sonarqube, spinnaker`
+`API, Airflow, AmazonEKS, Ansible, ApiDoc, Aqua, Argo, ArgoRollouts, Aws, Azure, BitBucket, Bucket, Buddy, CPU, CPlusPlus, CSharp, Clickup, Cloud, Cluster, Codefresh, Confluence, Coralogix, Crossplane, Datadog, Day2Operation, DeployedAt, Deployment, DevopsTool, EC2, EU, Environment, Falcosidekick, Fluxcd, GKE, GPU, Git, GitLab, GitVersion, Github, GithubActions, Go, Google, GoogleCloud, GoogleCloudPlatform, GoogleComputeEngine, Grafana, Graphql, HashiCorp, Infinity, Istio, Jenkins, Jira, Kafka, Kiali, Kotlin, Lambda, Launchdarkly, Link, Lock, LucidCharts, Matlab, Microservice, MongoDb, Moon, NewRelic, Node, NodeJS, Notion, Okta, Package, Pearl, PostgreSQL, Prometheus, Pulumi, Python, R, React, RestApi, Ruby, S3, SDK, SQL, Scala, Sentry, Server, Service, Slack, Swagger, Swift, TS, Terraform, TwoUsers, Youtrack, Zipkin, checkmarx, css3, html5, java, js, kibana, logz, pagerduty, php, port, sonarqube, spinnaker`

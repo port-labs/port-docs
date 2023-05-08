@@ -34,7 +34,8 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `S
 
 <Tabs groupId="api-definition" defaultValue="api" values={[
 {label: "API", value: "api"},
-{label: "Terraform", value: "tf"}
+{label: "Terraform", value: "tf"},
+{label: "Pulumi", value: "pulumi"}
 ]}>
 
 <TabItem value="api">
@@ -76,11 +77,157 @@ resource "port-labs_blueprint" "myBlueprint" {
 ```
 
 </TabItem>
+
+<TabItem value="pulumi">
+
+<Tabs groupId="pulumi-definition-calculation" defaultValue="python" values={[
+{label: "Python", value: "python"},
+{label: "TypeScript", value: "typescript"},
+{label: "JavaScript", value: "javascript"},
+{label: "GO", value: "go"}
+]}>
+
+<TabItem value="python">
+
+```python showLineNumbers
+"""A Python Pulumi program"""
+
+import pulumi
+from port_pulumi import Blueprint
+
+blueprint = Blueprint(
+    "myBlueprint",
+    identifier="myBlueprint",
+    title="My Blueprint",
+    properties=[
+    # blueprint properties
+    ],
+    # highlight-start
+    calculationProperties: [
+        {
+            "identifier": "myCalculation",
+            "title": "My Calculation",
+            "type": "number",
+            "calculation": ".proeprties.myStringProp + .properties.myStringProp"
+        }
+    ],
+    # highlight-end
+)
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript showLineNumbers
+import * as pulumi from "@pulumi/pulumi";
+import * as port from "@port-labs/pulumi";
+
+export const blueprint = new port.Blueprint("myBlueprint", {
+  identifier: "myBlueprint",
+  title: "My Blueprint",
+  properties: [
+    // blueprint properties
+  ],
+  // highlight-start
+  calculationProperties: [
+    {
+      identifier: "myCalculation",
+      title: "My Calculation",
+      type: "string",
+      calculation: ".proeprties.myStringProp + .properties.myStringProp",
+    },
+  ],
+  // highlight-end
+});
+```
+
+</TabItem>
+
+<TabItem value="javascript">
+
+```javascript showLineNumbers
+"use strict";
+const pulumi = require("@pulumi/pulumi");
+const port = require("@port-labs/pulumi");
+
+const entity = new port.Blueprint("myBlueprint", {
+  title: "My Blueprint",
+  identifier: "myBlueprint",
+  properties: [
+    // blueprint properties
+  ],
+  // highlight-start
+  calculationProperties: [
+    {
+      identifier: "myCalculation",
+      title: "My Calculation",
+      type: "string",
+      calculation: ".proeprties.myStringProp + .properties.myStringProp",
+    },
+  ],
+  // highlight-end
+});
+
+exports.title = entity.title;
+```
+
+</TabItem>
+<TabItem value="go">
+
+```go showLineNumbers
+package main
+
+import (
+	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
+			Identifier: pulumi.String("myBlueprint"),
+			Title:      pulumi.String("My Blueprint"),
+			// blueprint properties..
+      # highlight-start
+			CalculationProperties: port.BlueprintCalculationPropertyArray{
+			  &port.BlueprintCalculationPropertyArgs{
+			    Identifier:  pulumi.String("myCalcProp"),
+			    Title:       pulumi.String("My Calculation"),
+			    Type:        pulumi.String("string"),
+			    Calculation: pulumi.String(".properties.myStringProp + .properties.myStringProp"),
+			  },
+			},
+      # highlight-end
+		})
+		ctx.Export("blueprint", blueprint.Title)
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+
+```
+
+</TabItem>
+
+</Tabs>
+
+</TabItem>
+
 </Tabs>
 
 ## Supported Types
 
-Calculation properties support the following output types `string`, `number`, `object`, `array`, `boolean`, and `yaml`, for example:
+<Tabs groupId="calculation-definition" defaultValue="basic" values={[
+{label: "Basic", value: "basic"},
+{label: "Format", value: "format"},
+{label: "Spec", value: "spec"}
+]}>
+<TabItem value="basic">
+
+Calculation properties support the following output types: `string`, `number`, `object`, `array`, and `boolean`. For example:
 
 ```json showLineNumbers
 {
@@ -94,6 +241,54 @@ Calculation properties support the following output types `string`, `number`, `o
   }
 }
 ```
+
+</TabItem>
+
+<TabItem value = "format">
+
+Calculation properties support the following output formats: `yaml`, `team`, `user`, `ipv6`, and `url`. For example:
+
+```json showLineNumbers
+{
+  "calculationProperties": {
+    "myCalculationProp": {
+      "title": "My calculation property",
+      // highlight-next-line
+      "type": "string",
+      // highlight-next-line
+      "format": "user",
+      "calculation": ".properties.user"
+    }
+  }
+}
+```
+
+</TabItem>
+
+<TabItem value = "spec">
+
+Calculation properties support the following output specs: `markdown`, `open-api` and `async-api`. For example:
+
+```json showLineNumbers
+{
+  "calculationProperties": {
+    "myCalculationProp": {
+      "title": "My calculation property",
+      // highlight-next-line
+      "type": "string",
+      // highlight-next-line
+      "format": "url",
+      // highlight-next-line
+      "spec": "embedded-url"
+      "calculation": ".properties.text"
+    }
+  }
+}
+```
+
+</TabItem>
+
+</Tabs>
 
 ## Using `meta properties` in calculation properties
 

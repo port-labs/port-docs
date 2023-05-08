@@ -1,0 +1,49 @@
+```json showLineNumbers
+{
+  "identifier": "jenkinsBuild",
+  "description": "This blueprint represents a build event from Jenkins",
+  "title": "Jenkins Build",
+  "icon": "Jenkins",
+  "schema": {
+    "properties": {
+      "buildStatus": {
+        "type": "string",
+        "title": "Build Status",
+        "enum": ["SUCCESS", "FAILURE", "UNSTABLE"],
+        "enumColors": {
+          "SUCCESS": "green",
+          "FAILURE": "red",
+          "UNSTABLE": "yellow"
+        }
+      },
+      "buildUrl": {
+        "type": "string",
+        "title": "Build URL",
+        "description": "URL to the build"
+      },
+      "timestamp": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Timestamp",
+        "description": "Last updated timestamp of the build"
+      },
+      "buildDuration": {
+        "type": "number",
+        "title": "Build Duration",
+        "description": "Duration of the build"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "jenkinsJob": {
+      "title": "Jenkins Job",
+      "target": "jenkinsJob",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```

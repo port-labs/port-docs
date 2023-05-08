@@ -17,25 +17,35 @@
       },
       "details": {
         "type": "string",
-        "title": "Detail text"
+        "title": "Details"
       },
       "impact": {
         "type": "string",
-        "title": "Problem impact"
+        "title": "Problem Impact"
       },
       "severity": {
         "type": "string",
-        "title": "Problem severity"
+        "title": "Problem Severity"
       },
-      "impactedEntity": {
+      "tags": {
         "type": "array",
-        "title": "Impacted Entities"
+        "items": {
+          "type": "string"
+        },
+        "title": "Tags"
       }
     },
     "required": []
   },
   "mirrorProperties": {},
   "calculationProperties": {},
-  "relations": {}
+  "relations": {
+    "microservice": {
+      "title": "Impacted Services",
+      "target": "microservice",
+      "required": false,
+      "many": true
+    }
+  }
 }
 ```

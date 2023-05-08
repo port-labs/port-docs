@@ -2,12 +2,14 @@
 sidebar_position: 1
 ---
 
-# API
-
 import FindCredentials from "./\_template_docs/\_find_credentials.mdx";
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+
+# API
+
+<iframe width="100%" height="600" src="https://www.youtube.com/embed/7ACHX2V82M8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
 
 Port's [API](../../../api-reference/api-reference.mdx) is a generic interface to model your software catalog, ingest data, invoke actions, query scorecards and more.
 
@@ -83,14 +85,16 @@ const CLIENT_SECRET = "YOUR_CLIENT_SECRET";
 
 const API_URL = "https://api.getport.io/v1";
 
-const response = await axios.post(`${API_URL}/auth/access_token`, {
-  clientId: CLIENT_ID,
-  clientSecret: CLIENT_SECRET,
-});
+(async () => {
+  const response = await axios.post(`${API_URL}/auth/access_token`, {
+    clientId: CLIENT_ID,
+    clientSecret: CLIENT_SECRET,
+  });
 
-const accessToken = response.data.accessToken;
+  const accessToken = response.data.accessToken;
 
-// You can now use the value in accessToken when making further requests
+  // You can now use the value in accessToken when making further requests
+})();
 ```
 
 </TabItem>
@@ -213,32 +217,34 @@ const CLIENT_SECRET = "YOUR_CLIENT_SECRET";
 
 const API_URL = "https://api.getport.io/v1";
 
-const response = await axios.post(`${API_URL}/auth/access_token`, {
-  clientId: CLIENT_ID,
-  clientSecret: CLIENT_SECRET,
-});
+(async () => {
+  const response = await axios.post(`${API_URL}/auth/access_token`, {
+    clientId: CLIENT_ID,
+    clientSecret: CLIENT_SECRET,
+  });
 
-const accessToken = response.data.accessToken;
+  const accessToken = response.data.accessToken;
 
-// You can now use the value in accessToken when making further requests
+  // You can now use the value in accessToken when making further requests
 
-// highlight-start
-const blueprintId = "MY_BLUEPRINT";
-const entityId = "MY_ENTITY_IDENTIFIER";
-// highlight-end
+  // highlight-start
+  const blueprintId = "MY_BLUEPRINT";
+  const entityId = "MY_ENTITY_IDENTIFIER";
+  // highlight-end
 
-const config = {
-  headers: {
-    Authorization: `Bearer ${accessToken}`,
-  },
-};
+  const config = {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
 
-const getResponse = await axios.get(
-  `${API_URL}/blueprints/${blueprintId}/entities/${entityId}`,
-  config
-);
+  const getResponse = await axios.get(
+    `${API_URL}/blueprints/${blueprintId}/entities/${entityId}`,
+    config
+  );
 
-// getResponse.data contains the content of the resulting entity
+  // getResponse.data contains the content of the resulting entity
+})();
 ```
 
 </TabItem>
@@ -359,43 +365,45 @@ const CLIENT_SECRET = "YOUR_CLIENT_SECRET";
 
 const API_URL = "https://api.getport.io/v1";
 
-const response = await axios.post(`${API_URL}/auth/access_token`, {
-  clientId: CLIENT_ID,
-  clientSecret: CLIENT_SECRET,
-});
+(async () => {
+  const response = await axios.post(`${API_URL}/auth/access_token`, {
+    clientId: CLIENT_ID,
+    clientSecret: CLIENT_SECRET,
+  });
 
-const accessToken = response.data.accessToken;
+  const accessToken = response.data.accessToken;
 
-// You can now use the value in accessToken when making further requests
+  // You can now use the value in accessToken when making further requests
 
-// highlight-next-line
-const blueprintId = "MY_BLUEPRINT";
+  // highlight-next-line
+  const blueprintId = "MY_BLUEPRINT";
 
-const config = {
-  headers: {
-    Authorization: `Bearer ${accessToken}`,
-  },
-};
+  const config = {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
 
-const entity = {
-  // highlight-start
-  identifier: "MY_ENTITY_IDENTIFIER",
-  title: "MY TITLE",
-  properties: {
-    MY_STRING_PROP: "MY VALUE",
-    MY_BOOLEAN_PROP: false,
-  },
-  relations: {},
-};
-// highlight-end
+  const entity = {
+    // highlight-start
+    identifier: "MY_ENTITY_IDENTIFIER",
+    title: "MY TITLE",
+    properties: {
+      MY_STRING_PROP: "MY VALUE",
+      MY_BOOLEAN_PROP: false,
+    },
+    relations: {},
+  };
+  // highlight-end
 
-const postResponse = await axios.post(
-  `${API_URL}/blueprints/${blueprintId}/entities`,
-  entity,
-  config
-);
+  const postResponse = await axios.post(
+    `${API_URL}/blueprints/${blueprintId}/entities`,
+    entity,
+    config
+  );
 
-// postResponse.data contains the content of the resulting entity
+  // postResponse.data contains the content of the resulting entity
+})();
 ```
 
 </TabItem>
@@ -523,44 +531,46 @@ const CLIENT_SECRET = "YOUR_CLIENT_SECRET";
 
 const API_URL = "https://api.getport.io/v1";
 
-const response = await axios.post(`${API_URL}/auth/access_token`, {
-  clientId: CLIENT_ID,
-  clientSecret: CLIENT_SECRET,
-});
+(async () => {
+  const response = await axios.post(`${API_URL}/auth/access_token`, {
+    clientId: CLIENT_ID,
+    clientSecret: CLIENT_SECRET,
+  });
 
-const accessToken = response.data.accessToken;
+  const accessToken = response.data.accessToken;
 
-// You can now use the value in accessToken when making further requests
+  // You can now use the value in accessToken when making further requests
 
-// highlight-next-line
-const blueprintId = "MY_BLUEPRINT";
+  // highlight-next-line
+  const blueprintId = "MY_BLUEPRINT";
 
-const config = {
-  headers: {
-    Authorization: `Bearer ${accessToken}`,
-  },
-};
+  const config = {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
 
-const entity = {
-  // highlight-start
-  identifier: "MY_ENTITY_IDENTIFIER",
-  title: "MY TITLE",
-  properties: {
-    MY_STRING_PROP: "MY VALUE",
-    MY_BOOLEAN_PROP: false,
-  },
-  relations: {},
-};
-// highlight-end
+  const entity = {
+    // highlight-start
+    identifier: "MY_ENTITY_IDENTIFIER",
+    title: "MY TITLE",
+    properties: {
+      MY_STRING_PROP: "MY VALUE",
+      MY_BOOLEAN_PROP: false,
+    },
+    relations: {},
+  };
+  // highlight-end
 
-// Note the ?upsert=true&merge=true query parameters
-const postResponse = await axios.post(
-  `${API_URL}/blueprints/${blueprintId}/entities?upsert=true&merge=true`,
-  entity,
-  config
-);
+  // Note the ?upsert=true&merge=true query parameters
+  const postResponse = await axios.post(
+    `${API_URL}/blueprints/${blueprintId}/entities?upsert=true&merge=true`,
+    entity,
+    config
+  );
 
-// postResponse.data contains the content of the resulting entity
+  // postResponse.data contains the content of the resulting entity
+})();
 ```
 
 </TabItem>
@@ -689,44 +699,46 @@ const CLIENT_SECRET = "YOUR_CLIENT_SECRET";
 
 const API_URL = "https://api.getport.io/v1";
 
-const response = await axios.post(`${API_URL}/auth/access_token`, {
-  clientId: CLIENT_ID,
-  clientSecret: CLIENT_SECRET,
-});
+(async () => {
+  const response = await axios.post(`${API_URL}/auth/access_token`, {
+    clientId: CLIENT_ID,
+    clientSecret: CLIENT_SECRET,
+  });
 
-const accessToken = response.data.accessToken;
+  const accessToken = response.data.accessToken;
 
-// You can now use the value in accessToken when making further requests
+  // You can now use the value in accessToken when making further requests
 
-// highlight-next-line
-const blueprintId = "MY_BLUEPRINT";
+  // highlight-next-line
+  const blueprintId = "MY_BLUEPRINT";
 
-const config = {
-  headers: {
-    Authorization: `Bearer ${accessToken}`,
-  },
-};
+  const config = {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
 
-const entity = {
-  // highlight-start
-  identifier: "MY_ENTITY_IDENTIFIER",
-  title: "MY TITLE",
-  properties: {
-    MY_STRING_PROP: "MY VALUE",
-    MY_BOOLEAN_PROP: false,
-  },
-  relations: {},
-};
-// highlight-end
+  const entity = {
+    // highlight-start
+    identifier: "MY_ENTITY_IDENTIFIER",
+    title: "MY TITLE",
+    properties: {
+      MY_STRING_PROP: "MY VALUE",
+      MY_BOOLEAN_PROP: false,
+    },
+    relations: {},
+  };
+  // highlight-end
 
-// Note the ?upsert=true query parameter
-const postResponse = await axios.post(
-  `${API_URL}/blueprints/${blueprintId}/entities?upsert=true`,
-  entity,
-  config
-);
+  // Note the ?upsert=true query parameter
+  const postResponse = await axios.post(
+    `${API_URL}/blueprints/${blueprintId}/entities?upsert=true`,
+    entity,
+    config
+  );
 
-// postResponse.data contains the content of the resulting entity
+  // postResponse.data contains the content of the resulting entity
+})();
 ```
 
 </TabItem>
@@ -841,33 +853,35 @@ const CLIENT_SECRET = "YOUR_CLIENT_SECRET";
 
 const API_URL = "https://api.getport.io/v1";
 
-const response = await axios.post(`${API_URL}/auth/access_token`, {
-  clientId: CLIENT_ID,
-  clientSecret: CLIENT_SECRET,
-});
+(async () => {
+  const response = await axios.post(`${API_URL}/auth/access_token`, {
+    clientId: CLIENT_ID,
+    clientSecret: CLIENT_SECRET,
+  });
 
-const accessToken = response.data.accessToken;
+  const accessToken = response.data.accessToken;
 
-// You can now use the value in accessToken when making further requests
+  // You can now use the value in accessToken when making further requests
 
-// highlight-next-line
-const blueprintId = "MY_BLUEPRINT";
+  // highlight-next-line
+  const blueprintId = "MY_BLUEPRINT";
 
-// highlight-next-line
-const entityId = "MY_ENTITY";
+  // highlight-next-line
+  const entityId = "MY_ENTITY";
 
-const config = {
-  headers: {
-    Authorization: `Bearer ${accessToken}`,
-  },
-};
+  const config = {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
 
-const deleteResponse = await axios.delete(
-  `${API_URL}/blueprints/${blueprintId}/entities/${entityId}`,
-  config
-);
+  const deleteResponse = await axios.delete(
+    `${API_URL}/blueprints/${blueprintId}/entities/${entityId}`,
+    config
+  );
 
-// deleteResponse.data contains the content of the resulting entity
+  // deleteResponse.data contains the content of the resulting entity
+})();
 ```
 
 </TabItem>
@@ -980,30 +994,32 @@ const CLIENT_SECRET = "YOUR_CLIENT_SECRET";
 
 const API_URL = "https://api.getport.io/v1";
 
-const response = await axios.post(`${API_URL}/auth/access_token`, {
-  clientId: CLIENT_ID,
-  clientSecret: CLIENT_SECRET,
-});
+(async () => {
+  const response = await axios.post(`${API_URL}/auth/access_token`, {
+    clientId: CLIENT_ID,
+    clientSecret: CLIENT_SECRET,
+  });
 
-const accessToken = response.data.accessToken;
+  const accessToken = response.data.accessToken;
 
-// You can now use the value in accessToken when making further requests
+  // You can now use the value in accessToken when making further requests
 
-// highlight-next-line
-const blueprintId = "MY_BLUEPRINT";
+  // highlight-next-line
+  const blueprintId = "MY_BLUEPRINT";
 
-const config = {
-  headers: {
-    Authorization: `Bearer ${accessToken}`,
-  },
-};
+  const config = {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
 
-const deleteResponse = await axios.delete(
-  `${API_URL}/blueprints/${blueprintId}/all-entities`,
-  config
-);
+  const deleteResponse = await axios.delete(
+    `${API_URL}/blueprints/${blueprintId}/all-entities`,
+    config
+  );
 
-// deleteResponse.data contains the content of the resulting entity
+  // deleteResponse.data contains the content of the resulting entity
+})();
 ```
 
 </TabItem>

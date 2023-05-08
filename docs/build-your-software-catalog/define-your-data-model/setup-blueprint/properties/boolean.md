@@ -10,7 +10,7 @@ import TabItem from "@theme/TabItem"
 
 # Boolean
 
-Boolean is a primitive data type that has one of two possible values - `true` and `false`
+Boolean is a primitive data type that has one of two possible values - `true` and `false`.
 
 ## 💡 Common boolean usage
 
@@ -72,6 +72,142 @@ resource "port-labs_blueprint" "myBlueprint" {
   # highlight-end
 }
 ```
+
+</TabItem>
+</Tabs>
+
+## Pulumi definition
+
+<Tabs groupId="pulumi-definition" defaultValue="basic" values={[
+{label: "Basic", value: "basic"}
+]}>
+
+<TabItem value="basic">
+
+<Tabs groupId="pulumi-definition-boolean-basic" defaultValue="python" values={[
+{label: "Python", value: "python"},
+{label: "TypeScript", value: "typescript"},
+{label: "JavaScript", value: "javascript"},
+{label: "GO", value: "go"}
+]}>
+
+<TabItem value="python">
+
+```python showLineNumbers
+"""A Python Pulumi program"""
+
+import pulumi
+from port_pulumi import Blueprint
+
+blueprint = Blueprint(
+    "myBlueprint",
+    identifier="myBlueprint",
+    title="My Blueprint",
+    # highlight-start
+    properties=[
+      {
+        "type": "boolean",
+        "identifier": "myBooleanProp",
+        "title": "My boolean",
+        "required": True
+      }
+    ],
+    # highlight-end
+    relations=[]
+)
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript showLineNumbers
+import * as pulumi from "@pulumi/pulumi";
+import * as port from "@port-labs/pulumi";
+
+export const blueprint = new port.Blueprint("myBlueprint", {
+  identifier: "myBlueprint",
+  title: "My Blueprint",
+  // highlight-start
+  properties: [
+    {
+      identifier: "myBooleanProp",
+      title: "My boolean",
+      type: "boolean",
+      required: true,
+    },
+  ],
+  // highlight-end
+});
+```
+
+</TabItem>
+
+<TabItem value="javascript">
+
+```javascript showLineNumbers
+"use strict";
+const pulumi = require("@pulumi/pulumi");
+const port = require("@port-labs/pulumi");
+
+const entity = new port.Blueprint("myBlueprint", {
+  title: "My Blueprint",
+  identifier: "myBlueprint",
+  // highlight-start
+  properties: [
+    {
+      identifier: "myBooleanProp",
+      title: "My boolean",
+      type: "boolean",
+      required: true,
+    },
+  ],
+  // highlight-end
+  relations: [],
+});
+
+exports.title = entity.title;
+```
+
+</TabItem>
+<TabItem value="go">
+
+```go showLineNumbers
+package main
+
+import (
+	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
+			Identifier: pulumi.String("myBlueprint"),
+			Title:      pulumi.String("My Blueprint"),
+      // highlight-start
+			Properties: port.BlueprintPropertyArray{
+				&port.BlueprintPropertyArgs{
+					Identifier: pulumi.String("myBooleanProp"),
+					Title:      pulumi.String("My boolean"),
+					Required:   pulumi.Bool(false),
+					Type:       pulumi.String("boolean"),
+				},
+			},
+      // highlight-end
+		})
+		ctx.Export("blueprint", blueprint.Title)
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+```
+
+</TabItem>
+
+</Tabs>
 
 </TabItem>
 </Tabs>

@@ -1,0 +1,24 @@
+```json showLineNumbers
+{
+  "identifier": "jenkinsJobMapper",
+  "title": "Jenkins job mapper",
+  "description": "A webhook configuration to map Jenkins job to Port",
+  "icon": "Jenkins",
+  "mappings": [
+    {
+      "blueprint": "jenkinsJob",
+      "entity": {
+        "identifier": ".body.name",
+        "title": ".body.build.notes",
+        "properties": {
+          "jobName": ".body.display_name",
+          "jobStatus": ".body.build.phase",
+          "timestamp": ".body.build.timestamp"
+        }
+      }
+    }
+  ],
+  "enabled": true,
+  "security": {}
+}
+```

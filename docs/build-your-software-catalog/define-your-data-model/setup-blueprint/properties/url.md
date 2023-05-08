@@ -145,3 +145,300 @@ resource "port-labs_blueprint" "myBlueprint" {
 
 </TabItem>
 </Tabs>
+
+## Pulumi definition
+
+<Tabs groupId="pulumi-definition" defaultValue="basic" values={[
+{label: "Basic", value: "basic"},
+{label: "Enum", value: "enum"},
+{label: "Array - coming soon", value: "array"}
+]}>
+
+<TabItem value="basic">
+
+<Tabs groupId="pulumi-definition-url-basic" defaultValue="python" values={[
+{label: "Python", value: "python"},
+{label: "TypeScript", value: "typescript"},
+{label: "JavaScript", value: "javascript"},
+{label: "GO", value: "go"}
+]}>
+
+<TabItem value="python">
+
+```python showLineNumbers
+"""A Python Pulumi program"""
+
+import pulumi
+from port_pulumi import Blueprint
+
+blueprint = Blueprint(
+    "myBlueprint",
+    identifier="myBlueprint",
+    title="My Blueprint",
+    # highlight-start
+    properties=[
+      {
+        "type": "string",
+        "identifier": "myUrlProp",
+        "title": "My url",
+        "required": True,
+        "format": "url"
+      }
+    ],
+    # highlight-end
+    relations=[]
+)
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript showLineNumbers
+import * as pulumi from "@pulumi/pulumi";
+import * as port from "@port-labs/pulumi";
+
+export const blueprint = new port.Blueprint("myBlueprint", {
+  identifier: "myBlueprint",
+  title: "My Blueprint",
+  // highlight-start
+  properties: [
+    {
+      identifier: "myUrlProp",
+      title: "My url",
+      type: "string",
+      required: true,
+      format: "url",
+    },
+  ],
+  // highlight-end
+});
+```
+
+</TabItem>
+
+<TabItem value="javascript">
+
+```javascript showLineNumbers
+"use strict";
+const pulumi = require("@pulumi/pulumi");
+const port = require("@port-labs/pulumi");
+
+const entity = new port.Blueprint("myBlueprint", {
+  title: "My Blueprint",
+  identifier: "myBlueprint",
+  // highlight-start
+  properties: [
+    {
+      identifier: "myUrlProp",
+      title: "My url",
+      type: "string",
+      required: true,
+      format: "url",
+    },
+  ],
+  // highlight-end
+  relations: [],
+});
+
+exports.title = entity.title;
+```
+
+</TabItem>
+<TabItem value="go">
+
+```go showLineNumbers
+package main
+
+import (
+	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
+			Identifier: pulumi.String("myBlueprint"),
+			Title:      pulumi.String("My Blueprint"),
+      // highlight-start
+			Properties: port.BlueprintPropertyArray{
+				&port.BlueprintPropertyArgs{
+					Identifier: pulumi.String("myUrlProp"),
+					Title:      pulumi.String("My url"),
+					Required:   pulumi.Bool(false),
+					Type:       pulumi.String("string"),
+					Format:     pulumi.String("url"),
+				},
+			},
+      // highlight-end
+		})
+		ctx.Export("blueprint", blueprint.Title)
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+```
+
+</TabItem>
+
+</Tabs>
+
+</TabItem>
+
+<TabItem value="enum">
+
+<Tabs groupId="pulumi-definition-url-enum" defaultValue="python" values={[
+{label: "Python", value: "python"},
+{label: "TypeScript", value: "typescript"},
+{label: "JavaScript", value: "javascript"},
+{label: "GO", value: "go"}
+]}>
+
+<TabItem value="python">
+
+```python showLineNumbers
+"""A Python Pulumi program"""
+
+import pulumi
+from port_pulumi import Blueprint
+
+blueprint = Blueprint(
+    "myBlueprint",
+    identifier="myBlueprint",
+    title="My Blueprint",
+    # highlight-start
+    properties=[{
+      "type": "string",
+      "identifier": "myUrlProp",
+      "title": "My url",
+      "format": "url",
+      "required": True,
+      "enum": ["https://example.com", "https://getport.io"],
+      "enum_colors": {
+        "https://example.com": "red",
+        "https://getport.io": "green"
+      }
+    }],
+    # highlight-end
+    relations=[]
+)
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript showLineNumbers
+import * as pulumi from "@pulumi/pulumi";
+import * as port from "@port-labs/pulumi";
+
+export const blueprint = new port.Blueprint("myBlueprint", {
+  identifier: "myBlueprint",
+  title: "My Blueprint",
+  // highlight-start
+  properties: [
+    {
+      identifier: "myUrlProp",
+      title: "My url",
+      type: "string",
+      required: true,
+      format: "url",
+      enums: ["https://example.com", "https://getport.io"],
+      enumColors: {
+        "https://example.com": "red",
+        "https://getport.io": "green",
+      },
+    },
+  ],
+  // highlight-end
+});
+```
+
+</TabItem>
+
+<TabItem value="javascript">
+
+```javascript showLineNumbers
+"use strict";
+const pulumi = require("@pulumi/pulumi");
+const port = require("@port-labs/pulumi");
+
+const entity = new port.Blueprint("myBlueprint", {
+  title: "My Blueprint",
+  identifier: "myBlueprint",
+  // highlight-start
+  properties: [
+    {
+      identifier: "myUrlProp",
+      title: "My url",
+      type: "string",
+      required: true,
+      format: "url",
+      enums: ["https://example.com", "https://getport.io"],
+      enumColors: {
+        "https://example.com": "red",
+        "https://getport.io": "green",
+      },
+    },
+  ],
+  // highlight-end
+  relations: [],
+});
+
+exports.title = entity.title;
+```
+
+</TabItem>
+<TabItem value="go">
+
+```go showLineNumbers
+package main
+
+import (
+	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
+			Identifier: pulumi.String("myBlueprint"),
+			Title:      pulumi.String("My Blueprint"),
+      // highlight-start
+			Properties: port.BlueprintPropertyArray{
+				&port.BlueprintPropertyArgs{
+					Identifier: pulumi.String("myUrlProp"),
+					Title:      pulumi.String("My url"),
+					Required:   pulumi.Bool(false),
+					Type:       pulumi.String("string"),
+					Format:     pulumi.String("url"),
+					Enums: pulumi.StringArray{
+						pulumi.String("https://example.com"),
+						pulumi.String("https://getport.io"),
+					},
+					EnumColors: pulumi.StringMap{
+						"https://example.com": pulumi.String("red"),
+						"https://getport.io": pulumi.String("green"),
+					},
+				},
+			},
+      // highlight-end
+		})
+		ctx.Export("blueprint", blueprint.Title)
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+
+```
+
+</TabItem>
+
+</Tabs>
+
+</TabItem>
+</Tabs>

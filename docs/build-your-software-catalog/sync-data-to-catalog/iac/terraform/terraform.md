@@ -9,7 +9,7 @@ import TabItem from "@theme/TabItem";
 
 # Terraform
 
-Our integration with Terraform allows you to combine the state of your infrastructure with the entities representing them in Port.
+Our integration with [Terraform](https://www.terraform.io/) allows you to combine the state of your infrastructure with the entities representing them in Port.
 
 By using Port's Terraform provider you make it easy to integrate Port with your existing IaC definitions, every resource provisioned by Terraform can also be reported to the software catalog using the same `.tf` definition file.
 
@@ -194,7 +194,7 @@ properties {
 ```hcl showLineNumbers
 properties {
   name = "myUserProp"
-  value = "Admin Port"
+  value = "user@example.com"
 }
 ```
 
@@ -248,6 +248,30 @@ The following parameters are **required**:
 - `value` - the value of the property (for non-array properties);
 - `items` - an array of values (for array properties).
 
+:::note
+
+To set a default value, use the object keyword `default_value` with the desired value as the key. For example:
+
+```hcl showLineNumbers
+properties {
+  name = "myStringProp"
+  default_value = {
+    "value": "My string"
+  }
+}
+```
+
+To set default values for array properties, use the `default_items` keyword with the desired array as its value. For example:
+
+```hcl showLineNumbers
+properties {
+name = "myArrayProp"
+default_items = [1,2,3]
+}
+```
+
+:::
+
 ### `relations` schema
 
 The [`relations`](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/entity#relations) schema maps a target entity to the source entity definition:
@@ -281,7 +305,7 @@ The following parameters are **required**:
 - `identifier` - the identifier of the target entity.
 
 :::note
-At the moment, it is only possible to create entities with `many: true` relations using Port's Terraform provider.
+At the moment, it is only possible to create entities with `many: false` relations using Port's Terraform provider.
 :::
 
 ## Ingest data using the Terraform provider
