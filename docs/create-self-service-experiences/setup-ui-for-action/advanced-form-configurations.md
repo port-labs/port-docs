@@ -266,7 +266,7 @@ This example contains a filter that will only display only the envs that are not
 
 ```json
 {
-  "chosenEnv": {
+  "env": {
     "type": "string",
     "format": "entity",
     "blueprint": "env",
