@@ -293,20 +293,38 @@ resource "port-labs_entity" "myEntity" {
 
   relations {
     name  = "myAdditionalRelation"
-    identifier = "myAdditionalTargetEntityIdentifier"
-  }
+    identifiers = ["myAdditionalTargetEntityIdentifier"]
+  }[]
  # highlight-end
 }
 ```
+
+#### Definition
+
+<Tabs groupId="relations" queryString="relations" defaultValue="single" values={[
+{label: "Single", value: "single"},
+{label: "Many", value: "many"},
+]} >
+
+<TabItem value="single">
 
 The following parameters are **required**:
 
 - `name` - the name of the [relation](../../../define-your-data-model/relate-blueprints/relate-blueprints.md#structure-table) in the blueprint definition;
 - `identifier` - the identifier of the target entity.
 
-:::note
-At the moment, it is only possible to create entities with `many: false` relations using Port's Terraform provider.
-:::
+</TabItem>
+
+<TabItem value="many">
+
+The following parameters are **required**:
+
+- `name` - the name of the [relation](../../../define-your-data-model/relate-blueprints/relate-blueprints.md#structure-table) in the blueprint definition;
+- `identifiers` - the identifiers of the target entity.
+
+</TabItem>
+
+</Tabs>
 
 ## Ingest data using the Terraform provider
 
