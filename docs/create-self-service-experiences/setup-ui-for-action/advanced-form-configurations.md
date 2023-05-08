@@ -284,6 +284,10 @@ This example contains a filter that will only display only the envs that are not
 }
 ```
 
+![Only Production Envs](../../../static/img/software-catalog/blueprint/onlyNotProductionEnvs.png)
+
+:point_up: only the environments which are not with the role "production" will appear in the dropdown. :point_up:
+
 ### Filter the dropdown's available options based on properties of the user that execute the action
 
 This example contains a filter that will only display the namespaces that belong to the user's teams (notice the value key in the rules object).
