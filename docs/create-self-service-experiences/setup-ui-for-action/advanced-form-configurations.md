@@ -269,7 +269,7 @@ This example contains a filter that will only display environment entities whose
   "env": {
     "type": "string",
     "format": "entity",
-    "blueprint": "env",
+    "blueprint": "environment",
     "dataset": {
       "combinator": "and",
       "rules": [
