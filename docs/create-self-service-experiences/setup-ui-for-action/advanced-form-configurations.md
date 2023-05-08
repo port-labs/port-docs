@@ -286,7 +286,7 @@ This example contains a filter that will only display environment entities whose
 
 ![Only Production Envs](../../../static/img/software-catalog/blueprint/onlyNotProductionEnvs.png)
 
-:point_up: only the environments which are not with the role "production" will appear in the dropdown. :point_up:
+:point_up: only the environments whose type is not `production` will appear in the dropdown. :point_up:
 
 ### Filter the dropdown's available options based on properties of the user that execute the action
 
