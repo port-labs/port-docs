@@ -352,7 +352,7 @@ The `contains` operator checks if the specified substring exists in the specifie
 
 <TabItem value="containsAny">
 
-The `containsAny` operator checks if the specified substring exists in the specified array:
+The `containsAny` operator checks if the specified substring exists in the array:
 
 ```json showLineNumbers
 {
