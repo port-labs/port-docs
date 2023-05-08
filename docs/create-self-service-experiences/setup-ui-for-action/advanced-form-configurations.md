@@ -262,7 +262,7 @@ This example contains a dependency between the "language" input and the "SDK" in
 
 ### Filter the dropdown's available options based on a property
 
-This example contains a filter that will only display only the envs that are not with role "production".
+This example contains a filter that will only display environment entities whose type is not `production`:
 
 ```json
 {
