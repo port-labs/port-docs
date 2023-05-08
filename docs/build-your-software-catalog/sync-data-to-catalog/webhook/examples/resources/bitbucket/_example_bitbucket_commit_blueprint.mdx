@@ -1,0 +1,31 @@
+```json showLineNumbers
+{
+  "identifier": "bitBucketMicroservice",
+  "description": "This blueprint represents a microservice in our software catalog",
+  "title": "Microservice",
+  "icon": "Microservice",
+  "schema": {
+    "properties": {
+      "commit_hash": {
+        "type": "string",
+        "title": "Commit Hash"
+      },
+      "url": {
+        "type": "string",
+        "title": "Project URL",
+        "format": "url",
+        "default": "https://bitbucket.org",
+        "description": "the link to the repo in our BitBucket"
+      },
+      "author": {
+        "type": "string",
+        "title": "Author"
+      }
+    },
+    "required": ["commit_hash"]
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {}
+}
+```

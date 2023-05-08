@@ -1,0 +1,25 @@
+```json showLineNumbers
+{
+  "identifier": "bitbucketMapper",
+  "title": "BitBucket Commit Mapper",
+  "description": "A webhook configuration for commit events from BitBucket",
+  "icon": "BitBucket",
+  "mappings": [
+    {
+      "blueprint": "bitBucketMicroservice",
+      "filter": ".headers.\"X-Event-Key\" == \"repo:push\"",
+      "entity": {
+        "identifier": "latest_commit",
+        "title": "Latest Commit",
+        "properties": {
+          "commit_hash": ".body.push.changes[0].new.target.hash",
+          "author": ".body.push.changes[0].new.target.author.user.display_name",
+          "url": ".body.repository.links.html.href"
+        }
+      }
+    }
+  ],
+  "enabled": true,
+  "security": {}
+}
+```
