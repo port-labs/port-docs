@@ -60,9 +60,9 @@ To define the Azure pipelines invocation method in Port, follow the steps below:
   },
   // highlight-start
   "invocationMethod": {
-    "type": "AZURE_DEVOPS",
-    "org": "<AZURE_DEVOPS_ORG>",
-    "webhook": "<AZURE_DEVOPS_WEBHOOK_NAME>"
+    "type": "AZURE-DEVOPS",
+    "org": "<AZURE-DEVOPS-ORG>",
+    "webhook": "<AZURE-DEVOPS-WEBHOOK-NAME>"
   },
   // highlight-end
   "trigger": "CREATE"
@@ -72,8 +72,8 @@ To define the Azure pipelines invocation method in Port, follow the steps below:
 
 :::tip
 
-- `<AZURE_DEVOPS_ORG>` - your Azure DevOps organization name, can be found in your Azure DevOps URL: `https://dev.azure.com/{AZURE_DEVOPS_ORG}`;
-- `<AZURE_DEVOPS_WEBHOOK_NAME>` - the name you gave to the webhook resource in the Azure yaml pipeline file.
+- `<AZURE-DEVOPS-ORG>` - your Azure DevOps organization name, can be found in your Azure DevOps URL: `https://dev.azure.com/{AZURE_DEVOPS_ORG}`;
+- `<AZURE-DEVOPS-WEBHOOK-NAME>` - the name you gave to the webhook resource in the Azure yaml pipeline file.
 
 :::
 
