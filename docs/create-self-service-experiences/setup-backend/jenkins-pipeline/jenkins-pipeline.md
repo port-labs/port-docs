@@ -31,14 +31,33 @@ After checking the box, look for the **Post content parameters** section. This i
 
 :::note
 Here is a part of the JSON scheme of the Port action, which shows the inputs sent by Port when triggering the action:
+Shown here are the inputs configured in the Port action, and the payload that will be sent:
+
+**Port Action** - The full port action can be found [here](./jenkins-pipeline.md#setting-up-the-port-action).
+
+```json showLineNumber
+[
+  {
+    "identifier": "runPipeline",
+    "title": "Run Pipeline",
+    "icon": "Jenkins",
+    "userInputs": {
+      "properties": {
+        "input1": {
+          "type": "string"
+        }
+      }
+    }
+    ... # Port Action configuration
+]
+```
 
 ```json showLineNumber
 {
     ... # Event metadata
     "payload": {
         "properties": {
-            "input1": "input1_value",
-            "input2": "input2_value"
+            "input1": "input1_value"
         }
 
     }
@@ -80,7 +99,9 @@ http://JENKINS_URL/jenkins/generic-webhook-trigger/invoke?token=<JOB_TOKEN>
 For advanced configuration of your Jenkins webhook trigger, check out the [Generic webhook trigger](https://plugins.jenkins.io/generic-webhook-trigger/) plugin page!
 :::
 
-And now you are ready to trigger your pipeline using Port! All that is left is to create a Port [Webhook Action](../webhook/)!
+### Setting up the Port action
+
+And now you are ready to trigger your pipeline using Port. All that is left is to create a Port [Webhook Action](../webhook/).
 Here is an example for an action which will trigger the webhook we just set up:
 
 ```json showLineNumbers
@@ -109,3 +130,13 @@ Here is an example for an action which will trigger the webhook we just set up:
 ### Securing your webhook
 
 For setting up security for you webhook triggered pipeline, [enable whitelisting](https://plugins.jenkins.io/generic-webhook-trigger/#plugin-content-whitelist-hosts) for your Jenkins plugin, and configure the whitelisting using [this guide](../webhook/signature-verification.md).
+
+Here is an example of the required configuration:
+
+![Webhook Validation](../../../../static/img/self-service-actions/setup-backend/jenkins-pipeline/validate-webhook.png)
+
+:::note
+In the **HMAC Secret** field, choose a secret containing your `port-client-secret`.
+
+If this secret doesn't already exist, create a `secret text` type secret using [this guide](https://www.jenkins.io/doc/book/using/using-credentials/). The value of the secret should be your `Port Client Secret` as can be found [here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
+:::
