@@ -136,7 +136,9 @@ Here is an example of the required configuration:
 ![Webhook Validation](../../../../static/img/self-service-actions/setup-backend/jenkins-pipeline/validate-webhook.png)
 
 :::note
-In the **HMAC Secret** field, choose a secret containing your `port-client-secret`.
+
+- The IP field should be set to `3.251.12.205`, which is our hosted outbound WEBHOOK Gateway.
+- In the **HMAC Secret** field, choose a secret containing your `port-client-secret`.
 
 If this secret doesn't already exist, create a `secret text` type secret using [this guide](https://www.jenkins.io/doc/book/using/using-credentials/). The value of the secret should be your `Port Client Secret` as can be found [here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
 :::
