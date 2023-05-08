@@ -153,6 +153,7 @@ Port has 2 types of search rule operators:
 {label: "Property schema", value: "property-schema"},
 {label: "Between", value: "between"},
 {label: "Contains", value: "contains"},
+{label: "ContainsAny", value: "containsAny"},
 {label: "In", value: "in"}
 ]}>
 
@@ -344,6 +345,20 @@ The `contains` operator checks if the specified substring exists in the specifie
   "operator": "contains",
   "property": "myStringProperty",
   "value": "mySubString"
+}
+```
+
+</TabItem>
+
+<TabItem value="containsAny">
+
+The `containsAny` operator checks if the specified substring exists in the specified array:
+
+```json showLineNumbers
+{
+  "operator": "containsAny",
+  "property": "myArrayProperty",
+  "value": ["Value1", "Value2", ...]
 }
 ```
 
