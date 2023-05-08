@@ -274,7 +274,7 @@ This example contains a filter that will only display environment entities whose
       "combinator": "and",
       "rules": [
         {
-          "property": "role",
+          "property": "type",
           "operator": "!=",
           "value": "production"
         }
