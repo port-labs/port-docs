@@ -16,7 +16,7 @@ Jenkins required plugins:
 
 ### Enabling webhook trigger for a pipeline
 
-To enable triggering a Jenkins pipeline using a webhook invocation, you will need to add "Generic Webhook Trigger" as a Build trigger to your pipeline.
+To enable triggering a Jenkins pipeline using a webhook invocation, you will need to add "Generic Webhook Trigger" as a build trigger to your pipeline.
 
 In your Job's page, enter the **Configuration** tab, and scroll down to the **Build Triggers** section. Check the `Generic Webhook Trigger` box:
 
@@ -24,7 +24,7 @@ In your Job's page, enter the **Configuration** tab, and scroll down to the **Bu
 
 ### Defining variables
 
-After checking the box, look for the **Post content parameters** section. This is where you will define the variables which will be passed to your build run.
+After checking the box, look for the **Post content parameters** section. This is where you will define the variables which will be passed to your pipeline run.
 
 - The `Variable` field value should match the name of the variable that is defined in your Job configuration and expected by the job run.
 - The `Expression` field should be set to `JSONPath` and be directed to the relevant property sent by the Port action.
