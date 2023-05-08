@@ -18,7 +18,7 @@ terraform {
   required_providers {
     port-labs = {
       source  = "port-labs/port-labs"
-      version = "~> 0.9.5"
+      version = "~> 0.9.7"
     }
     google-beta = {
       source  = "hashicorp/google-beta"
@@ -215,6 +215,16 @@ terraform plan
 terraform apply
 ```
 
+:::note GCP permissions
+To be able to read the project and assets in this example, you need to use a GCP IAM role with at least the following permissions:
+
+```text showLineNumbers
+cloudasset.assets.searchAllResources
+resourcemanager.projects.get
+```
+
+:::
+
 Let's break down the definition file and understand the different parts:
 
 ## Module imports
@@ -226,7 +236,7 @@ terraform {
   required_providers {
     port-labs = {
       source  = "port-labs/port-labs"
-      version = "~> 0.9.5"
+      version = "~> 0.9.7"
     }
     google-beta = {
       source  = "hashicorp/google-beta"

@@ -1,10 +1,10 @@
 ---
 sidebar_position: 2
-title: Specific Asset Types Metadata
-description: Bring specific assets with extended metadata using terraform
+title: Resource Metadata for Specific Asset
+description: Bring assets with specific resource metadata using terraform
 ---
 
-# Specific Asset Types Metadata
+# Resource Metadata for Specific Asset
 
 In this example you are going to learn how to export GCP project's specific assets, with extended metadata for the matching asset type.
 
@@ -18,7 +18,7 @@ terraform {
   required_providers {
     port-labs = {
       source  = "port-labs/port-labs"
-      version = "~> 0.9.5"
+      version = "~> 0.9.7"
     }
     google-beta = {
       source  = "hashicorp/google-beta"
@@ -52,7 +52,11 @@ data "google_cloud_asset_resources_search_all" "my_assets" {
   asset_types = [
     "storage.googleapis.com/Bucket",
     "iam.googleapis.com/ServiceAccount",
-    "compute.googleapis.com/Disk"
+    "compute.googleapis.com/Disk",
+    "redis.googleapis.com/Instance",
+    "compute.googleapis.com/Instance",
+    "run.googleapis.com/Service",
+    "container.googleapis.com/Cluster"
   ]
 }
 
@@ -73,6 +77,34 @@ data "google_compute_disk" "my_disks" {
   for_each = {for idx, result in data.google_cloud_asset_resources_search_all.my_assets.results : idx => result if result.asset_type == "compute.googleapis.com/Disk"}
   zone = each.value.location
   name    = reverse(split("/", each.value.name))[0]
+}
+
+data "google_redis_instance" "my_memorystores" {
+  provider = google-beta
+  for_each = {for idx, result in data.google_cloud_asset_resources_search_all.my_assets.results : idx => result if result.asset_type == "redis.googleapis.com/Instance"}
+  name     = reverse(split("/", each.value.name))[0]
+  region   = each.value.location
+}
+
+data "google_compute_instance" "my_compute_instances" {
+  provider = google-beta
+  for_each = {for idx, result in data.google_cloud_asset_resources_search_all.my_assets.results : idx => result if result.asset_type == "compute.googleapis.com/Instance"}
+  name     = reverse(split("/", each.value.name))[0]
+  zone     = each.value.location
+}
+
+data "google_cloud_run_service" "my_run_services" {
+  provider = google-beta
+  for_each = {for idx, result in data.google_cloud_asset_resources_search_all.my_assets.results : idx => result if result.asset_type == "run.googleapis.com/Service"}
+  name     = reverse(split("/", each.value.name))[0]
+  location = each.value.location
+}
+
+data "google_container_cluster" "my_container_clusters" {
+  provider = google-beta
+  for_each = {for idx, result in data.google_cloud_asset_resources_search_all.my_assets.results : idx => result if result.asset_type == "container.googleapis.com/Cluster"}
+  name     = reverse(split("/", each.value.name))[0]
+  location = each.value.location
 }
 
 resource "port-labs_blueprint" "gcp_project_blueprint" {
@@ -373,6 +405,424 @@ resource "port-labs_entity" "gcp_disk_entity" {
     identifier = each.value.project
   }
 }
+
+resource "port-labs_blueprint" "gcp_memorystore_blueprint" {
+  title      = "Memorystore"
+  icon       = "Bucket"
+  identifier = "memorystore"
+  properties {
+    identifier = "link"
+    type       = "string"
+    format     = "url"
+    title      = "Link"
+  }
+  properties {
+    identifier = "region"
+    type       = "string"
+    title      = "Region"
+  }
+  properties {
+    identifier = "currentLocationId"
+    type       = "string"
+    title      = "Current Location ID"
+  }
+  properties {
+    identifier = "memorySizeGb"
+    type       = "number"
+    title      = "Memory Size GB"
+  }
+  properties {
+    identifier = "replicaCount"
+    type       = "number"
+    title      = "Replica Count"
+  }
+  properties {
+    identifier = "redisVersion"
+    type       = "string"
+    title      = "Redis Version"
+  }
+  properties {
+    identifier = "tier"
+    type       = "string"
+    enum       = ["BASIC", "STANDARD_HA"]
+    title      = "Public Access Prevention"
+  }
+  properties {
+    identifier = "readReplicasMode"
+    type       = "string"
+    enum       = ["READ_REPLICAS_DISABLED", "READ_REPLICAS_ENABLED"]
+    title      = "Read Replicas Mode"
+  }
+  properties {
+    identifier = "connectMode"
+    type       = "string"
+    enum       = ["DIRECT_PEERING", "PRIVATE_SERVICE_ACCESS"]
+    title      = "Connect Mode"
+  }
+  properties {
+    identifier = "createTime"
+    type       = "string"
+    format     = "date-time"
+    title      = "Create Time"
+  }
+  properties {
+    identifier = "authorizedNetwork"
+    type       = "string"
+    title      = "Authorized Network"
+  }
+  properties {
+    identifier = "nodes"
+    type       = "array"
+    title      = "Nodes"
+  }
+  properties {
+    identifier = "labels"
+    type       = "object"
+    title      = "Labels"
+  }
+  relations {
+    identifier = port-labs_blueprint.gcp_project_blueprint.identifier
+    target = port-labs_blueprint.gcp_project_blueprint.identifier
+  }
+}
+
+resource "port-labs_entity" "gcp_memorystore_entity" {
+  for_each = data.google_redis_instance.my_memorystores
+  identifier = "${each.value.project}_${each.value.location_id}_${each.value.name}"
+  title     = each.value.name
+  blueprint = port-labs_blueprint.gcp_memorystore_blueprint.identifier
+  properties {
+    name  = "link"
+    value = "https://console.cloud.google.com/memorystore/redis/locations/${each.value.region}/instances/${each.value.name}/details/overview?project=${each.value.project}"
+  }
+  properties {
+    name  = "region"
+    value = each.value.region
+  }
+  properties {
+    name  = "currentLocationId"
+    value = each.value.current_location_id
+  }
+  properties {
+    name  = "memorySizeGb"
+    value = each.value.memory_size_gb
+  }
+  properties {
+    name  = "replicaCount"
+    value = each.value.replica_count
+  }
+  properties {
+    name  = "redisVersion"
+    value = each.value.redis_version
+  }
+  properties {
+    name  = "tier"
+    value = each.value.tier
+  }
+  properties {
+    name  = "readReplicasMode"
+    value = each.value.read_replicas_mode
+  }
+  properties {
+    name  = "connectMode"
+    value = each.value.connect_mode
+  }
+  properties {
+    name  = "createTime"
+    value = each.value.create_time
+  }
+  properties {
+    name  = "authorizedNetwork"
+    value = each.value.authorized_network
+  }
+  properties {
+    name  = "nodes"
+    items = [for item in each.value.nodes: jsonencode(item)]
+  }
+  properties {
+    name  = "labels"
+    value = jsonencode(each.value.labels)
+  }
+  relations {
+    name = port-labs_blueprint.gcp_project_blueprint.identifier
+    identifier = each.value.project
+  }
+}
+
+resource "port-labs_blueprint" "gcp_compute_instance_blueprint" {
+  title      = "Compute Instance"
+  icon       = "GoogleComputeEngine"
+  identifier = "computeInstance"
+  properties {
+    identifier = "link"
+    type       = "string"
+    format     = "url"
+    title      = "Link"
+  }
+  properties {
+    identifier = "zone"
+    type       = "string"
+    title      = "Zone"
+  }
+  properties {
+    identifier = "description"
+    type       = "string"
+    title      = "Description"
+  }
+  properties {
+    identifier  = "currentStatus"
+    type        = "string"
+    enum        = ["PROVISIONING", "STAGING", "RUNNING", "STOPPING", "REPAIRING", "TERMINATED", "SUSPENDING", "SUSPENDED"]
+    enum_colors = {
+      PROVISIONING = "blue"
+      STAGING    = "blue"
+      RUNNING    = "green"
+      STOPPING   = "red"
+      REPAIRING  = "yellow"
+      TERMINATED = "red"
+      SUSPENDING  = "yellow"
+      SUSPENDED  = "lightGray"
+    }
+    title      = "Current Status"
+  }
+  properties {
+    identifier = "machineType"
+    type       = "string"
+    title      = "Machine Type"
+  }
+  properties {
+    identifier = "cpuPlatform"
+    type       = "string"
+    title      = "CPU Platform"
+  }
+  properties {
+    identifier = "deletionProtection"
+    type       = "boolean"
+    title      = "Deletion Protection"
+  }
+  properties {
+    identifier = "labels"
+    type       = "object"
+    title      = "Labels"
+  }
+  relations {
+    identifier = port-labs_blueprint.gcp_project_blueprint.identifier
+    target = port-labs_blueprint.gcp_project_blueprint.identifier
+  }
+}
+
+resource "port-labs_entity" "gcp_compute_instance_entity" {
+  for_each = data.google_compute_instance.my_compute_instances
+  identifier = "${each.value.project}_${each.value.zone}_${each.value.name}"
+  title     = each.value.name
+  blueprint = port-labs_blueprint.gcp_compute_instance_blueprint.identifier
+  properties {
+    name  = "link"
+    value = "https://console.cloud.google.com/compute/instancesDetail/zones/${each.value.zone}/instances/${each.value.name}?project=${each.value.project}"
+  }
+  properties {
+    name  = "zone"
+    value = each.value.zone
+  }
+  properties {
+    name  = "description"
+    value = each.value.description
+  }
+  properties {
+    name  = "currentStatus"
+    value = each.value.current_status
+  }
+  properties {
+    name  = "machineType"
+    value = each.value.machine_type
+  }
+  properties {
+    name  = "cpuPlatform"
+    value = each.value.cpu_platform
+  }
+  properties {
+    name  = "deletionProtection"
+    value = each.value.deletion_protection
+  }
+  properties {
+    name  = "labels"
+    value = jsonencode(each.value.labels)
+  }
+  relations {
+    name = port-labs_blueprint.gcp_project_blueprint.identifier
+    identifier = each.value.project
+  }
+}
+
+resource "port-labs_blueprint" "gcp_run_service_blueprint" {
+  title      = "Run Service"
+  icon       = "Service"
+  identifier = "runService"
+  properties {
+    identifier = "link"
+    type       = "string"
+    format     = "url"
+    title      = "Link"
+  }
+  properties {
+    identifier = "location"
+    type       = "string"
+    title      = "Location"
+  }
+  properties {
+    identifier = "metadata"
+    type       = "array"
+    title      = "Metadata"
+  }
+  properties {
+    identifier = "status"
+    type       = "array"
+    title      = "Status"
+  }
+  properties {
+    identifier = "template"
+    type       = "array"
+    title      = "Template"
+  }
+  properties {
+    identifier = "traffic"
+    type       = "array"
+    title      = "Traffic"
+  }
+  relations {
+    identifier = port-labs_blueprint.gcp_project_blueprint.identifier
+    target = port-labs_blueprint.gcp_project_blueprint.identifier
+  }
+}
+
+resource "port-labs_entity" "gcp_run_service_entity" {
+  for_each = data.google_cloud_run_service.my_run_services
+  identifier = "${each.value.project}_${each.value.location}_${each.value.name}"
+  title     = each.value.name
+  blueprint = port-labs_blueprint.gcp_run_service_blueprint.identifier
+  properties {
+    name  = "link"
+    value = "https://console.cloud.google.com/run/detail/${each.value.location}/${each.value.name}?project=${each.value.project}"
+  }
+  properties {
+    name  = "location"
+    value = each.value.location
+  }
+  properties {
+    name  = "metadata"
+    items = [for item in each.value.metadata: jsonencode(item)]
+  }
+  properties {
+    name  = "status"
+    items = [for item in each.value.status: jsonencode(item)]
+  }
+  properties {
+    name  = "template"
+    items = [for item in each.value.template: jsonencode(item)]
+  }
+  properties {
+    name  = "traffic"
+    items = [for item in each.value.traffic: jsonencode(item)]
+  }
+  relations {
+    name = port-labs_blueprint.gcp_project_blueprint.identifier
+    identifier = each.value.project
+  }
+}
+
+resource "port-labs_blueprint" "gcp_container_cluster_blueprint" {
+  title      = "Container Cluster"
+  icon       = "Cluster"
+  identifier = "containerCluster"
+  properties {
+    identifier = "link"
+    type       = "string"
+    format     = "url"
+    title      = "Link"
+  }
+  properties {
+    identifier = "location"
+    type       = "string"
+    title      = "Location"
+  }
+  properties {
+    identifier = "description"
+    type       = "string"
+    title      = "Description"
+  }
+  properties {
+    identifier = "masterVersion"
+    type       = "string"
+    title      = "Master Version"
+  }
+  properties {
+    identifier = "enableAutopilot"
+    type       = "boolean"
+    title      = "Enable Autopilot"
+  }
+  properties {
+    identifier = "addonsConfig"
+    type       = "array"
+    title      = "Addons Config"
+  }
+  properties {
+    identifier = "clusterAutoscaling"
+    type       = "array"
+    title      = "Cluster Autoscaling"
+  }
+  properties {
+    identifier = "network"
+    type       = "string"
+    title      = "Network"
+  }
+  relations {
+    identifier = port-labs_blueprint.gcp_project_blueprint.identifier
+    target = port-labs_blueprint.gcp_project_blueprint.identifier
+  }
+}
+
+resource "port-labs_entity" "gcp_container_cluster_entity" {
+  for_each = data.google_container_cluster.my_container_clusters
+  identifier = "${each.value.project}_${each.value.location}_${each.value.name}"
+  title     = each.value.name
+  blueprint = port-labs_blueprint.gcp_container_cluster_blueprint.identifier
+  properties {
+    name  = "link"
+    value = "https://console.cloud.google.com/kubernetes/clusters/details/${each.value.location}/${each.value.name}?project=${each.value.project}"
+  }
+  properties {
+    name  = "location"
+    value = each.value.location
+  }
+  properties {
+    name  = "description"
+    value = each.value.description
+  }
+  properties {
+    name  = "masterVersion"
+    value = each.value.master_version
+  }
+  properties {
+    name  = "enableAutopilot"
+    value = each.value.enable_autopilot
+  }
+  properties {
+    name  = "addonsConfig"
+    items = [for item in each.value.addons_config: jsonencode(item)]
+  }
+  properties {
+    name  = "clusterAutoscaling"
+    items = [for item in each.value.cluster_autoscaling: jsonencode(item)]
+  }
+  properties {
+    name  = "network"
+    value = each.value.network
+  }
+  relations {
+    name = port-labs_blueprint.gcp_project_blueprint.identifier
+    identifier = each.value.project
+  }
+}
 ```
 
 </details>
@@ -387,6 +837,24 @@ terraform plan
 # To apply the changes and update the catalog
 terraform apply
 ```
+
+:::note GCP permissions
+To be able to read the all the types of assets in this example, you need to use a GCP IAM role with at least the following permissions:
+
+```text showLineNumbers
+cloudasset.assets.searchAllResources
+compute.disks.get
+compute.instanceGroupManagers.get
+compute.instances.get
+container.clusters.get
+iam.serviceAccounts.get
+redis.instances.get
+resourcemanager.projects.get
+run.services.get
+storage.buckets.get
+```
+
+:::
 
 Let's break down the definition file and understand the different parts:
 
@@ -425,7 +893,7 @@ provider "google-beta" {
 
 ## Extracting the project and assets
 
-This part includes defining the datasource for the project and specific assets (`buckets`, `service accounts`, `disks`):
+This part includes defining the datasource for the project and specific assets (`buckets`, `service accounts`, `disks`, `memorystores`, `compute instances`, `run services`, `container clusters`):
 
 ```hcl showLineNumbers
 data "google_project" "project" {
@@ -439,7 +907,11 @@ data "google_cloud_asset_resources_search_all" "my_assets" {
   asset_types = [
     "storage.googleapis.com/Bucket",
     "iam.googleapis.com/ServiceAccount",
-    "compute.googleapis.com/Disk"
+    "compute.googleapis.com/Disk",
+    "redis.googleapis.com/Instance",
+    "compute.googleapis.com/Instance",
+    "run.googleapis.com/Service",
+    "container.googleapis.com/Cluster"
   ]
 }
 
@@ -460,6 +932,34 @@ data "google_compute_disk" "my_disks" {
   for_each = {for idx, result in data.google_cloud_asset_resources_search_all.my_assets.results : idx => result if result.asset_type == "compute.googleapis.com/Disk"}
   zone = each.value.location
   name    = reverse(split("/", each.value.name))[0]
+}
+
+data "google_redis_instance" "my_memorystores" {
+  provider = google-beta
+  for_each = {for idx, result in data.google_cloud_asset_resources_search_all.my_assets.results : idx => result if result.asset_type == "redis.googleapis.com/Instance"}
+  name     = reverse(split("/", each.value.name))[0]
+  region   = each.value.location
+}
+
+data "google_compute_instance" "my_compute_instances" {
+  provider = google-beta
+  for_each = {for idx, result in data.google_cloud_asset_resources_search_all.my_assets.results : idx => result if result.asset_type == "compute.googleapis.com/Instance"}
+  name     = reverse(split("/", each.value.name))[0]
+  zone     = each.value.location
+}
+
+data "google_cloud_run_service" "my_run_services" {
+  provider = google-beta
+  for_each = {for idx, result in data.google_cloud_asset_resources_search_all.my_assets.results : idx => result if result.asset_type == "run.googleapis.com/Service"}
+  name     = reverse(split("/", each.value.name))[0]
+  location = each.value.location
+}
+
+data "google_container_cluster" "my_container_clusters" {
+  provider = google-beta
+  for_each = {for idx, result in data.google_cloud_asset_resources_search_all.my_assets.results : idx => result if result.asset_type == "container.googleapis.com/Cluster"}
+  name     = reverse(split("/", each.value.name))[0]
+  location = each.value.location
 }
 ```
 
@@ -786,6 +1286,448 @@ resource "port-labs_entity" "gcp_disk_entity" {
 }
 ```
 
+## Creating the Memorystore blueprint and the entities matching the memorystores
+
+This part includes configuring the `memorystore` blueprint and creating the entities for the memorystores:
+
+```hcl showLineNumbers
+resource "port-labs_blueprint" "gcp_memorystore_blueprint" {
+  title      = "Memorystore"
+  icon       = "Bucket"
+  identifier = "memorystore"
+  properties {
+    identifier = "link"
+    type       = "string"
+    format     = "url"
+    title      = "Link"
+  }
+  properties {
+    identifier = "region"
+    type       = "string"
+    title      = "Region"
+  }
+  properties {
+    identifier = "currentLocationId"
+    type       = "string"
+    title      = "Current Location ID"
+  }
+  properties {
+    identifier = "memorySizeGb"
+    type       = "number"
+    title      = "Memory Size GB"
+  }
+  properties {
+    identifier = "replicaCount"
+    type       = "number"
+    title      = "Replica Count"
+  }
+  properties {
+    identifier = "redisVersion"
+    type       = "string"
+    title      = "Redis Version"
+  }
+  properties {
+    identifier = "tier"
+    type       = "string"
+    enum       = ["BASIC", "STANDARD_HA"]
+    title      = "Public Access Prevention"
+  }
+  properties {
+    identifier = "readReplicasMode"
+    type       = "string"
+    enum       = ["READ_REPLICAS_DISABLED", "READ_REPLICAS_ENABLED"]
+    title      = "Read Replicas Mode"
+  }
+  properties {
+    identifier = "connectMode"
+    type       = "string"
+    enum       = ["DIRECT_PEERING", "PRIVATE_SERVICE_ACCESS"]
+    title      = "Connect Mode"
+  }
+  properties {
+    identifier = "createTime"
+    type       = "string"
+    format     = "date-time"
+    title      = "Create Time"
+  }
+  properties {
+    identifier = "authorizedNetwork"
+    type       = "string"
+    title      = "Authorized Network"
+  }
+  properties {
+    identifier = "nodes"
+    type       = "array"
+    title      = "Nodes"
+  }
+  properties {
+    identifier = "labels"
+    type       = "object"
+    title      = "Labels"
+  }
+  relations {
+    identifier = port-labs_blueprint.gcp_project_blueprint.identifier
+    target = port-labs_blueprint.gcp_project_blueprint.identifier
+  }
+}
+
+resource "port-labs_entity" "gcp_memorystore_entity" {
+  for_each = data.google_redis_instance.my_memorystores
+  identifier = "${each.value.project}_${each.value.location_id}_${each.value.name}"
+  title     = each.value.name
+  blueprint = port-labs_blueprint.gcp_memorystore_blueprint.identifier
+  properties {
+    name  = "link"
+    value = "https://console.cloud.google.com/memorystore/redis/locations/${each.value.region}/instances/${each.value.name}/details/overview?project=${each.value.project}"
+  }
+  properties {
+    name  = "region"
+    value = each.value.region
+  }
+  properties {
+    name  = "currentLocationId"
+    value = each.value.current_location_id
+  }
+  properties {
+    name  = "memorySizeGb"
+    value = each.value.memory_size_gb
+  }
+  properties {
+    name  = "replicaCount"
+    value = each.value.replica_count
+  }
+  properties {
+    name  = "redisVersion"
+    value = each.value.redis_version
+  }
+  properties {
+    name  = "tier"
+    value = each.value.tier
+  }
+  properties {
+    name  = "readReplicasMode"
+    value = each.value.read_replicas_mode
+  }
+  properties {
+    name  = "connectMode"
+    value = each.value.connect_mode
+  }
+  properties {
+    name  = "createTime"
+    value = each.value.create_time
+  }
+  properties {
+    name  = "authorizedNetwork"
+    value = each.value.authorized_network
+  }
+  properties {
+    name  = "nodes"
+    items = [for item in each.value.nodes: jsonencode(item)]
+  }
+  properties {
+    name  = "labels"
+    value = jsonencode(each.value.labels)
+  }
+  relations {
+    name = port-labs_blueprint.gcp_project_blueprint.identifier
+    identifier = each.value.project
+  }
+}
+```
+
+## Creating the Compute Instance blueprint and the entities matching the compute-instances
+
+This part includes configuring the `computeInstance` blueprint and creating the entities for the compute-instances:
+
+```hcl showLineNumbers
+resource "port-labs_blueprint" "gcp_compute_instance_blueprint" {
+  title      = "Compute Instance"
+  icon       = "GoogleComputeEngine"
+  identifier = "computeInstance"
+  properties {
+    identifier = "link"
+    type       = "string"
+    format     = "url"
+    title      = "Link"
+  }
+  properties {
+    identifier = "zone"
+    type       = "string"
+    title      = "Zone"
+  }
+  properties {
+    identifier = "description"
+    type       = "string"
+    title      = "Description"
+  }
+  properties {
+    identifier  = "currentStatus"
+    type        = "string"
+    enum        = ["PROVISIONING", "STAGING", "RUNNING", "STOPPING", "REPAIRING", "TERMINATED", "SUSPENDING", "SUSPENDED"]
+    enum_colors = {
+      PROVISIONING = "blue"
+      STAGING    = "blue"
+      RUNNING    = "green"
+      STOPPING   = "red"
+      REPAIRING  = "yellow"
+      TERMINATED = "red"
+      SUSPENDING  = "yellow"
+      SUSPENDED  = "lightGray"
+    }
+    title      = "Current Status"
+  }
+  properties {
+    identifier = "machineType"
+    type       = "string"
+    title      = "Machine Type"
+  }
+  properties {
+    identifier = "cpuPlatform"
+    type       = "string"
+    title      = "CPU Platform"
+  }
+  properties {
+    identifier = "deletionProtection"
+    type       = "boolean"
+    title      = "Deletion Protection"
+  }
+  properties {
+    identifier = "labels"
+    type       = "object"
+    title      = "Labels"
+  }
+  relations {
+    identifier = port-labs_blueprint.gcp_project_blueprint.identifier
+    target = port-labs_blueprint.gcp_project_blueprint.identifier
+  }
+}
+
+resource "port-labs_entity" "gcp_compute_instance_entity" {
+  for_each = data.google_compute_instance.my_compute_instances
+  identifier = "${each.value.project}_${each.value.zone}_${each.value.name}"
+  title     = each.value.name
+  blueprint = port-labs_blueprint.gcp_compute_instance_blueprint.identifier
+  properties {
+    name  = "link"
+    value = "https://console.cloud.google.com/compute/instancesDetail/zones/${each.value.zone}/instances/${each.value.name}?project=${each.value.project}"
+  }
+  properties {
+    name  = "zone"
+    value = each.value.zone
+  }
+  properties {
+    name  = "description"
+    value = each.value.description
+  }
+  properties {
+    name  = "currentStatus"
+    value = each.value.current_status
+  }
+  properties {
+    name  = "machineType"
+    value = each.value.machine_type
+  }
+  properties {
+    name  = "cpuPlatform"
+    value = each.value.cpu_platform
+  }
+  properties {
+    name  = "deletionProtection"
+    value = each.value.deletion_protection
+  }
+  properties {
+    name  = "labels"
+    value = jsonencode(each.value.labels)
+  }
+  relations {
+    name = port-labs_blueprint.gcp_project_blueprint.identifier
+    identifier = each.value.project
+  }
+}
+```
+
+## Creating the Run Service blueprint and the entities matching the run services
+
+This part includes configuring the `runService` blueprint and creating the entities for the run services:
+
+```hcl showLineNumbers
+resource "port-labs_blueprint" "gcp_run_service_blueprint" {
+  title      = "Run Service"
+  icon       = "Service"
+  identifier = "runService"
+  properties {
+    identifier = "link"
+    type       = "string"
+    format     = "url"
+    title      = "Link"
+  }
+  properties {
+    identifier = "location"
+    type       = "string"
+    title      = "Location"
+  }
+  properties {
+    identifier = "metadata"
+    type       = "array"
+    title      = "Metadata"
+  }
+  properties {
+    identifier = "status"
+    type       = "array"
+    title      = "Status"
+  }
+  properties {
+    identifier = "template"
+    type       = "array"
+    title      = "Template"
+  }
+  properties {
+    identifier = "traffic"
+    type       = "array"
+    title      = "Traffic"
+  }
+  relations {
+    identifier = port-labs_blueprint.gcp_project_blueprint.identifier
+    target = port-labs_blueprint.gcp_project_blueprint.identifier
+  }
+}
+
+resource "port-labs_entity" "gcp_run_service_entity" {
+  for_each = data.google_cloud_run_service.my_run_services
+  identifier = "${each.value.project}_${each.value.location}_${each.value.name}"
+  title     = each.value.name
+  blueprint = port-labs_blueprint.gcp_run_service_blueprint.identifier
+  properties {
+    name  = "link"
+    value = "https://console.cloud.google.com/run/detail/${each.value.location}/${each.value.name}?project=${each.value.project}"
+  }
+  properties {
+    name  = "location"
+    value = each.value.location
+  }
+  properties {
+    name  = "metadata"
+    items = [for item in each.value.metadata: jsonencode(item)]
+  }
+  properties {
+    name  = "status"
+    items = [for item in each.value.status: jsonencode(item)]
+  }
+  properties {
+    name  = "template"
+    items = [for item in each.value.template: jsonencode(item)]
+  }
+  properties {
+    name  = "traffic"
+    items = [for item in each.value.traffic: jsonencode(item)]
+  }
+  relations {
+    name = port-labs_blueprint.gcp_project_blueprint.identifier
+    identifier = each.value.project
+  }
+}
+```
+
+## Creating the Container Cluster blueprint and the entities matching the container clusters
+
+This part includes configuring the `containerCluster` blueprint and creating the entities for the container clusters:
+
+```hcl showLineNumbers
+resource "port-labs_blueprint" "gcp_container_cluster_blueprint" {
+  title      = "Container Cluster"
+  icon       = "Cluster"
+  identifier = "containerCluster"
+  properties {
+    identifier = "link"
+    type       = "string"
+    format     = "url"
+    title      = "Link"
+  }
+  properties {
+    identifier = "location"
+    type       = "string"
+    title      = "Location"
+  }
+  properties {
+    identifier = "description"
+    type       = "string"
+    title      = "Description"
+  }
+  properties {
+    identifier = "masterVersion"
+    type       = "string"
+    title      = "Master Version"
+  }
+  properties {
+    identifier = "enableAutopilot"
+    type       = "boolean"
+    title      = "Enable Autopilot"
+  }
+  properties {
+    identifier = "addonsConfig"
+    type       = "array"
+    title      = "Addons Config"
+  }
+  properties {
+    identifier = "clusterAutoscaling"
+    type       = "array"
+    title      = "Cluster Autoscaling"
+  }
+  properties {
+    identifier = "network"
+    type       = "string"
+    title      = "Network"
+  }
+  relations {
+    identifier = port-labs_blueprint.gcp_project_blueprint.identifier
+    target = port-labs_blueprint.gcp_project_blueprint.identifier
+  }
+}
+
+resource "port-labs_entity" "gcp_container_cluster_entity" {
+  for_each = data.google_container_cluster.my_container_clusters
+  identifier = "${each.value.project}_${each.value.location}_${each.value.name}"
+  title     = each.value.name
+  blueprint = port-labs_blueprint.gcp_container_cluster_blueprint.identifier
+  properties {
+    name  = "link"
+    value = "https://console.cloud.google.com/kubernetes/clusters/details/${each.value.location}/${each.value.name}?project=${each.value.project}"
+  }
+  properties {
+    name  = "location"
+    value = each.value.location
+  }
+  properties {
+    name  = "description"
+    value = each.value.description
+  }
+  properties {
+    name  = "masterVersion"
+    value = each.value.master_version
+  }
+  properties {
+    name  = "enableAutopilot"
+    value = each.value.enable_autopilot
+  }
+  properties {
+    name  = "addonsConfig"
+    items = [for item in each.value.addons_config: jsonencode(item)]
+  }
+  properties {
+    name  = "clusterAutoscaling"
+    items = [for item in each.value.cluster_autoscaling: jsonencode(item)]
+  }
+  properties {
+    name  = "network"
+    value = each.value.network
+  }
+  relations {
+    name = port-labs_blueprint.gcp_project_blueprint.identifier
+    identifier = each.value.project
+  }
+}
+```
+
 ## Result
 
-After running `terraform apply` you will see the project entity, and the related `storageBucket`, `serviceAccount`, `disk` entities in Port.
+After running `terraform apply` you will see the project entity, and the related `storageBucket`, `serviceAccount`, `disk`, `memorystore`, `computeInstance`, `runService`, `containerCluster` entities in Port.
