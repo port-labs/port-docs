@@ -114,7 +114,7 @@ Here is the JSON of the action:
 ```
 
 :::note
-Don't forget to replace the placeholders for `AZURE-DEVOPS-ORG`, `AZURE-DEVOPS-WEBHOOK-NAME`.
+Don't forget to replace the placeholders for `AZURE-DEVOPS-ORG` and `AZURE-DEVOPS-WEBHOOK-NAME`.
 :::
 
 To learn how to generate an API token to interact with Port, look [here](../../../../build-your-software-catalog/sync-data-to-catalog/api/#generate-an-api-token).
