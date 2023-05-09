@@ -117,7 +117,7 @@ To set up a token for you job, scroll down to the **Token** section, and provide
 After saving, you will be able to specifically trigger this job job, using the following URL:
 
 ```text showLineNumbers
-http://JENKINS_URL/jenkins/generic-webhook-trigger/invoke?token=<JOB_TOKEN>
+http://JENKINS_URL/generic-webhook-trigger/invoke?token=<JOB_TOKEN>
 ```
 
 :::tip
@@ -146,7 +146,7 @@ Here is an example for an action that will trigger the webhook you just set up:
     # highlight-start
     "invocationMethod": {
       "type": "WEBHOOK",
-      "url": "http://JENKINS_URL/jenkins/generic-webhook-trigger/invoke?token=<JOB_TOKEN>"
+      "url": "http://JENKINS_URL/generic-webhook-trigger/invoke?token=<JOB_TOKEN>"
     },
     # highlight-end
     "trigger": "CREATE",
