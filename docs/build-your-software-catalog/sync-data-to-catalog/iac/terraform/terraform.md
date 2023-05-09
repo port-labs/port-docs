@@ -9,7 +9,7 @@ import TabItem from "@theme/TabItem";
 
 # Terraform
 
-Our integration with Terraform allows you to combine the state of your infrastructure with the entities representing them in Port.
+Our integration with [Terraform](https://www.terraform.io/) allows you to combine the state of your infrastructure with the entities representing them in Port.
 
 By using Port's Terraform provider you make it easy to integrate Port with your existing IaC definitions, every resource provisioned by Terraform can also be reported to the software catalog using the same `.tf` definition file.
 
@@ -248,6 +248,30 @@ The following parameters are **required**:
 - `value` - the value of the property (for non-array properties);
 - `items` - an array of values (for array properties).
 
+:::note
+
+To set a default value, use the object keyword `default_value` with the desired value as the key. For example:
+
+```hcl showLineNumbers
+properties {
+  name = "myStringProp"
+  default_value = {
+    "value": "My string"
+  }
+}
+```
+
+To set default values for array properties, use the `default_items` keyword with the desired array as its value. For example:
+
+```hcl showLineNumbers
+properties {
+name = "myArrayProp"
+default_items = [1,2,3]
+}
+```
+
+:::
+
 ### `relations` schema
 
 The [`relations`](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/entity#relations) schema maps a target entity to the source entity definition:
@@ -268,21 +292,39 @@ resource "port-labs_entity" "myEntity" {
   }
 
   relations {
-    name  = "myAdditionalRelation"
-    identifier = "myAdditionalTargetEntityIdentifier"
+    name  = "myAdditionalManyRelation"
+    identifiers = ["myAdditionalTargetEntityIdentifier", myAdditionalTargetEntityIdentifier2"]
   }
  # highlight-end
 }
 ```
 
+#### Definition
+
+<Tabs groupId="relations" queryString="relations" defaultValue="single" values={[
+{label: "Single", value: "single"},
+{label: "Many", value: "many"},
+]} >
+
+<TabItem value="single">
+
 The following parameters are **required**:
 
-- `name` - the name of the [relation](../../../define-your-data-model/relate-blueprints/relate-blueprints.md#structure-table) in the blueprint definition;
+- `name` - the `identifier` of the [relation](../../../define-your-data-model/relate-blueprints/relate-blueprints.md#structure-table) in the blueprint definition;
 - `identifier` - the identifier of the target entity.
 
-:::note
-At the moment, it is only possible to create entities with `many: false` relations using Port's Terraform provider.
-:::
+</TabItem>
+
+<TabItem value="many">
+
+The following parameters are **required**:
+
+- `name` - the `identifier` of the [relation](../../../define-your-data-model/relate-blueprints/relate-blueprints.md#structure-table) in the blueprint definition;
+- `identifiers` - the identifiers of the target entities.
+
+</TabItem>
+
+</Tabs>
 
 ## Ingest data using the Terraform provider
 

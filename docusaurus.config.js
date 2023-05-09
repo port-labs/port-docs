@@ -46,29 +46,30 @@ const config = {
         },
       }),
     ],
-    [
-      "redocusaurus",
-      {
-        // Plugin Options for loading OpenAPI files
-        specs: [
-          {
-            id: "port-api",
-            spec: "https://api.getport.io/yaml",
-          },
-        ],
-        // Theme Options for modifying how redoc renders them
-        theme: {
-          // Change with your site colors
-          primaryColor: "#1890ff",
-          primaryColorDark: "#1890ff",
-          theme: {
-            typography: {
-              fontFamily: "Inter",
-            },
-          },
-        },
-      },
-    ],
+    // Currently disabled because redocusaurus fails parsing our OpenAPI spec
+    // [
+    //   "redocusaurus",
+    //   {
+    //     // Plugin Options for loading OpenAPI files
+    //     specs: [
+    //       {
+    //         id: "port-api",
+    //         spec: "https://api.getport.io/yaml",
+    //       },
+    //     ],
+    //     // Theme Options for modifying how redoc renders them
+    //     theme: {
+    //       // Change with your site colors
+    //       primaryColor: "#1890ff",
+    //       primaryColorDark: "#1890ff",
+    //       theme: {
+    //         typography: {
+    //           fontFamily: "Inter",
+    //         },
+    //       },
+    //     },
+    //   },
+    // ],
   ],
 
   themeConfig:

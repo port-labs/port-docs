@@ -50,7 +50,6 @@ Each action is represented by a [Json schema](https://json-schema.org/), as show
 
 ```json showLineNumbers
 {
-  "id": "internalID",
   "identifier": "myIdentifier",
   "title": "My title",
   "description": "My description",
@@ -76,13 +75,33 @@ Each action is represented by a [Json schema](https://json-schema.org/), as show
 }
 ```
 
+:::note actions array
+Actions configured for a blueprint are saved as an array, in the JSON example above you can see the schema of a single action, in order to save this action definition in your blueprint, remember to wrap it in square brackets (`[]`) to include it as part of the array:
+
+```json showLineNumbers
+[
+  {
+  "identifier": "myIdentifier",
+  "title": "My title",
+  "description": "My description",
+  "icon": "My icon",
+  "userInputs": {
+    "properties": {
+  ... action definition
+    }
+  }
+]
+```
+
+:::
+
 ### Structure table
 
 An action consist of several properties:
 
 | Field              | Description                                                                                                                                                             | Notes                                                                                                                                                                                                                                  |
-| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `identifier`       | Internal Action ID                                                                                                                                                      | An internal ID Port assigns to each action. Immutable.                                                                                                                                                                                 |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `id`               | Internal Action ID                                                                                                                                                      | An internal ID Port assigns to each action. Immutable.                                                                                                                                                                                 | The `id` field will be added to the action JSON automatically after creating the action |
 | `identifier`       | Unique identifier                                                                                                                                                       | **Required**. The identifier is used for API calls, programmatic access and distinguishing between different actions                                                                                                                   |
 | `title`            | Name                                                                                                                                                                    | Human-readable name for the action                                                                                                                                                                                                     |
 | `description`      | Description                                                                                                                                                             | The value is visible on the action card in the Self-Service Hub and also as a tooltip to users when hovering over the action in the UI                                                                                                 |
