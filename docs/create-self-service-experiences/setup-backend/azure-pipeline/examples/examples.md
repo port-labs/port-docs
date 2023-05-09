@@ -103,11 +103,13 @@ Here is the JSON of the action:
     },
     "required": ["service", "environment"]
   },
+  // highlight-start
   "invocationMethod": {
     "type": "AZURE-DEVOPS",
     "org": "<AZURE-DEVOPS-ORG>",
     "webhook": "<AZURE-DEVOPS-WEBHOOK-NAME>"
   },
+  // highlight-end
   "trigger": "CREATE",
   "description": "Deploy a service to the environment"
 }
