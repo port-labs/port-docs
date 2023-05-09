@@ -46,6 +46,8 @@ In your job's page, enter the **Configuration** tab, and scroll down to the **Bu
 
 ![Enable generic webhook](../../../../static/img/self-service-actions/setup-backend/jenkins-pipeline/check-generic-webhook-option.png)
 
+By default, when enabling the webhook trigger for a job, it can be triggered by sending an event to `http://JENKINS_URL/jenkins/generic-webhook-trigger/invoke`. This means that, if not configured otherwise, all jobs will be triggered when sending an event to this route. It is recommended to set up a [job token](jenkins-pipeline.md#token-setup) to avoid running unwanted jobs.
+
 ### Defining variables
 
 After checking the box, look for the **Post content parameters** section. This is where you will define the variables which will be passed to your pipeline run.
@@ -107,8 +109,6 @@ $.payload.properties.input1
 ### Token setup
 
 The [token parameter](https://plugins.jenkins.io/generic-webhook-trigger/#plugin-content-token-parameter) allows triggering a specific (or a group) of jobs.
-
-By default, when enabling the webhook trigger for a job, it can be triggered by sending an event to `http://JENKINS_URL/jenkins/generic-webhook-trigger/invoke`. This means that, if not configured otherwise, all jobs will be triggered when sending an event to this route. It is recommended to set up a job token to avoid running unwanted jobs.
 
 To set up a token for you job, scroll down to the **Token** section, and provide a job token:
 
