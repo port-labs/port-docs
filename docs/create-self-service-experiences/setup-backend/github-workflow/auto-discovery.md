@@ -4,11 +4,11 @@ sidebar_position: 1
 
 # Auto Discovery
 
-Actions Auto Discovery is a tool that automates the process of discovering and syncing GitHub Actions with Port.
+Actions auto discovery automates the process of discovering and syncing GitHub workflow actions with Port.
 
-You can run the tool and it will automatically sync your GitHub Actions workflows with Port Actions in a selected blueprint.
+You can run the tool and it will automatically import your GitHub action workflows to Port and add them as self-service actions in a specified blueprint.
 
-For more detailed information about how to use this tool, please refer to the README file in the [project's repository](https://github.com/port-labs/actions-auto-discovery).
+For more detailed information about the auto discovery tool, please refer to the README file in the [project's repository](https://github.com/port-labs/actions-auto-discovery).
 
 # Usage example
 
