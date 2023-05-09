@@ -292,9 +292,9 @@ resource "port-labs_entity" "myEntity" {
   }
 
   relations {
-    name  = "myAdditionalRelation"
-    identifiers = ["myAdditionalTargetEntityIdentifier"]
-  }[]
+    name  = "myAdditionalManyRelation"
+    identifiers = ["myAdditionalTargetEntityIdentifier", myAdditionalTargetEntityIdentifier2"]
+  }
  # highlight-end
 }
 ```
@@ -310,7 +310,7 @@ resource "port-labs_entity" "myEntity" {
 
 The following parameters are **required**:
 
-- `name` - the name of the [relation](../../../define-your-data-model/relate-blueprints/relate-blueprints.md#structure-table) in the blueprint definition;
+- `name` - the `identifier` of the [relation](../../../define-your-data-model/relate-blueprints/relate-blueprints.md#structure-table) in the blueprint definition;
 - `identifier` - the identifier of the target entity.
 
 </TabItem>
@@ -319,8 +319,8 @@ The following parameters are **required**:
 
 The following parameters are **required**:
 
-- `name` - the name of the [relation](../../../define-your-data-model/relate-blueprints/relate-blueprints.md#structure-table) in the blueprint definition;
-- `identifiers` - the identifiers of the target entity.
+- `name` - the `identifier` of the [relation](../../../define-your-data-model/relate-blueprints/relate-blueprints.md#structure-table) in the blueprint definition;
+- `identifiers` - the identifiers of the target entities.
 
 </TabItem>
 
