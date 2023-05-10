@@ -25,8 +25,8 @@ The steps shown in the image above are as follows:
 
 An example flow would be:
 
-1. A developer asks to run an Azure pipeline;
-2. Port sends a `POST` request with the action payload to the Azure webhook `URL`;
+1. A developer asks to run a Jenkins pipeline;
+2. Port sends a `POST` request with the action payload to the Jenkins webhook `URL`;
 3. The Jenkins webhook receives the new action request;
 4. The Jenkins webhook triggers the pipeline;
 
