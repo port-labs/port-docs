@@ -78,7 +78,7 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `L
 
 <Tabs groupId="tf-definition" defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Array - coming soon", value: "array"}
+{label: "Array", value: "array"}
 ]}>
 
 <TabItem value="basic">
@@ -93,6 +93,28 @@ resource "port-labs_blueprint" "myBlueprint" {
     required   = false
     type       = "string"
     format     = "date-time"
+  }
+  # highlight-end
+}
+```
+
+</TabItem>
+
+<TabItem value="array">
+
+```hcl showLineNumbers
+resource "port-labs_blueprint" "myBlueprint" {
+  # ...blueprint properties
+  # highlight-start
+  properties {
+    identifier = "myDatetimeProp"
+    title      = "My datetime"
+    required   = false
+    type       = "array"
+    items = {
+      type   = "string"
+      format = "date-time"
+    }
   }
   # highlight-end
 }

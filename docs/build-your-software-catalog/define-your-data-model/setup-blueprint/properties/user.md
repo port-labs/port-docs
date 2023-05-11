@@ -92,7 +92,7 @@ In addition, `user` format distinguishes between users by their status:
 
 <Tabs groupId="tf-definition" defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Array - coming soon", value: "array"}
+{label: "Array", value: "array"}
 ]}>
 
 <TabItem value="basic">
@@ -113,6 +113,28 @@ resource "port-labs_blueprint" "myBlueprint" {
 ```
 
 </TabItem>
+<TabItem value="array">
+
+```hcl showLineNumbers
+resource "port-labs_blueprint" "myBlueprint" {
+  # ...blueprint properties
+  # highlight-start
+  properties {
+    identifier = "myUserProp"
+    title      = "My user"
+    required   = false
+    type       = "array"
+    items = {
+      type   = "string"
+      format = "user"
+    }
+  }
+  # highlight-end
+}
+```
+
+</TabItem>
+
 </Tabs>
 
 ## Pulumi definition
