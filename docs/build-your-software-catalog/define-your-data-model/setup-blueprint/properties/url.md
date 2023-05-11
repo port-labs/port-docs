@@ -99,7 +99,7 @@ In this [live demo](https://demo.getport.io/domains) example, we can see the `Do
 <Tabs groupId="tf-definition" defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Enum", value: "enum"},
-{label: "Array - coming soon", value: "array"}
+{label: "Array", value: "array"}
 ]}>
 
 <TabItem value="basic">
@@ -137,6 +137,28 @@ resource "port-labs_blueprint" "myBlueprint" {
     enum_colors = {
       "https://example.com" = "red",
       "https://getport.io"  = "green"
+    }
+  }
+  # highlight-end
+}
+```
+
+</TabItem>
+
+<TabItem value="array">
+
+```hcl showLineNumbers
+resource "port-labs_blueprint" "myBlueprint" {
+  # ...blueprint properties
+  # highlight-start
+  properties {
+    identifier = "myUrlProp"
+    title      = "My url"
+    required   = false
+    type       = "array"
+    items = {
+      type   = "string"
+      format = "url"
     }
   }
   # highlight-end
