@@ -113,6 +113,46 @@ resource "port-labs_blueprint" "myBlueprint" {
 ```
 
 </TabItem>
+<TabItem value="enum">
+
+```hcl showLineNumbers
+resource "port-labs_blueprint" "myBlueprint" {
+  # ...blueprint properties
+  # highlight-start
+  properties {
+    identifier = "myNumberProp"
+    title      = "My number"
+    required   = false
+    type       = "number"
+    enum       = [1,2]
+  }
+  # highlight-end
+}
+```
+
+</TabItem>
+
+<TabItem value="array">
+
+```hcl showLineNumbers
+resource "port-labs_blueprint" "myBlueprint" {
+  # ...blueprint properties
+  # highlight-start
+  properties {
+    identifier = "myNumberArrayProp"
+    title      = "My number array"
+    required   = false
+    type       = "array"
+    items = {
+      type = "number"
+    }
+  }
+  # highlight-end
+}
+```
+
+</TabItem>
+
 </Tabs>
 
 ## Pulumi definition

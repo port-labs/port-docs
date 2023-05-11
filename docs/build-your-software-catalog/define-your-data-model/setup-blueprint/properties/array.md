@@ -25,13 +25,6 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `M
 
 ## API definition
 
-<Tabs groupId="api-definition" defaultValue="basic" values={[
-{label: "Basic", value: "basic"},
-{label: "Enum", value: "enum"}
-]}>
-
-<TabItem value="basic">
-
 ```json showLineNumbers
 {
   "myArrayProp": {
@@ -46,38 +39,9 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `M
 }
 ```
 
-</TabItem>
-<TabItem value="enum">
-
-```json showLineNumbers
-{
-  "myArrayEnum": {
-    "title": "My array enum",
-    "icon": "My icon",
-    "description": "My array enum",
-    "type": "array",
-    // highlight-next-line
-    "enum": [
-      [1, 2, 3],
-      [1, 2]
-    ]
-  }
-}
-```
-
-</TabItem>
-</Tabs>
-
 <ApiRef />
 
 ## Terraform definition
-
-<Tabs groupId="tf-definition" defaultValue="basic" values={[
-{label: "Basic", value: "basic"},
-{label: "Enum - coming soon", value: "enum"}
-]}>
-
-<TabItem value="basic">
 
 ```hcl showLineNumbers
 resource "port-labs_blueprint" "myBlueprint" {
@@ -93,19 +57,9 @@ resource "port-labs_blueprint" "myBlueprint" {
 }
 ```
 
-</TabItem>
-</Tabs>
-
 ## Pulumi definition
 
-<Tabs groupId="pulumi-definition" defaultValue="basic" values={[
-{label: "Basic", value: "basic"},
-{label: "Enum - coming soon", value: "enum"}
-]}>
-
-<TabItem value="basic">
-
-<Tabs groupId="pulumi-definition-array-basic" defaultValue="python" values={[
+<Tabs groupId="basic" defaultValue="python" values={[
 {label: "Python", value: "python"},
 {label: "TypeScript", value: "typescript"},
 {label: "JavaScript", value: "javascript"},
@@ -228,9 +182,6 @@ func main() {
 
 </TabItem>
 
-</Tabs>
-
-</TabItem>
 </Tabs>
 
 ## Validate array

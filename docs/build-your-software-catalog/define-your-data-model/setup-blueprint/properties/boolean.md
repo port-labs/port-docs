@@ -26,12 +26,6 @@ In this [live demo](https://demo.getport.io/packages) example, we can see the `I
 
 ## API definition
 
-<Tabs groupId="api-definition" defaultValue="basic" values={[
-{label: "Basic", value: "basic"}
-]}>
-
-<TabItem value="basic">
-
 ```json showLineNumbers
 {
   "myBooleanProp": {
@@ -46,18 +40,9 @@ In this [live demo](https://demo.getport.io/packages) example, we can see the `I
 }
 ```
 
-</TabItem>
-</Tabs>
-
 <ApiRef />
 
 ## Terraform definition
-
-<Tabs groupId="tf-definition" defaultValue="basic" values={[
-{label: "Basic", value: "basic"}
-]}>
-
-<TabItem value="basic">
 
 ```hcl showLineNumbers
 resource "port-labs_blueprint" "myBlueprint" {
@@ -72,9 +57,6 @@ resource "port-labs_blueprint" "myBlueprint" {
   # highlight-end
 }
 ```
-
-</TabItem>
-</Tabs>
 
 ## Pulumi definition
 
