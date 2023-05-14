@@ -354,9 +354,6 @@ In this step-by-step example, you will export your `App Runner services` to Port
                    "serviceUrl": "\"https://\" + .ServiceUrl",
                    "iamRole": ".InstanceConfiguration.InstanceRoleArn | if . == null then null else \"https://console.aws.amazon.com/go/view?arn=\" + . end",
                    "arn": ".ServiceArn"
-                 },
-                 "relations": {
-                   "region": ".ServiceArn | split(\":\")[3]"
                  }
                }
              ]
@@ -814,9 +811,6 @@ In this step-by-step example, you will export your `SNS topics` and `SQS queues`
                    "delaySeconds": ".DelaySeconds",
                    "tags": ".Tags",
                    "arn": ".Arn"
-                 },
-                 "relations": {
-                   "region": ".Arn | split(\":\")[3]"
                  }
                }
              ]

@@ -103,18 +103,20 @@ Here is the JSON of the action:
     },
     "required": ["service", "environment"]
   },
+  // highlight-start
   "invocationMethod": {
-    "type": "AZURE_DEVOPS",
-    "org": "<AZURE_DEVOPS_ORG>",
-    "webhook": "<AZURE_DEVOPS_WEBHOOK_NAME>"
+    "type": "AZURE-DEVOPS",
+    "org": "<AZURE-DEVOPS-ORG>",
+    "webhook": "<AZURE-DEVOPS-WEBHOOK-NAME>"
   },
+  // highlight-end
   "trigger": "CREATE",
   "description": "Deploy a service to the environment"
 }
 ```
 
 :::note
-Don't forget to replace the placeholders for `YOUR_AZURE_DEVOPS_ORG`, `YOUR_AZURE_DEVOPS_WEBHOOK_NAME`.
+Don't forget to replace the placeholders for `AZURE-DEVOPS-ORG` and `AZURE-DEVOPS-WEBHOOK-NAME`.
 :::
 
 To learn how to generate an API token to interact with Port, look [here](../../../../build-your-software-catalog/sync-data-to-catalog/api/#generate-an-api-token).
