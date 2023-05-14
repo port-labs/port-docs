@@ -198,7 +198,7 @@ Array validations follow the JSON schema model, refer to the [JSON schema docs](
 
 <Tabs groupId="validation-definition" defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Terraform - coming soon", value: "tf"}
+{label: "Terraform", value: "tf"}
 ]}>
 
 <TabItem value="basic">
@@ -215,6 +215,26 @@ Array validations follow the JSON schema model, refer to the [JSON schema docs](
     "maxItems": 5,
     "uniqueItems": false
     // highlight-end
+  }
+}
+```
+
+</TabItem>
+
+<TabItem value="tf">
+
+```hcl showLineNumbers
+resource "port-labs_blueprint" "myBlueprint" {
+  # ...blueprint properties
+  properties {
+    identifier = "myArrayProp"
+    title      = "My array"
+    required   = false
+    type       = "array"
+    # highlight-start
+    min_items  = 0
+    max_items  = 5
+    # highlight-end
   }
 }
 ```
