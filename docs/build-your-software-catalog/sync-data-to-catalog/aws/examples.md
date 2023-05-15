@@ -2668,7 +2668,9 @@ Done! soon, you will be able to see any `Elastic Beanstalk applications and envi
 In this step-by-step example, you will export your `Cloudformation Stacks` to Port.
 
 :::info Important
+
 The AWS exporter won't sync Cloudformation Stacks in 'DELETE_COMPLETE' status, since their logical state is deleted.
+
 :::
 
 1. Create the following Port blueprint:
@@ -2807,9 +2809,10 @@ The AWS exporter won't sync Cloudformation Stacks in 'DELETE_COMPLETE' status, s
    </details>
 
 :::Tip Relations between Cloudformation Stacks and AWS resources
+
   In order to connect between Cloudformation Stacks and their affected resources, you'll need to update:
   1. Cloudformation blueprint
-     ```json showLineNumbers
+    ```json showLineNumbers
       "relations": {
         "lambdas": {
           "title": "Created Lambdas",
@@ -2819,7 +2822,7 @@ The AWS exporter won't sync Cloudformation Stacks in 'DELETE_COMPLETE' status, s
           "many": true
         }
       }
-     ```
+    ```
   2. `config.json`
     ```json showLineNumbers
     {
@@ -2836,10 +2839,13 @@ The AWS exporter won't sync Cloudformation Stacks in 'DELETE_COMPLETE' status, s
       }
     }
     ```
+    
 :::
 
 :::Important 
+
   The AWS Cloudformation API can retrieve up to 100 resources per Cloudformation Stack
+
 :::
 
 3. Update the exporter's `IAM policy`:
