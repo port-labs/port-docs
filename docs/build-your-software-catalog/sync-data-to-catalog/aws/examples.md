@@ -2671,136 +2671,136 @@ In this step-by-step example, you will export your `Cloudformation Stacks` to Po
 
    - **Cloudformation Stack** - will represent Cloudformation Stacks from the AWS account.
 
-   You may use the following definitions:
+You may use the following definitions:
 
-   <details>
-   <summary> CloudformationStack blueprint </summary>
+  <details>
+  <summary> CloudformationStack blueprint </summary>
 
-   ```json showLineNumbers
-   {
-     "identifier": "cloudFormationStack",
-     "description": "This blueprint represents a service in our software catalog",
-     "title": "CloudFormation Stack",
-     "icon": "Microservice",
-     "schema": {
-       "properties": {
-         "createdAt": {
-           "type": "string",
-           "title": "Creation Time"
-         },
-         "status": {
-           "title": "Status",
-           "description": "The current status of the Stack",
-           "type": "string",
-           "enum": [
-             "CREATE_IN_PROGRESS",
-             "CREATE_FAILED",
-             "CREATE_COMPLETE",
-             "ROLLBACK_IN_PROGRESS",
-             "ROLLBACK_FAILED",
-             "ROLLBACK_COMPLETE",
-             "DELETE_IN_PROGRESS",
-             "DELETE_FAILED",
-             "UPDATE_IN_PROGRESS",
-             "UPDATE_COMPLETE_CLEANUP_IN_PROGRESS",
-             "UPDATE_COMPLETE",
-             "UPDATE_FAILED",
-             "UPDATE_ROLLBACK_IN_PROGRESS",
-             "UPDATE_ROLLBACK_FAILED",
-             "UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS",
-             "UPDATE_ROLLBACK_COMPLETE",
-             "REVIEW_IN_PROGRESS",
-             "IMPORT_IN_PROGRESS",
-             "IMPORT_COMPLETE",
-             "IMPORT_ROLLBACK_IN_PROGRESS",
-             "IMPORT_ROLLBACK_FAILED",
-             "IMPORT_ROLLBACK_COMPLETE"
-           ],
-           "enumColors": {
-             "CREATE_IN_PROGRESS": "orange",
-             "CREATE_FAILED": "red",
-             "CREATE_COMPLETE": "green",
-             "ROLLBACK_IN_PROGRESS": "orange",
-             "ROLLBACK_FAILED": "red",
-             "ROLLBACK_COMPLETE": "green",
-             "UPDATE_IN_PROGRESS": "orange",
-             "UPDATE_FAILED": "red",
-             "UPDATE_COMPLETE": "green"
-           }
-         },
-         "resources": {
-           "items": {
-             "type": "object"
-           },
-           "title": "Resources",
-           "description": "The cloudformation stack resources",
-           "type": "array"
-         },
-         "template": {
-           "title": "Template",
-           "type": "string",
-           "format": "yaml"
-         },
-         "tags": {
-           "items": {
-             "type": "object"
-           },
-           "title": "Tags",
-           "type": "array"
-         },
-         "link": {
-           "title": "link",
-           "description": "The aws console stack url",
-           "type": "string",
-           "format": "url"
-         },
-         "lastUpdated": {
-           "type": "string",
-           "title": "Last Updated"
-         }
-       },
-       "required": []
-     },
-     "mirrorProperties": {},
-     "calculationProperties": {},
-     "relations": {}
-   }
-   ```
+    ```json showLineNumbers
+    {
+      "identifier": "cloudFormationStack",
+      "description": "This blueprint represents a service in our software catalog",
+      "title": "CloudFormation Stack",
+      "icon": "Microservice",
+      "schema": {
+        "properties": {
+          "createdAt": {
+            "type": "string",
+            "title": "Creation Time"
+          },
+          "status": {
+            "title": "Status",
+            "description": "The current status of the Stack",
+            "type": "string",
+            "enum": [
+              "CREATE_IN_PROGRESS",
+              "CREATE_FAILED",
+              "CREATE_COMPLETE",
+              "ROLLBACK_IN_PROGRESS",
+              "ROLLBACK_FAILED",
+              "ROLLBACK_COMPLETE",
+              "DELETE_IN_PROGRESS",
+              "DELETE_FAILED",
+              "UPDATE_IN_PROGRESS",
+              "UPDATE_COMPLETE_CLEANUP_IN_PROGRESS",
+              "UPDATE_COMPLETE",
+              "UPDATE_FAILED",
+              "UPDATE_ROLLBACK_IN_PROGRESS",
+              "UPDATE_ROLLBACK_FAILED",
+              "UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS",
+              "UPDATE_ROLLBACK_COMPLETE",
+              "REVIEW_IN_PROGRESS",
+              "IMPORT_IN_PROGRESS",
+              "IMPORT_COMPLETE",
+              "IMPORT_ROLLBACK_IN_PROGRESS",
+              "IMPORT_ROLLBACK_FAILED",
+              "IMPORT_ROLLBACK_COMPLETE"
+            ],
+            "enumColors": {
+              "CREATE_IN_PROGRESS": "orange",
+              "CREATE_FAILED": "red",
+              "CREATE_COMPLETE": "green",
+              "ROLLBACK_IN_PROGRESS": "orange",
+              "ROLLBACK_FAILED": "red",
+              "ROLLBACK_COMPLETE": "green",
+              "UPDATE_IN_PROGRESS": "orange",
+              "UPDATE_FAILED": "red",
+              "UPDATE_COMPLETE": "green"
+            }
+          },
+          "resources": {
+            "items": {
+              "type": "object"
+            },
+            "title": "Resources",
+            "description": "The cloudformation stack resources",
+            "type": "array"
+          },
+          "template": {
+            "title": "Template",
+            "type": "string",
+            "format": "yaml"
+          },
+          "tags": {
+            "items": {
+              "type": "object"
+            },
+            "title": "Tags",
+            "type": "array"
+          },
+          "link": {
+            "title": "link",
+            "description": "The aws console stack url",
+            "type": "string",
+            "format": "url"
+          },
+          "lastUpdated": {
+            "type": "string",
+            "title": "Last Updated"
+          }
+        },
+        "required": []
+      },
+      "mirrorProperties": {},
+      "calculationProperties": {},
+      "relations": {}
+    }
+    ```
 
-   </details>
+  </details>
 
 2. Upload the `config.json` file to the exporter's S3 bucket:
 
-   <details>
-   <summary> Port AWS exporter config.json </summary>
+  <details>
+  <summary> Port AWS exporter config.json </summary>
 
-   ```json showLineNumbers
-   {
-     "kind": "AWS::CloudFormation::Stack",
-     "port": {
-       "entity": {
-         "mappings": [
-           {
-             "identifier": ".StackName",
-             "title": ".StackName",
-             "blueprint": "cloudFormationStack",
-             "properties": {
-               "lastUpdated": ".LastUpdatedTime",
-               "resources": ".StackResources",
-               "createdAt": ".CreationTime",
-               "status": ".StackStatus",
-               "link": "\"https://console.aws.amazon.com/go/view?arn=\" + .StackId",
-               "template": ".TemplateBody",
-               "tags": ".Tags"
-             }
-           }
-         ]
-       }
-     }
-   }
-   ```
+```json showLineNumbers
+{
+  "kind": "AWS::CloudFormation::Stack",
+  "port": {
+    "entity": {
+      "mappings": [
+        {
+          "identifier": ".StackName",
+          "title": ".StackName",
+          "blueprint": "cloudFormationStack",
+          "properties": {
+            "lastUpdated": ".LastUpdatedTime",
+            "resources": ".StackResources",
+            "createdAt": ".CreationTime",
+            "status": ".StackStatus",
+            "link": "\"https://console.aws.amazon.com/go/view?arn=\" + .StackId",
+            "template": ".TemplateBody",
+            "tags": ".Tags"
+          }
+        }
+      ]
+    }
+  }
+}
+```
 
-   </details>
+  </details>
 
 3. Update the exporter's `IAM policy`:
 
