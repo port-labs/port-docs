@@ -2773,7 +2773,7 @@ The AWS exporter won't sync Cloudformation Stacks in 'DELETE_COMPLETE' status, s
    }
    ```
 
- </details>
+   </details>
 
 2. Upload the `config.json` file to the exporter's S3 bucket:
 
