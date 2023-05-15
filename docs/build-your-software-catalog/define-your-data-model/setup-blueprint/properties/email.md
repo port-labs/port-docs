@@ -145,8 +145,8 @@ resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties {
-    identifier = "myUrlProp"
-    title      = "My url"
+    identifier = "myEmailArray"
+    title      = "My email array"
     required   = false
     type       = "array"
     items = {

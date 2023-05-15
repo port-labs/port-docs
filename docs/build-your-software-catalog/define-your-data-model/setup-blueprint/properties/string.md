@@ -149,8 +149,8 @@ resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties {
-    identifier = "myArrayProp"
-    title      = "My array"
+    identifier = "myStringArray"
+    title      = "My string array"
     type       = "array"
     items = {
       type = "string"

@@ -105,8 +105,8 @@ resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties {
-    identifier = "myTeamProp"
-    title      = "My team"
+    identifier = "myTeamArray"
+    title      = "My team array"
     required   = false
     type       = "array"
     items = {

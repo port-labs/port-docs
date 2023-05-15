@@ -60,12 +60,6 @@ resource "port-labs_blueprint" "myBlueprint" {
 
 ## Pulumi definition
 
-<Tabs groupId="pulumi-definition" defaultValue="basic" values={[
-{label: "Basic", value: "basic"}
-]}>
-
-<TabItem value="basic">
-
 <Tabs groupId="pulumi-definition-boolean-basic" defaultValue="python" values={[
 {label: "Python", value: "python"},
 {label: "TypeScript", value: "typescript"},
@@ -189,7 +183,4 @@ func main() {
 
 </TabItem>
 
-</Tabs>
-
-</TabItem>
 </Tabs>
