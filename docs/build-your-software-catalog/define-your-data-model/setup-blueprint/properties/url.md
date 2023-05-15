@@ -153,7 +153,7 @@ resource "port-labs_blueprint" "myBlueprint" {
   # highlight-start
   properties {
     identifier = "myUrlArray"
-    title      = "My url"
+    title      = "My url array"
     required   = false
     type       = "array"
     items = {

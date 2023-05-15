@@ -120,8 +120,8 @@ resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties {
-    identifier = "myNumberProp"
-    title      = "My number"
+    identifier = "myNumberEnum"
+    title      = "My number enum"
     required   = false
     type       = "number"
     enum       = [1,2]
@@ -139,7 +139,7 @@ resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties {
-    identifier = "myNumberArrayProp"
+    identifier = "myNumberArray"
     title      = "My number array"
     required   = false
     type       = "array"
