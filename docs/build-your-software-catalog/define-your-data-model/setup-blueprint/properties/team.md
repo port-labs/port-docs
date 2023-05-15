@@ -76,7 +76,7 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `T
 
 <Tabs groupId="tf-definition" defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Array - coming soon", value: "array"}
+{label: "Array", value: "array"}
 ]}>
 
 <TabItem value="basic">
@@ -97,16 +97,32 @@ resource "port-labs_blueprint" "myBlueprint" {
 ```
 
 </TabItem>
+
+<TabItem value="array">
+
+```hcl showLineNumbers
+resource "port-labs_blueprint" "myBlueprint" {
+  # ...blueprint properties
+  # highlight-start
+  properties {
+    identifier = "myTeamArray"
+    title      = "My team array"
+    required   = false
+    type       = "array"
+    items = {
+      type   = "string"
+      format = "user"
+    }
+  }
+  # highlight-end
+}
+```
+
+</TabItem>
+
 </Tabs>
 
 ## Pulumi definition
-
-<Tabs groupId="pulumi-definition" defaultValue="basic" values={[
-{label: "Basic", value: "basic"},
-{label: "Enum - coming soon", value: "enum"}
-]}>
-
-<TabItem value="basic">
 
 <Tabs groupId="pulumi-definition-team-basic" defaultValue="python" values={[
 {label: "Python", value: "python"},
@@ -235,7 +251,4 @@ func main() {
 
 </TabItem>
 
-</Tabs>
-
-</TabItem>
 </Tabs>

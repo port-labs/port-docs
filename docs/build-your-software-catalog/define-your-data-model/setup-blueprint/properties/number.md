@@ -93,7 +93,7 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `J
 <Tabs groupId="tf-definition" defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Enum - coming soon", value: "enum"},
-{label: "Array - coming soon", value: "array"}
+{label: "Array", value: "array"}
 ]}>
 
 <TabItem value="basic">
@@ -113,6 +113,46 @@ resource "port-labs_blueprint" "myBlueprint" {
 ```
 
 </TabItem>
+<TabItem value="enum">
+
+```hcl showLineNumbers
+resource "port-labs_blueprint" "myBlueprint" {
+  # ...blueprint properties
+  # highlight-start
+  properties {
+    identifier = "myNumberEnum"
+    title      = "My number enum"
+    required   = false
+    type       = "number"
+    enum       = [1,2]
+  }
+  # highlight-end
+}
+```
+
+</TabItem>
+
+<TabItem value="array">
+
+```hcl showLineNumbers
+resource "port-labs_blueprint" "myBlueprint" {
+  # ...blueprint properties
+  # highlight-start
+  properties {
+    identifier = "myNumberArray"
+    title      = "My number array"
+    required   = false
+    type       = "array"
+    items = {
+      type = "number"
+    }
+  }
+  # highlight-end
+}
+```
+
+</TabItem>
+
 </Tabs>
 
 ## Pulumi definition
