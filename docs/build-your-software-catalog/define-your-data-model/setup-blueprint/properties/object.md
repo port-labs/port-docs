@@ -106,7 +106,7 @@ resource "port-labs_blueprint" "myBlueprint" {
   # highlight-start
   properties {
     identifier = "myObjectArray"
-    title      = "My array object"
+    title      = "My object array"
     required   = false
     type       = "array"
     items = {
