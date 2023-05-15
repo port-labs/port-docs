@@ -121,7 +121,7 @@ resource "port-labs_blueprint" "myBlueprint" {
   # highlight-start
   properties {
     identifier = "myNumberEnum"
-    title      = "My number"
+    title      = "My number enum"
     required   = false
     type       = "number"
     enum       = [1,2]
