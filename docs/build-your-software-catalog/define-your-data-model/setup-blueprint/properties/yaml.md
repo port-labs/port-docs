@@ -105,7 +105,7 @@ resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties {
-    identifier = "myYAMLProp"
+    identifier = "myYamlArray"
     title      = "My yaml array"
     required   = false
     type       = "array"
