@@ -478,7 +478,3 @@ terraform import port-labs_entity.myEntity "{blueprintIdentifier}:{entityIdentif
 ## Examples
 
 Refer to the [examples](./examples/examples.md) page for practical configurations and their corresponding blueprint definitions.
-
-```
-
-```
