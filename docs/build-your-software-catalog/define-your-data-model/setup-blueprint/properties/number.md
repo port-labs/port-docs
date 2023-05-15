@@ -120,7 +120,7 @@ resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties {
-    identifier = "myNumberProp"
+    identifier = "myNumberEnum"
     title      = "My number"
     required   = false
     type       = "number"
