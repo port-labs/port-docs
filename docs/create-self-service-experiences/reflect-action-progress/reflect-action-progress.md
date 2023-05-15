@@ -132,57 +132,55 @@ By invoking the Self-Service Action, the following action invocation body is sen
 
 ```json showLineNumbers
 {
+  "action": "create_microservice",
+  "resourceType": "run",
+  "status": "TRIGGERED",
+  "trigger": {
+    "by": {
+      "orgId": "org_7SDeR821bunhS8es",
+      "userId": "auth0|638879fa62c686d381b36ecb",
+      "user": {
+        "email": "test@test.com",
+        "firstName": "test",
+        "lastName": "test",
+        "id": "auth0|638879fa62c686d381b36ecb"
+      }
+    },
+    "origin": "UI",
+    "at": "2022-12-07T12:53:52.916Z"
+  },
+  "context": {
+    "entity": null,
+    "blueprint": "microservice",
+    // highlight-next-line
+    "runId": "r_QOz6WoOB1Q2lmhZZ"
+  },
   "payload": {
-    "action": "create_microservice",
-    "resourceType": "run",
-    "status": "TRIGGERED",
-    "trigger": {
-      "by": {
-        "orgId": "org_7SDeR821bunhS8es",
-        "userId": "auth0|638879fa62c686d381b36ecb",
-        "user": {
-          "email": "test@test.com",
-          "firstName": "test",
-          "lastName": "test",
-          "id": "auth0|638879fa62c686d381b36ecb"
+    "entity": null,
+    "action": {
+      "id": "action_ed2B0O9CbEYkuqvN",
+      "identifier": "create_microservice",
+      "title": "Create Microservice",
+      "userInputs": {
+        "properties": {
+          "name": { "title": "Service name", "type": "string" },
+          "region": { "title": "Cloud Region", "type": "string" }
         }
       },
-      "origin": "UI",
-      "at": "2022-12-07T12:53:52.916Z"
-    },
-    "context": {
-      "entity": null,
-      "blueprint": "microservice",
-      // highlight-next-line
-      "runId": "r_QOz6WoOB1Q2lmhZZ"
-    },
-    "payload": {
-      "entity": null,
-      "action": {
-        "id": "action_ed2B0O9CbEYkuqvN",
-        "identifier": "create_microservice",
-        "title": "Create Microservice",
-        "userInputs": {
-          "properties": {
-            "name": { "title": "Service name", "type": "string" },
-            "region": { "title": "Cloud Region", "type": "string" }
-          }
-        },
-        "invocationMethod": {
-          "url": "https://getport.io",
-          "agent": false,
-          "type": "WEBHOOK"
-        },
-        "trigger": "CREATE",
-        "description": "Create new microservice",
-        "blueprint": "microservice",
-        "createdAt": "2022-12-07T09:48:28.659Z",
-        "createdBy": "auth0|638879fa62c686d381b36ecb",
-        "updatedAt": "2022-12-07T09:48:28.659Z",
-        "updatedBy": "auth0|638879fa62c686d381b36ecb"
+      "invocationMethod": {
+        "url": "https://getport.io",
+        "agent": false,
+        "type": "WEBHOOK"
       },
-      "properties": { "name": "my-microservice", "region": "eu-west-1" }
-    }
+      "trigger": "CREATE",
+      "description": "Create new microservice",
+      "blueprint": "microservice",
+      "createdAt": "2022-12-07T09:48:28.659Z",
+      "createdBy": "auth0|638879fa62c686d381b36ecb",
+      "updatedAt": "2022-12-07T09:48:28.659Z",
+      "updatedBy": "auth0|638879fa62c686d381b36ecb"
+    },
+    "properties": { "name": "my-microservice", "region": "eu-west-1" }
   }
 }
 ```
