@@ -2667,11 +2667,11 @@ Done! soon, you will be able to see any `Elastic Beanstalk applications and envi
 
 In this step-by-step example, you will export your `Cloudformation Stacks` to Port.
 
-:::info Important
+<!-- :::info Important
 
 The AWS exporter won't sync Cloudformation Stacks in 'DELETE_COMPLETE' status, since their logical state is deleted.
 
-:::
+::: -->
 
 1. Create the following Port blueprint:
 
@@ -2679,11 +2679,11 @@ The AWS exporter won't sync Cloudformation Stacks in 'DELETE_COMPLETE' status, s
 
    You may use the following definitions:
 
-    <details>
-    <summary> CloudformationStack blueprint </summary>
+   <details>
+   <summary> CloudformationStack blueprint </summary>
 
    ```json showLineNumbers
-  {
+   {
     "identifier": "cloudFormationStack",
     "description": "This blueprint represents a service in our software catalog",
     "title": "CloudFormation Stack",
@@ -2770,10 +2770,10 @@ The AWS exporter won't sync Cloudformation Stacks in 'DELETE_COMPLETE' status, s
     "mirrorProperties": {},
     "calculationProperties": {},
     "relations": {}
-  }
+   }
    ```
 
-    </details>
+ </details>
 
 2. Upload the `config.json` file to the exporter's S3 bucket:
 
@@ -2804,49 +2804,9 @@ The AWS exporter won't sync Cloudformation Stacks in 'DELETE_COMPLETE' status, s
         }
       }
     }
-   ```
+    ```
 
    </details>
-
-:::Tip Relations between Cloudformation Stacks and AWS resources
-
-  In order to connect between Cloudformation Stacks and their affected resources, you'll need to update:
-  1. Cloudformation blueprint
-    ```json showLineNumbers
-      "relations": {
-        "lambdas": {
-          "title": "Created Lambdas",
-          "description": "The Lambda functions created from the CloudFormation Stack",
-          "target": "lambda",
-          "required": false,
-          "many": true
-        }
-      }
-    ```
-  2. `config.json`
-    ```json showLineNumbers
-    {
-      "kind": "AWS::CloudFormation::Stack",
-      "port": {
-        "entity": {
-          "mappings": [
-            {
-              ...
-            }, "relations": {
-                "lambdas": ".StackResources // [] | map(select(.ResourceType == \"AWS::Lambda::Function\")) | if . == [] then [] else .[].PhysicalResourceId end",
-              }
-        }
-      }
-    }
-    ```
-    
-:::
-
-:::Important 
-
-  The AWS Cloudformation API can retrieve up to 100 resources per Cloudformation Stack
-
-:::
 
 3. Update the exporter's `IAM policy`:
 
@@ -2871,7 +2831,6 @@ The AWS exporter won't sync Cloudformation Stacks in 'DELETE_COMPLETE' status, s
      ]
    }
    ```
-
    </details>
 
 4. Optional: Create an event rule to trigger automatic syncing of changes in Cloudformation Stacks.
@@ -2920,5 +2879,64 @@ The AWS exporter won't sync Cloudformation Stacks in 'DELETE_COMPLETE' status, s
    ```
 
    </details>
+      
+### Relations between Cloudformation Stacks and AWS resources
+
+   In order to connect between Cloudformation Stacks and their affected resources, you'll need to update the blueprint and the exporter configuration.
+      
+   here's an example of connecting between Cloudformation Stacks and Lambda functions:
+   
+      
+   :::Tip
+
+   Make sure your Lambda function configuration appears before your cloudformation defintion in the `config.yaml`
+
+   :::
+      
+   <details>
+   <summary> Add relations to the blueprint </summary>
+      
+   ```json showLineNumbers
+   {
+      ...
+      "relations": {
+          "lambdas": {
+            "title": "Created Lambdas",
+            "description": "The Lambda functions created from the CloudFormation Stack",
+            "target": "lambda",
+            "required": false,
+            "many": true
+         }
+      }
+   }
+   ```
+      
+   </details>
+     
+   <details>
+   <summary> Add relations to the exporter `config.yaml` </summary>
+    
+   ```json showLineNumbers
+   {
+      ...
+      "mappings": [
+         {...},
+      "relations": {
+         "lambdas": ".StackResources // [] | map(select(.ResourceType == \"AWS::Lambda::Function\")) | if . == [] then [] else .[].PhysicalResourceId end",
+      }]
+   }
+   ```
+      
+   </details>
+      
+      
+:::Important
+
+  The AWS Cloudformation API can retrieve up to 100 resources per Cloudformation Stack
+      
+  For more information about the Cloudformation API, see the [API Reference]([https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-concepts.html#cloudtrail-concepts-global-service-events](https://docs.aws.amazon.com/cli/latest/reference/cloudformation/index.html)).
+
+:::
+
 
 Done! soon, you will be able to see any `Cloudformation Stacks`.
