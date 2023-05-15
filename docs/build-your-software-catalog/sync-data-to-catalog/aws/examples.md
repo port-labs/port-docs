@@ -2922,7 +2922,7 @@ The AWS exporter won't sync Cloudformation Stacks in 'DELETE_COMPLETE' status, s
       "mappings": [
          {...},
       "relations": {
-         "lambdas": ".StackResources // [] | map(select(.ResourceType == \"AWS::Lambda::Function\")) | if . == [] then [] else .[].PhysicalResourceId end",
+         "lambdas": ".StackResources // [] | map(select(.ResourceType == \"AWS::Lambda::Function\")) | if . == [] then [] else .[].PhysicalResourceId end"
       }]
    }
    ```
