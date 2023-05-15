@@ -2671,101 +2671,101 @@ In this step-by-step example, you will export your `Cloudformation Stacks` to Po
 
    - **Cloudformation Stack** - will represent Cloudformation Stacks from the AWS account.
 
-You may use the following definitions:
+  You may use the following definitions:
 
   <details>
   <summary> CloudformationStack blueprint </summary>
 
-    ```json showLineNumbers
-    {
-      "identifier": "cloudFormationStack",
-      "description": "This blueprint represents a service in our software catalog",
-      "title": "CloudFormation Stack",
-      "icon": "Microservice",
-      "schema": {
-        "properties": {
-          "createdAt": {
-            "type": "string",
-            "title": "Creation Time"
-          },
-          "status": {
-            "title": "Status",
-            "description": "The current status of the Stack",
-            "type": "string",
-            "enum": [
-              "CREATE_IN_PROGRESS",
-              "CREATE_FAILED",
-              "CREATE_COMPLETE",
-              "ROLLBACK_IN_PROGRESS",
-              "ROLLBACK_FAILED",
-              "ROLLBACK_COMPLETE",
-              "DELETE_IN_PROGRESS",
-              "DELETE_FAILED",
-              "UPDATE_IN_PROGRESS",
-              "UPDATE_COMPLETE_CLEANUP_IN_PROGRESS",
-              "UPDATE_COMPLETE",
-              "UPDATE_FAILED",
-              "UPDATE_ROLLBACK_IN_PROGRESS",
-              "UPDATE_ROLLBACK_FAILED",
-              "UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS",
-              "UPDATE_ROLLBACK_COMPLETE",
-              "REVIEW_IN_PROGRESS",
-              "IMPORT_IN_PROGRESS",
-              "IMPORT_COMPLETE",
-              "IMPORT_ROLLBACK_IN_PROGRESS",
-              "IMPORT_ROLLBACK_FAILED",
-              "IMPORT_ROLLBACK_COMPLETE"
-            ],
-            "enumColors": {
-              "CREATE_IN_PROGRESS": "orange",
-              "CREATE_FAILED": "red",
-              "CREATE_COMPLETE": "green",
-              "ROLLBACK_IN_PROGRESS": "orange",
-              "ROLLBACK_FAILED": "red",
-              "ROLLBACK_COMPLETE": "green",
-              "UPDATE_IN_PROGRESS": "orange",
-              "UPDATE_FAILED": "red",
-              "UPDATE_COMPLETE": "green"
-            }
-          },
-          "resources": {
-            "items": {
-              "type": "object"
-            },
-            "title": "Resources",
-            "description": "The cloudformation stack resources",
-            "type": "array"
-          },
-          "template": {
-            "title": "Template",
-            "type": "string",
-            "format": "yaml"
-          },
-          "tags": {
-            "items": {
-              "type": "object"
-            },
-            "title": "Tags",
-            "type": "array"
-          },
-          "link": {
-            "title": "link",
-            "description": "The aws console stack url",
-            "type": "string",
-            "format": "url"
-          },
-          "lastUpdated": {
-            "type": "string",
-            "title": "Last Updated"
+  ```json showLineNumbers
+  {
+    "identifier": "cloudFormationStack",
+    "description": "This blueprint represents a service in our software catalog",
+    "title": "CloudFormation Stack",
+    "icon": "Microservice",
+    "schema": {
+      "properties": {
+        "createdAt": {
+          "type": "string",
+          "title": "Creation Time"
+        },
+        "status": {
+          "title": "Status",
+          "description": "The current status of the Stack",
+          "type": "string",
+          "enum": [
+            "CREATE_IN_PROGRESS",
+            "CREATE_FAILED",
+            "CREATE_COMPLETE",
+            "ROLLBACK_IN_PROGRESS",
+            "ROLLBACK_FAILED",
+            "ROLLBACK_COMPLETE",
+            "DELETE_IN_PROGRESS",
+            "DELETE_FAILED",
+            "UPDATE_IN_PROGRESS",
+            "UPDATE_COMPLETE_CLEANUP_IN_PROGRESS",
+            "UPDATE_COMPLETE",
+            "UPDATE_FAILED",
+            "UPDATE_ROLLBACK_IN_PROGRESS",
+            "UPDATE_ROLLBACK_FAILED",
+            "UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS",
+            "UPDATE_ROLLBACK_COMPLETE",
+            "REVIEW_IN_PROGRESS",
+            "IMPORT_IN_PROGRESS",
+            "IMPORT_COMPLETE",
+            "IMPORT_ROLLBACK_IN_PROGRESS",
+            "IMPORT_ROLLBACK_FAILED",
+            "IMPORT_ROLLBACK_COMPLETE"
+          ],
+          "enumColors": {
+            "CREATE_IN_PROGRESS": "orange",
+            "CREATE_FAILED": "red",
+            "CREATE_COMPLETE": "green",
+            "ROLLBACK_IN_PROGRESS": "orange",
+            "ROLLBACK_FAILED": "red",
+            "ROLLBACK_COMPLETE": "green",
+            "UPDATE_IN_PROGRESS": "orange",
+            "UPDATE_FAILED": "red",
+            "UPDATE_COMPLETE": "green"
           }
         },
-        "required": []
+        "resources": {
+          "items": {
+            "type": "object"
+          },
+          "title": "Resources",
+          "description": "The cloudformation stack resources",
+          "type": "array"
+        },
+        "template": {
+          "title": "Template",
+          "type": "string",
+          "format": "yaml"
+        },
+        "tags": {
+          "items": {
+            "type": "object"
+          },
+          "title": "Tags",
+          "type": "array"
+        },
+        "link": {
+          "title": "link",
+          "description": "The aws console stack url",
+          "type": "string",
+          "format": "url"
+        },
+        "lastUpdated": {
+          "type": "string",
+          "title": "Last Updated"
+        }
       },
-      "mirrorProperties": {},
-      "calculationProperties": {},
-      "relations": {}
-    }
-    ```
+      "required": []
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "relations": {}
+  }
+  ```
 
   </details>
 
@@ -2774,31 +2774,31 @@ You may use the following definitions:
   <details>
   <summary> Port AWS exporter config.json </summary>
 
-```json showLineNumbers
-{
-  "kind": "AWS::CloudFormation::Stack",
-  "port": {
-    "entity": {
-      "mappings": [
-        {
-          "identifier": ".StackName",
-          "title": ".StackName",
-          "blueprint": "cloudFormationStack",
-          "properties": {
-            "lastUpdated": ".LastUpdatedTime",
-            "resources": ".StackResources",
-            "createdAt": ".CreationTime",
-            "status": ".StackStatus",
-            "link": "\"https://console.aws.amazon.com/go/view?arn=\" + .StackId",
-            "template": ".TemplateBody",
-            "tags": ".Tags"
+  ```json showLineNumbers
+  {
+    "kind": "AWS::CloudFormation::Stack",
+    "port": {
+      "entity": {
+        "mappings": [
+          {
+            "identifier": ".StackName",
+            "title": ".StackName",
+            "blueprint": "cloudFormationStack",
+            "properties": {
+              "lastUpdated": ".LastUpdatedTime",
+              "resources": ".StackResources",
+              "createdAt": ".CreationTime",
+              "status": ".StackStatus",
+              "link": "\"https://console.aws.amazon.com/go/view?arn=\" + .StackId",
+              "template": ".TemplateBody",
+              "tags": ".Tags"
+            }
           }
-        }
-      ]
+        ]
+      }
     }
   }
-}
-```
+  ```
 
   </details>
 
@@ -2807,71 +2807,71 @@ You may use the following definitions:
   <details>
   <summary> IAM Policy </summary>
 
-```json showLineNumbers
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "VisualEditor0",
-      "Effect": "Allow",
-      "Action": [
-        "cloudformation:DescribeStacks",
-        "cloudformation:DescribeStackResources",
-        "cloudformation:ListStacks",
-        "cloudformation:GetTemplate"
-      ],
-      "Resource": "*"
-    }
-  ]
-}
-```
+  ```json showLineNumbers
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "VisualEditor0",
+        "Effect": "Allow",
+        "Action": [
+          "cloudformation:DescribeStacks",
+          "cloudformation:DescribeStackResources",
+          "cloudformation:ListStacks",
+          "cloudformation:GetTemplate"
+        ],
+        "Resource": "*"
+      }
+    ]
+  }
+  ```
 
   </details>
 
 4. Optional: Create an event rule to trigger automatic syncing of changes in Cloudformation Stacks.
 
-You may use the following CloudFormation Template:
+  You may use the following CloudFormation Template:
 
   <details>
   <summary> Event Rule CloudFormation Template </summary>
 
-```yaml showLineNumbers
-EventRule0:
-Type: AWS::Events::Rule
-Properties:
-  EventBusName: default
-  EventPattern:
-    detail-type:
-      - AWS API Call via CloudTrail
-    source:
-      - aws.cloudformation
-    detail:
-      eventSource:
-        - cloudformation.amazonaws.com
-      eventName:
-        - prefix: CreateStack
-        - prefix: UpdateStack
-        - prefix: DeleteStack
-  Name: port-aws-exporter-sync-cloudformation-trails
-  State: ENABLED
-  Targets:
-    - Id: PortAWSExporterEventsQueue
-      Arn:
-        Fn::ImportValue:
-          Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
-      InputTransformer:
-        InputPathsMap:
-          eventName: $.detail.eventName
-          awsRegion: $.detail.awsRegion
-          stackName: $.detail.requestParameters.stackName
-        InputTemplate: |-
-          {
-              "resource_type": "AWS::CloudFormation::Stack",
-              "region": "\"<awsRegion>\"",
-              "identifier": "if \"<stackName>\" | startswith(\"arn:\") then \"<stackName>\" | split(\"/\")[1] else \"<stackName>\" end",
-              "action": "if \"<eventName>\" | test(\"DeleteStack[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
-          }
-```
+    ```yaml showLineNumbers
+    EventRule0:
+    Type: AWS::Events::Rule
+    Properties:
+      EventBusName: default
+      EventPattern:
+        detail-type:
+          - AWS API Call via CloudTrail
+        source:
+          - aws.cloudformation
+        detail:
+          eventSource:
+            - cloudformation.amazonaws.com
+          eventName:
+            - prefix: CreateStack
+            - prefix: UpdateStack
+            - prefix: DeleteStack
+      Name: port-aws-exporter-sync-cloudformation-trails
+      State: ENABLED
+      Targets:
+        - Id: PortAWSExporterEventsQueue
+          Arn:
+            Fn::ImportValue:
+              Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+          InputTransformer:
+            InputPathsMap:
+              eventName: $.detail.eventName
+              awsRegion: $.detail.awsRegion
+              stackName: $.detail.requestParameters.stackName
+            InputTemplate: |-
+              {
+                  "resource_type": "AWS::CloudFormation::Stack",
+                  "region": "\"<awsRegion>\"",
+                  "identifier": "if \"<stackName>\" | startswith(\"arn:\") then \"<stackName>\" | split(\"/\")[1] else \"<stackName>\" end",
+                  "action": "if \"<eventName>\" | test(\"DeleteStack[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
+              }
+    ```
 
   </details>
 
@@ -2888,30 +2888,30 @@ In order to connect between Cloudformation Stacks and their affected resources, 
 here's an example of connecting between Cloudformation Stacks and Lambda functions:
 
 :::important TIP
-Make sure your Lambda function configuration appears before your cloudformation defintion in the `config.yaml`
+Make sure your Lambda function configuration appears before your cloudformation defintion in the `config.json`
 :::
 
-   <details>
-   <summary> Add relations to the blueprint </summary>
+<details>
+<summary> Add relations to the blueprint </summary>
 
-```json showLineNumbers
-{
-  "relations": {
-    "lambdas": {
-      "title": "Created Lambdas",
-      "description": "The Lambda functions created from the CloudFormation Stack",
-      "target": "lambda",
-      "required": false,
-      "many": true
+  ```json showLineNumbers
+  {
+    "relations": {
+      "lambdas": {
+        "title": "Created Lambdas",
+        "description": "The Lambda functions created from the CloudFormation Stack",
+        "target": "lambda",
+        "required": false,
+        "many": true
+      }
     }
   }
-}
-```
+  ```
 
-   </details>
+</details>
 
-   <details>
-   <summary> Add relations to the exporter config.yaml </summary>
+<details>
+<summary> Add relations to the exporter config.json </summary>
 
 ```json showLineNumbers
 {
