@@ -139,7 +139,7 @@ resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties {
-    identifier = "myNumberArrayProp"
+    identifier = "myNumberArray"
     title      = "My number array"
     required   = false
     type       = "array"
