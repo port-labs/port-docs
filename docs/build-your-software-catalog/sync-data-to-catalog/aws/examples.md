@@ -2898,7 +2898,6 @@ The AWS exporter won't sync Cloudformation Stacks in 'DELETE_COMPLETE' status, s
       
    ```json showLineNumbers
    {
-      ...
       "relations": {
           "lambdas": {
             "title": "Created Lambdas",
