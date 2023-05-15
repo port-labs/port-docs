@@ -107,7 +107,7 @@ resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties {
-    identifier = "myDatetimeProp"
+    identifier = "myDatetimeArray"
     title      = "My datetime"
     required   = false
     type       = "array"
