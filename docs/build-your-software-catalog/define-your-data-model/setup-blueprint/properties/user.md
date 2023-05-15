@@ -120,7 +120,7 @@ resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties {
-    identifier = "myUserProp"
+    identifier = "myUserArray"
     title      = "My user array"
     required   = false
     type       = "array"
