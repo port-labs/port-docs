@@ -441,7 +441,7 @@ In this step-by-step example, you will export your `App Runner services` to Port
 
 Done! soon, you will be able to see any `App Runner services`.
 
-## Mapping Lambda functions
+## Mapping Lambda functions {#lambda}
 
 In this step-by-step example, you will export your `Lambda functions` to Port.
 
@@ -451,7 +451,7 @@ In this step-by-step example, you will export your `Lambda functions` to Port.
 
    You may use the following definition:
 
-   <details>
+   <details > 
    <summary> Lambda blueprint </summary>
 
    ```json showLineNumbers
@@ -2663,18 +2663,18 @@ In this step-by-step example, you will export your `Elastic Beanstalk applicatio
 
 Done! soon, you will be able to see any `Elastic Beanstalk applications and environments`.
 
-## Mapping Cloudformation Stacks
+## Mapping CloudFormation Stacks
 
-In this step-by-step example, you will export your `Cloudformation Stacks` to Port.
+In this step-by-step example, you will export your `CloudFormation Stacks` to Port.
 
 1. Create the following Port blueprint:
 
-   - **Cloudformation Stack** - will represent Cloudformation Stacks from the AWS account.
+   - **CloudFormation Stack** - will represent CloudFormation Stacks from the AWS account.
 
-  You may use the following definitions:
+  You may use the following definition:
 
   <details>
-  <summary> CloudformationStack blueprint </summary>
+  <summary> CloudFormationStack blueprint </summary>
 
   ```json showLineNumbers
   {
@@ -2828,7 +2828,7 @@ In this step-by-step example, you will export your `Cloudformation Stacks` to Po
 
   </details>
 
-4. Optional: Create 2 event rules to trigger automatic syncing of changes in Cloudformation Stacks.
+4. Optional: Create 2 event rules to trigger automatic syncing of changes in CloudFormation Stacks.
 
   You may use the following CloudFormation Template:
 
@@ -2904,20 +2904,16 @@ In this step-by-step example, you will export your `Cloudformation Stacks` to Po
   </details>
 
 :::important IMPORTANT
-The AWS Cloudformation API can retrieve up to 100 resources per Cloudformation Stack.
+The AWS CloudFormation API can retrieve up to 100 resources per CloudFormation Stack.
 
-For more information about the Cloudformation API, see the [API Reference](https://docs.aws.amazon.com/cli/latest/reference/cloudformation/index.html).
+For more information about the CloudFormation API, see the [API Reference](https://docs.aws.amazon.com/cli/latest/reference/cloudformation/index.html).
 :::
 
-### Relations between Cloudformation Stacks and AWS resources
+### Relations between CloudFormation Stacks and AWS resources
 
-In order to connect between Cloudformation Stacks and their affected resources, you'll need to update the blueprint and the exporter configuration.
+In order to connect between CloudFormation Stacks and their affected resources, you'll need to update the blueprint and the exporter configuration.
 
-here's an example of connecting between Cloudformation Stacks and Lambda functions:
-
-:::important TIP
-Make sure your Lambda function configuration appears before your cloudformation defintion in the `config.json`
-:::
+Here's an example showing how to connect CloudFormation Stacks and Lambda functions:
 
 <details>
 <summary> Add relations to the blueprint </summary>
@@ -2954,4 +2950,7 @@ Make sure your Lambda function configuration appears before your cloudformation 
 
    </details>
 
-Done! soon, you will be able to see any `Cloudformation Stacks`.
+Make sure your [Lambda function configuration](#lambda) appears before your CloudFormation defintion in the `config.json`.
+
+
+Done! soon, you will be able to see any `CloudFormation Stacks`.
