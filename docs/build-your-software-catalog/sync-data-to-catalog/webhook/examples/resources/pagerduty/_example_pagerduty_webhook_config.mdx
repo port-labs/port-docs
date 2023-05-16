@@ -12,7 +12,7 @@
         "identifier": ".body.event.data.id",
         "title": ".body.event.data.summary",
         "properties": {
-          "description": ".body.event.data.event_type"
+          "status": ".body.event.data.event_type"
         }
       }
     },
@@ -38,6 +38,11 @@
     }
   ],
   "enabled": true,
-  "security": {}
+  "security": {
+    "signatureHeaderName": "X-Pagerduty-Signature",
+    "signatureAlgorithm": "sha256",
+    "signaturePrefix": "v1=",
+    "secret": "WEBHOOK_SECRET"
+  }
 }
 ```
