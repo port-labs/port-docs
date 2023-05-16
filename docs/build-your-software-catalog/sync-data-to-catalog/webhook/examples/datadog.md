@@ -27,6 +27,9 @@ Create the following blueprint definitions and webhook configuration:
 
 <details>
 <summary>Datadog webhook configuration</summary>
+
+Remember to replace the `WEBHOOK_SECRET` with the real secret you encoded in `sha256` when creating the webhook in Datadog.
+
 <DatadogConfiguration/>
 </details>
 
@@ -67,7 +70,15 @@ The webhook configuration's relation mapping will function properly only when th
         "tags": "$TAGS"
       }
       ```
-   4. `Custom Headers` - configure any custom HTTP header to be added to the webhook event;
+   4. `Custom Headers` - configure any custom HTTP header to be added to the webhook event. The format for the header is in JSON;
+      :::tip
+      You can use the custom header to configure security for your webhook. Copy and paste the JSON data below into the `Custom Headers` textbox.
+      ```json ShowLineNumbers
+      {
+        "X-Port-Signature": "your sha256 encoded secret"
+      }
+      ```
+      :::
 7. Click **Save** at the bottom of the page;
 
 :::tip

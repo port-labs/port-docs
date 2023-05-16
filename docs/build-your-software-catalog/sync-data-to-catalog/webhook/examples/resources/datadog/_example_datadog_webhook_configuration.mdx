@@ -13,11 +13,11 @@
         "properties": {
           "url": ".body.event_url",
           "message": ".body.message",
-          "event_type": ".body.event_type",
+          "eventType": ".body.event_type",
           "priority": ".body.priority",
           "creator": ".body.creator",
-          "alert_metric": ".body.alert_metric",
-          "alert_type": ".body.alert_type",
+          "alertMetric": ".body.alert_metric",
+          "alertType": ".body.alert_type",
           "tags": ".body.tags | split(\", \")"
         },
         "relations": {
@@ -26,7 +26,11 @@
       }
     }
   ],
-  "enabled": true,
-  "security": {}
+  "security": {
+    "secret": "WEBHOOK_SECRET",
+    "signatureHeaderName": "X-Port-Signature",
+    "signatureAlgorithm": "sha256",
+    "signaturePrefix": ""
+  }
 }
 ```
