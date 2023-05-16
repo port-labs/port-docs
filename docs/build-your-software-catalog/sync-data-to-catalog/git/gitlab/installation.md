@@ -45,11 +45,15 @@ In case a GitLab group has subgroups, the parent group's access token can be use
      You will need to fill in the following parameters:
 
    - `GITLAB_API_TOKEN` - Your `group access token` from the [prerequisites](#prerequisites);
-   - `GROUP_ID` - you can find your group ID on the main page of your GitLab group under the main title
 
      In case you are using a self-hosted installation of GitLab, you will also need to fill in the following parameter:
 
    - `GITLAB_API_URL` - the URL to your GitLab installation (for example, `https://gitlab.getport.io`);
+
+     For each group you can define which projects will be exported to Port catalog.
+     Port will get only merge requests, issues, pipeline etc... of the defined project.
+
+   - `GROUPS_TO_REPOS` - A Projects to group mapping
 
    :::tip
    The complete commands required to run the script are provided here as reference:
@@ -60,11 +64,17 @@ In case a GitLab group has subgroups, the parent group's access token can be use
 
    # Please enter your GitLab API token and group ID here
    export GITLAB_API_TOKEN=""
-   export GROUP_ID=""
    # If your GitLab installation is self-hosted, please enter your GitLab URL here
    # For example - https://gitlab.getport.io
    # If you are using https://gitlab.com, do not edit this field
    export GITLAB_API_URL=""
+
+   # A comma-separated list of projects per group to bring into the catalog
+   # For example - "GroupName1:Project1,Project2;GroupName2:*;"
+   # GROUPS_TO_REPOS="GroupName:*;" means all projects in the group "GroupName"
+   # GROUPS_TO_REPOS="*" means all projects in all groups
+   export GROUPS_TO_REPOS="*"
+
    curl -s https://raw.githubusercontent.com/port-labs/template-assets/main/gitlab/install.sh | bash
    ```
 
