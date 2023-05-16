@@ -8,7 +8,7 @@ sidebar_position: 1
 
 - A registered organization in Port;
 - Your Port user role is set to `Admin`;
-- A GitLab `private access token`, the token requires the following roles and scopes:
+- A GitLab `personal access token`, the token requires the following roles and scopes:
   - **Role:** Owner;
   - **Scopes:** api;
 
@@ -43,7 +43,7 @@ In case a GitLab group has subgroups, the parent group's access token can be use
 
      You will need to fill in the following parameters:
 
-   - `GITLAB_API_TOKEN` - Your `private access token` from the [prerequisites](#prerequisites);
+   - `GITLAB_API_TOKEN` - Your `personal access token` from the [prerequisites](#prerequisites);
 
      In case you are using a self-hosted installation of GitLab, you will also need to fill in the following parameter:
 
