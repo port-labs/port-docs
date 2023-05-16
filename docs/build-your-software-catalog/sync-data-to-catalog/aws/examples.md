@@ -2828,7 +2828,7 @@ In this step-by-step example, you will export your `Cloudformation Stacks` to Po
 
   </details>
 
-4. Optional: Create an event rule to trigger automatic syncing of changes in Cloudformation Stacks.
+4. Optional: Create 2 event rules to trigger automatic syncing of changes in Cloudformation Stacks.
 
   You may use the following CloudFormation Template:
 
@@ -2871,6 +2871,34 @@ In this step-by-step example, you will export your `Cloudformation Stacks` to Po
                   "identifier": "if \"<stackName>\" | startswith(\"arn:\") then \"<stackName>\" | split(\"/\")[1] else \"<stackName>\" end",
                   "action": "if \"<eventName>\" | test(\"DeleteStack[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
               }
+    EventRule1:
+      Type: AWS::Events::Rule
+      Properties:
+        EventBusName: default
+        EventPattern:
+          detail-type:
+            - CloudFormation Stack Status Change
+          source:
+            - aws.cloudformation
+        Name: port-aws-exporter-sync-cloudformation-status-change-trails
+        State: ENABLED
+        Targets:
+          - Id: PortAWSExporterEventsQueue
+            Arn:
+              Fn::ImportValue:
+                Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+            InputTransformer:
+              InputPathsMap:
+                region: $.region
+                stackId: $.detail.stack-id
+                status: $.detail.status-details.status
+              InputTemplate: |-
+                {
+                    "resource_type": "AWS::CloudFormation::Stack",
+                    "region": "\"<region>\"",
+                    "identifier": "\"<stackId>\" | split(\"/\")[1]",
+                    "action": "if \"<status>\" == \"DELETE_COMPLETE\" then \"delete\" else \"upsert\" end"
+                }
     ```
 
   </details>
