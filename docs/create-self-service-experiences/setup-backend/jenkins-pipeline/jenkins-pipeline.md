@@ -44,7 +44,7 @@ To enable triggering a Jenkins pipeline using a webhook invocation, you will nee
 
 In your job's page, enter the **Configuration** tab, and scroll down to the **Build Triggers** section. Check the `Generic Webhook Trigger` box:
 
-![Enable generic webhook](../../../../static/img/self-service-actions/setup-backend-pipeline/check-generic-webhook-option.png)
+![Enable generic webhook](../../../../static/img/self-service-actions/setup-backend/jenkins-pipeline/check-generic-webhook-option.png)
 
 By default, when enabling the webhook trigger for a job, it can be triggered by sending an event to `http://JENKINS_URL/generic-webhook-trigger/invoke`. This means that, if not configured otherwise, all jobs will be triggered when sending an event to this route. It is recommended to set up a [job token](jenkins-pipeline.md#token-setup) to avoid running unwanted jobs.
 
