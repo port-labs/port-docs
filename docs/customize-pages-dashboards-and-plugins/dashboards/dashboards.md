@@ -26,24 +26,52 @@ Continue reading to learn more about our visualization types:
 
 ### Pie chart
 
-You can create a pie chart illustrating data from Entities in your software catalog divided by categories and Entity properties inside a specific entity page [**specific entity page**](../page/entity-page.md).
+You can create a pie chart illustrating data from entities in your software catalog divided by categories and entity properties inside a specific entity page [**specific entity page**](../page/entity-page.md).
+
+![Pie Chart](../../../static/img/software-catalog/widgets/pieChartExample.png)
 
 #### Visualization properties
 
 | Field                   | Type     | Description                                                                                                                  | Default | Required |
 | ----------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------- | ------- | -------- |
-| `Title`                 | `String` | Visualization title                                                                                                          | `null`  | `true`   |
-| `Icon`                  | `String` | Visualization Icon                                                                                                           | `null`  | `false`  |
-| `Description`           | `String` | Visualization description                                                                                                    | `null`  | `false`  |
-| `Blueprint`             | `String` | The chosen Blueprint from which related Entities data is visualized from                                                     | `null`  | `true`   |
+| `Title`                 | `String` | Pie chart title                                                                                                              | `null`  | `true`   |
+| `Icon`                  | `String` | Pie chart Icon                                                                                                               | `null`  | `false`  |
+| `Description`           | `String` | Pie chart description                                                                                                        | `null`  | `false`  |
+| `Blueprint`             | `String` | The chosen blueprint from which related entities data is visualized from                                                     | `null`  | `true`   |
 | `Breakdown by property` | `String` | Group your chart by a specific property                                                                                      | `null`  | `true`   |
 | `Filters`               | `Array`  | Filters to include or exclude specific data based on Port's [Search Rules](../../search-and-query/search-and-query.md#rules) | []      | `false`  |
 
-#### Example: filter only `Deployment` Entities from last week
+### Metric chart
 
-Let's assume we have a [Blueprint](../../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) that is called `Service` which is related to another Blueprint called `Deployment`, and we want to create visualizations on top of the last week's deployments of this service.
+You can create a metric visualization from related entities in the [**specific entity page**](../page/entity-page.md). You can either count the entities or perform an aggregation function on a number property. You can also filter entities so the aggregation metric will only apply to a limited set of entities with Port's [Search Rules](../../search-and-query/search-and-query.md#rules)
 
-To achieve this desired state, we can go into one of the `Service`'s profile pages and create a new visualization. After selecting the `Deployment` Blueprint in the dropdown, we can add the following filter to the `Filters` array:
+![Number Chart](../../../static/img/software-catalog/widgets/numberChartExample.png)
+
+#### Metric properties
+
+| Field              | Type     | Description                                                                                                                                                                             | Default | Required |
+| ------------------ | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | -------- |
+| `Title`            | `String` | Metric title                                                                                                                                                                            | `null`  | `true`   |
+| `Icon`             | `String` | Metric Icon                                                                                                                                                                             | `null`  | `false`  |
+| `Description`      | `String` | Metric description                                                                                                                                                                      | `null`  | `false`  |
+| `Blueprint`        | `String` | The chosen blueprint from which related entities data is visualized from                                                                                                                | `null`  | `true`   |
+| `Calculation Type` | `String` | Aggregate by either counting the entities or perform a function on a property. Possible values: `count`, `property`                                                                     | `count` | `true`   |
+| `Property`         | `String` | The metric value will be the selected property's aggregated value (according to the chosen function). The `property` key is only available when `Calculation Type` equals to `Property` | `null`  | `true`   |
+| `Function`         | `String` | sum, min, max, average, median                                                                                                                                                          | `null`  | `true`   |
+| `Filters`          | `Array`  | Filters to include or exclude specific data based on Port's [search rules](../../search-and-query/search-and-query.md#rules)                                                            | []      | `false`  |
+| `unit`             | `String` | The unit of the metric. Possible Values: `%`, `$`, `£`, `€`, `none`, `custom`                                                                                                           | `null`  | `true`   |
+| `unitCustom`       | `String` | Text to display below the metric value. The `unitCustom` key is only available when `unit` equals to `custom`                                                                           | `null`  | `true`   |
+| `unitAlignment`    | `String` | `left`, `right`, `bottom`.                                                                                                                                                              | `null`  | `true`   |
+
+## Chart filters
+
+The chart filters allow to include or exclude specific data from the visualization. The filters are based on Port's [Search Rules](../../search-and-query/search-and-query.md#rules)
+
+### Filter example: only deployment entities from the last week
+
+Let's assume we have a [blueprint](../../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) that is called `Service` which is related to another blueprint called `Deployment`, and we want to create visualizations on top of the last week's deployments of this service.
+
+To achieve this desired state, we can go into one of the `Service`'s profile pages and create a new visualization. After selecting the `Deployment` blueprint in the dropdown, we can add the following filter to the `Filters` array:
 
 ```json showLineNumbers
 [

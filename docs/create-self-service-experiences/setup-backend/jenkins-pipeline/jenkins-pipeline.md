@@ -102,7 +102,7 @@ For example, the JSONPath for `input1` would be:
 $.payload.properties.input1
 ```
 
-**Port Action** - The full port action can be found [here](./jenkins-pipeline.md#setting-up-the-port-action).
+**Port Action** - The full Port action definition can be found [here](./jenkins-pipeline.md#setting-up-the-port-action).
 
 :::
 
