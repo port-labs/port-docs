@@ -35,17 +35,21 @@ An example flow would be:
 Google Cloud Build required dependencies:
 
 - Source Code Repository - You will be asked to authorize the Google Cloud Build service to access your GitHub, Gitlab or BitBucket account to proceed.
-- GCP Services - You will need to enable GCP APIs that are essential for the smooth running of your application or pipeline.
+- GCP Services - You will need to enable the following GCP APIs if you are following this tutorial:
+  1. Cloud Run;
+  2. Cloud Build;
+  3. Secret Manager;
+  4. Artifact Registry;
 
 ## Setting up the webhook
 
-### Enabling webhook trigger for a pipeline
+### Configuring the pipeline
 
-To enable triggering a Cloud Build pipeline using a webhook invocation, you will need to add a `cloudbuild.yaml` file or a `Dockerfile` to your project's root directory. This enables Cloud Build to read the pipeline steps and execute the instructions.
+To enable triggering a Cloud Build pipeline using a webhook invocation, you will need to add a `cloudbuild.yaml` file or a `Dockerfile` to your source code repository's root directory. This enables Cloud Build to read the pipeline steps and execute the instructions.
 
 The following example illustrates a simple Cloud Build pipeline that builds a container image, pushes the image to container registry and deploys it using Google Cloud Run. Copy and paste this code block into your `cloudbuild.yaml` file.
 
-```yaml showLineNumber
+```yaml showLineNumbers
 steps:
   # Build the container image
   - name: gcr.io/cloud-builders/docker
@@ -84,14 +88,16 @@ steps:
       ]
 
 substitutions:
-  #Repository Specific configuration. DevOps can change this settings
-  _REPOSITORY: your_container_name
-  _IMAGE_NAME: $(body.payload.properties.image_name)
+  #Repository Specific configuration. DevOps can change these as needed
+  _REPOSITORY: <YOUR_CONTAINER_REPOSITORY_NAME>
+  _IMAGE_NAME: $(body.payload.properties.imageName)
   _REGION: $(body.payload.properties.region)
 
 options:
   substitution_option: "ALLOW_LOOSE"
 ```
+
+### Enabling the webhook trigger for a pipeline
 
 On your Google Cloud Build page, go to the **Triggers** tab on the left sidebar, click on **Create Trigger** and fill in the form with the webhook information. Under **Event** choose "Webhook event"
 
@@ -103,7 +109,9 @@ After you have created or selected an existing secret, you will see a Webhook UR
 
 ![Webhook Security](../../../../static/img/self-service-actions/setup-backend/cloudbuild-pipeline/webhook_url_secret.PNG)
 
-And finally, you need to connect your source code repository to this pipeline and specify whether you want to invoke the pipeline steps in your `cloudbuild.yaml` or `Dockerfile`.
+![Webhook URL](../../../../static/img/self-service-actions/setup-backend/cloudbuild-pipeline/cloud-build-webhook-url-preview.PNG)
+
+And finally, you need to connect your source code repository to this pipeline and specify whether you want to invoke the pipeline steps in your `cloudbuild.yaml` or `Dockerfile` (make sure to mark `cloudbuild.yaml` if you used the pipeline snippet provided above).
 
 ![Webhook Security](../../../../static/img/self-service-actions/setup-backend/cloudbuild-pipeline/webhook_repository.PNG)
 
@@ -111,12 +119,12 @@ And finally, you need to connect your source code repository to this pipeline an
 
 Google Cloud Build enables developers to bind incoming webhook payload data to the pipeline configuration file. If you take a look at the sample `cloudbuild.yaml` file above, you will see the **substitutions** section has the below content. This is where you define the variables which will be passed to your pipeline run.
 
-```yaml
+```yaml showLineNumbers
 
 ... # Cloud Build pipeline steps
 substitutions:
-  _REPOSITORY: your_container_repository_name
-  _IMAGE_NAME: $(body.payload.properties.image_name)
+  _REPOSITORY: <YOUR_CONTAINER_REPOSITORY_NAME>
+  _IMAGE_NAME: $(body.payload.properties.imageName)
   _REGION: $(body.payload.properties.region)
 ```
 
@@ -127,7 +135,7 @@ substitutions:
 :::tip
 Here is part of the JSON scheme of the Port action, which shows the inputs sent by Port when triggering the action:
 
-```json showLineNumber
+```json showLineNumbers
 [
   {
     "identifier": "runPipeline",
@@ -141,31 +149,30 @@ Here is part of the JSON scheme of the Port action, which shows the inputs sent 
       }
     }
     ... # Port Action configuration
+  }
 ]
 ```
 
-Here is a sample payload that is generated when the action is triggered and sent to Jenkins:
+Here is a sample payload that is generated when the action is triggered and sent to Cloud Build:
 
-```json showLineNumber
+```json showLineNumbers
 {
     ... # Event metadata
     "payload": {
         "properties": {
             "region": "region_value"
         }
-
     }
-
 }
 ```
 
-For example, the substitutions value for `region` input would be:
+For example, the substitutions value for the `region` input would be:
 
-```text
+```text showLineNumbers
 $.payload.properties.region
 ```
 
-**Port Action** - The full port action can be found [here](../cloudbuild-pipeline/cloudbuild-pipeline.md#setting-up-the-port-action).
+**Port Action** - The full port action definition can be found [here](#setting-up-the-port-action).
 :::
 
 ### Setting up the Port action
@@ -176,33 +183,33 @@ Here is an example for an action that will trigger the webhook you just set up:
 
 ```json showLineNumbers
 [
-{
-  "identifier": "myIdentifier",
-  "title": "GCP Cloud Build",
-  "icon": "GCP",
-  "userInputs": {
-    "properties": {
-      "region": {
-        "type": "string",
-        "title": "Region Name"
+   {
+      "identifier":"runPipeline",
+      "title":"Run GCP Cloud Build Pipeline",
+      "icon":"GCP",
+      "userInputs":{
+         "properties":{
+            "region":{
+               "type":"string",
+               "title":"Region Name"
+            },
+            "imageName":{
+               "type":"string",
+               "title":"Container Image Name"
+            }
+         },
+         "required":[]
       },
-      "image_name": {
-        "type": "string",
-        "title": "Container Name"
-      }
-    },
-    "required": []
-  },
-  # highlight-start
-  "invocationMethod": {
-    "type": "WEBHOOK",
-    "url": "https://cloudbuild.googleapis.com/v1/projects/{project_id}/triggers/{webhook_name}:webhook?key={google_api_key}&secret={webhook_secret}"
-  },
-  # highlight-end
-  "trigger": "CREATE",
-  "description": "Webhook trigger for Google Cloud Build",
-  "requiredApproval": false
-}
+      # highlight-start
+      "invocationMethod":{
+         "type":"WEBHOOK",
+         "url":"https://cloudbuild.googleapis.com/v1/projects/{project_id}/triggers/{webhook_name}:webhook?key={google_api_key}&secret={webhook_secret}"
+      },
+      # highlight-end
+      "trigger":"CREATE",
+      "description":"Webhook trigger for Google Cloud Build",
+      "requiredApproval":false
+   }
 ]
 ```
 
