@@ -1,5 +1,5 @@
 ---
-sidebar_position: 10
+sidebar_position: 11
 description: Ingest PagerDuty incidents and services into Port
 ---
 
@@ -9,7 +9,7 @@ import PagerDutyWebhookConfig from "./resources/pagerduty/\_example_pagerduty_we
 
 # PagerDuty
 
-In this example you are going to create a webhook integration between [PagerDuty](https://www.pagerduty.com/) and Port, which will ingest PagerDuty services and its related incidents into Port.
+In this example you are going to create a webhook integration between [PagerDuty](https://www.pagerduty.com/) and Port, which will ingest PagerDuty services and its related incidents into Port. This integration will involve setting up a webhook to receive notifications from PagerDuty whenever an incident is created or updated, allowing Port to ingest and process the incident entities accordingly.
 
 ## Prerequisites
 
