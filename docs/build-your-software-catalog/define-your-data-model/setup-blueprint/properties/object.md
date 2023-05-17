@@ -28,7 +28,6 @@ In this [live demo](https://demo.getport.io/cloudResources) example, we can see 
 
 <Tabs groupId="api-definition" defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Enum", value: "enum"},
 {label: "Array", value: "array"}
 ]}>
 
@@ -51,29 +50,7 @@ In this [live demo](https://demo.getport.io/cloudResources) example, we can see 
 ```
 
 </TabItem>
-<TabItem value="enum">
 
-```json showLineNumbers
-{
-  "myObjectEnum": {
-    "title": "My object enum",
-    "icon": "My icon",
-    "description": "My object enum",
-    "type": "object",
-    // highlight-next-line
-    "enum": [
-      {
-        "myKey": 1
-      },
-      {
-        "myKey": 2
-      }
-    ]
-  }
-}
-```
-
-</TabItem>
 <TabItem value="array">
 
 ```json showLineNumbers
@@ -101,8 +78,7 @@ In this [live demo](https://demo.getport.io/cloudResources) example, we can see 
 
 <Tabs groupId="tf-definition" defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Enum - coming soon", value: "enum"},
-{label: "Array - coming soon", value: "array"}
+{label: "Array", value: "array"}
 ]}>
 
 <TabItem value="basic">
@@ -122,13 +98,32 @@ resource "port-labs_blueprint" "myBlueprint" {
 ```
 
 </TabItem>
+<TabItem value="array">
+
+```hcl showLineNumbers
+resource "port-labs_blueprint" "myBlueprint" {
+  # ...blueprint properties
+  # highlight-start
+  properties {
+    identifier = "myObjectArray"
+    title      = "My object array"
+    required   = false
+    type       = "array"
+    items = {
+      type = "object"
+    }
+  }
+  # highlight-end
+}
+```
+
+</TabItem>
 </Tabs>
 
 ## Pulumi definition
 
 <Tabs groupId="pulumi-definition" defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Enum - coming soon", value: "enum"},
 {label: "Array - coming soon", value: "array"}
 ]}>
 

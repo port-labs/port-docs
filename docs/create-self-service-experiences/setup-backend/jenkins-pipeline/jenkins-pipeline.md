@@ -21,7 +21,7 @@ The steps shown in the image above are as follows:
 
    :::
 
-3. Port publishes an invoked `WEBHOOK` via a `POST` request to `https://dev.azure.com/{org_name}/_apis/public/distributedtask/webhooks/{webhook_name}?api-version=6.0-preview`
+3. Port publishes an invoked `WEBHOOK` via a `POST` request to `https://{JENKINS_URL}/generic-webhook-trigger/invoke`
 
 An example flow would be:
 
@@ -46,7 +46,7 @@ In your job's page, enter the **Configuration** tab, and scroll down to the **Bu
 
 ![Enable generic webhook](../../../../static/img/self-service-actions/setup-backend/jenkins-pipeline/check-generic-webhook-option.png)
 
-By default, when enabling the webhook trigger for a job, it can be triggered by sending an event to `http://JENKINS_URL/jenkins/generic-webhook-trigger/invoke`. This means that, if not configured otherwise, all jobs will be triggered when sending an event to this route. It is recommended to set up a [job token](jenkins-pipeline.md#token-setup) to avoid running unwanted jobs.
+By default, when enabling the webhook trigger for a job, it can be triggered by sending an event to `http://JENKINS_URL/generic-webhook-trigger/invoke`. This means that, if not configured otherwise, all jobs will be triggered when sending an event to this route. It is recommended to set up a [job token](jenkins-pipeline.md#token-setup) to avoid running unwanted jobs.
 
 ### Defining variables
 
@@ -102,7 +102,7 @@ For example, the JSONPath for `input1` would be:
 $.payload.properties.input1
 ```
 
-**Port Action** - The full port action can be found [here](./jenkins-pipeline.md#setting-up-the-port-action).
+**Port Action** - The full Port action definition can be found [here](./jenkins-pipeline.md#setting-up-the-port-action).
 
 :::
 
