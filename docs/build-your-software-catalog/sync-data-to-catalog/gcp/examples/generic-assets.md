@@ -6,7 +6,7 @@ description: Bring generic information of assets using terraform
 
 # GCP Assets Inventory
 
-In this example you are going to export some generic information about a GCP project and all of its assets, to Port.
+In this example you are going to export some generic information about a GCP organization and all of its assets, to Port.
 
 Here is the complete `main.tf` file:
 
@@ -18,7 +18,7 @@ terraform {
   required_providers {
     port-labs = {
       source  = "port-labs/port-labs"
-      version = "~> 0.9.7"
+      version = "~> 0.10.2"
     }
     google-beta = {
       source  = "hashicorp/google-beta"
@@ -28,7 +28,7 @@ terraform {
 }
 
 locals {
-  project_id = "GCP_PROJECT" # set the project id
+  domain = "GCP_ORGANIZATION_DOMAIN_NAME" # set the organization's domain
 }
 
 provider "port-labs" {
@@ -38,22 +38,113 @@ provider "port-labs" {
 
 provider "google-beta" {
   credentials = "GOOGLE_APPLICATION_CREDENTIALS" # or set the env var GOOGLE_APPLICATION_CREDENTIALS
-  project     = local.project_id
 }
 
-data "google_project" "project" {
+data "google_organization" "my_org" {
   provider   = google-beta
-  project_id = local.project_id
+  domain = local.domain
+}
+
+data "google_cloud_asset_resources_search_all" "my_folder_assets" {
+  provider = google-beta
+  scope    = "organizations/${data.google_organization.my_org.org_id}"
+  asset_types = [
+    "cloudresourcemanager.googleapis.com/Folder"
+  ]
+}
+
+data "google_folder" "my_folders" {
+  for_each = {for idx, result in data.google_cloud_asset_resources_search_all.my_folder_assets.results : idx => result}
+  folder = "folders/${reverse(split("/", each.value.name))[0]}"
+}
+
+data "google_projects" "my_projects" {
+  provider   = google-beta
+  filter = "parent.id:*"
 }
 
 data "google_cloud_asset_resources_search_all" "my_assets" {
+  for_each = {for idx, result in data.google_projects.my_projects.projects: idx => result}
   provider = google-beta
-  scope    = "projects/${local.project_id}"
+  scope    = "projects/${each.value.project_id}"
+}
+
+resource "port-labs_blueprint" "gcp_org_blueprint" {
+  title      = "Organization"
+  icon       = "GCP"
+  identifier = "organization"
+  properties {
+    identifier = "link"
+    type       = "string"
+    format     = "url"
+    title      = "Link"
+  }
+  properties {
+    identifier = "createTime"
+    type       = "string"
+    format     = "date-time"
+    title      = "Create Time"
+  }
+}
+
+resource "port-labs_entity" "gcp_org_entity" {
+  identifier = data.google_organization.my_org.org_id
+  title     = data.google_organization.my_org.domain
+  blueprint = port-labs_blueprint.gcp_org_blueprint.identifier
+  properties {
+    name  = "link"
+    value = "https://console.cloud.google.com/welcome?organizationId=${data.google_organization.my_org.org_id}"
+  }
+  properties {
+    name  = "createTime"
+    value = data.google_organization.my_org.create_time
+  }
+}
+
+resource "port-labs_blueprint" "gcp_folder_blueprint" {
+  title      = "Folder"
+  icon       = "GCP"
+  identifier = "folder"
+  properties {
+    identifier = "link"
+    type       = "string"
+    format     = "url"
+    title      = "Link"
+  }
+  properties {
+    identifier = "createTime"
+    type       = "string"
+    format     = "date-time"
+    title      = "Create Time"
+  }
+  relations {
+    identifier = port-labs_blueprint.gcp_org_blueprint.identifier
+    target = port-labs_blueprint.gcp_org_blueprint.identifier
+  }
+}
+
+resource "port-labs_entity" "gcp_folder_entity" {
+  for_each = {for idx, folder in data.google_folder.my_folders: idx => folder}
+  identifier = each.value.folder_id
+  title     = each.value.display_name
+  blueprint = port-labs_blueprint.gcp_folder_blueprint.identifier
+  properties {
+    name  = "link"
+    value = "https://console.cloud.google.com/welcome?folder=${each.value.folder_id}"
+  }
+  properties {
+    name  = "createTime"
+    value = each.value.create_time
+  }
+  relations {
+    name = port-labs_blueprint.gcp_org_blueprint.identifier
+    identifier = data.google_organization.my_org.org_id
+  }
 }
 
 resource "port-labs_blueprint" "gcp_project_blueprint" {
   title      = "Project"
-  icon       = "Cloud"
+  icon       = "GCP"
   identifier = "project"
   properties {
     identifier = "link"
@@ -62,60 +153,67 @@ resource "port-labs_blueprint" "gcp_project_blueprint" {
     title      = "Link"
   }
   properties {
-    identifier = "orgId"
-    type       = "string"
-    title      = "Org ID"
-  }
-  properties {
-    identifier = "folderId"
-    type       = "string"
-    title      = "Folder ID"
-  }
-  properties {
     identifier = "number"
     type       = "string"
     title      = "Number"
   }
   properties {
-    identifier = "billingAccount"
+    identifier = "createTime"
     type       = "string"
-    title      = "Billing Account"
+    format     = "date-time"
+    title      = "Create Time"
   }
   properties {
     identifier = "labels"
     type       = "object"
     title      = "Labels"
   }
+  relations {
+    identifier = port-labs_blueprint.gcp_org_blueprint.identifier
+    target = port-labs_blueprint.gcp_org_blueprint.identifier
+  }
+  relations {
+    identifier = port-labs_blueprint.gcp_folder_blueprint.identifier
+    target = port-labs_blueprint.gcp_folder_blueprint.identifier
+  }
 }
 
 resource "port-labs_entity" "gcp_project_entity" {
-  identifier = data.google_project.project.project_id
-  title     = data.google_project.project.name
+  for_each = {for idx, project in data.google_projects.my_projects.projects : idx => project}
+  identifier = each.value.project_id
+  title     = each.value.name
   blueprint = port-labs_blueprint.gcp_project_blueprint.identifier
   properties {
     name  = "link"
-    value = "https://console.cloud.google.com/welcome?project=${data.google_project.project.project_id}"
-  }
-  properties {
-    name  = "orgId"
-    value = data.google_project.project.org_id
-  }
-  properties {
-    name  = "folderId"
-    value = data.google_project.project.folder_id
+    value = "https://console.cloud.google.com/welcome?project=${each.value.project_id}"
   }
   properties {
     name  = "number"
-    value = data.google_project.project.number
+    value = each.value.number
   }
   properties {
-    name  = "billingAccount"
-    value = data.google_project.project.billing_account
+    name  = "createTime"
+    value = each.value.create_time
   }
   properties {
     name  = "labels"
-    value = jsonencode(data.google_project.project.labels)
+    value = jsonencode(each.value.labels)
   }
+  dynamic "relations" {
+    for_each = each.value.parent.type == "organization" ? [1] : []
+    content {
+      name = port-labs_blueprint.gcp_org_blueprint.identifier
+      identifier = each.value.parent.id
+    }
+  }
+  dynamic "relations" {
+    for_each = each.value.parent.type == "folder" ? [1] : []
+    content {
+      name = port-labs_blueprint.gcp_folder_blueprint.identifier
+      identifier = each.value.parent.id
+    }
+  }
+  depends_on = [port-labs_entity.gcp_org_entity, port-labs_entity.gcp_folder_entity]
 }
 
 resource "port-labs_blueprint" "gcp_asset_blueprint" {
@@ -164,8 +262,8 @@ resource "port-labs_blueprint" "gcp_asset_blueprint" {
 }
 
 resource "port-labs_entity" "gcp_asset_entity" {
-  for_each = {for idx, result in data.google_cloud_asset_resources_search_all.my_assets.results: idx => result}
-  title     = each.value.display_name
+  for_each = {for idx, result in flatten(values({for idx, project_assets in data.google_cloud_asset_resources_search_all.my_assets: idx => [for result in project_assets.results : merge(result, {project_id: project_assets.id})]})) : idx => result}
+  title     = each.value.display_name == "" ? reverse(split("/", each.value.name))[0] : each.value.display_name
   blueprint = port-labs_blueprint.gcp_asset_blueprint.identifier
   properties {
     name  = "name"
@@ -197,14 +295,16 @@ resource "port-labs_entity" "gcp_asset_entity" {
   }
   relations {
     name = port-labs_blueprint.gcp_project_blueprint.identifier
-    identifier = local.project_id
+    identifier = reverse(split("/", each.value.project_id))[0]
   }
+
+  depends_on = [port-labs_entity.gcp_project_entity]
 }
 ```
 
 </details>
 
-To use this example yourself, simply replace the placeholders for `project_id`, `client_id`, `secret` and `credentials` and then run the following commands to setup your new backend, create the new infrastructure and update the software catalog:
+To use this example yourself, simply replace the placeholders for `domain`, `client_id`, `secret` and `credentials` and then run the following commands to setup your new backend, create the new infrastructure and update the software catalog:
 
 ```shell showLineNumbers
 # install modules and create an initial state
@@ -216,10 +316,13 @@ terraform apply
 ```
 
 :::note GCP permissions
-To be able to read the project and assets in this example, you need to use a GCP IAM role with at least the following permissions:
+To be able to read the organization, folders, projects and assets in this example, you need to use an organization's GCP IAM role with at least the following permissions:
 
 ```text showLineNumbers
 cloudasset.assets.searchAllResources
+resourcemanager.folders.get
+resourcemanager.folders.list
+resourcemanager.organizations.get
 resourcemanager.projects.get
 ```
 
@@ -236,7 +339,7 @@ terraform {
   required_providers {
     port-labs = {
       source  = "port-labs/port-labs"
-      version = "~> 0.9.7"
+      version = "~> 0.10.2"
     }
     google-beta = {
       source  = "hashicorp/google-beta"
@@ -246,7 +349,7 @@ terraform {
 }
 
 locals {
-  project_id = "GCP_PROJECT" # set the project id
+  domain = "GCP_ORGANIZATION_DOMAIN_NAME" # set the organization's domain
 }
 
 provider "port-labs" {
@@ -256,34 +359,137 @@ provider "port-labs" {
 
 provider "google-beta" {
   credentials = "GOOGLE_APPLICATION_CREDENTIALS" # or set the env var GOOGLE_APPLICATION_CREDENTIALS
-  project     = local.project_id
 }
 ```
 
-## Extracting the project and assets
+## Extracting the organization, folders, projects and assets
 
-This part includes defining the datasource for the project and assets:
+This part includes defining the datasource for the organization, folders, projects and assets:
 
 ```hcl showLineNumbers
-data "google_project" "project" {
+data "google_organization" "my_org" {
   provider   = google-beta
-  project_id = local.project_id
+  domain = local.domain
+}
+
+data "google_cloud_asset_resources_search_all" "my_folder_assets" {
+  provider = google-beta
+  scope    = "organizations/${data.google_organization.my_org.org_id}"
+  asset_types = [
+    "cloudresourcemanager.googleapis.com/Folder"
+  ]
+}
+
+data "google_folder" "my_folders" {
+  for_each = {for idx, result in data.google_cloud_asset_resources_search_all.my_folder_assets.results : idx => result}
+  folder = "folders/${reverse(split("/", each.value.name))[0]}"
+}
+
+data "google_projects" "my_projects" {
+  provider   = google-beta
+  filter = "parent.id:*"
 }
 
 data "google_cloud_asset_resources_search_all" "my_assets" {
+  for_each = {for idx, result in data.google_projects.my_projects.projects: idx => result}
   provider = google-beta
-  scope    = "projects/${local.project_id}"
+  scope    = "projects/${each.value.project_id}"
 }
 ```
 
-## Creating the Project blueprint and the entity matching the project
+## Creating the Organization blueprint and the entity matching the organization
 
-This part includes configuring the `project` blueprint and creating an entity for the project:
+This part includes configuring the `organization` blueprint and creating an entity for the organization:
+
+```hcl showLineNumbers
+resource "port-labs_blueprint" "gcp_org_blueprint" {
+  title      = "Organization"
+  icon       = "GCP"
+  identifier = "organization"
+  properties {
+    identifier = "link"
+    type       = "string"
+    format     = "url"
+    title      = "Link"
+  }
+  properties {
+    identifier = "createTime"
+    type       = "string"
+    format     = "date-time"
+    title      = "Create Time"
+  }
+}
+
+resource "port-labs_entity" "gcp_org_entity" {
+  identifier = data.google_organization.my_org.org_id
+  title     = data.google_organization.my_org.domain
+  blueprint = port-labs_blueprint.gcp_org_blueprint.identifier
+  properties {
+    name  = "link"
+    value = "https://console.cloud.google.com/welcome?organizationId=${data.google_organization.my_org.org_id}"
+  }
+  properties {
+    name  = "createTime"
+    value = data.google_organization.my_org.create_time
+  }
+}
+```
+
+## Creating the Folder blueprint and the entities matching the folders
+
+This part includes configuring the `folder` blueprint and creating an entities for the folders:
+
+```hcl showLineNumbers
+resource "port-labs_blueprint" "gcp_folder_blueprint" {
+  title      = "Folder"
+  icon       = "GCP"
+  identifier = "folder"
+  properties {
+    identifier = "link"
+    type       = "string"
+    format     = "url"
+    title      = "Link"
+  }
+  properties {
+    identifier = "createTime"
+    type       = "string"
+    format     = "date-time"
+    title      = "Create Time"
+  }
+  relations {
+    identifier = port-labs_blueprint.gcp_org_blueprint.identifier
+    target = port-labs_blueprint.gcp_org_blueprint.identifier
+  }
+}
+
+resource "port-labs_entity" "gcp_folder_entity" {
+  for_each = {for idx, folder in data.google_folder.my_folders: idx => folder}
+  identifier = each.value.folder_id
+  title     = each.value.display_name
+  blueprint = port-labs_blueprint.gcp_folder_blueprint.identifier
+  properties {
+    name  = "link"
+    value = "https://console.cloud.google.com/welcome?folder=${each.value.folder_id}"
+  }
+  properties {
+    name  = "createTime"
+    value = each.value.create_time
+  }
+  relations {
+    name = port-labs_blueprint.gcp_org_blueprint.identifier
+    identifier = data.google_organization.my_org.org_id
+  }
+}
+```
+
+## Creating the Project blueprint and the entities matching the projects
+
+This part includes configuring the `project` blueprint and creating an entities for the projects:
 
 ```hcl showLineNumbers
 resource "port-labs_blueprint" "gcp_project_blueprint" {
   title      = "Project"
-  icon       = "Cloud"
+  icon       = "GCP"
   identifier = "project"
   properties {
     identifier = "link"
@@ -292,60 +498,67 @@ resource "port-labs_blueprint" "gcp_project_blueprint" {
     title      = "Link"
   }
   properties {
-    identifier = "orgId"
-    type       = "string"
-    title      = "Org ID"
-  }
-  properties {
-    identifier = "folderId"
-    type       = "string"
-    title      = "Folder ID"
-  }
-  properties {
     identifier = "number"
     type       = "string"
     title      = "Number"
   }
   properties {
-    identifier = "billingAccount"
+    identifier = "createTime"
     type       = "string"
-    title      = "Billing Account"
+    format     = "date-time"
+    title      = "Create Time"
   }
   properties {
     identifier = "labels"
     type       = "object"
     title      = "Labels"
   }
+  relations {
+    identifier = port-labs_blueprint.gcp_org_blueprint.identifier
+    target = port-labs_blueprint.gcp_org_blueprint.identifier
+  }
+  relations {
+    identifier = port-labs_blueprint.gcp_folder_blueprint.identifier
+    target = port-labs_blueprint.gcp_folder_blueprint.identifier
+  }
 }
 
 resource "port-labs_entity" "gcp_project_entity" {
-  identifier = data.google_project.project.project_id
-  title     = data.google_project.project.name
+  for_each = {for idx, project in data.google_projects.my_projects.projects : idx => project}
+  identifier = each.value.project_id
+  title     = each.value.name
   blueprint = port-labs_blueprint.gcp_project_blueprint.identifier
   properties {
     name  = "link"
-    value = "https://console.cloud.google.com/welcome?project=${data.google_project.project.project_id}"
-  }
-  properties {
-    name  = "orgId"
-    value = data.google_project.project.org_id
-  }
-  properties {
-    name  = "folderId"
-    value = data.google_project.project.folder_id
+    value = "https://console.cloud.google.com/welcome?project=${each.value.project_id}"
   }
   properties {
     name  = "number"
-    value = data.google_project.project.number
+    value = each.value.number
   }
   properties {
-    name  = "billingAccount"
-    value = data.google_project.project.billing_account
+    name  = "createTime"
+    value = each.value.create_time
   }
   properties {
     name  = "labels"
-    value = jsonencode(data.google_project.project.labels)
+    value = jsonencode(each.value.labels)
   }
+  dynamic "relations" {
+    for_each = each.value.parent.type == "organization" ? [1] : []
+    content {
+      name = port-labs_blueprint.gcp_org_blueprint.identifier
+      identifier = each.value.parent.id
+    }
+  }
+  dynamic "relations" {
+    for_each = each.value.parent.type == "folder" ? [1] : []
+    content {
+      name = port-labs_blueprint.gcp_folder_blueprint.identifier
+      identifier = each.value.parent.id
+    }
+  }
+  depends_on = [port-labs_entity.gcp_org_entity, port-labs_entity.gcp_folder_entity]
 }
 ```
 
@@ -400,8 +613,8 @@ resource "port-labs_blueprint" "gcp_asset_blueprint" {
 }
 
 resource "port-labs_entity" "gcp_asset_entity" {
-  for_each = {for idx, result in data.google_cloud_asset_resources_search_all.my_assets.results: idx => result}
-  title     = each.value.display_name
+  for_each = {for idx, result in flatten(values({for idx, project_assets in data.google_cloud_asset_resources_search_all.my_assets: idx => [for result in project_assets.results : merge(result, {project_id: project_assets.id})]})) : idx => result}
+  title     = each.value.display_name == "" ? reverse(split("/", each.value.name))[0] : each.value.display_name
   blueprint = port-labs_blueprint.gcp_asset_blueprint.identifier
   properties {
     name  = "name"
@@ -409,7 +622,7 @@ resource "port-labs_entity" "gcp_asset_entity" {
   }
   properties {
     name  = "assetType"
-    value = reverse(split("/", each.value.asset_type))[0]
+    value = each.value.asset_type
   }
   properties {
     name  = "description"
@@ -433,11 +646,13 @@ resource "port-labs_entity" "gcp_asset_entity" {
   }
   relations {
     name = port-labs_blueprint.gcp_project_blueprint.identifier
-    identifier = local.project_id
+    identifier = reverse(split("/", each.value.project_id))[0]
   }
+
+  depends_on = [port-labs_entity.gcp_project_entity]
 }
 ```
 
 ## Result
 
-After running `terraform apply` you will see the project entity, and the related `gcpAssets` entities in Port.
+After running `terraform apply` you will see the organization, folders, projects, and `gcpAssets` entities in Port.
