@@ -113,8 +113,6 @@ use-entity:
     clientSecret: ${{ secrets.CLIENT_SECRET }}
     # highlight-next-line
     operation: PATCH_RUN
-    identifier: myEntity
-    blueprint: myBlueprint
     runId: myRunId
     status: "SUCCESS"
     logMessage: "My log message"
