@@ -117,7 +117,7 @@ use-entity:
     status: "SUCCESS"
     logMessage: "My log message"
     summary: "My summary"
-    link: "https://mylink.com"
+    link: `["https://mylink.com"]`
 ```
 
 </TabItem>

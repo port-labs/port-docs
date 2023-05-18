@@ -123,6 +123,12 @@ Add the following action to your `image` blueprint actions:
 
 <ExampleCiAction/>
 
+:::tip
+The example here is meant to show a common flow when using a Port self-service action and then using Port's GitHub action to update its logs, status and other information.
+
+In order to use Port's GItHub action to make these updates, you will need your backend to either be a GitHub workflow or for a different backend of your choosing to trigger a GitHub workflow as part of its logic
+:::
+
 After triggering the action in Port, a new action run will be created in Port (and a matching `runId` will be generated). The runId can be used to update the action status and reports logs to Port.
 
 To update the new self-service action run, add the following snippet to your GitHub workflow `yml` file (note you will need to pass the correct `runId` to the action):
@@ -138,5 +144,13 @@ To update the new self-service action run, add the following snippet to your Git
     status: "SUCCESS"
     logMessage: "Deployment completed successfully"
 ```
+
+:::tip
+The example above showing updating the status and adding a new logMessage to the action run, but it is also possible to update just a specific field of an action run.
+
+For example it is possible to trigger the GitHub action and just update the log, without changing the status.
+
+Note that once a Port action run has a status, it can no longer be updated and changes to the catalog can no longer be tied to that action, so it is considered a best practice to update the status of an action only when it has finished performing all of its changes
+:::
 
 That's it! The action status and logs are updated in Port.
