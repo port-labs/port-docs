@@ -48,3 +48,32 @@ By default, **Member** users can execute every action defined on a blueprint. In
 </TabItem>
 
 </Tabs>
+
+## Setting up a slack notification
+
+To enable Slack notifications, you need to create a Slack app and install it in your workspace by following steps 1-3 outlined in the [Slack API Documentation](https://api.slack.com/messaging/webhooks).
+
+Once you have completed the installation process, you will obtain a webhook URL that looks like this:
+
+```text
+https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX
+```
+
+Now, you can use your webhook URL to configure your approval notification to be sent to a Slack channel.
+
+To do this, modify the approvalNotification field in your action configuration as follows:
+
+```json showLineNumbers
+{
+  ...
+  "requiredApproval": true,
+  // highlight-start
+  "approvalNotification": {
+    "type": "webhook",
+    "format": "json / slack",
+    "url": "https://my-slack-webhook.com"
+  },
+  // highlight-end
+  ...
+}
+```

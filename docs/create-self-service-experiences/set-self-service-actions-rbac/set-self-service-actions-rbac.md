@@ -21,6 +21,61 @@ Self-service actions RBAC allows admins to finely control which users can execut
 - Specify that a new cluster provision request requires manual approval by the DevOps team;
 - etc.
 
+# Set your actions manual approval & Who can approve them
+
+You have the ability to set up manual approval steps for your actions.
+
+This feature is particularly useful in situations where an action has the potential to be dangerous, destructive, expensive, or when organizational policy mandates an additional level of review before proceeding.
+
+When a user clicks on the `execute` button of an action that requires approval, a new `run` object will be created in Port. The `run` object will have the status `WAITING_FOR_APPROVAL` and will be visible in the `Runs` tab of the action.
+
+On new approval requests, Port will send a notification via email to the users that has the permissions to approve it or a webhook notification to a configured url.
+
+To configure a manual approval step, add the `requiredApproval` field to your action:
+
+```json showLineNumbers
+[
+  {
+    ...
+    "invocationMethod": {
+      "type": "WEBHOOK",
+      "url": "https://example.com"
+    },
+    "trigger": "CREATE",
+    // highlight-next-line
+    "requiredApproval": true,
+    ...
+  }
+]
+```
+
+To configure which users can approve the action, see [Managing permissions](/docs/create-self-service-experiences/set-self-service-actions-rbac/examples.md#setting-action-permissions).
+
+## Configuring Approval notifications
+
+Instead of receiving approval notifications via email, you have the option to configure them to be sent to a webhook.
+
+This allows you to receive notifications in a format of your choice, either as a plain JSON object or as a Slack message.
+
+To set up approval notifications to be sent to a webhook, add the approvalNotification field to your action configuration:
+
+```json showLineNumbers
+{
+    ...
+    "requiredApproval": true,
+    // highlight-start
+    "approvalNotification": {
+      "type": "webhook",
+      "format": "json / slack",
+      "url": "https://my-slack-webhook.com"
+    },
+    // highlight-end
+    ...
+}
+```
+
+For an example of how to configure a webhook notification to you slack channel see [here](/docs/create-self-service-experiences/set-self-service-actions-rbac/examples.md#setting-up-a-slack-notification).
+
 ## Self-service actions RBAC examples
 
 Refer to the [examples](./examples.md) page for practical examples of Port's RBAC.
