@@ -44,21 +44,23 @@ Remember to update the `WEBHOOK_SECRET` with the real secret you receive after s
 2. Navigate to **Integrations** on the navigation bar and click on **Generic Webhooks (v3)**
 3. Click **New Webhook** and provide the following information:
    1. `Webhook URL` - enter the value of the `url` key you received after [creating the webhook configuration](../webhook.md#configuring-webhook-endpoints);
-   2. `Scope Type` - select whether you want to narrow down your webhook to a particular `Service` or to all services and resources in your `Account`;
+   2. `Scope Type` - select whether you want to receive webhook events for a specific service (select `Service` if this applies) or for all services in your account (select `Account` if this applies);
    3. `Description` - provide an optional description for your webhook;
    4. `Event Subscription` - choose the event types you would like to subscribe to;
-   5. `Custom Header` - enter any optional HTTP header to be added to your webhook payload;
+   5. `Custom Header` - enter any optional HTTP header to be added to your webhook payload.
 4. Click **Add webhook** to create your webhook:
 
-5. You can also use the `curl` method to create the webhook. Copy the code below and run it on your terminal;
+5. You can also use the `curl` method to create the webhook. Copy the code below and run it on your terminal:
 
-```curl
+```curl showLineNumbers
   curl --request POST \
-  --url https://api.pagerduty.com/webhook_subscriptions \
+  --url \
+ https://api.pagerduty.com/webhook_subscriptions
   --header 'Accept: application/vnd.pagerduty+json;version=2' \
   --header 'Authorization: Token token=<YOUR_PAGERDUTY_API_TOKEN>' \
   --header 'Content-Type: application/json' \
-  --data '{
+  --data \
+ '{
   "webhook_subscription": {
   "delivery_method": {
     "type": "http_delivery_method",
