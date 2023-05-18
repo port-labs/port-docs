@@ -39,7 +39,7 @@ Google Cloud Build required dependencies:
   1. Cloud Run;
   2. Cloud Build;
   3. Secret Manager;
-  4. Artifact Registry;
+  4. Artifact Registry.
 
 ## Setting up the webhook
 
@@ -88,7 +88,7 @@ steps:
       ]
 
 substitutions:
-  #Repository Specific configuration. DevOps can change these as needed
+  # Repository Specific configuration. DevOps can change these as needed
   _REPOSITORY: <YOUR_CONTAINER_REPOSITORY_NAME>
   _IMAGE_NAME: $(body.payload.properties.imageName)
   _REGION: $(body.payload.properties.region)
@@ -109,7 +109,7 @@ After you have created or selected an existing secret, you will see a Webhook UR
 
 ![Webhook Security](../../../../static/img/self-service-actions/setup-backend/cloudbuild-pipeline/webhook_url_secret.PNG)
 
-![Webhook URL](../../../../static/img/self-service-actions/setup-backend/cloudbuild-pipeline/cloud-build-webhook-url-preview.PNG)
+![Webhook URL](../../../../static/img/self-service-actions/setup-backend/cloudbuild-pipeline/cloud-build-webhook-preview-url.png)
 
 And finally, you need to connect your source code repository to this pipeline and specify whether you want to invoke the pipeline steps in your `cloudbuild.yaml` or `Dockerfile` (make sure to mark `cloudbuild.yaml` if you used the pipeline snippet provided above).
 
@@ -172,7 +172,7 @@ For example, the substitutions value for the `region` input would be:
 $.payload.properties.region
 ```
 
-**Port Action** - The full port action definition can be found [here](#setting-up-the-port-action).
+**Port Action** - The full Port action definition can be found [here](#setting-up-the-port-action).
 :::
 
 ### Setting up the Port action
