@@ -120,7 +120,6 @@ use-entity:
     logMessage: "My log message"
     summary: "My summary"
     link: "https://mylink.com"
-    external
 ```
 
 </TabItem>
