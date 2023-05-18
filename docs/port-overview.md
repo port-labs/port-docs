@@ -7,7 +7,11 @@ sidebar_label: 👋 Port Overview
 
 # 👋 Port Overview
 
-<iframe width="100%" height="600" src="https://www.youtube.com/embed/z2kR9HSRIpQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+<center>
+
+<iframe width="60%" height="400" src="https://www.youtube.com/embed/z2kR9HSRIpQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+
+</center>
 
 ## What is Port
 
