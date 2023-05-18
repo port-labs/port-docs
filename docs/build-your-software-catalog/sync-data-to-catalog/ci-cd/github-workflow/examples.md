@@ -123,7 +123,7 @@ Add the following action to your `image` blueprint actions:
 
 <ExampleCiAction/>
 
-:::tip
+:::info
 The example here is meant to show a common flow when using a Port self-service action and then using Port's GitHub action to update its logs, status and other information.
 
 In order to use Port's GItHub action to make these updates, you will need your backend to either be a GitHub workflow or for a different backend of your choosing to trigger a GitHub workflow as part of its logic
