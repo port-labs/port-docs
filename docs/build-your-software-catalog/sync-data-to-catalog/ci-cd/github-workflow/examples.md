@@ -123,7 +123,7 @@ Add the following action to your `image` blueprint actions:
 
 <ExampleCiAction/>
 
-After triggering the action in Port, a new run will be created in Port (Note that the runId that generated). The runId can be used to update the action status and reports logs to Port.
+After triggering the action in Port, a new action run will be created in Port (and a matching `runId` will be generated). The runId can be used to update the action status and reports logs to Port.
 
 Add the following snippet to your GitHub workflow `yml` file:
 
