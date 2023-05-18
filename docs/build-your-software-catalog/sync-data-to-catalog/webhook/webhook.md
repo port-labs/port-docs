@@ -175,6 +175,41 @@ Now let's explore the structure of a single mapping object:
 }
 ```
 
+- The `itemsToParse` key let you to create multiple entities from a single webhook event:
+
+:::note
+
+- Any JQ expression can be used here, as long as it evaluates to an array of items.
+- Any other mapping configuration JQ needs to be written with the item as the context.
+- To use the root of the event as the context again, you can use `$root`.
+  :::
+
+```json showLineNumbers
+{
+  ...
+  "mappings": [
+    {
+      "blueprint": "commits",
+      // highlight-start
+      "itemsToParse": ".body.pull_request.commits",
+      // highlight-end
+      // Checks if any of the modified files are in the frontend/src folder.
+      "filter": ".modified | any(test(\"/frontend/src\"))",
+      "entity": {
+        "identifier": ".id | tostring",
+        "title": ".message",
+        "properties": {
+          "author": ".author.email",
+          "url": ".url",
+          "repository": "$root.body.pusher.email"
+        }
+      }
+    }
+  ]
+  ...
+}
+```
+
 - The `entity` key is used to map information from the webhook payload to Port entity properties using JQ:
 
 ```json showLineNumbers
@@ -289,7 +324,7 @@ If you do not want to supply a security configuration with your webhook configur
 ```
 
 - The `signatureAlgorithm` key is used to specify the hashing algorithm used to create the payloads' hashed signature:
-  - **Available values:** `sha1`, `sha256`;
+  - **Available values:** `sha1`, `sha256`, `plain`;
   - When a webhook endpoint receives a new payload, it will use the specified algorithm to calculate the hashed signature of the received payload.
 
 ```json showLineNumbers
@@ -305,6 +340,10 @@ If you do not want to supply a security configuration with your webhook configur
   ...
 }
 ```
+
+:::info
+When using the `plain` algorithm, it will use the secret to match the exact signature header without trying to decrypt it.
+:::
 
 - The `signaturePrefix` key is used to specify a static prefix string that appears before the hashedSignature in the `signatureHeaderName` key:
   - For example, in GitHub webhooks, the header containing the hashed signature always starts with `sha256=`, so the webhook should be configured with: `"signaturePrefix": "sha256"`;
