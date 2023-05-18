@@ -125,7 +125,7 @@ Add the following action to your `image` blueprint actions:
 
 After triggering the action in Port, a new action run will be created in Port (and a matching `runId` will be generated). The runId can be used to update the action status and reports logs to Port.
 
-Add the following snippet to your GitHub workflow `yml` file:
+To update the new self-service action run, add the following snippet to your GitHub workflow `yml` file (note you will need to pass the correct `runId` to the action):
 
 ```yaml showLineNumbers
 - uses: port-labs/port-github-action@v1
