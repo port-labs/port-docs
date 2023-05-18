@@ -46,10 +46,12 @@ Port's GitHub action supports the following methods:
 
 - Create/Update catalog entities - invoked with the `UPSERT` operation, receives the identifier and other properties of a new entity or an entity that needs to be updated;
 - Get catalog entities - invoked with the `GET` operation, receives the identifier of an existing entity and retrieves it for use in your CI.
+- Update Running action - invoked with the `PATCH_RUN` operation, receives the identifier and other properties of a running action or an action that needs to be updated.
 
 <Tabs groupId="usage" defaultValue="upsert" values={[
 {label: "Create/Update", value: "upsert"},
-{label: "Get", value: "get"}
+{label: "Get", value: "get"},
+{label: "Update Running Action", value: "patch_run"}
 ]}>
 
 <TabItem value="upsert">
@@ -98,6 +100,27 @@ use-entity:
   needs: get-entity
   steps:
     - run: echo '${{needs.get-entity.outputs.entity}}' | jq .properties.myProp
+```
+
+</TabItem>
+
+<TabItem value="patch_run">
+
+```yaml showLineNumbers
+- uses: port-labs/port-github-action@v1
+  with:
+    clientId: ${{ secrets.CLIENT_ID }}
+    clientSecret: ${{ secrets.CLIENT_SECRET }}
+    # highlight-next-line
+    operation: PATCH_RUN
+    identifier: myEntity
+    blueprint: myBlueprint
+    runId: myRunId
+    status: "SUCCESS"
+    logMessage: "My log message"
+    summary: "My summary"
+    link: "https://mylink.com"
+    external
 ```
 
 </TabItem>

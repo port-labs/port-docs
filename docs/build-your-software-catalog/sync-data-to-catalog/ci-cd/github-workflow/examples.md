@@ -1,5 +1,6 @@
 import ExampleImageBlueprint from "../\_ci_example_image_blueprint.mdx";
 import ExampleCiJobBlueprint from "../\_ci_example_ci_job_blueprint.mdx";
+import ExampleCiAction from "../\ci_example_action.mdx";
 
 # Examples
 
@@ -113,3 +114,29 @@ All that’s left is to map the new `image` entity to the `ciJob` , thus making 
 ```
 
 That's it! The entities are updated and visible in the UI.
+
+## Basic update run example
+
+In this example you will create action that deploy the latest version of your service, and update the `ciJob` entity with the deployment status.
+
+Add the following snippet to your actions in `image` blueprint
+
+<ExampleCiAction/>
+
+After triggering the action in Port, a new run will be created in Port (Note that the runId that generated). The runId can be used to update the action status and reports logs to Port.
+
+Add the following snippet to your GitHub workflow `yml` file:
+
+```yaml showLineNumbers
+- uses: port-labs/port-github-action@v1
+  with:
+    clientId: ${{ secrets.CLIENT_ID }}
+    clientSecret: ${{ secrets.CLIENT_SECRET }}
+    operation: PATCH_RUN
+    runId: ${{ env.PORT_RUN_ID }}
+    icon: GithubActions
+    status: "SUCCESS"
+    logMessage: "Deployment completed successfully"
+```
+
+That's it! The action status and logs are updated in Port.
