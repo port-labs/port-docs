@@ -27,7 +27,7 @@ Get to know the basics of our Kubernetes exporter [here!](../kubernetes.md)
 In this use-case, you will use a custom bash script which will assist you in the process of installing Port's K8s exporter.
 
 :::note
-For more information about the k8s exporter installation script click [here](./quick-start.md)!
+For more information about the k8s exporter installation script click [here](./quick-start.md#k8s-exporter-installation-script)!
 :::
 
 The script will install the helm chart to the Kubernetes cluster which is currently in kubectl context.

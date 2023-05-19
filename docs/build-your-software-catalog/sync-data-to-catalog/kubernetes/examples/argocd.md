@@ -14,7 +14,7 @@ You can find the files to this exporter template **[here](https://github.com/por
 Using this template, you can easily create `argocdApp` and `argocdAppProject` Blueprints, and configure your K8s exporter to query your ArgoCD resources.
 
 :::note
-Blueprints created in this template define Relations to Blueprints which are referenced in the [Full Kubernetes Exporter](../full-kubernetes-exporter.md) docs.
+Blueprints created in this template define Relations to Blueprints which are referenced in the [Full Kubernetes Exporter](../quick-start/full-kubernetes-exporter.md) docs.
 
 Specifically the Blueprints in this example are related to the [service](https://github.com/port-labs/k8s-exporter-example/blob/main/terraform/Service.tf) and [deployment](https://github.com/port-labs/k8s-exporter-example/blob/main/terraform/Deployment.tf) Blueprints.
 
