@@ -1,29 +1,31 @@
 ---
-sidebar_position: 3
+sidebar_position: 1
+description: Vanilla Kubernetes quickstart
 ---
 
-# Map Your Complete K8s Ecosystem
+# Kubernetes
 
 Kubernetes has become one of the most popular ways to deploy microservice based applications. As the number of your microservices grow, and more clusters are deployed across several regions, it becomes complicated and tedious to keep track of all of your deployments, services, and jobs.
 
-Using Port's Kubernetes Exporter, you can keep track of your K8s resources and export all of the data to Port. We will use K8s' built in metadata to create Entities in Port and keep track of their state.
+Using Port's Kubernetes Exporter, you can keep track of your K8s resources and export all of the data to Port. You will use K8s' built in metadata to create Entities in Port and keep track of their state.
 
 :::tip
-Get to know the basics of our Kubernetes exporter [here!](./kubernetes.md)
+Get to know the basics of our Kubernetes exporter [here!](../kubernetes.md)
 :::
 
 ## Prerequisites
 
 - [Helm](https://helm.sh) must be installed to use the chart. Please refer to
   Helm's [documentation](https://helm.sh/docs) to get started;
-- The `jq` command must installed
-- The `yq` command must installed
-- The `kubectl` command must be installed
+- The `jq` command must installed;
+- The `yq` command must installed;
+- The `kubectl` command must be installed;
+- Have your [Port credentials](../../..//build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials) ready
 
 In this use-case, you will use a custom bash script which will assist you in the process of installing Port's K8s exporter.
 
 :::note
-For more information about the k8s exporter installation script click [here](./installation-script.md)!
+For more information about the k8s exporter installation script click [here](./quick-start.md)!
 :::
 
 The script will install the helm chart to the Kubernetes cluster which is currently in kubectl context.
@@ -56,24 +58,21 @@ This `blueprints.json` file defines the following blueprints:
 
 :::note
 
-- `Workload` is an abstraction of Kubernetes objects which create and manage pods. By creating this Blueprint, we can avoid creating a dedicated Blueprint per Workload type, all of which will likely look pretty similar.
+- `Workload` is an abstraction of Kubernetes objects which create and manage pods. By creating this Blueprint, you can avoid creating a dedicated Blueprint per Workload type, all of which will likely look pretty similar.
   Here is the list of kubernetes objects `Workload` will represent:
 
 * Deployment
 * ReplicaSet
 * StatefulSet
 * DaemonSet
-* Job
 
-- `Service` uses selectors to route traffic to pods, which complicates mapping a `service` entity to it's `workload` entity. For simplicity, we will map `Service` to `Namespace`
+- `Service` uses selectors to route traffic to pods, which complicates mapping a `service` entity to it's `workload` entity. For simplicity, you will map `Service` to `Namespace`
 
 :::
 
 ## Exporting your Kubernetes cluster
 
 ### Installing the Kubernetes exporter using the script
-
-Now it is time to run the installation script and deploy Port's Kubernetes Exporter.
 
 By default (unless a custom `CONFIG_YAML_URL` is set), the installation script fetches a `config.yaml` which has support for core k8s resources - Cluster, Namespace, Workload, Pod, Node.
 
@@ -85,7 +84,7 @@ In this use-case you will be using the `complete_usecase` template. To achieve t
 export TEMPLATE_NAME="complete_usecase"
 ```
 
-Now you are ready to run the installation script:
+You can now run the installation script using the following code snippet:
 
 ```bash showLineNumbers
 export CLUSTER_NAME="my-cluster"

@@ -1,15 +1,11 @@
----
-sidebar_position: 2
----
-
 import Image from "@theme/IdealImage";
-import ExporterBaseInstallCommand from "./\_exporter_base_install_command.mdx"
-import SpecificEntityPage from "../../../../static/img/integrations/k8s-exporter/DeploymentConfigAndPods.png"
-import AuditLogPage from "../../../../static/img/integrations/k8s-exporter/AuditLog.png"
+import ExporterBaseInstallCommand from "../\_exporter_base_install_command.mdx"
+import SpecificEntityPage from "../../../../../static/img/integrations/k8s-exporter/DeploymentConfigAndPods.png"
+import AuditLogPage from "../../../../../static/img/integrations/k8s-exporter/AuditLog.png"
 
 # Examples
 
-## Mapping replica sets and pods
+## Basic Pod and ReplicaSet solution
 
 In the following example you will export your Kubernetes `Replica Sets` and `Pods` to Port, you may use the following Port blueprint definitions, and `config.yaml`:
 
@@ -198,10 +194,6 @@ And you can look for the respective audit logs with an indication of the Kuberne
 
 </center>
 
-## Mapping CRDs
-
-It is also possible to export CRDs from your Kubernetes cluster, for CRD export examples, refer to the [CRDs](./CRDs/crds.md) section.
-
 ## Map your complete K8s ecosystem
 
-To learn how you can visualize a complete K8s cluster, including **namespaces**, **cluster roles**, **cron jobs**, **deployments**, **pods**, and more - check out our Kubernetes mapping [complete use case](./full-kubernetes-exporter.md)
+To learn how you can visualize a complete K8s cluster, including **nodes**, **namespaces**, **cluster roles**, **deployments**, **pods**, and more - check out our Kubernetes mapping [complete use case](../quick-start/full-kubernetes-exporter.md)
