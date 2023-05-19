@@ -24,7 +24,7 @@ Port's K8s exporter installation script will assist you in the process of instal
 
 This script will help you with:
 
-- setting up your custom Port [blueprints](../../define-your-data-model/setup-blueprint/);
+- setting up your custom Port [blueprints](../../../define-your-data-model/setup-blueprint/);
 - installing Port's k8s exporter using helm (check out the Helm chart's [installation documentation](../kubernetes.md#installation));
 - deploying your custom [`config.yaml`](../kubernetes.md#exporter-configyml-file)
 

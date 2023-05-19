@@ -20,7 +20,7 @@ Get to know the basics of our Kubernetes exporter [here!](../kubernetes.md)
 - The `jq` command must installed;
 - The `yq` command must installed;
 - The `kubectl` command must be installed;
-- Have your [Port credentials](../../..//build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials) ready
+- Have your [Port credentials](../../../sync-data-to-catalog/api/#find-your-port-credentials) ready
 
 In this use-case, you will use a custom bash script which will assist you in the process of installing Port's K8s exporter.
 
