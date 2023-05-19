@@ -5,8 +5,6 @@ description: Knative quickstart
 
 # Knative
 
-[Knative](https://knative.dev/docs/concepts/) is an open-source
-
 [Knative](https://knative.dev/docs/concepts/) is an open-source community project, which enhances Kubernetes by introducing components that facilitate the deployment, execution, and administration of serverless, cloud-native applications.
 
 Using Port's Kubernetes Exporter, you can keep track of all Knative resources across your different clusters and export all of the data to Port. You will use built in metadata from your kubernetes resources and CRDs to create Entities in Port and keep track of their state.
