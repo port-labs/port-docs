@@ -35,7 +35,7 @@ Contributions are very welcome. If you think you need help planning your contrib
 
 ### Writing style
 
-1. Pay attention to writing "the … **will** look like this", instead of "the … should **look** like this". It shows more confidence.
+1. Pay attention to writing "the … **will** look like this", instead of "the … **should** look like this". It shows more confidence.
 2. Write the docs in second person grammar, and not in third person grammar. For example: "**you** should do this" instead of "**we** will do this".
 3. Write small numbers (up to 10), in a word and not in a number. For example **two** instead of **2**.
 4. Make sure the spacing between different types of lines is the same throughout the whole document.
@@ -45,14 +45,16 @@ Contributions are very welcome. If you think you need help planning your contrib
 ### Code examples and snippets
 
 1. Try to make use of existing code examples to write new ones, they already list and implement most of the basic helper functions so they can save you time and keep a consistent code format.
-2. When naming Blueprints, entities and relations use the following guidelines:
+2. When naming blueprints, entities and relations use the following guidelines:
    1. Blueprint identifiers: should use camelCase styling with the first letter of a phrase always being a lower letter, for example: `microservice`, `deploymentConfig`, `servicePod`, etc.
    2. Blueprint titles: should use the section headlines (H1) rules: capital letters throughout the headlines.
-   3. Entity identifiers: should use kebab-case styling with letters always being lower, for example: `notification-service`, `recommendation-service`, `authentication`, etc.
-   4. Entity titles: Should use the section headlines (H1) rules: capital letters throughout the headlines.
-   5. Relation identifiers: should follow the name of the matching target blueprint, for example: a relation from microservice to package should use the `package` identifier, because that is the identifier of the `package` blueprint.
-   6. Relation titles: should usually follow the title of the matching target blueprint.
-   7. Self-Service Action identifiers: should use snake_case styling with letters always being lower, for example: `add_secret`, `create_bucket`, etc.
+   3. Blueprint properties: should use camelCase styling with the first letter of a property always being a lower letter, for example: `url`, `eventType`, `dashboardLink`, etc.
+   4. Entity identifiers: should use kebab-case styling with letters always being lower, for example: `notification-service`, `recommendation-service`, `authentication`, etc.
+   5. Entity titles: Should use the section headlines (H1) rules: capital letters throughout the headlines.
+   6. Relation identifiers: should follow the name of the matching target blueprint, for example: a relation from microservice to package should use the `package` identifier, because that is the identifier of the `package` blueprint.
+   7. Relation titles: should usually follow the title of the matching target blueprint.
+   8. Self-service action identifiers: should use snake_case styling with letters always being lower, for example: `add_secret`, `create_bucket`, etc.
+   9. Self-service action user inputs: should use camelCase styling with the first letter of an input always being a lower letter, for example: `url`, `serviceName`, `templateUrl`, etc.
 
 ## Contributor License Agreement (CLA)
 
