@@ -53,7 +53,9 @@ To configure which users can approve the action, see [Managing permissions](/doc
 
 ## Configuring approval notifications
 
-Instead of receiving approval notifications via email, you have the option to configure them to be sent to a webhook.
+by default manual approval notifications are sent via email to users who have approval permissions. 
+
+It is also possible to configure a webhook URL which the approval notification will be sent to.
 
 This allows you to receive notifications in a format of your choice, either as a plain JSON object or as a Slack message.
 
