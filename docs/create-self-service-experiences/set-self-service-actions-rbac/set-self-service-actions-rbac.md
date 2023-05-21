@@ -21,7 +21,7 @@ Self-service actions RBAC allows admins to finely control which users can execut
 - Specify that a new cluster provision request requires manual approval by the DevOps team;
 - etc.
 
-# Set your actions manual approval & Who can approve them
+## Configure manual approval for actions & give approval permissions
 
 You have the ability to set up manual approval steps for your actions.
 
