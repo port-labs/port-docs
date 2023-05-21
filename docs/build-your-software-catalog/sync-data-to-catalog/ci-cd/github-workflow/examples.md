@@ -150,7 +150,7 @@ The example above shows how to update the status and add a new log message to th
 
 For example it is possible to trigger the GitHub action and just update the log, without changing its status.
 
-Note that once a Port action run has a status, it can no longer be updated and changes to the catalog can no longer be tied to that action, so it is considered a best practice to update the status of an action only when it has finished performing all of its changes
+Note that once a Port action run has a status, it can no longer be updated and changes made to the catalog can no longer be tied to that action, so it is considered a best practice to update the status of an action only when it has finished performing all of its catalog changes and logic
 :::
 
 That's it! The action status and logs are updated in Port.
