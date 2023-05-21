@@ -61,7 +61,7 @@ https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX
 
 Now, you can use your webhook URL to send the manual approval notification to the Slack channel tied to the webhook URL.
 
-To do this, modify the approvalNotification field in your action configuration as follows:
+To do this, modify the `approvalNotification` field in your action configuration as shown below:
 
 ```json showLineNumbers
 {
