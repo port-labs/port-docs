@@ -146,7 +146,7 @@ To update the new self-service action run, add the following snippet to your Git
 ```
 
 :::tip
-The example above showing updating the status and adding a new logMessage to the action run, but it is also possible to update just a specific field of an action run.
+The example above shows how to update the status and add a new log message to the action run, but it is also possible to update just a specific field of an action run.
 
 For example it is possible to trigger the GitHub action and just update the log, without changing the status.
 
