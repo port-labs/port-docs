@@ -117,7 +117,7 @@ That's it! The entities are updated and visible in the UI.
 
 ## Basic update run example
 
-In this example you will create a self-service action that deploys the latest version of your service, and updates the `ciJob` entity with the deployment status.
+In this example you will create a self-service action that deploys the latest version of your service, and updates the action run with the deployment status.
 
 Add the following action to your `image` blueprint actions:
 
