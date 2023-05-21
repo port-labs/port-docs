@@ -29,7 +29,7 @@ This feature is particularly useful in situations where an action has the potent
 
 When a user clicks on the `execute` button of an action that requires approval, a new `run` object will be created in Port. The `run` object will have the status `WAITING_FOR_APPROVAL` and will be visible in the `Runs` tab of the action.
 
-On new approval requests, Port will send a notification via email to the users that has the permissions to approve it or a webhook notification to a configured url.
+When a new request requires approval, Port will send a notification via email to users that have the permissions to approve it, or it will send a notification to a configured url via a web request.
 
 To configure a manual approval step, add the `requiredApproval` field to your action:
 
