@@ -180,8 +180,7 @@ Now let's explore the structure of a single mapping object:
 :::note
 
 - Any JQ expression can be used here, as long as it evaluates to an array of items.
-- Any other mapping configuration JQ needs to be written with the item as the context.
-- To use the root of the event as the context again, you can use `$root`.
+- `item` will be added to the JQ context as a key containing the current item being processed and can be accessed using the `.item`.
   :::
 
 ```json showLineNumbers
@@ -194,14 +193,14 @@ Now let's explore the structure of a single mapping object:
       "itemsToParse": ".body.pull_request.commits",
       // highlight-end
       // Checks if any of the modified files are in the frontend/src folder.
-      "filter": ".modified | any(test(\"/frontend/src\"))",
+      "filter": ".item.modified | any(test(\"/frontend/src\"))",
       "entity": {
-        "identifier": ".id | tostring",
-        "title": ".message",
+        "identifier": ".item.id | tostring",
+        "title": ".item.message",
         "properties": {
-          "author": ".author.email",
-          "url": ".url",
-          "repository": "$root.body.pusher.email"
+          "author": ".item.author.email",
+          "url": ".item.url",
+          "repository": ".body.pusher.email"
         }
       }
     }
