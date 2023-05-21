@@ -62,7 +62,7 @@ And save the downloaded file
 
 :::note Prerequisites
 
-- You will need your Port `CLIENT_ID` and `CLIENT_SECRET`. To find your Port API credentials go to [Port](https://app.getport.io), click on `Help` at the bottom left corner, and select `Credentials` then you will be able to view and copy your `CLIENT_ID` and `CLIENT_SECRET`:
+- You will need your Port `CLIENT_ID` and `CLIENT_SECRET`. To find your Port API credentials go to [Port](https://app.getport.io), hover on the `3 dots button` at the top right corner, and select `Credentials` then you will be able to view and copy your `CLIENT_ID` and `CLIENT_SECRET`:
 
 <center>
 
