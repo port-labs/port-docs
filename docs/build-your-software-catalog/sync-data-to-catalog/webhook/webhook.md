@@ -175,12 +175,12 @@ Now let's explore the structure of a single mapping object:
 }
 ```
 
-- The `itemsToParse` key let you to create multiple entities from a single webhook event:
+- The `itemsToParse` makes it possible to create multiple entities from a single webhook event:
 
 :::note
 
 - Any JQ expression can be used here, as long as it evaluates to an array of items.
-- `item` will be added to the JQ context as a key containing the current item being processed and can be accessed using the `.item`.
+- `item` will be added to the JQ context as a key containing a reference to items in the array specified in `itemsToParse`. Keys from the object in the array can be accessed using the `.item.KEY_NAME` syntax, see the example JSON for more information.
   :::
 
 ```json showLineNumbers
@@ -341,7 +341,7 @@ If you do not want to supply a security configuration with your webhook configur
 ```
 
 :::info
-When using the `plain` algorithm, it will use the secret to match the exact signature header without trying to decrypt it.
+When using the `plain` algorithm, no hashing will be performed and the value of the secret saved in the Port webhook configuration will be compared to the value in the specified header without any modification.
 :::
 
 - The `signaturePrefix` key is used to specify a static prefix string that appears before the hashedSignature in the `signatureHeaderName` key:
