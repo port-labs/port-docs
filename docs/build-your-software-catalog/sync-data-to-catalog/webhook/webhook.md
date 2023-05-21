@@ -341,7 +341,7 @@ If you do not want to supply a security configuration with your webhook configur
 ```
 
 :::info
-When using the `plain` algorithm, it will use the secret to match the exact signature header without trying to decrypt it.
+When using the `plain` algorithm, no hashing will be performed and the value of the secret saved in the Port webhook configuration will be compared to the value in the specified header without any modification.
 :::
 
 - The `signaturePrefix` key is used to specify a static prefix string that appears before the hashedSignature in the `signatureHeaderName` key:
