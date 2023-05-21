@@ -209,6 +209,12 @@ Now let's explore the structure of a single mapping object:
 }
 ```
 
+:::note
+
+- Any JQ expression can be used here, as long as it evaluates to an array of items.
+- `item` will be added to the JQ context as a key containing the current item being processed and can be accessed using the `.item`.
+  :::
+
 - The `entity` key is used to map information from the webhook payload to Port entity properties using JQ:
 
 ```json showLineNumbers
