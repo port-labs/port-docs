@@ -51,7 +51,7 @@ To configure a manual approval step, add the `requiredApproval` field to your ac
 
 To configure which users can approve the action, see [Managing permissions](/docs/create-self-service-experiences/set-self-service-actions-rbac/examples.md#setting-action-permissions).
 
-## Configuring Approval notifications
+## Configuring approval notifications
 
 Instead of receiving approval notifications via email, you have the option to configure them to be sent to a webhook.
 
