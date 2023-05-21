@@ -10,9 +10,25 @@ import DeleteDependents from '../../../../generalTemplates/\_delete_dependents_g
 
 The GitHub integration supports additional flags to provide additional configuration, making it easier to configure its behavior to your liking.
 
+To use the advanced configuration and additional flags, add them as a root key to your [`port-app-config.yml`](./github.md#port-app-configyml-file) file, for example to add the
+`createMissingRelatedEntities` flag:
+
+```yaml showLineNumbers
+# highlight-next-line
+createMissingRelatedEntities: true
+resources:
+  - kind: pull-request
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+        ... mappings configuration
+```
+
 ## Using advanced configurations
 
-The following advanced configuration parameters are available:
+The following advanced configuration parameters are available and can be added to the [`port-app-config.yml`](./github.md#port-app-configyml-file) file:
 
 <Tabs groupId="config" queryString="parameter">
 
@@ -45,6 +61,13 @@ The `enableMergeEntity` parameter specifies whether to use the [create/update](.
 
 </TabItem>
 
-</Tabs>
+<TabItem value="createMissingRelatedEntities" label="Create missing related entities">
 
-All of the advanced configurations listed below can be added to the [`port-app-config.yml`](./github.md#port-app-configyml-file) file.
+The `createMissingRelatedEntities` parameter is used to enable the creation of missing related Port entities automatically in cases where the target related entity does not exist in the software catalog yet.
+
+- Default value: `false` (do not create missing related entities)
+- Use case: use `true` if you want GitHub app to create barebones related entities, in case those related entities do not exist in the software catalog.
+
+</TabItem>
+
+</Tabs>
