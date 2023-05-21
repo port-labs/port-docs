@@ -148,7 +148,7 @@ To update the new self-service action run, add the following snippet to your Git
 :::tip
 The example above shows how to update the status and add a new log message to the action run, but it is also possible to update just a specific field of an action run.
 
-For example it is possible to trigger the GitHub action and just update the log, without changing the status.
+For example it is possible to trigger the GitHub action and just update the log, without changing its status.
 
 Note that once a Port action run has a status, it can no longer be updated and changes to the catalog can no longer be tied to that action, so it is considered a best practice to update the status of an action only when it has finished performing all of its changes
 :::
