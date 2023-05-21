@@ -26,13 +26,15 @@ In the example below, the "SDK" input is depends on the "Language" input
 
 ```json
 {
-  "language": {
-    "type": "string",
-    "enum": ["javascript", "python"]
-  },
-  "SDK": {
-    "type": "string",
-    "dependsOn": ["language"]
+  "properties": {
+    "language": {
+      "type": "string",
+      "enum": ["javascript", "python"]
+    },
+    "SDK": {
+      "type": "string",
+      "dependsOn": ["language"]
+    }
   }
 }
 ```
@@ -68,17 +70,17 @@ The jqQuery property is used to create a query that can be used to extract data 
 
 ```json
 {
-  "language": {
-    "type": "string",
-    "enum": ["javascript", "python"],
-  }
-},
-{
-  "SDK": {
-    "type": "string",
-    "enum": {
-      "jqQuery": "if .form.language == \"javascript\" then [\"Node 16\", \"Node 18\"] else [\"Python 3.8\"] end"
+  "properties": {
+    "language": {
+      "type": "string",
+      "enum": ["javascript", "python"]
     },
+    "SDK": {
+      "type": "string",
+      "enum": {
+        "jqQuery": "if .form.language == \"javascript\" then [\"Node 16\", \"Node 18\"] else [\"Python 3.8\"] end"
+      }
+    }
   }
 }
 ```
@@ -344,6 +346,42 @@ This example contains a filter that will only display the namespaces that have s
 }
 ```
 
+### Filter the dropdown's available options with the `relatedTo` operator
+
+This example contains a filter that will only display the namespaces that are related to the cluster that was selected in the Cluster input.
+
+```json
+{
+  "Cluster": {
+    "type": "string",
+    "format": "entity",
+    "blueprint": "Cluster",
+    "title": "Cluster",
+    "description": "The cluster to create the namespace in"
+  },
+  "namespace": {
+    "type": "string",
+    "format": "entity",
+    "blueprint": "namespace",
+    "dependsOn": ["Cluster"],
+    "dataset": {
+      "combinator": "and",
+      "rules": [
+        {
+          "blueprint": "Cluster",
+          "operator": "relatedTo",
+          "value": {
+            "jqQuery": ".form.Cluster.identifier"
+          }
+        }
+      ]
+    },
+    "title": "namespace",
+    "description": "The namespace to create the cluster in"
+  }
+}
+```
+
 ### Setting a default value with the jqQuery
 
 This example contains an array input with a default value that will be equal to the tags of the entity on which the action is performed
@@ -364,11 +402,17 @@ This example contains an array input with a default value that will be equal to 
 :point_up: The namespace tags are already inserted to the form. :point_up:
 
 <!-- this is commented out for now -->
-<!-- ## Complete Example
+
+## Complete Example
+
 In this example, we will create an action that lets the user select a cluster and a namespace in that cluster. The user will also be able to select a service that is already running in the cluster. The action will then deploy the selected service to the selected namespace in the cluster. The user will only be able to select a service that is linked to his team.
+
 #### the existing model in Port:
+
 ![Developer PortalCreate New Blueprint](../../../static/img/software-catalog/blueprint/clusterNamespaceBlueprint.png)
+
 #### the action's configuration:
+
 ```json
 {
   "identifier": "createRunningService",
@@ -432,6 +476,8 @@ In this example, we will create an action that lets the user select a cluster an
   "description": "This will deploy a running service to a cluster"
 }
 ```
+
 #### The action in the developer portal:
+
 ![Cluster And Namespace Action](../../../static/img/software-catalog/blueprint/clusterNamespaceAction.png)
-:point_up: The user will be required to choose a cluster, then a namespace from the selected cluster. And will be able to deploy only services associated with his team -->
+:point_up: The user will be required to choose a cluster, then a namespace from the selected cluster. And will be able to deploy only services associated with his team
