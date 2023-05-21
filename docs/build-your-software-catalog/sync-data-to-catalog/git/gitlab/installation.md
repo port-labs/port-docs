@@ -54,6 +54,8 @@ In case a GitLab group has subgroups, the parent group's access token can be use
 
    - `GROUPS_TO_REPOS` - A Projects to group mapping, refer to the tip section below for a syntax example showing how to format this script parameter
 
+   - `SKIP_WEBHOOK_CREATION` - This option allows you to skip the webhook creation process and get only the current entities in your GitLab.
+
    :::tip
    The complete commands required to run the script are provided here as reference:
 
@@ -73,6 +75,9 @@ In case a GitLab group has subgroups, the parent group's access token can be use
    # GROUPS_TO_REPOS="GroupName:*;" means all projects in the group "GroupName"
    # GROUPS_TO_REPOS="*" means all projects in all groups
    export GROUPS_TO_REPOS="*"
+
+   # Set it to 'true' in order to skip the webhook creation process
+   export SKIP_WEBHOOK_CREATION='false'
 
    curl -s https://raw.githubusercontent.com/port-labs/template-assets/main/gitlab/install.sh | bash
    ```
