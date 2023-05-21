@@ -57,7 +57,7 @@ Instead of receiving approval notifications via email, you have the option to co
 
 This allows you to receive notifications in a format of your choice, either as a plain JSON object or as a Slack message.
 
-To set up approval notifications to be sent to a webhook, add the approvalNotification field to your action configuration:
+To send an approval notification to a URL, add the `approvalNotification` field to your action configuration:
 
 ```json showLineNumbers
 {
