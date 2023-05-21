@@ -70,7 +70,7 @@ To do this, modify the `approvalNotification` field in your action configuration
   // highlight-start
   "approvalNotification": {
     "type": "webhook",
-    "format": "json / slack",
+    "format": "slack",
     "url": "https://my-slack-webhook.com"
   },
   // highlight-end
