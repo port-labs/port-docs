@@ -74,7 +74,7 @@ To send an approval notification to a URL, add the `approvalNotification` field 
 }
 ```
 
-For an example of how to configure a webhook notification to you slack channel see [here](/docs/create-self-service-experiences/set-self-service-actions-rbac/examples.md#setting-up-a-slack-notification).
+Click [here](/docs/create-self-service-experiences/set-self-service-actions-rbac/examples.md#setting-up-a-slack-notification) to learn how to send manual approval requests to Slack.
 
 ## Self-service actions RBAC examples
 
