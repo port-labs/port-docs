@@ -244,18 +244,18 @@ This example contains a dependency between the "language" input and the "SDK" in
 
 ```json
 {
-  "language": {
-    "type": "string",
-    "enum": ["javascript", "python"],
-  }
-},
-{
-  "SDK": {
-    "type": "string",
-    "enum": {
-      "jqQuery": "if .form.language == \"javascript\" then [\"Node 16\", \"Node 18\"] else [\"Python 3.8\"] end"
+  "properties": {
+    "language": {
+      "type": "string",
+      "enum": ["javascript", "python"]
     },
-    "dependsOn": ["language"]
+    "SDK": {
+      "type": "string",
+      "enum": {
+        "jqQuery": "if .form.language == \"javascript\" then [\"Node 16\", \"Node 18\"] else [\"Python 3.8\"] end"
+      },
+      "dependsOn": ["language"]
+    }
   }
 }
 ```
@@ -289,6 +289,46 @@ This example contains a filter that will only display environment entities whose
 ![Only Production Envs](../../../static/img/software-catalog/blueprint/onlyNotProductionEnvs.png)
 
 :point_up: only the environments whose type is not `production` will appear in the dropdown. :point_up:
+
+### Filter the dropdown's available options based on a previous input
+
+This example contains a filter that will only display the namespaces that are related to the cluster that was selected in the `Cluster` input.
+
+```json
+{
+  "Cluster": {
+    "type": "string",
+    "format": "entity",
+    "blueprint": "Cluster",
+    "title": "Cluster",
+    "description": "The cluster to create the namespace in"
+  },
+  "namespace": {
+    "type": "string",
+    "format": "entity",
+    "blueprint": "namespace",
+    "dependsOn": ["Cluster"],
+    "dataset": {
+      "combinator": "and",
+      "rules": [
+        {
+          "blueprint": "Cluster",
+          "operator": "relatedTo",
+          "value": {
+            "jqQuery": ".form.Cluster.identifier"
+          }
+        }
+      ]
+    },
+    "title": "namespace",
+    "description": "The namespace to create the cluster in"
+  }
+}
+```
+
+![Cluster And Namespace Action](../../../static/img/software-catalog/blueprint/clusterNamespaceActionSmallerExample.png)
+
+:point_up: The user will be required to choose a cluster, then a namespace from the selected cluster. :point_up:
 
 ### Filter the dropdown's available options based on properties of the user that execute the action
 
@@ -342,42 +382,6 @@ This example contains a filter that will only display the namespaces that have s
         }
       ]
     }
-  }
-}
-```
-
-### Filter the dropdown's available options with the `relatedTo` operator
-
-This example contains a filter that will only display the namespaces that are related to the cluster that was selected in the Cluster input.
-
-```json
-{
-  "Cluster": {
-    "type": "string",
-    "format": "entity",
-    "blueprint": "Cluster",
-    "title": "Cluster",
-    "description": "The cluster to create the namespace in"
-  },
-  "namespace": {
-    "type": "string",
-    "format": "entity",
-    "blueprint": "namespace",
-    "dependsOn": ["Cluster"],
-    "dataset": {
-      "combinator": "and",
-      "rules": [
-        {
-          "blueprint": "Cluster",
-          "operator": "relatedTo",
-          "value": {
-            "jqQuery": ".form.Cluster.identifier"
-          }
-        }
-      ]
-    },
-    "title": "namespace",
-    "description": "The namespace to create the cluster in"
   }
 }
 ```
@@ -480,4 +484,5 @@ In this example, we will create an action that lets the user select a cluster an
 #### The action in the developer portal:
 
 ![Cluster And Namespace Action](../../../static/img/software-catalog/blueprint/clusterNamespaceAction.png)
-:point_up: The user will be required to choose a cluster, then a namespace from the selected cluster. And will be able to deploy only services associated with his team
+
+:point_up: The user will be required to choose a cluster, then a namespace from the selected cluster. And will be able to deploy only services associated with his team.
