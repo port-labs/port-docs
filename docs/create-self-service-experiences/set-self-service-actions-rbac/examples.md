@@ -49,7 +49,7 @@ By default, **Member** users can execute every action defined on a blueprint. In
 
 </Tabs>
 
-## Setting up a slack notification
+## Setting up a Slack notification
 
 To enable Slack notifications, you need to create a Slack app and install it in your workspace by following steps 1-3 outlined in the [Slack API Documentation](https://api.slack.com/messaging/webhooks).
 
