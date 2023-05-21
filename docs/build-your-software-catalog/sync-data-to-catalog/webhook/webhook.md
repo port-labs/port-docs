@@ -175,7 +175,7 @@ Now let's explore the structure of a single mapping object:
 }
 ```
 
-- The `itemsToParse` key let you to create multiple entities from a single webhook event:
+- The `itemsToParse` makes it possible to create multiple entities from a single webhook event:
 
 :::note
 
