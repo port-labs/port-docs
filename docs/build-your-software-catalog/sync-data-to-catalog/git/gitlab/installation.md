@@ -57,7 +57,7 @@ In case a GitLab group has subgroups, the parent group's access token can be use
    - `SKIP_WEBHOOK_CREATION` - This option allows you to skip the webhook creation process and get only the current entities in your GitLab.
 
    :::note
-   In case `SKIP_WEBHOOK_CREATION` option is set to `true` - the `personal access token` can include `read_api` scope only
+   In case `SKIP_WEBHOOK_CREATION` option is set to `true` - the GitLab `personal access token` does not require the `api` scope, and can instead be limited to the `read_api` scope.
    :::
 
    :::tip
