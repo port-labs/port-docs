@@ -1,9 +1,14 @@
-import Image from "@theme/IdealImage";
-import ExporterBaseInstallCommand from "../\_exporter_base_install_command.mdx"
-import SpecificEntityPage from "../../../../../static/img/integrations/k8s-exporter/DeploymentConfigAndPods.png"
-import AuditLogPage from "../../../../../static/img/integrations/k8s-exporter/AuditLog.png"
+---
+sidebar_position: 3
+description: Basic Example
+---
 
-# Examples
+import Image from "@theme/IdealImage";
+import ExporterBaseInstallCommand from "./\_exporter_base_install_command.mdx"
+import SpecificEntityPage from "../../../../static/img/integrations/k8s-exporter/DeploymentConfigAndPods.png"
+import AuditLogPage from "../../../../static/img/integrations/k8s-exporter/AuditLog.png"
+
+# Basic example
 
 ## Basic Pod and ReplicaSet solution
 
@@ -196,4 +201,4 @@ And you can look for the respective audit logs with an indication of the Kuberne
 
 ## Map your complete K8s ecosystem
 
-To learn how you can visualize a complete K8s cluster, including **nodes**, **namespaces**, **cluster roles**, **deployments**, **pods**, and more - check out our Kubernetes mapping [complete use case](../quick-start/full-kubernetes-exporter.md)
+To learn how you can visualize a complete K8s cluster, including **nodes**, **namespaces**, **cluster roles**, **deployments**, **pods**, and more - check out our Kubernetes mapping [complete use case](./templates/full-kubernetes-exporter.md)

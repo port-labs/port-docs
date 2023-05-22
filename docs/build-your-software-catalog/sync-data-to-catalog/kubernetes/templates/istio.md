@@ -3,9 +3,9 @@ sidebar_position: 2
 description: Knative quickstart
 ---
 
-# Knative
+# Istio
 
-[Knative](https://knative.dev/docs/concepts/) is an open-source community project, which enhances Kubernetes by introducing components that facilitate the deployment, execution, and administration of serverless, cloud-native applications.
+[Argo CD](https://argo-cd.readthedocs.io/en/stable/) functions as an open-source continuous delivery tool based on GitOps methodology. Argo automates the deployment of applications by monitoring your cluster and the infrastructure defined declaratively in a Git repository, and then reconciling any disparities between them.
 
 Using Port's Kubernetes Exporter, you can keep track of all Knative resources across your different clusters and export all of the data to Port. You will use built in metadata from your kubernetes resources and CRDs to create Entities in Port and keep track of their state.
 
@@ -25,7 +25,7 @@ Get to know the basics of our Kubernetes exporter [here!](../kubernetes.md)
 In this use-case, you will use a custom bash script which will assist you in the process of installing Port's K8s exporter.
 
 :::note
-For more information about the k8s exporter installation script click [here](./quick-start.md#k8s-exporter-installation-script)!
+For more information about the k8s exporter installation script click [here](../installation-script.md)!
 :::
 
 The script will install the helm chart to the Kubernetes cluster which is currently in kubectl context.

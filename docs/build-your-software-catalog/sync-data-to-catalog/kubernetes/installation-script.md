@@ -1,34 +1,17 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
+description: Installation Script
 ---
 
-import DocCardList from '@theme/DocCardList';
-
-# Quick starts
-
-To allow for a quick start when implementation Port's k8s exporter, custom pre-built configurations were created. These configurations will map common use-cases for when working with kubernetes.
-
-All pre-built configurations will be installed using Port's K8s [installation script](./quick-start.md#k8s-exporter-installation-script).
-:::note
-
-- Files used in the pre-built configurations can be found [here](https://github.com/port-labs/template-assets/tree/main/kubernetes)
-- These use-cases are generic, and might not always fit your specific use-case. Achieving custom use-cases might require some extra configuration of the k8s exporter
-
-:::
-
-## Kubernetes quickstarts
-
-<DocCardList/>
-
-## K8s exporter installation script
+# Installation Script
 
 Port's K8s exporter installation script will assist you in the process of installing Port's K8s exporter helm chart.
 
 This script will help you with:
 
 - setting up your custom Port [blueprints](../../../define-your-data-model/setup-blueprint/);
-- installing Port's k8s exporter using helm (check out the Helm chart's [installation documentation](../kubernetes.md#installation));
-- deploying your custom [`config.yaml`](../kubernetes.md#exporter-configyml-file)
+- installing Port's k8s exporter using helm (check out the Helm chart's [installation documentation](./kubernetes.md#installation));
+- deploying your custom [`config.yaml`](./kubernetes.md#exporter-configyml-file)
 
 :::tip
 You can view the bash script [here](https://github.com/port-labs/template-assets/blob/main/kubernetes/install.sh).
@@ -56,7 +39,7 @@ export {VARIABLE_NAME}={value}
 
 :::note
 
-- **CLUSTER_NAME:** The script replaces all occurrences of the string `{CLUSTER_NAME}` from the `config.yaml` set in the `CONFIG_YAML_URL`([defined here](./full-kubernetes-exporter.md#helm-chart-installation-configuration)) with the value of the environment variable `CLUSTER_NAME`. This is useful when creating a generic `config.yaml` which has no static cluster name.
+- **CLUSTER_NAME:** The script replaces all occurrences of the string `{CLUSTER_NAME}` from the `config.yaml` set in the `CONFIG_YAML_URL`([defined here](./templates/full-kubernetes-exporter.md#helm-chart-installation-configuration)) with the value of the environment variable `CLUSTER_NAME`. This is useful when creating a generic `config.yaml` which has no static cluster name.
 - **CUSTOM_BP_PATH:** It is important to order the blueprints while taking in to account the necessary relations for each blueprint. Once a blueprint was created, attempting to recreate it using the script will fail. To recreate a blueprint using the script, first delete the blueprint.
 
 :::
