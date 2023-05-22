@@ -73,7 +73,7 @@ This `blueprints.json` file defines the following blueprints:
 
 Using the `CONFIG_YAML_URL` parameter, you can define a custom `config.yaml` to use when installing the exporter.
 
-In this use-case you will be using the [this configuration file](https://github.com/port-labs/template-assets/blob/main/kubernetes/templates/istio-kubernetes_config.yaml). To achieve this, run:
+In this use-case you will be using the **[this configuration file](https://github.com/port-labs/template-assets/blob/main/kubernetes/templates/istio-kubernetes_config.yaml)**. To achieve this, run:
 
 ```bash showLineNumbers
 export CONFIG_YAML_URL="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/templates/istio-kubernetes_config.yaml"

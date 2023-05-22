@@ -74,14 +74,12 @@ This `blueprints.json` file defines the following blueprints:
 
 ### Installing the Kubernetes exporter using the script
 
-By default (unless a custom `CONFIG_YAML_URL` is set), the installation script fetches a `config.yaml` which has support for core k8s resources - Cluster, Namespace, Workload, Pod, Node.
+Using the `CONFIG_YAML_URL` parameter, you can define a custom `config.yaml` to use when installing the exporter.
 
-If no custom `CONFIG_YAML_URL` is defined, you can use custom pre-built templates to add on to the `config.yaml`. This is done using the `TEMPLATE_NAME` environment variable.
-
-In this use-case you will be using the `complete_usecase` template. To achieve this, run:
+In this use-case you will be using the **[this configuration file](https://github.com/port-labs/template-assets/blob/main/kubernetes/templates/complete_usecase-kubernetes_config.yaml)**. To achieve this, run:
 
 ```bash showLineNumbers
-export TEMPLATE_NAME="complete_usecase"
+export CONFIG_YAML_URL="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/templates/complete_usecase-kubernetes_config.yaml"
 ```
 
 You can now run the installation script using the following code snippet:
