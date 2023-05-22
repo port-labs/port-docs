@@ -6,7 +6,7 @@ import DocCardList from '@theme/DocCardList';
 
 # Quick starts
 
-To allow for a quick start when implementation Port's k8s exporter, custom pre-built configurations were created. These configurations will map common use-cases for when working with kubernetes.
+To allow for a quick start when implementing Port's k8s exporter, custom pre-built templates were created. These configurations will map common use-cases for when working with kubernetes.
 
 All pre-built configurations will be installed using Port's K8s [installation script](../installation-script.md).
 :::note
