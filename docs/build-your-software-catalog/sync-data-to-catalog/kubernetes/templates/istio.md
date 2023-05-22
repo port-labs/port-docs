@@ -5,9 +5,9 @@ description: Knative quickstart
 
 # Istio
 
-[Argo CD](https://argo-cd.readthedocs.io/en/stable/) functions as an open-source continuous delivery tool based on GitOps methodology. Argo automates the deployment of applications by monitoring your cluster and the infrastructure defined declaratively in a Git repository, and then reconciling any disparities between them.
+[Istio](https://istio.io/latest/docs/setup/getting-started/) is an open-source service mesh that provides a uniform way to connect, manage, and secure microservices.
 
-Using Port's Kubernetes Exporter, you can keep track of all Knative resources across your different clusters and export all of the data to Port. You will use built in metadata from your kubernetes resources and CRDs to create Entities in Port and keep track of their state.
+Using Port's Kubernetes Exporter, you can keep track of all Istio resources across your different clusters and export all of the data to Port. You will use built in metadata from your kubernetes resources and CRDs to create Entities in Port and keep track of their state.
 
 :::tip
 Get to know the basics of our Kubernetes exporter [here!](../kubernetes.md)
@@ -39,10 +39,10 @@ kubectl config current-context
 
 ### Creating Blueprints using the installation script
 
-The installation script provides a convenient way to create your blueprints. Using the `CUSTOM_BP_PATH` environment variable, you can fetch a pre-defined `blueprints.json` to create your blueprints. For this use-case, you will use [this file](https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/kubernetes_knative_usecase.json) to define your blueprints. Do this by running:
+The installation script provides a convenient way to create your blueprints. Using the `CUSTOM_BP_PATH` environment variable, you can fetch a pre-defined `blueprints.json` to create your blueprints. For this use-case, you will use [this file](https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/istio-blueprints.json) to define your blueprints. Do this by running:
 
 ```bash showLineNumbers
-export CUSTOM_BP_PATH="https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/kubernetes_knative_usecase.json"
+export CUSTOM_BP_PATH="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/blueprints/istio-blueprints.json"
 ```
 
 This `blueprints.json` file defines the following blueprints:
@@ -52,10 +52,8 @@ This `blueprints.json` file defines the following blueprints:
 - Node
 - Pod
 - Workload \*
-- Knative Service
-- Knative Configuration
-- Knative Revision
-- Knative Route
+- Istio Gateway
+- Istio VirtualService
 
 :::note
 
@@ -75,10 +73,10 @@ This `blueprints.json` file defines the following blueprints:
 
 Using the `CONFIG_YAML_URL` parameter, you can define a custom `config.yaml` to use when installing the exporter.
 
-In this use-case you will be using the [this configuration file](https://github.com/port-labs/template-assets/blob/main/kubernetes/full-configs/kubernetes_kantive_usecase.yaml). To achieve this, run:
+In this use-case you will be using the [this configuration file](https://github.com/port-labs/template-assets/blob/main/kubernetes/templates/istio-kubernetes_config.yaml). To achieve this, run:
 
 ```bash showLineNumbers
-export CONFIG_YAML_URL="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/full-configs/kubernetes_kantive_usecase.yaml"
+export CONFIG_YAML_URL="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/templates/istio-kubernetes_config.yaml"
 ```
 
 You can now run the installation script using the following code snippet:
@@ -90,4 +88,4 @@ export PORT_CLIENT_SECRET="my-port-client-secret"
 curl -s https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/install.sh | bash
 ```
 
-You can now browse to your Port environment to see that your blueprints have been created, and your k8s and knative resources are being reported to Port using the freshly installed k8s exporter.
+You can now browse to your Port environment to see that your blueprints have been created, and your k8s and Istio resources are being reported to Port using the freshly installed k8s exporter.

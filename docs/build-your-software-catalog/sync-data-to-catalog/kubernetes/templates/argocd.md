@@ -39,10 +39,18 @@ kubectl config current-context
 
 ### Creating Blueprints using the installation script
 
-The installation script provides a convenient way to create your blueprints. Using the `CUSTOM_BP_PATH` environment variable, you can fetch a pre-defined `blueprints.json` to create your blueprints. For this use-case, you will use [this file](https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/kubernetes_knative_usecase.json) to define your blueprints. Do this by running:
+The installation script provides a convenient way to create your blueprints. Using the `CUSTOM_BP_PATH` environment variable, you can fetch a pre-defined `blueprints.json` to create your blueprints.
+
+- If you use **Argo Rollouts**, use [this file](https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/argo-argo_rollouts-blueprints.json) to define your blueprints. Do this by running:
 
 ```bash showLineNumbers
-export CUSTOM_BP_PATH="https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/kubernetes_knative_usecase.json"
+export CUSTOM_BP_PATH="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/blueprints/argo-argo_rollouts-blueprints.json"
+```
+
+- If you don't use Argo Rollouts, use [this file](https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/argo-blueprints.json) by running:
+
+```bash showLineNumbers
+export CUSTOM_BP_PATH="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/blueprints/argo-blueprints.json"
 ```
 
 This `blueprints.json` file defines the following blueprints:
@@ -52,10 +60,9 @@ This `blueprints.json` file defines the following blueprints:
 - Node
 - Pod
 - Workload \*
-- Knative Service
-- Knative Configuration
-- Knative Revision
-- Knative Route
+- ArgoCD Application
+- ArgoCD Project
+- ArgoCD Repository
 
 :::note
 
@@ -66,6 +73,7 @@ This `blueprints.json` file defines the following blueprints:
 * ReplicaSet
 * StatefulSet
 * DaemonSet
+* Argo Rollouts (Only for Rollouts `blueprints.json`)
 
 :::
 
@@ -75,10 +83,16 @@ This `blueprints.json` file defines the following blueprints:
 
 Using the `CONFIG_YAML_URL` parameter, you can define a custom `config.yaml` to use when installing the exporter.
 
-In this use-case you will be using the [this configuration file](https://github.com/port-labs/template-assets/blob/main/kubernetes/full-configs/kubernetes_kantive_usecase.yaml). To achieve this, run:
+- If you use **Argo rollouts**, use [this configuration file](https://github.com/port-labs/template-assets/blob/main/kubernetes/templates/argo-argo_rollouts-kubernetes_config.yaml). To achieve this, run:
 
 ```bash showLineNumbers
-export CONFIG_YAML_URL="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/full-configs/kubernetes_kantive_usecase.yaml"
+export CONFIG_YAML_URL="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/templates/argo-argo_rollouts-kubernetes_config.yaml"
+```
+
+- If you don't use Argo Rollouts, use [this configuration file](https://github.com/port-labs/template-assets/blob/main/kubernetes/templates/argo-kubernetes_config.yaml) by running:
+
+```bash showLineNumbers
+export CONFIG_YAML_URL="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/templates/argo-kubernetes_config.yaml"
 ```
 
 You can now run the installation script using the following code snippet:
@@ -90,4 +104,4 @@ export PORT_CLIENT_SECRET="my-port-client-secret"
 curl -s https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/install.sh | bash
 ```
 
-You can now browse to your Port environment to see that your blueprints have been created, and your k8s and knative resources are being reported to Port using the freshly installed k8s exporter.
+You can now browse to your Port environment to see that your blueprints have been created, and your k8s and ArgoCD resources are being reported to Port using the freshly installed k8s exporter.
