@@ -92,7 +92,7 @@ The Email property type can be used to store any legal email address.
 <Tabs groupId="tf-definition" defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Enum", value: "enum"},
-{label: "Array - coming soon", value: "array"}
+{label: "Array", value: "array"}
 ]}>
 
 <TabItem value="basic">
@@ -137,6 +137,29 @@ resource "port-labs_blueprint" "myBlueprint" {
 ```
 
 </TabItem>
+
+<TabItem value="array">
+
+```hcl showLineNumbers
+resource "port-labs_blueprint" "myBlueprint" {
+  # ...blueprint properties
+  # highlight-start
+  properties {
+    identifier = "myEmailArray"
+    title      = "My email array"
+    required   = false
+    type       = "array"
+    items = {
+      type   = "string"
+      format = "email"
+    }
+  }
+  # highlight-end
+}
+```
+
+</TabItem>
+
 </Tabs>
 
 ## Pulumi definition
