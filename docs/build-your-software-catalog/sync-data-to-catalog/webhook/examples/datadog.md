@@ -75,3 +75,17 @@ In order to view the different payloads and structure of the events in Datadog w
 :::
 
 Done! any problem detected on your Datadog instance will trigger a webhook event. Port will parse the events according to the mapping and update the catalog entities accordingly.
+
+## Ingest service level objectives (SLOs)
+
+This guide will walk you through the steps to ingest Datadog SLOs into Port. By following these steps, you will be able to create a blueprint for a `microservice` entity in Port, representing a service in your Datadog account. Furthermore, you will establish a relation between this service and the `datadogSLO` blueprint, allowing the ingestion of all defined SLOs from your Datadog account.
+
+The provided example demonstrates how to pull data from Datadog's REST API at scheduled intervals using GitLab Pipelines and report the data to Port.
+
+- [GitLab CI Pipeline Example](https://github.com/port-labs/datadog-slo-example)
+
+## Ingest service dependency from your APM
+
+In this example, you will create a blueprint for `service` entity that ingests all services and their related dependencies in your Datadog APM using REST API. You will then add some shell script to create new entities in Port every time a GitLab CI is triggered by a schedule.
+
+- [GitLab CI Pipeline Example](https://github.com/port-labs/datadog-service-dependency-example)
