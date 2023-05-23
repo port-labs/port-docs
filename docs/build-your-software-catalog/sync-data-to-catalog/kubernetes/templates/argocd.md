@@ -5,7 +5,7 @@ description: Knative quickstart
 
 # ArgoCD
 
-[Argo CD](https://argo-cd.readthedocs.io/en/stable/) functions is an open-source continuous delivery tool based on GitOps methodology. Argo automates the deployment of applications by monitoring your cluster and the infrastructure defined declaratively in a Git repository, and then reconciling any disparities.
+[Argo CD](https://argo-cd.readthedocs.io/en/stable/) is an open-source continuous delivery tool based on GitOps methodology. Argo automates the deployment of applications by monitoring your cluster and the infrastructure defined declaratively in a Git repository, and then reconciling any disparities.
 
 Using Port's Kubernetes Exporter, you can keep track of all ArgoCD resources across your different clusters and export all of the data to Port. You will use built in metadata from your kubernetes resources and CRDs to create Entities in Port and keep track of their state.
 
@@ -20,7 +20,7 @@ Get to know the basics of our Kubernetes exporter [here!](../kubernetes.md)
 - The `jq` command must installed;
 - The `yq` command must installed;
 - The `kubectl` command must be installed;
-- Have your [Port credentials](../../../sync-data-to-catalog/api/#find-your-port-credentials) ready
+- Have your [Port credentials](../../../sync-data-to-catalog/api/#find-your-port-credentials) ready.
 
 In this use-case, you will use a custom bash script which will assist you in the process of installing Port's K8s exporter.
 
@@ -55,25 +55,25 @@ export CUSTOM_BP_PATH="https://raw.githubusercontent.com/port-labs/template-asse
 
 This `blueprints.json` file defines the following blueprints:
 
-- Cluster
-- Namespace
-- Node
-- Pod
-- Workload \*
-- ArgoCD Application
-- ArgoCD Project
-- ArgoCD Repository
+- Cluster;
+- Namespace;
+- Node;
+- Pod;
+- Workload \*;
+- ArgoCD Application;
+- ArgoCD Project;
+- ArgoCD Repository.
 
 :::note
 
-- `Workload` is an abstraction of Kubernetes objects which create and manage pods. By creating this Blueprint, you can avoid creating a dedicated Blueprint per Workload type, all of which will likely look pretty similar.
+- `Workload` is an abstraction of Kubernetes objects which create and manage pods. By creating this blueprint, you can avoid creating a dedicated blueprint per Workload type, all of which will likely look pretty similar.
   Here is the list of kubernetes objects `Workload` will represent:
 
-* Deployment
-* ReplicaSet
-* StatefulSet
-* DaemonSet
-* Argo Rollouts (Only for Rollouts `blueprints.json`)
+* Deployment;
+* ReplicaSet;
+* StatefulSet;
+* DaemonSet;
+* Argo Rollouts (Only for Rollouts `blueprints.json`).
 
 :::
 

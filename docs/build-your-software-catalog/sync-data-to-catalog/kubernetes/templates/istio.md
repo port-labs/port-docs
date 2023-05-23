@@ -20,7 +20,7 @@ Get to know the basics of our Kubernetes exporter [here!](../kubernetes.md)
 - The `jq` command must installed;
 - The `yq` command must installed;
 - The `kubectl` command must be installed;
-- Have your [Port credentials](../../../sync-data-to-catalog/api/#find-your-port-credentials) ready
+- Have your [Port credentials](../../../sync-data-to-catalog/api/#find-your-port-credentials) ready.
 
 In this use-case, you will use a custom bash script which will assist you in the process of installing Port's K8s exporter.
 
@@ -47,23 +47,23 @@ export CUSTOM_BP_PATH="https://raw.githubusercontent.com/port-labs/template-asse
 
 This `blueprints.json` file defines the following blueprints:
 
-- Cluster
-- Namespace
-- Node
-- Pod
-- Workload \*
-- Istio Gateway
-- Istio VirtualService
+- Cluster;
+- Namespace;
+- Node;
+- Pod;
+- Workload \*;
+- Istio Gateway;
+- Istio VirtualService.
 
 :::note
 
-- `Workload` is an abstraction of Kubernetes objects which create and manage pods. By creating this Blueprint, you can avoid creating a dedicated Blueprint per Workload type, all of which will likely look pretty similar.
+- `Workload` is an abstraction of Kubernetes objects which create and manage pods. By creating this blueprint, you can avoid creating a dedicated blueprint per Workload type, all of which will likely look pretty similar.
   Here is the list of kubernetes objects `Workload` will represent:
 
-* Deployment
-* ReplicaSet
-* StatefulSet
-* DaemonSet
+* Deployment;
+* ReplicaSet;
+* StatefulSet;
+* DaemonSet.
 
 :::
 

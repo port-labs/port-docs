@@ -4,7 +4,7 @@ sidebar_position: 1
 
 import DocCardList from '@theme/DocCardList';
 
-# Quick starts
+# Templates
 
 To allow for a quick start when implementing Port's k8s exporter, custom pre-built templates were created. These configurations will map common use-cases for when working with kubernetes.
 
