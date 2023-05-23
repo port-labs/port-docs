@@ -52,7 +52,7 @@ The following example illustrates a simple Cloud Build pipeline that builds a co
 ```yaml showLineNumbers
 steps:
   # Build the container image
-  - name: gcr.io/cloud-builders/docker
+  - name: "gcr.io/cloud-builders/docker"
     args:
       [
         "build",
@@ -94,7 +94,8 @@ substitutions:
   _REGION: $(body.payload.properties.region)
 
 options:
-  substitution_option: "ALLOW_LOOSE"
+  substitution_option: ALLOW_LOOSE
+  logging: CLOUD_LOGGING_ONLY
 ```
 
 ### Enabling the webhook trigger for a pipeline
@@ -110,6 +111,27 @@ After you have created or selected an existing secret, you will see a Webhook UR
 ![Webhook Security](../../../../static/img/self-service-actions/setup-backend/cloudbuild-pipeline/webhook_url_secret.PNG)
 
 ![Webhook URL](../../../../static/img/self-service-actions/setup-backend/cloudbuild-pipeline/cloud-build-webhook-preview-url.png)
+
+:::tip IAM Permissions
+Make sure that the service account or API key running the webhook has permission to run CloudBuild pipelines. Follow Google's guideline on how to obtain an API key [here](https://cloud.google.com/build/docs/automate-builds-webhook-events#optional_obtaining_an_api_key)
+
+Additionally, if you configure the webhook trigger to use a service account, Google requires that the `cloudbuild.yaml` file either:
+
+1. Specify 'build.logs_bucket'. This option allows you to store the build logs in a Google Cloud Storage bucket. Enable this setting using the following configuration:
+
+```yaml showLineNumbers
+steps:
+  - name: "bash"
+    args: ["echo", "Hello world!"]
+logsBucket: "LOGS_BUCKET_LOCATION"
+serviceAccount: "projects/PROJECT_ID/serviceAccounts/SERVICE_ACCOUNT"
+options:
+  logging: GCS_ONLY
+```
+
+2. Use the CLOUD_LOGGING_ONLY logging option as shown [above](#configuring-the-pipeline);
+3. Use the NONE logging option.
+   :::
 
 And finally, you need to connect your source code repository to this pipeline and specify whether you want to invoke the pipeline steps in your `cloudbuild.yaml` or `Dockerfile` (make sure to mark `cloudbuild.yaml` if you used the pipeline snippet provided above).
 
@@ -211,6 +233,66 @@ Here is an example for an action that will trigger the webhook you just set up:
       "requiredApproval":false
    }
 ]
+```
+
+### Report CloudBuild run status to Port
+
+Once you have triggered your CloudBuild pipeline successfully, it is essential to update the status of the run action in Port. This update allows Port to monitor the status of your CloudBuild pipeline. To report the CloudBuild pipeline status back to Port, please refer to the section on [updating an action run](../../reflect-action-progress/reflect-action-progress.md#updating-an-action-run) for guidance.
+
+The code snippet below demonstrates how you can report the progress of your pipeline to Port. Remember to modify the Port credentials in the substitutions section for CloudBuild to authenticate using your Port access token.
+
+```yaml showLineNumbers
+steps:
+  - name: ubuntu
+    args:
+      - echo
+      - hello world
+
+  # Get Port's Access Token
+  - name: "gcr.io/cloud-builders/curl"
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        # Get access token and save it to a file
+        accessToken=$(curl -X POST \
+          -H 'Content-Type: application/json' \
+          -d '{"clientId": "${_PORT_CLIENT_ID}", "clientSecret": "${_PORT_CLIENT_SECRET}"}' \
+          -s 'https://api.getport.io/v1/auth/access_token' | grep -o '"accessToken":"[^"]*' | awk -F'"' '{print $4}')
+        echo "$accessToken" > /workspace/token.txt
+
+  # Logs sending example
+  - name: "gcr.io/cloud-builders/curl"
+    args:
+      - "-c"
+      - |
+        curl -X POST \
+          -H 'Content-Type: application/json' \
+          -H "Authorization: Bearer $(cat /workspace/token.txt)" \
+          -d '{"message": "this is a log test message example"}' \
+          'https://api.getport.io/v1/actions/runs/${_RUN_ID}/logs'
+    entrypoint: bash
+
+  # Port status update example
+  - name: "gcr.io/cloud-builders/curl"
+    args:
+      - "-c"
+      - |
+        curl -X PATCH \
+          -H 'Content-Type: application/json' \
+          -H "Authorization: Bearer $(cat /workspace/token.txt)" \
+          -d '{"status":"SUCCESS", "message": {"run_status": "CloudBuild Run completed successfully!"}}' \
+          'https://api.getport.io/v1/actions/runs/${_RUN_ID}'
+    entrypoint: bash
+
+substitutions:
+  _RUN_ID: $(body.context.runId)
+  _PORT_CLIENT_ID: <Your Port Client Id>
+  _PORT_CLIENT_SECRET: <Your Port Client Secret>
+
+options:
+  substitution_option: ALLOW_LOOSE
+  logging: CLOUD_LOGGING_ONLY
 ```
 
 That's it! Anytime a user invokes an action in Port UI, a webhook trigger will be sent to Google Cloud Build to execute the pipeline.
