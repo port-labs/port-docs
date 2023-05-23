@@ -131,7 +131,8 @@ options:
 
 2. Use the CLOUD_LOGGING_ONLY logging option as shown [above](#configuring-the-pipeline);
 3. Use the NONE logging option.
-   :::
+
+:::
 
 And finally, you need to connect your source code repository to this pipeline and specify whether you want to invoke the pipeline steps in your `cloudbuild.yaml` or `Dockerfile` (make sure to mark `cloudbuild.yaml` if you used the pipeline snippet provided above).
 
