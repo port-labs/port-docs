@@ -325,10 +325,6 @@ If you do not want to supply a security configuration with your webhook configur
 }
 ```
 
-:::note
-When `plain` algorithm is chosen the signature wont be calculated and the value of the secret saved in the Port webhook configuration will be compared to the value in the specified header without any modification.
-:::
-
 - The `signatureAlgorithm` key is used to specify the hashing algorithm used to create the payloads' hashed signature:
   - **Available values:** `sha1`, `sha256`, `plain`;
   - When a webhook endpoint receives a new payload, it will use the specified algorithm to calculate the hashed signature of the received payload.
