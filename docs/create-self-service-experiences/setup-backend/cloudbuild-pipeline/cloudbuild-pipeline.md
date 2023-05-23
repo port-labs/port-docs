@@ -243,7 +243,7 @@ The code snippet below demonstrates how you can report the progress of your pipe
 
 ```yaml showLineNumbers
 steps:
-  - name: ubuntu
+  - name: "ubuntu"
     args:
       - echo
       - hello world
@@ -298,4 +298,5 @@ options:
 That's it! Anytime a user invokes an action in Port UI, a webhook trigger will be sent to Google Cloud Build to execute the pipeline.
 
 You can also follow the sample project on how to integration Cloud Build with Port.
-[Github Repository](https://github.com/port-labs/port-cloudbuild-webhook-trigger-example)
+
+- [Github Repository](https://github.com/port-labs/port-cloudbuild-webhook-trigger-example)
