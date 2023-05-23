@@ -1,5 +1,6 @@
 import ExampleImageBlueprint from "../\_ci_example_image_blueprint.mdx";
 import ExampleCiJobBlueprint from "../\_ci_example_ci_job_blueprint.mdx";
+import ExampleCiAction from "../\ci_example_action.mdx";
 
 # Examples
 
@@ -113,3 +114,43 @@ All that’s left is to map the new `image` entity to the `ciJob` , thus making 
 ```
 
 That's it! The entities are updated and visible in the UI.
+
+## Basic update run example
+
+In this example you will create a self-service action that deploys the latest version of your service, and updates the action run with the deployment status.
+
+Add the following action to your `image` blueprint actions:
+
+<ExampleCiAction/>
+
+:::info
+The example here is meant to show a common flow when using a Port self-service action and then using Port's GitHub action to update its logs, status and other information.
+
+In order to use Port's GitHub action to make these updates, you will need your backend to either be a GitHub workflow or for a different backend of your choosing to trigger a GitHub workflow as part of its logic
+:::
+
+After triggering the action in Port, a new action run will be created in Port (and a matching `runId` will be generated). The runId can be used to update the action status and reports logs to Port.
+
+To update the new self-service action run, add the following snippet to your GitHub workflow `yml` file (note you will need to pass the correct `runId` to the action):
+
+```yaml showLineNumbers
+- uses: port-labs/port-github-action@v1
+  with:
+    clientId: ${{ secrets.CLIENT_ID }}
+    clientSecret: ${{ secrets.CLIENT_SECRET }}
+    operation: PATCH_RUN
+    runId: ${{ env.PORT_RUN_ID }}
+    icon: GithubActions
+    status: "SUCCESS"
+    logMessage: "Deployment completed successfully"
+```
+
+:::tip
+The example above shows how to update the status and add a new log message to the action run, but it is also possible to update just a specific field of an action run.
+
+For example it is possible to trigger the GitHub action and just update the log, without changing its status.
+
+Note that once a Port action run has a status, it can no longer be updated and changes made to the catalog can no longer be tied to that action, so it is considered a best practice to update the status of an action only when it has finished performing all of its catalog changes and logic
+:::
+
+That's it! The action status and logs are updated in Port.
