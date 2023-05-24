@@ -113,7 +113,7 @@ After you have created or selected an existing secret, you will see a Webhook UR
 ![Webhook URL](../../../../static/img/self-service-actions/setup-backend/cloudbuild-pipeline/cloud-build-webhook-preview-url.png)
 
 :::tip IAM Permissions
-Make sure that the service account or API key running the webhook has permission to run CloudBuild pipelines. Follow Google's guideline on how to obtain an API key [here](https://cloud.google.com/build/docs/automate-builds-webhook-events#optional_obtaining_an_api_key)
+Make sure that the service account or API key running the webhook has permission to run Cloud Build pipelines. Follow Google's guideline on how to obtain an API key [here](https://cloud.google.com/build/docs/automate-builds-webhook-events#optional_obtaining_an_api_key)
 
 Additionally, if you configure the webhook trigger to use a service account, Google requires that the `cloudbuild.yaml` file either:
 
@@ -238,17 +238,12 @@ Here is an example for an action that will trigger the webhook you just set up:
 
 ### Report CloudBuild run status to Port
 
-Once you have triggered your CloudBuild pipeline successfully, it is essential to update the status of the run action in Port. This update allows Port to monitor the status of your CloudBuild pipeline. To report the CloudBuild pipeline status back to Port, please refer to the section on [updating an action run](../../reflect-action-progress/reflect-action-progress.md#updating-an-action-run) for guidance.
+Once you have triggered your Cloud Build pipeline successfully, it is essential to update the status of the run action in Port. This update allows Port to monitor the status of your Cloud Build pipeline.
 
-The code snippet below demonstrates how you can report the progress of your pipeline to Port. Remember to modify the Port credentials in the substitutions section for CloudBuild to authenticate using your Port access token.
+The code snippet below demonstrates how you can report the progress of your pipeline to Port. Remember to modify the Port credentials in the substitutions section for Cloud Build to authenticate using your Port access token.
 
 ```yaml showLineNumbers
 steps:
-  - name: "ubuntu"
-    args:
-      - echo
-      - hello world
-
   # Get Port's Access Token
   - name: "gcr.io/cloud-builders/curl"
     entrypoint: "bash"
@@ -298,6 +293,7 @@ options:
 
 That's it! Anytime a user invokes an action in Port UI, a webhook trigger will be sent to Google Cloud Build to execute the pipeline.
 
-You can also follow the sample project on how to integration Cloud Build with Port.
+For more information, visit:
 
-- [Github Repository](https://github.com/port-labs/port-cloudbuild-webhook-trigger-example)
+- [Cloud Build example repository](https://github.com/port-labs/port-cloudbuild-webhook-trigger-example)
+- [Updating an action run](../../reflect-action-progress/reflect-action-progress.md#updating-an-action-run)
