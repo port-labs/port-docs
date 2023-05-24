@@ -28,8 +28,6 @@ terraform {
 provider "port-labs" {
   #   client_id = "YOUR_CLIENT_ID"     # or set the environment variable PORT_CLIENT_ID
   #   secret    = "YOUR_CLIENT_SECRET" # or set the environment variable PORT_CLIENT_SECRET
-  client_id = "KZ5zDPudPshQMShUb4cLopBEE1fNSJGE"                                 # or set the env var PORT_CLIENT_ID
-  secret    = "EUUVyrSOqnsYgNeojG1cu1wbdeAhZCe2mEA1wBdDAgQM4sKcXR4ZvlwkusVE4yUb" # or set the env var PORT_CLIENT_SECRET
 }
 
 resource "port-labs_blueprint" "component" {
