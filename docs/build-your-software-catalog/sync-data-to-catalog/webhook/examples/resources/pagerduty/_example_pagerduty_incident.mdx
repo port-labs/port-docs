@@ -1,0 +1,62 @@
+```json showLineNumbers
+{
+  "identifier": "pagerdutyIncident",
+  "description": "This blueprint represents a PagerDuty incident in our software catalog",
+  "title": "PagerDuty Incident",
+  "icon": "pagerduty",
+  "schema": {
+    "properties": {
+      "status": {
+        "type": "string",
+        "title": "Incident Status",
+        "enum": [
+          "triggered",
+          "annotated",
+          "acknowledged",
+          "reassigned",
+          "escalated",
+          "reopened",
+          "resolved"
+        ]
+      },
+      "url": {
+        "type": "string",
+        "format": "url",
+        "title": "Incident URL"
+      },
+      "details": {
+        "type": "string",
+        "title": "Details"
+      },
+      "priority": {
+        "type": "string",
+        "title": "Priority"
+      },
+      "urgency": {
+        "type": "string",
+        "title": "Incident Urgency",
+        "enum": ["high", "low"]
+      },
+      "responder": {
+        "type": "string",
+        "title": "Assignee"
+      },
+      "escalation_policy": {
+        "type": "string",
+        "title": "Escalation Policy"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "microservice": {
+      "title": "Belongs To",
+      "target": "microservice",
+      "required": false,
+      "many": true
+    }
+  }
+}
+```
