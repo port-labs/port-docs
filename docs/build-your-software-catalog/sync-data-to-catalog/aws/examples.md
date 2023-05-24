@@ -354,9 +354,6 @@ In this step-by-step example, you will export your `App Runner services` to Port
                    "serviceUrl": "\"https://\" + .ServiceUrl",
                    "iamRole": ".InstanceConfiguration.InstanceRoleArn | if . == null then null else \"https://console.aws.amazon.com/go/view?arn=\" + . end",
                    "arn": ".ServiceArn"
-                 },
-                 "relations": {
-                   "region": ".ServiceArn | split(\":\")[3]"
                  }
                }
              ]
@@ -444,7 +441,7 @@ In this step-by-step example, you will export your `App Runner services` to Port
 
 Done! soon, you will be able to see any `App Runner services`.
 
-## Mapping Lambda functions
+## Mapping Lambda functions {#lambda}
 
 In this step-by-step example, you will export your `Lambda functions` to Port.
 
@@ -454,7 +451,7 @@ In this step-by-step example, you will export your `Lambda functions` to Port.
 
    You may use the following definition:
 
-   <details>
+   <details > 
    <summary> Lambda blueprint </summary>
 
    ```json showLineNumbers
@@ -814,9 +811,6 @@ In this step-by-step example, you will export your `SNS topics` and `SQS queues`
                    "delaySeconds": ".DelaySeconds",
                    "tags": ".Tags",
                    "arn": ".Arn"
-                 },
-                 "relations": {
-                   "region": ".Arn | split(\":\")[3]"
                  }
                }
              ]
@@ -2668,3 +2662,295 @@ In this step-by-step example, you will export your `Elastic Beanstalk applicatio
    </details>
 
 Done! soon, you will be able to see any `Elastic Beanstalk applications and environments`.
+
+## Mapping CloudFormation Stacks
+
+In this step-by-step example, you will export your `CloudFormation Stacks` to Port.
+
+1. Create the following Port blueprint:
+
+   - **CloudFormation Stack** - will represent CloudFormation Stacks from the AWS account.
+
+  You may use the following definition:
+
+  <details>
+  <summary> CloudFormationStack blueprint </summary>
+
+  ```json showLineNumbers
+  {
+    "identifier": "cloudFormationStack",
+    "description": "This blueprint represents a service in our software catalog",
+    "title": "CloudFormation Stack",
+    "icon": "Microservice",
+    "schema": {
+      "properties": {
+        "createdAt": {
+          "type": "string",
+          "title": "Creation Time"
+        },
+        "status": {
+          "title": "Status",
+          "description": "The current status of the Stack",
+          "type": "string",
+          "enum": [
+            "CREATE_IN_PROGRESS",
+            "CREATE_FAILED",
+            "CREATE_COMPLETE",
+            "ROLLBACK_IN_PROGRESS",
+            "ROLLBACK_FAILED",
+            "ROLLBACK_COMPLETE",
+            "DELETE_IN_PROGRESS",
+            "DELETE_FAILED",
+            "UPDATE_IN_PROGRESS",
+            "UPDATE_COMPLETE_CLEANUP_IN_PROGRESS",
+            "UPDATE_COMPLETE",
+            "UPDATE_FAILED",
+            "UPDATE_ROLLBACK_IN_PROGRESS",
+            "UPDATE_ROLLBACK_FAILED",
+            "UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS",
+            "UPDATE_ROLLBACK_COMPLETE",
+            "REVIEW_IN_PROGRESS",
+            "IMPORT_IN_PROGRESS",
+            "IMPORT_COMPLETE",
+            "IMPORT_ROLLBACK_IN_PROGRESS",
+            "IMPORT_ROLLBACK_FAILED",
+            "IMPORT_ROLLBACK_COMPLETE"
+          ],
+          "enumColors": {
+            "CREATE_IN_PROGRESS": "orange",
+            "CREATE_FAILED": "red",
+            "CREATE_COMPLETE": "green",
+            "ROLLBACK_IN_PROGRESS": "orange",
+            "ROLLBACK_FAILED": "red",
+            "ROLLBACK_COMPLETE": "green",
+            "UPDATE_IN_PROGRESS": "orange",
+            "UPDATE_FAILED": "red",
+            "UPDATE_COMPLETE": "green"
+          }
+        },
+        "resources": {
+          "items": {
+            "type": "object"
+          },
+          "title": "Resources",
+          "description": "The cloudformation stack resources",
+          "type": "array"
+        },
+        "template": {
+          "title": "Template",
+          "type": "string",
+          "format": "yaml"
+        },
+        "tags": {
+          "items": {
+            "type": "object"
+          },
+          "title": "Tags",
+          "type": "array"
+        },
+        "link": {
+          "title": "link",
+          "description": "The aws console stack url",
+          "type": "string",
+          "format": "url"
+        },
+        "lastUpdated": {
+          "type": "string",
+          "title": "Last Updated"
+        }
+      },
+      "required": []
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "relations": {}
+  }
+  ```
+
+  </details>
+
+2. Upload the `config.json` file to the exporter's S3 bucket:
+
+  <details>
+  <summary> Port AWS exporter config.json </summary>
+
+  ```json showLineNumbers
+  {
+    "kind": "AWS::CloudFormation::Stack",
+    "port": {
+      "entity": {
+        "mappings": [
+          {
+            "identifier": ".StackName",
+            "title": ".StackName",
+            "blueprint": "cloudFormationStack",
+            "properties": {
+              "lastUpdated": ".LastUpdatedTime",
+              "resources": ".StackResources",
+              "createdAt": ".CreationTime",
+              "status": ".StackStatus",
+              "link": "\"https://console.aws.amazon.com/go/view?arn=\" + .StackId",
+              "template": ".TemplateBody",
+              "tags": ".Tags"
+            }
+          }
+        ]
+      }
+    }
+  }
+  ```
+
+  </details>
+
+3. Update the exporter's `IAM policy`:
+
+  <details>
+  <summary> IAM Policy </summary>
+
+  ```json showLineNumbers
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "VisualEditor0",
+        "Effect": "Allow",
+        "Action": [
+          "cloudformation:DescribeStacks",
+          "cloudformation:DescribeStackResources",
+          "cloudformation:ListStacks",
+          "cloudformation:GetTemplate"
+        ],
+        "Resource": "*"
+      }
+    ]
+  }
+  ```
+
+  </details>
+
+4. Optional: Create 2 event rules to trigger automatic syncing of changes in CloudFormation Stacks.
+
+  You may use the following CloudFormation Template:
+
+  <details>
+  <summary> Event Rule CloudFormation Template </summary>
+
+    ```yaml showLineNumbers
+    EventRule0:
+    Type: AWS::Events::Rule
+    Properties:
+      EventBusName: default
+      EventPattern:
+        detail-type:
+          - AWS API Call via CloudTrail
+        source:
+          - aws.cloudformation
+        detail:
+          eventSource:
+            - cloudformation.amazonaws.com
+          eventName:
+            - prefix: CreateStack
+            - prefix: UpdateStack
+            - prefix: DeleteStack
+      Name: port-aws-exporter-sync-cloudformation-trails
+      State: ENABLED
+      Targets:
+        - Id: PortAWSExporterEventsQueue
+          Arn:
+            Fn::ImportValue:
+              Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+          InputTransformer:
+            InputPathsMap:
+              eventName: $.detail.eventName
+              awsRegion: $.detail.awsRegion
+              stackName: $.detail.requestParameters.stackName
+            InputTemplate: |-
+              {
+                  "resource_type": "AWS::CloudFormation::Stack",
+                  "region": "\"<awsRegion>\"",
+                  "identifier": "if \"<stackName>\" | startswith(\"arn:\") then \"<stackName>\" | split(\"/\")[1] else \"<stackName>\" end",
+                  "action": "if \"<eventName>\" | test(\"DeleteStack[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
+              }
+    EventRule1:
+      Type: AWS::Events::Rule
+      Properties:
+        EventBusName: default
+        EventPattern:
+          detail-type:
+            - CloudFormation Stack Status Change
+          source:
+            - aws.cloudformation
+        Name: port-aws-exporter-sync-cloudformation-status-change-trails
+        State: ENABLED
+        Targets:
+          - Id: PortAWSExporterEventsQueue
+            Arn:
+              Fn::ImportValue:
+                Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+            InputTransformer:
+              InputPathsMap:
+                region: $.region
+                stackId: $.detail.stack-id
+                status: $.detail.status-details.status
+              InputTemplate: |-
+                {
+                    "resource_type": "AWS::CloudFormation::Stack",
+                    "region": "\"<region>\"",
+                    "identifier": "\"<stackId>\" | split(\"/\")[1]",
+                    "action": "if \"<status>\" == \"DELETE_COMPLETE\" then \"delete\" else \"upsert\" end"
+                }
+    ```
+
+  </details>
+
+:::important IMPORTANT
+The AWS CloudFormation API can retrieve up to 100 resources per CloudFormation Stack.
+
+For more information about the CloudFormation API, see the [API Reference](https://docs.aws.amazon.com/cli/latest/reference/cloudformation/index.html).
+:::
+
+### Relations between CloudFormation Stacks and AWS resources
+
+In order to connect between CloudFormation Stacks and their affected resources, you'll need to update the blueprint and the exporter configuration.
+
+Here's an example showing how to connect CloudFormation Stacks and Lambda functions:
+
+<details>
+<summary> Add relations to the blueprint </summary>
+
+  ```json showLineNumbers
+  {
+    "relations": {
+      "lambdas": {
+        "title": "Created Lambdas",
+        "description": "The Lambda functions created from the CloudFormation Stack",
+        "target": "lambda",
+        "required": false,
+        "many": true
+      }
+    }
+  }
+  ```
+
+</details>
+
+<details>
+<summary> Add relations to the exporter config.json </summary>
+
+```json showLineNumbers
+{
+   ...
+   "mappings": [
+      {...},
+   "relations": {
+      "lambdas": ".StackResources // [] | map(select(.ResourceType == \"AWS::Lambda::Function\")) | if . == [] then [] else .[].PhysicalResourceId end"
+   }]
+}
+```
+
+   </details>
+
+Make sure your [Lambda function configuration](#lambda) appears before your CloudFormation defintion in the `config.json`.
+
+
+Done! soon, you will be able to see any `CloudFormation Stacks`.

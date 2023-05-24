@@ -260,6 +260,34 @@ This example contains a dependency between the "language" input and the "SDK" in
 
 ![Cluster And Namespace Action](../../../static/img/software-catalog/blueprint/javascriptSDK.png)
 
+### Filter the dropdown's available options based on a property
+
+This example contains a filter that will only display environment entities whose type is not `production`:
+
+```json
+{
+  "env": {
+    "type": "string",
+    "format": "entity",
+    "blueprint": "environment",
+    "dataset": {
+      "combinator": "and",
+      "rules": [
+        {
+          "property": "type",
+          "operator": "!=",
+          "value": "production"
+        }
+      ]
+    }
+  }
+}
+```
+
+![Only Production Envs](../../../static/img/software-catalog/blueprint/onlyNotProductionEnvs.png)
+
+:point_up: only the environments whose type is not `production` will appear in the dropdown. :point_up:
+
 ### Filter the dropdown's available options based on properties of the user that execute the action
 
 This example contains a filter that will only display the namespaces that belong to the user's teams (notice the value key in the rules object).

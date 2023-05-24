@@ -292,21 +292,39 @@ resource "port-labs_entity" "myEntity" {
   }
 
   relations {
-    name  = "myAdditionalRelation"
-    identifier = "myAdditionalTargetEntityIdentifier"
+    name  = "myAdditionalManyRelation"
+    identifiers = ["myAdditionalTargetEntityIdentifier", myAdditionalTargetEntityIdentifier2"]
   }
  # highlight-end
 }
 ```
 
+#### Definition
+
+<Tabs groupId="relations" queryString="relations" defaultValue="single" values={[
+{label: "Single", value: "single"},
+{label: "Many", value: "many"},
+]} >
+
+<TabItem value="single">
+
 The following parameters are **required**:
 
-- `name` - the name of the [relation](../../../define-your-data-model/relate-blueprints/relate-blueprints.md#structure-table) in the blueprint definition;
+- `name` - the `identifier` of the [relation](../../../define-your-data-model/relate-blueprints/relate-blueprints.md#structure-table) in the blueprint definition;
 - `identifier` - the identifier of the target entity.
 
-:::note
-At the moment, it is only possible to create entities with `many: false` relations using Port's Terraform provider.
-:::
+</TabItem>
+
+<TabItem value="many">
+
+The following parameters are **required**:
+
+- `name` - the `identifier` of the [relation](../../../define-your-data-model/relate-blueprints/relate-blueprints.md#structure-table) in the blueprint definition;
+- `identifiers` - the identifiers of the target entities.
+
+</TabItem>
+
+</Tabs>
 
 ## Ingest data using the Terraform provider
 
@@ -395,6 +413,63 @@ Important notes about adding existing entities to the Terraform provider:
 <TabItem value="delete">
 
 To delete an entity using Terraform, simply remove the `port-labs_entity` resource defined in your `.tf` definition file and then run `terraform apply`.
+
+</TabItem>
+
+</Tabs>
+
+## Import existing data to the Terraform state
+
+<Tabs groupId="terraform-import" queryString="current-scenario" defaultValue="entity" values={[
+{label: "Blueprint", value: "blueprint"},
+{label: "Entity", value: "entity"},
+]} >
+
+<TabItem value="blueprint">
+
+To import an existing blueprint to the Terraform state, add a `port-labs_blueprint` resource to your `.tf` definition file:
+
+```hcl showLineNumbers
+
+# highlight-start
+
+resource "port-labs_blueprint" "myBlueprint" {
+  ...
+}
+
+# highlight-end
+```
+
+Then run the following command to import the blueprint to the Terraform state:
+
+```shell showLineNumbers
+terraform import port-labs_blueprint.myBlueprint "{blueprintIdentifier}"
+```
+
+</TabItem>
+
+<TabItem value="entity">
+
+To import an existing entity to the Terraform state, add a `port-labs_entity` resource to your `.tf` definition file:
+
+```hcl showLineNumbers
+
+# highlight-start
+
+resource "port-labs_entity" "myEntity" {
+  ...
+}
+
+
+# highlight-end
+```
+
+Then run the following command to import the entity to the Terraform state:
+
+```shell showLineNumbers
+
+terraform import port-labs_entity.myEntity "{blueprintIdentifier}:{entityIdentifier}"
+```
 
 </TabItem>
 
