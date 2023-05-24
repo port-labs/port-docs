@@ -13,7 +13,7 @@ In this example you are going to create a webhook integration between [PagerDuty
 
 ## Prerequisites
 
-Create the following blueprint definition and webhook configuration:
+Create the following blueprint definitions and webhook configuration:
 
 <details>
 <summary>PagerDuty service blueprint</summary>
@@ -40,17 +40,16 @@ Remember to update the `WEBHOOK_SECRET` with the real secret you receive after s
 
 ## Create the PagerDuty webhook
 
-1. Go to [PagerDuty](https://www.pagerduty.com/) and select an account you want to configure the webhook for;
-2. Navigate to **Integrations** on the navigation bar and click on **Generic Webhooks (v3)**
+1. Go to [PagerDuty](https://www.pagerduty.com/) and select the account you want to configure the webhook for.
+2. Navigate to **Integrations** in the navigation bar and click on **Generic Webhooks (v3)**.
 3. Click **New Webhook** and provide the following information:
-   1. `Webhook URL` - enter the value of the `url` key you received after [creating the webhook configuration](../webhook.md#configuring-webhook-endpoints);
-   2. `Scope Type` - select whether you want to receive webhook events for a specific service (select `Service` if this applies) or for all services in your account (select `Account` if this applies);
-   3. `Description` - provide an optional description for your webhook;
-   4. `Event Subscription` - choose the event types you would like to subscribe to;
+   1. `Webhook URL` - enter the value of the `url` key you received after [creating the webhook configuration](../webhook.md#configuring-webhook-endpoints).
+   2. `Scope Type` - select whether you want to receive webhook events for a specific service (select `Service` if applicable) or for all services in your account (select `Account` if applicable).
+   3. `Description` - provide an optional description for your webhook.
+   4. `Event Subscription` - choose the event types you would like to subscribe to.
    5. `Custom Header` - enter any optional HTTP header to be added to your webhook payload.
-4. Click **Add webhook** to create your webhook:
-
-5. You can also use the `curl` method to create the webhook. Copy the code below and run it on your terminal:
+4. Click **Add webhook** to create your webhook.
+5. Alternatively, you can use the `curl` method to create the webhook. Copy the code below and run it in your terminal:
 
 ```curl showLineNumbers
   curl --request POST \
