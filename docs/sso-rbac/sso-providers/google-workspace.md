@@ -4,6 +4,11 @@ sidebar_position: 2
 description: Integrate Google Workspace with Port
 ---
 
+import Image from "@theme/IdealImage";
+import credentialsNav from "../../../static/img/sso/google-workspace/credentialsNav.png"
+import appType from "../../../static/img/sso/google-workspace/appType.png"
+import clientIdAndSecret from "../../../static/img/sso/google-workspace/clientIdAndSecret.png"
+
 # How to configure Google Workspace
 
 Follow this step-by-step guide to configure the integration between Port and Google Workspace.
@@ -15,257 +20,56 @@ In order to complete the process you will need to contact us to receive the info
 
 ## Port-Google Workspace integration benefits
 
-- Connect to the Port application via an Google Workspace app.
+- Connect to the Port application via your Google Workspace SSO organization.
 - Your Google Workspace teams will be automatically synced with Port upon a user sign-in.
 - Set granular permissions on Port according to your Google Workspace groups.
 
-## How to configure a Port application in Google Workspace
+## How to configure Port authentication in Google Workspace
 
-### Step #1: Register a new application
+### Step #1: Create OAuth credentials
 
-1. In the Google Workspace admin portal, navigate to to `Apps` -> `Web and mobile apps`.
+1. In the [Google API Console](https://console.developers.google.com/), choose your project and navigate to `Credentials`.
 
-   ![Web and mobile apps](../../../static/img/sso/google-workspace/webAndMobile.png)
+<center>
 
-2. Click on `Add App` followed by `Add custom SAML app`.
+<Image img={credentialsNav} style={{ width: 300 }} />
 
-   ![AzureAD new application wizard](../../../static/img/sso/google-workspace/addApp.png)
+</center>
 
-3. Click on `New registration` at the top of the page
+2. Click on `CREATE CREDENTIALS` followed by `OAuth client ID`.
 
-   ![AzureAD new application wizard](../../../static/img/sso/azure-ad/AzureNewRegistration.png)
+   ![Create Credentials](../../../static/img/sso/google-workspace/createCredentials.png)
 
-4. Define the Port application settings:
+3. In the `Application type` field, choose `Web application`, and give you credentials a name.
 
-   4.1 `Name`: Insert a friendly name for the Port app, like `Port`.
+<center>
 
-   4.2 `Supported account types`: Please select the option that is appropriate for your organization.
+<Image img={appType} style={{ width: 600 }} />
 
-   :::note
-   For most use cases this would be **Accounts in this organizational directory only (Default Directory only - Single tenant)**.
-   :::
+</center>
 
-   4.3 `Redirect URI`:
+4. Set the `Authorized JavaScript Origins` and `Authorized redirect URIs`:
 
-   - Set `Platform` to `Web`.
-   - Set `URL` to `https://auth.getport.io/login/callback`.
+   4.1 `Authorized JavaScript Origins`: Add `https://auth.getport.io` URI
 
-   ![AzureAD new application wizard](../../../static/img/sso/azure-ad/ApplicationRegistrationForm.png)
+   4.2 `Authorized redirect URIs`: Add `https://port-production.eu.auth0.com/login/callback` URI
 
-   4.4 Click `Register`.
+   4.3 Click `CREATE`.
 
-### Step #2: Customize your Port app with Login URL and Logo
+### Step #2: Contact Port
 
-1.  On the new Port App page, click `Branding & Properties`.
+After creating the credentials in [step #1](./google-workspace.md#step-1-create-oauth-credentials), a new `CLIENT ID` and `CLIENT SECRET` should be created.
 
-    ![Azure navigation bar Branding and Properties](../../../static/img/sso/azure-ad/AzureAppNavBranding.png)
+<center>
 
-    1.1 `Home page URL`: paste the following URL:
+<Image img={clientIdAndSecret} style={{ width: 350 }} />
 
-    ```text showLineNumbers
-    https://auth.getport.io/authorize?response_type=token&client_id=96IeqL36Q0UIBxIfV1oqOkDWU6UslfDj&connection={CONNECTION_NAME}&redirect_uri=https%3A%2F%2Fapp.getport.io
-    ```
+</center>
 
-    :::note
-    We will provide your `{CONNECTION_NAME}` (Contact us on Slack/Intercom).
-    :::
+<br/>
 
-    1.2 Add the Port logo (optional):
+Contact Port (via Intercom/Slack) and provide them with:
 
-    ![Port's logo](../../../static/img/sso/general-assets/PortLogo.png)
-
-    1.3 `Publisher domain`: Select the domain matching **your** user emails (for example `getport.io`).
-
-    ![Azure app branding form](../../../static/img/sso/azure-ad/AzureAppBrandingForm.png)
-
-    1.4 Click `Save`.
-
-### Step #3: Configuring the application permissions
-
-1. On the Port App page, click `API Permissions`.
-
-   ![Azure navigation bar API permissions](../../../static/img/sso/azure-ad/AzureAppNavAPI.png)
-
-2. Click `Add a permission`:
-
-   ![Azure navigation bar API permissions](../../../static/img/sso/azure-ad/AzureAppAPIPermissions.png)
-
-3. On the `Microsoft APIs` tab:
-
-   3.1 Click on `Microsoft Graph`
-
-   ![Azure API permissions Microsoft APIs](../../../static/img/sso/azure-ad/AzureAppMicrosoftGraph.png)
-
-   3.2 Click on `Delegate Permissions`
-
-   ![Azure Microsoft APIs delegate permissions](../../../static/img/sso/azure-ad/AzureAppAPIdelegatePermissions.png)
-
-   3.3 Search and mark the following permissions:
-
-   - `email`, `openid`, `profile`, `User.read`.
-
-   ![Azure API set permissions](../../../static/img/sso/azure-ad/AzureAppAPIPermissionsSettings.png)
-
-   3.4 Click `Add permissions`.
-
-   :::note
-   (OPTIONAL) `Grant admin consent`: when users from your organization will first log in, they will be prompted to confirm the permissions specified here. You can click the `Grant admin consent for Default Directory` to automatically approve their permissions.
-   :::
-
-### Step #4: Configuring the application claims
-
-1. On the Port App page, click `Token configuration`:
-
-   ![Azure application token configuration](../../../static/img/sso/azure-ad/AzureAppTokenConfigurationTab.png)
-
-2. Click `Add optional claim`:
-
-   ![Azure app token adding a claim button](../../../static/img/sso/azure-ad/AzureAppAddToken.png)
-
-3. Select `ID` as the token type and then select the `email` claim, then click `Add`:
-
-   ![Azure app token adding a claim](../../../static/img/sso/azure-ad/AzureAppAddingClaims.png)
-
-   :::note
-   Repeat the same process for `Access` and `SAML` (3 times total).
-   :::
-
-4. Your optional claims will look like this:
-
-   ![Azure app permissions summary](../../../static/img/sso/azure-ad/AzureAppPermissionsFinal.png)
-
-   :::info  
-   If you wish to configure the `groups claim` to pull your AzureAD groups into Port, please follow [How to allow pulling AzureAD groups to Port](#how-to-allow-pulling-azuread-groups-to-port).
-   :::
-
-### Step #5: Configuring application secret
-
-1. On the Port App page, click `Certificates & Secrets`:
-
-   ![Azure application certification and secrets button](../../../static/img/sso/azure-ad/AzureAppCertificationsSecretsNav.png)
-
-2. On the `Client secrets` tab, click the `New client secret` button:
-
-   ![Azure application client secrets button](../../../static/img/sso/azure-ad/AzureAppClientSecrets.png)
-
-   2.1 `Description`: Enter a secret description, for example `Port Login Client Secret`.
-
-   2.2 `Expires`: Select when will the secret expires.
-
-   :::danger
-   Be sure to mark on your calendar the expiration date of the secret. The secret needs to be replaced before its expiration, otherwise login to Port will be disabled.
-   :::
-
-   2.3 Click `Add`.
-
-   A secret will be created and its Value will appear as shown in the image below. Immediately document the secret’s value because we will need it for our next step.
-
-   :::danger COPY YOUR SECRET NOW
-   Be advised that your secret will never appear again after you leave this page.
-   :::
-
-   ![Azure application display secrets](../../../static/img/sso/azure-ad/AzureAppSecret.png)
-
-### Step #6: Providing the application information to Port
-
-Port needs the following information for this process:
-
-- The `Client Secret` value that you created on [Step 5: Configuring application secret](#step-5-configuring-application-secret).
-- The `Application (Client) ID`, which appears on the Port application overview page:
-
-![Azure application display secrets](../../../static/img/sso/azure-ad/AzureAppDetailsSection.png)
-
-:::note
-**Port** will provide you the `CONNECTION_NAME` needed for the homepage URL of the App, as described on [Step 2](#step-2-customize-your-port-app-with-login-url-and-logo).
-:::
-
-### Step #7: Exposing the application to your organization
-
-1. Assigning the App to organization users and groups
-
-   After the app setup is complete, you can proceed to assign it to your organization’s users and groups, by distributing it in your organization:
-
-   1.1 Go to `Azure Active Directory`.
-
-   1.2 Go to `Enterprise Applications`:
-
-   ![Azure AD enterprise applications](../../../static/img/sso/azure-ad/AzureAppEnterpriseNav.png)
-
-2. Click on the Port app:
-
-   ![Azure all application port app](../../../static/img/sso/azure-ad/AzurePortApp.png)
-
-3. Click on `Users and Groups`:
-
-   ![Azure AD users and groups](../../../static/img/sso/azure-ad/AzureAppUserGroupsNav.png)
-
-4. Click `Add user/group`:
-
-   ![Azure AD users and groups](../../../static/img/sso/azure-ad/AzureAddUserGroupButton.png)
-
-   4.1 Select users and groups you want to grant access to Port.
-
-   4.2 Click `Assign`.
-
-   :::note
-   **IMPORTANT**: To make the **Port** app connection work, users who have access need to have a legal value in their `Email` field in Azure AD.
-   :::
-
-5. Make the Port application visible on the `myapplications` page:
-
-   5.1 Go to `Azure Active Directory`.
-
-   5.2 Go to `Enterprise Applications`.
-
-   5.3 Click on the Port app.
-
-   5.4 Click on `Properties`:
-
-   ![Azure application properties](../../../static/img/sso/azure-ad/AzureAppProperties.png)
-
-   5.5 Set the application properties:
-
-   - Mark `Enabled for users to sign-in?` as `Yes`.
-
-   - Mark `Visible to users?` as `Yes`.
-
-   :::note
-   By default the `Assignment required?` flag is set to `No`, meaning any user with the Homepage URL to the Port app can access it, even if the app isn’t directly assigned to them.
-   Changing the flag to `Yes` means only users and groups the app is directly assigned to can use and access it.
-
-   :::
-
-   ![Azure application properties form](../../../static/img/sso/azure-ad/AzureAppPropertiesValues.png)
-
-   You should see the Port app on the [https://myapplications.microsoft.com](https://myapplications.microsoft.com) dashboard:
-
-   ![Azure application dashboard](../../../static/img/sso/azure-ad/AzureDashboardWithPort.png)
-
-   :::note
-   Users can also manually access Port by going to the App Homepage URL: `https://auth.getport.io/authorize?response_type=token&client_id=96IeqL36Q0UIBxIfV1oqOkDWU6UslfDj&connection={CONNECTION_NAME}&redirect_uri=https%3A%2F%2Fapp.getport.io`
-   :::
-
----
-
-## How to allow pulling AzureAD groups to Port
-
-:::note
-This stage is **OPTIONAL** and is required only if you wish to pull all of your AzureAD groups into Port inherently.
-
-**Benefit:** managing permissions and user access on Port.
-**Outcome:** for every user that logs in, we will automatically get their associate AzureAD groups, according to your definitions in the settings below.
-:::
-
-1. On the `Token configuration` tab, Click `Add groups claim`:
-
-   ![Azure app groups claim button](../../../static/img/sso/azure-ad/AzureAppGroupsClaim.png)
-
-2. On the groups claim window, check the following options: `Security Groups`, `Directory roles`, `All groups`.
-
-   :::note
-   You can also edit the groups' ID that is provided to Port. in the following example we left it as Group ID:
-
-   ![Azure app edit group claims](../../../static/img/sso/azure-ad/AzureAppEditGroupsClaim.png)
-   :::
-
-3. Click `Add`.
+- Your new credential's `Client ID`;
+- Your new credential's `Client Secret`;
+- Your `Google Workspace domain` - the domain for your login.
