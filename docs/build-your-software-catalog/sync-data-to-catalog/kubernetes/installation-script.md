@@ -1,22 +1,17 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
+description: Installation Script
 ---
 
 # Installation Script
 
-Here, you will read about Port's K8s exporter installation script, which will assist you in the process of installing Port's K8s exporter helm chart.
+Port's K8s exporter installation script will assist you in the process of installing Port's K8s exporter helm chart.
 
-This script can help you with:
+This script will help you with:
 
-- setting up your custom Port [blueprints](../../define-your-data-model/setup-blueprint/);
+- setting up your custom Port [blueprints](../../define-your-data-model/setup-blueprint);
 - installing Port's k8s exporter using helm (check out the Helm chart's [installation documentation](./kubernetes.md#installation));
 - deploying your custom [`config.yaml`](./kubernetes.md#exporter-configyml-file)
-
-:::note
-Check out the [complete k8s](./full-kubernetes-exporter.md) use-case page, which showcases a full example for installing Port's K8s exporter using the installation script with custom configuration.
-:::
-
-## K8s exporter installation script
 
 :::tip
 You can view the bash script [here](https://github.com/port-labs/template-assets/blob/main/kubernetes/install.sh).
@@ -44,9 +39,10 @@ export {VARIABLE_NAME}={value}
 
 :::note
 
-- **CLUSTER_NAME:** The script replaces all occurrences of the string `{CLUSTER_NAME}` from the `config.yaml` set in the `CONFIG_YAML_URL`([defined here](./full-kubernetes-exporter.md#helm-chart-installation-configuration)) with the value of the environment variable `CLUSTER_NAME`. This is useful when creating a generic `config.yaml` which has no static cluster name.
+- **CLUSTER_NAME:** The script replaces all occurrences of the string `{CLUSTER_NAME}` from the `config.yaml` set in the `CONFIG_YAML_URL`([defined here](./templates/full-kubernetes-exporter.md#helm-chart-installation-configuration)) with the value of the environment variable `CLUSTER_NAME`. This is useful when creating a generic `config.yaml` which has no static cluster name.
 - **CUSTOM_BP_PATH:** It is important to order the blueprints while taking in to account the necessary relations for each blueprint. Once a blueprint was created, attempting to recreate it using the script will fail. To recreate a blueprint using the script, first delete the blueprint.
-  :::
+
+:::
 
 #### Helm Chart Installation configuration
 

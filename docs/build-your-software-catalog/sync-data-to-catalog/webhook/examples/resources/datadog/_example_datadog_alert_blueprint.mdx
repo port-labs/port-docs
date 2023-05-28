@@ -1,0 +1,60 @@
+```json showLineNumbers
+{
+  "identifier": "datadogAlert",
+  "description": "This blueprint represents a Datadog monitor/alert in our software catalog",
+  "title": "Datadog Alert",
+  "icon": "Datadog",
+  "schema": {
+    "properties": {
+      "url": {
+        "type": "string",
+        "format": "url",
+        "title": "Event URL"
+      },
+      "message": {
+        "type": "string",
+        "title": "Details"
+      },
+      "eventType": {
+        "type": "string",
+        "title": "Event Type"
+      },
+      "priority": {
+        "type": "string",
+        "title": "Metric Priority"
+      },
+      "creator": {
+        "type": "string",
+        "title": "Creator"
+      },
+      "alertMetric": {
+        "type": "string",
+        "title": "Alert Metric"
+      },
+      "alertType": {
+        "type": "string",
+        "title": "Alert Type",
+        "enum": ["error", "warning", "success", "info"]
+      },
+      "tags": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "title": "Tags"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "microservice": {
+      "title": "Services",
+      "target": "microservice",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```

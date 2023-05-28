@@ -21,6 +21,63 @@ Self-service actions RBAC allows admins to finely control which users can execut
 - Specify that a new cluster provision request requires manual approval by the DevOps team;
 - etc.
 
+## Configure manual approval for actions & give approval permissions
+
+You have the ability to set up manual approval steps for your actions.
+
+This feature is particularly useful in situations where an action has the potential to be dangerous, destructive, expensive, or when organizational policy mandates an additional level of review before proceeding.
+
+When a user clicks on the `execute` button of an action that requires approval, a new `run` object will be created in Port. The `run` object will have the status `WAITING_FOR_APPROVAL` and will be visible in the `Runs` tab of the action.
+
+When a new request requires approval, Port will send a notification via email to users that have the permissions to approve it, or it will send a notification to a configured url via a web request.
+
+To configure a manual approval step, add the `requiredApproval` field to your action:
+
+```json showLineNumbers
+[
+  {
+    ...
+    "invocationMethod": {
+      "type": "WEBHOOK",
+      "url": "https://example.com"
+    },
+    "trigger": "CREATE",
+    // highlight-next-line
+    "requiredApproval": true,
+    ...
+  }
+]
+```
+
+To configure which users can approve the action, see [Managing permissions](/docs/create-self-service-experiences/set-self-service-actions-rbac/examples.md#setting-action-permissions).
+
+## Configuring approval notifications
+
+by default manual approval notifications are sent via email to users who have approval permissions.
+
+It is also possible to configure a webhook URL which the approval notification will be sent to.
+
+This allows you to receive notifications in a format of your choice, either as a plain JSON object or as a Slack message.
+
+To send an approval notification to a URL, add the `approvalNotification` field to your action configuration:
+
+```json showLineNumbers
+{
+    ...
+    "requiredApproval": true,
+    // highlight-start
+    "approvalNotification": {
+      "type": "webhook",
+      "format": "json / slack",
+      "url": "https://my-slack-webhook.com"
+    },
+    // highlight-end
+    ...
+}
+```
+
+Click [here](/docs/create-self-service-experiences/set-self-service-actions-rbac/examples.md#setting-up-a-slack-notification) to learn how to send manual approval requests to Slack.
+
 ## Self-service actions RBAC examples
 
 Refer to the [examples](./examples.md) page for practical examples of Port's RBAC.

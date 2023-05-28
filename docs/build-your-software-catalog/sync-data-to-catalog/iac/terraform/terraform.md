@@ -418,6 +418,63 @@ To delete an entity using Terraform, simply remove the `port-labs_entity` resour
 
 </Tabs>
 
+## Import existing data to the Terraform state
+
+<Tabs groupId="terraform-import" queryString="current-scenario" defaultValue="entity" values={[
+{label: "Blueprint", value: "blueprint"},
+{label: "Entity", value: "entity"},
+]} >
+
+<TabItem value="blueprint">
+
+To import an existing blueprint to the Terraform state, add a `port-labs_blueprint` resource to your `.tf` definition file:
+
+```hcl showLineNumbers
+
+# highlight-start
+
+resource "port-labs_blueprint" "myBlueprint" {
+  ...
+}
+
+# highlight-end
+```
+
+Then run the following command to import the blueprint to the Terraform state:
+
+```shell showLineNumbers
+terraform import port-labs_blueprint.myBlueprint "{blueprintIdentifier}"
+```
+
+</TabItem>
+
+<TabItem value="entity">
+
+To import an existing entity to the Terraform state, add a `port-labs_entity` resource to your `.tf` definition file:
+
+```hcl showLineNumbers
+
+# highlight-start
+
+resource "port-labs_entity" "myEntity" {
+  ...
+}
+
+
+# highlight-end
+```
+
+Then run the following command to import the entity to the Terraform state:
+
+```shell showLineNumbers
+
+terraform import port-labs_entity.myEntity "{blueprintIdentifier}:{entityIdentifier}"
+```
+
+</TabItem>
+
+</Tabs>
+
 ## Examples
 
 Refer to the [examples](./examples/examples.md) page for practical configurations and their corresponding blueprint definitions.
