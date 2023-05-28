@@ -1,0 +1,41 @@
+<details>
+
+<summary> Port port-app-config.yml </summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: repository
+    selector:
+      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
+    port:
+      entity:
+        mappings:
+          identifier: ".name" # The Entity identifier will be the repository name.
+          title: ".name"
+          blueprint: '"microservice"'
+          properties:
+            readme: file://README.md
+            repositoryUrl: .html_url
+  - kind: folder
+    selector:
+      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
+      folders: # Specify the repositories and folders to include under this relative path.
+        - path: apps/* # Relative path to the folders within the repositories.
+          repos: # List of repositories to include folders from.
+            - backend-service
+            - frontend-service
+    port:
+      entity:
+        mappings:
+          identifier: ".folder.name"
+          title: ".folder.name"
+          blueprint: '"folder"'
+          properties:
+            sha: ".folder.sha"
+            link: .repo.html_url + "/" + .folder.path
+            readme: file://README.md
+          relations:
+            service: ".repo.name"
+```
+
+</details>
