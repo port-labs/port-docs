@@ -51,7 +51,7 @@ A scorecard rule is a single evaluation consisting of multiple checks, each rule
 | Field         | Type     | Description                                                                                                                       |
 | ------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------- |
 | `title`       | `String` | `Rule` name that will be shown in the UI                                                                                          |
-| `description` | `String` | `Rule` description that will be shown in the UI when the rule is expanded                                                         |
+| `description` | `String` | description that will be shown in the UI when the rule is expanded                                                                |
 | `identifier`  | `String` | The unique identifier of the `Rule`                                                                                               |
 | `level`       | `String` | one of `Gold` `Silver` `Bronze`                                                                                                   |
 | `query`       | `Object` | The query is built from an array of [`conditions`](#conditions) and a [`combinator`](#combinator) (or / and) that will define the |
