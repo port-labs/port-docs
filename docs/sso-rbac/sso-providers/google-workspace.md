@@ -5,9 +5,12 @@ description: Integrate Google Workspace with Port
 ---
 
 import Image from "@theme/IdealImage";
-import credentialsNav from "../../../static/img/sso/google-workspace/credentialsNav.png"
-import appType from "../../../static/img/sso/google-workspace/appType.png"
-import clientIdAndSecret from "../../../static/img/sso/google-workspace/clientIdAndSecret.png"
+import webAndMobile from "../../../static/img/sso/google-workspace/webAndMobile.png"
+import addSamlApp from "../../../static/img/sso/google-workspace/addSamlApp.png"
+import appNameAndIcon from "../../../static/img/sso/google-workspace/appNameAndIcon.png"
+import urlAndCert from "../../../static/img/sso/google-workspace/urlAndCert.png"
+import ACSandEntity from "../../../static/img/sso/google-workspace/ACSandEntity.png"
+import SSOandCert from "../../../static/img/sso/google-workspace/SSOandCert.png"
 
 # How to configure Google Workspace
 
@@ -20,56 +23,69 @@ In order to complete the process you will need to contact us to receive the info
 
 ## Port-Google Workspace integration benefits
 
-- Connect to the Port application via your Google Workspace SSO organization.
+- Connect to the Port application via your Google Workspace Application.
 - Your Google Workspace teams will be automatically synced with Port upon a user sign-in.
 - Set granular permissions on Port according to your Google Workspace groups.
 
-## How to configure Port authentication in Google Workspace
+## Create your Google Workspace application
 
-### Step #1: Create OAuth credentials
-
-1. In the [Google API Console](https://console.developers.google.com/), choose your project and navigate to `Credentials`.
+1. In the [Google Admin Console](https://admin.google.com/), in the sidebar menu, navigate to **Apps** -> **Web and mobile apps**
 
 <center>
 
-<Image img={credentialsNav} style={{ width: 300 }} />
+<Image img={webAndMobile} style={{ width: 300 }} />
 
 </center>
 
-2. Click on `CREATE CREDENTIALS` followed by `OAuth client ID`.
-
-   ![Create Credentials](../../../static/img/sso/google-workspace/createCredentials.png)
-
-3. In the `Application type` field, choose `Web application`, and give you credentials a name.
+2. Click on `Add app` followed by `Add custom SAML app`.
 
 <center>
 
-<Image img={appType} style={{ width: 600 }} />
+<Image img={addSamlApp} style={{ width: 300 }} />
 
 </center>
 
-4. Set the `Authorized JavaScript Origins` and `Authorized redirect URIs`:
+3. Define the initial Port application settings:
 
-   4.1 `Authorized JavaScript Origins`: Add `https://auth.getport.io` URI
+   1. `App name`: Insert a name of your choice for the Port app, like `Port`.
+   2. Add an `App icon` (optional):
 
-   4.2 `Authorized redirect URIs`: Add `https://port-production.eu.auth0.com/login/callback` URI
+   <details>
+   <summary>Port Logo</summary>
 
-   4.3 Click `CREATE`.
+   ![Port's logo](../../../static/img/sso/general-assets/PortIcon.png)
 
-### Step #2: Contact Port
+   </details>
 
-After creating the credentials in [step #1](./google-workspace.md#step-1-create-oauth-credentials), a new `CLIENT ID` and `CLIENT SECRET` should be created.
+   3. Press `Continue`
 
 <center>
 
-<Image img={clientIdAndSecret} style={{ width: 350 }} />
+<Image img={appNameAndIcon} style={{ width: 600 }} />
 
 </center>
 
-<br/>
+3. Take note of the following:
+   1. Your `SSO URL`;
+   2. Your `Certificate`.
 
-Contact Port (via Intercom/Slack) and provide them with:
+<center>
 
-- Your new credential's `Client ID`;
-- Your new credential's `Client Secret`;
-- Your `Google Workspace domain` - the domain for your login.
+<Image img={SSOandCert} style={{ width: 550 }} />
+
+</center>
+
+Pass these to Port using Slack/Intercom. <br/>
+You will be provided with your `CONNECTION_NAME`.
+
+Press `Continue`.
+
+4. You will need to create the following mappings:
+   _Google Directory attributes_:
+   1. **`Primary email`** -> `email`
+   2. **`First name`** -> `name`
+      _Google membership_ (optional):
+      This mapping is only relevant if you wish to pass groups in to Port.
+   3. **`Google Groups`**(list) -> `groups`
+
+Press `Finish`
