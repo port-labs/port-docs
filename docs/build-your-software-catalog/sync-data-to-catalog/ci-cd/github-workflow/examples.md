@@ -1,6 +1,6 @@
 import ExampleImageBlueprint from "../\_ci_example_image_blueprint.mdx";
 import ExampleCiJobBlueprint from "../\_ci_example_ci_job_blueprint.mdx";
-import ExampleCiAction from "../\ci_example_action.mdx";
+import ExampleCiAction from "../\_ci_example_action.mdx";
 
 # Examples
 
