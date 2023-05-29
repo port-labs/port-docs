@@ -1,6 +1,6 @@
 ---
 title: "Google Workspace"
-sidebar_position: 2
+sidebar_position: 5
 description: Integrate Google Workspace with Port
 ---
 
@@ -18,7 +18,7 @@ import attributeMapping from "../../../static/img/sso/google-workspace/attribute
 Follow this step-by-step guide to configure the integration between Port and Google Workspace.
 
 :::info
-In order to complete the process you will need to contact us to receive the information you require, as well as the information Port requires from you. All is elaborated below in the following section.
+In order to complete the process you will need to contact us to receive the information you require, as well as the information Port requires from you. All is elaborated below.
 
 :::
 
@@ -76,8 +76,11 @@ In order to complete the process you will need to contact us to receive the info
 
 </center>
 
-Pass these to Port using Slack/Intercom. <br/>
-You will be provided with your `CONNECTION_NAME`.
+Pass these to Port. <br/>
+
+:::note
+We will provide your `{CONNECTION_NAME}` (Contact us on Slack/Intercom).
+:::
 
 Press `Continue`.
 
