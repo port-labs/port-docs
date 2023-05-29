@@ -81,13 +81,16 @@ You will be provided with your `CONNECTION_NAME`.
 
 Press `Continue`.
 
-4. You will need to create the following mappings: <br/>
-   _Google Directory attributes_:
-   - **`Primary email`** -> `email`
-   - **`First name`** -> `name` <br/>
-     _Google membership_ (optional):
-     This mapping is only relevant if you wish to pass groups to Port.
-   - **`Google Groups`**(list) -> `groups`
+4. You will need to create the following mappings:
+
+_Google Directory attributes_:
+
+- **`Primary email`** -> `email`
+- **`First name`** -> `name`
+
+_Google membership_ (optional): This mapping is only relevant if you wish to pass groups to Port.
+
+- **`Google Groups`**(list) -> `groups`
 
 Press `Finish`
 
