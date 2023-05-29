@@ -47,7 +47,9 @@ Remember to replace the `WEBHOOK_SECRET` with the real secret you specify when c
    }
    ```
 5. Click **Send** to create your Snyk webhook;
-6. You can also create the Snyk webhook using the `curl` command below:
+
+:::note
+You can also create the Snyk webhook using the `curl` command below:
 
 ```curl showLineNumbers
 curl -X POST \
@@ -56,5 +58,7 @@ curl -X POST \
      -d '{"url": "https://ingest.getport.io/<YOUR_PORT_WEBHOOK_KEY>", "secret": "WEBHOOK_SECRET"}' \
      https://api.snyk.io/v1/org/<YOUR_ORG_ID>/webhooks
 ```
+
+:::
 
 Done! Any vulnerability detected on your source code will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
