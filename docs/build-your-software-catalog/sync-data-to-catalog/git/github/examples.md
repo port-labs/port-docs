@@ -85,7 +85,7 @@ In the following example you will ingest your GitHub repositories and their issu
 
 After creating the blueprints and committing the `port-app-config.yml` file to your `.github-private` or to a specific repository, you will see new entities in Port matching your repositories alongside their issues. (Remember that the `port-app-config.yml` file has to be in the **default branch** of the repository to take effect).
 
-## Mapping repositories and folders
+## Mapping repositories and monorepos
 
 In the following example you will ingest your GitHub repositories and their folders to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
 
