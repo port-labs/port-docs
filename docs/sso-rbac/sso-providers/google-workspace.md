@@ -11,6 +11,7 @@ import appNameAndIcon from "../../../static/img/sso/google-workspace/appNameAndI
 import urlAndCert from "../../../static/img/sso/google-workspace/urlAndCert.png"
 import ACSandEntity from "../../../static/img/sso/google-workspace/ACSandEntity.png"
 import SSOandCert from "../../../static/img/sso/google-workspace/SSOandCert.png"
+import attributeMapping from "../../../static/img/sso/google-workspace/attributeMapping.png"
 
 # How to configure Google Workspace
 
@@ -80,12 +81,18 @@ You will be provided with your `CONNECTION_NAME`.
 
 Press `Continue`.
 
-4. You will need to create the following mappings:
+4. You will need to create the following mappings: <br/>
    _Google Directory attributes_:
-   1. **`Primary email`** -> `email`
-   2. **`First name`** -> `name`
-      _Google membership_ (optional):
-      This mapping is only relevant if you wish to pass groups in to Port.
-   3. **`Google Groups`**(list) -> `groups`
+   - **`Primary email`** -> `email`
+   - **`First name`** -> `name` <br/>
+     _Google membership_ (optional):
+     This mapping is only relevant if you wish to pass groups to Port.
+   - **`Google Groups`**(list) -> `groups`
 
 Press `Finish`
+
+<center>
+
+<Image img={attributeMapping} style={{ width: 550 }} />
+
+</center>
