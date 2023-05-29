@@ -502,7 +502,7 @@ The `invocationMethod` supports 3 configurations:
 - [Webhook](../setup-backend/webhook/webhook.md)
 - [Kafka](../setup-backend/kafka/kafka.md)
 - [GitHub](../setup-backend/github-workflow/github-workflow.md)
-- [GitLab](../setup-backend/port-execution-agent/gitlab-pipeline/gitlab-pipeline.md)
+- [GitLab](../setup-backend/gitlab-pipeline/gitlab-pipeline.md)
 
 ### Invocation method structure fields
 
