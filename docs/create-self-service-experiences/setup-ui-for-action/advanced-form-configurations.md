@@ -485,4 +485,4 @@ In this example, we will create an action that lets the user select a cluster an
 
 ![Cluster And Namespace Action](../../../static/img/software-catalog/blueprint/clusterNamespaceAction.png)
 
-:point_up: The user will be required to choose a cluster, then a namespace from the selected cluster. And will be able to deploy only services associated with his team.
+:point_up: The user will be required to choose a cluster, and then the namespace input list will be populated with cluster entities related to the chosen cluster. The user will only be able to deploy services associated with his team.
