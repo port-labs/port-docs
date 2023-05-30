@@ -26,4 +26,4 @@ The data flow when using the Port execution agent is as follows:
 
 ## Next steps
 
-[Explore How to install and use the agent](./quickstart)
+[Explore How to install and use the agent](./Installation.md)

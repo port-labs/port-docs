@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Quickstart
+# Installation
 
 Let's dive in to a walkthrough on how to install the Port execution agent in your Kubernetes cluster.
 
@@ -75,7 +75,7 @@ helm install my-port-agent port-labs/port-agent \
     --set env.normal.KAFKA_CONSUMER_GROUP_ID=YOUR_KAFKA_CONSUMER_GROUP \
     --set env.secret.KAFKA_CONSUMER_USERNAME=YOUR_KAFKA_USERNAME \
     --set env.secret.KAFKA_CONSUMER_PASSWORD=YOUR_KAFKA_PASSWORD \
-    --set env.normal.<YOUR GITLAB GROUP>_<YOUR GITLAB PROJECT>=YOUR TOKEN \
+    --set env.normal.<YOUR GITLAB GROUP>_<YOUR GITLAB PROJECT>=YOUR_GITLAB_TOKEN \
     --set env.normal.STREAMER_NAME=KafkaToGitLabStreamer
 ```
 
@@ -86,6 +86,10 @@ In order to trigger your GitLab Pipeline you need to save a trigger token as an 
 The name of the environment variable is a combination of the `GitLab group` and `GitLab project` seperated by `_`
 
 For example: `group_project=token`
+
+:::note
+You can load multiple trigger tokens, for different groups and projects in your GitLab environment.
+:::
 
 ### Self Hosted GitLab
 
@@ -105,6 +109,6 @@ When a new invocation is detected, the agent will pull it from your Kafka topic 
 
 Follow one of the guides below:
 
-- [Self-Service Actions Deep Dive](../../self-service-actions-deep-dive/self-service-actions-deep-dive.md) - Set up a Blueprint and Self-Service Actions.
-- [Changelog Listener](../webhook/examples/changelog-listener.md) - Create a Blueprint with `changelogDestination` to listen and act on changes in the software catalog.
-- [GitLab Pipeline Trigger](https://google.com) - Create an action for a GitLab Pipeline execution.
+- [Self-Service Actions Deep Dive](../../self-service-actions-deep-dive/self-service-actions-deep-dive.md) - Set up a blueprint and self-service actions.
+- [Changelog Listener](../webhook/examples/changelog-listener.md) - Create a blueprint with `changelogDestination` to listen and act on changes in the software catalog.
+- [GitLab Pipeline Trigger](../gitlab-pipeline/gitlab-pipeline.md) - Create an action that triggers GitLab Pipeline execution.
