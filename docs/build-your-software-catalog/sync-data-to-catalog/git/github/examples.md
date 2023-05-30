@@ -102,6 +102,8 @@ In the following example you will ingest your GitHub repositories and their fold
 - Click [Here](https://docs.github.com/en/rest/repos/repos#get-a-repository) for the GitHub repository object structure.
 - Click [Here](https://docs.github.com/en/rest/git/trees#get-a-tree) for the GitHub folder object structure.
 
+:::
+
 ## Mapping supported resources
 
 The above example shows a specific use case, but Port's GitHub app supports the ingestion of many other GitHub objects, to adapt the example above, use the GitHub API reference to learn about the available fields for the different supported objects:
