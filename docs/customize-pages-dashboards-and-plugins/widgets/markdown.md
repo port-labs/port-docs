@@ -29,8 +29,8 @@ Here is how the Markdown tab in the specific entity page appears when markdown t
 
 ### Mermaid
 
-The markdown also supports [Mermaid](https://mermaid-js.github.io/mermaid/#/), a diagramming and charting tool that uses text and code to generate diagrams and charts.
+The markdown widget also supports [Mermaid](https://mermaid-js.github.io/mermaid/#/), a diagramming and charting tool that uses text and code to generate diagrams and charts.
 
-You can refer to the [Mermaid Examples](https://mermaid.js.org/syntax/examples.html) for more examples and information on how to use it.
+To use Mermaid with the markdown widget, all you need to do is add mermaid syntax to the markdown property. You can refer to the [Mermaid Examples](https://mermaid.js.org/syntax/examples.html) for more examples and information on how to use it.
 
 ![Markdown Mermaid Example](../../../static/img/software-catalog/widgets/markdownMermaid.png)
