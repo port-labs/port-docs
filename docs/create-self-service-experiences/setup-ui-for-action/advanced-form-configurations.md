@@ -330,7 +330,7 @@ This example contains a filter that will only display the namespaces that are re
 
 :point_up: The user will be required to choose a cluster, then a namespace from the selected cluster. :point_up:
 
-### Filter the dropdown's available options based on properties of the user that execute the action
+### Filter the dropdown's available options based on properties of the user that executes the action
 
 This example contains a filter that will only display the namespaces that belong to the user's teams (notice the value key in the rules object).
 
@@ -358,9 +358,9 @@ This example contains a filter that will only display the namespaces that belong
 
 ![Cluster And Namespace Action](../../../static/img/software-catalog/blueprint/userPropertiesModal.png)
 
-:point_up: these are only the namespaces that are associated with the logged-in user's teams. :point_up:
+:point_up: these are the only namespaces that are associated with the logged-in user's teams. :point_up:
 
-### Filter the dropdown's available options based on the properties of the entity on which the action is performed (for day-2 or delete actions only)
+### Filter the dropdown's available options based on the properties of the entity on which the action is performed
 
 This example contains a filter that will only display the namespaces that have similar tags to the tags of the entity on which the action is performed.
 
@@ -404,8 +404,6 @@ This example contains an array input with a default value that will be equal to 
 ![entity tags action](../../../static/img/software-catalog/blueprint/defaultEntityTags.png)
 
 :point_up: The namespace tags are already inserted to the form. :point_up:
-
-<!-- this is commented out for now -->
 
 ## Complete Example
 
