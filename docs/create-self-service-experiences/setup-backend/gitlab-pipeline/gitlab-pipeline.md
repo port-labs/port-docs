@@ -112,4 +112,4 @@ Here is the JSON of the action:
 ## Further steps
 
 - Contact us through Intercom to set up a Kafka topic for your organization.
-- [Install the Port agent for triggering the GitLab pipeline](../port-execution-agent/port-execution-agent.md).
+- [Install the Port agent for triggering the GitLab pipeline](../port-execution-agent/Installation.md).
