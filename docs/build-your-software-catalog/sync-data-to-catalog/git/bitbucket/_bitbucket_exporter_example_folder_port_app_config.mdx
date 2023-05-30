@@ -18,20 +18,19 @@ resources:
             repositoryUrl: .links.html.href
   - kind: folder
     selector:
-      query: "true"
-      folders:
-        - path: apps/*
-          repos:
-            - bitbucket-app-setup-example
+      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
+      folders: # Specify the repositories and folders to include under this relative path.
+        - path: apps/* # Relative path to the folders within the repositories.
+          repos: # List of repositories to include folders from.
+            - backend-service
+            - frontend-service
     port:
       entity:
         mappings:
           identifier: .folder.name
           blueprint: '"folder"'
           properties:
-            link: >-
-              .repo.links.html.href + "/src/" + .repo.mainbranch.name + "/" + 
-              .folder.path
+            link: .repo.links.html.href + "/src/" + .repo.mainbranch.name + "/" + .folder.path
             readme: file://README.md
           relations:
             service: .repo.name
