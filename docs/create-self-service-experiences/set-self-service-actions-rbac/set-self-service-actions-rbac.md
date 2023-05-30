@@ -53,7 +53,7 @@ To configure which users can approve the action, see [Managing permissions](/doc
 
 ## Configuring approval notifications
 
-by default manual approval notifications are sent via email to users who have approval permissions. 
+by default manual approval notifications are sent via email to users who have approval permissions.
 
 It is also possible to configure a webhook URL which the approval notification will be sent to.
 

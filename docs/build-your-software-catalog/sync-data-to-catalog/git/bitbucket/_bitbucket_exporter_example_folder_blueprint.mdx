@@ -1,0 +1,40 @@
+<details>
+<summary>Folder blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "folder",
+  "title": "Folder",
+  "icon": "Bitbucket",
+  "schema": {
+    "properties": {
+      "sha": {
+        "title": "Sha",
+        "type": "string"
+      },
+      "link": {
+        "title": "Link",
+        "type": "string",
+        "format": "url"
+      },
+      "readme": {
+        "title": "README",
+        "type": "string",
+        "format": "markdown"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "service": {
+      "target": "microservice",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
