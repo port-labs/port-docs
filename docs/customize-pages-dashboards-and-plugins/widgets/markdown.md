@@ -34,3 +34,26 @@ The markdown widget also supports [Mermaid](https://mermaid-js.github.io/mermaid
 To use Mermaid with the markdown widget, all you need to do is add mermaid syntax to the markdown property. You can refer to the [Mermaid Examples](https://mermaid.js.org/syntax/examples.html) for more examples and information on how to use it.
 
 ![Markdown Mermaid Example](../../../static/img/software-catalog/widgets/markdownMermaid.png)
+
+<details>
+<summary>Mermaid diagram example</summary>
+
+````
+```mermaid
+sequenceDiagram
+    participant ClientService
+    participant PaymentService
+    participant InventoryService
+    participant ShippingService
+
+    ClientService->>PaymentService: Request Payment
+    PaymentService-->>InventoryService: Update Inventory
+    InventoryService-->>ShippingService: Ship Order
+    ShippingService-->>InventoryService: Confirm Shipment
+    InventoryService-->>PaymentService: Update Payment Status
+    PaymentService-->>ClientService: Return Payment Status
+
+```
+````
+
+</details>
