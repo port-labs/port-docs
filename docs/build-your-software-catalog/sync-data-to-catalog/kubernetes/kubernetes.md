@@ -196,7 +196,7 @@ In order to **update** the `config.yml` file deployed on your Kubernetes cluster
 
 ## Examples
 
-Refer to the [examples](./examples.md) page for practical configurations and their corresponding blueprint definitions.
+Refer to the [examples](./basic-example.md) page for practical configurations and their corresponding blueprint definitions.
 
 ## Advanced
 
