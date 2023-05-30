@@ -1,0 +1,40 @@
+<details>
+
+<summary> Port port-app-config.yml </summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: repository
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .name
+          title: .name
+          blueprint: '"microservice"'
+          properties:
+            readme: file://README.md
+            repositoryUrl: .links.html.href
+  - kind: folder
+    selector:
+      query: "true"
+      folders:
+        - path: apps/*
+          repos:
+            - bitbucket-app-setup-example
+    port:
+      entity:
+        mappings:
+          identifier: .folder.name
+          blueprint: '"folder"'
+          properties:
+            link: >-
+              .repo.links.html.href + "/src/" + .repo.mainbranch.name + "/" + 
+              .folder.path
+            readme: file://README.md
+          relations:
+            service: .repo.name
+```
+
+</details>
