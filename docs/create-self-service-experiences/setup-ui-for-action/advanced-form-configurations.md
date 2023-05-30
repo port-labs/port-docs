@@ -328,7 +328,7 @@ This example contains a filter that will only display the namespaces that are re
 
 ![Cluster And Namespace Action](../../../static/img/software-catalog/blueprint/clusterNamespaceActionSmallerExample.png)
 
-:point_up: The user will be required to choose a cluster, then a namespace from the selected cluster. :point_up:
+:point_up: The user will be required to choose a cluster, and then the namespace input list will be populated with cluster entities related to the chosen cluster. :point_up:
 
 ### Filter the dropdown's available options based on properties of the user that executes the action
 
