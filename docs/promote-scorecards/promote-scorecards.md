@@ -48,12 +48,13 @@ Rules enable you to generate checks inside a scorecard only for entities and pro
 
 A scorecard rule is a single evaluation consisting of multiple checks, each rule has a level which directly translates to how important it is for the check to pass (the more basic the check, the lower its level):
 
-| Field        | Type     | Description                                                                                                                       |
-| ------------ | -------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| `title`      | `String` | `Rule` name that will be shown in the UI                                                                                          |
-| `identifier` | `String` | The unique identifier of the `Rule`                                                                                               |
-| `level`      | `String` | one of `Gold` `Silver` `Bronze`                                                                                                   |
-| `query`      | `Object` | The query is built from an array of [`conditions`](#conditions) and a [`combinator`](#combinator) (or / and) that will define the |
+| Field         | Type     | Description                                                                                                                                                   |
+| ------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `title`       | `String` | `Rule` name that will be shown in the UI                                                                                                                      |
+| `description` | `String` | Description that will be shown in the UI when the rule is expanded. Value that contains markdown is also supported and will be displayed in a markdown format |
+| `identifier`  | `String` | The unique identifier of the `Rule`                                                                                                                           |
+| `level`       | `String` | one of `Gold` `Silver` `Bronze`                                                                                                                               |
+| `query`       | `Object` | The query is built from an array of [`conditions`](#conditions) and a [`combinator`](#combinator) (or / and) that will define the                             |
 
 ### Combinator
 
