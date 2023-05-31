@@ -1,0 +1,45 @@
+```json showLineNumbers
+{
+  "identifier": "goPackage",
+  "description": "This blueprint represents a Go package",
+  "title": "Go Package",
+  "icon": "Go",
+  "schema": {
+    "properties": {
+      "module": {
+        "type": "string",
+        "title": "Module",
+        "description": "The module path in the go.mod file"
+      },
+      "go": {
+        "type": "string",
+        "title": "Go Version",
+        "description": "The Go language version the module is written in"
+      },
+      "require": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "title": "Dependencies",
+        "description": "The direct dependencies of the module, with their versions"
+      },
+      "indirect_require": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "title": "Indirect Dependencies",
+        "description": "The indirect dependencies of the module, with their versions"
+      }
+    },
+    "required": [
+      "module",
+      "go"
+    ]
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {}
+}
+```

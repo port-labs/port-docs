@@ -1,0 +1,54 @@
+```json showLineNumbers
+#!/bin/bash
+
+set -e
+
+parse_go_mod() {
+  local file_path=$1
+  local require_section=false
+  local indirect_section=false
+  local data='{"module": "", "go": "", "require": [], "indirect_require": []}'
+
+  while IFS= read -r line
+  do
+    if [[ "$line" =~ ^module[[:space:]](.*)$ ]]; then
+      data=$(jq --arg val "${BASH_REMATCH[1]}" '.module = $val' <<<"$data")
+    elif [[ "$line" =~ ^go[[:space:]](.*)$ ]]; then
+      data=$(jq --arg val "${BASH_REMATCH[1]}" '.go = $val' <<<"$data")
+    elif [[ "$line" =~ ^require[[:space:]]*\($ ]]; then
+      require_section=true
+      indirect_section=false
+    elif [[ "$line" =~ ^require[[:space:]]*\)$ ]]; then
+      require_section=false
+    elif [[ "$require_section" = true && "$line" =~ ^[[:space:]](.*)\/\/[[:space:]]indirect$ ]]; then
+      indirect_section=true
+      data=$(jq --arg val "${BASH_REMATCH[1]// \/\/ indirect}" '.indirect_require += [$val]' <<<"$data")
+    elif [[ "$require_section" = true && "$line" =~ ^[[:space:]](.*[^[:space:]]*)$ ]]; then
+      if $indirect_section; then
+        data=$(jq --arg val "${BASH_REMATCH[1]}" '.indirect_require += [$val]' <<<"$data")
+      else
+        data=$(jq --arg val "${BASH_REMATCH[1]}" '.require += [$val]' <<<"$data")
+      fi
+    fi
+  done < $file_path
+
+  echo "$data" | tee output.json
+}
+
+send_to_port() {
+  local webhook=$1
+  local data=$2
+  response=$(curl --silent --output /dev/null --write-out "%{http_code}" --location $webhook --header 'Content-Type: application/json' --data "$data")
+  if [ $response -eq 202 ]; then
+    echo "Data sent successfully."
+  else
+    echo "Error sending data, HTTP response code: $response."
+  fi
+}
+
+WEBHOOK="your-webhook-url"
+GO_MOD_FILE="go.mod"
+
+parsed_data=$(parse_go_mod $GO_MOD_FILE)
+send_to_port $WEBHOOK "$parsed_data"
+```

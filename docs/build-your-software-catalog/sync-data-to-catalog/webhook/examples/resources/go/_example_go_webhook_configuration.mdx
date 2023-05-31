@@ -1,0 +1,25 @@
+```json showLineNumbers
+{
+  "identifier": "goPackageMapper",
+  "title": "Go Package Mapper",
+  "description": "A webhook configuration to map Go packages to Port",
+  "icon": "Go",
+  "mappings": [
+    {
+      "blueprint": "goPackage",
+      "entity": {
+        "identifier": ".body.module | split(\"/\")[1]",
+        "title": ".body.module",
+        "properties": {
+          "module": ".body.module",
+          "go": ".body.go",
+          "require": ".body.require",
+          "indirect_require": ".body.indirect_require"
+        }
+      }
+    }
+  ],
+  "enabled": true
+}
+
+```
