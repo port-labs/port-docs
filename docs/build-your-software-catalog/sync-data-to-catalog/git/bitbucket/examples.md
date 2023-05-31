@@ -6,8 +6,7 @@ import MicroserviceBlueprint from '../\_git_exporter_example_microservice_bluepr
 import PRBlueprint from './\_bitbucket_exporter_example_pull_request_blueprint.mdx'
 import PortAppConfig from './\_bitbucket_exporter_example_port_app_config.mdx'
 import BitbucketResources from './\_bitbucket_exporter_supported_resources.mdx'
-import PortFolderAppConfig from './\_bitbucket_exporter_example_folder_port_app_config.mdx'
-import FolderBlueprint from './\_bitbucket_exporter_example_folder_blueprint.mdx'
+import PortMonoRepoAppConfig from './\_bitbucket_exporter_example_monorepo_port_app_config.mdx'
 
 # Examples
 
@@ -36,9 +35,9 @@ After creating the blueprints and committing the `port-app-config.yml` file to y
 
 In the following example you will ingest your Bitbucket repositories and their folders to Port. By following this example you can map your different services, packages and libraries from your monorepo into separate entities in Port. you may use the following Port blueprint definitions and `port-app-config.yml`:
 
-<FolderBlueprint/>
+<MicroserviceBlueprint/>
 
-<PortFolderAppConfig/>
+<PortMonoRepoAppConfig/>
 
 :::tip
 

@@ -4,18 +4,6 @@
 
 ```yaml showLineNumbers
 resources:
-  - kind: repository
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: .name
-          title: .name
-          blueprint: '"microservice"'
-          properties:
-            readme: file://README.md
-            repositoryUrl: .links.html.href
   - kind: folder
     selector:
       query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
@@ -30,7 +18,7 @@ resources:
           identifier: .folder.name
           blueprint: '"folder"'
           properties:
-            link: .repo.links.html.href + "/src/" + .repo.mainbranch.name + "/" + .folder.path
+            repositoryUrl: .repo.links.html.href + "/src/" + .repo.mainbranch.name + "/" + .folder.path
             readme: file://README.md
 ```
 

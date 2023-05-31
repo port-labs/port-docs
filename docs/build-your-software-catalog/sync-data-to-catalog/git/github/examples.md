@@ -11,8 +11,7 @@ import WorkflowBlueprint from './example-workflow-workflowrun/\_git_exporter_exa
 import WorkflowRunBlueprint from './example-workflow-workflowrun/\_git_exporter_example_workflow_run_blueprint.mdx'
 import PortWfWfrAppConfig from './example-workflow-workflowrun/\_github_exporter_example_wf_wfr_port_app_config.mdx'
 
-import FolderBlueprint from './example-folder/\_git_exporter_example_folder_blueprint.mdx'
-import PortFolderAppConfig from './example-folder/\_github_exporter_example_folder_port_app_config.mdx'
+import PortMonoRepoAppConfig from './example-monorepo/\_github_exporter_example_monorepo_port_app_config.mdx'
 
 import IssueBlueprint from './example-issue/\_git_exporter_example_issue_blueprint.mdx'
 import PortIssueAppConfig from './example-issue/\_github_exporter_example_issue_port_app_config.mdx'
@@ -89,9 +88,9 @@ After creating the blueprints and committing the `port-app-config.yml` file to y
 
 In the following example you will ingest your GitHub repositories and their folders to Port. By following this example you can map your different services, packages and libraries from your monorepo into separate entities in Port. you may use the following Port blueprint definitions and `port-app-config.yml`:
 
-<FolderBlueprint/>
+<MicroserviceBlueprint/>
 
-<PortFolderAppConfig/>
+<PortMonoRepoAppConfig/>
 
 :::tip
 
