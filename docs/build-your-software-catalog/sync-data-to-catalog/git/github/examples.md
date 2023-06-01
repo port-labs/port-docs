@@ -92,8 +92,8 @@ In the following example you will ingest your GitHub repositories and their fold
 
 <PortMonoRepoAppConfig/>
 
-:::info
-To Retrieve the root folders of your monorepo, you can use this syntax in your `port-app-config.yml`:
+:::tip
+To retrieve the root folders of your monorepo, you can use this following syntax in your `port-app-config.yml`:
 
 ```yaml
 - kind: folder
