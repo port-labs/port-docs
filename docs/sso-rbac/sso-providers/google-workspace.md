@@ -90,16 +90,16 @@ In order to complete the process you will need to contact us to receive the info
 
 Pass these to Port. <br/>
 
-:::note
-We will provide your `{CONNECTION_NAME}` (Contact us on Slack/Intercom).
-:::
-
 Press `Continue`.
 
 5. Configure your new application as shown bellow:
 
 - `ACS URL` - `https://auth.getport.io/login/callback?connection={CONNECTION_NAME}`
 - `Entity ID` - `urn:auth0:port-prod:{CONNECTION_NAME}`
+
+:::note
+We will provide your `{CONNECTION_NAME}` (Contact us on Slack/Intercom).
+:::
 
 Press `Continue`
 
