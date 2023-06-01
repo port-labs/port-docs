@@ -93,6 +93,21 @@ In the following example you will ingest your GitHub repositories and their fold
 <PortMonoRepoAppConfig/>
 
 :::tip
+To retrieve the root folders of your monorepo, you can use this following syntax in your `port-app-config.yml`:
+
+```yaml
+- kind: folder
+    selector:
+      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
+      folders: # Specify the repositories and folders to include under this relative path.
+        - path: "*" # Relative path to the folders within the repositories.
+          repos: # List of repositories to include folders from.
+            - backend-service
+            - frontend-service
+```
+
+:::
+:::tip
 
 - Refer to the [setup](github.md#setup) section to learn more about the `port-app-config.yml` setup process;
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitHub objects to Port Entities;
@@ -108,3 +123,11 @@ The above example shows a specific use case, but Port's GitHub app supports the 
 <GitHubResources/>
 
 When adding the ingestion of other resources, remember to add a entry to the `resources` array and change the value provided to the `kind` key accordingly.
+
+```
+
+```
+
+```
+
+```
