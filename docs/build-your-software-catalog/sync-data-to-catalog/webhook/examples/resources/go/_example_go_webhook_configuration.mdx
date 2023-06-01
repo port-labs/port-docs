@@ -1,25 +1,26 @@
 ```json showLineNumbers
 {
-  "identifier": "goPackageMapper",
-  "title": "Go Package Mapper",
-  "description": "A webhook configuration to map Go packages to Port",
+  "identifier": "goDependencyMapper",
+  "title": "Go Dependency Mapper",
+  "description": "A webhook configuration to map Go dependencies to Port",
   "icon": "Go",
   "mappings": [
     {
-      "blueprint": "goPackage",
+      "blueprint": "goDependency",
       "entity": {
-        "identifier": ".body.module | split(\"/\")[1]",
-        "title": ".body.module",
+        "identifier": ".body.package_name",
+        "title": ".body.package_url",
         "properties": {
-          "module": ".body.module",
-          "go": ".body.go",
-          "require": ".body.require",
-          "indirect_require": ".body.indirect_require"
+          "package_name": ".body.package_name",
+          "package_url": ".body.package_url",
+          "version": ".body.version",
+          "indirect": ".body.indirect"
         }
       }
     }
   ],
   "enabled": true
 }
+
 
 ```

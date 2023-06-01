@@ -2,53 +2,63 @@
 #!/bin/bash
 
 set -e
+# Create or clear the output file
+echo "[]" > output.json
 
-parse_go_mod() {
-  local file_path=$1
-  local require_section=false
-  local indirect_section=false
-  local data='{"module": "", "go": "", "require": [], "indirect_require": []}'
+# Extract require lines from go.mod excluding the first and the last lines
+mapfile -t requires < <(sed -n '/require (/,/)/p' go.mod | tail -n +2 | head -n -1)
 
-  while IFS= read -r line
-  do
-    if [[ "$line" =~ ^module[[:space:]](.*)$ ]]; then
-      data=$(jq --arg val "${BASH_REMATCH[1]}" '.module = $val' <<<"$data")
-    elif [[ "$line" =~ ^go[[:space:]](.*)$ ]]; then
-      data=$(jq --arg val "${BASH_REMATCH[1]}" '.go = $val' <<<"$data")
-    elif [[ "$line" =~ ^require[[:space:]]*\($ ]]; then
-      require_section=true
-      indirect_section=false
-    elif [[ "$line" =~ ^require[[:space:]]*\)$ ]]; then
-      require_section=false
-    elif [[ "$require_section" = true && "$line" =~ ^[[:space:]](.*)\/\/[[:space:]]indirect$ ]]; then
-      indirect_section=true
-      data=$(jq --arg val "${BASH_REMATCH[1]// \/\/ indirect}" '.indirect_require += [$val]' <<<"$data")
-    elif [[ "$require_section" = true && "$line" =~ ^[[:space:]](.*[^[:space:]]*)$ ]]; then
-      if $indirect_section; then
-        data=$(jq --arg val "${BASH_REMATCH[1]}" '.indirect_require += [$val]' <<<"$data")
-      else
-        data=$(jq --arg val "${BASH_REMATCH[1]}" '.require += [$val]' <<<"$data")
-      fi
+# Parse each require line into a package JSON
+for require in "${requires[@]}"; do
+    # Ignore if line is 'require (' or ')'
+    if [[ "$require" == "require (" ]] || [[ "$require" == ")" ]]; then
+        continue
     fi
-  done < $file_path
+    
+    # Split line into an array
+    IFS=' ' read -r -a parts <<< "$require"
+    
+    # Assign array items to variables
+    package_url="${parts[0]}"
+    version="${parts[1]}"
+    indirect=false
+    
+    # Check if line is indirect
+    if [[ "${parts[2]}" == "//" && "${parts[3]}" == "indirect" ]]; then
+        indirect=true
+    fi
 
-  echo "$data" | tee output.json
-}
+    # Extract the package name from the URL
+    package_name=$(basename "$package_url")
 
-send_to_port() {
-  local webhook=$1
-  local data=$2
-  response=$(curl --silent --output /dev/null --write-out "%{http_code}" --location $webhook --header 'Content-Type: application/json' --data "$data")
-  if [ $response -eq 202 ]; then
-    echo "Data sent successfully."
-  else
-    echo "Error sending data, HTTP response code: $response."
-  fi
-}
+    # Prepend 'https://' to package URL if not already there and remove any white spaces
+    package_url=$(echo "$package_url" | tr -d '[:space:]')
+    if [[ "$package_url" != http* ]]; then
+        package_url="https://$package_url"
+    fi
+    
+    # Create the package JSON
+    package_json=$(jq -n \
+        --arg pn "$package_name" \
+        --arg id "$package_name" \
+        --arg pu "$package_url" \
+        --arg v "$version" \
+        --argjson i "$indirect" \
+        '{
+            identifier: $id,
+            package_name: $pn,
+            package_url: $pu,
+            version: $v,
+            indirect: $i
+        }')
+    
+    # Add the package JSON to the output file
+    jq --argjson p "$package_json" '. += [$p]' output.json > temp.json && mv temp.json output.json
 
-WEBHOOK="your-webhook-url"
-GO_MOD_FILE="go.mod"
+    # Send the package JSON to the webhook
+    curl --location 'https://ingest.getport.io/Y32TvpMB8NQZEIPQ' \
+        --header 'Content-Type: application/json' \
+        --data "$package_json"
+done
 
-parsed_data=$(parse_go_mod $GO_MOD_FILE)
-send_to_port $WEBHOOK "$parsed_data"
 ```

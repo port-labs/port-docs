@@ -1,41 +1,38 @@
 ```json showLineNumbers
 {
-  "identifier": "goPackage",
-  "description": "This blueprint represents a Go package",
-  "title": "Go Package",
+  "identifier": "goDependency",
+  "description": "This blueprint represents a Go dependency",
+  "title": "Go Dependency",
   "icon": "Go",
   "schema": {
     "properties": {
-      "module": {
+      "package_url": {
+        "icon": "DefaultProperty",
+        "title": "Package URL",
+        "description": "The URL of the dependency package",
         "type": "string",
-        "title": "Module",
-        "description": "The module path in the go.mod file"
+        "format": "url"
       },
-      "go": {
+      "version": {
         "type": "string",
-        "title": "Go Version",
-        "description": "The Go language version the module is written in"
+        "title": "Version",
+        "description": "The version of the dependency"
       },
-      "require": {
-        "type": "array",
-        "items": {
-          "type": "string"
-        },
-        "title": "Dependencies",
-        "description": "The direct dependencies of the module, with their versions"
+      "indirect": {
+        "type": "boolean",
+        "title": "Indirect Dependency",
+        "description": "Whether the dependency is indirect"
       },
-      "indirect_require": {
-        "type": "array",
-        "items": {
-          "type": "string"
-        },
-        "title": "Indirect Dependencies",
-        "description": "The indirect dependencies of the module, with their versions"
+      "package_name": {
+        "type": "string",
+        "title": "Package Name",
+        "description": "The name of the dependency package"
       }
     },
     "required": [
-      "module",
-      "go"
+      "package_name",
+      "package_url",
+      "version"
     ]
   },
   "mirrorProperties": {},
