@@ -117,19 +117,15 @@ Create the following webhook configuration we are still using the Same blueprint
 </details>
 
 <details>
-
-:::note
-There are slight changes to the webhook, and since is probably a one time run, you may want to start off running this to import all your incidents and services into Port
-:::
-
-</details>
-
-<details>
 <summary> PagerDuty Bash Script for Historical Data </summary>
 
 <PagerDutyWebhookShellConfig/>
 
 </details>
+
+:::note
+There are slight changes to the webhook, and since is probably a one time run, you may want to start off running this to import all your incidents and services into Port
+:::
 
 ## How to Run the script
 
