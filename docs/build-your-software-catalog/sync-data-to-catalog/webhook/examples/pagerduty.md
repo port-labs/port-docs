@@ -6,6 +6,8 @@ description: Ingest PagerDuty incidents and services into Port
 import PagerDutyServiceBlueprint from "./resources/pagerduty/\_example_pagerduty_service.mdx";
 import PagerDutyIncidentBlueprint from "./resources/pagerduty/\_example_pagerduty_incident.mdx";
 import PagerDutyWebhookConfig from "./resources/pagerduty/\_example_pagerduty_webhook_config.mdx";
+import PagerDutyWebhookHistoryConfig from "./resources/pagerduty/\_example_pagerduty_webhook_history_config.mdx";
+import PagerDutyWebhookShellConfig from "./resources/pagerduty/\_example_pagerduty_shell_history_config.mdx;
 
 # PagerDuty
 
@@ -99,3 +101,53 @@ In order to view the different events available in PagerDuty webhooks, [look her
 :::
 
 Done! any change that happens to your services or incidents in PagerDuty will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+
+## Import PagerDuty Historical Data
+
+This documentation guides you on how to use the provided Bash script to fetch data from the PagerDuty API and push it to the Port platform. The script extracts services and incidents from PagerDuty, and sends them to Port as Microservice and Incident entities respectively.
+
+## Prerequisites
+
+Create the following webhook configuration we are still using the Same blueprint specified above.
+
+<details>
+<summary>PagerDuty Webhook configuration for Historical Data</summary>
+
+<PagerDutyWebhookHistoryConfig/>
+</details>
+
+<details>
+
+:::note
+There are slight changes to the webhook, and since is probably a one time run, you may want to start off running this to import all your incidents and services into Port
+:::
+
+</details>
+
+<details>
+<summary> PagerDuty Bash Script for Historical Data </summary>
+
+<PagerDutyWebhookShellConfig/>
+
+</details>
+
+## How to Run the script
+
+This script requires two configuration values:
+
+1. PD_TOKEN: Your PagerDuty API token.
+2. PORT_URL: Your Port webhook URL.
+
+Then run this
+
+  ```json showLineNumbers
+  bash pagerduty_to_port.sh
+  ```
+
+This script fetches services and incidents from PagerDuty and sends them to Port.
+
+:::tip
+The script writes the JSON payload for each service and incident to a file named output.json. This can be useful for debugging if you encounter any issues.
+:::
+
+Done! you can now pull out your historical data into Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
