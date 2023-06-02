@@ -7,7 +7,7 @@ import PagerDutyServiceBlueprint from "./resources/pagerduty/\_example_pagerduty
 import PagerDutyIncidentBlueprint from "./resources/pagerduty/\_example_pagerduty_incident.mdx";
 import PagerDutyWebhookConfig from "./resources/pagerduty/\_example_pagerduty_webhook_config.mdx";
 import PagerDutyWebhookHistoryConfig from "./resources/pagerduty/\_example_pagerduty_webhook_history_config.mdx";
-import PagerDutyWebhookShellConfig from "./resources/pagerduty/\_example_pagerduty_shell_history_config.mdx;
+import PagerDutyWebhookShellConfig from "./resources/pagerduty/\_example_pagerduty_shell_history_config.mdx";
 
 # PagerDuty
 
@@ -140,9 +140,9 @@ This script requires two configuration values:
 
 Then run this
 
-  ```json showLineNumbers
-  bash pagerduty_to_port.sh
-  ```
+```json showLineNumbers
+bash pagerduty_to_port.sh
+```
 
 This script fetches services and incidents from PagerDuty and sends them to Port.
 
