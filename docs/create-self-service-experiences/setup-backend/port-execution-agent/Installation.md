@@ -75,8 +75,7 @@ helm install my-port-agent port-labs/port-agent \
     --set env.normal.KAFKA_CONSUMER_GROUP_ID=YOUR_KAFKA_CONSUMER_GROUP \
     --set env.secret.KAFKA_CONSUMER_USERNAME=YOUR_KAFKA_USERNAME \
     --set env.secret.KAFKA_CONSUMER_PASSWORD=YOUR_KAFKA_PASSWORD \
-    --set env.normal.<YOUR GITLAB GROUP>_<YOUR GITLAB PROJECT>=YOUR_GITLAB_TOKEN \
-    --set env.normal.STREAMER_NAME=KafkaToGitLabStreamer
+    --set env.secret.<YOUR GITLAB GROUP>_<YOUR GITLAB PROJECT>=YOUR_GITLAB_TOKEN
 ```
 
 ### Trigger Tokens

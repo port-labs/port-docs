@@ -10,6 +10,84 @@ The steps shown in the image above are as follows:
 2. A secure topic (`ORG_ID.runs`) holds all the action invocations;
 3. Port's execution agent pulls the new trigger event from your Kafka topic, and triggers your GitLab Pipeline.
 
+## Create a GitLab pipeline
+
+First, we need to set up a GitLab pipeline for our CI/CD flow.
+
+You can use this example of using [Port's API](../../../build-your-software-catalog/sync-data-to-catalog/api/api.md) from GitLab CI/CD:
+
+<details>
+<summary>Click here to see the code</summary>
+
+```yaml showLineNumbers
+stages: # List of stages for jobs, and their order of execution
+  - save-port-data
+  - deploy
+  - report-deployment
+  - send-logs
+  - update-status
+
+save-port-data: # Example - get the Port API access token and RunId
+  stage: save-port-data
+  before_script:
+    - apt-get -qq update
+    - apt-get install -y jq
+  script:
+    - |
+      accessToken=$(curl -X POST \
+        -H 'Content-Type: application/json' \
+        -d '{"clientId": "'"$PORT_CLIENT_ID"'", "clientSecret": "'"$PORT_CLIENT_SECRET"'"}' \
+        -s 'https://api.getport.io/v1/auth/access_token' | jq -r '.accessToken')
+      echo "ACCESS_TOKEN=$accessToken" >> data.env
+      runId=$(cat $TRIGGER_PAYLOAD | jq -r '.port_payload.context.runId')
+      echo "RUN_ID=$runId" >> data.env
+  artifacts:
+    reports:
+      dotenv: data.env
+
+deploy-job:
+  stage: deploy
+  script:
+    - echo "Deploying application..."
+    ## Enter your deploy logic here
+
+report-deployment: # Example - create a deployment entity
+  stage: report-deployment
+  script:
+    - |
+      curl --location --request POST "https://api.getport.io/v1/blueprints/deployment/entities?upsert=true" \
+        --header "Authorization: Bearer $ACCESS_TOKEN" \
+        --header "Content-Type: application/json" \
+        --data-raw '{
+          "identifier": "'"$service-$environment"'",
+          "properties": {"jobUrl":"'"$CI_JOB_URL"'","imageTag":"latest"},
+          "relations": {}
+        }'
+
+send-logs: # Example - send Logs of the action run to Port
+  stage: send-logs
+  script:
+    - |
+      curl -X POST \
+        -H 'Content-Type: application/json' \
+        -H "Authorization: Bearer $ACCESS_TOKEN" \
+        -d '{"message": "this is a log test message example"}' \
+        "https://api.getport.io/v1/actions/runs/$RUN_ID/logs"
+
+update-status: # Example - update the Action run status as success
+  stage: update-status
+  image: curlimages/curl:latest
+  script:
+    - |
+      curl -X PATCH \
+        -H 'Content-Type: application/json' \
+        -H "Authorization: Bearer $ACCESS_TOKEN" \
+        -d '{"status":"SUCCESS", "message": {"run_status": "GitLab CI/CD Run completed successfully!"}}' \
+        "https://api.getport.io/v1/actions/runs/$RUN_ID"
+```
+
+</details>
+
 :::important IMPORTANT
 In order to trigger GitLab Pipelines through the Port agent, you'll need to [create a GitLab Pipeline trigger token](https://docs.gitlab.com/ee/ci/triggers/).
 
@@ -18,9 +96,9 @@ You can trigger pipelines accross multiple GitLab projects, as long as you have 
 Trigger tokens are loaded to the Port agent as environment variables.
 :::
 
-## Create a deployment Blueprint
+## Create a Blueprint
 
-Let’s configure a `Deployment` Blueprint. Its base structure is:
+Let’s configure a new blueprint, named `Deployment`, its base structure is:
 
 ```json showLineNumbers
 {
