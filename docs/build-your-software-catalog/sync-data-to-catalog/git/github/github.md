@@ -131,7 +131,7 @@ resources:
 
   - etc.
 
-- The `port`, `entity` and the `mappings` keys open the section used to map the GitHub API object fields to Port entities. The `mappings` key can either be an object or an array of objects that matches the structure of an [entity](../../../sync-data-to-catalog/sync-data-to-catalog.md#entity-json-structure)
+- The `port`, `entity` and the `mappings` keys open the section used to map the GitHub API object fields to Port entities. To create multiple mappings of the same kind, you can add another object under the `resources` array;
 
   ```yaml showLineNumbers
   resources:
