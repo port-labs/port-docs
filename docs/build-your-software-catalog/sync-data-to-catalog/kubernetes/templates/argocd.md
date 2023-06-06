@@ -83,16 +83,16 @@ This `blueprints.json` file defines the following blueprints:
 
 Using the `CONFIG_YAML_URL` parameter, you can define a custom `config.yaml` to use when installing the exporter.
 
-- If you use **Argo rollouts**, use **[this configuration file](https://github.com/port-labs/template-assets/blob/main/kubernetes/templates/argo-argo_rollouts-kubernetes_config.yaml)**. To achieve this, run:
+- If you use **Argo rollouts**, use **[this configuration file](https://github.com/port-labs/template-assets/blob/main/kubernetes/templates/argo-argo_rollouts-kubernetes_v1_config.yaml)**. To achieve this, run:
 
 ```bash showLineNumbers
-export CONFIG_YAML_URL="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/templates/argo-argo_rollouts-kubernetes_config.yaml"
+export CONFIG_YAML_URL="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/templates/argo-argo_rollouts-kubernetes_v1_config.yaml"
 ```
 
-- If you don't use Argo Rollouts, use [this configuration file](https://github.com/port-labs/template-assets/blob/main/kubernetes/templates/argo-kubernetes_config.yaml) by running:
+- If you don't use Argo Rollouts, use [this configuration file](https://github.com/port-labs/template-assets/blob/main/kubernetes/templates/argo-kubernetes_v1_config.yaml) by running:
 
 ```bash showLineNumbers
-export CONFIG_YAML_URL="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/templates/argo-kubernetes_config.yaml"
+export CONFIG_YAML_URL="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/templates/argo-kubernetes_v1_config.yaml"
 ```
 
 You can now run the installation script using the following code snippet:
