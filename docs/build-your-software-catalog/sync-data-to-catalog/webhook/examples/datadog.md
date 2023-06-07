@@ -86,6 +86,6 @@ The provided example demonstrates how to pull data from Datadog's REST API at sc
 
 ## Ingest service dependency from your APM
 
-In this example, you will create a blueprint for `service` entity that ingests all services and their related dependencies in your Datadog APM using REST API. You will then add some shell script to create new entities in Port every time a GitLab CI is triggered by a schedule.
+In this example, you will create a `service` blueprint that ingests all services and their related dependencies in your Datadog APM using REST API. You will then add some shell script to create new entities in Port every time GitLab CI is triggered by a schedule.
 
 - [GitLab CI Pipeline Example](https://github.com/port-labs/datadog-service-dependency-example)
