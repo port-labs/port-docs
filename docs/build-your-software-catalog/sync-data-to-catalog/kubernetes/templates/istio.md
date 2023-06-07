@@ -3,11 +3,11 @@ sidebar_position: 2
 description: Knative quickstart
 ---
 
-# Knative
+# Istio
 
-[Knative](https://knative.dev/docs/concepts/) is an open-source community project, which enhances Kubernetes by introducing components that facilitate the deployment, execution, and administration of serverless, cloud-native applications.
+[Istio](https://istio.io/latest/docs/setup/getting-started/) is an open-source service mesh that provides a uniform way to connect, manage, and secure microservices.
 
-Using Port's Kubernetes Exporter, you can keep track of the Knative resources across your different clusters and export all of the data to Port. You will use built in metadata from your kubernetes resources and CRDs to create Entities in Port and keep track of their state.
+Using Port's Kubernetes Exporter, you can keep track of all Istio resources across your different clusters and export all of the data to Port. You will use built in metadata from your kubernetes resources and CRDs to create Entities in Port and keep track of their state.
 
 :::tip
 Get to know the basics of our Kubernetes exporter [here!](../kubernetes.md)
@@ -25,7 +25,7 @@ Get to know the basics of our Kubernetes exporter [here!](../kubernetes.md)
 In this use-case, you will use a custom bash script which will assist you in the process of installing Port's K8s exporter.
 
 :::note
-For more information about the k8s exporter installation script click **[here](../installation-script.md)**!
+For more information about the k8s exporter installation script click [here](../installation-script.md)!
 :::
 
 The script will install the helm chart to the Kubernetes cluster which is currently in kubectl context.
@@ -35,14 +35,14 @@ To view the context name of the cluster the exporter will be installed on, run:
 kubectl config current-context
 ```
 
-## Setting up your blueprints
+## Setting up your Blueprints
 
 ### Creating Blueprints using the installation script
 
-The installation script provides a convenient way to create your blueprints. Using the `CUSTOM_BP_PATH` environment variable, you can fetch a pre-defined `blueprints.json` to create your blueprints. For this use-case, you will use [this file](https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/kubernetes_knative_usecase.json) to define your blueprints. Do this by running:
+The installation script provides a convenient way to create your blueprints. Using the `CUSTOM_BP_PATH` environment variable, you can fetch a pre-defined `blueprints.json` to create your blueprints. For this use-case, you will use [this file](https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/istio-blueprints.json) to define your blueprints. Do this by running:
 
 ```bash showLineNumbers
-export CUSTOM_BP_PATH="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/blueprints/kubernetes_knative_usecase.json"
+export CUSTOM_BP_PATH="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/blueprints/istio-blueprints.json"
 ```
 
 This `blueprints.json` file defines the following blueprints:
@@ -52,10 +52,8 @@ This `blueprints.json` file defines the following blueprints:
 - Node;
 - Pod;
 - Workload \*;
-- Knative Service;
-- Knative Configuration;
-- Knative Revision;
-- Knative Route.
+- Istio Gateway;
+- Istio VirtualService.
 
 :::note
 
@@ -75,10 +73,10 @@ This `blueprints.json` file defines the following blueprints:
 
 Using the `CONFIG_YAML_URL` parameter, you can define a custom `config.yaml` to use when installing the exporter.
 
-In this use-case you will be using **[this configuration file](https://github.com/port-labs/template-assets/blob/main/kubernetes/full-configs/kubernetes_kantive_usecase.yaml)**. To achieve this, run:
+In this use-case you will be using the **[this configuration file](https://github.com/port-labs/template-assets/blob/main/kubernetes/templates/istio-kubernetes_config.yaml)**. To achieve this, run:
 
 ```bash showLineNumbers
-export CONFIG_YAML_URL="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/full-configs/kubernetes_kantive_usecase.yaml"
+export CONFIG_YAML_URL="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/templates/istio-kubernetes_config.yaml"
 ```
 
 You can now run the installation script using the following code snippet:
@@ -90,4 +88,4 @@ export PORT_CLIENT_SECRET="my-port-client-secret"
 curl -s https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/install.sh | bash
 ```
 
-You can now browse to your Port environment to see that your blueprints have been created, and your k8s and knative resources are being reported to Port using the freshly installed k8s exporter.
+You can now browse to your Port environment to see that your blueprints have been created, and your k8s and Istio resources are being reported to Port using the freshly installed k8s exporter.
