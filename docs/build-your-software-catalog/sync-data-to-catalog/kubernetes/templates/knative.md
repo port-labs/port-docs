@@ -90,4 +90,4 @@ export PORT_CLIENT_SECRET="my-port-client-secret"
 curl -s https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/install.sh | bash
 ```
 
-You can now browse to your Port environment to see that your blueprints have been created, and your k8s and knative resources are being reported to Port using the freshly installed k8s exporter.
+You can now browse to your Port environment to see that your blueprints have been created, and your k8s and Knative resources are being reported to Port using the freshly installed k8s exporter.
