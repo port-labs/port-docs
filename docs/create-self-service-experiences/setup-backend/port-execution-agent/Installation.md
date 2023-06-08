@@ -82,7 +82,7 @@ helm install my-port-agent port-labs/port-agent \
 
 In order to trigger your GitLab Pipeline you need to save a trigger token as an environment variable.
 
-The name of the environment variable is a combination of the `GitLab group` and `GitLab project` seperated by `_`
+Pass the helm chart an environment variable with a name that is the combination of the `GitLab group` and `GitLab project` seperated by `_`
 
 For example: `group_project=token`
 
