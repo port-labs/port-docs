@@ -6,8 +6,8 @@ description: Ingest PagerDuty incidents and services into Port
 import PagerDutyServiceBlueprint from "./resources/pagerduty/\_example_pagerduty_service.mdx";
 import PagerDutyIncidentBlueprint from "./resources/pagerduty/\_example_pagerduty_incident.mdx";
 import PagerDutyWebhookConfig from "./resources/pagerduty/\_example_pagerduty_webhook_config.mdx";
-import PagerDutyWebhookHistoryConfig from "./resources/pagerduty/\_example_pagerduty_webhook_history_config.mdx";
-import PagerDutyWebhookShellConfig from "./resources/pagerduty/\_example_pagerduty_shell_history_config.mdx";
+import PagerDutyWebhookHistory from "./resources/pagerduty/\_example_pagerduty_webhook_history_config.mdx";
+import PagerDutyScript from "./resources/pagerduty/\_example_pagerduty_shell_history_config.mdx";
 
 # PagerDuty
 
@@ -104,22 +104,22 @@ Done! any change that happens to your services or incidents in PagerDuty will tr
 
 ## Import PagerDuty Historical Data
 
-This documentation guides you on how to use the provided Bash script to fetch data from the PagerDuty API and push it to the Port platform. The script extracts services and incidents from PagerDuty, and sends them to Port as Microservice and Incident entities respectively.
+This documentation guides you on how to use the provided Bash script to fetch data from the PagerDuty API and injest it to Port. The script extracts services and incidents from PagerDuty, and sends them to Port as Microservice and Incident entities respectively.
 
 ## Prerequisites
 
-Create the following webhook configuration we are still using the Same blueprint specified above.
+We will continue utilizing the same blueprint mentioned earlier to create the following webhook configuration.
 
 <details>
 <summary>PagerDuty Webhook configuration for Historical Data</summary>
 
-<PagerDutyWebhookHistoryConfig/>
+<PagerDutyWebhookHistory/>
 </details>
 
 <details>
 <summary> PagerDuty Bash Script for Historical Data </summary>
 
-<PagerDutyWebhookShellConfig/>
+<PagerDutyScript/>
 
 </details>
 
