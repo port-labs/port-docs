@@ -10,7 +10,7 @@ import PackageWebhookConfig from './resources/golang/\_example_package_webhook_c
 
 # Golang
 
-In this example, you will create a webhook integration between Go and Port. This integration will ingest Go modules, versions, and dependencies into Port and map them to your `package` blueprint. Finally, you will add some script to transform your go.mod file into a format required by the webhook. Finally, you will configure your Gitlab to create/update your entities in Port every time a deployment or commit is made to a specified branch such as main or dev.
+In this example, you will create a webhook integration between Go and Port. This integration will ingest Go modules, versions, and dependencies into Port and map them to your `package` blueprint. Finally, you will add some script to transform your go.mod file into a format required by the webhook.
 
 ## Prerequisites
 

@@ -11,7 +11,7 @@ import PackageWebhookConfig from './resources/javascript/\_example_package_webho
 
 # JavaScript
 
-In this example you are going to create `package` blueprint that ingests all third party dependencies and libraries in your package.json file using a combination of REST API and Webhook. You will then relate this blueprint to a `service` blueprint, allowing you to map all the packages used by a service. Finally, you will add some script to transform your package file into a format required by the webhook. Finally, you will configure your Gitlab to create/update your entities in Port every time a deployment or commit is made to a specified branch such as main or dev.
+In this example you are going to create `package` blueprint that ingests all third party dependencies and libraries in your package.json file using a combination of REST API and Webhook. You will then relate this blueprint to a `service` blueprint, allowing you to map all the packages used by a service. Finally, you will add some script to transform your package file into a format required by the webhook.
 
 ## Prerequisites
 
