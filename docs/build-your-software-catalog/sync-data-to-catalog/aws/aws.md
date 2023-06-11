@@ -335,6 +335,12 @@ To run some optional commands in this guide, you will need to install:
 
 ## Installation
 
+### Terraform installation
+
+If you are using Terraform to manage your infrastructe, you can use the AWS exporter [Terraform module](../iac/terraform/modules/aws-exporter-module.md).
+
+### Step-by-step installation
+
 1. Prepare a [`config.json`](#exporter-configjson-file) file that will define which AWS resources to ingest to Port;
 
 2. Create the [`IAM policy`](#iam-policy) that provides permissions to `list` and `read` the AWS resources in the `config.json`;
