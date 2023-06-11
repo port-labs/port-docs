@@ -91,7 +91,6 @@ according to the following [spec](https://docs.aws.amazon.com/lambda/latest/dg/s
 
 </details>
 
-
 :::tip LAMBDA FUNCTION IAM POLICY
 By default, the exporter will be granted with the [default exporter policy](https://github.com/port-labs/terraform-aws-port-exporter/blob/main/defaults/policy.json).
 
@@ -102,7 +101,7 @@ create a new policy.json file, and pass it's path to the `lambda_policy_file` va
 
 ### Exporter CloudFormation Stack
 
-After finishing the installation, you should see your the Port exporter in your CloudFormation Stacks with the name
+After finishing the installation, you should see the Port exporter deployment in your CloudFormation Stacks with the name
 
 `serverlessrepo-<exporter_stack_name>` - based on the `stack_name` variable.
 

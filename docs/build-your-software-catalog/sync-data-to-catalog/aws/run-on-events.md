@@ -317,4 +317,5 @@ To read more about input transformer in EventBridge, click [here](https://docs.a
 
 ### Examples
 
-Refer to the [examples](./examples.md) page for practical configurations and their corresponding blueprint definitions.
+- Refer to the [examples](./examples.md) page for practical configurations and their corresponding blueprint definitions.
+- Refer to the Eventbridge rule [Terraform example](https://github.com/port-labs/terraform-aws-port-exporter/tree/main/examples/terraform_deploy_eventbridge_rule)

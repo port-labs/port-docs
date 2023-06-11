@@ -337,7 +337,7 @@ To run some optional commands in this guide, you will need to install:
 
 ### Terraform installation
 
-If you are using Terraform to manage your infrastructe, you can use the AWS exporter [Terraform module](../iac/terraform/modules/aws-exporter-module.md).
+If you are using Terraform to manage your infrastructure, you can use the AWS exporter [Terraform module](../iac/terraform/modules/aws-exporter-module.md).
 
 ### Step-by-step installation
 
@@ -479,6 +479,8 @@ After running the exporter successfully for the first time, you probably want to
 
 - `ScheduleExpression` - Make sure to set an interval that is longer than the time it takes for the exporter to execute;
 - `ScheduleState` - Set the schedule state to `ENABLED`.
+
+If you are using the Terrafom module, update the `schedule_state` and `schedule_expression` variables.
 
 :::info
 In order to determine lambda execution time, you can [view the logs](#view-the-logs), and search for the first and last log lines.
