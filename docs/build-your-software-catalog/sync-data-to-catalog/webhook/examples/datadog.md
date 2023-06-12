@@ -78,7 +78,7 @@ Done! any problem detected on your Datadog instance will trigger a webhook event
 
 ## Let's Test It
 
-In this section, we will go through the webhook event data received from Datadog anytime an alert is triggered and how the entity is finally created in Port using the webhook configuration.
+In this section, we'll explore the webhook event data that is received from Datadog whenever an alert is triggered. We'll also delve into how the entity is finally created in Port by using the webhook configuration.
 
 ### Payload
 
