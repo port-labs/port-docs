@@ -105,7 +105,7 @@ Done! any change that happens to your services or incidents in PagerDuty will tr
 
 ## Let's Test It
 
-In this section, we will display the webhook event data received from PagerDuty when an incident is created or updated and how the entity is finally created in Port using the webhook configuration.
+In this section, we explore the webhook event data that is received from PagerDuty whenever an incident is created or updated. We will also delve into how the entity is finally created in Port using the webhook configuration.
 
 ### Payload
 
@@ -171,7 +171,7 @@ Below is an example of the payload structure sent to the webhook URL from PagerD
 
 ### Mapping Result
 
-Using the mappings defined in the webhook configuration, below is the result of the JSON data parsed to Port to create the incident entities:
+Using the mappings defined in the webhook configuration, Port will extract the necessary properties from the PagerDuty webhook payload and use the resulting data to create the incident entities. Below is an example of the output JSON data:
 
 ```json showLineNumbers
 {
