@@ -52,3 +52,170 @@ In order to view the different payloads and events available in Jenkins webhooks
 :::
 
 Done! any changes to a job or build process (queued, started, completed, finalized etc.) will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+
+## Let's Test It
+
+In this section, we'll explore the webhook event data that is sent from Jenkins whenever a job is created. We'll also delve into how the entity is finally created in Port by using the webhook configuration.
+
+### Payload
+
+The **Generic Event** plugin tracks two main objects: `item` and `run`. Below is an example of the payload structure sent to the webhook URL after a Jenkins item (job) is created:
+
+<details>
+<summary>Jenkins job payload</summary>
+
+```json showLineNumbers
+{
+  "data": {
+    "_class": "hudson.model.FreeStyleProject",
+    "actions": [
+      {},
+      {},
+      {
+        "_class": "org.jenkinsci.plugins.displayurlapi.actions.JobDisplayAction"
+      },
+      {
+        "_class": "com.cloudbees.plugins.credentials.ViewCredentialsAction"
+      }
+    ],
+    "description": "None",
+    "displayName": "Port Webhook Test Project",
+    "displayNameOrNull": "None",
+    "fullDisplayName": "Port Webhook Test Project",
+    "fullName": "Port Webhook Test Project",
+    "name": "Port Webhook Test Project",
+    "buildable": true,
+    "builds": [],
+    "color": "notbuilt",
+    "firstBuild": "None",
+    "healthReport": [],
+    "inQueue": false,
+    "keepDependencies": false,
+    "lastBuild": "None",
+    "lastCompletedBuild": "None",
+    "lastFailedBuild": "None",
+    "lastStableBuild": "None",
+    "lastSuccessfulBuild": "None",
+    "lastUnstableBuild": "None",
+    "lastUnsuccessfulBuild": "None",
+    "nextBuildNumber": 1,
+    "property": [],
+    "queueItem": "None",
+    "concurrentBuild": false,
+    "disabled": false,
+    "downstreamProjects": [],
+    "labelExpression": "None",
+    "scm": {
+      "_class": "hudson.scm.NullSCM"
+    },
+    "upstreamProjects": []
+  },
+  "dataType": "hudson.model.FreeStyleProject",
+  "id": "25185f88-92bc-499c-bfd1-5f17a297ce3a",
+  "source": "",
+  "time": "2023-06-14T16:14:37.915+0000",
+  "type": "item.created",
+  "url": "job/Port%20Webhook%20Test%20Project/"
+}
+```
+
+</details>
+
+After the Jenkins job is created, the event dispatcher will track and report the `run` (build) stages from initiated, started, completed to finalized. Below is a sample payload sent to the webhook URL after the build is complete.
+
+<details>
+
+<summary>Jenkins build payload </summary>
+
+```json showLineNumbers
+{
+  "data": {
+    "_class": "hudson.model.FreeStyleBuild",
+    "actions": [
+      {
+        "_class": "hudson.model.CauseAction",
+        "causes": [
+          {
+            "_class": "hudson.model.Cause$UserIdCause",
+            "shortDescription": "Started by user Username",
+            "userId": "admin",
+            "userName": "Name"
+          }
+        ]
+      },
+      {},
+      {
+        "_class": "org.jenkinsci.plugins.displayurlapi.actions.RunDisplayAction"
+      }
+    ],
+    "artifacts": [],
+    "building": false,
+    "description": "None",
+    "displayName": "#1",
+    "duration": 5774,
+    "estimatedDuration": 5774,
+    "executor": {},
+    "fullDisplayName": "Port Webhook Test Project #1",
+    "id": "1",
+    "inProgress": true,
+    "keepLog": false,
+    "number": 1,
+    "queueId": 9,
+    "result": "SUCCESS",
+    "timestamp": 1686759877596,
+    "builtOn": "",
+    "changeSet": {
+      "_class": "hudson.scm.EmptyChangeLogSet",
+      "items": [],
+      "kind": "None"
+    },
+    "culprits": []
+  },
+  "dataType": "hudson.model.FreeStyleBuild",
+  "id": "806dd823-f59b-4549-ae91-735d17127745",
+  "source": "job/Port%20Webhook%20Test%20Project/",
+  "time": "2023-06-14T16:24:43.433+0000",
+  "type": "run.completed",
+  "url": "job/Port%20Webhook%20Test%20Project/1/"
+}
+```
+
+</details>
+
+### Mapping Result
+
+Using the mappings defined in the webhook configuration, Port will extract the necessary properties from the Jenkins webhook payload and use the resulting data to create the job and build entities. Here is an example of the job mappings JSON data:
+
+```json showLineNumbers
+{
+  "identifier": "job-Port-Webhook-Test-Project",
+  "title": "Port Webhook Test Project",
+  "blueprint": "jenkinsJob",
+  "properties": {
+    "jobName": "Port Webhook Test Project",
+    "url": "job/Port%20Webhook%20Test%20Project/",
+    "jobStatus": "created",
+    "timestamp": "2023-06-14T16:40:16.957Z"
+  },
+  "relations": {}
+}
+```
+
+Additionally, the Jenkins build entity will be created using the below mapping data:
+
+```json showLineNumbers
+{
+  "identifier": "Port-Webhook-Test-Project-1",
+  "title": "#1",
+  "blueprint": "jenkinsBuild",
+  "properties": {
+    "buildUrl": "job/Port%20Webhook%20Test%20Project/1/",
+    "buildDuration": 12577447,
+    "timestamp": "2023-06-14T16:40:00.783Z",
+    "buildStatus": "SUCCESS"
+  },
+  "relations": {
+    "jenkinsJob": ["job-Port-Webhook-Test-Project"]
+  }
+}
+```
