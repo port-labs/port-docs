@@ -13,7 +13,9 @@ import PagerDutyScript from "./resources/pagerduty/\_example_pagerduty_shell_his
 
 In this example you are going to create a webhook integration between [PagerDuty](https://www.pagerduty.com/) and Port, which will ingest PagerDuty services and its related incidents into Port. This integration will involve setting up a webhook to receive notifications from PagerDuty whenever an incident is created or updated, allowing Port to ingest and process the incident entities accordingly.
 
-## Prerequisites
+## Import PagerDuty services and incidents
+
+### Prerequisites
 
 Create the following blueprint definitions and webhook configuration:
 
@@ -40,7 +42,7 @@ Remember to update the `WEBHOOK_SECRET` with the real secret you receive after s
 
 </details>
 
-## Create the PagerDuty webhook
+### Create the PagerDuty webhook
 
 1. Go to [PagerDuty](https://www.pagerduty.com/) and select the account you want to configure the webhook for.
 2. Navigate to **Integrations** in the navigation bar and click on **Generic Webhooks (v3)**.
@@ -110,7 +112,7 @@ The script extracts services and incidents from PagerDuty, and sends them to Por
 
 ### Prerequisites
 
-We will continue utilizing the same blueprint mentioned earlier to create the following webhook configuration.
+We will continue utilizing the same blueprint mentioned earlier to create the following [webhook configuration](../examples/pagerduty#prerequisites)
 
 <details>
 <summary>PagerDuty webhook configuration for historical data</summary>
