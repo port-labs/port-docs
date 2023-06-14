@@ -210,7 +210,7 @@ Additionally, the Jenkins build entity will be created using the below mapping d
   "blueprint": "jenkinsBuild",
   "properties": {
     "buildUrl": "job/Port%20Webhook%20Test%20Project/1/",
-    "buildDuration": 12577447,
+    "buildDuration": 5774,
     "timestamp": "2023-06-14T16:40:00.783Z",
     "buildStatus": "SUCCESS"
   },
