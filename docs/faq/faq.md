@@ -22,7 +22,7 @@ Our blog has several articles that deal with how to set up the portal, and our d
 
 ## Is Port a cloud or self-hosted solution??
 
-Port is both SaaS and cloud based and will support a self-hosted solution based on a K8s operator.
+Port is a SaaS based product. However, we're working on a version where Port can be deployed on the customer's cloud account. To apply for the beta write to us at [info@getport.io](mailto:info@getport.io).
 
 ## Why not backstage?
 
