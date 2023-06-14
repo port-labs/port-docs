@@ -108,7 +108,7 @@ In this example you are going to use the provided Bash script to fetch data from
 
 The script extracts services and incidents from PagerDuty, and sends them to Port as microservice and incident entities respectively.
 
-## Prerequisites
+### Prerequisites
 
 We will continue utilizing the same blueprint mentioned earlier to create the following webhook configuration.
 
@@ -131,7 +131,7 @@ Remember to update the `WEBHOOK_SECRET` with the real secret you receive after s
 There are slight changes to the webhook, and since is probably a one time run, you may want to start off running this to import all your incidents and services into Port
 :::
 
-## How to Run the script
+### How to Run the script
 
 This script requires two configuration values:
 
