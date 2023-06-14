@@ -1,6 +1,6 @@
 ---
 sidebar_position: 12
-description: Ingest Go Modules and dependencies into your catalog
+description: Ingest Go modules and dependencies into your catalog
 ---
 
 import GoBlueprint from "./resources/go/\_example_go_blueprint.mdx";
@@ -28,7 +28,7 @@ Create the following blueprint definitions and webhook configuration:
 </details>
 
 <details>
-<summary>Go Bash Script</summary>
+<summary>Go Bash script</summary>
 <GoShell/>
 </details>
 
@@ -48,12 +48,8 @@ Create the following blueprint definitions and webhook configuration:
 
 :::note
 
-- `mapfile -t` reads lines into an array from the `go.mod` file, creating a collection for iteration.
-- Text manipulation and filtering are achieved using `sed`, `tail -n +2`, `head -n -1`, and `tr -d '[:space:]'`. These commands collectively process the text from the file.
-- `IFS=' '` is used to set the Internal Field Separator to space, affecting how word splitting occurs.
-- `read -r -a` is employed to split lines into arrays, facilitating further processing.
-- `basename` is used to extract filenames from paths, reducing the URL to a simpler form.
-- JSON handling is done using `jq -n` and `jq --argjson`. These commands allow for the creation of JSON objects and their addition to the output JSON file.
+- The script uses `mapfile`, a bash built-in command, to read lines from the `go.mod` file into an array. This command might not be available in all shells by default. If you're using a different shell (like Dash or Zsh), you might need to switch to Bash or adapt the script to use a similar functionality.
+- `jq` is another command that the script uses extensively for handling JSON data. It's utilized to create JSON objects from the package details extracted from the `go.mod` file, and to append these objects to an output JSON file. `jq` is a powerful command-line JSON processor, but it's not included by default in many systems. You may need to install it separately.
 
 :::
 
