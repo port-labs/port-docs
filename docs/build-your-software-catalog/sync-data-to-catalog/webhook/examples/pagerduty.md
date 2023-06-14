@@ -104,20 +104,24 @@ Done! any change that happens to your services or incidents in PagerDuty will tr
 
 ## Import PagerDuty Historical Data
 
-This documentation guides you on how to use the provided Bash script to fetch data from the PagerDuty API and injest it to Port. The script extracts services and incidents from PagerDuty, and sends them to Port as Microservice and Incident entities respectively.
+In this example you are going to use the provided Bash script to fetch data from the PagerDuty API and ingest it to Port.
+
+The script extracts services and incidents from PagerDuty, and sends them to Port as microservice and incident entities respectively.
 
 ## Prerequisites
 
 We will continue utilizing the same blueprint mentioned earlier to create the following webhook configuration.
 
 <details>
-<summary>PagerDuty Webhook configuration for Historical Data</summary>
+<summary>PagerDuty webhook configuration for historical data</summary>
 
+Remember to update the `WEBHOOK_SECRET` with the real secret you receive after subscribing to the webhook in PagerDuty.
 <PagerDutyWebhookHistory/>
+
 </details>
 
 <details>
-<summary> PagerDuty Bash Script for Historical Data </summary>
+<summary> PagerDuty Bash script for historical data </summary>
 
 <PagerDutyScript/>
 
@@ -136,14 +140,14 @@ This script requires two configuration values:
 
 Then run this
 
-```json showLineNumbers
+```bash showLineNumbers
 bash pagerduty_to_port.sh
 ```
 
 This script fetches services and incidents from PagerDuty and sends them to Port.
 
 :::tip
-The script writes the JSON payload for each service and incident to a file named output.json. This can be useful for debugging if you encounter any issues.
+The script writes the JSON payload for each service and incident to a file named `output.json`. This can be useful for debugging if you encounter any issues.
 :::
 
-Done! you can now pull out your historical data into Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+Done! you can now import historical data from PagerDuty into Port. Port will parse the events according to the mapping and update the catalog entities accordingly.

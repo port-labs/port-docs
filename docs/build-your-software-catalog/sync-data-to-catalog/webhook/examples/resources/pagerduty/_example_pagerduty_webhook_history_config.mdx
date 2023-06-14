@@ -1,6 +1,6 @@
 ```json showLineNumbers
 {
-  "identifier": "pagerdutyMapper",
+  "identifier": "pagerdutyHistoryMapper",
   "title": "PagerDuty Mapper",
   "description": "A webhook configuration to map PagerDuty Historical services and its related incidents to Port",
   "icon": "pagerduty",
@@ -17,26 +17,25 @@
       }
     },
     {
-        "blueprint": "pagerdutyIncident",
-        "filter": ".body.event.event_type | startswith(\"incident\")",
-        "entity": {
-          "identifier": ".body.event.data.identifier",
-          "title": ".body.event.data.title",
-          "properties": {
-            "status": ".body.event.data.properties.status",
-            "url": ".body.event.data.properties.url",
-            "details": ".body.event.data.properties.details",
-            "priority": ".body.event.data.properties.priority",
-            "urgency": ".body.event.data.properties.urgency",
-            "responder": ".body.event.data.properties.responder",
-            "escalation_policy": ".body.event.data.properties.escalation_policy"
-    },
-    "relations": {
-      "microservice": ".body.event.data.relations.microservice"
+      "blueprint": "pagerdutyIncident",
+      "filter": ".body.event.event_type | startswith(\"incident\")",
+      "entity": {
+        "identifier": ".body.event.data.identifier",
+        "title": ".body.event.data.title",
+        "properties": {
+          "status": ".body.event.data.properties.status",
+          "url": ".body.event.data.properties.url",
+          "details": ".body.event.data.properties.details",
+          "priority": ".body.event.data.properties.priority",
+          "urgency": ".body.event.data.properties.urgency",
+          "responder": ".body.event.data.properties.responder",
+          "escalation_policy": ".body.event.data.properties.escalation_policy"
+        },
+        "relations": {
+          "microservice": ".body.event.data.relations.microservice"
+        }
+      }
     }
-  }
-}
-
   ],
   "enabled": true,
   "security": {
@@ -46,5 +45,4 @@
     "secret": "WEBHOOK_SECRET"
   }
 }
-
 ```
