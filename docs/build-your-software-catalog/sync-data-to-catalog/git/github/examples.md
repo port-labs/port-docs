@@ -123,11 +123,3 @@ The above example shows a specific use case, but Port's GitHub app supports the 
 <GitHubResources/>
 
 When adding the ingestion of other resources, remember to add a entry to the `resources` array and change the value provided to the `kind` key accordingly.
-
-```
-
-```
-
-```
-
-```
