@@ -57,7 +57,7 @@ Done! any change you make to an issue (open, close, edit, etc.) will trigger a w
 
 ### Prerequisites
 
-Use the python script to injest historical issues into port
+Use the python script to ingest historical issues into port
 
 <details>
 <summary>Jira Python script for historical issues</summary>
