@@ -5,12 +5,15 @@ description: Ingest Jira issue into your catalog
 
 import JiraIssueBlueprint from "./resources/jira/\_example_jira_issue_blueprint.mdx";
 import JiraIssueConfiguration from "./resources/jira/\_example_jira_issue_configuration.mdx";
+import JiraIssueConfigurationPython from "./resources/jira/\_example_jira_issue_configuration_python.mdx";
 
 # Jira
 
 In this example you are going to create a webhook integration between [Jira](https://www.atlassian.com/software/jira) and Port, which will ingest Jira issue entities.
 
-## Prerequisites
+## Import Jira Issues
+
+### Prerequisites
 
 Create the following blueprint definition and webhook configuration:
 
@@ -28,7 +31,7 @@ Create the following blueprint definition and webhook configuration:
 
 </details>
 
-## Create the Jira webhook
+### Create the Jira webhook
 
 1. Log in to Jira as a user with the Administer Jira global permission;
 2. Click the gear icon at the top right corner;
@@ -49,3 +52,51 @@ In order to view the different payloads and events available in Jira webhooks, [
 :::
 
 Done! any change you make to an issue (open, close, edit, etc.) will trigger a webhook event that Jira will send to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+
+## Import Jira Historical Issues
+
+### Prerequisites
+
+Use the python script to injest historical issues into port
+
+<details>
+<summary>Jira Python script for historical issues</summary>
+
+Remember to update the `WEBHOOK_SECRET` with the real secret you receive after subscribing to the webhook in Jira
+
+<JiraIssueConfigurationPython/>
+
+</details>
+
+:::tip
+The script writes the JSON payload for issues to a file named `output.json`. This can be useful for debugging if you encounter any issues.
+:::
+
+### Create the Jira API token
+
+1. Log in to your [Jira account](https://id.atlassian.com/manage-profile/security/api-tokens).
+2. Click Create API token.
+3. From the dialog that appears, enter a memorable and concise Label for your token and click **Create**.
+4. Click **Copy** to clipboard, then paste somewhere safe
+5. BASE64 encode the string:
+   1. Linux/Unix/MacOS
+      ```shell showLineNumbers
+      echo -n user@example.com:api_token_string | base64
+      ```
+   2. Windows 7 and later, using Microsoft Powershell:
+      ```shell showLineNumbers
+      $Text = ‘user@example.com:api_token_string’
+      $Bytes = [System.Text.Encoding]::UTF8.GetBytes($Text)
+      $EncodedText = [Convert]::ToBase64String($Bytes)
+      $EncodedText
+      ```
+6. Update `auth_string` in the python script with the generated BASE64 key
+
+:::note
+
+For security reasons it isn't possible to view the token after closing the creation dialog; if necessary, create a new token.
+You should store the token securely, just as for any password.
+
+:::
+
+Done! you can now import historical issues from Jira into Port. Port will parse the issues according to the mapping and update the catalog entities accordingly.

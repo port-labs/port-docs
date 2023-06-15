@@ -1,0 +1,67 @@
+```python showLineNumbers
+import requests
+import json
+
+# Set variables
+your_domain = '' # Use your Jira Domain
+max_results = 15  # Increase as your requirement
+status_list = ["In Progress", "To Do"]
+auth_string = 'Basic ""' # replace the "" with base64
+status = ','.join(f'"{s}"' for s in status_list) # Format status_list as string
+
+# Set up headers and URL for Jira request
+jira_url = f'https://{your_domain}.atlassian.net/rest/api/3/search?jql=status%20in%20({status})&maxResults={max_results}&expand=changelog'
+headers = {
+    'Authorization': auth_string
+
+}
+
+# Make request to Jira API
+response = requests.get(jira_url, headers=headers)
+data = response.json()
+
+issues = data['issues']  # Get all the issues
+
+output_data = []
+
+for issue in issues:
+
+    issueUrl = issue['self'].split('rest')[0] + "browse/" + issue['key']
+
+    data_to_send = {
+        "issue": {
+            "key": issue['key'],
+            "fields": {
+                "summary": issue['fields']['summary'],
+                "description": issue['fields']['description']['content'][0]['content'][0]['text'] if issue['fields']['description'] else None,
+                "status": {
+                    "name": issue['fields']['status']['name']
+                },
+                "issuetype": {
+                    "name": issue['fields']['issuetype']['name']
+                },
+                "self": issue['self'],
+            },
+            "lastChangeType": "",
+            "self": issue['self']
+        },
+        "user": {
+            "displayName": issue['fields']['creator']['displayName']
+        }
+    }
+
+    output_data.append(data_to_send)
+
+    # Send data to Port
+    port_url = 'https://ingest.getport.io/WEBHOOK_SECRET'
+    headers = {'Content-Type': 'application/json'}
+    response = requests.post(port_url, headers=headers, data=json.dumps(data_to_send))
+
+    print(response.status_code)
+    print(response.text)
+
+# Write all issues to output.json
+with open('output.json', 'w') as f:
+    json.dump(output_data, f, indent=4)
+
+```
