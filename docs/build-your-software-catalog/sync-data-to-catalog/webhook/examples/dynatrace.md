@@ -91,3 +91,66 @@ In order to view the different payloads and events available in Dynatrace webhoo
 :::
 
 Done! any problem detected on your Dynatrace entity will trigger a webhook event. Port will parse the events according to the mapping and update the catalog entities accordingly.
+
+## Let's Test It
+
+In this section, we'll explore the webhook event data that is received from Dynatrace whenever an problem is detected on your account. We'll also delve into how the entity is finally created in Port by using the webhook configuration.
+
+### Payload
+
+Below is an example of the payload structure sent to the webhook URL after a problem is detected:
+
+<details>
+<summary> Webhook event payload</summary>
+
+```json showLineNumbers
+{
+  "ImpactedEntities": [
+    {
+      "type": "HOST",
+      "name": "MyHost1",
+      "entity": "HOST-Apalca"
+    },
+    {
+      "type": "SERVICE",
+      "name": "MyService1",
+      "entity": "SERVICE-Apalca"
+    }
+  ],
+  "ImpactedEntity": "MyHost1, MyService1",
+  "PID": "99999",
+  "ProblemDetailsText": "Dynatrace problem notification test run details",
+  "ProblemID": "999",
+  "ProblemImpact": "INFRASTRUCTURE",
+  "ProblemTitle": "Dynatrace problem notification test run",
+  "ProblemURL": "https://example.com",
+  "State": "OPEN",
+  "ProblemTags": "testtag1, testtag2",
+  "ProblemSeverity": "PERFORMANCE"
+}
+```
+
+</details>
+
+### Mapping Result
+
+Using the mappings defined in the webhook configuration, Port will extract the necessary properties from the Dynatrace webhook payload and use the output data to create the problem entities. Below is the result of the mapping:
+
+```json showLineNumbers
+{
+  "identifier": "99999",
+  "title": "Dynatrace problem notification test run",
+  "blueprint": "dynatraceProblem",
+  "properties": {
+    "state": "OPEN",
+    "impact": "INFRASTRUCTURE",
+    "url": "https://example.com",
+    "details": "Dynatrace problem notification test run details",
+    "severity": "PERFORMANCE",
+    "tags": ["testtag1", "testtag2"]
+  },
+  "relations": {
+    "microservice": ["HOST-Apalca", "SERVICE-Apalca"]
+  }
+}
+```
