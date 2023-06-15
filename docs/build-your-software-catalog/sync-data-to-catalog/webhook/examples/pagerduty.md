@@ -129,10 +129,6 @@ Remember to update the `WEBHOOK_SECRET` with the real secret you receive after s
 
 </details>
 
-:::note
-There are slight changes to the webhook, and since is probably a one time run, you may want to start off running this to import all your incidents and services into Port
-:::
-
 ### How to Run the script
 
 This script requires two configuration values:
