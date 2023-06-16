@@ -49,3 +49,195 @@ In order to view the different payloads and events available in Jira webhooks, [
 :::
 
 Done! any change you make to an issue (open, close, edit, etc.) will trigger a webhook event that Jira will send to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+
+## Let's Test It
+
+In this section, we'll explore the webhook event data that is received from Jira whenever an issue is created or updated. We'll also delve into how the entity is finally created in Port by using the webhook configuration.
+
+### Payload
+
+Below is an example of the payload structure sent to the webhook URL after an issue is created:
+
+<details>
+<summary> Webhook event payload</summary>
+
+```json showLineNumbers
+{
+  "timestamp": 1686916266116,
+  "webhookEvent": "jira:issue_created",
+  "issue_event_type_name": "issue_created",
+  "user": {
+    "self": "https://account.atlassian.net/rest/api/2/user?accountId=557058%3A69f39959-769f-4dac-8a7a-46eb55b03723",
+    "accountId": "557058%3A69f39959-769f-4dac-8a7a-46eb55b03723",
+    "avatarUrls": {
+      "48x48": "https://secure.gravatar.com/avatar/9df2ac1caa70b0a67ff0561f7d0363e5?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-1.png"
+    },
+    "displayName": "Your Name",
+    "active": true,
+    "timeZone": "Europe/London",
+    "accountType": "atlassian"
+  },
+  "issue": {
+    "id": "10000",
+    "self": "https://account.atlassian.net/rest/api/2/10000",
+    "key": "PI-1",
+    "fields": {
+      "statuscategorychangedate": "2023-06-16T11:51:06.277+0000",
+      "issuetype": {
+        "self": "https://account.atlassian.net/rest/api/2/issuetype/10002",
+        "id": "10002",
+        "description": "Epics track collections of related bugs, stories, and tasks.",
+        "iconUrl": "https://account.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10307?size=medium",
+        "name": "Epic",
+        "subtask": false,
+        "avatarId": 10307,
+        "entityId": "66c6d416-6eb4-4b38-92fa-9a7d68c64165",
+        "hierarchyLevel": 1
+      },
+      "timespent": "None",
+      "project": {
+        "self": "https://account.atlassian.net/rest/api/2/project/10000",
+        "id": "10000",
+        "key": "PI",
+        "name": "Port Integration",
+        "projectTypeKey": "software",
+        "simplified": true,
+        "avatarUrls": {
+          "48x48": "https://account.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10413"
+        }
+      },
+      "fixVersions": [],
+      "aggregatetimespent": "None",
+      "resolution": "None",
+      "resolutiondate": "None",
+      "workratio": -1,
+      "watches": {
+        "self": "https://account.atlassian.net/rest/api/2/issue/PI-1/watchers",
+        "watchCount": 0,
+        "isWatching": false
+      },
+      "issuerestriction": {
+        "issuerestrictions": {},
+        "shouldDisplay": true
+      },
+      "lastViewed": "None",
+      "created": "2023-06-16T11:51:05.291+0000",
+      "priority": {
+        "self": "https://account.atlassian.net/rest/api/2/priority/3",
+        "iconUrl": "https://account.atlassian.net/images/icons/priorities/medium.svg",
+        "name": "Medium",
+        "id": "3"
+      },
+      "labels": ["cloud", "infra"],
+      "issuelinks": [],
+      "assignee": {
+        "self": "https://account.atlassian.net/rest/api/2/user?accountId=557058%3A69f39947-769f-4dac-8a7a-46eb55b03705",
+        "accountId": "557058:69f39947-769f-4dac-8a7a-46eb55b03705",
+        "avatarUrls": {
+          "48x48": "https://secure.gravatar.com/avatar/9df2ac1caa70b0a67ff0561f7d0363e5?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-1.png"
+        },
+        "displayName": "Your Name",
+        "active": true,
+        "timeZone": "Europe/London",
+        "accountType": "atlassian"
+      },
+      "updated": "2023-06-16T11:51:05.291+0000",
+      "status": {
+        "self": "https://account.atlassian.net/rest/api/2/status/10000",
+        "description": "",
+        "iconUrl": "https://account.atlassian.net/",
+        "name": "To Do",
+        "id": "10000",
+        "statusCategory": {
+          "self": "https://account.atlassian.net/rest/api/2/statuscategory/2",
+          "id": 2,
+          "key": "new",
+          "colorName": "blue-gray",
+          "name": "New"
+        }
+      },
+      "components": [],
+      "timeoriginalestimate": "None",
+      "description": "We need to migrate our current infrastructure from in-house to the cloud",
+      "attachment": [],
+      "summary": "Migrate Infra to Cloud",
+      "creator": {
+        "self": "https://account.atlassian.net/rest/api/2/user?accountId=557058%3A69f39947-769f-4dac-8a7a-46eb55b03705",
+        "accountId": "557058:69f39947-769f-4dac-8a7a-46eb55b03705",
+        "avatarUrls": {
+          "48x48": "https://secure.gravatar.com/avatar/9df2ac1caa70b0a67ff0561f7d0363e5?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-1.png"
+        },
+        "displayName": "Your Name",
+        "active": true,
+        "timeZone": "Europe/London",
+        "accountType": "atlassian"
+      },
+      "subtasks": [],
+      "reporter": {
+        "self": "https://account.atlassian.net/rest/api/2/user?accountId=557058%3A69f39947-769f-4dac-8a7a-46eb55b03705",
+        "accountId": "557058:69f39947-769f-4dac-8a7a-46eb55b03705",
+        "avatarUrls": {
+          "48x48": "https://secure.gravatar.com/avatar/9df2ac1caa70b0a67ff0561f7d0363e5?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-1.png"
+        },
+        "displayName": "Your Name",
+        "active": true,
+        "timeZone": "Europe/London",
+        "accountType": "atlassian"
+      },
+      "aggregateprogress": {
+        "progress": 0,
+        "total": 0
+      },
+      "environment": "None",
+      "duedate": "2023-06-19",
+      "progress": {
+        "progress": 0,
+        "total": 0
+      },
+      "votes": {
+        "self": "https://account.atlassian.net/rest/api/2/issue/PI-1/votes",
+        "votes": 0,
+        "hasVoted": false
+      }
+    }
+  },
+  "changelog": {
+    "id": "10001",
+    "items": [
+      {
+        "field": "status",
+        "fieldtype": "jira",
+        "fieldId": "status",
+        "from": "10000",
+        "fromString": "To Do",
+        "to": "10001",
+        "toString": "In Progress"
+      }
+    ]
+  }
+}
+```
+
+</details>
+
+### Mapping Result
+
+Using the mappings defined in the webhook configuration, Port will extract the necessary properties from the Jira webhook payload and use the output data to create the issue entities. Below is the result of the mapping:
+
+```json showLineNumbers
+{
+  "identifier": "PI-1",
+  "title": "PI-1 - Migrate Infra to Cloud",
+  "blueprint": "jiraIssue",
+  "properties": {
+    "summary": "Migrate Infra to Cloud",
+    "description": "We need to migrate our current infrastructure from in-house to the cloud",
+    "status": "To Do",
+    "lastChangeType": "issue_created",
+    "changingUser": "Your Name",
+    "issueUrl": "https://account.atlassian.net/browse/PI-1",
+    "issueType": "Epic"
+  },
+  "relations": {}
+}
+```
