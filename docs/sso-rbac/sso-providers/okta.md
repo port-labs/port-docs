@@ -61,9 +61,13 @@ Under `General Settings`:
 
 ### Step #3: Configure OIDC settings
 
+Get your `Okta Domain` by clicking on your user mail at the top-right corner of the Okta management interface, hovering on the okta domain (will be in the format `{YOUR_COMPANY_NAME}.okta.com`) and clicking on `Copy to clipboard`:
+
+![Get Okta domain](../../../static/img/sso/okta/OktaGetDomain.png)
+
 Under `General` tab:
 
-1. Copy the `Client ID` and the `Okta Domain` and send it to Port (on the slack channel).
+1. Copy the `Client ID` and send it to Port along with the `Okta Domain` from the previous step (on the slack channel/Intercom).
 
    ![Okta app settings](../../../static/img/sso/okta/OktaAppSettingsPage.png)
 
@@ -110,7 +114,7 @@ To allow automatic Okta group support in Port, please follow these steps:
 
 1. Under the `Application` page, select Port App and go to the `Sign On` tab:
 
-   ![Okta application sign-on settings](../../../static/img/sso/okta/OktaAppSingOnSettings.png)
+   ![Okta application sign-on settings](../../../static/img/sso/okta/OktaAppSignOnSettings.png)
 
 2. Under `OpenID Connect Token` click `Edit`:
 
