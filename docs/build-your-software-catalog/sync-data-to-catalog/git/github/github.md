@@ -131,7 +131,7 @@ resources:
 
   - etc.
 
-- The `port`, `entity` and the `mappings` keys open the section used to map the GitHub API object fields to Port entities. To create multiple mappings of the same kind, you can add another object under the `resources` array;
+- The `port`, `entity` and the `mappings` keys open the section used to map the GitHub API object fields to Port entities. To create multiple mappings of the same kind, you can add another item to the `resources` array;
 
   ```yaml showLineNumbers
   resources:
@@ -149,6 +149,12 @@ resources:
               url: ".html_url"
               description: ".description"
       # highlight-end
+    - kind: repository # In this instance repository is mapped again with a different filter
+      selector:
+        query: '.name == "bla"'
+      port:
+        entity:
+          mappings: ...
   ```
 
   :::tip
