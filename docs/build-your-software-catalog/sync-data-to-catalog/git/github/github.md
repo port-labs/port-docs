@@ -151,7 +151,7 @@ resources:
       # highlight-end
     - kind: repository # In this instance repository is mapped again with a different filter
       selector:
-        query: '.name == "bla"'
+        query: '.name == "MyRepositoryName"'
       port:
         entity:
           mappings: ...
