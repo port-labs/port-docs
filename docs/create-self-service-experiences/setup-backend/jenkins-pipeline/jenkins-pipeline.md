@@ -202,6 +202,7 @@ pipeline {
     }
 
     stages {
+        // highlight-next-line
         stage('Get access token') {
             steps {
                 script {
@@ -224,6 +225,7 @@ pipeline {
             }
         }
 
+        // highlight-next-line
         stage('Send logs example') {
             steps {
                 script {
@@ -240,6 +242,7 @@ pipeline {
             }
         }
 
+        // highlight-next-line
         stage('Update status example') {
             steps {
                 script {
