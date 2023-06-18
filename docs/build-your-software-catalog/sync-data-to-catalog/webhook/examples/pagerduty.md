@@ -104,7 +104,7 @@ In order to view the different events available in PagerDuty webhooks, [look her
 
 Done! any change that happens to your services or incidents in PagerDuty will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
 
-## Import PagerDuty Historical Data
+## Import PagerDuty historical data
 
 In this example you are going to use the provided Bash script to fetch data from the PagerDuty API and ingest it to Port.
 
@@ -133,10 +133,10 @@ Remember to update the `WEBHOOK_SECRET` with the real secret you receive after s
 
 This script requires two configuration values:
 
-1. PD_TOKEN: Your PagerDuty API token.
-2. PORT_URL: Your Port webhook URL.
+1. `PD_TOKEN`: your PagerDuty API token;
+2. `PORT_URL`: your Port webhook URL.
 
-Then run this
+Then trigger the script by running:
 
 ```bash showLineNumbers
 bash pagerduty_to_port.sh
