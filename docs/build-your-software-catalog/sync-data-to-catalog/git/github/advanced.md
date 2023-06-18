@@ -70,4 +70,13 @@ The `createMissingRelatedEntities` parameter is used to enable the creation of m
 
 </TabItem>
 
+<TabItem value="enrichEntities" label="Enrich entities">
+
+The `enrichEntitiesWithGitopsMetadata` parameter is used to enable the enrichment of Port entities that managed by GitOps, with additional metadata such as GitOps spec file path (`port.yml`) and latest commit information.
+
+- Default value: `true` (enrich entities with GitOps metadata)
+- Use case: use `true` if you want GitHub app to enrich the Port entities managed by GitOps, with additional JSON metadata. Use the `gitopsMetadataProperty` to change the identifier of the `object` property, according to your blueprint schema definition (default property identifier: `gitopsMetadata`).
+
+</TabItem>
+
 </Tabs>
