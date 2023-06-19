@@ -55,27 +55,18 @@ Done! any change you make to an issue (open, close, edit, etc.) will trigger a w
 
 ## Import Jira Historical Issues
 
+In this example you are going to use the provided Python script to fetch data from the Jira API and ingest it to Port.
+
 ### Prerequisites
 
-Use the python script to ingest historical issues into port
+This example utilizes the same [blueprint and webhook](#prerequisites) definition from the previous section.
 
-<details>
-<summary>Jira Python script for historical issues</summary>
+In addition, it requires a Jira API token that is provided as a parameter to the Python script
 
-Remember to update the `WEBHOOK_SECRET` with the real secret you receive after subscribing to the webhook in Jira
+#### Create the Jira API token
 
-<JiraIssueConfigurationPython/>
-
-</details>
-
-:::tip
-The script writes the JSON payload for issues to a file named `output.json`. This can be useful for debugging if you encounter any issues.
-:::
-
-### Create the Jira API token
-
-1. Log in to your [Jira account](https://id.atlassian.com/manage-profile/security/api-tokens).
-2. Click Create API token.
+1. Log in to your [Jira account](https://id.atlassian.com/manage-profile/security/api-tokens);
+2. Click Create API token;
 3. From the dialog that appears, enter a memorable and concise Label for your token and click **Create**.
 4. Click **Copy** to clipboard, then paste somewhere safe
 5. BASE64 encode the string:
@@ -91,6 +82,21 @@ The script writes the JSON payload for issues to a file named `output.json`. Thi
       $EncodedText
       ```
 6. Update `auth_string` in the python script with the generated BASE64 key
+
+Use the following Python script to ingest historical Jira issues into port:
+
+<details>
+<summary>Jira Python script for historical issues</summary>
+
+Remember to update the `WEBHOOK_URL` with the value of the `url` key you received after creating the webhook configuration.
+
+<JiraIssueConfigurationPython/>
+
+</details>
+
+:::tip
+The script writes the JSON payload for issues to a file named `output.json`. This can be useful for debugging if you encounter any issues.
+:::
 
 :::note
 

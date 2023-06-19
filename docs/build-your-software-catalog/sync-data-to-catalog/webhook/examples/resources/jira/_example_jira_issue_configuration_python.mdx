@@ -4,9 +4,9 @@ import json
 
 # Set variables
 your_domain = '' # Use your Jira Domain
-max_results = 15  # Increase as your requirement
+max_results = 50  # Jira Absolute maximum is typically 1000 beyond which calls will fail due to performance considerations.
 status_list = ["In Progress", "To Do"]
-auth_string = 'Basic ""' # replace the "" with base64
+auth_string = 'Basic YOUR_BASE64_USER_TOKEN'
 status = ','.join(f'"{s}"' for s in status_list) # Format status_list as string
 
 # Set up headers and URL for Jira request
@@ -53,7 +53,7 @@ for issue in issues:
     output_data.append(data_to_send)
 
     # Send data to Port
-    port_url = 'https://ingest.getport.io/WEBHOOK_SECRET'
+    port_url = 'WEBHOOK_URL'
     headers = {'Content-Type': 'application/json'}
     response = requests.post(port_url, headers=headers, data=json.dumps(data_to_send))
 
