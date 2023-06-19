@@ -9,7 +9,7 @@ import GoShell from "./resources/go/\_example_go_bash.mdx"
 
 # Go
 
-In this example you will create a webhook integration that will injest [Go](https://go.dev/) modules, versions and dependencies to Port.
+In this example you will create a webhook integration that will ingest [Go](https://go.dev/) modules, versions and dependencies to Port.
 
 The integration includes setting up a webhook to keep track of the dependencies defined in your Golang application, allowing Port to ingest and process the Go entities accordingly.
 
