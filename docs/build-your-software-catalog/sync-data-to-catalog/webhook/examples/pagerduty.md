@@ -112,7 +112,7 @@ The script extracts services and incidents from PagerDuty, and sends them to Por
 
 ### Prerequisites
 
-We will continue utilizing the same blueprint mentioned earlier to create the following [webhook configuration](../examples/pagerduty#prerequisites)
+This example utilizes the same [blueprint](#prerequisites) definition from the previous section, along with a new webhook configuration:
 
 <details>
 <summary>PagerDuty webhook configuration for historical data</summary>
