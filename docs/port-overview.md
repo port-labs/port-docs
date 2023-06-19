@@ -37,7 +37,7 @@ Drive developer productivity by allowing developers to run free and use self-ser
 
 #### Software maturity
 
-Port checklist you define and track standards, scorecards and KPIs for quality, production readiness, productivity, and more. Drive visibility and a culture of software quality.
+Port scorecards let you define and track standards and KPIs for quality, production readiness, productivity, and more. Drive visibility and a culture of software quality.
 
 [Software Maturity Live Demo](https://demo.getport.io/serviceEntity?identifier=authentication&activeTab=8) 🎬
 
