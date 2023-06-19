@@ -21,7 +21,7 @@ Internal developer portals need a context-rich software catalog with maturity an
 
 ![Developer Platform complete vision](../static/img/port-overview/port-stack.png)
 
-### Port's product pillars
+### Port product pillars
 
 #### Software Catalog
 
