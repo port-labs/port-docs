@@ -422,19 +422,19 @@ To delete an existing webhook, make an HTTP DELETE request to `https://api.getpo
 Here's the breakdown of the steps to create a new webhook using the Port UI:
 
 1. Login to your [Port account](https://app.getport.io).
-2. From the menu, select **Builder**.
-3. Choose your existing [blueprint](/docs/quickstart.md#define-a-blueprint).
-4. Click on the 4 outpointing icon to preview the blueprint schema.
+2. From the menu, select **Builder**
+3. Choose your existing [blueprint](/docs/quickstart.md#define-a-blueprint)
+4. Click on the blueprint **expand** button
 5. Click on the option icon and select **Ingest data**.
 6. Scroll down to the "Custom Integrations" section.
-7. Select **Custom Integration**.
-   - Provide a **Title** for your webhook.
-   - Choose whether to use the **Identifier Autogenerate** option or specify your own identifier.
-   - Provide a description for your webhook.
-   - Select an icon from the dropdown menu to represent your webhook.
-8. Click **Next**.
-   - Scroll down to the **JQ Mapping** section, which displays the properties created when the blueprint was set up.
-   - Review the mapping.
+7. Select **Custom Integration**;
+   - Provide a **Title** for your webhook;
+   - Choose whether to use the **Identifier Autogenerate** option or specify your own identifier;
+   - Provide a description for your webhook;
+   - Select an icon from the dropdown menu to represent your webhook;
+8. Click **Next**;
+   - Scroll down to the **JQ Mapping** section, which displays the properties created when the blueprint was set up;
+   - Review the mapping;
 9. Finally, click **Create** to create the new webhook.
 
 Please note that this breakdown captures the steps involved in creating a webhook using the Port UI based on the provided narrative.
@@ -447,7 +447,7 @@ Here's the breakdown of the steps to update a webhook using the Port UI:
 1. Login to your [Port account](https://app.getport.io).
 2. From the menu, select **Builder**.
 3. Choose your existing [blueprint](/docs/quickstart.md#define-a-blueprint).
-4. Click on the 4 outpointing icon to preview the blueprint schema.
+4. Click on the blueprint **expand** button.
 5. Click on the option icon and select **Ingest data**.
 6. Scroll down to the **Custom Integration** section.
 7. Select the desired webhook that you want to modify.
@@ -465,7 +465,7 @@ Here's the breakdown of the steps to delete a webhook using the Port UI:
 1. Login to your [Port account](https://app.getport.io).
 2. From the menu, select **Builder**.
 3. Choose your existing [blueprint](/docs/quickstart.md#define-a-blueprint).
-4. Click on the 4 outpointing icon to preview the blueprint schema.
+4. Click on the blueprint **expand** button.
 5. Click on the option icon and select **Ingest data**.
 6. Scroll down to the **Custom Integration** section.
 7. Hover over the desired webhook that you want to delete.
