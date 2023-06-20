@@ -18,7 +18,7 @@ The source code of script is open and available on [GitHub](https://github.com/p
 
 ## Usage
 
-1. Clone the following repository `git clone https://github.com/port-labs/backstage-import.git`\'/;.,lkio9000000kp.....///..///.....
+1. Clone the following repository `git clone https://github.com/port-labs/backstage-import.git`
 
 2. Create a `.env` file with the following values
 
