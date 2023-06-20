@@ -18,8 +18,9 @@ The source code of the import script is open and available on [**GitHub**](https
 
 1. Clone the project repository repository:
 
-````bash showLineNumbers
+```bash showLineNumbers
 git clone https://github.com/port-labs/backstage-import.git
+```
 
 2. In the cloned repository, create a `.env` file with the following values:
 
@@ -27,7 +28,7 @@ git clone https://github.com/port-labs/backstage-import.git
 BACKSTAGE_URL=<YOUR BACKSTAGE URL i.e https://demo.backstage.io>
 PORT_CLIENT_ID=<YOUR PORT CLIENT ID>
 PORT_CLIENT_SECRET=<YOUR PORT CLIENT SECRET>
-````
+```
 
 3. Run the import script:
 
