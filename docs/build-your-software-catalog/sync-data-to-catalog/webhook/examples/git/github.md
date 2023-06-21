@@ -28,6 +28,18 @@ Create the following webhook configuration [using port ui](../../?operation=ui#c
 
 <PullRequestWebhookConfig/>
 
+### Add webhook security using Port UI
+
+Scroll down to **Advanced settings**
+Input the following details:
+
+1.  secret: `WEBHOOK_SECRET`;
+2.  Signature Header Name : `X-Hub-Signature-256`;
+3.  Signature Algorithm : Select `sha256` from dropdown option;
+4.  Signature Prefix : `sha256=`;
+5.  Request Identifier Path : `.headers.\"X-GitHub-Delivery\"`;
+6.  Click **Save** at the bottom of the page.
+
 </details>
 
 ## Create the GitHub webhook
