@@ -14,7 +14,7 @@ In this example you are going to create a webhook integration between [Sentry](h
 
 ## Prerequisites
 
-Create the following blueprint definitions and webhook configuration:
+Create the following blueprint definition:
 
 <details>
 
@@ -23,10 +23,18 @@ Create the following blueprint definitions and webhook configuration:
 
 </details>
 
+Create the following webhook configuration [using port ui](../../?operation=ui#configuring-webhook-endpoints):
+
 <details>
 
 <summary>Sentry issue webhook configuration</summary>
 <SentryIssuesConfiguration/>
+
+Scroll down to **Advanced settings** and input the following details:
+
+1.  Signature Header Name : `sentry-hook-signature`;
+2.  Signature Algorithm : Select `sha256` from dropdown option;
+3.  Click **Save** at the bottom of the page.
 
 </details>
 
@@ -66,10 +74,18 @@ The following example adds a `sentryComment` blueprint, in addition to the `sent
 
 </details>
 
+Create the following webhook configuration [using port ui](../../?operation=ui#configuring-webhook-endpoints):
+
 <details>
 
 <summary>Sentry comments webhook configuration</summary>
 <SentryCommentsConfiguration/>
+
+Scroll down to **Advanced settings** and input the following details:
+
+1.  Signature Header Name : `sentry-hook-signature`;
+2.  Signature Algorithm : Select `sha256` from dropdown option;
+3.  Click **Save** at the bottom of the page.
 
 </details>
 
