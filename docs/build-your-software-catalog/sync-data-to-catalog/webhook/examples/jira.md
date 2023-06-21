@@ -12,7 +12,7 @@ In this example you are going to create a webhook integration between [Jira](htt
 
 ## Prerequisites
 
-Create the following blueprint definition and webhook configuration:
+Create the following blueprint definition:
 
 <details>
 <summary>Jira issue blueprint</summary>
@@ -20,6 +20,8 @@ Create the following blueprint definition and webhook configuration:
 <JiraIssueBlueprint/>
 
 </details>
+
+Create the following webhook configuration [using port ui](../../?operation=ui#configuring-webhook-endpoints)
 
 <details>
 <summary>Jira issue webhook configuration</summary>
