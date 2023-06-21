@@ -5,7 +5,7 @@ description: Ingest Python packages into your catalog
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import ServiceBlueprint from './resources/python/\_example_service_blueprint.mdx'
+import ServiceBlueprint from './resources/service/\_example_global_service_blueprint.mdx'
 import PackageBlueprint from './resources/python/\_example_package_blueprint.mdx'
 import PackageWebhookConfig from './resources/python/\_example_package_webhook_config.mdx'
 

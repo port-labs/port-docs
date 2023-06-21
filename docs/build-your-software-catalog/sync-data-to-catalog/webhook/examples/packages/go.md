@@ -7,6 +7,7 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PackageBlueprint from './resources/golang/\_example_package_blueprint.mdx'
 import PackageWebhookConfig from './resources/golang/\_example_package_webhook_config.mdx'
+import ServiceBlueprint from './resources/service/\_example_global_service_blueprint.mdx'
 
 # Golang
 
@@ -17,6 +18,11 @@ To ingest the packages to Port, a script that sends information about packages a
 ## Prerequisites
 
 Create the following blueprint definition and webhook configuration:
+
+<details>
+<summary>Service blueprint</summary>
+<ServiceBlueprint/>
+</details>
 
 <details>
 <summary>Package blueprint</summary>
@@ -43,6 +49,7 @@ Here is an example snippet showing how to integrate Port's API and webhook with 
 
 # Get environment variables
 WEBHOOK_URL="$WEBHOOK_URL"
+SERVICE_ID="$SERVICE_ID"
 
 set -e
 # Create or clear the output file
@@ -89,10 +96,11 @@ for require in "${requires[@]}"; do
         --argjson i "$indirect" \
         '{
             identifier: $id,
-            package_name: $pn,
-            package_url: $pu,
+            packageName: $pn,
+            packageUrl: $pu,
             version: $v,
-            indirect: $i
+            indirect: $i,
+            service: $SERVICE_ID
         }')
 
     # Add the package JSON to the output file
@@ -104,5 +112,13 @@ for require in "${requires[@]}"; do
         --data "$package_json"
 done
 ```
+
+:::note
+
+- The script utilizes the `mapfile` command, which is a built-in command in the Bash shell, to read lines from the `go.mod` file and store them in an array. Please note that this command may not be available in all shells by default. If you are using a different shell such as Dash or Zsh, you may need to switch to Bash or modify the script to achieve a similar functionality.
+
+- The script heavily relies on the `jq` command for manipulating JSON data. It is used to create JSON objects based on the package details extracted from the `go.mod` file and append these objects to an output JSON file. It is important to note that `jq` is a powerful JSON processor for the command-line, but it is not typically included in many systems by default. You may need to install it separately to use it.
+
+:::
 
 </details>
