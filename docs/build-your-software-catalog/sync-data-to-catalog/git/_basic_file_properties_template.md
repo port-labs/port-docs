@@ -23,7 +23,6 @@ port.yml:
 blueprint: code_module
 title: Module 1
 identifier: module_1_entity
----
 properties:
   myStringProp: file://module1/README.md
 ```

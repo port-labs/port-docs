@@ -88,7 +88,7 @@ Since both of the valid `port.yml` formats follow the same structure, the follow
 
 <PortYmlStructure/>
 
-### File properties
+### Ingesting repository file contents
 
 <BasicFileProperties/>
 
