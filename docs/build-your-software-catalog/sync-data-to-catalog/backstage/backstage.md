@@ -37,3 +37,7 @@ PORT_CLIENT_SECRET=<YOUR PORT CLIENT SECRET>
 ```
 
 Done! after the script completes, you will see the new blueprints in Port, along with entities matching the data you have in your Backstage instance.
+
+## Next Steps
+
+* [Export to GitOps](link-goes-here) - After all the entities are automatically imported to Port, you will probably want to start and manage them via specification files in the Git.
