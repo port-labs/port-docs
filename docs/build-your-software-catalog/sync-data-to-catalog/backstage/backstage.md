@@ -40,4 +40,12 @@ Done! after the script completes, you will see the new blueprints in Port, along
 
 ## Next Steps
 
-- Export to GitOps: Once all the entities have been automatically imported to Port, you will likely want to start managing them through specification files in Git. To do this, click on the three-dot icon in the top right corner of the Port UI, then select "Export Data" from the menu, and in the `format` field fill in `GitOps (.yml)`. This will download all the specification files to your local machine. You can then push them to your GitOps repository and begin managing them from there.
+### Export to GitOps
+
+Once all entities have been imported to Port, you will likely want to start managing them through specification files in Git.
+
+To do this, click on the three-dot icon in the top right corner of the Port UI, then select "Export Data" from the menu, followed by "Export to GitOps." This will download all the specification files to your local machine.
+
+You can then push them to your GitOps repository and begin managing them from there.
+
+To learn more about managing your Port entities using GitOps, refer to the [GitHub](../git/github/gitops/gitops.md) and [Bitbucket](../git/bitbucket/gitops/gitops.md) GitOps pages.
