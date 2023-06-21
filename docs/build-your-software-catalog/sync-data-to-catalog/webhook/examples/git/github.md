@@ -30,8 +30,7 @@ Create the following webhook configuration [using port ui](../../?operation=ui#c
 
 ### Add webhook security using Port UI
 
-Scroll down to **Advanced settings**
-Input the following details:
+Scroll down to **Advanced settings** and input the following details:
 
 1.  secret: `WEBHOOK_SECRET`;
 2.  Signature Header Name : `X-Hub-Signature-256`;
