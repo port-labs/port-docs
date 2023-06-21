@@ -28,6 +28,15 @@ Create the following webhook configuration [using port ui](../../?operation=ui#c
 
 <MergeRequestWebhookConfig/>
 
+### Add webhook security using Port UI
+
+Scroll down to **Advanced settings**
+
+Input the following details:
+
+- Request Identifier Path : `.headers.X-Gitlab-Event-Uuid`;
+- Click **Save** at the bottom of the page.
+
 </details>
 
 ## Create the GitLab webhook
