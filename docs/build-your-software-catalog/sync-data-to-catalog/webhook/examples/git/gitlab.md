@@ -12,7 +12,7 @@ In this example you are going to create a webhook integration between [GitLab](h
 
 ## Prerequisites
 
-Create the following blueprint definition and webhook configuration:
+Create the following blueprint definition:
 
 <details>
 <summary>Merge request blueprint</summary>
@@ -20,6 +20,8 @@ Create the following blueprint definition and webhook configuration:
 <MergeRequestBlueprint/>
 
 </details>
+
+Create the following webhook configuration [using port ui](../../?operation=ui#configuring-webhook-endpoints):
 
 <details>
 <summary>Pull request webhook configuration</summary>
