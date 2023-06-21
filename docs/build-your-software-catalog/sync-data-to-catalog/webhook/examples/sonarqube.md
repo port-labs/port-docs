@@ -12,7 +12,7 @@ In this example you are going to create a webhook integration between [SonarQube
 
 ## Prerequisites
 
-Create the following blueprint definition and webhook configuration:
+Create the following blueprint definition:
 
 <details>
 <summary>SonarQube analysis blueprint</summary>
@@ -21,12 +21,23 @@ Create the following blueprint definition and webhook configuration:
 
 </details>
 
+Create the following webhook configuration [using port ui](../../?operation=ui#configuring-webhook-endpoints):
+
 <details>
 <summary>SonarQube analysis webhook configuration</summary>
 
 Remember to replace the `WEBHOOK_SECRET` with the real secret you specify when creating the webhook in SonarCloud.
 
 <SonarcloudAnalysisConfiguration/>
+
+### Add webhook security using Port UI
+
+Scroll down to **Advanced settings** and input the following details:
+
+1.  secret: `WEBHOOK_SECRET`;
+2.  Signature Header Name : `X-Sonar-Webhook-HMAC-SHA256`;
+3.  Signature Algorithm : Select `sha256` from dropdown option;
+4.  Click **Save** at the bottom of the page.
 
 </details>
 
