@@ -30,9 +30,7 @@ Create the following webhook configuration [using port ui](../../?operation=ui#c
 
 ### Add webhook security using Port UI
 
-Scroll down to **Advanced settings**
-
-Input the following details:
+Scroll down to **Advanced settings** and input the following details:
 
 - Request Identifier Path : `.headers.X-Gitlab-Event-Uuid`;
 - Click **Save** at the bottom of the page.
