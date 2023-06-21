@@ -10,7 +10,9 @@ import PackageWebhookConfig from './resources/golang/\_example_package_webhook_c
 
 # Golang
 
-In this example, you will create a webhook integration between Go and Port. This integration will ingest Go modules, versions, and dependencies into Port and map them to your `package` blueprint. Finally, you will add some script to transform your go.mod file into a format required by the webhook.
+In this example you are going to create a `package` blueprint that ingests Go modules, versions and dependencies using a combination of Port's [API](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/) and [webhook functionality](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/webhook/). You will then relate this blueprint to a `service` blueprint, allowing you to map all the packages used by a service.
+
+To ingest the packages to Port, a script that sends information about packages according to the webhook configuration is used.
 
 ## Prerequisites
 
@@ -28,7 +30,9 @@ Create the following blueprint definition and webhook configuration:
 
 </details>
 
-## Working with Port's API and Bash Script
+## Working with Port's API and Bash script
+
+Here is an example snippet showing how to integrate Port's API and webhook with your existing pipelines using bash:
 
 <details>
 
@@ -102,17 +106,3 @@ done
 ```
 
 </details>
-
-## Script Usage
-
-1. Copy the script into a file in the root of your Go project. Make sure your go.mod file is also located in the root of the project;
-2. Make the script executable. For instance, if you named the script ingest.sh, you would use the following command;
-   ```bash showLineNumbers
-   chmod +x ingest.sh
-   ```
-3. Run the script:
-   ```bash showLineNumbers
-   ./ingest.sh
-   ```
-
-Done! After the script has run, it will automatically injest Go packages into Port via HTTP Request

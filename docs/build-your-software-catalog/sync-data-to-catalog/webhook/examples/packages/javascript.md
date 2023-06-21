@@ -11,7 +11,9 @@ import PackageWebhookConfig from './resources/javascript/\_example_package_webho
 
 # JavaScript
 
-In this example you are going to create `package` blueprint that ingests all third party dependencies and libraries in your package.json file using a combination of REST API and Webhook. You will then relate this blueprint to a `service` blueprint, allowing you to map all the packages used by a service. Finally, you will add some script to transform your package file into a format required by the webhook.
+In this example you are going to create a `package` blueprint that ingests all third party dependencies and libraries in your `package.json` file using a combination of Port's [API](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/) and [webhook functionality](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/webhook/). You will then relate this blueprint to a `service` blueprint, allowing you to map all the packages used by a service.
+
+To ingest the packages to Port, a script that sends information about packages according to the webhook configuration is used.
 
 ## Prerequisites
 
@@ -34,9 +36,9 @@ Create the following blueprint definition and webhook configuration:
 
 </details>
 
-## Working with Port's API
+## Working with Port's API and Bash script
 
-Here is an example snippet showing how to integrate Port's API and Webhook with your existing pipelines using Python and Bash:
+Here is an example snippet showing how to integrate Port's API and webhook with your existing pipelines using Python and Bash:
 
 <Tabs groupId="usage" defaultValue="python" values={[
 {label: "Python", value: "python"},
@@ -174,6 +176,6 @@ echo "$converted_data"
 </TabItem>
 </Tabs>
 
-For more information on how to adapt this tutorial with your existing Gitlab CI pipelines, visit:
+For an example showing how to integrate the above scripts with your existing Gitlab CI pipelines, visit:
 
 - [Package.json example](https://github.com/port-labs/package-json-webhook-example)

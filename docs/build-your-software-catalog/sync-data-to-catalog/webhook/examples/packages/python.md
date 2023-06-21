@@ -11,7 +11,9 @@ import PackageWebhookConfig from './resources/python/\_example_package_webhook_c
 
 # Python
 
-In this example you are going to create `package` blueprint that ingests all third party dependencies and libraries in your requirements.txt file using a combination of REST API and Webhook. You will then relate this blueprint to a `service` blueprint, allowing you to map all the packages used by a service. Finally, you will add some script to transform your package file into a format required by the webhook.
+In this example you are going to create a `package` blueprint that ingests all third party dependencies and libraries in your `requirements.txt` file using a combination of Port's [API](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/) and [webhook functionality](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/webhook/). You will then relate this blueprint to a `service` blueprint, allowing you to map all the packages used by a service.
+
+To ingest the packages to Port, a script that sends information about packages according to the webhook configuration is used.
 
 ## Prerequisites
 
@@ -34,7 +36,7 @@ Create the following blueprint definition and webhook configuration:
 
 </details>
 
-## Working with Port's API
+## Working with Port's API and Bash script
 
 Here is an example snippet showing how to integrate Port's API and Webhook with your existing pipelines using Python and Bash:
 
@@ -200,6 +202,6 @@ echo "$converted_data"
 </TabItem>
 </Tabs>
 
-For more information on how to adapt this tutorial with your existing Gitlab CI pipelines, visit:
+For an example showing how to integrate the above scripts with your existing Gitlab CI pipelines, visit:
 
 - [Requirements.txt example](https://github.com/port-labs/requirements-file-webhook-example)
