@@ -12,7 +12,7 @@ In this example you are going to create a webhook integration between [GitHub](h
 
 ## Prerequisites
 
-Create the following blueprint definition and webhook configuration:
+Create the following blueprint definition:
 
 <details>
 <summary>Pull request blueprint</summary>
@@ -21,10 +21,10 @@ Create the following blueprint definition and webhook configuration:
 
 </details>
 
+Create the following webhook configuration [using port ui](../../?operation=ui#configuring-webhook-endpoints):
+
 <details>
 <summary>Pull request webhook configuration</summary>
-
-Remember to replace the `WEBHOOK_SECRET` with the real secret you specify when creating the webhook in GitHub.
 
 <PullRequestWebhookConfig/>
 
