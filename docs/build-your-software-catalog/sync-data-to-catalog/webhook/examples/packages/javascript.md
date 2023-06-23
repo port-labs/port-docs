@@ -11,7 +11,7 @@ import PackageWebhookConfig from './resources/javascript/\_example_package_webho
 
 # JavaScript
 
-In this example you are going to create a `package` blueprint that ingests all third party dependencies and libraries in your `package.json` file using a combination of Port's [API](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/) and [webhook functionality](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/webhook/). You will then relate this blueprint to a `service` blueprint, allowing you to map all the packages used by a service.
+In this example you are going to create a `package` blueprint that ingests all third party dependencies and libraries in your `package.json` file using a combination of Port's [API](../../../api/api.md) and [webhook functionality](../../webhook.md). You will then relate this blueprint to a `service` blueprint, allowing you to map all the packages used by a service.
 
 To ingest the packages to Port, a script that sends information about packages according to the webhook configuration is used.
 
