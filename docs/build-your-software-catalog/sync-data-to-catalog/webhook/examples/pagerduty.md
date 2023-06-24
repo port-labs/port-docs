@@ -17,7 +17,7 @@ In this example you are going to create a webhook integration between [PagerDuty
 
 ### Prerequisites
 
-Create the following blueprint definitions and webhook configuration:
+Create the following blueprint definitions:
 
 <details>
 <summary>PagerDuty service blueprint</summary>
@@ -33,12 +33,29 @@ Create the following blueprint definitions and webhook configuration:
 
 </details>
 
+Create the following webhook configuration [using Port UI](../../?operation=ui#configuring-webhook-endpoints)
+
 <details>
 <summary>PagerDuty webhook configuration</summary>
 
 Remember to update the `WEBHOOK_SECRET` with the real secret you receive after subscribing to the webhook in PagerDuty.
 
+1. Basic details:
+   1. Title : `PagerDuty Mapper`;
+   2. Identifier : `pagerduty_mapper`;
+   3. Description : `A webhook configuration to map PagerDuty services and it's related incidents to Port`;
+   4. Icon : `Pagerduty`;
+2. Integration configuration:
+   1. The JQ mapping;
+
 <PagerDutyWebhookConfig/>
+
+3. Scroll down to **Advanced settings** and input the following details:
+   1. secret: `WEBHOOK_SECRET`;
+   2. Signature Header Name : `X-Pagerduty-Signature`;
+   3. Signature Algorithm : Select `sha256` from dropdown option;
+   4. Signature Prefix : `v1=`
+   5. Click **Save** at the bottom of the page.
 
 </details>
 
@@ -114,11 +131,29 @@ The script extracts services and incidents from PagerDuty, and sends them to Por
 
 This example utilizes the same [blueprint](#prerequisites) definition from the previous section, along with a new webhook configuration:
 
+Create the following webhook configuration [using Port UI](../../?operation=ui#configuring-webhook-endpoints)
+
 <details>
 <summary>PagerDuty webhook configuration for historical data</summary>
 
 Remember to update the `WEBHOOK_SECRET` with the real secret you receive after subscribing to the webhook in PagerDuty.
-<PagerDutyWebhookHistory/>
+
+1. Basic details:
+   1. Title : `PagerDuty History Mapper`;
+   2. Identifier : `pagerduty_history_mapper`;
+   3. Description : `A webhook configuration to map PagerDuty Historical services and its related incidents to Port`;
+   4. Icon : `Pagerduty`;
+2. Integration configuration:
+
+   1. The JQ mapping;
+      <PagerDutyWebhookHistory/>
+
+3. Scroll down to **Advanced settings** and input the following details:
+   1. secret: `WEBHOOK_SECRET`;
+   2. Signature Header Name : `X-Pagerduty-Signature`;
+   3. Signature Algorithm : Select `sha256` from dropdown option;
+   4. Signature Prefix : `v1=`
+   5. Click **Save** at the bottom of the page.
 
 </details>
 
