@@ -21,12 +21,22 @@ Create the following blueprint definition:
 
 </details>
 
-Create the following webhook configuration [using port ui](../../?operation=ui#configuring-webhook-endpoints)
+Create the following webhook configuration [using Port UI](../../?operation=ui#configuring-webhook-endpoints)
 
 <details>
 <summary>Jira issue webhook configuration</summary>
 
+1. Basic details:
+   1. Title : `Jira mapper`;
+   2. Identifier : `jira_mapper`;
+   3. Description : `A webhook configuration to map Jira issues to Port`;
+   4. Icon : `Jira`;
+2. Integration configuration:
+   1. The JQ mapping;
+
 <JiraIssueConfiguration/>
+
+3.  Click **Save** at the bottom of the page.
 
 </details>
 
