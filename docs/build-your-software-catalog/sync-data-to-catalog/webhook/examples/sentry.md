@@ -30,11 +30,17 @@ Create the following webhook configuration [using port ui](../../?operation=ui#c
 <summary>Sentry issue webhook configuration</summary>
 <SentryIssuesConfiguration/>
 
-Scroll down to **Advanced settings** and input the following details:
-
-1.  Signature Header Name : `sentry-hook-signature`;
-2.  Signature Algorithm : Select `sha256` from dropdown option;
-3.  Click **Save** at the bottom of the page.
+1. Basic details:
+   1. Title : `Sentry mapper`;
+   2. Identifier : `sentryIssuesMapper`;
+   3. Description : `A webhook configuration to map Sentry Issues to Port`;
+   4. Icon : `Sentry`;
+2. Integration configuration:
+   1. The JQ mapping example;
+   2. Scroll down to **Advanced settings** and input the following details:
+      1. Signature Header Name : `sentry-hook-signature`;
+      2. Signature Algorithm : Select `sha256` from dropdown option;
+      3. Click **Save** at the bottom of the page.
 
 </details>
 
@@ -81,11 +87,17 @@ Create the following webhook configuration [using port ui](../../?operation=ui#c
 <summary>Sentry comments webhook configuration</summary>
 <SentryCommentsConfiguration/>
 
-Scroll down to **Advanced settings** and input the following details:
-
-1.  Signature Header Name : `sentry-hook-signature`;
-2.  Signature Algorithm : Select `sha256` from dropdown option;
-3.  Click **Save** at the bottom of the page.
+1. Basic details:
+   1. Title : `Sentry mapper`;
+   2. Identifier : `sentryIssuesMapper`;
+   3. Description : `A webhook configuration to map Sentry Issues to Port`;
+   4. Icon : `Sentry`;
+2. Integration configuration:
+   1. The JQ mapping example;
+   2. Scroll down to **Advanced settings** and input the following details:
+      1. Signature Header Name : `sentry-hook-signature`;
+      2. Signature Algorithm : Select `sha256` from dropdown option;
+      3. Click **Save** at the bottom of the page.
 
 </details>
 
