@@ -14,7 +14,7 @@ In this example you are going to create a webhook integration between [Jenkins](
 
 ## Prerequisites
 
-Create the following blueprint definition and webhook configuration:
+Create the following blueprint definition:
 
 <details>
 <summary>Jenkins job blueprint</summary>
@@ -30,10 +30,23 @@ Create the following blueprint definition and webhook configuration:
 
 </details>
 
+Create the following webhook configuration [using Port UI](../../?operation=ui#configuring-webhook-endpoints)
+
 <details>
 
 <summary>Jenkins job and build webhook configuration</summary>
+
+1. Basic details:
+   1. Title : `Jenkins Mapper`;
+   2. Identifier : `jenkins_mapper`;
+   3. Description : `A webhook configuration to map Jenkins builds and jobs to Port`;
+   4. Icon : `Jenkins`;
+2. Integration configuration:
+   1. The JQ mapping;
+
 <JenkinsBuildWebhookConfig/>
+
+3.  Click **Save** at the bottom of the page.
 
 </details>
 
