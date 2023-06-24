@@ -26,14 +26,19 @@ Create the following webhook configuration [using port ui](../../?operation=ui#c
 <details>
 <summary>Pull request webhook configuration</summary>
 
+1. Basic details:
+   1. Title : `Gitlab mapper`;
+   2. Identifier : `gitlab_mapper`;
+   3. Description : `A webhook configuration to map Gitlab merge requests to Port`;
+   4. Icon : `Gitlab`;
+2. Integration configuration:
+   1. The JQ mapping;
+
 <MergeRequestWebhookConfig/>
 
-### Add webhook security using Port UI
-
-Scroll down to **Advanced settings** and input the following details:
-
-- Request Identifier Path : `.headers.X-Gitlab-Event-Uuid`;
-- Click **Save** at the bottom of the page.
+3. Scroll down to **Advanced settings** and input the following details:
+   1. Request Identifier Path : `.headers.X-Gitlab-Event-Uuid`;
+   2. Click **Save** at the bottom of the page.
 
 </details>
 
