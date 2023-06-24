@@ -23,24 +23,26 @@ Create the following blueprint definition:
 
 </details>
 
-Create the following webhook configuration [using port ui](../../?operation=ui#configuring-webhook-endpoints):
+Create the following webhook configuration [using Port UI](../../?operation=ui#configuring-webhook-endpoints):
 
 <details>
 
 <summary>Sentry issue webhook configuration</summary>
-<SentryIssuesConfiguration/>
 
 1. Basic details:
-   1. Title : `Sentry mapper`;
-   2. Identifier : `sentryIssuesMapper`;
+   1. Title : `Sentry issue mapper`;
+   2. Identifier : `sentry_issue_mapper`;
    3. Description : `A webhook configuration to map Sentry Issues to Port`;
    4. Icon : `Sentry`;
 2. Integration configuration:
-   1. The JQ mapping example;
-   2. Scroll down to **Advanced settings** and input the following details:
-      1. Signature Header Name : `sentry-hook-signature`;
-      2. Signature Algorithm : Select `sha256` from dropdown option;
-      3. Click **Save** at the bottom of the page.
+   1. The JQ mapping;
+
+<SentryIssuesConfiguration/>
+
+3. Scroll down to **Advanced settings** and input the following details:
+   1. Signature Header Name : `sentry-hook-signature`;
+   2. Signature Algorithm : Select `sha256` from dropdown option;
+   3. Click **Save** at the bottom of the page.
 
 </details>
 
@@ -80,24 +82,26 @@ The following example adds a `sentryComment` blueprint, in addition to the `sent
 
 </details>
 
-Create the following webhook configuration [using port ui](../../?operation=ui#configuring-webhook-endpoints):
+Create the following webhook configuration [using Port UI](../../?operation=ui#configuring-webhook-endpoints):
 
 <details>
 
 <summary>Sentry comments webhook configuration</summary>
-<SentryCommentsConfiguration/>
 
 1. Basic details:
-   1. Title : `Sentry mapper`;
-   2. Identifier : `sentryMapper`;
+   1. Title : `Sentry comment mapper`;
+   2. Identifier : `sentry_comment_mapper`;
    3. Description : `A webhook configuration to map Sentry Comments to Port`;
    4. Icon : `Sentry`;
 2. Integration configuration:
-   1. The JQ mapping example;
-   2. Scroll down to **Advanced settings** and input the following details:
-      1. Signature Header Name : `sentry-hook-signature`;
-      2. Signature Algorithm : Select `sha256` from dropdown option;
-      3. Click **Save** at the bottom of the page.
+   1. The JQ mapping;
+
+<SentryCommentsConfiguration/>
+
+3. Scroll down to **Advanced settings** and input the following details:
+   1. Signature Header Name : `sentry-hook-signature`;
+   2. Signature Algorithm : Select `sha256` from dropdown option;
+   3. Click **Save** at the bottom of the page.
 
 </details>
 
