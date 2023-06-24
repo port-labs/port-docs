@@ -13,7 +13,7 @@ In this example you are going to create a webhook integration between [Datadog](
 
 ## Prerequisites
 
-Create the following blueprint definitions and webhook configuration:
+Create the following blueprint definitions:
 
 <details>
 <summary>Datadog microservice blueprint</summary>
@@ -25,9 +25,23 @@ Create the following blueprint definitions and webhook configuration:
 <DatadogBlueprint/>
 </details>
 
+Create the following webhook configuration [using Port UI](../../?operation=ui#configuring-webhook-endpoints)
+
 <details>
 <summary>Datadog webhook configuration</summary>
+
+1. Basic details:
+   1. Title : `Datadog Alert Mapper`;
+   2. Identifier : `datadog_alert_mapper`;
+   3. Description : `A webhook configuration for alerts/monitors events from Datadog`;
+   4. Icon : `Datadog`;
+2. Integration configuration:
+   1. The JQ mapping;
+
 <DatadogConfiguration/>
+
+3.  Click **Save** at the bottom of the page.
+
 </details>
 
 :::note
