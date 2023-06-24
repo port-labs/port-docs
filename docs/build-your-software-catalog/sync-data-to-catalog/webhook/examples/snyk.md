@@ -12,7 +12,7 @@ In this example you are going to create a webhook integration between [Snyk](htt
 
 ## Prerequisites
 
-Create the following blueprint definition and webhook configuration:
+Create the following blueprint definition:
 
 <details>
 <summary>Snyk vulnerability blueprint</summary>
@@ -21,12 +21,28 @@ Create the following blueprint definition and webhook configuration:
 
 </details>
 
+Create the following webhook configuration [using Port UI](../../?operation=ui#configuring-webhook-endpoints)
+
 <details>
 <summary>Snyk vulnerability webhook configuration</summary>
-
 Remember to replace the `WEBHOOK_SECRET` with the real secret you specify when creating the webhook in Snyk.
 
+1. Basic details:
+   1. Title : `Snyk Mapper`;
+   2. Identifier : `snyk_mapper`;
+   3. Description : `A webhook configuration to map Snyk vulnerability to Port`;
+   4. Icon : `Snyk`;
+2. Integration configuration:
+   1. The JQ mapping;
+
 <SnykConfiguration/>
+
+3. Scroll down to **Advanced settings** and input the following details:
+   1. secret: `WEBHOOK_SECRET`;
+   2. Signature Header Name : `X-Hub-Signature`;
+   3. Signature Algorithm : Select `sha256` from dropdown option;
+   4. Signature Prefix : `sha256=`
+   5. Click **Save** at the bottom of the page.
 
 </details>
 
