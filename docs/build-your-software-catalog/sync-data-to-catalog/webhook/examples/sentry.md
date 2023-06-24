@@ -89,8 +89,8 @@ Create the following webhook configuration [using port ui](../../?operation=ui#c
 
 1. Basic details:
    1. Title : `Sentry mapper`;
-   2. Identifier : `sentryIssuesMapper`;
-   3. Description : `A webhook configuration to map Sentry Issues to Port`;
+   2. Identifier : `sentryMapper`;
+   3. Description : `A webhook configuration to map Sentry Comments to Port`;
    4. Icon : `Sentry`;
 2. Integration configuration:
    1. The JQ mapping example;
