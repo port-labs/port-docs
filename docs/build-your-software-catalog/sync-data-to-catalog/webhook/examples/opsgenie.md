@@ -21,12 +21,22 @@ Create the following blueprint definition:
 
 </details>
 
-Create the following webhook configuration [using port ui](../../?operation=ui#configuring-webhook-endpoints):
+Create the following webhook configuration [using Port UI](../../?operation=ui#configuring-webhook-endpoints):
 
 <details>
 <summary>OpsGenie alert webhook configuration</summary>
 
+1. Basic details:
+   1. Title : `OpsGenie mapper`;
+   2. Identifier : `opsgenie_mapper`;
+   3. Description : `A webhook configuration to map OpsGenie alerts to Port`;
+   4. Icon : `OpsGenie`;
+2. Integration configuration:
+   1. The JQ mapping;
+
 <OpsGenieAlertConfiguration/>
+
+3. Click **Save** at the bottom of the page.
 
 </details>
 
