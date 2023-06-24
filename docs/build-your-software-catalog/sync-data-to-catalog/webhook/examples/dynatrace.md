@@ -13,7 +13,7 @@ In this example you are going to create a webhook integration between [Dynatrace
 
 ## Prerequisites
 
-Create the following blueprint definitions and webhook configuration:
+Create the following blueprint definitions:
 
 <details>
 <summary>Dynatrace microservice blueprint</summary>
@@ -25,9 +25,23 @@ Create the following blueprint definitions and webhook configuration:
 <DynatraceProblemBlueprint/>
 </details>
 
+Create the following webhook configuration [using Port UI](../../?operation=ui#configuring-webhook-endpoints)
+
 <details>
 <summary>Dynatrace problem webhook configuration</summary>
+
+1. Basic details:
+   1. Title : `Dynatrace Problem Mapper`;
+   2. Identifier : `dynatrace_problem_mapper`;
+   3. Description : `A webhook configuration for problem events from Dynatrace`;
+   4. Icon : `Dynatrace`;
+2. Integration configuration:
+   1. The JQ mapping;
+
 <DynatraceProblemConfiguration/>
+
+3.  Click **Save** at the bottom of the page.
+
 </details>
 
 :::note
