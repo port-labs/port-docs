@@ -21,23 +21,29 @@ Create the following blueprint definition:
 
 </details>
 
-Create the following webhook configuration [using port ui](../../?operation=ui#configuring-webhook-endpoints):
+Create the following webhook configuration [using Port UI](../../?operation=ui#configuring-webhook-endpoints):
 
 <details>
 <summary>Pull request webhook configuration</summary>
 
+1. Basic details:
+   1. Title : `Pull Request Mapper`;
+   2. Identifier : `pull_request_mapper`;
+   3. Description : `A webhook configuration for pull-request events from GitHub`;
+   4. Icon : `Github`;
+2. Integration configuration:
+   1. The JQ mapping;
+
 <PullRequestWebhookConfig/>
 
-### Add webhook security using Port UI
+3. Scroll down to **Advanced settings** and input the following details:
 
-Scroll down to **Advanced settings** and input the following details:
-
-1.  secret: `WEBHOOK_SECRET`;
-2.  Signature Header Name : `X-Hub-Signature-256`;
-3.  Signature Algorithm : Select `sha256` from dropdown option;
-4.  Signature Prefix : `sha256=`;
-5.  Request Identifier Path : `.headers.\"X-GitHub-Delivery\"`;
-6.  Click **Save** at the bottom of the page.
+   1. secret: `WEBHOOK_SECRET`;
+   2. Signature Header Name : `X-Hub-Signature-256`;
+   3. Signature Algorithm : Select `sha256` from dropdown option;
+   4. Signature Prefix : `sha256=`;
+   5. Request Identifier Path : `.headers.\"X-GitHub-Delivery\"`;
+   6. Click **Save** at the bottom of the page.
 
 </details>
 
