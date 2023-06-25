@@ -57,7 +57,36 @@ The above script performs the following actions:
 You can delete resources you don't want to export by removing them from the resources array in the script above.
 :::
 
+### AWS exporter Terraform module
+
+After setting up the basic configuration, the template above deploys the AWS exporter Terraform module.
+
+For more information, visit the [AWS exporter module docs](../iac/terraform/modules/aws-exporter-module.md)
+
 ## Step-by-step installation
+
+In order to deploy the application, you will need to fill in the following parameters:
+
+- **Cloud Formation related parameters:**
+  - `Application name` - The stack name of the application created via `AWS CloudFormation`.
+- **Bucket related parameters:**
+  - `CreateBucket` - `true` if you want the application to create and manage your bucket, or `false` if you want to create the bucket on your own.
+  - `BucketName` - The name of your bucket, or a globally unique name for a new bucket.
+  - `ConfigJsonFileKey` - The file key (path) to the [`config.json`](#exporter-configjson-file) in the bucket.
+- **IAM Policy related parameters:**
+  - `CustomIAMPolicyARN` - The ARN of the [IAM policy](#iam-policy).
+- **Secret related parameters:**
+
+  - `CustomPortCredentialsSecretARN` - The ARN of the Port credentials secret;
+
+    **OR**
+
+  - `SecretName` - The name for the new Port credentials secret to create.
+
+- **Lambda related parameters:**
+  - `FunctionName` - The function name for the exporter's lambda.
+  - `ScheduleExpression` - The [schedule expression](https://docs.aws.amazon.com/lambda/latest/dg/services-cloudwatchevents-expressions.html) to define an event schedule for the exporter.
+  - `ScheduleState` - The schedule initial state - `ENABLED` or `DISABLED`. We recommend to enable it only after one successful run.
 
 1. Prepare a [`config.json`](#exporter-configjson-file) file that will define which AWS resources to ingest to Port;
 
@@ -218,22 +247,18 @@ In addition to running on schedule, the AWS exporter can be used to act on live 
 
 That way you can configure a resource to be synced as soon as it changed, in real time.
 
-1. You should prepare an [event rule](./event-based-updates.md/#definition), based on specific events matching resources you want the AWS exporter to update in real time;
+1. Prepare an [event rule](./event-based-updates.md/#definition), based on specific events matching resources you want the AWS exporter to update in real time and save it to a Cloudformation YAML template (`template.yml`).
 
-2. Deploy the event rule
-
-   :::tip Create a rule
-   You can create and deploy an event rule, using a Cloudformation YAML template (`template.yml`), like in the [example](#definition), using this command:
+2. Deploy the event rule using this command:
 
    ```bash showLineNumbers
    aws cloudformation deploy --template-file template.yml --stack-name port-aws-exporter-event-rules
    ```
 
-   To learn about more ways to work with Cloudformation stacks, click [here](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacks.html).
-   :::
+## Further information
 
-For more information visit the [Event-based Updates](./event-based-updates.md) page.
+- Refer to the [examples](./examples.md) page for practical configurations and their corresponding blueprint definitions.
 
-## Examples
+- Learn about more ways of [working with Cloudformation stacks](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacks.html).
 
-Refer to the [examples](./examples.md) page for practical configurations and their corresponding blueprint definitions.
+- Deep-dive into the [Event-based Updates](./event-based-updates.md) machanism.

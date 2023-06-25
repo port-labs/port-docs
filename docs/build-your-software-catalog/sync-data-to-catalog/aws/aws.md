@@ -295,25 +295,6 @@ The stack consists of several components:
 - [SQS queue](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html) - a queue of events, to be consumed by the exporter. Read [here](./event-based-updates.md) to learn how to use the exporter to consume and act on live events from different AWS services;
 - [EventsBridge scheduled rule](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-create-rule-schedule.html) - a rule to run the exporter on a schedule.
 
-In order to deploy the application, you will need to fill in the following parameters:
+## Getting started
 
-- **Cloud Formation related parameters:**
-  - `Application name` - The stack name of the application created via `AWS CloudFormation`.
-- **Bucket related parameters:**
-  - `CreateBucket` - `true` if you want the application to create and manage your bucket, or `false` if you want to create the bucket on your own.
-  - `BucketName` - The name of your bucket, or a globally unique name for a new bucket.
-  - `ConfigJsonFileKey` - The file key (path) to the [`config.json`](#exporter-configjson-file) in the bucket.
-- **IAM Policy related parameters:**
-  - `CustomIAMPolicyARN` - The ARN of the [IAM policy](#iam-policy).
-- **Secret related parameters:**
-
-  - `CustomPortCredentialsSecretARN` - The ARN of the Port credentials secret;
-
-    **OR**
-
-  - `SecretName` - The name for the new Port credentials secret to create.
-
-- **Lambda related parameters:**
-  - `FunctionName` - The function name for the exporter's lambda.
-  - `ScheduleExpression` - The [schedule expression](https://docs.aws.amazon.com/lambda/latest/dg/services-cloudwatchevents-expressions.html) to define an event schedule for the exporter.
-  - `ScheduleState` - The schedule initial state - `ENABLED` or `DISABLED`. We recommend to enable it only after one successful run.
+Continue to the [Installation](./Installation.md) section to setup the AWS exporter in your Port environment.

@@ -6,6 +6,12 @@ sidebar_position: 1
 
 The AWS exporter module is used to deploy the Port AWS Exporter in your AWS account.
 
+:::note NOTE
+For full installation, including the resources blueprints and updating AWS blueprints based on AWS events,
+
+Please use the full **[AWS exporter Terraform installation](../../../aws/Installation.md#terraform-installation-recommended)**
+:::
+
 ## Prerequisites
 
 Before using this module, make sure you have completed the following prerequisites:
@@ -72,7 +78,9 @@ You can also provide an existing secret instead using the `custom_port_credentia
 
 `bucket_name` - bucket name for the exporter configuration. Lambda also use it to write intermediate temporary files.
 
-`config_json_file` - (required) path to the configuration JSON file.
+`config_json` - (required) file path / JSON formatted string of the exporter config.
+
+`config_s3_key` - (required) s3 key name of the exporter configuration.
 
 `function_name` - the name of the AWS Lambda function.
 
@@ -82,7 +90,7 @@ You can also provide an existing secret instead using the `custom_port_credentia
 
 The secret value should be in the format: `{"id":"<PORT_CLIENT_ID>","clientSecret":"<PORT_CLIENT_SECRET>"}`
 
-`lambda_policy_file` - (optional) path to a AWS IAM policy json file to grant to the Lambda function. If not passed, using the default exporter policies.
+`lambda_policy` - (optional) path or JSON formatted string of the AWS policy json to grant to the Lambda function. If not passed, using the default exporter policies.
 
 `events_queue_name` - the name of the events queue to the Port exporter.
 
