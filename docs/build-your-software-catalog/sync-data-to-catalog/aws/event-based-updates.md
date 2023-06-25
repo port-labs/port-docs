@@ -1,8 +1,8 @@
 ---
-sidebar_position: 1
+sidebar_position: 3
 ---
 
-# Real-Time Updates
+# Event-based Updates
 
 Our AWS integration allows you to trigger a sync of your AWS resources with Port based on real-time events (in addition to the standard scheduled sync).
 As a result, your software catalog will be updated shortly after a resource is created, updated or deleted.
@@ -297,24 +297,9 @@ The message includes:
 To read more about input transformer in EventBridge, click [here](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-transform-target-input.html).
 :::
 
-## Setup summary
-
-1. You should prepare an [event rule](#definition), based on specific events matching resources you want the AWS exporter to update in real time;
-
-2. Create the event rule from step 1.
-
-   :::tip Create a rule
-   You can create and deploy an event rule, using a Cloudformation YAML template (`template.yml`), like in the [example](#definition), using this command:
-
-   ```bash showLineNumbers
-   aws cloudformation deploy --template-file template.yml --stack-name port-aws-exporter-event-rules
-   ```
-
-   To learn about more ways to work with Cloudformation stacks, click [here](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacks.html).
-   :::
-
 ## Next steps
 
 ### Examples
 
-Refer to the [examples](./examples.md) page for practical configurations and their corresponding blueprint definitions.
+- Refer to the [examples](./examples.md) page for practical configurations and their corresponding blueprint definitions.
+- Refer to the Event Bridge rule [Terraform example](https://github.com/port-labs/terraform-aws-port-exporter/tree/main/examples/terraform_deploy_eventbridge_rule)
