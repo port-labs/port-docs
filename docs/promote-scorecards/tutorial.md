@@ -72,7 +72,7 @@ An editor window will open with the current JSON array of the defined Scorecards
 Remember that an access token is necessary in order to make API requests. If you need to generate a new token, refer to [Getting an API token](../build-your-software-catalog/sync-data-to-catalog/api/api.md#get-api-token).
 :::
 
-In order to create a scorecard from the API, you will make a PUT request to the URL `https://api.getport.io/v1/{blueprint_identifier}/scorecards`.
+In order to create a scorecard from the API, you will make a PUT request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards`.
 
 Here are some request examples that will create the Scorecard of Ownership on the `microservice` Blueprint:
 
@@ -241,8 +241,8 @@ An editor window will open with the current scorecards of the Blueprint. In orde
 
 To update a scorecard you can use 2 different URLs:
 
-1. Update a single Scorecard using the URL `https://api.getport.io/v1/{blueprint_identifier}/scorecards/{scorecard_identifier}`. The request body will be the full Scorecard + the wanted changed values
-2. Make a PUT request to the URL `https://api.getport.io/v1/{blueprint_identifier}/scorecards`. to multiple scorecards at once
+1. Update a single Scorecard using the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards/{scorecard_identifier}`. The request body will be the full Scorecard + the wanted changed values
+2. Make a PUT request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards`. to multiple scorecards at once
 
 The request body will include the existing body of the Scorecard, after the desired updates to the existing Scorecard have been applied.
 
@@ -254,9 +254,9 @@ A Scorecard cannot be restored after deletion!
 
 There are two ways to delete a Scorecard:
 
-- Make an HTTP PUT request and remove it from the array of the scorecards via the URL `https://api.getport.io/v1/{blueprint_identifier}/scorecards`
+- Make an HTTP PUT request and remove it from the array of the scorecards via the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards`
 - Make an HTTP DELETE request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards/{scorecard_identifier}` the `scorecard_identifier` is the identifier of the scorecard we want to delete
 
 :::note
-When using the multiple update Scorecards `https://api.getport.io/v1/{blueprint_identifier}/scorecards` PUT request, keep in mind that you will see a new `id` property. This is used via Port to identify the Scorecard in order to be able to update its properties
+When using the multiple update Scorecards `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards` PUT request, keep in mind that you will see a new `id` property. This is used via Port to identify the Scorecard in order to be able to update its properties
 :::

@@ -1,10 +1,10 @@
 ---
-sidebar_position: 4
+sidebar_position: 2
 description: Keep merge requests up to date using webhooks
 ---
 
-import MergeRequestBlueprint from './resources/gitlab/\_example_gitlab_mr_blueprint.mdx'
-import MergeRequestWebhookConfig from './resources/gitlab/\_example_gitlab_mr_configuration.mdx'
+import MergeRequestBlueprint from '../resources/gitlab/\_example_gitlab_mr_blueprint.mdx'
+import MergeRequestWebhookConfig from '../resources/gitlab/\_example_gitlab_mr_configuration.mdx'
 
 # GitLab
 
