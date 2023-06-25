@@ -2952,5 +2952,4 @@ Here's an example showing how to connect CloudFormation Stacks and Lambda functi
 
 Make sure your [Lambda function configuration](#lambda) appears before your CloudFormation defintion in the `config.json`.
 
-
 Done! soon, you will be able to see any `CloudFormation Stacks`.
