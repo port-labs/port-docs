@@ -136,6 +136,7 @@ from urllib.parse import urlparse
 
 output_filename = "output.json"
 webhook_url = 'https://ingest.getport.io/WEBHOOK_SECRET'
+SERVICE_ID = ''
 
 # Prepare the headers for the requests
 headers = {'Content-Type': 'application/json'}
@@ -180,7 +181,8 @@ for requires in require_blocks:
             "package_name": package_name,
             "package_url": package_url,
             "version": version,
-            "indirect": indirect
+            "indirect": indirect,
+            "service" SERVICE_ID
         }
 
         # Append to the output file
