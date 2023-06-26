@@ -122,3 +122,94 @@ done
 :::
 
 </details>
+
+<details>
+
+<summary>Go Python script</summary>
+Remember to update the `WEBHOOK_SECRET` with the real secret you receive after creating the webhook in PORT.
+
+```python showLineNumbers
+import json
+import requests
+import os
+from urllib.parse import urlparse
+
+output_filename = "output.json"
+webhook_url = 'https://ingest.getport.io/WEBHOOK_SECRET'
+
+# Prepare the headers for the requests
+headers = {'Content-Type': 'application/json'}
+
+# Initialize the output file
+with open(output_filename, 'w') as f:
+    json.dump([], f)
+
+# Read the go.mod file
+with open('go.mod', 'r') as f:
+    lines = f.readlines()
+
+# Find all require blocks
+require_blocks = []
+start = -1
+for i, line in enumerate(lines):
+    if line.strip() == 'require (':
+        start = i
+    elif line.strip() == ')' and start != -1:
+        require_blocks.append(lines[start + 1:i])
+        start = -1
+
+# Process each require block
+for requires in require_blocks:
+    for require in requires:
+        parts = require.split()  # Split the line into parts
+
+        package_url = parts[0]
+        version = parts[1]
+        indirect = len(parts) > 3 and parts[2] == "//" and parts[3] == "indirect"  # Check if the package is indirect
+
+        # Parse the package name from the URL
+        package_name = os.path.basename(urlparse(package_url).path)
+
+        # Ensure package_url is in URL format
+        if not package_url.startswith('http://') and not package_url.startswith('https://'):
+            package_url = 'https://' + package_url
+
+        # Prepare the package dictionary
+        package_dict = {
+            "identifier": package_name,
+            "package_name": package_name,
+            "package_url": package_url,
+            "version": version,
+            "indirect": indirect
+        }
+
+        # Append to the output file
+        with open(output_filename, 'r+') as f:
+            data = json.load(f)
+            data.append(package_dict)
+            f.seek(0)
+            json.dump(data, f, indent=4)
+
+        # Send data to the webhook
+        response = requests.post(webhook_url, headers=headers, data=json.dumps(package_dict))
+        print(response.status_code)
+
+```
+
+:::note
+
+- The script leverages the `requests` library for sending HTTP requests. This is a powerful and flexible module for sending all kinds of HTTP requests but it is not included in the standard Python library. It is used in the script to send the package details (in JSON format) to a webhook. You may need to install it separately using pip.
+
+  ```bash showLineNumbers
+  pip install requests
+  ```
+
+- The script also utilizes the `tldextract` library to accurately extract the domain and subdomain from a URL. While Python's built-in urllib can parse URLs, tldextract provides more accurate extraction especially when dealing with complex URLs. It can also handle URLs without schemes. This library is not part of Python's standard library and needs to be installed separately using pip.
+
+  ```bash showLineNumbers
+  pip install tldextract
+  ```
+
+:::
+
+</details>
