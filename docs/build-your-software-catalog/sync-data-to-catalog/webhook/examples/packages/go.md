@@ -40,9 +40,9 @@ Create the following blueprint definition and webhook configuration:
 
 Here is an example snippet showing how to integrate Port's API and Webhook with your existing pipelines using Python and Bash:
 
-<Tabs groupId="usage" defaultValue="bash" values={[
-{label: "Bash", value: "bash"},
-{label: "Python", value: "python"}
+<Tabs groupId="usage" defaultValue="python" values={[
+{label: "Python", value: "python"},
+{label: "Bash", value: "bash"}
 ]}>
 
 <TabItem value="bash">
@@ -142,6 +142,10 @@ Create the following Python script in your repository to create or update Port e
 <summary>Go Python script</summary>
 
 ```python showLineNumbers
+# Dependencies to install:
+# pip install requests
+# pip install tldextract
+
 import json
 import requests
 import os
@@ -210,22 +214,6 @@ for requires in require_blocks:
         print(response.status_code)
 
 ```
-
-:::note
-
-- The script leverages the `requests` library for sending HTTP requests. This is a powerful and flexible module for sending all kinds of HTTP requests but it is not included in the standard Python library. It is used in the script to send the package details (in JSON format) to a webhook. You may need to install it separately using pip.
-
-  ```bash showLineNumbers
-  pip install requests
-  ```
-
-- The script also utilizes the `tldextract` library to accurately extract the domain and subdomain from a URL. While Python's built-in urllib can parse URLs, tldextract provides more accurate extraction especially when dealing with complex URLs. It can also handle URLs without schemes. This library is not part of Python's standard library and needs to be installed separately using pip.
-
-  ```bash showLineNumbers
-  pip install tldextract
-  ```
-
-:::
 
 </details>
 </TabItem>
