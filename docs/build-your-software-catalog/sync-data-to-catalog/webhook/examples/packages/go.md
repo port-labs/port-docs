@@ -38,7 +38,16 @@ Create the following blueprint definition and webhook configuration:
 
 ## Working with Port's API and Bash script
 
-Here is an example snippet showing how to integrate Port's API and webhook with your existing pipelines using bash:
+Here is an example snippet showing how to integrate Port's API and Webhook with your existing pipelines using Python and Bash:
+
+<Tabs groupId="usage" defaultValue="bash" values={[
+{label: "Bash", value: "bash"},
+{label: "Python", value: "python"}
+]}>
+
+<TabItem value="bash">
+
+Create the following Bash script in your repository to create or update Port entities as part of your pipeline:
 
 <details>
 
@@ -122,11 +131,15 @@ done
 :::
 
 </details>
+</TabItem>
+
+<TabItem value="python">
+
+Create the following Python script in your repository to create or update Port entities as part of your pipeline:
 
 <details>
 
 <summary>Go Python script</summary>
-Remember to update the `WEBHOOK_SECRET` with the real secret you receive after creating the webhook in PORT.
 
 ```python showLineNumbers
 import json
@@ -135,8 +148,8 @@ import os
 from urllib.parse import urlparse
 
 output_filename = "output.json"
-webhook_url = 'https://ingest.getport.io/WEBHOOK_SECRET'
-SERVICE_ID = ''
+webhook_url = os.environ.get('WEBHOOK_URL')
+SERVICE_ID = os.environ.get('SERVICE_ID')
 
 # Prepare the headers for the requests
 headers = {'Content-Type': 'application/json'}
@@ -215,3 +228,5 @@ for requires in require_blocks:
 :::
 
 </details>
+</TabItem>
+</Tabs>
