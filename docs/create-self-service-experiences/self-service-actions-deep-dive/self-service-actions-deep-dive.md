@@ -623,51 +623,6 @@ Here is an example `payload` object for a `CREATE` action:
 ```json showLineNumbers
 "payload": {
     "entity": null,
-    "action": {
-        "id": "action_lGviYLG6W5U9o2Qq",
-        "identifier": "create",
-        "title": "Create",
-        "userInputs": {
-            "properties": {
-                "title": {
-                    "type": "string",
-                    "title": "Title"
-                },
-                "region": {
-                    "type": "string",
-                    "title": "Region",
-                    "enum": [
-                        "prod-2-use1"
-                    ],
-                    "default": "prod-1-use1",
-                    "description": "The region that this cluster is going to be deployed"
-                },
-                "version": {
-                    "type": "string",
-                    "title": "Version"
-                },
-                "type": {
-                    "type": "string",
-                    "title": "Type",
-                    "enum": [
-                        "EKS",
-                        "Self-Managed"
-                    ]
-                }
-            },
-            "required": [
-                "region"
-            ]
-        },
-        "invocationMethod": { "type": "WEBHOOK", "url": "https://example.com" },
-        "trigger": "CREATE",
-        "description": "This will create a new k8s cluster",
-        "blueprint": "k8sCluster",
-        "createdAt": "2022-07-27T16:47:23.165Z",
-        "createdBy": "auth0|6278b02000955c006f9132d3",
-        "updatedAt": "2022-07-27T16:47:23.165Z",
-        "updatedBy": "auth0|6278b02000955c006f9132d3"
-    },
     "properties": {
         "region": "prod-2-use1",
         "title": "dev-env",

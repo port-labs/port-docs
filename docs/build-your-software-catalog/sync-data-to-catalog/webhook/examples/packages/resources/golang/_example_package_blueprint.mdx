@@ -1,12 +1,12 @@
 ```json showLineNumbers
 {
-  "identifier": "goDependency",
+  "identifier": "package",
   "description": "This blueprint represents a Go dependency",
-  "title": "Go Dependency",
+  "title": "Go Package",
   "icon": "Go",
   "schema": {
     "properties": {
-      "package_url": {
+      "packageUrl": {
         "icon": "DefaultProperty",
         "title": "Package URL",
         "description": "The URL of the dependency package",
@@ -23,20 +23,23 @@
         "title": "Indirect Dependency",
         "description": "Whether the dependency is indirect"
       },
-      "package_name": {
+      "packageName": {
         "type": "string",
         "title": "Package Name",
         "description": "The name of the dependency package"
       }
     },
-    "required": [
-      "package_name",
-      "package_url",
-      "version"
-    ]
+    "required": ["packageName", "packageUrl", "version"]
   },
   "mirrorProperties": {},
   "calculationProperties": {},
-  "relations": {}
+  "relations": {
+    "service": {
+      "title": "Service",
+      "target": "service",
+      "required": false,
+      "many": true
+    }
+  }
 }
 ```
