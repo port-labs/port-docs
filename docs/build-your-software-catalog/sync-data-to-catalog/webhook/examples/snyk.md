@@ -63,13 +63,13 @@ curl -X POST \
 
 Done! Any vulnerability detected on your source code will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
 
-## Let's Test It
+## Test the webhook
 
-In this section, we'll explore the webhook event data that is received from Snyk whenever a code vulnerability is added or removed from your repository. We'll also delve into how the entity is finally created in Port by using the webhook configuration.
+This section includes a sample webhook event sent from Snyk when a code vulnerability is added or removed. In addition, it also includes the entity created from the event based on the webhook configuration provided in the previous section.
 
 ### Payload
 
-Below is an example of the payload structure sent to the webhook URL after a code vulnerability is detected:
+Here is an example of the payload structure sent to the webhook URL when a code vulnerability is detected:
 
 <details>
 <summary> Webhook event payload</summary>
@@ -251,7 +251,7 @@ Below is an example of the payload structure sent to the webhook URL after a cod
 
 ### Mapping Result
 
-Using the mappings defined in the webhook configuration, Port will extract the necessary properties from the Snyk webhook payload and use the resulting data to create the vulnerability entities. In this case, because there are two sets of data in the `newIssues` array property (check the above JSON data), Port will create two vulnerability entities. Here is an example of one of the mappings:
+The combination of the sample payload and the webhook configuration generate the following Port entities (in the sample above, multiple entities will be generated because the `newIssues` array contains multiple objects):
 
 ```json showLineNumbers
 {
