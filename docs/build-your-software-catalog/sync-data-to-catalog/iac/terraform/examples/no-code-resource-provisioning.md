@@ -2,13 +2,13 @@
 sidebar_position: 4
 ---
 
-# Resource Scaffolding
+# No-Code Resource Provisioning
 
-Port's Terraform provider, combined with Port's [self-service actions](../../../../../create-self-service-experiences/create-self-service-experiences.md) can be used to expose IaC resource scaffolding operations to users. These scaffolding operations can automate the lifecycle of different cloud cloud.
+Port's Terraform provider, combined with Port's [self-service actions](../../../../../create-self-service-experiences/create-self-service-experiences.md) can be used to expose IaC no-code resource provisioning operations to users. These provisioning operations can automate the lifecycle of different cloud resources.
 
-Working with IaC resource scaffolding allows developers to easily manage resources, without needing to know the underlying systems, tools, and practices (such as Terraform).
+Working with IaC no-code resource provisioning allows developers to easily manage resources, without needing to know the underlying systems, tools, and practices (such as Terraform).
 
-Let's review an example of how to make use of IaC resource scaffolding, using Port's self-service actions.
+Let's review an example of how to make use of IaC no-code resource provisioning, using Port's self-service actions.
 
 ## Example
 
@@ -240,6 +240,6 @@ Done! Your bucket will be deleted from AWS and Port.
 
 ## Summary
 
-IaC resource scaffolding help your team efficiently control and configure any cloud resources in your possession.
+IaC no-code resource provisioning help your team efficiently control and configure any cloud resources in your possession.
 
-Port self-service actions allow you to quickly ramp up an event based infrastructure to leverage your IaC resource scaffolding workflows.
+Port self-service actions allow you to quickly ramp up an event based infrastructure to leverage your IaC no-code resource provisioning workflows.
