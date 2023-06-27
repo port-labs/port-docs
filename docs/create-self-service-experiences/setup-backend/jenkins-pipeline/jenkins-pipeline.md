@@ -170,7 +170,8 @@ Here is an example of the required configuration:
 
 :::note
 
-- The IP field should be set to `3.251.12.205`, which is our hosted outbound WEBHOOK Gateway.
+- The IP field should be set to `3.251.12.205`, which is our hosted outbound WEBHOOK Gateway;
+  - For more information about Port's outbound calls, check out Port's [actions security](../../security/security.md) page.
 - In the **HMAC Secret** field, choose a secret containing your `port-client-secret`.
 
 If this secret doesn't already exist, create a `secret text` type secret using [this guide](https://www.jenkins.io/doc/book/using/using-credentials/). The value of the secret should be your `Port Client Secret` which can be found by following the guide [here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
