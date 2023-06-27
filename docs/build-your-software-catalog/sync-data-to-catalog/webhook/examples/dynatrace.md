@@ -92,13 +92,13 @@ In order to view the different payloads and events available in Dynatrace webhoo
 
 Done! any problem detected on your Dynatrace entity will trigger a webhook event. Port will parse the events according to the mapping and update the catalog entities accordingly.
 
-## Let's Test It
+## Test the webhook
 
-In this section, we'll explore the webhook event data that is received from Dynatrace whenever an problem is detected on your account. We'll also delve into how the entity is finally created in Port by using the webhook configuration.
+This section includes a sample webhook event sent from Dynatrace when a problem is detected in a resource in your account. In addition, it also includes the entity created from the event based on the webhook configuration provided in the previous section.
 
 ### Payload
 
-Below is an example of the payload structure sent to the webhook URL after a problem is detected:
+Here is an example of the payload structure sent to the webhook URL when a problem is detected:
 
 <details>
 <summary> Webhook event payload</summary>
@@ -134,7 +134,7 @@ Below is an example of the payload structure sent to the webhook URL after a pro
 
 ### Mapping Result
 
-Using the mappings defined in the webhook configuration, Port will extract the necessary properties from the Dynatrace webhook payload and use the output data to create the problem entities. Below is the result of the mapping:
+The combination of the sample payload and the webhook configuration generate the following Port entities:
 
 ```json showLineNumbers
 {
