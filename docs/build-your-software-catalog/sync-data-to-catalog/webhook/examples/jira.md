@@ -69,33 +69,14 @@ In addition, it requires a Jira API token that is provided as a parameter to the
 2. Click Create API token;
 3. From the dialog that appears, enter a memorable and concise Label for your token and click **Create**;
 4. Click **Copy** to copy the token to your clipboard, you will not have another opportunity to view the token value after you leave this page;
-5. Encode the token along with your Jira username using Base64:
-   1. Linux/Unix/MacOS
-      ```shell showLineNumbers
-      echo -n user@example.com:api_token_string | base64
-      ```
-   2. Windows 7 and later, using Microsoft Powershell:
-      ```powershell showLineNumbers
-      $Text = ‘user@example.com:api_token_string’
-      $Bytes = [System.Text.Encoding]::UTF8.GetBytes($Text)
-      $EncodedText = [Convert]::ToBase64String($Bytes)
-      $EncodedText
-      ```
-6. Update `auth_string` variable in the Python script with the generated Base64 key
 
 Use the following Python script to ingest historical Jira issues into port:
 
 <details>
 <summary>Jira Python script for historical issues</summary>
 
-Remember to update the `WEBHOOK_URL` with the value of the `url` key you received after creating the webhook configuration.
-
 <JiraIssueConfigurationPython/>
 
 </details>
-
-:::tip
-The script writes the JSON payload for issues to a file named `output.json`. This can be useful for debugging if you encounter any issues.
-:::
 
 Done! you can now import historical issues from Jira into Port. Port will parse the issues according to the mapping and update the catalog entities accordingly.

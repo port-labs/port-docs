@@ -1,67 +1,87 @@
 ```python showLineNumbers
+# Dependencies to Install
+# pip install jira
+
+from jira import JIRA
 import requests
 import json
+import os
 
-# Set variables
-your_domain = '' # Use your Jira Domain
-max_results = 50  # Jira Absolute maximum is typically 1000 beyond which calls will fail due to performance considerations.
-status_list = ["In Progress", "To Do"]
-auth_string = 'Basic YOUR_BASE64_USER_TOKEN'
-status = ','.join(f'"{s}"' for s in status_list) # Format status_list as string
+def authenticate_with_jira(server, username, api_token):
+    # This function authenticates with JIRA and returns a JIRA object
+    return JIRA(server=server, basic_auth=(username, api_token))
 
-# Set up headers and URL for Jira request
-jira_url = f'https://{your_domain}.atlassian.net/rest/api/3/search?jql=status%20in%20({status})&maxResults={max_results}&expand=changelog'
-headers = {
-    'Authorization': auth_string
-
-}
-
-# Make request to Jira API
-response = requests.get(jira_url, headers=headers)
-data = response.json()
-
-issues = data['issues']  # Get all the issues
-
-output_data = []
-
-for issue in issues:
-
-    issueUrl = issue['self'].split('rest')[0] + "browse/" + issue['key']
-
-    data_to_send = {
-        "issue": {
-            "key": issue['key'],
-            "fields": {
-                "summary": issue['fields']['summary'],
-                "description": issue['fields']['description']['content'][0]['content'][0]['text'] if issue['fields']['description'] else None,
-                "status": {
-                    "name": issue['fields']['status']['name']
-                },
-                "issuetype": {
-                    "name": issue['fields']['issuetype']['name']
-                },
-                "self": issue['self'],
-            },
-            "lastChangeType": "",
-            "self": issue['self']
-        },
-        "user": {
-            "displayName": issue['fields']['creator']['displayName']
-        }
-    }
-
-    output_data.append(data_to_send)
-
-    # Send data to Port
-    port_url = 'WEBHOOK_URL'
+def send_to_port(data, port_url):
+    # This function sends issue data to Port
     headers = {'Content-Type': 'application/json'}
-    response = requests.post(port_url, headers=headers, data=json.dumps(data_to_send))
+    response = requests.post(port_url, headers=headers, data=json.dumps(data))
 
-    print(response.status_code)
-    print(response.text)
+    # Check the response from Port
+    if response.status_code != 202:
+        print(f"Error sending issue {data['issue']['key']} to Port: {response.status_code}")
+    else:
+        print(f"Issue {data['issue']['key']} successfully sent to Port.")
 
-# Write all issues to output.json
-with open('output.json', 'w') as f:
-    json.dump(output_data, f, indent=4)
+    return response
+
+def process_issues(issues):
+    # This function processes the issues from JIR
+    total_issues_processed = 0
+
+    for issue in issues:
+        try:
+            description = issue.fields.description if issue.fields.description else None
+
+            data_to_send = {
+                "issue": {
+                    "key": issue.key,
+                    "fields": {
+                        "summary": issue.fields.summary,
+                        "description": description,
+                        "status": {"name": issue.fields.status.name},
+                        "issuetype": {"name": issue.fields.issuetype.name},
+                        "self": issue.self,
+                    },
+                    "lastChangeType": "",
+                    "self": issue.self,
+                },
+                "user": {"displayName": issue.fields.creator.displayName},
+            }
+
+            response = send_to_port(data_to_send, os.getenv('PORT_URL')) ## Your WEBHOOK_URL after creating the Port Webhook
+            if response.status_code == 202:
+                total_issues_processed += 1
+
+        except Exception as e:
+            print(f"Error processing issue {issue.key}: {str(e)}")
+
+    return total_issues_processed
+
+def main():
+    jira_server = os.getenv('JIRA_SERVER')  ## This is your Jira Domain https://{your_domain}.atlassian.net
+    username = os.getenv('USERNAMES')
+    api_token = os.getenv('API_TOKEN')
+    status_list = ["In Progress", "To Do"]
+    status = ','.join(f'"{s}"' for s in status_list)
+
+    jira = authenticate_with_jira(jira_server, username, api_token)
+
+    start_at = 0
+    max_results = 20
+    total_issues_processed = 0
+
+    while True:
+        issues = jira.search_issues(f'status in ({status})', startAt=start_at, maxResults=max_results)
+        if not issues:
+            break
+
+        total_issues_processed += process_issues(issues)
+        start_at += max_results
+
+    print(f"Total issues processed: {total_issues_processed}")
+
+if __name__ == "__main__":
+    main()
+
 
 ```
