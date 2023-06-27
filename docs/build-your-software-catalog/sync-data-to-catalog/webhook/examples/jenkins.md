@@ -53,13 +53,13 @@ In order to view the different payloads and events available in Jenkins webhooks
 
 Done! any changes to a job or build process (queued, started, completed, finalized etc.) will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
 
-## Let's Test It
+## Test the webhook
 
-In this section, we'll explore the webhook event data that is sent from Jenkins whenever a job is created. We'll also delve into how the entity is finally created in Port by using the webhook configuration.
+This section includes a sample webhook event sent from Jenkins when jobs and builds are created. In addition, it also includes the entity created from the event based on the webhook configuration provided in the previous section.
 
 ### Payload
 
-The **Generic Event** plugin tracks two main objects: `item` and `run`. Below is an example of the payload structure sent to the webhook URL after a Jenkins item (job) is created:
+The **Generic Event** plugin tracks two main objects: `item` and `run`. Below is an example of the payload structure sent to the webhook URL after a Jenkins `item` (job) is created:
 
 <details>
 <summary>Jenkins job payload</summary>
@@ -121,7 +121,7 @@ The **Generic Event** plugin tracks two main objects: `item` and `run`. Below is
 
 </details>
 
-After the Jenkins job is created, the event dispatcher will track and report the `run` (build) stages from initiated, started, completed to finalized. Below is a sample payload sent to the webhook URL after the build is complete.
+After the Jenkins job is created, the event dispatcher will track and report the `run` (build) stages (initiated, started, completed, finalized). Below is a sample payload sent to the webhook URL after the build is complete.
 
 <details>
 
@@ -184,7 +184,7 @@ After the Jenkins job is created, the event dispatcher will track and report the
 
 ### Mapping Result
 
-Using the mappings defined in the webhook configuration, Port will extract the necessary properties from the Jenkins webhook payload and use the resulting data to create the job and build entities. Here is an example of the job mappings JSON data:
+The combination of the sample payload and the webhook configuration generate the following Port `jenkinsJob` entity:
 
 ```json showLineNumbers
 {
@@ -201,7 +201,7 @@ Using the mappings defined in the webhook configuration, Port will extract the n
 }
 ```
 
-Additionally, the Jenkins build entity will be created using the below mapping data:
+In addition, the following Port `jenkinsBuild` entity will also be generated:
 
 ```json showLineNumbers
 {
