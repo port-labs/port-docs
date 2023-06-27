@@ -76,13 +76,13 @@ In order to view the different payloads and structure of the events in Datadog w
 
 Done! any problem detected on your Datadog instance will trigger a webhook event. Port will parse the events according to the mapping and update the catalog entities accordingly.
 
-## Let's Test It
+## Test the webhook
 
-In this section, we'll explore the webhook event data that is received from Datadog whenever an alert is triggered. We'll also delve into how the entity is finally created in Port by using the webhook configuration.
+This section includes a sample webhook event sent from Datadog when an alert is triggered. In addition, it also includes the entity created from the event based on the webhook configuration provided in the previous section.
 
 ### Payload
 
-Below is an example of the payload structure sent to the webhook URL after a monitor or alert is created:
+Here is an example of the payload structure sent to the webhook URL when a Datadog monitor or alert is created:
 
 <details>
 <summary> Webhook event payload</summary>
@@ -114,7 +114,7 @@ Below is an example of the payload structure sent to the webhook URL after a mon
 
 ### Mapping Result
 
-Using the mappings defined in the webhook configuration, Port will extract the necessary properties from the Datadog webhook payload and use the resulting data to create the alert entities. Below is the result of the mapping:
+The combination of the sample payload and the webhook configuration generate the following Port entity:
 
 ```json showLineNumbers
 {
