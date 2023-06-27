@@ -251,6 +251,8 @@ This stage is **OPTIONAL** and is required only if you wish to pull all of your 
 
 **Benefit:** managing permissions and user access on Port.
 **Outcome:** for every user that logs in, we will automatically get their associate AzureAD groups, according to your definitions in the settings below.
+
+Important: In order to import Azure AD groups into Port, Port will require the connection app to approve the `Directory.Read.All` permission
 :::
 
 1. On the `Token configuration` tab, Click `Add groups claim`:
