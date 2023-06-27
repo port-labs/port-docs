@@ -1,6 +1,7 @@
 ```python showLineNumbers
 # Dependencies to Install
 # pip install jira
+# pip install requests
 
 from jira import JIRA
 import requests
@@ -25,7 +26,7 @@ def send_to_port(data, port_url):
     return response
 
 def process_issues(issues):
-    # This function processes the issues from JIR
+    # This function processes the issues from JIRA
     total_issues_processed = 0
 
     for issue in issues:
