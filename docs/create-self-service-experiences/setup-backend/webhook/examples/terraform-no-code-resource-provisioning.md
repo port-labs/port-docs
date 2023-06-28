@@ -2,9 +2,9 @@
 sidebar_position: 4
 ---
 
-# No-Code Resource Provisioning
+# Terraform: No-Code Resource Provisioning
 
-Port's Terraform provider, combined with Port's [self-service actions](../../../../../create-self-service-experiences/create-self-service-experiences.md) can be used to expose IaC no-code resource provisioning operations to users. These provisioning operations can automate the lifecycle of different cloud resources.
+Port's Terraform provider, combined with Port's [self-service actions](../../../create-self-service-experiences.md) can be used to expose IaC no-code resource provisioning operations to users. These provisioning operations can automate the lifecycle of different cloud resources.
 
 Working with IaC no-code resource provisioning allows developers to easily manage resources, without needing to know the underlying systems, tools, and practices (such as Terraform).
 
@@ -50,7 +50,7 @@ Now you have a running server that receives a webhook request from Port and appl
 
 To make your local machine public to Port, you can use either [ngrok](https://ngrok.com/download) or [smee](https://smee.io/).
 
-Port's [local webhook debugging guide](../../../../../create-self-service-experiences/setup-backend/webhook/local-debugging-webhook.md#creating-the-vm-create-action) contains a reference on how to work with `smee`.
+Port's [local webhook debugging guide](../local-debugging-webhook.md#creating-the-vm-create-action) contains a reference on how to work with `smee`.
 
 Otherwise, if you choose `ngrok`, run:
 
@@ -73,9 +73,9 @@ Keep the `Forwarding URL` for later use.
 
 ### Setup Port resources
 
-First, set up a [blueprint](../../../../define-your-data-model/setup-blueprint/setup-blueprint.md) for an S3 bucket in Port.
+First, set up a [blueprint](../../../../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) for an S3 bucket in Port.
 
-You can create as many [properties](../../../../define-your-data-model/setup-blueprint/properties/properties.md) as you want for the bucket, but this example keeps it lean with 4 properties - `URL`, `Bucket Name`, `Bucket ACL` and `Tags`.
+You can create as many [properties](../../../../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/properties.md) as you want for the bucket, but this example keeps it lean with 4 properties - `URL`, `Bucket Name`, `Bucket ACL` and `Tags`.
 
 <details>
 <summary> AWS bucket blueprint </summary>
@@ -198,15 +198,15 @@ Replace `<YOUR_WEBHOOK_URL>` with the URL you got earlier from Ngrok or Smee.
 Everything is ready to run the configured self-service actions.
 
 Go to the `AWS Bucket` blueprint page, and run `Create AWS Bucket`:
-![create-bucket-button.png](../../../../../../static/img/complete-use-cases/iac-templates/create-bucket-button.png)
+![create-bucket-button.png](../../../../../static/img/complete-use-cases/iac-templates/create-bucket-button.png)
 
 Fill in the name of the S3 bucket (must be globally unique!) and click `Create`:
 
-![create-bucket-form.png](../../../../../../static/img/complete-use-cases/iac-templates/create-bucket-form.png)
+![create-bucket-form.png](../../../../../static/img/complete-use-cases/iac-templates/create-bucket-form.png)
 
 Hooray! In a minute, you'll have a new S3 bucket, which is also added as a Port entity.
 
-![created-bucket.png](../../../../../../static/img/complete-use-cases/iac-templates/created-bucket.png)
+![created-bucket.png](../../../../../static/img/complete-use-cases/iac-templates/created-bucket.png)
 
 #### Change ACL (day-2 operation)
 
@@ -216,11 +216,11 @@ For example, a valid use case is to change bucket visibility from `private` to `
 
 Go to the bucket entity and choose the `Change ACL` Day-2 operation:
 
-![change-acl-button.png](../../../../../../static/img/complete-use-cases/iac-templates/change-acl-button.png)
+![change-acl-button.png](../../../../../static/img/complete-use-cases/iac-templates/change-acl-button.png)
 
 Choose the `public-read` option for `ACL`, and `Execute`:
 
-![change-acl-form.png](../../../../../../static/img/complete-use-cases/iac-templates/change-acl-form.png)
+![change-acl-form.png](../../../../../static/img/complete-use-cases/iac-templates/change-acl-form.png)
 
 `Terraform apply` will be triggered behind the scenes, and when it finishes, you will see the entity's `Bucket ACL` property updated to `public-read`.
 
@@ -230,11 +230,11 @@ Finally, you can clear your environment and delete the bucket.
 
 Go to the bucket entity and choose `Delete`:
 
-![delete-bucket-button.png](../../../../../../static/img/complete-use-cases/iac-templates/delete-bucket-button.png)
+![delete-bucket-button.png](../../../../../static/img/complete-use-cases/iac-templates/delete-bucket-button.png)
 
 Click on `Delete`:
 
-![delete-bucket-modal.png](../../../../../../static/img/complete-use-cases/iac-templates/delete-bucket-modal.png)
+![delete-bucket-modal.png](../../../../../static/img/complete-use-cases/iac-templates/delete-bucket-modal.png)
 
 Done! Your bucket will be deleted from AWS and Port.
 
