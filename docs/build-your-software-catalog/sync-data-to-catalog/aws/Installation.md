@@ -45,7 +45,6 @@ terraform apply -var 'resources=["ecs_service", "lambda", "sns", "sqs", "s3_buck
 ```
 
 :::info
-
 The above script performs the following actions:
 
 1. Creates the resource blueprints in your Port environment.
