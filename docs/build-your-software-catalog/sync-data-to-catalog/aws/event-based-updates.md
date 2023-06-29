@@ -2,7 +2,7 @@
 sidebar_position: 3
 ---
 
-# Event-based Updates
+# Event-Based Updates
 
 Our AWS integration allows you to trigger a sync of your AWS resources with Port based on real-time events (in addition to the standard scheduled sync).
 As a result, your software catalog will be updated shortly after a resource is created, updated or deleted.

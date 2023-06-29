@@ -101,7 +101,7 @@ The secret value should be in the format: `{"id":"<PORT_CLIENT_ID>","clientSecre
 </details>
 
 :::tip LAMBDA FUNCTION IAM POLICY
-By default, the exporter will be use the [default exporter policy](https://github.com/port-labs/terraform-aws-port-exporter/blob/main/defaults/policy.json).
+By default, the exporter will use the [default exporter policy](https://github.com/port-labs/terraform-aws-port-exporter/blob/main/defaults/policy.json).
 
 In order to use your custom [AWS policy](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html), create a new `policy.json` file, and pass its path to the `lambda_policy_file` variable.
 :::

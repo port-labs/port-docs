@@ -47,9 +47,9 @@ terraform apply -var 'resources=["ecs_service", "lambda", "sns", "sqs", "s3_buck
 :::info
 The above script performs the following actions:
 
-1. Creates the resources blueprints in your Port environment.
-2. Deploys the AWS exporter in your AWS environment.
-3. Setting up [Event Bridge Rules](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-rules.html) for triggering the exporter for resources updates.
+1. Creates the resource blueprints in your Port environment.
+2. Deploys the AWS exporter in your AWS environment;
+3. Setting up [Event Bridge Rules](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-rules.html) that trigger the exporter to update resources;
 4. Invokes the AWS exporter Lambda function for the first time to get the current resources state.
    :::
 
@@ -64,6 +64,8 @@ After setting up the basic configuration, the template above deploys the AWS exp
 For more information, visit the [AWS exporter module docs](../iac/terraform/modules/aws-exporter-module.md)
 
 ## Step-by-step installation
+
+The steps outlined here can be used to manually install the AWS exporter using CloudFormation.
 
 In order to deploy the application, you will need to fill in the following parameters:
 
@@ -243,9 +245,10 @@ For more details, click [here](https://docs.aws.amazon.com/serverlessrepo/latest
 
 ### Configure the AWS Exporter to run on events
 
-In addition to running on schedule, the AWS exporter can be used to act on live events, such as create, update and delete of a resource.
-
+In addition to running on schedule, the AWS exporter can be used to act on live events, such as create, update and delete of a resource in your AWS account.
 That way you can configure a resource to be synced as soon as it changed, in real time.
+
+To configure the AWS exporter to use events as triggers, follow these steps:
 
 1. Prepare an [event rule](./event-based-updates.md/#definition), based on specific events matching resources you want the AWS exporter to update in real time and save it to a Cloudformation YAML template (`template.yml`).
 
@@ -257,8 +260,6 @@ That way you can configure a resource to be synced as soon as it changed, in rea
 
 ## Further information
 
-- Refer to the [examples](./examples.md) page for practical configurations and their corresponding blueprint definitions.
-
-- Learn about more ways of [working with Cloudformation stacks](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacks.html).
-
+- Refer to the [examples](./examples.md) page for practical configurations and their corresponding blueprint definitions;
+- Learn about more ways of [working with Cloudformation stacks](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacks.html);
 - Deep-dive into the [Event-based Updates](./event-based-updates.md) machanism.
