@@ -51,7 +51,8 @@ The above script performs the following actions:
 2. Deploys the AWS exporter in your AWS environment;
 3. Setting up [Event Bridge Rules](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-rules.html) that trigger the exporter to update resources;
 4. Invokes the AWS exporter Lambda function for the first time to get the current resources state.
-   :::
+
+:::
 
 :::tip
 You can delete resources you don't want to export by removing them from the resources array in the script above.
