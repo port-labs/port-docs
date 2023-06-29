@@ -15,7 +15,7 @@ resources:
           blueprint: '"microservice"'
           properties:
             readme: file://README.md
-            repositoryUrl: .html_url
+            url: .html_url
   - kind: issue
     selector:
       query: ".pull_request == null" # JQ boolean query. If evaluated to false - skip syncing the object.
