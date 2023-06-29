@@ -38,7 +38,16 @@ Create the following blueprint definition and webhook configuration:
 
 ## Working with Port's API and Bash script
 
-Here is an example snippet showing how to integrate Port's API and webhook with your existing pipelines using bash:
+Here is an example snippet showing how to integrate Port's API and Webhook with your existing pipelines using Python and Bash:
+
+<Tabs groupId="usage" defaultValue="python" values={[
+{label: "Python", value: "python"},
+{label: "Bash", value: "bash"}
+]}>
+
+<TabItem value="bash">
+
+Create the following Bash script in your repository to create or update Port entities as part of your pipeline:
 
 <details>
 
@@ -122,3 +131,90 @@ done
 :::
 
 </details>
+</TabItem>
+
+<TabItem value="python">
+
+Create the following Python script in your repository to create or update Port entities as part of your pipeline:
+
+<details>
+
+<summary>Go Python script</summary>
+
+```python showLineNumbers
+# Dependencies to install:
+# pip install requests
+# pip install tldextract
+
+import json
+import requests
+import os
+from urllib.parse import urlparse
+
+output_filename = "output.json"
+webhook_url = os.environ.get('WEBHOOK_URL')
+SERVICE_ID = os.environ.get('SERVICE_ID')
+
+# Prepare the headers for the requests
+headers = {'Content-Type': 'application/json'}
+
+# Initialize the output file
+with open(output_filename, 'w') as f:
+    json.dump([], f)
+
+# Read the go.mod file
+with open('go.mod', 'r') as f:
+    lines = f.readlines()
+
+# Find all require blocks
+require_blocks = []
+start = -1
+for i, line in enumerate(lines):
+    if line.strip() == 'require (':
+        start = i
+    elif line.strip() == ')' and start != -1:
+        require_blocks.append(lines[start + 1:i])
+        start = -1
+
+# Process each require block
+for requires in require_blocks:
+    for require in requires:
+        parts = require.split()  # Split the line into parts
+
+        package_url = parts[0]
+        version = parts[1]
+        indirect = len(parts) > 3 and parts[2] == "//" and parts[3] == "indirect"  # Check if the package is indirect
+
+        # Parse the package name from the URL
+        package_name = os.path.basename(urlparse(package_url).path)
+
+        # Ensure package_url is in URL format
+        if not package_url.startswith('http://') and not package_url.startswith('https://'):
+            package_url = 'https://' + package_url
+
+        # Prepare the package dictionary
+        package_dict = {
+            "identifier": package_name,
+            "package_name": package_name,
+            "package_url": package_url,
+            "version": version,
+            "indirect": indirect,
+            "service" SERVICE_ID
+        }
+
+        # Append to the output file
+        with open(output_filename, 'r+') as f:
+            data = json.load(f)
+            data.append(package_dict)
+            f.seek(0)
+            json.dump(data, f, indent=4)
+
+        # Send data to the webhook
+        response = requests.post(webhook_url, headers=headers, data=json.dumps(package_dict))
+        print(response.status_code)
+
+```
+
+</details>
+</TabItem>
+</Tabs>
