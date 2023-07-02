@@ -101,12 +101,15 @@ The Email property type can be used to store any legal email address.
 resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myEmailProp"
-    title      = "My email"
-    required   = false
-    type       = "string"
-    format     = "email"
+  properties = {
+    string_prop = {
+      "myEmailProp" = {
+        title       = "My email"
+        icon        = "My icon"
+        description = "My email property"
+        format      = "email"
+      }
+    }
   }
   # highlight-end
 }
@@ -120,7 +123,7 @@ resource "port-labs_blueprint" "myBlueprint" {
 resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
+  properties = {
     identifier = "myEmailProp"
     title      = "My email"
     required   = false
@@ -144,14 +147,16 @@ resource "port-labs_blueprint" "myBlueprint" {
 resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myEmailArray"
-    title      = "My email array"
-    required   = false
-    type       = "array"
-    items = {
-      type   = "string"
-      format = "email"
+  properties = {
+    array_prop = {
+      myEmailArray = {
+        title      = "My email array"
+        identifier = "myEmailArray"
+        type       = "array"
+        string_items = {
+          format = "email"
+        }
+      }
     }
   }
   # highlight-end
