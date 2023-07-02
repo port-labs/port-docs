@@ -91,3 +91,66 @@ In order to view the different payloads and events available in Dynatrace webhoo
 :::
 
 Done! any problem detected on your Dynatrace entity will trigger a webhook event. Port will parse the events according to the mapping and update the catalog entities accordingly.
+
+## Test the webhook
+
+This section includes a sample webhook event sent from Dynatrace when a problem is detected in a resource in your account. In addition, it also includes the entity created from the event based on the webhook configuration provided in the previous section.
+
+### Payload
+
+Here is an example of the payload structure sent to the webhook URL when a problem is detected:
+
+<details>
+<summary> Webhook event payload</summary>
+
+```json showLineNumbers
+{
+  "ImpactedEntities": [
+    {
+      "type": "HOST",
+      "name": "MyHost1",
+      "entity": "HOST-Apalca"
+    },
+    {
+      "type": "SERVICE",
+      "name": "MyService1",
+      "entity": "SERVICE-Apalca"
+    }
+  ],
+  "ImpactedEntity": "MyHost1, MyService1",
+  "PID": "99999",
+  "ProblemDetailsText": "Dynatrace problem notification test run details",
+  "ProblemID": "999",
+  "ProblemImpact": "INFRASTRUCTURE",
+  "ProblemTitle": "Dynatrace problem notification test run",
+  "ProblemURL": "https://example.com",
+  "State": "OPEN",
+  "ProblemTags": "testtag1, testtag2",
+  "ProblemSeverity": "PERFORMANCE"
+}
+```
+
+</details>
+
+### Mapping Result
+
+The combination of the sample payload and the webhook configuration generate the following Port entities:
+
+```json showLineNumbers
+{
+  "identifier": "99999",
+  "title": "Dynatrace problem notification test run",
+  "blueprint": "dynatraceProblem",
+  "properties": {
+    "state": "OPEN",
+    "impact": "INFRASTRUCTURE",
+    "url": "https://example.com",
+    "details": "Dynatrace problem notification test run details",
+    "severity": "PERFORMANCE",
+    "tags": ["testtag1", "testtag2"]
+  },
+  "relations": {
+    "microservice": ["HOST-Apalca", "SERVICE-Apalca"]
+  }
+}
+```
