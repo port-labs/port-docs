@@ -20,7 +20,7 @@ terraform {
   required_providers {
     port-labs = {
       source  = "port-labs/port-labs"
-      version = "~> 0.10.3"
+      version = "~> 1.0.0"
     }
   }
 }
@@ -42,23 +42,27 @@ resource "port-labs_blueprint" "component" {
   title      = "Component"
 
   properties {
-    identifier = "type"
-    title      = "Type"
-    required   = false
-    type       = "string"
-    enum       = ["service", "library"]
-    enum_colors = {
-      "service" = "blue",
-      "library" = "green"
+    string_prop = {
+      "type" = {
+        title      = "Type"
+        required   = false
+        type       = "string"
+        enum       = ["service", "library"]
+        enum_colors = {
+          "service" = "blue",
+          "library" = "green"
+        }
+      }
     }
   }
 
-  relations {
-    identifier = "system"
+  relations = {
+  "system" = {
     target     = "system"
     required   = false
     many       = false
     title      = "System"
+    }
   }
   relations {
     identifier = "resource"
@@ -401,7 +405,7 @@ terraform {
   required_providers {
     port-labs = {
       source  = "port-labs/port-labs"
-      version = "~> 0.10.3"
+      version = "~> 1.0.0"
     }
   }
 }

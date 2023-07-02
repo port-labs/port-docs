@@ -81,18 +81,23 @@ resource "port-labs_entity" "myEntity" {
 
 # highlight-start
   properties {
-    name  = "myStringProp"
-    value = "My string"
+    string_prop = {
+      "myStringProp" = "My string"
+     }
   }
 
   properties {
-    name  = "myNumberProp"
-    value = 7
+    number_prop = {
+      "myNumberProp" = 7
+    }
   }
 
   properties {
-    name  = "myArrayProp"
-    items = [1,2,3]
+    array_prop = {
+      string_items = {
+        "myArrayProp" = ["a", "b", "c"]
+      }
+    }
   }
  # highlight-end
 
@@ -254,36 +259,6 @@ properties {
 
 </Tabs>
 
-The following parameters are **required**:
-
-- `name` - the name of the property in the [blueprint definition](../../../define-your-data-model/setup-blueprint/properties/properties.md#structure);
-- `value` - the value of the property (for non-array properties);
-- `items` - an array of values (for array properties).
-
-:::note
-
-To set a default value, use the object keyword `default_value` with the desired value as the key. For example:
-
-```hcl showLineNumbers
-properties {
-  name = "myStringProp"
-  default_value = {
-    "value": "My string"
-  }
-}
-```
-
-To set default values for array properties, use the `default_items` keyword with the desired array as its value. For example:
-
-```hcl showLineNumbers
-properties {
-name = "myArrayProp"
-default_items = [1,2,3]
-}
-```
-
-:::
-
 ### `relations` schema
 
 The [`relations`](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/entity#relations) schema maps a target entity to the source entity definition:
@@ -299,13 +274,15 @@ resource "port-labs_entity" "myEntity" {
 
 # highlight-start
   relations {
-    name  = "myRelation"
-    identifier = "myTargetEntityIdentifier"
+    single_relation = {
+    "mySingleRelation" = "myTargetEntityIdentifier"
+    }
   }
 
   relations {
-    name  = "myAdditionalManyRelation"
-    identifiers = ["myAdditionalTargetEntityIdentifier", myAdditionalTargetEntityIdentifier2"]
+    many_relation = {
+      "myManyRelation" = ["myTargetEntityIdentifier", "myTargetEntityIdentifier2"]
+    }
   }
  # highlight-end
 }
@@ -320,19 +297,31 @@ resource "port-labs_entity" "myEntity" {
 
 <TabItem value="single">
 
-The following parameters are **required**:
+the schema is as follows:
 
-- `name` - the `identifier` of the [relation](../../../define-your-data-model/relate-blueprints/relate-blueprints.md#structure-table) in the blueprint definition;
-- `identifier` - the identifier of the target entity.
+```hcl showLineNumbers
+relations {
+  single_relation = {
+    # Key-value pair of the relation identifier and the target identifier
+    "mySingleRelation" = "myTargetEntityIdentifier"
+  }
+}
+```
 
 </TabItem>
 
 <TabItem value="many">
 
-The following parameters are **required**:
+the schema is as follows:
 
-- `name` - the `identifier` of the [relation](../../../define-your-data-model/relate-blueprints/relate-blueprints.md#structure-table) in the blueprint definition;
-- `identifiers` - the identifiers of the target entities.
+```hcl showLineNumbers
+relations {
+  many_relations = {
+    # Key-value pair of the relation identifier and the target identifiers
+    "myManyRelation" = ["myTargetEntityIdentifier", "myTargetEntityIdentifier2"]
+  }
+}
+```
 
 </TabItem>
 
@@ -358,25 +347,24 @@ resource "port-labs_entity" "myEntity" {
   title      = "My Entity"
   blueprint  = "myBlueprint"
 
-  properties {
-    name  = "myStringProp"
-    value = "Example microservice"
-  }
-  properties {
-    name  = "myNumberProp"
-    value = 1
-  }
-  properties {
-    name  = "myArrayProp"
-    items = ["#rnd", "#deployments"]
-  }
-  properties {
-    name  = "myObjectProp"
-    value = jsonencode({ "foo" : "bar" })
-  }
-  properties {
-    name  = "myBoolProp"
-    value = true
+  properties = {
+    "string_prop" = {
+      "myStringProp" = "My string"
+    }
+    "number_prop" = {
+      "myNumberProp" = 7
+    }
+    "boolean_prop" = {
+      "myBooleanProp" = true
+    }
+    "object_prop" = {
+      "myObjectProp" = jsonencode({ "my" : "object" })
+    }
+    "array_prop" = {
+    "string_prop" = {
+        "myArrayProp" = ["a", "b", "c"]
+      }
+    }
   }
 }
 ```

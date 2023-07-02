@@ -75,7 +75,7 @@ terraform {
   required_providers {
     port-labs = {
       source  = "port-labs/port-labs"
-      version = "~> 0.10.3"
+      version = "~> 1.0.0"
     }
   }
 }
@@ -90,35 +90,30 @@ resource "port-labs_blueprint" "developer_environment" {
   icon       = "Environment"
   title      = "Developer Environment"
 
-  properties {
-    identifier = "bucketUrl"
-    title      = "Bucket URL"
-    required   = false
-    type       = "string"
-    format     = "url"
-  }
-
-  properties {
-    identifier = "queueUrl"
-    title      = "Queue URL"
-    required   = false
-    type       = "string"
-    format     = "url"
-  }
-
-  properties {
-    identifier = "lambdaUrl"
-    title      = "Lambda URL"
-    required   = false
-    type       = "string"
-    format     = "url"
-  }
-
-  properties {
-    identifier = "memorySize"
-    title      = "Memory Size"
-    required   = false
-    type       = "number"
+  properties = {
+    string_prop = {
+      "bucketUrl" = {
+        title = "Bucket URL"
+        format = "url"
+        required   = false
+      }
+      "queueUrl" = {
+        title = "Queue URL"
+        format = "url"
+        required   = false
+      }
+      "lambdaUrl" = {
+        title = "Lambda URL"
+        format = "url"
+        required   = false
+      }
+    }
+    number_prop = {
+      "memorySize" = {
+        title = "Memory Size"
+        required   = false
+      }
+    }
   }
 }
 ```
@@ -137,7 +132,7 @@ terraform {
   required_providers {
     port-labs = {
       source  = "port-labs/port-labs"
-      version = "~> 0.10.3"
+      version = "~> 1.0.0"
     }
   }
 }
@@ -230,24 +225,15 @@ resource "port-labs_entity" "dev_env" {
   title      = aws_lambda_function.port_terraform_example_dev_env_lambda.function_name
   blueprint  = "developerEnvironment"
 
-  properties {
-    name  = "bucketUrl"
-    value = "https://${aws_s3_bucket.port_terraform_example_dev_env_bucket.bucket_domain_name}"
-  }
-
-  properties {
-    name  = "queueUrl"
-    value = aws_sqs_queue.port_terraform_example_dev_env_queue.id
-  }
-
-  properties {
-    name  = "lambdaUrl"
-    value = aws_lambda_function_url.example_function_url.function_url
-  }
-
-  properties {
-    name  = "memorySize"
-    value = aws_lambda_function.port_terraform_example_dev_env_lambda.memory_size
+  properties = {
+    string_prop = {
+      "bucketUrl" = "https://${aws_s3_bucket.port_terraform_example_dev_env_bucket.bucket_domain_name}"
+      "queueUrl"  = aws_sqs_queue.port_terraform_example_dev_env_queue.id
+      "lambdaUrl" = aws_lambda_function_url.example_function_url.function_url
+    }
+    number_prop = {
+      "memorySize" = aws_lambda_function.port_terraform_example_dev_env_lambda.memory_size
+    }
   }
 }
 
@@ -277,7 +263,7 @@ terraform {
   required_providers {
     port-labs = {
       source  = "port-labs/port-labs"
-      version = "~> 0.10.3"
+      version = "~> 1.0.0"
     }
   }
 }
@@ -387,19 +373,12 @@ resource "port-labs_entity" "dev_env" {
   title      = aws_lambda_function.port_terraform_example_dev_env_lambda.function_name
   blueprint  = "developerEnvironment"
 
-  properties {
-    name  = "bucketUrl"
-    value = "https://${aws_s3_bucket.port_terraform_example_dev_env_bucket.bucket_domain_name}"
-  }
-
-  properties {
-    name  = "queueUrl"
-    value = aws_sqs_queue.port_terraform_example_dev_env_queue.id
-  }
-
-  properties {
-    name  = "lambdaUrl"
-    value = aws_lambda_function_url.example_function_url.function_url
+  properties = {
+    string_prop = {
+      "bucketName" = aws_s3_bucket.port_terraform_example_dev_env_bucket.id
+      "queueUrl"   = aws_sqs_queue.port_terraform_example_dev_env_queue.id
+      "lambdaUrl" = aws_lambda_function_url.example_function_url.function_url
+    }
   }
 }
 ```

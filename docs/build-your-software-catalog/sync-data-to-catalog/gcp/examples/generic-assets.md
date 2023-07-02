@@ -18,7 +18,7 @@ terraform {
   required_providers {
     port-labs = {
       source  = "port-labs/port-labs"
-      version = "~> 0.10.3"
+      version = "~> 1.0.0"
     }
     google-beta = {
       source  = "hashicorp/google-beta"
@@ -339,7 +339,7 @@ terraform {
   required_providers {
     port-labs = {
       source  = "port-labs/port-labs"
-      version = "~> 0.10.3"
+      version = "~> 1.0.0"
     }
     google-beta = {
       source  = "hashicorp/google-beta"
