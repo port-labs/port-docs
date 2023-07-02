@@ -40,131 +40,106 @@ resource "port-labs_blueprint" "myBlueprint" {
   icon       = "Microservice"
   title      = "Test Docs"
 
-  properties {
-    identifier = "myStringProp"
-    title      = "My string"
-    required   = false
-    type       = "string"
+  properties = {
+    string_prop = {
+      "myStringProp" = {
+        title      = "My string"
+        required   = false
+      }
+      "myUrlProp" = {
+        title      = "My url"
+        required   = false
+        format     = "url"
+      }
+      "myEmailProp" = {
+        title      = "My email"
+        required   = false
+        format     = "email"
+      }
+      "myUserProp" = {
+        title      = "My user"
+        required   = false
+        format     = "user"
+      }
+      "myTeamProp" = {
+        title      = "My team"
+        required   = false
+        format     = "team"
+      }
+      "myDatetimeProp" = {
+        title      = "My datetime"
+        required   = false
+        format     = "date-time"
+      }
+      "myYAMLProp" = {
+        title      = "My YAML"
+        required   = false
+        format     = "yaml"
+      }
+      "myTimerProp" = {
+        title      = "My timer"
+        required   = false
+        format     = "timer"
+      }
+    }
+    number_prop = {
+      "myNumberProp" = {
+        title      = "My number"
+        required   = false
+      }
+    }
+    boolean_prop = {
+      "myBooleanProp" = {
+        title      = "My boolean"
+        required   = false
+      }
+    }
+    object_prop = {
+      "myObjectProp" = {
+        title      = "My object"
+        required   = false
+      }
+    }
+    array_prop = {
+      "myArrayProp" = {
+        title      = "My array"
+        required   = false
+      }
+    }
   }
 
-  properties {
-    identifier = "myNumberProp"
-    title      = "My number"
-    required   = false
-    type       = "number"
+  mirror_properties = {
+    "myMirrorProp" = {
+      title      = "My mirror property"
+      path       = "myRelation.myStringProp"
+    }
+    "myMirrorPropWithMeta" = {
+      title      = "My mirror property of meta property"
+      path       = "myRelation.$identifier"
+    }
   }
 
-  properties {
-    identifier = "myBooleanProp"
-    title      = "My boolean"
-    required   = false
-    type       = "boolean"
+  calculation_properties = {
+    "myCalculation" = {
+      title       = "My calculation property"
+      calculation = ".properties.myStringProp + .properties.myStringProp"
+      type        = "string"
+    }
+    # Calculation property making use of meta-properties
+    "myCalculationWithMeta" = {
+      title       = "My calculation property with meta properties"
+      calculation = ".identifier + \"-\" + .title + \"-\" + .properties.myStringProp"
+      type        = "string"
+    }
   }
 
-  properties {
-    identifier = "myObjectProp"
-    title      = "My object"
-    required   = false
-    type       = "object"
-  }
-
-  properties {
-    identifier = "myArrayProp"
-    title      = "My array"
-    required   = false
-    type       = "array"
-  }
-
-  properties {
-    identifier = "myUrlProp"
-    title      = "My url"
-    required   = false
-    type       = "string"
-    format     = "url"
-  }
-
-  properties {
-    identifier = "myEmailProp"
-    title      = "My email"
-    required   = false
-    type       = "string"
-    format     = "email"
-  }
-
-  properties {
-    identifier = "myUserProp"
-    title      = "My user"
-    required   = false
-    type       = "string"
-    format     = "user"
-  }
-
-  properties {
-    identifier = "myTeamProp"
-    title      = "My team"
-    required   = false
-    type       = "string"
-    format     = "team"
-  }
-
-  properties {
-    identifier = "myDatetimeProp"
-    title      = "My datetime"
-    required   = false
-    type       = "string"
-    format     = "date-time"
-  }
-
-  properties {
-    identifier = "myTimerProp"
-    title      = "My timer"
-    required   = false
-    type       = "string"
-    format     = "timer"
-  }
-
-  properties {
-    identifier = "myYAMLProp"
-    title      = "My yaml"
-    required   = false
-    type       = "string"
-    format     = "yaml"
-  }
-
-  mirror_properties {
-    identifier = "myMirrorProp"
-    title      = "My mirror property"
-    path       = "myRelation.myStringProp"
-  }
-
-  # Mirror property of a meta-property
-  mirror_properties {
-    identifier = "myMirrorPropWithMeta"
-    title      = "My mirror property of meta property"
-    path       = "myRelation.$identifier"
-  }
-
-  calculation_properties {
-    identifier  = "myCalculation"
-    title       = "My calculation property"
-    calculation = ".properties.myStringProp + .properties.myStringProp"
-    type        = "string"
-  }
-
-  # Calculation property making use of meta-properties
-  calculation_properties {
-    identifier  = "myCalculationWithMeta"
-    title       = "My calculation property with meta properties"
-    calculation = ".identifier + \"-\" + .title + \"-\" + .properties.myStringProp"
-    type        = "string"
-  }
-
-  relations {
-    target     = port-labs_blueprint.other.identifier
-    title      = "myRelation"
-    identifier = "myRelation"
-    many       = false
-    required   = false
+  relations = {
+    "myRelation" = {
+      target     = port-labs_blueprint.other.identifier
+      title      = "myRelation"
+      many       = false
+      required   = false
+    }
   }
 }
 
@@ -174,11 +149,13 @@ resource "port-labs_blueprint" "other" {
   icon       = "Microservice"
   title      = "Test Docs Relation"
 
-  properties {
-    identifier = "myStringProp"
-    title      = "My string"
-    required   = false
-    type       = "string"
+  properties = {
+    string_prop = {
+      "myStringProp" = {
+        title      = "My string"
+        required   = false
+      }
+    }
   }
 }
 ```
