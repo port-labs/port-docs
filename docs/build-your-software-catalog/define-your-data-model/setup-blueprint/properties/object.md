@@ -87,11 +87,15 @@ In this [live demo](https://demo.getport.io/cloudResources) example, we can see 
 resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myObjectProp"
-    title      = "My object"
-    required   = false
-    type       = "object"
+  properties = {
+    object_prop = {
+      "myObjectProp" = {
+        title      = "My object"
+        icon       = "My icon"
+        description = "My object property"
+        default    = jsonencode({myKey = "myValue"})
+      }
+    }
   }
   # highlight-end
 }

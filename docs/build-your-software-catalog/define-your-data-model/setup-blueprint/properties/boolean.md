@@ -48,11 +48,13 @@ In this [live demo](https://demo.getport.io/packages) example, we can see the `I
 resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myBooleanProp"
-    title      = "My boolean"
-    required   = false
-    type       = "boolean"
+  properties = {
+    boolean_prop = {
+      "myBooleanProp" = {
+        title      = "My boolean"
+        required   = true
+      }
+    }
   }
   # highlight-end
 }
