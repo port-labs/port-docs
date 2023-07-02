@@ -64,12 +64,16 @@ In this [live demo](https://demo.getport.io/developerEnvs) example, we can see t
 resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myTimerProp"
-    title      = "My timer"
-    required   = false
-    type       = "string"
-    format     = "timer"
+  properties = {
+    string_prop = {
+      "myTimerProp" = {
+        title       = "My timer"
+        icon        = "My icon"
+        description = "My timer property"
+        format      = "timer"
+        default     = "2022-04-18T11:44:15.345Z"
+      }
+    }
   }
   # highlight-end
 }

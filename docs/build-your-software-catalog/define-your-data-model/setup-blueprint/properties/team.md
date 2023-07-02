@@ -85,12 +85,14 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `T
 resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myTeamProp"
-    title      = "My team"
-    required   = false
-    type       = "string"
-    format     = "team"
+  properties = {
+    string_prop = {
+      myTeamProp = {
+        title    = "My team"
+        required = false
+        format   = "team"
+      }
+    }
   }
   # highlight-end
 }
@@ -104,17 +106,19 @@ resource "port-labs_blueprint" "myBlueprint" {
 resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myTeamArray"
-    title      = "My team array"
-    required   = false
-    type       = "array"
-    items = {
-      type   = "string"
-      format = "user"
+  properties = {
+    array_prop = {
+      myTeamArray = {
+        title    = "My team array"
+        required = false
+        type     = "array"
+        string_items = {
+          format = "user"
+        }
+      }
     }
+    # highlight-end
   }
-  # highlight-end
 }
 ```
 

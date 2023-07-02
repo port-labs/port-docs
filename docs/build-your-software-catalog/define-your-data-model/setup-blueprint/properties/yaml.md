@@ -86,12 +86,14 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `H
 resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myYAMLProp"
-    title      = "My yaml"
-    required   = false
-    type       = "string"
-    format     = "yaml"
+  properties = {
+    string_prop = {
+      "myYAMLProp" = {
+        title      = "My yaml"
+        required   = false
+        format     = "yaml"
+      }
+    }
   }
   # highlight-end
 }
@@ -104,14 +106,16 @@ resource "port-labs_blueprint" "myBlueprint" {
 resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myYamlArray"
-    title      = "My yaml array"
-    required   = false
-    type       = "array"
-    items = {
-      type   = "string"
-      format = "yaml"
+  properties = {
+    array_prop = {
+      "myYamlArray" = {
+        identifier = "myYamlArray"
+        title      = "My yaml array"
+        required   = false
+        string_items = {
+          format = "yaml"
+        }
+      }
     }
   }
   # highlight-end
