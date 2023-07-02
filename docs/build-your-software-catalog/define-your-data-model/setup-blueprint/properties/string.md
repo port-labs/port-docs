@@ -106,11 +106,13 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `L
 resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myStringProp"
-    title      = "My string"
-    required   = false
-    type       = "string"
+  properties = {
+    string_prop = {
+      "myStringProp" = {
+        title      = "My string"
+        required   = false
+      }
+    }
   }
   # highlight-end
 }
@@ -124,15 +126,17 @@ resource "port-labs_blueprint" "myBlueprint" {
 resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myStringProp"
-    title      = "My string"
-    required   = false
-    type       = "string"
-    enum       = ["my-option-1", "my-option-2"]
-    enum_colors = {
-      "my-option-1" = "red"
-      "my-option-2" = "green"
+  properties = {
+    string_prop = {
+      "myStringProp" = {
+        title      = "My string"
+        required   = false
+        enum       = ["my-option-1", "my-option-2"]
+        enum_colors = {
+          "my-option-1" = "red"
+          "my-option-2" = "green"
+        }
+      }
     }
   }
   # highlight-end
@@ -148,15 +152,21 @@ resource "port-labs_blueprint" "myBlueprint" {
 resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myStringArray"
-    title      = "My string array"
-    type       = "array"
-    items = {
-      type = "string"
+  properties = {
+    array_prop = {
+      "myStringArray" = {
+        title        = "My string array"
+        string_items = {} # Pass an empty object only sets the type to string
+      }
+      "myStringArrayWithDefault" = {
+        title = "My string array with default"
+        string_items = {
+          default = ["my-default-1", "my-default-2"]
+        }
+      }
     }
+    # highlight-end
   }
-  # highlight-end
 }
 
 ```
