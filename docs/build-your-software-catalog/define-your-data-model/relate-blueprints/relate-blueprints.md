@@ -250,12 +250,13 @@ resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # ...user-defined properties
   # highlight-start
-  relations {
-    identifier = "myRelation"
-    title      = "My relation"
-    target     = "myTargetBlueprint"
-    required   = false
-    many       = true
+  relations = {
+    "myRelation" = {
+      title    = "My title"
+      target   = "My target blueprint"
+      required = true
+      many     = false
+    }
   }
   # highlight-end
 }
