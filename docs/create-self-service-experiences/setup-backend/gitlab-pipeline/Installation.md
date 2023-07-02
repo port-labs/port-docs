@@ -4,17 +4,26 @@ sidebar_position: 1
 
 # Installation
 
-GitLab pipelines triggering can be done using [Port's execution agent](../port-execution-agent/port-execution-agent.md).
+GitLab pipelines can be triggered using [Port's execution agent](../port-execution-agent/port-execution-agent.md).
 
-Let's install the agent for GitLab pipelines triggering.
+Let's install the agent and configure it to trigger GitLab pipelines.
 
-:::note prerequisites
+## Prerequisites
 
 - [Helm](https://helm.sh) must be installed to use the chart. Please refer to
-  Helm's [documentation](https://helm.sh/docs) for further details on the installation.
-- The connection credentials to Kafka are provided to you by Port.
-- If you want to trigger a GitLab Pipeline, you need to have a [GitLab trigger token](https://docs.gitlab.com/ee/ci/triggers/)
+  Helm's [documentation](https://helm.sh/docs) for further details on the installation;
+- The connection credentials to Kafka are provided to you by Port;
+- If you want to trigger a GitLab Pipeline, you need to have a [GitLab trigger token](https://docs.gitlab.com/ee/ci/triggers/).
 
+:::important Trigger Tokens
+
+In order to trigger your GitLab Pipeline you need to provide a GitLab [trigger token](https://docs.gitlab.com/ee/ci/triggers/#create-a-trigger-token) as an environment variable.
+
+To provide the trigger token to the agent, pass the helm chart an environment variable with a name that is the combination of the `GitLab group` and `GitLab project` separated by an underscore (`_`)
+
+For example: `group_project=token`
+
+You can load multiple trigger tokens, for different groups and projects in your GitLab environment.
 :::
 
 1. Add Port's Helm repo by using the following command:
@@ -40,18 +49,6 @@ helm install my-port-agent port-labs/port-agent \
     --set env.secret.<YOUR GITLAB GROUP>_<YOUR GITLAB PROJECT>=YOUR_GITLAB_TOKEN
 ```
 
-### Trigger Tokens
-
-In order to trigger your GitLab Pipeline you need to provide a GitLab [trigger token](https://docs.gitlab.com/ee/ci/triggers/#create-a-trigger-token) as an environment variable.
-
-To provide the trigger token to the agent, pass the helm chart an environment variable with a name that is the combination of the `GitLab group` and `GitLab project` separated by an underscore (`_`)
-
-For example: `group_project=token`
-
-:::note
-You can load multiple trigger tokens, for different groups and projects in your GitLab environment.
-:::
-
 ### Self Hosted GitLab
 
 If you are using a private GitLab environment, pass the `GITLAB_URL` environment variable to your Port agent installation:
@@ -60,4 +57,4 @@ If you are using a private GitLab environment, pass the `GITLAB_URL` environment
 --set env.normal.GITLAB_URL
 ```
 
-Done! **Port Agent** is now running in your environment and will trigger any GitLab pipeline that you've configured.
+Done! **Port's execution agent** is now running in your environment and will trigger any GitLab pipeline that you have configured.
