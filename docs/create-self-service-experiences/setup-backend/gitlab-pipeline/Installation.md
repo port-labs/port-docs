@@ -26,6 +26,8 @@ For example: `group_project=token`
 You can load multiple trigger tokens, for different groups and projects in your GitLab environment.
 :::
 
+## Installing the agent
+
 1. Add Port's Helm repo by using the following command:
 
 ```bash showLineNumbers
