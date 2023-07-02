@@ -67,11 +67,13 @@ resource "port-labs_blueprint" "s3_bucket" {
   icon       = "Bucket"
   title      = "S3 Bucket"
 
-  properties {
-    identifier = "isPrivate"
-    title      = "Is private?"
-    required   = false
-    type       = "boolean"
+  properties = {
+    boolean_prop = {
+      isPrivate = {
+        title      = "Is private?"
+        required   = false
+      }
+    }
   }
 }
 ```
@@ -124,9 +126,10 @@ resource "port-labs_entity" "s3_bucket" {
   title      = aws_s3_bucket.port-terraform-example-bucket.bucket
   blueprint  = "s3Bucket"
 
-  properties {
-    name  = "isPrivate"
-    value = aws_s3_bucket_acl.port-terraform-example-bucket-acl.acl == "private" ? true : false
+  properties = {
+    string_prop = {
+      "isPrivate" = aws_s3_bucket_acl.port-terraform-example-bucket-acl.acl == "private" ? true : false
+    }
   }
 }
 ```
@@ -203,9 +206,10 @@ resource "port-labs_entity" "s3_bucket" {
   title      = aws_s3_bucket.port-terraform-example-bucket.bucket
   blueprint  = "s3Bucket"
 
-  properties {
-    name  = "isPrivate"
-    value = aws_s3_bucket_acl.port-terraform-example-bucket-acl.acl == "private" ? true : false
+  properties = {
+    string_prop = {
+      "isPrivate" = aws_s3_bucket_acl.port-terraform-example-bucket-acl.acl == "private" ? true : false
+    }
   }
 }
 ```
@@ -225,9 +229,10 @@ Continue reading to learn how to make updates and how to cleanup.
 Notice how we defined the `isPrivate` property of the bucket entity:
 
 ```hcl showLineNumbers
-properties {
-    name  = "isPrivate"
-    value = aws_s3_bucket_acl.port-terraform-example-bucket-acl.acl == "private" ? true : false
+properties = {
+    string_prop = {
+      "isPrivate" = aws_s3_bucket_acl.port-terraform-example-bucket-acl.acl == "private" ? true : false
+    }
 }
 ```
 
