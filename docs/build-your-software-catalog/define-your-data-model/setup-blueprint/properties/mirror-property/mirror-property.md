@@ -76,10 +76,11 @@ The `path` key receives a path of chained relations, which lead up to a blueprin
 resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  mirror_properties {
-    identifier = "myMirrorProp"
-    title      = "My mirror property"
-    path       = "myRelation.myProperty"
+  mirror_properties = {
+    myMirrorProp = {
+      title = "My mirror property"
+      path  = "myRelation.myProperty"
+    }
   }
   # highlight-end
 }
