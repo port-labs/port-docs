@@ -39,7 +39,7 @@ The following section outlines how to use the mapper script to send data from th
 ### Script Usage
 
 1. Copy the script into a file in the root of your Java project. Make sure your `pom.xml` file is also located in the root of the project;
-2. Make the script executable. For instance, if you named the script `parse_and_send.sh`, you would use the following command;
+2. Make the script executable. For instance, if you named the script `parse_and_send.sh`, you would use the following command:
 
    ```bash showLineNumbers
    chmod +x parse_and_send.sh
@@ -51,4 +51,4 @@ The following section outlines how to use the mapper script to send data from th
    ./parse_and_send.sh
    ```
 
-Done! After the script has run, it will automatically injest Maven dependencies into Port via HTTP Request
+Done! After the script has run, it will automatically injest Maven dependencies into Port via HTTP Requests
