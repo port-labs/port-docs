@@ -2673,8 +2673,8 @@ In this step-by-step example, you will export your `CloudFormation Stacks` to Po
 
 You may use the following definition:
 
-   <details>
-   <summary> CloudFormationStack blueprint </summary>
+    <details>
+    <summary> CloudFormationStack blueprint </summary>
 
 ```json showLineNumbers
 {
@@ -2767,141 +2767,141 @@ You may use the following definition:
 }
 ```
 
-   </details>
+    </details>
 
 2. Upload the `config.json` file to the exporter's S3 bucket:
 
-   <details>
-   <summary> Port AWS exporter config.json </summary>
+    <details>
+    <summary> Port AWS exporter config.json </summary>
 
-```json showLineNumbers
-{
-  "kind": "AWS::CloudFormation::Stack",
-  "port": {
-    "entity": {
-      "mappings": [
-        {
-          "identifier": ".StackName",
-          "title": ".StackName",
-          "blueprint": "cloudFormationStack",
-          "properties": {
-            "lastUpdated": ".LastUpdatedTime",
-            "resources": ".StackResources",
-            "createdAt": ".CreationTime",
-            "status": ".StackStatus",
-            "link": "\"https://console.aws.amazon.com/go/view?arn=\" + .StackId",
-            "template": ".TemplateBody",
-            "tags": ".Tags"
-          }
-        }
-      ]
-    }
-  }
-}
-```
+   ```json showLineNumbers
+   {
+     "kind": "AWS::CloudFormation::Stack",
+     "port": {
+       "entity": {
+         "mappings": [
+           {
+             "identifier": ".StackName",
+             "title": ".StackName",
+             "blueprint": "cloudFormationStack",
+             "properties": {
+               "lastUpdated": ".LastUpdatedTime",
+               "resources": ".StackResources",
+               "createdAt": ".CreationTime",
+               "status": ".StackStatus",
+               "link": "\"https://console.aws.amazon.com/go/view?arn=\" + .StackId",
+               "template": ".TemplateBody",
+               "tags": ".Tags"
+             }
+           }
+         ]
+       }
+     }
+   }
+   ```
 
    </details>
 
 3. Update the exporter's `IAM policy`:
 
-   <details>
-   <summary> IAM Policy </summary>
+    <details>
+    <summary> IAM Policy </summary>
 
-```json showLineNumbers
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "VisualEditor0",
-      "Effect": "Allow",
-      "Action": [
-        "cloudformation:DescribeStacks",
-        "cloudformation:DescribeStackResources",
-        "cloudformation:ListStacks",
-        "cloudformation:GetTemplate"
-      ],
-      "Resource": "*"
-    }
-  ]
-}
-```
+   ```json showLineNumbers
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Sid": "VisualEditor0",
+         "Effect": "Allow",
+         "Action": [
+           "cloudformation:DescribeStacks",
+           "cloudformation:DescribeStackResources",
+           "cloudformation:ListStacks",
+           "cloudformation:GetTemplate"
+         ],
+         "Resource": "*"
+       }
+     ]
+   }
+   ```
 
-   </details>
+    </details>
 
 4. Optional: Create 2 event rules to trigger automatic syncing of changes in CloudFormation Stacks.
 
 You may use the following CloudFormation Template:
 
-   <details>
-   <summary> Event Rule CloudFormation Template </summary>
+    <details>
+    <summary> Event Rule CloudFormation Template </summary>
 
-    ```yaml showLineNumbers
-    EventRule0:
-    Type: AWS::Events::Rule
-    Properties:
-      EventBusName: default
-      EventPattern:
-        detail-type:
-          - AWS API Call via CloudTrail
-        source:
-          - aws.cloudformation
-        detail:
-          eventSource:
-            - cloudformation.amazonaws.com
-          eventName:
-            - prefix: CreateStack
-            - prefix: UpdateStack
-            - prefix: DeleteStack
-      Name: port-aws-exporter-sync-cloudformation-trails
-      State: ENABLED
-      Targets:
-        - Id: PortAWSExporterEventsQueue
-          Arn:
-            Fn::ImportValue:
-              Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
-          InputTransformer:
-            InputPathsMap:
-              eventName: $.detail.eventName
-              awsRegion: $.detail.awsRegion
-              stackName: $.detail.requestParameters.stackName
-            InputTemplate: |-
-              {
-                  "resource_type": "AWS::CloudFormation::Stack",
-                  "region": "\"<awsRegion>\"",
-                  "identifier": "if \"<stackName>\" | startswith(\"arn:\") then \"<stackName>\" | split(\"/\")[1] else \"<stackName>\" end",
-                  "action": "if \"<eventName>\" | test(\"DeleteStack[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
-              }
-    EventRule1:
-      Type: AWS::Events::Rule
-      Properties:
-        EventBusName: default
-        EventPattern:
-          detail-type:
-            - CloudFormation Stack Status Change
-          source:
-            - aws.cloudformation
-        Name: port-aws-exporter-sync-cloudformation-status-change-trails
-        State: ENABLED
-        Targets:
-          - Id: PortAWSExporterEventsQueue
-            Arn:
-              Fn::ImportValue:
-                Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
-            InputTransformer:
-              InputPathsMap:
-                region: $.region
-                stackId: $.detail.stack-id
-                status: $.detail.status-details.status
-              InputTemplate: |-
-                {
-                    "resource_type": "AWS::CloudFormation::Stack",
-                    "region": "\"<region>\"",
-                    "identifier": "\"<stackId>\" | split(\"/\")[1]",
-                    "action": "if \"<status>\" == \"DELETE_COMPLETE\" then \"delete\" else \"upsert\" end"
-                }
-    ```
+```yaml showLineNumbers
+EventRule0:
+Type: AWS::Events::Rule
+Properties:
+  EventBusName: default
+  EventPattern:
+    detail-type:
+      - AWS API Call via CloudTrail
+    source:
+      - aws.cloudformation
+    detail:
+      eventSource:
+        - cloudformation.amazonaws.com
+      eventName:
+        - prefix: CreateStack
+        - prefix: UpdateStack
+        - prefix: DeleteStack
+  Name: port-aws-exporter-sync-cloudformation-trails
+  State: ENABLED
+  Targets:
+    - Id: PortAWSExporterEventsQueue
+      Arn:
+        Fn::ImportValue:
+          Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+      InputTransformer:
+        InputPathsMap:
+          eventName: $.detail.eventName
+          awsRegion: $.detail.awsRegion
+          stackName: $.detail.requestParameters.stackName
+        InputTemplate: |-
+          {
+              "resource_type": "AWS::CloudFormation::Stack",
+              "region": "\"<awsRegion>\"",
+              "identifier": "if \"<stackName>\" | startswith(\"arn:\") then \"<stackName>\" | split(\"/\")[1] else \"<stackName>\" end",
+              "action": "if \"<eventName>\" | test(\"DeleteStack[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
+          }
+EventRule1:
+  Type: AWS::Events::Rule
+  Properties:
+    EventBusName: default
+    EventPattern:
+      detail-type:
+        - CloudFormation Stack Status Change
+      source:
+        - aws.cloudformation
+    Name: port-aws-exporter-sync-cloudformation-status-change-trails
+    State: ENABLED
+    Targets:
+      - Id: PortAWSExporterEventsQueue
+        Arn:
+          Fn::ImportValue:
+            Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+        InputTransformer:
+          InputPathsMap:
+            region: $.region
+            stackId: $.detail.stack-id
+            status: $.detail.status-details.status
+          InputTemplate: |-
+            {
+                "resource_type": "AWS::CloudFormation::Stack",
+                "region": "\"<region>\"",
+                "identifier": "\"<stackId>\" | split(\"/\")[1]",
+                "action": "if \"<status>\" == \"DELETE_COMPLETE\" then \"delete\" else \"upsert\" end"
+            }
+```
 
-   </details>
+    </details>
 
 :::important IMPORTANT
 The AWS CloudFormation API can retrieve up to 100 resources per CloudFormation Stack.
