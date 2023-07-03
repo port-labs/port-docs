@@ -3080,7 +3080,7 @@ In this step-by-step example, you will export your `EC2 instances` to Port.
 3. Update the exporter's `IAM policy`:
 
    <details>
-   <summary> IAM Policy </summary>
+   <summary> IAM policy </summary>
 
    ```json showLineNumbers
    {
@@ -3098,12 +3098,12 @@ In this step-by-step example, you will export your `EC2 instances` to Port.
 
    </details>
 
-4. Optional: Create an event rule to trigger automatic syncing of changes in EC2 instanceS.
+4. Optional: create an event rule to trigger automatic syncing of changes in EC2 instances.
 
-   You may use the following CloudFormation Template:
+   You may use the following CloudFormation template:
 
    <details>
-   <summary> Event Rule CloudFormation Template </summary>
+   <summary> Event rule CloudFormation template </summary>
 
    ```yaml showLineNumbers
    AWSTemplateFormatVersion: "2010-09-09"
