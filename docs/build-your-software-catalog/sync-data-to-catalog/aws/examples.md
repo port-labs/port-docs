@@ -2671,101 +2671,101 @@ In this step-by-step example, you will export your `CloudFormation Stacks` to Po
 
    - **CloudFormation Stack** - will represent CloudFormation Stacks from the AWS account.
 
-You may use the following definition:
+   You may use the following definition:
 
     <details>
     <summary> CloudFormationStack blueprint </summary>
 
-```json showLineNumbers
-{
-  "identifier": "cloudFormationStack",
-  "description": "This blueprint represents a service in our software catalog",
-  "title": "CloudFormation Stack",
-  "icon": "Microservice",
-  "schema": {
-    "properties": {
-      "createdAt": {
-        "type": "string",
-        "title": "Creation Time"
-      },
-      "status": {
-        "title": "Status",
-        "description": "The current status of the Stack",
-        "type": "string",
-        "enum": [
-          "CREATE_IN_PROGRESS",
-          "CREATE_FAILED",
-          "CREATE_COMPLETE",
-          "ROLLBACK_IN_PROGRESS",
-          "ROLLBACK_FAILED",
-          "ROLLBACK_COMPLETE",
-          "DELETE_IN_PROGRESS",
-          "DELETE_FAILED",
-          "UPDATE_IN_PROGRESS",
-          "UPDATE_COMPLETE_CLEANUP_IN_PROGRESS",
-          "UPDATE_COMPLETE",
-          "UPDATE_FAILED",
-          "UPDATE_ROLLBACK_IN_PROGRESS",
-          "UPDATE_ROLLBACK_FAILED",
-          "UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS",
-          "UPDATE_ROLLBACK_COMPLETE",
-          "REVIEW_IN_PROGRESS",
-          "IMPORT_IN_PROGRESS",
-          "IMPORT_COMPLETE",
-          "IMPORT_ROLLBACK_IN_PROGRESS",
-          "IMPORT_ROLLBACK_FAILED",
-          "IMPORT_ROLLBACK_COMPLETE"
-        ],
-        "enumColors": {
-          "CREATE_IN_PROGRESS": "orange",
-          "CREATE_FAILED": "red",
-          "CREATE_COMPLETE": "green",
-          "ROLLBACK_IN_PROGRESS": "orange",
-          "ROLLBACK_FAILED": "red",
-          "ROLLBACK_COMPLETE": "green",
-          "UPDATE_IN_PROGRESS": "orange",
-          "UPDATE_FAILED": "red",
-          "UPDATE_COMPLETE": "green"
+   ```json showLineNumbers
+   {
+    "identifier": "cloudFormationStack",
+    "description": "This blueprint represents a service in our software catalog",
+    "title": "CloudFormation Stack",
+    "icon": "Microservice",
+    "schema": {
+      "properties": {
+        "createdAt": {
+          "type": "string",
+          "title": "Creation Time"
+        },
+        "status": {
+          "title": "Status",
+          "description": "The current status of the Stack",
+          "type": "string",
+          "enum": [
+            "CREATE_IN_PROGRESS",
+            "CREATE_FAILED",
+            "CREATE_COMPLETE",
+            "ROLLBACK_IN_PROGRESS",
+            "ROLLBACK_FAILED",
+            "ROLLBACK_COMPLETE",
+            "DELETE_IN_PROGRESS",
+            "DELETE_FAILED",
+            "UPDATE_IN_PROGRESS",
+            "UPDATE_COMPLETE_CLEANUP_IN_PROGRESS",
+            "UPDATE_COMPLETE",
+            "UPDATE_FAILED",
+            "UPDATE_ROLLBACK_IN_PROGRESS",
+            "UPDATE_ROLLBACK_FAILED",
+            "UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS",
+            "UPDATE_ROLLBACK_COMPLETE",
+            "REVIEW_IN_PROGRESS",
+            "IMPORT_IN_PROGRESS",
+            "IMPORT_COMPLETE",
+            "IMPORT_ROLLBACK_IN_PROGRESS",
+            "IMPORT_ROLLBACK_FAILED",
+            "IMPORT_ROLLBACK_COMPLETE"
+          ],
+          "enumColors": {
+            "CREATE_IN_PROGRESS": "orange",
+            "CREATE_FAILED": "red",
+            "CREATE_COMPLETE": "green",
+            "ROLLBACK_IN_PROGRESS": "orange",
+            "ROLLBACK_FAILED": "red",
+            "ROLLBACK_COMPLETE": "green",
+            "UPDATE_IN_PROGRESS": "orange",
+            "UPDATE_FAILED": "red",
+            "UPDATE_COMPLETE": "green"
+          }
+        },
+        "resources": {
+          "items": {
+            "type": "object"
+          },
+          "title": "Resources",
+          "description": "The cloudformation stack resources",
+          "type": "array"
+        },
+        "template": {
+          "title": "Template",
+          "type": "string",
+          "format": "yaml"
+        },
+        "tags": {
+          "items": {
+            "type": "object"
+          },
+          "title": "Tags",
+          "type": "array"
+        },
+        "link": {
+          "title": "link",
+          "description": "The aws console stack url",
+          "type": "string",
+          "format": "url"
+        },
+        "lastUpdated": {
+          "type": "string",
+          "title": "Last Updated"
         }
       },
-      "resources": {
-        "items": {
-          "type": "object"
-        },
-        "title": "Resources",
-        "description": "The cloudformation stack resources",
-        "type": "array"
-      },
-      "template": {
-        "title": "Template",
-        "type": "string",
-        "format": "yaml"
-      },
-      "tags": {
-        "items": {
-          "type": "object"
-        },
-        "title": "Tags",
-        "type": "array"
-      },
-      "link": {
-        "title": "link",
-        "description": "The aws console stack url",
-        "type": "string",
-        "format": "url"
-      },
-      "lastUpdated": {
-        "type": "string",
-        "title": "Last Updated"
-      }
+      "required": []
     },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "relations": {}
-}
-```
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "relations": {}
+   }
+   ```
 
     </details>
 
