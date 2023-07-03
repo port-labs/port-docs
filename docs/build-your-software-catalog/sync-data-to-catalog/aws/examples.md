@@ -2673,8 +2673,8 @@ In this step-by-step example, you will export your `CloudFormation Stacks` to Po
 
 You may use the following definition:
 
-    <details>
-    <summary> CloudFormationStack blueprint </summary>
+  <details>
+  <summary> CloudFormationStack blueprint </summary>
 
 ```json showLineNumbers
 {
@@ -2767,7 +2767,7 @@ You may use the following definition:
 }
 ```
 
-    </details>
+  </details>
 
 2. Upload the `config.json` file to the exporter's S3 bucket:
 
