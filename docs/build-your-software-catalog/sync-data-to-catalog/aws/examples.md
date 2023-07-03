@@ -2965,11 +2965,11 @@ In this step-by-step example, you will export your `EC2 instances` to Port.
    You may use the following definitions:
 
     <details>
-    <summary> EC2 Instance blueprint </summary>
+    <summary> EC2 instance blueprint </summary>
 
    ```json showLineNumbers
    {
-     "identifier": "ec2_instance",
+     "identifier": "ec2Instance",
      "description": "This blueprint represents an AWS EC2 instance in our software catalog",
      "title": "EC2 Instance",
      "icon": "EC2",
@@ -3030,14 +3030,7 @@ In this step-by-step example, you will export your `EC2 instances` to Port.
      },
      "mirrorProperties": {},
      "calculationProperties": {},
-     "relations": {
-       "region": {
-         "title": "Region",
-         "target": "region",
-         "required": false,
-         "many": false
-       }
-     }
+     "relations": {}
    }
    ```
 
@@ -3062,7 +3055,7 @@ In this step-by-step example, you will export your `EC2 instances` to Port.
                {
                  "identifier": ".InstanceId",
                  "title": ".Tags[]? | select(.Key == \"Name\") | .Value",
-                 "blueprint": "ec2_instance",
+                 "blueprint": "ec2Instance",
                  "properties": {
                    "state": ".State.Name",
                    "type": ".InstanceType",
@@ -3072,9 +3065,6 @@ In this step-by-step example, you will export your `EC2 instances` to Port.
                    "platform": ".PlatformDetails",
                    "architecture": ".Architecture",
                    "tags": ".Tags"
-                 },
-                 "relations": {
-                   "region": ".Placement.AvailabilityZone | .[:-1]"
                  }
                }
              ]
