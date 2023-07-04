@@ -8,7 +8,7 @@ import StackHawkWebhookConfig from "./resources/stackhawk/\_example_webhook_conf
 
 # StackHawk
 
-In this example you are going to create a webhook integration between [StackHawk](https://www.stackhawk.com/) and Port, which will ingest application vulnerabilities into Port. This integration will involve setting up a webhook to receive notifications from StackHawk whenever an application is scanned for vulnerabilities, allowing Port to ingest and process the vulnerability entities accordingly.
+In this example, you are going to create a webhook integration between [StackHawk](https://www.stackhawk.com/) and Port, which will ingest application vulnerabilities into Port. This integration will involve setting up a webhook to receive notifications from StackHawk whenever an application is scanned for vulnerabilities, allowing Port to ingest and process the vulnerability entities accordingly.
 
 ## Prerequisites
 
@@ -40,7 +40,7 @@ Remember to update the `WEBHOOK_SECRET` and `AUTH_SIGNATURE_HEADER` with the rea
    3. `Scan Data For` - choose the application(s) you want to receive webhook events for or choose `Select All` if you want to configure a global webhook for all your applications.
    4. `Scan Events` - choose `Scan Completed` event type.
    5. `Webhook Endpoint URL` - enter the value of the `url` key you received after [creating the webhook configuration](../webhook.md#configuring-webhook-endpoints).
-   6. `Auth Header Name` - enter the name of the HTTP header that will contain your auth token/key. For example, you can enter `X-StackHawk-Port-Webhook`
+   6. `Auth Header Name` - enter the name of the HTTP header that will contain your auth token/key. For example, you can enter `X-StackHawk-Port-Webhook`.
    7. `Auth Header Value` - enter the secret authentication token that will be added to your webhook payload.
 4. Click **Create and Test** to create your webhook.
 
@@ -48,7 +48,7 @@ Remember to update the `WEBHOOK_SECRET` and `AUTH_SIGNATURE_HEADER` with the rea
 In order to view the different events available in StackHawk webhooks, [look here](https://docs.stackhawk.com/workflow-integrations/webhook.html)
 :::
 
-Done! any change that happens to your applications in StackHawk will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+Done! Any changes that happen to your applications in StackHawk will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
 
 ## Test the webhook
 
@@ -156,9 +156,9 @@ Here is an example of the payload structure sent to the webhook URL when an appl
 
 </details>
 
-### Mapping Result
+### Mapping result
 
-The combination of the sample payload and the webhook configuration generate the following Port entities (in the sample above, multiple entities will be generated because the `findings` array contains multiple objects):
+The combination of the sample payload and the webhook configuration generates the following Port entities (in the sample above, multiple entities will be generated because the `findings` array contains multiple objects):
 
 ```json showLineNumbers
 {
