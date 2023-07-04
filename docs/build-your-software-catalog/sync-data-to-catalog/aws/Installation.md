@@ -41,7 +41,7 @@ cd template-assets/aws
 terraform init
 
 # Deploy the aws exporter and provide the resources you want to export
-terraform apply -var 'resources=["ecs_service", "lambda", "sns", "sqs", "s3_bucket", "rds_db_instance", "dynamodb_table"]'
+terraform apply -var 'resources=["ecs_service", "lambda", "sns", "sqs", "s3_bucket", "rds_db_instance", "dynamodb_table", "ec2_instance"]'
 ```
 
 :::info
