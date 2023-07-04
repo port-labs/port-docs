@@ -1,5 +1,7 @@
 # Roles, Teams & Ownership
 
+Port's RBAC mechanism makes it possible to assign permissions to specific users and teams, as well as configure custom roles tailored to the needs of the different personas in Port.
+
 ## Assigning permissions
 
 In Port, you can assign permissions by using [roles](#roles), [team ownership](../../build-your-software-catalog/set-catalog-rbac/examples.md#team-ownership-examples) and [users](../../build-your-software-catalog/set-catalog-rbac/examples.md#user-examples).
