@@ -71,10 +71,10 @@ This `blueprints.json` file defines the following blueprints:
 
 Using the `CONFIG_YAML_URL` parameter, you can define a custom `config.yaml` to use when installing the exporter.
 
-In this use-case you will be using **[this configuration file](https://github.com/port-labs/template-assets/blob/main/kubernetes/templates/complete_usecase-kubernetes_v1_config.yaml)**. To achieve this, run:
+In this use-case you will be using **[this configuration file](https://github.com/port-labs/template-assets/blob/main/kubernetes/kubernetes_v1_config.yaml)**. To achieve this, run:
 
 ```bash showLineNumbers
-export CONFIG_YAML_URL="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/templates/complete_usecase-kubernetes_v1_config.yaml"
+export CONFIG_YAML_URL="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/kubernetes_v1_config.yaml"
 ```
 
 You can now run the installation script using the following code snippet:
