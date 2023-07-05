@@ -81,7 +81,7 @@ The yaml input type can be used to store any key/value based data, for example:
 <TabItem value="basic">
 
 ```hcl showLineNumbers
-resource "port-labs_action" "myAction" {
+resource "port_action" "myAction" {
   # ...action properties
   # highlight-start
   user_properties {

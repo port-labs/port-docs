@@ -77,7 +77,7 @@ The array input type can be used to store any list of data, for example:
 <TabItem value="basic">
 
 ```hcl showLineNumbers
-resource "port-labs_action" "myAction" {
+resource "port_action" "myAction" {
   # ...action properties
   # highlight-start
   user_properties {

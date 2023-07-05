@@ -73,7 +73,7 @@ You will need to create a developer environment blueprint to follow this example
 ```hcl showLineNumbers
 terraform {
   required_providers {
-    port-labs = {
+    port = {
       source  = "port-labs/port-labs"
       version = "~> 1.0.0"
     }
@@ -85,7 +85,7 @@ provider "port-labs" {
   secret    = "YOUR_CLIENT_SECRET" # or set the environment variable PORT_CLIENT_SECRET
 }
 
-resource "port-labs_blueprint" "developer_environment" {
+resource "port_blueprint" "developer_environment" {
   identifier = "developerEnvironment"
   icon       = "Environment"
   title      = "Developer Environment"
@@ -130,7 +130,7 @@ Here is the complete `main.tf` file:
 ```hcl showLineNumbers
 terraform {
   required_providers {
-    port-labs = {
+    port = {
       source  = "port-labs/port-labs"
       version = "~> 1.0.0"
     }
@@ -213,7 +213,7 @@ resource "aws_lambda_event_source_mapping" "event_source_mapping" {
   batch_size       = 1
 }
 
-resource "port-labs_entity" "dev_env" {
+resource "port_entity" "dev_env" {
   depends_on = [
     aws_s3_bucket.port_terraform_example_dev_env_bucket,
     aws_lambda_function.port_terraform_example_dev_env_lambda,
@@ -261,7 +261,7 @@ This part includes importing and setting up the required Terraform providers and
 ```hcl showLineNumbers
 terraform {
   required_providers {
-    port-labs = {
+    port = {
       source  = "port-labs/port-labs"
       version = "~> 1.0.0"
     }
@@ -361,7 +361,7 @@ resource "aws_lambda_event_source_mapping" "event_source_mapping" {
 This part includes configuring the `developerEnvironment` blueprint and creating an entity for our new bucket:
 
 ```hcl showLineNumbers
-resource "port-labs_entity" "dev_env" {
+resource "port_entity" "dev_env" {
   depends_on = [
     aws_s3_bucket.port_terraform_example_dev_env_bucket,
     aws_lambda_function.port_terraform_example_dev_env_lambda,

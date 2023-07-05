@@ -19,7 +19,7 @@ Here is the example definition:
 ```hcl showLineNumbers
 terraform {
   required_providers {
-    port-labs = {
+    port = {
       source  = "port-labs/port-labs"
       version = "~> 1.0.0"
     }
@@ -31,9 +31,9 @@ provider "port-labs" {
   secret    = "PORT_CLIENT_SECRET" # or set the env var PORT_CLIENT_SECRET
 }
 
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   depends_on = [
-    port-labs_blueprint.other
+    port_blueprint.other
   ]
   # ...blueprint properties
   identifier = "test-docs"
@@ -135,7 +135,7 @@ resource "port-labs_blueprint" "myBlueprint" {
 
   relations = {
     "myRelation" = {
-      target     = port-labs_blueprint.other.identifier
+      target     = port_blueprint.other.identifier
       title      = "myRelation"
       many       = false
       required   = false
@@ -143,7 +143,7 @@ resource "port-labs_blueprint" "myBlueprint" {
   }
 }
 
-resource "port-labs_blueprint" "other" {
+resource "port_blueprint" "other" {
   # ...blueprint properties
   identifier = "test-docs-relation"
   icon       = "Microservice"

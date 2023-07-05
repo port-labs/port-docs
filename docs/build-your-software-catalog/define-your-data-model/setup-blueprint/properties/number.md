@@ -99,7 +99,7 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `J
 <TabItem value="basic">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties = {
@@ -119,7 +119,7 @@ resource "port-labs_blueprint" "myBlueprint" {
 <TabItem value="enum">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties = {
@@ -140,7 +140,7 @@ resource "port-labs_blueprint" "myBlueprint" {
 <TabItem value="array">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties = {
@@ -369,7 +369,7 @@ If _x_ is the value being validated, the following must hold true:
 
 ```hcl showLineNumbers
 
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   properties = {
     "number_prop" = {
       "myNumberProp" = {

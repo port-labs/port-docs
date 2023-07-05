@@ -44,7 +44,7 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `M
 ## Terraform definition
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties = {
@@ -64,7 +64,7 @@ To set a type of array property, you need to use the `<type>_items` property typ
 For example, to set an array of strings, you need to use the `string_items` property type.
 
 ```
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   properties = {
     array_props = {
@@ -248,7 +248,7 @@ Array validations follow the JSON schema model, refer to the [JSON schema docs](
 <TabItem value="tf">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   properties = {
     array_props = {

@@ -83,7 +83,7 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `H
 <TabItem value="basic">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties = {
@@ -103,7 +103,7 @@ resource "port-labs_blueprint" "myBlueprint" {
 <TabItem value="array">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties = {

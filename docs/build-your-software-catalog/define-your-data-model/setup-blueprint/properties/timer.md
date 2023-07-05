@@ -61,7 +61,7 @@ In this [live demo](https://demo.getport.io/developerEnvs) example, we can see t
 <TabItem value="basic">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties = {

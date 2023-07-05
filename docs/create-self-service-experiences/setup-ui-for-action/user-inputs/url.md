@@ -99,7 +99,7 @@ The URL input type can be used to store a link to any web resource, for example:
 <TabItem value="basic">
 
 ```hcl showLineNumbers
-resource "port-labs_action" "myAction" {
+resource "port_action" "myAction" {
   # ...action properties
   # highlight-start
   user_properties {
@@ -120,7 +120,7 @@ resource "port-labs_action" "myAction" {
 <TabItem value="enum">
 
 ```hcl showLineNumbers
-resource "port-labs_action" "myAction" {
+resource "port_action" "myAction" {
   # ...action properties
   # highlight-start
   user_properties {

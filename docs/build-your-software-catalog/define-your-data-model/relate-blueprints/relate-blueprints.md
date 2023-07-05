@@ -106,7 +106,7 @@ A single type relation is distinguished by the `many: false` configuration:
 <TabItem value="tf">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # ...user-defined properties
   # highlight-start
@@ -166,7 +166,7 @@ A many type relation is distinguished by the `many: true` configuration:
 <TabItem value="tf">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # ...user-defined properties
   # highlight-start
@@ -246,7 +246,7 @@ Relations are part of the structure of a [blueprint](../setup-blueprint/setup-bl
 <TabItem value="tf">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # ...user-defined properties
   # highlight-start

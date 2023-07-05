@@ -50,7 +50,7 @@ You will need to create a developer environment blueprint to follow this example
 ```hcl showLineNumbers
 terraform {
   required_providers {
-    port-labs = {
+    port = {
       source  = "port-labs/port-labs"
       version = "~> 1.0.0"
     }
@@ -62,7 +62,7 @@ provider "port-labs" {
   secret    = "YOUR_CLIENT_SECRET" # or set the environment variable PORT_CLIENT_SECRET
 }
 
-resource "port-labs_blueprint" "s3_bucket" {
+resource "port_blueprint" "s3_bucket" {
   identifier = "s3Bucket"
   icon       = "Bucket"
   title      = "S3 Bucket"
@@ -90,7 +90,7 @@ Here is the complete `main.tf` file:
 ```hcl showLineNumbers
 terraform {
   required_providers {
-    port-labs = {
+    port = {
       source  = "port-labs/port-labs"
       version = "~> 1.0.0"
     }
@@ -117,7 +117,7 @@ resource "aws_s3_bucket_acl" "port-terraform-example-bucket-acl" {
   acl    = "private"
 }
 
-resource "port-labs_entity" "s3_bucket" {
+resource "port_entity" "s3_bucket" {
   depends_on = [
     aws_s3_bucket.port-terraform-example-bucket
   ]
@@ -156,7 +156,7 @@ This part includes importing and setting up the required Terraform providers and
 ```hcl showLineNumbers
 terraform {
   required_providers {
-    port-labs = {
+    port = {
       source  = "port-labs/port-labs"
       version = "~> 1.0.0"
     }
@@ -195,7 +195,7 @@ resource "aws_s3_bucket_acl" "port-terraform-example-bucket-acl" {
 This part includes configuring the `s3Bucket` blueprint and creating an entity for our new bucket:
 
 ```hcl showLineNumbers
-resource "port-labs_entity" "s3_bucket" {
+resource "port_entity" "s3_bucket" {
 # highlight-start
   depends_on = [
     aws_s3_bucket.port-terraform-example-bucket

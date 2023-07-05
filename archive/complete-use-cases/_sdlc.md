@@ -385,7 +385,7 @@ Create a file called `env.tf` with the following content:
 ```hcl showLineNumbers
 terraform {
   required_providers {
-    port-labs = {
+    port = {
       source  = "port-labs/port-labs"
       version = "~> 0.8.3"
     }
@@ -397,7 +397,7 @@ provider "port-labs" {
   secret    = "{YOUR CLIENT SECRET}" # or set the env var PORT_CLIENT_SECRET
 }
 
-resource "port-labs_entity" "production" {
+resource "port_entity" "production" {
   identifier = "production"
   title      = "Production"
   blueprint  = "environment"

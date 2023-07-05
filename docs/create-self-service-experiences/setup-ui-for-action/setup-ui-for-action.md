@@ -192,7 +192,7 @@ The JSON shown above is for a single blueprint action, the actions of a blueprin
 <TabItem value="terraform" label="Terraform">
 
 ```hcl showLineNumbers
-resource "port-labs_action" "myAction" {
+resource "port_action" "myAction" {
   blueprint_identifier = "myBlueprint"
   title                = "My Action"
   identifier           = "myAction"

@@ -99,7 +99,7 @@ In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we
 <TabItem value="basic">
 
 ```hcl showLineNumbers
-resource "port-labs_action" "myAction" {
+resource "port_action" "myAction" {
   # ...action properties
   # highlight-start
   user_properties {
@@ -119,7 +119,7 @@ resource "port-labs_action" "myAction" {
 <TabItem value="enum">
 
 ```hcl showLineNumbers
-resource "port-labs_action" "myAction" {
+resource "port_action" "myAction" {
   # ...action properties
   # highlight-start
   user_properties {

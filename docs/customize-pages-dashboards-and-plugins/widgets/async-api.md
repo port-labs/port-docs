@@ -53,7 +53,7 @@ When using URL for the `async-api` display please make sure that your server all
 <TabItem value="terraform">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties {
@@ -103,7 +103,7 @@ When using the object type, you will have to provide the full JSON AsyncAPI spec
 <TabItem value="terraform">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties {
