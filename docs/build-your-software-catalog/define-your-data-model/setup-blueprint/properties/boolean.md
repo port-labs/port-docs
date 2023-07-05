@@ -49,7 +49,7 @@ resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties = {
-    boolean_prop = {
+    boolean_props = {
       "myBooleanProp" = {
         title      = "My boolean"
         required   = true

@@ -42,7 +42,7 @@ resource "port-labs_blueprint" "component" {
   title      = "Component"
 
   properties {
-    string_prop = {
+    string_props = {
       "type" = {
         title      = "Type"
         required   = false

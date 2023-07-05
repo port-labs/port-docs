@@ -102,7 +102,7 @@ resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties = {
-    string_prop = {
+    string_props = {
       "myEmailProp" = {
         title       = "My email"
         icon        = "My icon"
@@ -148,7 +148,7 @@ resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties = {
-    array_prop = {
+    array_props = {
       myEmailArray = {
         title      = "My email array"
         identifier = "myEmailArray"

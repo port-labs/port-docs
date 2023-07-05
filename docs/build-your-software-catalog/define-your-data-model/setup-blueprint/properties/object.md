@@ -88,7 +88,7 @@ resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties = {
-    object_prop = {
+    object_props = {
       "myObjectProp" = {
         title      = "My object"
         icon       = "My icon"

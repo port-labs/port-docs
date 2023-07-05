@@ -48,7 +48,7 @@ resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties = {
-    array_prop = {
+    array_props = {
       "myArrayProp" = {
         title      = "My array"
         required   = true
@@ -67,7 +67,7 @@ For example, to set an array of strings, you need to use the `string_items` prop
 resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   properties = {
-    array_prop = {
+    array_props = {
       "myArrayProp" = {
         title      = "My array"
         required   = true
@@ -251,7 +251,7 @@ Array validations follow the JSON schema model, refer to the [JSON schema docs](
 resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   properties = {
-    array_prop = {
+    array_props = {
       "myArrayProp" = {
         title      = "My array"
         required   = true

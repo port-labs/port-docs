@@ -102,7 +102,7 @@ resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties = {
-    string_prop = {
+    string_props = {
       myUserProp = {
         title      = "My user"
         required   = false
@@ -122,7 +122,7 @@ resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties = {
-    array_prop = {
+    array_props = {
       "myUserArray" = {
         title      = "My user array"
         required   = false

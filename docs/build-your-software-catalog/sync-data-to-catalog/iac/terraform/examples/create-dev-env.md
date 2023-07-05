@@ -91,7 +91,7 @@ resource "port-labs_blueprint" "developer_environment" {
   title      = "Developer Environment"
 
   properties = {
-    string_prop = {
+    string_props = {
       "bucketUrl" = {
         title = "Bucket URL"
         format = "url"
@@ -108,7 +108,7 @@ resource "port-labs_blueprint" "developer_environment" {
         required   = false
       }
     }
-    number_prop = {
+    number_props = {
       "memorySize" = {
         title = "Memory Size"
         required   = false
@@ -226,12 +226,12 @@ resource "port-labs_entity" "dev_env" {
   blueprint  = "developerEnvironment"
 
   properties = {
-    string_prop = {
+    string_props = {
       "bucketUrl" = "https://${aws_s3_bucket.port_terraform_example_dev_env_bucket.bucket_domain_name}"
       "queueUrl"  = aws_sqs_queue.port_terraform_example_dev_env_queue.id
       "lambdaUrl" = aws_lambda_function_url.example_function_url.function_url
     }
-    number_prop = {
+    number_props = {
       "memorySize" = aws_lambda_function.port_terraform_example_dev_env_lambda.memory_size
     }
   }
@@ -374,7 +374,7 @@ resource "port-labs_entity" "dev_env" {
   blueprint  = "developerEnvironment"
 
   properties = {
-    string_prop = {
+    string_props = {
       "bucketName" = aws_s3_bucket.port_terraform_example_dev_env_bucket.id
       "queueUrl"   = aws_sqs_queue.port_terraform_example_dev_env_queue.id
       "lambdaUrl" = aws_lambda_function_url.example_function_url.function_url

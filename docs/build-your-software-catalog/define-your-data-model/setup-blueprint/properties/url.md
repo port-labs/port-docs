@@ -109,7 +109,7 @@ resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties = {
-    string_prop = {
+    string_props = {
       "myUrlProp" = {
         title    = "My url"
         required = false
@@ -130,7 +130,7 @@ resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties = {
-    string_prop = {
+    string_props = {
       "myUrlEnum" = {
         title    = "My url enum"
         required = false
@@ -156,7 +156,7 @@ resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties = {
-    string_prop = {
+    string_props = {
       "myUrlArray" = {
         title    = "My url array"
         required = false

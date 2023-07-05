@@ -103,7 +103,7 @@ resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties = {
-    number_prop = {
+    number_props = {
       "myNumberProp" = {
         title       = "My number"
         description = "My number property"
@@ -123,7 +123,7 @@ resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties = {
-    number_prop = {
+    number_props = {
       "myNumberProp" = {
         title       = "My number"
         description = "My number property"

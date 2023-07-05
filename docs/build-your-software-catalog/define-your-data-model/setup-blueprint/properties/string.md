@@ -107,7 +107,7 @@ resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties = {
-    string_prop = {
+    string_props = {
       "myStringProp" = {
         title      = "My string"
         required   = false
@@ -127,7 +127,7 @@ resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties = {
-    string_prop = {
+    string_props = {
       "myStringProp" = {
         title      = "My string"
         required   = false
@@ -153,7 +153,7 @@ resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties = {
-    array_prop = {
+    array_props = {
       "myStringArray" = {
         title        = "My string array"
         string_items = {} # Pass an empty object only sets the type to string

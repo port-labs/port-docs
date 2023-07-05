@@ -87,7 +87,7 @@ resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties = {
-    string_prop = {
+    string_props = {
       "myYAMLProp" = {
         title      = "My yaml"
         required   = false
@@ -107,7 +107,7 @@ resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties = {
-    array_prop = {
+    array_props = {
       "myYamlArray" = {
         identifier = "myYamlArray"
         title      = "My yaml array"

@@ -81,19 +81,19 @@ resource "port-labs_entity" "myEntity" {
 
 # highlight-start
   properties {
-    string_prop = {
+    string_props = {
       "myStringProp" = "My string"
      }
   }
 
   properties {
-    number_prop = {
+    number_props = {
       "myNumberProp" = 7
     }
   }
 
   properties {
-    array_prop = {
+    array_props = {
       string_items = {
         "myArrayProp" = ["a", "b", "c"]
       }

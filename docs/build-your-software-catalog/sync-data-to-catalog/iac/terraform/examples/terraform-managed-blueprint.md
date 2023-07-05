@@ -41,7 +41,7 @@ resource "port-labs_blueprint" "myBlueprint" {
   title      = "Test Docs"
 
   properties = {
-    string_prop = {
+    string_props = {
       "myStringProp" = {
         title      = "My string"
         required   = false
@@ -82,25 +82,25 @@ resource "port-labs_blueprint" "myBlueprint" {
         format     = "timer"
       }
     }
-    number_prop = {
+    number_props = {
       "myNumberProp" = {
         title      = "My number"
         required   = false
       }
     }
-    boolean_prop = {
+    boolean_props = {
       "myBooleanProp" = {
         title      = "My boolean"
         required   = false
       }
     }
-    object_prop = {
+    object_props = {
       "myObjectProp" = {
         title      = "My object"
         required   = false
       }
     }
-    array_prop = {
+    array_props = {
       "myArrayProp" = {
         title      = "My array"
         required   = false
@@ -150,7 +150,7 @@ resource "port-labs_blueprint" "other" {
   title      = "Test Docs Relation"
 
   properties = {
-    string_prop = {
+    string_props = {
       "myStringProp" = {
         title      = "My string"
         required   = false

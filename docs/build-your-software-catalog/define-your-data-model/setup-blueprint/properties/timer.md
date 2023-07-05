@@ -65,7 +65,7 @@ resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties = {
-    string_prop = {
+    string_props = {
       "myTimerProp" = {
         title       = "My timer"
         icon        = "My icon"

@@ -88,7 +88,7 @@ resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties = {
-    string_prop = {
+    string_props = {
       "myDatetimeProp" = {
         title       = "My datetime"
         icon        = "My icon"
@@ -111,7 +111,7 @@ resource "port-labs_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties = {
-    array_prop = {
+    array_props = {
       "myDatetimeArray" = {
         title    = "My datetime array"
         icon     = "My icon"

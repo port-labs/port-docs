@@ -68,7 +68,7 @@ resource "port-labs_blueprint" "s3_bucket" {
   title      = "S3 Bucket"
 
   properties = {
-    boolean_prop = {
+    boolean_props = {
       isPrivate = {
         title      = "Is private?"
         required   = false
@@ -127,7 +127,7 @@ resource "port-labs_entity" "s3_bucket" {
   blueprint  = "s3Bucket"
 
   properties = {
-    string_prop = {
+    string_props = {
       "isPrivate" = aws_s3_bucket_acl.port-terraform-example-bucket-acl.acl == "private" ? true : false
     }
   }
@@ -207,7 +207,7 @@ resource "port-labs_entity" "s3_bucket" {
   blueprint  = "s3Bucket"
 
   properties = {
-    string_prop = {
+    string_props = {
       "isPrivate" = aws_s3_bucket_acl.port-terraform-example-bucket-acl.acl == "private" ? true : false
     }
   }
@@ -230,7 +230,7 @@ Notice how we defined the `isPrivate` property of the bucket entity:
 
 ```hcl showLineNumbers
 properties = {
-    string_prop = {
+    string_props = {
       "isPrivate" = aws_s3_bucket_acl.port-terraform-example-bucket-acl.acl == "private" ? true : false
     }
 }
