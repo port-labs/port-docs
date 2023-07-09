@@ -17,7 +17,7 @@ To follow this example, please contact us via Intercom to receive a dedicated Ka
 - Connection credentials to the Kafka topic, provided to you by Port. they will look like to this:
 
 ```json showLineNumbers
-KAFKA_BROKERS=kafka-broker-1.eu-west-1.getport.io:9196,kafka-broker-2.eu-west-1.getport.io:9196,kafka-broker-3.eu-west-1.getport.io:9196
+KAFKA_BROKERS=b-1-public.publicclusterprod.t9rw6w.c1.kafka.eu-west-1.amazonaws.com:9196,b-2-public.publicclusterprod.t9rw6w.c1.kafka.eu-west-1.amazonaws.com:9196,b-3-public.publicclusterprod.t9rw6w.c1.kafka.eu-west-1.amazonaws.com:9196
 KAFKA_RUNS_TOPIC=YOUR_ORG_ID.runs
 KAFKA_AUTHENTICATION_MECHANISM=scram-sha-512
 KAFKA_ENABLE_SSL=true
@@ -689,7 +689,7 @@ aws lambda create-event-source-mapping --topics YOUR_ORG_ID.runs --source-access
           --function-name port-execution-lambda \
           --batch-size 1 --starting-position LATEST \
           --self-managed-kafka-event-source-config '{"ConsumerGroupId":"YOUR_KAFKA_CONSUMER_GROUP"}' \
-          --self-managed-event-source '{"Endpoints":{"KAFKA_BOOTSTRAP_SERVERS":["kafka-broker-1.eu-west-1.getport.io:9196", "kafka-broker-2.eu-west-1.getport.io:9196", "kafka-broker-3.eu-west-1.getport.io:9196"]}}'
+          --self-managed-event-source '{"Endpoints":{"KAFKA_BOOTSTRAP_SERVERS":["b-1-public.publicclusterprod.t9rw6w.c1.kafka.eu-west-1.amazonaws.com:9196", "b-2-public.publicclusterprod.t9rw6w.c1.kafka.eu-west-1.amazonaws.com:9196", "b-3-public.publicclusterprod.t9rw6w.c1.kafka.eu-west-1.amazonaws.com:9196"]}}'
 ```
 
 ## Triggering the action
