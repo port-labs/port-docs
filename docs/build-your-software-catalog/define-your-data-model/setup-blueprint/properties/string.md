@@ -474,7 +474,7 @@ String validations support the following operators:
 <Tabs groupId="validation-definition" defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Array", value: "array"},
-{label: "Terraform - coming soon", value: "tf"},
+{label: "Terraform", value: "tf"},
 {label: "Pulumi - coming soon", value: "pulumi"}
 ]}>
 
@@ -520,4 +520,32 @@ String validations support the following operators:
 ```
 
 </TabItem>
+
+<TabItem value="tf">
+
+```hcl showLineNumbers
+
+resource "port_blueprint" "myBlueprint" {
+  # ...blueprint properties
+  # highlight-start
+  properties = {
+    string_props = {
+      "myStringProp" = {
+        title      = "My string"
+        required   = false
+        // highlight-start
+        min_length = 1
+        max_length = 32
+        pattern    = "^[a-zA-Z0-9-]*-service$"
+        // highlight-end
+      }
+    }
+  }
+  # highlight-end
+}
+
+```
+
+</TabItem>
+
 </Tabs>

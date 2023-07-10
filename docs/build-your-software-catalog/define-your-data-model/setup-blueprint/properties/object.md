@@ -93,7 +93,7 @@ resource "port_blueprint" "myBlueprint" {
         title      = "My object"
         icon       = "My icon"
         description = "My object property"
-        default    = jsonencode({myKey = "myValue"})
+        default    = jsonencode({"myKey" = "myValue"})
       }
     }
   }

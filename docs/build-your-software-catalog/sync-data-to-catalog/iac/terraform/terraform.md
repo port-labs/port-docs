@@ -36,7 +36,7 @@ Port's Terraform provider supports The following resources to ingest data to the
 
 ### `port_entity`
 
-The [`port_entity`](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/entity) resource defines a basic entity:
+The [`port_entity`](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/port_entity) resource defines a basic entity:
 
 ```hcl showLineNumbers
 # highlight-start
@@ -47,7 +47,7 @@ resource "port_entity" "myEntity" {
  # highlight-end
 
   # Entity property values
-  properties {
+  properties = {
     ...
   }
   ...
@@ -71,7 +71,7 @@ It is also possible to specify the following parameters as part of the `port_ent
 
 ### `properties` schema
 
-The [`properties`](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/entity#nested-schema-for-properties) schema assigns a specified value to one of the entity's properties.
+The [`properties`](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/port_entity#nested-schema-for-properties) schema assigns a specified value to one of the entity's properties.
 
 ```hcl showLineNumbers
 resource "port_entity" "myEntity" {
@@ -80,19 +80,19 @@ resource "port_entity" "myEntity" {
   blueprint  = "myBlueprint" # Identifier of the blueprint to create this entity from
 
 # highlight-start
-  properties {
+  properties = {
     string_props = {
       "myStringProp" = "My string"
      }
   }
 
-  properties {
+  properties = {
     number_props = {
       "myNumberProp" = 7
     }
   }
 
-  properties {
+  properties = {
     array_props = {
       string_items = {
         "myArrayProp" = ["a", "b", "c"]
@@ -126,7 +126,7 @@ resource "port_entity" "myEntity" {
 <TabItem value="string">
 
 ```hcl showLineNumbers
-properties {
+properties = {
   string_prop {
    "myStringProp" = "My string"
   }
@@ -137,7 +137,7 @@ properties {
 <TabItem value="number">
 
 ```hcl showLineNumbers
-properties {
+properties = {
   number_prop {
     "myNumberProp" = 7
   }
@@ -148,7 +148,7 @@ properties {
 <TabItem value="boolean">
 
 ```hcl showLineNumbers
-properties {
+properties = {
   boolean_prop {
     "myBooleanProp" = true
   }
@@ -159,7 +159,7 @@ properties {
 <TabItem value="object">
 
 ```hcl showLineNumbers
-properties {
+properties = {
   object_prop {
     "myObjectProp" = jsonencode({ "my" : "object" })
   }
@@ -170,7 +170,7 @@ properties {
 <TabItem value="array">
 
 ```hcl showLineNumbers
-properties {
+properties = {
   array_prop {
     string_prop {
       "myArrayProp" = ["a", "b", "c"])
@@ -183,10 +183,10 @@ properties {
 <TabItem value="url">
 
 ```hcl showLineNumbers
-properties {
- string_prop {
-   "myUrlProp" = "https://example.com"
- }
+properties = {
+  string_prop = {
+    "myUrlProp" = "https://example.com"
+  }
 }
 ```
 
@@ -194,17 +194,19 @@ properties {
 <TabItem value="email">
 
 ```hcl showLineNumbers
-properties {
-  string_prop {
+properties = {
+  string_prop = {
     "myEmailProp" = "me@example.com"
+  }
 }
+
 ```
 
 </TabItem>
 <TabItem value="user">
 
 ```hcl showLineNumbers
-properties {
+properties = {
  string_prop {
    "myUserProp" = "argo-admin"
   }
@@ -215,7 +217,7 @@ properties {
 <TabItem value="team">
 
 ```hcl showLineNumbers
-properties {
+properties = {
   string_prop {
     "myTeamProp" = "argo-admins"
   }
@@ -226,7 +228,7 @@ properties {
 <TabItem value="datetime">
 
 ```hcl showLineNumbers
-properties {
+properties = {
   string_prop {
     "myDatetimeProp" = "2023-04-18T11:44:15.345Z"
   }
@@ -237,18 +239,19 @@ properties {
 <TabItem value="timer">
 
 ```hcl showLineNumbers
-properties {
-  string_prop {
-    "myTimerProp" = "2023-04-18T11:44:15.345Z"
+properties = {
+  string_prop = {
+    "myUserProp" = "argo-admin"
   }
 }
+
 ```
 
 </TabItem>
 <TabItem value="yaml">
 
 ```hcl showLineNumbers
-properties {
+properties = {
   string_prop {
     "myYamlProp" = "myKey: myValue"
   }
@@ -261,7 +264,7 @@ properties {
 
 ### `relations` schema
 
-The [`relations`](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/entity#relations) schema maps a target entity to the source entity definition:
+The [`relations`](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/port_entity#relations) schema maps a target entity to the source entity definition:
 
 ```hcl showLineNumbers
 resource "port_entity" "myEntity" {
@@ -329,7 +332,7 @@ relations {
 
 ## Ingest data using the Terraform provider
 
-To ingest data to the software catalog using the Terraform provider, you will define [`port_entity`](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/entity) resources in your Terraform definition files:
+To ingest data to the software catalog using the Terraform provider, you will define [`port_entity`](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/port_entity) resources in your Terraform definition files:
 
 <Tabs groupId="sync-data" queryString="current-scenario" defaultValue="create" values={[
 {label: "Create", value: "create"},

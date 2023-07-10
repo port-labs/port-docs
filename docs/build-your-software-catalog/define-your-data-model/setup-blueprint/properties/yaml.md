@@ -88,7 +88,7 @@ resource "port_blueprint" "myBlueprint" {
   # highlight-start
   properties = {
     string_props = {
-      "myYAMLProp" = {
+      "myYamlProp" = {
         title      = "My yaml"
         required   = false
         format     = "yaml"

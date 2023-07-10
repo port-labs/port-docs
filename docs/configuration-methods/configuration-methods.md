@@ -62,7 +62,7 @@ Port's [Terraform provider](https://registry.terraform.io/providers/port-labs/po
 
 <InstallTerraform />
 
-To create a blueprint using Port's Terraform provider you need a `.tf` file defining a [`port_blueprint`](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/blueprint) resource:
+To create a blueprint using Port's Terraform provider you need a `.tf` file defining a [`port_blueprint`](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/port_blueprint) resource:
 
 ```hcl showLineNumbers
 resource "port_blueprint" "myBlueprint" {
