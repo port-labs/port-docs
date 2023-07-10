@@ -78,7 +78,7 @@ resource "port_blueprint" "myBlueprint" {
 }
 ```
 
-We currently support the following types of array items: string_items, number_items, boolean_items, object_items.
+We currently support the following types of array items: `string_items`, `number_items`, `boolean_items`, `object_items`.
 :::
 
 ## Pulumi definition
