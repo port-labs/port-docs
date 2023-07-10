@@ -25,7 +25,7 @@ terraform {
   }
 }
 
-provider "port-labs" {
+provider "port" {
   #   client_id = "YOUR_CLIENT_ID"     # or set the environment variable PORT_CLIENT_ID
   #   secret    = "YOUR_CLIENT_SECRET" # or set the environment variable PORT_CLIENT_SECRET
 }
@@ -416,7 +416,7 @@ provider "aws" {
   region     = "eu-west-1"
 }
 
-provider "port-labs" {
+provider "port" {
   client_id = "YOUR_CLIENT_ID"     # or set the environment variable PORT_CLIENT_ID
   secret    = "YOUR_CLIENT_SECRET" # or set the environment variable PORT_CLIENT_SECRET
 }

@@ -392,7 +392,7 @@ terraform {
   }
 }
 
-provider "port-labs" {
+provider "port" {
   client_id = "{YOUR CLIENT ID}"     # or set the env var PORT_CLIENT_ID
   secret    = "{YOUR CLIENT SECRET}" # or set the env var PORT_CLIENT_SECRET
 }

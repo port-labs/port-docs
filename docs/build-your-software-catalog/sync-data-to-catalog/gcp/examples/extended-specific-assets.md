@@ -31,7 +31,7 @@ locals {
   domain = "GCP_ORGANIZATION_DOMAIN_NAME" # set the organization's domain
 }
 
-provider "port-labs" {
+provider "port" {
   client_id = "PORT_CLIENT_ID"     # or set the env var PORT_CLIENT_ID
   secret    = "PORT_CLIENT_SECRET" # or set the env var PORT_CLIENT_SECRET
 }
@@ -1003,7 +1003,7 @@ locals {
   domain = "GCP_ORGANIZATION_DOMAIN_NAME" # set the organization's domain
 }
 
-provider "port-labs" {
+provider "port" {
   client_id = "PORT_CLIENT_ID"     # or set the env var PORT_CLIENT_ID
   secret    = "PORT_CLIENT_SECRET" # or set the env var PORT_CLIENT_SECRET
 }
