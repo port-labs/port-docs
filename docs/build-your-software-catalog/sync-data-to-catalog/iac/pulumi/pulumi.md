@@ -69,7 +69,7 @@ entity = Entity(
 
 ```typescript showLineNumbers
 import * as pulumi from "@pulumi/pulumi";
-import { Entity } from "@port-labs/pulumi";
+import { Entity } from "@port-labs/port";
 
 export const entity = new Entity("myEntity", {
   title: "My Entity",
@@ -86,7 +86,7 @@ export const entity = new Entity("myEntity", {
 ```javascript showLineNumbers
 "use strict";
 const pulumi = require("@pulumi/pulumi");
-const port = require("@port-labs/pulumi");
+const port = require("@port-labs/port");
 
 const entity = new Entity("myEntity", {
   title: "My Entity",
@@ -108,7 +108,7 @@ package main
 
 import (
     "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-    "github.com/port-pulumi/port-pulumi/sdk/v3/go/port_pulumi"
+    "github.com/port-labs/pulumi-port/sdk/go/port"
 )
 
 func main() {
@@ -208,7 +208,7 @@ entity = Entity(
 
 ```typescript showLineNumbers
 import * as pulumi from "@pulumi/pulumi";
-import { Entity } from "@port-labs/pulumi";
+import { Entity } from "@port-labs/port";
 
 export const entity = new Entity("myEntity", {
   identifier: "myEntity",
@@ -228,7 +228,7 @@ export const entity = new Entity("myEntity", {
 ```javascript showLineNumbers
 "use strict";
 const pulumi = require("@pulumi/pulumi");
-const port = require("@port-labs/pulumi");
+const port = require("@port-labs/port");
 
 const entity = new port.Entity("myEntity", {
   identifier: "myEntity",
@@ -250,7 +250,7 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/port-labs/pulumi-port/sdk/go/port"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -319,7 +319,7 @@ entity = Entity(
 
 ```typescript showLineNumbers
 import * as pulumi from "@pulumi/pulumi";
-import { Entity } from "@port-labs/pulumi";
+import { Entity } from "@port-labs/port";
 
 export const entity = new Entity("myEntity", {
   identifier: "myEntity",
@@ -339,7 +339,7 @@ export const entity = new Entity("myEntity", {
 ```javascript showLineNumbers
 "use strict";
 const pulumi = require("@pulumi/pulumi");
-const port = require("@port-labs/pulumi");
+const port = require("@port-labs/port");
 
 const entity = new Entity("myEntity", {
   identifier: "myEntity",
@@ -361,7 +361,7 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/port-labs/pulumi-port/sdk/go/port"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -432,7 +432,7 @@ entity = Entity(
 
 ```typescript showLineNumbers
 import * as pulumi from "@pulumi/pulumi";
-import { Entity } from "@port-labs/pulumi";
+import { Entity } from "@port-labs/port";
 
 export const entity = new Entity("myEntity", {
   identifier: "myEntity",
@@ -452,7 +452,7 @@ export const entity = new Entity("myEntity", {
 ```javascript showLineNumbers
 "use strict";
 const pulumi = require("@pulumi/pulumi");
-const port = require("@port-labs/pulumi");
+const port = require("@port-labs/port");
 
 const entity = new Entity("myEntity", {
   identifier: "myEntity",
@@ -474,7 +474,7 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/port-labs/pulumi-port/sdk/go/port"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -546,7 +546,7 @@ entity = Entity(
 
 ```typescript showLineNumbers
 import * as pulumi from "@pulumi/pulumi";
-import { Entity } from "@port-labs/pulumi";
+import { Entity } from "@port-labs/port";
 
 export const entity = new Entity("myEntity", {
   identifier: "myEntity",
@@ -568,7 +568,7 @@ export const entity = new Entity("myEntity", {
 ```javascript showLineNumbers
 "use strict";
 const pulumi = require("@pulumi/pulumi");
-const port = require("@port-labs/pulumi");
+const port = require("@port-labs/port");
 
 const entity = new Entity("myEntity", {
   identifier: "myEntity",
@@ -595,7 +595,7 @@ package main
 import (
 	"encoding/json"
 
-	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/port-labs/pulumi-port/sdk/go/port"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -677,7 +677,7 @@ entity = Entity(
 
 ```typescript showLineNumbers
 import * as pulumi from "@pulumi/pulumi";
-import { Entity } from "@port-labs/pulumi";
+import { Entity } from "@port-labs/port";
 
 export const entity = new Entity("myEntity", {
   identifier: "myEntity",
@@ -697,7 +697,7 @@ export const entity = new Entity("myEntity", {
 ```javascript showLineNumbers
 "use strict";
 const pulumi = require("@pulumi/pulumi");
-const port = require("@port-labs/pulumi");
+const port = require("@port-labs/port");
 
 const entity = new Entity("myEntity", {
   identifier: "myEntity",
@@ -720,7 +720,7 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/port-labs/pulumi-port/sdk/go/port"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -793,7 +793,7 @@ entity = Entity(
 
 ```typescript showLineNumbers
 import * as pulumi from "@pulumi/pulumi";
-import { Entity } from "@port-labs/pulumi";
+import { Entity } from "@port-labs/port";
 
 export const entity = new Entity("myEntity", {
   identifier: "myEntity",
@@ -813,7 +813,7 @@ export const entity = new Entity("myEntity", {
 ```javascript showLineNumbers
 "use strict";
 const pulumi = require("@pulumi/pulumi");
-const port = require("@port-labs/pulumi");
+const port = require("@port-labs/port");
 
 const entity = new Entity("myEntity", {
   identifier: "myEntity",
@@ -836,7 +836,7 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/port-labs/pulumi-port/sdk/go/port"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -909,7 +909,7 @@ entity = Entity(
 
 ```typescript showLineNumbers
 import * as pulumi from "@pulumi/pulumi";
-import { Entity } from "@port-labs/pulumi";
+import { Entity } from "@port-labs/port";
 
 export const entity = new Entity("myEntity", {
   identifier: "myEntity",
@@ -929,7 +929,7 @@ export const entity = new Entity("myEntity", {
 ```javascript showLineNumbers
 "use strict";
 const pulumi = require("@pulumi/pulumi");
-const port = require("@port-labs/pulumi");
+const port = require("@port-labs/port");
 
 const entity = new Entity("myEntity", {
   identifier: "myEntity",
@@ -952,7 +952,7 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/port-labs/pulumi-port/sdk/go/port"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -1025,7 +1025,7 @@ entity = Entity(
 
 ```typescript showLineNumbers
 import * as pulumi from "@pulumi/pulumi";
-import { Entity } from "@port-labs/pulumi";
+import { Entity } from "@port-labs/port";
 
 export const entity = new Entity("myEntity", {
   identifier: "myEntity",
@@ -1045,7 +1045,7 @@ export const entity = new Entity("myEntity", {
 ```javascript showLineNumbers
 "use strict";
 const pulumi = require("@pulumi/pulumi");
-const port = require("@port-labs/pulumi");
+const port = require("@port-labs/port");
 
 const entity = new Entity("myEntity", {
   identifier: "myEntity",
@@ -1068,7 +1068,7 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/port-labs/pulumi-port/sdk/go/port"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -1141,7 +1141,7 @@ entity = Entity(
 
 ```typescript showLineNumbers
 import * as pulumi from "@pulumi/pulumi";
-import { Entity } from "@port-labs/pulumi";
+import { Entity } from "@port-labs/port";
 
 export const entity = new Entity("myEntity", {
   identifier: "myEntity",
@@ -1161,7 +1161,7 @@ export const entity = new Entity("myEntity", {
 ```javascript showLineNumbers
 "use strict";
 const pulumi = require("@pulumi/pulumi");
-const port = require("@port-labs/pulumi");
+const port = require("@port-labs/port");
 
 const entity = new Entity("myEntity", {
   identifier: "myEntity",
@@ -1184,7 +1184,7 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/port-labs/pulumi-port/sdk/go/port"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -1257,7 +1257,7 @@ entity = Entity(
 
 ```typescript showLineNumbers
 import * as pulumi from "@pulumi/pulumi";
-import { Entity } from "@port-labs/pulumi";
+import { Entity } from "@port-labs/port";
 
 export const entity = new Entity("myEntity", {
   identifier: "myEntity",
@@ -1277,7 +1277,7 @@ export const entity = new Entity("myEntity", {
 ```javascript showLineNumbers
 "use strict";
 const pulumi = require("@pulumi/pulumi");
-const port = require("@port-labs/pulumi");
+const port = require("@port-labs/port");
 
 const entity = new Entity("myEntity", {
   identifier: "myEntity",
@@ -1300,7 +1300,7 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/port-labs/pulumi-port/sdk/go/port"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -1372,7 +1372,7 @@ entity = Entity(
 
 ```typescript showLineNumbers
 import * as pulumi from "@pulumi/pulumi";
-import { Entity } from "@port-labs/pulumi";
+import { Entity } from "@port-labs/port";
 
 export const entity = new Entity("myEntity", {
   identifier: "myEntity",
@@ -1392,7 +1392,7 @@ export const entity = new Entity("myEntity", {
 ```javascript showLineNumbers
 "use strict";
 const pulumi = require("@pulumi/pulumi");
-const port = require("@port-labs/pulumi");
+const port = require("@port-labs/port");
 
 const entity = new Entity("myEntity", {
   identifier: "myEntity",
@@ -1415,7 +1415,7 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/port-labs/pulumi-port/sdk/go/port"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -1488,7 +1488,7 @@ entity = Entity(
 
 ```typescript showLineNumbers
 import * as pulumi from "@pulumi/pulumi";
-import { Entity } from "@port-labs/pulumi";
+import { Entity } from "@port-labs/port";
 
 export const entity = new Entity("myEntity", {
   identifier: "myEntity",
@@ -1508,7 +1508,7 @@ export const entity = new Entity("myEntity", {
 ```javascript showLineNumbers
 "use strict";
 const pulumi = require("@pulumi/pulumi");
-const port = require("@port-labs/pulumi");
+const port = require("@port-labs/port");
 
 const entity = new Entity("myEntity", {
   identifier: "myEntity",
@@ -1530,7 +1530,7 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/port-labs/pulumi-port/sdk/go/port"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -1613,7 +1613,7 @@ entity = Entity(
 
 ```typescript showLineNumbers
 import * as pulumi from "@pulumi/pulumi";
-import { Entity } from "@port-labs/pulumi";
+import { Entity } from "@port-labs/port";
 
 export const entity = new Entity("myEntity", {
   identifier: "myEntity",
@@ -1633,7 +1633,7 @@ export const entity = new Entity("myEntity", {
 ```javascript showLineNumbers
 "use strict";
 const pulumi = require("@pulumi/pulumi");
-const port = require("@port-labs/pulumi");
+const port = require("@port-labs/port");
 
 const entity = new Entity("myEntity", {
   identifier: "myEntity",
@@ -1656,7 +1656,7 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/port-labs/pulumi-port/sdk/go/port"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -1745,7 +1745,7 @@ entity = Entity(
 
 ```typescript showLineNumbers
 import * as pulumi from "@pulumi/pulumi";
-import { Entity } from "@port-labs/pulumi";
+import { Entity } from "@port-labs/port";
 
 export const entity = new Entity("myEntity", {
   title: "My Entity",
@@ -1762,7 +1762,7 @@ export const entity = new Entity("myEntity", {
 ```javascript showLineNumbers
 "use strict";
 const pulumi = require("@pulumi/pulumi");
-const port = require("@port-labs/pulumi");
+const port = require("@port-labs/port");
 
 const entity = new Entity("myEntity", {
   title: "My Entity",
@@ -1785,7 +1785,7 @@ package main
 
 import (
     "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-    "github.com/port-pulumi/port-pulumi/sdk/v3/go/port_pulumi"
+    "github.com/port-labs/pulumi-port/sdk/go/port"
 )
 
 func main() {
