@@ -60,7 +60,7 @@ resource "port_blueprint" "myBlueprint" {
 ```
 
 :::info
-To set a type of array property, you need to use the `<type>_items` property type.
+To set the type of an array property, you need to use the `<type>_items` property type.
 For example, to set an array of strings, you need to use the `string_items` property type.
 
 ```
@@ -78,7 +78,7 @@ resource "port_blueprint" "myBlueprint" {
 }
 ```
 
-We currently support the following types of array items: string_items, number_items, boolean_items, object_items.
+We currently support the following types of array items: `string_items`, `number_items`, `boolean_items`, `object_items`.
 :::
 
 ## Pulumi definition
