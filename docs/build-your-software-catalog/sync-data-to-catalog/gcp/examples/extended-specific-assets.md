@@ -16,7 +16,7 @@ Here is the complete `main.tf` file:
 ```hcl showLineNumbers
 terraform {
   required_providers {
-    port_labs = {
+    port-labs = {
       source  = "port-labs/port-labs"
       version = "~> 0.10.3"
     }
