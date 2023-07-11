@@ -209,29 +209,34 @@ resource "port_blueprint" "gcp_project_blueprint" {
   title      = "Project"
   icon       = "GCP"
   identifier = "project"
-  properties {
-    identifier = "link"
-    type       = "string"
-    format     = "url"
-    title      = "Link"
+  properties = {
+    string_props = {
+      "link" = {
+        format     = "url"
+        title      = "Link"
+      }
+      "number" = {
+        title      = "Number"
+      }
+      "createTime" = {
+        format     = "date-time"
+        title      = "Create Time"
+      }
+    }
+    object_props = {
+      "labels" = {
+        title      = "Labels"
+      }
+    }
   }
-  properties {
-    identifier = "number"
-    type       = "string"
-    title      = "Number"
+  relations = {
+    port_blueprint.gcp_org_blueprint.identifier = {
+      target = port_blueprint.gcp_org_blueprint.identifier
+    }
+    port_blueprint.gcp_folder_blueprint.identifier = {
+      target = port_blueprint.gcp_folder_blueprint.identifier
+    }
   }
-  properties {
-    identifier = "createTime"
-    type       = "string"
-    format     = "date-time"
-    title      = "Create Time"
-  }
-  properties {
-    identifier = "labels"
-    type       = "object"
-    title      = "Labels"
-  }
-  relations {
     identifier = port_blueprint.gcp_org_blueprint.identifier
     target = port_blueprint.gcp_org_blueprint.identifier
   }
@@ -246,19 +251,19 @@ resource "port_entity" "gcp_project_entity" {
   identifier = each.value.project_id
   title     = each.value.name
   blueprint = port_blueprint.gcp_project_blueprint.identifier
-  properties {
+  properties{
     name  = "link"
     value = "https://console.cloud.google.com/welcome?project=${each.value.project_id}"
   }
-  properties {
+  properties{
     name  = "number"
     value = each.value.number
   }
-  properties {
+  properties{
     name  = "createTime"
     value = each.value.create_time
   }
-  properties {
+  properties{
     name  = "labels"
     value = jsonencode(each.value.labels)
   }

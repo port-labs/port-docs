@@ -76,7 +76,7 @@ In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we
 
 <Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Array - coming soon", value: "array"}
+{label: "Array", value: "array"}
 ]}>
 
 <TabItem value="basic">
@@ -85,14 +85,39 @@ In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we
 resource "port_action" "myAction" {
   # ...action properties
   # highlight-start
-  user_properties {
-    identifier  = "myUserInput"
-    title       = "My user input"
-    description = "My user input"
-    required    = false
-    type        = "string"
-    format      = "user"
-    default     = "me@example.com"
+  user_properties = {
+    string_props = {
+      "myUserInput" = {
+        title       = "My user input"
+        description = "My user input"
+        required    = false
+        format      = "user"
+        default     = "me@example.com"
+      }
+    }
+  }
+  # highlight-end
+}
+```
+
+</TabItem>
+
+<TabItem value="array">
+
+```hcl showLineNumbers
+
+resource "port_action" "myAction" {
+  # ...action properties
+  # highlight-start
+  user_properties = {
+    array_props = {
+      "myUserArrayInput" = {
+        title       = "My user array input"
+        description = "My user array input"
+        required    = false
+        format      = "user"
+      }
+    }
   }
   # highlight-end
 }

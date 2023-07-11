@@ -63,13 +63,15 @@ In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we
 resource "port_action" "myAction" {
   # ...action properties
   # highlight-start
-  user_properties {
-    identifier  = "myBooleanInput"
-    title       = "My boolean input"
-    description = "My boolean input"
-    required    = false
-    type        = "boolean"
-    default     = true
+  user_properties = {
+    boolean_props = {
+      myBooleanInput = {
+        title       = "My boolean input"
+        description = "My boolean input"
+        required    = false
+        default     = true
+      }
+    }
   }
   # highlight-end
 }

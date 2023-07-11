@@ -97,14 +97,15 @@ The Email input type can be used to store any legal email address.
 resource "port_action" "myAction" {
   # ...action properties
   # highlight-start
-  user_properties {
-    identifier  = "myEmailInput"
-    title       = "My email input"
-    description = "My email input"
-    required    = false
-    type        = "string"
-    format      = "email"
-    default     = "me@example.com"
+  user_properties = {
+    string_props = {
+      "myEmailInput" = {
+        title       = "My email input"
+        description = "My email input"
+        format      = "email"
+        default     = "me@example.com"
+      }
+    }
   }
   # highlight-end
 }
@@ -118,18 +119,45 @@ resource "port_action" "myAction" {
 resource "port_action" "myAction" {
   # ...action properties
   # highlight-start
-  user_properties {
-    identifier  = "myEmailSelectInput"
-    title       = "My email select input"
-    description = "My email select input"
-    required    = false
-    type        = "string"
-    format      = "email"
-    enum        = ["me@example.com", "example@example.com"]
+  user_properties = {
+    string_props = {
+      "myEmailInput" = {
+        title       = "My email input"
+        description = "My email input"
+        format      = "email"
+        default     = "me@example.com"
+        enum = ["me@example.com", "example@example.com"]
+      }
+    }
   }
   # highlight-end
 }
 ```
 
 </TabItem>
+
+<TabItem value="array">
+
+```hcl showLineNumbers
+resource "port_action" "myAction" {
+  # ...action properties
+  # highlight-start
+  user_properties = {
+    array_props = {
+      "myEmailInput" = {
+        title       = "My email input"
+        description = "My email input"
+        default     = "me@example.com"
+        string_items = {
+          format = "email"
+        }
+      }
+    }
+  }
+  # highlight-end
+}
+```
+
+</TabItem>
+
 </Tabs>

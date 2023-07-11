@@ -127,7 +127,7 @@ resource "port_entity" "myEntity" {
 
 ```hcl showLineNumbers
 properties = {
-  string_prop {
+  string_props {
    "myStringProp" = "My string"
   }
 }
@@ -172,7 +172,7 @@ properties = {
 ```hcl showLineNumbers
 properties = {
   array_prop {
-    string_prop {
+    string_props {
       "myArrayProp" = ["a", "b", "c"])
     }
   }
@@ -184,7 +184,7 @@ properties = {
 
 ```hcl showLineNumbers
 properties = {
-  string_prop = {
+  string_props = {
     "myUrlProp" = "https://example.com"
   }
 }
@@ -195,7 +195,7 @@ properties = {
 
 ```hcl showLineNumbers
 properties = {
-  string_prop = {
+  string_props = {
     "myEmailProp" = "me@example.com"
   }
 }
@@ -207,7 +207,7 @@ properties = {
 
 ```hcl showLineNumbers
 properties = {
- string_prop {
+ string_props {
    "myUserProp" = "argo-admin"
   }
 }
@@ -218,7 +218,7 @@ properties = {
 
 ```hcl showLineNumbers
 properties = {
-  string_prop {
+  string_props {
     "myTeamProp" = "argo-admins"
   }
 }
@@ -229,7 +229,7 @@ properties = {
 
 ```hcl showLineNumbers
 properties = {
-  string_prop {
+  string_props {
     "myDatetimeProp" = "2023-04-18T11:44:15.345Z"
   }
 }
@@ -240,7 +240,7 @@ properties = {
 
 ```hcl showLineNumbers
 properties = {
-  string_prop = {
+  string_props = {
     "myUserProp" = "argo-admin"
   }
 }
@@ -252,7 +252,7 @@ properties = {
 
 ```hcl showLineNumbers
 properties = {
-  string_prop {
+  string_props {
     "myYamlProp" = "myKey: myValue"
   }
 }
@@ -277,7 +277,7 @@ resource "port_entity" "myEntity" {
 
 # highlight-start
   relations {
-    single_relation = {
+    single_relations = {
     "mySingleRelation" = "myTargetEntityIdentifier"
     }
   }
@@ -304,7 +304,7 @@ the schema is as follows:
 
 ```hcl showLineNumbers
 relations {
-  single_relation = {
+  single_relations = {
     # Key-value pair of the relation identifier and the target identifier
     "mySingleRelation" = "myTargetEntityIdentifier"
   }
@@ -351,7 +351,7 @@ resource "port_entity" "myEntity" {
   blueprint  = "myBlueprint"
 
   properties = {
-    "string_prop" = {
+    "string_props" = {
       "myStringProp" = "My string"
     }
     "number_prop" = {
@@ -364,7 +364,7 @@ resource "port_entity" "myEntity" {
       "myObjectProp" = jsonencode({ "my" : "object" })
     }
     "array_prop" = {
-    "string_prop" = {
+    "string_props" = {
         "myArrayProp" = ["a", "b", "c"]
       }
     }

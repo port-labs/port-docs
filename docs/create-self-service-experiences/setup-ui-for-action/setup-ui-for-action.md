@@ -197,26 +197,9 @@ resource "port_action" "myAction" {
   title                = "My Action"
   identifier           = "myAction"
   description          = "My self-service action"
-
-  user_properties {
-    identifier  = "myInput"
-    type        = "myType"
-    title       = "My Input"
-    description = "My user input"
-  }
-
-  user_properties {
-    identifier  = "mySpecialInput"
-    type        = "myType"
-    title       = "My Special Input"
-    description = "My special user input"
-  }
-
-  trigger = "myActionTrigger"
-
-  invocation_method {
-    type = "myInvocationType"
-  }
+  user_properties = {}
+  trigger = "myActionTrigger"å
+  myInvocationType_method = {}
 }
 ```
 

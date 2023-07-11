@@ -91,8 +91,8 @@ In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we
 
 <Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Select (Enum) - coming soon", value: "enum"},
-{label: "Array - coming soon", value: "array"}
+{label: "Select (Enum)", value: "enum"},
+{label: "Array", value: "array"}
 ]}>
 
 <TabItem value="basic">
@@ -101,19 +101,70 @@ In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we
 resource "port_action" "myAction" {
   # ...action properties
   # highlight-start
-  user_properties {
-    identifier  = "myNumberInput"
-    title       = "My number input"
-    description = "My number input"
-    required    = false
-    type        = "number"
-    default     = 7
+  user_properties = {
+    number_props = {
+      "myNumberInput" = {
+        title       = "My number input"
+        description = "My number input"
+        required    = false
+        default     = 7
+      }
+    }
   }
   # highlight-end
 }
 ```
 
 </TabItem>
+
+<TabItem value="enum">
+
+```hcl showLineNumbers
+
+resource "port_action" "myAction" {
+  # ...action properties
+  # highlight-start
+  user_properties = {
+    number_props = {
+      "myNumberInput" = {
+        title       = "My number input"
+        description = "My number input"
+        required    = false
+        enum        = [1, 2, 3, 4]
+      }
+    }
+  }
+  # highlight-end
+}
+
+```
+
+</TabItem>
+
+<TabItem value="array">
+
+```hcl showLineNumbers
+
+resource "port_action" "myAction" {
+  # ...action properties
+  # highlight-start
+  user_properties = {
+    array_props = {
+      "myNumberArrayInput" = {
+        title       = "My number array input"
+        description = "My number array input"
+        required    = false
+        number_items = {}
+      }
+    }
+  }
+  # highlight-end
+}
+
+```
+
+</TabItem>
+
 </Tabs>
 
 ## Validate number

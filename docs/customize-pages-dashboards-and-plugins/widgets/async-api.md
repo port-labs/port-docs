@@ -108,12 +108,13 @@ When using the object type, you will have to provide the full JSON AsyncAPI spec
 resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myAsyncApi"
-    title      = "My Async API"
-    required   = false
-    type       = "object"
-    spec       = "async-api"
+  properties = {
+    "myAsyncApi" = {
+      title    = "My Async API"
+      required = false
+      type     = "object"
+      spec     = "async-api"
+    }
   }
   # highlight-end
 }

@@ -83,12 +83,14 @@ The datetime input type can be used to store any date and time, for example:
 resource "port_action" "myAction" {
   # ...action properties
   # highlight-start
-  properties {
-    identifier = "myDatetimeProp"
-    title      = "My datetime"
-    required   = false
-    type       = "string"
-    format     = "date-time"
+  user_properties = {
+    string_props = {
+      myDatetimeProp = {
+        title    = "My datetime"
+        required = false
+        format   = "date-time"
+      }
+    }
   }
   # highlight-end
 }
