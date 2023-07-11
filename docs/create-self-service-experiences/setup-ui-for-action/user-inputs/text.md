@@ -222,4 +222,30 @@ Text validations support the following operators:
 ```
 
 </TabItem>
+
+<TabItem value="tf">
+
+```hcl showLineNumbers
+resource "port_action" "myAction" {
+  # ...action properties
+  # highlight-start
+  user_properties = {
+    string_props = {
+      myTextInput = {
+        title       = "My text input"
+        description = "My text input"
+        required    = false
+        default     = "My default"
+        minLength   = 1
+        maxLength   = 32
+        pattern     = "^[a-zA-Z0-9-]*-service$"
+      }
+    }
+  }
+  # highlight-end
+}
+```
+
+</TabItem>
+
 </Tabs>

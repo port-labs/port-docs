@@ -199,12 +199,11 @@ The JSON shown above is for a single blueprint action, the actions of a blueprin
 
 ```hcl showLineNumbers
 resource "port_action" "myAction" {
-  blueprint_identifier = "myBlueprint"
-  title                = "My Action"
+  blueprint = "myBlueprint"
   identifier           = "myAction"
   description          = "My self-service action"
   user_properties = {}
-  trigger = "myActionTrigger"å
+  trigger = "myActionTrigger"
   myInvocationType_method = {}
 }
 ```

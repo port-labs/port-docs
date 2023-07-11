@@ -16,9 +16,9 @@ Here is the complete `main.tf` file:
 ```hcl showLineNumbers
 terraform {
   required_providers {
-    port = {
+    port_labs = {
       source  = "port-labs/port-labs"
-      version = "~> 1.0.0"
+      version = "~> 0.10.3"
     }
     google-beta = {
       source  = "hashicorp/google-beta"
@@ -132,7 +132,7 @@ data "google_container_cluster" "my_container_clusters" {
 }
 
 
-resource "port_blueprint" "gcp_org_blueprint" {
+resource "port-labs_blueprint" "gcp_org_blueprint" {
   title      = "Organization"
   icon       = "GCP"
   identifier = "organization"
@@ -153,7 +153,7 @@ resource "port_blueprint" "gcp_org_blueprint" {
 resource "port_entity" "gcp_org_entity" {
   identifier = data.google_organization.my_org.org_id
   title     = data.google_organization.my_org.domain
-  blueprint = port_blueprint.gcp_org_blueprint.identifier
+  blueprint = port-labs_blueprint.gcp_org_blueprint.identifier
   properties {
     name  = "link"
     value = "https://console.cloud.google.com/welcome?organizationId=${data.google_organization.my_org.org_id}"
@@ -164,7 +164,7 @@ resource "port_entity" "gcp_org_entity" {
   }
 }
 
-resource "port_blueprint" "gcp_folder_blueprint" {
+resource "port-labs_blueprint" "gcp_folder_blueprint" {
   title      = "Folder"
   icon       = "GCP"
   identifier = "folder"
@@ -181,8 +181,8 @@ resource "port_blueprint" "gcp_folder_blueprint" {
     title      = "Create Time"
   }
   relations {
-    identifier = port_blueprint.gcp_org_blueprint.identifier
-    target = port_blueprint.gcp_org_blueprint.identifier
+    identifier = port-labs_blueprint.gcp_org_blueprint.identifier
+    target = port-labs_blueprint.gcp_org_blueprint.identifier
   }
 }
 
@@ -190,7 +190,7 @@ resource "port_entity" "gcp_folder_entity" {
   for_each = {for idx, folder in data.google_folder.my_folders: idx => folder}
   identifier = each.value.folder_id
   title     = each.value.display_name
-  blueprint = port_blueprint.gcp_folder_blueprint.identifier
+  blueprint = port-labs_blueprint.gcp_folder_blueprint.identifier
   properties {
     name  = "link"
     value = "https://console.cloud.google.com/welcome?folder=${each.value.folder_id}"
@@ -200,12 +200,12 @@ resource "port_entity" "gcp_folder_entity" {
     value = each.value.create_time
   }
   relations {
-    name = port_blueprint.gcp_org_blueprint.identifier
+    name = port-labs_blueprint.gcp_org_blueprint.identifier
     identifier = data.google_organization.my_org.org_id
   }
 }
 
-resource "port_blueprint" "gcp_project_blueprint" {
+resource "port-labs_blueprint" "gcp_project_blueprint" {
   title      = "Project"
   icon       = "GCP"
   identifier = "project"
@@ -230,19 +230,19 @@ resource "port_blueprint" "gcp_project_blueprint" {
     }
   }
   relations = {
-    port_blueprint.gcp_org_blueprint.identifier = {
-      target = port_blueprint.gcp_org_blueprint.identifier
+    port-labs_blueprint.gcp_org_blueprint.identifier = {
+      target = port-labs_blueprint.gcp_org_blueprint.identifier
     }
-    port_blueprint.gcp_folder_blueprint.identifier = {
-      target = port_blueprint.gcp_folder_blueprint.identifier
+    port-labs_blueprint.gcp_folder_blueprint.identifier = {
+      target = port-labs_blueprint.gcp_folder_blueprint.identifier
     }
   }
-    identifier = port_blueprint.gcp_org_blueprint.identifier
-    target = port_blueprint.gcp_org_blueprint.identifier
+    identifier = port-labs_blueprint.gcp_org_blueprint.identifier
+    target = port-labs_blueprint.gcp_org_blueprint.identifier
   }
   relations {
-    identifier = port_blueprint.gcp_folder_blueprint.identifier
-    target = port_blueprint.gcp_folder_blueprint.identifier
+    identifier = port-labs_blueprint.gcp_folder_blueprint.identifier
+    target = port-labs_blueprint.gcp_folder_blueprint.identifier
   }
 }
 
@@ -250,7 +250,7 @@ resource "port_entity" "gcp_project_entity" {
   for_each = {for idx, project in data.google_projects.my_projects.projects : idx => project}
   identifier = each.value.project_id
   title     = each.value.name
-  blueprint = port_blueprint.gcp_project_blueprint.identifier
+  blueprint = port-labs_blueprint.gcp_project_blueprint.identifier
   properties{
     name  = "link"
     value = "https://console.cloud.google.com/welcome?project=${each.value.project_id}"
@@ -270,21 +270,21 @@ resource "port_entity" "gcp_project_entity" {
   dynamic "relations" {
     for_each = each.value.parent.type == "organization" ? [1] : []
     content {
-      name = port_blueprint.gcp_org_blueprint.identifier
+      name = port-labs_blueprint.gcp_org_blueprint.identifier
       identifier = each.value.parent.id
     }
   }
   dynamic "relations" {
     for_each = each.value.parent.type == "folder" ? [1] : []
     content {
-      name = port_blueprint.gcp_folder_blueprint.identifier
+      name = port-labs_blueprint.gcp_folder_blueprint.identifier
       identifier = each.value.parent.id
     }
   }
   depends_on = [port_entity.gcp_org_entity, port_entity.gcp_folder_entity]
 }
 
-resource "port_blueprint" "gcp_bucket_blueprint" {
+resource "port-labs_blueprint" "gcp_bucket_blueprint" {
   title      = "Storage Bucket"
   icon       = "Bucket"
   identifier = "storageBucket"
@@ -332,8 +332,8 @@ resource "port_blueprint" "gcp_bucket_blueprint" {
     title      = "Labels"
   }
   relations {
-    identifier = port_blueprint.gcp_project_blueprint.identifier
-    target = port_blueprint.gcp_project_blueprint.identifier
+    identifier = port-labs_blueprint.gcp_project_blueprint.identifier
+    target = port-labs_blueprint.gcp_project_blueprint.identifier
   }
 }
 
@@ -341,22 +341,11 @@ resource "port_entity" "gcp_bucket_entity" {
   for_each = data.google_storage_bucket.my_buckets
   identifier = each.value.id
   title     = each.value.name
-  blueprint = port_blueprint.gcp_bucket_blueprint.identifier
+  blueprint = port-labs_blueprint.gcp_bucket_blueprint.identifier
   properties {
     name  = "link"
     value = "https://console.cloud.google.com/storage/browser/${each.value.id};tab=objects?project=${each.value.project}"
   }
-  properties {
-    name  = "location"
-    value = each.value.location
-  }
-  properties {
-    name  = "publicAccessPrevention"
-    value = each.value.public_access_prevention
-  }
-  properties {
-    name  = "storageClass"
-    value = each.value.storage_class
   }
   properties {
     name  = "uniformBucketLevelAccess"
@@ -375,14 +364,14 @@ resource "port_entity" "gcp_bucket_entity" {
     value = jsonencode(each.value.labels)
   }
   relations {
-    name = port_blueprint.gcp_project_blueprint.identifier
+    name = port-labs_blueprint.gcp_project_blueprint.identifier
     identifier = each.value.project
   }
 
   depends_on = [port_entity.gcp_project_entity]
 }
 
-resource "port_blueprint" "gcp_service_account_blueprint" {
+resource "port-labs_blueprint" "gcp_service_account_blueprint" {
 
   title      = "Service Account"
   icon       = "Lock"
@@ -400,8 +389,8 @@ resource "port_blueprint" "gcp_service_account_blueprint" {
     title      = "email"
   }
   relations {
-    identifier = port_blueprint.gcp_project_blueprint.identifier
-    target = port_blueprint.gcp_project_blueprint.identifier
+    identifier = port-labs_blueprint.gcp_project_blueprint.identifier
+    target = port-labs_blueprint.gcp_project_blueprint.identifier
   }
 }
 
@@ -409,7 +398,7 @@ resource "port_entity" "gcp_service_account_entity" {
   for_each = data.google_service_account.my_accounts
   identifier = each.value.account_id
   title     = each.value.display_name
-  blueprint = port_blueprint.gcp_service_account_blueprint.identifier
+  blueprint = port-labs_blueprint.gcp_service_account_blueprint.identifier
   properties {
     name  = "link"
     value = "https://console.cloud.google.com/iam-admin/serviceaccounts/details/${each.value.unique_id}?project=${each.value.project}"
@@ -419,14 +408,14 @@ resource "port_entity" "gcp_service_account_entity" {
     value = each.value.email
   }
   relations {
-    name = port_blueprint.gcp_project_blueprint.identifier
+    name = port-labs_blueprint.gcp_project_blueprint.identifier
     identifier = each.value.project
   }
 
   depends_on = [port_entity.gcp_project_entity]
 }
 
-resource "port_blueprint" "gcp_disk_blueprint" {
+resource "port-labs_blueprint" "gcp_disk_blueprint" {
   title      = "Disk"
   icon       = "GoogleComputeEngine"
   identifier = "disk"
@@ -472,8 +461,8 @@ resource "port_blueprint" "gcp_disk_blueprint" {
     title      = "Labels"
   }
   relations {
-    identifier = port_blueprint.gcp_project_blueprint.identifier
-    target = port_blueprint.gcp_project_blueprint.identifier
+    identifier = port-labs_blueprint.gcp_project_blueprint.identifier
+    target = port-labs_blueprint.gcp_project_blueprint.identifier
   }
 }
 
@@ -481,7 +470,7 @@ resource "port_entity" "gcp_disk_entity" {
   for_each = data.google_compute_disk.my_disks
   identifier = "${each.value.project}_${each.value.zone}_${each.value.name}"
   title     = each.value.name
-  blueprint = port_blueprint.gcp_disk_blueprint.identifier
+  blueprint = port-labs_blueprint.gcp_disk_blueprint.identifier
   properties {
     name  = "link"
     value = "https://console.cloud.google.com/compute/disksDetail/zones/${each.value.zone}/disks/${each.value.name}?project=${each.value.project}"
@@ -515,14 +504,14 @@ resource "port_entity" "gcp_disk_entity" {
     value = jsonencode(each.value.labels)
   }
   relations {
-    name = port_blueprint.gcp_project_blueprint.identifier
+    name = port-labs_blueprint.gcp_project_blueprint.identifier
     identifier = each.value.project
   }
 
   depends_on = [port_entity.gcp_project_entity]
 }
 
-resource "port_blueprint" "gcp_memorystore_blueprint" {
+resource "port-labs_blueprint" "gcp_memorystore_blueprint" {
   title      = "Memorystore"
   icon       = "GoogleCloudPlatform"
   identifier = "memorystore"
@@ -597,8 +586,8 @@ resource "port_blueprint" "gcp_memorystore_blueprint" {
     title      = "Labels"
   }
   relations {
-    identifier = port_blueprint.gcp_project_blueprint.identifier
-    target = port_blueprint.gcp_project_blueprint.identifier
+    identifier = port-labs_blueprint.gcp_project_blueprint.identifier
+    target = port-labs_blueprint.gcp_project_blueprint.identifier
   }
 }
 
@@ -606,7 +595,7 @@ resource "port_entity" "gcp_memorystore_entity" {
   for_each = data.google_redis_instance.my_memorystores
   identifier = "${each.value.project}_${each.value.location_id}_${each.value.name}"
   title     = each.value.name
-  blueprint = port_blueprint.gcp_memorystore_blueprint.identifier
+  blueprint = port-labs_blueprint.gcp_memorystore_blueprint.identifier
   properties {
     name  = "link"
     value = "https://console.cloud.google.com/memorystore/redis/locations/${each.value.region}/instances/${each.value.name}/details/overview?project=${each.value.project}"
@@ -660,14 +649,14 @@ resource "port_entity" "gcp_memorystore_entity" {
     value = jsonencode(each.value.labels)
   }
   relations {
-    name = port_blueprint.gcp_project_blueprint.identifier
+    name = port-labs_blueprint.gcp_project_blueprint.identifier
     identifier = each.value.project
   }
 
   depends_on = [port_entity.gcp_project_entity]
 }
 
-resource "port_blueprint" "gcp_compute_instance_blueprint" {
+resource "port-labs_blueprint" "gcp_compute_instance_blueprint" {
   title      = "Compute Instance"
   icon       = "GoogleComputeEngine"
   identifier = "computeInstance"
@@ -724,8 +713,8 @@ resource "port_blueprint" "gcp_compute_instance_blueprint" {
     title      = "Labels"
   }
   relations {
-    identifier = port_blueprint.gcp_project_blueprint.identifier
-    target = port_blueprint.gcp_project_blueprint.identifier
+    identifier = port-labs_blueprint.gcp_project_blueprint.identifier
+    target = port-labs_blueprint.gcp_project_blueprint.identifier
   }
 }
 
@@ -733,7 +722,7 @@ resource "port_entity" "gcp_compute_instance_entity" {
   for_each = data.google_compute_instance.my_compute_instances
   identifier = "${each.value.project}_${each.value.zone}_${each.value.name}"
   title     = each.value.name
-  blueprint = port_blueprint.gcp_compute_instance_blueprint.identifier
+  blueprint = port-labs_blueprint.gcp_compute_instance_blueprint.identifier
   properties {
     name  = "link"
     value = "https://console.cloud.google.com/compute/instancesDetail/zones/${each.value.zone}/instances/${each.value.name}?project=${each.value.project}"
@@ -767,14 +756,14 @@ resource "port_entity" "gcp_compute_instance_entity" {
     value = jsonencode(each.value.labels)
   }
   relations {
-    name = port_blueprint.gcp_project_blueprint.identifier
+    name = port-labs_blueprint.gcp_project_blueprint.identifier
     identifier = each.value.project
   }
 
   depends_on = [port_entity.gcp_project_entity]
 }
 
-resource "port_blueprint" "gcp_run_service_blueprint" {
+resource "port-labs_blueprint" "gcp_run_service_blueprint" {
   title      = "Run Service"
   icon       = "Service"
   identifier = "runService"
@@ -810,8 +799,8 @@ resource "port_blueprint" "gcp_run_service_blueprint" {
     title      = "Traffic"
   }
   relations {
-    identifier = port_blueprint.gcp_project_blueprint.identifier
-    target = port_blueprint.gcp_project_blueprint.identifier
+    identifier = port-labs_blueprint.gcp_project_blueprint.identifier
+    target = port-labs_blueprint.gcp_project_blueprint.identifier
   }
 }
 
@@ -819,7 +808,7 @@ resource "port_entity" "gcp_run_service_entity" {
   for_each = data.google_cloud_run_service.my_run_services
   identifier = "${each.value.project}_${each.value.location}_${each.value.name}"
   title     = each.value.name
-  blueprint = port_blueprint.gcp_run_service_blueprint.identifier
+  blueprint = port-labs_blueprint.gcp_run_service_blueprint.identifier
   properties {
     name  = "link"
     value = "https://console.cloud.google.com/run/detail/${each.value.location}/${each.value.name}?project=${each.value.project}"
@@ -845,14 +834,14 @@ resource "port_entity" "gcp_run_service_entity" {
     items = [for item in each.value.traffic: jsonencode(item)]
   }
   relations {
-    name = port_blueprint.gcp_project_blueprint.identifier
+    name = port-labs_blueprint.gcp_project_blueprint.identifier
     identifier = each.value.project
   }
 
   depends_on = [port_entity.gcp_project_entity]
 }
 
-resource "port_blueprint" "gcp_container_cluster_blueprint" {
+resource "port-labs_blueprint" "gcp_container_cluster_blueprint" {
   title      = "Container Cluster"
   icon       = "Cluster"
   identifier = "containerCluster"
@@ -898,8 +887,8 @@ resource "port_blueprint" "gcp_container_cluster_blueprint" {
     title      = "Network"
   }
   relations {
-    identifier = port_blueprint.gcp_project_blueprint.identifier
-    target = port_blueprint.gcp_project_blueprint.identifier
+    identifier = port-labs_blueprint.gcp_project_blueprint.identifier
+    target = port-labs_blueprint.gcp_project_blueprint.identifier
   }
 }
 
@@ -907,7 +896,7 @@ resource "port_entity" "gcp_container_cluster_entity" {
   for_each = data.google_container_cluster.my_container_clusters
   identifier = "${each.value.project}_${each.value.location}_${each.value.name}"
   title     = each.value.name
-  blueprint = port_blueprint.gcp_container_cluster_blueprint.identifier
+  blueprint = port-labs_blueprint.gcp_container_cluster_blueprint.identifier
   properties {
     name  = "link"
     value = "https://console.cloud.google.com/kubernetes/clusters/details/${each.value.location}/${each.value.name}?project=${each.value.project}"
@@ -941,7 +930,7 @@ resource "port_entity" "gcp_container_cluster_entity" {
     value = each.value.network
   }
   relations {
-    name = port_blueprint.gcp_project_blueprint.identifier
+    name = port-labs_blueprint.gcp_project_blueprint.identifier
     identifier = each.value.project
   }
 
@@ -1120,7 +1109,7 @@ data "google_container_cluster" "my_container_clusters" {
 This part includes configuring the `organization` blueprint and creating an entity for the organization:
 
 ```hcl showLineNumbers
-resource "port_blueprint" "gcp_org_blueprint" {
+resource "port-labs_blueprint" "gcp_org_blueprint" {
   title      = "Organization"
   icon       = "GCP"
   identifier = "organization"
@@ -1141,7 +1130,7 @@ resource "port_blueprint" "gcp_org_blueprint" {
 resource "port_entity" "gcp_org_entity" {
   identifier = data.google_organization.my_org.org_id
   title     = data.google_organization.my_org.domain
-  blueprint = port_blueprint.gcp_org_blueprint.identifier
+  blueprint = port-labs_blueprint.gcp_org_blueprint.identifier
   properties {
     name  = "link"
     value = "https://console.cloud.google.com/welcome?organizationId=${data.google_organization.my_org.org_id}"
@@ -1158,7 +1147,7 @@ resource "port_entity" "gcp_org_entity" {
 This part includes configuring the `folder` blueprint and creating an entities for the folders:
 
 ```hcl showLineNumbers
-resource "port_blueprint" "gcp_folder_blueprint" {
+resource "port-labs_blueprint" "gcp_folder_blueprint" {
   title      = "Folder"
   icon       = "GCP"
   identifier = "folder"
@@ -1175,8 +1164,8 @@ resource "port_blueprint" "gcp_folder_blueprint" {
     title      = "Create Time"
   }
   relations {
-    identifier = port_blueprint.gcp_org_blueprint.identifier
-    target = port_blueprint.gcp_org_blueprint.identifier
+    identifier = port-labs_blueprint.gcp_org_blueprint.identifier
+    target = port-labs_blueprint.gcp_org_blueprint.identifier
   }
 }
 
@@ -1184,7 +1173,7 @@ resource "port_entity" "gcp_folder_entity" {
   for_each = {for idx, folder in data.google_folder.my_folders: idx => folder}
   identifier = each.value.folder_id
   title     = each.value.display_name
-  blueprint = port_blueprint.gcp_folder_blueprint.identifier
+  blueprint = port-labs_blueprint.gcp_folder_blueprint.identifier
   properties {
     name  = "link"
     value = "https://console.cloud.google.com/welcome?folder=${each.value.folder_id}"
@@ -1194,7 +1183,7 @@ resource "port_entity" "gcp_folder_entity" {
     value = each.value.create_time
   }
   relations {
-    name = port_blueprint.gcp_org_blueprint.identifier
+    name = port-labs_blueprint.gcp_org_blueprint.identifier
     identifier = data.google_organization.my_org.org_id
   }
 }
@@ -1205,7 +1194,7 @@ resource "port_entity" "gcp_folder_entity" {
 This part includes configuring the `project` blueprint and creating an entities for the projects:
 
 ```hcl showLineNumbers
-resource "port_blueprint" "gcp_project_blueprint" {
+resource "port-labs_blueprint" "gcp_project_blueprint" {
   title      = "Project"
   icon       = "GCP"
   identifier = "project"
@@ -1232,12 +1221,12 @@ resource "port_blueprint" "gcp_project_blueprint" {
     title      = "Labels"
   }
   relations {
-    identifier = port_blueprint.gcp_org_blueprint.identifier
-    target = port_blueprint.gcp_org_blueprint.identifier
+    identifier = port-labs_blueprint.gcp_org_blueprint.identifier
+    target = port-labs_blueprint.gcp_org_blueprint.identifier
   }
   relations {
-    identifier = port_blueprint.gcp_folder_blueprint.identifier
-    target = port_blueprint.gcp_folder_blueprint.identifier
+    identifier = port-labs_blueprint.gcp_folder_blueprint.identifier
+    target = port-labs_blueprint.gcp_folder_blueprint.identifier
   }
 }
 
@@ -1245,7 +1234,7 @@ resource "port_entity" "gcp_project_entity" {
   for_each = {for idx, project in data.google_projects.my_projects.projects : idx => project}
   identifier = each.value.project_id
   title     = each.value.name
-  blueprint = port_blueprint.gcp_project_blueprint.identifier
+  blueprint = port-labs_blueprint.gcp_project_blueprint.identifier
   properties {
     name  = "link"
     value = "https://console.cloud.google.com/welcome?project=${each.value.project_id}"
@@ -1265,14 +1254,14 @@ resource "port_entity" "gcp_project_entity" {
   dynamic "relations" {
     for_each = each.value.parent.type == "organization" ? [1] : []
     content {
-      name = port_blueprint.gcp_org_blueprint.identifier
+      name = port-labs_blueprint.gcp_org_blueprint.identifier
       identifier = each.value.parent.id
     }
   }
   dynamic "relations" {
     for_each = each.value.parent.type == "folder" ? [1] : []
     content {
-      name = port_blueprint.gcp_folder_blueprint.identifier
+      name = port-labs_blueprint.gcp_folder_blueprint.identifier
       identifier = each.value.parent.id
     }
   }
@@ -1285,7 +1274,7 @@ resource "port_entity" "gcp_project_entity" {
 This part includes configuring the `storageBucket` blueprint and creating the entities for the buckets:
 
 ```hcl showLineNumbers
-resource "port_blueprint" "gcp_bucket_blueprint" {
+resource "port-labs_blueprint" "gcp_bucket_blueprint" {
   title      = "Storage Bucket"
   icon       = "Bucket"
   identifier = "storageBucket"
@@ -1333,8 +1322,8 @@ resource "port_blueprint" "gcp_bucket_blueprint" {
     title      = "Labels"
   }
   relations {
-    identifier = port_blueprint.gcp_project_blueprint.identifier
-    target = port_blueprint.gcp_project_blueprint.identifier
+    identifier = port-labs_blueprint.gcp_project_blueprint.identifier
+    target = port-labs_blueprint.gcp_project_blueprint.identifier
   }
 }
 
@@ -1342,7 +1331,7 @@ resource "port_entity" "gcp_bucket_entity" {
   for_each = data.google_storage_bucket.my_buckets
   identifier = each.value.id
   title     = each.value.name
-  blueprint = port_blueprint.gcp_bucket_blueprint.identifier
+  blueprint = port-labs_blueprint.gcp_bucket_blueprint.identifier
   properties {
     name  = "link"
     value = "https://console.cloud.google.com/storage/browser/${each.value.id};tab=objects?project=${each.value.project}"
@@ -1376,7 +1365,7 @@ resource "port_entity" "gcp_bucket_entity" {
     value = jsonencode(each.value.labels)
   }
   relations {
-    name = port_blueprint.gcp_project_blueprint.identifier
+    name = port-labs_blueprint.gcp_project_blueprint.identifier
     identifier = each.value.project
   }
 
@@ -1389,7 +1378,7 @@ resource "port_entity" "gcp_bucket_entity" {
 This part includes configuring the `serviceAccount` blueprint and creating the entities for the service accounts:
 
 ```hcl showLineNumbers
-resource "port_blueprint" "gcp_service_account_blueprint" {
+resource "port-labs_blueprint" "gcp_service_account_blueprint" {
 
   title      = "Service Account"
   icon       = "Lock"
@@ -1407,8 +1396,8 @@ resource "port_blueprint" "gcp_service_account_blueprint" {
     title      = "email"
   }
   relations {
-    identifier = port_blueprint.gcp_project_blueprint.identifier
-    target = port_blueprint.gcp_project_blueprint.identifier
+    identifier = port-labs_blueprint.gcp_project_blueprint.identifier
+    target = port-labs_blueprint.gcp_project_blueprint.identifier
   }
 }
 
@@ -1416,7 +1405,7 @@ resource "port_entity" "gcp_service_account_entity" {
   for_each = data.google_service_account.my_accounts
   identifier = each.value.account_id
   title     = each.value.display_name
-  blueprint = port_blueprint.gcp_service_account_blueprint.identifier
+  blueprint = port-labs_blueprint.gcp_service_account_blueprint.identifier
   properties {
     name  = "link"
     value = "https://console.cloud.google.com/iam-admin/serviceaccounts/details/${each.value.unique_id}?project=${each.value.project}"
@@ -1426,7 +1415,7 @@ resource "port_entity" "gcp_service_account_entity" {
     value = each.value.email
   }
   relations {
-    name = port_blueprint.gcp_project_blueprint.identifier
+    name = port-labs_blueprint.gcp_project_blueprint.identifier
     identifier = each.value.project
   }
 
@@ -1439,7 +1428,7 @@ resource "port_entity" "gcp_service_account_entity" {
 This part includes configuring the `disk` blueprint and creating the entities for the disks:
 
 ```hcl showLineNumbers
-resource "port_blueprint" "gcp_disk_blueprint" {
+resource "port-labs_blueprint" "gcp_disk_blueprint" {
   title      = "Disk"
   icon       = "GoogleComputeEngine"
   identifier = "disk"
@@ -1485,8 +1474,8 @@ resource "port_blueprint" "gcp_disk_blueprint" {
     title      = "Labels"
   }
   relations {
-    identifier = port_blueprint.gcp_project_blueprint.identifier
-    target = port_blueprint.gcp_project_blueprint.identifier
+    identifier = port-labs_blueprint.gcp_project_blueprint.identifier
+    target = port-labs_blueprint.gcp_project_blueprint.identifier
   }
 }
 
@@ -1494,7 +1483,7 @@ resource "port_entity" "gcp_disk_entity" {
   for_each = data.google_compute_disk.my_disks
   identifier = "${each.value.project}_${each.value.zone}_${each.value.name}"
   title     = each.value.name
-  blueprint = port_blueprint.gcp_disk_blueprint.identifier
+  blueprint = port-labs_blueprint.gcp_disk_blueprint.identifier
   properties {
     name  = "link"
     value = "https://console.cloud.google.com/compute/disksDetail/zones/${each.value.zone}/disks/${each.value.name}?project=${each.value.project}"
@@ -1528,7 +1517,7 @@ resource "port_entity" "gcp_disk_entity" {
     value = jsonencode(each.value.labels)
   }
   relations {
-    name = port_blueprint.gcp_project_blueprint.identifier
+    name = port-labs_blueprint.gcp_project_blueprint.identifier
     identifier = each.value.project
   }
 
@@ -1541,7 +1530,7 @@ resource "port_entity" "gcp_disk_entity" {
 This part includes configuring the `memorystore` blueprint and creating the entities for the memorystores:
 
 ```hcl showLineNumbers
-resource "port_blueprint" "gcp_memorystore_blueprint" {
+resource "port-labs_blueprint" "gcp_memorystore_blueprint" {
   title      = "Memorystore"
   icon       = "GoogleCloudPlatform"
   identifier = "memorystore"
@@ -1616,8 +1605,8 @@ resource "port_blueprint" "gcp_memorystore_blueprint" {
     title      = "Labels"
   }
   relations {
-    identifier = port_blueprint.gcp_project_blueprint.identifier
-    target = port_blueprint.gcp_project_blueprint.identifier
+    identifier = port-labs_blueprint.gcp_project_blueprint.identifier
+    target = port-labs_blueprint.gcp_project_blueprint.identifier
   }
 }
 
@@ -1625,7 +1614,7 @@ resource "port_entity" "gcp_memorystore_entity" {
   for_each = data.google_redis_instance.my_memorystores
   identifier = "${each.value.project}_${each.value.location_id}_${each.value.name}"
   title     = each.value.name
-  blueprint = port_blueprint.gcp_memorystore_blueprint.identifier
+  blueprint = port-labs_blueprint.gcp_memorystore_blueprint.identifier
   properties {
     name  = "link"
     value = "https://console.cloud.google.com/memorystore/redis/locations/${each.value.region}/instances/${each.value.name}/details/overview?project=${each.value.project}"
@@ -1679,7 +1668,7 @@ resource "port_entity" "gcp_memorystore_entity" {
     value = jsonencode(each.value.labels)
   }
   relations {
-    name = port_blueprint.gcp_project_blueprint.identifier
+    name = port-labs_blueprint.gcp_project_blueprint.identifier
     identifier = each.value.project
   }
 
@@ -1692,7 +1681,7 @@ resource "port_entity" "gcp_memorystore_entity" {
 This part includes configuring the `computeInstance` blueprint and creating the entities for the compute-instances:
 
 ```hcl showLineNumbers
-resource "port_blueprint" "gcp_compute_instance_blueprint" {
+resource "port-labs_blueprint" "gcp_compute_instance_blueprint" {
   title      = "Compute Instance"
   icon       = "GoogleComputeEngine"
   identifier = "computeInstance"
@@ -1749,8 +1738,8 @@ resource "port_blueprint" "gcp_compute_instance_blueprint" {
     title      = "Labels"
   }
   relations {
-    identifier = port_blueprint.gcp_project_blueprint.identifier
-    target = port_blueprint.gcp_project_blueprint.identifier
+    identifier = port-labs_blueprint.gcp_project_blueprint.identifier
+    target = port-labs_blueprint.gcp_project_blueprint.identifier
   }
 }
 
@@ -1758,7 +1747,7 @@ resource "port_entity" "gcp_compute_instance_entity" {
   for_each = data.google_compute_instance.my_compute_instances
   identifier = "${each.value.project}_${each.value.zone}_${each.value.name}"
   title     = each.value.name
-  blueprint = port_blueprint.gcp_compute_instance_blueprint.identifier
+  blueprint = port-labs_blueprint.gcp_compute_instance_blueprint.identifier
   properties {
     name  = "link"
     value = "https://console.cloud.google.com/compute/instancesDetail/zones/${each.value.zone}/instances/${each.value.name}?project=${each.value.project}"
@@ -1792,7 +1781,7 @@ resource "port_entity" "gcp_compute_instance_entity" {
     value = jsonencode(each.value.labels)
   }
   relations {
-    name = port_blueprint.gcp_project_blueprint.identifier
+    name = port-labs_blueprint.gcp_project_blueprint.identifier
     identifier = each.value.project
   }
 
@@ -1805,7 +1794,7 @@ resource "port_entity" "gcp_compute_instance_entity" {
 This part includes configuring the `runService` blueprint and creating the entities for the run services:
 
 ```hcl showLineNumbers
-resource "port_blueprint" "gcp_run_service_blueprint" {
+resource "port-labs_blueprint" "gcp_run_service_blueprint" {
   title      = "Run Service"
   icon       = "Service"
   identifier = "runService"
@@ -1841,8 +1830,8 @@ resource "port_blueprint" "gcp_run_service_blueprint" {
     title      = "Traffic"
   }
   relations {
-    identifier = port_blueprint.gcp_project_blueprint.identifier
-    target = port_blueprint.gcp_project_blueprint.identifier
+    identifier = port-labs_blueprint.gcp_project_blueprint.identifier
+    target = port-labs_blueprint.gcp_project_blueprint.identifier
   }
 }
 
@@ -1850,7 +1839,7 @@ resource "port_entity" "gcp_run_service_entity" {
   for_each = data.google_cloud_run_service.my_run_services
   identifier = "${each.value.project}_${each.value.location}_${each.value.name}"
   title     = each.value.name
-  blueprint = port_blueprint.gcp_run_service_blueprint.identifier
+  blueprint = port-labs_blueprint.gcp_run_service_blueprint.identifier
   properties {
     name  = "link"
     value = "https://console.cloud.google.com/run/detail/${each.value.location}/${each.value.name}?project=${each.value.project}"
@@ -1876,7 +1865,7 @@ resource "port_entity" "gcp_run_service_entity" {
     items = [for item in each.value.traffic: jsonencode(item)]
   }
   relations {
-    name = port_blueprint.gcp_project_blueprint.identifier
+    name = port-labs_blueprint.gcp_project_blueprint.identifier
     identifier = each.value.project
   }
 
@@ -1889,7 +1878,7 @@ resource "port_entity" "gcp_run_service_entity" {
 This part includes configuring the `containerCluster` blueprint and creating the entities for the container clusters:
 
 ```hcl showLineNumbers
-resource "port_blueprint" "gcp_container_cluster_blueprint" {
+resource "port-labs_blueprint" "gcp_container_cluster_blueprint" {
   title      = "Container Cluster"
   icon       = "Cluster"
   identifier = "containerCluster"
@@ -1935,8 +1924,8 @@ resource "port_blueprint" "gcp_container_cluster_blueprint" {
     title      = "Network"
   }
   relations {
-    identifier = port_blueprint.gcp_project_blueprint.identifier
-    target = port_blueprint.gcp_project_blueprint.identifier
+    identifier = port-labs_blueprint.gcp_project_blueprint.identifier
+    target = port-labs_blueprint.gcp_project_blueprint.identifier
   }
 }
 
@@ -1944,7 +1933,7 @@ resource "port_entity" "gcp_container_cluster_entity" {
   for_each = data.google_container_cluster.my_container_clusters
   identifier = "${each.value.project}_${each.value.location}_${each.value.name}"
   title     = each.value.name
-  blueprint = port_blueprint.gcp_container_cluster_blueprint.identifier
+  blueprint = port-labs_blueprint.gcp_container_cluster_blueprint.identifier
   properties {
     name  = "link"
     value = "https://console.cloud.google.com/kubernetes/clusters/details/${each.value.location}/${each.value.name}?project=${each.value.project}"
@@ -1978,7 +1967,7 @@ resource "port_entity" "gcp_container_cluster_entity" {
     value = each.value.network
   }
   relations {
-    name = port_blueprint.gcp_project_blueprint.identifier
+    name = port-labs_blueprint.gcp_project_blueprint.identifier
     identifier = each.value.project
   }
 

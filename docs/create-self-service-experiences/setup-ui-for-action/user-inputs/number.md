@@ -185,7 +185,7 @@ If _x_ is the value being validated, the following must hold true:
 <Tabs groupId="validation-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Array", value: "array"},
-{label: "Terraform - coming soon", value: "tf"}
+{label: "Terraform", value: "tf"}
 ]}>
 
 <TabItem value="basic">
@@ -225,6 +225,31 @@ If _x_ is the value being validated, the following must hold true:
     // highlight-end
   }
 }
+```
+
+</TabItem>
+
+<TabItem value="tf">
+
+```hcl showLineNumbers
+
+resource "port_action" "myAction" {
+  # ...action properties
+  # highlight-start
+  user_properties = {
+    number_props = {
+      "myNumberInput" = {
+        title       = "My number input"
+        description = "My number input"
+        required    = false
+        minimum     = 0
+        maximum     = 50
+      }
+    }
+  }
+  # highlight-end
+}
+
 ```
 
 </TabItem>

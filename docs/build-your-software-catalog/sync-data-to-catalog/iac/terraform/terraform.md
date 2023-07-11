@@ -172,7 +172,7 @@ properties = {
 ```hcl showLineNumbers
 properties = {
   array_props = {
-    string_props {
+    string_props = {
       "myArrayProp" = ["a", "b", "c"])
     }
   }
