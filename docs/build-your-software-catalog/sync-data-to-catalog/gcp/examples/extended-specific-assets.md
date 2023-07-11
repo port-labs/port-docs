@@ -150,7 +150,7 @@ resource "port-labs_blueprint" "gcp_org_blueprint" {
   }
 }
 
-resource "port_entity" "gcp_org_entity" {
+resource "port-labs_entity" "gcp_org_entity" {
   identifier = data.google_organization.my_org.org_id
   title     = data.google_organization.my_org.domain
   blueprint = port-labs_blueprint.gcp_org_blueprint.identifier
@@ -186,7 +186,7 @@ resource "port-labs_blueprint" "gcp_folder_blueprint" {
   }
 }
 
-resource "port_entity" "gcp_folder_entity" {
+resource "port-labs_entity" "gcp_folder_entity" {
   for_each = {for idx, folder in data.google_folder.my_folders: idx => folder}
   identifier = each.value.folder_id
   title     = each.value.display_name
@@ -209,34 +209,29 @@ resource "port-labs_blueprint" "gcp_project_blueprint" {
   title      = "Project"
   icon       = "GCP"
   identifier = "project"
-  properties = {
-    string_props = {
-      "link" = {
-        format     = "url"
-        title      = "Link"
-      }
-      "number" = {
-        title      = "Number"
-      }
-      "createTime" = {
-        format     = "date-time"
-        title      = "Create Time"
-      }
-    }
-    object_props = {
-      "labels" = {
-        title      = "Labels"
-      }
-    }
+  properties {
+    identifier = "link"
+    type       = "string"
+    format     = "url"
+    title      = "Link"
   }
-  relations = {
-    port-labs_blueprint.gcp_org_blueprint.identifier = {
-      target = port-labs_blueprint.gcp_org_blueprint.identifier
-    }
-    port-labs_blueprint.gcp_folder_blueprint.identifier = {
-      target = port-labs_blueprint.gcp_folder_blueprint.identifier
-    }
+  properties {
+    identifier = "number"
+    type       = "string"
+    title      = "Number"
   }
+  properties {
+    identifier = "createTime"
+    type       = "string"
+    format     = "date-time"
+    title      = "Create Time"
+  }
+  properties {
+    identifier = "labels"
+    type       = "object"
+    title      = "Labels"
+  }
+  relations {
     identifier = port-labs_blueprint.gcp_org_blueprint.identifier
     target = port-labs_blueprint.gcp_org_blueprint.identifier
   }
@@ -246,24 +241,24 @@ resource "port-labs_blueprint" "gcp_project_blueprint" {
   }
 }
 
-resource "port_entity" "gcp_project_entity" {
+resource "port-labs_entity" "gcp_project_entity" {
   for_each = {for idx, project in data.google_projects.my_projects.projects : idx => project}
   identifier = each.value.project_id
   title     = each.value.name
   blueprint = port-labs_blueprint.gcp_project_blueprint.identifier
-  properties{
+  properties {
     name  = "link"
     value = "https://console.cloud.google.com/welcome?project=${each.value.project_id}"
   }
-  properties{
+  properties {
     name  = "number"
     value = each.value.number
   }
-  properties{
+  properties {
     name  = "createTime"
     value = each.value.create_time
   }
-  properties{
+  properties {
     name  = "labels"
     value = jsonencode(each.value.labels)
   }
@@ -281,7 +276,7 @@ resource "port_entity" "gcp_project_entity" {
       identifier = each.value.parent.id
     }
   }
-  depends_on = [port_entity.gcp_org_entity, port_entity.gcp_folder_entity]
+  depends_on = [port-labs_entity.gcp_org_entity, port-labs_entity.gcp_folder_entity]
 }
 
 resource "port-labs_blueprint" "gcp_bucket_blueprint" {
@@ -337,7 +332,7 @@ resource "port-labs_blueprint" "gcp_bucket_blueprint" {
   }
 }
 
-resource "port_entity" "gcp_bucket_entity" {
+resource "port-labs_entity" "gcp_bucket_entity" {
   for_each = data.google_storage_bucket.my_buckets
   identifier = each.value.id
   title     = each.value.name
@@ -346,6 +341,17 @@ resource "port_entity" "gcp_bucket_entity" {
     name  = "link"
     value = "https://console.cloud.google.com/storage/browser/${each.value.id};tab=objects?project=${each.value.project}"
   }
+  properties {
+    name  = "location"
+    value = each.value.location
+  }
+  properties {
+    name  = "publicAccessPrevention"
+    value = each.value.public_access_prevention
+  }
+  properties {
+    name  = "storageClass"
+    value = each.value.storage_class
   }
   properties {
     name  = "uniformBucketLevelAccess"
@@ -368,7 +374,7 @@ resource "port_entity" "gcp_bucket_entity" {
     identifier = each.value.project
   }
 
-  depends_on = [port_entity.gcp_project_entity]
+  depends_on = [port-labs_entity.gcp_project_entity]
 }
 
 resource "port-labs_blueprint" "gcp_service_account_blueprint" {
@@ -394,7 +400,7 @@ resource "port-labs_blueprint" "gcp_service_account_blueprint" {
   }
 }
 
-resource "port_entity" "gcp_service_account_entity" {
+resource "port-labs_entity" "gcp_service_account_entity" {
   for_each = data.google_service_account.my_accounts
   identifier = each.value.account_id
   title     = each.value.display_name
@@ -412,7 +418,7 @@ resource "port_entity" "gcp_service_account_entity" {
     identifier = each.value.project
   }
 
-  depends_on = [port_entity.gcp_project_entity]
+  depends_on = [port-labs_entity.gcp_project_entity]
 }
 
 resource "port-labs_blueprint" "gcp_disk_blueprint" {
@@ -466,7 +472,7 @@ resource "port-labs_blueprint" "gcp_disk_blueprint" {
   }
 }
 
-resource "port_entity" "gcp_disk_entity" {
+resource "port-labs_entity" "gcp_disk_entity" {
   for_each = data.google_compute_disk.my_disks
   identifier = "${each.value.project}_${each.value.zone}_${each.value.name}"
   title     = each.value.name
@@ -508,7 +514,7 @@ resource "port_entity" "gcp_disk_entity" {
     identifier = each.value.project
   }
 
-  depends_on = [port_entity.gcp_project_entity]
+  depends_on = [port-labs_entity.gcp_project_entity]
 }
 
 resource "port-labs_blueprint" "gcp_memorystore_blueprint" {
@@ -591,7 +597,7 @@ resource "port-labs_blueprint" "gcp_memorystore_blueprint" {
   }
 }
 
-resource "port_entity" "gcp_memorystore_entity" {
+resource "port-labs_entity" "gcp_memorystore_entity" {
   for_each = data.google_redis_instance.my_memorystores
   identifier = "${each.value.project}_${each.value.location_id}_${each.value.name}"
   title     = each.value.name
@@ -653,7 +659,7 @@ resource "port_entity" "gcp_memorystore_entity" {
     identifier = each.value.project
   }
 
-  depends_on = [port_entity.gcp_project_entity]
+  depends_on = [port-labs_entity.gcp_project_entity]
 }
 
 resource "port-labs_blueprint" "gcp_compute_instance_blueprint" {
@@ -718,7 +724,7 @@ resource "port-labs_blueprint" "gcp_compute_instance_blueprint" {
   }
 }
 
-resource "port_entity" "gcp_compute_instance_entity" {
+resource "port-labs_entity" "gcp_compute_instance_entity" {
   for_each = data.google_compute_instance.my_compute_instances
   identifier = "${each.value.project}_${each.value.zone}_${each.value.name}"
   title     = each.value.name
@@ -760,7 +766,7 @@ resource "port_entity" "gcp_compute_instance_entity" {
     identifier = each.value.project
   }
 
-  depends_on = [port_entity.gcp_project_entity]
+  depends_on = [port-labs_entity.gcp_project_entity]
 }
 
 resource "port-labs_blueprint" "gcp_run_service_blueprint" {
@@ -804,7 +810,7 @@ resource "port-labs_blueprint" "gcp_run_service_blueprint" {
   }
 }
 
-resource "port_entity" "gcp_run_service_entity" {
+resource "port-labs_entity" "gcp_run_service_entity" {
   for_each = data.google_cloud_run_service.my_run_services
   identifier = "${each.value.project}_${each.value.location}_${each.value.name}"
   title     = each.value.name
@@ -838,7 +844,7 @@ resource "port_entity" "gcp_run_service_entity" {
     identifier = each.value.project
   }
 
-  depends_on = [port_entity.gcp_project_entity]
+  depends_on = [port-labs_entity.gcp_project_entity]
 }
 
 resource "port-labs_blueprint" "gcp_container_cluster_blueprint" {
@@ -892,7 +898,7 @@ resource "port-labs_blueprint" "gcp_container_cluster_blueprint" {
   }
 }
 
-resource "port_entity" "gcp_container_cluster_entity" {
+resource "port-labs_entity" "gcp_container_cluster_entity" {
   for_each = data.google_container_cluster.my_container_clusters
   identifier = "${each.value.project}_${each.value.location}_${each.value.name}"
   title     = each.value.name
@@ -934,7 +940,7 @@ resource "port_entity" "gcp_container_cluster_entity" {
     identifier = each.value.project
   }
 
-  depends_on = [port_entity.gcp_project_entity]
+  depends_on = [port-labs_entity.gcp_project_entity]
 }
 ```
 
@@ -982,9 +988,9 @@ This part includes importing and setting up the required Terraform providers and
 ```hcl showLineNumbers
 terraform {
   required_providers {
-    port = {
+    port-labs = {
       source  = "port-labs/port-labs"
-      version = "~> 1.0.0"
+      version = "~> 0.10.3"
     }
     google-beta = {
       source  = "hashicorp/google-beta"
@@ -997,7 +1003,7 @@ locals {
   domain = "GCP_ORGANIZATION_DOMAIN_NAME" # set the organization's domain
 }
 
-provider "port" {
+provider "port-labs" {
   client_id = "PORT_CLIENT_ID"     # or set the env var PORT_CLIENT_ID
   secret    = "PORT_CLIENT_SECRET" # or set the env var PORT_CLIENT_SECRET
 }
@@ -1127,7 +1133,7 @@ resource "port-labs_blueprint" "gcp_org_blueprint" {
   }
 }
 
-resource "port_entity" "gcp_org_entity" {
+resource "port-labs_entity" "gcp_org_entity" {
   identifier = data.google_organization.my_org.org_id
   title     = data.google_organization.my_org.domain
   blueprint = port-labs_blueprint.gcp_org_blueprint.identifier
@@ -1169,7 +1175,7 @@ resource "port-labs_blueprint" "gcp_folder_blueprint" {
   }
 }
 
-resource "port_entity" "gcp_folder_entity" {
+resource "port-labs_entity" "gcp_folder_entity" {
   for_each = {for idx, folder in data.google_folder.my_folders: idx => folder}
   identifier = each.value.folder_id
   title     = each.value.display_name
@@ -1230,7 +1236,7 @@ resource "port-labs_blueprint" "gcp_project_blueprint" {
   }
 }
 
-resource "port_entity" "gcp_project_entity" {
+resource "port-labs_entity" "gcp_project_entity" {
   for_each = {for idx, project in data.google_projects.my_projects.projects : idx => project}
   identifier = each.value.project_id
   title     = each.value.name
@@ -1265,7 +1271,7 @@ resource "port_entity" "gcp_project_entity" {
       identifier = each.value.parent.id
     }
   }
-  depends_on = [port_entity.gcp_org_entity, port_entity.gcp_folder_entity]
+  depends_on = [port-labs_entity.gcp_org_entity, port-labs_entity.gcp_folder_entity]
 }
 ```
 
@@ -1327,7 +1333,7 @@ resource "port-labs_blueprint" "gcp_bucket_blueprint" {
   }
 }
 
-resource "port_entity" "gcp_bucket_entity" {
+resource "port-labs_entity" "gcp_bucket_entity" {
   for_each = data.google_storage_bucket.my_buckets
   identifier = each.value.id
   title     = each.value.name
@@ -1369,7 +1375,7 @@ resource "port_entity" "gcp_bucket_entity" {
     identifier = each.value.project
   }
 
-  depends_on = [port_entity.gcp_project_entity]
+  depends_on = [port-labs_entity.gcp_project_entity]
 }
 ```
 
@@ -1401,7 +1407,7 @@ resource "port-labs_blueprint" "gcp_service_account_blueprint" {
   }
 }
 
-resource "port_entity" "gcp_service_account_entity" {
+resource "port-labs_entity" "gcp_service_account_entity" {
   for_each = data.google_service_account.my_accounts
   identifier = each.value.account_id
   title     = each.value.display_name
@@ -1419,7 +1425,7 @@ resource "port_entity" "gcp_service_account_entity" {
     identifier = each.value.project
   }
 
-  depends_on = [port_entity.gcp_project_entity]
+  depends_on = [port-labs_entity.gcp_project_entity]
 }
 ```
 
@@ -1479,7 +1485,7 @@ resource "port-labs_blueprint" "gcp_disk_blueprint" {
   }
 }
 
-resource "port_entity" "gcp_disk_entity" {
+resource "port-labs_entity" "gcp_disk_entity" {
   for_each = data.google_compute_disk.my_disks
   identifier = "${each.value.project}_${each.value.zone}_${each.value.name}"
   title     = each.value.name
@@ -1521,7 +1527,7 @@ resource "port_entity" "gcp_disk_entity" {
     identifier = each.value.project
   }
 
-  depends_on = [port_entity.gcp_project_entity]
+  depends_on = [port-labs_entity.gcp_project_entity]
 }
 ```
 
@@ -1610,7 +1616,7 @@ resource "port-labs_blueprint" "gcp_memorystore_blueprint" {
   }
 }
 
-resource "port_entity" "gcp_memorystore_entity" {
+resource "port-labs_entity" "gcp_memorystore_entity" {
   for_each = data.google_redis_instance.my_memorystores
   identifier = "${each.value.project}_${each.value.location_id}_${each.value.name}"
   title     = each.value.name
@@ -1672,7 +1678,7 @@ resource "port_entity" "gcp_memorystore_entity" {
     identifier = each.value.project
   }
 
-  depends_on = [port_entity.gcp_project_entity]
+  depends_on = [port-labs_entity.gcp_project_entity]
 }
 ```
 
@@ -1743,7 +1749,7 @@ resource "port-labs_blueprint" "gcp_compute_instance_blueprint" {
   }
 }
 
-resource "port_entity" "gcp_compute_instance_entity" {
+resource "port-labs_entity" "gcp_compute_instance_entity" {
   for_each = data.google_compute_instance.my_compute_instances
   identifier = "${each.value.project}_${each.value.zone}_${each.value.name}"
   title     = each.value.name
@@ -1785,7 +1791,7 @@ resource "port_entity" "gcp_compute_instance_entity" {
     identifier = each.value.project
   }
 
-  depends_on = [port_entity.gcp_project_entity]
+  depends_on = [port-labs_entity.gcp_project_entity]
 }
 ```
 
@@ -1835,7 +1841,7 @@ resource "port-labs_blueprint" "gcp_run_service_blueprint" {
   }
 }
 
-resource "port_entity" "gcp_run_service_entity" {
+resource "port-labs_entity" "gcp_run_service_entity" {
   for_each = data.google_cloud_run_service.my_run_services
   identifier = "${each.value.project}_${each.value.location}_${each.value.name}"
   title     = each.value.name
@@ -1869,7 +1875,7 @@ resource "port_entity" "gcp_run_service_entity" {
     identifier = each.value.project
   }
 
-  depends_on = [port_entity.gcp_project_entity]
+  depends_on = [port-labs_entity.gcp_project_entity]
 }
 ```
 
@@ -1929,7 +1935,7 @@ resource "port-labs_blueprint" "gcp_container_cluster_blueprint" {
   }
 }
 
-resource "port_entity" "gcp_container_cluster_entity" {
+resource "port-labs_entity" "gcp_container_cluster_entity" {
   for_each = data.google_container_cluster.my_container_clusters
   identifier = "${each.value.project}_${each.value.location}_${each.value.name}"
   title     = each.value.name
@@ -1971,7 +1977,7 @@ resource "port_entity" "gcp_container_cluster_entity" {
     identifier = each.value.project
   }
 
-  depends_on = [port_entity.gcp_project_entity]
+  depends_on = [port-labs_entity.gcp_project_entity]
 }
 ```
 
