@@ -83,15 +83,17 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `H
 <TabItem value="basic">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myYAMLProp"
-    title      = "My yaml"
-    required   = false
-    type       = "string"
-    format     = "yaml"
+  properties = {
+    string_props = {
+      "myYamlProp" = {
+        title      = "My yaml"
+        required   = false
+        format     = "yaml"
+      }
+    }
   }
   # highlight-end
 }
@@ -101,17 +103,19 @@ resource "port-labs_blueprint" "myBlueprint" {
 <TabItem value="array">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myYamlArray"
-    title      = "My yaml array"
-    required   = false
-    type       = "array"
-    items = {
-      type   = "string"
-      format = "yaml"
+  properties = {
+    array_props = {
+      "myYamlArray" = {
+        identifier = "myYamlArray"
+        title      = "My yaml array"
+        required   = false
+        string_items = {
+          format = "yaml"
+        }
+      }
     }
   }
   # highlight-end

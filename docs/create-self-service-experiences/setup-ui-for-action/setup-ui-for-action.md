@@ -198,31 +198,13 @@ The JSON shown above is for a single blueprint action, the actions of a blueprin
 <TabItem value="terraform" label="Terraform">
 
 ```hcl showLineNumbers
-resource "port-labs_action" "myAction" {
-  blueprint_identifier = "myBlueprint"
-  title                = "My Action"
+resource "port_action" "myAction" {
+  blueprint = "myBlueprint"
   identifier           = "myAction"
   description          = "My self-service action"
-
-  user_properties {
-    identifier  = "myInput"
-    type        = "myType"
-    title       = "My Input"
-    description = "My user input"
-  }
-
-  user_properties {
-    identifier  = "mySpecialInput"
-    type        = "myType"
-    title       = "My Special Input"
-    description = "My special user input"
-  }
-
+  user_properties = {}
   trigger = "myActionTrigger"
-
-  invocation_method {
-    type = "myInvocationType"
-  }
+  myInvocationType_method = {}
 }
 ```
 

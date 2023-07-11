@@ -101,29 +101,54 @@ In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we
 
 <Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Select (Enum) - coming soon", value: "enum"},
-{label: "Array - coming soon", value: "array"}
+{label: "Array", value: "array"}
 ]}>
 
 <TabItem value="basic">
 
 ```hcl showLineNumbers
-resource "port-labs_action" "myAction" {
+resource "port_action" "myAction" {
   # ...action properties
   # highlight-start
-  user_properties {
-    identifier  = "myObjectInput"
-    title       = "My object input"
-    description = "My object input"
-    required    = false
-    type        = "object"
-    default     = jsonencode({ "myKey" = "myValue" })
+  user_properties = {
+    object_props = {
+      "myObjectInput" = {
+        title       = "My object input"
+        description = "My object input"
+        required    = false
+        default     = jsonencode({ "myKey" = "myValue" })
+      }
+    }
   }
   # highlight-end
 }
 ```
 
 </TabItem>
+
+<TabItem value="array">
+
+```hcl showLineNumbers
+
+resource "port_action" "myAction" {
+  # ...action properties
+  # highlight-start
+  user_properties = {
+    array_props = {
+      "myObjectArrayInput" = {
+        title       = "My object array input"
+        description = "My object array input"
+        required    = false
+        object_items = {}
+      }
+    }
+  }
+  # highlight-end
+}
+```
+
+</TabItem>
+
 </Tabs>
 
 ## Validate object

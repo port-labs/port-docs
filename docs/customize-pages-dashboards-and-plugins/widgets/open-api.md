@@ -55,7 +55,7 @@ To serve the OpenAPI spec from an AWS S3 bucket, please add a CORS policy to the
 <TabItem value="terraform">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties {
@@ -105,7 +105,7 @@ When using the object type, you will have to provide the full JSON OpenAPI spec 
 <TabItem value="terraform">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties {

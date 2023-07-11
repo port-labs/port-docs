@@ -45,14 +45,16 @@ In this [live demo](https://demo.getport.io/packages) example, we can see the `I
 ## Terraform definition
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myBooleanProp"
-    title      = "My boolean"
-    required   = false
-    type       = "boolean"
+  properties = {
+    boolean_props = {
+      "myBooleanProp" = {
+        title      = "My boolean"
+        required   = true
+      }
+    }
   }
   # highlight-end
 }

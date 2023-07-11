@@ -135,7 +135,7 @@ All available properties are listed in the [properties](./properties/properties.
 <TabItem value="tf">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   title      = "My blueprint"
   icon       = "My icon"
   identifier = "myIdentifier"

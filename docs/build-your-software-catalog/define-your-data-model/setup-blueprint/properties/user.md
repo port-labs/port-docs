@@ -98,15 +98,17 @@ In addition, `user` format distinguishes between users by their status:
 <TabItem value="basic">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myUserProp"
-    title      = "My user"
-    required   = false
-    type       = "string"
-    format     = "user"
+  properties = {
+    string_props = {
+      myUserProp = {
+        title      = "My user"
+        required   = false
+        format     = "user"
+      }
+    }
   }
   # highlight-end
 }
@@ -116,17 +118,18 @@ resource "port-labs_blueprint" "myBlueprint" {
 <TabItem value="array">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myUserArray"
-    title      = "My user array"
-    required   = false
-    type       = "array"
-    items = {
-      type   = "string"
-      format = "user"
+  properties = {
+    array_props = {
+      "myUserArray" = {
+        title      = "My user array"
+        required   = false
+        string_items = {
+          format = "user"
+        }
+      }
     }
   }
   # highlight-end

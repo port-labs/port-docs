@@ -105,15 +105,17 @@ In this [live demo](https://demo.getport.io/domains) example, we can see the `Do
 <TabItem value="basic">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myUrlProp"
-    title      = "My url"
-    required   = false
-    type       = "string"
-    format     = "url"
+  properties = {
+    string_props = {
+      "myUrlProp" = {
+        title    = "My url"
+        required = false
+        format   = "url"
+      }
+    }
   }
   # highlight-end
 }
@@ -124,19 +126,21 @@ resource "port-labs_blueprint" "myBlueprint" {
 <TabItem value="enum">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myUrlProp"
-    title      = "My url"
-    required   = false
-    type       = "string"
-    format     = "url"
-    enum       = ["https://example.com", "https://getport.io"]
-    enum_colors = {
-      "https://example.com" = "red",
-      "https://getport.io"  = "green"
+  properties = {
+    string_props = {
+      "myUrlEnum" = {
+        title    = "My url enum"
+        required = false
+        format   = "url"
+        enum     = ["https://example.com", "https://getport.io"]
+        enum_colors = {
+          "https://example.com" = "red",
+          "https://getport.io"  = "green"
+        }
+      }
     }
   }
   # highlight-end
@@ -148,17 +152,18 @@ resource "port-labs_blueprint" "myBlueprint" {
 <TabItem value="array">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myUrlArray"
-    title      = "My url array"
-    required   = false
-    type       = "array"
-    items = {
-      type   = "string"
-      format = "url"
+  properties = {
+    string_props = {
+      "myUrlArray" = {
+        title    = "My url array"
+        required = false
+        string_items = {
+          format = "url"
+        }
+      }
     }
   }
   # highlight-end

@@ -44,18 +44,42 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `M
 ## Terraform definition
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myArrayProp"
-    title      = "My array"
-    required   = false
-    type       = "array"
+  properties = {
+    array_props = {
+      "myArrayProp" = {
+        title      = "My array"
+        required   = true
+      }
+    }
   }
   # highlight-end
 }
 ```
+
+:::info
+To set the type of an array property, you need to use the `<type>_items` property type.
+For example, to set an array of strings, you need to use the `string_items` property type.
+
+```
+resource "port_blueprint" "myBlueprint" {
+  # ...blueprint properties
+  properties = {
+    array_props = {
+      "myArrayProp" = {
+        title      = "My array"
+        required   = true
+        string_items = {} # You can also set here default values
+      }
+    }
+  }
+}
+```
+
+We currently support the following types of array items: `string_items`, `number_items`, `boolean_items`, `object_items`.
+:::
 
 ## Pulumi definition
 
@@ -224,17 +248,19 @@ Array validations follow the JSON schema model, refer to the [JSON schema docs](
 <TabItem value="tf">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
-  properties {
-    identifier = "myArrayProp"
-    title      = "My array"
-    required   = false
-    type       = "array"
-    # highlight-start
-    min_items  = 0
-    max_items  = 5
-    # highlight-end
+  properties = {
+    array_props = {
+      "myArrayProp" = {
+        title      = "My array"
+        required   = true
+        # highlight-start
+        min_items  = 0
+        max_items  = 5
+        # highlight-end
+      }
+    }
   }
 }
 ```

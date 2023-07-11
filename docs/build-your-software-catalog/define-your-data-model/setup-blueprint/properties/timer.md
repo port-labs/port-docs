@@ -61,15 +61,19 @@ In this [live demo](https://demo.getport.io/developerEnvs) example, we can see t
 <TabItem value="basic">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myTimerProp"
-    title      = "My timer"
-    required   = false
-    type       = "string"
-    format     = "timer"
+  properties = {
+    string_props = {
+      "myTimerProp" = {
+        title       = "My timer"
+        icon        = "My icon"
+        description = "My timer property"
+        format      = "timer"
+        default     = "2022-04-18T11:44:15.345Z"
+      }
+    }
   }
   # highlight-end
 }

@@ -63,7 +63,7 @@ You can access properties as part of the calculation by using `.properties`
 <TabItem value="tf">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   calculation_properties {

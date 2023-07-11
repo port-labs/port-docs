@@ -84,15 +84,19 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `L
 <TabItem value="basic">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myDatetimeProp"
-    title      = "My datetime"
-    required   = false
-    type       = "string"
-    format     = "date-time"
+  properties = {
+    string_props = {
+      "myDatetimeProp" = {
+        title       = "My datetime"
+        icon        = "My icon"
+        description = "My datetime property"
+        format      = "date-time"
+        default     = "2022-04-18T11:44:15.345Z"
+      }
+    }
   }
   # highlight-end
 }
@@ -103,17 +107,20 @@ resource "port-labs_blueprint" "myBlueprint" {
 <TabItem value="array">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myDatetimeArray"
-    title      = "My datetime array"
-    required   = false
-    type       = "array"
-    items = {
-      type   = "string"
-      format = "date-time"
+  properties = {
+    array_props = {
+      "myDatetimeArray" = {
+        title    = "My datetime array"
+        icon     = "My icon"
+        required = false
+        type     = "array"
+        string_items = {
+          format = "date-time"
+        }
+      }
     }
   }
   # highlight-end

@@ -103,14 +103,16 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `L
 <TabItem value="basic">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myStringProp"
-    title      = "My string"
-    required   = false
-    type       = "string"
+  properties = {
+    string_props = {
+      "myStringProp" = {
+        title      = "My string"
+        required   = false
+      }
+    }
   }
   # highlight-end
 }
@@ -121,18 +123,20 @@ resource "port-labs_blueprint" "myBlueprint" {
 <TabItem value="enum">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myStringProp"
-    title      = "My string"
-    required   = false
-    type       = "string"
-    enum       = ["my-option-1", "my-option-2"]
-    enum_colors = {
-      "my-option-1" = "red"
-      "my-option-2" = "green"
+  properties = {
+    string_props = {
+      "myStringProp" = {
+        title      = "My string"
+        required   = false
+        enum       = ["my-option-1", "my-option-2"]
+        enum_colors = {
+          "my-option-1" = "red"
+          "my-option-2" = "green"
+        }
+      }
     }
   }
   # highlight-end
@@ -145,18 +149,24 @@ resource "port-labs_blueprint" "myBlueprint" {
 <TabItem value="array">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myStringArray"
-    title      = "My string array"
-    type       = "array"
-    items = {
-      type = "string"
+  properties = {
+    array_props = {
+      "myStringArray" = {
+        title        = "My string array"
+        string_items = {} # Pass an empty object only sets the type to string
+      }
+      "myStringArrayWithDefault" = {
+        title = "My string array with default"
+        string_items = {
+          default = ["my-default-1", "my-default-2"]
+        }
+      }
     }
+    # highlight-end
   }
-  # highlight-end
 }
 
 ```
@@ -464,7 +474,7 @@ String validations support the following operators:
 <Tabs groupId="validation-definition" defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Array", value: "array"},
-{label: "Terraform - coming soon", value: "tf"},
+{label: "Terraform", value: "tf"},
 {label: "Pulumi - coming soon", value: "pulumi"}
 ]}>
 
@@ -510,4 +520,32 @@ String validations support the following operators:
 ```
 
 </TabItem>
+
+<TabItem value="tf">
+
+```hcl showLineNumbers
+
+resource "port_blueprint" "myBlueprint" {
+  # ...blueprint properties
+  # highlight-start
+  properties = {
+    string_props = {
+      "myStringProp" = {
+        title      = "My string"
+        required   = false
+        // highlight-start
+        min_length = 1
+        max_length = 32
+        pattern    = "^[a-zA-Z0-9-]*-service$"
+        // highlight-end
+      }
+    }
+  }
+  # highlight-end
+}
+
+```
+
+</TabItem>
+
 </Tabs>

@@ -45,7 +45,7 @@ In order to add an embedded view tab into your specific entity page, all you nee
 <TabItem value="terraform">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties {

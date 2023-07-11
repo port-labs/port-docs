@@ -92,21 +92,24 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `J
 
 <Tabs groupId="tf-definition" defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Enum - coming soon", value: "enum"},
+{label: "Enum", value: "enum"},
 {label: "Array", value: "array"}
 ]}>
 
 <TabItem value="basic">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myNumberProp"
-    title      = "My number"
-    required   = false
-    type       = "number"
+  properties = {
+    number_props = {
+      "myNumberProp" = {
+        title       = "My number"
+        description = "My number property"
+        default     = 7
+      }
+    }
   }
   # highlight-end
 }
@@ -116,15 +119,17 @@ resource "port-labs_blueprint" "myBlueprint" {
 <TabItem value="enum">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myNumberEnum"
-    title      = "My number enum"
-    required   = false
-    type       = "number"
-    enum       = [1,2]
+  properties = {
+    number_props = {
+      "myNumberProp" = {
+        title       = "My number"
+        description = "My number property"
+        enum        = [1, 2, 3, 4]
+      }
+    }
   }
   # highlight-end
 }
@@ -135,19 +140,23 @@ resource "port-labs_blueprint" "myBlueprint" {
 <TabItem value="array">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myNumberArray"
-    title      = "My number array"
-    required   = false
-    type       = "array"
-    items = {
-      type = "number"
+  properties = {
+    "myNumberArray" = {
+      title        = "My number array"
+      description  = "My number array"
+      number_items = {}
+    }
+    "myNumberArrayWithDefault" = {
+      title       = "My number array with default"
+      description = "My number array"
+      number_items = {
+        default = [1, 2, 3, 4]
+      }
     }
   }
-  # highlight-end
 }
 ```
 
@@ -311,7 +320,7 @@ If _x_ is the value being validated, the following must hold true:
 <Tabs groupId="validation-definition" defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Array", value: "array"},
-{label: "Terraform - coming soon", value: "tf"},
+{label: "Terraform", value: "tf"},
 {label: "Pulumi - comfing soon", value: "pulumi"}
 ]}>
 
@@ -355,4 +364,28 @@ If _x_ is the value being validated, the following must hold true:
 ```
 
 </TabItem>
+
+<TabItem value="tf">
+
+```hcl showLineNumbers
+
+resource "port_blueprint" "myBlueprint" {
+  properties = {
+    "number_props" = {
+      "myNumberProp" = {
+        title       = "My number"
+        icon        = "My icon"
+        description = "My number property"
+        # highlight-start
+        minimum     = 0
+        maximum     = 50
+        # highlight-end
+      }
+    }
+  }
+}
+```
+
+</TabItem>
+
 </Tabs>
