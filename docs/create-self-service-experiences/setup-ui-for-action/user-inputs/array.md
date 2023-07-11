@@ -154,4 +154,6 @@ resource "port_action" "myAction" {
 }
 ```
 
+</TabItem>
+
 </Tabs>
