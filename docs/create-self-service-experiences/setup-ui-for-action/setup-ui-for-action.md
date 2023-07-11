@@ -9,6 +9,12 @@ import TabItem from "@theme/TabItem"
 
 # 📄 Setup Actions
 
+<center>
+
+<iframe width="60%" height="400" src="https://www.youtube.com/embed/DhDQ_lucdgM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+
+</center>
+
 Choose the name, description and icon of the action to make it recognizable.
 
 Select the user inputs you would like the user to fill out to use the action.
