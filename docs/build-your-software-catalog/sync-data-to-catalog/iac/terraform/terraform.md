@@ -127,7 +127,7 @@ resource "port_entity" "myEntity" {
 
 ```hcl showLineNumbers
 properties = {
-  string_props {
+  string_props = {
    "myStringProp" = "My string"
   }
 }
@@ -138,7 +138,7 @@ properties = {
 
 ```hcl showLineNumbers
 properties = {
-  number_prop {
+  number_props = {
     "myNumberProp" = 7
   }
 }
@@ -149,7 +149,7 @@ properties = {
 
 ```hcl showLineNumbers
 properties = {
-  boolean_prop {
+  boolean_props = {
     "myBooleanProp" = true
   }
 }
@@ -160,7 +160,7 @@ properties = {
 
 ```hcl showLineNumbers
 properties = {
-  object_prop {
+  object_props = {
     "myObjectProp" = jsonencode({ "my" : "object" })
   }
 }
@@ -171,7 +171,7 @@ properties = {
 
 ```hcl showLineNumbers
 properties = {
-  array_prop {
+  array_props = {
     string_props {
       "myArrayProp" = ["a", "b", "c"])
     }
@@ -207,7 +207,7 @@ properties = {
 
 ```hcl showLineNumbers
 properties = {
- string_props {
+ string_props = {
    "myUserProp" = "argo-admin"
   }
 }
@@ -218,7 +218,7 @@ properties = {
 
 ```hcl showLineNumbers
 properties = {
-  string_props {
+  string_props = {
     "myTeamProp" = "argo-admins"
   }
 }
@@ -229,7 +229,7 @@ properties = {
 
 ```hcl showLineNumbers
 properties = {
-  string_props {
+  string_props = {
     "myDatetimeProp" = "2023-04-18T11:44:15.345Z"
   }
 }
@@ -252,7 +252,7 @@ properties = {
 
 ```hcl showLineNumbers
 properties = {
-  string_props {
+  string_props = {
     "myYamlProp" = "myKey: myValue"
   }
 }
@@ -276,14 +276,14 @@ resource "port_entity" "myEntity" {
   ...
 
 # highlight-start
-  relations {
-    single_relations = {
+  relations = {
+    single_relations =  {
     "mySingleRelation" = "myTargetEntityIdentifier"
     }
   }
 
   relations {
-    many_relation = {
+    many_relations = {
       "myManyRelation" = ["myTargetEntityIdentifier", "myTargetEntityIdentifier2"]
     }
   }
@@ -354,16 +354,16 @@ resource "port_entity" "myEntity" {
     "string_props" = {
       "myStringProp" = "My string"
     }
-    "number_prop" = {
+    "number_props" = {
       "myNumberProp" = 7
     }
-    "boolean_prop" = {
+    "boolean_props" = {
       "myBooleanProp" = true
     }
-    "object_prop" = {
+    "object_props" = {
       "myObjectProp" = jsonencode({ "my" : "object" })
     }
-    "array_prop" = {
+    "array_props" = {
     "string_props" = {
         "myArrayProp" = ["a", "b", "c"]
       }

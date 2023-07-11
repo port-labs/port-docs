@@ -371,7 +371,7 @@ If _x_ is the value being validated, the following must hold true:
 
 resource "port_blueprint" "myBlueprint" {
   properties = {
-    "number_prop" = {
+    "number_props" = {
       "myNumberProp" = {
         title       = "My number"
         icon        = "My icon"
