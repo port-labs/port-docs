@@ -5,6 +5,12 @@ sidebar_label: ⚡️ Create Self-Service Experiences
 
 # ⚡️ Create Self-Service Experiences
 
+<center>
+
+<iframe width="60%" height="400" src="https://www.youtube.com/embed/KHuGBQlErWo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+
+</center>
+
 Drive developer productivity by allowing developers to run free and use self-service actions like scaffolding a service or provisioning a cloud resource. Developer self-service brings consistency and repeatability and ensures that developers do the right thing because it’s intuitive and clear, all with guardrails like manual approvals or consumption policies to comply with organizational standards.
 
 1. **Not Opinionated** - set any Self-Service action UI with low-code UI components;
@@ -13,10 +19,6 @@ Drive developer productivity by allowing developers to run free and use self-ser
 4. **Loosely coupled** to your infrastructure and architecture;
 5. **Stateful** - every invoked action affects the software catalog by adding/modifying/deleting one or more entities;
 6. **Secure by design** - does not require keys to sensitive infrastructure by using an event-based model, all actions are audited, embedded guardrails like manual approval and TTL are baked inside.
-
-<!-- <div style={{position: "relative", "padding-bottom": "62.5%", height:"0"}}><iframe src="https://www.loom.com/embed/fee8fe438f00483981ea9368bb10385b" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style={{position: "absolute", top:"0", left:"0", width:"100%", height:"100%"}} ></iframe></div> -->
-
-<!-- <br></br> -->
 
 ## 💡 Common self-service actions
 
