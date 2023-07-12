@@ -23,10 +23,11 @@ In order to complete the process you will need to contact us to receive the info
 
 :::info
 
-### Prerequisites
+**Prerequisites**
 
-- To make the **Port** app connection work, users who have access need to have a legal value in their `Email` field in Azure AD.
-  :::
+To make the **Port** app connection work, users who have access need to have a legal value in their `Email` field in Azure AD.
+
+:::
 
 ### Step #1: Register a new application
 
