@@ -187,23 +187,22 @@ resource "port_blueprint" "myBlueprint" {
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Blueprint
+from port_pulumi import Blueprint,BlueprintPropertiesArgs,BlueprintPropertiesNumberPropsArgs
 
 blueprint = Blueprint(
     "myBlueprint",
     identifier="myBlueprint",
     title="My Blueprint",
     # highlight-start
-    properties=[
-      {
-        "type": "number",
-        "identifier": "myNumberProp",
-        "title": "My Number",
-        "required": True
-      }
-    ],
+    properties=BlueprintPropertiesArgs(
+        number_props={
+            "myNumberProp": BlueprintPropertiesNumberPropsArgs(
+                title="My number", required=False,
+            )
+        },
+    ),
     # highlight-end
-    relations=[]
+    relations={}
 )
 ```
 
@@ -219,14 +218,14 @@ export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myNumberProp",
-      title: "My Number",
-      type: "number",
-      required: true,
+    properties: {
+        numberProps: {
+            myNumberProp: {
+                title: "My number",
+                required: false
+            }
+        },
     },
-  ],
   // highlight-end
 });
 ```
@@ -244,16 +243,16 @@ const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myNumberProp",
-      title: "My Number",
-      type: "number",
-      required: true,
-    },
-  ],
+  properties: {
+      numberProps: {
+          myNumberProp: {
+              title: "My number",
+              required: false
+          }
+      },
+  },
   // highlight-end
-  relations: [],
+  relations: {}
 });
 
 exports.title = entity.title;
@@ -276,12 +275,12 @@ func main() {
 			Identifier: pulumi.String("myBlueprint"),
 			Title:      pulumi.String("My Blueprint"),
       // highlight-start
-			Properties: port.BlueprintPropertyArray{
-				&port.BlueprintPropertyArgs{
-					Identifier: pulumi.String("myNumberProp"),
-					Title:      pulumi.String("My Number"),
-					Required:   pulumi.Bool(false),
-					Type:       pulumi.String("number"),
+			Properties: port.BlueprintPropertiesArgs{
+				NumberProps: port.BlueprintPropertiesNumberPropsMap{
+					"myNumberProp": port.BlueprintPropertiesNumberPropsArgs{
+						Title:    pulumi.String("My number"),
+						Required: pulumi.Bool(false),
+					},
 				},
 			},
 		})

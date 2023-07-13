@@ -29,7 +29,6 @@ Here is the example definition in all the supported languages:
 <TabItem value="python">
 
 ```python showLineNumbers
-
 from pulumi import ResourceOptions
 import port_pulumi as port
 
@@ -38,138 +37,91 @@ other = port.Blueprint(
     identifier="test-docs-relation",
     icon="Microservice",
     title="Test Docs Relation",
-    properties=[
-        {
-            "type": "string",
-            "identifier": "myStringProp",
-            "title": "My string",
-            "required": False,
+    properties=port.BlueprintPropertiesArgs(
+        string_props={
+            "myStringProp": port.BlueprintPropertiesStringPropsArgs(
+                title="My string", required=False
+            )
         }
-    ],
+    ),
 )
 
-blueprint = port.Blueprint("myBlueprint",
-                           identifier="test-docs",
-                           icon="Microservice",
-                           title="Test Docs",
-                           properties=[
-                               {
-                                   "identifier": "myStringProp",
-                                   "title": "My string",
-                                   "required": False,
-                                   "type": "string"
-                               },
-                               {
-                                   "identifier": "myNumberProp",
-                                   "title": "My number",
-                                   "required": False,
-                                   "type": "number"
-                               },
-                               {
-                                   "identifier": "myBooleanProp",
-                                   "title": "My boolean",
-                                   "required": False,
-                                   "type": "boolean"
-                               },
-                               {
-                                   "identifier": "myObjectProp",
-                                   "title": "My object",
-                                   "required": False,
-                                   "type": "object"
-                               },
-                               {
-                                   "identifier": "myArrayProp",
-                                   "title": "My array",
-                                   "required": False,
-                                   "type": "array"
-                               },
-                               {
-                                   "identifier": "myUrlProp",
-                                   "title": "My url",
-                                   "required": False,
-                                   "type": "string",
-                                   "format": "url"
-                               },
-                               {
-                                   "identifier": "myEmailProp",
-                                   "title": "My email",
-                                   "required": False,
-                                   "type": "string",
-                                   "format": "email"
-                               },
-                               {
-                                   "identifier": "myUserProp",
-                                   "title": "My user",
-                                   "required": False,
-                                   "type": "string",
-                                   "format": "user"
-                               },
-                               {
-                                   "identifier": "myTeamProp",
-                                   "title": "My team",
-                                   "required": False,
-                                   "type": "string",
-                                   "format": "team"
-                               },
-                               {
-                                   "identifier": "myDatetimeProp",
-                                   "title": "My datetime",
-                                   "required": False,
-                                   "type": "string",
-                                   "format": "date-time"
-                               },
-                               {
-                                   "identifier": "myTimerProp",
-                                   "title": "My timer",
-                                   "required": False,
-                                   "type": "string",
-                                   "format": "timer"
-                               },
-                               {
-                                   "identifier": "myYAMLProp",
-                                   "title": "My yaml",
-                                   "required": False,
-                                   "type": "string",
-                                   "format": "yaml"
-                               }
-                           ],
-                           mirror_properties=[
-                               {
-                                   "identifier": "myMirrorProp",
-                                   "title": "My mirror property",
-                                   "path": "myRelation.myStringProp"
-                               },
-                               {
-                                   "identifier": "myMirrorPropWithMeta",
-                                   "title": "My mirror property of meta property",
-                                   "path": "myRelation.$identifier"
-                               }
-                           ],
-                           calculation_properties=[
-                               {
-                                   "identifier": "myCalculation",
-                                   "title": "My calculation property",
-                                   "calculation": ".properties.myStringProp + .properties.myStringProp",
-                                   "type": "string"
-                               },
-                               {
-                                   "identifier": "myCalculationWithMeta",
-                                   "title": "My calculation property with meta properties",
-                                   "calculation": ".identifier + \"-\" + .title + \"-\" + .properties.myStringProp",
-                                   "type": "string"
-                               }
-                           ],
-                           relations=[
-                               {
-                                   "target": "test-docs-relation",
-                                   "title": "myRelation",
-                                   "identifier": "myRelation",
-                                   "many": False,
-                                   "required": False
-                               }
-                           ],
-                           opts=ResourceOptions(depends_on=[other])
-                          )
+blueprint = port.Blueprint(
+    "myBlueprint",
+    identifier="test-docs",
+    icon="Microservice",
+    title="Test Docs",
+    properties=port.BlueprintPropertiesArgs(
+        string_props={
+            "myStringProp": port.BlueprintPropertiesStringPropsArgs(
+                title="My string", required=False
+            ),
+            "myUrlProp": port.BlueprintPropertiesStringPropsArgs(
+                title="My url", required=False, format="url"
+            ),
+            "myEmailProp": port.BlueprintPropertiesStringPropsArgs(
+                title="My email", required=False, format="email"
+            ),
+            "myUserProp": port.BlueprintPropertiesStringPropsArgs(
+                title="My user", required=False, format="user"
+            ),
+            "myTeamProp": port.BlueprintPropertiesStringPropsArgs(
+                title="My team", required=False, format="team"
+            ),
+            "myDatetimeProp": port.BlueprintPropertiesStringPropsArgs(
+                title="My datetime", required=False, format="date-time"
+            ),
+            "myTimerProp": port.BlueprintPropertiesStringPropsArgs(
+                title="My timer", required=False, format="timer"
+            ),
+            "myYAMLProp": port.BlueprintPropertiesStringPropsArgs(
+                title="My yaml", required=False, format="yaml"
+            ),
+        },
+        number_props={
+            "myNumberProp": port.BlueprintPropertiesNumberPropsArgs(
+                title="My number", required=False,
+            )
+        },
+        boolean_props={
+            "myBooleanProp": port.BlueprintPropertiesBooleanPropsArgs(
+                title="My boolean", required=False
+            )
+        },
+        object_props={
+            "myObjectProp": port.BlueprintPropertiesObjectPropsArgs(
+                title="My object", required=False
+            )
+        },
+        array_props={
+            "myArrayProp": port.BlueprintPropertiesArrayPropsArgs(
+                title="My array", required=False
+            )
+        }
+    ),
+    mirror_properties={
+        "myMirrorProp": port.BlueprintMirrorPropertiesArgs(
+            title="My mirror property", path="myRelation.myStringProp"
+        ),
+        "myMirrorPropWithMeta": port.BlueprintMirrorPropertiesArgs(
+            title="My mirror property of meta property", path="myRelation.$identifier"
+        ),
+    },
+    calculation_properties={
+        "myCalculation": port.BlueprintCalculationPropertiesArgs(
+            title="My calculation property", calculation=".properties.myStringProp + .properties.myStringProp", type="string",
+        ),
+        "myCalculationWithMeta": port.BlueprintCalculationPropertiesArgs(
+            title="My calculation property with meta properties", calculation='.identifier + "-" + .title + "-" + .properties.myStringProp', type="string",
+        ),
+    },
+    relations={
+        "myRelation": port.BlueprintRelationsArgs(
+            title="My relation", target="test-docs-relation", many=False, required=False,
+        ),
+    },
+    opts=ResourceOptions(depends_on=[other]),
+)
 ```
 
 </TabItem>
@@ -181,144 +133,124 @@ import * as pulumi from "@pulumi/pulumi";
 import * as port from "@port-labs/port";
 
 const other = new port.Blueprint("other", {
-  identifier: "test-docs-relation",
-  icon: "Microservice",
-  title: "Test Docs Relation",
-  properties: [
-    {
-      identifier: "myStringProp",
-      title: "My string",
-      required: false,
-      type: "string",
-    },
-  ],
+    identifier: "test-docs-relation",
+    icon: "Microservice",
+    title: "Test Docs Relation",
+    properties: {
+        stringProps: {
+            myStringProp: {
+                title: "My string",
+                required: false
+            }
+        }
+    }
 });
 
 const myBlueprint = new port.Blueprint(
-  "myBlueprint",
-  {
-    identifier: "test-docs",
-    icon: "Microservice",
-    title: "Test Docs",
-    properties: [
-      {
-        identifier: "myStringProp",
-        title: "My string",
-        required: false,
-        type: "string",
-      },
-      {
-        identifier: "myNumberProp",
-        title: "My number",
-        required: false,
-        type: "number",
-      },
-      {
-        identifier: "myBooleanProp",
-        title: "My boolean",
-        required: false,
-        type: "boolean",
-      },
-      {
-        identifier: "myObjectProp",
-        title: "My object",
-        required: false,
-        type: "object",
-      },
-      {
-        identifier: "myArrayProp",
-        title: "My array",
-        required: false,
-        type: "array",
-      },
-      {
-        identifier: "myUrlProp",
-        title: "My url",
-        required: false,
-        type: "string",
-        format: "url",
-      },
-      {
-        identifier: "myEmailProp",
-        title: "My email",
-        required: false,
-        type: "string",
-        format: "email",
-      },
-      {
-        identifier: "myUserProp",
-        title: "My user",
-        required: false,
-        type: "string",
-        format: "user",
-      },
-      {
-        identifier: "myTeamProp",
-        title: "My team",
-        required: false,
-        type: "string",
-        format: "team",
-      },
-      {
-        identifier: "myDatetimeProp",
-        title: "My datetime",
-        required: false,
-        type: "string",
-        format: "date-time",
-      },
-      {
-        identifier: "myTimerProp",
-        title: "My timer",
-        required: false,
-        type: "string",
-        format: "timer",
-      },
-      {
-        identifier: "myYAMLProp",
-        title: "My yaml",
-        required: false,
-        type: "string",
-        format: "yaml",
-      },
-    ],
-    mirrorProperties: [
-      {
-        identifier: "myMirrorProp",
-        title: "My mirror property",
-        path: "myRelation.myStringProp",
-      },
-      {
-        identifier: "myMirrorPropWithMeta",
-        title: "My mirror property of meta property",
-        path: "myRelation.$identifier",
-      },
-    ],
-    calculationProperties: [
-      {
-        identifier: "myCalculation",
-        title: "My calculation property",
-        calculation: ".properties.myStringProp + .properties.myStringProp",
-        type: "string",
-      },
-      {
-        identifier: "myCalculationWithMeta",
-        title: "My calculation property with meta properties",
-        calculation:
-          '.identifier + "-" + .title + "-" + .properties.myStringProp',
-        type: "string",
-      },
-    ],
-    relations: [
-      {
-        identifier: "myRelation",
-        title: "myRelation",
-        target: "test-docs-relation",
-        many: false,
-        required: false,
-      },
-    ],
-  },
-  { dependsOn: [other] }
+    "myBlueprint",
+    {
+        identifier: "test-docs",
+        icon: "Microservice",
+        title: "Test Docs",
+        properties: {
+            stringProps: {
+                myStringProp: {
+                    title: "My string",
+                    required: false
+                },
+                myUrlProp: {
+                    title: "My url",
+                    required: false,
+                    format: "url"
+                },
+                myEmailProp: {
+                    title: "My email",
+                    required: false,
+                    format: "email"
+                },
+                myUserProp: {
+                    title: "My user",
+                    required: false,
+                    format: "user"
+                },
+                myTeamProp: {
+                    title: "My team",
+                    required: false,
+                    format: "team"
+                },
+                myDatetimeProp: {
+                    title: "My datetime",
+                    required: false,
+                    format: "date-time"
+                },
+                myTimerProp: {
+                    title: "My timer",
+                    required: false,
+                    format: "timer"
+                },
+                myYAMLProp: {
+                    title: "My yaml",
+                    required: false,
+                    format: "yaml"
+                }
+            },
+            numberProps: {
+                myNumberProp: {
+                    title: "My number",
+                    required: false
+                }
+            },
+            booleanProps: {
+                myBooleanProp: {
+                    title: "My boolean",
+                    required: false
+                }
+            },
+            objectProps: {
+                myObjectProp: {
+                    title: "My object",
+                    required: false
+                }
+            },
+            arrayProps: {
+                myArrayProp: {
+                    title: "My array",
+                    required: false
+                }
+            }
+        },
+        mirrorProperties: {
+            myMirrorProp: {
+                title: "My mirror property",
+                path: "myRelation.myStringProp"
+            },
+            myMirrorPropWithMeta: {
+                title: "My mirror property of meta property",
+                path: "myRelation.$identifier"
+            }
+        },
+        calculationProperties:{
+            myCalculation: {
+                title: "My calculation property",
+                calculation: ".properties.myStringProp + .properties.myStringProp",
+                type: "string"
+            },
+            myCalculationWithMeta: {
+                title: "My calculation property with meta properties",
+                calculation: '.identifier + "-" + .title + "-" + .properties.myStringProp',
+                type: "string"
+            }
+        },
+        relations:{
+            myRelation: {
+                title: "My relation",
+                target: "test-docs-relation",
+                many: false,
+                required: false
+            }
+        }
+    },
+    { dependsOn: [other] }
 );
 ```
 
@@ -332,144 +264,124 @@ const pulumi = require("@pulumi/pulumi");
 const port = require("@port-labs/port");
 
 const other = new port.Blueprint("other", {
-  identifier: "test-docs-relation",
-  icon: "Microservice",
-  title: "Test Docs Relation",
-  properties: [
-    {
-      identifier: "myStringProp",
-      title: "My string",
-      required: false,
-      type: "string",
-    },
-  ],
+    identifier: "test-docs-relation",
+    icon: "Microservice",
+    title: "Test Docs Relation",
+    properties: {
+        stringProps: {
+            myStringProp: {
+                title: "My string",
+                required: false
+            }
+        }
+    }
 });
 
 const myBlueprint = new port.Blueprint(
-  "myBlueprint",
-  {
-    identifier: "test-docs",
-    icon: "Microservice",
-    title: "Test Docs",
-    properties: [
-      {
-        identifier: "myStringProp",
-        title: "My string",
-        required: false,
-        type: "string",
-      },
-      {
-        identifier: "myNumberProp",
-        title: "My number",
-        required: false,
-        type: "number",
-      },
-      {
-        identifier: "myBooleanProp",
-        title: "My boolean",
-        required: false,
-        type: "boolean",
-      },
-      {
-        identifier: "myObjectProp",
-        title: "My object",
-        required: false,
-        type: "object",
-      },
-      {
-        identifier: "myArrayProp",
-        title: "My array",
-        required: false,
-        type: "array",
-      },
-      {
-        identifier: "myUrlProp",
-        title: "My url",
-        required: false,
-        type: "string",
-        format: "url",
-      },
-      {
-        identifier: "myEmailProp",
-        title: "My email",
-        required: false,
-        type: "string",
-        format: "email",
-      },
-      {
-        identifier: "myUserProp",
-        title: "My user",
-        required: false,
-        type: "string",
-        format: "user",
-      },
-      {
-        identifier: "myTeamProp",
-        title: "My team",
-        required: false,
-        type: "string",
-        format: "team",
-      },
-      {
-        identifier: "myDatetimeProp",
-        title: "My datetime",
-        required: false,
-        type: "string",
-        format: "date-time",
-      },
-      {
-        identifier: "myTimerProp",
-        title: "My timer",
-        required: false,
-        type: "string",
-        format: "timer",
-      },
-      {
-        identifier: "myYAMLProp",
-        title: "My yaml",
-        required: false,
-        type: "string",
-        format: "yaml",
-      },
-    ],
-    mirrorProperties: [
-      {
-        identifier: "myMirrorProp",
-        title: "My mirror property",
-        path: "myRelation.myStringProp",
-      },
-      {
-        identifier: "myMirrorPropWithMeta",
-        title: "My mirror property of meta property",
-        path: "myRelation.$identifier",
-      },
-    ],
-    calculationProperties: [
-      {
-        identifier: "myCalculation",
-        title: "My calculation property",
-        calculation: ".properties.myStringProp + .properties.myStringProp",
-        type: "string",
-      },
-      {
-        identifier: "myCalculationWithMeta",
-        title: "My calculation property with meta properties",
-        calculation:
-          '.identifier + "-" + .title + "-" + .properties.myStringProp',
-        type: "string",
-      },
-    ],
-    relations: [
-      {
-        identifier: "myRelation",
-        title: "myRelation",
-        target: "test-docs-relation",
-        many: false,
-        required: false,
-      },
-    ],
-  },
-  { dependsOn: [other] }
+    "myBlueprint",
+    {
+        identifier: "test-docs",
+        icon: "Microservice",
+        title: "Test Docs",
+        properties: {
+            stringProps: {
+                myStringProp: {
+                    title: "My string",
+                    required: false
+                },
+                myUrlProp: {
+                    title: "My url",
+                    required: false,
+                    format: "url"
+                },
+                myEmailProp: {
+                    title: "My email",
+                    required: false,
+                    format: "email"
+                },
+                myUserProp: {
+                    title: "My user",
+                    required: false,
+                    format: "user"
+                },
+                myTeamProp: {
+                    title: "My team",
+                    required: false,
+                    format: "team"
+                },
+                myDatetimeProp: {
+                    title: "My datetime",
+                    required: false,
+                    format: "date-time"
+                },
+                myTimerProp: {
+                    title: "My timer",
+                    required: false,
+                    format: "timer"
+                },
+                myYAMLProp: {
+                    title: "My yaml",
+                    required: false,
+                    format: "yaml"
+                }
+            },
+            numberProps: {
+                myNumberProp: {
+                    title: "My number",
+                    required: false
+                }
+            },
+            booleanProps: {
+                myBooleanProp: {
+                    title: "My boolean",
+                    required: false
+                }
+            },
+            objectProps: {
+                myObjectProp: {
+                    title: "My object",
+                    required: false
+                }
+            },
+            arrayProps: {
+                myArrayProp: {
+                    title: "My array",
+                    required: false
+                }
+            }
+        },
+        mirrorProperties: {
+            myMirrorProp: {
+                title: "My mirror property",
+                path: "myRelation.myStringProp"
+            },
+            myMirrorPropWithMeta: {
+                title: "My mirror property of meta property",
+                path: "myRelation.$identifier"
+            }
+        },
+        calculationProperties:{
+            myCalculation: {
+                title: "My calculation property",
+                calculation: ".properties.myStringProp + .properties.myStringProp",
+                type: "string"
+            },
+            myCalculationWithMeta: {
+                title: "My calculation property with meta properties",
+                calculation: '.identifier + "-" + .title + "-" + .properties.myStringProp',
+                type: "string"
+            }
+        },
+        relations:{
+            myRelation: {
+                title: "My relation",
+                target: "test-docs-relation",
+                many: false,
+                required: false
+            }
+        }
+    },
+    { dependsOn: [other] }
 );
 ```
 
@@ -491,140 +403,122 @@ func main() {
 			Identifier: pulumi.String("test-docs-relation"),
 			Icon:       pulumi.String("Microservice"),
 			Title:      pulumi.String("Test Docs Relation"),
-			Properties: port.BlueprintPropertyArray{
-				&port.BlueprintPropertyArgs{
-					Identifier: pulumi.String("myStringProp"),
-					Title:      pulumi.String("My string"),
-					Required:   pulumi.Bool(false),
-					Type:       pulumi.String("string"),
+			Properties: port.BlueprintPropertiesArgs{
+				StringProps: port.BlueprintPropertiesStringPropsMap{
+					"myStringProp": port.BlueprintPropertiesStringPropsArgs{
+						Title:    pulumi.String("My string"),
+						Required: pulumi.Bool(false),
+					},
 				},
 			},
 		})
+		if err != nil {
+			return err
+		}
 
 		myBlueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
 			Identifier: pulumi.String("test-docs"),
 			Icon:       pulumi.String("Microservice"),
 			Title:      pulumi.String("Test Docs"),
-			Properties: port.BlueprintPropertyArray{
-				&port.BlueprintPropertyArgs{
-					Identifier: pulumi.String("myStringProp"),
-					Title:      pulumi.String("My string"),
-					Required:   pulumi.Bool(false),
-					Type:       pulumi.String("string"),
+			Properties: port.BlueprintPropertiesArgs{
+				StringProps: port.BlueprintPropertiesStringPropsMap{
+					"myStringProp": port.BlueprintPropertiesStringPropsArgs{
+						Title:    pulumi.String("My string"),
+						Required: pulumi.Bool(false),
+					},
+					"myUrlProp": port.BlueprintPropertiesStringPropsArgs{
+						Title:    pulumi.String("My url"),
+						Required: pulumi.Bool(false),
+						Format:   pulumi.String("url"),
+					},
+					"myEmailProp": port.BlueprintPropertiesStringPropsArgs{
+						Title:    pulumi.String("My email"),
+						Required: pulumi.Bool(false),
+						Format:   pulumi.String("email"),
+					},
+					"myUserProp": port.BlueprintPropertiesStringPropsArgs{
+						Title:    pulumi.String("My user"),
+						Required: pulumi.Bool(false),
+						Format:   pulumi.String("user"),
+					},
+					"myTeamProp": port.BlueprintPropertiesStringPropsArgs{
+						Title:    pulumi.String("My team"),
+						Required: pulumi.Bool(false),
+						Format:   pulumi.String("team"),
+					},
+					"myDatetimeProp": port.BlueprintPropertiesStringPropsArgs{
+						Title:    pulumi.String("My datetime"),
+						Required: pulumi.Bool(false),
+						Format:   pulumi.String("date-time"),
+					},
+					"myTimerProp": port.BlueprintPropertiesStringPropsArgs{
+						Title:    pulumi.String("My timer"),
+						Required: pulumi.Bool(false),
+						Format:   pulumi.String("timer"),
+					},
+					"myYAMLProp": port.BlueprintPropertiesStringPropsArgs{
+						Title:    pulumi.String("My yaml"),
+						Required: pulumi.Bool(false),
+						Format:   pulumi.String("yaml"),
+					},
 				},
-				&port.BlueprintPropertyArgs{
-					Identifier: pulumi.String("myNumberProp"),
-					Title:      pulumi.String("My number"),
-					Required:   pulumi.Bool(false),
-					Type:       pulumi.String("number"),
+				NumberProps: port.BlueprintPropertiesNumberPropsMap{
+					"myNumberProp": port.BlueprintPropertiesNumberPropsArgs{
+						Title:    pulumi.String("My number"),
+						Required: pulumi.Bool(false),
+					},
 				},
-				&port.BlueprintPropertyArgs{
-					Identifier: pulumi.String("myBooleanProp"),
-					Title:      pulumi.String("My boolean"),
-					Required:   pulumi.Bool(false),
-					Type:       pulumi.String("boolean"),
+				BooleanProps: port.BlueprintPropertiesBooleanPropsMap{
+					"myBooleanProp": port.BlueprintPropertiesBooleanPropsArgs{
+						Title:    pulumi.String("My boolean"),
+						Required: pulumi.Bool(false),
+					},
 				},
-				&port.BlueprintPropertyArgs{
-					Identifier: pulumi.String("myObjectProp"),
-					Title:      pulumi.String("My object"),
-					Required:   pulumi.Bool(false),
-					Type:       pulumi.String("object"),
+				ObjectProps: port.BlueprintPropertiesObjectPropsMap{
+					"myObjectProp": port.BlueprintPropertiesObjectPropsArgs{
+						Title:    pulumi.String("My object"),
+						Required: pulumi.Bool(false),
+					},
 				},
-				&port.BlueprintPropertyArgs{
-					Identifier: pulumi.String("myArrayProp"),
-					Title:      pulumi.String("My array"),
-					Required:   pulumi.Bool(false),
-					Type:       pulumi.String("array"),
-				},
-				&port.BlueprintPropertyArgs{
-					Identifier: pulumi.String("myUrlProp"),
-					Title:      pulumi.String("My url"),
-					Required:   pulumi.Bool(false),
-					Type:       pulumi.String("string"),
-					Format:     pulumi.String("url"),
-				},
-				&port.BlueprintPropertyArgs{
-					Identifier: pulumi.String("myEmailProp"),
-					Title:      pulumi.String("My email"),
-					Required:   pulumi.Bool(false),
-					Type:       pulumi.String("string"),
-					Format:     pulumi.String("email"),
-				},
-				&port.BlueprintPropertyArgs{
-					Identifier: pulumi.String("myUserProp"),
-					Title:      pulumi.String("My user"),
-					Required:   pulumi.Bool(false),
-					Type:       pulumi.String("string"),
-					Format:     pulumi.String("user"),
-				},
-				&port.BlueprintPropertyArgs{
-					Identifier: pulumi.String("myTeamProp"),
-					Title:      pulumi.String("My team"),
-					Required:   pulumi.Bool(false),
-					Type:       pulumi.String("string"),
-					Format:     pulumi.String("team"),
-				},
-				&port.BlueprintPropertyArgs{
-					Identifier: pulumi.String("myDatetimeProp"),
-					Title:      pulumi.String("My datetime"),
-					Required:   pulumi.Bool(false),
-					Type:       pulumi.String("string"),
-					Format:     pulumi.String("date-time"),
-				},
-				&port.BlueprintPropertyArgs{
-					Identifier: pulumi.String("myTimerProp"),
-					Title:      pulumi.String("My timer"),
-					Required:   pulumi.Bool(false),
-					Type:       pulumi.String("string"),
-					Format:     pulumi.String("timer"),
-				},
-				&port.BlueprintPropertyArgs{
-					Identifier: pulumi.String("myYAMLProp"),
-					Title:      pulumi.String("My yaml"),
-					Required:   pulumi.Bool(false),
-					Type:       pulumi.String("string"),
-					Format:     pulumi.String("yaml"),
+				ArrayProps: port.BlueprintPropertiesArrayPropsMap{
+					"myArrayProp": port.BlueprintPropertiesArrayPropsArgs{
+						Title:    pulumi.String("My array"),
+						Required: pulumi.Bool(false),
+					},
 				},
 			},
-			MirrorProperties: port.BlueprintMirrorPropertyArray{
-				&port.BlueprintMirrorPropertyArgs{
-					Identifier: pulumi.String("myMirrorProp"),
-					Title:      pulumi.String("My mirror property"),
-					Path:       pulumi.String("myRelation.myStringProp"),
+			MirrorProperties: port.BlueprintMirrorPropertiesMap{
+				"myMirrorProp": port.BlueprintMirrorPropertiesArgs{
+					Title: pulumi.String("My mirror property"),
+					Path:  pulumi.String("myRelation.myStringProp"),
 				},
-				&port.BlueprintMirrorPropertyArgs{
-					Identifier: pulumi.String("myMirrorPropWithMeta"),
-					Title:      pulumi.String("My mirror property of meta property"),
-					Path:       pulumi.String("myRelation.$identifier"),
+				"myMirrorPropWithMeta": port.BlueprintMirrorPropertiesArgs{
+					Title: pulumi.String("My mirror property of meta property"),
+					Path:  pulumi.String("myRelation.$identifier"),
 				},
 			},
-			CalculationProperties: port.BlueprintCalculationPropertyArray{
-				&port.BlueprintCalculationPropertyArgs{
-					Identifier:  pulumi.String("myCalculation"),
+			CalculationProperties: port.BlueprintCalculationPropertiesMap{
+				"myCalculation": port.BlueprintCalculationPropertiesArgs{
 					Title:       pulumi.String("My calculation property"),
 					Calculation: pulumi.String(".properties.myStringProp + .properties.myStringProp"),
 					Type:        pulumi.String("string"),
 				},
-				&port.BlueprintCalculationPropertyArgs{
-					Identifier:  pulumi.String("myCalculationWithMeta"),
+				"myCalculationWithMeta": port.BlueprintCalculationPropertiesArgs{
 					Title:       pulumi.String("My calculation property with meta properties"),
 					Calculation: pulumi.String(".identifier + \"-\" + .title + \"-\" + .properties.myStringProp"),
 					Type:        pulumi.String("string"),
 				},
 			},
-			Relations: port.BlueprintRelationArray{
-				&port.BlueprintRelationArgs{
-					Identifier: pulumi.String("myRelation"),
-					Title:      pulumi.String("myRelation"),
-					Target:     pulumi.String("test-docs-relation"),
-					Many:       pulumi.Bool(false),
-					Required:   pulumi.Bool(false),
+			Relations: port.BlueprintRelationsMap{
+				"myRelation": &port.BlueprintRelationsArgs{
+					Title:    pulumi.String("My relation"),
+					Target:   pulumi.String("test-docs-relation"),
+					Many:     pulumi.Bool(false),
+					Required: pulumi.Bool(false),
 				},
 			},
 		}, pulumi.DependsOn([]pulumi.Resource{other}))
 
-		ctx.Export("blueprint", myBlueprint.Title)
-		ctx.Export("other", other.Title)
 		if err != nil {
 			return err
 		}

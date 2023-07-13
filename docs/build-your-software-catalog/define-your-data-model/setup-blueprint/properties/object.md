@@ -146,23 +146,20 @@ resource "port_blueprint" "myBlueprint" {
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Blueprint
+from port_pulumi import Blueprint,BlueprintPropertiesArgs,BlueprintPropertiesObjectPropsArgs
 
 blueprint = Blueprint(
     "myBlueprint",
     identifier="myBlueprint",
     title="My Blueprint",
     # highlight-start
-    properties=[
-      {
-        "type": "object",
-        "identifier": "myObjectProp",
-        "title": "My object",
-        "required": True
-      }
-    ],
+    properties=BlueprintPropertiesArgs(
+        object_props=BlueprintPropertiesObjectPropsArgs(
+            title="My object", required=False
+        )
+    ),
     # highlight-end
-    relations=[]
+    relations={},
 )
 ```
 
@@ -178,14 +175,14 @@ export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myObjectProp",
-      title: "My object",
-      type: "object",
-      required: true,
+    properties: {
+        objectProps: {
+            myObjectProp: {
+                title: "My object",
+                required: true,
+            },
+        },
     },
-  ],
   // highlight-end
 });
 ```
@@ -203,16 +200,16 @@ const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myObjectProp",
-      title: "My object",
-      type: "object",
-      required: true,
-    },
-  ],
+  properties: {
+      objectProps: {
+            myObjectProp: {
+                title: "My object",
+                required: true,
+            },
+        },
+  },
   // highlight-end
-  relations: [],
+  relations: {},
 });
 
 exports.title = entity.title;
@@ -235,12 +232,12 @@ func main() {
 			Identifier: pulumi.String("myBlueprint"),
 			Title:      pulumi.String("My Blueprint"),
       // highlight-start
-			Properties: port.BlueprintPropertyArray{
-				&port.BlueprintPropertyArgs{
-					Identifier: pulumi.String("myObjectProp"),
-					Title:      pulumi.String("My object"),
-					Required:   pulumi.Bool(false),
-					Type:       pulumi.String("object"),
+			Properties: port.BlueprintPropertiesArgs{
+				ObjectProps: port.BlueprintPropertiesObjectPropsMap{
+					"myObjectProp": port.BlueprintPropertiesObjectPropsArgs{
+						Title:      pulumi.String("My object"),
+                        Required:   pulumi.Bool(false),
+					},
 				},
 			},
       // highlight-end

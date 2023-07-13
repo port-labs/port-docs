@@ -148,17 +148,17 @@ blueprint = Blueprint(
     identifier="myBlueprint",
     title="My Blueprint",
     # highlight-start
-    properties=[
-      {
-         "type": "string",
-         "format": "team",
-         "identifier": "myTeamProp",
-         "title": "My team",
-         "required": True
-      }
-    ],
+    properties=BlueprintPropertiesArgs(
+        string_props={
+            "myTeamProp": BlueprintPropertiesStringPropsArgs(
+                title="My team",
+                required=False,
+                format="team",
+            )
+        }
+    ),
     # highlight-end
-    relations=[]
+    relations={}
 )
 ```
 
@@ -174,15 +174,15 @@ export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myTeamProp",
-      title: "My team",
-      type: "string",
-      format: "team",
-      required: true,
+    properties: {
+        stringProps: {
+            myTeamProp: {
+                title: "My team",
+                required: false,
+                format: "team",
+            },
+        },
     },
-  ],
   // highlight-end
 });
 ```
@@ -200,17 +200,17 @@ const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myTeamProp",
-      title: "My team",
-      type: "string",
-      format: "team",
-      required: true,
+    properties: {
+        stringProps: {
+            myTeamProp: {
+                title: "My team",
+                required: false,
+                format: "team",
+            },
+        },
     },
-  ],
   // highlight-end
-  relations: [],
+  relations: {},
 });
 
 exports.title = entity.title;
@@ -233,14 +233,14 @@ func main() {
 			Identifier: pulumi.String("myBlueprint"),
 			Title:      pulumi.String("My Blueprint"),
       // highlight-start
-			Properties: port.BlueprintPropertyArray{
-				&port.BlueprintPropertyArgs{
-					Identifier: pulumi.String("myTeamProp"),
-					Title:      pulumi.String("My team"),
-					Required:   pulumi.Bool(false),
-					Type:       pulumi.String("string"),
-					Format:     pulumi.String("team"),
-				},
+			Properties: port.BlueprintPropertiesArgs{
+				StringProps: port.BlueprintPropertiesStringPropsMap{
+					"myTeamProp": &port.BlueprintPropertyArgs{
+                        Title:      pulumi.String("My team"),
+                        Required:   pulumi.Bool(false),
+                        Format:     pulumi.String("team"),
+                    },
+                },
 			},
       // highlight-end
 		})

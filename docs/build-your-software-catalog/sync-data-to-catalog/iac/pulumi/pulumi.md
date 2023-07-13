@@ -51,14 +51,14 @@ The `Entity` resource defines a basic entity:
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Entity
+from port_pulumi import Entity,BlueprintPropertiesArgs
 
 entity = Entity(
 	"myEntity",
 	title="My Entity",
 	blueprint="myBlueprint",
-	properties=[],
-	relations=[]
+    properties=BlueprintPropertiesArgs(),
+    relations={}
 )
 
 ```
@@ -74,8 +74,8 @@ import { Entity } from "@port-labs/port";
 export const entity = new Entity("myEntity", {
   title: "My Entity",
   blueprint: "myBlueprint",
-  properties: [],
-  relations: [],
+  properties: {},
+  relations: {},
 });
 ```
 
@@ -91,8 +91,8 @@ const port = require("@port-labs/port");
 const entity = new Entity("myEntity", {
   title: "My Entity",
   blueprint: "myBlueprint",
-  properties: [],
-  relations: [],
+  properties: {},
+  relations: {},
 });
 
 exports.title = entity.title;
@@ -116,8 +116,8 @@ func main() {
         entity, err := port_pulumi.NewEntity(ctx, "myEntity", &port_pulumi.EntityArgs{
             Title:      pulumi.String("My Entity"),
             Blueprint:  pulumi.String("myBlueprint"),
-            Properties: pulumi.StringArray{},
-            Relations:  pulumi.StringArray{},
+            Properties: port.EntityPropertiesArgs{},
+            Relations:  port.EntityRelations{},
         })
         if err != nil {
             return err
@@ -180,26 +180,22 @@ The `properties` schema assigns a specified value to one of the entity's propert
 
 ```python showLineNumbers
 """A Python Pulumi program"""
-
-import pulumi
-from port_pulumi import Entity
+from port_pulumi import Entity,EntityPropertiesArgs
 
 entity = Entity(
-	"myEntity",
-	identifier="myEntity",
-	title="My Entity",
-	blueprint="myBlueprint",
-	# highlight-start
-	properties=[
-		{
-		  "name": "myStringProp",
-		  "value": "My string"
-		}
-	],
-	# highlight-end
-	relations=[]
+  "myEntity",
+  identifier="myEntity",
+  title="My Entity",
+  blueprint="myBlueprint",
+  # highlight-start
+  properties=EntityPropertiesArgs(
+    string_props={
+      "myStringProp": "My string"
+    }
+  ),
+  # highlight-end
+  relations={}
 )
-
 ```
 
 </TabItem>
@@ -215,9 +211,16 @@ export const entity = new Entity("myEntity", {
   title: "My Entity",
   blueprint: "myBlueprint",
   // highlight-start
-  properties: [{ name: "myStringProp", value: "My string" }],
+  properties: {
+    stringProps: {
+      myStringProp: {
+        title: "My string",
+        required: false
+      }
+    }
+  },
   // highlight-end
-  relations: [],
+  relations: {},
 });
 ```
 
@@ -235,9 +238,16 @@ const entity = new port.Entity("myEntity", {
   title: "My Entity",
   blueprint: "myBlueprint",
   // highlight-start
-  properties: [{ name: "myStringProp", value: "My string" }],
+  properties: {
+    stringProps: {
+      myStringProp: {
+          title: "My string",
+          required: false
+      }
+    }
+  },
   // highlight-end
-  relations: [],
+  relations: {},
 });
 
 exports.title = entity.title;
@@ -261,12 +271,11 @@ func main() {
 			Title:      pulumi.String("My Entity"),
 			Blueprint:  pulumi.String("myBlueprint"),
 			// highlight-start
-			Properties: port.EntityPropertyArray{
-				&port.EntityPropertyArgs{
-					Name:  pulumi.String("myStringProp"),
-					Value: pulumi.String("My String"),
-				},
-			},
+            Properties: port.EntityPropertiesArgs{
+              StringProps: pulumi.StringMap{
+                "myStringProp": pulumi.String("myStringValue"),
+              },
+            },
 			// highlight-end
 		})
 		ctx.Export("entity", entity.Title)
@@ -1590,18 +1599,23 @@ The `relations` schema maps a target entity to the source entity definition:
 
 import json
 import pulumi
-from port_pulumi import Entity
+from port_pulumi import Entity,EntityRelationsArgs
 
 entity = Entity(
 	"myEntity",
 	identifier="myEntity",
 	title="My Entity",
 	blueprint="myBlueprint",
-	properties=[],
+	properties={},
 	# highlight-start
-	relations=[
-		{ "name": "myRelation", "identifier": "targetEntityIdentifier" }
-	]
+    relations=EntityRelationsArgs(
+      many_relations={
+        "myManyRelation": ["myTargetEntityIdentifier", "myTargetEntityIdentifier2"]
+      },
+      single_relations={
+        "mySingleRelation": "myTargetEntityIdentifier"
+      },
+    ),
 	# highlight-end
 )
 
@@ -1619,9 +1633,16 @@ export const entity = new Entity("myEntity", {
   identifier: "myEntity",
   title: "My Entity",
   blueprint: "myBlueprint",
-  properties: [],
+  properties: {},
   // highlight-start
-  relations: [{ name: "myRelation", identifier: "targetEntityIdentifier" }],
+  relations: {
+    singleRelations: {
+      myRelation: "myTargetEntityIdentifier"
+    },
+    manyRelations: {
+      myRelation: ["myTargetEntityIdentifier", "myTargetEntityIdentifier2"]
+    }
+  },
   // highlight-end
 });
 ```
@@ -1639,9 +1660,16 @@ const entity = new Entity("myEntity", {
   identifier: "myEntity",
   title: "My Entity",
   blueprint: "myBlueprint",
-  properties: [],
+  properties: {},
   // highlight-start
-  relations: [{ name: "myRelation", identifier: "targetEntityIdentifier" }],
+  relations: {
+    singleRelations: {
+      myRelation: "myTargetEntityIdentifier"
+    },
+    manyRelations: {
+      myRelation: ["myTargetEntityIdentifier", "myTargetEntityIdentifier2"]
+    }
+  },
   // highlight-end
 });
 
@@ -1667,14 +1695,19 @@ func main() {
 			Title:      pulumi.String("My Entity"),
 			Blueprint:  pulumi.String("myBlueprint"),
 			// highlight-start
-			Relations: port.EntityRelationArray{
-				&port.EntityRelationArgs{
-					Name:       pulumi.String("myRelation"),
-					Identifier: pulumi.String("targetEntityIdentifier"),
-				},
-			},
+            Relations: port.EntityRelationsArgs{
+              SingleRelations: pulumi.StringMap{
+                "mySingleRelation": pulumi.String("myTargetEntityIdentifier"),
+              },
+              ManyRelations: pulumi.StringArrayMap{
+                "myManyRelation": pulumi.StringArray{
+                  pulumi.String("myTargetEntityIdentifier"),
+                  pulumi.String("myTargetEntityIdentifier2"),
+                },
+              },
+            },	
 			// highlight-end
-			Properties: port.EntityPropertyArray{
+            Properties: port.EntityPropertiesArgs{
 				// ..properties
 			},
 		})
@@ -1733,8 +1766,8 @@ entity = Entity(
 	"myEntity",
 	title="My Entity",
 	blueprint="myBlueprint",
-	properties=[],
-	relations=[]
+	properties={},
+	relations={}
 )
 
 ```
@@ -1750,8 +1783,8 @@ import { Entity } from "@port-labs/port";
 export const entity = new Entity("myEntity", {
   title: "My Entity",
   blueprint: "myBlueprint",
-  properties: [],
-  relations: [],
+  properties: {},
+  relations: {},
 });
 ```
 
@@ -1767,8 +1800,8 @@ const port = require("@port-labs/port");
 const entity = new Entity("myEntity", {
   title: "My Entity",
   blueprint: "myBlueprint",
-  properties: [],
-  relations: [],
+  properties: {},
+  relations: {},
 });
 
 exports.title = entity.title;
@@ -1793,8 +1826,8 @@ func main() {
         entity, err := port_pulumi.NewEntity(ctx, "myEntity", &port_pulumi.EntityArgs{
             Title:      pulumi.String("My Entity"),
             Blueprint:  pulumi.String("myBlueprint"),
-            Properties: pulumi.StringArray{},
-            Relations:  pulumi.StringArray{},
+            Properties: port.EntityPropertiesArgs{},
+            Relations:  port.EntityRelationsArgs{},
         })
         if err != nil {
             return err
