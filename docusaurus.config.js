@@ -217,6 +217,11 @@ const config = {
         minHeadingLevel: 2,
         maxHeadingLevel: 6,
       },
+      colorMode: {
+        defaultMode: "dark",
+        disableSwitch: false,
+        respectPrefersColorScheme: true,
+      },
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
