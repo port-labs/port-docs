@@ -104,7 +104,7 @@ resource "port_blueprint" "myBlueprint" {
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Blueprint,BlueprintPropertiesArgs
+from port_pulumi import Blueprint,BlueprintPropertiesArgs,BlueprintMirrorPropertiesArgs
 
 blueprint = Blueprint(
     "myBlueprint",
@@ -115,7 +115,7 @@ blueprint = Blueprint(
     ),
     # highlight-start
     mirror_properties={
-        "myMirrorProp": port.BlueprintMirrorPropertiesArgs(
+        "myMirrorProp": BlueprintMirrorPropertiesArgs(
             title="My mirror property", path="myRelation.myStringProp"
         )
     },

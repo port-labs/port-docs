@@ -162,7 +162,7 @@ resource "port_blueprint" "myBlueprint" {
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Blueprint, BlueprintPropertyArgs, BlueprintPropertiesArgs
+from port_pulumi import Blueprint,BlueprintPropertyArgs,BlueprintPropertiesArgs
 
 blueprint = Blueprint(
     "myBlueprint",

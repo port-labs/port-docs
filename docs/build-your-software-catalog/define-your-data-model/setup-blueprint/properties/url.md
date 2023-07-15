@@ -196,24 +196,22 @@ resource "port_blueprint" "myBlueprint" {
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Blueprint
+from port_pulumi import Blueprint,BlueprintPropertiesArgs,BlueprintPropertiesStringPropsArgs
 
 blueprint = Blueprint(
     "myBlueprint",
     identifier="myBlueprint",
     title="My Blueprint",
     # highlight-start
-    properties=[
-      {
-        "type": "string",
-        "identifier": "myUrlProp",
-        "title": "My url",
-        "required": True,
-        "format": "url"
-      }
-    ],
+    properties=BlueprintPropertiesArgs(
+        string_props={
+            "myUrlProp": BlueprintPropertiesStringPropsArgs(
+                title="My url", required=False, format="url"
+            ),
+        }
+    ),
     # highlight-end
-    relations=[]
+    relations={}
 )
 ```
 
@@ -229,15 +227,15 @@ export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myUrlProp",
-      title: "My url",
-      type: "string",
-      required: true,
-      format: "url",
+    properties: {
+        stringProps: {
+            myUrlProp: {
+                title: "My url",
+                required: true,
+                format: "url",
+            },
+        }
     },
-  ],
   // highlight-end
 });
 ```
@@ -261,11 +259,6 @@ const entity = new port.Blueprint("myBlueprint", {
                 title: "My url",
                 required: true,
                 format: "url",
-                enums: ["https://example.com", "https://getport.io"],
-                enumColors: {
-                    "https://example.com": "red",
-                    "https://getport.io": "green",
-                },
             },
         }
     },

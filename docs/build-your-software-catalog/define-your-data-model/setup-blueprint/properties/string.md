@@ -197,23 +197,21 @@ resource "port_blueprint" "myBlueprint" {
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Blueprint
+from port_pulumi import Blueprint,BlueprintPropertiesArgs,BlueprintPropertiesStringPropsArgs
 
 blueprint = Blueprint(
     "myBlueprint",
     identifier="myBlueprint",
     title="My Blueprint",
     # highlight-start
-    properties=[
-      {
-        "type": "string",
-        "identifier": "myStringProp",
-        "title": "My String",
-        "required": True
-      }
-    ],
+    properties=BlueprintPropertiesArgs(
+        string_props={
+            "myStringProp": BlueprintPropertiesStringPropsArgs(
+                title="My string", required=False
+            )
+    ),
     # highlight-end
-    relations=[]
+    relations={}
 )
 ```
 
@@ -229,14 +227,14 @@ export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myStringProp",
-      title: "My String",
-      type: "string",
-      required: true,
+    properties: {
+        stringProps: {
+            myStringProp: {
+                title: "My string",
+                required: true
+            },
+        }
     },
-  ],
   // highlight-end
 });
 ```
@@ -254,16 +252,16 @@ const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myStringProp",
-      title: "My String",
-      type: "string",
-      required: true,
+    properties: {
+        stringProps: {
+            myStringProp: {
+                title: "My string",
+                required: true
+            },
+        }
     },
-  ],
   // highlight-end
-  relations: [],
+  relations: {},
 });
 
 exports.title = entity.title;
@@ -326,7 +324,7 @@ func main() {
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Blueprint
+from port_pulumi import Blueprint,BlueprintPropertiesArgs
 
 blueprint = Blueprint(
     "myBlueprint",

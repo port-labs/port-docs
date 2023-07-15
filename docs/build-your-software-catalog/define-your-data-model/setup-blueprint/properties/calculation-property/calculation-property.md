@@ -93,7 +93,7 @@ resource "port_blueprint" "myBlueprint" {
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Blueprint,BlueprintPropertiesArgs
+from port_pulumi import Blueprint,BlueprintPropertiesArgs,BlueprintCalculationPropertiesArgs
 
 blueprint = Blueprint(
     "myBlueprint",
@@ -104,7 +104,7 @@ blueprint = Blueprint(
     ),
     # highlight-start
     calculation_properties={
-      "myCalculation": port.BlueprintCalculationPropertiesArgs(
+      "myCalculation": BlueprintCalculationPropertiesArgs(
         title="My calculation property", calculation=".properties.myStringProp + .properties.myStringProp", type="string",
       )
     },

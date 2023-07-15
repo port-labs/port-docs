@@ -105,7 +105,7 @@ blueprint = Blueprint(
     # highlight-start
     properties=BlueprintPropertiesArgs(
         array_props={
-            "myArrayProp": port.BlueprintPropertyArgs(
+            "myArrayProp": BlueprintPropertyArgs(
                 title="My array", required=True,
             )
         }
