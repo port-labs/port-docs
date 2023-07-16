@@ -4,7 +4,7 @@ import requests
 import os
 import xml.dom.minidom
 
-# Get environment variables using the config object or os.environ["KEY"]
+# The URL for the webhook endpoint provided by Port
 WEBHOOK_URL = os.environ["WEBHOOK_URL"]
 
 def add_entity_to_port(entity_object):
@@ -105,7 +105,7 @@ def ingest_soap_respone_data(soap_file):
 
     return soap_response_object
 
-# Example usage
+# Replace the values in these variables with the paths leading to your SOAP API definition XML files
 soap_request_file = "your_soap_request.xml"
 soap_response_file = "your_soap_response.xml"
 
