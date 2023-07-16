@@ -42,7 +42,7 @@ This documentation uses the [CycloneDX](https://cyclonedx.org/) SBOM standard. F
 
 ## Working with Port's API and Bash script
 
-Here is an example snippet showing how to integrate Port's API and Webhook with your existing pipelines using Python and Bash:
+Here are example snippets showing how to integrate Port's API and Webhook with your existing pipelines using Python and report SBOM entities from them:
 
 <Tabs groupId="usage" defaultValue="json" values={[
 {label: "JSON", value: "json"},
@@ -61,7 +61,6 @@ import requests
 import json
 import os
 
-# Get environment variables using the config object or os.environ["KEY"]
 WEBHOOK_URL = os.environ['WEBHOOK_URL'] ## the value of the URL you receive after creating the Port webhook
 PATH_TO_SBOM_JSON_FILE = os.environ['PATH_TO_SBOM_JSON_FILE']
 
@@ -158,12 +157,10 @@ Create the following Python script in your repository to create or update Port e
   <summary> Python script for CycloneDX XML </summary>
 
 ```python showLineNumbers
-## Import the needed libraries
 import requests
 import xml.dom.minidom
 import os
 
-# Get environment variables using the config object or os.environ["KEY"]
 WEBHOOK_URL = os.environ["WEBHOOK_URL"]
 PATH_TO_SBOM_XML_FILE = os.environ["PATH_TO_SBOM_XML_FILE"]
 
