@@ -104,23 +104,21 @@ resource "port_blueprint" "myBlueprint" {
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Blueprint
+from port_pulumi import Blueprint,BlueprintPropertiesArgs,BlueprintMirrorPropertiesArgs
 
 blueprint = Blueprint(
     "myBlueprint",
     identifier="myBlueprint",
     title="My Blueprint",
-    properties=[
-    # blueprint properties
-    ],
+    properties=BlueprintPropertiesArgs(
+        # blueprint properties
+    ),
     # highlight-start
-    mirrorProperties=[
-        {
-            "identifier": "myMirrorProp",
-            "title": "My mirror property",
-            "path": "myRelation.myProperty"
-        }
-    ],
+    mirror_properties={
+        "myMirrorProp": BlueprintMirrorPropertiesArgs(
+            title="My mirror property", path="myRelation.myStringProp"
+        )
+    },
     # highlight-end
 )
 ```
@@ -136,17 +134,16 @@ import * as port from "@port-labs/port";
 export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
-  properties: [
+  properties: {
     // blueprint properties
-  ],
+  },
   // highlight-start
-  mirrorProperties: [
-    {
-      identifier: "myMirrorProp",
+  mirrorProperties: {
+    myMirrorProp: {
       title: "My mirror property",
       path: "myRelation.myProperty",
     },
-  ],
+  },
   // highlight-end
 });
 ```
@@ -163,17 +160,16 @@ const port = require("@port-labs/port");
 const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
-  properties: [
+  properties: {
     // blueprint properties
-  ],
+  },
   // highlight-start
-  mirrorProperties: [
-    {
-      identifier: "myMirrorProp",
+  mirrorProperties: {
+    myMirrorProp: {
       title: "My mirror property",
       path: "myRelation.myProperty",
     },
-  ],
+  },
   // highlight-end
 });
 
@@ -198,11 +194,10 @@ func main() {
 			Title:      pulumi.String("My Blueprint"),
 			// blueprint properties..
       # highlight-start
-			MirrorProperties: port.BlueprintMirrorPropertyArray{
-			  &port.BlueprintMirrorPropertyArgs{
-			    Identifier:  pulumi.String("myMirrorProp"),
-			    Title:       pulumi.String("My mirror property"),
-			    Path:        pulumi.String("myRelation.myProperty"),
+			MirrorProperties: port.BlueprintMirrorPropertiesMap{
+              "myMirrorProp": port.BlueprintMirrorPropertiesArgs{
+                    Title: pulumi.String("My mirror property"),
+                    Path:  pulumi.String("myRelation.myProperty"),
 			  },
 			},
       # highlight-end

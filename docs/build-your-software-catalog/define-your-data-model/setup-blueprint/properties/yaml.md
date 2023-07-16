@@ -147,24 +147,24 @@ resource "port_blueprint" "myBlueprint" {
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Blueprint
+from port_pulumi import Blueprint,BlueprintPropertiesArgs,BlueprintPropertyArgs
 
 blueprint = Blueprint(
     "myBlueprint",
     identifier="myBlueprint",
     title="My Blueprint",
     # highlight-start
-    properties=[
-      {
-         "type": "string",
-         "format": "yaml",
-         "identifier": "myYAMLProp",
-         "title": "My yaml",
-         "required": True
-      }
-    ],
+    properties=BlueprintPropertiesArgs(
+        string_props={
+            "myYamlProp": BlueprintPropertyArgs(
+                title="My yaml",
+                required=False,
+                format="yaml",
+            )
+        }
+    ),
     # highlight-end
-    relations=[]
+    relations={}
 )
 ```
 
@@ -180,15 +180,15 @@ export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myYAMLProp",
-      title: "My yaml",
-      type: "string",
-      format: "yaml",
-      required: true,
+  properties: {
+      stringProps: {
+          myYamlProp: {
+            title: "My yaml",
+            required: false,
+            format: "yaml",
+          },
     },
-  ],
+  },
   // highlight-end
 });
 ```
@@ -206,15 +206,15 @@ const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myYAMLProp",
-      title: "My yaml",
-      type: "string",
-      format: "yaml",
-      required: true,
+  properties: {
+    stringProps: {
+        myYamlProp: {
+            title: "My yaml",
+            required: false,
+            format: "yaml",
+        },
     },
-  ],
+  },
   // highlight-end
   relations: [],
 });
@@ -239,13 +239,11 @@ func main() {
 			Identifier: pulumi.String("myBlueprint"),
 			Title:      pulumi.String("My Blueprint"),
       // highlight-start
-			Properties: port.BlueprintPropertyArray{
-				&port.BlueprintPropertyArgs{
-					Identifier: pulumi.String("myYAMLProp"),
-					Title:      pulumi.String("My yaml"),
-					Required:   pulumi.Bool(false),
-					Type:       pulumi.String("string"),
-					Format:     pulumi.String("yaml"),
+			Properties: port.BlueprintPropertiesArgs{
+				"myYAMLProp": port.BlueprintPropertiesStringPropsArgs{
+					Title:    pulumi.String("My yaml"),
+					Required: pulumi.Bool(false),
+					Format:   pulumi.String("yaml"),
 				},
 			},
       // highlight-end
