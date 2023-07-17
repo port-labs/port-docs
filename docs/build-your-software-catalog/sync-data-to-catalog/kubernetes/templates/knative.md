@@ -37,7 +37,7 @@ kubectl config current-context
 
 ## Setting up your blueprints
 
-### Creating Blueprints using the installation script
+### Creating blueprints using the installation script
 
 The installation script provides a convenient way to create your blueprints. Using the `CUSTOM_BP_PATH` environment variable, you can fetch a pre-defined `blueprints.json` to create your blueprints. For this use-case, you will use [this file](https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/kubernetes_knative_usecase.json) to define your blueprints. Do this by running:
 
@@ -62,10 +62,10 @@ This `blueprints.json` file defines the following blueprints:
 - `Workload` is an abstraction of Kubernetes objects which create and manage pods. By creating this blueprint, you can avoid creating a dedicated blueprint per Workload type, all of which will likely look pretty similar.
   Here is the list of kubernetes objects `Workload` will represent:
 
-* Deployment;
-* ReplicaSet;
-* StatefulSet;
-* DaemonSet.
+  - Deployment;
+  - ReplicaSet;
+  - StatefulSet;
+  - DaemonSet.
 
 :::
 
