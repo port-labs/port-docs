@@ -14,6 +14,19 @@ Using Port's Kubernetes Exporter, you can keep track of important Openshift reso
 Get to know the basics of our Kubernetes exporter [here!](../kubernetes.md)
 :::
 
+## Mapping Red Hat Openshift - Goals
+
+While Red Hat Openshift provides great visibility when it comes to your Openshift (Kubernetes) environments, there are still some questions that remain about how your Openshift environment connects and interacts with the rest of your infrastructure, for example:
+
+- Which cloud provider is the cluster running in?
+- Which VPC is the cluster running in?
+- Who is on-call for a given cluster?
+- What are all the endpoints provided by all different Openshift clusters in a cloud region?
+
+Importing your Openshift resources to Port makes it easy to create multiple tailored views for different use cases. For example, you can create a view that shows you how your Openshift cluster interacts with the rest of your infrastructure, or you can create a high-level view that allows management to understand the business value provided by your Openshift installations.
+
+In this example you will map your Openshift clusters, their workloads and the Openshift routes which are exposed by your different clusters.
+
 ## Prerequisites
 
 - [Helm](https://helm.sh) must be installed to use the chart. Please refer to
