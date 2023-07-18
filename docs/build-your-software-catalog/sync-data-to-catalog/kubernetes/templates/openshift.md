@@ -20,7 +20,7 @@ While Red Hat Openshift provides great visibility when it comes to your Openshif
 
 - Which cloud provider is this cluster running in?
 - Which VPC is the cluster running in?
-- Who is on-call for this cluster?
+- Who is on-call for a given cluster?
 - What are all the endpoints provided by all different Openshift clusters in a cloud region?
 
 Importing your Openshift resources to Port makes it easy to create multiple tailored views for different use cases. For example, you can create a view that shows you how your Openshift cluster interacts with the rest of your infrastructure, or you can create a high-level view that allows management to understand the business value provided by your Openshift installations.
