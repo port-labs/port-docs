@@ -129,7 +129,7 @@ By using user inputs, you can specify to your users exactly what information you
 
 To learn more about user inputs, refer to the [user inputs](./user-inputs/user-inputs.md) page.
 
-### `trigger`- Action type
+### `trigger` - Action type
 
 Port actions support 3 action types:
 
