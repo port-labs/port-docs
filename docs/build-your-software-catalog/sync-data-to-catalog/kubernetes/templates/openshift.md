@@ -16,7 +16,7 @@ Get to know the basics of our Kubernetes exporter [here!](../kubernetes.md)
 
 ## Mapping Red Hat Openshift - Goals
 
-While Red Hat Openshift provides great visibility when it comes to your Openshift(kubernetes) environments, there are still a some logical questions to be asked about your Openshift environments, for example:
+While Red Hat Openshift provides great visibility when it comes to your Openshift (Kubernetes) environments, there are still some questions that remain about how your Openshift environment connects and interacts with the rest of your infrastructure, for example:
 
 - Which cloud provider is this cluster running in?
 - Which VPC is the cluster running in?
