@@ -23,7 +23,7 @@ While Red Hat Openshift provides great visibility when it comes to your Openshif
 - Who is on-call for this cluster?
 - What are all the endpoints provided by all different openshift clusters in this region?
 
-Importing your Openshift resources to Port can provide you with a tailored view, and granular information about your Openshift environments, in a more broad and _businessy_ point of view.
+Importing your Openshift resources to Port makes it easy to create multiple tailored views for different use cases. For example, you can create a view that shows you how your Openshift cluster interacts with the rest of your infrastructure, or you can create a high-level view that allows management to understand the business value provided by your Openshift installations.
 
 In this example you will map your Openshift clusters, their workloads and the Openshift routes which are exposed by your different clusters.
 
