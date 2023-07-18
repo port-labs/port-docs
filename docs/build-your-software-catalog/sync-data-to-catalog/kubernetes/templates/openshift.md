@@ -18,7 +18,7 @@ Get to know the basics of our Kubernetes exporter [here!](../kubernetes.md)
 
 While Red Hat Openshift provides great visibility when it comes to your Openshift (Kubernetes) environments, there are still some questions that remain about how your Openshift environment connects and interacts with the rest of your infrastructure, for example:
 
-- Which cloud provider is this cluster running in?
+- Which cloud provider is the cluster running in?
 - Which VPC is the cluster running in?
 - Who is on-call for a given cluster?
 - What are all the endpoints provided by all different Openshift clusters in a cloud region?
