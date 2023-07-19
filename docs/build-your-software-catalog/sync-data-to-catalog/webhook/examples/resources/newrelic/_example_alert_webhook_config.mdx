@@ -1,0 +1,32 @@
+```json showLineNumbers
+{
+  "identifier": "newRelicAlertMapper",
+  "title": "Alert Mapper",
+  "description": "A webhook configuration for alerts events from New Relic",
+  "icon": "NewRelic",
+  "mappings": [
+    {
+      "blueprint": "newRelicAlert",
+      "filter": "true",
+      "entity": {
+        "identifier": ".body.id",
+        "title": ".body.title",
+        "properties": {
+          "priority": ".body.priority",
+          "issueURL": ".body.issueUrl",
+          "state": ".body.state",
+          "trigger": ".body.trigger",
+          "sources": ".body.sources",
+          "workflowName": ".body.workflowName",
+          "alertConditionNames": ".body.alertConditionNames",
+          "alertPolicyNames": ".body.alertPolicyNames"
+        },
+        "relations": {
+          "microservice": ".body.tags"
+        }
+      }
+    }
+  ],
+  "security": {}
+}
+```
