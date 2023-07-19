@@ -251,7 +251,7 @@ values={[
 
 <TabItem value="api">
 
-```json
+```json showLineNumbers
 {
   "properties": {
     "language": {
@@ -274,21 +274,22 @@ values={[
 <TabItem value="terraform">
 
 ```hcl showLineNumbers
-
-{
-  user_properties = {
-    string_props = {
-      language = {
-        enum = ["javascript", "python"]
-      }
-      SDK = {
-        enum_jq_query = "if .form.language == \"javascript\" then [\"Node 16\", \"Node 18\"] else [\"Python 3.8\"] end"
-        depends_on: ["language"]
+resource "port_action" myAction {
+  # action configuration
+  {
+    user_properties = {
+      string_props = {
+        language = {
+          enum = ["javascript", "python"]
+        }
+        SDK = {
+          enum_jq_query = "if .form.language == \"javascript\" then [\"Node 16\", \"Node 18\"] else [\"Python 3.8\"] end"
+          depends_on: ["language"]
+        }
       }
     }
   }
 }
-
 ```
 
 </TabItem>
@@ -309,7 +310,7 @@ values={[
 
 <TabItem value="api">
 
-```json
+```json showLineNumbers
 {
   "env": {
     "type": "string",
@@ -334,28 +335,31 @@ values={[
 <TabItem value="terraform">
 
 ```hcl showLineNumbers
-
-{
-  string_props = {
-    env = {
-      format : "entity",
-      blueprint : "environment"
-      dataset = {
-        combinator = "and"
-        rules = [
-          {
-            property = "type"
-            operator = "!="
-            value = {
-              jq_query = "'production'"
-            }
+resource "port_action" myAction {
+  # action configuration
+  {
+    user_properties = {
+      string_props = {
+        env = {
+          format : "entity",
+          blueprint : "environment"
+          dataset = {
+            combinator = "and"
+            rules = [
+              {
+                property = "type"
+                operator = "!="
+                value = {
+                  jq_query = "'production'"
+                }
+              }
+            ]
           }
-        ]
+        }
       }
     }
   }
 }
-
 ```
 
 </TabItem>
@@ -378,7 +382,7 @@ values={[
 
 <TabItem value="api">
 
-```json
+```json showLineNumbers
 {
   "Cluster": {
     "type": "string",
@@ -415,37 +419,40 @@ values={[
 <TabItem value="terraform">
 
 ```hcl showLineNumbers
-
-{
-  string_props = {
-    cluster = {
-      format      = "entity",
-      blueprint   = "Cluster",
-      title       = "Cluster",
-      description = "The cluster to create the namespace in"
-    }
-    namespace = {
-      title : "namespace",
-      description : "The namespace to create the cluster in"
-      format     = "entity",
-      blueprint  = "namespace",
-      depends_on = ["Cluster"],
-      dataset = {
-        combinator = "and"
-        rules = [
-          {
-            blueprint = "Cluster"
-            operator  = "relatedTo"
-            value = {
-              jq_query = ".form.Cluster.identifier"
-            }
+resource "port_action" myAction {
+  # action configuration
+  {
+    user_properties = {
+      string_props = {
+        cluster = {
+          format      = "entity",
+          blueprint   = "Cluster",
+          title       = "Cluster",
+          description = "The cluster to create the namespace in"
+        }
+        namespace = {
+          title : "namespace",
+          description : "The namespace to create the cluster in"
+          format     = "entity",
+          blueprint  = "namespace",
+          depends_on = ["Cluster"],
+          dataset = {
+            combinator = "and"
+            rules = [
+              {
+                blueprint = "Cluster"
+                operator  = "relatedTo"
+                value = {
+                  jq_query = ".form.Cluster.identifier"
+                }
+              }
+            ]
           }
-        ]
+        }
       }
     }
   }
 }
-
 ```
 
 </TabItem>
@@ -468,7 +475,7 @@ values={[
 
 <TabItem value="api">
 
-```json
+```json showLineNumbers
 {
   "namespace": {
     "type": "string",
@@ -495,28 +502,31 @@ values={[
 <TabItem value="terraform">
 
 ```hcl showLineNumbers
-
-{
-  string_props = {
-    namespace = {
-      format : "entity",
-      blueprint : "namespace"
-      dataset = {
-        combinator = "and"
-        rules = [
-          {
-            property = "$team",
-            operator = "containsAny",
-            value = {
-              jq_query = "[.user.teams[].name]"
-            }
+resource "port_action" myAction {
+  # action configuration
+  {
+    user_properties = {
+      string_props = {
+        namespace = {
+          format : "entity",
+          blueprint : "namespace"
+          dataset = {
+            combinator = "and"
+            rules = [
+              {
+                property = "$team",
+                operator = "containsAny",
+                value = {
+                  jq_query = "[.user.teams[].name]"
+                }
+              }
+            ]
           }
-        ]
+        }
       }
     }
   }
 }
-
 ```
 
 </TabItem>
@@ -539,7 +549,7 @@ values={[
 
 <TabItem value="api">
 
-```json
+```json showLineNumbers
 {
   "namespace": {
     "type": "string",
@@ -566,28 +576,31 @@ values={[
 <TabItem value="terraform">
 
 ```hcl showLineNumbers
-
-{
-  string_props = {
-    namespace = {
-      format     = "entity",
-      blueprint  = "namespace",
-      dataset = {
-        combinator = "and"
-        rules = [
-          {
-            property = "tags"
-            operator = "containsAny"
-            value = {
-              jq_query = "[.entity.properties.tags[]]"
-            }
+resource "port_action" myAction {
+  # action configuration
+  {
+    user_properties = {
+      string_props = {
+        namespace = {
+          format     = "entity",
+          blueprint  = "namespace",
+          dataset = {
+            combinator = "and"
+            rules = [
+              {
+                property = "tags"
+                operator = "containsAny"
+                value = {
+                  jq_query = "[.entity.properties.tags[]]"
+                }
+              }
+            ]
           }
-        ]
+        }
       }
     }
   }
 }
-
 ```
 
 </TabItem>
@@ -606,7 +619,7 @@ values={[
 
 <TabItem value="api">
 
-```json
+```json showLineNumbers
 {
   "some_input": {
     "type": "array",
@@ -622,15 +635,18 @@ values={[
 <TabItem value="terraform">
 
 ```hcl showLineNumbers
-
-{
-  array_props = {
-    some_input = {
-      default_jq_query
+resource "port_action" myAction {
+  # action configuration
+  {
+    user_properties = {
+      array_props = {
+        some_input = {
+          default_jq_query = ".entity.properties.tags"
+        }
+      }
     }
   }
 }
-
 ```
 
 </TabItem>
@@ -659,7 +675,7 @@ values={[
 
 <TabItem value="api">
 
-```json
+```json showLineNumbers
 {
   "identifier": "createRunningService",
   "title": "Deploy running service to a cluster",
