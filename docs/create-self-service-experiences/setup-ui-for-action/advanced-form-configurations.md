@@ -24,7 +24,7 @@ values={[
 The dependsOn property is used to create a dependency between inputs. Input dependency means that if input X depends on input Y, input X will be disabled until input Y is filled.
 In the example below, the "SDK" input is depends on the "Language" input
 
-```json
+```json showLineNumbers
 {
   "properties": {
     "language": {
@@ -44,7 +44,7 @@ In the example below, the "SDK" input is depends on the "Language" input
 The dataset property is used to filter the available options in an "entity" format input.
 The "value" key in the dataset can be a constant (String, number, etc) or a "jqQuery" object. Read more on how to use the "dataset" <a href="/search-and-query/#combinator">here</a>
 
-```json
+```json showLineNumbers
 {
   "namespace": {
     "type": "string",
@@ -68,7 +68,7 @@ The "value" key in the dataset can be a constant (String, number, etc) or a "jqQ
 <TabItem value="jqQuery">
 The jqQuery property is used to create a query that can be used to extract data from the entity, the logged-in user, or the current action's form inputs. The query can also be used to perform data manipulations.
 
-```json
+```json showLineNumbers
 {
   "properties": {
     "language": {
@@ -275,7 +275,7 @@ values={[
 
 ```hcl showLineNumbers
 resource "port_action" myAction {
-  # action configuration
+  # ...action configuration
   {
     user_properties = {
       string_props = {
@@ -336,7 +336,7 @@ values={[
 
 ```hcl showLineNumbers
 resource "port_action" myAction {
-  # action configuration
+  # ...action configuration
   {
     user_properties = {
       string_props = {
@@ -420,7 +420,7 @@ values={[
 
 ```hcl showLineNumbers
 resource "port_action" myAction {
-  # action configuration
+  # ...action configuration
   {
     user_properties = {
       string_props = {
@@ -503,7 +503,7 @@ values={[
 
 ```hcl showLineNumbers
 resource "port_action" myAction {
-  # action configuration
+  # ...action configuration
   {
     user_properties = {
       string_props = {
@@ -577,7 +577,7 @@ values={[
 
 ```hcl showLineNumbers
 resource "port_action" myAction {
-  # action configuration
+  # ...action configuration
   {
     user_properties = {
       string_props = {
@@ -636,7 +636,7 @@ values={[
 
 ```hcl showLineNumbers
 resource "port_action" myAction {
-  # action configuration
+  # ...action configuration
   {
     user_properties = {
       array_props = {
@@ -744,32 +744,31 @@ values={[
 <TabItem value="terraform">
 
 ```hcl showLineNumbers
-
 resource "port_action" "createRunningService" {
-  title             = "Create Running Service"
-  blueprint         = "abc"
-  identifier        = "createRunningService"
-  trigger           = "CREATE"
-  description       = "This will deploy a running service to a cluster"
+  title       = "Create Running Service"
+  blueprint   = "abc"
+  identifier  = "createRunningService"
+  trigger     = "CREATE"
+  description = "This will deploy a running service to a cluster"
   webhook_method = {
     url = "https://example.com"
   }
   user_properties = {
     string_props = {
       cluster = {
-        format     = "entity",
-        blueprint =  "Cluster",
-        title            = "Cluster"
-        description =  "The cluster to create the namespace in"
-        required         = true
+        format      = "entity",
+        blueprint   = "Cluster",
+        title       = "Cluster"
+        description = "The cluster to create the namespace in"
+        required    = true
       }
       namespace = {
-        title      = "Namespace"
-        format     = "entity",
-        blueprint = "namespace",
-        description =  "The namespace to create the cluster in"
-        required   = true
-        depends_on = ["cluster"]
+        title       = "Namespace"
+        format      = "entity",
+        blueprint   = "namespace",
+        description = "The namespace to create the cluster in"
+        required    = true
+        depends_on  = ["cluster"]
         dataset = {
           combinator = "and"
           rules = [
@@ -784,9 +783,9 @@ resource "port_action" "createRunningService" {
         }
       }
       service = {
-        title      = "Service"
+        title     = "Service"
         blueprint = "Service",
-        required   = true
+        required  = true
         dataset = {
           combinator = "and"
           rules = [
