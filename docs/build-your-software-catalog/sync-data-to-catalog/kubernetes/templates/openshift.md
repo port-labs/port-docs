@@ -83,8 +83,6 @@ This `blueprints.json` file defines the following blueprints:
 
 :::
 
-## Exporting your Openshift routes
-
 ### Installing the Kubernetes exporter using the script
 
 Using the `CONFIG_YAML_URL` parameter, you can define a custom `config.yaml` to use when installing the exporter.
