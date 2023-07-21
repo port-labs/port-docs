@@ -1,0 +1,44 @@
+```json showLineNumbers
+{
+  "identifier": "newRelicService",
+  "description": "This blueprint represents a New Relic service or application in our software catalog",
+  "title": "New Relic Service",
+  "icon": "NewRelic",
+  "schema": {
+    "properties": {
+      "language": {
+        "type": "string",
+        "title": "Language"
+      },
+      "health_status": {
+        "type": "string",
+        "title": "Health Status",
+        "enum": ["green", "orange", "gray", "unknown", "red"],
+        "enumColors": {
+          "orange": "orange",
+          "green": "green",
+          "gray": "lightGray",
+          "unknown": "purple",
+          "red": "red"
+        }
+      },
+      "application_summary": {
+        "type": "object",
+        "title": "Summary"
+      },
+      "settings": {
+        "type": "object",
+        "title": "Settings"
+      },
+      "links": {
+        "type": "object",
+        "title": "Links"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {}
+}
+```

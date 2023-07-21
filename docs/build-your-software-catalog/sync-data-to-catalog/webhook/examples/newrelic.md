@@ -6,6 +6,8 @@ description: Ingest New Relic alerts into your catalog
 import NewRelicAlertBlueprint from "./resources/newrelic/\_example_alert_blueprint.mdx";
 import NewRelicWebhookConfiguration from "./resources/newrelic/\_example_alert_webhook_config.mdx"
 import MicroserviceBlueprint from "./resources/newrelic/\_example_microservice_blueprint.mdx"
+import NewRelicserviceBlueprint from "./resources/newrelic/\_example_newrelic_service_blueprint.mdx"
+import PythonScript from "./resources/newrelic/\_example_python_script.mdx"
 
 # New Relic
 
@@ -143,3 +145,21 @@ The combination of the sample payload and the webhook configuration generate the
   }
 }
 ```
+
+## Ingest services and applications from your APM
+
+In this example, you will create a `newRelicService` blueprint that ingests all services and applications in your New Relic APM using REST API. You will then add some python script to create new entities in Port.
+
+<details>
+<summary>New Relic service blueprint</summary>
+<NewRelicserviceBlueprint/>
+</details>
+
+<details>
+<summary>Python script</summary>
+<PythonScript/>
+</details>
+
+:::note
+Please note that by deafult, all New Relic REST API clients are configured to consume New Relic US site APIs (https://api.newrelic.com/v2). If you are on the New Relic EU site, set the environment variable `NEW_RELIC_API_URL` to https://api.eu.newrelic.com/v2.
+:::
