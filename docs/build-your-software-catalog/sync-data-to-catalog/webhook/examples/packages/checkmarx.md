@@ -9,9 +9,9 @@ import CheckmarxWebhookConfig from './resources/checkmarx/\_example_checkmarx_we
 
 # Checkmarx KICS
 
-In this example you are going to create a `checkmarxScan` blueprint that ingests all scan results in your Checkmarx KICS file using a combination of Port's [API](../../../api/api.md) and [webhook functionality](../../webhook.md).
+In this example, you will create a `checkmarxScan` blueprint that ingests all scan results in your Checkmarx KICS file using a combination of Port's [API](../../../api/api.md) and [webhook functionality](../../webhook.md).
 
-To ingest the scan results to Port, a script that sends information about the scans according to the webhook configuration is used.
+To ingest the scan results to Port, use a script that sends information about the scans according to the webhook configuration.
 
 ## Prerequisites
 
