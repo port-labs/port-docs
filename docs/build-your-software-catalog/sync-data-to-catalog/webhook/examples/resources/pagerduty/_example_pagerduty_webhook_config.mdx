@@ -1,48 +1,35 @@
 ```json showLineNumbers
-{
-  "identifier": "pagerdutyMapper",
-  "title": "PagerDuty Mapper",
-  "description": "A webhook configuration to map PagerDuty services and it's related incidents to Port",
-  "icon": "pagerduty",
-  "mappings": [
-    {
-      "blueprint": "microservice",
-      "filter": ".body.event.event_type | startswith(\"service\")",
-      "entity": {
-        "identifier": ".body.event.data.id",
-        "title": ".body.event.data.summary",
-        "properties": {
-          "status": ".body.event.data.event_type"
-        }
-      }
-    },
-    {
-      "blueprint": "pagerdutyIncident",
-      "filter": ".body.event.event_type | startswith(\"incident\")",
-      "entity": {
-        "identifier": ".body.event.data.id",
-        "title": ".body.event.data.title",
-        "properties": {
-          "status": ".body.event.data.status",
-          "url": ".body.event.data.html_url",
-          "details": ".body.event.data.title",
-          "priority": ".body.event.data.priority",
-          "urgency": ".body.event.data.urgency",
-          "responder": ".body.event.data.assignees[0].summary",
-          "escalation_policy": ".body.event.data.escalation_policy.summary"
-        },
-        "relations": {
-          "microservice": ".body.event.data.service.id"
-        }
+[
+  {
+    "blueprint": "microservice",
+    "filter": ".body.event.event_type | startswith(\"service\")",
+    "entity": {
+      "identifier": ".body.event.data.id",
+      "title": ".body.event.data.summary",
+      "properties": {
+        "status": ".body.event.data.event_type"
       }
     }
-  ],
-  "enabled": true,
-  "security": {
-    "signatureHeaderName": "X-Pagerduty-Signature",
-    "signatureAlgorithm": "sha256",
-    "signaturePrefix": "v1=",
-    "secret": "WEBHOOK_SECRET"
+  },
+  {
+    "blueprint": "pagerdutyIncident",
+    "filter": ".body.event.event_type | startswith(\"incident\")",
+    "entity": {
+      "identifier": ".body.event.data.id",
+      "title": ".body.event.data.title",
+      "properties": {
+        "status": ".body.event.data.status",
+        "url": ".body.event.data.html_url",
+        "details": ".body.event.data.title",
+        "priority": ".body.event.data.priority",
+        "urgency": ".body.event.data.urgency",
+        "responder": ".body.event.data.assignees[0].summary",
+        "escalation_policy": ".body.event.data.escalation_policy.summary"
+      },
+      "relations": {
+        "microservice": ".body.event.data.service.id"
+      }
+    }
   }
-}
+]
 ```

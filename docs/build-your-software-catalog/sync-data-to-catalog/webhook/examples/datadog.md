@@ -11,9 +11,9 @@ import DatadogMicroserviceBlueprint from "./resources/datadog/\_example_datadog_
 
 In this example you are going to create a webhook integration between [Datadog](https://www.datadoghq.com/) and Port, which will ingest alerts and monitors entities to Port and map them to your microservice entities.
 
-## Prerequisites
+## Port configuration
 
-Create the following blueprint definitions and webhook configuration:
+Create the following blueprint definitions:
 
 <details>
 <summary>Datadog microservice blueprint</summary>
@@ -25,16 +25,29 @@ Create the following blueprint definitions and webhook configuration:
 <DatadogBlueprint/>
 </details>
 
+Create the following webhook configuration [using Port UI](../../?operation=ui#configuring-webhook-endpoints)
+
 <details>
 <summary>Datadog webhook configuration</summary>
-<DatadogConfiguration/>
+
+1. **Basic details** tab - fill the following details:
+   1. Title : `Datadog Alert Mapper`;
+   2. Identifier : `datadog_alert_mapper`;
+   3. Description : `A webhook configuration for alerts/monitors events from Datadog`;
+   4. Icon : `Datadog`;
+2. **Integration configuration** tab - fill the following JQ mapping:
+
+   <DatadogConfiguration/>
+
+3. Click **Save** at the bottom of the page.
+
 </details>
 
 :::note
 The webhook configuration's relation mapping will function properly only when the identifiers of the Port microservice entities match the names of the services or hosts in your Datadog.
 :::
 
-## Create the Datadog webhook
+## Create a webhook in Datadog
 
 1. Log in to Datadog with your credentials;
 2. Click on **Integrations** at the left sidebar of the page;
@@ -75,68 +88,6 @@ In order to view the different payloads and structure of the events in Datadog w
 :::
 
 Done! any problem detected on your Datadog instance will trigger a webhook event. Port will parse the events according to the mapping and update the catalog entities accordingly.
-
-## Test the webhook
-
-This section includes a sample webhook event sent from Datadog when an alert is triggered. In addition, it also includes the entity created from the event based on the webhook configuration provided in the previous section.
-
-### Payload
-
-Here is an example of the payload structure sent to the webhook URL when a Datadog monitor or alert is created:
-
-<details>
-<summary> Webhook event payload</summary>
-
-```json showLineNumbers
-{
-  "id": "7050278235293370890",
-  "message": "Webhook message text",
-  "priority": "normal",
-  "last_updated": "1684492195000",
-  "event_type": "query_alert_monitor",
-  "event_url": "https://us5.datadoghq.com/event/event?id=7050278235293370890",
-  "service": "api-service",
-  "creator": "user@domain.com",
-  "title": "[Triggered] [TEST] Service with IP 172.19.128.1 have exceeded memory limit",
-  "date": "1684492195000",
-  "org_id": "1300048894",
-  "org_name": "Port",
-  "alert_id": "147793",
-  "alert_metric": "system.mem.used",
-  "alert_status": "system.mem.used over host:api-service was > 7516192768.0 on average during the last 5m.",
-  "alert_title": "[TEST] api-service with IP 172.19.128.1 have exceeded memory limit",
-  "alert_type": "error",
-  "tags": "host:api-service,monitor"
-}
-```
-
-</details>
-
-### Mapping Result
-
-The combination of the sample payload and the webhook configuration generate the following Port entity:
-
-```json showLineNumbers
-{
-  "identifier": "147793",
-  "title": "[Triggered] [TEST] api-service with IP 172.19.128.1 have exceeded memory limit",
-  "blueprint": "datadogAlert",
-  "team": [],
-  "properties": {
-    "url": "https://us5.datadoghq.com/event/event?id=7050278235293370890",
-    "message": "Webhook message text",
-    "eventType": "query_alert_monitor",
-    "priority": "normal",
-    "creator": "user@domain.com",
-    "alertMetric": "system.mem.used",
-    "alertType": "error",
-    "tags": ["host:api-service,monitor"]
-  },
-  "relations": {
-    "microservice": "api-service"
-  }
-}
-```
 
 ## Ingest service level objectives (SLOs)
 

@@ -11,9 +11,9 @@ import DynatraceMicroserviceBlueprint from "./resources/dynatrace/\_example_dyna
 
 In this example you are going to create a webhook integration between [Dynatrace](https://www.dynatrace.com/) and Port, which will ingest problem entities to Port and map them to your microservice entities.
 
-## Prerequisites
+## Port configuration
 
-Create the following blueprint definitions and webhook configuration:
+Create the following blueprint definitions:
 
 <details>
 <summary>Dynatrace microservice blueprint</summary>
@@ -25,9 +25,24 @@ Create the following blueprint definitions and webhook configuration:
 <DynatraceProblemBlueprint/>
 </details>
 
+Create the following webhook configuration [using Port UI](../../?operation=ui#configuring-webhook-endpoints)
+
 <details>
 <summary>Dynatrace problem webhook configuration</summary>
-<DynatraceProblemConfiguration/>
+
+1. **Basic details** tab - fill the following details:
+
+   1. Title : `Dynatrace Problem Mapper`;
+   2. Identifier : `dynatrace_problem_mapper`;
+   3. Description : `A webhook configuration for problem events from Dynatrace`;
+   4. Icon : `Dynatrace`;
+
+2. **Integration configuration** tab - fill the following JQ mapping:
+
+   <DynatraceProblemConfiguration/>
+
+3. Click **Save** at the bottom of the page.
+
 </details>
 
 :::note
@@ -57,7 +72,7 @@ The above JQ expression will split the tags by comma and space, then filter the 
 </details>
 :::
 
-## Create the Dynatrace webhook
+## Create a webhook in Dynatrace
 
 1. Log in to Dynatrace with your credentials;
 2. Click on **Settings** at the left sidebar of the page;
@@ -91,66 +106,3 @@ In order to view the different payloads and events available in Dynatrace webhoo
 :::
 
 Done! any problem detected on your Dynatrace entity will trigger a webhook event. Port will parse the events according to the mapping and update the catalog entities accordingly.
-
-## Test the webhook
-
-This section includes a sample webhook event sent from Dynatrace when a problem is detected in a resource in your account. In addition, it also includes the entity created from the event based on the webhook configuration provided in the previous section.
-
-### Payload
-
-Here is an example of the payload structure sent to the webhook URL when a problem is detected:
-
-<details>
-<summary> Webhook event payload</summary>
-
-```json showLineNumbers
-{
-  "ImpactedEntities": [
-    {
-      "type": "HOST",
-      "name": "MyHost1",
-      "entity": "HOST-Apalca"
-    },
-    {
-      "type": "SERVICE",
-      "name": "MyService1",
-      "entity": "SERVICE-Apalca"
-    }
-  ],
-  "ImpactedEntity": "MyHost1, MyService1",
-  "PID": "99999",
-  "ProblemDetailsText": "Dynatrace problem notification test run details",
-  "ProblemID": "999",
-  "ProblemImpact": "INFRASTRUCTURE",
-  "ProblemTitle": "Dynatrace problem notification test run",
-  "ProblemURL": "https://example.com",
-  "State": "OPEN",
-  "ProblemTags": "testtag1, testtag2",
-  "ProblemSeverity": "PERFORMANCE"
-}
-```
-
-</details>
-
-### Mapping Result
-
-The combination of the sample payload and the webhook configuration generate the following Port entities:
-
-```json showLineNumbers
-{
-  "identifier": "99999",
-  "title": "Dynatrace problem notification test run",
-  "blueprint": "dynatraceProblem",
-  "properties": {
-    "state": "OPEN",
-    "impact": "INFRASTRUCTURE",
-    "url": "https://example.com",
-    "details": "Dynatrace problem notification test run details",
-    "severity": "PERFORMANCE",
-    "tags": ["testtag1", "testtag2"]
-  },
-  "relations": {
-    "microservice": ["HOST-Apalca", "SERVICE-Apalca"]
-  }
-}
-```
