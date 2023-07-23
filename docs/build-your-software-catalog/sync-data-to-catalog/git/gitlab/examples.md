@@ -18,7 +18,7 @@ import PortIssueAppConfig from './example-issue/\_gitlab_exporter_example_issue_
 
 ## Mapping projects, file contents and merge requests
 
-In the following example you will ingest your Gitlab projects, their README.md file contents and pull requests to Port, you may use the following Port blueprint definitions and `integration configuration`:
+In the following example you will ingest your GitLab projects, their README.md file contents and pull requests to Port, you may use the following Port blueprint definitions and `integration configuration`:
 
 <MicroserviceBlueprint/>
 
@@ -29,9 +29,9 @@ In the following example you will ingest your Gitlab projects, their README.md f
 :::tip
 
 - Refer to the [setup](gitlab.md#setup) section to learn more about the `integration configuration` setup process;
-- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform Gitlab objects to Port Entities;
-- Click [Here](https://docs.gitlab.com/ee/api/groups.html#list-a-groups-projects) for the Gitlab project object structure.
-- Click [Here](https://docs.gitlab.com/ee/api/merge_requests.html#list-project-merge-requests) for the Gitlab merge request object structure.
+- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port Entities;
+- Click [Here](https://docs.gitlab.com/ee/api/groups.html#list-a-groups-projects) for the GitLab project object structure.
+- Click [Here](https://docs.gitlab.com/ee/api/merge_requests.html#list-project-merge-requests) for the GitLab merge request object structure.
 
 :::
 
@@ -39,7 +39,7 @@ After creating the blueprints and saving the `integration configuration`, you wi
 
 ## Mapping projects, pipelines and jobs
 
-In the following example you will ingest your Gitlab projects, their pipelines and jobs runs to Port, you may use the following Port blueprint definitions and `integration configuration`:
+In the following example you will ingest your GitLab projects, their pipelines and jobs runs to Port, you may use the following Port blueprint definitions and `integration configuration`:
 
 <MicroserviceBlueprint/>
 
@@ -52,10 +52,10 @@ In the following example you will ingest your Gitlab projects, their pipelines a
 :::tip
 
 - Refer to the [setup](gitlab.md#setup) section to learn more about the `integration configuration` setup process;
-- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform Gitlab objects to Port Entities;
-- Click [Here](https://docs.gitlab.com/ee/api/groups.html#list-a-groups-projects) for the Gitlab project object structure.
-- Click [Here](https://docs.gitlab.com/ee/api/pipelines.html#list-project-pipelines) for the Gitlab pipeline object structure.
-- Click [Here](https://docs.gitlab.com/ee/api/jobs.html#list-project-jobs) for the Gitlab job object structure.
+- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port Entities;
+- Click [Here](https://docs.gitlab.com/ee/api/groups.html#list-a-groups-projects) for the GitLab project object structure.
+- Click [Here](https://docs.gitlab.com/ee/api/pipelines.html#list-project-pipelines) for the GitLab pipeline object structure.
+- Click [Here](https://docs.gitlab.com/ee/api/jobs.html#list-project-jobs) for the GitLab job object structure.
 
 :::
 
@@ -63,7 +63,7 @@ After creating the blueprints and saving the `integration configuration`, you wi
 
 ## Mapping projects and issues
 
-In the following example you will ingest your Gitlab projects and their issue to Port, you may use the following Port blueprint definitions and `integration configuration`:
+In the following example you will ingest your GitLab projects and their issue to Port, you may use the following Port blueprint definitions and `integration configuration`:
 
 <MicroserviceBlueprint/>
 
@@ -74,9 +74,9 @@ In the following example you will ingest your Gitlab projects and their issue to
 :::tip
 
 - Refer to the [setup](gitlab.md#setup) section to learn more about the `integration configuration` setup process;
-- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform Gitlab objects to Port Entities;
-- Click [Here](https://docs.gitlab.com/ee/api/groups.html#list-a-groups-projects) for the Gitlab project object structure.
-- Click [Here](https://docs.gitlab.com/ee/api/issues.html#list-project-issues) for the Gitlab issue object structure.
+- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port Entities;
+- Click [Here](https://docs.gitlab.com/ee/api/groups.html#list-a-groups-projects) for the GitLab project object structure.
+- Click [Here](https://docs.gitlab.com/ee/api/issues.html#list-project-issues) for the GitLab issue object structure.
 
 :::
 
@@ -84,7 +84,7 @@ After creating the blueprints and saving the `integration configuration`, you wi
 
 ## Mapping supported resources
 
-The above example shows a specific use case, but Port's Gitlab integration supports the ingestion of many other Gitlab objects, to adapt the example above, use the Gitlab API reference to learn about the available fields for the different supported objects:
+The above example shows a specific use case, but Port's GitLab integration supports the ingestion of many other GitLab objects, to adapt the example above, use the GitLab API reference to learn about the available fields for the different supported objects:
 
 <GitlabResources/>
 

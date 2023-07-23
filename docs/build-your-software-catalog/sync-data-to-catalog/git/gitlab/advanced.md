@@ -8,7 +8,7 @@ import DeleteDependents from '../../../../generalTemplates/\_delete_dependents_g
 
 # Advanced
 
-The Gitlab integration supports additional flags to provide additional configuration, making it easier to configure its behavior to your liking.
+The GitLab integration supports additional flags to provide additional configuration, making it easier to configure its behavior to your liking.
 
 To use the advanced configuration and additional flags, add them as a root key to your [`integration configuration`](./gitlab.md#the-integration-configuration), for example to add the
 `createMissingRelatedEntities` flag:
@@ -34,7 +34,7 @@ The following advanced configuration parameters are available and can be added t
 
 <TabItem label="Spec path" value="specPath">
 
-The `specPath` parameter specifies a list of [globPatterns](https://www.malikbrowne.com/blog/a-beginners-guide-glob-patterns)[] that Port's Gitlab app will search for `port.yml` files in.
+The `specPath` parameter specifies a list of [globPatterns](https://www.malikbrowne.com/blog/a-beginners-guide-glob-patterns)[] that Port's GitLab app will search for `port.yml` files in.
 
 - Default value: `**/port.yml`
 - Use case:
@@ -57,7 +57,7 @@ The `specPath` parameter specifies a list of [globPatterns](https://www.malikbro
 The `enableMergeEntity` parameter specifies whether to use the [create/update](../../api/api.md?operation=create-update#usage) or [create/override](../../api/api.md?operation=create-override#usage) strategy when creating entities listed in a `port.yml` file.
 
 - Default value: `false` (use create/override)
-- Use case: use `false` if you want Gitlab to be the source-of-truth for catalog entities. Use `true` if you want to use Gitlab as the source for some properties of entities in the catalog, and use other sources to for properties which are subject to change automatically.
+- Use case: use `false` if you want GitLab to be the source-of-truth for catalog entities. Use `true` if you want to use GitLab as the source for some properties of entities in the catalog, and use other sources to for properties which are subject to change automatically.
 
 </TabItem>
 
@@ -66,7 +66,7 @@ The `enableMergeEntity` parameter specifies whether to use the [create/update](.
 The `createMissingRelatedEntities` parameter is used to enable the creation of missing related Port entities automatically in cases where the target related entity does not exist in the software catalog yet.
 
 - Default value: `false` (do not create missing related entities)
-- Use case: use `true` if you want Gitlab app to create barebones related entities, in case those related entities do not exist in the software catalog.
+- Use case: use `true` if you want GitLab app to create barebones related entities, in case those related entities do not exist in the software catalog.
 
 </TabItem>
 
