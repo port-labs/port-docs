@@ -17,7 +17,7 @@ To use the advanced configuration and additional flags, add them as a root key t
 # highlight-next-line
 createMissingRelatedEntities: true
 resources:
-  - kind: mergeRequest
+  - kind: merge-request
     selector:
       query: "true"
     port:

@@ -26,13 +26,13 @@ Port's Gitlab app allows you to ingest a variety of objects resources provided b
 
 The Gitlab app uses a YAML configuration to describe the ETL process to load data into the developer portal. The approach reflects a golden middle between an overly opinionated Git visualization that might not work for everyone and a too-broad approach that could introduce unneeded complexity into the developer portal.
 
-Here is an example snippet from the config which demonstrates the ETL process for getting `mergeRequest` data from the Gitlab and into the software catalog:
+Here is an example snippet from the config which demonstrates the ETL process for getting `merge-request` data from the Gitlab and into the software catalog:
 
 ```yaml showLineNumbers
 resources:
   # Extract
   # highlight-start
-  - kind: mergeRequest
+  - kind: merge-request
     selector:
       query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
     # highlight-end
