@@ -1,0 +1,29 @@
+```json showLineNumbers
+{
+  "identifier": "trivyVulnerabilityMapper",
+  "title": "Trivy Vulnerability Mapper",
+  "description": "A webhook configuration to ingest Trivy vulnerabilities from a file",
+  "icon": "Trivy",
+  "mappings": [
+    {
+      "blueprint": "trivyVulnerability",
+      "itemsToParse": ".body.vulnerabilities",
+      "entity": {
+        "identifier": ".item.id",
+        "title": ".item.title",
+        "properties": {
+          "version": ".item.version",
+          "package_name": ".item.pkgName",
+          "url": ".item.primaryUrl",
+          "description": ".item.description",
+          "target": ".item.target",
+          "severity": ".item.severity",
+          "data_source": ".item.dataSource"
+        }
+      }
+    }
+  ],
+  "enabled": true,
+  "security": {}
+}
+```
