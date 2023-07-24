@@ -25,7 +25,7 @@ To manage entities using GitOps, you will need to add a `port.yml` file to the *
 
 The `port.yml` file can specify one or more Port entities that will be ingested to Port, and any change made to the `port.yml` file will also be reflected inside Port.
 
-This configuration turns your GitLab repositories to the source-of-truth for the software catalog.
+This configuration turns your GitLab projects to the source-of-truth for the software catalog.
 
 ### GitOps `port.yml` file
 
