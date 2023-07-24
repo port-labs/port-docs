@@ -52,20 +52,14 @@ The `tokenMapping` parameter supports specifying the paths that the integration 
 
 Mapping format:
 
-```json showLineNumbers
-{
-  "*/MyFirstGitLabProject/**": "<MY_FIRST_GITLAB_PROJECT_GROUP_TOKEN>",
-  "*/MySecondGitLabProject/*": "<MY_SECOND_GITLAB_PROJECT_GROUP_TOKEN>"
-}
+```showLineNumbers
+{"MY_FIRST_GITLAB_PROJECT_GROUP_TOKEN": ["*/MyFirstGitLabProject/**", "*/MySecondGitLabProject/*"]}
 ```
 
 Example:
 
-```json showLineNumbers
-{
-  "*/DevopsTeam/*Service": "glpat-JgzfY-u17v1X_RnQ8wxR",
-  "*/RnDTeam/*Service": "glpat-QXbeg-Ev9xtu5_5FsaAQ"
-}
+```showLineNumbers
+{"glpat-QXbeg-Ev9xtu5_5FsaAQ": ["*/DevopsTeam/*Service", "*/RnDTeam/*Service"]}
 ```
 
 ### appHost
