@@ -4,7 +4,21 @@
 
 ```yaml showLineNumbers
 resources:
-  - kind: issue
+  - kind: project
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .path_with_namespace | gsub(" "; "")
+          title: .name
+          blueprint: '"microservice"'
+          properties:
+            url: .web_url
+            description: .description
+            namespace: .namespace.name
+            full_path: .namespace.full_path
+  - kind: mergeRequest
     selector:
       query: "true"
     port:
@@ -12,16 +26,16 @@ resources:
         mappings:
           identifier: .id | tostring
           title: .title
-          blueprint: '"issue"'
+          blueprint: '"mergeRequest"'
           properties:
             creator: .author.name
             status: .state
             createdAt: .created_at
-            closedAt: .closed_at
             updatedAt: .updated_at
             description: .description
             link: .web_url
-            labels: "[.labels[]]"
+          relations:
+            microservice: .references.full | gsub("!.+"; "")
 ```
 
 </details>

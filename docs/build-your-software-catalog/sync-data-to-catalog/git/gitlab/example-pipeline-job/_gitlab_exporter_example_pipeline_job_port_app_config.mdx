@@ -4,6 +4,20 @@
 
 ```yaml showLineNumbers
 resources:
+  - kind: project
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .path_with_namespace | gsub(" "; "")
+          title: .name
+          blueprint: '"microservice"'
+          properties:
+            url: .web_url
+            description: .description
+            namespace: .namespace.name
+            full_path: .namespace.full_path
   - kind: pipeline
     selector:
       query: "true"
@@ -20,6 +34,8 @@ resources:
             updatedAt: .updated_at
             description: .description
             link: .web_url
+          relations:
+            microservice: .__project.path_with_namespace | gsub(" "; "")
   - kind: job
     selector:
       query: "true"

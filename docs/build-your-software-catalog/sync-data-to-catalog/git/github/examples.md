@@ -118,8 +118,8 @@ To retrieve the root folders of your monorepo, you can use this following syntax
 
 ## Mapping supported resources
 
-The above example shows a specific use case, but Port's GitHub app supports the ingestion of many other GitHub objects, to adapt the example above, use the GitHub API reference to learn about the available fields for the different supported objects:
+The above examples shows a specific use cases, but Port's GitHub app supports the ingestion of many other GitHub objects, to adapt the examples above, use the GitHub API reference to learn about the available fields for the different supported objects:
 
 <GitHubResources/>
 
-When adding the ingestion of other resources, remember to add a entry to the `resources` array and change the value provided to the `kind` key accordingly.
+When adding the ingestion of other resources, remember to add an entry to the `resources` array and change the value provided to the `kind` key accordingly.

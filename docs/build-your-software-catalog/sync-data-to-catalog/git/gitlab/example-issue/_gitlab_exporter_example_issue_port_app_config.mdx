@@ -22,6 +22,8 @@ resources:
             description: .description
             link: .web_url
             labels: "[.labels[]]"
+          relations:
+            microservice: .references.full | gsub("#.+"; "")
 ```
 
 </details>
