@@ -26,7 +26,7 @@ Port's GitLab app allows you to ingest a variety of objects resources provided b
 
 The GitLab app uses a YAML configuration to describe the ETL process to load data into the developer portal. The approach reflects a golden middle between an overly opinionated Git visualization that might not work for everyone and a too-broad approach that could introduce unneeded complexity into the developer portal.
 
-Here is an example snippet from the config which demonstrates the ETL process for getting `merge-request` data from the GitLab and into the software catalog:
+Here is an example snippet from the config which demonstrates the ETL process for getting `merge-request` data from GitLab and into the software catalog:
 
 ```yaml showLineNumbers
 resources:
@@ -54,7 +54,7 @@ resources:
         # highlight-end
 ```
 
-The app makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from GitLab's API events.
+The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from GitLab's API events.
 
 ### The integration configuration
 
@@ -131,22 +131,22 @@ resources:
 
   ```yaml showLineNumbers
   resources:
-  - kind: project
-    selector:
-      query: 'true'
-    port:
-      # highlight-start
-      entity:
-        mappings: # Mappings between one GitLab API object to a Port entity. Each value is a JQ query.
-          identifier: .namespace.full_path | gsub("/";"-")
-          title: .name
-          blueprint: '"microservice"'
-          properties:
-            url: .web_link
-            description: .description
-            namespace: .namespace.name
-            full_path: .namespace.full_path | split("/") | .[:-1] | join("/")
-      # highlight-end
+    - kind: project
+      selector:
+        query: "true"
+      port:
+        # highlight-start
+        entity:
+          mappings: # Mappings between one GitLab API object to a Port entity. Each value is a JQ query.
+            identifier: .namespace.full_path | gsub("/";"-")
+            title: .name
+            blueprint: '"microservice"'
+            properties:
+              url: .web_link
+              description: .description
+              namespace: .namespace.name
+              full_path: .namespace.full_path | split("/") | .[:-1] | join("/")
+        # highlight-end
     - kind: project # In this instance project is mapped again with a different filter
       selector:
         query: '.name == "MyRepositoryName"'
@@ -161,24 +161,24 @@ resources:
 
 ### Setup
 
-To ingest GitLab objects using the [`integration configuration`](#the-integration-configuration), you can follow the steps below:
+To ingest GitLab objects using the [integration configuration](#the-integration-configuration), you can follow the steps below:
 
 1. Go to the DevPortal Builder page;
 2. Select a blueprint you want to ingest using GitLab;
 3. Choose the **Ingest Data** option from the menu;
 4. Select GitLab under the Git providers category;
-5. Add the contents of your [`integration configuration`](#the-integration-configuration) to the editor;
-6. Click `Save & Resync`.
+5. Add the contents of your [integration configuration](#the-integration-configuration) to the editor;
+6. Click `Save & Resync`;
 
 ## Permissions
 
 Port's GitLab integration requires a group access token with permissions over the `api` scope. To create a group access token, follow the steps below:
 
-1. Sign in to GitLab and go to your desired group's settings.
-2. In the "Access Tokens" section, click "Create access token."
-3. Fill in the token details: name, expiration (optional), and select API scope.
-4. Click "Create group access token."
-5. Copy the generated token and use it in the integration installation process.
+1. Sign in to GitLab and go to your desired group's settings;
+2. In the "Access Tokens" section, click "Create access token";
+3. Fill in the token details: name, expiration (optional), and select API scope;
+4. Click "Create group access token";
+5. Copy the generated token and use it in the integration installation process;
 
 ## Examples
 
@@ -186,7 +186,7 @@ Refer to the [examples](./examples.md) page for practical configurations and the
 
 ## GitOps
 
-Port's GitLab app also provides GitOps capabilities, refer to the [GitOps](./gitops/gitops.md) page to learn more.
+Port's GitLab integration also provides GitOps capabilities, refer to the [GitOps](./gitops/gitops.md) page to learn more.
 
 ## Advanced
 

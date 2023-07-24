@@ -10,7 +10,7 @@ import DeleteDependents from '../../../../generalTemplates/\_delete_dependents_g
 
 The GitLab integration supports additional flags to provide additional configuration, making it easier to configure its behavior to your liking.
 
-To use the advanced configuration and additional flags, add them as a root key to your [`integration configuration`](./gitlab.md#the-integration-configuration), for example to add the
+To use the advanced configuration and additional flags, add them as a root key to your [integration configuration](./gitlab.md#the-integration-configuration), for example to add the
 `createMissingRelatedEntities` flag:
 
 ```yaml showLineNumbers
@@ -28,7 +28,7 @@ resources:
 
 ## Using advanced configurations
 
-The following advanced configuration parameters are available and can be added to the [`integration configuration`](./gitlab.md#the-integration-configuration):
+The following advanced configuration parameters are available and can be added to the [integration configuration](./gitlab.md#the-integration-configuration):
 
 <Tabs groupId="config" queryString="parameter">
 
