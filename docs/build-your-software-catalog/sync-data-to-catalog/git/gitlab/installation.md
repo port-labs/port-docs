@@ -39,7 +39,7 @@ sidebar_position: 1
 
 In case you are using a self-hosted GitLab instance, you need to add the following line to your helm installation command:
 
-```bash
+```bash showLineNumbers
 	--set integration.config.gitlabHost="https://you-gitlab-url"
 ```
 
@@ -48,11 +48,25 @@ In case you are using a self-hosted GitLab instance, you need to add the followi
 ### tokenMapping
 
 The GitLab integration support fetching data related to specific paths in your GitLab groups. The integration is also able to fetch data from different GitLab parent groups by providing additional group tokens. In order to do so, you need to map the desired paths to the relevant access tokens.
-The `tokenMapping` parameter supports specifying the paths that the integration will search for files and information in, using [globPatterns](https://www.malikbrowne.com/blog/a-beginners-guide-glob-patterns)[].
-Format: `{"*/MyFirstGitLabProject/**": "<MY_FIRST_GIRLAB_PROJECT_GROUP_TOKEN>", "*/MySecondGitLabProject/*": "<MY_SECOND_GIRLAB_PROJECT_GROUP_TOKEN>"}`
+The `tokenMapping` parameter supports specifying the paths that the integration will search for files and information in, using [globPatterns](https://www.malikbrowne.com/blog/a-beginners-guide-glob-patterns).
+
+Mapping format:
+
+```json showLineNumbers
+{
+  "*/MyFirstGitLabProject/**": "<MY_FIRST_GITLAB_PROJECT_GROUP_TOKEN>",
+  "*/MySecondGitLabProject/*": "<MY_SECOND_GITLAB_PROJECT_GROUP_TOKEN>"
+}
+```
 
 Example:
-`{"*/DevopsTeam/*Service": "glpat-JgzfY-u17v1X_RnQ8wxR", "*/RnDTeam/*Service": "glpat-QXbeg-Ev9xtu5_5FsaAQ"}`
+
+```json showLineNumbers
+{
+  "*/DevopsTeam/*Service": "glpat-JgzfY-u17v1X_RnQ8wxR",
+  "*/RnDTeam/*Service": "glpat-QXbeg-Ev9xtu5_5FsaAQ"
+}
+```
 
 ### appHost
 
