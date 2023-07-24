@@ -15,11 +15,11 @@ sidebar_position: 1
 
 1. Sign in to GitLab and go to your desired group's settings.
 
-   ![GitLab group settings](../../../../../static/img/integrations/gitlab/GitlabGroupSettings.png)
+   ![GitLab group settings](../../../../../static/img/integrations/gitlab/GitLabGroupSettings.png)
 
 2. In the "Access Tokens" section, click "Create access token."
 
-   ![GitLab group access tokens](../../../../../static/img/integrations/gitlab/GitlabGroupAccessTokens.png)
+   ![GitLab group access tokens](../../../../../static/img/integrations/gitlab/GitLabGroupAccessTokens.png)
 
 3. Fill in the token details: name, expiration (optional), and select API scope.
 4. Click "Create group access token."
@@ -30,7 +30,7 @@ sidebar_position: 1
 
 7. Select GitLab under the Git providers category.
 
-   ![DevPortal Builder GitLab option](../../../../../static/img/integrations/gitlab/DevPortalBuilderGitlabOption.png)
+   ![DevPortal Builder GitLab option](../../../../../static/img/integrations/gitlab/DevPortalBuilderGitLabOption.png)
 
 8. Copy the helm installation command and set the missing parameters.
 
