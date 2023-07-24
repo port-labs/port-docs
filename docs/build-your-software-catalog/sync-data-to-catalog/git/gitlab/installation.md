@@ -9,7 +9,7 @@ sidebar_position: 1
 - A gitlab account with admin privileges;
 - A gitlab group account with `api` privileges (Refer to the [permissions](./gitlab.md#permissions) section for more information);
 - A kubernetes cluster to install the integration on;
-- Your Port user role is set to `Admin`;
+- Your Port user role is set to `Admin`.
 
 :::
 
@@ -23,8 +23,8 @@ sidebar_position: 1
 
 3. Fill in the token details: name, expiration (optional), and select `api` scope;
 4. Click "Create group access token";
-5. Copy the generated token and use it in the integration installation process;
-6. Click the ingest button for the blueprint you want to ingest using GitLab:
+5. Copy the generated token and use it when deploying the integration in the following steps;
+6. Click the ingest button in Port Builder Page for the blueprint you want to ingest using GitLab:
 
    ![DevPortal Builder ingest button](../../../../../static/img/integrations/gitlab/DevPortalBuilderIngestButton.png)
 

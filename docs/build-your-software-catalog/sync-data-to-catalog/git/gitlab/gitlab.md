@@ -169,7 +169,7 @@ To ingest GitLab objects using the [integration configuration](#the-integration-
 3. Choose the **Ingest Data** option from the menu;
 4. Select GitLab under the Git providers category;
 5. Add the contents of your [integration configuration](#the-integration-configuration) to the editor;
-6. Click `Save & Resync`;
+6. Click `Save & Resync`.
 
 ## Permissions
 
@@ -179,7 +179,7 @@ Port's GitLab integration requires a group access token with permissions over th
 2. In the "Access Tokens" section, click "Create access token";
 3. Fill in the token details: name, expiration (optional), and select API scope;
 4. Click "Create group access token";
-5. Copy the generated token and use it in the integration installation process;
+5. Copy the generated token and use it in the integration installation process.
 
 ## Examples
 
