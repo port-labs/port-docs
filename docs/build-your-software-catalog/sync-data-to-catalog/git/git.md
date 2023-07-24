@@ -6,4 +6,4 @@ For more information about our Git integration, take a look at the documentation
 
 - [GitHub](./github/github.md)
 - [Bitbucket](./bitbucket/bitbucket.md)
-- [GitLab](gitlab/gitlab.md)
+- [GitLab](./gitlab/gitlab.md)
