@@ -66,38 +66,6 @@ For example:
 
 :::
 
-## Install for GitLab Pipeline invocation
-
-```bash showLineNumbers
-helm install my-port-agent port-labs/port-agent \
-    --create-namespace --namespace port-agent \
-    --set env.normal.PORT_ORG_ID=YOUR_ORG_ID \
-    --set env.normal.KAFKA_CONSUMER_GROUP_ID=YOUR_KAFKA_CONSUMER_GROUP \
-    --set env.secret.KAFKA_CONSUMER_USERNAME=YOUR_KAFKA_USERNAME \
-    --set env.secret.KAFKA_CONSUMER_PASSWORD=YOUR_KAFKA_PASSWORD \
-    --set env.secret.<YOUR GITLAB GROUP>_<YOUR GITLAB PROJECT>=YOUR_GITLAB_TOKEN
-```
-
-### Trigger Tokens
-
-In order to trigger your GitLab Pipeline you need to save a trigger token as an environment variable.
-
-The name of the environment variable is a combination of the `GitLab group` and `GitLab project` seperated by `_`
-
-For example: `group_project=token`
-
-:::note
-You can load multiple trigger tokens, for different groups and projects in your GitLab environment.
-:::
-
-### Self Hosted GitLab
-
-If you are using a private GitLab environment, pass the `GITLAB_URL` environment variable to your Port agent installation:
-
-```bash showLineNumbers
---set env.normal.GITLAB_URL
-```
-
 Well Done! **Port Agent** is now running in your environment and will trigger any webhook that you've configured (for self-service actions, or changes in the software catalog).
 
 When a new invocation is detected, the agent will pull it from your Kafka topic and forward it to the internal API in your private network.

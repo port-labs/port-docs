@@ -82,15 +82,17 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `T
 <TabItem value="basic">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myTeamProp"
-    title      = "My team"
-    required   = false
-    type       = "string"
-    format     = "team"
+  properties = {
+    string_props = {
+      myTeamProp = {
+        title    = "My team"
+        required = false
+        format   = "team"
+      }
+    }
   }
   # highlight-end
 }
@@ -101,20 +103,22 @@ resource "port-labs_blueprint" "myBlueprint" {
 <TabItem value="array">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myTeamArray"
-    title      = "My team array"
-    required   = false
-    type       = "array"
-    items = {
-      type   = "string"
-      format = "user"
+  properties = {
+    array_props = {
+      myTeamArray = {
+        title    = "My team array"
+        required = false
+        type     = "array"
+        string_items = {
+          format = "user"
+        }
+      }
     }
+    # highlight-end
   }
-  # highlight-end
 }
 ```
 
@@ -137,24 +141,24 @@ resource "port-labs_blueprint" "myBlueprint" {
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Blueprint
+from port_pulumi import Blueprint,BlueprintPropertiesArgs,BlueprintPropertiesStringPropsArgs
 
 blueprint = Blueprint(
     "myBlueprint",
     identifier="myBlueprint",
     title="My Blueprint",
     # highlight-start
-    properties=[
-      {
-         "type": "string",
-         "format": "team",
-         "identifier": "myTeamProp",
-         "title": "My team",
-         "required": True
-      }
-    ],
+    properties=BlueprintPropertiesArgs(
+        string_props={
+            "myTeamProp": BlueprintPropertiesStringPropsArgs(
+                title="My team",
+                required=False,
+                format="team",
+            )
+        }
+    ),
     # highlight-end
-    relations=[]
+    relations={}
 )
 ```
 
@@ -164,21 +168,21 @@ blueprint = Blueprint(
 
 ```typescript showLineNumbers
 import * as pulumi from "@pulumi/pulumi";
-import * as port from "@port-labs/pulumi";
+import * as port from "@port-labs/port";
 
 export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myTeamProp",
-      title: "My team",
-      type: "string",
-      format: "team",
-      required: true,
+    properties: {
+        stringProps: {
+            myTeamProp: {
+                title: "My team",
+                required: false,
+                format: "team",
+            },
+        },
     },
-  ],
   // highlight-end
 });
 ```
@@ -190,23 +194,23 @@ export const blueprint = new port.Blueprint("myBlueprint", {
 ```javascript showLineNumbers
 "use strict";
 const pulumi = require("@pulumi/pulumi");
-const port = require("@port-labs/pulumi");
+const port = require("@port-labs/port");
 
 const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myTeamProp",
-      title: "My team",
-      type: "string",
-      format: "team",
-      required: true,
+    properties: {
+        stringProps: {
+            myTeamProp: {
+                title: "My team",
+                required: false,
+                format: "team",
+            },
+        },
     },
-  ],
   // highlight-end
-  relations: [],
+  relations: {},
 });
 
 exports.title = entity.title;
@@ -219,7 +223,7 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/port-labs/pulumi-port/sdk/go/port"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -229,14 +233,14 @@ func main() {
 			Identifier: pulumi.String("myBlueprint"),
 			Title:      pulumi.String("My Blueprint"),
       // highlight-start
-			Properties: port.BlueprintPropertyArray{
-				&port.BlueprintPropertyArgs{
-					Identifier: pulumi.String("myTeamProp"),
-					Title:      pulumi.String("My team"),
-					Required:   pulumi.Bool(false),
-					Type:       pulumi.String("string"),
-					Format:     pulumi.String("team"),
-				},
+			Properties: port.BlueprintPropertiesArgs{
+				StringProps: port.BlueprintPropertiesStringPropsMap{
+					"myTeamProp": &port.BlueprintPropertyArgs{
+                        Title:      pulumi.String("My team"),
+                        Required:   pulumi.Bool(false),
+                        Format:     pulumi.String("team"),
+                    },
+                },
 			},
       // highlight-end
 		})

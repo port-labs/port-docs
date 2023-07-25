@@ -1,0 +1,60 @@
+<details>
+
+<summary> Ocean integration configuration </summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: project
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .path_with_namespace | gsub(" "; "")
+          title: .name
+          blueprint: '"microservice"'
+          properties:
+            url: .web_url
+            description: .description
+            namespace: .namespace.name
+            full_path: .namespace.full_path
+  - kind: pipeline
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .id | tostring
+          title: .title // (.id | tostring)
+          blueprint: '"pipeline"'
+          properties:
+            creator: .user.name
+            status: .status
+            createdAt: .created_at
+            updatedAt: .updated_at
+            description: .description
+            link: .web_url
+          relations:
+            microservice: .__project.path_with_namespace | gsub(" "; "")
+  - kind: job
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .id | tostring
+          title: .name
+          blueprint: '"job"'
+          properties:
+            creator: .user.name
+            startedAt: .started_at
+            updatedAt: .updated_at
+            finishedAt: .finished_at
+            stage: .stage
+            status: .status
+            link: .web_url
+          relations:
+            pipeline: .pipeline.id | tostring
+```
+
+</details>

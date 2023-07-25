@@ -1,0 +1,26 @@
+```json showLineNumbers
+{
+  "identifier": "soapApiMapper",
+  "title": "SOAP API Mapper",
+  "description": "A webhook configuration to ingest SOAP API paths from a file",
+  "icon": "ApiDoc",
+  "mappings": [
+    {
+      "blueprint": "soapApi",
+      "itemsToParse": ".body.paths",
+      "entity": {
+        "identifier": ".item.path_name",
+        "title": ".item.path_name",
+        "properties": {
+          "url": ".item.url",
+          "attributes": ".item.attributes",
+          "parameters": ".item.parameters",
+          "response": ".item.response"
+        }
+      }
+    }
+  ],
+  "enabled": true,
+  "security": {}
+}
+```

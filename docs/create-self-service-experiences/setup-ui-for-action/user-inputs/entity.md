@@ -104,24 +104,28 @@ The entity is represented by the unique `entity` _format_ and the `blueprint` ke
 ## Terraform definition
 
 <Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
-{label: "Basic", value: "basic"}
+{label: "Basic", value: "basic"},
+{label: "Enum", value: "enum"},
+{label: "Array", value: "array"}
 ]}>
 
 <TabItem value="basic">
 
 ```hcl showLineNumbers
-resource "port-labs_action" "myAction" {
+resource "port_action" "myAction" {
   # ...action properties
   # highlight-start
-  user_properties {
-    identifier  = "myEntityInput"
-    title       = "My entity input"
-    description = "My entity input"
-    required    = false
-    type        = "string"
-    format      = "entity"
-    blueprint   = "myBlueprint"
-    default     = "My default"
+  user_properties = {
+    string_props = {
+      "myEntityInput" = {
+        title       = "My entity input"
+        description = "My entity input"
+        required    = false
+        format      = "entity"
+        blueprint   = "myBlueprint"
+        default     = "My default"
+      }
+    }
   }
   # highlight-end
 }
@@ -132,21 +136,49 @@ resource "port-labs_action" "myAction" {
 <TabItem value="enum">
 
 ```hcl showLineNumbers
-resource "port-labs_action" "myAction" {
+
+resource "port_action" "myAction" {
   # ...action properties
   # highlight-start
-  user_properties {
-    identifier  = "myTextSelectInput"
-    title       = "My text Select input"
-    description = "My text select input"
-    required    = false
-    type        = "string"
-    enum        = ["my-option-1", "my-option-2"]
+  user_properties = {
+    string_props = {
+      "myEntityInput" = {
+        title       = "My entity input"
+        description = "My entity input"
+        required    = false
+        format      = "entity"
+        blueprint   = "myBlueprint"
+        enum        = ["My default", "My other default"]
+      }
+    }
   }
   # highlight-end
 }
-
 ```
 
 </TabItem>
+
+<TabItem value="array">
+
+```hcl showLineNumbers
+resource "port_action" "myAction" {
+  # ...action properties
+  # highlight-start
+  user_properties = {
+    array_props = {
+      "EntityArrayInput" = {
+        title       = "My entity array input"
+        description = "My entity array input"
+        string_items = {
+          format = "entity"
+        }
+      }
+    }
+  }
+  # highlight-end
+}
+```
+
+</TabItem>
+
 </Tabs>

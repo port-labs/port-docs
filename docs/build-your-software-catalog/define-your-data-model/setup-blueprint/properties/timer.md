@@ -61,15 +61,19 @@ In this [live demo](https://demo.getport.io/developerEnvs) example, we can see t
 <TabItem value="basic">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myTimerProp"
-    title      = "My timer"
-    required   = false
-    type       = "string"
-    format     = "timer"
+  properties = {
+    string_props = {
+      "myTimerProp" = {
+        title       = "My timer"
+        icon        = "My icon"
+        description = "My timer property"
+        format      = "timer"
+        default     = "2022-04-18T11:44:15.345Z"
+      }
+    }
   }
   # highlight-end
 }
@@ -99,24 +103,24 @@ resource "port-labs_blueprint" "myBlueprint" {
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Blueprint
+from port_pulumi import Blueprint,BlueprintPropertiesArgs,BlueprintPropertiesStringPropsArgs
 
 blueprint = Blueprint(
     "myBlueprint",
     identifier="myBlueprint",
     title="My Blueprint",
     # highlight-start
-    properties=[
-      {
-         "type": "string",
-         "format": "timer",
-         "identifier": "myTimerProp",
-         "title": "My timer",
-         "required": True
-      }
-    ],
+    properties=BlueprintPropertiesArgs(
+        string_props={
+            "myTimerProp": BlueprintPropertiesStringPropsArgs(
+                title="My timer",
+                format="timer",
+                required=True,
+            )
+        }
+    ),
     # highlight-end
-    relations=[]
+    relations={}
 )
 ```
 
@@ -126,21 +130,21 @@ blueprint = Blueprint(
 
 ```typescript showLineNumbers
 import * as pulumi from "@pulumi/pulumi";
-import * as port from "@port-labs/pulumi";
+import * as port from "@port-labs/port";
 
 export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myTimerProp",
-      title: "My timer",
-      type: "string",
-      format: "timer",
-      required: true,
+    properties: {
+        stringProps: {
+            myTimerProp: {
+                title: "My timer",
+                format: "timer",
+                required: true,
+            },
+        },
     },
-  ],
   // highlight-end
 });
 ```
@@ -152,23 +156,23 @@ export const blueprint = new port.Blueprint("myBlueprint", {
 ```javascript showLineNumbers
 "use strict";
 const pulumi = require("@pulumi/pulumi");
-const port = require("@port-labs/pulumi");
+const port = require("@port-labs/port");
 
 const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myTimerProp",
-      title: "My timer",
-      type: "string",
-      format: "timer",
-      required: true,
+    properties: {
+        stringProps: {
+            myTimerProp: {
+                title: "My timer",
+                format: "timer",
+                required: true,
+            },
+        },
     },
-  ],
   // highlight-end
-  relations: [],
+  relations: {},
 });
 
 exports.title = entity.title;
@@ -181,7 +185,7 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/port-labs/pulumi-port/sdk/go/port"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -191,14 +195,14 @@ func main() {
 			Identifier: pulumi.String("myBlueprint"),
 			Title:      pulumi.String("My Blueprint"),
       // highlight-start
-			Properties: port.BlueprintPropertyArray{
-				&port.BlueprintPropertyArgs{
-					Identifier: pulumi.String("myTimerProp"),
-					Title:      pulumi.String("My timer"),
-					Required:   pulumi.Bool(false),
-					Type:       pulumi.String("string"),
-					Format:     pulumi.String("timer"),
-				},
+			Properties: port.BlueprintPropertiesArgs{
+				StringProps: port.BlueprintPropertiesStringPropsMap{
+					"myTimerProp": &port.BlueprintPropertiesStringPropsArgs{
+                        Title:    pulumi.String("My timer"),
+                        Format:   pulumi.String("timer"),
+                        Required: pulumi.Bool(true),
+                    },
+                },
 			},
       // highlight-end
 		})

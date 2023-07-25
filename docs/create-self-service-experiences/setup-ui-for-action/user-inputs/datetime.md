@@ -74,25 +74,51 @@ The datetime input type can be used to store any date and time, for example:
 
 <Tabs groupId="tf-definition" defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Array - coming soon", value: "array"}
+{label: "Array", value: "array"}
 ]}>
 
 <TabItem value="basic">
 
 ```hcl showLineNumbers
-resource "port-labs_action" "myAction" {
+resource "port_action" "myAction" {
   # ...action properties
   # highlight-start
-  properties {
-    identifier = "myDatetimeProp"
-    title      = "My datetime"
-    required   = false
-    type       = "string"
-    format     = "date-time"
+  user_properties = {
+    string_props = {
+      myDatetimeProp = {
+        title    = "My datetime"
+        required = false
+        format   = "date-time"
+      }
+    }
   }
   # highlight-end
 }
 ```
 
 </TabItem>
+
+<TabItem value="array">
+
+```hcl showLineNumbers
+resource "port_action" "myAction" {
+  # ...action properties
+  # highlight-start
+  user_properties = {
+    array_props = {
+      myArrayDatetimeProp = {
+        title    = "My array datetime"
+        required = false
+        string_items = {
+          format = "date-time"
+        }
+      }
+    }
+  }
+  # highlight-end
+}
+```
+
+</TabItem>
+
 </Tabs>

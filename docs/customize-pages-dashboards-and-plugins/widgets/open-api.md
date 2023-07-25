@@ -24,7 +24,9 @@ When using the URL format, Port will query the provided URL for the OpenAPI spec
 
 :::note
 
-When using URL for the `open-api` display please make sure that your server allows cross-origin (CORS) requests from `app.getport.io`
+When using URL for the `open-api` display please make sure that your server allows cross-origin (CORS) requests from `app.getport.io`.
+
+To serve the OpenAPI spec from an AWS S3 bucket, please add a CORS policy to the bucket that allows requests from `app.getport.io`, check out the [AWS documentation](https://docs.aws.amazon.com/AmazonS3/latest/userguide/enabling-cors-examples.html?icmpid=docs_amazons3_console) for more information.
 :::
 
 <Tabs groupId="lang" defaultValue="api" values={[
@@ -53,7 +55,7 @@ When using URL for the `open-api` display please make sure that your server allo
 <TabItem value="terraform">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties {
@@ -103,7 +105,7 @@ When using the object type, you will have to provide the full JSON OpenAPI spec 
 <TabItem value="terraform">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties {

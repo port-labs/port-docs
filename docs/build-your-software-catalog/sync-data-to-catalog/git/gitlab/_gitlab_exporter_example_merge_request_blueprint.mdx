@@ -1,0 +1,58 @@
+<details>
+<summary>Merge request blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "mergeRequest",
+  "title": "Merge Request",
+  "icon": "GitVersion",
+  "schema": {
+    "properties": {
+      "creator": {
+        "title": "Creator",
+        "type": "string"
+      },
+      "status": {
+        "title": "Status",
+        "type": "string",
+        "enum": ["opened", "closed", "merged", "locked"],
+        "enumColors": {
+          "opened": "yellow",
+          "closed": "red",
+          "merged": "green",
+          "locked": "blue"
+        }
+      },
+      "createdAt": {
+        "title": "Create At",
+        "type": "string",
+        "format": "date-time"
+      },
+      "updatedAt": {
+        "title": "Updated At",
+        "type": "string",
+        "format": "date-time"
+      },
+      "description": {
+        "title": "Description",
+        "type": "string",
+        "format": "markdown"
+      },
+      "link": {
+        "title": "Link",
+        "format": "url",
+        "type": "string"
+      }
+    }
+  },
+  "relations": {
+    "pipeline": {
+      "target": "pipeline",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

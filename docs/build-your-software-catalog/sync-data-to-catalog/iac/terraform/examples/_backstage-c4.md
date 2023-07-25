@@ -18,23 +18,23 @@ Here is the complete `main.tf` file:
 ```hcl showLineNumbers
 terraform {
   required_providers {
-    port-labs = {
+    port = {
       source  = "port-labs/port-labs"
-      version = "~> 0.10.3"
+      version = "~> 1.0.0"
     }
   }
 }
 
-provider "port-labs" {
+provider "port" {
   #   client_id = "YOUR_CLIENT_ID"     # or set the environment variable PORT_CLIENT_ID
   #   secret    = "YOUR_CLIENT_SECRET" # or set the environment variable PORT_CLIENT_SECRET
 }
 
-resource "port-labs_blueprint" "component" {
+resource "port_blueprint" "component" {
   depends_on = [
-    port-labs_blueprint.system,
-    port-labs_blueprint.resource,
-    port-labs_blueprint.api
+    port_blueprint.system,
+    port_blueprint.resource,
+    port_blueprint.api
   ]
 
   identifier = "component"
@@ -42,23 +42,27 @@ resource "port-labs_blueprint" "component" {
   title      = "Component"
 
   properties {
-    identifier = "type"
-    title      = "Type"
-    required   = false
-    type       = "string"
-    enum       = ["service", "library"]
-    enum_colors = {
-      "service" = "blue",
-      "library" = "green"
+    string_props = {
+      "type" = {
+        title      = "Type"
+        required   = false
+        type       = "string"
+        enum       = ["service", "library"]
+        enum_colors = {
+          "service" = "blue",
+          "library" = "green"
+        }
+      }
     }
   }
 
-  relations {
-    identifier = "system"
+  relations = {
+  "system" = {
     target     = "system"
     required   = false
     many       = false
     title      = "System"
+    }
   }
   relations {
     identifier = "resource"
@@ -89,7 +93,7 @@ resource "port-labs_blueprint" "component" {
     title      = "Provides API"
   }
 }
-resource "port-labs_blueprint" "resource" {
+resource "port_blueprint" "resource" {
   identifier = "resource"
   icon       = "DevopsTool"
   title      = "Resource"
@@ -103,7 +107,7 @@ resource "port-labs_blueprint" "resource" {
   }
 }
 
-resource "port-labs_blueprint" "api" {
+resource "port_blueprint" "api" {
   identifier = "api"
   icon       = "Link"
   title      = "API"
@@ -117,7 +121,7 @@ resource "port-labs_blueprint" "api" {
   }
 }
 
-resource "port-labs_blueprint" "domain" {
+resource "port_blueprint" "domain" {
   identifier = "domain"
   icon       = "Server"
   title      = "Domain"
@@ -130,9 +134,9 @@ resource "port-labs_blueprint" "domain" {
   }
 }
 
-resource "port-labs_blueprint" "system" {
+resource "port_blueprint" "system" {
   depends_on = [
-    port-labs_blueprint.domain
+    port_blueprint.domain
   ]
 
   identifier = "system"
@@ -155,18 +159,18 @@ resource "port-labs_blueprint" "system" {
   }
 }
 
-resource "port-labs_entity" "orderDomain" {
+resource "port_entity" "orderDomain" {
   depends_on = [
-    port-labs_blueprint.system,
-    port-labs_blueprint.resource,
-    port-labs_blueprint.api,
-    port-labs_blueprint.domain,
-    port-labs_blueprint.component,
+    port_blueprint.system,
+    port_blueprint.resource,
+    port_blueprint.api,
+    port_blueprint.domain,
+    port_blueprint.component,
   ]
 
   identifier = "orders"
   title      = "Orders"
-  blueprint  = port-labs_blueprint.domain.identifier
+  blueprint  = port_blueprint.domain.identifier
 
   properties {
     name  = "active"
@@ -174,19 +178,19 @@ resource "port-labs_entity" "orderDomain" {
   }
 }
 
-resource "port-labs_entity" "cartSystem" {
+resource "port_entity" "cartSystem" {
   depends_on = [
-    port-labs_blueprint.system,
-    port-labs_blueprint.resource,
-    port-labs_blueprint.api,
-    port-labs_blueprint.domain,
-    port-labs_blueprint.component,
-    port-labs_entity.orderDomain,
+    port_blueprint.system,
+    port_blueprint.resource,
+    port_blueprint.api,
+    port_blueprint.domain,
+    port_blueprint.component,
+    port_entity.orderDomain,
   ]
 
   identifier = "cart"
   title      = "Cart"
-  blueprint  = port-labs_blueprint.system.identifier
+  blueprint  = port_blueprint.system.identifier
 
   properties {
     name  = "active"
@@ -195,23 +199,23 @@ resource "port-labs_entity" "cartSystem" {
 
   relations {
     name       = "domain"
-    identifier = port-labs_entity.orderDomain.identifier
+    identifier = port_entity.orderDomain.identifier
   }
 }
 
-resource "port-labs_entity" "productsSystem" {
+resource "port_entity" "productsSystem" {
   depends_on = [
-    port-labs_blueprint.system,
-    port-labs_blueprint.resource,
-    port-labs_blueprint.api,
-    port-labs_blueprint.domain,
-    port-labs_blueprint.component,
-    port-labs_entity.orderDomain,
+    port_blueprint.system,
+    port_blueprint.resource,
+    port_blueprint.api,
+    port_blueprint.domain,
+    port_blueprint.component,
+    port_entity.orderDomain,
   ]
 
   identifier = "product"
   title      = "Products"
-  blueprint  = port-labs_blueprint.system.identifier
+  blueprint  = port_blueprint.system.identifier
 
   properties {
     name  = "active"
@@ -220,23 +224,23 @@ resource "port-labs_entity" "productsSystem" {
 
   relations {
     name       = "domain"
-    identifier = port-labs_entity.orderDomain.identifier
+    identifier = port_entity.orderDomain.identifier
   }
 }
 
-resource "port-labs_entity" "cartResource" {
+resource "port_entity" "cartResource" {
   depends_on = [
-    port-labs_blueprint.system,
-    port-labs_blueprint.resource,
-    port-labs_blueprint.api,
-    port-labs_blueprint.domain,
-    port-labs_blueprint.component,
-    port-labs_entity.orderDomain,
+    port_blueprint.system,
+    port_blueprint.resource,
+    port_blueprint.api,
+    port_blueprint.domain,
+    port_blueprint.component,
+    port_entity.orderDomain,
   ]
 
   identifier = "cartSqlDb"
   title      = "Cart SQL Database"
-  blueprint  = port-labs_blueprint.resource.identifier
+  blueprint  = port_blueprint.resource.identifier
 
   properties {
     name  = "type"
@@ -244,19 +248,19 @@ resource "port-labs_entity" "cartResource" {
   }
 }
 
-resource "port-labs_entity" "cartApi" {
+resource "port_entity" "cartApi" {
   depends_on = [
-    port-labs_blueprint.system,
-    port-labs_blueprint.resource,
-    port-labs_blueprint.api,
-    port-labs_blueprint.domain,
-    port-labs_blueprint.component,
-    port-labs_entity.orderDomain,
+    port_blueprint.system,
+    port_blueprint.resource,
+    port_blueprint.api,
+    port_blueprint.domain,
+    port_blueprint.component,
+    port_entity.orderDomain,
   ]
 
   identifier = "cartApi"
   title      = "Cart API"
-  blueprint  = port-labs_blueprint.api.identifier
+  blueprint  = port_blueprint.api.identifier
 
   properties {
     name  = "type"
@@ -264,19 +268,19 @@ resource "port-labs_entity" "cartApi" {
   }
 }
 
-resource "port-labs_entity" "coreKafkaLibraryComponent" {
+resource "port_entity" "coreKafkaLibraryComponent" {
   depends_on = [
-    port-labs_blueprint.system,
-    port-labs_blueprint.resource,
-    port-labs_blueprint.api,
-    port-labs_blueprint.domain,
-    port-labs_blueprint.component,
-    port-labs_entity.cartSystem,
+    port_blueprint.system,
+    port_blueprint.resource,
+    port_blueprint.api,
+    port_blueprint.domain,
+    port_blueprint.component,
+    port_entity.cartSystem,
   ]
 
   identifier = "coreKafkaLibrary"
   title      = "Core Kafka Library"
-  blueprint  = port-labs_blueprint.component.identifier
+  blueprint  = port_blueprint.component.identifier
 
   properties {
     name  = "type"
@@ -284,19 +288,19 @@ resource "port-labs_entity" "coreKafkaLibraryComponent" {
   }
 }
 
-resource "port-labs_entity" "corePaymentLibraryComponent" {
+resource "port_entity" "corePaymentLibraryComponent" {
   depends_on = [
-    port-labs_blueprint.system,
-    port-labs_blueprint.resource,
-    port-labs_blueprint.api,
-    port-labs_blueprint.domain,
-    port-labs_blueprint.component,
-    port-labs_entity.cartSystem,
+    port_blueprint.system,
+    port_blueprint.resource,
+    port_blueprint.api,
+    port_blueprint.domain,
+    port_blueprint.component,
+    port_entity.cartSystem,
   ]
 
   identifier = "coreKafkaLibrary"
   title      = "Core Kafka Library"
-  blueprint  = port-labs_blueprint.component.identifier
+  blueprint  = port_blueprint.component.identifier
 
   properties {
     name  = "type"
@@ -305,23 +309,23 @@ resource "port-labs_entity" "corePaymentLibraryComponent" {
 
   relations {
     name       = "system"
-    identifier = port-labs_entity.cartSystem.identifier
+    identifier = port_entity.cartSystem.identifier
   }
 }
 
-resource "port-labs_entity" "cartService" {
+resource "port_entity" "cartService" {
   depends_on = [
-    port-labs_blueprint.system,
-    port-labs_blueprint.resource,
-    port-labs_blueprint.api,
-    port-labs_blueprint.domain,
-    port-labs_blueprint.component,
-    port-labs_entity.cartSystem,
+    port_blueprint.system,
+    port_blueprint.resource,
+    port_blueprint.api,
+    port_blueprint.domain,
+    port_blueprint.component,
+    port_entity.cartSystem,
   ]
 
   identifier = "cartService"
   title      = "Cart Service"
-  blueprint  = port-labs_blueprint.component.identifier
+  blueprint  = port_blueprint.component.identifier
 
   properties {
     name  = "type"
@@ -330,36 +334,36 @@ resource "port-labs_entity" "cartService" {
 
   relations {
     name       = "system"
-    identifier = port-labs_entity.cartSystem.identifier
+    identifier = port_entity.cartSystem.identifier
   }
   relations {
     name = "resource"
     identifier = [
-      port-labs_entity.cartResource.identifier
+      port_entity.cartResource.identifier
     ]
   }
   relations {
     name = "component"
     identifier = [
-      port-labs_entity.coreKafkaLibraryComponent.identifier,
-      port-labs_entity.corePaymentLibraryComponent.identifier
+      port_entity.coreKafkaLibraryComponent.identifier,
+      port_entity.corePaymentLibraryComponent.identifier
     ]
   }
 }
 
-resource "port-labs_entity" "productService" {
+resource "port_entity" "productService" {
   depends_on = [
-    port-labs_blueprint.system,
-    port-labs_blueprint.resource,
-    port-labs_blueprint.api,
-    port-labs_blueprint.domain,
-    port-labs_blueprint.component,
-    port-labs_entity.cartSystem,
+    port_blueprint.system,
+    port_blueprint.resource,
+    port_blueprint.api,
+    port_blueprint.domain,
+    port_blueprint.component,
+    port_entity.cartSystem,
   ]
 
   identifier = "productService"
   title      = "Product Service"
-  blueprint  = port-labs_blueprint.component.identifier
+  blueprint  = port_blueprint.component.identifier
 
   properties {
     name  = "type"
@@ -368,11 +372,11 @@ resource "port-labs_entity" "productService" {
 
   relations {
     name       = "system"
-    identifier = port-labs_entity.productsSystem.identifier
+    identifier = port_entity.productsSystem.identifier
   }
   relations {
     name       = "consumesApi"
-    identifier = port-labs_entity.cartApi.identifier
+    identifier = port_entity.cartApi.identifier
   }
 }
 ```
@@ -399,9 +403,9 @@ This part includes importing and setting up the required Terraform providers and
 ```hcl showLineNumbers
 terraform {
   required_providers {
-    port-labs = {
+    port = {
       source  = "port-labs/port-labs"
-      version = "~> 0.10.3"
+      version = "~> 1.0.0"
     }
   }
 }
@@ -412,7 +416,7 @@ provider "aws" {
   region     = "eu-west-1"
 }
 
-provider "port-labs" {
+provider "port" {
   client_id = "YOUR_CLIENT_ID"     # or set the environment variable PORT_CLIENT_ID
   secret    = "YOUR_CLIENT_SECRET" # or set the environment variable PORT_CLIENT_SECRET
 }
@@ -438,7 +442,7 @@ resource "aws_s3_bucket_acl" "port-terraform-example-bucket-acl" {
 This part includes configuring the `s3Bucket` blueprint and creating an entity for our new bucket:
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "s3_bucket" {
+resource "port_blueprint" "s3_bucket" {
   identifier = "s3Bucket"
   icon       = "Bucket"
   title      = "S3 Bucket"
@@ -452,17 +456,17 @@ resource "port-labs_blueprint" "s3_bucket" {
 }
 
 
-resource "port-labs_entity" "s3_bucket" {
+resource "port_entity" "s3_bucket" {
 # highlight-start
   depends_on = [
     aws_s3_bucket.port-terraform-example-bucket,
-    port-labs_blueprint.s3_bucket
+    port_blueprint.s3_bucket
   ]
 # highlight-end
 
   identifier = aws_s3_bucket.port-terraform-example-bucket.bucket
   title      = aws_s3_bucket.port-terraform-example-bucket.bucket
-  blueprint  = port-labs_blueprint.s3_bucket.identifier
+  blueprint  = port_blueprint.s3_bucket.identifier
 
   properties {
     name  = "isPrivate"

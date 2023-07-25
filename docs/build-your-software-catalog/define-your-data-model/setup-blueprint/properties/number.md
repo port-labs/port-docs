@@ -92,21 +92,24 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `J
 
 <Tabs groupId="tf-definition" defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Enum - coming soon", value: "enum"},
+{label: "Enum", value: "enum"},
 {label: "Array", value: "array"}
 ]}>
 
 <TabItem value="basic">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myNumberProp"
-    title      = "My number"
-    required   = false
-    type       = "number"
+  properties = {
+    number_props = {
+      "myNumberProp" = {
+        title       = "My number"
+        description = "My number property"
+        default     = 7
+      }
+    }
   }
   # highlight-end
 }
@@ -116,15 +119,17 @@ resource "port-labs_blueprint" "myBlueprint" {
 <TabItem value="enum">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myNumberEnum"
-    title      = "My number enum"
-    required   = false
-    type       = "number"
-    enum       = [1,2]
+  properties = {
+    number_props = {
+      "myNumberProp" = {
+        title       = "My number"
+        description = "My number property"
+        enum        = [1, 2, 3, 4]
+      }
+    }
   }
   # highlight-end
 }
@@ -135,19 +140,23 @@ resource "port-labs_blueprint" "myBlueprint" {
 <TabItem value="array">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myNumberArray"
-    title      = "My number array"
-    required   = false
-    type       = "array"
-    items = {
-      type = "number"
+  properties = {
+    "myNumberArray" = {
+      title        = "My number array"
+      description  = "My number array"
+      number_items = {}
+    }
+    "myNumberArrayWithDefault" = {
+      title       = "My number array with default"
+      description = "My number array"
+      number_items = {
+        default = [1, 2, 3, 4]
+      }
     }
   }
-  # highlight-end
 }
 ```
 
@@ -178,23 +187,22 @@ resource "port-labs_blueprint" "myBlueprint" {
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Blueprint
+from port_pulumi import Blueprint,BlueprintPropertiesArgs,BlueprintPropertiesNumberPropsArgs
 
 blueprint = Blueprint(
     "myBlueprint",
     identifier="myBlueprint",
     title="My Blueprint",
     # highlight-start
-    properties=[
-      {
-        "type": "number",
-        "identifier": "myNumberProp",
-        "title": "My Number",
-        "required": True
-      }
-    ],
+    properties=BlueprintPropertiesArgs(
+        number_props={
+            "myNumberProp": BlueprintPropertiesNumberPropsArgs(
+                title="My number", required=False,
+            )
+        },
+    ),
     # highlight-end
-    relations=[]
+    relations={}
 )
 ```
 
@@ -204,20 +212,20 @@ blueprint = Blueprint(
 
 ```typescript showLineNumbers
 import * as pulumi from "@pulumi/pulumi";
-import * as port from "@port-labs/pulumi";
+import * as port from "@port-labs/port";
 
 export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myNumberProp",
-      title: "My Number",
-      type: "number",
-      required: true,
+    properties: {
+        numberProps: {
+            myNumberProp: {
+                title: "My number",
+                required: false
+            }
+        },
     },
-  ],
   // highlight-end
 });
 ```
@@ -229,22 +237,22 @@ export const blueprint = new port.Blueprint("myBlueprint", {
 ```javascript showLineNumbers
 "use strict";
 const pulumi = require("@pulumi/pulumi");
-const port = require("@port-labs/pulumi");
+const port = require("@port-labs/port");
 
 const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myNumberProp",
-      title: "My Number",
-      type: "number",
-      required: true,
-    },
-  ],
+  properties: {
+      numberProps: {
+          myNumberProp: {
+              title: "My number",
+              required: false
+          }
+      },
+  },
   // highlight-end
-  relations: [],
+  relations: {}
 });
 
 exports.title = entity.title;
@@ -257,7 +265,7 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/port-labs/pulumi-port/sdk/go/port"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -267,12 +275,12 @@ func main() {
 			Identifier: pulumi.String("myBlueprint"),
 			Title:      pulumi.String("My Blueprint"),
       // highlight-start
-			Properties: port.BlueprintPropertyArray{
-				&port.BlueprintPropertyArgs{
-					Identifier: pulumi.String("myNumberProp"),
-					Title:      pulumi.String("My Number"),
-					Required:   pulumi.Bool(false),
-					Type:       pulumi.String("number"),
+			Properties: port.BlueprintPropertiesArgs{
+				NumberProps: port.BlueprintPropertiesNumberPropsMap{
+					"myNumberProp": port.BlueprintPropertiesNumberPropsArgs{
+						Title:    pulumi.String("My number"),
+						Required: pulumi.Bool(false),
+					},
 				},
 			},
 		})
@@ -311,7 +319,7 @@ If _x_ is the value being validated, the following must hold true:
 <Tabs groupId="validation-definition" defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Array", value: "array"},
-{label: "Terraform - coming soon", value: "tf"},
+{label: "Terraform", value: "tf"},
 {label: "Pulumi - comfing soon", value: "pulumi"}
 ]}>
 
@@ -355,4 +363,28 @@ If _x_ is the value being validated, the following must hold true:
 ```
 
 </TabItem>
+
+<TabItem value="tf">
+
+```hcl showLineNumbers
+
+resource "port_blueprint" "myBlueprint" {
+  properties = {
+    "number_props" = {
+      "myNumberProp" = {
+        title       = "My number"
+        icon        = "My icon"
+        description = "My number property"
+        # highlight-start
+        minimum     = 0
+        maximum     = 50
+        # highlight-end
+      }
+    }
+  }
+}
+```
+
+</TabItem>
+
 </Tabs>
