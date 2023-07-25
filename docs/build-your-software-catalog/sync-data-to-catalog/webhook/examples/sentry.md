@@ -81,11 +81,11 @@ Done! any issue and comment in Sentry will trigger a webhook event. Port will pa
 
 ## Let's Test It
 
-In this section, we'll explore the webhook event data that is received from Sentry whenever an issue or comment is added to your project. We'll also delve into how the entity is finally created in Port by using the webhook configuration.
+This section includes a sample webhook event sent from Sentry when an issue or comment is created. In addition, it includes the entity created from the event based on the webhook configuration provided in the previous section.
 
 ### Payload
 
-Below is an example of the payload structure sent to the webhook URL after a new issue or comment is added:
+Here is an example of the payload structure sent to the webhook URL when a Sentry issue or comment is created:
 
 <details>
 <summary> Sentry issue webhook event payload</summary>
@@ -179,7 +179,7 @@ Below is an example of the payload structure sent to the webhook URL after a new
 
 ### Mapping Result
 
-Using the mappings defined in the webhook configuration, Port will extract the necessary properties from the Sentry webhook payload and use the output data to create the issue entities. Below is the result of the mapping:
+The combination of the sample payload and the webhook configuration generate the following Port `sentryIssue` entity:
 
 ```json showLineNumbers
 {
@@ -197,7 +197,7 @@ Using the mappings defined in the webhook configuration, Port will extract the n
 }
 ```
 
-Additionally, the comment entity will be created using the following mapping data:
+In addition, the following Port `sentryComment` entity will be generated:
 
 ```json showLineNumbers
 {
