@@ -52,11 +52,11 @@ Done! any change you make to a pull request (open, close, edit, etc.) will trigg
 
 ## Let's Test It
 
-In this section, we'll explore the webhook event data that is received from GitHub whenever a pull request is created. We'll also delve into how the entity is finally created in Port by using the webhook configuration.
+This section includes a sample webhook event sent from GitHub when a pull request is created. In addition, it includes the entity created from the event based on the webhook configuration provided in the previous section.
 
 ### Payload
 
-Below is an example of the payload structure sent to the webhook URL after a pull request is opened:
+Here is an example of the payload structure sent to the webhook URL when a GitHub pull request is opened:
 
 <details>
 <summary> Webhook event payload</summary>
@@ -133,7 +133,7 @@ Below is an example of the payload structure sent to the webhook URL after a pul
 
 ### Mapping Result
 
-Using the mappings defined in the webhook configuration, Port will extract the necessary properties from the GitHub webhook payload and use the output data to create the pull request entities. Below is the result of the mapping:
+The combination of the sample payload and the webhook configuration generate the following Port entity:
 
 ```json showLineNumbers
 {
