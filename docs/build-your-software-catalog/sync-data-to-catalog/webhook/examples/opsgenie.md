@@ -60,11 +60,11 @@ Done! any change that happens to an OpsGenie alert (created, acknowledged, etc.)
 
 ## Let's Test It
 
-In this section, we'll explore the webhook event data that is received from OpsGenie whenever an alert is created. We'll also delve into how the entity is finally created in Port by using the webhook configuration.
+This section includes a sample webhook event sent from OpsGenie when an alert is created. In addition, it includes the entity created from the event based on the webhook configuration provided in the previous section.
 
 ### Payload
 
-Below is an example of the payload structure sent to the webhook URL after an alert is created:
+Here is an example of the payload structure sent to the webhook URL when an OpsGenie alert is created:
 
 <details>
 <summary> Webhook event payload</summary>
@@ -102,7 +102,7 @@ Below is an example of the payload structure sent to the webhook URL after an al
 
 ### Mapping Result
 
-Using the mappings defined in the webhook configuration, Port will extract the necessary properties from the OpsGenie webhook payload and use the output data to create the alert entities. Below is the result of the mapping:
+The combination of the sample payload and the webhook configuration generate the following Port entity:
 
 ```json showLineNumbers
 {
