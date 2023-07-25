@@ -150,6 +150,8 @@ Port has 2 types of search rule operators:
 {label: ">=", value: ">="},
 {label: "<", value: "<"},
 {label: "<=", value: "<="},
+{label: "isEmpty", value: "isEmpty"},
+{label: "isNotEmpty", value: "isNotEmpty"},
 {label: "Property schema", value: "property-schema"},
 {label: "Between", value: "between"},
 {label: "Contains", value: "contains"},
@@ -236,6 +238,32 @@ The `<=` operator checks values less than or equal to the specified value:
   "operator": "<=",
   "property": "myNumericProperty",
   "value": 7
+}
+```
+
+</TabItem>
+
+<TabItem value="isEmpty">
+
+The `isEmpty` operator checks if the value of the specified property is `null`:
+
+```json showLineNumbers
+{
+  "operator": "isEmpty",
+  "property": "myProperty"
+}
+```
+
+</TabItem>
+
+<TabItem value="isNotEmpty">
+
+The `isNotEmpty` operator checks if the value of the specified property is not `null`:
+
+```json showLineNumbers
+{
+  "operator": "isNotEmpty",
+  "property": "myProperty"
 }
 ```
 

@@ -1,0 +1,28 @@
+```json showLineNumbers
+{
+  "identifier": "goDependencyMapper",
+  "title": "Go Dependency Mapper",
+  "description": "A webhook configuration to map packages and dependencies from a file",
+  "icon": "Go",
+  "mappings": [
+    {
+      "blueprint": "package",
+      "entity": {
+        "identifier": ".body.package_name",
+        "title": ".body.package_url",
+        "properties": {
+          "packageName": ".body.package_name",
+          "packageUrl": ".body.package_url",
+          "version": ".body.version",
+          "indirect": ".body.indirect"
+        }
+        "relations": {
+          "service": ".body.service"
+        }
+      }
+    }
+  ],
+  "enabled": true,
+  "security": {}
+}
+```

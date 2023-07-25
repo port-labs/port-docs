@@ -1,0 +1,26 @@
+```json showLineNumbers
+{
+  "identifier": "packagesMapper",
+  "title": "Package Mapper",
+  "description": "A webhook configuration to map packages and dependencies from a file",
+  "icon": "Package",
+  "mappings": [
+    {
+      "blueprint": "packages",
+      "itemsToParse": ".body.dependencies",
+      "entity": {
+        "identifier": ".item.id",
+        "title": ".item.name",
+        "properties": {
+          "version": ".item.version"
+        },
+        "relations": {
+          "service": ".body.service"
+        }
+      }
+    }
+  ],
+  "enabled": true,
+  "security": {}
+}
+```

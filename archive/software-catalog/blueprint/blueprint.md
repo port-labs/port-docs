@@ -110,7 +110,7 @@ Each Blueprint has a `properties` section under its `schema`. In this section, y
 For Example:
 
 ```json showLineNumbers
-"string_prop": {
+"string_props": {
     "title": "My String Property",
     "type": "string",
     "default": "foo",
@@ -140,7 +140,7 @@ We highly recommend you set a `description`, so your developers will understand 
 ## Property types
 
 ```json {3} showLineNumbers
-"string_prop": {
+"string_props": {
     "title": "My String Property",
     "type": "string",
     "default": "foo",
@@ -737,7 +737,7 @@ For more info on the `embedded-url` property, refer to the [Embedded URL Widget]
 You can add icons to properties:
 
 ```json showLineNumbers
-"string_prop": {
+"string_props": {
     "title": "My String Property",
     "type": "string",
     // highlight-next-line

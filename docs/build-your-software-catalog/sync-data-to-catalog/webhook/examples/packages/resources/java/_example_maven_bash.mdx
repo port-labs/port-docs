@@ -1,0 +1,50 @@
+```json showLineNumbers
+#!/bin/bash
+set -e
+
+# Create or clear the output file
+echo "[]" > output.json
+
+# Extract dependencies from pom.xml
+mapfile -t dependencies < <(xmlstarlet sel -N x=http://maven.apache.org/POM/4.0.0 -t -m '//x:dependency' -v 'concat(x:groupId, ":", x:artifactId, ":", x:version, ":", x:scope)' -n pom.xml)
+
+# Parse each dependency into a package JSON
+for dependency in "${dependencies[@]}"; do
+    # Split line into an array
+    IFS=':' read -r -a parts <<< "$dependency"
+
+    # Assign array items to variables
+    groupId="${parts[0]}"
+    artifactId="${parts[1]}"
+    version="${parts[2]}"
+    scope="${parts[3]}"
+
+    # Create the package JSON
+    package_json=$(jq -n \
+        --arg gi "$groupId" \
+        --arg ai "$artifactId" \
+        --arg v "$version" \
+        --arg s "$scope" \
+        '{
+            groupId: $gi,
+            artifactId: $ai,
+            version: $v,
+            scope: $s
+        }')
+
+    # Add the package JSON to the output file
+    jq --argjson p "$package_json" '. += [$p]' output.json > temp.json && mv temp.json output.json
+    # Send the package JSON to the webhook
+    curl --location 'https://ingest.getport.io/YOUR_WEBHOOK_URL' \
+        --header 'Content-Type: application/json' \
+        --data "$package_json"
+done
+
+```
+
+:::note
+
+- The script utilizes the `mapfile` command, which is a built-in command in the Bash shell, to read lines from the `pom.xml` file and store them in an array. Please note that this command may not be available in all shells by default. If you are using a different shell such as Dash or Zsh, you may need to switch to Bash or modify the script to achieve a similar functionality.
+- The script relies on the `jq` command for manipulating JSON data. It is used to create JSON objects based on the package details extracted from the `go.mod` file and append these objects to an output JSON file. It is important to note that `jq` is a powerful JSON processor for the command-line, but it is not typically included in many systems by default. You may need to install it separately to use it.
+
+:::

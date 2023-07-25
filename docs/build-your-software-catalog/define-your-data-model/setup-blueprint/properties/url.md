@@ -105,15 +105,17 @@ In this [live demo](https://demo.getport.io/domains) example, we can see the `Do
 <TabItem value="basic">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myUrlProp"
-    title      = "My url"
-    required   = false
-    type       = "string"
-    format     = "url"
+  properties = {
+    string_props = {
+      "myUrlProp" = {
+        title    = "My url"
+        required = false
+        format   = "url"
+      }
+    }
   }
   # highlight-end
 }
@@ -124,19 +126,21 @@ resource "port-labs_blueprint" "myBlueprint" {
 <TabItem value="enum">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myUrlProp"
-    title      = "My url"
-    required   = false
-    type       = "string"
-    format     = "url"
-    enum       = ["https://example.com", "https://getport.io"]
-    enum_colors = {
-      "https://example.com" = "red",
-      "https://getport.io"  = "green"
+  properties = {
+    string_props = {
+      "myUrlEnum" = {
+        title    = "My url enum"
+        required = false
+        format   = "url"
+        enum     = ["https://example.com", "https://getport.io"]
+        enum_colors = {
+          "https://example.com" = "red",
+          "https://getport.io"  = "green"
+        }
+      }
     }
   }
   # highlight-end
@@ -148,17 +152,18 @@ resource "port-labs_blueprint" "myBlueprint" {
 <TabItem value="array">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myUrlArray"
-    title      = "My url array"
-    required   = false
-    type       = "array"
-    items = {
-      type   = "string"
-      format = "url"
+  properties = {
+    string_props = {
+      "myUrlArray" = {
+        title    = "My url array"
+        required = false
+        string_items = {
+          format = "url"
+        }
+      }
     }
   }
   # highlight-end
@@ -191,24 +196,22 @@ resource "port-labs_blueprint" "myBlueprint" {
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Blueprint
+from port_pulumi import Blueprint,BlueprintPropertiesArgs,BlueprintPropertiesStringPropsArgs
 
 blueprint = Blueprint(
     "myBlueprint",
     identifier="myBlueprint",
     title="My Blueprint",
     # highlight-start
-    properties=[
-      {
-        "type": "string",
-        "identifier": "myUrlProp",
-        "title": "My url",
-        "required": True,
-        "format": "url"
-      }
-    ],
+    properties=BlueprintPropertiesArgs(
+        string_props={
+            "myUrlProp": BlueprintPropertiesStringPropsArgs(
+                title="My url", required=False, format="url"
+            ),
+        }
+    ),
     # highlight-end
-    relations=[]
+    relations={}
 )
 ```
 
@@ -218,21 +221,21 @@ blueprint = Blueprint(
 
 ```typescript showLineNumbers
 import * as pulumi from "@pulumi/pulumi";
-import * as port from "@port-labs/pulumi";
+import * as port from "@port-labs/port";
 
 export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myUrlProp",
-      title: "My url",
-      type: "string",
-      required: true,
-      format: "url",
+    properties: {
+        stringProps: {
+            myUrlProp: {
+                title: "My url",
+                required: true,
+                format: "url",
+            },
+        }
     },
-  ],
   // highlight-end
 });
 ```
@@ -244,23 +247,23 @@ export const blueprint = new port.Blueprint("myBlueprint", {
 ```javascript showLineNumbers
 "use strict";
 const pulumi = require("@pulumi/pulumi");
-const port = require("@port-labs/pulumi");
+const port = require("@port-labs/port");
 
 const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myUrlProp",
-      title: "My url",
-      type: "string",
-      required: true,
-      format: "url",
+    properties: {
+        stringProps: {
+            myUrlProp: {
+                title: "My url",
+                required: true,
+                format: "url",
+            },
+        }
     },
-  ],
   // highlight-end
-  relations: [],
+  relations: {},
 });
 
 exports.title = entity.title;
@@ -273,7 +276,7 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/port-labs/pulumi-port/sdk/go/port"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -283,14 +286,14 @@ func main() {
 			Identifier: pulumi.String("myBlueprint"),
 			Title:      pulumi.String("My Blueprint"),
       // highlight-start
-			Properties: port.BlueprintPropertyArray{
-				&port.BlueprintPropertyArgs{
-					Identifier: pulumi.String("myUrlProp"),
-					Title:      pulumi.String("My url"),
-					Required:   pulumi.Bool(false),
-					Type:       pulumi.String("string"),
-					Format:     pulumi.String("url"),
-				},
+			Properties: port.BlueprintPropertiesArgs{
+				StringProps: port.BlueprintPropertiesStringPropsMap{
+                    "myUrlProp": &port.BlueprintPropertyArgs{
+                        Title:      pulumi.String("My url"),
+                        Required:   pulumi.Bool(true),
+                        Format:     pulumi.String("url"),
+                    },
+                },
 			},
       // highlight-end
 		})
@@ -331,18 +334,20 @@ blueprint = Blueprint(
     identifier="myBlueprint",
     title="My Blueprint",
     # highlight-start
-    properties=[{
-      "type": "string",
-      "identifier": "myUrlProp",
-      "title": "My url",
-      "format": "url",
-      "required": True,
-      "enum": ["https://example.com", "https://getport.io"],
-      "enum_colors": {
-        "https://example.com": "red",
-        "https://getport.io": "green"
-      }
-    }],
+    properties=BlueprintPropertiesArgs(
+        string_props={
+            "myUrlProp":BlueprintPropertiesStringPropsArgs(
+                title="My url",
+                required=True,
+                format="url",
+                enum=["https://example.com", "https://getport.io"],
+                enum_colors={
+                    "https://example.com": "red",
+                    "https://getport.io": "green"
+                }
+            )
+        },
+    )
     # highlight-end
     relations=[]
 )
@@ -354,26 +359,26 @@ blueprint = Blueprint(
 
 ```typescript showLineNumbers
 import * as pulumi from "@pulumi/pulumi";
-import * as port from "@port-labs/pulumi";
+import * as port from "@port-labs/port";
 
 export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myUrlProp",
-      title: "My url",
-      type: "string",
-      required: true,
-      format: "url",
-      enums: ["https://example.com", "https://getport.io"],
-      enumColors: {
-        "https://example.com": "red",
-        "https://getport.io": "green",
-      },
-    },
-  ],
+  properties: {
+        stringProps: {
+            myUrlProp: {
+                title: "My url",
+                required: true,
+                format: "url",
+                enums: ["https://example.com", "https://getport.io"],
+                enumColors: {
+                    "https://example.com": "red",
+                    "https://getport.io": "green",
+                },
+            },
+        }
+  },
   // highlight-end
 });
 ```
@@ -385,28 +390,28 @@ export const blueprint = new port.Blueprint("myBlueprint", {
 ```javascript showLineNumbers
 "use strict";
 const pulumi = require("@pulumi/pulumi");
-const port = require("@port-labs/pulumi");
+const port = require("@port-labs/port");
 
 const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myUrlProp",
-      title: "My url",
-      type: "string",
-      required: true,
-      format: "url",
-      enums: ["https://example.com", "https://getport.io"],
-      enumColors: {
-        "https://example.com": "red",
-        "https://getport.io": "green",
-      },
-    },
-  ],
+  properties: {
+      stringProps: {
+        myUrlProp: {
+          title: "My url",
+          required: true,
+          format: "url",
+          enums: ["https://example.com", "https://getport.io"],
+          enumColors: {
+            "https://example.com": "red",
+            "https://getport.io": "green",
+          },
+        },
+      }
+  },
   // highlight-end
-  relations: [],
+  relations: {},
 });
 
 exports.title = entity.title;
@@ -419,7 +424,7 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/port-labs/pulumi-port/sdk/go/port"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -429,20 +434,20 @@ func main() {
 			Identifier: pulumi.String("myBlueprint"),
 			Title:      pulumi.String("My Blueprint"),
       // highlight-start
-			Properties: port.BlueprintPropertyArray{
-				&port.BlueprintPropertyArgs{
-					Identifier: pulumi.String("myUrlProp"),
-					Title:      pulumi.String("My url"),
-					Required:   pulumi.Bool(false),
-					Type:       pulumi.String("string"),
-					Format:     pulumi.String("url"),
-					Enums: pulumi.StringArray{
-						pulumi.String("https://example.com"),
-						pulumi.String("https://getport.io"),
-					},
-					EnumColors: pulumi.StringMap{
-						"https://example.com": pulumi.String("red"),
-						"https://getport.io": pulumi.String("green"),
+			Properties: port.BlueprintPropertiesArgs{
+				StringProps: port.BlueprintPropertiesStringPropsMap{
+					"myUrlProp": port.BlueprintPropertiesStringPropsArgs{
+						Title:      pulumi.String("My url"),
+						Required:   pulumi.Bool(false),
+						Format:     pulumi.String("url"),
+						Enums: pulumi.StringArray{
+							pulumi.String("https://example.com"),
+							pulumi.String("https://getport.io"),
+						},
+						EnumColors: pulumi.StringMap{
+							"https://example.com": pulumi.String("red"),
+							"https://getport.io":  pulumi.String("green"),
+						},
 					},
 				},
 			},
