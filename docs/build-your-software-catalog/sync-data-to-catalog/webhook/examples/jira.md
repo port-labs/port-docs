@@ -55,11 +55,11 @@ Done! any change you make to an issue (open, close, edit, etc.) will trigger a w
 
 ## Let's Test It
 
-In this section, we'll explore the webhook event data that is received from Jira whenever an issue is created or updated. We'll also delve into how the entity is finally created in Port by using the webhook configuration.
+This section includes a sample webhook event sent from Jira when an issue is created or updated. In addition, it includes the entity created from the event based on the webhook configuration provided in the previous section.
 
 ### Payload
 
-Below is an example of the payload structure sent to the webhook URL after an issue is created:
+Here is an example of the payload structure sent to the webhook URL when a Jira issue is created:
 
 <details>
 <summary> Webhook event payload</summary>
@@ -225,7 +225,7 @@ Below is an example of the payload structure sent to the webhook URL after an is
 
 ### Mapping Result
 
-Using the mappings defined in the webhook configuration, Port will extract the necessary properties from the Jira webhook payload and use the output data to create the issue entities. Below is the result of the mapping:
+The combination of the sample payload and the webhook configuration generate the following Port entity:
 
 ```json showLineNumbers
 {
@@ -244,6 +244,7 @@ Using the mappings defined in the webhook configuration, Port will extract the n
   "relations": {}
 }
 ```
+
 ## Import Jira Historical Issues
 
 In this example you are going to use the provided Python script to fetch data from the Jira API and ingest it to Port.
