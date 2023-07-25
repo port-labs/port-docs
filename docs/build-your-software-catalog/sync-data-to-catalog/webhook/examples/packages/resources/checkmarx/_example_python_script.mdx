@@ -1,0 +1,79 @@
+```python showLineNumbers
+## Import the needed libraries
+import requests
+import os
+import json
+
+WEBHOOK_URL = os.environ["WEBHOOK_URL"] # The URL for the webhook endpoint provided by Port
+PATH_TO_CHECKMARX_JSON_FILE = os.environ["PATH_TO_CHECKMARX_JSON_FILE"] # The path to the checkmarx result.json file relative to the project folder
+
+
+def add_entity_to_port(entity_object):
+    """A function to create the passed entity in Port using the webhook URL
+
+    Params
+    --------------
+    entity_object: dict
+        The entity to add in your Port catalog
+
+    Returns
+    --------------
+    response: dict
+        The response object after calling the webhook
+    """
+    headers = {"Accept": "application/json"}
+    response = requests.post(WEBHOOK_URL, json=entity_object, headers=headers)
+    return response.json()
+
+
+def read_checkmarx_file(checkmarx_json_path):
+    """This function takes a Checkmarx KICS result.json file path, extracts the necessary information into a
+    JSON array and then sends the data to Port
+
+    Params
+    --------------
+    checkmarx_json_path: str
+        The path to the result.json file relative to the project's root folder
+
+    Returns
+    --------------
+    response: dict
+        The response object after calling the webhook
+    """
+    with open(checkmarx_json_path) as file:
+        data = json.load(file)
+    scan_result = []
+    queries = data.get("queries", [])
+
+    for query in queries:
+        query_name = query.get("query_name")
+        query_id = query.get("query_id")
+        severity = query.get("severity")
+        platform = query.get("platform")
+        query_url = query.get("query_url")
+        cloud_provider = query.get("cloud_provider")
+        category = query.get("category")
+        description = query.get("description")
+        files = [{"file_name": file.get("file_name"), "issue_type": file.get("issue_type")} for file in query.get("files", [])]
+
+        scan_result.append({
+            "query_name": query_name,
+            "query_id": query_id,
+            "severity": severity,
+            "platform": platform,
+            "query_url": query_url,
+            "cloud_provider": cloud_provider,
+            "category": category,
+            "description": description,
+            "files": files
+        })
+
+    entity_object = {
+        "scans": scan_result
+    }
+    webhook_response = add_entity_to_port(entity_object)
+    return webhook_response
+
+response_data = read_checkmarx_file(PATH_TO_CHECKMARX_JSON_FILE)
+print(response_data)
+```

@@ -1,0 +1,37 @@
+```json showLineNumbers
+{
+  "identifier": "mavenDependency",
+  "description": "This blueprint represents a Maven dependency",
+  "title": "Maven Dependency",
+  "icon": "java",
+  "schema": {
+    "properties": {
+      "groupId": {
+        "icon": "DefaultProperty",
+        "title": "Group ID",
+        "description": "The group ID of the dependency package",
+        "type": "string"
+      },
+      "artifactId": {
+        "type": "string",
+        "title": "Artifact ID",
+        "description": "The artifact ID of the dependency package"
+      },
+      "version": {
+        "type": "string",
+        "title": "Version",
+        "description": "The version of the dependency"
+      },
+      "scope": {
+        "type": "string",
+        "title": "Scope",
+        "description": "The scope of the dependency (e.g., compile, test, etc.)"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {}
+}
+```

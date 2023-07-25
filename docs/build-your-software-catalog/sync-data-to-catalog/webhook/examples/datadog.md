@@ -76,6 +76,68 @@ In order to view the different payloads and structure of the events in Datadog w
 
 Done! any problem detected on your Datadog instance will trigger a webhook event. Port will parse the events according to the mapping and update the catalog entities accordingly.
 
+## Test the webhook
+
+This section includes a sample webhook event sent from Datadog when an alert is triggered. In addition, it also includes the entity created from the event based on the webhook configuration provided in the previous section.
+
+### Payload
+
+Here is an example of the payload structure sent to the webhook URL when a Datadog monitor or alert is created:
+
+<details>
+<summary> Webhook event payload</summary>
+
+```json showLineNumbers
+{
+  "id": "7050278235293370890",
+  "message": "Webhook message text",
+  "priority": "normal",
+  "last_updated": "1684492195000",
+  "event_type": "query_alert_monitor",
+  "event_url": "https://us5.datadoghq.com/event/event?id=7050278235293370890",
+  "service": "api-service",
+  "creator": "user@domain.com",
+  "title": "[Triggered] [TEST] Service with IP 172.19.128.1 have exceeded memory limit",
+  "date": "1684492195000",
+  "org_id": "1300048894",
+  "org_name": "Port",
+  "alert_id": "147793",
+  "alert_metric": "system.mem.used",
+  "alert_status": "system.mem.used over host:api-service was > 7516192768.0 on average during the last 5m.",
+  "alert_title": "[TEST] api-service with IP 172.19.128.1 have exceeded memory limit",
+  "alert_type": "error",
+  "tags": "host:api-service,monitor"
+}
+```
+
+</details>
+
+### Mapping Result
+
+The combination of the sample payload and the webhook configuration generate the following Port entity:
+
+```json showLineNumbers
+{
+  "identifier": "147793",
+  "title": "[Triggered] [TEST] api-service with IP 172.19.128.1 have exceeded memory limit",
+  "blueprint": "datadogAlert",
+  "team": [],
+  "properties": {
+    "url": "https://us5.datadoghq.com/event/event?id=7050278235293370890",
+    "message": "Webhook message text",
+    "eventType": "query_alert_monitor",
+    "priority": "normal",
+    "creator": "user@domain.com",
+    "alertMetric": "system.mem.used",
+    "alertType": "error",
+    "tags": ["host:api-service,monitor"]
+  },
+  "relations": {
+    "microservice": "api-service"
+  }
+}
+```
+
 ## Ingest service level objectives (SLOs)
 
 This guide will walk you through the steps to ingest Datadog SLOs into Port. By following these steps, you will be able to create a blueprint for a `microservice` entity in Port, representing a service in your Datadog account. Furthermore, you will establish a relation between this service and the `datadogSLO` blueprint, allowing the ingestion of all defined SLOs from your Datadog account.

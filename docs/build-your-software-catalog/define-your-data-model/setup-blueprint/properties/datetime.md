@@ -84,15 +84,19 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `L
 <TabItem value="basic">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myDatetimeProp"
-    title      = "My datetime"
-    required   = false
-    type       = "string"
-    format     = "date-time"
+  properties = {
+    string_props = {
+      "myDatetimeProp" = {
+        title       = "My datetime"
+        icon        = "My icon"
+        description = "My datetime property"
+        format      = "date-time"
+        default     = "2022-04-18T11:44:15.345Z"
+      }
+    }
   }
   # highlight-end
 }
@@ -103,17 +107,20 @@ resource "port-labs_blueprint" "myBlueprint" {
 <TabItem value="array">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myDatetimeArray"
-    title      = "My datetime array"
-    required   = false
-    type       = "array"
-    items = {
-      type   = "string"
-      format = "date-time"
+  properties = {
+    array_props = {
+      "myDatetimeArray" = {
+        title    = "My datetime array"
+        icon     = "My icon"
+        required = false
+        type     = "array"
+        string_items = {
+          format = "date-time"
+        }
+      }
     }
   }
   # highlight-end
@@ -146,24 +153,24 @@ resource "port-labs_blueprint" "myBlueprint" {
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Blueprint
+from port_pulumi import Blueprint,BlueprintPropertiesArgs,BlueprintPropertiesStringPropsArgs
 
 blueprint = Blueprint(
     "myBlueprint",
     identifier="myBlueprint",
     title="My Blueprint",
     # highlight-start
-    properties=[
-      {
-        "type": "string",
-        "identifier": "myDatetimeProp",
-        "title": "My datetime",
-        "required": True,
-        "format": "date-time"
-      }
-    ],
+    properties=BlueprintPropertiesArgs(
+        string_props={
+            "myDatetimeProp": BlueprintPropertiesStringPropsArgs(
+                title="My email",
+                format="date-time",
+                Required=True,
+            )
+        }
+    ),
     # highlight-end
-    relations=[]
+    relations={},
 )
 ```
 
@@ -173,21 +180,21 @@ blueprint = Blueprint(
 
 ```typescript showLineNumbers
 import * as pulumi from "@pulumi/pulumi";
-import * as port from "@port-labs/pulumi";
+import * as port from "@port-labs/port";
 
 export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myDatetimeProp",
-      title: "My datetime",
-      type: "string",
-      required: true,
-      format: "date-time",
+    properties: {
+        string_props: {
+            myDatetimeProp: {
+                title: "My datetime",
+                format: "date-time",
+                required: true,
+            },
+        },
     },
-  ],
   // highlight-end
 });
 ```
@@ -199,23 +206,23 @@ export const blueprint = new port.Blueprint("myBlueprint", {
 ```javascript showLineNumbers
 "use strict";
 const pulumi = require("@pulumi/pulumi");
-const port = require("@port-labs/pulumi");
+const port = require("@port-labs/port");
 
 const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myDatetimeProp",
-      title: "My datetime",
-      type: "string",
-      required: true,
-      format: "date-time",
+    properties: {
+        string_props: {
+            myDatetimeProp: {
+                title: "My datetime",
+                format: "date-time",
+                required: true,
+            },
+        },
     },
-  ],
   // highlight-end
-  relations: [],
+  relations: {},
 });
 
 exports.title = entity.title;
@@ -228,7 +235,7 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/port-labs/pulumi-port/sdk/go/port"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -238,13 +245,13 @@ func main() {
 			Identifier: pulumi.String("myBlueprint"),
 			Title:      pulumi.String("My Blueprint"),
       // highlight-start
-			Properties: port.BlueprintPropertyArray{
-				&port.BlueprintPropertyArgs{
-					Identifier: pulumi.String("myDatetimeProp"),
-					Title:      pulumi.String("My datetime"),
-					Required:   pulumi.Bool(false),
-					Type:       pulumi.String("string"),
-					Format:     pulumi.String("date-time"),
+			Properties: port.BlueprintPropertiesArgs{
+				StringProps: port.BlueprintPropertiesStringPropsMap{
+					"myDatetimeProp": &port.BlueprintPropertiesStringPropsArgs{
+						Title:  pulumi.String("My datetime"),
+						Format: pulumi.String("date-time"),
+						Required: pulumi.Bool(false),
+					},
 				},
 			},
       // highlight-end
@@ -279,27 +286,29 @@ func main() {
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Blueprint
+from port_pulumi import Blueprint,BlueprintPropertiesStringPropsArgs,BlueprintPropertiesArgs
 
 blueprint = Blueprint(
     "myBlueprint",
     identifier="myBlueprint",
     title="My Blueprint",
     # highlight-start
-    properties=[{
-      "type": "string",
-      "identifier": "myDatetimeProp",
-      "title": "My datetime",
-      "format": "date-time",
-      "required": True,
-      "enum": ["2022-04-18T11:44:15.345Z", "2022-05-18T11:44:15.345Z"],
-      "enum_colors": {
-        "2022-04-18T11:44:15.345Z": "red",
-        "2022-05-18T11:44:15.345Z": "green"
-      }
-    }],
+    properties=BlueprintPropertiesArgs(
+        string_props={
+            "myDatetimeProp": BlueprintPropertiesStringPropsArgs(
+                title="My datetime",
+                required=True,
+                format="date-time",
+                enums=["2022-04-18T11:44:15.345Z", "2022-05-18T11:44:15.345Z"],
+                enum_colors={
+                    "2022-04-18T11:44:15.345Z": "red",
+                    "2022-05-18T11:44:15.345Z": "green"
+                },
+            )
+        }
+    ),
     # highlight-end
-    relations=[]
+    relations={}
 )
 ```
 
@@ -309,26 +318,25 @@ blueprint = Blueprint(
 
 ```typescript showLineNumbers
 import * as pulumi from "@pulumi/pulumi";
-import * as port from "@port-labs/pulumi";
+import * as port from "@port-labs/port";
 
 export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myDatetimeProp",
-      title: "My datetime",
-      type: "string",
-      required: true,
-      format: "date-time",
-      enums: ["2022-04-18T11:44:15.345Z", "2022-05-18T11:44:15.345Z"],
-      enumColors: {
-        "2022-04-18T11:44:15.345Z": "red",
-        "2022-05-18T11:44:15.345Z": "green",
-      },
-    },
-  ],
+    properties: {
+        stringProps: {
+            myDatetimeProp: {
+                title: "My datetime",
+                format: "date-time",
+                required: true,
+                enums: ["2022-04-18T11:44:15.345Z", "2022-05-18T11:44:15.345Z"],
+                enumColors: {
+                    "2022-04-18T11:44:15.345Z": "red",
+                    "2022-05-18T11:44:15.345Z": "green",
+                },
+            },
+        },
   // highlight-end
 });
 ```
@@ -340,28 +348,27 @@ export const blueprint = new port.Blueprint("myBlueprint", {
 ```javascript showLineNumbers
 "use strict";
 const pulumi = require("@pulumi/pulumi");
-const port = require("@port-labs/pulumi");
+const port = require("@port-labs/port");
 
 const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myDatetimeProp",
-      title: "My datetime",
-      type: "string",
-      required: true,
-      format: "date-time",
-      enums: ["2022-04-18T11:44:15.345Z", "2022-05-18T11:44:15.345Z"],
-      enumColors: {
-        "2022-04-18T11:44:15.345Z": "red",
-        "2022-05-18T11:44:15.345Z": "green",
-      },
-    },
-  ],
+    properties: {
+        stringProps: {
+            myDatetimeProp: {
+                title: "My datetime",
+                format: "date-time",
+                required: true,
+                enums: ["2022-04-18T11:44:15.345Z", "2022-05-18T11:44:15.345Z"],
+                enumColors: {
+                    "2022-04-18T11:44:15.345Z": "red",
+                    "2022-05-18T11:44:15.345Z": "green",
+                },
+            },
+        },
   // highlight-end
-  relations: [],
+  relations: {},
 });
 
 exports.title = entity.title;
@@ -374,7 +381,7 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/port-labs/pulumi-port/sdk/go/port"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -384,23 +391,23 @@ func main() {
 			Identifier: pulumi.String("myBlueprint"),
 			Title:      pulumi.String("My Blueprint"),
       // highlight-start
-			Properties: port.BlueprintPropertyArray{
-				&port.BlueprintPropertyArgs{
-					Identifier: pulumi.String("myDatetimeProp"),
-					Title:      pulumi.String("My datetime"),
-					Required:   pulumi.Bool(false),
-					Type:       pulumi.String("string"),
-					Format:     pulumi.String("date-time"),
-					Enums: pulumi.StringArray{
-						pulumi.String("2022-04-18T11:44:15.345Z"),
-						pulumi.String("2022-05-18T11:44:15.345Z"),
-					},
-					EnumColors: pulumi.StringMap{
-						"2022-04-18T11:44:15.345Z": pulumi.String("red"),
-						"2022-05-18T11:44:15.345Z": pulumi.String("green"),
-					},
-				},
-			},
+			Properties: port.BlueprintPropertiesArgs{
+				StringProps: port.BlueprintPropertiesStringPropsMap{
+					"myDatetimeProp": &port.BlueprintPropertiesStringPropsArgs{
+                        Title:  pulumi.String("My datetime"),
+                        Format: pulumi.String("date-time"),
+                        Required: pulumi.Bool(false),
+                        Enums: pulumi.StringArray{
+                            pulumi.String("2022-04-18T11:44:15.345Z"),
+                            pulumi.String("2022-05-18T11:44:15.345Z"),
+                        },
+                        EnumColors: pulumi.StringMap{
+                            "2022-04-18T11:44:15.345Z": pulumi.String("red"),
+                            "2022-05-18T11:44:15.345Z": pulumi.String("green"),
+                        },
+                    },
+                },
+            },
       // highlight-end
 		})
 		ctx.Export("blueprint", blueprint.Title)

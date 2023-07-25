@@ -77,7 +77,7 @@ The array input type can be used to store any list of data, for example:
 <TabItem value="basic">
 
 ```hcl showLineNumbers
-resource "port-labs_action" "myAction" {
+resource "port_action" "myAction" {
   # ...action properties
   # highlight-start
   user_properties {
@@ -108,7 +108,7 @@ Array validations follow the JSON schema model, refer to the [JSON schema docs](
 
 <Tabs groupId="validation-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Terraform - coming soon", value: "tf"}
+{label: "Terraform", value: "tf"}
 ]}>
 
 <TabItem value="basic">
@@ -130,4 +130,30 @@ Array validations follow the JSON schema model, refer to the [JSON schema docs](
 ```
 
 </TabItem>
+
+<TabItem value="tf">
+
+```hcl showLineNumbers
+
+resource "port_action" "myAction" {
+  # ...action properties
+  # highlight-start
+  user_properties = {
+    array_props = {
+      "myArrayInput" = {
+        title       = "My array input"
+        description = "My array input"
+        required    = false
+        min_items   = 0
+        max_items   = 5
+        unique_items = false
+      }
+    }
+  }
+  # highlight-end
+}
+```
+
+</TabItem>
+
 </Tabs>
