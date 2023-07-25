@@ -14,4 +14,4 @@ The steps shown in the image above are as follows:
 
 - See the [deployment example](./examples/run-service-deployment.md) for GitLab pipelines.
 - Contact us through Intercom to set up a Kafka topic for your organization.
-- [Install the Port agent for triggering the GitLab pipeline](../port-execution-agent/Installation.md).
+- [Install the Port execution agent to triggering the GitLab pipelines](./Installation.md).

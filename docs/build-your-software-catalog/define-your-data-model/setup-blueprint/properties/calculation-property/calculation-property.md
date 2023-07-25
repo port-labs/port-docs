@@ -63,7 +63,7 @@ You can access properties as part of the calculation by using `.properties`
 <TabItem value="tf">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   calculation_properties {
@@ -93,24 +93,21 @@ resource "port-labs_blueprint" "myBlueprint" {
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Blueprint
+from port_pulumi import Blueprint,BlueprintPropertiesArgs,BlueprintCalculationPropertiesArgs
 
 blueprint = Blueprint(
     "myBlueprint",
     identifier="myBlueprint",
     title="My Blueprint",
-    properties=[
+    properties=BlueprintPropertiesArgs(
     # blueprint properties
-    ],
+    ),
     # highlight-start
-    calculationProperties: [
-        {
-            "identifier": "myCalculation",
-            "title": "My Calculation",
-            "type": "number",
-            "calculation": ".proeprties.myStringProp + .properties.myStringProp"
-        }
-    ],
+    calculation_properties={
+      "myCalculation": BlueprintCalculationPropertiesArgs(
+        title="My calculation property", calculation=".properties.myStringProp + .properties.myStringProp", type="string",
+      )
+    },
     # highlight-end
 )
 ```
@@ -121,23 +118,22 @@ blueprint = Blueprint(
 
 ```typescript showLineNumbers
 import * as pulumi from "@pulumi/pulumi";
-import * as port from "@port-labs/pulumi";
+import * as port from "@port-labs/port";
 
 export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
-  properties: [
-    // blueprint properties
-  ],
+  properties: {
+      // blueprint properties
+  },
   // highlight-start
-  calculationProperties: [
-    {
-      identifier: "myCalculation",
-      title: "My Calculation",
-      type: "string",
-      calculation: ".proeprties.myStringProp + .properties.myStringProp",
-    },
-  ],
+  calculationProperties:{
+    myCalculation: {
+      title: "My calculation property",
+      calculation: ".properties.myStringProp + .properties.myStringProp",
+      type: "string"
+    }
+  },
   // highlight-end
 });
 ```
@@ -149,23 +145,22 @@ export const blueprint = new port.Blueprint("myBlueprint", {
 ```javascript showLineNumbers
 "use strict";
 const pulumi = require("@pulumi/pulumi");
-const port = require("@port-labs/pulumi");
+const port = require("@port-labs/port");
 
 const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
-  properties: [
+  properties: {
     // blueprint properties
-  ],
+  },
   // highlight-start
-  calculationProperties: [
-    {
-      identifier: "myCalculation",
-      title: "My Calculation",
-      type: "string",
-      calculation: ".proeprties.myStringProp + .properties.myStringProp",
-    },
-  ],
+  calculationProperties:{
+    myCalculation: {
+      title: "My calculation property",
+      calculation: ".properties.myStringProp + .properties.myStringProp",
+      type: "string"
+    }
+  },
   // highlight-end
 });
 
@@ -179,7 +174,7 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/port-labs/pulumi-port/sdk/go/port"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -190,14 +185,13 @@ func main() {
 			Title:      pulumi.String("My Blueprint"),
 			// blueprint properties..
       # highlight-start
-			CalculationProperties: port.BlueprintCalculationPropertyArray{
-			  &port.BlueprintCalculationPropertyArgs{
-			    Identifier:  pulumi.String("myCalcProp"),
-			    Title:       pulumi.String("My Calculation"),
-			    Type:        pulumi.String("string"),
-			    Calculation: pulumi.String(".properties.myStringProp + .properties.myStringProp"),
-			  },
-			},
+            CalculationProperties: port.BlueprintCalculationPropertiesMap{
+              "myCalculation": port.BlueprintCalculationPropertiesArgs{
+                  Title:       pulumi.String("My calculation property"),
+                  Calculation: pulumi.String(".properties.myStringProp + .properties.myStringProp"),
+                  Type:        pulumi.String("string"),
+              }
+            },
       # highlight-end
 		})
 		ctx.Export("blueprint", blueprint.Title)

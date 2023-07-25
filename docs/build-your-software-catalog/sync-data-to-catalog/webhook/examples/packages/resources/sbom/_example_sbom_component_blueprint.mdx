@@ -1,0 +1,59 @@
+```json showLineNumbers
+{
+  "identifier": "sbomComponent",
+  "description": "This blueprint represents an SBOM component in our software catalog",
+  "title": "SBOM Component",
+  "icon": "Package",
+  "schema": {
+    "properties": {
+      "name": {
+        "title": "Name",
+        "type": "string"
+      },
+      "version": {
+        "title": "Version",
+        "type": "string"
+      },
+      "package_url": {
+        "title": "Package URL",
+        "type": "string"
+      },
+      "external_references": {
+        "title": "External References",
+        "type": "array"
+      },
+      "licenses": {
+        "title": "Licenses",
+        "type": "array"
+      },
+      "type": {
+        "title": "Type",
+        "type": "string",
+        "default": "library",
+        "enum": [
+          "application",
+          "framework",
+          "library",
+          "container",
+          "platform",
+          "operating-system",
+          "device",
+          "device-driver",
+          "firmware",
+          "file",
+          "data",
+          "machine-learning-model"
+        ]
+      },
+      "software_product": {
+        "title": "Software Product",
+        "type": "string"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {}
+}
+```

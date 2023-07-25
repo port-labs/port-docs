@@ -9,6 +9,12 @@ import TabItem from "@theme/TabItem"
 
 # 📄 Setup Actions
 
+<center>
+
+<iframe width="60%" height="400" src="https://www.youtube.com/embed/DhDQ_lucdgM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+
+</center>
+
 Choose the name, description and icon of the action to make it recognizable.
 
 Select the user inputs you would like the user to fill out to use the action.
@@ -123,7 +129,7 @@ By using user inputs, you can specify to your users exactly what information you
 
 To learn more about user inputs, refer to the [user inputs](./user-inputs/user-inputs.md) page.
 
-### `trigger`- Action type
+### `trigger` - Action type
 
 Port actions support 3 action types:
 
@@ -192,31 +198,13 @@ The JSON shown above is for a single blueprint action, the actions of a blueprin
 <TabItem value="terraform" label="Terraform">
 
 ```hcl showLineNumbers
-resource "port-labs_action" "myAction" {
-  blueprint_identifier = "myBlueprint"
-  title                = "My Action"
+resource "port_action" "myAction" {
+  blueprint = "myBlueprint"
   identifier           = "myAction"
   description          = "My self-service action"
-
-  user_properties {
-    identifier  = "myInput"
-    type        = "myType"
-    title       = "My Input"
-    description = "My user input"
-  }
-
-  user_properties {
-    identifier  = "mySpecialInput"
-    type        = "myType"
-    title       = "My Special Input"
-    description = "My special user input"
-  }
-
+  user_properties = {}
   trigger = "myActionTrigger"
-
-  invocation_method {
-    type = "myInvocationType"
-  }
+  myInvocationType_method = {}
 }
 ```
 

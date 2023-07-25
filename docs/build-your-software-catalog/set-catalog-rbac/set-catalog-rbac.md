@@ -22,7 +22,7 @@ Port's catalog RBAC capabilities are enabled by Port's [permissions controls](..
 
 :::tip
 
-In order to manage who can view which pages in Port, check out [page permissions](../../customize-pages-dashboards-and-plugins/page/tutorial.md#page-permissions).
+In order to manage who can view which pages in Port, check out [page permissions](../../customize-pages-dashboards-and-plugins/page/page-permissions.md).
 :::
 
 ## 💡 Common Catalog RBAC usage

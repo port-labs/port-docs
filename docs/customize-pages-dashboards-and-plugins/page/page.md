@@ -126,7 +126,7 @@ Locking a blueprints' page disables the option to hide columns or apply filters 
 
 Locking pages gives you a way to specifically curate pages to your developers' needs and make sure they can't modify the views, this prevents them from seeing data that isn't relevant to them.
 
-To learn how to lock pages, refer to the [tutorial](./tutorial.md#lock-pages)
+To learn how to lock pages, refer to [page permissions](./page-permissions.md#lock-pages)
 
 #### Deleting pages
 
@@ -210,6 +210,6 @@ We provide a free text search option on tables. To search on a table, click the 
 
 ![Table search bar marked](../../../static/img/software-catalog/pages/TableSearchBar.png)
 
-[Explore how to control page visibility with basic examples](./tutorial.md)
+[Explore how to control page visibility and permissions](./page-permissions.md)
 
 [Dive into advanced operations on Pages with our API ➡️ ](../../api-reference/api-reference.mdx)

@@ -1,0 +1,24 @@
+```json showLineNumbers
+{
+  "identifier": "mavenDependencyMapper",
+  "title": "Maven Dependency Mapper",
+  "description": "A webhook configuration to map Maven dependencies to Port",
+  "icon": "Java",
+  "mappings": [
+    {
+      "blueprint": "mavenDependency",
+      "entity": {
+        "identifier": ".body.artifactId",
+        "title": ".body.groupId",
+        "properties": {
+          "groupId": ".body.groupId",
+          "artifactId": ".body.artifactId",
+          "version": ".body.version",
+          "scope": ".body.scope"
+        }
+      }
+    }
+  ],
+  "enabled": true
+}
+```

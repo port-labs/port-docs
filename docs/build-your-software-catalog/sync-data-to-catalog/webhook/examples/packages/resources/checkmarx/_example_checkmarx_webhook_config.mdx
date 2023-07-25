@@ -1,0 +1,29 @@
+```json showLineNumbers
+{
+  "identifier": "checkmarxMapper",
+  "title": "Checkmarx Mapper",
+  "description": "A webhook configuration to ingest Checkmarx KICS scans from a file",
+  "icon": "checkmarx",
+  "mappings": [
+    {
+      "blueprint": "checkmarxScan",
+      "itemsToParse": ".body.scans",
+      "entity": {
+        "identifier": ".item.query_id",
+        "title": ".item.query_name",
+        "properties": {
+          "severity": ".item.severity",
+          "url": ".item.query_url",
+          "platform": ".item.platform",
+          "files": ".item.files",
+          "cloud_provider": ".item.cloud_provider",
+          "description": ".item.description",
+          "category": ".item.category"
+        }
+      }
+    }
+  ],
+  "enabled": true,
+  "security": {}
+}
+```

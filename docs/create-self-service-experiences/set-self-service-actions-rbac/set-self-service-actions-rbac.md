@@ -10,7 +10,7 @@ Port provides granular control to make sure every user can only execute and invo
 :::tip
 This section covers the self-service actions section of Port's RBAC functionality, while it is not a prerequisite, it is highly recommended you also go over Port's [permission controls](../../sso-rbac/rbac/rbac.md).
 
-In order to manage who can view which pages in Port, check out [page permissions](../../customize-pages-dashboards-and-plugins/page/tutorial.md#page-permissions).
+In order to manage who can view which pages in Port, check out [page permissions](../../customize-pages-dashboards-and-plugins/page/page-permissions.md).
 :::
 
 ## 💡 Common Self-service actions RBAC usage

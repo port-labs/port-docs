@@ -21,6 +21,14 @@ In order to complete the process you will need to contact us to receive the info
 
 ## How to configure a Port application in Azure AD
 
+:::info
+
+**Prerequisites**
+
+To make the **Port** app connection work, users who have access need to have a legal value in their `Email` field in Azure AD.
+
+:::
+
 ### Step #1: Register a new application
 
 1. In the Microsoft Azure Portal, go to `Azure Active Directory`.
@@ -204,10 +212,6 @@ Port needs the following information for this process:
 
    4.2 Click `Assign`.
 
-   :::note
-   **IMPORTANT**: To make the **Port** app connection work, users who have access need to have a legal value in their `Email` field in Azure AD.
-   :::
-
 5. Make the Port application visible on the `myapplications` page:
 
    5.1 Go to `Azure Active Directory`.
@@ -251,6 +255,8 @@ This stage is **OPTIONAL** and is required only if you wish to pull all of your 
 
 **Benefit:** managing permissions and user access on Port.
 **Outcome:** for every user that logs in, we will automatically get their associate AzureAD groups, according to your definitions in the settings below.
+
+Important: In order to import Azure AD groups into Port, Port will require the connection app to approve the `Directory.Read.All` permission
 :::
 
 1. On the `Token configuration` tab, Click `Add groups claim`:
