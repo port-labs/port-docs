@@ -1,0 +1,70 @@
+```bash showLineNumbers
+#!/bin/bash
+
+set -e
+# PagerDuty API endpoints and token
+PD_API_SERVICES='https://api.pagerduty.com/services'
+PD_API_INCIDENTS='https://api.pagerduty.com/incidents'
+PD_TOKEN='API_TOKEN'
+
+# Port webhook URL
+PORT_URL='https://ingest.getport.io/WEBHOOK_SECRET'
+
+# Fetch services from PagerDuty
+services=$(curl --silent --header "Authorization: Token token=${PD_TOKEN}" --header "Accept: application/vnd.pagerduty+json;version=2" --request GET ${PD_API_SERVICES})
+
+# Extract services array
+services_list=$(echo ${services} | jq '.services')
+
+# Iterate over services and push to Port
+for i in $(seq 0 $(($(echo ${services_list} | jq '. | length') - 1)))
+do
+    service=$(echo ${services_list} | jq ".[$i]")
+
+    # Prepare payload for Port
+    payload=$(jq -n \
+                  --arg id "$(echo ${service} | jq -r '.id')" \
+                  --arg name "$(echo ${service} | jq -r '.name')" \
+                  --arg status "$(echo ${service} | jq -r '.status')" \
+                  '{event: {event_type: "service", data: {identifier: $id, title: $name, properties: {status: $status}}}}')
+
+    # Push to Port
+    curl --silent --header 'Content-Type: application/json' --request POST --data "${payload}" ${PORT_URL}
+
+    # Output payload to output.json file
+    echo ${payload} >> output.json
+done
+
+# Fetch incidents from PagerDuty
+incidents=$(curl --silent --header "Authorization: Token token=${PD_TOKEN}" --header "Accept: application/vnd.pagerduty+json;version=2" --request GET ${PD_API_INCIDENTS})
+
+# Extract incidents array
+incidents_list=$(echo ${incidents} | jq '.incidents')
+
+# Iterate over incidents and push to Port
+for i in $(seq 0 $(($(echo ${incidents_list} | jq '. | length') - 1)))
+do
+    incident=$(echo ${incidents_list} | jq ".[$i]")
+
+    # Prepare payload for Port
+    payload=$(jq -n \
+                  --arg id "$(echo ${incident} | jq -r '.id')" \
+                  --arg title "$(echo ${incident} | jq -r '.title')" \
+                  --arg status "$(echo ${incident} | jq -r '.status')" \
+                  --arg url "$(echo ${incident} | jq -r '.html_url')" \
+                  --arg description "$(echo ${incident} | jq -r '.description')" \
+                  --arg urgency "$(echo ${incident} | jq -r '.urgency')" \
+                  --arg responder "$(echo ${incident} | jq -r '.last_status_change_by.summary')" \
+                  --arg escalation_policy "$(echo ${incident} | jq -r '.escalation_policy.summary')" \
+                  --arg service "$(echo ${incident} | jq -r '.service.id')" \
+                  '{event: {event_type: "incident", data: {identifier: $id, title: $title, properties: {status: $status, url: $url, details: $description, urgency: $urgency, responder: $responder, escalation_policy: $escalation_policy}, relations: {microservice: $service}}}}')
+
+    # Push to Port
+    curl  --header 'Content-Type: application/json' --request POST --data "${payload}" ${PORT_URL}
+
+    # Output payload to output.json file
+    echo ${payload} >> output.json
+done
+
+
+```

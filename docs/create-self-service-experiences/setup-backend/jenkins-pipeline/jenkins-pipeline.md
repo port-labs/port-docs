@@ -170,8 +170,97 @@ Here is an example of the required configuration:
 
 :::note
 
-- The IP field should be set to `3.251.12.205`, which is our hosted outbound WEBHOOK Gateway.
+- The IP field should be set to `3.251.12.205`, which is our hosted outbound WEBHOOK Gateway;
+  - For more information about Port's outbound calls, check out Port's [actions security](../../security/security.md) page.
 - In the **HMAC Secret** field, choose a secret containing your `port-client-secret`.
 
 If this secret doesn't already exist, create a `secret text` type secret using [this guide](https://www.jenkins.io/doc/book/using/using-credentials/). The value of the secret should be your `Port Client Secret` which can be found by following the guide [here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
 :::
+
+### Report Jenkins action run status to Port
+
+Once you have triggered your Jenkins pipeline successfully, it is essential to update the status of the run action in Port.
+
+In order to update the action, you'll need to create the `RUN_ID` variable, and to set it to be fetched from the [action payload](../../self-service-actions-deep-dive/self-service-actions-deep-dive.md#action-message-structure):
+
+![RUN_ID variable](../../../../static/img/self-service-actions/setup-backend/jenkins-pipeline/jenkins-runid-variable.png)
+
+The code snippet below demonstrates how you can report the progress of your pipeline to Port:
+
+<details>
+<summary> Click here to see the code</summary>
+
+```groovy showLineNumbers
+import groovy.json.JsonSlurper
+
+pipeline {
+    agent any
+
+    environment {
+        PORT_CLIENT_ID="YOUR_CLIENT_ID"
+        PORT_CLIENT_SECRET="YOUR_CLIENT_SECRET"
+        ACCESS_TOKEN = ""
+    }
+
+    stages {
+        // highlight-next-line
+        stage('Get access token') {
+            steps {
+                script {
+                    // Execute the curl command and capture the output
+                    def result = sh(returnStdout: true, script: """
+                        accessTokenPayload=\$(curl -X POST \
+                            -H "Content-Type: application/json" \
+                            -d '{"clientId": "${PORT_CLIENT_ID}", "clientSecret": "${PORT_CLIENT_SECRET}"}' \
+                            -s "https://api.getport.io/v1/auth/access_token")
+                        echo \$accessTokenPayload
+                    """)
+
+                    // Parse the JSON response using JsonSlurper
+                    def jsonSlurper = new JsonSlurper()
+                    def payloadJson = jsonSlurper.parseText(result.trim())
+
+                    // Access the desired data from the payload
+                    ACCESS_TOKEN = payloadJson.accessToken
+                }
+            }
+        }
+
+        // highlight-next-line
+        stage('Send logs example') {
+            steps {
+                script {
+                    def logs_report_response = sh(script: """
+                        curl -X POST \
+                            -H "Content-Type: application/json" \
+                            -H "Authorization: Bearer ${ACCESS_TOKEN}" \
+                            -d '{"message": "this is a log test message example"}' \
+                            "https://api.getport.io/v1/actions/runs/$RUN_ID/logs"
+                    """, returnStdout: true)
+
+                    println(logs_report_response)
+                }
+            }
+        }
+
+        // highlight-next-line
+        stage('Update status example') {
+            steps {
+                script {
+                    def status_report_response = sh(script: """
+                        curl -X PATCH \
+                          -H "Content-Type: application/json" \
+                          -H "Authorization: Bearer ${ACCESS_TOKEN}" \
+                          -d '{"status":"SUCCESS", "message": {"run_status": "Jenkins CI/CD Run completed successfully!"}}' \
+                            "https://api.getport.io/v1/actions/runs/${RUN_ID}"
+                    """, returnStdout: true)
+
+                    println(status_report_response)
+                }
+            }
+        }
+    }
+}
+```
+
+</details>

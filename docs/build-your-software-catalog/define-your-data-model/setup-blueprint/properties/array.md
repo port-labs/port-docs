@@ -44,18 +44,42 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `M
 ## Terraform definition
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myArrayProp"
-    title      = "My array"
-    required   = false
-    type       = "array"
+  properties = {
+    array_props = {
+      "myArrayProp" = {
+        title      = "My array"
+        required   = true
+      }
+    }
   }
   # highlight-end
 }
 ```
+
+:::info
+To set the type of an array property, you need to use the `<type>_items` property type.
+For example, to set an array of strings, you need to use the `string_items` property type.
+
+```
+resource "port_blueprint" "myBlueprint" {
+  # ...blueprint properties
+  properties = {
+    array_props = {
+      "myArrayProp" = {
+        title      = "My array"
+        required   = true
+        string_items = {} # You can also set here default values
+      }
+    }
+  }
+}
+```
+
+We currently support the following types of array items: `string_items`, `number_items`, `boolean_items`, `object_items`.
+:::
 
 ## Pulumi definition
 
@@ -72,21 +96,20 @@ resource "port-labs_blueprint" "myBlueprint" {
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Blueprint
+from port_pulumi import Blueprint,BlueprintPropertiesArgs,BlueprintPropertyArgs
 
 blueprint = Blueprint(
     "myBlueprint",
     identifier="myBlueprint",
     title="My Blueprint",
     # highlight-start
-    properties=[
-      {
-        "type": "array",
-        "identifier": "myArrayProp",
-        "title": "My array",
-        "required": True
-      }
-    ],
+    properties=BlueprintPropertiesArgs(
+        array_props={
+            "myArrayProp": BlueprintPropertyArgs(
+                title="My array", required=True,
+            )
+        }
+    ),
     # highlight-end
     relations=[]
 )
@@ -98,20 +121,20 @@ blueprint = Blueprint(
 
 ```typescript showLineNumbers
 import * as pulumi from "@pulumi/pulumi";
-import * as port from "@port-labs/pulumi";
+import * as port from "@port-labs/port";
 
 export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myArrayProp",
-      title: "My array",
-      type: "array",
-      required: true,
+  properties: {
+    array_props: {
+      myArrayProp: {
+        title: "My array",
+        required: true,
+      },
     },
-  ],
+  },
   // highlight-end
 });
 ```
@@ -123,20 +146,20 @@ export const blueprint = new port.Blueprint("myBlueprint", {
 ```javascript showLineNumbers
 "use strict";
 const pulumi = require("@pulumi/pulumi");
-const port = require("@port-labs/pulumi");
+const port = require("@port-labs/port");
 
 const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myArrayProp",
-      title: "My array",
-      type: "array",
-      required: true,
+  properties: {
+    array_props: {
+      myArrayProp: {
+        title: "My array",
+        required: true,
+      },
     },
-  ],
+  },
   // highlight-end
   relations: [],
 });
@@ -151,7 +174,7 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/port-labs/pulumi-port/sdk/go/port"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -161,13 +184,13 @@ func main() {
 			Identifier: pulumi.String("myBlueprint"),
 			Title:      pulumi.String("My Blueprint"),
       // highlight-start
-			Properties: port.BlueprintPropertyArray{
-				&port.BlueprintPropertyArgs{
-					Identifier: pulumi.String("myArrayProp"),
-					Title:      pulumi.String("My array"),
-					Required:   pulumi.Bool(false),
-					Type:       pulumi.String("array"),
-				},
+			Properties: port.BlueprintPropertiesArgs{
+				ArrayProps: port.BlueprintPropertiesArrayPropsMap{
+                    "myArrayProp": port.BlueprintPropertyArgs{
+                        Title:    pulumi.String("My array"),
+                        Required: pulumi.Bool(true),
+                    },
+                },
 			},
       // highlight-end
 		})
@@ -224,17 +247,19 @@ Array validations follow the JSON schema model, refer to the [JSON schema docs](
 <TabItem value="tf">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
-  properties {
-    identifier = "myArrayProp"
-    title      = "My array"
-    required   = false
-    type       = "array"
-    # highlight-start
-    min_items  = 0
-    max_items  = 5
-    # highlight-end
+  properties = {
+    array_props = {
+      "myArrayProp" = {
+        title      = "My array"
+        required   = true
+        # highlight-start
+        min_items  = 0
+        max_items  = 5
+        # highlight-end
+      }
+    }
   }
 }
 ```

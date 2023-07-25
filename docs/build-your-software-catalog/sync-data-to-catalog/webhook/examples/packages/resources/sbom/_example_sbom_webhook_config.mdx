@@ -1,0 +1,48 @@
+```json showLineNumbers
+{
+  "identifier": "sbomMapper",
+  "title": "SBOM Mapper",
+  "description": "A webhook configuration to map SBOM components and vulnerabilities to Port",
+  "icon": "Package",
+  "mappings": [
+    {
+      "blueprint": "sbomComponent",
+      "itemsToParse": ".body.components",
+      "entity": {
+        "identifier": ".item.reference",
+        "title": ".item.name",
+        "properties": {
+          "version": ".item.version",
+          "package_url": ".item.purl",
+          "type": ".item.type",
+          "external_references": ".item.external_references",
+          "licenses": ".item.licenses",
+          "software_product": ".body.software_product + \"-\" + .body.software_version"
+        }
+      }
+    },
+    {
+      "blueprint": "sbomVulnerability",
+      "itemsToParse": ".body.vulnerabilities",
+      "entity": {
+        "identifier": ".item.id",
+        "title": ".item.id",
+        "properties": {
+          "description": ".item.description",
+          "reference": ".item.reference",
+          "recommendation": ".item.recommendation",
+          "ratings": ".item.ratings",
+          "source": ".item.source",
+          "published": ".item.published",
+          "state": ".item.state"
+        },
+        "relations": {
+          "components": ".item.affects"
+        }
+      }
+    }
+  ],
+  "enabled": true,
+  "security": {}
+}
+```

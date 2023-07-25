@@ -1,0 +1,33 @@
+```json showLineNumbers
+{
+  "identifier": "stackHawkMapper",
+  "title": "StackHawk Mapper",
+  "description": "A webhook configuration to map StackHawk vulnerability to Port",
+  "icon": "StackHawk",
+  "mappings": [
+    {
+      "blueprint": "stackHawkVulnerability",
+      "itemsToParse": ".body.scanCompleted.findings",
+      "entity": {
+        "identifier": ".body.scanCompleted.scan.application + \"-\" + .item.pluginId | gsub(\"[^a-zA-Z0-9@_.:\\/=-]\"; \"-\") | tostring",
+        "title": ".item.pluginName",
+        "properties": {
+          "severity": ".item.severity",
+          "host": ".item.host",
+          "totalCount": ".item.totalCount",
+          "category": ".item.category",
+          "url": ".item.findingURL",
+          "tags": ".body.scanCompleted.scan.tags"
+        }
+      }
+    }
+  ],
+  "enabled": true,
+  "security": {
+    "secret": "WEBHOOK_SECRET",
+    "signatureHeaderName": "AUTH_SIGNATURE_HEADER",
+    "signatureAlgorithm": "plain",
+    "signaturePrefix": ""
+  }
+}
+```

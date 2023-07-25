@@ -50,28 +50,30 @@ You will need to create a developer environment blueprint to follow this example
 ```hcl showLineNumbers
 terraform {
   required_providers {
-    port-labs = {
+    port = {
       source  = "port-labs/port-labs"
-      version = "~> 0.10.3"
+      version = "~> 1.0.0"
     }
   }
 }
 
-provider "port-labs" {
+provider "port" {
   client_id = "YOUR_CLIENT_ID"     # or set the environment variable PORT_CLIENT_ID
   secret    = "YOUR_CLIENT_SECRET" # or set the environment variable PORT_CLIENT_SECRET
 }
 
-resource "port-labs_blueprint" "s3_bucket" {
+resource "port_blueprint" "s3_bucket" {
   identifier = "s3Bucket"
   icon       = "Bucket"
   title      = "S3 Bucket"
 
-  properties {
-    identifier = "isPrivate"
-    title      = "Is private?"
-    required   = false
-    type       = "boolean"
+  properties = {
+    boolean_props = {
+      isPrivate = {
+        title      = "Is private?"
+        required   = false
+      }
+    }
   }
 }
 ```
@@ -88,9 +90,9 @@ Here is the complete `main.tf` file:
 ```hcl showLineNumbers
 terraform {
   required_providers {
-    port-labs = {
+    port = {
       source  = "port-labs/port-labs"
-      version = "~> 0.10.3"
+      version = "~> 1.0.0"
     }
   }
 }
@@ -101,7 +103,7 @@ provider "aws" {
   region     = "eu-west-1"
 }
 
-provider "port-labs" {
+provider "port" {
   client_id = "YOUR_CLIENT_ID"     # or set the environment variable PORT_CLIENT_ID
   secret    = "YOUR_CLIENT_SECRET" # or set the environment variable PORT_CLIENT_SECRET
 }
@@ -115,7 +117,7 @@ resource "aws_s3_bucket_acl" "port-terraform-example-bucket-acl" {
   acl    = "private"
 }
 
-resource "port-labs_entity" "s3_bucket" {
+resource "port_entity" "s3_bucket" {
   depends_on = [
     aws_s3_bucket.port-terraform-example-bucket
   ]
@@ -124,9 +126,10 @@ resource "port-labs_entity" "s3_bucket" {
   title      = aws_s3_bucket.port-terraform-example-bucket.bucket
   blueprint  = "s3Bucket"
 
-  properties {
-    name  = "isPrivate"
-    value = aws_s3_bucket_acl.port-terraform-example-bucket-acl.acl == "private" ? true : false
+  properties = {
+    string_props = {
+      "isPrivate" = aws_s3_bucket_acl.port-terraform-example-bucket-acl.acl == "private" ? true : false
+    }
   }
 }
 ```
@@ -153,9 +156,9 @@ This part includes importing and setting up the required Terraform providers and
 ```hcl showLineNumbers
 terraform {
   required_providers {
-    port-labs = {
+    port = {
       source  = "port-labs/port-labs"
-      version = "~> 0.10.3"
+      version = "~> 1.0.0"
     }
   }
 }
@@ -166,7 +169,7 @@ provider "aws" {
   region     = "eu-west-1"
 }
 
-provider "port-labs" {
+provider "port" {
   client_id = "YOUR_CLIENT_ID"     # or set the environment variable PORT_CLIENT_ID
   secret    = "YOUR_CLIENT_SECRET" # or set the environment variable PORT_CLIENT_SECRET
 }
@@ -192,7 +195,7 @@ resource "aws_s3_bucket_acl" "port-terraform-example-bucket-acl" {
 This part includes configuring the `s3Bucket` blueprint and creating an entity for our new bucket:
 
 ```hcl showLineNumbers
-resource "port-labs_entity" "s3_bucket" {
+resource "port_entity" "s3_bucket" {
 # highlight-start
   depends_on = [
     aws_s3_bucket.port-terraform-example-bucket
@@ -203,9 +206,10 @@ resource "port-labs_entity" "s3_bucket" {
   title      = aws_s3_bucket.port-terraform-example-bucket.bucket
   blueprint  = "s3Bucket"
 
-  properties {
-    name  = "isPrivate"
-    value = aws_s3_bucket_acl.port-terraform-example-bucket-acl.acl == "private" ? true : false
+  properties = {
+    string_props = {
+      "isPrivate" = aws_s3_bucket_acl.port-terraform-example-bucket-acl.acl == "private" ? true : false
+    }
   }
 }
 ```
@@ -225,9 +229,10 @@ Continue reading to learn how to make updates and how to cleanup.
 Notice how we defined the `isPrivate` property of the bucket entity:
 
 ```hcl showLineNumbers
-properties {
-    name  = "isPrivate"
-    value = aws_s3_bucket_acl.port-terraform-example-bucket-acl.acl == "private" ? true : false
+properties = {
+    string_props = {
+      "isPrivate" = aws_s3_bucket_acl.port-terraform-example-bucket-acl.acl == "private" ? true : false
+    }
 }
 ```
 

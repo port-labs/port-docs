@@ -75,26 +75,51 @@ The yaml input type can be used to store any key/value based data, for example:
 
 <Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Array - coming soon", value: "array"}
+{label: "Array", value: "array"}
 ]}>
 
 <TabItem value="basic">
 
 ```hcl showLineNumbers
-resource "port-labs_action" "myAction" {
+resource "port_action" "myAction" {
   # ...action properties
   # highlight-start
-  user_properties {
-    identifier  = "myYamlInput"
-    title       = "My yaml input"
-    description = "My yaml input"
-    required    = false
-    type        = "string"
-    format      = "yaml"
+  user_properties = {
+    string_props = {
+      "myYamlInput" = {
+        title       = "My yaml input"
+        description = "My yaml input"
+      }
+    }
   }
   # highlight-end
 }
 ```
 
 </TabItem>
+
+<TabItem value="array">
+
+```hcl showLineNumbers
+
+resource "port_action" "myAction" {
+  # ...action properties
+  # highlight-start
+  user_properties = {
+    array_props = {
+      "myYamlArrayInput" = {
+        title       = "My yaml array input"
+        description = "My yaml array input"
+        string_items = {
+          format = "yaml"
+        }
+      }
+    }
+  }
+  # highlight-end
+}
+```
+
+</TabItem>
+
 </Tabs>

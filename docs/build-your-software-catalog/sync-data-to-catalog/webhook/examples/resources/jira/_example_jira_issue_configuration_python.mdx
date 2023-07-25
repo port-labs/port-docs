@@ -1,0 +1,88 @@
+```python showLineNumbers
+# Dependencies to Install
+# pip install jira
+# pip install requests
+
+from jira import JIRA
+import requests
+import json
+import os
+
+def authenticate_with_jira(server, username, api_token):
+    # This function authenticates with JIRA and returns a JIRA object
+    return JIRA(server=server, basic_auth=(username, api_token))
+
+def send_to_port(data, port_url):
+    # This function sends issue data to Port
+    headers = {'Content-Type': 'application/json'}
+    response = requests.post(port_url, headers=headers, data=json.dumps(data))
+
+    # Check the response from Port
+    if response.status_code != 202:
+        print(f"Error sending issue {data['issue']['key']} to Port: {response.status_code}")
+    else:
+        print(f"Issue {data['issue']['key']} successfully sent to Port.")
+
+    return response
+
+def process_issues(issues):
+    # This function processes the issues from JIRA
+    total_issues_processed = 0
+
+    for issue in issues:
+        try:
+            description = issue.fields.description if issue.fields.description else None
+
+            data_to_send = {
+                "issue": {
+                    "key": issue.key,
+                    "fields": {
+                        "summary": issue.fields.summary,
+                        "description": description,
+                        "status": {"name": issue.fields.status.name},
+                        "issuetype": {"name": issue.fields.issuetype.name},
+                        "self": issue.self,
+                    },
+                    "lastChangeType": "",
+                    "self": issue.self,
+                },
+                "user": {"displayName": issue.fields.creator.displayName},
+            }
+
+            response = send_to_port(data_to_send, os.getenv('PORT_URL')) ## Your WEBHOOK_URL after creating the Port Webhook
+            if response.status_code == 202:
+                total_issues_processed += 1
+
+        except Exception as e:
+            print(f"Error processing issue {issue.key}: {str(e)}")
+
+    return total_issues_processed
+
+def main():
+    jira_server = os.getenv('JIRA_SERVER')  ## This is your Jira Domain https://{your_domain}.atlassian.net
+    username = os.getenv('USERNAMES')
+    api_token = os.getenv('API_TOKEN')
+    status_list = ["In Progress", "To Do"]
+    status = ','.join(f'"{s}"' for s in status_list)
+
+    jira = authenticate_with_jira(jira_server, username, api_token)
+
+    start_at = 0
+    max_results = 20
+    total_issues_processed = 0
+
+    while True:
+        issues = jira.search_issues(f'status in ({status})', startAt=start_at, maxResults=max_results)
+        if not issues:
+            break
+
+        total_issues_processed += process_issues(issues)
+        start_at += max_results
+
+    print(f"Total issues processed: {total_issues_processed}")
+
+if __name__ == "__main__":
+    main()
+
+
+```
