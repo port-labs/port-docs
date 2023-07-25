@@ -84,14 +84,18 @@ In this [live demo](https://demo.getport.io/cloudResources) example, we can see 
 <TabItem value="basic">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myObjectProp"
-    title      = "My object"
-    required   = false
-    type       = "object"
+  properties = {
+    object_props = {
+      "myObjectProp" = {
+        title      = "My object"
+        icon       = "My icon"
+        description = "My object property"
+        default    = jsonencode({"myKey" = "myValue"})
+      }
+    }
   }
   # highlight-end
 }
@@ -101,7 +105,7 @@ resource "port-labs_blueprint" "myBlueprint" {
 <TabItem value="array">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties {
@@ -142,23 +146,20 @@ resource "port-labs_blueprint" "myBlueprint" {
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Blueprint
+from port_pulumi import Blueprint,BlueprintPropertiesArgs,BlueprintPropertiesObjectPropsArgs
 
 blueprint = Blueprint(
     "myBlueprint",
     identifier="myBlueprint",
     title="My Blueprint",
     # highlight-start
-    properties=[
-      {
-        "type": "object",
-        "identifier": "myObjectProp",
-        "title": "My object",
-        "required": True
-      }
-    ],
+    properties=BlueprintPropertiesArgs(
+        object_props=BlueprintPropertiesObjectPropsArgs(
+            title="My object", required=False
+        )
+    ),
     # highlight-end
-    relations=[]
+    relations={},
 )
 ```
 
@@ -168,20 +169,20 @@ blueprint = Blueprint(
 
 ```typescript showLineNumbers
 import * as pulumi from "@pulumi/pulumi";
-import * as port from "@port-labs/pulumi";
+import * as port from "@port-labs/port";
 
 export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myObjectProp",
-      title: "My object",
-      type: "object",
-      required: true,
+    properties: {
+        objectProps: {
+            myObjectProp: {
+                title: "My object",
+                required: true,
+            },
+        },
     },
-  ],
   // highlight-end
 });
 ```
@@ -193,22 +194,22 @@ export const blueprint = new port.Blueprint("myBlueprint", {
 ```javascript showLineNumbers
 "use strict";
 const pulumi = require("@pulumi/pulumi");
-const port = require("@port-labs/pulumi");
+const port = require("@port-labs/port");
 
 const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myObjectProp",
-      title: "My object",
-      type: "object",
-      required: true,
-    },
-  ],
+  properties: {
+      objectProps: {
+            myObjectProp: {
+                title: "My object",
+                required: true,
+            },
+        },
+  },
   // highlight-end
-  relations: [],
+  relations: {},
 });
 
 exports.title = entity.title;
@@ -221,7 +222,7 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/port-labs/pulumi-port/sdk/go/port"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -231,12 +232,12 @@ func main() {
 			Identifier: pulumi.String("myBlueprint"),
 			Title:      pulumi.String("My Blueprint"),
       // highlight-start
-			Properties: port.BlueprintPropertyArray{
-				&port.BlueprintPropertyArgs{
-					Identifier: pulumi.String("myObjectProp"),
-					Title:      pulumi.String("My object"),
-					Required:   pulumi.Bool(false),
-					Type:       pulumi.String("object"),
+			Properties: port.BlueprintPropertiesArgs{
+				ObjectProps: port.BlueprintPropertiesObjectPropsMap{
+					"myObjectProp": port.BlueprintPropertiesObjectPropsArgs{
+						Title:      pulumi.String("My object"),
+                        Required:   pulumi.Bool(false),
+					},
 				},
 			},
       // highlight-end

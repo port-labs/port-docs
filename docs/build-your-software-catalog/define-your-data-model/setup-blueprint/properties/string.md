@@ -103,14 +103,16 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `L
 <TabItem value="basic">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myStringProp"
-    title      = "My string"
-    required   = false
-    type       = "string"
+  properties = {
+    string_props = {
+      "myStringProp" = {
+        title      = "My string"
+        required   = false
+      }
+    }
   }
   # highlight-end
 }
@@ -121,18 +123,20 @@ resource "port-labs_blueprint" "myBlueprint" {
 <TabItem value="enum">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myStringProp"
-    title      = "My string"
-    required   = false
-    type       = "string"
-    enum       = ["my-option-1", "my-option-2"]
-    enum_colors = {
-      "my-option-1" = "red"
-      "my-option-2" = "green"
+  properties = {
+    string_props = {
+      "myStringProp" = {
+        title      = "My string"
+        required   = false
+        enum       = ["my-option-1", "my-option-2"]
+        enum_colors = {
+          "my-option-1" = "red"
+          "my-option-2" = "green"
+        }
+      }
     }
   }
   # highlight-end
@@ -145,18 +149,24 @@ resource "port-labs_blueprint" "myBlueprint" {
 <TabItem value="array">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  properties {
-    identifier = "myStringArray"
-    title      = "My string array"
-    type       = "array"
-    items = {
-      type = "string"
+  properties = {
+    array_props = {
+      "myStringArray" = {
+        title        = "My string array"
+        string_items = {} # Pass an empty object only sets the type to string
+      }
+      "myStringArrayWithDefault" = {
+        title = "My string array with default"
+        string_items = {
+          default = ["my-default-1", "my-default-2"]
+        }
+      }
     }
+    # highlight-end
   }
-  # highlight-end
 }
 
 ```
@@ -187,23 +197,21 @@ resource "port-labs_blueprint" "myBlueprint" {
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Blueprint
+from port_pulumi import Blueprint,BlueprintPropertiesArgs,BlueprintPropertiesStringPropsArgs
 
 blueprint = Blueprint(
     "myBlueprint",
     identifier="myBlueprint",
     title="My Blueprint",
     # highlight-start
-    properties=[
-      {
-        "type": "string",
-        "identifier": "myStringProp",
-        "title": "My String",
-        "required": True
-      }
-    ],
+    properties=BlueprintPropertiesArgs(
+        string_props={
+            "myStringProp": BlueprintPropertiesStringPropsArgs(
+                title="My string", required=False
+            )
+    ),
     # highlight-end
-    relations=[]
+    relations={}
 )
 ```
 
@@ -213,20 +221,20 @@ blueprint = Blueprint(
 
 ```typescript showLineNumbers
 import * as pulumi from "@pulumi/pulumi";
-import * as port from "@port-labs/pulumi";
+import * as port from "@port-labs/port";
 
 export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myStringProp",
-      title: "My String",
-      type: "string",
-      required: true,
+    properties: {
+        stringProps: {
+            myStringProp: {
+                title: "My string",
+                required: true
+            },
+        }
     },
-  ],
   // highlight-end
 });
 ```
@@ -238,22 +246,22 @@ export const blueprint = new port.Blueprint("myBlueprint", {
 ```javascript showLineNumbers
 "use strict";
 const pulumi = require("@pulumi/pulumi");
-const port = require("@port-labs/pulumi");
+const port = require("@port-labs/port");
 
 const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myStringProp",
-      title: "My String",
-      type: "string",
-      required: true,
+    properties: {
+        stringProps: {
+            myStringProp: {
+                title: "My string",
+                required: true
+            },
+        }
     },
-  ],
   // highlight-end
-  relations: [],
+  relations: {},
 });
 
 exports.title = entity.title;
@@ -266,7 +274,7 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/port-labs/pulumi-port/sdk/go/port"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -276,13 +284,13 @@ func main() {
 			Identifier: pulumi.String("myBlueprint"),
 			Title:      pulumi.String("My Blueprint"),
       // highlight-start
-			Properties: port.BlueprintPropertyArray{
-				&port.BlueprintPropertyArgs{
-					Identifier: pulumi.String("myStringProp"),
-					Title:      pulumi.String("My String"),
-					Required:   pulumi.Bool(false),
-					Type:       pulumi.String("string"),
-				},
+			Properties: port.BlueprintPropertiesArgs{
+				StringProps: port.BlueprintPropertiesStringPropsMap{
+					"myStringProp": &port.BlueprintPropertiesStringPropsArgs{
+                        Title:      pulumi.String("My String"),
+                        Required:   pulumi.Bool(true),
+                    },
+                },
 			},
       // highlight-end
 		})
@@ -316,26 +324,28 @@ func main() {
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Blueprint
+from port_pulumi import Blueprint,BlueprintPropertiesArgs
 
 blueprint = Blueprint(
     "myBlueprint",
     identifier="myBlueprint",
     title="My Blueprint",
     # highlight-start
-    properties=[{
-      "type": "string",
-      "identifier": "myStringProp",
-      "title": "My String",
-      "required": True,
-      "enum": ["my-option-1", "my-option-2"],
-      "enum_colors": {
-        "my-option-1": "red",
-        "my-option-2": "green"
-      }
-    }],
+    properties=BlueprintPropertiesArgs(
+        string_props={
+            "myStringProp": {
+                "title": "My String",
+                "required": True,
+                "enum": ["my-option-1", "my-option-2"],
+                "enum_colors": {
+                    "my-option-1": "red",
+                    "my-option-2": "green"
+                }
+            }
+        }
+    ),
     # highlight-end
-    relations=[]
+    relations={}
 )
 ```
 
@@ -345,25 +355,25 @@ blueprint = Blueprint(
 
 ```typescript showLineNumbers
 import * as pulumi from "@pulumi/pulumi";
-import * as port from "@port-labs/pulumi";
+import * as port from "@port-labs/port";
 
 export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myStringProp",
-      title: "My String",
-      type: "string",
-      required: true,
-      enums: ["my-option-1", "my-option-2"],
-      enumColors: {
-        "my-option-1": "red",
-        "my-option-2": "green",
-      },
+    properties: {
+        stringProps: {
+            myStringProp: {
+                title: "My String",
+                required: true,
+                enums: ["my-option-1", "my-option-2"],
+                enumColors: {
+                    "my-option-1": "red",
+                    "my-option-2": "green",
+                },
+            }
+        }
     },
-  ],
   // highlight-end
 });
 ```
@@ -375,27 +385,27 @@ export const blueprint = new port.Blueprint("myBlueprint", {
 ```javascript showLineNumbers
 "use strict";
 const pulumi = require("@pulumi/pulumi");
-const port = require("@port-labs/pulumi");
+const port = require("@port-labs/port");
 
 const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myStringProp",
-      title: "My String",
-      type: "string",
-      required: true,
-      enums: ["my-option-1", "my-option-2"],
-      enumColors: {
-        "my-option-1": "red",
-        "my-option-2": "green",
-      },
+    properties: {
+        stringProps: {
+            myStringProp: {
+                title: "My String",
+                required: true,
+                enums: ["my-option-1", "my-option-2"],
+                enumColors: {
+                    "my-option-1": "red",
+                    "my-option-2": "green",
+                },
+            }
+        }
     },
-  ],
   // highlight-end
-  relations: [],
+  relations: {},
 });
 
 exports.title = entity.title;
@@ -408,7 +418,7 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/port-labs/pulumi-port/sdk/go/port"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -418,21 +428,22 @@ func main() {
 			Identifier: pulumi.String("myBlueprint"),
 			Title:      pulumi.String("My Blueprint"),
       // highlight-start
-			Properties: port.BlueprintPropertyArray{
-				&port.BlueprintPropertyArgs{
-					Identifier: pulumi.String("myStringProp"),
-					Title:      pulumi.String("My String"),
-					Required:   pulumi.Bool(false),
-					Type:       pulumi.String("string"),
-					Enums: pulumi.StringArray{
-						pulumi.String("my-option-1"),
-						pulumi.String("my-option-2"),
-					},
-					EnumColors: pulumi.StringMap{
-						"my-option-1": pulumi.String("red"),
-						"my-option-2": pulumi.String("green"),
-					},
-				},
+			Properties: port.BlueprintPropertiesArgs{
+				StringProps: port.BlueprintPropertiesStringPropsMap{
+					"myStringProp": port.BlueprintPropertiesStringPropsArgs{
+                        Title:      pulumi.String("My String"),
+                        Required:   pulumi.Bool(false),
+                        Type:       pulumi.String("string"),
+                        Enums: pulumi.StringArray{
+                            pulumi.String("my-option-1"),
+                            pulumi.String("my-option-2"),
+                        },
+                        EnumColors: pulumi.StringMap{
+                            "my-option-1": pulumi.String("red"),
+                            "my-option-2": pulumi.String("green"),
+                        },
+                    },
+                },
 			},
       // highlight-end
 		})
@@ -464,7 +475,7 @@ String validations support the following operators:
 <Tabs groupId="validation-definition" defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Array", value: "array"},
-{label: "Terraform - coming soon", value: "tf"},
+{label: "Terraform", value: "tf"},
 {label: "Pulumi - coming soon", value: "pulumi"}
 ]}>
 
@@ -510,4 +521,32 @@ String validations support the following operators:
 ```
 
 </TabItem>
+
+<TabItem value="tf">
+
+```hcl showLineNumbers
+
+resource "port_blueprint" "myBlueprint" {
+  # ...blueprint properties
+  # highlight-start
+  properties = {
+    string_props = {
+      "myStringProp" = {
+        title      = "My string"
+        required   = false
+        // highlight-start
+        min_length = 1
+        max_length = 32
+        pattern    = "^[a-zA-Z0-9-]*-service$"
+        // highlight-end
+      }
+    }
+  }
+  # highlight-end
+}
+
+```
+
+</TabItem>
+
 </Tabs>

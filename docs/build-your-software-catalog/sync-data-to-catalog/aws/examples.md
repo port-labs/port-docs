@@ -2671,13 +2671,13 @@ In this step-by-step example, you will export your `CloudFormation Stacks` to Po
 
    - **CloudFormation Stack** - will represent CloudFormation Stacks from the AWS account.
 
-  You may use the following definition:
+   You may use the following definition:
 
-  <details>
-  <summary> CloudFormationStack blueprint </summary>
+    <details>
+    <summary> CloudFormationStack blueprint </summary>
 
-  ```json showLineNumbers
-  {
+   ```json showLineNumbers
+   {
     "identifier": "cloudFormationStack",
     "description": "This blueprint represents a service in our software catalog",
     "title": "CloudFormation Stack",
@@ -2764,144 +2764,144 @@ In this step-by-step example, you will export your `CloudFormation Stacks` to Po
     "mirrorProperties": {},
     "calculationProperties": {},
     "relations": {}
-  }
-  ```
+   }
+   ```
 
-  </details>
+    </details>
 
 2. Upload the `config.json` file to the exporter's S3 bucket:
 
-  <details>
-  <summary> Port AWS exporter config.json </summary>
+    <details>
+    <summary> Port AWS exporter config.json </summary>
 
-  ```json showLineNumbers
-  {
-    "kind": "AWS::CloudFormation::Stack",
-    "port": {
-      "entity": {
-        "mappings": [
-          {
-            "identifier": ".StackName",
-            "title": ".StackName",
-            "blueprint": "cloudFormationStack",
-            "properties": {
-              "lastUpdated": ".LastUpdatedTime",
-              "resources": ".StackResources",
-              "createdAt": ".CreationTime",
-              "status": ".StackStatus",
-              "link": "\"https://console.aws.amazon.com/go/view?arn=\" + .StackId",
-              "template": ".TemplateBody",
-              "tags": ".Tags"
-            }
-          }
-        ]
-      }
-    }
-  }
-  ```
+   ```json showLineNumbers
+   {
+     "kind": "AWS::CloudFormation::Stack",
+     "port": {
+       "entity": {
+         "mappings": [
+           {
+             "identifier": ".StackName",
+             "title": ".StackName",
+             "blueprint": "cloudFormationStack",
+             "properties": {
+               "lastUpdated": ".LastUpdatedTime",
+               "resources": ".StackResources",
+               "createdAt": ".CreationTime",
+               "status": ".StackStatus",
+               "link": "\"https://console.aws.amazon.com/go/view?arn=\" + .StackId",
+               "template": ".TemplateBody",
+               "tags": ".Tags"
+             }
+           }
+         ]
+       }
+     }
+   }
+   ```
 
-  </details>
+    </details>
 
 3. Update the exporter's `IAM policy`:
 
-  <details>
-  <summary> IAM Policy </summary>
+    <details>
+    <summary> IAM Policy </summary>
 
-  ```json showLineNumbers
-  {
-    "Version": "2012-10-17",
-    "Statement": [
-      {
-        "Sid": "VisualEditor0",
-        "Effect": "Allow",
-        "Action": [
-          "cloudformation:DescribeStacks",
-          "cloudformation:DescribeStackResources",
-          "cloudformation:ListStacks",
-          "cloudformation:GetTemplate"
-        ],
-        "Resource": "*"
-      }
-    ]
-  }
-  ```
+   ```json showLineNumbers
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Sid": "VisualEditor0",
+         "Effect": "Allow",
+         "Action": [
+           "cloudformation:DescribeStacks",
+           "cloudformation:DescribeStackResources",
+           "cloudformation:ListStacks",
+           "cloudformation:GetTemplate"
+         ],
+         "Resource": "*"
+       }
+     ]
+   }
+   ```
 
-  </details>
+    </details>
 
 4. Optional: Create 2 event rules to trigger automatic syncing of changes in CloudFormation Stacks.
 
-  You may use the following CloudFormation Template:
+   You may use the following CloudFormation Template:
 
-  <details>
-  <summary> Event Rule CloudFormation Template </summary>
+    <details>
+    <summary> Event Rule CloudFormation Template </summary>
 
-    ```yaml showLineNumbers
-    EventRule0:
-    Type: AWS::Events::Rule
-    Properties:
-      EventBusName: default
-      EventPattern:
-        detail-type:
-          - AWS API Call via CloudTrail
-        source:
-          - aws.cloudformation
-        detail:
-          eventSource:
-            - cloudformation.amazonaws.com
-          eventName:
-            - prefix: CreateStack
-            - prefix: UpdateStack
-            - prefix: DeleteStack
-      Name: port-aws-exporter-sync-cloudformation-trails
-      State: ENABLED
-      Targets:
-        - Id: PortAWSExporterEventsQueue
-          Arn:
-            Fn::ImportValue:
-              Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
-          InputTransformer:
-            InputPathsMap:
-              eventName: $.detail.eventName
-              awsRegion: $.detail.awsRegion
-              stackName: $.detail.requestParameters.stackName
-            InputTemplate: |-
-              {
-                  "resource_type": "AWS::CloudFormation::Stack",
-                  "region": "\"<awsRegion>\"",
-                  "identifier": "if \"<stackName>\" | startswith(\"arn:\") then \"<stackName>\" | split(\"/\")[1] else \"<stackName>\" end",
-                  "action": "if \"<eventName>\" | test(\"DeleteStack[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
-              }
-    EventRule1:
-      Type: AWS::Events::Rule
-      Properties:
-        EventBusName: default
-        EventPattern:
-          detail-type:
-            - CloudFormation Stack Status Change
-          source:
-            - aws.cloudformation
-        Name: port-aws-exporter-sync-cloudformation-status-change-trails
-        State: ENABLED
-        Targets:
-          - Id: PortAWSExporterEventsQueue
-            Arn:
-              Fn::ImportValue:
-                Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
-            InputTransformer:
-              InputPathsMap:
-                region: $.region
-                stackId: $.detail.stack-id
-                status: $.detail.status-details.status
-              InputTemplate: |-
-                {
-                    "resource_type": "AWS::CloudFormation::Stack",
-                    "region": "\"<region>\"",
-                    "identifier": "\"<stackId>\" | split(\"/\")[1]",
-                    "action": "if \"<status>\" == \"DELETE_COMPLETE\" then \"delete\" else \"upsert\" end"
-                }
-    ```
+   ```yaml showLineNumbers
+   EventRule0:
+   Type: AWS::Events::Rule
+   Properties:
+     EventBusName: default
+     EventPattern:
+       detail-type:
+         - AWS API Call via CloudTrail
+       source:
+         - aws.cloudformation
+       detail:
+         eventSource:
+           - cloudformation.amazonaws.com
+         eventName:
+           - prefix: CreateStack
+           - prefix: UpdateStack
+           - prefix: DeleteStack
+     Name: port-aws-exporter-sync-cloudformation-trails
+     State: ENABLED
+     Targets:
+       - Id: PortAWSExporterEventsQueue
+         Arn:
+           Fn::ImportValue:
+             Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+         InputTransformer:
+           InputPathsMap:
+             eventName: $.detail.eventName
+             awsRegion: $.detail.awsRegion
+             stackName: $.detail.requestParameters.stackName
+           InputTemplate: |-
+             {
+                 "resource_type": "AWS::CloudFormation::Stack",
+                 "region": "\"<awsRegion>\"",
+                 "identifier": "if \"<stackName>\" | startswith(\"arn:\") then \"<stackName>\" | split(\"/\")[1] else \"<stackName>\" end",
+                 "action": "if \"<eventName>\" | test(\"DeleteStack[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
+             }
+   EventRule1:
+     Type: AWS::Events::Rule
+     Properties:
+       EventBusName: default
+       EventPattern:
+         detail-type:
+           - CloudFormation Stack Status Change
+         source:
+           - aws.cloudformation
+       Name: port-aws-exporter-sync-cloudformation-status-change-trails
+       State: ENABLED
+       Targets:
+         - Id: PortAWSExporterEventsQueue
+           Arn:
+             Fn::ImportValue:
+               Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+           InputTransformer:
+             InputPathsMap:
+               region: $.region
+               stackId: $.detail.stack-id
+               status: $.detail.status-details.status
+             InputTemplate: |-
+               {
+                   "resource_type": "AWS::CloudFormation::Stack",
+                   "region": "\"<region>\"",
+                   "identifier": "\"<stackId>\" | split(\"/\")[1]",
+                   "action": "if \"<status>\" == \"DELETE_COMPLETE\" then \"delete\" else \"upsert\" end"
+               }
+   ```
 
-  </details>
+    </details>
 
 :::important IMPORTANT
 The AWS CloudFormation API can retrieve up to 100 resources per CloudFormation Stack.
@@ -2918,19 +2918,19 @@ Here's an example showing how to connect CloudFormation Stacks and Lambda functi
 <details>
 <summary> Add relations to the blueprint </summary>
 
-  ```json showLineNumbers
-  {
-    "relations": {
-      "lambdas": {
-        "title": "Created Lambdas",
-        "description": "The Lambda functions created from the CloudFormation Stack",
-        "target": "lambda",
-        "required": false,
-        "many": true
-      }
+```json showLineNumbers
+{
+  "relations": {
+    "lambdas": {
+      "title": "Created Lambdas",
+      "description": "The Lambda functions created from the CloudFormation Stack",
+      "target": "lambda",
+      "required": false,
+      "many": true
     }
   }
-  ```
+}
+```
 
 </details>
 
@@ -2952,5 +2952,608 @@ Here's an example showing how to connect CloudFormation Stacks and Lambda functi
 
 Make sure your [Lambda function configuration](#lambda) appears before your CloudFormation defintion in the `config.json`.
 
-
 Done! soon, you will be able to see any `CloudFormation Stacks`.
+
+## Mapping EC2 instances
+
+In this step-by-step example, you will export your `EC2 instances` to Port.
+
+1. Create the following Port blueprint:
+
+   - **EC2 Instance** - will represent EC2 instances from the AWS account.
+
+   You may use the following definitions:
+
+    <details>
+    <summary> EC2 instance blueprint </summary>
+
+   ```json showLineNumbers
+   {
+     "identifier": "ec2Instance",
+     "description": "This blueprint represents an AWS EC2 instance in our software catalog",
+     "title": "EC2 Instance",
+     "icon": "EC2",
+     "schema": {
+       "properties": {
+         "architecture": {
+           "type": "string",
+           "title": "Architecture",
+           "enum": ["i386", "x86_64", "arm64", "x86_64_mac", "arm64_mac"]
+         },
+         "availabilityZone": {
+           "type": "string",
+           "title": "Availability Zone"
+         },
+         "link": {
+           "type": "string",
+           "title": "Link",
+           "format": "url"
+         },
+         "platform": {
+           "type": "string",
+           "title": "Platform"
+         },
+         "state": {
+           "type": "string",
+           "title": "State",
+           "enum": [
+             "pending",
+             "running",
+             "shutting-down",
+             "terminated",
+             "stopping",
+             "stopped"
+           ],
+           "enumColors": {
+             "pending": "yellow",
+             "running": "green",
+             "shutting-down": "pink",
+             "stopped": "purple",
+             "stopping": "orange",
+             "terminated": "red"
+           }
+         },
+         "tags": {
+           "type": "array",
+           "title": "Tags"
+         },
+         "type": {
+           "type": "string",
+           "title": "Instance Type"
+         },
+         "vpcId": {
+           "type": "string",
+           "title": "VPC ID"
+         }
+       },
+       "required": []
+     },
+     "mirrorProperties": {},
+     "calculationProperties": {},
+     "relations": {}
+   }
+   ```
+
+    </details>
+
+2. Upload the `config.json` file to the exporter's S3 bucket:
+
+   <details>
+   <summary> Port AWS exporter config.json </summary>
+
+   ```json showLineNumbers
+   {
+     "resources": [
+       {
+         "kind": "AWS::EC2::Instance",
+         "selector": {
+           "query": ".State.Name | startswith(\"terminated\") | not"
+         },
+         "port": {
+           "entity": {
+             "mappings": [
+               {
+                 "identifier": ".InstanceId",
+                 "title": ".Tags[]? | select(.Key == \"Name\") | .Value",
+                 "blueprint": "ec2Instance",
+                 "properties": {
+                   "state": ".State.Name",
+                   "type": ".InstanceType",
+                   "vpcId": ".VpcId",
+                   "link": "\"https://console.aws.amazon.com/ec2/home?region=\" + .Placement.AvailabilityZone[:-1] + \"#InstanceDetails:instanceId=\" + .InstanceId",
+                   "availabilityZone": ".Placement.AvailabilityZone",
+                   "platform": ".PlatformDetails",
+                   "architecture": ".Architecture",
+                   "tags": ".Tags"
+                 }
+               }
+             ]
+           }
+         }
+       }
+     ]
+   }
+   ```
+
+   </details>
+
+3. Update the exporter's `IAM policy`:
+
+   <details>
+   <summary> IAM policy </summary>
+
+   ```json showLineNumbers
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Sid": "VisualEditor0",
+         "Effect": "Allow",
+         "Action": ["ec2:DescribeInstances", "ec2:DescribeInstanceStatus"],
+         "Resource": "*"
+       }
+     ]
+   }
+   ```
+
+   </details>
+
+4. Optional: create an event rule to trigger automatic syncing of changes in EC2 instances.
+
+   You may use the following CloudFormation template:
+
+   <details>
+   <summary> Event rule CloudFormation template </summary>
+
+   ```yaml showLineNumbers
+   AWSTemplateFormatVersion: "2010-09-09"
+   Description: The template used to create event rules for the Port AWS exporter.
+   Parameters:
+     PortAWSExporterStackName:
+       Description: Name of the Port AWS exporter stack name
+       Type: String
+       MinLength: 1
+       MaxLength: 255
+       AllowedPattern: ^[a-zA-Z][-a-zA-Z0-9]*$
+       Default: serverlessrepo-port-aws-exporter
+   Resources:
+     EC2InstanceTagsEventRule:
+       Type: AWS::Events::Rule
+       Properties:
+         EventBusName: default
+         EventPattern:
+           source:
+             - aws.ec2
+           detail-type:
+             - AWS API Call via CloudTrail
+           detail:
+             eventSource:
+               - ec2.amazonaws.com
+             eventName:
+               - prefix: DeleteTags
+               - prefix: CreateTags
+         Name: port-aws-exporter-sync-ec2-tags-trails
+         State: ENABLED
+         Targets:
+           - Id: PortAWSExporterEventsQueue
+             Arn:
+               Fn::ImportValue:
+                 Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+             InputTransformer:
+               InputPathsMap:
+                 awsRegion: $.detail.awsRegion
+                 eventName: $.detail.eventName
+                 requestInstanceId: $.detail.requestParameters.resourcesSet.items[0].resourceId
+               InputTemplate: |-
+                 {
+                   "resource_type": "AWS::EC2::Instance",
+                   "region": "\"<awsRegion>\"",
+                   "identifier": "\"<requestInstanceId>\"",
+                   "action": "\"upsert\""
+                 }
+     EC2InstanceStateChangeEventRule:
+       Type: AWS::Events::Rule
+       Properties:
+         EventBusName: default
+         EventPattern:
+           detail-type:
+             - EC2 Instance State-change Notification
+           source:
+             - aws.ec2
+         Name: port-aws-exporter-sync-ec2-instance-status-change-trails
+         State: ENABLED
+         Targets:
+           - Id: PortAWSExporterEventsQueue
+             Arn:
+               Fn::ImportValue:
+                 Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+             InputTransformer:
+               InputPathsMap:
+                 region: $.region
+                 instanceId: $.detail.instance-id
+                 status: $.detail.state
+               InputTemplate: |-
+                 {
+                     "resource_type": "AWS::EC2::Instance",
+                     "region": "\"<region>\"",
+                     "identifier": "\"<instanceId>\"",
+                     "action": "if \"<status>\" == \"terminated\" then \"delete\" else \"upsert\" end"
+                 }
+   ```
+
+   </details>
+
+Done! soon, you will be able to see any `EC2 instances`
+
+## Mapping Elastic load balancers
+
+In this step-by-step example, you will export your `Load balancers` to Port.
+
+1. Create the following Port blueprint:
+
+   - **Load Balancer** - will represent load balancers from the AWS account.
+
+  You may use the following definitions:
+
+    <details>
+    <summary> Load balancer blueprint </summary>
+
+   ```json showLineNumbers
+   {
+    "identifier": "loadBalancer",
+    "description": "This blueprint represents an AWS Load Balancer in our software catalog",
+    "title": "Load Balancer",
+    "icon": "AWS",
+    "schema": {
+      "properties": {
+        "state": {
+          "type": "string",
+          "title": "State",
+          "default": "active",
+          "enum": [
+            "provisioning",
+            "active",
+            "failed",
+            "active_impaired"
+          ],
+          "enumColors": {
+            "active": "green",
+            "failed": "red",
+            "provisioning": "yellow",
+            "active_impaired": "orange"
+          }
+        },
+        "type": {
+          "type": "string",
+          "title": "Type",
+          "default": "application",
+          "enum": [
+            "application",
+            "network",
+            "gateway"
+          ]
+        },
+        "scheme": {
+          "type": "string",
+          "title": "Scheme"
+        },
+        "vpcId": {
+          "type": "string",
+          "title": "Vpc ID"
+        },
+        "availabilityZones": {
+          "type": "array",
+          "title": "Availability Zones"
+        },
+        "dnsName": {
+          "type": "string",
+          "title": "DNS Name"
+        },
+        "securityGroup": {
+          "type": "array",
+          "title": "Security Group"
+        },
+        "arn": {
+          "type": "string",
+          "title": "ARN"
+        },
+        "link": {
+          "type": "string",
+          "format": "url",
+          "title": "Link"
+        },
+        "listeners": {
+          "type": "array",
+          "title": "Listeners"
+        },
+        "attributes": {
+          "type": "array",
+          "title": "Attributes"
+        },
+        "tags": {
+          "type": "array",
+          "title": "Tags"
+        }
+      },
+      "required": []
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "relations": {
+      "region": {
+        "title": "Region",
+        "target": "region",
+        "required": false,
+        "many": false
+      }
+    }
+  }
+   ```
+
+    </details>
+
+2. Upload the `config.json` file to the exporter's S3 bucket:
+
+   <details>
+   <summary> Port AWS exporter config.json </summary>
+
+   ```json showLineNumbers
+   {
+     "resources": [
+       {
+        "kind":"AWS::ElasticLoadBalancingV2::LoadBalancer",
+        "port":{
+            "entity":{
+              "mappings":[
+                  {
+                    "identifier":".LoadBalancerName",
+                    "title":".LoadBalancerName",
+                    "blueprint":"loadBalancer",
+                    "properties":{
+                        "link":"\"https://console.aws.amazon.com/go/view?arn=\" + .LoadBalancerArn",
+                        "state":".State.Code",
+                        "type":".Type",
+                        "scheme":".Scheme",
+                        "vpcId":".VpcId",
+                        "availabilityZones":".AvailabilityZones",
+                        "dnsName":".DNSName",
+                        "securityGroup":".SecurityGroups",
+                        "listeners":".Listeners",
+                        "attributes":".Attributes",
+                        "tags":".Tags",
+                        "arn":".LoadBalancerArn"
+                    },
+                    "relations":{
+                        "region":".LoadBalancerArn | split(\":\") | .[3]"
+                    }
+                  }
+              ]
+            }
+        }
+      }
+     ]
+   }
+   ```
+
+   </details>
+
+3. Update the exporter's `IAM policy`:
+
+   <details>
+   <summary> IAM policy </summary>
+
+   ```json showLineNumbers
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Sid": "VisualEditor0",
+         "Effect": "Allow",
+         "Action": [
+            "elasticloadbalancing:DescribeLoadBalancers",
+            "elasticloadbalancing:DescribeLoadBalancerAttributes",
+            "elasticloadbalancing:DescribeListeners",
+            "elasticloadbalancing:DescribeTags",
+            "ec2:DescribeSecurityGroups"
+          ],
+         "Resource": "*"
+       }
+     ]
+   }
+   ```
+
+   </details>
+
+4. Optional: create an event rule to trigger automatic syncing of changes in load balancers.
+
+   You may use the following CloudFormation template:
+
+   <details>
+   <summary> Event rule CloudFormation template </summary>
+
+   ```yaml showLineNumbers
+   AWSTemplateFormatVersion: "2010-09-09"
+   Description: The template used to create event rules for the Port AWS exporter.
+   Parameters:
+     PortAWSExporterStackName:
+       Description: Name of the Port AWS exporter stack name
+       Type: String
+       MinLength: 1
+       MaxLength: 255
+       AllowedPattern: ^[a-zA-Z][-a-zA-Z0-9]*$
+       Default: serverlessrepo-port-aws-exporter
+   Resources:
+    LoadBalancerCreateEventRule:
+      Type: AWS::Events::Rule
+      Properties:
+        EventBusName: default
+        EventPattern:
+          source:
+            - aws.elasticloadbalancing
+          detail-type:
+            - AWS API Call via CloudTrail
+          detail:
+            eventSource:
+              - elasticloadbalancing.amazonaws.com
+            eventName:
+              - prefix: CreateLoadBalancer
+        Name: port-aws-exporter-sync-elb-create-trails
+        State: ENABLED
+        Targets:
+          - Id: PortAWSExporterEventsQueue
+            Arn:
+              Fn::ImportValue:
+                Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+            InputTransformer:
+              InputPathsMap:
+                awsRegion: $.detail.awsRegion
+                eventName: $.detail.eventName
+                requestElbName: $.detail.requestParameters.name
+              InputTemplate: |-
+                {
+                  "resource_type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+                  "region": "\"<awsRegion>\"",
+                  "identifier": "\"<requestElbName>\"",
+                  "action": "if \"<eventName>\" | test(\"DeleteLoadBalancer[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
+                }
+    LoadBalancerUpdateEventRule:
+      Type: AWS::Events::Rule
+      Properties:
+        EventBusName: default
+        EventPattern:
+          source:
+            - aws.elasticloadbalancing
+          detail-type:
+            - AWS API Call via CloudTrail
+          detail:
+            eventSource:
+              - elasticloadbalancing.amazonaws.com
+            eventName:
+              - prefix: DeleteLoadBalancer
+              - prefix: SetSecurityGroups
+              - prefix: ModifyLoadBalancerAttributes
+        Name: port-aws-exporter-sync-elb-update-trails
+        State: ENABLED
+        Targets:
+          - Id: PortAWSExporterEventsQueue
+            Arn:
+              Fn::ImportValue:
+                Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+            InputTransformer:
+              InputPathsMap:
+                awsRegion: $.detail.awsRegion
+                eventName: $.detail.eventName
+                requestElbArn: $.detail.requestParameters.loadBalancerArn
+              InputTemplate: |-
+                {
+                  "resource_type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+                  "region": "\"<awsRegion>\"",
+                  "identifier": "\"<requestElbArn>\" | split(\"/\") | .[2]",
+                  "action": "if \"<eventName>\" | test(\"DeleteLoadBalancer[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
+                }
+    LoadBalancerTagsEventRule:
+      Type: AWS::Events::Rule
+      Properties:
+        EventBusName: default
+        EventPattern:
+          source:
+            - aws.elasticloadbalancing
+          detail-type:
+            - AWS API Call via CloudTrail
+          detail:
+            eventSource:
+              - elasticloadbalancing.amazonaws.com
+            eventName:
+              - prefix: RemoveTags
+              - prefix: AddTags
+        Name: port-aws-exporter-sync-elb-tags-trails
+        State: ENABLED
+        Targets:
+          - Id: PortAWSExporterEventsQueue
+            Arn:
+              Fn::ImportValue:
+                Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+            InputTransformer:
+              InputPathsMap:
+                awsRegion: $.detail.awsRegion
+                eventName: $.detail.eventName
+                requestElbArn: $.detail.requestParameters.resourceArns[0]
+              InputTemplate: |-
+                {
+                  "resource_type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+                  "region": "\"<awsRegion>\"",
+                  "identifier": "\"<requestElbArn>\" | split(\"/\") | .[2]",
+                  "action": "if \"<eventName>\" | test(\"DeleteLoadBalancer[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
+                }
+    LoadBalancerUpsertListenersEventRule:
+      Type: AWS::Events::Rule
+      Properties:
+        EventBusName: default
+        EventPattern:
+          source:
+            - aws.elasticloadbalancing
+          detail-type:
+            - AWS API Call via CloudTrail
+          detail:
+            eventSource:
+              - elasticloadbalancing.amazonaws.com
+            eventName:
+              - prefix: CreateListener
+              - prefix: ModifyListener
+        Name: port-aws-exporter-sync-elb-upsert-listener-trails
+        State: ENABLED
+        Targets:
+          - Id: PortAWSExporterEventsQueue
+            Arn:
+              Fn::ImportValue:
+                Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+            InputTransformer:
+              InputPathsMap:
+                awsRegion: $.detail.awsRegion
+                eventName: $.detail.eventName
+                responseElbArn: $.detail.responseElements.listeners[0].loadBalancerArn
+              InputTemplate: |-
+                {
+                  "resource_type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+                  "region": "\"<awsRegion>\"",
+                  "identifier": "\"<responseElbArn>\" | split(\"/\") | .[2]",
+                  "action": "if \"<eventName>\" | test(\"DeleteLoadBalancer[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
+                }
+    LoadBalancerDeleteListenersEventRule:
+      Type: AWS::Events::Rule
+      Properties:
+        EventBusName: default
+        EventPattern:
+          source:
+            - aws.elasticloadbalancing
+          detail-type:
+            - AWS API Call via CloudTrail
+          detail:
+            eventSource:
+              - elasticloadbalancing.amazonaws.com
+            eventName:
+              - prefix: DeleteListener
+        Name: port-aws-exporter-sync-elb-delete-listener-trails
+        State: ENABLED
+        Targets:
+          - Id: PortAWSExporterEventsQueue
+            Arn:
+              Fn::ImportValue:
+                Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+            InputTransformer:
+              InputPathsMap:
+                awsRegion: $.detail.awsRegion
+                eventName: $.detail.eventName
+                requestElbArn: $.detail.requestParameters.listenerArn
+              InputTemplate: |-
+                {
+                  "resource_type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+                  "region": "\"<awsRegion>\"",
+                  "identifier": "\"<requestElbArn>\" | split(\"/\") | .[2]",
+                  "action": "if \"<eventName>\" | test(\"DeleteLoadBalancer[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
+                }
+   ```
+
+   </details>
+
+Done! soon, you will be able to see any `Load balancers`

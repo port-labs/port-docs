@@ -73,13 +73,14 @@ The `path` key receives a path of chained relations, which lead up to a blueprin
 <TabItem value="basic">
 
 ```hcl showLineNumbers
-resource "port-labs_blueprint" "myBlueprint" {
+resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
-  mirror_properties {
-    identifier = "myMirrorProp"
-    title      = "My mirror property"
-    path       = "myRelation.myProperty"
+  mirror_properties = {
+    myMirrorProp = {
+      title = "My mirror property"
+      path  = "myRelation.myProperty"
+    }
   }
   # highlight-end
 }
@@ -103,23 +104,21 @@ resource "port-labs_blueprint" "myBlueprint" {
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Blueprint
+from port_pulumi import Blueprint,BlueprintPropertiesArgs,BlueprintMirrorPropertiesArgs
 
 blueprint = Blueprint(
     "myBlueprint",
     identifier="myBlueprint",
     title="My Blueprint",
-    properties=[
-    # blueprint properties
-    ],
+    properties=BlueprintPropertiesArgs(
+        # blueprint properties
+    ),
     # highlight-start
-    mirrorProperties=[
-        {
-            "identifier": "myMirrorProp",
-            "title": "My mirror property",
-            "path": "myRelation.myProperty"
-        }
-    ],
+    mirror_properties={
+        "myMirrorProp": BlueprintMirrorPropertiesArgs(
+            title="My mirror property", path="myRelation.myStringProp"
+        )
+    },
     # highlight-end
 )
 ```
@@ -130,22 +129,21 @@ blueprint = Blueprint(
 
 ```typescript showLineNumbers
 import * as pulumi from "@pulumi/pulumi";
-import * as port from "@port-labs/pulumi";
+import * as port from "@port-labs/port";
 
 export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
-  properties: [
+  properties: {
     // blueprint properties
-  ],
+  },
   // highlight-start
-  mirrorProperties: [
-    {
-      identifier: "myMirrorProp",
+  mirrorProperties: {
+    myMirrorProp: {
       title: "My mirror property",
       path: "myRelation.myProperty",
     },
-  ],
+  },
   // highlight-end
 });
 ```
@@ -157,22 +155,21 @@ export const blueprint = new port.Blueprint("myBlueprint", {
 ```javascript showLineNumbers
 "use strict";
 const pulumi = require("@pulumi/pulumi");
-const port = require("@port-labs/pulumi");
+const port = require("@port-labs/port");
 
 const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
-  properties: [
+  properties: {
     // blueprint properties
-  ],
+  },
   // highlight-start
-  mirrorProperties: [
-    {
-      identifier: "myMirrorProp",
+  mirrorProperties: {
+    myMirrorProp: {
       title: "My mirror property",
       path: "myRelation.myProperty",
     },
-  ],
+  },
   // highlight-end
 });
 
@@ -186,7 +183,7 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi/sdk/go/port"
+	"github.com/port-labs/pulumi-port/sdk/go/port"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -197,11 +194,10 @@ func main() {
 			Title:      pulumi.String("My Blueprint"),
 			// blueprint properties..
       # highlight-start
-			MirrorProperties: port.BlueprintMirrorPropertyArray{
-			  &port.BlueprintMirrorPropertyArgs{
-			    Identifier:  pulumi.String("myMirrorProp"),
-			    Title:       pulumi.String("My mirror property"),
-			    Path:        pulumi.String("myRelation.myProperty"),
+			MirrorProperties: port.BlueprintMirrorPropertiesMap{
+              "myMirrorProp": port.BlueprintMirrorPropertiesArgs{
+                    Title: pulumi.String("My mirror property"),
+                    Path:  pulumi.String("myRelation.myProperty"),
 			  },
 			},
       # highlight-end

@@ -93,22 +93,24 @@ In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we
 <Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Select (Enum)", value: "enum"},
-{label: "Array - coming soon", value: "array"}
+{label: "Array", value: "array"}
 ]}>
 
 <TabItem value="basic">
 
 ```hcl showLineNumbers
-resource "port-labs_action" "myAction" {
+resource "port_action" "myAction" {
   # ...action properties
   # highlight-start
-  user_properties {
-    identifier  = "myTextInput"
-    title       = "My text input"
-    description = "My text input"
-    required    = false
-    type        = "string"
-    default     = "My default"
+  user_properties = {
+    string_props = {
+      myTextInput = {
+        title       = "My text input"
+        description = "My text input"
+        required    = false
+        default     = "My default"
+      }
+    }
   }
   # highlight-end
 }
@@ -119,16 +121,18 @@ resource "port-labs_action" "myAction" {
 <TabItem value="enum">
 
 ```hcl showLineNumbers
-resource "port-labs_action" "myAction" {
+resource "port_action" "myAction" {
   # ...action properties
   # highlight-start
-  user_properties {
-    identifier  = "myTextSelectInput"
-    title       = "My text Select input"
-    description = "My text select input"
-    required    = false
-    type        = "string"
-    enum        = ["my-option-1", "my-option-2"]
+  user_properties = {
+    string_props = {
+      myTextSelectInput = {
+        title       = "My text select input"
+        description = "My text select input"
+        required    = false
+        enum        = ["my-option-1", "my-option-2"]
+      }
+    }
   }
   # highlight-end
 }
@@ -136,6 +140,30 @@ resource "port-labs_action" "myAction" {
 ```
 
 </TabItem>
+
+<TabItem value="array">
+
+```hcl showLineNumbers
+
+resource "port_action" "myAction" {
+  # ...action properties
+  # highlight-start
+  user_properties = {
+    array_props = {
+      myTextArrayInput = {
+        title       = "My text array input"
+        description = "My text array input"
+        required    = false
+        string_items = {}
+      }
+    }
+  }
+  # highlight-end
+}
+```
+
+</TabItem>
+
 </Tabs>
 
 ## Validate text
@@ -149,7 +177,7 @@ Text validations support the following operators:
 <Tabs groupId="validation-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Array", value: "array"},
-{label: "Terraform - coming soon", value: "tf"}
+{label: "Terraform", value: "tf"}
 ]}>
 
 <TabItem value="basic">
@@ -194,4 +222,30 @@ Text validations support the following operators:
 ```
 
 </TabItem>
+
+<TabItem value="tf">
+
+```hcl showLineNumbers
+resource "port_action" "myAction" {
+  # ...action properties
+  # highlight-start
+  user_properties = {
+    string_props = {
+      myTextInput = {
+        title       = "My text input"
+        description = "My text input"
+        required    = false
+        default     = "My default"
+        minLength   = 1
+        maxLength   = 32
+        pattern     = "^[a-zA-Z0-9-]*-service$"
+      }
+    }
+  }
+  # highlight-end
+}
+```
+
+</TabItem>
+
 </Tabs>

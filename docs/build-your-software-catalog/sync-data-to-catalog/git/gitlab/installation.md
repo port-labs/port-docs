@@ -4,90 +4,65 @@ sidebar_position: 1
 
 # Installation
 
-## Prerequisites
+:::note Prerequisites
 
-- A registered organization in Port;
-- Your Port user role is set to `Admin`;
-- A GitLab `personal access token`, the token requires the following roles and scopes:
-  - **Role:** Owner;
-  - **Scopes:** api;
+- A gitlab account with admin privileges;
+- A gitlab group account with `api` privileges (Refer to the [permissions](./gitlab.md#permissions) section for more information);
+- A kubernetes cluster to install the integration on;
+- Your Port user role is set to `Admin`.
 
-:::note
-In case a GitLab group has subgroups, the parent group's access token can be used to ingest information from the subgroups.
 :::
 
-## Installation
+1. Sign in to GitLab and go to your desired group's settings:
 
-1. Head to [Port](https://app.getport.io/dev-portal) and look at the DevPortal Builder page.
-2. At the top right corner click the `Add` button and then click `Choose from template`.
+   ![GitLab group settings](../../../../../static/img/integrations/gitlab/GitLabGroupSettings.png)
 
-   ![Choose From Template](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/gitlab/choose-from-template-button.png)
+2. In the "Access Tokens" section, you need to provide the token details, including the name and an optional expiration date. Additionally, select the api scope, and then proceed to click on the "Create access token" button.
 
-3. In the template center choose `Map your git ecosystem`.
+   ![GitLab group access tokens](../../../../../static/img/integrations/gitlab/GitLabGroupAccessTokens.png)
 
-   ![Choose a use case](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/gitlab/template-center.png)
+3. Click "Create group access token";
+4. Copy the generated token and use it when deploying the integration in the following steps;
+5. Click the ingest button in Port Builder Page for the blueprint you want to ingest using GitLab:
 
-4. Select `GitLab` and click on the `Get this template` button.
+   ![DevPortal Builder ingest button](../../../../../static/img/integrations/gitlab/DevPortalBuilderIngestButton.png)
 
-   ![Get this template](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/gitlab/get-this-template.png)
-   In the background, Port will create the relevant [blueprints](../../../define-your-data-model/setup-blueprint/setup-blueprint.md) and [webhook](../../webhook/webhook.md) configurations for the GitLab integration.
+6. Select GitLab under the Git providers category:
 
-5. A codeblock will appear with commands that you need to run in order to setup the integration in GitLab:
+   ![DevPortal Builder GitLab option](../../../../../static/img/integrations/gitlab/DevPortalBuilderGitLabOption.png)
 
-   ![Script run commands](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/gitlab/gitlab-script-step.png)
+7. Copy the helm installation command and set the [required configuration](#configuring-the-gitlab-integration);
 
-   The following parameters will be filled automatically by Port:
+8. Run the helm command with the updated parameters to install the integration in your Kubernetes cluster.
 
-   - `PORT_CLIENT_ID` - your client ID;
-   - `PORT_CLIENT_SECRET` - your client secret;
+## Self-hosted GitLab
 
-     You will need to fill in the following parameters:
+In case you are using a self-hosted GitLab instance, you need to add the following line to your helm installation command:
 
-   - `GITLAB_API_TOKEN` - Your `personal access token` from the [prerequisites](#prerequisites);
+```bash showLineNumbers
+	--set integration.config.gitlabHost="https://you-gitlab-url"
+```
 
-     In case you are using a self-hosted installation of GitLab, you will also need to fill in the following parameter:
+## Configuring the GitLab integration
 
-   - `GITLAB_API_URL` - the URL to your GitLab installation (for example, `https://gitlab.getport.io`);
+### tokenMapping
 
-     For each group you can define which projects will be exported to Port catalog.
-     Port will only ingest the merge requests, issues, pipeline etc of the defined projects.
+The GitLab integration support fetching data related to specific paths in your GitLab groups. The integration is also able to fetch data from different GitLab parent groups by providing additional group tokens. In order to do so, you need to map the desired paths to the relevant access tokens.
+The `tokenMapping` parameter supports specifying the paths that the integration will search for files and information in, using [globPatterns](https://www.malikbrowne.com/blog/a-beginners-guide-glob-patterns).
 
-   - `GROUPS_TO_REPOS` - A Projects to group mapping, refer to the tip section below for a syntax example showing how to format this script parameter
+Mapping format:
 
-   - `SKIP_WEBHOOK_CREATION` - This option allows you to skip the webhook creation process and get only the current entities in your GitLab.
+```showLineNumbers
+{"MY_FIRST_GITLAB_PROJECT_GROUP_TOKEN": ["*/MyFirstGitLabProject/**", "*/MySecondGitLabProject/*"]}
+```
 
-   :::note
-   In case `SKIP_WEBHOOK_CREATION` option is set to `true` - the GitLab `personal access token` does not require the `api` scope, and can instead be limited to the `read_api` scope.
-   :::
+Example:
 
-   :::tip
-   The complete commands required to run the script are provided here as reference:
+```showLineNumbers
+{"glpat-QXbeg-Ev9xtu5_5FsaAQ": ["*/DevopsTeam/*Service", "*/RnDTeam/*Service"]}
+```
 
-   ```bash showLineNumbers
-   export PORT_CLIENT_ID="YOUR_CLIENT_ID"
-   export PORT_CLIENT_SECRET="YOUR_CLIENT_SECRET"
+### appHost
 
-   # Please enter your GitLab API token and group ID here
-   export GITLAB_API_TOKEN=""
-   # If your GitLab installation is self-hosted, please enter your GitLab URL here
-   # For example - https://gitlab.getport.io
-   # If you are using https://gitlab.com, do not edit this field
-   export GITLAB_API_URL=""
-
-   # A comma-separated list of projects per group to bring into the catalog
-   # For example - "GroupName1:Project1,Project2;GroupName2:*;"
-   # GROUPS_TO_REPOS="GroupName:*;" means all projects in the group "GroupName"
-   # GROUPS_TO_REPOS="*" means all projects in all groups
-   export GROUPS_TO_REPOS="*"
-
-   # Set it to 'true' in order to skip the webhook creation process
-   export SKIP_WEBHOOK_CREATION='false'
-
-   curl -s https://raw.githubusercontent.com/port-labs/template-assets/main/gitlab/install.sh | bash
-   ```
-
-   :::
-
-6. Run the bash commands and that it, you're done!
-
-   Existing repositories (projects), merge requests and other GitLab objects will be mapped as Port entities. In addition, a [GitLab webhook](https://docs.gitlab.com/ee/user/project/integrations/webhooks.html) will be configured, so every update to GitLab objects tracked by the integration will be reflected in Port (for example - new projects, updates to merge requests and more).
+In order for the GitLab integration to update the data in Port on every change in the GitLab repository, you need to specify the `appHost` parameter.
+The `appHost` parameter should be set to the `url` of your GitLab integration instance. In addition, your GitLab instance (whether it is GItLab SaaS or a self-hosted version of GitLab) needs to have the option to send webhook requests to the Gitlab integration instance, so please configure your network accordingly.

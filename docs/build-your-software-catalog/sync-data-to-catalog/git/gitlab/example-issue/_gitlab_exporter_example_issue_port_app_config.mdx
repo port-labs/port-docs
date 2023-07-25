@@ -1,0 +1,29 @@
+<details>
+
+<summary> Ocean integration configuration </summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: issue
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .id | tostring
+          title: .title
+          blueprint: '"issue"'
+          properties:
+            creator: .author.name
+            status: .state
+            createdAt: .created_at
+            closedAt: .closed_at
+            updatedAt: .updated_at
+            description: .description
+            link: .web_url
+            labels: "[.labels[]]"
+          relations:
+            microservice: .references.full | gsub("#.+"; "")
+```
+
+</details>

@@ -7,7 +7,7 @@ description: Knative quickstart
 
 [Argo CD](https://argo-cd.readthedocs.io/en/stable/) is an open-source continuous delivery tool based on GitOps methodology. Argo automates the deployment of applications by monitoring your cluster and the infrastructure defined declaratively in a Git repository, and then reconciling any disparities.
 
-Using Port's Kubernetes Exporter, you can keep track of all ArgoCD resources across your different clusters and export all of the data to Port. You will use built in metadata from your kubernetes resources and CRDs to create Entities in Port and keep track of their state.
+Using Port's Kubernetes Exporter, you can keep track of all ArgoCD resources across your different clusters and export all of the data to Port. You will use built in metadata from your kubernetes resources and CRDs to create entities in Port and keep track of their state.
 
 :::tip
 Get to know the basics of our Kubernetes exporter [here!](../kubernetes.md)
@@ -28,16 +28,16 @@ In this use-case, you will use a custom bash script which will assist you in the
 For more information about the k8s exporter installation script click [here](../installation-script.md)!
 :::
 
-The script will install the helm chart to the Kubernetes cluster which is currently in kubectl context.
+The script will install the helm chart in the Kubernetes cluster which is currently in kubectl context.
 To view the context name of the cluster the exporter will be installed on, run:
 
 ```bash showLineNumbers
 kubectl config current-context
 ```
 
-## Setting up your Blueprints
+## Setting up your blueprints
 
-### Creating Blueprints using the installation script
+### Creating blueprints using the installation script
 
 The installation script provides a convenient way to create your blueprints. Using the `CUSTOM_BP_PATH` environment variable, you can fetch a pre-defined `blueprints.json` to create your blueprints.
 
@@ -69,11 +69,11 @@ This `blueprints.json` file defines the following blueprints:
 - `Workload` is an abstraction of Kubernetes objects which create and manage pods. By creating this blueprint, you can avoid creating a dedicated blueprint per Workload type, all of which will likely look pretty similar.
   Here is the list of kubernetes objects `Workload` will represent:
 
-* Deployment;
-* ReplicaSet;
-* StatefulSet;
-* DaemonSet;
-* Argo Rollouts (Only for Rollouts `blueprints.json`).
+  - Deployment;
+  - ReplicaSet;
+  - StatefulSet;
+  - DaemonSet;
+  - Argo Rollouts (Only for Rollouts `blueprints.json`).
 
 :::
 

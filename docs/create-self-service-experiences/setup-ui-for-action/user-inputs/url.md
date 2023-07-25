@@ -93,23 +93,25 @@ The URL input type can be used to store a link to any web resource, for example:
 <Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Select (Enum)", value: "enum"},
-{label: "Array - coming soon", value: "array"}
+{label: "Array", value: "array"}
 ]}>
 
 <TabItem value="basic">
 
 ```hcl showLineNumbers
-resource "port-labs_action" "myAction" {
+resource "port_action" "myAction" {
   # ...action properties
   # highlight-start
-  user_properties {
-    identifier  = "myUrlInput"
-    title       = "My url input"
-    description = "My url input"
-    required    = false
-    type        = "string"
-    format      = "url"
-    default     = "https://example.com"
+  user_properties = {
+    string_props = {
+      "myUrlInput" = {
+        title       = "My url input"
+        icon        = "My icon"
+        description = "My url input"
+        format      = "url"
+        default     = "https://example.com"
+      }
+    }
   }
   # highlight-end
 }
@@ -120,17 +122,42 @@ resource "port-labs_action" "myAction" {
 <TabItem value="enum">
 
 ```hcl showLineNumbers
-resource "port-labs_action" "myAction" {
+resource "port_action" "myAction" {
   # ...action properties
   # highlight-start
-  user_properties {
-    identifier  = "myUrlSelectInput"
-    title       = "My url select input"
-    description = "My url select input"
-    required    = false
-    type        = "string"
-    format      = "url"
-    enum        = ["https://example.com", "https://getport.io"]
+  user_properties = {
+    string_props = {
+      "myUrlSelectInput" = {
+        title       = "My url select input"
+        icon        = "My icon"
+        description = "My url select input"
+        format      = "url"
+        enum        = ["https://example.com", "https://getport.io"]
+      }
+    }
+  }
+  # highlight-end
+}
+```
+
+</TabItem>
+
+<TabItem value="array">
+
+```hcl showLineNumbers
+
+resource "port_action" "myAction" {
+  # ...action properties
+  # highlight-start
+  user_properties = {
+    array_props = {
+      "myUrlArrayInput" = {
+        title       = "My url array input"
+        icon        = "My icon"
+        description = "My url array input"
+        format      = "url"
+      }
+    }
   }
   # highlight-end
 }

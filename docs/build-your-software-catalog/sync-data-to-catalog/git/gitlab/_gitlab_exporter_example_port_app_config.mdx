@@ -1,0 +1,41 @@
+<details>
+
+<summary> Ocean integration configuration </summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: project
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .path_with_namespace | gsub(" "; "")
+          title: .name
+          blueprint: '"microservice"'
+          properties:
+            url: .web_url
+            description: .description
+            namespace: .namespace.name
+            full_path: .namespace.full_path
+  - kind: mergeRequest
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .id | tostring
+          title: .title
+          blueprint: '"mergeRequest"'
+          properties:
+            creator: .author.name
+            status: .state
+            createdAt: .created_at
+            updatedAt: .updated_at
+            description: .description
+            link: .web_url
+          relations:
+            microservice: .references.full | gsub("!.+"; "")
+```
+
+</details>

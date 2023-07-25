@@ -6,12 +6,16 @@ description: Ingest PagerDuty incidents and services into Port
 import PagerDutyServiceBlueprint from "./resources/pagerduty/\_example_pagerduty_service.mdx";
 import PagerDutyIncidentBlueprint from "./resources/pagerduty/\_example_pagerduty_incident.mdx";
 import PagerDutyWebhookConfig from "./resources/pagerduty/\_example_pagerduty_webhook_config.mdx";
+import PagerDutyWebhookHistory from "./resources/pagerduty/\_example_pagerduty_webhook_history_config.mdx";
+import PagerDutyScript from "./resources/pagerduty/\_example_pagerduty_shell_history_config.mdx";
 
 # PagerDuty
 
 In this example you are going to create a webhook integration between [PagerDuty](https://www.pagerduty.com/) and Port, which will ingest PagerDuty services and its related incidents into Port. This integration will involve setting up a webhook to receive notifications from PagerDuty whenever an incident is created or updated, allowing Port to ingest and process the incident entities accordingly.
 
-## Prerequisites
+## Import PagerDuty services and incidents
+
+### Prerequisites
 
 Create the following blueprint definitions and webhook configuration:
 
@@ -38,7 +42,7 @@ Remember to update the `WEBHOOK_SECRET` with the real secret you receive after s
 
 </details>
 
-## Create the PagerDuty webhook
+### Create the PagerDuty webhook
 
 1. Go to [PagerDuty](https://www.pagerduty.com/) and select the account you want to configure the webhook for.
 2. Navigate to **Integrations** in the navigation bar and click on **Generic Webhooks (v3)**.
@@ -99,3 +103,49 @@ In order to view the different events available in PagerDuty webhooks, [look her
 :::
 
 Done! any change that happens to your services or incidents in PagerDuty will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+
+## Import PagerDuty historical data
+
+In this example you are going to use the provided Bash script to fetch data from the PagerDuty API and ingest it to Port.
+
+The script extracts services and incidents from PagerDuty, and sends them to Port as microservice and incident entities respectively.
+
+### Prerequisites
+
+This example utilizes the same [blueprint](#prerequisites) definition from the previous section, along with a new webhook configuration:
+
+<details>
+<summary>PagerDuty webhook configuration for historical data</summary>
+
+Remember to update the `WEBHOOK_SECRET` with the real secret you receive after subscribing to the webhook in PagerDuty.
+<PagerDutyWebhookHistory/>
+
+</details>
+
+<details>
+<summary> PagerDuty Bash script for historical data </summary>
+
+<PagerDutyScript/>
+
+</details>
+
+### How to Run the script
+
+This script requires two configuration values:
+
+1. `PD_TOKEN`: your PagerDuty API token;
+2. `PORT_URL`: your Port webhook URL.
+
+Then trigger the script by running:
+
+```bash showLineNumbers
+bash pagerduty_to_port.sh
+```
+
+This script fetches services and incidents from PagerDuty and sends them to Port.
+
+:::tip
+The script writes the JSON payload for each service and incident to a file named `output.json`. This can be useful for debugging if you encounter any issues.
+:::
+
+Done! you can now import historical data from PagerDuty into Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
