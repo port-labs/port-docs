@@ -41,10 +41,9 @@ def extract_trivy_scan_data(trivy_file):
     for result in trivy_results:
         target = result.get("Target")
         vulnerabilities = result.get("Vulnerabilities", [])
-        index = 1
         for vulnerability in vulnerabilities:
             vulnerability_data = {
-                "id": remove_invalid_chars(target + "-" + vulnerability.get("VulnerabilityID", "") + "-" + str(index)),
+                "id": remove_invalid_chars(vulnerability.get("VulnerabilityID", "") + "-" + vulnerability.get("PkgName", "")),
                 "pkgName": vulnerability.get("PkgName", ""),
                 "version": vulnerability.get("InstalledVersion", ""),
                 "title": vulnerability.get("Title", ""),
@@ -55,7 +54,6 @@ def extract_trivy_scan_data(trivy_file):
                 "target": target
             }
             trivy_vulnerabilities.append(vulnerability_data)
-            index+=1
 
     entity_object = {
         "vulnerabilities": trivy_vulnerabilities,
