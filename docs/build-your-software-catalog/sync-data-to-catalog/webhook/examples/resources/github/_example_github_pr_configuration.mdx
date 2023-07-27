@@ -1,30 +1,16 @@
 ```json showLineNumbers
-{
-  "identifier": "pullRequestMapper",
-  "title": "Pull Request Mapper",
-  "description": "A webhook configuration for pull-request events from GitHub",
-  "icon": "Github",
-  "mappings": [
-    {
-      "blueprint": "pullRequest",
-      "filter": ".headers.\"X-GitHub-Event\" == \"pull_request\"",
-      "entity": {
-        "identifier": ".body.pull_request.id | tostring",
-        "title": ".body.pull_request.title",
-        "properties": {
-          "author": ".body.pull_request.user.login",
-          "url": ".body.pull_request.html_url"
-        }
+[
+  {
+    "blueprint": "pullRequest",
+    "filter": ".headers.\"X-GitHub-Event\" == \"pull_request\"",
+    "entity": {
+      "identifier": ".body.pull_request.id | tostring",
+      "title": ".body.pull_request.title",
+      "properties": {
+        "author": ".body.pull_request.user.login",
+        "url": ".body.pull_request.html_url"
       }
     }
-  ],
-  "enabled": true,
-  "security": {
-    "secret": "WEBHOOK_SECRET",
-    "signatureHeaderName": "X-Hub-Signature-256",
-    "signatureAlgorithm": "sha256",
-    "signaturePrefix": "sha256=",
-    "requestIdentifierPath": ".headers.\"X-GitHub-Delivery\""
   }
-}
+]
 ```

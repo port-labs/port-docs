@@ -1,31 +1,24 @@
 ```json showLineNumbers
-{
-  "identifier": "datadogAlertMapper",
-  "title": "Alert Mapper",
-  "description": "A webhook configuration for alerts/monitors events from Datadog",
-  "icon": "Datadog",
-  "mappings": [
-    {
-      "blueprint": "datadogAlert",
-      "entity": {
-        "identifier": ".body.alert_id | tostring",
-        "title": ".body.title",
-        "properties": {
-          "url": ".body.event_url",
-          "message": ".body.message",
-          "eventType": ".body.event_type",
-          "priority": ".body.priority",
-          "creator": ".body.creator",
-          "alertMetric": ".body.alert_metric",
-          "alertType": ".body.alert_type",
-          "tags": ".body.tags | split(\", \")"
-        },
-        "relations": {
-          "microservice": ".body.service"
-        }
+[
+  {
+    "blueprint": "datadogAlert",
+    "entity": {
+      "identifier": ".body.alert_id | tostring",
+      "title": ".body.title",
+      "properties": {
+        "url": ".body.event_url",
+        "message": ".body.message",
+        "eventType": ".body.event_type",
+        "priority": ".body.priority",
+        "creator": ".body.creator",
+        "alertMetric": ".body.alert_metric",
+        "alertType": ".body.alert_type",
+        "tags": ".body.tags | split(\", \")"
+      },
+      "relations": {
+        "microservice": ".body.service"
       }
     }
-  ],
-  "security": {}
-}
+  }
+]
 ```

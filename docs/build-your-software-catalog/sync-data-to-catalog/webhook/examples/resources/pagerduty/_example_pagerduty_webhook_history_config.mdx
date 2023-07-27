@@ -1,48 +1,35 @@
 ```json showLineNumbers
-{
-  "identifier": "pagerdutyHistoryMapper",
-  "title": "PagerDuty Mapper",
-  "description": "A webhook configuration to map PagerDuty Historical services and its related incidents to Port",
-  "icon": "pagerduty",
-  "mappings": [
-    {
-      "blueprint": "microservice",
-      "filter": ".body.event.event_type | startswith(\"service\")",
-      "entity": {
-        "identifier": ".body.event.data.identifier",
-        "title": ".body.event.data.title",
-        "properties": {
-          "status": ".body.event.data.properties.status"
-        }
-      }
-    },
-    {
-      "blueprint": "pagerdutyIncident",
-      "filter": ".body.event.event_type | startswith(\"incident\")",
-      "entity": {
-        "identifier": ".body.event.data.identifier",
-        "title": ".body.event.data.title",
-        "properties": {
-          "status": ".body.event.data.properties.status",
-          "url": ".body.event.data.properties.url",
-          "details": ".body.event.data.properties.details",
-          "priority": ".body.event.data.properties.priority",
-          "urgency": ".body.event.data.properties.urgency",
-          "responder": ".body.event.data.properties.responder",
-          "escalation_policy": ".body.event.data.properties.escalation_policy"
-        },
-        "relations": {
-          "microservice": ".body.event.data.relations.microservice"
-        }
+[
+  {
+    "blueprint": "microservice",
+    "filter": ".body.event.event_type | startswith(\"service\")",
+    "entity": {
+      "identifier": ".body.event.data.identifier",
+      "title": ".body.event.data.title",
+      "properties": {
+        "status": ".body.event.data.properties.status"
       }
     }
-  ],
-  "enabled": true,
-  "security": {
-    "signatureHeaderName": "X-Pagerduty-Signature",
-    "signatureAlgorithm": "sha256",
-    "signaturePrefix": "v1=",
-    "secret": "WEBHOOK_SECRET"
+  },
+  {
+    "blueprint": "pagerdutyIncident",
+    "filter": ".body.event.event_type | startswith(\"incident\")",
+    "entity": {
+      "identifier": ".body.event.data.identifier",
+      "title": ".body.event.data.title",
+      "properties": {
+        "status": ".body.event.data.properties.status",
+        "url": ".body.event.data.properties.url",
+        "details": ".body.event.data.properties.details",
+        "priority": ".body.event.data.properties.priority",
+        "urgency": ".body.event.data.properties.urgency",
+        "responder": ".body.event.data.properties.responder",
+        "escalation_policy": ".body.event.data.properties.escalation_policy"
+      },
+      "relations": {
+        "microservice": ".body.event.data.relations.microservice"
+      }
+    }
   }
-}
+]
 ```

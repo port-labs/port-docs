@@ -1,32 +1,21 @@
 ```json showLineNumbers
-{
-  "identifier": "sentryMapper",
-  "title": "Sentry mapper",
-  "description": "A webhook configuration to map Sentry Comments to Port",
-  "icon": "Sentry",
-  "mappings": [
-    {
-      "blueprint": "sentryComment",
-      "entity": {
-        "identifier": ".body.data.comment_id",
-        "title": "Comment Event",
-        "properties": {
-          "action": ".body.action",
-          "comment": ".body.data.comment",
-          "project": ".body.data.project_slug",
-          "issue_id": ".body.data.issue_id",
-          "timestamp": ".body.data.timestamp"
-        },
-        "relations": {
-          "sentryIssue": ".body.data.issue_id | tostring"
-        }
+[
+  {
+    "blueprint": "sentryComment",
+    "entity": {
+      "identifier": ".body.data.comment_id",
+      "title": "Comment Event",
+      "properties": {
+        "action": ".body.action",
+        "comment": ".body.data.comment",
+        "project": ".body.data.project_slug",
+        "issue_id": ".body.data.issue_id",
+        "timestamp": ".body.data.timestamp"
+      },
+      "relations": {
+        "sentryIssue": ".body.data.issue_id | tostring"
       }
     }
-  ],
-  "enabled": true,
-  "security": {
-    "signatureHeaderName": "sentry-hook-signature",
-    "signatureAlgorithm": "sha256"
   }
-}
+]
 ```

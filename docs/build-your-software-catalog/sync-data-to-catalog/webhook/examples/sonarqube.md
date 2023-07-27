@@ -10,9 +10,9 @@ import SonarcloudAnalysisConfiguration from "./resources/sonarqube/\_example_son
 
 In this example you are going to create a webhook integration between [SonarQube's SonarCloud](https://www.sonarsource.com/products/sonarcloud/) and Port, which will ingest SonarQube code quality analysis entities.
 
-## Prerequisites
+## Port configuration
 
-Create the following blueprint definition and webhook configuration:
+Create the following blueprint definition:
 
 <details>
 <summary>SonarQube analysis blueprint</summary>
@@ -21,16 +21,34 @@ Create the following blueprint definition and webhook configuration:
 
 </details>
 
+Create the following webhook configuration [using Port ui](../../?operation=ui#configuring-webhook-endpoints):
+
 <details>
 <summary>SonarQube analysis webhook configuration</summary>
 
-Remember to replace the `WEBHOOK_SECRET` with the real secret you specify when creating the webhook in SonarCloud.
+1. **Basic details** tab - fill the following details:
 
-<SonarcloudAnalysisConfiguration/>
+   1. Title : `SonarQube mapper`;
+   2. Identifier : `sonarqube_mapper`;
+   3. Description : `A webhook configuration to map SonarQube alerts to Port`;
+   4. Icon : `sonarqube`;
+
+2. **Integration configuration** tab - fill the following JQ mapping:
+
+   <SonarcloudAnalysisConfiguration/>
+
+3. Scroll down to **Advanced settings** and input the following details:
+
+   1. secret: `WEBHOOK_SECRET`;
+   2. Signature Header Name : `X-Sonar-Webhook-HMAC-SHA256`;
+   3. Signature Algorithm : Select `sha256` from dropdown option;
+   4. Click **Save** at the bottom of the page.
+
+   Remember to replace the `WEBHOOK_SECRET` with the real secret you specify when creating the webhook in SonarCloud.
 
 </details>
 
-## Create the SonarCloud webhook
+## Create a webhook in SonarCloud
 
 1. Go to [SonarCloud](https://sonarcloud.io/projects) and select a project you want to configure a webhook for;
 2. Click on **Administration** at the bottom left of the page and select **Webhooks**;
