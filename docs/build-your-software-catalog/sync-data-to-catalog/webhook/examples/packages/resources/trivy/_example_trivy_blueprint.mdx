@@ -1,0 +1,54 @@
+```json showLineNumbers
+{
+  "identifier": "trivyVulnerability",
+  "description": "This blueprint represents a Trivy vulnerability in our software catalog",
+  "title": "Trivy Vulnerability",
+  "icon": "Trivy",
+  "schema": {
+    "properties": {
+      "version": {
+        "title": "Version",
+        "type": "string"
+      },
+      "package_name": {
+        "title": "Package Name",
+        "type": "string"
+      },
+      "url": {
+        "title": "Primary URL",
+        "type": "string",
+        "format": "url"
+      },
+      "description": {
+        "title": "Description",
+        "type": "string"
+      },
+      "target": {
+        "title": "Target",
+        "type": "string"
+      },
+      "severity": {
+        "title": "Severity",
+        "type": "string",
+        "default": "HIGH",
+        "enum": ["HIGH", "MEDIUM", "LOW", "CRITICAL", "UNKNOWN"],
+        "enumColors": {
+          "HIGH": "red",
+          "MEDIUM": "yellow",
+          "LOW": "green",
+          "CRITICAL": "red",
+          "UNKNOWN": "purple"
+        }
+      },
+      "data_source": {
+        "title": "Data Source",
+        "type": "object"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {}
+}
+```

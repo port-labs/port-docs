@@ -1,0 +1,68 @@
+```python showLineNumbers
+## Import the needed libraries
+import requests
+import os
+import json
+import re
+
+WEBHOOK_URL = os.environ["WEBHOOK_URL"] # The URL for the webhook endpoint provided by Port
+PATH_TO_TRIVY_JSON_FILE = os.environ["PATH_TO_TRIVY_JSON_FILE"] # The path to the Trivy result.json file relative to the project folder
+
+
+def add_entity_to_port(entity_object):
+    """A function to create the passed entity in Port using the webhook URL
+
+    Params
+    --------------
+    entity_object: dict
+        The entity to add in your Port catalog
+
+    Returns
+    --------------
+    response: dict
+        The response object after calling the webhook
+    """
+    headers = {"Accept": "application/json"}
+    response = requests.post(WEBHOOK_URL, json=entity_object, headers=headers)
+    return response.json()
+
+def remove_invalid_chars(input_str):
+    """A helper function to remove characters that don't meet Port's entity identifier pattern"""
+    pattern = r"[^A-Za-z0-9@_.:\\/=-]"
+    clean_identifier = re.sub(pattern, '', input_str)
+    return clean_identifier
+
+def extract_trivy_scan_data(trivy_file):
+    with open(trivy_file, 'r') as file:
+        data = json.load(file)
+
+    trivy_results = data.get("Results", [])
+    trivy_vulnerabilities = []
+    for result in trivy_results:
+        target = result.get("Target")
+        vulnerabilities = result.get("Vulnerabilities", [])
+        for vulnerability in vulnerabilities:
+            vulnerability_data = {
+                "id": remove_invalid_chars(vulnerability.get("VulnerabilityID", "") + "-" + vulnerability.get("PkgName", "")),
+                "pkgName": vulnerability.get("PkgName", ""),
+                "version": vulnerability.get("InstalledVersion", ""),
+                "title": vulnerability.get("Title", ""),
+                "description": vulnerability.get("Description", ""),
+                "severity": vulnerability.get("Severity", ""),
+                "primaryUrl": vulnerability.get("PrimaryURL"),
+                "dataSource": vulnerability.get("DataSource", {}),
+                "target": target
+            }
+            trivy_vulnerabilities.append(vulnerability_data)
+
+    entity_object = {
+        "vulnerabilities": trivy_vulnerabilities,
+    }
+    webhook_response = add_entity_to_port(entity_object)
+    return webhook_response
+
+
+trivy_file = PATH_TO_TRIVY_JSON_FILE
+response_data = extract_trivy_scan_data(trivy_file)
+print(response_data)
+```
