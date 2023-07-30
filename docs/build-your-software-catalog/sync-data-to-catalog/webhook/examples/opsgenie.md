@@ -10,9 +10,9 @@ import OpsGenieAlertConfiguration from "./resources/opsgenie/\_example_opsgenie_
 
 In this example you are going to create a webhook integration between [OpsGenie](https://www.atlassian.com/software/opsgenie) and Port, which will ingest alert entities.
 
-## Prerequisites
+## Port configuration
 
-Create the following blueprint definition and webhook configuration:
+Create the following blueprint definition:
 
 <details>
 <summary>OpsGenie alert blueprint</summary>
@@ -21,14 +21,24 @@ Create the following blueprint definition and webhook configuration:
 
 </details>
 
+Create the following webhook configuration [using Port UI](../../?operation=ui#configuring-webhook-endpoints):
+
 <details>
 <summary>OpsGenie alert webhook configuration</summary>
 
-<OpsGenieAlertConfiguration/>
+1. **Basic details** tab - fill the following details:
+   1. Title : `OpsGenie mapper`;
+   2. Identifier : `opsgenie_mapper`;
+   3. Description : `A webhook configuration to map OpsGenie alerts to Port`;
+   4. Icon : `OpsGenie`;
+2. **Integration configuration** tab - fill the following JQ mapping:
+   <OpsGenieAlertConfiguration/>
+
+3. Click **Save** at the bottom of the page.
 
 </details>
 
-## Create the OpsGenie webhook
+## Create a webhook in OpsGenie
 
 1. Go to OpsGenie;
 2. Select **Settings**;

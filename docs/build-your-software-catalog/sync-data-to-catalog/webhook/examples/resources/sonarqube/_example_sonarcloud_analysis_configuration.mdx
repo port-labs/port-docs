@@ -1,36 +1,23 @@
 ```json showLineNumbers
-{
-  "identifier": "sonarCloudMapper",
-  "title": "SonarCloud mapper",
-  "description": "A webhook configuration to map SonarCloud analysis runs to Port",
-  "icon": "sonarqube",
-  "mappings": [
-    {
-      "blueprint": "sonarCloudAnalysis",
-      "entity": {
-        "identifier": ".body.taskId",
-        "title": ".body.project.name + \"-\" + .body.taskId",
-        "properties": {
-          "serverUrl": ".body.serverUrl",
-          "status": ".body.status",
-          "projectName": ".body.project.name",
-          "projectUrl": ".body.project.url",
-          "branchName": ".body.branch.name",
-          "branchType": ".body.branch.type",
-          "branchUrl": ".body.branch.url",
-          "qualityGateName": ".body.qualityGate.name",
-          "qualityGateStatus": ".body.qualityGate.status",
-          "qualityGateConditions": ".body.qualityGate.conditions"
-        }
+[
+  {
+    "blueprint": "sonarCloudAnalysis",
+    "entity": {
+      "identifier": ".body.taskId",
+      "title": ".body.project.name + \"-\" + .body.taskId",
+      "properties": {
+        "serverUrl": ".body.serverUrl",
+        "status": ".body.status",
+        "projectName": ".body.project.name",
+        "projectUrl": ".body.project.url",
+        "branchName": ".body.branch.name",
+        "branchType": ".body.branch.type",
+        "branchUrl": ".body.branch.url",
+        "qualityGateName": ".body.qualityGate.name",
+        "qualityGateStatus": ".body.qualityGate.status",
+        "qualityGateConditions": ".body.qualityGate.conditions"
       }
     }
-  ],
-  "enabled": true,
-  "security": {
-    "secret": "WEBHOOK_SECRET",
-    "signatureHeaderName": "X-Sonar-Webhook-HMAC-SHA256",
-    "signatureAlgorithm": "sha256",
-    "signaturePrefix": ""
   }
-}
+]
 ```
