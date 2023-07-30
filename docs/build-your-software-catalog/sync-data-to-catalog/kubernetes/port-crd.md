@@ -215,9 +215,9 @@ To export the Port entity CRDs using Port's K8s exporter, you will need to creat
 
 To learn how to use Port CRDs to fit your needs, you will follow an example. It will give you a general understanding of how to map any data you would like.
 
-### Example - Mapping a repository using Port CRDs
+### Example - Mapping a microservice using Port CRDs
 
-The goal for this example is to map a git repository using Port's CRD and Port's K8s exporter. For this example, you will map [Port's docs repository](https://github.com/port-labs/port-docs) as a Port entity.
+The goal for this example is to map a microservice using Port's CRD and Port's K8s exporter. For this example, you will map [Port's docs microservice](https://github.com/port-labs/port-docs) as a Port entity.
 
 :::note Prerequisites
 Before getting started:
@@ -230,30 +230,42 @@ Before getting started:
 
 1. **Deploy the Port CRD** - Follow the [deployment step](./port-crd.md#deploying-ports-crds) to deploy the Port CRD. You will only need the cluster-scoped entity CRD.
 
-2. **Creating the blueprint** - You will begin by defining the blueprint which will represent a git repository.
+2. **Creating the blueprint** - You will begin by defining the blueprint which will represent a microservice in your software catalog.
    Create the following blueprint in your Port environment:
 
 ```json showLineNumbers
 {
-  "identifier": "repository",
-  "title": "Repository",
-  "icon": "Git",
-  "Description": "This blueprint represents a git repository",
+  "identifier": "microservice",
+  "title": "Microservice",
+  "icon": "Microservice",
+  "description": "This blueprint represents a microservice",
   "schema": {
     "properties": {
       "description": {
         "title": "Description",
-        "description": "A short description for this repository",
+        "description": "A short description for this microservice",
         "type": "string"
       },
-      "url": {
-        "title": "URL",
-        "description": "The URL of this repository",
+      "onCall": {
+        "title": "On-Call",
+        "description": "Who the on-call for this microservice is",
+        "type": "string"
+      },
+      "slackChannel": {
+        "title": "Slack Channel",
+        "description": "The URL of this microservice's Slack channel",
+        "format": "url",
+        "type": "string"
+      },
+      "datadogUrl": {
+        "title": "Datadog URL",
+        "description": "The URL of this microservice's DataDog dashboard",
         "format": "url",
         "type": "string"
       },
       "language": {
         "type": "string",
+        "description": "The language this microservice is written in",
         "title": "Language"
       }
     },
@@ -265,7 +277,7 @@ Before getting started:
 }
 ```
 
-3. **Create a Port Entity custom resource in your cluster** - Create an Entity CR which will represent Port's docs repository, using the scheme defined in your blueprint:
+3. **Create a Port Entity custom resource in your cluster** - Create an Entity CR which will represent a microservice, using the scheme defined in your blueprint:
 
    1. Create the following file as `port-entity.yaml`:
 
@@ -274,13 +286,15 @@ Before getting started:
 apiVersion: getport.io/v1
 kind: ClusterEntity
 metadata:
-  name: port-docs-repo
+  name: my-microservice-entity
 spec:
-  blueprint: repository
-  identifier: port-docs-repository
+  blueprint: microservice
+  identifier: my-awesome-microservice
   properties:
-    description: This entity represents Port's docs repository
-    url: https://github.com/port-labs/port-docs/tree/main
+    description: This entity represents my awesome microservice
+    onCall: some@email.com
+    slackChannel: https://domain.slack.com/archives/12345678
+    datadogUrl: https://www.datadoghq.com/
     language: typescript
 ```
 
@@ -298,15 +312,18 @@ kubectl apply -f port-entity.yaml
    resources:
      - kind: getport.io/v1/ClusterEntities # Map entities of type 'Port Cluster Entities'
        selector:
-         query: .spec.blueprint == "repository" # This will make sure to only query ClusterEntites were .spec.blueprint == 'repository'
+         query: .spec.blueprint == "microservice" # This will make sure to only query ClusterEntites were .spec.blueprint == 'microservice'
        port:
          entity:
            mappings:
              - identifier: .spec.identifier
+               title: .spec.identifier
                blueprint: .spec.blueprint
                properties:
                  description: .spec.properties.description
-                 url: .spec.properties.url
+                 onCall: .spec.properties.onCall
+                 slackChannel: .spec.properties.slackChannel
+                 datadogUrl: .spec.properties.datadogUrl
                  language: .spec.properties.language
    ```
 
