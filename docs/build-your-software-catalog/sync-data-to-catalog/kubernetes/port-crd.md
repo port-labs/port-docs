@@ -4,7 +4,7 @@ sidebar_position: 7
 
 # Entity CRD
 
-Port's K8s exporter allows exporting data from any resource in your Kubernetes clusters, including [CustomResourceDefinitions](port-crd.md)(CRDs).
+[Port's K8s exporter](./kubernetes.md) allows exporting data from any resource in your Kubernetes clusters, including [CustomResourceDefinitions](port-crd.md)(CRDs).
 To take advantage of the flexibility of Port's K8s exporter, Port provides additional CRDs which allow to use K8s resource definitions as a source of [entities](../../sync-data-to-catalog/sync-data-to-catalog.md#creating-entities) in your software catalog.
 
 :::tip
@@ -14,6 +14,8 @@ All CRDs provided by Port can be found [here.](https://github.com/port-labs/port
 # Port CRDs
 
 A Port entity can represent any kind of data in your infrastructure, from nodes to pods, and even external data such as repositories. This means Port entities can reference both cluster-scoped Kubernetes resources, and namespace-scoped Kubernetes resources. To achieve this, 2 CRDs are provided:
+
+<!-- TODO: Change to git URLS -->
 
 **Namespace scoped entity CRD** - `getport.io/v1/Entity`
 
@@ -135,28 +137,52 @@ spec:
 
 </details>
 
-## Port CRD Structure
+## Port CRDs Structure
 
 Port CRDs provide four key attributes:
 
-- `Blueprint ID` **Required** : The [blueprint](../../define-your-data-model/setup-blueprint/setup-blueprint.md#what-is-a-blueprint) identifier (string) of the entity you wish to map.
+- `Blueprint ID` **Required**: The [blueprint](../../define-your-data-model/setup-blueprint/setup-blueprint.md#what-is-a-blueprint) identifier (string) of the entity you wish to map.
 
-- `Entity ID` **Required** : The [entity](../../sync-data-to-catalog/sync-data-to-catalog.md#creating-entities) identifier (string) of the entity you wish to map.
+- `Entity ID` **Required**: The [entity](../../sync-data-to-catalog/sync-data-to-catalog.md#creating-entities) identifier (string) of the entity you wish to map.
 
-- `Properties` **Optional** : The [properties](../../define-your-data-model/setup-blueprint/properties/properties.md) field (object) holds the property data of the entity you want to map.
+- `Properties` **Optional**: The [properties](../../define-your-data-model/setup-blueprint/properties/properties.md) field (object) holds the properties data of the entity you want to map.
 
-- `Relations` **Optional** : The [relations](../../define-your-data-model/relate-blueprints/relate-blueprints.md) field (object) holds the relations data of the entity you want to map.
+- `Relations` **Optional**: The [relations](../../define-your-data-model/relate-blueprints/relate-blueprints.md) field (object) holds the relations data of the entity you want to map.
+
+<details>
+  <summary>CRD examples</summary>
 
 ```yaml showLineNumbers
-# Namespaces Port Entity CRD example
+# Namespaced Port Entity CRD example
 apiVersion: getport.io/v1
 kind: Entity
 metadata:
   name: example-entity-resource
   namespace: example-namespace
 spec:
-  blueprint: "<Blueprint ID>"
-  identifier: "<Entity ID>"
+  blueprint: blueprint-identifier
+  identifier: entity-identifier
+  properties:
+    myStringProp: string
+    myArrayProp:
+      - string_1
+      - string_2
+      - string_3
+    myUrlProp: https://test-url.com
+  relations:
+    singleRelation: relation-target-id
+    multipleRelations:
+      - relation-target-id-1
+      - relation-target-id-2
+
+# Namespaced Port Cluster Entity CRD example
+apiVersion: getport.io/v1
+kind: ClusterEntity
+metadata:
+  name: example-cluster-entity-resource
+spec:
+  blueprint: blueprint-identifier
+  identifier: entity-identifier
   properties:
     myStringProp: string
     myArrayProp:
@@ -170,3 +196,130 @@ spec:
       - relation-target-id-1
       - relation-target-id-2
 ```
+
+</details>
+
+## Deploying Port's CRDs
+
+To deploy Port's CRDs in your K8s cluster, run the following commands:
+
+```bash showLineNumbers
+# Run this to install Port's namespace-scoped CRD
+kubectl apply -f https://raw.githubusercontent.com/port-labs/port-crds/main/port-entity-crd-namespace.yaml
+
+# Run this to install Port's cluster-scoped CRD
+kubectl apply -f https://raw.githubusercontent.com/port-labs/port-crds/main/port-entity-crd-cluster.yaml
+```
+
+## Exporting the Port CRDs
+
+To export the Port entity CRDs using Port's K8s exporter, you will need to create custom configuration for your [config.yaml](./kubernetes.md#exporter-configyml-file). This mapping configuration will match the blueprint data model you defined in your software catalog.
+
+To learn how to use Port CRDs to fit your needs, you will follow an example. It will give you a general understanding of how to map any data you would like.
+
+### Example - Mapping a repository using CRDs
+
+The goal for this example is to map a git repository using Port's CRD and Port's K8s exporter. For this example, you will map [Port's docs repository](https://github.com/port-labs/port-docs) as a Port entity.
+
+:::note Prerequisites
+Before getting started:
+
+- Prepare your [Port credentials](../../../build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials)
+- Be familiar with [Port's K8s exporter](./kubernetes.md) and configuration
+- Make sure you are connected to a K8s cluster using `kubectl`
+
+:::
+
+1. **Deploy the Port CRD** - Follow the [deployment step](./port-crd.md#deploying-ports-crds) to deploy the Port CRD. You will only need the cluster-scoped entity CRD.
+
+2. **Creating the blueprint** - You will begin by defining the blueprint which will represent a git repository.
+   Create the following blueprint in your Port environment:
+
+```json showLineNumbers
+{
+  "identifier": "repository",
+  "title": "Repository",
+  "icon": "Git",
+  "Description": "This blueprint represents a git repository",
+  "schema": {
+    "properties": {
+      "description": {
+        "title": "Description",
+        "description": "A short description for this repository",
+        "type": "string"
+      },
+      "url": {
+        "title": "URL",
+        "description": "The URL of this repository",
+        "format": "url",
+        "type": "string"
+      },
+      "language": {
+        "type": "string",
+        "title": "Language"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {}
+}
+```
+
+3. **Create a CRD instance in your cluster** - Create an Entity CRD which will represent Port's docs repository, using the scheme defined in your blueprint:
+
+   1. Create the following file as `port-entity.yaml`:
+
+   ```yaml showLineNumbers
+   # Namespaces Port Entity CRD example
+   apiVersion: getport.io/v1
+   kind: ClusterEntity
+   metadata:
+     name: port-docs-repo
+   spec:
+     blueprint: repository
+     identifier: port-docs-repository
+     properties:
+       description: This entity represents Port's docs repository
+       url: https://github.com/port-labs/port-docs/tree/main
+       language: typescript
+   ```
+
+   2. Apply CRD manifest to your cluster:
+
+   ```bash showLineNumbers
+   kubectl apply -f port-entity.yaml
+   ```
+
+4. **Create mapping configuration for the K8s exporter** - Create (or add to existing) the following `config.yaml` configuration for mapping this CRD using Port's k8s exporter:
+
+   1. Create your `config.yaml`:
+
+   ```yaml showLineNumbers
+   resources:
+     - kind: getport.io/v1/ClusterEntities # Map entities of type 'Port Cluster Entities'
+       selector:
+         query: .spec.blueprint == "repository" # This will make sure to only query ClusterEntites were .spec.blueprint == 'repository'
+       port:
+         entity:
+           mappings:
+             - identifier: .spec.identifier
+               blueprint: .spec.blueprint
+               properties:
+                 description: .spec.properties.description
+                 url: .spec.properties.url
+                 language: .spec.properties.language
+   ```
+
+   2. Install Port's K8s exporter using your new `config.yaml`:
+
+   ```bash showLineNumbers
+   export CLUSTER_NAME="<YOUR_CLUSTER_NAME>" # Defaults to 'my-cluster'
+   export CONFIG_YAML_URL="<PATH_TO_CONFIG_YAML>/config.yaml"
+   export PORT_CLIENT_ID="<PORT_CLIENT_ID>"
+   export PORT_CLIENT_SECRET="<PORT_CLIENT_SECRET>"
+   curl -s https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/install.sh | bash
+   ```
+
+You should now be able to see the newly exported entity in your Port environment.
