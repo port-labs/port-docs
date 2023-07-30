@@ -269,26 +269,26 @@ Before getting started:
 
    1. Create the following file as `port-entity.yaml`:
 
-   ```yaml showLineNumbers
-   # Namespaces Port Entity CRD example
-   apiVersion: getport.io/v1
-   kind: ClusterEntity
-   metadata:
-     name: port-docs-repo
-   spec:
-     blueprint: repository
-     identifier: port-docs-repository
-     properties:
-       description: This entity represents Port's docs repository
-       url: https://github.com/port-labs/port-docs/tree/main
-       language: typescript
-   ```
+```yaml showLineNumbers
+# Namespaces Port Entity CRD example
+apiVersion: getport.io/v1
+kind: ClusterEntity
+metadata:
+  name: port-docs-repo
+spec:
+  blueprint: repository
+  identifier: port-docs-repository
+  properties:
+    description: This entity represents Port's docs repository
+    url: https://github.com/port-labs/port-docs/tree/main
+    language: typescript
+```
 
-   2. Apply CRD manifest to your cluster:
+2.  Apply CRD manifest to your cluster:
 
-   ```bash showLineNumbers
-   kubectl apply -f port-entity.yaml
-   ```
+```bash showLineNumbers
+kubectl apply -f port-entity.yaml
+```
 
 4. **Create mapping configuration for the K8s exporter** - Create (or add to existing) the following `config.yaml` configuration for mapping this CRD using Port's k8s exporter:
 
