@@ -44,7 +44,7 @@ Note that all of the [properties](../../../build-your-software-catalog/define-yo
 
 <DocCardList />
 
-## Order of user inputs
+## Ordering user inputs
 
 You can define the order in which the user inputs will be displayed in the UI by using the `order` field. This field is an array of the user input names.
 
