@@ -2,7 +2,7 @@
 sidebar_position: 7
 ---
 
-# Entity CRD
+# Port Entity CRD
 
 [Port's K8s exporter](./kubernetes.md) allows exporting data from any resource in your Kubernetes clusters, including [CustomResourceDefinitions](port-crd.md)(CRDs).
 To take advantage of the flexibility of Port's K8s exporter, Port provides additional CRDs which allow to use K8s resource definitions as a source of [entities](../../sync-data-to-catalog/sync-data-to-catalog.md#creating-entities) in your software catalog.
@@ -15,12 +15,10 @@ All CRDs provided by Port can be found [here.](https://github.com/port-labs/port
 
 A Port entity can represent any kind of data in your infrastructure, from nodes to pods, and even external data such as repositories. This means Port entities can reference both cluster-scoped Kubernetes resources, and namespace-scoped Kubernetes resources. To achieve this, 2 CRDs are provided:
 
-<!-- TODO: Change to git URLS -->
-
 **Namespace scoped entity CRD** - `getport.io/v1/Entity`
 
 <details>
-  <summary>Entity CRD definition</summary>
+  <summary>Entity CRD</summary>
 
 ```
 apiVersion: apiextensions.k8s.io/v1
@@ -80,7 +78,7 @@ spec:
 **Cluster scoped entity CRD** - `getport.io/v1/ClusterEntity`
 
 <details>
-  <summary>Cluster Entity CRD definition</summary>
+  <summary>Cluster Entity CRD</summary>
 
 ```
 apiVersion: apiextensions.k8s.io/v1
@@ -211,13 +209,13 @@ kubectl apply -f https://raw.githubusercontent.com/port-labs/port-crds/main/port
 kubectl apply -f https://raw.githubusercontent.com/port-labs/port-crds/main/port-entity-crd-cluster.yaml
 ```
 
-## Exporting the Port CRDs
+## Exporting Port's custom resources
 
 To export the Port entity CRDs using Port's K8s exporter, you will need to create custom configuration for your [config.yaml](./kubernetes.md#exporter-configyml-file). This mapping configuration will match the blueprint data model you defined in your software catalog.
 
 To learn how to use Port CRDs to fit your needs, you will follow an example. It will give you a general understanding of how to map any data you would like.
 
-### Example - Mapping a repository using CRDs
+### Example - Mapping a repository using Port CRDs
 
 The goal for this example is to map a git repository using Port's CRD and Port's K8s exporter. For this example, you will map [Port's docs repository](https://github.com/port-labs/port-docs) as a Port entity.
 
@@ -267,7 +265,7 @@ Before getting started:
 }
 ```
 
-3. **Create a CRD instance in your cluster** - Create an Entity CRD which will represent Port's docs repository, using the scheme defined in your blueprint:
+3. **Create a Port Entity custom resource in your cluster** - Create an Entity CR which will represent Port's docs repository, using the scheme defined in your blueprint:
 
    1. Create the following file as `port-entity.yaml`:
 
