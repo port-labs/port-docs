@@ -64,7 +64,7 @@ You can define the order in which the user inputs will be displayed in the UI by
       "type": "input_type"
     }
   },
-  "required": ["myInput1", "myInput2"],
+  "required": [],
   "order": ["myInput2", "myInput1"]
 }
 ```
