@@ -13,7 +13,7 @@ All CRDs provided by Port can be found [here.](https://github.com/port-labs/port
 
 # Port CRDs
 
-A Port entity can represent any kind of data in your infrastructure, from nodes to pods, and even external data such as repositories. This means Port entities can reference both cluster-scoped Kubernetes resources, and namespace-scoped Kubernetes resources. To achieve this, 2 CRDs are provided:
+A Port entity can represent any kind of data in your infrastructure, from nodes to pods to, to non-Kuberenetes related entities such as repositories or microservices. To achieve this level of abstraction, 2 CRDs are provided:
 
 **Namespace scoped entity CRD** - `getport.io/v1/Entity`
 
@@ -168,8 +168,8 @@ spec:
       - string_3
     myUrlProp: https://test-url.com
   relations:
-    singleRelation: relation-target-id
-    multipleRelations:
+    mySingleRelation: relation-target-id
+    myManyRelations:
       - relation-target-id-1
       - relation-target-id-2
 
@@ -189,8 +189,8 @@ spec:
       - string_3
     myUrlProp: https://test-url.com
   relations:
-    singleRelation: relation-target-id
-    multipleRelations:
+    mySingleRelation: relation-target-id
+    myManyRelation:
       - relation-target-id-1
       - relation-target-id-2
 ```
