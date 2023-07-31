@@ -22,7 +22,7 @@ The secret input type can be used for sensitive information, such as:
 
 ## Secret Input Structure
 
-A secret input is defined as regular input, but with the additional `encryption` field which specifies the encryption algorithm to use:
+A secret input is defined as a regular input, but with the additional `encryption` field which specifies the encryption algorithm to use:
 
 ```json showLineNumbers
 {
