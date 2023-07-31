@@ -78,7 +78,6 @@ from cryptography.fernet import Fernet
 
 PORT_CLIENT_SECRET = 'YOUR PORT CLIENT SECRET'
 
-# Flask app should start in global layout
 app = Flask(__name__)
 
 @app.route('/', methods=['POST'])
@@ -117,7 +116,6 @@ from cryptography.fernet import Fernet
 
 PORT_CLIENT_SECRET = 'YOUR PORT CLIENT SECRET'
 
-# Flask app should start in global layout
 app = Flask(__name__)
 
 @app.route('/', methods=['POST'])
@@ -142,6 +140,91 @@ if __name__ == '__main__':
     print ("Starting app on port %d" % port)
 
     app.run(debug=False, port=port, host='0.0.0.0')
+```
+
+</TabItem>
+</Tabs>
+
+</details>
+
+<details>
+<summary> NodeJs Webhook </summary>
+
+These examples use the `express` and `fernet` packages.
+
+<Tabs groupId="node-webhook" queryString defaultValue="string" values={[
+{label: "String Secret", value: "string"},
+{label: "Object Secret", value: "object"}
+]}>
+
+<TabItem value="string">
+
+```js showLineNumbers
+const express = require("express");
+const bodyParser = require("body-parser");
+const fernet = require("fernet");
+const port = 80;
+
+const app = express();
+
+const PORT_CLIENT_SECRET = "YOUR PORT CLIENT SECRET";
+
+app.post("/", bodyParser.json(), (req, res) => {
+  // initialize the fernet decrypter
+  const encodedSecret = Buffer.from(PORT_CLIENT_SECRET).toString("base64");
+  const fernetSecret = new fernet.Secret(encodedSecret);
+  const fernetToken = new fernet.Token({
+    secret: fernetSecret,
+    ttl: 0,
+  });
+
+  encrypted_property_value = req.body.payload.properties["secret-property"];
+
+  // decrypt the property
+  decrypted_property_value = fernetToken.decode(encrypted_property_value);
+
+  return decrypted_property_value; // this is the original value the user sent
+});
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
+});
+```
+
+</TabItem>
+<TabItem value="object">
+
+```js showLineNumbers
+const express = require("express");
+const bodyParser = require("body-parser");
+const fernet = require("fernet");
+const port = 80;
+
+const app = express();
+
+const PORT_CLIENT_SECRET = "YOUR PORT CLIENT SECRET";
+
+app.post("/", bodyParser.json(), (req, res) => {
+  // initialize the fernet decrypter
+  const encodedSecret = Buffer.from(PORT_CLIENT_SECRET).toString("base64");
+  const fernetSecret = new fernet.Secret(encodedSecret);
+  const fernetToken = new fernet.Token({
+    secret: fernetSecret,
+    ttl: 0,
+  });
+
+  encrypted_property_value = req.body.payload.properties["secret-property"];
+
+  // decrypt the property
+  decrypted_property_value = fernetToken.decode(encrypted_property_value);
+  object_property_value = JSON.parse(decrypted_property_value);
+
+  return object_property_value; // this is the original value the user sent
+});
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
+});
 ```
 
 </TabItem>
