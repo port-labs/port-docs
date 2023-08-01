@@ -15,7 +15,7 @@ All CRDs provided by Port can be found [here.](https://github.com/port-labs/port
 
 A Port entity can represent any kind of data in your infrastructure, from nodes to pods to non-Kuberenetes related entities such as repositories or microservices. To achieve this level of abstraction, 2 CRDs are provided:
 
-**Namespace scoped entity CRD** - `getport.io/v1/Entity`
+## Namespace scoped entity CRD - `getport.io/v1/Entity`
 
 <details>
   <summary>Entity CRD</summary>
@@ -75,7 +75,7 @@ spec:
 
 </details>
 
-**Cluster scoped entity CRD** - `getport.io/v1/ClusterEntity`
+## Cluster scoped entity CRD - `getport.io/v1/ClusterEntity`
 
 <details>
   <summary>Cluster Entity CRD</summary>
@@ -140,11 +140,8 @@ spec:
 Port CRDs provide four key attributes:
 
 - `Blueprint ID` **Required**: The [blueprint](../../define-your-data-model/setup-blueprint/setup-blueprint.md#what-is-a-blueprint) identifier (string) of the entity you wish to map;
-
 - `Entity ID` **Required**: The [entity](../../sync-data-to-catalog/sync-data-to-catalog.md#creating-entities) identifier (string) of the entity you wish to map;
-
 - `Properties` **Optional**: The [properties](../../define-your-data-model/setup-blueprint/properties/properties.md) field (object) holds the properties data of the entity you want to map;
-
 - `Relations` **Optional**: The [relations](../../define-your-data-model/relate-blueprints/relate-blueprints.md) field (object) holds the relations data of the entity you want to map.
 
 <details>
