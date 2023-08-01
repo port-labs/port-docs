@@ -32,4 +32,4 @@ To achieve this, follow these general steps for any CD solution:
 2. Define a Kubernetes Port entity manifest using Port's CRD, which contains the data model and data you wish to map to Port, and deploy it to your kubernetes cluster using your CD solution.
 3. Update Port's K8s exporter `config.yaml` to map the Port CRD you just created. Deploy the new `config.yaml`.
 
-The entities should appear in your Port environment.
+The entities defined using Port's CRD will appear in your Port environment.
