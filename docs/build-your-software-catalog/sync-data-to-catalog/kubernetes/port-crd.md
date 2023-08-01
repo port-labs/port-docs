@@ -13,7 +13,7 @@ All CRDs provided by Port can be found [here.](https://github.com/port-labs/port
 
 # Port CRDs
 
-A Port entity can represent any kind of data in your infrastructure, from nodes to pods to, to non-Kuberenetes related entities such as repositories or microservices. To achieve this level of abstraction, 2 CRDs are provided:
+A Port entity can represent any kind of data in your infrastructure, from nodes to pods to non-Kuberenetes related entities such as repositories or microservices. To achieve this level of abstraction, 2 CRDs are provided:
 
 **Namespace scoped entity CRD** - `getport.io/v1/Entity`
 
