@@ -295,7 +295,7 @@ spec:
     language: typescript
 ```
 
-4.  Apply CRD manifest to your cluster:
+4.  Apply the CRD manifest to your cluster:
 
 ```bash showLineNumbers
 kubectl apply -f port-entity.yaml
