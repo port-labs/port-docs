@@ -24,7 +24,7 @@ For fully understanding how to use GitOps with Port's CRDs to map entities, make
 ## Managing entities defined using CRDs and GitOps
 
 Port's CRDs allow defining and mapping any kind of entity using Kubernetes. You can find an example for doing this in the [Port CRDs - mapping a microservice example](../kubernetes/port-crd.md#example---mapping-a-microservice-using-port-crds).
-Mapping entities can be done using any Continuous Deployment(CD) solution, for example ArgoCD or FluxCD, by deploying the Port custom resources using the CD solution, and exporting them to Port
+Mapping entities can be done using any Continuous Deployment (CD) solution, for example ArgoCD or FluxCD, by deploying the Port custom resources using the CD solution, and mapping their definition to Port using Port's K8s exporter.
 
 To achieve this, follow these general steps for any CD solution:
 
