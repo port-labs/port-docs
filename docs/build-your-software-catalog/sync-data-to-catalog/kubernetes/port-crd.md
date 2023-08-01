@@ -274,7 +274,7 @@ Before getting started:
 }
 ```
 
-3. **Create a Port Entity custom resource in your cluster** - Create an Entity CR which will represent a microservice, using the scheme defined in your blueprint:
+3. **Create a Port entity custom resource in your cluster** - create an Entity CR which will represent a microservice, using the scheme defined in your blueprint:
 
    1. Create the following file as `port-entity.yaml`:
 
@@ -301,7 +301,7 @@ spec:
 kubectl apply -f port-entity.yaml
 ```
 
-4. **Create mapping configuration for the K8s exporter** - Create (or add to existing) the following `config.yaml` configuration for mapping this CRD using Port's k8s exporter:
+4. **Create a mapping configuration for the K8s exporter** - create (or add to an existing) the following `config.yaml` configuration to map this CRD using Port's k8s exporter:
 
    1. Create your `config.yaml`:
 
