@@ -4,14 +4,15 @@ sidebar_position: 4
 
 # GitOps using Port CRDs
 
-You can use GitOps, [Port's Entity CRDs](../kubernetes/port-crd.md) and [Port's K8s exporter](../kubernetes/kubernetes.md) to export custom entities in to Port.
+You can use GitOps, [Port's K8s exporter](../kubernetes/kubernetes.md) and [Port's Entity CRDs](../kubernetes/port-crd.md) to export custom entities in to Port.
 
 :::note
 For fully understanding how to use GitOps with Port's CRDs to map entities, make sure you are familiar with:
 
 - [Ports Kubernetes exporter](../kubernetes/kubernetes.md)
 - [Ports Entity CRDs](../kubernetes/port-crd.md)
-  :::
+
+:::
 
 ## Export entities with GitOps and Kubernetes use cases
 
