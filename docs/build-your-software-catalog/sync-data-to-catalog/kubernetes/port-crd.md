@@ -5,7 +5,7 @@ sidebar_position: 7
 # Port Entity CRD
 
 [Port's K8s exporter](./kubernetes.md) allows exporting data from any resource in your Kubernetes clusters, including [Custom Resource Definitions](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/)(CRDs).
-To take advantage of the flexibility of Port's K8s exporter, Port provides additional CRDs which allow to use K8s resource definitions as a source of [entities](../../sync-data-to-catalog/sync-data-to-catalog.md#creating-entities) in your software catalog.
+To take advantage of the flexibility of Port's K8s exporter, Port provides additional CRDs which make it possible to use K8s resource definitions as a source of [entities](../../sync-data-to-catalog/sync-data-to-catalog.md#creating-entities) in your software catalog.
 
 :::tip
 All CRDs provided by Port can be found [here.](https://github.com/port-labs/port-crds)
