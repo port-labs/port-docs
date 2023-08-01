@@ -16,7 +16,7 @@ For fully understanding how to use GitOps with Port's CRDs to map entities, make
 ## Export entities with GitOps and Kubernetes use cases
 
 - Use your K8s clusters as the source-of-truth for your **microservices**, **packages**, **libraries** and other software catalog assets;
-- Update Port in a "Push Only" method, where no elevated permissions are required for Port to interact with your infrastructure.
+- Update Port in a "Push Only" method, where no elevated permissions are required for Port to interact with your infrastructure;
 - Allow developers to keep the catalog up-to-date, by making updates to Kubernetes manifest files in their Git repositories;
 - Create a standardized way to document software catalog assets in your organization;
 - etc.
