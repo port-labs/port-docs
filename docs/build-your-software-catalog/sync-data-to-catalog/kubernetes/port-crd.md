@@ -139,7 +139,7 @@ spec:
 
 Port CRDs provide four key attributes:
 
-- `Blueprint ID` **Required**: The [blueprint](../../define-your-data-model/setup-blueprint/setup-blueprint.md#what-is-a-blueprint) identifier (string) of the entity you wish to map.
+- `Blueprint ID` **Required**: The [blueprint](../../define-your-data-model/setup-blueprint/setup-blueprint.md#what-is-a-blueprint) identifier (string) of the entity you wish to map;
 
 - `Entity ID` **Required**: The [entity](../../sync-data-to-catalog/sync-data-to-catalog.md#creating-entities) identifier (string) of the entity you wish to map;
 
