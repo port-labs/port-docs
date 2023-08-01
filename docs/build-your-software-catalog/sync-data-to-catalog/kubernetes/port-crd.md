@@ -225,7 +225,7 @@ Before getting started:
 
 :::
 
-1. **Deploy the Port CRD** - Follow the [deployment step](./port-crd.md#deploying-ports-crds) to deploy the Port CRD. You will only need the cluster-scoped entity CRD.
+1. **Deploy the Port CRD** - follow the [deployment step](./port-crd.md#deploying-ports-crds) to deploy the Port CRD. You will only need the cluster-scoped entity CRD.
 
 2. **Creating the blueprint** - You will begin by defining the blueprint which will represent a microservice in your software catalog.
    Create the following blueprint in your Port environment:
