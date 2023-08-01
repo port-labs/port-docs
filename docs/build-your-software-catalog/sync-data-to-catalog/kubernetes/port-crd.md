@@ -208,7 +208,7 @@ kubectl apply -f https://raw.githubusercontent.com/port-labs/port-crds/main/port
 
 ## Exporting Port's custom resources
 
-To export the Port entity CRDs using Port's K8s exporter, you will need to create custom configuration for your [config.yaml](./kubernetes.md#exporter-configyml-file). This mapping configuration will match the blueprint data model you defined in your software catalog.
+To export the Port entity CRDs using Port's K8s exporter, you will need to create a custom configuration for your [config.yaml](./kubernetes.md#exporter-configyml-file). This mapping configuration will match the blueprint data model you defined in your software catalog.
 
 To learn how to use Port CRDs to fit your needs, you will follow an example. It will give you a general understanding of how to map any data you would like.
 
