@@ -416,17 +416,17 @@ The basic structure of a Self-Service Action:
 
 ### Structure table
 
-| Field              | Description                                                                                                                                                                                                                                       |
-| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `id`               | Internal Action ID                                                                                                                                                                                                                                |
-| `identifier`       | Action identifier                                                                                                                                                                                                                                 |
-| `title`            | Action title                                                                                                                                                                                                                                      |
-| `icon`             | Action icon                                                                                                                                                                                                                                       |
-| `userInputs`       | An object containing `properties` and `required` keys following the standard JSON schema format as seen in [Blueprint structure](../../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md#blueprint-structure) |
-| `invocationMethod` | Defines the destination where invocations of the Self-Service Action will be delivered, see [invocation method](#invocation-method) for details                                                                                                   |
-| `trigger`          | The type of the action: `CREATE`, `DAY-2` or `DELETE`                                                                                                                                                                                             |
-| `requiredApproval` | Whether the action requires approval or not                                                                                                                                                                                                       |
-| `description`      | Action description                                                                                                                                                                                                                                |
+| Field              | Description                                                                                                                                                                                                 |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`               | Internal Action ID                                                                                                                                                                                          |
+| `identifier`       | Action identifier                                                                                                                                                                                           |
+| `title`            | Action title                                                                                                                                                                                                |
+| `icon`             | Action icon                                                                                                                                                                                                 |
+| `userInputs`       | An object containing `properties`, `required` and `order` as seen in [Blueprint structure](../../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md#blueprint-structure) |
+| `invocationMethod` | Defines the destination where invocations of the Self-Service Action will be delivered, see [invocation method](#invocation-method) for details                                                             |
+| `trigger`          | The type of the action: `CREATE`, `DAY-2` or `DELETE`                                                                                                                                                       |
+| `requiredApproval` | Whether the action requires approval or not                                                                                                                                                                 |
+| `description`      | Action description                                                                                                                                                                                          |
 
 ### Properties structure table
 
