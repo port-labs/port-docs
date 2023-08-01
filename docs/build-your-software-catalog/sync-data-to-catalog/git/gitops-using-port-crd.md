@@ -30,7 +30,7 @@ Mapping entities can be done using any Continuous Deployment (CD) solution, for 
 To achieve this, follow these general steps for any CD solution:
 
 1. Navigate to [Port's CRDs document](../kubernetes/port-crd.md#deploying-ports-crds) page to learn how to deploy the CRDs. You can deploy them as part of your CD pipeline by placing the CRD manifests in one of your CD source directory/applications;
-2. Define a Kubernetes Port entity manifest using Port's CRD, which contains the data model and data you wish to map to Port, and deploy it to your kubernetes cluster using your CD solution.
+2. Define a Kubernetes Port entity manifest using Port's CRD, which contains the data model and data you wish to map to Port, and deploy it to your kubernetes cluster using your CD solution;
 3. Update Port's K8s exporter `config.yaml` to map the Port CRD you just created. Deploy the new `config.yaml`.
 
 The entities defined using Port's CRD will appear in your Port environment.

@@ -214,7 +214,7 @@ To learn how to use Port CRDs to fit your needs, you will follow an example. It 
 
 ### Example - Mapping a microservice using Port CRDs
 
-The goal for this example is to map a microservice using Port's CRD and Port's K8s exporter. For this example, you will map [Port's docs microservice](https://github.com/port-labs/port-docs) as a Port entity.
+The goal for this example is to map a microservice using Port's CRD and Port's K8s exporter. For this example, you will map microservice as a Port entity.
 
 :::note Prerequisites
 Before getting started:
