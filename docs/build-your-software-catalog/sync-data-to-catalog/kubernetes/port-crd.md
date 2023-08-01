@@ -219,7 +219,7 @@ The goal for this example is to map a microservice using Port's CRD and Port's K
 :::note Prerequisites
 Before getting started:
 
-- Prepare your [Port credentials](../../../build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials)
+- Prepare your [Port credentials](../../../build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials);
 - Be familiar with [Port's K8s exporter](./kubernetes.md) and configuration
 - Make sure you are connected to a K8s cluster using `kubectl`
 
