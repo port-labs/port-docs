@@ -143,7 +143,7 @@ Port CRDs provide four key attributes:
 
 - `Entity ID` **Required**: The [entity](../../sync-data-to-catalog/sync-data-to-catalog.md#creating-entities) identifier (string) of the entity you wish to map;
 
-- `Properties` **Optional**: The [properties](../../define-your-data-model/setup-blueprint/properties/properties.md) field (object) holds the properties data of the entity you want to map.
+- `Properties` **Optional**: The [properties](../../define-your-data-model/setup-blueprint/properties/properties.md) field (object) holds the properties data of the entity you want to map;
 
 - `Relations` **Optional**: The [relations](../../define-your-data-model/relate-blueprints/relate-blueprints.md) field (object) holds the relations data of the entity you want to map.
 
