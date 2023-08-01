@@ -295,13 +295,13 @@ spec:
     language: typescript
 ```
 
-2.  Apply CRD manifest to your cluster:
+4.  Apply CRD manifest to your cluster:
 
 ```bash showLineNumbers
 kubectl apply -f port-entity.yaml
 ```
 
-4. **Create mapping configuration for the K8s exporter** - Create (or add to existing) the following `config.yaml` configuration for mapping this CRD using Port's k8s exporter:
+5. **Create mapping configuration for the K8s exporter** - Create (or add to existing) the following `config.yaml` configuration for mapping this CRD using Port's k8s exporter:
 
    1. Create your `config.yaml`:
 
