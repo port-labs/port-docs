@@ -337,4 +337,4 @@ kubectl apply -f port-entity.yaml
    curl -s https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/install.sh | bash
    ```
 
-You should now be able to see the newly exported entity in your Port environment.
+You will now be able to see the newly exported entity in your Port environment.
