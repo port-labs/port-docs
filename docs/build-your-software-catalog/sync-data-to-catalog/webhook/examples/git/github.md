@@ -133,7 +133,7 @@ Here is an example of the payload structure sent to the webhook URL when a GitHu
 
 ### Mapping Result
 
-The combination of the sample payload and the webhook configuration generate the following Port entity:
+The combination of the sample payload and the webhook configuration generates the following Port entity:
 
 ```json showLineNumbers
 {
