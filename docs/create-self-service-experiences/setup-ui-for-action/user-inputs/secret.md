@@ -1,6 +1,6 @@
 ---
 sidebar_position: 14
-description: Secret is an input whose value is encrypted and is never saved in Port's Databases.
+description: Secret is an input whose value is encrypted with your client secret when sent to your backend and is never saved or logged in its transit.
 ---
 
 import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"
@@ -10,7 +10,7 @@ import TabItem from "@theme/TabItem"
 
 # Secret
 
-Secret is an input whose value is encrypted and is never saved by Port (not even after the encryption).
+Secret input is an input type used to pass secrets and sensitive information to action backends, the values sent via the secret input go through an additional layer of encryption using your private key. In addition, the values sent via the secret input are not logged or saved by Port.
 
 ## 💡 Common Secret Usage
 
@@ -18,6 +18,8 @@ The secret input type can be used for sensitive information, such as:
 
 - Cloud secrets;
 - Passwords;
+- API keys;
+- Secret tokens
 - etc.
 
 ## Secret Input Structure
@@ -38,25 +40,64 @@ A secret input is defined as a regular input, but with the additional `encryptio
 }
 ```
 
-### Supported Ecnryption Algortithms
-
-[fernet](https://cryptography.io/en/latest/fernet/) - Your organization's [Client Secret](../../../build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials) will be used as the encryption key.
+- [fernet](https://cryptography.io/en/latest/fernet/) - when using Fernet for symmetric encryption your organization's [Client Secret](../../../build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials) is used as the encryption key. Set the encryption value to `"fernet"` to use it.
 
 ### Supported Types
 
-[string](./text.md) - For `"type": "string"` properties the inputted value will be taken as is and encrypted. It is not supported to have both an `encryption` for a string input and `format`.
+<Tabs groupId="supported-types" queryString defaultValue="string" values={[
+{label: "String Secret", value: "string"},
+{label: "Object Secret", value: "object"}
+]}>
+<TabItem value="string">
 
-[object](./object.md) - For `"type": "object"` properties the inputted Json value will be treated as a string and encrypted without further manipulation.
+```json showLineNumbers
+{
+  "mySecretInput": {
+    "title": "My secret input",
+    "icon": "My icon",
+    // highlight-start
+    "type": "string",
+    // highlight-end
+    "encryption": "fernet",
+    "description": "My entity input"
+  }
+}
+```
+
+**Note:** it is unsupported to have the a `format` for secrets inputs.
+
+</TabItem>
+<TabItem value="object">
+
+```json showLineNumbers
+{
+  "mySecretInput": {
+    "title": "My secret input",
+    "icon": "My icon",
+    // highlight-start
+    "type": "object",
+    // highlight-end
+    "encryption": "fernet",
+    "description": "My entity input"
+  }
+}
+```
+
+</TabItem>
+</Tabs>
 
 ## Handling the Payload
 
-The payload sent to your infrastructure will have the secret property's value will be encrypted.
-In most cases you will need to decrypt it before you could use it.
+The payload sent to your infrastructure will contain the encrypted value of your secret property inputs. To make use of your secret inputs, you will need to decrypt them:
 
-### Example Invokees
+### Examples
 
-<details>
-<summary> Python Webhook </summary>
+<Tabs groupId="examples" queryString defaultValue="python" values={[
+{label: "Python Webhook", value: "python"},
+{label: "NodeJs Webhook", value: "nodeJs"}
+]}>
+
+<TabItem value="python">
 
 These examples use the `flask` and `cryptography` packages.
 
@@ -145,10 +186,8 @@ if __name__ == '__main__':
 </TabItem>
 </Tabs>
 
-</details>
-
-<details>
-<summary> NodeJs Webhook </summary>
+</TabItem>
+<TabItem value="nodeJs">
 
 These examples use the `express` and `fernet` packages.
 
@@ -230,4 +269,5 @@ app.listen(port, () => {
 </TabItem>
 </Tabs>
 
-</details>
+</TabItem>
+</Tabs>
