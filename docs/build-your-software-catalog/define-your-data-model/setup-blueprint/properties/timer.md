@@ -26,7 +26,7 @@ In this [live demo](https://demo.getport.io/developerEnvs) example, we can see t
 
 ## API definition
 
-<Tabs groupId="api-definition" defaultValue="basic" values={[
+<Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"}
 ]}>
 
@@ -54,7 +54,7 @@ In this [live demo](https://demo.getport.io/developerEnvs) example, we can see t
 
 ## Terraform definition
 
-<Tabs groupId="tf-definition" defaultValue="basic" values={[
+<Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"}
 ]}>
 
@@ -84,13 +84,13 @@ resource "port_blueprint" "myBlueprint" {
 
 ## Pulumi definition
 
-<Tabs groupId="pulumi-definition" defaultValue="basic" values={[
+<Tabs groupId="pulumi-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 ]}>
 
 <TabItem value="basic">
 
-<Tabs groupId="pulumi-definition-timer-basic" defaultValue="python" values={[
+<Tabs groupId="pulumi-definition-timer-basic" queryString defaultValue="python" values={[
 {label: "Python", value: "python"},
 {label: "TypeScript", value: "typescript"},
 {label: "JavaScript", value: "javascript"},
@@ -136,15 +136,15 @@ export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
   // highlight-start
-    properties: {
-        stringProps: {
-            myTimerProp: {
-                title: "My timer",
-                format: "timer",
-                required: true,
-            },
-        },
+  properties: {
+    stringProps: {
+      myTimerProp: {
+        title: "My timer",
+        format: "timer",
+        required: true,
+      },
     },
+  },
   // highlight-end
 });
 ```
@@ -162,15 +162,15 @@ const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
   // highlight-start
-    properties: {
-        stringProps: {
-            myTimerProp: {
-                title: "My timer",
-                format: "timer",
-                required: true,
-            },
-        },
+  properties: {
+    stringProps: {
+      myTimerProp: {
+        title: "My timer",
+        format: "timer",
+        required: true,
+      },
     },
+  },
   // highlight-end
   relations: {},
 });
