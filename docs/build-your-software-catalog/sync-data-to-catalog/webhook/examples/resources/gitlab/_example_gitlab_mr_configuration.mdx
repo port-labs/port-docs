@@ -1,35 +1,25 @@
 ```json showLineNumbers
-{
-  "identifier": "gitlabMapper",
-  "title": "Gitlab mapper",
-  "description": "A webhook configuration to map Gitlab merge requests to Port",
-  "icon": "Gitlab",
-  "mappings": [
-    {
-      "blueprint": "gitlabMergeRequest",
-      "entity": {
-        "identifier": ".body.object_attributes.id",
-        "title": "(.body.object_attributes.id | tostring) + \" - \" + .body.object_attributes.title",
-        "properties": {
-          "state": ".body.object_attributes.state",
-          "description": ".body.object_attributes.description",
-          "mergeStatus": ".body.object_attributes.merge_status",
-          "lastChangeType": ".body.object_attributes.action",
-          "repositoryUrl": ".body.project.homepage",
-          "sourceBranch": ".body.object_attributes.source_branch",
-          "targetBranch": ".body.object_attributes.target_branch",
-          "mergeRequestUrl": ".body.object_attributes.url",
-          "lastCommitUrl": ".body.object_attributes.last_commit.url",
-          "projectName": ".body.project.name",
-          "projectUrl": ".body.project.homepage",
-          "labels": ".body.object_attributes.labels"
-        }
+[
+  {
+    "blueprint": "gitlabMergeRequest",
+    "entity": {
+      "identifier": ".body.object_attributes.id",
+      "title": "(.body.object_attributes.id | tostring) + \" - \" + .body.object_attributes.title",
+      "properties": {
+        "state": ".body.object_attributes.state",
+        "description": ".body.object_attributes.description",
+        "mergeStatus": ".body.object_attributes.merge_status",
+        "lastChangeType": ".body.object_attributes.action",
+        "repositoryUrl": ".body.project.homepage",
+        "sourceBranch": ".body.object_attributes.source_branch",
+        "targetBranch": ".body.object_attributes.target_branch",
+        "mergeRequestUrl": ".body.object_attributes.url",
+        "lastCommitUrl": ".body.object_attributes.last_commit.url",
+        "projectName": ".body.project.name",
+        "projectUrl": ".body.project.homepage",
+        "labels": ".body.object_attributes.labels"
       }
     }
-  ],
-  "enabled": true,
-  "security": {
-    "requestIdentifierPath": ".headers.X-Gitlab-Event-Uuid"
   }
-}
+]
 ```
