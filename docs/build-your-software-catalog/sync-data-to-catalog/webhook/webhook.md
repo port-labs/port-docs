@@ -385,7 +385,8 @@ When using the `plain` algorithm, no hashing will be performed and the value of 
 ## Configuring webhook endpoints
 
 <Tabs queryString="operation">
-
+<TabItem label="Using API" value="api">
+<Tabs>
 <TabItem label="Create webhook" value="create">
 
 To create a new webhook, make an HTTP POST request to `https://api.getport.io/v1/webhooks` with your [webhook configuration](#configuration-structure) in the request body.
@@ -398,7 +399,6 @@ The API response will include the complete configuration of the webhook, includi
   - **Note:** The `https://ingest.getport.io` is constant, only the `webhookKey` will change between webhooks configurations.
 
 </TabItem>
-
 <TabItem label="Update webhook" value="update">
 
 To update an existing webhook, make an HTTP PATCH request to `https://api.getport.io/v1/webhooks/{WEBHOOK_IDENTIFIER}` with your updated [webhook configuration](#configuration-structure) in the request body.
@@ -408,13 +408,76 @@ When updating the webhook configuration, partial updates are supported, meaning 
 The API response will include the updated configuration of the webhook.
 
 </TabItem>
-
 <TabItem label="Delete webhook" value="delete">
 
 To delete an existing webhook, make an HTTP DELETE request to `https://api.getport.io/v1/webhooks/{WEBHOOK_IDENTIFIER}`.
 
 </TabItem>
+</Tabs>
+</TabItem>
+<TabItem label="Using Port UI" value="ui">
+<Tabs>
+<TabItem label="Create webhook" value="create-ui">
 
+Here's the breakdown of the steps to create a new webhook using the Port UI:
+
+1. Login to your [Port account](https://app.getport.io)
+2. From the top menu, select **Buexapilder**
+3. Choose your existing [blueprint](/docs/quickstart.md#define-a-blueprint)
+4. Click on the blueprint **expand** button
+5. Click on the `...` icon and select **Ingest data**.
+6. Scroll down to the "Custom Integrations" section.
+7. Select **Custom Integration**;
+   - Provide a **Title** for your webhook;
+   - Choose whether to use the **Identifier Autogenerate** option or specify your own identifier;
+   - Provide a description for your webhook;
+   - Select an icon from the dropdown menu to represent your webhook;
+   - Click **Next**
+8. Scroll down to the **JQ Mapping** section;
+   - This section displays the properties created when the blueprint was set up;
+   - Review the mapping and modify it if necessary;
+9. Finally, click **Create** to create the new webhook.
+
+Please note that this breakdown captures the steps involved in creating a webhook using the Port UI based on the provided narrative.
+
+</TabItem>
+<TabItem label="Update webhook" value="update-ui">
+
+Here's the breakdown of the steps to update a webhook using the Port UI:
+
+1. Login to your [Port account](https://app.getport.io)
+2. From the top menu, select **Builder**
+3. Choose your existing [blueprint](/docs/quickstart.md#define-a-blueprint)
+4. Click on the blueprint **expand** button
+5. Click on the `...` icon and select **Ingest data**
+6. Scroll down to the **Custom Integration** section
+7. Select the desired webhook that you want to modify
+8. Make the necessary changes to the webhook configuration
+9. Click **Save** to save your changes
+
+By following these steps, you'll be able to update a webhook using the Port UI based on the provided narrative.
+
+</TabItem>
+
+<TabItem label="Delete webhook" value="delete-ui">
+
+Here's the breakdown of the steps to delete a webhook using the Port UI:
+
+1. Login to your [Port account](https://app.getport.io)
+2. From the top menu, select **Builder**
+3. Choose your existing [blueprint](/docs/quickstart.md#define-a-blueprint)
+4. Click on the blueprint **expand** button
+5. Click on the `...` icon and select **Ingest data**
+6. Scroll down to the **Custom Integration** section
+7. Hover over the desired webhook that you want to delete
+8. A **Delete** icon will appear
+9. Click on the **Delete** icon to remove the webhook
+
+By following these steps, you'll be able to delete a webhook using the Port UI based on the provided narrative.
+
+</TabItem>
+</Tabs>
+</TabItem>
 </Tabs>
 
 ## Using the custom webhook
