@@ -26,7 +26,7 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `L
 
 ## API definition
 
-<Tabs groupId="api-definition" defaultValue="basic" values={[
+<Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Array", value: "array"}
 ]}>
@@ -76,7 +76,7 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `L
 
 ## Terraform definition
 
-<Tabs groupId="tf-definition" defaultValue="basic" values={[
+<Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Array", value: "array"}
 ]}>
@@ -132,7 +132,7 @@ resource "port_blueprint" "myBlueprint" {
 
 ## Pulumi definition
 
-<Tabs groupId="pulumi-definition" defaultValue="basic" values={[
+<Tabs groupId="pulumi-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Enum", value: "enum"},
 {label: "Array - coming soon", value: "array"}
@@ -186,15 +186,15 @@ export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
   // highlight-start
-    properties: {
-        string_props: {
-            myDatetimeProp: {
-                title: "My datetime",
-                format: "date-time",
-                required: true,
-            },
-        },
+  properties: {
+    string_props: {
+      myDatetimeProp: {
+        title: "My datetime",
+        format: "date-time",
+        required: true,
+      },
     },
+  },
   // highlight-end
 });
 ```
@@ -212,15 +212,15 @@ const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
   // highlight-start
-    properties: {
-        string_props: {
-            myDatetimeProp: {
-                title: "My datetime",
-                format: "date-time",
-                required: true,
-            },
-        },
+  properties: {
+    string_props: {
+      myDatetimeProp: {
+        title: "My datetime",
+        format: "date-time",
+        required: true,
+      },
     },
+  },
   // highlight-end
   relations: {},
 });
@@ -273,7 +273,7 @@ func main() {
 
 <TabItem value="enum">
 
-<Tabs groupId="pulumi-definition-date-time-enum" defaultValue="python" values={[
+<Tabs groupId="pulumi-definition-date-time-enum" queryString defaultValue="python" values={[
 {label: "Python", value: "python"},
 {label: "TypeScript", value: "typescript"},
 {label: "JavaScript", value: "javascript"},

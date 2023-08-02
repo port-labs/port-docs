@@ -110,6 +110,9 @@ Create the following webhook configuration [using Port UI](../../?operation=ui#c
       "incident.status_update_published",
       "incident.unacknowledged"
   ],
+  "filter": {
+    "type": "account_reference"
+  },
   "type": "webhook_subscription"
   }
   }'
@@ -120,6 +123,101 @@ In order to view the different events available in PagerDuty webhooks, [look her
 :::
 
 Done! any change that happens to your services or incidents in PagerDuty will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+
+## Let's Test It
+
+This section includes a sample webhook event sent from PagerDuty when an incident is created or updated. In addition, it includes the entity created from the event based on the webhook configuration provided in the previous section.
+
+### Payload
+
+Here is an example of the payload structure sent to the webhook URL when a PagerDuty incident is created:
+
+<details>
+<summary>Webhook event payload</summary>
+
+```json showLineNumbers
+{
+  "event": {
+    "id": "01DVUHO6P4XQDFJ9AHOADT3UQ4",
+    "event_type": "incident.triggered",
+    "resource_type": "incident",
+    "occurred_at": "2023-06-12T11:56:08.355Z",
+    "agent": {
+      "html_url": "https://your_account.pagerduty.com/users/PJCRRLH",
+      "id": "PJCRRLH",
+      "self": "https://api.pagerduty.com/users/PJCRRLH",
+      "summary": "username",
+      "type": "user_reference"
+    },
+    "client": "None",
+    "data": {
+      "id": "Q01J2OS7YBWLNY",
+      "type": "incident",
+      "self": "https://api.pagerduty.com/incidents/Q01J2OS7YBWLNY",
+      "html_url": "https://your_account.pagerduty.com/incidents/Q01J2OS7YBWLNY",
+      "number": 7,
+      "status": "triggered",
+      "incident_key": "acda20953f7446248f90260db65144f8",
+      "created_at": "2023-06-12T11:56:08Z",
+      "title": "Test PagerDuty Incident",
+      "service": {
+        "html_url": "https://your_account.pagerduty.com/services/PWJAGSD",
+        "id": "PWJAGSD",
+        "self": "https://api.pagerduty.com/services/PWJAGSD",
+        "summary": "Port Internal Service",
+        "type": "service_reference"
+      },
+      "assignees": [
+        {
+          "html_url": "https://your_account.pagerduty.com/users/PRGAUI4",
+          "id": "PRGAUI4",
+          "self": "https://api.pagerduty.com/users/PRGAUI4",
+          "summary": "username",
+          "type": "user_reference"
+        }
+      ],
+      "escalation_policy": {
+        "html_url": "https://your_account.pagerduty.com/escalation_policies/P7LVMYP",
+        "id": "P7LVMYP",
+        "self": "https://api.pagerduty.com/escalation_policies/P7LVMYP",
+        "summary": "Test Escalation Policy",
+        "type": "escalation_policy_reference"
+      },
+      "teams": [],
+      "priority": "None",
+      "urgency": "high",
+      "conference_bridge": "None",
+      "resolve_reason": "None"
+    }
+  }
+}
+```
+
+</details>
+
+### Mapping Result
+
+The combination of the sample payload and the webhook configuration generates the following Port entity:
+
+```json showLineNumbers
+{
+  "identifier": "Q01J2OS7YBWLNY",
+  "title": "Test PagerDuty Incident",
+  "blueprint": "pagerdutyIncident",
+  "team": [],
+  "properties": {
+    "status": "triggered",
+    "url": "https://your_account.pagerduty.com/incidents/Q01J2OS7YBWLNY",
+    "details": "Test PagerDuty Incident",
+    "urgency": "high",
+    "responder": "Username",
+    "escalation_policy": "Test Escalation Policy"
+  },
+  "relations": {
+    "microservice": "PWJAGSD"
+  }
+}
+```
 
 ## Import PagerDuty historical data
 

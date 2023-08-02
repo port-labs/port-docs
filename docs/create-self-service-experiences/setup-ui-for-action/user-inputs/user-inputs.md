@@ -12,12 +12,15 @@ Each action has a `userInputs` section in its definition. In this section, you c
 
 ```json showLineNumbers
 {
-  "myInput": {
-    "title": "My input",
-    "icon": "My icon",
-    "description": "My input",
-    "type": "input_type"
-  }
+  "properties": {
+    "myInput": {
+      "title": "My input",
+      "icon": "My icon",
+      "description": "My input",
+      "type": "input_type"
+    }
+  },
+  "required": ["myInput"]
 }
 ```
 
@@ -40,3 +43,28 @@ Note that all of the [properties](../../../build-your-software-catalog/define-yo
 ## Supported user inputs
 
 <DocCardList />
+
+## Ordering user inputs
+
+You can define the order in which the user inputs will be displayed in the UI by using the `order` field. This field is an array of the user input names.
+
+```json showLineNumbers
+{
+  "properties": {
+    "myInput1": {
+      "title": "My input 1",
+      "icon": "My icon 1",
+      "description": "My input 1",
+      "type": "input_type"
+    },
+    "myInput2": {
+      "title": "My input 2",
+      "icon": "My icon 2",
+      "description": "My input 2",
+      "type": "input_type"
+    }
+  },
+  "required": [],
+  "order": ["myInput2", "myInput1"]
+}
+```

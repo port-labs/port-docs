@@ -25,7 +25,7 @@ In this [live demo](https://demo.getport.io/domains) example, we can see the `Do
 
 ## API definition
 
-<Tabs groupId="api-definition" defaultValue="basic" values={[
+<Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Enum", value: "enum"},
 {label: "Array", value: "array"}
@@ -96,7 +96,7 @@ In this [live demo](https://demo.getport.io/domains) example, we can see the `Do
 
 ## Terraform definition
 
-<Tabs groupId="tf-definition" defaultValue="basic" values={[
+<Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Enum", value: "enum"},
 {label: "Array", value: "array"}
@@ -175,7 +175,7 @@ resource "port_blueprint" "myBlueprint" {
 
 ## Pulumi definition
 
-<Tabs groupId="pulumi-definition" defaultValue="basic" values={[
+<Tabs groupId="pulumi-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Enum", value: "enum"},
 {label: "Array - coming soon", value: "array"}
@@ -183,7 +183,7 @@ resource "port_blueprint" "myBlueprint" {
 
 <TabItem value="basic">
 
-<Tabs groupId="pulumi-definition-url-basic" defaultValue="python" values={[
+<Tabs groupId="pulumi-definition-url-basic" queryString defaultValue="python" values={[
 {label: "Python", value: "python"},
 {label: "TypeScript", value: "typescript"},
 {label: "JavaScript", value: "javascript"},
@@ -227,15 +227,15 @@ export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
   // highlight-start
-    properties: {
-        stringProps: {
-            myUrlProp: {
-                title: "My url",
-                required: true,
-                format: "url",
-            },
-        }
+  properties: {
+    stringProps: {
+      myUrlProp: {
+        title: "My url",
+        required: true,
+        format: "url",
+      },
     },
+  },
   // highlight-end
 });
 ```
@@ -253,15 +253,15 @@ const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
   // highlight-start
-    properties: {
-        stringProps: {
-            myUrlProp: {
-                title: "My url",
-                required: true,
-                format: "url",
-            },
-        }
+  properties: {
+    stringProps: {
+      myUrlProp: {
+        title: "My url",
+        required: true,
+        format: "url",
+      },
     },
+  },
   // highlight-end
   relations: {},
 });
@@ -314,7 +314,7 @@ func main() {
 
 <TabItem value="enum">
 
-<Tabs groupId="pulumi-definition-url-enum" defaultValue="python" values={[
+<Tabs groupId="pulumi-definition-url-enum" queryString defaultValue="python" values={[
 {label: "Python", value: "python"},
 {label: "TypeScript", value: "typescript"},
 {label: "JavaScript", value: "javascript"},
@@ -366,18 +366,18 @@ export const blueprint = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   // highlight-start
   properties: {
-        stringProps: {
-            myUrlProp: {
-                title: "My url",
-                required: true,
-                format: "url",
-                enums: ["https://example.com", "https://getport.io"],
-                enumColors: {
-                    "https://example.com": "red",
-                    "https://getport.io": "green",
-                },
-            },
-        }
+    stringProps: {
+      myUrlProp: {
+        title: "My url",
+        required: true,
+        format: "url",
+        enums: ["https://example.com", "https://getport.io"],
+        enumColors: {
+          "https://example.com": "red",
+          "https://getport.io": "green",
+        },
+      },
+    },
   },
   // highlight-end
 });
@@ -397,18 +397,18 @@ const entity = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   // highlight-start
   properties: {
-      stringProps: {
-        myUrlProp: {
-          title: "My url",
-          required: true,
-          format: "url",
-          enums: ["https://example.com", "https://getport.io"],
-          enumColors: {
-            "https://example.com": "red",
-            "https://getport.io": "green",
-          },
+    stringProps: {
+      myUrlProp: {
+        title: "My url",
+        required: true,
+        format: "url",
+        enums: ["https://example.com", "https://getport.io"],
+        enumColors: {
+          "https://example.com": "red",
+          "https://getport.io": "green",
         },
-      }
+      },
+    },
   },
   // highlight-end
   relations: {},

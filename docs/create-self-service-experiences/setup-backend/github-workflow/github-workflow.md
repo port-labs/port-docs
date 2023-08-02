@@ -2,7 +2,11 @@
 
 [Port's GitHub application](../../../build-your-software-catalog/sync-data-to-catalog/git/github/installation.md) can trigger a [GitHub workflow](https://docs.github.com/en/actions/using-workflows) using a customer provided input and [`port_payload`](../../self-service-actions-deep-dive/self-service-actions-deep-dive.md#action-message-structure).
 
-![Port Kafka Architecture](../../../../static/img/self-service-actions/portGithubWorkflowArchitecture.png)
+:::tip
+Self-service actions using GitHub workflows are available both with the standard Port [GitHub app](../../../build-your-software-catalog/sync-data-to-catalog/git/github/github.md), and with the [self-hosted version](../../../build-your-software-catalog/sync-data-to-catalog/git/github/self-hosted-installation.md)
+:::
+
+![Port GitHub workflow Architecture](../../../../static/img/self-service-actions/portGithubWorkflowArchitecture.png)
 
 The steps shown in the image above are as follows:
 
