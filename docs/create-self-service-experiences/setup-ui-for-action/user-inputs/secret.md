@@ -99,7 +99,7 @@ The payload sent to your infrastructure will contain the encrypted value of your
 
 <TabItem value="python">
 
-These examples use the `flask` and `cryptography` packages.
+The following examples use the `flask` and `cryptography` packages:
 
 <Tabs groupId="python-webhook" queryString defaultValue="string" values={[
 {label: "String Secret", value: "string"},
@@ -189,7 +189,7 @@ if __name__ == '__main__':
 </TabItem>
 <TabItem value="nodeJs">
 
-These examples use the `express` and `fernet` packages.
+The following examples use the `express` and `fernet` packages:
 
 <Tabs groupId="node-webhook" queryString defaultValue="string" values={[
 {label: "String Secret", value: "string"},
