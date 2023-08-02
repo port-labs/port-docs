@@ -135,5 +135,7 @@ jobs:
 
 ## Next steps
 
-- [Connect Port's GitHub exporter](../../../../build-your-software-catalog/sync-data-to-catalog/git/github/examples)
-  to make sure all of the properties (like URL, readme etc..) are automatically ingested from GitHub. You can learn how to setup Port's GitHub exporter [here](../../../../build-your-software-catalog/sync-data-to-catalog/git/github/examples#mapping-repositories-and-issues) you can find more information about it.
+- [Connect Port's GitHub exporter](../../../../build-your-software-catalog/sync-data-to-catalog/git/github/github.md)
+  to make sure all of the properties (like URL, readme etc..) are automatically ingested from GitHub.
+  - You can learn how to setup Port's GitHub exporter [here](../../../../build-your-software-catalog/sync-data-to-catalog/git/github/github.md#ingesting-git-objects);
+  - You can see example configurations and use cases [here](../../../../build-your-software-catalog/sync-data-to-catalog/git/github/examples.md).
