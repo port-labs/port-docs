@@ -40,7 +40,7 @@ A secret input is defined as a regular input, but with the additional `encryptio
 }
 ```
 
-- [fernet](https://cryptography.io/en/latest/fernet/) - when using Fernet for symmetric encryption your organization's [Client Secret](../../../build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials) is used as the encryption key. Set the encryption value to `"fernet"` to use it.
+- [fernet](https://cryptography.io/en/latest/fernet/) - when using Fernet for symmetric encryption your organization's [Client Secret](../../../build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials) is used as the encryption key.
 
 ### Supported Types
 
