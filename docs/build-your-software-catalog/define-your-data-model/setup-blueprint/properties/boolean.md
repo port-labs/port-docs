@@ -62,7 +62,7 @@ resource "port_blueprint" "myBlueprint" {
 
 ## Pulumi definition
 
-<Tabs groupId="pulumi-definition-boolean-basic" defaultValue="python" values={[
+<Tabs groupId="pulumi-definition-boolean-basic" queryString defaultValue="python" values={[
 {label: "Python", value: "python"},
 {label: "TypeScript", value: "typescript"},
 {label: "JavaScript", value: "javascript"},
@@ -108,13 +108,13 @@ export const blueprint = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   // highlight-start
   properties: {
-      booleanProps: {
-          myBooleanProp: {
-              title: "My boolean",
-              required: true,
-          },
+    booleanProps: {
+      myBooleanProp: {
+        title: "My boolean",
+        required: true,
       },
-  }
+    },
+  },
   // highlight-end
 });
 ```
@@ -132,14 +132,14 @@ const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
   // highlight-start
-    properties: {
-        booleanProps: {
-            myBooleanProp: {
-                title: "My boolean",
-                required: true,
-            },
-        },
+  properties: {
+    booleanProps: {
+      myBooleanProp: {
+        title: "My boolean",
+        required: true,
+      },
     },
+  },
   // highlight-end
   relations: {},
 });

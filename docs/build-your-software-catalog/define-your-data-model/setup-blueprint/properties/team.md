@@ -25,7 +25,7 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `T
 
 ## API definition
 
-<Tabs groupId="api-definition" defaultValue="basic" values={[
+<Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Array", value: "array"}
 ]}>
@@ -74,7 +74,7 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `T
 
 ## Terraform definition
 
-<Tabs groupId="tf-definition" defaultValue="basic" values={[
+<Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Array", value: "array"}
 ]}>
@@ -128,7 +128,7 @@ resource "port_blueprint" "myBlueprint" {
 
 ## Pulumi definition
 
-<Tabs groupId="pulumi-definition-team-basic" defaultValue="python" values={[
+<Tabs groupId="pulumi-definition-team-basic" queryString defaultValue="python" values={[
 {label: "Python", value: "python"},
 {label: "TypeScript", value: "typescript"},
 {label: "JavaScript", value: "javascript"},
@@ -174,15 +174,15 @@ export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
   // highlight-start
-    properties: {
-        stringProps: {
-            myTeamProp: {
-                title: "My team",
-                required: false,
-                format: "team",
-            },
-        },
+  properties: {
+    stringProps: {
+      myTeamProp: {
+        title: "My team",
+        required: false,
+        format: "team",
+      },
     },
+  },
   // highlight-end
 });
 ```
@@ -200,15 +200,15 @@ const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
   // highlight-start
-    properties: {
-        stringProps: {
-            myTeamProp: {
-                title: "My team",
-                required: false,
-                format: "team",
-            },
-        },
+  properties: {
+    stringProps: {
+      myTeamProp: {
+        title: "My team",
+        required: false,
+        format: "team",
+      },
     },
+  },
   // highlight-end
   relations: {},
 });
