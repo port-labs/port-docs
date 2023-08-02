@@ -10,9 +10,9 @@ import MergeRequestWebhookConfig from '../resources/gitlab/\_example_gitlab_mr_c
 
 In this example you are going to create a webhook integration between [GitLab](https://about.gitlab.com/) and Port, which will ingest merge request entities.
 
-## Prerequisites
+## Port configuration
 
-Create the following blueprint definition and webhook configuration:
+Create the following blueprint definition:
 
 <details>
 <summary>Merge request blueprint</summary>
@@ -21,14 +21,28 @@ Create the following blueprint definition and webhook configuration:
 
 </details>
 
+Create the following webhook configuration [using Port ui](../../?operation=ui#configuring-webhook-endpoints):
+
 <details>
 <summary>Pull request webhook configuration</summary>
 
-<MergeRequestWebhookConfig/>
+1. **Basic details** tab - fill the following details:
+
+   1. Title : `Gitlab mapper`;
+   2. Identifier : `gitlab_mapper`;
+   3. Description : `A webhook configuration to map Gitlab merge requests to Port`;
+   4. Icon : `Gitlab`;
+
+2. **Integration configuration** tab - fill the following JQ mapping:
+   <MergeRequestWebhookConfig/>
+
+3. Scroll down to **Advanced settings** and input the following details:
+   1. Request Identifier Path : `.headers.X-Gitlab-Event-Uuid`;
+   2. Click **Save** at the bottom of the page.
 
 </details>
 
-## Create the GitLab webhook
+## Create a webhook in GitLab
 
 :::tip
 Webhooks can be created at the group level and at the project level, this example focuses on project-level webhooks

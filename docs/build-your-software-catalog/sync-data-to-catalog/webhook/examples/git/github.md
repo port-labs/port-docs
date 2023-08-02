@@ -10,9 +10,9 @@ import PullRequestWebhookConfig from '../resources/github/\_example_github_pr_co
 
 In this example you are going to create a webhook integration between [GitHub](https://github.com) and Port, which will ingest pull request entities.
 
-## Prerequisites
+## Port configuration
 
-Create the following blueprint definition and webhook configuration:
+Create the following blueprint definition:
 
 <details>
 <summary>Pull request blueprint</summary>
@@ -21,16 +21,31 @@ Create the following blueprint definition and webhook configuration:
 
 </details>
 
+Create the following webhook configuration [using Port UI](../../?operation=ui#configuring-webhook-endpoints):
+
 <details>
 <summary>Pull request webhook configuration</summary>
 
-Remember to replace the `WEBHOOK_SECRET` with the real secret you specify when creating the webhook in GitHub.
+1. **Basic details** tab - fill the following details:
+   1. Title : `Pull Request Mapper`;
+   2. Identifier : `pull_request_mapper`;
+   3. Description : `A webhook configuration for pull-request events from GitHub`;
+   4. Icon : `Github`;
+2. **Integration configuration** tab - fill the following JQ mapping:
+   <PullRequestWebhookConfig/>
 
-<PullRequestWebhookConfig/>
+3. Scroll down to **Advanced settings** and input the following details:
+
+   1. Secret: `WEBHOOK_SECRET`;
+   2. Signature Header Name : `X-Hub-Signature-256`;
+   3. Signature Algorithm : Select `sha256` from dropdown option;
+   4. Signature Prefix : `sha256=`;
+   5. Request Identifier Path : `.headers.\"X-GitHub-Delivery\"`;
+   6. Click **Save** at the bottom of the page.
 
 </details>
 
-## Create the GitHub webhook
+## Create a webhook in GitHub
 
 1. Go to your desired organization/repository in GitHub;
 2. Select **Settings**;

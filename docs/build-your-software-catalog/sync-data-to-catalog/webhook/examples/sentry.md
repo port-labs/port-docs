@@ -12,9 +12,9 @@ import SentryIssuesConfiguration from "./resources/sentry/\_example_sentry_issue
 
 In this example you are going to create a webhook integration between [Sentry](https://sentry.io) and Port, which will ingest issues entities.
 
-## Prerequisites
+## Port configuration
 
-Create the following blueprint definitions and webhook configuration:
+Create the following blueprint definition:
 
 <details>
 
@@ -23,10 +23,25 @@ Create the following blueprint definitions and webhook configuration:
 
 </details>
 
+Create the following webhook configuration [using Port UI](../../?operation=ui#configuring-webhook-endpoints):
+
 <details>
 
 <summary>Sentry issue webhook configuration</summary>
-<SentryIssuesConfiguration/>
+
+1. **Basic details** tab - fill the following details:
+   1. Title : `Sentry issue mapper`;
+   2. Identifier : `sentry_issue_mapper`;
+   3. Description : `A webhook configuration to map Sentry Issues to Port`;
+   4. Icon : `Sentry`;
+2. **Integration configuration** tab - fill the following JQ mapping:
+
+   <SentryIssuesConfiguration/>
+
+3. Scroll down to **Advanced settings** and input the following details:
+   1. Signature Header Name : `sentry-hook-signature`;
+   2. Signature Algorithm : Select `sha256` from dropdown option;
+   3. Click **Save** at the bottom of the page.
 
 </details>
 
@@ -36,13 +51,13 @@ So when following this example, please first create the webhook configuration in
 After getting the secret from Sentry, you can go back to Port and update the [webhook configuration](../webhook.md#configuring-webhook-endpoints) with the secret.
 :::
 
-## Create the Sentry webhook
+## Create a webhook in Sentry
 
 1. Log in to Sentry with your organization's credentials;
 2. Click the gear icon (Setting) at the left sidebar of the page;
 3. Choose **Developer Settings**;
 4. At the upper corner of this page, click on **Create New Integration**;
-5. Sentry provides two types of integrations: Internal and Public. For the purpose of this guide, choose **Internal Integration** and click on the **Next** button
+5. Sentry provides two types of integrations: Internal and Public. For the purpose of this guide, choose **Internal Integration** and click on the **Next** button;
 6. Input the following details:
    1. `Name` - use a meaningful name such as Port Webhook;
    2. `Webhook URL` - enter the value of the `url` key you received after creating the webhook configuration;
@@ -66,15 +81,30 @@ The following example adds a `sentryComment` blueprint, in addition to the `sent
 
 </details>
 
+Create the following webhook configuration [using Port UI](../../?operation=ui#configuring-webhook-endpoints):
+
 <details>
 
 <summary>Sentry comments webhook configuration</summary>
-<SentryCommentsConfiguration/>
+
+1. **Basic details** tab - fill the following details:
+   1. Title : `Sentry comment mapper`;
+   2. Identifier : `sentry_comment_mapper`;
+   3. Description : `A webhook configuration to map Sentry Comments to Port`;
+   4. Icon : `Sentry`;
+2. **Integration configuration** tab - fill the following JQ mapping:
+
+   <SentryCommentsConfiguration/>
+
+3. Scroll down to **Advanced settings** and input the following details:
+   1. Signature Header Name : `sentry-hook-signature`;
+   2. Signature Algorithm : Select `sha256` from dropdown option;
+   3. Click **Save** at the bottom of the page.
 
 </details>
 
 :::tip
-In order to view the different payloads and events available in Sentry webhooks, [look here](https://docs.sentry.io/product/integrations/integration-platform/webhooks/)
+In order to view the different payloads and events available in Sentry webhooks, [click here](https://docs.sentry.io/product/integrations/integration-platform/webhooks/)
 :::
 
 Done! any issue and comment in Sentry will trigger a webhook event. Port will parse the events according to the mapping and update the catalog entities accordingly.
