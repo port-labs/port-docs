@@ -179,7 +179,7 @@ Here is an example of the payload structure sent to the webhook URL when a Sentr
 
 ### Mapping Result
 
-The combination of the sample payload and the webhook configuration generate the following Port `sentryIssue` entity:
+The combination of the sample payload and the webhook configuration generates the following Port `sentryIssue` entity:
 
 ```json showLineNumbers
 {
