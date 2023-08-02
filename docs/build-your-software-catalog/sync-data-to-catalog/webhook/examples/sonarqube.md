@@ -64,3 +64,139 @@ In order to view the different payloads and events available in SonarQube webhoo
 :::
 
 Done! any new analysis you run (for example, on new PRs or changes to PRs) will trigger a webhook event that SonarCloud will send to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+
+## Let's Test It
+
+This section includes a sample webhook event sent from SonarQube when a code repository is scanned for quality assurance. In addition, it includes the entity created from the event based on the webhook configuration provided in the previous section.
+
+### Payload
+
+Here is an example of the payload structure sent to the webhook URL when a SonarQube repository is scanned:
+
+<details>
+<summary> Webhook event payload</summary>
+
+```json showLineNumbers
+{
+  "serverUrl": "https://sonarcloud.io",
+  "taskId": "AYi_1w1fcGD_RU1S5-r_",
+  "status": "SUCCESS",
+  "analysedAt": "2023-06-15T16:15:05+0000",
+  "revision": "575718d8287cd09630ff0ff9aa4bb8570ea4ef29",
+  "changedAt": "2023-06-15T16:15:05+0000",
+  "project": {
+    "key": "Username_Test_Python_App",
+    "name": "Test_Python_App",
+    "url": "https://sonarcloud.io/dashboard?id=Username_Test_Python_App"
+  },
+  "branch": {
+    "name": "master",
+    "type": "LONG",
+    "isMain": true,
+    "url": "https://sonarcloud.io/dashboard?id=Username_Test_Python_App"
+  },
+  "qualityGate": {
+    "name": "My Quality Gate",
+    "status": "ERROR",
+    "conditions": [
+      {
+        "metric": "code_smells",
+        "operator": "GREATER_THAN",
+        "value": "217",
+        "status": "ERROR",
+        "errorThreshold": "5"
+      },
+      {
+        "metric": "ncloc",
+        "operator": "GREATER_THAN",
+        "value": "8435",
+        "status": "ERROR",
+        "errorThreshold": "20"
+      },
+      {
+        "metric": "new_branch_coverage",
+        "operator": "LESS_THAN",
+        "status": "NO_VALUE",
+        "errorThreshold": "1"
+      },
+      {
+        "metric": "new_sqale_debt_ratio",
+        "operator": "GREATER_THAN",
+        "value": "1.0303030303030303",
+        "status": "OK",
+        "errorThreshold": "5"
+      },
+      {
+        "metric": "new_violations",
+        "operator": "GREATER_THAN",
+        "value": "3",
+        "status": "ERROR",
+        "errorThreshold": "1"
+      }
+    ]
+  },
+  "properties": {}
+}
+```
+
+</details>
+
+### Mapping Result
+
+The combination of the sample payload and the webhook configuration generate the following Port entity:
+
+```json showLineNumbers
+{
+  "identifier": "AYi_1w1fcGD_RU1S5-r_",
+  "title": "Test_Python_App-AYi_1w1fcGD_RU1S5-r_",
+  "blueprint": "sonarCloudAnalysis",
+  "properties": {
+    "serverUrl": "https://sonarcloud.io",
+    "status": "SUCCESS",
+    "projectName": "Test_Python_App",
+    "projectUrl": "https://sonarcloud.io/dashboard?id=Username_Test_Python_App",
+    "branchName": "master",
+    "branchType": "LONG",
+    "branchUrl": "https://sonarcloud.io/dashboard?id=Username_Test_Python_App",
+    "qualityGateName": "My Quality Gate",
+    "qualityGateStatus": "ERROR",
+    "qualityGateConditions": [
+      {
+        "metric": "code_smells",
+        "operator": "GREATER_THAN",
+        "value": "217",
+        "status": "ERROR",
+        "errorThreshold": "5"
+      },
+      {
+        "metric": "ncloc",
+        "operator": "GREATER_THAN",
+        "value": "8435",
+        "status": "ERROR",
+        "errorThreshold": "20"
+      },
+      {
+        "metric": "new_branch_coverage",
+        "operator": "LESS_THAN",
+        "status": "NO_VALUE",
+        "errorThreshold": "1"
+      },
+      {
+        "metric": "new_sqale_debt_ratio",
+        "operator": "GREATER_THAN",
+        "value": "1.0303030303030303",
+        "status": "OK",
+        "errorThreshold": "5"
+      },
+      {
+        "metric": "new_violations",
+        "operator": "GREATER_THAN",
+        "value": "3",
+        "status": "ERROR",
+        "errorThreshold": "1"
+      }
+    ]
+  },
+  "relations": {}
+}
+```
