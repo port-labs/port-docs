@@ -40,7 +40,7 @@ A secret input is defined as a regular input, but with the additional `encryptio
 }
 ```
 
-- [fernet](https://cryptography.io/en/latest/fernet/) - when using Fernet for symmetric encryption your organization's [Client Secret](../../../build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials) is used as the encryption key.
+- [fernet](https://cryptography.io/en/latest/fernet/) - when using Fernet for symmetric encryption the encryption key will be the first 32 bytes of your organization's [Client Secret](../../../build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
 
 ### Supported Types
 
@@ -124,7 +124,7 @@ app = Flask(__name__)
 @app.route('/', methods=['POST'])
 def webhook():
     # initialize the fernet decrypter
-    key = base64.urlsafe_b64encode(PORT_CLIENT_SECRET.encode())
+    key = base64.urlsafe_b64encode(PORT_CLIENT_SECRET[:32].encode())
     fernet_instance = Fernet(key)
 
     req = request.get_json(silent=True, force=True)
@@ -162,7 +162,7 @@ app = Flask(__name__)
 @app.route('/', methods=['POST'])
 def webhook():
     # initialize the fernet decrypter
-    key = base64.urlsafe_b64encode(PORT_CLIENT_SECRET.encode())
+    key = base64.urlsafe_b64encode(PORT_CLIENT_SECRET[:32].encode())
     fernet_instance = Fernet(key)
 
     req = request.get_json(silent=True, force=True)
@@ -210,7 +210,9 @@ const PORT_CLIENT_SECRET = "YOUR PORT CLIENT SECRET";
 
 app.post("/", bodyParser.json(), (req, res) => {
   // initialize the fernet decrypter
-  const encodedSecret = Buffer.from(PORT_CLIENT_SECRET).toString("base64");
+  const encodedSecret = Buffer.from(
+    PORT_CLIENT_SECRET.substring(0, 32)
+  ).toString("base64");
   const fernetSecret = new fernet.Secret(encodedSecret);
   const fernetToken = new fernet.Token({
     secret: fernetSecret,
@@ -245,7 +247,9 @@ const PORT_CLIENT_SECRET = "YOUR PORT CLIENT SECRET";
 
 app.post("/", bodyParser.json(), (req, res) => {
   // initialize the fernet decrypter
-  const encodedSecret = Buffer.from(PORT_CLIENT_SECRET).toString("base64");
+  const encodedSecret = Buffer.from(
+    PORT_CLIENT_SECRET.substring(0, 32)
+  ).toString("base64");
   const fernetSecret = new fernet.Secret(encodedSecret);
   const fernetToken = new fernet.Token({
     secret: fernetSecret,
