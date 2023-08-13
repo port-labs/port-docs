@@ -56,6 +56,13 @@ The metadata configuration of the webhook includes all properties related to the
 
 Here is an example metadata configuration:
 
+<Tabs groupId="definition" queryString defaultValue="api" values={[
+{label: "API", value: "api"},
+{label: "Terraform", value: "tf"},
+]}>
+
+<TabItem value="api">
+
 ```json showLineNumbers
 {
   // highlight-start
@@ -74,6 +81,32 @@ Here is an example metadata configuration:
 }
 ```
 
+</TabItem>
+
+<TabItem value="tf">
+
+```hcl showLineNumbers
+  resource "port_webhook" "myWebhook" {
+    // highlight-start
+    identifier = "pullRequestMapper"
+    title = "Pull Request Mapper"
+    description = "A webhook configuration for pull-request events from GitHub"
+    icon = "Github"
+    enabled = true
+    // highlight-end
+    mappings = {
+      ...
+    }
+    security = {
+      ...
+    }
+  }
+
+```
+
+</TabItem>
+</Tabs>
+
 #### Structure table
 
 | Field         | Description           | Notes                                                                                                    |
@@ -91,6 +124,13 @@ The mapping configuration of the webhook defines how the webhook event payload i
 The mapping configuration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to extract information from the event payload into Port entity properties.
 
 Here is an example mapping configuration:
+
+<Tabs groupId="definition" queryString defaultValue="api" values={[
+{label: "API", value: "api"},
+{label: "Terraform", value: "tf"},
+]}>
+
+<TabItem value="api">
 
 ```json showLineNumbers
 {
@@ -119,6 +159,43 @@ Here is an example mapping configuration:
   }
 }
 ```
+
+</TabItem>
+
+<TabItem value="tf">
+
+```hcl showLineNumbers
+  resource "port_webhook" "myWebhook" {
+    identifier = "pullRequestMapper"
+    title = "Pull Request Mapper"
+    enabled = true
+    ...
+    // highlight-start
+    mappings = [
+      {
+        blueprint = "pullRequest"
+        filter = ".headers.\"X-GitHub-Event\" == \"pull_request\""
+        entity = {
+          identifier = ".body.pull_request.id | tostring"
+          title = ".body.pull_request.title"
+          properties = {
+            author = ".body.pull_request.user.login"
+            url = ".body.pull_request.html_url"
+          }
+        }
+      }
+    ]
+    // highlight-end
+    security = {
+      ...
+    }
+  }
+
+```
+
+</TabItem>
+
+</Tabs>
 
 #### Structure
 
@@ -247,6 +324,13 @@ The security configuration of the webhook is used to tell Port how to verify the
 
 Here is an example security configuration:
 
+<Tabs groupId="definition" queryString defaultValue="api" values={[
+{label: "API", value: "api"},
+{label: "Terraform", value: "tf"},
+]}>
+
+<TabItem value="api">
+
 ```json showLineNumbers
 {
   "identifier": "pullRequestMapper",
@@ -265,6 +349,35 @@ Here is an example security configuration:
   // highlight-end
 }
 ```
+
+</TabItem>
+
+<TabItem value="tf">
+
+```hcl showLineNumbers
+
+resource "port_webhook" "myWebhook" {
+    identifier = "pullRequestMapper"
+    ...
+    mappings = [
+      ...
+    ]
+    // highlight-start
+    security = {
+      secret = "WEBHOOK_SECRET"
+      signature_header_name = "X-Hub-Signature-256"
+      signature_algorithm = "sha256"
+      signature_prefix = "sha256="
+      request_identifier_path = ".headers.\"X-GitHub-Delivery\""
+    }
+    // highlight-end
+}
+
+```
+
+</TabItem>
+
+</Tabs>
 
 :::tip
 The security configuration is not mandatory, but it does provide an additional layer of security, making sure that Port only processes payloads that were actually sent from one of your 3rd party webhooks.
