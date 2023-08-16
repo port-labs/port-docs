@@ -39,10 +39,10 @@ kubectl config current-context
 
 ### Creating blueprints using the installation script
 
-The installation script provides a convenient way to create your blueprints. Using the `CUSTOM_BP_PATH` environment variable, you can fetch a pre-defined `blueprints.json` to create your blueprints. For this use-case, you will use [this file](https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/blueprints/kubernetes_complete_usecase_bps.json) to define your blueprints. Do this by running:
+The installation script provides a convenient way to create your blueprints. Using the `CUSTOM_BP_PATH` environment variable, you can fetch a pre-defined `blueprints.json` to create your blueprints. For this use-case, you will use [this file](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/full-kubernetes-exporter/) to define your blueprints. Do this by running:
 
 ```bash showLineNumbers
-export CUSTOM_BP_PATH="https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/kubernetes_complete_usecase_bps.json"
+export CUSTOM_BP_PATH="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/blueprints/kubernetes_complete_usecase_bps.json"
 ```
 
 This `blueprints.json` file defines the following blueprints:
