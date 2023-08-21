@@ -6,24 +6,72 @@ import Image from "@theme/IdealImage";
 
 # Examples
 
-## Mapping ECS services
+## Mapping ECS clusters and ECS services
 
-In this step-by-step example, you will export your `ECS services` to Port.
+In this step-by-step example, you will export your `ECS clusters` and `ECS services` to Port.
 
 1. Create the following Port blueprint:
 
-   - **ECS** - will represent ECS services from the AWS account.
+   - **ECS Cluster** - will represent ECS clusters from the AWS account.
+   - **ECS Service** - will represent ECS services from the AWS account.
 
-   You may use the following definition:
+   You may use the following definitions:
 
     <details>
-    <summary> ECS blueprint </summary>
+    <summary> ECS Cluster blueprint </summary>
 
    ```json showLineNumbers
    {
-     "identifier": "ecs",
-     "description": "This blueprint represents an AWS ECS service in our software catalog",
-     "title": "ECS",
+     "identifier": "ecsCluster",
+     "description": "This blueprint represents an AWS ECS Cluster in our software catalog",
+     "title": "ECS Cluster",
+     "icon": "AWS",
+     "schema": {
+       "properties": {
+         "link": {
+           "type": "string",
+           "format": "url",
+           "title": "Link"
+         },
+         "capacityProviders": {
+           "type": "array",
+           "title": "Capacity Providers"
+         },
+         "defaultCapacityProviderStrategy": {
+           "type": "array",
+           "title": "Default Capacity Provider Strategy"
+         },
+         "clusterSettings": {
+           "type": "array",
+           "title": "Cluster Settings"
+         },
+         "tags": {
+           "type": "array",
+           "title": "Tags"
+         },
+         "arn": {
+           "type": "string",
+           "title": "ARN"
+         }
+       },
+       "required": []
+     },
+     "mirrorProperties": {},
+     "calculationProperties": {},
+     "relations": {}
+   }
+   ```
+
+    </details>
+
+    <details>
+    <summary> ECS Service blueprint </summary>
+
+   ```json showLineNumbers
+   {
+     "identifier": "ecsService",
+     "description": "This blueprint represents an AWS ECS Service in our software catalog",
+     "title": "ECS Service",
      "icon": "Service",
      "schema": {
        "properties": {
@@ -35,10 +83,6 @@ In this step-by-step example, you will export your `ECS services` to Port.
          "desiredCount": {
            "type": "number",
            "title": "Desired Count"
-         },
-         "cluster": {
-           "type": "string",
-           "title": "Cluster"
          },
          "taskDefinition": {
            "type": "string",
@@ -80,7 +124,14 @@ In this step-by-step example, you will export your `ECS services` to Port.
        "required": []
      },
      "mirrorProperties": {},
-     "calculationProperties": {}
+     "calculationProperties": {},
+     "relations": {
+       "ecsCluster": {
+         "target": "ecsCluster",
+         "many": false,
+         "required": false
+       }
+     }
    }
    ```
 
@@ -95,6 +146,28 @@ In this step-by-step example, you will export your `ECS services` to Port.
    {
      "resources": [
        {
+         "kind": "AWS::ECS::Cluster",
+         "port": {
+           "entity": {
+             "mappings": [
+               {
+                 "identifier": ".ClusterName",
+                 "title": ".ClusterName",
+                 "blueprint": "ecsCluster",
+                 "properties": {
+                   "link": "\"https://console.aws.amazon.com/go/view?arn=\" + .Arn",
+                   "capacityProviders": ".CapacityProviders",
+                   "defaultCapacityProviderStrategy": ".DefaultCapacityProviderStrategy",
+                   "clusterSettings": ".ClusterSettings",
+                   "tags": ".Tags",
+                   "arn": ".Arn"
+                 }
+               }
+             ]
+           }
+         }
+       },
+       {
          "kind": "AWS::ECS::Service",
          "port": {
            "entity": {
@@ -102,7 +175,7 @@ In this step-by-step example, you will export your `ECS services` to Port.
                {
                  "identifier": ".ServiceName",
                  "title": ".ServiceName",
-                 "blueprint": "ecs",
+                 "blueprint": "ecsService",
                  "properties": {
                    "link": "\"https://console.aws.amazon.com/go/view?arn=\" + .ServiceArn",
                    "desiredCount": ".DesiredCount",
@@ -115,6 +188,9 @@ In this step-by-step example, you will export your `ECS services` to Port.
                    "taskDefinition": ".TaskDefinition | split(\"/\")[-1]",
                    "iamRole": ".Role | if . == null then null else \"https://console.aws.amazon.com/go/view?arn=\" + . end",
                    "arn": ".ServiceArn"
+                 },
+                 "relations": {
+                   "ecsCluster": ".Cluster | split(\"/\")[-1]"
                  }
                }
              ]
@@ -140,8 +216,9 @@ In this step-by-step example, you will export your `ECS services` to Port.
          "Sid": "VisualEditor0",
          "Effect": "Allow",
          "Action": [
-           "ecs:DescribeServices",
+           "ecs:DescribeClusters",
            "ecs:ListClusters",
+           "ecs:DescribeServices",
            "ecs:ListServices"
          ],
          "Resource": "*"
@@ -152,7 +229,7 @@ In this step-by-step example, you will export your `ECS services` to Port.
 
    </details>
 
-4. Optional: Create an event rule to trigger automatic syncing of changes in ECS services.
+4. Optional: Create an event rule to trigger automatic syncing of changes in ECS clusters and ECS services.
 
    You may use the following CloudFormation Template:
 
@@ -176,6 +253,46 @@ In this step-by-step example, you will export your `ECS services` to Port.
        Properties:
          EventBusName: default
          EventPattern:
+           source:
+             - aws.ecs
+           detail-type:
+             - AWS API Call via CloudTrail
+           detail:
+             eventSource:
+               - ecs.amazonaws.com
+             eventName:
+               - prefix: CreateCluster
+               - prefix: DeleteCluster
+               - prefix: UpdateCluster
+               - prefix: UpdateClusterSettings
+               - prefix: PutClusterCapacityProviders
+               - prefix: TagResource
+               - prefix: UntagResource
+         Name: port-aws-exporter-sync-ecs-cluster-trails
+         State: ENABLED
+         Targets:
+           - Id: PortAWSExporterEventsQueue
+             Arn:
+               Fn::ImportValue:
+                 Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+             InputTransformer:
+               InputPathsMap:
+                 awsRegion: $.detail.awsRegion
+                 clusterName: $.detail.responseElements.cluster.clusterName
+                 eventName: $.detail.eventName
+                 resourceArn: $.detail.requestParameters.resourceArn
+               InputTemplate: |-
+                 {
+                  "resource_type": "AWS::ECS::Cluster",
+                  "region": "\"<awsRegion>\"",
+                  "identifier": "\"<eventName>\" | if test(\"TagResource|UntagResource[^a-zA-Z]*$\") then \"<resourceArn>\" | split(\"/\")[-1] else \"<clusterName>\" end",
+                  "action": "if \"<eventName>\" | test(\"DeleteCluster[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
+                 }
+     EventRule1:
+       Type: AWS::Events::Rule
+       Properties:
+         EventBusName: default
+         EventPattern:
            detail-type:
              - AWS API Call via CloudTrail
            source:
@@ -187,7 +304,7 @@ In this step-by-step example, you will export your `ECS services` to Port.
                - prefix: CreateService
                - prefix: UpdateService
                - prefix: DeleteService
-         Name: port-aws-exporter-sync-ecs-trails
+         Name: port-aws-exporter-sync-ecs-service-trails
          State: ENABLED
          Targets:
            - Id: PortAWSExporterEventsQueue
@@ -212,7 +329,7 @@ In this step-by-step example, you will export your `ECS services` to Port.
 
    </details>
 
-Done! soon, you will be able to see any `ECS services`.
+Done! soon, you will be able to see any `ECS clusters` and `ECS services`.
 
 ## Mapping App Runner services
 
@@ -2678,92 +2795,92 @@ In this step-by-step example, you will export your `CloudFormation Stacks` to Po
 
    ```json showLineNumbers
    {
-    "identifier": "cloudFormationStack",
-    "description": "This blueprint represents a service in our software catalog",
-    "title": "CloudFormation Stack",
-    "icon": "Microservice",
-    "schema": {
-      "properties": {
-        "createdAt": {
-          "type": "string",
-          "title": "Creation Time"
-        },
-        "status": {
-          "title": "Status",
-          "description": "The current status of the Stack",
-          "type": "string",
-          "enum": [
-            "CREATE_IN_PROGRESS",
-            "CREATE_FAILED",
-            "CREATE_COMPLETE",
-            "ROLLBACK_IN_PROGRESS",
-            "ROLLBACK_FAILED",
-            "ROLLBACK_COMPLETE",
-            "DELETE_IN_PROGRESS",
-            "DELETE_FAILED",
-            "UPDATE_IN_PROGRESS",
-            "UPDATE_COMPLETE_CLEANUP_IN_PROGRESS",
-            "UPDATE_COMPLETE",
-            "UPDATE_FAILED",
-            "UPDATE_ROLLBACK_IN_PROGRESS",
-            "UPDATE_ROLLBACK_FAILED",
-            "UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS",
-            "UPDATE_ROLLBACK_COMPLETE",
-            "REVIEW_IN_PROGRESS",
-            "IMPORT_IN_PROGRESS",
-            "IMPORT_COMPLETE",
-            "IMPORT_ROLLBACK_IN_PROGRESS",
-            "IMPORT_ROLLBACK_FAILED",
-            "IMPORT_ROLLBACK_COMPLETE"
-          ],
-          "enumColors": {
-            "CREATE_IN_PROGRESS": "orange",
-            "CREATE_FAILED": "red",
-            "CREATE_COMPLETE": "green",
-            "ROLLBACK_IN_PROGRESS": "orange",
-            "ROLLBACK_FAILED": "red",
-            "ROLLBACK_COMPLETE": "green",
-            "UPDATE_IN_PROGRESS": "orange",
-            "UPDATE_FAILED": "red",
-            "UPDATE_COMPLETE": "green"
-          }
-        },
-        "resources": {
-          "items": {
-            "type": "object"
-          },
-          "title": "Resources",
-          "description": "The cloudformation stack resources",
-          "type": "array"
-        },
-        "template": {
-          "title": "Template",
-          "type": "string",
-          "format": "yaml"
-        },
-        "tags": {
-          "items": {
-            "type": "object"
-          },
-          "title": "Tags",
-          "type": "array"
-        },
-        "link": {
-          "title": "link",
-          "description": "The aws console stack url",
-          "type": "string",
-          "format": "url"
-        },
-        "lastUpdated": {
-          "type": "string",
-          "title": "Last Updated"
-        }
-      },
-      "required": []
-    },
-    "mirrorProperties": {},
-    "calculationProperties": {},
-    "relations": {}
+     "identifier": "cloudFormationStack",
+     "description": "This blueprint represents a service in our software catalog",
+     "title": "CloudFormation Stack",
+     "icon": "Microservice",
+     "schema": {
+       "properties": {
+         "createdAt": {
+           "type": "string",
+           "title": "Creation Time"
+         },
+         "status": {
+           "title": "Status",
+           "description": "The current status of the Stack",
+           "type": "string",
+           "enum": [
+             "CREATE_IN_PROGRESS",
+             "CREATE_FAILED",
+             "CREATE_COMPLETE",
+             "ROLLBACK_IN_PROGRESS",
+             "ROLLBACK_FAILED",
+             "ROLLBACK_COMPLETE",
+             "DELETE_IN_PROGRESS",
+             "DELETE_FAILED",
+             "UPDATE_IN_PROGRESS",
+             "UPDATE_COMPLETE_CLEANUP_IN_PROGRESS",
+             "UPDATE_COMPLETE",
+             "UPDATE_FAILED",
+             "UPDATE_ROLLBACK_IN_PROGRESS",
+             "UPDATE_ROLLBACK_FAILED",
+             "UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS",
+             "UPDATE_ROLLBACK_COMPLETE",
+             "REVIEW_IN_PROGRESS",
+             "IMPORT_IN_PROGRESS",
+             "IMPORT_COMPLETE",
+             "IMPORT_ROLLBACK_IN_PROGRESS",
+             "IMPORT_ROLLBACK_FAILED",
+             "IMPORT_ROLLBACK_COMPLETE"
+           ],
+           "enumColors": {
+             "CREATE_IN_PROGRESS": "orange",
+             "CREATE_FAILED": "red",
+             "CREATE_COMPLETE": "green",
+             "ROLLBACK_IN_PROGRESS": "orange",
+             "ROLLBACK_FAILED": "red",
+             "ROLLBACK_COMPLETE": "green",
+             "UPDATE_IN_PROGRESS": "orange",
+             "UPDATE_FAILED": "red",
+             "UPDATE_COMPLETE": "green"
+           }
+         },
+         "resources": {
+           "items": {
+             "type": "object"
+           },
+           "title": "Resources",
+           "description": "The cloudformation stack resources",
+           "type": "array"
+         },
+         "template": {
+           "title": "Template",
+           "type": "string",
+           "format": "yaml"
+         },
+         "tags": {
+           "items": {
+             "type": "object"
+           },
+           "title": "Tags",
+           "type": "array"
+         },
+         "link": {
+           "title": "link",
+           "description": "The aws console stack url",
+           "type": "string",
+           "format": "url"
+         },
+         "lastUpdated": {
+           "type": "string",
+           "title": "Last Updated"
+         }
+       },
+       "required": []
+     },
+     "mirrorProperties": {},
+     "calculationProperties": {},
+     "relations": {}
    }
    ```
 
@@ -3193,102 +3310,93 @@ In this step-by-step example, you will export your `Load balancers` to Port.
 
    - **Load Balancer** - will represent load balancers from the AWS account.
 
-  You may use the following definitions:
+You may use the following definitions:
 
     <details>
     <summary> Load balancer blueprint </summary>
 
-   ```json showLineNumbers
-   {
-    "identifier": "loadBalancer",
-    "description": "This blueprint represents an AWS Load Balancer in our software catalog",
-    "title": "Load Balancer",
-    "icon": "AWS",
-    "schema": {
-      "properties": {
-        "state": {
-          "type": "string",
-          "title": "State",
-          "default": "active",
-          "enum": [
-            "provisioning",
-            "active",
-            "failed",
-            "active_impaired"
-          ],
-          "enumColors": {
-            "active": "green",
-            "failed": "red",
-            "provisioning": "yellow",
-            "active_impaired": "orange"
-          }
-        },
-        "type": {
-          "type": "string",
-          "title": "Type",
-          "default": "application",
-          "enum": [
-            "application",
-            "network",
-            "gateway"
-          ]
-        },
-        "scheme": {
-          "type": "string",
-          "title": "Scheme"
-        },
-        "vpcId": {
-          "type": "string",
-          "title": "Vpc ID"
-        },
-        "availabilityZones": {
-          "type": "array",
-          "title": "Availability Zones"
-        },
-        "dnsName": {
-          "type": "string",
-          "title": "DNS Name"
-        },
-        "securityGroup": {
-          "type": "array",
-          "title": "Security Group"
-        },
-        "arn": {
-          "type": "string",
-          "title": "ARN"
-        },
-        "link": {
-          "type": "string",
-          "format": "url",
-          "title": "Link"
-        },
-        "listeners": {
-          "type": "array",
-          "title": "Listeners"
-        },
-        "attributes": {
-          "type": "array",
-          "title": "Attributes"
-        },
-        "tags": {
-          "type": "array",
-          "title": "Tags"
+```json showLineNumbers
+{
+  "identifier": "loadBalancer",
+  "description": "This blueprint represents an AWS Load Balancer in our software catalog",
+  "title": "Load Balancer",
+  "icon": "AWS",
+  "schema": {
+    "properties": {
+      "state": {
+        "type": "string",
+        "title": "State",
+        "default": "active",
+        "enum": ["provisioning", "active", "failed", "active_impaired"],
+        "enumColors": {
+          "active": "green",
+          "failed": "red",
+          "provisioning": "yellow",
+          "active_impaired": "orange"
         }
       },
-      "required": []
-    },
-    "mirrorProperties": {},
-    "calculationProperties": {},
-    "relations": {
-      "region": {
-        "title": "Region",
-        "target": "region",
-        "required": false,
-        "many": false
+      "type": {
+        "type": "string",
+        "title": "Type",
+        "default": "application",
+        "enum": ["application", "network", "gateway"]
+      },
+      "scheme": {
+        "type": "string",
+        "title": "Scheme"
+      },
+      "vpcId": {
+        "type": "string",
+        "title": "Vpc ID"
+      },
+      "availabilityZones": {
+        "type": "array",
+        "title": "Availability Zones"
+      },
+      "dnsName": {
+        "type": "string",
+        "title": "DNS Name"
+      },
+      "securityGroup": {
+        "type": "array",
+        "title": "Security Group"
+      },
+      "arn": {
+        "type": "string",
+        "title": "ARN"
+      },
+      "link": {
+        "type": "string",
+        "format": "url",
+        "title": "Link"
+      },
+      "listeners": {
+        "type": "array",
+        "title": "Listeners"
+      },
+      "attributes": {
+        "type": "array",
+        "title": "Attributes"
+      },
+      "tags": {
+        "type": "array",
+        "title": "Tags"
       }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "region": {
+      "title": "Region",
+      "target": "region",
+      "required": false,
+      "many": false
     }
   }
-   ```
+}
+```
 
     </details>
 
@@ -3301,36 +3409,36 @@ In this step-by-step example, you will export your `Load balancers` to Port.
    {
      "resources": [
        {
-        "kind":"AWS::ElasticLoadBalancingV2::LoadBalancer",
-        "port":{
-            "entity":{
-              "mappings":[
-                  {
-                    "identifier":".LoadBalancerName",
-                    "title":".LoadBalancerName",
-                    "blueprint":"loadBalancer",
-                    "properties":{
-                        "link":"\"https://console.aws.amazon.com/go/view?arn=\" + .LoadBalancerArn",
-                        "state":".State.Code",
-                        "type":".Type",
-                        "scheme":".Scheme",
-                        "vpcId":".VpcId",
-                        "availabilityZones":".AvailabilityZones",
-                        "dnsName":".DNSName",
-                        "securityGroup":".SecurityGroups",
-                        "listeners":".Listeners",
-                        "attributes":".Attributes",
-                        "tags":".Tags",
-                        "arn":".LoadBalancerArn"
-                    },
-                    "relations":{
-                        "region":".LoadBalancerArn | split(\":\") | .[3]"
-                    }
-                  }
-              ]
-            }
-        }
-      }
+         "kind": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+         "port": {
+           "entity": {
+             "mappings": [
+               {
+                 "identifier": ".LoadBalancerName",
+                 "title": ".LoadBalancerName",
+                 "blueprint": "loadBalancer",
+                 "properties": {
+                   "link": "\"https://console.aws.amazon.com/go/view?arn=\" + .LoadBalancerArn",
+                   "state": ".State.Code",
+                   "type": ".Type",
+                   "scheme": ".Scheme",
+                   "vpcId": ".VpcId",
+                   "availabilityZones": ".AvailabilityZones",
+                   "dnsName": ".DNSName",
+                   "securityGroup": ".SecurityGroups",
+                   "listeners": ".Listeners",
+                   "attributes": ".Attributes",
+                   "tags": ".Tags",
+                   "arn": ".LoadBalancerArn"
+                 },
+                 "relations": {
+                   "region": ".LoadBalancerArn | split(\":\") | .[3]"
+                 }
+               }
+             ]
+           }
+         }
+       }
      ]
    }
    ```
@@ -3350,12 +3458,12 @@ In this step-by-step example, you will export your `Load balancers` to Port.
          "Sid": "VisualEditor0",
          "Effect": "Allow",
          "Action": [
-            "elasticloadbalancing:DescribeLoadBalancers",
-            "elasticloadbalancing:DescribeLoadBalancerAttributes",
-            "elasticloadbalancing:DescribeListeners",
-            "elasticloadbalancing:DescribeTags",
-            "ec2:DescribeSecurityGroups"
-          ],
+           "elasticloadbalancing:DescribeLoadBalancers",
+           "elasticloadbalancing:DescribeLoadBalancerAttributes",
+           "elasticloadbalancing:DescribeListeners",
+           "elasticloadbalancing:DescribeTags",
+           "ec2:DescribeSecurityGroups"
+         ],
          "Resource": "*"
        }
      ]
@@ -3383,175 +3491,175 @@ In this step-by-step example, you will export your `Load balancers` to Port.
        AllowedPattern: ^[a-zA-Z][-a-zA-Z0-9]*$
        Default: serverlessrepo-port-aws-exporter
    Resources:
-    LoadBalancerCreateEventRule:
-      Type: AWS::Events::Rule
-      Properties:
-        EventBusName: default
-        EventPattern:
-          source:
-            - aws.elasticloadbalancing
-          detail-type:
-            - AWS API Call via CloudTrail
-          detail:
-            eventSource:
-              - elasticloadbalancing.amazonaws.com
-            eventName:
-              - prefix: CreateLoadBalancer
-        Name: port-aws-exporter-sync-elb-create-trails
-        State: ENABLED
-        Targets:
-          - Id: PortAWSExporterEventsQueue
-            Arn:
-              Fn::ImportValue:
-                Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
-            InputTransformer:
-              InputPathsMap:
-                awsRegion: $.detail.awsRegion
-                eventName: $.detail.eventName
-                requestElbName: $.detail.requestParameters.name
-              InputTemplate: |-
-                {
-                  "resource_type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
-                  "region": "\"<awsRegion>\"",
-                  "identifier": "\"<requestElbName>\"",
-                  "action": "if \"<eventName>\" | test(\"DeleteLoadBalancer[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
-                }
-    LoadBalancerUpdateEventRule:
-      Type: AWS::Events::Rule
-      Properties:
-        EventBusName: default
-        EventPattern:
-          source:
-            - aws.elasticloadbalancing
-          detail-type:
-            - AWS API Call via CloudTrail
-          detail:
-            eventSource:
-              - elasticloadbalancing.amazonaws.com
-            eventName:
-              - prefix: DeleteLoadBalancer
-              - prefix: SetSecurityGroups
-              - prefix: ModifyLoadBalancerAttributes
-        Name: port-aws-exporter-sync-elb-update-trails
-        State: ENABLED
-        Targets:
-          - Id: PortAWSExporterEventsQueue
-            Arn:
-              Fn::ImportValue:
-                Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
-            InputTransformer:
-              InputPathsMap:
-                awsRegion: $.detail.awsRegion
-                eventName: $.detail.eventName
-                requestElbArn: $.detail.requestParameters.loadBalancerArn
-              InputTemplate: |-
-                {
-                  "resource_type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
-                  "region": "\"<awsRegion>\"",
-                  "identifier": "\"<requestElbArn>\" | split(\"/\") | .[2]",
-                  "action": "if \"<eventName>\" | test(\"DeleteLoadBalancer[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
-                }
-    LoadBalancerTagsEventRule:
-      Type: AWS::Events::Rule
-      Properties:
-        EventBusName: default
-        EventPattern:
-          source:
-            - aws.elasticloadbalancing
-          detail-type:
-            - AWS API Call via CloudTrail
-          detail:
-            eventSource:
-              - elasticloadbalancing.amazonaws.com
-            eventName:
-              - prefix: RemoveTags
-              - prefix: AddTags
-        Name: port-aws-exporter-sync-elb-tags-trails
-        State: ENABLED
-        Targets:
-          - Id: PortAWSExporterEventsQueue
-            Arn:
-              Fn::ImportValue:
-                Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
-            InputTransformer:
-              InputPathsMap:
-                awsRegion: $.detail.awsRegion
-                eventName: $.detail.eventName
-                requestElbArn: $.detail.requestParameters.resourceArns[0]
-              InputTemplate: |-
-                {
-                  "resource_type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
-                  "region": "\"<awsRegion>\"",
-                  "identifier": "\"<requestElbArn>\" | split(\"/\") | .[2]",
-                  "action": "if \"<eventName>\" | test(\"DeleteLoadBalancer[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
-                }
-    LoadBalancerUpsertListenersEventRule:
-      Type: AWS::Events::Rule
-      Properties:
-        EventBusName: default
-        EventPattern:
-          source:
-            - aws.elasticloadbalancing
-          detail-type:
-            - AWS API Call via CloudTrail
-          detail:
-            eventSource:
-              - elasticloadbalancing.amazonaws.com
-            eventName:
-              - prefix: CreateListener
-              - prefix: ModifyListener
-        Name: port-aws-exporter-sync-elb-upsert-listener-trails
-        State: ENABLED
-        Targets:
-          - Id: PortAWSExporterEventsQueue
-            Arn:
-              Fn::ImportValue:
-                Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
-            InputTransformer:
-              InputPathsMap:
-                awsRegion: $.detail.awsRegion
-                eventName: $.detail.eventName
-                responseElbArn: $.detail.responseElements.listeners[0].loadBalancerArn
-              InputTemplate: |-
-                {
-                  "resource_type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
-                  "region": "\"<awsRegion>\"",
-                  "identifier": "\"<responseElbArn>\" | split(\"/\") | .[2]",
-                  "action": "if \"<eventName>\" | test(\"DeleteLoadBalancer[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
-                }
-    LoadBalancerDeleteListenersEventRule:
-      Type: AWS::Events::Rule
-      Properties:
-        EventBusName: default
-        EventPattern:
-          source:
-            - aws.elasticloadbalancing
-          detail-type:
-            - AWS API Call via CloudTrail
-          detail:
-            eventSource:
-              - elasticloadbalancing.amazonaws.com
-            eventName:
-              - prefix: DeleteListener
-        Name: port-aws-exporter-sync-elb-delete-listener-trails
-        State: ENABLED
-        Targets:
-          - Id: PortAWSExporterEventsQueue
-            Arn:
-              Fn::ImportValue:
-                Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
-            InputTransformer:
-              InputPathsMap:
-                awsRegion: $.detail.awsRegion
-                eventName: $.detail.eventName
-                requestElbArn: $.detail.requestParameters.listenerArn
-              InputTemplate: |-
-                {
-                  "resource_type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
-                  "region": "\"<awsRegion>\"",
-                  "identifier": "\"<requestElbArn>\" | split(\"/\") | .[2]",
-                  "action": "if \"<eventName>\" | test(\"DeleteLoadBalancer[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
-                }
+     LoadBalancerCreateEventRule:
+       Type: AWS::Events::Rule
+       Properties:
+         EventBusName: default
+         EventPattern:
+           source:
+             - aws.elasticloadbalancing
+           detail-type:
+             - AWS API Call via CloudTrail
+           detail:
+             eventSource:
+               - elasticloadbalancing.amazonaws.com
+             eventName:
+               - prefix: CreateLoadBalancer
+         Name: port-aws-exporter-sync-elb-create-trails
+         State: ENABLED
+         Targets:
+           - Id: PortAWSExporterEventsQueue
+             Arn:
+               Fn::ImportValue:
+                 Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+             InputTransformer:
+               InputPathsMap:
+                 awsRegion: $.detail.awsRegion
+                 eventName: $.detail.eventName
+                 requestElbName: $.detail.requestParameters.name
+               InputTemplate: |-
+                 {
+                   "resource_type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+                   "region": "\"<awsRegion>\"",
+                   "identifier": "\"<requestElbName>\"",
+                   "action": "if \"<eventName>\" | test(\"DeleteLoadBalancer[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
+                 }
+     LoadBalancerUpdateEventRule:
+       Type: AWS::Events::Rule
+       Properties:
+         EventBusName: default
+         EventPattern:
+           source:
+             - aws.elasticloadbalancing
+           detail-type:
+             - AWS API Call via CloudTrail
+           detail:
+             eventSource:
+               - elasticloadbalancing.amazonaws.com
+             eventName:
+               - prefix: DeleteLoadBalancer
+               - prefix: SetSecurityGroups
+               - prefix: ModifyLoadBalancerAttributes
+         Name: port-aws-exporter-sync-elb-update-trails
+         State: ENABLED
+         Targets:
+           - Id: PortAWSExporterEventsQueue
+             Arn:
+               Fn::ImportValue:
+                 Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+             InputTransformer:
+               InputPathsMap:
+                 awsRegion: $.detail.awsRegion
+                 eventName: $.detail.eventName
+                 requestElbArn: $.detail.requestParameters.loadBalancerArn
+               InputTemplate: |-
+                 {
+                   "resource_type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+                   "region": "\"<awsRegion>\"",
+                   "identifier": "\"<requestElbArn>\" | split(\"/\") | .[2]",
+                   "action": "if \"<eventName>\" | test(\"DeleteLoadBalancer[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
+                 }
+     LoadBalancerTagsEventRule:
+       Type: AWS::Events::Rule
+       Properties:
+         EventBusName: default
+         EventPattern:
+           source:
+             - aws.elasticloadbalancing
+           detail-type:
+             - AWS API Call via CloudTrail
+           detail:
+             eventSource:
+               - elasticloadbalancing.amazonaws.com
+             eventName:
+               - prefix: RemoveTags
+               - prefix: AddTags
+         Name: port-aws-exporter-sync-elb-tags-trails
+         State: ENABLED
+         Targets:
+           - Id: PortAWSExporterEventsQueue
+             Arn:
+               Fn::ImportValue:
+                 Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+             InputTransformer:
+               InputPathsMap:
+                 awsRegion: $.detail.awsRegion
+                 eventName: $.detail.eventName
+                 requestElbArn: $.detail.requestParameters.resourceArns[0]
+               InputTemplate: |-
+                 {
+                   "resource_type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+                   "region": "\"<awsRegion>\"",
+                   "identifier": "\"<requestElbArn>\" | split(\"/\") | .[2]",
+                   "action": "if \"<eventName>\" | test(\"DeleteLoadBalancer[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
+                 }
+     LoadBalancerUpsertListenersEventRule:
+       Type: AWS::Events::Rule
+       Properties:
+         EventBusName: default
+         EventPattern:
+           source:
+             - aws.elasticloadbalancing
+           detail-type:
+             - AWS API Call via CloudTrail
+           detail:
+             eventSource:
+               - elasticloadbalancing.amazonaws.com
+             eventName:
+               - prefix: CreateListener
+               - prefix: ModifyListener
+         Name: port-aws-exporter-sync-elb-upsert-listener-trails
+         State: ENABLED
+         Targets:
+           - Id: PortAWSExporterEventsQueue
+             Arn:
+               Fn::ImportValue:
+                 Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+             InputTransformer:
+               InputPathsMap:
+                 awsRegion: $.detail.awsRegion
+                 eventName: $.detail.eventName
+                 responseElbArn: $.detail.responseElements.listeners[0].loadBalancerArn
+               InputTemplate: |-
+                 {
+                   "resource_type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+                   "region": "\"<awsRegion>\"",
+                   "identifier": "\"<responseElbArn>\" | split(\"/\") | .[2]",
+                   "action": "if \"<eventName>\" | test(\"DeleteLoadBalancer[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
+                 }
+     LoadBalancerDeleteListenersEventRule:
+       Type: AWS::Events::Rule
+       Properties:
+         EventBusName: default
+         EventPattern:
+           source:
+             - aws.elasticloadbalancing
+           detail-type:
+             - AWS API Call via CloudTrail
+           detail:
+             eventSource:
+               - elasticloadbalancing.amazonaws.com
+             eventName:
+               - prefix: DeleteListener
+         Name: port-aws-exporter-sync-elb-delete-listener-trails
+         State: ENABLED
+         Targets:
+           - Id: PortAWSExporterEventsQueue
+             Arn:
+               Fn::ImportValue:
+                 Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+             InputTransformer:
+               InputPathsMap:
+                 awsRegion: $.detail.awsRegion
+                 eventName: $.detail.eventName
+                 requestElbArn: $.detail.requestParameters.listenerArn
+               InputTemplate: |-
+                 {
+                   "resource_type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+                   "region": "\"<awsRegion>\"",
+                   "identifier": "\"<requestElbArn>\" | split(\"/\") | .[2]",
+                   "action": "if \"<eventName>\" | test(\"DeleteLoadBalancer[^a-zA-Z]*$\") then \"delete\" else \"upsert\" end"
+                 }
    ```
 
    </details>
