@@ -68,9 +68,8 @@ The entity is represented by the unique `entity` _format_ and the `blueprint` ke
     // highlight-start
     "type": "string",
     "format": "entity",
-    "blueprint": "myBlueprint",
+    "blueprint": "myBlueprint"
     // highlight-end
-    "default": "My default"
   }
 }
 ```
@@ -123,7 +122,6 @@ resource "port_action" "myAction" {
         required    = false
         format      = "entity"
         blueprint   = "myBlueprint"
-        default     = "My default"
       }
     }
   }
