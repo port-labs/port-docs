@@ -10,10 +10,11 @@ import TabItem from "@theme/TabItem"
 
 ## Create Scorecards
 
-Scorecards can be created by two methods:
+Scorecards can be created by three methods:
 
 - UI
 - API
+- Terraform
 
 <!-- TODO: fix this back to some actual blueprint -->
 
@@ -225,6 +226,50 @@ We can see that the `hasSlackChannel` rule passed because we provided one to tha
 
 Therefore the level of the entity is `Bronze` because it passed all the rules in the `Bronze` level (hasSlackChannel)
 
+### From Terraform
+
+In order to create a scorecard from the Terraform provider, you will need to use the `port_scorecard` resource.
+
+Here is an example of how to create the Ownership scorecard from the Terraform provider:
+
+```hcl showLineNumbers
+resource "port_scorecard" "ownership" {
+  blueprint = "microservice"
+  identifier = "Ownership"
+  title = "Ownership"
+  rules = [
+    {
+      identifier = "hasSlackChannel"
+      title = "Has Slack Channel"
+      level = "Silver"
+      query = {
+        combinator = "and"
+        conditions = [
+          {
+            operator = "isNotEmpty"
+            property = "slackChannel"
+          }
+        ]
+      }
+    },
+    {
+      identifier = "hasTeam"
+      title = "Has Team"
+      level = "Bronze"
+      query = {
+        combinator = "and"
+        conditions = [
+          {
+            operator = "isNotEmpty"
+            property = "$team"
+          }
+        ]
+      }
+    }
+  ]
+}
+```
+
 ## Update Scorecards
 
 To update Scorecards, we can use the same URL and payload we have used before with the `id` that the backend generated for that scorecard.
@@ -246,6 +291,10 @@ To update a scorecard you can use 2 different URLs:
 
 The request body will include the existing body of the Scorecard, after the desired updates to the existing Scorecard have been applied.
 
+### From Terraform
+
+In order to update a scorecard from the Terraform provider, you will need to run the `terraform apply -target=port_scorecard.<resourceId>` command with the updated scorecard resource.
+
 ## Delete Scorecards
 
 :::danger
@@ -260,3 +309,7 @@ There are two ways to delete a Scorecard:
 :::note
 When using the multiple update Scorecards `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards` PUT request, keep in mind that you will see a new `id` property. This is used via Port to identify the Scorecard in order to be able to update its properties
 :::
+
+:::note
+
+Delete Scorecard from Terraform is by using the `terraform destroy -target=port_scorecard.<resourceId>` command with the scorecard resource you want to delete.
