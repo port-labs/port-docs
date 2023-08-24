@@ -3310,10 +3310,10 @@ In this step-by-step example, you will export your `Load balancers` to Port.
 
    - **Load Balancer** - will represent load balancers from the AWS account.
 
-You may use the following definitions:
+   You may use the following definitions:
 
-    <details>
-    <summary> Load balancer blueprint </summary>
+<details>
+<summary> Load balancer blueprint </summary>
 
 ```json showLineNumbers
 {
@@ -3398,7 +3398,7 @@ You may use the following definitions:
 }
 ```
 
-    </details>
+   </details>
 
 2. Upload the `config.json` file to the exporter's S3 bucket:
 
