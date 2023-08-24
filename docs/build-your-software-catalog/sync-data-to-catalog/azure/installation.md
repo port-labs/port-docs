@@ -44,7 +44,7 @@ In case a system topic already exists and is not provided to the deployment of t
 
 4. Edit and copy the installation command.
    :::tip
-   Here is the place where you can adjust what the exporter will be deployed with: `event_grid_system_topic_name` parameter if you already have one.
+   The installation command includes placeholders that allow you to customize the integration's configuration. For example, you can update the command and specify the `event_grid_system_topic_name` parameter if you already have one.
    - Specify the `event_grid_system_topic_name` parameter if you already have an Event Grid system topic of type `Microsoft.Resources.Subscriptions` in your subscription;
    - Specify the `event_grid_event_filter_list` parameter if you want to listen to more events;
    - Specify the `action_permissions_list` parameter if you want the integration to have more permissions.
