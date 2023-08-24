@@ -51,7 +51,7 @@ Due to a limitation in Azure **only one** Event Grid System Topic of type `Micro
      ![Dev Portal Builder Azure Exporter Installation](../../../../static/img/integrations/azure-exporter/DevPortalIngestAzureInstallation.png)
 5. Run the command in your terminal to deploy the Azure exporter.
 
-## Mapping Configuration
+## Mapping configuration
 
 You can configure the exporter what to fetch from your Azure subscription by adding / editing the configuration file in the integration page.
 
