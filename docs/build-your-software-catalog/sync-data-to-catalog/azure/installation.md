@@ -18,7 +18,7 @@ The Azure exporter uses the following Azure infrastructure:
 - Azure Container App;
 - Azure Event Grid (Used for real-time data sync to Port):
   - Azure Event Grid System Topic of type `Microsoft.Resources.Subscriptions`;
-  - Azure Event Grid Subscription
+  - Azure Event Grid Subscription;
 
 :::caution
 Due to a limitation in Azure **only one** Event Grid System Topic of type `Microsoft.Resources.Subscriptions` can be created per subscription, so if you already have one you'll need to pass it to the integration using `event_grid_system_topic_name=<your-event-grid-system-topic-name>`, otherwise the deployment of the integration will fail due to not being able to create a new one.
