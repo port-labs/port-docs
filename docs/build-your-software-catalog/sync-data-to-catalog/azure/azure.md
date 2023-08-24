@@ -9,7 +9,7 @@ import Image from "@theme/IdealImage";
 # Azure
 
 Our integration with Azure provides the ability to export your Azure resources to Port, according to your configuration.
-You can define the integration to run both on schedule and on events.
+After the initial import of data, the integration will also listen to live events from Azure to update data inside Port in real time.
 
 Our integration with Azure supports real-time event processing, this allows for an accurate **real-time** representation of your Azure infrastructure inside Port.
 
