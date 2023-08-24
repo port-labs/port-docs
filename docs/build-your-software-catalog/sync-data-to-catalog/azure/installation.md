@@ -43,7 +43,7 @@ Due to a limitation in Azure **only one** Event Grid System Topic of type `Micro
 4. Edit and copy the installation command.
    :::tip
    Here is the place where you can adjust what the exporter will be deployed with: `event_grid_system_topic_name` parameter if you already have one.
-   - Specify the `event_grid_system_topic_name` parameter if you already have an Event Grid System Topic of type `Microsoft.Resources.Subscriptions` in your subscription.
+   - Specify the `event_grid_system_topic_name` parameter if you already have an Event Grid system topic of type `Microsoft.Resources.Subscriptions` in your subscription;
    - Specify the `event_grid_event_filter_list` parameter if you want to listen to more events.
    - Specify the `action_permissions_list` parameter if you want the integration to have more permissions.
      :::
