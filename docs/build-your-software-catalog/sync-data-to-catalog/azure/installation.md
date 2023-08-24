@@ -17,7 +17,7 @@ The Azure exporter uses the following Azure infrastructure:
 
 - Azure Container App;
 - Azure Event Grid (Used for real-time data sync to Port):
-  - Azure Event Grid System Topic of type `Microsoft.Resources.Subscriptions`
+  - Azure Event Grid System Topic of type `Microsoft.Resources.Subscriptions`;
   - Azure Event Grid Subscription
 
 :::caution
