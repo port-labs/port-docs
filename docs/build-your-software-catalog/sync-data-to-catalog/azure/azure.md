@@ -195,4 +195,4 @@ To find more actions that could be assigned to the exporter, you can use the [Az
 
 ## Getting started
 
-Continue to the Installation guide to learn how to install the Azure exporter.
+Continue to the installation guide to learn how to install the Azure exporter.
