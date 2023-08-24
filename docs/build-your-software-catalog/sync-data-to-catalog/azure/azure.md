@@ -37,7 +37,7 @@ The Azure exporter allows you to perform extract, transform, load (ETL) on data 
 
 The exporter is deployed using an Azure [Container App](https://learn.microsoft.com/en-us/azure/container-apps/overview) that is deployed to your Azure subscription.
 
-The Azure exporter uses a YAML configuration to describe the ETL process to load data into the developer portal. The approach reflects a golden middle between an overly opinionated Azure visualization that might not work for everyone and a too-broad approach that could introduce unneeded complexity into the developer portal.
+The Azure exporter uses a YAML configuration to describe the ETL process to load data into the developer portal. The approach reflects a middle-ground between an overly opinionated Azure visualization that might not work for everyone and a too-broad approach that could introduce unneeded complexity into the developer portal.
 
 Here is an example snippet from the config which demonstrates the ETL process for getting `Container App` data from Azure and into the software catalog:
 
