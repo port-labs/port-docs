@@ -53,7 +53,7 @@ Due to a limitation in Azure **only one** Event Grid System Topic of type `Micro
 
 ## Mapping configuration
 
-You can configure the exporter what to fetch from your Azure subscription by adding / editing the configuration file in the integration page.
+You can update the exporter's configuration in the integration page, you can use the configuration to add or remove Azure resources that will be ingested from your subscription.
 
 ![Dev Portal Ingest Azure Mapping Configuration](../../../../static/img/integrations/azure-exporter/DevPortalIngestAzureMappingConfiguration.png)
 
