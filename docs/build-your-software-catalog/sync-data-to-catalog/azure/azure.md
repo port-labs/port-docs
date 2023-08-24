@@ -19,7 +19,7 @@ Port's Azure exporter is open source, view the source code [**here**](https://gi
 
 ## 💡 Azure integration common use cases
 
-Our Azure integration makes it easy to fill the software catalog with data directly from your Azure organization, for example:
+Our Azure integration makes it easy to fill the software catalog with data directly from your Azure subscription, for example:
 
 - Map all the resources in your Azure organization, including **AKS**, **Storage Accounts**, **Container Apps**, **Load Balancers** and other Azure objects.
 - Watch for Azure object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
