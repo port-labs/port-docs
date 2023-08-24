@@ -11,7 +11,7 @@ It uses our Terraform [Ocean](https://ocean.getport.io) Integration Factory [mod
 Multiple ways to deploy the Azure exporter could be found in the Azure Integration example [README](https://registry.terraform.io/modules/port-labs/integration-factory/ocean/latest/examples/azure_container_app_azure_integration)
 :::
 
-## Azure Infrastructure Used by the Azure Exporter
+## Azure infrastructure used by the Azure exporter
 
 The Azure exporter uses the following Azure infrastructure:
 
