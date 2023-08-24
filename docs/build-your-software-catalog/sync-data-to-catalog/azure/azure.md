@@ -86,7 +86,7 @@ The integration configuration is a YAML file that describes the ETL process to l
       ...
   ```
 - The `kind` field describes the Azure resource type to be ingested into Port.
-  The `kind` field should be set to the Azure resource type as it appears in the [resource guide](https://learn.microsoft.com/en-us/azure/templates/). e.g. The resource type for the `Container App` could be found [here](https://learn.microsoft.com/en-us/azure/templates/microsoft.app/change-log/containerapps).
+  The `kind` field should be set to the Azure resource type as it appears in the [resource guide](https://learn.microsoft.com/en-us/azure/templates/). e.g. The resource type for the `Container App` could be found [here](https://learn.microsoft.com/en-us/azure/templates/microsoft.app/containerapps?pivots=deployment-language-arm-template) as well with the resource object structure.
   ```yaml showLineNumbers
   resources:
     # highlight-start

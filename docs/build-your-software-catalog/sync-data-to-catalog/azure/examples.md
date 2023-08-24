@@ -29,15 +29,23 @@ In the following example you will ingest your Azure Resource Groups to Port, you
 
 In the following example you will ingest your Azure Storage Accounts and Containers to Port, you may use the following Port blueprint definitions and integration configuration:
 
+:::note
+The Storage Account has a relation to the Resource Group, so creation of the [Resource Group blueprint](#mapping-resource-groups) is required.
+:::
+
 <StorageAccountBlueprint/>
 
 <StorageContainerBlueprint/>
 
 <StorageAppConfig/>
 
-## Mapping Azure Resources
+## Mapping Compute Resources
 
 In the following example you will ingest your Azure Resources to Port, you may use the following Port blueprint definitions and integration configuration:
+
+:::note
+The Resources below have a relation to the Resource Group, so creation of the [Resource Group blueprint](#mapping-resource-groups) is required.
+:::
 
 <AKSBlueprint/>
 
