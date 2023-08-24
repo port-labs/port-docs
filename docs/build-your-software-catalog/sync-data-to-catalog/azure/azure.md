@@ -174,7 +174,7 @@ The integration configuration is a YAML file that describes the ETL process to l
 The exporter will need to have access to your Azure subscription in order to export your resources to Port.
 This is done by assigning a [user-assigned identity](https://learn.microsoft.com/en-us/azure/container-apps/managed-identity?tabs=portal,dotnet#add-a-user-assigned-identity) to the exporter, and granting that identity the required permissions to your Azure subscription.
 
-As part of the installation process, you will need to define the permissions that the exporter will have on your Azure subscription.
+As part of the installation process, you will need to define the permissions that the exporter will have to your Azure subscription.
 This will be defined by specifying the [actions](https://learn.microsoft.com/en-us/azure/role-based-access-control/role-definitions#actions) that the exporter will be allowed to perform on your Azure subscription.
 
 Here is an example of action permissions that could be assigned to the exporter:
