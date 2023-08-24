@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Installation
 
-The azure exporter is deployed using Terraform on Azure ContainerApp.
+The azure exporter is deployed using Terraform on Azure Container App.
 It uses our Terraform Ocean Integration Factory [module](https://registry.terraform.io/modules/port-labs/integration-factory/ocean/latest) to deploy the exporter.
 
 :::tip
