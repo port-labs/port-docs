@@ -48,7 +48,7 @@ resources:
   - kind: Microsoft.App/containerApps
     selector:
       query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
-      apiVersion: "2022-03-01" # Azure API version to use to fetch the resource
+      apiVersion: "2023-05-01" # Azure API version to use to fetch the resource
     # highlight-end
     port:
       entity:
@@ -103,7 +103,7 @@ The integration configuration is a YAML file that describes the ETL process to l
       # highlight-start
       selector:
         query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
-        apiVersion: "2022-03-01" # Azure API version to use to fetch the resource
+        apiVersion: "2023-05-01" # Azure API version to use to fetch the resource
       # highlight-end
   ```
 
@@ -113,7 +113,7 @@ The integration configuration is a YAML file that describes the ETL process to l
     ```
   - The `apiVersion` field is the Azure API version to use to fetch the resource. This field is required for all resources. You can find the API version for each resource in the [Azure Resources reference](https://learn.microsoft.com/en-us/azure/templates/). For example, the supported API versions for the `containerApps` resource was found in the [Container App Changelog](https://learn.microsoft.com/en-us/azure/templates/microsoft.app/change-log/containerapps).
     ```yaml showLineNumbers
-    apiVersion: "2022-03-01"
+    apiVersion: "2023-05-01"
     ```
 
 - The `port` field describes the Port entity to be created from the Azure resource.
@@ -122,7 +122,7 @@ The integration configuration is a YAML file that describes the ETL process to l
     - kind: Microsoft.App/containerApps
       selector:
         query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
-        apiVersion: "2022-03-01" # Azure API version to use to fetch the resource
+        apiVersion: "2023-05-01" # Azure API version to use to fetch the resource
       # highlight-start
       port:
         entity:
@@ -148,7 +148,7 @@ The integration configuration is a YAML file that describes the ETL process to l
       - kind: Microsoft.App/containerApps
         selector:
           query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
-          apiVersion: "2022-03-01" # Azure API version to use to fetch the resource
+          apiVersion: "2023-05-01" # Azure API version to use to fetch the resource
         port:
           # highlight-start
           entity:
