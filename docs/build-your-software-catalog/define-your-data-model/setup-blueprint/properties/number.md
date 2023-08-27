@@ -29,7 +29,8 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `J
 <Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Enum", value: "enum"},
-{label: "Array", value: "array"}
+{label: "Array", value: "array"},
+{label: "Enum Array", value: "enumArray"},
 ]}>
 
 <TabItem value="basic">
@@ -77,6 +78,31 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `J
     "type": "array",
     "items": {
       "type": "number"
+    }
+    // highlight-end
+  }
+}
+```
+
+</TabItem>
+<TabItem value="enumArray">
+
+```json showLineNumbers
+{
+  "myNumberArray": {
+    "title": "My number array",
+    "icon": "My icon",
+    "description": "My number array",
+    // highlight-start
+    "type": "array",
+    "items": {
+      "type": "number",
+      "enum": [1, 2, 3, 4],
+      "enumColors": {
+        "1": "red",
+        "2": "green",
+        "3": "blue"
+      }
     }
     // highlight-end
   }
