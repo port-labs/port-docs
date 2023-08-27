@@ -41,6 +41,26 @@ You can create a pie chart illustrating data from entities in your software cata
 | `Breakdown by property` | `String` | Group your chart by a specific property                                                                                      | `null`  | `true`   |
 | `Filters`               | `Array`  | Filters to include or exclude specific data based on Port's [Search Rules](../../search-and-query/search-and-query.md#rules) | []      | `false`  |
 
+### Iframe visualization
+
+You can create a iframe widget to display an embedded url in the dashboard. The iframe widget is useful to display external dashboards or other external content. It also appends to the iframe query string the entity and the blueprint so the embedded page can use it for various purposes.
+
+![Pie Chart](../../../static/img/software-catalog/widgets/iframeWidget.png)
+
+#### Widget properties
+
+| Field               | Type           | Description                                                                                                                                               | Default | Required |
+| ------------------- | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | -------- |
+| `Title`             | `String`       | Iframe widget title                                                                                                                                       | `null`  | `true`   |
+| `Icon`              | `String`       | Iframe widget Icon                                                                                                                                        | `null`  | `false`  |
+| `Description`       | `String`       | Iframe widget description                                                                                                                                 | `null`  | `false`  |
+| `URL`               | `String`       | Iframe widget url                                                                                                                                         | `null`  | `false`  |
+| `URL type`          | `String`       | `public` or `protect`                                                                                                                                     | `null`  | `false`  |
+| `Authorization Url` | `URL String`   | If the `URL type` is `protected` this will be required. Read more about it [here](../widgets/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
+| `clientId`          | `String`       | If the `URL type` is `protected` this will be required. Read more about it [here](../widgets/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
+| `Scopes`            | `String Array` | If the `URL type` is `protected` this will be required. Read more about it [here](../widgets/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
+| `Token URL`         | `URL String`   | If the `URL type` is `protected` this will be required. Read more about it [here](../widgets/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
+
 ### Number chart
 
 You can create a number chart visualization from related entities in the [**specific entity page**](../page/entity-page.md). You can either count the entities or perform an aggregation function on a number property. You can also filter entities so the aggregation number chart will only apply to a limited set of entities with Port's [Search Rules](../../search-and-query/search-and-query.md#rules)
