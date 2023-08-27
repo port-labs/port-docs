@@ -228,7 +228,7 @@ Therefore the level of the entity is `Bronze` because it passed all the rules in
 
 ### From Terraform
 
-In order to create a scorecard from the Terraform provider, you will need to use the `port_scorecard` resource.
+In order to create a scorecard from the [Terraform provider](../../build-your-software-catalog/sync-data-to-catalog/iac/terraform/) , you will need to use the `port_scorecard` resource.
 
 Here is an example of how to create an Ownership scorecard with the Terraform provider:
 
@@ -303,6 +303,8 @@ A Scorecard cannot be restored after deletion!
 
 There are two ways to delete a Scorecard:
 
+### From API
+
 - Make an HTTP PUT request and remove it from the array of the scorecards via the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards`
 - Make an HTTP DELETE request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards/{scorecard_identifier}` the `scorecard_identifier` is the identifier of the scorecard we want to delete
 
@@ -310,6 +312,6 @@ There are two ways to delete a Scorecard:
 When using the multiple update Scorecards `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards` PUT request, keep in mind that you will see a new `id` property. This is used via Port to identify the Scorecard in order to be able to update its properties
 :::
 
-:::note
+### From Terraform
 
 In order to delete a scorecard using the Terraform provider, use the `terraform destroy -target=port_scorecard.<resourceId>` command with the scorecard resource you want to delete. (remember that it is also possible to remove the definition of the `port_scorecard` resource from the `.tf` file and run `terraform apply`)
