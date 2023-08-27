@@ -303,7 +303,7 @@ A Scorecard cannot be restored after deletion!
 
 There are two ways to delete a Scorecard:
 
-### From API
+### From the API
 
 - Make an HTTP PUT request and remove it from the array of the scorecards via the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards`
 - Make an HTTP DELETE request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards/{scorecard_identifier}` the `scorecard_identifier` is the identifier of the scorecard we want to delete
