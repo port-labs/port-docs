@@ -293,7 +293,7 @@ The request body will include the existing body of the Scorecard, after the desi
 
 ### From Terraform
 
-In order to update a scorecard from the Terraform provider, you will need to run the `terraform apply -target=port_scorecard.<resourceId>` command with the updated scorecard resource.
+In order to update a scorecard with the Terraform provider, you will need to run the `terraform apply -target=port_scorecard.<resourceId>` command with the updated scorecard resource.
 
 ## Delete Scorecards
 
