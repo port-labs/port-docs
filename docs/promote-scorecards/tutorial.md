@@ -230,7 +230,7 @@ Therefore the level of the entity is `Bronze` because it passed all the rules in
 
 In order to create a scorecard from the Terraform provider, you will need to use the `port_scorecard` resource.
 
-Here is an example of how to create the Ownership scorecard from the Terraform provider:
+Here is an example of how to create an Ownership scorecard with the Terraform provider:
 
 ```hcl showLineNumbers
 resource "port_scorecard" "ownership" {
