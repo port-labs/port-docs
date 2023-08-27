@@ -312,4 +312,4 @@ When using the multiple update Scorecards `https://api.getport.io/v1/blueprints/
 
 :::note
 
-Delete Scorecard from Terraform is by using the `terraform destroy -target=port_scorecard.<resourceId>` command with the scorecard resource you want to delete.
+In order to delete a scorecard using the Terraform provider, use the `terraform destroy -target=port_scorecard.<resourceId>` command with the scorecard resource you want to delete. (remember that it is also possible to remove the definition of the `port_scorecard` resource from the `.tf` file and run `terraform apply`)
