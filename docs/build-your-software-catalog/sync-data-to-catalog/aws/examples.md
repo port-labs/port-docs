@@ -568,7 +568,7 @@ In this step-by-step example, you will export your `Lambda functions` to Port.
 
    You may use the following definition:
 
-   <details > 
+   <details> 
    <summary> Lambda blueprint </summary>
 
    ```json showLineNumbers
@@ -2790,8 +2790,8 @@ In this step-by-step example, you will export your `CloudFormation Stacks` to Po
 
    You may use the following definition:
 
-    <details>
-    <summary> CloudFormationStack blueprint </summary>
+   <details> 
+   <summary>CloudFormationStack blueprint</summary>
 
    ```json showLineNumbers
    {
@@ -3310,93 +3310,93 @@ In this step-by-step example, you will export your `Load balancers` to Port.
 
    - **Load Balancer** - will represent load balancers from the AWS account.
 
-You may use the following definitions:
+   You may use the following definitions:
 
     <details>
-    <summary> Load balancer blueprint </summary>
+    <summary> LoadBalancer blueprint </summary>
 
-```json showLineNumbers
-{
-  "identifier": "loadBalancer",
-  "description": "This blueprint represents an AWS Load Balancer in our software catalog",
-  "title": "Load Balancer",
-  "icon": "AWS",
-  "schema": {
-    "properties": {
-      "state": {
-        "type": "string",
-        "title": "State",
-        "default": "active",
-        "enum": ["provisioning", "active", "failed", "active_impaired"],
-        "enumColors": {
-          "active": "green",
-          "failed": "red",
-          "provisioning": "yellow",
-          "active_impaired": "orange"
-        }
-      },
-      "type": {
-        "type": "string",
-        "title": "Type",
-        "default": "application",
-        "enum": ["application", "network", "gateway"]
-      },
-      "scheme": {
-        "type": "string",
-        "title": "Scheme"
-      },
-      "vpcId": {
-        "type": "string",
-        "title": "Vpc ID"
-      },
-      "availabilityZones": {
-        "type": "array",
-        "title": "Availability Zones"
-      },
-      "dnsName": {
-        "type": "string",
-        "title": "DNS Name"
-      },
-      "securityGroup": {
-        "type": "array",
-        "title": "Security Group"
-      },
-      "arn": {
-        "type": "string",
-        "title": "ARN"
-      },
-      "link": {
-        "type": "string",
-        "format": "url",
-        "title": "Link"
-      },
-      "listeners": {
-        "type": "array",
-        "title": "Listeners"
-      },
-      "attributes": {
-        "type": "array",
-        "title": "Attributes"
-      },
-      "tags": {
-        "type": "array",
-        "title": "Tags"
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "relations": {
-    "region": {
-      "title": "Region",
-      "target": "region",
-      "required": false,
-      "many": false
-    }
-  }
-}
-```
+   ```json showLineNumbers
+   {
+     "identifier": "loadBalancer",
+     "description": "This blueprint represents an AWS Load Balancer in our software catalog",
+     "title": "Load Balancer",
+     "icon": "AWS",
+     "schema": {
+       "properties": {
+         "state": {
+           "type": "string",
+           "title": "State",
+           "default": "active",
+           "enum": ["provisioning", "active", "failed", "active_impaired"],
+           "enumColors": {
+             "active": "green",
+             "failed": "red",
+             "provisioning": "yellow",
+             "active_impaired": "orange"
+           }
+         },
+         "type": {
+           "type": "string",
+           "title": "Type",
+           "default": "application",
+           "enum": ["application", "network", "gateway"]
+         },
+         "scheme": {
+           "type": "string",
+           "title": "Scheme"
+         },
+         "vpcId": {
+           "type": "string",
+           "title": "Vpc ID"
+         },
+         "availabilityZones": {
+           "type": "array",
+           "title": "Availability Zones"
+         },
+         "dnsName": {
+           "type": "string",
+           "title": "DNS Name"
+         },
+         "securityGroup": {
+           "type": "array",
+           "title": "Security Group"
+         },
+         "arn": {
+           "type": "string",
+           "title": "ARN"
+         },
+         "link": {
+           "type": "string",
+           "format": "url",
+           "title": "Link"
+         },
+         "listeners": {
+           "type": "array",
+           "title": "Listeners"
+         },
+         "attributes": {
+           "type": "array",
+           "title": "Attributes"
+         },
+         "tags": {
+           "type": "array",
+           "title": "Tags"
+         }
+       },
+       "required": []
+     },
+     "mirrorProperties": {},
+     "calculationProperties": {},
+     "relations": {
+       "region": {
+         "title": "Region",
+         "target": "region",
+         "required": false,
+         "many": false
+       }
+     }
+   }
+   ```
 
     </details>
 
