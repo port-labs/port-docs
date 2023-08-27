@@ -94,9 +94,9 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `L
 ```json showLineNumbers
 {
   "myStringArray": {
-    "title": "My string array",
+    "title": "My string enum array",
     "icon": "My icon",
-    "description": "My string array",
+    "description": "My string enum array",
     // highlight-start
     "type": "array",
     "items": {
