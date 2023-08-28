@@ -30,7 +30,7 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `L
 {label: "Basic", value: "basic"},
 {label: "Enum", value: "enum"},
 {label: "Array", value: "array"},
-{label: "Enum-Array", value: "enumArray"}
+{label: "Enum Array", value: "enumArray"}
 ]}>
 
 <TabItem value="basic">

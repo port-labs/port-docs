@@ -29,7 +29,7 @@ In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we
 {label: "Basic", value: "basic"},
 {label: "Select (Enum)", value: "enum"},
 {label: "Array", value: "array"},
-{label: "Enum-Array", value: "enumArray"}
+{label: "Enum Array", value: "enumArray"}
 ]}>
 
 <TabItem value="basic">
