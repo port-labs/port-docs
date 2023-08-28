@@ -45,7 +45,7 @@ You can create a pie chart illustrating data from entities in your software cata
 
 You can create an iframe widget to display an embedded url in the dashboard. The iframe widget is useful to display external dashboards or other external content. It also appends to the iframe URL query params the entity identifier and the blueprint identifier so the embedded page can use it for various purposes.
 
-The entity identifier will be concatenated as `entity` and the blueprint identifier will be concatenated as `blueprint`. For example: `https://some-iframe-url.com?entity=identifier&blueprint=identifier`.
+The entity identifier will be concatenated under the `entity` query param and the blueprint identifier will be concatenated under the `blueprint` query param. For example: `https://some-iframe-url.com?entity=entity_identifier&blueprint=blueprint_identifier`.
 
 ![Pie Chart](../../../static/img/software-catalog/widgets/iframeWidget.png)
 
