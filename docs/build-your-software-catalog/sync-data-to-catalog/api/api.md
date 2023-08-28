@@ -932,12 +932,10 @@ curl --location --request DELETE "https://api.getport.io/v1/blueprints/${bluepri
 
 It is possible to delete all entities of a blueprint with a single request using a dedicated route.
 
+It is also possible to delete the blueprint containing the entities within the same delete operation by adding the `delete_blueprint=true` query parameter, for example: `https://api.getport.io/v1/blueprints/<BLUEPRINT_IDENTIFIER>/all-entities?delete_blueprint=true`.
+
 :::note limitations
-The delete all route can be used if the blueprint meets the following conditions:
-
-- The blueprint does not have required relations;
-- There are fewer than 1000 entities for the blueprint.
-
+The delete all route can only be used if the blueprint does not have required relations.
 :::
 
 <Tabs groupId="code-examples" defaultValue="python" values={[
