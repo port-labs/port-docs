@@ -4,7 +4,7 @@ sidebar_position: 5
 
 import MicroserviceBlueprint from './\_gitlab_exporter_example_microservice_blueprint.mdx'
 
-# Special Mapping
+# Mapping Extensions
 
 ## Introduction
 
@@ -63,12 +63,12 @@ This means that any search query supported by the GitLab Search API can be used 
 
 ### Syntax
 
-- `search://scope=<scope>&&query=<query>&&query=<query>`
+- `search://scope=<scope>&&query=<query>`
   - `search://` - This ist the prefix to indicate that the mapping is a search check;
   - `scope` - The scope of the search, currently only `blobs` are supported (searches in the repository files) (see [GitLab Search API](https://docs.gitlab.com/ee/api/search.html#scope) for more details);
   - `query` - The query to search for, expected to be a valid GitLab Advanced Search query (see [GitLab Advanced Search syntax](https://docs.gitlab.com/ee/user/search/advanced_search.html#syntax) for more details).
 
-### Search Checks Examples:
+### Search Checks Examples
 
 - `search://scope=blobs&&query=filename:README.md` - Check whether the project contains a `README.md` file;
 - `search://scope=blobs&&query=filename:test_* extension:py` - Check whether the project contains tests;
@@ -78,7 +78,7 @@ This means that any search query supported by the GitLab Search API can be used 
   In the screenshot below we can see that we use the exact same query as gitlab advanced search
   ![GitLab Search Query Syntax](../../../../../static/img/integrations/gitlab/GitlabSearchQueryExample.png)
 
-### Integration Config Example:
+### Integration Config Example
 
 ```yaml showLineNumbers
   - kind: project
