@@ -4,6 +4,20 @@
 
 ```yaml showLineNumbers
 resources:
+  - kind: project
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .path_with_namespace | gsub(" "; "")
+          title: .name
+          blueprint: '"repository"'
+          properties:
+            url: .web_url
+            description: .description
+            namespace: .namespace.name
+            full_path: .namespace.full_path
   - kind: issue
     selector:
       query: "true"
@@ -23,7 +37,7 @@ resources:
             link: .web_url
             labels: "[.labels[]]"
           relations:
-            microservice: .references.full | gsub("#.+"; "")
+            repository: .references.full | gsub("#.+"; "")
 ```
 
 </details>

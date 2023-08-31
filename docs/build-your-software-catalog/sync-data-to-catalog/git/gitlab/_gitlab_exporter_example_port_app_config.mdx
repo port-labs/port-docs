@@ -12,7 +12,7 @@ resources:
         mappings:
           identifier: .path_with_namespace | gsub(" "; "")
           title: .name
-          blueprint: '"microservice"'
+          blueprint: '"repository"'
           properties:
             url: .web_url
             readme: file://README.md
@@ -36,7 +36,7 @@ resources:
             description: .description
             link: .web_url
           relations:
-            microservice: .references.full | gsub("!.+"; "")
+            repository: .references.full | gsub("!.+"; "")
 ```
 
 </details>

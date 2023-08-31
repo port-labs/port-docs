@@ -1,10 +1,10 @@
 <details>
-<summary>Issue blueprint</summary>
+<summary>Pull request blueprint</summary>
 
 ```json showLineNumbers
 {
-  "identifier": "issue",
-  "title": "Issue",
+  "identifier": "pull_request",
+  "title": "Pull Request",
   "icon": "Github",
   "schema": {
     "properties": {
@@ -16,23 +16,19 @@
         "title": "Assignees",
         "type": "array"
       },
-      "labels": {
-        "title": "Labels",
+      "reviewers": {
+        "title": "Reviewers",
         "type": "array"
       },
       "status": {
         "title": "Status",
         "type": "string",
-        "enum": ["open", "closed"],
+        "enum": ["merged", "open", "closed"],
         "enumColors": {
+          "merged": "purple",
           "open": "green",
-          "closed": "purple"
+          "closed": "red"
         }
-      },
-      "createdAt": {
-        "title": "Created At",
-        "type": "string",
-        "format": "date-time"
       },
       "closedAt": {
         "title": "Closed At",
@@ -44,19 +40,19 @@
         "type": "string",
         "format": "date-time"
       },
+      "mergedAt": {
+        "title": "Merged At",
+        "type": "string",
+        "format": "date-time"
+      },
       "description": {
         "title": "Description",
         "type": "string",
         "format": "markdown"
       },
-      "issueNumber": {
-        "title": "Issue Number",
-        "type": "number"
-      },
       "link": {
-        "title": "Link",
-        "type": "string",
-        "format": "url"
+        "format": "url",
+        "type": "string"
       }
     },
     "required": []
@@ -65,8 +61,9 @@
   "calculationProperties": {},
   "relations": {
     "repository": {
+      "title": "Repository",
       "target": "repository",
-      "required": true,
+      "required": false,
       "many": false
     }
   }
