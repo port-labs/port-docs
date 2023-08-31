@@ -1,0 +1,64 @@
+<details>
+
+<summary> Port port-app-config.yml </summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: repository
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .name
+          title: .name
+          blueprint: '"repository"'
+          properties:
+            url: .html_url
+            readme: file://README.md
+  - kind: pull-request
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .head.repo.name + (.id|tostring)
+          title: .title
+          blueprint: '"pull_request"'
+          properties:
+            creator: .user.login
+            assignees: "[.assignees[].login]"
+            reviewers: "[.requested_reviewers[].login]"
+            status: .status
+            closedAt: .closed_at
+            updatedAt: .updated_at
+            mergedAt: .merged_at
+            description: .body
+            prNumber: .id
+            link: .html_url
+          relations:
+            repository: .head.repo.name
+  - kind: folder
+    selector:
+      query: "true"
+      folders:
+        - path: "*" # Using "*" will ingest the folders from the root of each of repository as entities
+          repos:
+            - backend-service
+            - frontend-service
+    port:
+      entity:
+        mappings:
+          identifier: .folder.name
+          title: .folder.name
+          blueprint: '"folder"'
+          properties:
+            url: >-
+              .repo.html_url + "/tree/" + .repo.default_branch  + "/" +
+              .folder.path
+            readme: file://README.md
+          relations:
+            repository: .repo.name
+```
+
+</details>

@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-import MicroserviceBlueprint from '../\_git_exporter_example_microservice_blueprint.mdx'
+import MicroserviceBlueprint from '../\_git_exporter_example_repository_blueprint.mdx'
 import PRBlueprint from './\_gitlab_exporter_example_merge_request_blueprint.mdx'
 import PortAppConfig from './\_gitlab_exporter_example_port_app_config.mdx'
 import GitlabResources from './\_gitlab_exporter_supported_resources.mdx'
