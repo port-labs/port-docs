@@ -12,7 +12,7 @@ resources:
         mappings:
           identifier: .path_with_namespace | gsub(" "; "")
           title: .name
-          blueprint: '"microservice"'
+          blueprint: '"repository"'
           properties:
             url: .web_url
             description: .description
@@ -35,7 +35,7 @@ resources:
             description: .description
             link: .web_url
           relations:
-            microservice: .__project.path_with_namespace | gsub(" "; "")
+            repository: .__project.path_with_namespace | gsub(" "; "")
   - kind: job
     selector:
       query: "true"
