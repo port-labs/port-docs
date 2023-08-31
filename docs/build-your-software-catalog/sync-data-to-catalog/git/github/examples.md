@@ -122,7 +122,7 @@ To retrieve the root folders of your monorepo, you can use this following syntax
 
 ## Mapping repositories, repository folders and pull requests
 
-In the following example you will ingest your GitHub repositories, the repository root folders and the repository pull requests to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+In the following example you will ingest your GitHub repositories, the repository's root folders and the repository pull requests to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
 
 <RepositoryBlueprint/>
 
