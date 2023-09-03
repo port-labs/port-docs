@@ -34,7 +34,7 @@ In case a system topic already exists and is not provided to the deployment of t
 
 ## Permissions
 
-In order to successfully deploy the Azure exporter, it's crucial to ensure that the user who deploys the integration in the Azure subscription has the appropriate access permissions.
+In order to successfully deploy the Azure exporter, it's crucial to ensure that the user who deploys the integration in the Azure subscription has the appropriate access permissions. One of the following permission assignments are required:
 
 - Option 1: the user can have the `Owner` Azure role assigned to him for the subscription that the integration will be deployed on. This role provides comprehensive control and access rights;
 - Option 2: for a more limited approach, the user should possess the minimum necessary permissions required to carry out the integration deployment. These permissions will grant the user access to specific resources and actions essential for the task without granting full `Owner` privileges. The following steps will guide you through the process of creating a custom role and assigning it to the user along with other required roles:
@@ -104,13 +104,12 @@ In order to successfully deploy the Azure exporter, it's crucial to ensure that 
 
     </details>
 
-
   - [Assign the following roles](https://learn.microsoft.com/en-us/azure/role-based-access-control/role-assignments-portal) to the user on the subscription that will be used to deploy the integration:
-    - The custom `Azure Exporter Deployment` role we defined above;
-    - The `API Management Workspace Contributor` role;
-    - The `EventGrid Contributor` role;
-    - The `ContainerApp Reader` role;
-    - The `EventGrid EventSubscription Contributor` role;
+    - The custom `Azure Exporter Deployment` role we defined above.
+    - The `API Management Workspace Contributor` role.
+    - The `EventGrid Contributor` role.
+    - The `ContainerApp Reader` role.
+    - The `EventGrid EventSubscription Contributor` role.
 
 ## Installation
 
