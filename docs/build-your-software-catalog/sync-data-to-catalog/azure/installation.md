@@ -45,7 +45,7 @@ In order to successfully deploy the Azure exporter, it's crucial to ensure that 
 
     <summary> Custom Resource Definition </summary>
 
-    ```json
+    ```json showLineNumbers
     {
       "id": "<ROLE_DEFINITION_ID>",
       "properties": {
