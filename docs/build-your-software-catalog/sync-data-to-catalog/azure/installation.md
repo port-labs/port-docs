@@ -34,7 +34,7 @@ In case a system topic already exists and is not provided to the deployment of t
 
 ## Permissions
 
-In order to successfully deploy the Azure exporter, it's crucial to ensure that the user who will be responsible for deploying the integration has the appropriate access permissions.
+In order to successfully deploy the Azure exporter, it's crucial to ensure that the user who deploys the integration in the Azure subscription has the appropriate access permissions.
 
 - Option 1: The user can have Owner role for the specific subscription designated for deploying the integration. This role provides comprehensive control and access rights.
 - Option 2: For a more limited approach, the user should possess the minimum necessary permissions required to carry out the integration deployment. These permissions will grant the user access to specific resources and actions essential for the task without granting full Owner privileges. The following steps will guide you through the process of creating a custom role and assigning it along with other roles to the user.
