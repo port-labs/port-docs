@@ -140,6 +140,18 @@ resource "port_blueprint" "myBlueprint" {
   icon       = "My icon"
   identifier = "myIdentifier"
   description = "My description"
+  properties {
+    string_props = {
+      "myProperty" = {
+        type  = "string"
+        title = "My Property"
+      }
+      "myUrlProperty" = {
+        title  = "URL Property"
+        format = "url"
+      }
+    }
+  }
 }
 ```
 
