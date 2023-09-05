@@ -2845,14 +2845,6 @@ In this step-by-step example, you will export your `CloudFormation Stacks` to Po
              "UPDATE_COMPLETE": "green"
            }
          },
-         "resources": {
-           "items": {
-             "type": "object"
-           },
-           "title": "Resources",
-           "description": "The cloudformation stack resources",
-           "type": "array"
-         },
          "template": {
            "title": "Template",
            "type": "string",
@@ -2903,7 +2895,6 @@ In this step-by-step example, you will export your `CloudFormation Stacks` to Po
              "blueprint": "cloudFormationStack",
              "properties": {
                "lastUpdated": ".LastUpdatedTime",
-               "resources": ".StackResources",
                "createdAt": ".CreationTime",
                "status": ".StackStatus",
                "link": "\"https://console.aws.amazon.com/go/view?arn=\" + .StackId",
