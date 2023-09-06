@@ -14,4 +14,8 @@ Feel free to reach out with any questions or requests 🚀
 
 - [Blog posts](https://www.getport.io/blog)
 
+- [Resource center](https://www.getport.io/resource-center)
+
+- [Newsroom](https://www.getport.io/newsroom)
+
 ---
