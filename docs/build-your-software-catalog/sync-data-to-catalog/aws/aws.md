@@ -173,6 +173,12 @@ Here is an example snippet of the `config.json` file which demonstrates the ETL 
 
 - The `port`, `entity` and the `mappings` keys open the section used to map the AWS resource fields to Port entities, the `mappings` key is an array where each object matches the structure of an [entity](../sync-data-to-catalog.md#entity-json-structure).
 - Each mapping value is a JQ query, except for `blueprint` which has to be a static string.
+- The `itemsToParse` key in a mapping, makes it possible to create multiple entities from a single AWS resource.
+
+  - Any JQ expression can be used here, as long as it evaluates to an array of items.
+  - `item` will be added to the JQ context as a key containing a reference to items in the array specified in `itemsToParse`. For array of objects, keys from an object can be accessed using the `.item.KEY_NAME` syntax.
+
+  <br></br>
 
   ```json showLineNumbers
   "resources": [
@@ -199,6 +205,13 @@ Here is an example snippet of the `config.json` file which demonstrates the ETL 
                 "timeout": ".Timeout",
                 "runtime": ".Runtime"
               }
+            },
+            {
+              "itemsToParse": ".Layers",
+              "identifier": ".item",
+              "title": ".item",
+              "blueprint": "functionLayer",
+              "properties": {}
             }
           ]
         }
