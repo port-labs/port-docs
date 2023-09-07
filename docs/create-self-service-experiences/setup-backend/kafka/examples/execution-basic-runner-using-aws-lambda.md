@@ -528,7 +528,7 @@ def report_to_port(run_id: str ,entity_props: dict):
     return response.status_code
 
 
-def report_action_status(run_context: dict, status: str):
+def report_action_status(run_id: str, status: str):
     '''
     Reports to Port on the status of an action run ``entity_props``
     '''
@@ -538,8 +538,6 @@ def report_action_status(run_context: dict, status: str):
     headers = {
         'Authorization': f'Bearer {token}'
     }
-
-    run_id = run_context['runId']
 
     body = {
         "status": status,
