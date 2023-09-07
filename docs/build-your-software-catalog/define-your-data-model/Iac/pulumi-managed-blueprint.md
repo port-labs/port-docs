@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: Pulumi-Managed Blueprint
+title: Pulumi
 description: Comprehensive blueprint with properties, relations and mirror properties
 ---
 
@@ -9,7 +9,7 @@ import TabItem from "@theme/TabItem"
 
 # Pulumi-Managed Blueprint Example
 
-This example includes a complete blueprint resource definition in Pulumi, which includes:
+This example includes a complete [blueprint](../../define-your-data-model/setup-blueprint/setup-blueprint.md?definition=tf#configure-blueprints-in-port) resource definition in Pulumi, which includes:
 
 - [Blueprint](../../define-your-data-model/setup-blueprint/setup-blueprint.md?definition=pulumi#configure-blueprints-in-port) definition examples;
 - All [property](../../define-your-data-model/setup-blueprint/properties/properties.md) type definitions;

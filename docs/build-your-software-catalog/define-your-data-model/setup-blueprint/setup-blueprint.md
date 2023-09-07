@@ -155,6 +155,9 @@ resource "port_blueprint" "myBlueprint" {
 }
 ```
 
+:::tip TIP
+For full example, check the [Terraform-Managed Blueprint Example](../Iac/terraform-managed-blueprint.md) page.
+:::
 </TabItem>
 
 <TabItem value="pulumi">
@@ -171,7 +174,7 @@ resource "port_blueprint" "myBlueprint" {
 ```python showLineNumbers
 """A Python Pulumi program"""
 
-import pulumi
+impor t pulumi
 from port_pulumi import Blueprint
 
 blueprint = Blueprint(
@@ -180,9 +183,40 @@ blueprint = Blueprint(
     title="My Blueprint",
     icon="My icon",
     description="My description",
+    properties=port.BlueprintPropertiesArgs(
+        string_props={
+            "myStringProp": port.BlueprintPropertiesStringPropsArgs(
+                title="My string", required=False
+            ),
+            "myUrlProp": port.BlueprintPropertiesStringPropsArgs(
+                title="My url", required=False, format="url"
+            ),
+            "myEmailProp": port.BlueprintPropertiesStringPropsArgs(
+                title="My email", required=False, format="email"
+            ),
+            "myUserProp": port.BlueprintPropertiesStringPropsArgs(
+                title="My user", required=False, format="user"
+            ),
+            "myTeamProp": port.BlueprintPropertiesStringPropsArgs(
+                title="My team", required=False, format="team"
+            ),
+            "myDatetimeProp": port.BlueprintPropertiesStringPropsArgs(
+                title="My datetime", required=False, format="date-time"
+            ),
+            "myTimerProp": port.BlueprintPropertiesStringPropsArgs(
+                title="My timer", required=False, format="timer"
+            ),
+            "myYAMLProp": port.BlueprintPropertiesStringPropsArgs(
+                title="My yaml", required=False, format="yaml"
+            ),
+        }
+    )
 )
 ```
 
+:::tip TIP
+For full example, check the [Pulumi-Managed Blueprint Example](../Iac/pulumi-managed-blueprint.md) page.
+:::
 </TabItem>
 
 <TabItem value="typescript">
@@ -196,9 +230,20 @@ export const blueprint = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   icon: "My icon",
   description: "My description",
+  properties: [
+    {
+      identifier: "language",
+      title: "Language",
+      type: "string",
+      required: true,
+    },
+  ],
 });
 ```
 
+:::tip TIP
+For full example, check the [Pulumi-Managed Blueprint Example](../Iac/pulumi-managed-blueprint.md) page.
+:::
 </TabItem>
 
 <TabItem value="javascript">
@@ -213,11 +258,20 @@ const entity = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   icon: "My icon",
   description: "My description",
+  properties: [
+    {
+      name: "language",
+      value: "Node",
+    },
+  ],
 });
 
 exports.title = entity.title;
 ```
 
+:::tip TIP
+For full example, check the [Pulumi-Managed Blueprint Example](../Iac/pulumi-managed-blueprint.md) page.
+:::
 </TabItem>
 <TabItem value="go">
 
@@ -232,10 +286,18 @@ import (
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
 		blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
-			Identifier:  pulumi.String("myBlueprint"),
-			Title:       pulumi.String("My Blueprint"),
-			Icon:        pulumi.String("My icon"),
+			Identifier: pulumi.String("myBlueprint"),
+			Title:      pulumi.String("My Blueprint"),
+			Icon:       pulumi.String("My icon"),
 			Description: pulumi.String("My description"),
+			Properties: port.BlueprintPropertiesArgs{
+				StringProps: port.BlueprintPropertiesStringPropsMap{
+					"myStringProp": port.BlueprintPropertiesStringPropsArgs{
+						Title:    pulumi.String("My string"),
+						Required: pulumi.Bool(false),
+					},
+				},
+			},
 		})
 		ctx.Export("blueprint", blueprint.Title)
 		if err != nil {
@@ -244,8 +306,12 @@ func main() {
 		return nil
 	})
 }
+
 ```
 
+:::tip TIP
+For full example, check the [Pulumi-Managed Blueprint Example](../Iac/pulumi-managed-blueprint.md) page.
+:::
 </TabItem>
 
 </Tabs>
