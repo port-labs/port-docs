@@ -6,25 +6,25 @@
 createMissingRelatedEntities: true
 resources:
   - kind: team
-      selector:
-        query: 'true'
-      port:
-        entity:
-          mappings:
-            identifier: '.id | tostring'
-            title: .name
-            blueprint: '"githubTeam"'
-            properties:
-              name: .name
-              slug: .slug
-              description: .description
-              link: .html_url
-              permission: .permission
-              notification_setting: .notification_setting
+    selector:
+      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
+    port:
+      entity:
+        mappings:
+          identifier: ".id | tostring"
+          title: .name
+          blueprint: '"githubTeam"'
+          properties:
+            name: .name
+            slug: .slug
+            description: .description
+            link: .html_url
+            permission: .permission
+            notification_setting: .notification_setting
   - kind: repository
     selector:
-      query: 'true'  # JQ boolean query. If evaluated to false - skip syncing the object.
-      teams: true  # Boolean flag to indicate whether to include the repository teams.
+      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
+      teams: true # Boolean flag to indicate whether to include the repository teams.
     port:
       entity:
         mappings:
@@ -35,7 +35,7 @@ resources:
             url: .html_url
             readme: file://README.md
           relations:
-            githubTeams: '[.teams[].id | tostring]'
+            githubTeams: "[.teams[].id | tostring]"
 ```
 
 </details>
