@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: Pulumi-Managed Blueprint
+title: Pulumi
 description: Comprehensive blueprint with properties, relations and mirror properties
 ---
 
@@ -9,13 +9,13 @@ import TabItem from "@theme/TabItem"
 
 # Pulumi-Managed Blueprint Example
 
-This example includes a complete blueprint resource definition in Pulumi, which includes:
+This example includes a complete [blueprint](../../define-your-data-model/setup-blueprint/setup-blueprint.md) resource definition in Pulumi, which includes:
 
-- [Blueprint](../../../../define-your-data-model/setup-blueprint/setup-blueprint.md?definition=pulumi#configure-blueprints-in-port) definition examples;
-- All [property](../../../../define-your-data-model/setup-blueprint/properties/properties.md) type definitions;
-- [Relation](../../../../define-your-data-model/relate-blueprints/relate-blueprints.md?definition=pulumi#configure-relations-in-port) definition example;
-- [Mirror property](../../../../define-your-data-model/setup-blueprint/properties/mirror-property/mirror-property.md) definition example;
-- [Calculation property](../../../../define-your-data-model/setup-blueprint/properties/calculation-property/calculation-property.md) definition example.
+- [Blueprint](../../define-your-data-model/setup-blueprint/setup-blueprint.md?definition=pulumi#configure-blueprints-in-port) definition examples;
+- All [property](../../define-your-data-model/setup-blueprint/properties/properties.md) type definitions;
+- [Relation](../../define-your-data-model/relate-blueprints/relate-blueprints.md?definition=pulumi#configure-relations-in-port) definition example;
+- [Mirror property](../../define-your-data-model/setup-blueprint/properties/mirror-property/mirror-property.md) definition example;
+- [Calculation property](../../define-your-data-model/setup-blueprint/properties/calculation-property/calculation-property.md) definition example.
 
 Here is the example definition in all the supported languages:
 
@@ -133,124 +133,125 @@ import * as pulumi from "@pulumi/pulumi";
 import * as port from "@port-labs/port";
 
 const other = new port.Blueprint("other", {
-    identifier: "test-docs-relation",
-    icon: "Microservice",
-    title: "Test Docs Relation",
-    properties: {
-        stringProps: {
-            myStringProp: {
-                title: "My string",
-                required: false
-            }
-        }
-    }
+  identifier: "test-docs-relation",
+  icon: "Microservice",
+  title: "Test Docs Relation",
+  properties: {
+    stringProps: {
+      myStringProp: {
+        title: "My string",
+        required: false,
+      },
+    },
+  },
 });
 
 const myBlueprint = new port.Blueprint(
-    "myBlueprint",
-    {
-        identifier: "test-docs",
-        icon: "Microservice",
-        title: "Test Docs",
-        properties: {
-            stringProps: {
-                myStringProp: {
-                    title: "My string",
-                    required: false
-                },
-                myUrlProp: {
-                    title: "My url",
-                    required: false,
-                    format: "url"
-                },
-                myEmailProp: {
-                    title: "My email",
-                    required: false,
-                    format: "email"
-                },
-                myUserProp: {
-                    title: "My user",
-                    required: false,
-                    format: "user"
-                },
-                myTeamProp: {
-                    title: "My team",
-                    required: false,
-                    format: "team"
-                },
-                myDatetimeProp: {
-                    title: "My datetime",
-                    required: false,
-                    format: "date-time"
-                },
-                myTimerProp: {
-                    title: "My timer",
-                    required: false,
-                    format: "timer"
-                },
-                myYAMLProp: {
-                    title: "My yaml",
-                    required: false,
-                    format: "yaml"
-                }
-            },
-            numberProps: {
-                myNumberProp: {
-                    title: "My number",
-                    required: false
-                }
-            },
-            booleanProps: {
-                myBooleanProp: {
-                    title: "My boolean",
-                    required: false
-                }
-            },
-            objectProps: {
-                myObjectProp: {
-                    title: "My object",
-                    required: false
-                }
-            },
-            arrayProps: {
-                myArrayProp: {
-                    title: "My array",
-                    required: false
-                }
-            }
+  "myBlueprint",
+  {
+    identifier: "test-docs",
+    icon: "Microservice",
+    title: "Test Docs",
+    properties: {
+      stringProps: {
+        myStringProp: {
+          title: "My string",
+          required: false,
         },
-        mirrorProperties: {
-            myMirrorProp: {
-                title: "My mirror property",
-                path: "myRelation.myStringProp"
-            },
-            myMirrorPropWithMeta: {
-                title: "My mirror property of meta property",
-                path: "myRelation.$identifier"
-            }
+        myUrlProp: {
+          title: "My url",
+          required: false,
+          format: "url",
         },
-        calculationProperties:{
-            myCalculation: {
-                title: "My calculation property",
-                calculation: ".properties.myStringProp + .properties.myStringProp",
-                type: "string"
-            },
-            myCalculationWithMeta: {
-                title: "My calculation property with meta properties",
-                calculation: '.identifier + "-" + .title + "-" + .properties.myStringProp',
-                type: "string"
-            }
+        myEmailProp: {
+          title: "My email",
+          required: false,
+          format: "email",
         },
-        relations:{
-            myRelation: {
-                title: "My relation",
-                target: "test-docs-relation",
-                many: false,
-                required: false
-            }
-        }
+        myUserProp: {
+          title: "My user",
+          required: false,
+          format: "user",
+        },
+        myTeamProp: {
+          title: "My team",
+          required: false,
+          format: "team",
+        },
+        myDatetimeProp: {
+          title: "My datetime",
+          required: false,
+          format: "date-time",
+        },
+        myTimerProp: {
+          title: "My timer",
+          required: false,
+          format: "timer",
+        },
+        myYAMLProp: {
+          title: "My yaml",
+          required: false,
+          format: "yaml",
+        },
+      },
+      numberProps: {
+        myNumberProp: {
+          title: "My number",
+          required: false,
+        },
+      },
+      booleanProps: {
+        myBooleanProp: {
+          title: "My boolean",
+          required: false,
+        },
+      },
+      objectProps: {
+        myObjectProp: {
+          title: "My object",
+          required: false,
+        },
+      },
+      arrayProps: {
+        myArrayProp: {
+          title: "My array",
+          required: false,
+        },
+      },
     },
-    { dependsOn: [other] }
+    mirrorProperties: {
+      myMirrorProp: {
+        title: "My mirror property",
+        path: "myRelation.myStringProp",
+      },
+      myMirrorPropWithMeta: {
+        title: "My mirror property of meta property",
+        path: "myRelation.$identifier",
+      },
+    },
+    calculationProperties: {
+      myCalculation: {
+        title: "My calculation property",
+        calculation: ".properties.myStringProp + .properties.myStringProp",
+        type: "string",
+      },
+      myCalculationWithMeta: {
+        title: "My calculation property with meta properties",
+        calculation:
+          '.identifier + "-" + .title + "-" + .properties.myStringProp',
+        type: "string",
+      },
+    },
+    relations: {
+      myRelation: {
+        title: "My relation",
+        target: "test-docs-relation",
+        many: false,
+        required: false,
+      },
+    },
+  },
+  { dependsOn: [other] }
 );
 ```
 
@@ -264,124 +265,125 @@ const pulumi = require("@pulumi/pulumi");
 const port = require("@port-labs/port");
 
 const other = new port.Blueprint("other", {
-    identifier: "test-docs-relation",
-    icon: "Microservice",
-    title: "Test Docs Relation",
-    properties: {
-        stringProps: {
-            myStringProp: {
-                title: "My string",
-                required: false
-            }
-        }
-    }
+  identifier: "test-docs-relation",
+  icon: "Microservice",
+  title: "Test Docs Relation",
+  properties: {
+    stringProps: {
+      myStringProp: {
+        title: "My string",
+        required: false,
+      },
+    },
+  },
 });
 
 const myBlueprint = new port.Blueprint(
-    "myBlueprint",
-    {
-        identifier: "test-docs",
-        icon: "Microservice",
-        title: "Test Docs",
-        properties: {
-            stringProps: {
-                myStringProp: {
-                    title: "My string",
-                    required: false
-                },
-                myUrlProp: {
-                    title: "My url",
-                    required: false,
-                    format: "url"
-                },
-                myEmailProp: {
-                    title: "My email",
-                    required: false,
-                    format: "email"
-                },
-                myUserProp: {
-                    title: "My user",
-                    required: false,
-                    format: "user"
-                },
-                myTeamProp: {
-                    title: "My team",
-                    required: false,
-                    format: "team"
-                },
-                myDatetimeProp: {
-                    title: "My datetime",
-                    required: false,
-                    format: "date-time"
-                },
-                myTimerProp: {
-                    title: "My timer",
-                    required: false,
-                    format: "timer"
-                },
-                myYAMLProp: {
-                    title: "My yaml",
-                    required: false,
-                    format: "yaml"
-                }
-            },
-            numberProps: {
-                myNumberProp: {
-                    title: "My number",
-                    required: false
-                }
-            },
-            booleanProps: {
-                myBooleanProp: {
-                    title: "My boolean",
-                    required: false
-                }
-            },
-            objectProps: {
-                myObjectProp: {
-                    title: "My object",
-                    required: false
-                }
-            },
-            arrayProps: {
-                myArrayProp: {
-                    title: "My array",
-                    required: false
-                }
-            }
+  "myBlueprint",
+  {
+    identifier: "test-docs",
+    icon: "Microservice",
+    title: "Test Docs",
+    properties: {
+      stringProps: {
+        myStringProp: {
+          title: "My string",
+          required: false,
         },
-        mirrorProperties: {
-            myMirrorProp: {
-                title: "My mirror property",
-                path: "myRelation.myStringProp"
-            },
-            myMirrorPropWithMeta: {
-                title: "My mirror property of meta property",
-                path: "myRelation.$identifier"
-            }
+        myUrlProp: {
+          title: "My url",
+          required: false,
+          format: "url",
         },
-        calculationProperties:{
-            myCalculation: {
-                title: "My calculation property",
-                calculation: ".properties.myStringProp + .properties.myStringProp",
-                type: "string"
-            },
-            myCalculationWithMeta: {
-                title: "My calculation property with meta properties",
-                calculation: '.identifier + "-" + .title + "-" + .properties.myStringProp',
-                type: "string"
-            }
+        myEmailProp: {
+          title: "My email",
+          required: false,
+          format: "email",
         },
-        relations:{
-            myRelation: {
-                title: "My relation",
-                target: "test-docs-relation",
-                many: false,
-                required: false
-            }
-        }
+        myUserProp: {
+          title: "My user",
+          required: false,
+          format: "user",
+        },
+        myTeamProp: {
+          title: "My team",
+          required: false,
+          format: "team",
+        },
+        myDatetimeProp: {
+          title: "My datetime",
+          required: false,
+          format: "date-time",
+        },
+        myTimerProp: {
+          title: "My timer",
+          required: false,
+          format: "timer",
+        },
+        myYAMLProp: {
+          title: "My yaml",
+          required: false,
+          format: "yaml",
+        },
+      },
+      numberProps: {
+        myNumberProp: {
+          title: "My number",
+          required: false,
+        },
+      },
+      booleanProps: {
+        myBooleanProp: {
+          title: "My boolean",
+          required: false,
+        },
+      },
+      objectProps: {
+        myObjectProp: {
+          title: "My object",
+          required: false,
+        },
+      },
+      arrayProps: {
+        myArrayProp: {
+          title: "My array",
+          required: false,
+        },
+      },
     },
-    { dependsOn: [other] }
+    mirrorProperties: {
+      myMirrorProp: {
+        title: "My mirror property",
+        path: "myRelation.myStringProp",
+      },
+      myMirrorPropWithMeta: {
+        title: "My mirror property of meta property",
+        path: "myRelation.$identifier",
+      },
+    },
+    calculationProperties: {
+      myCalculation: {
+        title: "My calculation property",
+        calculation: ".properties.myStringProp + .properties.myStringProp",
+        type: "string",
+      },
+      myCalculationWithMeta: {
+        title: "My calculation property with meta properties",
+        calculation:
+          '.identifier + "-" + .title + "-" + .properties.myStringProp',
+        type: "string",
+      },
+    },
+    relations: {
+      myRelation: {
+        title: "My relation",
+        target: "test-docs-relation",
+        many: false,
+        required: false,
+      },
+    },
+  },
+  { dependsOn: [other] }
 );
 ```
 
@@ -530,4 +532,3 @@ func main() {
 </TabItem>
 
 </Tabs>
-```
