@@ -58,4 +58,8 @@ h6::first-letter {
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
 
+.hidden .menu__list {
+  display: none !important;
+}
+
 @import url("https://fonts.googleapis.com/css2?family=Lexend&family=Inter");
