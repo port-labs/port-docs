@@ -214,9 +214,6 @@ blueprint = Blueprint(
 )
 ```
 
-:::tip TIP
-For full example, check the [Pulumi-Managed Blueprint Example](../Iac/pulumi-managed-blueprint.md) page.
-:::
 </TabItem>
 
 <TabItem value="typescript">
@@ -241,9 +238,6 @@ export const blueprint = new port.Blueprint("myBlueprint", {
 });
 ```
 
-:::tip TIP
-For full example, check the [Pulumi-Managed Blueprint Example](../Iac/pulumi-managed-blueprint.md) page.
-:::
 </TabItem>
 
 <TabItem value="javascript">
@@ -269,9 +263,6 @@ const entity = new port.Blueprint("myBlueprint", {
 exports.title = entity.title;
 ```
 
-:::tip TIP
-For full example, check the [Pulumi-Managed Blueprint Example](../Iac/pulumi-managed-blueprint.md) page.
-:::
 </TabItem>
 <TabItem value="go">
 
@@ -309,11 +300,11 @@ func main() {
 
 ```
 
+</TabItem>
+
 :::tip TIP
 For full example, check the [Pulumi-Managed Blueprint Example](../Iac/pulumi-managed-blueprint.md) page.
 :::
-</TabItem>
-
 </Tabs>
 
 </TabItem>
