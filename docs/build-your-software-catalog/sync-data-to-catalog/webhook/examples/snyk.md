@@ -8,6 +8,13 @@ import SnykConfiguration from "./resources/snyk/\_example_snyk_vulnerability_web
 
 # Snyk
 
+:::tip Supported by Ocean!
+Ocean's [Snyk integration](https://github.com/port-labs/ocean/tree/main/integrations/snyk#snyk) is simpler to use and provides more capabilities than the webhook, we recommend using it instead.  
+Read more about Ocean [here](https://ocean.getport.io/).
+
+If you'd still prefer to use the webhook, proceed with the instructions on this page.
+:::
+
 In this example you are going to create a webhook integration between [Snyk](https://snyk.io/) and Port, which will ingest Snyk code and infrastructure vulnerability entities into Port.
 
 ## Port configuration
