@@ -137,3 +137,11 @@ After you have the app registered in your organization and the Docker is up and 
 5. Choose the repositories you want the app to be installed for:
 
 ![GitHub app installation chooses repositories](../../../../../static/img/integrations/github-app/SelfHostedInstallationRepoSelection.png)
+
+## Limitations
+
+As this is a self-hosted version, there are some limitations due to security considerations and the fact that we don't have access to your GitHub instance
+
+- You must include configuration as part of the repository, and you can't configure it via Port's UI/API;
+
+- To use self-service actions, you will need [Kafka Credentials](../../../../create-self-service-experiences/setup-backend/kafka/kafka.md) configured for your organization;

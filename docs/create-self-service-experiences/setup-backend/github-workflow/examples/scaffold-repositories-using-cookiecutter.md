@@ -6,7 +6,7 @@ sidebar_position: 2
 
 [This GitHub action](https://github.com/port-labs/cookiecutter-gha) allows you to quickly scaffold repositories using any selected [Cookiecutter Template](https://www.cookiecutter.io/templates) via Port Actions.
 
-In addition, as cookiecutter is an open source project you can make your own project template, learn more about it [here](https://cookiecutter.readthedocs.io/en/2.0.2/tutorials.html#create-your-very-own-cookiecutter-project-template)
+In addition, as cookiecutter is an open-source project you can make your own project template, learn more about it [here](https://cookiecutter.readthedocs.io/en/2.0.2/tutorials.html#create-your-very-own-cookiecutter-project-template)
 
 ## Example - scaffolding golang template
 
@@ -14,7 +14,7 @@ Follow these steps to get started with the Golang template:
 
 1. Create the following GitHub action secrets:
 
-   1. `ORG_TOKEN` - a PAT (Personal Access Token) with permissions to create repositories;
+   1. `ORG_TOKEN` - a [fine-grained PAT](https://github.com/settings/tokens?type=beta) with permissions to create repositories
    2. `PORT_CLIENT_ID` - Port Client ID [learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token);
    3. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token);
 
