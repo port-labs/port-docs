@@ -16,8 +16,8 @@ The steps shown in the image above are as follows:
 
    - Action Topic - `ORG_ID.runs`
    - Changes Topic - `ORG_ID.change.log`
+     :::
 
-:::
 :::note about consumer groups
 
 As part of the setup, you will need to create a consumer group that listens to the topics. The consumer group id can be one of:
