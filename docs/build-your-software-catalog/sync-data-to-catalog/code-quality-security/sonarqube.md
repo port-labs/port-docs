@@ -1,15 +1,15 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Snyk
+# Sonarqube
 
-Our Snyk integration allows you to import `targets`, `projects` and `issues` from your Snyk account into Port, according to your mapping and definitions.
+Our Sonarqube integration allows you to import `projects`, `issues` and `analyses` from your Sonarqube account into Port, according to your mapping and definitions.
 
 ## Common use cases
 
-- Map `targets`, `projects` and `issues` in your Snyk organization environment.
+- Map `projects`, `issues` and `analyses` in your Sonarqube organization environment.
 - Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
-- Create/delete Snyk objects using self-service actions.
+- Create/delete Sonarqube objects using self-service actions.
 
 ## installation
 
@@ -19,65 +19,66 @@ Install the integration via Helm by running this command:
 # The following script will install an Ocean integration at your K8s cluster using helm
 # initializePortResources: When set to true the integration will create default blueprints + JQ Mappings
 # integration.identifier: Change the identifier to describe your integration
+# integration.secrets.sonarApiToken: The SonarQube API token
+# integration.config.sonarOrganizationId: The SonarQube organization ID
 
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install my-snyk-integration port-labs/port-ocean \
+helm upgrade --install my-sonarqube-integration port-labs/port-ocean \
 	--set port.clientId="PORT_CLIENT_ID"  \
 	--set port.clientSecret="PORT_CLIENT_SECRET"  \
 	--set port.baseUrl="https://api.getport.io"  \
 	--set initializePortResources=true  \
-	--set integration.identifier="my-snyk-integration"  \
-	--set integration.type="snyk"  \
+	--set integration.identifier="my-sonarqube-integration"  \
+	--set integration.type="sonarqube"  \
 	--set integration.eventListener.type="POLLING"  \
-	--set integration.secrets.token="string"  \
-	--set integration.config.organizationId="string"
+	--set integration.secrets.sonarApiToken="string"  \
+	--set integration.config.sonarOrganizationId="string"
 ```
 
-## Ingesting Snyk objects
+## Ingesting Sonarqube objects
 
-The Snyk integration uses a YAML configuration to describe the process of loading data into the developer portal.
+The Sonarqube integration uses a YAML configuration to describe the process of loading data into the developer portal.
 
-Here is an example snippet from the config which demonstrates the process for getting `project` data from Snyk:
+Here is an example snippet from the config which demonstrates the process for getting `project` data from Sonarqube:
 
 ```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
 resources:
-  - kind: project
+  - kind: projects
     selector:
       query: "true"
     port:
       entity:
         mappings:
-          identifier: .id
-          title: .attributes.name
-          blueprint: '"snykProject"'
+          blueprint: '"sonarQubeProject"'
+          identifier: .key
+          title: .name
           properties:
-            url: ("https://app.snyk.io/org/" + .relationships.organization.data.id + "/project/" + .id | tostring)
-            owner: .__owner.email
-            businessCriticality: .attributes.business_criticality
-            environment: .attributes.environment
-            lifeCycle: .attributes.lifecycle
-            highOpenVulnerabilities: .meta.latest_issue_counts.high
-            mediumOpenVulnerabilities: .meta.latest_issue_counts.medium
-            lowOpenVulnerabilities: .meta.latest_issue_counts.low
-            criticalOpenVulnerabilities: .meta.latest_issue_counts.critical
-            importedBy: .__importer.email
-            tags: .attributes.tags
+            organization: .organization
+            link: .link
+            lastAnalysisStatus: .branch.status.qualityGateStatus
+            lastAnalysisDate: .analysisDateAllBranches
+            numberOfBugs: .measures[]? | select(.metric == "bugs") | .value
+            numberOfCodeSmells: .measures[]? | select(.metric == "code_smells") | .value
+            numberOfVulnerabilities: .measures[]? | select(.metric == "vulnerabilities") | .value
+            numberOfHotSpots: .measures[]? | select(.metric == "security_hotspots") | .value
+            numberOfDuplications: .measures[]? | select(.metric == "duplicated_files") | .value
+            coverage: .measures[]? | select(.metric == "coverage") | .value
+            mainBranch: .branch.name
+            tags: .tags
 ```
 
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Snyk's API events.
+The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Sonarqube's API events.
 
 ### Configuration structure
 
-The integration configuration determines which resources will be queried from Snyk, and which entities and properties will be created in Port.
+The integration configuration determines which resources will be queried from Sonarqube, and which entities and properties will be created in Port.
 
 :::tip Supported resources
-The following resources can be used to map data from Snyk, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
+The following resources can be used to map data from Sonarqube, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
 
-- [`Target`](https://apidocs.snyk.io/?version=2023-08-21%7Ebeta#get-/orgs/-org_id-/targets)
 - [`Project`](https://apidocs.snyk.io/?version=2023-08-21#get-/orgs/-org_id-/projects)
 - [`Issue`](https://snyk.docs.apiary.io/#reference/projects/aggregated-project-issues/list-all-aggregated-issues)
+- [`Analysis`](https://apidocs.snyk.io/?version=2023-08-21%7Ebeta#get-/orgs/-org_id-/targets)
 
 :::
 
