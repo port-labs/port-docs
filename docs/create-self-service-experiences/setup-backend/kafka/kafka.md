@@ -10,12 +10,13 @@ The steps shown in the image above are as follows:
 
 1. Port publishes an invoked `Action` or `Change` message to Kafka;
 2. A secure Kafka topic holds all of the action invocations and changes;
-   :::note about topics
-   The actions and changes topics are separated, their formats are:
 
-   - Action Topic - `ORG_ID.runs`
-   - Changes Topic - `ORG_ID.change.log`
-     :::
+:::note about topics
+The actions and changes topics are separated, their formats are:
+
+- Action Topic - `ORG_ID.runs`
+- Changes Topic - `ORG_ID.change.log`
+  :::
 
 :::note about consumer groups
 
