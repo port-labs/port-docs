@@ -14,7 +14,7 @@ Follow these steps to get started with the Golang template:
 
 1. Create the following GitHub action secrets:
 
-   1. `ORG_TOKEN` - a PAT (Personal Access Token) with permissions to create repositories, make sure to use [Fine-grained token](https://github.com/settings/tokens?type=beta);
+   1. `ORG_TOKEN` - a [fine-grained PAT](https://github.com/settings/tokens?type=beta) with permissions to create repositories
    2. `PORT_CLIENT_ID` - Port Client ID [learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token);
    3. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token);
 

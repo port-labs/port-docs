@@ -18,7 +18,6 @@ The proto property type can be used to store types defined in .proto files, for 
 
 - Messages between microservices;
 - Microservices APIs;
-- etc.
 
 ## API definition
 
