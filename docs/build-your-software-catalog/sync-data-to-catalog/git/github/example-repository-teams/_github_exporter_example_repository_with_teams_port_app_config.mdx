@@ -11,11 +11,11 @@ resources:
     port:
       entity:
         mappings:
-          identifier: ".id | tostring"
+          identifier: .name
           title: .name
           blueprint: '"githubTeam"'
           properties:
-            name: .name
+            id: .id
             slug: .slug
             description: .description
             link: .html_url
@@ -35,7 +35,7 @@ resources:
             url: .html_url
             readme: file://README.md
           relations:
-            githubTeams: "[.teams[].id | tostring]"
+            githubTeams: [.teams[].name]
 ```
 
 </details>
