@@ -1,18 +1,18 @@
 ---
 sidebar_position: 1
-title: Terraform-Managed Blueprint
+title: Terraform
 description: Comprehensive blueprint with properties, relations and mirror properties
 ---
 
 # Terraform-Managed Blueprint Example
 
-This example includes a complete blueprint resource definition in terraform, which includes:
+This example includes a complete [blueprint](../../define-your-data-model/setup-blueprint/setup-blueprint.md) resource definition in Terraform, which includes:
 
-- [Blueprint](../../../../define-your-data-model/setup-blueprint/setup-blueprint.md?definition=tf#configure-blueprints-in-port) definition examples;
-- All [property](../../../../define-your-data-model/setup-blueprint/properties/properties.md) type definitions;
-- [Relation](../../../../define-your-data-model/relate-blueprints/relate-blueprints.md?definition=tf#configure-relations-in-port) definition example;
-- [Mirror property](../../../../define-your-data-model/setup-blueprint/properties/mirror-property/mirror-property.md) definition example;
-- [Calculation property](../../../../define-your-data-model/setup-blueprint/properties/calculation-property/calculation-property.md) definition example.
+- [Blueprint](../../define-your-data-model/setup-blueprint/setup-blueprint.md?definition=tf#configure-blueprints-in-port) definition examples;
+- All [property](../../define-your-data-model/setup-blueprint/properties/properties.md) type definitions;
+- [Relation](../../define-your-data-model/relate-blueprints/relate-blueprints.md?definition=tf#configure-relations-in-port) definition example;
+- [Mirror property](../../define-your-data-model/setup-blueprint/properties/mirror-property/mirror-property.md) definition example;
+- [Calculation property](../../define-your-data-model/setup-blueprint/properties/calculation-property/calculation-property.md) definition example.
 
 Here is the example definition:
 
