@@ -94,6 +94,9 @@ const config = {
           },
         ],
       },
+      hotjar: {
+        applicationId: 3649439,
+      },
       footer: {
         style: "dark",
         links: [
@@ -260,6 +263,7 @@ const config = {
 
   plugins: [
     "@docusaurus/theme-live-codeblock",
+    "docusaurus-plugin-hotjar",
     "@stackql/docusaurus-plugin-hubspot",
     [
       "@docusaurus/plugin-client-redirects",
