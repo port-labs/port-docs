@@ -19,13 +19,11 @@ The actions and changes topics are separated, their formats are:
   :::
 
 :::note about consumer groups
-
 As part of the setup, you will need to create a consumer group that listens to the topics. The consumer group id can be one of:
 
 - Any group name with a prefix of your org id, for example `ORG_ID.my-group-name`
 - A group name that matches your username provided by Port
-
-:::
+  :::
 
 3. A listener implemented on the Client side receives the new topic message and runs code defined by the DevOps team.
 
