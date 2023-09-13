@@ -169,6 +169,27 @@ The following resources can be used to map data from Newrelic, it is possible to
   Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
   :::
 
+### Tags
+
+Some Newrelic `entities` have a property named `tags` which contains potentially useful information such as machine information, hostname, agent name & version, and more. For example:
+
+```json showLineNumbers
+"tags": [
+  {
+    "key": "account",
+    "values": [
+      "Account12345"
+    ]
+  }
+]
+```
+
+Before mapping, this integration performs a tranformation on each `tag`, after which the example above would look like this:
+
+```json showLineNumbers
+tags = [{"account": "Account12345"}]
+```
+
 ### Ingest data into Port
 
 To ingest Newrelic objects using the [integration configuration](#configuration-structure), you can follow the steps below:
