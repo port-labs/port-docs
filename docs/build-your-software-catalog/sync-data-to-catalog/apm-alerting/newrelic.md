@@ -32,8 +32,8 @@ helm upgrade --install my-newrelic-integration port-labs/port-ocean \
 	--set integration.identifier="my-newrelic-integration"  \
 	--set integration.type="newrelic"  \
 	--set integration.eventListener.type="POLLING"  \
-	--set integration.secrets.newRelicAPIKey="string"  \
-	--set integration.secrets.newRelicAccountID="string" \
+	--set integration.secrets.newRelicAPIKey="<NR_API_KEY>"  \
+	--set integration.secrets.newRelicAccountID="<NR_ACCOUNT_ID>" \
   --set scheduledResyncInterval=120
 ```
 
