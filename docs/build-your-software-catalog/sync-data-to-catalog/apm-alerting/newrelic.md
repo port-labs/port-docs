@@ -21,7 +21,6 @@ Install the integration via Helm by running this command:
 # The following script will install an Ocean integration at your K8s cluster using helm
 # initializePortResources: When set to true the integration will create default blueprints + JQ Mappings
 # integration.identifier: Change the identifier to describe your integration
-# scheduledResyncInterval: The number of minutes between each resync
 
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-newrelic-integration port-labs/port-ocean \
@@ -34,7 +33,6 @@ helm upgrade --install my-newrelic-integration port-labs/port-ocean \
 	--set integration.eventListener.type="POLLING"  \
 	--set integration.secrets.newRelicAPIKey="<NR_API_KEY>"  \
 	--set integration.secrets.newRelicAccountID="<NR_ACCOUNT_ID>" \
-  --set scheduledResyncInterval=120
 ```
 
 ### Event listener
