@@ -10,21 +10,10 @@ An `Issue` is a group of incidents that describe the underlying problem of your 
 
 ## Common use cases
 
-- Map issues and projects in your Newrelic organization environment.
-- Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
-- Create/delete Newrelic objects using self-service actions.
+- Map your monitored applications and services in New Relic with their current open alerts.
+- Watch for new alerts and updates raised on your monitored applications and automatically synchronize them into Port.
 
 ## Installation
-
-### Event listener type
-
-The integration supports 3 types of event listeners. When installing the integration (see below), specify your preferred type by setting the value of the `integration.eventListener.type` key to one of the following:
-
-- `POLLING` - pulls the configuration from Port every minute and checks it for changes. If there is a change, a resync will occur.
-- `KAFKA` - listens to a Kafka topic for changes in the configuration. If there is a change, a resync will occur.
-- `WEBHOOK` - NewRelic supports configuring [workflows](https://docs.newrelic.com/docs/alerts-applied-intelligence/applied-intelligence/incident-workflows/incident-workflows/#workflows-triggered) that will trigger a webhook when a change to issues that the policies are monitoring occurs. The integration will listen to those webhooks and update the corresponding issues in Port.
-
-### Install via Helm
 
 Install the integration via Helm by running this command:
 
@@ -44,8 +33,13 @@ helm upgrade --install my-newrelic-integration port-labs/port-ocean \
 	--set integration.type="newrelic"  \
 	--set integration.eventListener.type="POLLING"  \
 	--set integration.secrets.newRelicAPIKey="string"  \
-	--set integration.secrets.newRelicAccountID="string"
+	--set integration.secrets.newRelicAccountID="string" \
+  --set scheduledResyncInterval=120
 ```
+
+### Event listener
+
+The integration uses polling to pull the configuration from Port every minute and check it for changes. If there is a change, a resync will occur.
 
 ## Ingesting Newrelic objects
 

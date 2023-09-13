@@ -76,9 +76,9 @@ The integration configuration determines which resources will be queried from So
 :::tip Supported resources
 The following resources can be used to map data from Sonarqube, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
 
-- [`Project`](https://apidocs.snyk.io/?version=2023-08-21#get-/orgs/-org_id-/projects)
-- [`Issue`](https://snyk.docs.apiary.io/#reference/projects/aggregated-project-issues/list-all-aggregated-issues)
-- [`Analysis`](https://apidocs.snyk.io/?version=2023-08-21%7Ebeta#get-/orgs/-org_id-/targets)
+- `Project` - represents a Sonarqube project. Retrieves data from [`components`](https://next.sonarqube.com/sonarqube/web_api/api/components), [`measures`](https://next.sonarqube.com/sonarqube/web_api/api/measures), and [`branches`](https://next.sonarqube.com/sonarqube/web_api/api/project_branches).
+- [`Issue`](https://next.sonarqube.com/sonarqube/web_api/api/issues)
+- `Analysis` - represents a Sonarqube analysis and latest activity.
 
 :::
 
@@ -92,7 +92,7 @@ The following resources can be used to map data from Sonarqube, it is possible t
       ...
   ```
 
-- The `kind` key is a specifier for a Snyk object:
+- The `kind` key is a specifier for a Sonarqube object:
 
   ```yaml showLineNumbers
     resources:
@@ -114,7 +114,7 @@ The following resources can be used to map data from Sonarqube, it is possible t
       port:
   ```
 
-- The `port`, `entity` and the `mappings` keys are used to map the Snyk object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
+- The `port`, `entity` and the `mappings` keys are used to map the Sonarqube object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
 
   ```yaml showLineNumbers
   resources:
@@ -124,22 +124,23 @@ The following resources can be used to map data from Sonarqube, it is possible t
       port:
         # highlight-start
         entity:
-          mappings: # Mappings between one Snyk object to a Port entity. Each value is a JQ query.
-            identifier: .id
-            title: .attributes.name
-            blueprint: '"snykProject"'
+          mappings:
+            blueprint: '"sonarQubeProject"'
+            identifier: .key
+            title: .name
             properties:
-              url: ("https://app.snyk.io/org/" + .relationships.organization.data.id + "/project/" + .id | tostring)
-              owner: .__owner.email
-              businessCriticality: .attributes.business_criticality
-              environment: .attributes.environment
-              lifeCycle: .attributes.lifecycle
-              highOpenVulnerabilities: .meta.latest_issue_counts.high
-              mediumOpenVulnerabilities: .meta.latest_issue_counts.medium
-              lowOpenVulnerabilities: .meta.latest_issue_counts.low
-              criticalOpenVulnerabilities: .meta.latest_issue_counts.critical
-              importedBy: .__importer.email
-              tags: .attributes.tags
+              organization: .organization
+              link: .link
+              lastAnalysisStatus: .branch.status.qualityGateStatus
+              lastAnalysisDate: .analysisDateAllBranches
+              numberOfBugs: .measures[]? | select(.metric == "bugs") | .value
+              numberOfCodeSmells: .measures[]? | select(.metric == "code_smells") | .value
+              numberOfVulnerabilities: .measures[]? | select(.metric == "vulnerabilities") | .value
+              numberOfHotSpots: .measures[]? | select(.metric == "security_hotspots") | .value
+              numberOfDuplications: .measures[]? | select(.metric == "duplicated_files") | .value
+              coverage: .measures[]? | select(.metric == "coverage") | .value
+              mainBranch: .branch.name
+              tags: .tags
         # highlight-end
     - kind: project # In this instance project is mapped again with a different filter
       selector:
@@ -149,123 +150,25 @@ The following resources can be used to map data from Sonarqube, it is possible t
           mappings: ...
   ```
 
-  :::tip Blueprint key
-  Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-  :::
+:::tip Blueprint key
+Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
+
+:::
 
 ### Ingest data into Port
 
-To ingest Snyk objects using the [integration configuration](#configuration-structure), you can follow the steps below:
+To ingest Sonarqube objects using the [integration configuration](#configuration-structure), you can follow the steps below:
 
 1. Go to the DevPortal Builder page.
 2. Select a blueprint you want to ingest using Snyk.
 3. Choose the **Ingest Data** option from the menu.
-4. Select Snyk under the Code quality & security providers category.
+4. Select Sonarqube under the Code quality & security providers category.
 5. Modify the [configuration](#configuration-structure) according to your needs.
 6. Click `Resync`.
 
 ## Examples
 
 Examples of blueprints and the relevant integration configurations:
-
-### Target
-
-<details>
-<summary>Target blueprint</summary>
-
-```json showLineNumbers
-{
-  "identifier": "snykTarget",
-  "title": "Snyk Target",
-  "icon": "Snyk",
-  "schema": {
-    "properties": {
-      "criticalOpenVulnerabilities": {
-        "icon": "Vulnerability",
-        "type": "number",
-        "title": "Open Critical Vulnerabilities"
-      },
-      "highOpenVulnerabilities": {
-        "icon": "Vulnerability",
-        "type": "number",
-        "title": "Open High Vulnerabilities"
-      },
-      "mediumOpenVulnerabilities": {
-        "icon": "Vulnerability",
-        "type": "number",
-        "title": "Open Medium Vulnerabilities"
-      },
-      "lowOpenVulnerabilities": {
-        "icon": "Vulnerability",
-        "type": "number",
-        "title": "Open Low Vulnerabilities"
-      },
-      "origin": {
-        "title": "Target Origin",
-        "type": "string",
-        "enum": [
-          "artifactory-cr",
-          "aws-config",
-          "aws-lambda",
-          "azure-functions",
-          "azure-repos",
-          "bitbucket-cloud",
-          "bitbucket-server",
-          "cli",
-          "cloud-foundry",
-          "digitalocean-cr",
-          "docker-hub",
-          "ecr",
-          "gcr",
-          "github",
-          "github-cr",
-          "github-enterprise",
-          "gitlab",
-          "gitlab-cr",
-          "google-artifact-cr",
-          "harbor-cr",
-          "heroku",
-          "ibm-cloud",
-          "kubernetes",
-          "nexus-cr",
-          "pivotal",
-          "quay-cr",
-          "terraform-cloud"
-        ]
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "relations": {}
-}
-```
-
-</details>
-
-<details>
-<summary>Integration configuration</summary>
-
-```yaml showLineNumbers
-- kind: target
-  selector:
-    query: "true"
-  port:
-    entity:
-      mappings:
-        identifier: .attributes.displayName
-        title: .attributes.displayName
-        blueprint: '"snykTarget"'
-        properties:
-          origin: .attributes.origin
-          highOpenVulnerabilities: "[.__projects[].meta.latest_issue_counts.high] | add"
-          mediumOpenVulnerabilities: "[.__projects[].meta.latest_issue_counts.medium] | add"
-          lowOpenVulnerabilities: "[.__projects[].meta.latest_issue_counts.low] | add"
-          criticalOpenVulnerabilities: "[.__projects[].meta.latest_issue_counts.critical] | add"
-```
-
-</details>
 
 ### Project
 
@@ -274,91 +177,71 @@ Examples of blueprints and the relevant integration configurations:
 
 ```json showLineNumbers
 {
-  "identifier": "snykProject",
-  "description": "This blueprint represents a snyk project in our software catalog",
-  "title": "Snyk Project",
-  "icon": "Snyk",
+  "identifier": "sonarQubeProject",
+  "title": "SonarQube Project",
+  "icon": "sonarqube",
   "schema": {
     "properties": {
-      "url": {
+      "organization": {
         "type": "string",
-        "title": "URL",
-        "format": "url",
-        "icon": "Snyk"
-      },
-      "owner": {
-        "type": "string",
-        "title": "Owner",
-        "format": "user",
+        "title": "Organization",
         "icon": "TwoUsers"
       },
-      "businessCriticality": {
-        "title": "Business Criticality",
-        "type": "array",
-        "items": {
-          "type": "string",
-          "enum": ["critical", "high", "medium", "low"]
-        },
-        "icon": "DefaultProperty"
-      },
-      "environment": {
-        "items": {
-          "type": "string",
-          "enum": [
-            "frontend",
-            "backend",
-            "internal",
-            "external",
-            "mobile",
-            "saas",
-            "onprem",
-            "hosted",
-            "distributed"
-          ]
-        },
-        "icon": "Environment",
-        "title": "Environment",
-        "type": "array"
-      },
-      "lifeCycle": {
-        "title": "Life Cycle",
-        "type": "array",
-        "items": {
-          "type": "string",
-          "enum": ["development", "sandbox", "production"]
-        },
-        "icon": "DefaultProperty"
-      },
-      "highOpenVulnerabilities": {
-        "icon": "Vulnerability",
-        "type": "number",
-        "title": "Open High Vulnerabilities"
-      },
-      "mediumOpenVulnerabilities": {
-        "icon": "Vulnerability",
-        "type": "number",
-        "title": "Open Medium Vulnerabilities"
-      },
-      "lowOpenVulnerabilities": {
-        "icon": "Vulnerability",
-        "type": "number",
-        "title": "Open Low Vulnerabilities"
-      },
-      "criticalOpenVulnerabilities": {
-        "icon": "Vulnerability",
-        "type": "number",
-        "title": "Open Low Vulnerabilities"
-      },
-      "importedBy": {
-        "icon": "TwoUsers",
+      "link": {
         "type": "string",
-        "title": "Imported By",
-        "format": "user"
+        "format": "url",
+        "title": "Link",
+        "icon": "Link"
+      },
+      "lastAnalysisStatus": {
+        "type": "string",
+        "title": "Last Analysis Status",
+        "enum": ["PASSED", "OK", "FAILED", "ERROR"],
+        "enumColors": {
+          "PASSED": "green",
+          "OK": "green",
+          "FAILED": "red",
+          "ERROR": "red"
+        }
+      },
+      "lastAnalysisDate": {
+        "type": "string",
+        "format": "date-time",
+        "icon": "Clock",
+        "title": "Last Analysis Date"
+      },
+      "numberOfBugs": {
+        "type": "number",
+        "title": "Number Of Bugs"
+      },
+      "numberOfCodeSmells": {
+        "type": "number",
+        "title": "Number Of CodeSmells"
+      },
+      "numberOfVulnerabilities": {
+        "type": "number",
+        "title": "Number Of Vulnerabilities"
+      },
+      "numberOfHotSpots": {
+        "type": "number",
+        "title": "Number Of HotSpots"
+      },
+      "numberOfDuplications": {
+        "type": "number",
+        "title": "Number Of Duplications"
+      },
+      "coverage": {
+        "type": "number",
+        "title": "Coverage"
+      },
+      "mainBranch": {
+        "type": "string",
+        "icon": "Git",
+        "title": "Main Branch"
       },
       "tags": {
         "type": "array",
-        "title": "Tags",
-        "icon": "DefaultProperty"
+        "title": "Tags"
       }
     },
     "required": []
@@ -376,114 +259,178 @@ Examples of blueprints and the relevant integration configurations:
 
 ```yaml showLineNumbers
 resources:
-  - kind: project
+  - kind: projects
     selector:
       query: "true"
     port:
       entity:
         mappings:
-          identifier: .id
-          title: .attributes.name
-          blueprint: '"snykProject"'
+          blueprint: '"sonarQubeProject"'
+          identifier: .key
+          title: .name
           properties:
-            url: ("https://app.snyk.io/org/" + .relationships.organization.data.id + "/project/" + .id | tostring)
-            owner: .__owner.email
-            businessCriticality: .attributes.business_criticality
-            environment: .attributes.environment
-            lifeCycle: .attributes.lifecycle
-            highOpenVulnerabilities: .meta.latest_issue_counts.high
-            mediumOpenVulnerabilities: .meta.latest_issue_counts.medium
-            lowOpenVulnerabilities: .meta.latest_issue_counts.low
-            criticalOpenVulnerabilities: .meta.latest_issue_counts.critical
-            importedBy: .__importer.email
-            tags: .attributes.tags
+            organization: .organization
+            link: .link
+            lastAnalysisStatus: .branch.status.qualityGateStatus
+            lastAnalysisDate: .analysisDateAllBranches
+            numberOfBugs: .measures[]? | select(.metric == "bugs") | .value
+            numberOfCodeSmells: .measures[]? | select(.metric == "code_smells") | .value
+            numberOfVulnerabilities: .measures[]? | select(.metric == "vulnerabilities") | .value
+            numberOfHotSpots: .measures[]? | select(.metric == "security_hotspots") | .value
+            numberOfDuplications: .measures[]? | select(.metric == "duplicated_files") | .value
+            coverage: .measures[]? | select(.metric == "coverage") | .value
+            mainBranch: .branch.name
+            tags: .tags
 ```
 
 </details>
 
-## Issue
+### Issue
 
 <details>
 <summary>Issue blueprint</summary>
 
+```json showLineNumbers
+{
+{
+  "identifier": "sonarQubeIssue",
+  "title": "SonarQube Issue",
+  "icon": "sonarqube",
+  "schema": {
+    "properties": {
+      "type": {
+        "type": "string",
+        "title": "Type",
+        "enum": [
+          "CODE_SMELL",
+          "BUG",
+          "VULNERABILITY"
+        ]
+      },
+      "severity": {
+        "type": "string",
+        "title": "Severity",
+        "enum": [
+          "MAJOR",
+          "INFO",
+          "MINOR",
+          "CRITICAL",
+          "BLOCKER"
+        ],
+        "enumColors": {
+          "MAJOR": "orange",
+          "INFO": "green",
+          "CRITICAL": "red",
+          "BLOCKER": "red",
+          "MINOR": "yellow"
+        }
+      },
+      "link": {
+        "type": "string",
+        "format": "url",
+        "icon": "Link",
+        "title": "Link"
+      },
+      "status": {
+        "type": "string",
+        "title": "Status",
+        "enum": [
+          "OPEN",
+          "CLOSED",
+          "RESOLVED",
+          "REOPENED",
+          "CONFIRMED"
+        ]
+      },
+      "assignees": {
+        "title": "Assignees",
+        "type": "string",
+        "icon": "TwoUsers"
+      },
+      "tags": {
+        "type": "array",
+        "title": "Tags"
+      },
+      "createdAt": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Created At"
+      }
+    }
+  },
+  "relations": {
+    "sonarQubeProject": {
+      "target": "sonarQubeProject",
+      "required": false,
+      "title": "SonarQube Project",
+      "many": false
+    }
+  }
+}
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: issues
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          blueprint: '"sonarQubeIssue"'
+          identifier: .key
+          title: .message
+          properties:
+            type: .type
+            severity: .severity
+            link: .link
+            status: .status
+            assignees: .assignee
+            tags: .tags
+            createdAt: .creationDate
+          relations:
+            sonarQubeProject: .project
+```
+
+</details>
+
+### Analysis
+
+<details>
+<summary>Analysis blueprint</summary>
+
 ```yaml showLineNumbers
 {
-  "identifier": "snykVulnerability",
-  "description": "This blueprint represents a Snyk vulnerability in our software catalog",
-  "title": "Snyk Vulnerability",
-  "icon": "Snyk",
+  "identifier": "sonarQubeAnalysis",
+  "title": "SonarQube Analysis",
+  "icon": "sonarqube",
   "schema":
     {
       "properties":
         {
-          "score": { "icon": "Star", "type": "number", "title": "Score" },
-          "packageName":
-            {
-              "type": "string",
-              "title": "Package Name",
-              "icon": "DefaultProperty",
-            },
-          "packageVersions":
-            { "icon": "Package", "title": "Package Versions", "type": "array" },
-          "type":
-            {
-              "type": "string",
-              "title": "Type",
-              "enum": ["vuln", "license", "configuration"],
-              "icon": "DefaultProperty",
-            },
-          "severity":
-            {
-              "icon": "Alert",
-              "title": "Issue Severity",
-              "type": "string",
-              "enum": ["low", "medium", "high", "critical"],
-              "enumColors":
-                {
-                  "low": "green",
-                  "medium": "yellow",
-                  "high": "red",
-                  "critical": "red",
-                },
-            },
-          "url":
-            {
-              "icon": "Link",
-              "type": "string",
-              "title": "Issue URL",
-              "format": "url",
-            },
-          "language":
-            {
-              "type": "string",
-              "title": "Language",
-              "icon": "DefaultProperty",
-            },
-          "publicationTime":
-            {
-              "type": "string",
-              "format": "date-time",
-              "title": "Publication Time",
-              "icon": "DefaultProperty",
-            },
-          "isPatched":
-            {
-              "type": "boolean",
-              "title": "Is Patched",
-              "icon": "DefaultProperty",
-            },
+          "branch":
+            { "type": "string", "title": "Branch", "icon": "GitVersion" },
+          "fixedIssues": { "type": "number", "title": "Fixed Issues" },
+          "newIssues": { "type": "number", "title": "New Issues" },
+          "coverage": { "title": "Coverage", "type": "number" },
+          "duplications": { "type": "number", "title": "Duplications" },
+          "createdAt":
+            { "type": "string", "format": "date-time", "title": "Created At" },
         },
-      "required": [],
     },
-  "mirrorProperties": {},
-  "calculationProperties": {},
   "relations":
     {
-      "snykProject":
+      "sonarQubeProject":
         {
-          "title": "Project",
-          "target": "snykProject",
+          "target": "sonarQubeProject",
           "required": false,
+          "title": "SonarQube Project",
           "many": false,
         },
     },
@@ -497,27 +444,24 @@ resources:
 
 ```yaml showLineNumbers
 resources:
-  - kind: vulnerability
+  - kind: analysis
     selector:
-      query: '.issueType == "vuln"'
+      query: "true"
     port:
       entity:
         mappings:
-          identifier: .issueData.id
-          title: .issueData.title
-          blueprint: '"snykVulnerability"'
+          blueprint: '"sonarQubeAnalysis"'
+          identifier: .analysisId
+          title: .commit.message
           properties:
-            score: .priorityScore
-            packageName: .pkgName
-            packageVersions: .pkgVersions
-            type: .issueType
-            severity: .issueData.severity
-            url: .issueData.url
-            language: .issueData.language // .issueType
-            publicationTime: .issueData.publicationTime
-            isPatched: .isPatched
+            branch: .branch_name
+            fixedIssues: .measures.violations_fixed
+            newIssues: .measures.violations_added
+            coverage: .measures.coverage_change
+            duplications: .measures.duplicated_lines_density_change
+            createdAt: .analysis_date
           relations:
-            snykProject: .__project.id
+            sonarQubeProject: .project
 ```
 
 </details>
