@@ -174,18 +174,24 @@ Some Newrelic `entities` have a property named `tags` which contains potentially
 ```json showLineNumbers
 "tags": [
   {
-    "key": "account",
+    "key": "coreCount",
     "values": [
-      "Account12345"
+      "10"
     ]
-  }
+  },
+  {
+    "key": "hostStatus",
+    "values": [
+      "running"
+    ]
+  },
 ]
 ```
 
 Before mapping, this integration performs a tranformation on each `tag`, after which the example above would look like this:
 
 ```json showLineNumbers
-tags = [{"account": "Account12345"}]
+tags = [{"coreCount": "10"}, {"hostStatus":"running"}]
 ```
 
 ### Ingest data into Port
