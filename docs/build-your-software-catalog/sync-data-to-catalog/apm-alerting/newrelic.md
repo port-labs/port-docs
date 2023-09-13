@@ -191,7 +191,7 @@ Some Newrelic `entities` have a property named `tags` which contains potentially
 Before mapping, this integration performs a tranformation on each `tag`, after which the example above would look like this:
 
 ```json showLineNumbers
-tags = [{"coreCount": "10"}, {"hostStatus":"running"}]
+tags = ["coreCount":"10","hostStatus":"running"]
 ```
 
 ### Ingest data into Port
@@ -209,10 +209,10 @@ To ingest Newrelic objects using the [integration configuration](#configuration-
 
 Examples of blueprints and the relevant integration configurations:
 
-### Entity
+### Service (Entity)
 
 <details>
-<summary>Entity blueprint</summary>
+<summary>Service blueprint</summary>
 
 ```json showLineNumbers
 {
