@@ -16,9 +16,11 @@ The Overview tab is comprised of two widgets:
 
 ### Details
 
+Here you will find the entity's properties and their values, its scorecards and their values, and other metadata.
+
 ### Related entities
 
-By default, all directly-related entities in the same direction will automatically appear in the widget. This is true for both forward-related and backward-related entities. Indirectly-related entities will not appear.
+By default, all directly-related entities in the same direction will automatically appear in this widget. This is true for both forward-related and backward-related entities. Indirectly-related entities will not appear.
 
 For example:
 
