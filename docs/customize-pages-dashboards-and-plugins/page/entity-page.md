@@ -36,7 +36,13 @@ As you can see, when looking at the entity page of a certain `Workflow Run`, `Wo
 
 You can add additional entities to the `Related entities` table by clicking on the `+ New Tab` button. In the dialog, the `Target blueprint` dropdown will display all entities that are related in any way to the current entity. In our `Workflow run` example above, we can use this button to add a `Pull request` tab to our widget.
 
-If the target blueprint can be reached by more than one relation, the `related property` dropdown will display all of them so you can choose the correct one for your use-case:
+![afterNewTab](../../../static/img/software-catalog/pages/afterNewTab.png)
+
+In some cases, the target blueprint may be reachable by more than one relation, like this:
+
+![multipleRelations](../../../static/img/software-catalog/pages/multipleRelations.png)
+
+Say we want to add a `Cluster` tab to `ServiceInEnv`'s related entities. In such a case, the `related property` dropdown will display the possible relations for us to choose from:
 
 ![multiplePaths](../../../static/img/software-catalog/pages/multiplePaths.png)
 
