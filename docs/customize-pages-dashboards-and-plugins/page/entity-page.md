@@ -24,7 +24,7 @@ By default, all directly-related entities in the same direction will automatical
 
 For example:
 
-`Workflow Run` has a forward-relation to `Workflow`, which has a forward-relation to `Microservice`. `Microservice` has a **backward**-relation to `Pull Request`:
+`Workflow Run` has a forward-relation to `Workflow`, which has a forward-relation to `Microservice`. `Microservice` has a **backward**-relation to `Pull Request`. Since we changed direction midway, this relation is **indirect**:
 
 ![builderRelationsExample](../../../static/img/software-catalog/pages/builderRelationsExample.png)
 
@@ -34,12 +34,15 @@ As you can see, when looking at the entity page of a certain `Workflow Run`, `Wo
 
 #### New related entity tab
 
-You can add additional entities to the `Related entities` table by clicking on the `+ New Tab` button. In the dialog, the `Target blueprint` dropdown will display all entities that are related in any way to the current entity.  
-If there are multiple paths to reach the target blueprint, you will see the following message in the dialog:
+You can add additional entities to the `Related entities` table by clicking on the `+ New Tab` button. In the dialog, the `Target blueprint` dropdown will display all entities that are related in any way to the current entity. In our `Workflow run` example above, we can use this button to add a `Pull request` tab to our widget.
+
+If the target blueprint can be reached by more than one relation, the `related property` dropdown will display all of them so you can choose the correct one for your use-case:
 
 ![multiplePaths](../../../static/img/software-catalog/pages/multiplePaths.png)
 
-In this case, you will need to choose a relation or property that will determine the path to the target.
+#### Hide tabs
+
+The `Hide tabs` button on the right allows you to control which tabs are visible in this widget.
 
 ## Runs
 
