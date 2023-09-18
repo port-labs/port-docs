@@ -171,3 +171,57 @@ use_pkce = true
   - Make sure your tokenUrl is the correct URL.
 
 </details>
+
+### Azure AD
+
+<details>
+<summary>Setup</summary>
+
+**Steps:**
+
+1. Follow the [Register an application](https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#register-an-application) steps in Azure Documentation to add an application in your Azure subscription;
+2. Follow the [Add a redirect URI](https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#add-a-redirect-uri) steps in Azure documentation to add `https://app.getport.io` as a Redirect URI;
+3. Follow the [Configure platform settings](https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#configure-platform-settings) to configure your application as `Single-page application`;
+4. Add a custom scope to your new application: 1. In your application click on the Expose an API button on the left sidebar; 2. Click on the `Add a scope` button to add a scope that will allow Admins and users to consent `Read User`; 3. Add the scope you just created under the `Authorization Scope` field in the property in your blueprint inside Port.
+   ![Azure AD Scope](../../../../static/img/software-catalog/widgets/embedded-url/AzureAdScope.png)
+   <br />
+
+**Configure Grafana with OAuth & Port embedding**
+:::note
+The following example is just for illustration purposes and may not reflect the actual URLs and client IDs used in
+your Azure AD setup.
+
+Based on Grafana docs for [JWT Configuration](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/jwt/) & [Azure AD Configuration](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/azuread/)
+
+:::
+
+```ini showLineNumbers
+[security] ;Required for the embedding
+allow_embedding = true
+
+[auth.jwt] ;Required for the embedding
+...
+email_claim = preferred_username
+username_claim = preferred_username
+jwk_set_url = "https://login.microsoftonline.com/common/discovery/v2.0/keys"
+expect_claims = {"iss": "https://login.microsoftonline.com/{YOUR_APPLICATION_UUID}/v2.0"}
+url_login = true
+...
+
+[auth.azuread] ;Regular Azure AD authentication
+...
+client_id = {CLIENT_ID}
+client_secret = {CLIENT_SECRET}
+auth_url = "https://login.microsoftonline.com/{YOUR_APPLICATION_UUID}/oauth2/v2.0/authorize"
+token_url = "https://login.microsoftonline.com/{YOUR_APPLICATION_UUID}/oauth2/v2.0/token"
+allowed_domains = "{my-domain}.com"
+use_pkce = true
+...
+```
+
+**Troubleshoot**
+
+- "_Could not fetch your auth token._"
+  - Make sure your tokenUrl is the correct URL.
+
+</details>
