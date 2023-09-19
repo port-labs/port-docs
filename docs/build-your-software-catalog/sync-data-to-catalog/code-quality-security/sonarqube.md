@@ -21,6 +21,7 @@ Install the integration via Helm by running this command:
 # integration.identifier: Change the identifier to describe your integration
 # integration.secrets.sonarApiToken: The SonarQube API token
 # integration.config.sonarOrganizationId: The SonarQube organization ID
+# scheduledResyncInterval: the number of minutes between each resync
 
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-sonarqube-integration port-labs/port-ocean \
@@ -32,7 +33,8 @@ helm upgrade --install my-sonarqube-integration port-labs/port-ocean \
 	--set integration.type="sonarqube"  \
 	--set integration.eventListener.type="POLLING"  \
 	--set integration.secrets.sonarApiToken="string"  \
-	--set integration.config.sonarOrganizationId="string"
+	--set integration.config.sonarOrganizationId="string" \
+  --set scheduledResyncInterval=120
 ```
 
 ## Ingesting Sonarqube objects
