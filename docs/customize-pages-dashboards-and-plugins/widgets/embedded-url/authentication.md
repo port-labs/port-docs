@@ -182,9 +182,14 @@ use_pkce = true
 1. Follow the [Register an application](https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#register-an-application) steps in Azure Documentation to add an application in your Azure subscription;
 2. Follow the [Add a redirect URI](https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#add-a-redirect-uri) steps in Azure documentation to add `https://app.getport.io` as a Redirect URI;
 3. Follow the [Configure platform settings](https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#configure-platform-settings) to configure your application as `Single-page application`;
-4. Add a custom scope to your new application: 1. In your application click on the Expose an API button on the left sidebar; 2. Click on the `Add a scope` button to add a scope that will allow Admins and users to consent `Read User`; 3. Add the scope you just created under the `Authorization Scope` field in the property in your blueprint inside Port.
-   ![Azure AD Scope](../../../../static/img/software-catalog/widgets/embedded-url/AzureAdScope.png)
-   <br />
+4. Add a custom scope to your new application:
+
+   1. In your application click on the Expose an API button on the left sidebar;
+   2. Click on the `Add a scope` button to add a scope that will allow Admins and users to consent `Read User`;
+   3. Add the scope you just created under the `Authorization Scope` field in the property in your blueprint inside Port.
+      ![Azure AD Scope](../../../../static/img/software-catalog/widgets/embedded-url/AzureAdScope.png)
+
+<br />
 
 **Configure Grafana with OAuth & Port embedding**
 :::note
