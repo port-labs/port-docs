@@ -185,9 +185,35 @@ use_pkce = true
 4. Add a custom scope to your new application:
 
    1. In your application click on the Expose an API button on the left sidebar;
+
    2. Click on the `Add a scope` button to add a scope that will allow Admins and users to consent `Read User`;
-   3. Add the scope you just created under the `Authorization Scope` field in the property in your blueprint inside Port.
       ![Azure AD Scope](../../../../static/img/software-catalog/widgets/embedded-url/AzureAdScope.png)
+
+   3. Add the scope you just created under the `Authorization Scope` field in the property in your blueprint inside Port.
+      ```json showLineNumbers
+      ...
+      "schema": {
+        "properties": {
+          "ff": {
+            "type": "string",
+            "title": "ff",
+            "format": "url",
+            "spec": "embedded-url",
+            "specAuthentication": {
+              "authorizationUrl": "https://app.com",
+              "tokenUrl": "https://app.com",
+              "clientId": "1234",
+              // highlight-start
+              "authorizationScope": [
+                "api://xxxx-xxxx-xxxx-xxxx-xxxx/user.read"
+              ]
+              // highlight-end
+            }
+          }
+        }
+      }
+      ...
+      ```
 
 <br />
 
