@@ -18,10 +18,10 @@ Install the integration via Helm by running this command:
 ```bash showLineNumbers
 # The following script will install an Ocean integration at your K8s cluster using helm
 # initializePortResources: When set to true the integration will create default blueprints + JQ Mappings
+# scheduledResyncInterval: the number of minutes between each resync
 # integration.identifier: Change the identifier to describe your integration
 # integration.secrets.sonarApiToken: The SonarQube API token
 # integration.config.sonarOrganizationId: The SonarQube organization ID
-# scheduledResyncInterval: the number of minutes between each resync
 
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-sonarqube-integration port-labs/port-ocean \
@@ -29,12 +29,12 @@ helm upgrade --install my-sonarqube-integration port-labs/port-ocean \
 	--set port.clientSecret="PORT_CLIENT_SECRET"  \
 	--set port.baseUrl="https://api.getport.io"  \
 	--set initializePortResources=true  \
+  --set scheduledResyncInterval=120 \
 	--set integration.identifier="my-sonarqube-integration"  \
 	--set integration.type="sonarqube"  \
 	--set integration.eventListener.type="POLLING"  \
 	--set integration.secrets.sonarApiToken="string"  \
-	--set integration.config.sonarOrganizationId="string" \
-  --set scheduledResyncInterval=120
+	--set integration.config.sonarOrganizationId="string"
 ```
 
 ## Ingesting Sonarqube objects

@@ -18,8 +18,8 @@ Install the integration via Helm by running this command:
 ```bash showLineNumbers
 # The following script will install an Ocean integration at your K8s cluster using helm
 # initializePortResources: When set to true the integration will create default blueprints + JQ Mappings
-# integration.identifier: Change the identifier to describe your integration
 # scheduledResyncInterval: the number of minutes between each resync
+# integration.identifier: Change the identifier to describe your integration
 
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-snyk-integration port-labs/port-ocean \
@@ -27,12 +27,12 @@ helm upgrade --install my-snyk-integration port-labs/port-ocean \
 	--set port.clientSecret="PORT_CLIENT_SECRET"  \
 	--set port.baseUrl="https://api.getport.io"  \
 	--set initializePortResources=true  \
+  --set scheduledResyncInterval=120 \
 	--set integration.identifier="my-snyk-integration"  \
 	--set integration.type="snyk"  \
 	--set integration.eventListener.type="POLLING"  \
-	--set integration.secrets.token="string"  \
-	--set integration.config.organizationId="string" \
-  --set scheduledResyncInterval=120
+	--set integration.secrets.token="SNYK_TOKEN"  \
+	--set integration.config.organizationId="ORG_ID"
 ```
 
 ## Ingesting Snyk objects
