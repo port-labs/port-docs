@@ -170,9 +170,9 @@ To retrieve the teams of your repositories, you will need to add the `teams` pro
 
 In the following example you will ingest your GitHub repositories and their Dependabot Alerts to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
 
-<DependabotAlertBlueprint/>
-
 <RepositoryBlueprint/>
+
+<DependabotAlertBlueprint/>
 
 <PortRepositoryDependabotAlertMappingAppConfig/>
 
