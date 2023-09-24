@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 4
 description: Ingest SonarQube analysis into your catalog
 ---
 
@@ -9,7 +9,7 @@ import SonarcloudAnalysisConfiguration from "./resources/sonarqube/\_example_son
 # SonarQube
 
 :::tip Supported by Ocean!
-Ocean's [SonarQube integration](https://github.com/port-labs/ocean/tree/main/integrations/sonarqube#sonarqube) is simpler to use and provides more capabilities than the webhook, we recommend using it instead.  
+Ocean's [SonarQube integration](../../code-quality-security/sonarqube.md) is simpler to use and provides more capabilities than the webhook, we recommend using it instead.  
 Read more about Ocean [here](https://ocean.getport.io/).
 
 If you'd still prefer to use the webhook, proceed with the instructions on this page.

@@ -9,7 +9,7 @@ import JiraIssueConfiguration from "./resources/jira/\_example_jira_issue_config
 # Jira
 
 :::tip Supported by Ocean!
-Ocean's [Jira integration](/build-your-software-catalog/sync-data-to-catalog/project-management/jira) is simpler to use and provides more capabilities than the webhook, we recommend using it instead.  
+Ocean's [Jira integration](../../project-management/jira.md) is simpler to use and provides more capabilities than the webhook, we recommend using it instead.  
 Read more about Ocean [here](https://ocean.getport.io/).
 
 If you'd still prefer to use the webhook, proceed with the instructions on this page.

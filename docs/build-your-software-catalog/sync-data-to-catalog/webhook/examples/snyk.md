@@ -1,5 +1,5 @@
 ---
-sidebar_position: 9
+sidebar_position: 8
 description: Ingest Snyk vulnerabilities into your catalog
 ---
 
@@ -9,7 +9,7 @@ import SnykConfiguration from "./resources/snyk/\_example_snyk_vulnerability_web
 # Snyk
 
 :::tip Supported by Ocean!
-Ocean's [Snyk integration](https://github.com/port-labs/ocean/tree/main/integrations/snyk#snyk) is simpler to use and provides more capabilities than the webhook, we recommend using it instead.  
+Ocean's [Snyk integration](../../code-quality-security/snyk.md) is simpler to use and provides more capabilities than the webhook, we recommend using it instead.  
 Read more about Ocean [here](https://ocean.getport.io/).
 
 If you'd still prefer to use the webhook, proceed with the instructions on this page.
