@@ -1,5 +1,5 @@
 ---
-sidebar_position: 9
+sidebar_position: 8
 description: Ingest Snyk vulnerabilities into your catalog
 ---
 

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 8
+sidebar_position: 7
 description: Ingest Dynatrace problems into your catalog
 ---
 
