@@ -1,13 +1,13 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Pagerduty
+# PagerDuty
 
-Our Pagerduty integration allows you to import `services` and `incidents` from your Pagerduty account into Port, according to your mapping and definitions.
+Our PagerDuty integration allows you to import `services` and `incidents` from your PagerDuty account into Port, according to your mapping and definitions.
 
 ## Common use cases
 
-- Map `services` and `incidents` in your Pagerduty organization environment.
+- Map `services` and `incidents` in your PagerDuty organization environment.
 - Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
 ## installation
@@ -20,7 +20,7 @@ Install the integration via Helm by running this command:
 # scheduledResyncInterval: the number of minutes between each resync
 # integration.identifier: Change the identifier to describe your integration
 # integration.secrets.token: PagerDuty API token
-# integration.config.apiUrl: Pagerduty api url. If not specified, the default will be https://api.pagerduty.com
+# integration.config.apiUrl: PagerDuty api url. If not specified, the default will be https://api.pagerduty.com
 
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-pagerduty-integration port-labs/port-ocean \
@@ -36,18 +36,18 @@ helm upgrade --install my-pagerduty-integration port-labs/port-ocean \
 	--set integration.config.apiUrl="string"
 ```
 
-## Ingesting Pagerduty objects
+## Ingesting PagerDuty objects
 
-The Pagerduty integration uses a YAML configuration to describe the process of loading data into the developer portal. See [examples](#examples) below.
+The PagerDuty integration uses a YAML configuration to describe the process of loading data into the developer portal. See [examples](#examples) below.
 
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Pagerduty's API events.
+The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from PagerDuty's API events.
 
 ### Configuration structure
 
-The integration configuration determines which resources will be queried from Pagerduty, and which entities and properties will be created in Port.
+The integration configuration determines which resources will be queried from PagerDuty, and which entities and properties will be created in Port.
 
 :::tip Supported resources
-The following resources can be used to map data from Pagerduty, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
+The following resources can be used to map data from PagerDuty, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
 
 - [`Service`](https://developer.pagerduty.com/api-reference/e960cca205c0f-list-services)
 - [`Incident`](https://developer.pagerduty.com/api-reference/9d0b4b12e36f9-list-incidents)
@@ -64,7 +64,7 @@ The following resources can be used to map data from Pagerduty, it is possible t
       ...
   ```
 
-- The `kind` key is a specifier for a Pagerduty object:
+- The `kind` key is a specifier for a PagerDuty object:
 
   ```yaml showLineNumbers
     resources:
@@ -86,7 +86,7 @@ The following resources can be used to map data from Pagerduty, it is possible t
       port:
   ```
 
-- The `port`, `entity` and the `mappings` keys are used to map the Pagerduty object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
+- The `port`, `entity` and the `mappings` keys are used to map the PagerDuty object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
 
   ```yaml showLineNumbers
   resources:
@@ -96,7 +96,7 @@ The following resources can be used to map data from Pagerduty, it is possible t
       port:
         # highlight-start
         entity:
-          mappings: # Mappings between one Pagerduty object to a Port entity. Each value is a JQ query.
+          mappings: # Mappings between one PagerDuty object to a Port entity. Each value is a JQ query.
             identifier: .id
             title: .name
             blueprint: '"pagerdutyService"'
@@ -117,12 +117,12 @@ The following resources can be used to map data from Pagerduty, it is possible t
 
 ### Ingest data into Port
 
-To ingest Pagerduty objects using the [integration configuration](#configuration-structure), you can follow the steps below:
+To ingest PagerDuty objects using the [integration configuration](#configuration-structure), you can follow the steps below:
 
 1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using Pagerduty.
+2. Select a blueprint you want to ingest using PagerDuty.
 3. Choose the **Ingest Data** option from the menu.
-4. Select Pagerduty under the Incident management category.
+4. Select PagerDuty under the Incident management category.
 5. Modify the [configuration](#configuration-structure) according to your needs.
 6. Click `Resync`.
 

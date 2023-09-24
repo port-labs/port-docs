@@ -1,15 +1,15 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Sonarqube
+# SonarQube
 
-Our Sonarqube integration allows you to import `projects`, `issues` and `analyses` from your Sonarqube account into Port, according to your mapping and definitions.
+Our SonarQube integration allows you to import `projects`, `issues` and `analyses` from your SonarQube account into Port, according to your mapping and definitions.
 
 ## Common use cases
 
-- Map `projects`, `issues` and `analyses` in your Sonarqube organization environment.
+- Map `projects`, `issues` and `analyses` in your SonarQube organization environment.
 - Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
-- Create/delete Sonarqube objects using self-service actions.
+- Create/delete SonarQube objects using self-service actions.
 
 ## installation
 
@@ -37,11 +37,11 @@ helm upgrade --install my-sonarqube-integration port-labs/port-ocean \
 	--set integration.config.sonarOrganizationId="string"
 ```
 
-## Ingesting Sonarqube objects
+## Ingesting SonarQube objects
 
-The Sonarqube integration uses a YAML configuration to describe the process of loading data into the developer portal.
+The SonarQube integration uses a YAML configuration to describe the process of loading data into the developer portal.
 
-Here is an example snippet from the config which demonstrates the process for getting `project` data from Sonarqube:
+Here is an example snippet from the config which demonstrates the process for getting `project` data from SonarQube:
 
 ```yaml showLineNumbers
 resources:
@@ -69,18 +69,18 @@ resources:
             tags: .tags
 ```
 
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Sonarqube's API events.
+The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from SonarQube's API events.
 
 ### Configuration structure
 
-The integration configuration determines which resources will be queried from Sonarqube, and which entities and properties will be created in Port.
+The integration configuration determines which resources will be queried from SonarQube, and which entities and properties will be created in Port.
 
 :::tip Supported resources
-The following resources can be used to map data from Sonarqube, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
+The following resources can be used to map data from SonarQube, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
 
-- `Project` - represents a Sonarqube project. Retrieves data from [`components`](https://next.sonarqube.com/sonarqube/web_api/api/components), [`measures`](https://next.sonarqube.com/sonarqube/web_api/api/measures), and [`branches`](https://next.sonarqube.com/sonarqube/web_api/api/project_branches).
+- `Project` - represents a SonarQube project. Retrieves data from [`components`](https://next.sonarqube.com/sonarqube/web_api/api/components), [`measures`](https://next.sonarqube.com/sonarqube/web_api/api/measures), and [`branches`](https://next.sonarqube.com/sonarqube/web_api/api/project_branches).
 - [`Issue`](https://next.sonarqube.com/sonarqube/web_api/api/issues)
-- `Analysis` - represents a Sonarqube analysis and latest activity.
+- `Analysis` - represents a SonarQube analysis and latest activity.
 
 :::
 
@@ -94,7 +94,7 @@ The following resources can be used to map data from Sonarqube, it is possible t
       ...
   ```
 
-- The `kind` key is a specifier for a Sonarqube object:
+- The `kind` key is a specifier for a SonarQube object:
 
   ```yaml showLineNumbers
     resources:
@@ -116,7 +116,7 @@ The following resources can be used to map data from Sonarqube, it is possible t
       port:
   ```
 
-- The `port`, `entity` and the `mappings` keys are used to map the Sonarqube object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
+- The `port`, `entity` and the `mappings` keys are used to map the SonarQube object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
 
   ```yaml showLineNumbers
   resources:
@@ -159,12 +159,12 @@ Note the value of the `blueprint` key - if you want to use a hardcoded string, y
 
 ### Ingest data into Port
 
-To ingest Sonarqube objects using the [integration configuration](#configuration-structure), you can follow the steps below:
+To ingest SonarQube objects using the [integration configuration](#configuration-structure), you can follow the steps below:
 
 1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using Snyk.
+2. Select a blueprint you want to ingest using SonarQube.
 3. Choose the **Ingest Data** option from the menu.
-4. Select Sonarqube under the Code quality & security providers category.
+4. Select SonarQube under the Code quality & security providers category.
 5. Modify the [configuration](#configuration-structure) according to your needs.
 6. Click `Resync`.
 
