@@ -106,16 +106,16 @@ docker run \
   ghcr.io/port-labs/port-self-hosted-github-app
 ```
 
-| Env variable         | Description                                                                                     |
-| -------------------- | ----------------------------------------------------------------------------------------------- |
-| `APP_ID`             | Application ID, you can find it in the edit GitHub App page                                     |
-| `WEBHOOK_SECRET`     | The same string that was used to register the application in the previous step                  |
-| `GHE_HOST`           | Your organization's self-hosted GitHub hostname                                                 |
-| `PORT`               | The port that the GitHub App will listen to                                                     |
-| `PORT_URL`           | Port's API Base URL                                                                             |
-| `PORT_CLIENT_ID`     | Port client id for interacting with the API                                                     |
-| `PORT_CLIENT_SECRET` | Port client secret for interacting with the API                                                 |
-| `PRIVATE_KEY`        | A base64 encoded private key. You can paste the file content here https://www.base64encode.org/ |
+| Env variable         | Description                                                                         |
+| -------------------- | ----------------------------------------------------------------------------------- |
+| `APP_ID`             | Application ID, you can find it in the edit GitHub App page                         |
+| `WEBHOOK_SECRET`     | The same string that was used to register the application in the previous step      |
+| `GHE_HOST`           | Your organization's self-hosted GitHub hostname                                     |
+| `PORT`               | The port that the GitHub App will listen to                                         |
+| `PORT_URL`           | Port's API Base URL                                                                 |
+| `PORT_CLIENT_ID`     | Port client id for interacting with the API                                         |
+| `PORT_CLIENT_SECRET` | Port client secret for interacting with the API                                     |
+| `PRIVATE_KEY`        | A base64 encoded private key. You can use a tool like https://www.base64encode.org/ |
 
 ## Health check route
 
