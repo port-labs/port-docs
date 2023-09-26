@@ -37,6 +37,7 @@ In organizations that have a self-hosted GitHub installation there is no access 
 
 - **GitHub App name:** port.io
 - **Homepage URL:** https://getport.io
+- **Setup URL:** https://app.getport.io
 - **Webhook URL:** HTTP Server URL, if you don't yet know the value of this step, leave it blank until you deploy the GitHub backend
 - **Webhook secret:** Webhook secret (Any string you would like)
 - **Repository Permissions:**
