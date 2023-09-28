@@ -59,10 +59,11 @@ This widget allows you to display any markdown content you wish in formatted for
 
 #### Markdown widget properties
 
-| Field   | Type     | Description           | Default | Required |
-| ------- | -------- | --------------------- | ------- | -------- |
-| `Title` | `String` | Markdown widget title | `null`  | `true`   |
-| `Icon`  | `String` | Markdown widget Icon  | `null`  | `false`  |
+| Field      | Type     | Description           | Default | Required |
+| ---------- | -------- | --------------------- | ------- | -------- |
+| `Title`    | `String` | Markdown widget title | `null`  | `true`   |
+| `Icon`     | `String` | Markdown widget Icon  | `null`  | `false`  |
+| `markdown` | `String` | Markdown content      | `null`  | `false`  |
 
 ### Iframe visualization
 
