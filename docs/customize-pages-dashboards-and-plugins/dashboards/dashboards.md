@@ -1,28 +1,8 @@
-# Dashboards
+# Dashboard widgets
 
-Port supports multiple visualizations, allowing you to display data from your software catalog in a visual and graphic manner, making it easier to create custom dashboard and make sense of large datasets.
+Port supports various visualizations in the form of widgets, allowing you to display data from your software catalog using graphic elements, making it easier to make sense of large datasets.
 
-Continue reading to learn more about our visualization types:
-
-## Creating visualizations
-
-- On the top right of the page click on `Add Visualization` button;
-- Select the desired visualization:
-
-![Dropdown](../../../static/img/software-catalog/widgets/AddPieChartVisualization.png)
-
-- Fill out the form and click save.
-
-![Dropdown](../../../static/img/software-catalog/widgets/AddPieChartForm.png)
-
-## Editing visualizations
-
-- On the top right of the pie chart widget click on the three dots icon;
-- Select your desired action (edit/delete).
-
-![Dropdown](../../../static/img/software-catalog/widgets/EditOrDeleteWidget.png)
-
-## Visualization types
+## Widget types
 
 ### Pie chart
 
@@ -40,28 +20,6 @@ You can create a pie chart illustrating data from entities in your software cata
 | `Blueprint`             | `String` | The chosen blueprint from which related entities data is visualized                                                          | `null`  | `true`   |
 | `Breakdown by property` | `String` | Group your chart by a specific property                                                                                      | `null`  | `true`   |
 | `Filters`               | `Array`  | Filters to include or exclude specific data based on Port's [Search Rules](../../search-and-query/search-and-query.md#rules) | []      | `false`  |
-
-### Iframe visualization
-
-You can create an iframe widget to display an embedded url in the dashboard. The iframe widget is useful to display external dashboards or other external content. It also appends to the iframe URL query params the entity identifier and the blueprint identifier so the embedded page can use it for various purposes.
-
-The entity identifier will be concatenated under the `entity` query param and the blueprint identifier will be concatenated under the `blueprint` query param. For example: `https://some-iframe-url.com?entity=entity_identifier&blueprint=blueprint_identifier`.
-
-![Pie Chart](../../../static/img/software-catalog/widgets/iframeWidget.png)
-
-#### Widget properties
-
-| Field               | Type           | Description                                                                                                                                               | Default | Required |
-| ------------------- | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | -------- |
-| `Title`             | `String`       | Iframe widget title                                                                                                                                       | `null`  | `true`   |
-| `Icon`              | `String`       | Iframe widget Icon                                                                                                                                        | `null`  | `false`  |
-| `Description`       | `String`       | Iframe widget description                                                                                                                                 | `null`  | `false`  |
-| `URL`               | `String`       | Iframe widget url                                                                                                                                         | `null`  | `false`  |
-| `URL type`          | `String`       | `public` or `protect`                                                                                                                                     | `null`  | `false`  |
-| `Authorization Url` | `URL String`   | If the `URL type` is `protected` this will be required. Read more about it [here](../widgets/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
-| `clientId`          | `String`       | If the `URL type` is `protected` this will be required. Read more about it [here](../widgets/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
-| `Scopes`            | `String Array` | If the `URL type` is `protected` this will be required. Read more about it [here](../widgets/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
-| `Token URL`         | `URL String`   | If the `URL type` is `protected` this will be required. Read more about it [here](../widgets/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
 
 ### Number chart
 
@@ -93,9 +51,44 @@ When performing calculations of average time intervals, such as by hour, day, we
 For example, if the dataset includes information spanning across 2 hours and 20 minutes, but the selected average timeframe is `hour`, then the summed value will be divided by 3 hours.
 :::
 
+### Markdown
+
+This widget allows you to display any markdown content you wish in formatted form:
+
+<img src='/img/software-catalog/widgets/markdownWidget.png' width='500rem' />
+
+#### Markdown widget properties
+
+| Field   | Type     | Description           | Default | Required |
+| ------- | -------- | --------------------- | ------- | -------- |
+| `Title` | `String` | Markdown widget title | `null`  | `true`   |
+| `Icon`  | `String` | Markdown widget Icon  | `null`  | `false`  |
+
+### Iframe visualization
+
+You can create an iframe widget to display an embedded url in the dashboard. The iframe widget is useful to display external dashboards or other external content. It also appends to the iframe URL query params the entity identifier and the blueprint identifier so the embedded page can use it for various purposes.
+
+The entity identifier will be concatenated under the `entity` query param and the blueprint identifier will be concatenated under the `blueprint` query param. For example: `https://some-iframe-url.com?entity=entity_identifier&blueprint=blueprint_identifier`.
+
+![Pie Chart](../../../static/img/software-catalog/widgets/iframeWidget.png)
+
+#### Widget properties
+
+| Field               | Type           | Description                                                                                                                                            | Default | Required |
+| ------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- | -------- |
+| `Title`             | `String`       | Iframe widget title                                                                                                                                    | `null`  | `true`   |
+| `Icon`              | `String`       | Iframe widget Icon                                                                                                                                     | `null`  | `false`  |
+| `Description`       | `String`       | Iframe widget description                                                                                                                              | `null`  | `false`  |
+| `URL`               | `String`       | Iframe widget url                                                                                                                                      | `null`  | `false`  |
+| `URL type`          | `String`       | `public` or `protect`                                                                                                                                  | `null`  | `false`  |
+| `Authorization Url` | `URL String`   | If the `URL type` is `protected` this will be required. Read more about it [here](../tabs/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
+| `clientId`          | `String`       | If the `URL type` is `protected` this will be required. Read more about it [here](../tabs/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
+| `Scopes`            | `String Array` | If the `URL type` is `protected` this will be required. Read more about it [here](../tabs/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
+| `Token URL`         | `URL String`   | If the `URL type` is `protected` this will be required. Read more about it [here](../tabs/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
+
 ## Chart filters
 
-The chart filters allow to include or exclude specific data from the visualization. The filters are based on Port's [Search Rules](../../search-and-query/search-and-query.md#rules)
+The chart filters allow to include or exclude specific data from the visualization. The filters are based on Port's [Search Rules](../../search-and-query/search-and-query.md#rules).
 
 ### Filter example: only deployment entities from the last week
 
