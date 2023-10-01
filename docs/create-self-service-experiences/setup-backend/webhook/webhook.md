@@ -1,5 +1,7 @@
 # Webhook Self-Service Actions
 
+## Overview
+
 Port can trigger webhooks based on a customer provided `URL` Both for `Action` and `Changelog` events.
 
 ![Port Kafka Architecture](../../../../static/img/self-service-actions/portWebhookArchitecture.jpg)
@@ -39,6 +41,22 @@ An example flow would be:
 3. An AWS Lambda function is triggered by this new action message;
 4. The Lambda function deploys a new version of the service;
 5. When the Lambda is done, it reports back to Port about the new Microservice `Deployment`.
+
+## Configuration
+
+When creating the action, the `Backend` step includes multiple configurations that you can customize:
+
+### HTTP request type
+
+By default, a `POST` request will be sent to the specified endpoint URL. You can change the request to any of the supported types:
+
+![httpRequestType](/img/self-service-actions/setup-backend/httpRequestType.png)
+
+### Sync vs. async execution
+
+By default, the action will be executed **synchronously**, meaning that your backend will need to explicitly send Port its result via the API.
+
+Alternatively, you can set the execution type to **asynchronous**, which will cause the action to automatically report its result back to Port via the returned HTTP status code and payload.
 
 ## Next steps
 
