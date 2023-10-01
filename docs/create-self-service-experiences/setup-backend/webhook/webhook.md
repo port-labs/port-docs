@@ -54,9 +54,9 @@ By default, a `POST` request will be sent to the specified endpoint URL. You can
 
 ### Sync vs. async execution
 
-By default, the action will be executed **synchronously**, meaning that your backend will need to explicitly send Port its result via the API.
+By default, the action will be executed **asynchronous**, meaning that your backend will need to explicitly send Port its result via the API.
 
-Alternatively, you can set the execution type to **asynchronous**, which will cause the action to automatically report its result back to Port via the returned HTTP status code and payload.
+Alternatively, you can set the execution type to **synchronous**, which will cause the action to automatically report its result back to Port via the returned HTTP status code and payload.
 
 ## Next steps
 
