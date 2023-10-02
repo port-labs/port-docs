@@ -1,10 +1,10 @@
 ---
-sidebar_position: 3
+sidebar_position: 2
 ---
 
 # Entity page
 
-Each [entity](../../build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md#entity-json-structure) has a specific page that contains 3 tabs (by default):
+Each [entity](../../build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md#entity-json-structure) has a dedicated page that contains 3 tabs (by default):
 
 - [`Overview`](#overview)
 - [`Runs`](#runs)
@@ -57,3 +57,37 @@ If the entity's blueprint has any [actions](/create-self-service-experiences/) c
 ## Audit log
 
 This tab displays all actions (including CRUD) that caused any change to the entity's configuration. For each change, useful metadata will be shown such as the initiator, diff before and after the change, relevant blueprint, and more.
+
+## Dashboard widgets
+
+[Visualization widgets](/customize-pages-dashboards-and-plugins/dashboards/) can be added to an entity page to display data using graphic elements.
+
+You can add widgets to an entity page by using the `Add visualization` menu:
+
+![addVisualizations](../../../static/img/software-catalog/pages/addVisualizations.png)
+
+Let's create a simple number chart that displays the number of `System` entities related to this `Domain`:
+
+<img src='/img/software-catalog/pages/demoNumberChart.png' width='350rem' />
+
+After the first widget is created, a new tab called `dashboard` will be created in the entity page displaying the new widget:
+
+![entityAfterVisualization](../../../static/img/software-catalog/pages/entityAfterVisualization.png)
+
+Each additional visualization will be added as a widget to the `dashboard` tab.
+
+## Additional tabs
+
+Additional tabs can be added to an entity page by utilizing specific properties in the entity's blueprint.  
+To see which tabs are supported and how to add them, see the [tabs page](/customize-pages-dashboards-and-plugins/tabs/).
+
+## Entity page operations
+
+Each page type has a set of operations that can be performed from the UI.  
+The table below summarizes the available operations for an entity page:
+
+| Page type   | Save a view | Save view as<br /> a new page | Edit page | Delete page | Lock page |
+| ----------- | :---------: | :---------------------------: | :-------: | :---------: | :-------: |
+| Entity page |     ✅      |              ❌               |    ❌     |     ❌      |    ✅     |
+
+For more information about each operation, see [page operations](/customize-pages-dashboards-and-plugins/page/catalog-page#page-operations).
