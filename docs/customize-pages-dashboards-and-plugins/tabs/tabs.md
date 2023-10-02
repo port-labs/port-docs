@@ -11,6 +11,5 @@ These views allow you to customize your developer portal by creating dashboards 
 For more information about available widgets, click on any of the links below:
 
 - [Markdown](/customize-pages-dashboards-and-plugins/tabs/markdown)
-- [Embedded-url (iframe)](./embedded-url)
-- [OpenAPI](./open-api)
-- [AsyncAPI](./async-api)
+- [Embedded-url (iframe)](/customize-pages-dashboards-and-plugins/tabs/embedded-url)
+- [Swagger](/customize-pages-dashboards-and-plugins/tabs/swagger)
