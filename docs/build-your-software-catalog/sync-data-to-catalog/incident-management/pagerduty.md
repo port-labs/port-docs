@@ -24,8 +24,8 @@ Install the integration via Helm by running this command:
 
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-pagerduty-integration port-labs/port-ocean \
-	--set port.clientId="QTflIhzjb4S5EVFxIz86mYLR18RClgTO"  \
-	--set port.clientSecret="knmdHSdLGHtOOTr19OnpYuNXMrZ9wt9Dcgovu18PabLgqkL0SVL8zhtLLwPlRxb3"  \
+	--set port.clientId="PORT_CLIENT_ID"  \
+	--set port.clientSecret="PORT_CLIENT_SECRET"  \
 	--set port.baseUrl="https://api.getport.io"  \
 	--set initializePortResources=true  \
   --set scheduledResyncInterval=120 \
