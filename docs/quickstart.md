@@ -9,31 +9,31 @@ import TabItem from "@theme/TabItem"
 
 # ⏱️ Quickstart
 
-This guide takes 5-7 minutes to complete, and aims to demonstrate the potential of a developer portal for you and your developers.
+This guide takes less than 10 minutes to complete, and aims to demonstrate the potential of a developer portal for you and your developers.
 
 :::tip note
 This guide will include Port concepts and components that are a bit more advanced. Do not worry about understanding everything now, use this guide to get a sense of what you can achieve with Port and gain some hands-on experience with it 😎
 :::
 
-### Agenda
+### The goal of this guide
 
 In this guide we will model a repository from your Git provider in Port, using your real data.
 
-Sign up
-Create “Repository” blueprint (provide code, use API) with simple scorecard (e.g. must have team name).
-Install Git provider app
-Add mapping to data sources (we will provide it, just copy-paste).
-Add simple dashboard
-What can your devs now achieve using what we created?
+After completing it, you will get a sense of how Port can be used to:
+
+- Get observability into your entire infrastructure by ingesting data from anywhere.
+- See the status of your services and who is responsible for them.
+- Set and track standards and KPIs for your services.
+- Customize your portal to suit the needs of your developers.
 
 ### 1. Sign-up to Port
 
-❇️ Head over to [app.getport.io](https://app.getport.io) and create an account.
+Head over to [app.getport.io](https://app.getport.io) and create an account.
 
 ### 2. Create your first blueprint!
 
 [Blueprints](/build-your-software-catalog/define-your-data-model/setup-blueprint/) are one of Port's basic building blocks, used to represent any data source in your infrastructure.  
-We will now create a `Repository` blueprint to model a Git repository on Github/Bitbucket.
+We will now create a `Service` blueprint to model a Git repository on Github/Bitbucket.
 
 We will use Port's API to create the blueprint:
 
@@ -49,20 +49,21 @@ We will use Port's API to create the blueprint:
 
 ![apiAuthorize](/img/quickstart/apiAuthorize.png)
 
----
+Now that we can use the API, let's go ahead and create our `Service` blueprint:
 
-Now that we can use the API, let's go ahead and create our `Repository` blueprint:
-
-1. Select the `POST` request for blueprints, then click on `Try it out`:
+1. Select the [POST request for blueprints](https://api.getport.io/static/index.html#/Blueprints/post_v1_blueprints), then click on `Try it out`:
 
 ![apiBlueprintPost](/img/quickstart/apiBlueprintPost.png)
 
 2. In the request body, replace the existing example with the following definition, then click `Execute`:
 
+<details>
+<summary><b>Blueprint JSON (click to expand)</b></summary>
+
 ```json showLineNumbers
 {
-  "identifier": "repository",
-  "title": "Repository",
+  "identifier": "service",
+  "title": "Service",
   "icon": "Microservice",
   "schema": {
     "properties": {
@@ -75,6 +76,10 @@ Now that we can use the API, let's go ahead and create our `Repository` blueprin
         "title": "Repository URL",
         "type": "string",
         "format": "url"
+      },
+      "language": {
+        "title": "Language",
+        "type": "string"
       }
     },
     "required": []
@@ -84,6 +89,8 @@ Now that we can use the API, let's go ahead and create our `Repository` blueprin
   "relations": {}
 }
 ```
+
+</details>
 
 Congratulations, you have successfully modeled a basic Git repository 🥳  
 You can now see the blueprint in the `Builder` tab of your Port app:
@@ -121,22 +128,186 @@ Once installed, you should now see new data sources in your `Builder` waiting to
 
 2. Finally, we need to map the desired information from our Git provider's API to the properties of the blueprint we created in Port. For this guide, we will provide you with mapping so you do not need to do anything yourself.
 
-In the `Data sources` page, click on the exporter you installed. In the `Mapping` tab paste the following snippet, then click `Save & Resync`:
+In the `Data sources` page, click on the exporter you installed. In the `Mapping` tab paste the following snippet (choose your Git provider), then click `Save & Resync`:
+
+<Tabs values={[
+{label: "Github", value: "Github"},
+{label: "BitBucket", value: "BitBucket"}
+]}>
+
+<TabItem value="Github">
+
+<details>
+<summary><b>Github blueprint mapping (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 resources:
   - kind: repository
     selector:
-      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
+      query: "true"
     port:
       entity:
         mappings:
-          identifier: ".name" # The Entity identifier will be the repository name.
-          title: ".name"
-          blueprint: '"repository"'
+          identifier: .name
+          title: .name
+          blueprint: '"service"'
           properties:
-            readme: file://README.md # fetching the README.md file that is within the root folder of the repository and ingesting its contents as a markdown property
+            readme: file://README.md
             url: .html_url
+            language: .language
 ```
 
-## Now head back to your `Catalog`,
+</details>
+</TabItem>
+
+<TabItem value="BitBucket">
+
+<details>
+<summary><b>BitBucket blueprint mapping (click to expand)</b></summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: repository
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: ".name"
+          title: ".name"
+          blueprint: '"service"'
+          properties:
+            readme: file://README.md
+            url: ".links.html.href"
+            language: ".language"
+```
+
+</details>
+</TabItem>
+</Tabs>
+
+<img src='/img/quickstart/githubRepoMapping.png' width='750rem' />
+
+---
+
+Now head back to your `Catalog`, and go to the `Services` page. We can see that Port has created an entity for us representing our repository, filled with real data: 🥳
+
+![catalogAfterRepoCreation](/img/quickstart/catalogAfterRepoCreation.png)
+
+Clicking on the service name in the table will take us to its entity page:
+
+![entityAfterIngestion](/img/quickstart/entityAfterIngestion.png)
+
+As you can see, Port has pulled the repository's name, url and language, and its readme file is displayed in a new `README` tab in the entity page.
+
+### Recap - what have achieved so far?
+
+In order to keep this guide simple, we have implemented a minimal representation of a Git repository. This is a fraction of what can be achieved with Port. By leveraging Port's different components, you can:
+
+- Map all the resources in your Git provider organization, including repositories, pull requests, workflows, workflow runs, teams, dependabot alerts and other GitHub/BitBucket objects.
+- Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
+- Trigger workflows directly from Port and report their status.
+- Create/delete objects directly from Port.
+- Control what properties your developers can see and which actions they can perform.
+
+### 4. Set standards using **scorecards**
+
+In this step we will see how to set metrics for our resources.
+
+Let's add a scorecard to the `Service` blueprint:
+
+1. Head over to the `Builder` page and double-click on the blueprint. Choose the `Scorecards` tab, then click on `New scorecard`:
+
+<img src='/img/quickstart/blueprintAddScorecard.png' width='250rem' />
+
+2. Replace the contents with the following JSON and click `Save`:
+
+<details>
+<summary><b>Scorecard JSON (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "Readme",
+  "title": "Readme",
+  "rules": [
+    {
+      "identifier": "hasReadme",
+      "title": "Has readme",
+      "level": "Bronze",
+      "query": {
+        "combinator": "and",
+        "conditions": [
+          {
+            "operator": "isNotEmpty",
+            "property": "readme"
+          }
+        ]
+      }
+    }
+  ]
+}
+```
+
+</details>
+
+What we have just done is add a "Bronze" level metric that ensures all `Services` have a readme file.  
+Going back to the entity we created in our `Catalog`, we can see that its `Scorecards` tab displays our new metric. Since our repository has a readme file, we pass with flying colors:
+
+![entityPageAfterScorecard](/img/quickstart/entityPageAfterScorecard.png)
+
+#### What more can you achieve with scorecards?
+
+- Evaluate the maturity & producton readiness of your services.
+- Enforce the standards that matter to you (e.g. ensure each service has an on-call defined).
+- Track DORA metrics.
+- Define thresholds (gold/silver/bronze) and prioritize metrics & KPIs.
+
+### 5. Customize views and dashboards
+
+Port is designed to be very flexible when it comes to data visualization and presentation.  
+Let's create a simple new view for our service (and future services):
+
+1. Head back to the `Services` page in your `Catalog`. Click on `Group by` and choose `Readme` from the dropdown:
+
+![groupByView](/img/quickstart/groupByView.png)
+
+This table is now grouped by the scorecard we created in the previous step.
+
+Say you really like this view, and want your developers to see the `Services` table in this format. Notice that the `Save this view` button is now enabled?
+
+2. Click on `Save this view`, then click on `Save as a new page`:
+
+<img src='/img/quickstart/saveAsNewPage.png' width='500rem' />
+
+Choose a name and an icon for the new page, then click on `Save page`.  
+A second `Services` page is now created in your `Catalog`. You can further customize views and create pages in any way that suits you.
+
+#### Create a dashboard
+
+Dashboards allow you to visualize data that interests you and your developers.
+Let's create a very simple number chart showing how many services we have in our environment:
+
+1. Go to the `Home` tab of your Port app.
+2. In the top-right corner, click on `Add` and choose `Number chart`.
+
+![createNumberChart](/img/quickstart/createNumberChart.png)
+
+3. Fill the form out like this, then click `Save`:
+
+<img src='/img/quickstart/numOfServices.png' width='380rem' />
+
+You should now see a simple chart with the number of services (a whopping 1!) in your Port app:
+
+<img src='/img/quickstart/numberChartServices.png' width='380rem' />
+
+Obviously this is just an example, in a real-life environment with many different resources you can visualize more complex data based on any property in any of your blueprints.
+
+### Conclusion
+
+Hopefully you now have a basic grasp of what you can do with Port, but this is just the tip of the iceberg. With Port's full suite of features, you can create a truly powerful, personalized developer portal.
+
+More guides & tutorials will be available soon, in the meantime feel free to reach out with any questions via our [community slack](https://www.getport.io/community) or [Github project](https://github.com/port-labs?view_as=public).
+
+<!-- ### What's next?
+
+Because this guide is introductory, various powerful features (e.g. [self-service actions](/create-self-service-experiences/)) of Port were not covered in it. -->
