@@ -11,20 +11,16 @@ import TabItem from "@theme/TabItem"
 
 This guide takes less than 10 minutes to complete, and aims to demonstrate the potential of a developer portal for you and your developers.
 
-:::tip note
-This guide will include Port concepts and components that are a bit more advanced. Do not worry about understanding everything now, use this guide to get a sense of what you can achieve with Port and gain some hands-on experience with it 😎
-:::
-
 ### The goal of this guide
 
 In this guide we will model a repository from your Git provider in Port, using your real data.
 
-After completing it, you will get a sense of how Port can be used to:
+After completing it, you will get a sense of how your organization's daily routine could look like:
 
-- Get observability into your entire infrastructure by ingesting data from anywhere.
-- See the status of your services and who is responsible for them.
-- Set and track standards and KPIs for your services.
-- Customize your portal to suit the needs of your developers.
+- Developers will be able to see all the services in the organization and their relevant metadata.
+- Developers will be able to follow the organization's standards for production readiness.
+- R&D managers will be able to get a bird's eye view of the organization's production readiness.
+- Platform engineers will be able to customize Port to curate the developer's and R&D manager's experience.
 
 ### 1. Sign-up to Port
 
@@ -97,7 +93,7 @@ You can now see the blueprint in the `Builder` tab of your Port app:
 
 ![builderAfterBpCreate](/img/quickstart/builderAfterBpCreate.png)
 
-Now let's create an Entity based on our new blueprint and fill it with real data!
+Now let's connect our blueprint to a data source and fill it with real data!
 
 ### 3. Ingest data into your repository
 
@@ -122,11 +118,11 @@ Install [BitBucket app](https://marketplace.atlassian.com/apps/1229886/port-conn
 
 </Tabs>
 
-Once installed, you should now see new data sources in your `Builder` waiting to be used, for example:
+Once installed, you should now see new data sources in your `Builder` tab waiting to be used, for example:
 
 ![dataSourcesGithub](/img/quickstart/dataSourcesGithub.png)
 
-2. Finally, we need to map the desired information from our Git provider's API to the properties of the blueprint we created in Port. For this guide, we will provide you with mapping so you do not need to do anything yourself.
+2. Finally, we need to map the desired information from our Git provider's API to the properties of the blueprint we created in Port. For this guide, we will provide you with mapping so you do not need to do anything yourself. If you want to dive further into this, see [Port's Git integrations](/build-your-software-catalog/sync-data-to-catalog/git/).
 
 In the `Data sources` page, click on the exporter you installed. In the `Mapping` tab paste the following snippet (choose your Git provider), then click `Save & Resync`:
 
@@ -200,16 +196,6 @@ Clicking on the service name in the table will take us to its entity page:
 
 As you can see, Port has pulled the repository's name, url and language, and its readme file is displayed in a new `README` tab in the entity page.
 
-### Recap - what have achieved so far?
-
-In order to keep this guide simple, we have implemented a minimal representation of a Git repository. This is a fraction of what can be achieved with Port. By leveraging Port's different components, you can:
-
-- Map all the resources in your Git provider organization, including repositories, pull requests, workflows, workflow runs, teams, dependabot alerts and other GitHub/BitBucket objects.
-- Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
-- Trigger workflows directly from Port and report their status.
-- Create/delete objects directly from Port.
-- Control what properties your developers can see and which actions they can perform.
-
 ### 4. Set standards using **scorecards**
 
 In this step we will see how to set metrics for our resources.
@@ -227,8 +213,8 @@ Let's add a scorecard to the `Service` blueprint:
 
 ```json showLineNumbers
 {
-  "identifier": "Readme",
-  "title": "Readme",
+  "identifier": "ProductionReadiness",
+  "title": "Production Readiness",
   "rules": [
     {
       "identifier": "hasReadme",
@@ -279,7 +265,7 @@ Say you really like this view, and want your developers to see the `Services` ta
 
 <img src='/img/quickstart/saveAsNewPage.png' width='500rem' />
 
-Choose a name and an icon for the new page, then click on `Save page`.  
+Name the new page "Service Readiness", choose and icon, and click on `Save page`.  
 A second `Services` page is now created in your `Catalog`. You can further customize views and create pages in any way that suits you.
 
 #### Create a dashboard
@@ -296,9 +282,9 @@ Let's create a very simple number chart showing how many services we have in our
 
 <img src='/img/quickstart/numOfServices.png' width='380rem' />
 
-You should now see a simple chart with the number of services (a whopping 1!) in your Port app:
+You should now see a simple chart with the number of services (a whopping 1!) in the `Home` tab of your Port app:
 
-<img src='/img/quickstart/numberChartServices.png' width='380rem' />
+<img src='/img/quickstart/numberChartServices.png' width='300rem' />
 
 Obviously this is just an example, in a real-life environment with many different resources you can visualize more complex data based on any property in any of your blueprints.
 
