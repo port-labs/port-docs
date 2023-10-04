@@ -15,7 +15,7 @@ sidebar_label: 👋 Port Overview
 
 ## Get started with Port
 
-If you want to jump right in and try out Port for yourself, our [quickstart guide](/quickstart) takes less than 10 minutes to complete and covers many of Port's key pillars.
+If you want to jump right in and try out Port for yourself, our [quickstart guide](/quickstart) takes 7 minutes to complete and covers many of Port's key pillars.
 
 ## What is Port
 

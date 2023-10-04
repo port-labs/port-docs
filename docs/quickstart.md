@@ -9,7 +9,7 @@ import TabItem from "@theme/TabItem"
 
 # ⏱️ Quickstart
 
-This guide takes less than 10 minutes to complete, and aims to demonstrate the potential of a developer portal for you and your developers.
+This guide takes 7 minutes to complete, and aims to demonstrate the potential of a developer portal for you and your developers.
 
 ### The goal of this guide
 
@@ -253,7 +253,7 @@ Going back to the entity we created in our `Catalog`, we can see that its `Score
 Port is designed to be very flexible when it comes to data visualization and presentation.  
 Let's create a simple new view for our service (and future services):
 
-1. Head back to the `Services` page in your `Catalog`. Click on `Group by` and choose `Readme` from the dropdown:
+1. Head back to the `Services` page in your `Catalog`. Click on `Group by` and choose `Production Readiness` from the dropdown:
 
 ![groupByView](/img/quickstart/groupByView.png)
 
@@ -265,7 +265,7 @@ Say you really like this view, and want your developers to see the `Services` ta
 
 <img src='/img/quickstart/saveAsNewPage.png' width='500rem' />
 
-Name the new page "Service Readiness", choose and icon, and click on `Save page`.  
+Choose a name and icon, and click on `Save page`.  
 A second `Services` page is now created in your `Catalog`. You can further customize views and create pages in any way that suits you.
 
 #### Create a dashboard
