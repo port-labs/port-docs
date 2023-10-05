@@ -17,6 +17,12 @@ An `Issue` is a group of incidents that describe the underlying problem of your 
 
 Install the integration via Helm by running this command:
 
+:::note
+If you are using new relic's EU region, add the following flag to the command:
+
+`--set integration.config.newRelicGraphqlURL="https://api.eu.newrelic.com/graphql"`
+:::
+
 ```bash showLineNumbers
 # The following script will install an Ocean integration at your K8s cluster using helm
 # initializePortResources: When set to true the integration will create default blueprints + JQ Mappings
@@ -34,7 +40,7 @@ helm upgrade --install my-newrelic-integration port-labs/port-ocean \
 	--set integration.type="newrelic"  \
 	--set integration.eventListener.type="POLLING"  \
 	--set integration.secrets.newRelicAPIKey="<NR_API_KEY>"  \
-  --set-string integration.secrets.newRelicAccountID=<NR_ACCOUNT_ID>
+	--set-string integration.secrets.newRelicAccountID=<NR_ACCOUNT_ID>
 ```
 
 ### Event listener
