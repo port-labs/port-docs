@@ -7,7 +7,7 @@ title: Scaffold a new service
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Self-service actions
+# Scaffold a new service
 
 This guide takes 7 minutes to complete, and aims to demonstrate the power of self-service actions in Port.
 
