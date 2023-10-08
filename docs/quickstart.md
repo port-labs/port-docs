@@ -264,6 +264,7 @@ Say you really like this view, and want your developers to see the `Services` ta
 2. Click on `Save this view`, then click on `Save as a new page`:
 
 <img src='/img/quickstart/saveAsNewPage.png' width='500rem' />
+<br/><br/>
 
 Choose a name and icon, and click on `Save page`.  
 A second `Services` page is now created in your `Catalog`. You can further customize views and create pages in any way that suits you.
@@ -292,7 +293,7 @@ Obviously this is just an example, in a real-life environment with many differen
 
 Hopefully you now have a basic grasp of what you can do with Port, but this is just the tip of the iceberg. With Port's full suite of features, you can create a truly powerful, personalized developer portal.
 
-#### What's next?
+### What's next?
 
 - [Self-service actions guide](/guides-and-tutorials/self-service-actions)(~7 minutes)  
   Increase your developers' productivity and independence by creating powerful actions for them to use.

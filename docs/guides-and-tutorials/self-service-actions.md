@@ -1,6 +1,6 @@
 ---
 sidebar_position: 3
-title: Self-service actions
+title: Scaffold a new service
 #sidebar_label: ⏱️ Quickstart
 ---
 
@@ -11,7 +11,7 @@ import TabItem from "@theme/TabItem"
 
 This guide takes 7 minutes to complete, and aims to demonstrate the power of self-service actions in Port.
 
-:::tip note
+:::tip Prerequisites
 This guide assumes you have a Port account and a basic knowledge of working with Port. If you haven't done so, go ahead and complete the [quickstart](/quickstart).
 :::
 
@@ -19,11 +19,11 @@ This guide assumes you have a Port account and a basic knowledge of working with
 
 In this guide we create an action that initializes a new Github repository. In reality, such an action can be used by developers to scaffold new services.
 
-After completing it, you will understand how self-service actions can:
+After completing it, you will get a sense of how your organization's daily routine could look like:
 
-- Enable developers to create, terminate and perform day-2 operations on any resource in your catalog.
-- Minimize JIRA tickets and increase developer productivity.
-- Tailor the developers' experience to the organization's unique standards and policies.
+- Developers will be able to scaffold new services easily.
+- R&D managers will be able to get an overview of new services - how many were created and by who.
+- Platform engineers will be able to control permissions to ensure only the relevant people can create new services.
 
 ### Create the action's frontend
 
@@ -48,8 +48,10 @@ After completing it, you will understand how self-service actions can:
 - When using `Text` inputs, you can set constraints and limitations to enforce certain patterns.
   :::
 
-5. Now we'll define the backend of the action. Port supports multiple invocation types, for this tutorial we will use a `Github workflow`.  
-   Fill the form out like this (**replace the `Organization` and `Repository` values with yours**) and click `Next`:
+5. Now we'll define the backend of the action. Port supports multiple invocation types, for this tutorial we will use a `Github workflow`.
+   - Replace the `Organization` and `Repository` values with your values (this is where the workflow will reside).
+   - Name the workflow `portCreateRepo.yaml`.
+   - Fill out the rest of the form like this, then click `Next`:
 
 <img src='/img/guides/backendGithub.png' width='75%' />
 
@@ -71,6 +73,8 @@ Now we want to write the logic that our action will trigger.
 
 3. Now let's create the workflow file that contains our logic. Under ".github/workflows", create a new file named `portCreateRepo.yaml` and use the following snippet as its content:
 
+Change `<YOUR-ORG-NAME>` to the name of the organization in which you want to create the new repository.
+
 <details>
 <summary><b>Github workflow (click to expand)</b></summary>
 
@@ -82,6 +86,10 @@ on:
   workflow_dispatch:
     inputs:
       name:
+        type: string
+      port_payload:
+        required: true
+        description: Port's payload, including details for who triggered the action and general context
         type: string
 jobs:
   create-repository:
@@ -95,12 +103,12 @@ jobs:
           org: "<YOUR-ORG-NAME>" # change this to the org name in which you want to create the new repo
           access-token: ${{ secrets.ORG_ADMIN_TOKEN }} # the secret we created in the previous step
           private-repo: true
-          initalize-repo: true
+          initialize-repo: true
 ```
 
 </details>
 
-All done 🚀 the action is ready to be used.
+All done! The action is ready to be used 🚀
 
 ### Execute the action
 
@@ -117,6 +125,11 @@ After creating an action, it will appear under the `Self-service` tab of your Po
 3. This page provides details about the action run. As you can see, the backend returned `Success` and the repo was successfully created:
 
 <img src='/img/guides/runStatus.png' width='80%' />
+
+### Possible daily routine integrations
+
+- Send a Slack notification to relevant people with the result of the action.
+- Update a graph in Port showing the number of created services or some property (e.g. CPU usage).
 
 ### Conclusion
 
