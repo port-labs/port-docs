@@ -46,7 +46,8 @@ After completing it, you will get a sense of how your organization's daily routi
 - We set the `Required` field to `true` to ensure that a name is always provided when using this action.
 - We set the type to `Text` since this is a name, but note all of the different types of input that Port allows.
 - When using `Text` inputs, you can set constraints and limitations to enforce certain patterns.
-  :::
+
+:::
 
 5. Now we'll define the backend of the action. Port supports multiple invocation types, for this tutorial we will use a `Github workflow`.
    - Replace the `Organization` and `Repository` values with your values (this is where the workflow will reside).
