@@ -118,7 +118,7 @@ Install [BitBucket app](https://marketplace.atlassian.com/apps/1229886/port-conn
 
 </Tabs>
 
-Once installed, you should now see new data sources in your `Builder` tab waiting to be used, for example:
+Once installed, you should now see new data sources in your `Builder` tab waiting to be used (may take a few seconds to appear):
 
 ![dataSourcesGithub](/img/quickstart/dataSourcesGithub.png)
 
@@ -292,8 +292,7 @@ Obviously this is just an example, in a real-life environment with many differen
 
 Hopefully you now have a basic grasp of what you can do with Port, but this is just the tip of the iceberg. With Port's full suite of features, you can create a truly powerful, personalized developer portal.
 
-More guides & tutorials will be available soon, in the meantime feel free to reach out with any questions via our [community slack](https://www.getport.io/community) or [Github project](https://github.com/port-labs?view_as=public).
+#### What's next?
 
-<!-- ### What's next?
-
-Because this guide is introductory, various powerful features (e.g. [self-service actions](/create-self-service-experiences/)) of Port were not covered in it. -->
+- [Self-service actions guide](/guides-and-tutorials/self-service-actions)(~7 minutes)  
+  Increase your developers' productivity and independence by creating powerful actions for them to use.
