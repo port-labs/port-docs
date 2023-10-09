@@ -106,13 +106,13 @@ Now let's connect our blueprint to a data source and fill it with real data!
 
 <TabItem value="Github">
 
-Install [Github app](https://github.com/apps/getport-io).
+Install [Github app](https://github.com/apps/getport-io) in the entire organization.
 
 </TabItem>
 
 <TabItem value="BitBucket">
 
-Install [BitBucket app](https://marketplace.atlassian.com/apps/1229886/port-connector-for-bitbucket?hosting=cloud&tab=overview).
+Install [BitBucket app](https://marketplace.atlassian.com/apps/1229886/port-connector-for-bitbucket?hosting=cloud&tab=overview) in the entire organization.
 
 </TabItem>
 
@@ -186,11 +186,11 @@ resources:
 
 ---
 
-Now head back to your `Catalog`, and go to the `Services` page. We can see that Port has created an entity for us representing our repository, filled with real data: 🥳
+Now head back to your `Catalog`, and go to the `Services` page. We can see that Port has created entities for us representing our repositories, filled with real data: 🥳
 
 ![catalogAfterRepoCreation](/img/quickstart/catalogAfterRepoCreation.png)
 
-Clicking on the service name in the table will take us to its entity page:
+Clicking on a service name in the table will take us to its entity page:
 
 ![entityAfterIngestion](/img/quickstart/entityAfterIngestion.png)
 
@@ -271,23 +271,23 @@ A second `Services` page is now created in your `Catalog`. You can further custo
 
 #### Create a dashboard
 
-Dashboards allow you to visualize data that interests you and your developers.
-Let's create a very simple number chart showing how many services we have in our environment:
+Dashboards allow you to visualize data that interests you and your developers.  
+Let's create a simple pie chart showing the language distribution in our services:
 
 1. Go to the `Home` tab of your Port app.
-2. In the top-right corner, click on `Add` and choose `Number chart`.
+2. In the top-right corner, click on `Add` and choose `Pie chart`.
 
-![createNumberChart](/img/quickstart/createNumberChart.png)
+![createPieChart](/img/quickstart/createPieChart.png)
 
 3. Fill the form out like this, then click `Save`:
 
-<img src='/img/quickstart/numOfServices.png' width='380rem' />
+<img src='/img/quickstart/pieChartLanguagesForm.png' width='380rem' />
 
-You should now see a simple chart with the number of services (a whopping 1!) in the `Home` tab of your Port app:
+You should now see a pie chart with the number of services and their language distribution in the `Home` tab of your Port app:
 
-<img src='/img/quickstart/numberChartServices.png' width='300rem' />
+<img src='/img/quickstart/pieChartLanguages.png' width='300rem' />
 
-Obviously this is just an example, in a real-life environment with many different resources you can visualize more complex data based on any property in any of your blueprints.
+This is just an example, in a real-life environment with many different resources you can visualize more complex data based on any property in any of your blueprints.
 
 ### Conclusion
 

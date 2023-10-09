@@ -12,12 +12,15 @@ import TabItem from "@theme/TabItem"
 This guide takes 7 minutes to complete, and aims to demonstrate the power of self-service actions in Port.
 
 :::tip Prerequisites
-This guide assumes you have a Port account and a basic knowledge of working with Port. If you haven't done so, go ahead and complete the [quickstart](/quickstart).
-:::
+
+- This guide assumes you have a Port account and a basic knowledge of working with Port. If you haven't done so, go ahead and complete the [quickstart](/quickstart).
+
+- You will need a Github repository in which you can place a workflow that we will use in this guide. If you don't have one, we recommend [creating a new repository](https://docs.github.com/en/get-started/quickstart/create-a-repo) named `Port-actions`.
+  :::
 
 ### The goal of this guide
 
-In this guide we create an action that initializes a new Github repository. In reality, such an action can be used by developers to scaffold new services.
+In this guide we will create an action that initializes a new Github repository. In reality, such an action can be used by developers to scaffold new services.
 
 After completing it, you will get a sense of how your organization's daily routine could look like:
 
@@ -50,7 +53,7 @@ After completing it, you will get a sense of how your organization's daily routi
 :::
 
 5. Now we'll define the backend of the action. Port supports multiple invocation types, for this tutorial we will use a `Github workflow`.
-   - Replace the `Organization` and `Repository` values with your values (this is where the workflow will reside).
+   - Replace the `Organization` and `Repository` values with your values (this is where the workflow will reside and run).
    - Name the workflow `portCreateRepo.yaml`.
    - Fill out the rest of the form like this, then click `Next`:
 
@@ -64,11 +67,11 @@ The action's frontend is now ready 🥳
 
 Now we want to write the logic that our action will trigger.
 
-1. Go to your [Github tokens page](https://github.com/settings/tokens), create a personal access token with `Repo` and `Org:admin` scope, and copy it:
+1. Go to your [Github tokens page](https://github.com/settings/tokens), create a personal access token with `repo` and `admin:org` scope, and copy it:
 
 <img src='/img/guides/personalAccessToken.png' width='80%' />
 
-2. In the repository where your workflow will reside, create a new secret and name it `ORG_ADMIN_TOKEN`. For its value, paste the token you created in the previous step.
+2. In the repository where your workflow will reside, create a new secret under `Settings->Secrets and variables->Actions` and name it `ORG_ADMIN_TOKEN`. For its value, paste the token you created in the previous step.
 
 <img src='/img/guides/repositorySecret.png' width='80%' />
 
@@ -129,8 +132,8 @@ After creating an action, it will appear under the `Self-service` tab of your Po
 
 ### Possible daily routine integrations
 
-- Send a Slack notification to relevant people with the result of the action.
-- Update a graph in Port showing the number of created services or some property (e.g. CPU usage).
+- Send a slack message in the R&D channel to let everyone know that a new service was created.
+- Send a weekly/monthly report for managers showing all the new services created in this timeframe and their owners.
 
 ### Conclusion
 
