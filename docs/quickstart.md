@@ -299,5 +299,5 @@ Hopefully you now have a basic grasp of what you can do with Port, but this is j
 
 ### What's next?
 
-- [Self-service actions guide](/guides-and-tutorials/self-service-actions)(~7 minutes)  
+- [Self-service actions guide](/guides-and-tutorials/scaffold-a-new-service)(~7 minutes)  
   Increase your developers' productivity and independence by creating powerful actions for them to use.

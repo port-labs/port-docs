@@ -12,4 +12,4 @@ First, have a go at our [quickstart](/quickstart) if you haven't already. It cov
 All guides take less than 10 minutes to complete ✅
 
 - [Port quickstart](/quickstart)
-- [Self-service actions](/guides-and-tutorials/self-service-actions)
+- [Self-service actions](/guides-and-tutorials/scaffold-a-new-service)
