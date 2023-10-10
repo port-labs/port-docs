@@ -16,7 +16,8 @@ This guide takes 7 minutes to complete, and aims to demonstrate the power of sel
 - This guide assumes you have a Port account and a basic knowledge of working with Port. If you haven't done so, go ahead and complete the [quickstart](/quickstart).
 
 - You will need a Github repository in which you can place a workflow that we will use in this guide. If you don't have one, we recommend [creating a new repository](https://docs.github.com/en/get-started/quickstart/create-a-repo) named `Port-actions`.
-  :::
+
+:::
 
 ### The goal of this guide
 
@@ -67,11 +68,23 @@ The action's frontend is now ready 🥳
 
 Now we want to write the logic that our action will trigger.
 
-1. Go to your [Github tokens page](https://github.com/settings/tokens), create a personal access token with `repo` and `admin:org` scope, and copy it:
+:::info Important
+If the Github organization which will house your workflow is not the same as the one you'll create the new repository in, install Port's [Github app](https://github.com/apps/getport-io) in the other organization as well.
+:::
 
-<img src='/img/guides/personalAccessToken.png' width='80%' />
+1. First, let's create the necessary token and secrets:
 
-2. In the repository where your workflow will reside, create a new secret under `Settings->Secrets and variables->Actions` and name it `ORG_ADMIN_TOKEN`. For its value, paste the token you created in the previous step.
+- Go to your [Github tokens page](https://github.com/settings/tokens), create a personal access token with `repo` and `admin:org` scope, and copy it (this token is needed to create a repo from our workflow).
+
+  <img src='/img/guides/personalAccessToken.png' width='80%' />
+  
+  - Go to your [Port application](https://app.getport.io/), hover over the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
+
+2. In the repository where your workflow will reside, create 3 new secrets under `Settings->Secrets and variables->Actions`:
+
+- `ORG_ADMIN_TOKEN` - the personal access token you created in the previous step.
+- `PORT_CLIENT_ID` - the client ID you copied from your Port app.
+- `PORT_CLIENT_SECRET` - the client secret you copied from your Port app.
 
 <img src='/img/guides/repositorySecret.png' width='80%' />
 
@@ -100,14 +113,25 @@ jobs:
     runs-on: ubuntu-latest
     name: Create repository
     steps:
-      - name: create repo
+      - name: Create service
         uses: octobay/create-repository-action@v1
         with:
           name: ${{ inputs.name }}
           org: "<YOUR-ORG-NAME>" # change this to the org name in which you want to create the new repo
-          access-token: ${{ secrets.ORG_ADMIN_TOKEN }} # the secret we created in the previous step
+          access-token: ${{ secrets.ORG_ADMIN_TOKEN }}
           private-repo: true
           initialize-repo: true
+  reflect-action-result: # Send action progress/result back to Port
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create a log message
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          operation: PATCH_RUN
+          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          logMessage: New service "${{ inputs.name }}" created successfully 🚀
 ```
 
 </details>
@@ -128,7 +152,9 @@ After creating an action, it will appear under the `Self-service` tab of your Po
 
 3. This page provides details about the action run. As you can see, the backend returned `Success` and the repo was successfully created:
 
-<img src='/img/guides/runStatus.png' width='80%' />
+<img src='/img/guides/runStatus.png' width='90%' />
+
+Note the `Log stream` at the bottom, this can be used to report progress, results and errors.
 
 ### Possible daily routine integrations
 
@@ -137,7 +163,8 @@ After creating an action, it will appear under the `Self-service` tab of your Po
 
 ### Conclusion
 
-The self-service actions are one of Port's main pillars, giving developers easy and fine-tuned access to operations they need to perform in their daily routines.  
-Self-service actions are flexible, allowing use of various backend invocation types to support your organization's methodologies.
+Creating a service is not just a periodic task developers undertake, but a vital step that can occur on a monthly basis. However, it's crucial to recognize that this is only a fragment of the broader experience that we're striving to create for developers.  
+Our ultimate goal is to facilitate a seamless transition from ideation to production. In doing so, we aim to eliminate the need for developers to navigate through a plethora of tools, reducing friction and accelerating the time-to-production.  
+In essence, we're not just building a tool, but sculpting an ecosystem that empowers developers to bring new features to life with utmost efficiency.
 
 More guides & tutorials will be available soon, in the meantime feel free to reach out with any questions via our [community slack](https://www.getport.io/community) or [Github project](https://github.com/port-labs?view_as=public).

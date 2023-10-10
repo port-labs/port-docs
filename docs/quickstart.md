@@ -118,6 +118,10 @@ Install [BitBucket app](https://marketplace.atlassian.com/apps/1229886/port-conn
 
 </Tabs>
 
+:::info NOTE
+Make sure to install the app in the entire organization (and not in a single repository). This way Port will automatically create entities for all repositories.
+:::
+
 Once installed, you should now see new data sources in your `Builder` tab waiting to be used (may take a few seconds to appear):
 
 ![dataSourcesGithub](/img/quickstart/dataSourcesGithub.png)
