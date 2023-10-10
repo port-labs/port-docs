@@ -77,7 +77,7 @@ If the Github organization which will house your workflow is not the same as the
 - Go to your [Github tokens page](https://github.com/settings/tokens), create a personal access token with `repo` and `admin:org` scope, and copy it (this token is needed to create a repo from our workflow).
 
   <img src='/img/guides/personalAccessToken.png' width='80%' />
-  
+
   - Go to your [Port application](https://app.getport.io/), hover over the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
 
 2. In the repository where your workflow will reside, create 3 new secrets under `Settings->Secrets and variables->Actions`:
@@ -154,7 +154,9 @@ After creating an action, it will appear under the `Self-service` tab of your Po
 
 <img src='/img/guides/runStatus.png' width='90%' />
 
-Note the `Log stream` at the bottom, this can be used to report progress, results and errors.
+💡 Note the `Log stream` at the bottom, this can be used to report progress, results and errors
+
+Congrats! You can now create services easily from Port 💪🏽
 
 ### Possible daily routine integrations
 
