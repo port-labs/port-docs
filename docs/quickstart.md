@@ -106,19 +106,23 @@ Now let's connect our blueprint to a data source and fill it with real data!
 
 <TabItem value="Github">
 
-Install [Github app](https://github.com/apps/getport-io).
+Install [Github app](https://github.com/apps/getport-io) in the entire organization.
 
 </TabItem>
 
 <TabItem value="BitBucket">
 
-Install [BitBucket app](https://marketplace.atlassian.com/apps/1229886/port-connector-for-bitbucket?hosting=cloud&tab=overview).
+Install [BitBucket app](https://marketplace.atlassian.com/apps/1229886/port-connector-for-bitbucket?hosting=cloud&tab=overview) in the entire organization.
 
 </TabItem>
 
 </Tabs>
 
-Once installed, you should now see new data sources in your `Builder` tab waiting to be used, for example:
+:::info NOTE
+Make sure to install the app in the entire organization (and not in a single repository). This way Port will automatically create entities for all repositories.
+:::
+
+Once installed, you should now see new data sources in your `Builder` tab waiting to be used (may take a few seconds to appear):
 
 ![dataSourcesGithub](/img/quickstart/dataSourcesGithub.png)
 
@@ -186,11 +190,11 @@ resources:
 
 ---
 
-Now head back to your `Catalog`, and go to the `Services` page. We can see that Port has created an entity for us representing our repository, filled with real data: 🥳
+Now head back to your `Catalog`, and go to the `Services` page. We can see that Port has created entities for us representing our repositories, filled with real data: 🥳
 
 ![catalogAfterRepoCreation](/img/quickstart/catalogAfterRepoCreation.png)
 
-Clicking on the service name in the table will take us to its entity page:
+Clicking on a service name in the table will take us to its entity page:
 
 ![entityAfterIngestion](/img/quickstart/entityAfterIngestion.png)
 
@@ -264,36 +268,36 @@ Say you really like this view, and want your developers to see the `Services` ta
 2. Click on `Save this view`, then click on `Save as a new page`:
 
 <img src='/img/quickstart/saveAsNewPage.png' width='500rem' />
+<br/><br/>
 
 Choose a name and icon, and click on `Save page`.  
 A second `Services` page is now created in your `Catalog`. You can further customize views and create pages in any way that suits you.
 
 #### Create a dashboard
 
-Dashboards allow you to visualize data that interests you and your developers.
-Let's create a very simple number chart showing how many services we have in our environment:
+Dashboards allow you to visualize data that interests you and your developers.  
+Let's create a simple pie chart showing the language distribution in our services:
 
 1. Go to the `Home` tab of your Port app.
-2. In the top-right corner, click on `Add` and choose `Number chart`.
+2. In the top-right corner, click on `Add` and choose `Pie chart`.
 
-![createNumberChart](/img/quickstart/createNumberChart.png)
+![createPieChart](/img/quickstart/createPieChart.png)
 
 3. Fill the form out like this, then click `Save`:
 
-<img src='/img/quickstart/numOfServices.png' width='380rem' />
+<img src='/img/quickstart/pieChartLanguagesForm.png' width='380rem' />
 
-You should now see a simple chart with the number of services (a whopping 1!) in the `Home` tab of your Port app:
+You should now see a pie chart with the number of services and their language distribution in the `Home` tab of your Port app:
 
-<img src='/img/quickstart/numberChartServices.png' width='300rem' />
+<img src='/img/quickstart/pieChartLanguages.png' width='300rem' />
 
-Obviously this is just an example, in a real-life environment with many different resources you can visualize more complex data based on any property in any of your blueprints.
+This is just an example, in a real-life environment with many different resources you can visualize more complex data based on any property in any of your blueprints.
 
 ### Conclusion
 
 Hopefully you now have a basic grasp of what you can do with Port, but this is just the tip of the iceberg. With Port's full suite of features, you can create a truly powerful, personalized developer portal.
 
-More guides & tutorials will be available soon, in the meantime feel free to reach out with any questions via our [community slack](https://www.getport.io/community) or [Github project](https://github.com/port-labs?view_as=public).
+### What's next?
 
-<!-- ### What's next?
-
-Because this guide is introductory, various powerful features (e.g. [self-service actions](/create-self-service-experiences/)) of Port were not covered in it. -->
+- [Self-service actions guide](/guides-and-tutorials/scaffold-a-new-service)(~7 minutes)  
+  Increase your developers' productivity and independence by creating powerful actions for them to use.
