@@ -10,7 +10,7 @@ Port allows setting dynamic permissions for executing and/or approving execution
 Examples of useful applications of dynamic permissions:
 
 - Ensure that action executions requested by a team member can only be approved by his/her direct manager.
-- An action that terminates a service can only be executed if that service has no unresolved incindents.
+- Perform validations/manipulations on inputs that depend on data from related entities.
 
 ## Configuring permissions
 
@@ -50,13 +50,13 @@ Under each of these two keys, you can add a `policy` key, which allows you to us
         "queries": {
           "query_name": {
             "rules": [
-                # Your rule/s logic here (see link to queries page above)
+                # Your rule/s logic here
               ],
               "combinator": "and"
           }
         },
         "conditions": [
-          # A jq query
+          # A jq query resulting in a boolean value
         ]
       }
     },
@@ -74,7 +74,10 @@ Under each of these two keys, you can add a `policy` key, which allows you to us
               ],
               "combinator": "and"
           }
-        }
+        },
+        "conditions": [
+          # A jq query resulting in an array of strings
+        ]
       }
     }
   }
@@ -86,7 +89,14 @@ Under each of these two keys, you can add a `policy` key, which allows you to us
 ### Guidelines
 
 - You can define any number of queries you wish for execution/approve policies.
--
+- For `execution` policies, the condition must return a `boolean` value (determining whether the requester is allowed to execute the action or not).
+- For `approve` policies, the condition must return an array of strings (the users who can approve the execution of the action).
+- In both `rules` and `conditions` values, you can access the following metadata:
+  - `blueprint` - the blueprint tied to the action.
+  - `action` - the action object.
+  - `userInputs` - the values provided to the action inputs by the user who executed the action.
+  - `user` - the user who executed the action.
+  - `entity` - the entity created/modified/deleted by this action.
 
 ## Complete example
 
