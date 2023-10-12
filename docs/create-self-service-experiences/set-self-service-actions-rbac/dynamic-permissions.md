@@ -100,12 +100,10 @@ Under each of these two keys, you can add a `policy` key, which allows you to us
 
 ## Complete example
 
-Here is an example of a permissions JSON belonging to a simple `service` blueprint.
-Note the `scaffold_new_microservice` action (line 84):
+Here is an example of a permissions JSON belonging to a simple `service` blueprint.  
+In this example the `scaffold_new_microservice` action can be approved only by the team leader of the user that asked to execute the action.
 
-- The `approve` key under it contains a `policy` key which indicates that some additional logic is defined here that determines who can approve an exeution of this action.
-
-The `scaffold_new_microservice` action can be approved only by the team leader of the user that asked to execute the action.
+Note the `scaffold_new_microservice` action (**line 49**). The `approve` key under it contains a `policy` key which indicates that some additional logic is defined here that determines who can approve an exeution of this action.
 
 <details>
 <summary>Service permissions JSON (click to expand)</summary>
