@@ -42,6 +42,10 @@ resources:
   - kind: cost
     selector:
       query: "true"
+      window: "month"
+      aggregate: "namespace"
+      step: "window"
+      resolution: "1m"
     port:
       entity:
         mappings:
@@ -111,9 +115,18 @@ The following resources can be used to map data from OpenCost, it is possible to
       # highlight-start
       selector:
         query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
+        window: "month"
+        aggregate: "namespace"
+        step: "window"
+        resolution: "1m"
       # highlight-end
       port:
   ```
+
+  - **window** - Duration of time over which to query. Accepts: words like `today`, `week`, `month`, `yesterday`, `lastweek`, `lastmonth`; durations like `30m`, `12h`, `7d`; RFC3339 date pairs like `2021-01-02T15:04:05Z,2021-02-02T15:04:05Z`; Unix timestamps like `1578002645,1580681045`.
+  - **aggregate** - Field by which to aggregate the results. Accepts: `cluster`, `node`, `namespace`, `controllerKind`, `controller`, `service`, `pod`, `container`, `label:name`, and `annotation:name`. Also accepts comma-separated lists for multi-aggregation, like `namespace,label:app`.
+  - **step** - Duration of a single allocation set. If unspecified, this defaults to the window, so that you receive exactly one set for the entire window. If specified, such as `30m`, `2h`, `1d` etc, it works chronologically backward, querying in durations of step until the full window is covered. Default is `window`.
+  - **resolution** - Duration to use as resolution in Prometheus queries. Smaller values (i.e. higher resolutions) will provide better accuracy, but worse performance (i.e. slower query time, higher memory use). Larger values (i.e. lower resolutions) will perform better, but at the expense of lower accuracy for short-running workloads. Default is `1m`.
 
 - The `port`, `entity` and the `mappings` keys are used to map the OpenCost object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
 
@@ -289,6 +302,10 @@ resources:
   - kind: cost
     selector:
       query: "true"
+      window: "month"
+      aggregate: "namespace"
+      step: "window"
+      resolution: "1m"
     port:
       entity:
         mappings:
