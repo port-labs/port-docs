@@ -101,7 +101,7 @@ name: Port action - create repository
 on:
   workflow_dispatch:
     inputs:
-      name:
+      service_name:
         type: string
       port_payload:
         required: true
@@ -115,7 +115,7 @@ jobs:
       - name: Create service
         uses: octobay/create-repository-action@v1
         with:
-          name: ${{ inputs.name }}
+          name: ${{ inputs.service_name }}
           org: "<YOUR-ORG-NAME>" # change this to the org name in which you want to create the new repo
           access-token: ${{ secrets.ORG_ADMIN_TOKEN }}
           private-repo: true
@@ -130,7 +130,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
           runId: ${{fromJson(inputs.port_payload).context.runId}}
-          logMessage: New service "${{ inputs.name }}" created successfully 🚀
+          logMessage: New service "${{ inputs.service_name }}" created successfully 🚀
 ```
 
 </details>
