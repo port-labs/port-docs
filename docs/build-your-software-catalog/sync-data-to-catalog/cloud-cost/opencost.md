@@ -3,7 +3,7 @@ import TabItem from "@theme/TabItem"
 
 # OpenCost
 
-Our OpenCost integration allows you to import `cost` from your OpenCost account into Port, according to your mapping and definition.
+Our OpenCost integration allows you to import `cost` from your OpenCost instance into Port, according to your mapping and definition.
 
 ## Common use cases
 
@@ -17,7 +17,6 @@ Install the integration via Helm by running this command:
 # The following script will install an Ocean integration in your K8s cluster using helm
 # integration.identifier: Change the identifier to describe your integration
 # integration.config.opencostHost: The URL of you OpenCost server. Used to make API calls
-# integration.config.window: Duration of time over which to query. Accepts words like today, week, month, yesterday, lastweek, lastmonth. Durations like 30m, 12h, 7d are also accepted by the API. If none is provided, it defaults to today
 
 helm upgrade --install my-opencost-integration port-labs/port-ocean \
 	--set port.clientId="CLIENT_ID"  \
@@ -26,7 +25,7 @@ helm upgrade --install my-opencost-integration port-labs/port-ocean \
 	--set integration.identifier="my-opencost-integration"  \
 	--set integration.type="opencost"  \
 	--set integration.eventListener.type="POLLING"  \
-	--set integration.config.opencostHost="https://example.com"
+	--set integration.config.opencostHost="https://myOpenCostInstance:9003"
 ```
 
 ## Ingesting OpenCost objects
