@@ -8,7 +8,7 @@ Additional tabs can be added to enhance the content of your developer portal wit
 
 These views allow you to customize your developer portal by creating dashboards that provide insights for you and your developers.
 
-For more information about available widgets, click on any of the links below:
+For more information about available tabs, click on any of the links below:
 
 - [Markdown](/customize-pages-dashboards-and-plugins/tabs/markdown)
 - [Embedded-url (iframe)](/customize-pages-dashboards-and-plugins/tabs/embedded-url)
