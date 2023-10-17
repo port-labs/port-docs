@@ -42,7 +42,7 @@ resources:
     selector:
       query: "true"
       window: "month"
-      aggregate: "namespace"
+      aggregate: "pod"
       step: "window"
       resolution: "1m"
     port:
@@ -115,7 +115,7 @@ The following resources can be used to map data from OpenCost, it is possible to
       selector:
         query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
         window: "month"
-        aggregate: "namespace"
+        aggregate: "pod"
         step: "window"
         resolution: "1m"
       # highlight-end
@@ -302,7 +302,7 @@ resources:
     selector:
       query: "true"
       window: "month"
-      aggregate: "namespace"
+      aggregate: "pod"
       step: "window"
       resolution: "1m"
     port:
