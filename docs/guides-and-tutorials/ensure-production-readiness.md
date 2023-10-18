@@ -64,13 +64,13 @@ If you already have a Pagerduty account that you can play around with, feel free
 
 Now let's bring our Pagerduty data into Port. Port's Pagerduty integration automatically fetches `Services` and `Incidents`, and creates blueprints and entities for them.
 
-1. Install Port's Pagerduty integration using Helm, by running the command below in your terminal.
-
 :::info Note
 For this installation you will need Helm and a running K8s cluster (see [prerequisites](/guides-and-tutorials/ensure-production-readiness)).
 :::
 
-- Replace `CLIENT_ID` and `CLIENT_SECRET` with your credentials (get them [here](/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)).
+1. Install Port's Pagerduty integration using Helm, by running the command below in your terminal.
+
+- Replace `CLIENT_ID` and `CLIENT_SECRET` with your credentials (get them [here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)).
 
 - Replace `token` with your Pagerduty token. To obtain it:
   - Hover over your avatar in the top right corner of your Pagerduty app, then click `My profile`.
@@ -86,15 +86,15 @@ For this installation you will need Helm and a running K8s cluster (see [prerequ
 ```bash showLineNumbers
 helm repo add port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-pagerduty-integration port-labs/port-ocean \
-    --set port.clientId="CLIENT_ID" \ # REPLACE
-    --set port.clientSecret="CLIENT_SECRET"  \ # REPLACE
+    --set port.clientId="CLIENT_ID" \     # REPLACE VALUE
+    --set port.clientSecret="CLIENT_SECRET"  \     # REPLACE VALUE
     --set initializePortResources=true  \
     --set integration.identifier="my-pagerduty-integration"  \
     --set integration.type="pagerduty"  \
     --set integration.eventListener.type="POLLING"  \
-    --set integration.secrets.token="token"  \ # REPLACE
-    --set integration.config.appHost="https://example.com"  \
-    --set integration.config.apiUrl="https://api.pagerduty.com"  \
+    --set integration.secrets.token="token"  \     # REPLACE VALUE
+    --set integration.config.appHost="https://example.com"  \     # NO NEED TO REPLACE FOR THIS GUIDE
+    --set integration.config.apiUrl="https://api.pagerduty.com"
 ```
 
 </details>
@@ -117,7 +117,7 @@ First, we will need to create a [relation](/build-your-software-catalog/define-y
 
 <img src='/img/guides/relationCreation.png' width='40%' />
 
-Now that the blueprints are related, let's create a [mirror property](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/mirror-property/) in our service to display its on-call.
+Now that the blueprints are related, let's create a [mirror property](https://docs.getport.io/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/mirror-property/) in our service to display its on-call.
 
 1. Choose the `Service` blueprint again, and under the `PagerDutyService` relation, click on `New mirror property`.  
    Fill the form out like this, then click `Create`:
@@ -165,11 +165,12 @@ Going back to our Catalog, we can now see that our entities have their code owne
 
 ### Display each service's relevant Slack channel
 
-We will now use a [calculation property](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/calculation-property/) to build a URL to the relevant Slack channel.
+We will now use a [calculation property](https://docs.getport.io/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/calculation-property/) to build a URL to the relevant Slack channel.
 
 1. Go to your [Builder](https://app.getport.io/dev-portal/data-model) yet again, choose the `Service` blueprint, and click `New property`.
 
-2. Fill out the form like this, then click `Create`:
+2. Fill out the form like this, then click `Create`:  
+   The `JQ calculation` field for copy-paste convenience: `"https://slack.com/" + .identifier`
 
 <img src='/img/guides/createSlackClaculationProp.png' width='50%' />
 
@@ -285,6 +286,7 @@ Now go to your Catalog and click on any of your services. Click on the `Scorecar
 
 ### Conclusion
 
-Production readiness is something that needs to be monitored and handled constantly. With Port, standards are easy to set-up, prioritize and track. Using Port's API, you can also create/get/modify your scorecards from anywhere, allowing seamless integration with other platforms and services in your environment.
+Production readiness is something that needs to be monitored and handled constantly. In a microservice-heavy environment, things like codeowners and on-call management is critical.  
+With Port, standards are easy to set-up, prioritize and track. Using Port's API, you can also create/get/modify your scorecards from anywhere, allowing seamless integration with other platforms and services in your environment.
 
 More guides & tutorials will be available soon, in the meantime feel free to reach out with any questions via our [community slack](https://www.getport.io/community) or [Github project](https://github.com/port-labs?view_as=public).
