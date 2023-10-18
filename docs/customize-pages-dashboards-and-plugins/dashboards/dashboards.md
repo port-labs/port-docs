@@ -125,12 +125,12 @@ To achieve this desired state, we can go into one of the `Service`'s profile pag
 
 ### Dynamic filters
 
-You can use user data when filtering a widget, using the following functions:
+You can use properties of the logged-in user when filtering a widget, by using the following functions:
 
-- getUserTeams
-- getUserEmail
-- getUserFullName
-- blueprint
+- getUserTeams - a list of the teams the user belongs to.
+- getUserEmail - the user's email.
+- getUserFullName - the user's full name.
+- blueprint - the blueprint identifier of the current page.
 
 #### Usage examples
 
@@ -149,7 +149,7 @@ You can use user data when filtering a widget, using the following functions:
   {
     "property": "emails",
     "operator": "contains",
-    "value": ["{{getUserEmail()}}"]
+    "value": "{{getUserEmail()}}"
   }
 ]
 ```
