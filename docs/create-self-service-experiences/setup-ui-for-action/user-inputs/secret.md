@@ -131,7 +131,7 @@ def webhook():
     encrypted_property_value = req.get('payload').get('properties').get('secret-property')
 
     # decrypt the property
-    decrypted_property_value = fernet_instance.decrypt(encrypted_property_value)
+    decrypted_property_value = fernet_instance.decrypt(str.encode(encrypted_property_value))
 
     return decrypted_property_value # this is the original value the user sent
 

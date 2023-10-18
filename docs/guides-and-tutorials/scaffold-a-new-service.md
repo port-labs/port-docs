@@ -1,7 +1,6 @@
 ---
-sidebar_position: 3
+sidebar_position: 1
 title: Scaffold a new service
-#sidebar_label: ⏱️ Quickstart
 ---
 
 import Tabs from "@theme/Tabs"
@@ -37,9 +36,9 @@ After completing it, you will get a sense of how your organization's daily routi
 
 2. Each action in Port is directly tied to a blueprint. Since we are creating a repository, the `Service` blueprint we created in the [quickstart guide](/quickstart) is an obvious candidate. Choose it from the dropdown.
 
-3. Fill in the basic details of the action like this:
+3. Fill in the basic details of the action like this, then click `Next`:
 
-![actionBasicDetails](/img/guides/actionBasicDetails.png)
+<img src='/img/guides/actionBasicDetails.png' width='60%' />
 
 4. The next step is to define the action's inputs. When someone uses this action, all we want them to enter is the new repository's name. Click on `New input`, fill in the form like this, then click on `Create`:
 

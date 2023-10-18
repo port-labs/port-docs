@@ -2,6 +2,11 @@
 
 Port supports various visualizations in the form of widgets, allowing you to display data from your software catalog using graphic elements, making it easier to make sense of large datasets.
 
+Dashboards are available in:
+
+1. The [Home page](https://app.getport.io/organization/home) of your Port app - the home page itself is a dashboard, allowing you to add and customize any of the widgets described on this page.
+2. Every [entity page](/customize-pages-dashboards-and-plugins/page/entity-page#dashboard-widgets) can have a `dashboard` tab with its own widgets.
+
 ## Widget types
 
 ### Pie chart
@@ -71,7 +76,14 @@ You can create an iframe widget to display an embedded url in the dashboard. The
 
 The entity identifier will be concatenated under the `entity` query param and the blueprint identifier will be concatenated under the `blueprint` query param. For example: `https://some-iframe-url.com?entity=entity_identifier&blueprint=blueprint_identifier`.
 
-![Pie Chart](../../../static/img/software-catalog/widgets/iframeWidget.png)
+![iFrame](../../../static/img/software-catalog/widgets/iframeWidget.png)
+
+### Table
+
+This widget allows you to create tables displaying all entities based on a selected blueprint.  
+Tables can be [searched, filtered and customized](/customize-pages-dashboards-and-plugins/page/catalog-page#customization) as you wish, using the corresponding buttons in the widget.
+
+<img src='/img/software-catalog/widgets/tableExample.png' width='400rem' />
 
 #### Widget properties
 
