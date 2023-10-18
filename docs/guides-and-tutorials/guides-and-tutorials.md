@@ -13,3 +13,4 @@ All guides take less than 10 minutes to complete ✅
 
 - [Port quickstart](/quickstart)
 - [Scaffold a new service](/guides-and-tutorials/scaffold-a-new-service)
+- [Ensure production readiness](/guides-and-tutorials/ensure-production-readiness)
