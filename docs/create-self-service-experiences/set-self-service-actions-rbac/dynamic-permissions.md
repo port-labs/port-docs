@@ -94,9 +94,14 @@ Under each of these two keys, you can add a `policy` key, which allows you to us
 - In both `rules` and `conditions` values, you can access the following metadata:
   - `blueprint` - the blueprint tied to the action.
   - `action` - the action object.
-  - `userInputs` - the values provided to the action inputs by the user who executed the action.
-  - `user` - the user who executed the action.
-  - `entity` - the entity created/modified/deleted by this action.
+  - `inputs` - the values provided to the action inputs by the user who executed the action.
+  - `user` - the user who executed/wants to approve the action (according to the policy type).
+  - `entity` - for day-2 actions, this will hold the entity the action was executed on.
+  - `trigger` - information about the triggered action:
+    - `at` - the date of the action execution.
+    - `user` - the user who executed the action.
+- Any query that fails to evaluate will be ignored.
+- Each query can return up to 1000 entities, so make sure you make them as precise as possible.
 
 ## Complete example
 
