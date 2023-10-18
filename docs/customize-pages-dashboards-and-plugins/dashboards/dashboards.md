@@ -78,13 +78,6 @@ The entity identifier will be concatenated under the `entity` query param and th
 
 ![iFrame](../../../static/img/software-catalog/widgets/iframeWidget.png)
 
-### Table
-
-This widget allows you to create tables displaying all entities based on a selected blueprint.  
-Tables can be [searched, filtered and customized](/customize-pages-dashboards-and-plugins/page/catalog-page#customization) as you wish, using the corresponding buttons in the widget.
-
-<img src='/img/software-catalog/widgets/tableExample.png' width='400rem' />
-
 #### Widget properties
 
 | Field               | Type           | Description                                                                                                                                            | Default | Required |
@@ -99,11 +92,20 @@ Tables can be [searched, filtered and customized](/customize-pages-dashboards-an
 | `Scopes`            | `String Array` | If the `URL type` is `protected` this will be required. Read more about it [here](../tabs/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
 | `Token URL`         | `URL String`   | If the `URL type` is `protected` this will be required. Read more about it [here](../tabs/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
 
+### Table
+
+This widget allows you to create tables displaying all entities based on a selected blueprint.  
+Tables can be [searched, filtered and customized](/customize-pages-dashboards-and-plugins/page/catalog-page#customization) as you wish, using the corresponding buttons in the widget.
+
+<img src='/img/software-catalog/widgets/tableExample.png' width='400rem' />
+
 ## Chart filters
 
-The chart filters allow to include or exclude specific data from the visualization. The filters are based on Port's [Search Rules](../../search-and-query/search-and-query.md#rules).
+[Pie charts](#pie-chart), [number charts](#number-chart) and [tables](#table) support filters, which allow you to include or exclude specific data from them. The filters are based on Port's [Search Rules](../../search-and-query/search-and-query.md#rules), and are set when creating the widget:
 
-### Filter example: only deployment entities from the last week
+<img src='/img/software-catalog/widgets/widgetFilterForm.png' width='400rem' />
+
+#### Filter example: only deployment entities from the last week
 
 Let's assume we have a [blueprint](../../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) that is called `Service` which is related to another blueprint called `Deployment`, and we want to create visualizations on top of the last week's deployments of this service.
 
@@ -117,6 +119,57 @@ To achieve this desired state, we can go into one of the `Service`'s profile pag
     "value": {
       "preset": "lastWeek"
     }
+  }
+]
+```
+
+### Dynamic filters
+
+You can use user data when filtering a widget, using the following functions:
+
+- getUserTeams
+- getUserEmail
+- getUserFullName
+- blueprint
+
+#### Usage examples
+
+```json showLineNumbers
+[
+  {
+    "property": "$team",
+    "operator": "containsAny",
+    "value": ["{{getUserTeams()}}"]
+  }
+]
+```
+
+```json showLineNumbers
+[
+  {
+    "property": "emails",
+    "operator": "contains",
+    "value": ["{{getUserEmail()}}"]
+  }
+]
+```
+
+```json showLineNumbers
+[
+  {
+    "property": "name",
+    "operator": "=",
+    "value": "{{getUserFullName()}}"
+  }
+]
+```
+
+```json showLineNumbers
+[
+  {
+    "property": "$blueprint",
+    "operator": "=",
+    "value": "{{blueprint}}"
   }
 ]
 ```
