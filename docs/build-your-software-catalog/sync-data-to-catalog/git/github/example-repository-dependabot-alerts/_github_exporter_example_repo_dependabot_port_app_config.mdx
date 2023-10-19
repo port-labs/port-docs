@@ -1,0 +1,43 @@
+<details>
+
+<summary> Port port-app-config.yml </summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: repository
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .name
+          title: .name
+          blueprint: '"repository"'
+          properties:
+            url: .html_url
+            readme: file://README.md
+  - kind: dependabot-alert
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .repo.name + "-" + (.number | tostring)
+          title: .number | tostring
+          blueprint: '"dependabotAlert"'
+          properties:
+            state: .state
+            severity: .security_advisory.severity
+            packageName: .dependency.package.name
+            packageEcosystem: .dependency.package.ecosystem
+            manifestPath: .dependency.manifest_path
+            scope: .dependency.scope
+            ghsaID: .security_advisory.ghsa_id
+            cveID: .security_advisory.cve_id
+            url: .url
+            references: "[.security_advisory.references[].url]"
+          relations:
+            repository: .repo.name
+```
+
+</details>

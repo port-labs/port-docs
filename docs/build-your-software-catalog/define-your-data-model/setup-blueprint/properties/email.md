@@ -18,7 +18,7 @@ The Email property type can be used to store any legal email address.
 
 ## API definition
 
-<Tabs groupId="api-definition" defaultValue="basic" values={[
+<Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Enum", value: "enum"},
 {label: "Array", value: "array"}
@@ -89,7 +89,7 @@ The Email property type can be used to store any legal email address.
 
 ## Terraform definition
 
-<Tabs groupId="tf-definition" defaultValue="basic" values={[
+<Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Enum", value: "enum"},
 {label: "Array", value: "array"}
@@ -169,7 +169,7 @@ resource "port_blueprint" "myBlueprint" {
 
 ## Pulumi definition
 
-<Tabs groupId="pulumi-definition" defaultValue="basic" values={[
+<Tabs groupId="pulumi-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Enum", value: "enum"},
 {label: "Array - coming soon", value: "array"}
@@ -177,7 +177,7 @@ resource "port_blueprint" "myBlueprint" {
 
 <TabItem value="basic">
 
-<Tabs groupId="pulumi-definition-email-basic" defaultValue="python" values={[
+<Tabs groupId="pulumi-definition-email-basic" queryString defaultValue="python" values={[
 {label: "Python", value: "python"},
 {label: "TypeScript", value: "typescript"},
 {label: "JavaScript", value: "javascript"},
@@ -227,7 +227,7 @@ export const blueprint = new port.Blueprint("myBlueprint", {
       myEmailProp: {
         title: "My email",
         format: "email",
-        required: true,  
+        required: true,
       },
     },
   },
@@ -248,15 +248,15 @@ const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
   // highlight-start
-    properties: {
-        string_props: {
-            myEmailProp: {
-                title: "My email",
-                format: "email",
-                required: true,
-            },
-        },
+  properties: {
+    string_props: {
+      myEmailProp: {
+        title: "My email",
+        format: "email",
+        required: true,
+      },
     },
+  },
   // highlight-end
   relations: {},
 });
@@ -286,7 +286,7 @@ func main() {
 					"myEmailProp": &port.BlueprintPropertiesStringPropsArgs{
                         Title:  pulumi.String("My email"),
                         Format: pulumi.String("email"),
-                        Required: pulumi.Bool(true),    
+                        Required: pulumi.Bool(true),
                     },
                 },
 			},
@@ -309,7 +309,7 @@ func main() {
 
 <TabItem value="enum">
 
-<Tabs groupId="pulumi-definition-email-enum" defaultValue="python" values={[
+<Tabs groupId="pulumi-definition-email-enum" queryString defaultValue="python" values={[
 {label: "Python", value: "python"},
 {label: "TypeScript", value: "typescript"},
 {label: "JavaScript", value: "javascript"},

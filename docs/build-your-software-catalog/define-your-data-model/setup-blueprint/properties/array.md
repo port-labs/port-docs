@@ -83,7 +83,7 @@ We currently support the following types of array items: `string_items`, `number
 
 ## Pulumi definition
 
-<Tabs groupId="basic" defaultValue="python" values={[
+<Tabs groupId="basic" queryString defaultValue="python" values={[
 {label: "Python", value: "python"},
 {label: "TypeScript", value: "typescript"},
 {label: "JavaScript", value: "javascript"},
@@ -219,7 +219,7 @@ Array validations support the following operators:
 Array validations follow the JSON schema model, refer to the [JSON schema docs](https://json-schema.org/understanding-json-schema/reference/array.html) to learn about all of the available validations
 :::
 
-<Tabs groupId="validation-definition" defaultValue="basic" values={[
+<Tabs groupId="validation-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Terraform", value: "tf"}
 ]}>

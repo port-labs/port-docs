@@ -1,0 +1,24 @@
+<details>
+<summary>Mapping Configuration</summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: Microsoft.Resources/resourceGroups
+    selector:
+      query: "true"
+      apiVersion: "2022-09-01" # azure resource api version to query
+    port:
+      entity:
+        mappings:
+          identifier: '.id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase | join("/")'
+          title: .name
+          blueprint: '"resourceGroup"'
+          properties:
+            location: .location
+            # the provisioning state property is returned in lower case when using the SDK and in camelCase when using the REST API
+            # therefore supporting both (for users who use the SDK)
+            provisioningState: .properties.provisioningState + .properties.provisioning_state
+            tags: .tags
+```
+
+</details>

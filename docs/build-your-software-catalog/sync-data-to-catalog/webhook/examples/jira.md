@@ -9,13 +9,18 @@ import JiraIssueConfigurationPython from "./resources/jira/\_example_jira_issue_
 
 # Jira
 
+:::tip Supported by Ocean!
+Ocean's [Jira integration](../../project-management/jira.md) is simpler to use and provides more capabilities than the webhook, we recommend using it instead.  
+Read more about Ocean [here](https://ocean.getport.io/).
+
+If you'd still prefer to use the webhook, proceed with the instructions on this page.
+:::
+
 In this example you are going to create a webhook integration between [Jira](https://www.atlassian.com/software/jira) and Port, which will ingest Jira issue entities.
 
-## Import Jira Issues
+## Port configuration
 
-### Prerequisites
-
-Create the following blueprint definition and webhook configuration:
+Create the following blueprint definition:
 
 <details>
 <summary>Jira issue blueprint</summary>
@@ -24,14 +29,25 @@ Create the following blueprint definition and webhook configuration:
 
 </details>
 
+Create the following webhook configuration [using Port UI](../../?operation=ui#configuring-webhook-endpoints)
+
 <details>
 <summary>Jira issue webhook configuration</summary>
 
-<JiraIssueConfiguration/>
+1. **Basic details** tab - fill the following details:
+   1. Title : `Jira mapper`;
+   2. Identifier : `jira_mapper`;
+   3. Description : `A webhook configuration to map Jira issues to Port`;
+   4. Icon : `Jira`;
+2. **Integration configuration** tab - fill the following JQ mapping:
+
+   <JiraIssueConfiguration/>
+
+3. Click **Save** at the bottom of the page.
 
 </details>
 
-### Create the Jira webhook
+## Create a webhook in Jira
 
 1. Log in to Jira as a user with the Administer Jira global permission;
 2. Click the gear icon at the top right corner;

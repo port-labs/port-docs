@@ -27,7 +27,7 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `H
 
 ## API definition
 
-<Tabs groupId="api-definition" defaultValue="basic" values={[
+<Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Array", value: "array"}
 ]}>
@@ -75,7 +75,7 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `H
 
 ## Terraform definition
 
-<Tabs groupId="tf-definition" defaultValue="basic" values={[
+<Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Array", value: "array"}
 ]}>
@@ -127,14 +127,14 @@ resource "port_blueprint" "myBlueprint" {
 
 ## Pulumi definition
 
-<Tabs groupId="pulumi-definition" defaultValue="basic" values={[
+<Tabs groupId="pulumi-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Enum - coming soon", value: "enum"}
 ]}>
 
 <TabItem value="basic">
 
-<Tabs groupId="pulumi-definition-yaml-basic" defaultValue="python" values={[
+<Tabs groupId="pulumi-definition-yaml-basic" queryString defaultValue="python" values={[
 {label: "Python", value: "python"},
 {label: "TypeScript", value: "typescript"},
 {label: "JavaScript", value: "javascript"},
@@ -181,12 +181,12 @@ export const blueprint = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   // highlight-start
   properties: {
-      stringProps: {
-          myYamlProp: {
-            title: "My yaml",
-            required: false,
-            format: "yaml",
-          },
+    stringProps: {
+      myYamlProp: {
+        title: "My yaml",
+        required: false,
+        format: "yaml",
+      },
     },
   },
   // highlight-end
@@ -208,11 +208,11 @@ const entity = new port.Blueprint("myBlueprint", {
   // highlight-start
   properties: {
     stringProps: {
-        myYamlProp: {
-            title: "My yaml",
-            required: false,
-            format: "yaml",
-        },
+      myYamlProp: {
+        title: "My yaml",
+        required: false,
+        format: "yaml",
+      },
     },
   },
   // highlight-end

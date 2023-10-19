@@ -41,7 +41,7 @@ In addition, `user` format distinguishes between users by their status:
 
 ## API definition
 
-<Tabs groupId="api-definition" defaultValue="basic" values={[
+<Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Array", value: "array"}
 ]}>
@@ -90,7 +90,7 @@ In addition, `user` format distinguishes between users by their status:
 
 ## Terraform definition
 
-<Tabs groupId="tf-definition" defaultValue="basic" values={[
+<Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Array", value: "array"}
 ]}>
@@ -142,14 +142,14 @@ resource "port_blueprint" "myBlueprint" {
 
 ## Pulumi definition
 
-<Tabs groupId="pulumi-definition" defaultValue="basic" values={[
+<Tabs groupId="pulumi-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Enum - coming soon", value: "enum"}
 ]}>
 
 <TabItem value="basic">
 
-<Tabs groupId="pulumi-definition-user-basic" defaultValue="python" values={[
+<Tabs groupId="pulumi-definition-user-basic" queryString defaultValue="python" values={[
 {label: "Python", value: "python"},
 {label: "TypeScript", value: "typescript"},
 {label: "JavaScript", value: "javascript"},
