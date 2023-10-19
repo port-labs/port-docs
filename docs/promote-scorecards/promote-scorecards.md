@@ -247,9 +247,14 @@ It has two rules:
 
 ## Scorecard UI indications
 
-After configuring scorecards for the blueprint, entities matching the defined rules and filters will be evaluated and their scorecards will be displayed in the specific entity page:
+After configuring scorecards for the blueprint, each entity created from it will have a `Scorecards` tab in its [entity page](/customize-pages-dashboards-and-plugins/page/entity-page), detailing the different checks and their results:
 
 ![Developer Portal Scorecards Tab](../../static/img/software-catalog/scorecard/tutorial/ScorecardsTab.png)
+
+Additionally, the [catalog page](/customize-pages-dashboards-and-plugins/page/catalog-page) of each blueprint will automatically have a column for each scorecard rule.  
+For example, this `service` blueprint has 4 rules configured, and we can see a column for each of them in the catalog:
+
+![catalogPageScorecardColumns](../../static/img/software-catalog/scorecard/catalogPageScorecardColumns.png)
 
 ## Next steps
 

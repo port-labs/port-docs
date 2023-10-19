@@ -56,6 +56,13 @@ The metadata configuration of the webhook includes all properties related to the
 
 Here is an example metadata configuration:
 
+<Tabs groupId="definition" queryString defaultValue="api" values={[
+{label: "API", value: "api"},
+{label: "Terraform", value: "tf"},
+]}>
+
+<TabItem value="api">
+
 ```json showLineNumbers
 {
   // highlight-start
@@ -74,6 +81,32 @@ Here is an example metadata configuration:
 }
 ```
 
+</TabItem>
+
+<TabItem value="tf">
+
+```hcl showLineNumbers
+  resource "port_webhook" "myWebhook" {
+    // highlight-start
+    identifier = "pullRequestMapper"
+    title = "Pull Request Mapper"
+    description = "A webhook configuration for pull-request events from GitHub"
+    icon = "Github"
+    enabled = true
+    // highlight-end
+    mappings = {
+      ...
+    }
+    security = {
+      ...
+    }
+  }
+
+```
+
+</TabItem>
+</Tabs>
+
 #### Structure table
 
 | Field         | Description           | Notes                                                                                                    |
@@ -91,6 +124,13 @@ The mapping configuration of the webhook defines how the webhook event payload i
 The mapping configuration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to extract information from the event payload into Port entity properties.
 
 Here is an example mapping configuration:
+
+<Tabs groupId="definition" queryString defaultValue="api" values={[
+{label: "API", value: "api"},
+{label: "Terraform", value: "tf"},
+]}>
+
+<TabItem value="api">
 
 ```json showLineNumbers
 {
@@ -119,6 +159,43 @@ Here is an example mapping configuration:
   }
 }
 ```
+
+</TabItem>
+
+<TabItem value="tf">
+
+```hcl showLineNumbers
+  resource "port_webhook" "myWebhook" {
+    identifier = "pullRequestMapper"
+    title = "Pull Request Mapper"
+    enabled = true
+    ...
+    // highlight-start
+    mappings = [
+      {
+        blueprint = "pullRequest"
+        filter = ".headers.\"X-GitHub-Event\" == \"pull_request\""
+        entity = {
+          identifier = ".body.pull_request.id | tostring"
+          title = ".body.pull_request.title"
+          properties = {
+            author = ".body.pull_request.user.login"
+            url = ".body.pull_request.html_url"
+          }
+        }
+      }
+    ]
+    // highlight-end
+    security = {
+      ...
+    }
+  }
+
+```
+
+</TabItem>
+
+</Tabs>
 
 #### Structure
 
@@ -247,6 +324,13 @@ The security configuration of the webhook is used to tell Port how to verify the
 
 Here is an example security configuration:
 
+<Tabs groupId="definition" queryString defaultValue="api" values={[
+{label: "API", value: "api"},
+{label: "Terraform", value: "tf"},
+]}>
+
+<TabItem value="api">
+
 ```json showLineNumbers
 {
   "identifier": "pullRequestMapper",
@@ -265,6 +349,35 @@ Here is an example security configuration:
   // highlight-end
 }
 ```
+
+</TabItem>
+
+<TabItem value="tf">
+
+```hcl showLineNumbers
+
+resource "port_webhook" "myWebhook" {
+    identifier = "pullRequestMapper"
+    ...
+    mappings = [
+      ...
+    ]
+    // highlight-start
+    security = {
+      secret = "WEBHOOK_SECRET"
+      signature_header_name = "X-Hub-Signature-256"
+      signature_algorithm = "sha256"
+      signature_prefix = "sha256="
+      request_identifier_path = ".headers.\"X-GitHub-Delivery\""
+    }
+    // highlight-end
+}
+
+```
+
+</TabItem>
+
+</Tabs>
 
 :::tip
 The security configuration is not mandatory, but it does provide an additional layer of security, making sure that Port only processes payloads that were actually sent from one of your 3rd party webhooks.
@@ -385,7 +498,8 @@ When using the `plain` algorithm, no hashing will be performed and the value of 
 ## Configuring webhook endpoints
 
 <Tabs queryString="operation">
-
+<TabItem label="Using API" value="api">
+<Tabs>
 <TabItem label="Create webhook" value="create">
 
 To create a new webhook, make an HTTP POST request to `https://api.getport.io/v1/webhooks` with your [webhook configuration](#configuration-structure) in the request body.
@@ -398,7 +512,6 @@ The API response will include the complete configuration of the webhook, includi
   - **Note:** The `https://ingest.getport.io` is constant, only the `webhookKey` will change between webhooks configurations.
 
 </TabItem>
-
 <TabItem label="Update webhook" value="update">
 
 To update an existing webhook, make an HTTP PATCH request to `https://api.getport.io/v1/webhooks/{WEBHOOK_IDENTIFIER}` with your updated [webhook configuration](#configuration-structure) in the request body.
@@ -408,13 +521,76 @@ When updating the webhook configuration, partial updates are supported, meaning 
 The API response will include the updated configuration of the webhook.
 
 </TabItem>
-
 <TabItem label="Delete webhook" value="delete">
 
 To delete an existing webhook, make an HTTP DELETE request to `https://api.getport.io/v1/webhooks/{WEBHOOK_IDENTIFIER}`.
 
 </TabItem>
+</Tabs>
+</TabItem>
+<TabItem label="Using Port UI" value="ui">
+<Tabs>
+<TabItem label="Create webhook" value="create-ui">
 
+Here's the breakdown of the steps to create a new webhook using the Port UI:
+
+1. Login to your [Port account](https://app.getport.io)
+2. From the top menu, select **Buexapilder**
+3. Choose your existing [blueprint](/docs/quickstart.md#define-a-blueprint)
+4. Click on the blueprint **expand** button
+5. Click on the `...` icon and select **Ingest data**.
+6. Scroll down to the "Custom Integrations" section.
+7. Select **Custom Integration**;
+   - Provide a **Title** for your webhook;
+   - Choose whether to use the **Identifier Autogenerate** option or specify your own identifier;
+   - Provide a description for your webhook;
+   - Select an icon from the dropdown menu to represent your webhook;
+   - Click **Next**
+8. Scroll down to the **JQ Mapping** section;
+   - This section displays the properties created when the blueprint was set up;
+   - Review the mapping and modify it if necessary;
+9. Finally, click **Create** to create the new webhook.
+
+Please note that this breakdown captures the steps involved in creating a webhook using the Port UI based on the provided narrative.
+
+</TabItem>
+<TabItem label="Update webhook" value="update-ui">
+
+Here's the breakdown of the steps to update a webhook using the Port UI:
+
+1. Login to your [Port account](https://app.getport.io)
+2. From the top menu, select **Builder**
+3. Choose your existing [blueprint](/docs/quickstart.md#define-a-blueprint)
+4. Click on the blueprint **expand** button
+5. Click on the `...` icon and select **Ingest data**
+6. Scroll down to the **Custom Integration** section
+7. Select the desired webhook that you want to modify
+8. Make the necessary changes to the webhook configuration
+9. Click **Save** to save your changes
+
+By following these steps, you'll be able to update a webhook using the Port UI based on the provided narrative.
+
+</TabItem>
+
+<TabItem label="Delete webhook" value="delete-ui">
+
+Here's the breakdown of the steps to delete a webhook using the Port UI:
+
+1. Login to your [Port account](https://app.getport.io)
+2. From the top menu, select **Builder**
+3. Choose your existing [blueprint](/docs/quickstart.md#define-a-blueprint)
+4. Click on the blueprint **expand** button
+5. Click on the `...` icon and select **Ingest data**
+6. Scroll down to the **Custom Integration** section
+7. Hover over the desired webhook that you want to delete
+8. A **Delete** icon will appear
+9. Click on the **Delete** icon to remove the webhook
+
+By following these steps, you'll be able to delete a webhook using the Port UI based on the provided narrative.
+
+</TabItem>
+</Tabs>
+</TabItem>
 </Tabs>
 
 ## Using the custom webhook

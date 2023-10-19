@@ -1,29 +1,21 @@
 ```json showLineNumbers
-{
-  "identifier": "opsGenieMapper",
-  "title": "OpsGenie mapper",
-  "description": "A webhook configuration to map OpsGenie alerts to Port",
-  "icon": "OpsGenie",
-  "mappings": [
-    {
-      "blueprint": "opsGenieAlert",
-      "entity": {
-        "identifier": ".body.alert.alertId",
-        "title": ".body.alert.tinyId + \" - \" + .body.alert.message",
-        "properties": {
-          "description": ".body.alert.description",
-          "lastChangeType": ".body.action",
-          "priority": ".body.alert.priority",
-          "sourceName": ".body.source.name",
-          "sourceType": ".body.source.type",
-          "tags": ".body.alert.tags",
-          "responders": ".body.alert.responders",
-          "teams": ".body.alert.teams"
-        }
+[
+  {
+    "blueprint": "opsGenieAlert",
+    "entity": {
+      "identifier": ".body.alert.alertId",
+      "title": ".body.alert.tinyId + \" - \" + .body.alert.message",
+      "properties": {
+        "description": ".body.alert.description",
+        "lastChangeType": ".body.action",
+        "priority": ".body.alert.priority",
+        "sourceName": ".body.source.name",
+        "sourceType": ".body.source.type",
+        "tags": ".body.alert.tags",
+        "responders": ".body.alert.responders",
+        "teams": ".body.alert.teams"
       }
     }
-  ],
-  "enabled": true,
-  "security": {}
-}
+  }
+]
 ```

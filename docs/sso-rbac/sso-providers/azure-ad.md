@@ -248,27 +248,8 @@ Port needs the following information for this process:
 
 ---
 
-## How to allow pulling AzureAD groups to Port
+## Permissions required to pull AzureAD groups to Port
 
-:::note
-This stage is **OPTIONAL** and is required only if you wish to pull all of your AzureAD groups into Port inherently.
+Port can query the group membership of users who log in through the AzureAD SSO, and add their teams as team entities inside Port. This allows the platform engineers to take advantage of existing groups from AzureAD to manage permissions and access to resources inside Port's catalog.
 
-**Benefit:** managing permissions and user access on Port.
-**Outcome:** for every user that logs in, we will automatically get their associate AzureAD groups, according to your definitions in the settings below.
-
-Important: In order to import Azure AD groups into Port, Port will require the connection app to approve the `Directory.Read.All` permission
-:::
-
-1. On the `Token configuration` tab, Click `Add groups claim`:
-
-   ![Azure app groups claim button](../../../static/img/sso/azure-ad/AzureAppGroupsClaim.png)
-
-2. On the groups claim window, check the following options: `Security Groups`, `Directory roles`, `All groups`.
-
-   :::note
-   You can also edit the groups' ID that is provided to Port. in the following example we left it as Group ID:
-
-   ![Azure app edit group claims](../../../static/img/sso/azure-ad/AzureAppEditGroupsClaim.png)
-   :::
-
-3. Click `Add`.
+**Important:** In order to import Azure AD groups into Port, Port will require the connection app to approve the `Directory.Read.All` permission
