@@ -117,7 +117,7 @@ Currently, the OpsGenie API lacks support for programmatic webhook creation. To 
 
 ### Prerequisite
 
-Prepare a webhook `URL` using this format: `<app_host>/integration/webhook`. The `app_host` parameter should match the ingress or external load balancer where the integration will be deployed. For example, if your ingress or load balancer exposes the OpsGenie Ocean integration at `https://myservice.domain.com`, your webhook `URL` should be `https://myservice.domain.com/integration/webhook`.
+Prepare a webhook `URL` using this format: `{app_host}/integration/webhook`. The `app_host` parameter should match the ingress or external load balancer where the integration will be deployed. For example, if your ingress or load balancer exposes the OpsGenie Ocean integration at `https://myservice.domain.com`, your webhook `URL` should be `https://myservice.domain.com/integration/webhook`.
 
 ### Create a webhook in OpsGenie
 
