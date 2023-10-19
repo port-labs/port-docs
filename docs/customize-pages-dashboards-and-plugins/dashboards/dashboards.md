@@ -1,28 +1,13 @@
-# Dashboards
+# Dashboard widgets
 
-Port supports multiple visualizations, allowing you to display data from your software catalog in a visual and graphic manner, making it easier to create custom dashboard and make sense of large datasets.
+Port supports various visualizations in the form of widgets, allowing you to display data from your software catalog using graphic elements, making it easier to make sense of large datasets.
 
-Continue reading to learn more about our visualization types:
+Dashboards are available in:
 
-## Creating visualizations
+1. The [Home page](https://app.getport.io/organization/home) of your Port app - the home page itself is a dashboard, allowing you to add and customize any of the widgets described on this page.
+2. Every [entity page](/customize-pages-dashboards-and-plugins/page/entity-page#dashboard-widgets) can have a `dashboard` tab with its own widgets.
 
-- On the top right of the page click on `Add Visualization` button;
-- Select the desired visualization:
-
-![Dropdown](../../../static/img/software-catalog/widgets/AddPieChartVisualization.png)
-
-- Fill out the form and click save.
-
-![Dropdown](../../../static/img/software-catalog/widgets/AddPieChartForm.png)
-
-## Editing visualizations
-
-- On the top right of the pie chart widget click on the three dots icon;
-- Select your desired action (edit/delete).
-
-![Dropdown](../../../static/img/software-catalog/widgets/EditOrDeleteWidget.png)
-
-## Visualization types
+## Widget types
 
 ### Pie chart
 
@@ -71,11 +56,56 @@ When performing calculations of average time intervals, such as by hour, day, we
 For example, if the dataset includes information spanning across 2 hours and 20 minutes, but the selected average timeframe is `hour`, then the summed value will be divided by 3 hours.
 :::
 
+### Markdown
+
+This widget allows you to display any markdown content you wish in formatted form:
+
+<img src='/img/software-catalog/widgets/markdownWidget.png' width='500rem' />
+
+#### Markdown widget properties
+
+| Field      | Type     | Description           | Default | Required |
+| ---------- | -------- | --------------------- | ------- | -------- |
+| `Title`    | `String` | Markdown widget title | `null`  | `true`   |
+| `Icon`     | `String` | Markdown widget Icon  | `null`  | `false`  |
+| `markdown` | `String` | Markdown content      | `null`  | `false`  |
+
+### Iframe visualization
+
+You can create an iframe widget to display an embedded url in the dashboard. The iframe widget is useful to display external dashboards or other external content. It also appends to the iframe URL query params the entity identifier and the blueprint identifier so the embedded page can use it for various purposes.
+
+The entity identifier will be concatenated under the `entity` query param and the blueprint identifier will be concatenated under the `blueprint` query param. For example: `https://some-iframe-url.com?entity=entity_identifier&blueprint=blueprint_identifier`.
+
+![iFrame](../../../static/img/software-catalog/widgets/iframeWidget.png)
+
+#### Widget properties
+
+| Field               | Type           | Description                                                                                                                                            | Default | Required |
+| ------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- | -------- |
+| `Title`             | `String`       | Iframe widget title                                                                                                                                    | `null`  | `true`   |
+| `Icon`              | `String`       | Iframe widget Icon                                                                                                                                     | `null`  | `false`  |
+| `Description`       | `String`       | Iframe widget description                                                                                                                              | `null`  | `false`  |
+| `URL`               | `String`       | Iframe widget url                                                                                                                                      | `null`  | `false`  |
+| `URL type`          | `String`       | `public` or `protect`                                                                                                                                  | `null`  | `false`  |
+| `Authorization Url` | `URL String`   | If the `URL type` is `protected` this will be required. Read more about it [here](../tabs/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
+| `clientId`          | `String`       | If the `URL type` is `protected` this will be required. Read more about it [here](../tabs/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
+| `Scopes`            | `String Array` | If the `URL type` is `protected` this will be required. Read more about it [here](../tabs/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
+| `Token URL`         | `URL String`   | If the `URL type` is `protected` this will be required. Read more about it [here](../tabs/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
+
+### Table
+
+This widget allows you to create tables displaying all entities based on a selected blueprint.  
+Tables can be [searched, filtered and customized](/customize-pages-dashboards-and-plugins/page/catalog-page#customization) as you wish, using the corresponding buttons in the widget.
+
+<img src='/img/software-catalog/widgets/tableExample.png' width='400rem' />
+
 ## Chart filters
 
-The chart filters allow to include or exclude specific data from the visualization. The filters are based on Port's [Search Rules](../../search-and-query/search-and-query.md#rules)
+[Pie charts](#pie-chart), [number charts](#number-chart) and [tables](#table) support filters, which allow you to include or exclude specific data from them. The filters are based on Port's [Search Rules](../../search-and-query/search-and-query.md#rules), and are set when creating the widget:
 
-### Filter example: only deployment entities from the last week
+<img src='/img/software-catalog/widgets/widgetFilterForm.png' width='400rem' />
+
+#### Filter example: only deployment entities from the last week
 
 Let's assume we have a [blueprint](../../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) that is called `Service` which is related to another blueprint called `Deployment`, and we want to create visualizations on top of the last week's deployments of this service.
 
@@ -89,6 +119,57 @@ To achieve this desired state, we can go into one of the `Service`'s profile pag
     "value": {
       "preset": "lastWeek"
     }
+  }
+]
+```
+
+### Dynamic filters
+
+You can use properties of the logged-in user when filtering a widget, by using the following functions:
+
+- getUserTeams - a list of the teams the user belongs to.
+- getUserEmail - the user's email.
+- getUserFullName - the user's full name.
+- blueprint - the blueprint identifier of the current page.
+
+#### Usage examples
+
+```json showLineNumbers
+[
+  {
+    "property": "$team",
+    "operator": "containsAny",
+    "value": ["{{getUserTeams()}}"]
+  }
+]
+```
+
+```json showLineNumbers
+[
+  {
+    "property": "emails",
+    "operator": "contains",
+    "value": "{{getUserEmail()}}"
+  }
+]
+```
+
+```json showLineNumbers
+[
+  {
+    "property": "name",
+    "operator": "=",
+    "value": "{{getUserFullName()}}"
+  }
+]
+```
+
+```json showLineNumbers
+[
+  {
+    "property": "$blueprint",
+    "operator": "=",
+    "value": "{{blueprint}}"
   }
 ]
 ```

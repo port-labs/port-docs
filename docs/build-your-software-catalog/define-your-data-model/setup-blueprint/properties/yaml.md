@@ -27,7 +27,7 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `H
 
 ## API definition
 
-<Tabs groupId="api-definition" defaultValue="basic" values={[
+<Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Array", value: "array"}
 ]}>
@@ -75,7 +75,7 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `H
 
 ## Terraform definition
 
-<Tabs groupId="tf-definition" defaultValue="basic" values={[
+<Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Array", value: "array"}
 ]}>
@@ -127,14 +127,14 @@ resource "port_blueprint" "myBlueprint" {
 
 ## Pulumi definition
 
-<Tabs groupId="pulumi-definition" defaultValue="basic" values={[
+<Tabs groupId="pulumi-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Enum - coming soon", value: "enum"}
 ]}>
 
 <TabItem value="basic">
 
-<Tabs groupId="pulumi-definition-yaml-basic" defaultValue="python" values={[
+<Tabs groupId="pulumi-definition-yaml-basic" queryString defaultValue="python" values={[
 {label: "Python", value: "python"},
 {label: "TypeScript", value: "typescript"},
 {label: "JavaScript", value: "javascript"},
@@ -147,24 +147,24 @@ resource "port_blueprint" "myBlueprint" {
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Blueprint
+from port_pulumi import Blueprint,BlueprintPropertiesArgs,BlueprintPropertyArgs
 
 blueprint = Blueprint(
     "myBlueprint",
     identifier="myBlueprint",
     title="My Blueprint",
     # highlight-start
-    properties=[
-      {
-         "type": "string",
-         "format": "yaml",
-         "identifier": "myYAMLProp",
-         "title": "My yaml",
-         "required": True
-      }
-    ],
+    properties=BlueprintPropertiesArgs(
+        string_props={
+            "myYamlProp": BlueprintPropertyArgs(
+                title="My yaml",
+                required=False,
+                format="yaml",
+            )
+        }
+    ),
     # highlight-end
-    relations=[]
+    relations={}
 )
 ```
 
@@ -180,15 +180,15 @@ export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myYAMLProp",
-      title: "My yaml",
-      type: "string",
-      format: "yaml",
-      required: true,
+  properties: {
+    stringProps: {
+      myYamlProp: {
+        title: "My yaml",
+        required: false,
+        format: "yaml",
+      },
     },
-  ],
+  },
   // highlight-end
 });
 ```
@@ -206,15 +206,15 @@ const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myYAMLProp",
-      title: "My yaml",
-      type: "string",
-      format: "yaml",
-      required: true,
+  properties: {
+    stringProps: {
+      myYamlProp: {
+        title: "My yaml",
+        required: false,
+        format: "yaml",
+      },
     },
-  ],
+  },
   // highlight-end
   relations: [],
 });
@@ -239,13 +239,11 @@ func main() {
 			Identifier: pulumi.String("myBlueprint"),
 			Title:      pulumi.String("My Blueprint"),
       // highlight-start
-			Properties: port.BlueprintPropertyArray{
-				&port.BlueprintPropertyArgs{
-					Identifier: pulumi.String("myYAMLProp"),
-					Title:      pulumi.String("My yaml"),
-					Required:   pulumi.Bool(false),
-					Type:       pulumi.String("string"),
-					Format:     pulumi.String("yaml"),
+			Properties: port.BlueprintPropertiesArgs{
+				"myYAMLProp": port.BlueprintPropertiesStringPropsArgs{
+					Title:    pulumi.String("My yaml"),
+					Required: pulumi.Bool(false),
+					Format:   pulumi.String("yaml"),
 				},
 			},
       // highlight-end

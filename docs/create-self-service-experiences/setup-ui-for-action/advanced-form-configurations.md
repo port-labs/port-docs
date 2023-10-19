@@ -9,22 +9,23 @@ Advanced user form settings allow you to create more customizable experiences fo
 
 - Filter the available options in a dropdown input.
 - Create a dependency between inputs to allow the user to select a value based on the value of another input.
-- Define dynamic default values based on the logged-in user properties(such as teams, email, role etc`) or the entity that the action is being executed on (for day-2 or delete actions only).
+- Define dynamic default values based on the logged-in user properties(such as teams, email, role) or the entity that the action is being executed on (for day-2 or delete actions only).
 
 #### building such actions can be done by leveraging 3 keys in the action's schema:
 
 <Tabs
-defaultValue="jqQuery"
+defaultValue="DependsOn"
 values={[
 { label: 'dependsOn', value: 'DependsOn', },
 { label: 'dataset', value: 'Dataset', },
 { label: 'jqQuery', value: 'jqQuery', },
 ]}>
 <TabItem value="DependsOn">
-The dependsOn property is used to create a dependency between inputs. Input dependency means that if input X depends on input Y, input X will be disabled until input Y is filled.
-In the example below, the "SDK" input is depends on the "Language" input
 
-```json
+The `dependsOn` property is used to create a dependency between inputs. If input X depends on input Y, input X will be disabled until input Y is filled.  
+In the example below, the `SDK` input depends on the `Language` input:
+
+```json showLineNumbers
 {
   "properties": {
     "language": {
@@ -41,10 +42,14 @@ In the example below, the "SDK" input is depends on the "Language" input
 
 </TabItem>
 <TabItem value="Dataset">
-The dataset property is used to filter the available options in an "entity" format input.
-The "value" key in the dataset can be a constant (String, number, etc) or a "jqQuery" object. Read more on how to use the "dataset" <a href="/search-and-query/#combinator">here</a>
 
-```json
+The `dataset` property is used to filter the displayed options in an "entity" input. It is comprised of two properties:
+
+- `Combinator` - the logical operation to apply between the rules of the dataset. [Read more](/search-and-query/#combinator).
+- `Rules` - an array of [rules](/search-and-query/#rules), only entities that pass them will be displayed in the form.
+  Note that the `value` key in the dataset can be a constant (string, number, etc) or a "jqQuery" object.
+
+```json showLineNumbers
 {
   "namespace": {
     "type": "string",
@@ -66,9 +71,11 @@ The "value" key in the dataset can be a constant (String, number, etc) or a "jqQ
 
 </TabItem>
 <TabItem value="jqQuery">
-The jqQuery property is used to create a query that can be used to extract data from the entity, the logged-in user, or the current action's form inputs. The query can also be used to perform data manipulations.
 
-```json
+The `jqQuery` property is used to extract data from the entity, the logged-in user, or the current action's form inputs. It can also be used to perform data manipulations.  
+In this example, the `jqQuery` checks the value of another property (`language`) and determines the possible values of the `SDK` property accordingly:
+
+```json showLineNumbers
 {
   "properties": {
     "language": {
@@ -85,7 +92,7 @@ The jqQuery property is used to create a query that can be used to extract data 
 }
 ```
 
-### All the properties you can access using the "jqQuery" object
+### The properties you can access using the "jqQuery" object
 
 <Tabs
 defaultValue="form"
@@ -94,8 +101,10 @@ values={[
 {label: 'entity', value: 'entity'},
 {label: 'user', value: 'user'},
 ]}>
+
 <TabItem value="form">
-The value of the input that was inserted by the user in the action form.
+
+The values of the inputs in the current action form.
 
 Usage:
 
@@ -105,7 +114,7 @@ Usage:
 }
 ```
 
-The available form object(each input is a key in the action's `userInputs` object):
+The available `form` object(each input is a key in the action's [`userInputs`](/create-self-service-experiences/setup-ui-for-action/user-inputs/) object):
 
 ```json
 {
@@ -115,9 +124,10 @@ The available form object(each input is a key in the action's `userInputs` objec
 }
 ```
 
-  </TabItem>
-  <TabItem value="entity">
-  The properties of the entity on which the action is performed. Entity data is only available in "day-2" and "delete" actions.
+</TabItem>
+<TabItem value="entity">
+
+The properties of the `entity` on which the action is performed. Entity data is only available in "day-2" and "delete" actions.
 
 Usage:
 
@@ -127,7 +137,7 @@ Usage:
 }
 ```
 
-The available entity object:
+The available `entity` object:
 
 ```json
 {
@@ -184,9 +194,10 @@ The available entity object:
 }
 ```
 
-  </TabItem>
-  <TabItem value="user">
-  The properties of the user that executed the action.
+</TabItem>
+<TabItem value="user">
+
+The properties of the user that executed the action.
 
 Usage:
 
@@ -223,8 +234,9 @@ The available logged-in user object:
 }
 ```
 
-  </TabItem>
+</TabItem>
 </Tabs>
+
 Keys that are supported with jqQuery expressions:
 
 | Key     | Description                       |
@@ -236,13 +248,24 @@ Keys that are supported with jqQuery expressions:
 </TabItem>
 </Tabs>
 
+---
+
 ## Usage examples
 
 ### Creating a dependency between two form inputs
 
-This example contains a dependency between the "language" input and the "SDK" input. The "SDK" input's available options are defined according to the selected language (see the jqQuery key).
+This example contains a dependency between the `language` input and the `SDK` input. The `SDK` input's available options are defined according to the selected language (see the `jqQuery` key).
 
-```json
+<Tabs
+defaultValue="api"
+values={[
+{label: 'API', value: 'api'},
+{label: 'Terraform', value: 'terraform'},
+]}>
+
+<TabItem value="api">
+
+```json showLineNumbers
 {
   "properties": {
     "language": {
@@ -260,13 +283,48 @@ This example contains a dependency between the "language" input and the "SDK" in
 }
 ```
 
+</TabItem>
+
+<TabItem value="terraform">
+
+```hcl showLineNumbers
+resource "port_action" myAction {
+  # ...action configuration
+  {
+    user_properties = {
+      string_props = {
+        language = {
+          enum = ["javascript", "python"]
+        }
+        SDK = {
+          enum_jq_query = "if .form.language == \"javascript\" then [\"Node 16\", \"Node 18\"] else [\"Python 3.8\"] end"
+          depends_on: ["language"]
+        }
+      }
+    }
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
 ![Cluster And Namespace Action](../../../static/img/software-catalog/blueprint/javascriptSDK.png)
 
 ### Filter the dropdown's available options based on a property
 
 This example contains a filter that will only display environment entities whose type is not `production`:
 
-```json
+<Tabs
+defaultValue="api"
+values={[
+{label: 'API', value: 'api'},
+{label: 'Terraform', value: 'terraform'},
+]}>
+
+<TabItem value="api">
+
+```json showLineNumbers
 {
   "env": {
     "type": "string",
@@ -286,15 +344,59 @@ This example contains a filter that will only display environment entities whose
 }
 ```
 
+</TabItem>
+
+<TabItem value="terraform">
+
+```hcl showLineNumbers
+resource "port_action" myAction {
+  # ...action configuration
+  {
+    user_properties = {
+      string_props = {
+        env = {
+          format : "entity",
+          blueprint : "environment"
+          dataset = {
+            combinator = "and"
+            rules = [
+              {
+                property = "type"
+                operator = "!="
+                value = {
+                  jq_query = "'production'"
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
 ![Only Production Envs](../../../static/img/software-catalog/blueprint/onlyNotProductionEnvs.png)
 
 :point_up: only the environments whose type is not `production` will appear in the dropdown. :point_up:
 
 ### Filter the dropdown's available options based on a previous input
 
-This example contains a filter that will only display the namespaces that are related to the cluster that was selected in the `Cluster` input.
+This example contains a filter that will only display the namespaces that are [related to](/search-and-query/#operators-1) the cluster that was selected in the `Cluster` input:
 
-```json
+<Tabs
+defaultValue="api"
+values={[
+{label: 'API', value: 'api'},
+{label: 'Terraform', value: 'terraform'},
+]}>
+
+<TabItem value="api">
+
+```json showLineNumbers
 {
   "Cluster": {
     "type": "string",
@@ -326,15 +428,68 @@ This example contains a filter that will only display the namespaces that are re
 }
 ```
 
+</TabItem>
+
+<TabItem value="terraform">
+
+```hcl showLineNumbers
+resource "port_action" myAction {
+  # ...action configuration
+  {
+    user_properties = {
+      string_props = {
+        cluster = {
+          format      = "entity",
+          blueprint   = "Cluster",
+          title       = "Cluster",
+          description = "The cluster to create the namespace in"
+        }
+        namespace = {
+          title : "namespace",
+          description : "The namespace to create the cluster in"
+          format     = "entity",
+          blueprint  = "namespace",
+          depends_on = ["Cluster"],
+          dataset = {
+            combinator = "and"
+            rules = [
+              {
+                blueprint = "Cluster"
+                operator  = "relatedTo"
+                value = {
+                  jq_query = ".form.Cluster.identifier"
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
 ![Cluster And Namespace Action](../../../static/img/software-catalog/blueprint/clusterNamespaceActionSmallerExample.png)
 
-:point_up: The user will be required to choose a cluster, and then the namespace input list will be populated with cluster entities related to the chosen cluster. :point_up:
+:point_up: The user will be required to choose a cluster, then the `namespace` input list will be populated with namespace entities related to the chosen cluster. :point_up:
 
 ### Filter the dropdown's available options based on properties of the user that executes the action
 
-This example contains a filter that will only display the namespaces that belong to the user's teams (notice the value key in the rules object).
+This example contains a filter that will only display the namespaces that belong to the user's teams (note the value key in the rules object):
 
-```json
+<Tabs
+defaultValue="api"
+values={[
+{label: 'API', value: 'api'},
+{label: 'Terraform', value: 'terraform'},
+]}>
+
+<TabItem value="api">
+
+```json showLineNumbers
 {
   "namespace": {
     "type": "string",
@@ -356,15 +511,59 @@ This example contains a filter that will only display the namespaces that belong
 }
 ```
 
+</TabItem>
+
+<TabItem value="terraform">
+
+```hcl showLineNumbers
+resource "port_action" myAction {
+  # ...action configuration
+  {
+    user_properties = {
+      string_props = {
+        namespace = {
+          format : "entity",
+          blueprint : "namespace"
+          dataset = {
+            combinator = "and"
+            rules = [
+              {
+                property = "$team",
+                operator = "containsAny",
+                value = {
+                  jq_query = "[.user.teams[].name]"
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
 ![Cluster And Namespace Action](../../../static/img/software-catalog/blueprint/userPropertiesModal.png)
 
-:point_up: these are the only namespaces that are associated with the logged-in user's teams. :point_up:
+:point_up: These are the only namespaces that are associated with the logged-in user's teams. :point_up:
 
 ### Filter the dropdown's available options based on the properties of the entity on which the action is performed
 
-This example contains a filter that will only display the namespaces that have similar tags to the tags of the entity on which the action is performed.
+This example contains a filter that will only display the namespaces that have similar tags to those of the entity on which the action is performed:
 
-```json
+<Tabs
+defaultValue="api"
+values={[
+{label: 'API', value: 'api'},
+{label: 'Terraform', value: 'terraform'},
+]}>
+
+<TabItem value="api">
+
+```json showLineNumbers
 {
   "namespace": {
     "type": "string",
@@ -386,11 +585,55 @@ This example contains a filter that will only display the namespaces that have s
 }
 ```
 
+</TabItem>
+
+<TabItem value="terraform">
+
+```hcl showLineNumbers
+resource "port_action" myAction {
+  # ...action configuration
+  {
+    user_properties = {
+      string_props = {
+        namespace = {
+          format     = "entity",
+          blueprint  = "namespace",
+          dataset = {
+            combinator = "and"
+            rules = [
+              {
+                property = "tags"
+                operator = "containsAny"
+                value = {
+                  jq_query = "[.entity.properties.tags[]]"
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
 ### Setting a default value with the jqQuery
 
-This example contains an array input with a default value that will be equal to the tags of the entity on which the action is performed
+This example contains an array input with a default value that will be equal to the tags of the entity on which the action is performed:
 
-```json
+<Tabs
+defaultValue="api"
+values={[
+{label: 'API', value: 'api'},
+{label: 'Terraform', value: 'terraform'},
+]}>
+
+<TabItem value="api">
+
+```json showLineNumbers
 {
   "some_input": {
     "type": "array",
@@ -401,9 +644,31 @@ This example contains an array input with a default value that will be equal to 
 }
 ```
 
+</TabItem>
+
+<TabItem value="terraform">
+
+```hcl showLineNumbers
+resource "port_action" myAction {
+  # ...action configuration
+  {
+    user_properties = {
+      array_props = {
+        some_input = {
+          default_jq_query = ".entity.properties.tags"
+        }
+      }
+    }
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
 ![entity tags action](../../../static/img/software-catalog/blueprint/defaultEntityTags.png)
 
-:point_up: The namespace tags are already inserted to the form. :point_up:
+:point_up: The namespace tags are already inserted into the form. :point_up:
 
 ## Complete Example
 
@@ -415,7 +680,16 @@ In this example, we will create an action that lets the user select a cluster an
 
 #### the action's configuration:
 
-```json
+<Tabs
+defaultValue="api"
+values={[
+{label: 'API', value: 'api'},
+{label: 'Terraform', value: 'terraform'},
+]}>
+
+<TabItem value="api">
+
+```json showLineNumbers
 {
   "identifier": "createRunningService",
   "title": "Deploy running service to a cluster",
@@ -479,8 +753,77 @@ In this example, we will create an action that lets the user select a cluster an
 }
 ```
 
+</TabItem>
+
+<TabItem value="terraform">
+
+```hcl showLineNumbers
+resource "port_action" "createRunningService" {
+  title       = "Create Running Service"
+  blueprint   = "abc"
+  identifier  = "createRunningService"
+  trigger     = "CREATE"
+  description = "This will deploy a running service to a cluster"
+  webhook_method = {
+    url = "https://example.com"
+  }
+  user_properties = {
+    string_props = {
+      cluster = {
+        format      = "entity",
+        blueprint   = "Cluster",
+        title       = "Cluster"
+        description = "The cluster to create the namespace in"
+        required    = true
+      }
+      namespace = {
+        title       = "Namespace"
+        format      = "entity",
+        blueprint   = "namespace",
+        description = "The namespace to create the cluster in"
+        required    = true
+        depends_on  = ["cluster"]
+        dataset = {
+          combinator = "and"
+          rules = [
+            {
+              blueprint = "Cluster"
+              operator  = "relatedTo"
+              value = {
+                jq_query = ".form.Cluster.identifier"
+              }
+            }
+          ]
+        }
+      }
+      service = {
+        title     = "Service"
+        blueprint = "Service",
+        required  = true
+        dataset = {
+          combinator = "and"
+          rules = [
+            {
+              blueprint = "$team"
+              operator  = "containsAny"
+              value = {
+                jq_query = "[.user.teams[].name]"
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
 #### The action in the developer portal:
 
 ![Cluster And Namespace Action](../../../static/img/software-catalog/blueprint/clusterNamespaceAction.png)
 
-:point_up: The user will be required to choose a cluster, and then the namespace input list will be populated with cluster entities related to the chosen cluster. The user will only be able to deploy services associated with his team.
+:point_up: The user will be required to choose a cluster, and then the namespace input list will be populated with namespace entities related to the chosen cluster. The user will only be able to deploy services associated with his team.  
+Note the `$` before `team`, this indicates that this is a [metadata property](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/meta-properties).

@@ -12,7 +12,7 @@ resources:
         mappings:
           identifier: ".name" # The Entity identifier will be the repository name.
           title: ".name"
-          blueprint: '"microservice"'
+          blueprint: '"repository"'
           properties:
             readme: file://README.md
             url: .html_url
@@ -32,7 +32,7 @@ resources:
             updatedAt: ".updated_at"
             link: ".html_url"
           relations:
-            service: ".repo"
+            repository: ".repo"
   - kind: workflow-run
     selector:
       query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.

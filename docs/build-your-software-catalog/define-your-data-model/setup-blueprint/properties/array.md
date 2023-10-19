@@ -83,7 +83,7 @@ We currently support the following types of array items: `string_items`, `number
 
 ## Pulumi definition
 
-<Tabs groupId="basic" defaultValue="python" values={[
+<Tabs groupId="basic" queryString defaultValue="python" values={[
 {label: "Python", value: "python"},
 {label: "TypeScript", value: "typescript"},
 {label: "JavaScript", value: "javascript"},
@@ -96,21 +96,20 @@ We currently support the following types of array items: `string_items`, `number
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Blueprint
+from port_pulumi import Blueprint,BlueprintPropertiesArgs,BlueprintPropertyArgs
 
 blueprint = Blueprint(
     "myBlueprint",
     identifier="myBlueprint",
     title="My Blueprint",
     # highlight-start
-    properties=[
-      {
-        "type": "array",
-        "identifier": "myArrayProp",
-        "title": "My array",
-        "required": True
-      }
-    ],
+    properties=BlueprintPropertiesArgs(
+        array_props={
+            "myArrayProp": BlueprintPropertyArgs(
+                title="My array", required=True,
+            )
+        }
+    ),
     # highlight-end
     relations=[]
 )
@@ -128,14 +127,14 @@ export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myArrayProp",
-      title: "My array",
-      type: "array",
-      required: true,
+  properties: {
+    array_props: {
+      myArrayProp: {
+        title: "My array",
+        required: true,
+      },
     },
-  ],
+  },
   // highlight-end
 });
 ```
@@ -153,14 +152,14 @@ const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myArrayProp",
-      title: "My array",
-      type: "array",
-      required: true,
+  properties: {
+    array_props: {
+      myArrayProp: {
+        title: "My array",
+        required: true,
+      },
     },
-  ],
+  },
   // highlight-end
   relations: [],
 });
@@ -185,13 +184,13 @@ func main() {
 			Identifier: pulumi.String("myBlueprint"),
 			Title:      pulumi.String("My Blueprint"),
       // highlight-start
-			Properties: port.BlueprintPropertyArray{
-				&port.BlueprintPropertyArgs{
-					Identifier: pulumi.String("myArrayProp"),
-					Title:      pulumi.String("My array"),
-					Required:   pulumi.Bool(false),
-					Type:       pulumi.String("array"),
-				},
+			Properties: port.BlueprintPropertiesArgs{
+				ArrayProps: port.BlueprintPropertiesArrayPropsMap{
+                    "myArrayProp": port.BlueprintPropertyArgs{
+                        Title:    pulumi.String("My array"),
+                        Required: pulumi.Bool(true),
+                    },
+                },
 			},
       // highlight-end
 		})
@@ -220,7 +219,7 @@ Array validations support the following operators:
 Array validations follow the JSON schema model, refer to the [JSON schema docs](https://json-schema.org/understanding-json-schema/reference/array.html) to learn about all of the available validations
 :::
 
-<Tabs groupId="validation-definition" defaultValue="basic" values={[
+<Tabs groupId="validation-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Terraform", value: "tf"}
 ]}>

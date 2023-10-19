@@ -62,7 +62,7 @@ resource "port_blueprint" "myBlueprint" {
 
 ## Pulumi definition
 
-<Tabs groupId="pulumi-definition-boolean-basic" defaultValue="python" values={[
+<Tabs groupId="pulumi-definition-boolean-basic" queryString defaultValue="python" values={[
 {label: "Python", value: "python"},
 {label: "TypeScript", value: "typescript"},
 {label: "JavaScript", value: "javascript"},
@@ -75,23 +75,23 @@ resource "port_blueprint" "myBlueprint" {
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Blueprint
+from port_pulumi import Blueprint,BlueprintPropertiesArgs,BlueprintPropertiesBooleanPropsArgs
 
 blueprint = Blueprint(
     "myBlueprint",
     identifier="myBlueprint",
     title="My Blueprint",
     # highlight-start
-    properties=[
-      {
-        "type": "boolean",
-        "identifier": "myBooleanProp",
-        "title": "My boolean",
-        "required": True
-      }
-    ],
+    properties=BlueprintPropertiesArgs(
+        boolean_props={
+            "myBooleanProp": BlueprintPropertiesBooleanPropsArgs(
+                title="My boolean",
+                required=True,
+            )
+        }
+    ),
     # highlight-end
-    relations=[]
+    relations={},
 )
 ```
 
@@ -107,14 +107,14 @@ export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myBooleanProp",
-      title: "My boolean",
-      type: "boolean",
-      required: true,
+  properties: {
+    booleanProps: {
+      myBooleanProp: {
+        title: "My boolean",
+        required: true,
+      },
     },
-  ],
+  },
   // highlight-end
 });
 ```
@@ -132,16 +132,16 @@ const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myBooleanProp",
-      title: "My boolean",
-      type: "boolean",
-      required: true,
+  properties: {
+    booleanProps: {
+      myBooleanProp: {
+        title: "My boolean",
+        required: true,
+      },
     },
-  ],
+  },
   // highlight-end
-  relations: [],
+  relations: {},
 });
 
 exports.title = entity.title;
@@ -164,14 +164,14 @@ func main() {
 			Identifier: pulumi.String("myBlueprint"),
 			Title:      pulumi.String("My Blueprint"),
       // highlight-start
-			Properties: port.BlueprintPropertyArray{
-				&port.BlueprintPropertyArgs{
-					Identifier: pulumi.String("myBooleanProp"),
-					Title:      pulumi.String("My boolean"),
-					Required:   pulumi.Bool(false),
-					Type:       pulumi.String("boolean"),
-				},
-			},
+			Properties: port.BlueprintPropertiesArgs{
+				BooleanProps: port.BlueprintPropertiesBooleanPropsMap{
+					"myBooleanProp": port.BlueprintPropertiesBooleanPropsArgs{
+						Title:    pulumi.String("My boolean"),
+						Required: pulumi.Bool(false),
+					},
+                },
+            },
       // highlight-end
 		})
 		ctx.Export("blueprint", blueprint.Title)

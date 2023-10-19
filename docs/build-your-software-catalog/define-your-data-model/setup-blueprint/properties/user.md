@@ -41,7 +41,7 @@ In addition, `user` format distinguishes between users by their status:
 
 ## API definition
 
-<Tabs groupId="api-definition" defaultValue="basic" values={[
+<Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Array", value: "array"}
 ]}>
@@ -90,7 +90,7 @@ In addition, `user` format distinguishes between users by their status:
 
 ## Terraform definition
 
-<Tabs groupId="tf-definition" defaultValue="basic" values={[
+<Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Array", value: "array"}
 ]}>
@@ -142,14 +142,14 @@ resource "port_blueprint" "myBlueprint" {
 
 ## Pulumi definition
 
-<Tabs groupId="pulumi-definition" defaultValue="basic" values={[
+<Tabs groupId="pulumi-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Enum - coming soon", value: "enum"}
 ]}>
 
 <TabItem value="basic">
 
-<Tabs groupId="pulumi-definition-user-basic" defaultValue="python" values={[
+<Tabs groupId="pulumi-definition-user-basic" queryString defaultValue="python" values={[
 {label: "Python", value: "python"},
 {label: "TypeScript", value: "typescript"},
 {label: "JavaScript", value: "javascript"},
@@ -162,24 +162,24 @@ resource "port_blueprint" "myBlueprint" {
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Blueprint
+from port_pulumi import Blueprint,BlueprintPropertyArgs,BlueprintPropertiesArgs
 
 blueprint = Blueprint(
     "myBlueprint",
     identifier="myBlueprint",
     title="My Blueprint",
     # highlight-start
-    properties=[
-      {
-         "type": "string",
-         "format": "user",
-         "identifier": "myUserProp",
-         "title": "My user",
-         "required": True
-      }
-    ],
+    properties=BlueprintPropertiesArgs(
+        string_props={
+            "myUserProp": BlueprintPropertyArgs(
+                title="My user",
+                required=False,
+                format="user",
+            )
+        }
+    ),
     # highlight-end
-    relations=[]
+    relations={}
 )
 ```
 
@@ -195,15 +195,15 @@ export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myUserProp",
-      title: "My user",
-      type: "string",
-      format: "user",
-      required: true,
+  properties: {
+    stringProps: {
+      myUserProp: {
+        title: "My user",
+        required: false,
+        format: "user",
+      },
     },
-  ],
+  },
   // highlight-end
 });
 ```
@@ -221,15 +221,15 @@ const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myUserProp",
-      title: "My user",
-      type: "string",
-      format: "user",
-      required: true,
+  properties: {
+    stringProps: {
+      myUserProp: {
+        title: "My user",
+        required: false,
+        format: "user",
+      },
     },
-  ],
+  },
   // highlight-end
   relations: [],
 });
@@ -254,14 +254,14 @@ func main() {
 			Identifier: pulumi.String("myBlueprint"),
 			Title:      pulumi.String("My Blueprint"),
       // highlight-start
-			Properties: port.BlueprintPropertyArray{
-				&port.BlueprintPropertyArgs{
-					Identifier: pulumi.String("myUserProp"),
-					Title:      pulumi.String("My user"),
-					Required:   pulumi.Bool(false),
-					Type:       pulumi.String("string"),
-					Format:     pulumi.String("user"),
-				},
+			Properties: port.BlueprintPropertiesArgs{
+				StringProps: port.BlueprintPropertiesStringPropsArgs{
+                    "myUserProp": port.BlueprintPropertiesStringPropsArgs{
+                        Title:    pulumi.String("My user"),
+                        Required: pulumi.Bool(false),
+                        Format:   pulumi.String("user"),
+                    },
+                },
 			},
       // highlight-end
 		})

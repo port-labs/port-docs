@@ -59,3 +59,8 @@ h6::first-letter {
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Lexend&family=Inter");
+
+.operators-tabs {
+  font-size: 0.8rem;
+  text-align: center;
+}

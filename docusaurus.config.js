@@ -94,6 +94,9 @@ const config = {
           },
         ],
       },
+      hotjar: {
+        applicationId: 3649439,
+      },
       footer: {
         style: "dark",
         links: [
@@ -217,6 +220,11 @@ const config = {
         minHeadingLevel: 2,
         maxHeadingLevel: 6,
       },
+      colorMode: {
+        defaultMode: "dark",
+        disableSwitch: false,
+        respectPrefersColorScheme: true,
+      },
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
@@ -232,21 +240,30 @@ const config = {
       hubspot: {
         accountId: 21928972,
       },
+      algolia: {
+        // The application ID provided by Algolia
+        appId: "VHYI0G637S",
+        // Public API key: it is safe to commit it
+        apiKey: "1bacc12054c0224408f2be6b60d697c9",
+        indexName: "getport",
+        contextualSearch: true,
+      },
     }),
   themes: [
-    [
-      require.resolve("@easyops-cn/docusaurus-search-local"),
-      {
-        hashed: true,
-        indexDocs: true,
-        indexBlog: false,
-        docsRouteBasePath: "/",
-      },
-    ],
+    // [
+    //   require.resolve("@easyops-cn/docusaurus-search-local"),
+    //   {
+    //     hashed: true,
+    //     indexDocs: true,
+    //     indexBlog: false,
+    //     docsRouteBasePath: "/",
+    //   },
+    // ],
   ],
 
   plugins: [
     "@docusaurus/theme-live-codeblock",
+    "docusaurus-plugin-hotjar",
     "@stackql/docusaurus-plugin-hubspot",
     [
       "@docusaurus/plugin-client-redirects",

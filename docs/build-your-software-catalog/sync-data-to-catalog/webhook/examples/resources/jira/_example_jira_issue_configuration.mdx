@@ -1,28 +1,20 @@
 ```json showLineNumbers
-{
-  "identifier": "jiraMapper",
-  "title": "Jira mapper",
-  "description": "A webhook configuration to map Jira issues to Port",
-  "icon": "Jira",
-  "mappings": [
-    {
-      "blueprint": "jiraIssue",
-      "entity": {
-        "identifier": ".body.issue.key",
-        "title": ".body.issue.key + \" - \" + .body.issue.fields.summary",
-        "properties": {
-          "summary": ".body.issue.fields.summary",
-          "description": ".body.issue.fields.description",
-          "status": ".body.issue.fields.status.name",
-          "lastChangeType": ".body.issue_event_type_name",
-          "changingUser": ".body.user.displayName",
-          "issueUrl": "(.body.issue.self | split(\"rest\") | first) + \"browse/\" + .body.issue.key",
-          "issueType": ".body.issue.fields.issuetype.name"
-        }
+[
+  {
+    "blueprint": "jiraIssue",
+    "entity": {
+      "identifier": ".body.issue.key",
+      "title": ".body.issue.key + \" - \" + .body.issue.fields.summary",
+      "properties": {
+        "summary": ".body.issue.fields.summary",
+        "description": ".body.issue.fields.description",
+        "status": ".body.issue.fields.status.name",
+        "lastChangeType": ".body.issue_event_type_name",
+        "changingUser": ".body.user.displayName",
+        "issueUrl": "(.body.issue.self | split(\"rest\") | first) + \"browse/\" + .body.issue.key",
+        "issueType": ".body.issue.fields.issuetype.name"
       }
     }
-  ],
-  "enabled": true,
-  "security": {}
-}
+  }
+]
 ```

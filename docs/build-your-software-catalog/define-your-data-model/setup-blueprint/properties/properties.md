@@ -38,3 +38,23 @@ The name of the property is the key of the property object. For example, in the 
 ## Supported properties
 
 <DocCardList />
+
+## Miscellaneous
+
+### Available enum colors
+
+Properties defined using [enum](./string.md?api-definition=enum#api-definition) can also include specific colors for the different values available in the property definition, the available enum colors are:
+
+```showLineNumbers text
+blue
+turquoise
+orange
+purple
+pink
+yellow
+green
+red
+darkGray
+lightGray
+bronze
+```

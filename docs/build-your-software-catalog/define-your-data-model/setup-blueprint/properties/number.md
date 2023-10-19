@@ -26,10 +26,11 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `J
 
 ## API definition
 
-<Tabs groupId="api-definition" defaultValue="basic" values={[
+<Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Enum", value: "enum"},
-{label: "Array", value: "array"}
+{label: "Array", value: "array"},
+{label: "Enum Array", value: "enumArray"},
 ]}>
 
 <TabItem value="basic">
@@ -84,13 +85,38 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `J
 ```
 
 </TabItem>
+<TabItem value="enumArray">
+
+```json showLineNumbers
+{
+  "myNumberArray": {
+    "title": "My number enum array",
+    "icon": "My icon",
+    "description": "My number enum array",
+    // highlight-start
+    "type": "array",
+    "items": {
+      "type": "number",
+      "enum": [1, 2, 3, 4],
+      "enumColors": {
+        "1": "red",
+        "2": "green",
+        "3": "blue"
+      }
+    }
+    // highlight-end
+  }
+}
+```
+
+</TabItem>
 </Tabs>
 
 <ApiRef />
 
 ## Terraform definition
 
-<Tabs groupId="tf-definition" defaultValue="basic" values={[
+<Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Enum", value: "enum"},
 {label: "Array", value: "array"}
@@ -166,7 +192,7 @@ resource "port_blueprint" "myBlueprint" {
 
 ## Pulumi definition
 
-<Tabs groupId="pulumi-definition" defaultValue="basic" values={[
+<Tabs groupId="pulumi-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Enum - coming soon", value: "enum"},
 {label: "Array - coming soon", value: "array"}
@@ -174,7 +200,7 @@ resource "port_blueprint" "myBlueprint" {
 
 <TabItem value="basic">
 
-<Tabs groupId="pulumi-definition-number-basic" defaultValue="python" values={[
+<Tabs groupId="pulumi-definition-number-basic" queryString defaultValue="python" values={[
 {label: "Python", value: "python"},
 {label: "TypeScript", value: "typescript"},
 {label: "JavaScript", value: "javascript"},
@@ -187,23 +213,22 @@ resource "port_blueprint" "myBlueprint" {
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Blueprint
+from port_pulumi import Blueprint,BlueprintPropertiesArgs,BlueprintPropertiesNumberPropsArgs
 
 blueprint = Blueprint(
     "myBlueprint",
     identifier="myBlueprint",
     title="My Blueprint",
     # highlight-start
-    properties=[
-      {
-        "type": "number",
-        "identifier": "myNumberProp",
-        "title": "My Number",
-        "required": True
-      }
-    ],
+    properties=BlueprintPropertiesArgs(
+        number_props={
+            "myNumberProp": BlueprintPropertiesNumberPropsArgs(
+                title="My number", required=False,
+            )
+        },
+    ),
     # highlight-end
-    relations=[]
+    relations={}
 )
 ```
 
@@ -219,14 +244,14 @@ export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myNumberProp",
-      title: "My Number",
-      type: "number",
-      required: true,
+  properties: {
+    numberProps: {
+      myNumberProp: {
+        title: "My number",
+        required: false,
+      },
     },
-  ],
+  },
   // highlight-end
 });
 ```
@@ -244,16 +269,16 @@ const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myNumberProp",
-      title: "My Number",
-      type: "number",
-      required: true,
+  properties: {
+    numberProps: {
+      myNumberProp: {
+        title: "My number",
+        required: false,
+      },
     },
-  ],
+  },
   // highlight-end
-  relations: [],
+  relations: {},
 });
 
 exports.title = entity.title;
@@ -276,12 +301,12 @@ func main() {
 			Identifier: pulumi.String("myBlueprint"),
 			Title:      pulumi.String("My Blueprint"),
       // highlight-start
-			Properties: port.BlueprintPropertyArray{
-				&port.BlueprintPropertyArgs{
-					Identifier: pulumi.String("myNumberProp"),
-					Title:      pulumi.String("My Number"),
-					Required:   pulumi.Bool(false),
-					Type:       pulumi.String("number"),
+			Properties: port.BlueprintPropertiesArgs{
+				NumberProps: port.BlueprintPropertiesNumberPropsMap{
+					"myNumberProp": port.BlueprintPropertiesNumberPropsArgs{
+						Title:    pulumi.String("My number"),
+						Required: pulumi.Bool(false),
+					},
 				},
 			},
 		})
@@ -317,7 +342,7 @@ If _x_ is the value being validated, the following must hold true:
 - _x_ ≤ `maximum`
 - _x_ < `exclusiveMaximum`
 
-<Tabs groupId="validation-definition" defaultValue="basic" values={[
+<Tabs groupId="validation-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Array", value: "array"},
 {label: "Terraform", value: "tf"},

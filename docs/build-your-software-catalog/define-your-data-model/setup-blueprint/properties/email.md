@@ -18,7 +18,7 @@ The Email property type can be used to store any legal email address.
 
 ## API definition
 
-<Tabs groupId="api-definition" defaultValue="basic" values={[
+<Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Enum", value: "enum"},
 {label: "Array", value: "array"}
@@ -89,7 +89,7 @@ The Email property type can be used to store any legal email address.
 
 ## Terraform definition
 
-<Tabs groupId="tf-definition" defaultValue="basic" values={[
+<Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Enum", value: "enum"},
 {label: "Array", value: "array"}
@@ -169,7 +169,7 @@ resource "port_blueprint" "myBlueprint" {
 
 ## Pulumi definition
 
-<Tabs groupId="pulumi-definition" defaultValue="basic" values={[
+<Tabs groupId="pulumi-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Enum", value: "enum"},
 {label: "Array - coming soon", value: "array"}
@@ -177,7 +177,7 @@ resource "port_blueprint" "myBlueprint" {
 
 <TabItem value="basic">
 
-<Tabs groupId="pulumi-definition-email-basic" defaultValue="python" values={[
+<Tabs groupId="pulumi-definition-email-basic" queryString defaultValue="python" values={[
 {label: "Python", value: "python"},
 {label: "TypeScript", value: "typescript"},
 {label: "JavaScript", value: "javascript"},
@@ -190,24 +190,23 @@ resource "port_blueprint" "myBlueprint" {
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Blueprint
+from port_pulumi import Blueprint,BlueprintPropertiesArgs,BlueprintPropertiesStringPropsArgs
 
 blueprint = Blueprint(
     "myBlueprint",
     identifier="myBlueprint",
     title="My Blueprint",
     # highlight-start
-    properties=[
-      {
-        "type": "string",
-        "identifier": "myEmailProp",
-        "title": "My email",
-        "required": True,
-        "format": "email"
-      }
-    ],
+    properties=BlueprintPropertiesArgs(
+        string_props={
+            "myEmailProp": BlueprintPropertiesStringPropsArgs(
+                title="My email",
+                format="email",
+            )
+        }
+    ),
     # highlight-end
-    relations=[]
+    relations={},
 )
 ```
 
@@ -223,15 +222,15 @@ export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myEmailProp",
-      title: "My email",
-      type: "string",
-      required: true,
-      format: "email",
+  properties: {
+    string_props: {
+      myEmailProp: {
+        title: "My email",
+        format: "email",
+        required: true,
+      },
     },
-  ],
+  },
   // highlight-end
 });
 ```
@@ -249,17 +248,17 @@ const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myEmailProp",
-      title: "My email",
-      type: "string",
-      required: true,
-      format: "email",
+  properties: {
+    string_props: {
+      myEmailProp: {
+        title: "My email",
+        format: "email",
+        required: true,
+      },
     },
-  ],
+  },
   // highlight-end
-  relations: [],
+  relations: {},
 });
 
 exports.title = entity.title;
@@ -282,14 +281,14 @@ func main() {
 			Identifier: pulumi.String("myBlueprint"),
 			Title:      pulumi.String("My Blueprint"),
       // highlight-start
-			Properties: port.BlueprintPropertyArray{
-				&port.BlueprintPropertyArgs{
-					Identifier: pulumi.String("myEmailProp"),
-					Title:      pulumi.String("My email"),
-					Required:   pulumi.Bool(false),
-					Type:       pulumi.String("string"),
-					Format:     pulumi.String("email"),
-				},
+			Properties: port.BlueprintPropertiesArgs{
+				StringProps: port.BlueprintPropertiesStringPropsMap{
+					"myEmailProp": &port.BlueprintPropertiesStringPropsArgs{
+                        Title:  pulumi.String("My email"),
+                        Format: pulumi.String("email"),
+                        Required: pulumi.Bool(true),
+                    },
+                },
 			},
       // highlight-end
 		})
@@ -310,7 +309,7 @@ func main() {
 
 <TabItem value="enum">
 
-<Tabs groupId="pulumi-definition-email-enum" defaultValue="python" values={[
+<Tabs groupId="pulumi-definition-email-enum" queryString defaultValue="python" values={[
 {label: "Python", value: "python"},
 {label: "TypeScript", value: "typescript"},
 {label: "JavaScript", value: "javascript"},
@@ -323,27 +322,29 @@ func main() {
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Blueprint
+from port_pulumi import Blueprint,BlueprintPropertiesArgs,BlueprintPropertiesStringPropsArgs
 
 blueprint = Blueprint(
     "myBlueprint",
     identifier="myBlueprint",
     title="My Blueprint",
     # highlight-start
-    properties=[{
-      "type": "string",
-      "identifier": "myEmailProp",
-      "title": "My email",
-      "format": "email",
-      "required": True,
-      "enum": ["me@example.com", "other@example.com"],
-      "enum_colors": {
-        "me@example.com": "red",
-        "other@example.com": "green"
-      }
-    }],
+    properties=BlueprintPropertiesArgs(
+        string_props={
+            "myEmailProp": BlueprintPropertiesStringPropsArgs(
+                title="My email",
+                required=True,
+                format="email",
+                enums=["me@example.com", "other@example.com"],
+                enum_colors={
+                    "me@example.com": "red",
+                    "other@example.com": "green",
+                },
+            )
+        }
+    ),
     # highlight-end
-    relations=[]
+    relations={}
 )
 ```
 
@@ -359,20 +360,19 @@ export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myEmailProp",
-      title: "My email",
-      type: "string",
-      required: true,
-      format: "email",
-      enums: ["me@example.com", "other@example.com"],
-      enumColors: {
-        "me@example.com": "red",
-        "other@example.com": "green",
-      },
-    },
-  ],
+    properties: {
+        stringProps: {
+            myEmailProp: {
+                title: "My email",
+                required: true,
+                format: "email",
+                enums: ["me@example.com", "other@example.com"],
+                enumColors: {
+                    "me@example.com": "red",
+                    "other@example.com": "green",
+                },
+            }
+        },
   // highlight-end
 });
 ```
@@ -390,22 +390,21 @@ const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myEmailProp",
-      title: "My email",
-      type: "string",
-      required: true,
-      format: "email",
-      enums: ["me@example.com", "other@example.com"],
-      enumColors: {
-        "me@example.com": "red",
-        "other@example.com": "green",
-      },
-    },
-  ],
+  properties: {
+      stringProps: {
+        myEmailProp: {
+          title: "My email",
+          required: true,
+          format: "email",
+          enums: ["me@example.com", "other@example.com"],
+          enumColors: {
+            "me@example.com": "red",
+            "other@example.com": "green",
+          },
+      }
+  },
   // highlight-end
-  relations: [],
+  relations: {},
 });
 
 exports.title = entity.title;
@@ -428,21 +427,22 @@ func main() {
 			Identifier: pulumi.String("myBlueprint"),
 			Title:      pulumi.String("My Blueprint"),
       // highlight-start
-			Properties: port.BlueprintPropertyArray{
-				&port.BlueprintPropertyArgs{
-					Identifier: pulumi.String("myEmailProp"),
-					Title:      pulumi.String("My email"),
-					Required:   pulumi.Bool(false),
-					Type:       pulumi.String("string"),
-					Enums: pulumi.StringArray{
-						pulumi.String("me@example.com"),
-						pulumi.String("other@example.com"),
+			Properties: port.BlueprintPropertiesArgs{
+				StringProps: port.BlueprintPropertiesStringPropsMap{
+					"myEmailProp": &port.BlueprintPropertiesStringPropsArgs{
+						Title:    pulumi.String("My email"),
+						Required: pulumi.Bool(false),
+						Format:   pulumi.String("email"),
+						Enums: pulumi.StringArray{
+							pulumi.String("me@example.com"),
+							pulumi.String("other@example.com"),
+						},
+						EnumColors: pulumi.StringMap{
+							"me@example.com":    pulumi.String("red"),
+							"other@example.com": pulumi.String("green"),
+						},
+						Format: pulumi.String("email"),
 					},
-					EnumColors: pulumi.StringMap{
-						"me@example.com": pulumi.String("red"),
-						"other@example.com": pulumi.String("green"),
-					},
-					Format:     pulumi.String("email"),
 				},
 			},
       // highlight-end

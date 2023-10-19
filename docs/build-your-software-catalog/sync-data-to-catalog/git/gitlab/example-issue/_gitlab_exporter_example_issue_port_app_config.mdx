@@ -1,0 +1,43 @@
+<details>
+
+<summary> Ocean integration configuration </summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: project
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .path_with_namespace | gsub(" "; "")
+          title: .name
+          blueprint: '"repository"'
+          properties:
+            url: .web_url
+            description: .description
+            namespace: .namespace.name
+            full_path: .namespace.full_path
+  - kind: issue
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .id | tostring
+          title: .title
+          blueprint: '"issue"'
+          properties:
+            creator: .author.name
+            status: .state
+            createdAt: .created_at
+            closedAt: .closed_at
+            updatedAt: .updated_at
+            description: .description
+            link: .web_url
+            labels: "[.labels[]]"
+          relations:
+            repository: .references.full | gsub("#.+"; "")
+```
+
+</details>

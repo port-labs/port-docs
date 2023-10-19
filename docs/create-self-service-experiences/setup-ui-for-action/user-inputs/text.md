@@ -29,7 +29,8 @@ In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we
 <Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Select (Enum)", value: "enum"},
-{label: "Array", value: "array"}
+{label: "Array", value: "array"},
+{label: "Enum Array", value: "enumArray"},
 ]}>
 
 <TabItem value="basic">
@@ -77,6 +78,30 @@ In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we
     "type": "array",
     "items": {
       "type": "string"
+    }
+    // highlight-end
+  }
+}
+```
+
+</TabItem>
+<TabItem value="enumArray">
+
+```json showLineNumbers
+{
+  "myStringArray": {
+    "title": "My text-selection array input",
+    "icon": "My icon",
+    "description": "My text-selection array input",
+    // highlight-start
+    "type": "array",
+    "items": {
+      "type": "string",
+      "enum": ["my-option-1", "my-option-2"],
+      "enumColors": {
+        "my-option-1": "red",
+        "my-option-2": "green"
+      }
     }
     // highlight-end
   }

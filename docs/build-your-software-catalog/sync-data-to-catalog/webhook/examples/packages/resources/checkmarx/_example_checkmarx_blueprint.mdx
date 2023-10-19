@@ -1,0 +1,55 @@
+```json showLineNumbers
+{
+  "identifier": "checkmarxScan",
+  "description": "This blueprint represents a Checkmarx KICS scan in our software catalog",
+  "title": "Checkmarx Scans",
+  "icon": "checkmarx",
+  "schema": {
+    "properties": {
+      "severity": {
+        "title": "Severity",
+        "type": "string",
+        "enum": ["LOW", "MEDIUM", "HIGH", "INFO"],
+        "enumColors": {
+          "LOW": "green",
+          "MEDIUM": "yellow",
+          "HIGH": "red",
+          "INFO": "yellow"
+        }
+      },
+      "url": {
+        "type": "string",
+        "title": "Scan URL",
+        "format": "url"
+      },
+      "platform": {
+        "title": "Platform",
+        "type": "string"
+      },
+      "files": {
+        "items": {
+          "type": "object"
+        },
+        "title": "Files",
+        "type": "array"
+      },
+      "cloud_provider": {
+        "title": "Cloud Provider",
+        "type": "string"
+      },
+      "description": {
+        "title": "Description",
+        "type": "string"
+      },
+      "category": {
+        "title": "Category",
+        "type": "string"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {}
+}
+```

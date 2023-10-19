@@ -13,6 +13,10 @@ sidebar_label: 👋 Port Overview
 
 </center>
 
+## Get started with Port
+
+If you want to jump right in and try out Port for yourself, our [quickstart guide](/quickstart) takes 7 minutes to complete and covers many of Port's key pillars.
+
 ## What is Port
 
 Welcome to Port! :wave:
@@ -52,8 +56,3 @@ With Port, you can set up automation to automatically respond to events from you
 R&D Insights & Reports is a pillar of port that provides data-driven insights and analytical reports on the development process. It allows teams, developers and management to make informed decisions based on metrics, trends and usage patterns to improve the development process, optimize performance, and reduce cost.
 
 [Insights & Reports live demo](https://demo.getport.io/serviceEntity?identifier=recommendation&activeTab=1) 🎬
-
-## Quick Start
-
-Port's [quick start](./quickstart.md) takes around 5 minutes.  
-By the end of it you will have a good basic understanding of how Port works.

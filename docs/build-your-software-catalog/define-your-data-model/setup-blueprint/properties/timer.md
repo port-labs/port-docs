@@ -26,7 +26,7 @@ In this [live demo](https://demo.getport.io/developerEnvs) example, we can see t
 
 ## API definition
 
-<Tabs groupId="api-definition" defaultValue="basic" values={[
+<Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"}
 ]}>
 
@@ -54,7 +54,7 @@ In this [live demo](https://demo.getport.io/developerEnvs) example, we can see t
 
 ## Terraform definition
 
-<Tabs groupId="tf-definition" defaultValue="basic" values={[
+<Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"}
 ]}>
 
@@ -84,13 +84,13 @@ resource "port_blueprint" "myBlueprint" {
 
 ## Pulumi definition
 
-<Tabs groupId="pulumi-definition" defaultValue="basic" values={[
+<Tabs groupId="pulumi-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 ]}>
 
 <TabItem value="basic">
 
-<Tabs groupId="pulumi-definition-timer-basic" defaultValue="python" values={[
+<Tabs groupId="pulumi-definition-timer-basic" queryString defaultValue="python" values={[
 {label: "Python", value: "python"},
 {label: "TypeScript", value: "typescript"},
 {label: "JavaScript", value: "javascript"},
@@ -103,24 +103,24 @@ resource "port_blueprint" "myBlueprint" {
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Blueprint
+from port_pulumi import Blueprint,BlueprintPropertiesArgs,BlueprintPropertiesStringPropsArgs
 
 blueprint = Blueprint(
     "myBlueprint",
     identifier="myBlueprint",
     title="My Blueprint",
     # highlight-start
-    properties=[
-      {
-         "type": "string",
-         "format": "timer",
-         "identifier": "myTimerProp",
-         "title": "My timer",
-         "required": True
-      }
-    ],
+    properties=BlueprintPropertiesArgs(
+        string_props={
+            "myTimerProp": BlueprintPropertiesStringPropsArgs(
+                title="My timer",
+                format="timer",
+                required=True,
+            )
+        }
+    ),
     # highlight-end
-    relations=[]
+    relations={}
 )
 ```
 
@@ -136,15 +136,15 @@ export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myTimerProp",
-      title: "My timer",
-      type: "string",
-      format: "timer",
-      required: true,
+  properties: {
+    stringProps: {
+      myTimerProp: {
+        title: "My timer",
+        format: "timer",
+        required: true,
+      },
     },
-  ],
+  },
   // highlight-end
 });
 ```
@@ -162,17 +162,17 @@ const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
   // highlight-start
-  properties: [
-    {
-      identifier: "myTimerProp",
-      title: "My timer",
-      type: "string",
-      format: "timer",
-      required: true,
+  properties: {
+    stringProps: {
+      myTimerProp: {
+        title: "My timer",
+        format: "timer",
+        required: true,
+      },
     },
-  ],
+  },
   // highlight-end
-  relations: [],
+  relations: {},
 });
 
 exports.title = entity.title;
@@ -195,14 +195,14 @@ func main() {
 			Identifier: pulumi.String("myBlueprint"),
 			Title:      pulumi.String("My Blueprint"),
       // highlight-start
-			Properties: port.BlueprintPropertyArray{
-				&port.BlueprintPropertyArgs{
-					Identifier: pulumi.String("myTimerProp"),
-					Title:      pulumi.String("My timer"),
-					Required:   pulumi.Bool(false),
-					Type:       pulumi.String("string"),
-					Format:     pulumi.String("timer"),
-				},
+			Properties: port.BlueprintPropertiesArgs{
+				StringProps: port.BlueprintPropertiesStringPropsMap{
+					"myTimerProp": &port.BlueprintPropertiesStringPropsArgs{
+                        Title:    pulumi.String("My timer"),
+                        Format:   pulumi.String("timer"),
+                        Required: pulumi.Bool(true),
+                    },
+                },
 			},
       // highlight-end
 		})
