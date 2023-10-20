@@ -116,7 +116,7 @@ jobs:
         uses: octobay/create-repository-action@v1
         with:
           name: ${{ inputs.service_name }}
-          org: "<YOUR-ORG-NAME>" # change this to the org name in which you want to create the new repo
+          org: "<YOUR-ORG-NAME>" # if you test with your personal github, remove this line, otherwise - change this to the org name in which you want to create the new repo
           access-token: ${{ secrets.ORG_ADMIN_TOKEN }}
           private-repo: true
           initialize-repo: true
