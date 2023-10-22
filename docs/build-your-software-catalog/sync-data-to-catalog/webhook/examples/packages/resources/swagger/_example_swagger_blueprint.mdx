@@ -1,0 +1,61 @@
+```json showLineNumbers
+{
+  "identifier": "swaggerPath",
+  "description": "This blueprint represents a Swagger path in our software catalog",
+  "title": "Swagger API Paths",
+  "icon": "Swagger",
+  "schema": {
+    "properties": {
+      "method": {
+        "type": "string",
+        "title": "Method",
+        "default": "get",
+        "enum": ["get", "post", "delete", "put", "patch"],
+        "enumColors": {
+          "get": "yellow",
+          "post": "green",
+          "delete": "red",
+          "put": "purple",
+          "patch": "purple"
+        }
+      },
+      "host": {
+        "type": "string",
+        "title": "API Base URL",
+        "format": "url"
+      },
+      "path": {
+        "title": "Path",
+        "type": "string"
+      },
+      "parameters": {
+        "items": {
+          "type": "object"
+        },
+        "title": "Parameters",
+        "type": "array"
+      },
+      "responses": {
+        "title": "Responses",
+        "type": "object"
+      },
+      "description": {
+        "title": "Description",
+        "type": "string"
+      },
+      "version": {
+        "title": "Version",
+        "type": "string"
+      },
+      "summary": {
+        "title": "Summary",
+        "type": "string"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {}
+}
+```
