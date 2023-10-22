@@ -46,7 +46,7 @@ The integration uses polling to pull the configuration from Port every minute an
 
 The Sentry integration uses a YAML configuration to describe the process of loading data into the developer portal.
 
-Here is an example snippet from the config which demonstrates the process for getting `Issue` data from Newrelic:
+Here is an example snippet from the config which demonstrates the process for getting `Issue` data from Sentry:
 
 ```yaml showLineNumbers
 resources:
@@ -101,7 +101,7 @@ The following resources can be used to map data from Sentry, it is possible to r
         ...
   ```
 
-- The `port`, `entity` and the `mappings` keys are used to map the Newrelic object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
+- The `port`, `entity` and the `mappings` keys are used to map the Sentry object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
 
   ```yaml showLineNumbers
   resources:
