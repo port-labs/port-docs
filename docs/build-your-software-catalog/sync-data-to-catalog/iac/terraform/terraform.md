@@ -83,19 +83,24 @@ resource "port_entity" "myEntity" {
   properties = {
     string_props = {
       "myStringProp" = "My string"
-      }
-  
+     }
+  }
+
+  properties = {
     number_props = {
       "myNumberProp" = 7
-      }
+    }
+  }
 
+  properties = {
     array_props = {
       string_items = {
         "myArrayProp" = ["a", "b", "c"]
-        }
       }
- # highlight-end
+    }
   }
+ # highlight-end
+
   # Entity relations
   ...
 }
