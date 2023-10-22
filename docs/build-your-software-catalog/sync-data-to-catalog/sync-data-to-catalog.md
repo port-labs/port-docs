@@ -103,4 +103,7 @@ Use the links below to learn about the different data ingestion methods Port off
 - [Kubernetes & ArgoCD & K8s CRDs](./kubernetes/kubernetes.md);
 - [IaC](./iac/iac.md);
 - [Git providers](./git/git.md);
-- Cloud provider - coming soon;
+- [AWS](./aws/aws.md), [Azure](./azure/azure.md), [GCP](./gcp/gcp.md);
+- [Cloud Cost](./cloud-cost/opencost.md);
+- [Event Processing](./event-processing/kafka.md);
+- Incident Management - [PagerDuty](./incident-management/pagerduty.md), [Opsgenie](./incident-management/opsgenie.md), [FireHydrant](./incident-management/firehydrant.md);
