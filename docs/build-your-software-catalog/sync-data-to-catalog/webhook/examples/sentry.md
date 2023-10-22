@@ -108,3 +108,141 @@ In order to view the different payloads and events available in Sentry webhooks,
 :::
 
 Done! any issue and comment in Sentry will trigger a webhook event. Port will parse the events according to the mapping and update the catalog entities accordingly.
+
+## Let's Test It
+
+This section includes a sample webhook event sent from Sentry when an issue or comment is created. In addition, it includes the entity created from the event based on the webhook configuration provided in the previous section.
+
+### Payload
+
+Here is an example of the payload structure sent to the webhook URL when a Sentry issue or comment is created:
+
+<details>
+<summary> Sentry issue webhook event payload</summary>
+
+```json showLineNumbers
+{
+  "action": "created",
+  "installation": {
+    "uuid": "54a3e698-f389-4d86-b9f8-50093a228449"
+  },
+  "data": {
+    "issue": {
+      "id": "4253613038",
+      "shareId": "None",
+      "shortId": "PYTHON-B",
+      "title": "NameError: name 'total' is not defined",
+      "culprit": "__main__ in <module>",
+      "permalink": "None",
+      "logger": "None",
+      "level": "error",
+      "status": "unresolved",
+      "statusDetails": {},
+      "substatus": "new",
+      "isPublic": false,
+      "platform": "python",
+      "project": {
+        "id": "4504989602480128",
+        "name": "python",
+        "slug": "python",
+        "platform": "python"
+      },
+      "type": "error",
+      "metadata": {
+        "value": "name 'total' is not defined",
+        "type": "NameError",
+        "filename": "sentry.py",
+        "function": "<module>",
+        "display_title_with_tree_label": false
+      },
+      "numComments": 0,
+      "assignedTo": "None",
+      "isBookmarked": false,
+      "isSubscribed": false,
+      "subscriptionDetails": "None",
+      "hasSeen": false,
+      "annotations": [],
+      "issueType": "error",
+      "issueCategory": "error",
+      "isUnhandled": true,
+      "count": "1",
+      "userCount": 0,
+      "firstSeen": "2023-06-15T17:10:09.914274Z",
+      "lastSeen": "2023-06-15T17:10:09.914274Z"
+    }
+  },
+  "actor": {
+    "type": "application",
+    "id": "sentry",
+    "name": "Sentry"
+  }
+}
+```
+
+</details>
+
+<details>
+<summary> Sentry comment webhook event payload</summary>
+
+```json showLineNumbers
+{
+  "action": "created",
+  "installation": {
+    "uuid": "d5a2de51-0138-496a-8e79-c17747c3a40d"
+  },
+  "data": {
+    "comment_id": "1729635072",
+    "issue_id": "4253613038",
+    "project_slug": "python",
+    "timestamp": "2023-06-15T17:15:53.383120Z",
+    "comment": "Hello admin please take a look at this"
+  },
+  "actor": {
+    "type": "user",
+    "id": 2683666,
+    "name": "user@domain.com"
+  }
+}
+```
+
+</details>
+
+### Mapping Result
+
+The combination of the sample payload and the webhook configuration generates the following Port `sentryIssue` entity:
+
+```json showLineNumbers
+{
+  "identifier": "4253613038",
+  "title": "NameError: name 'total' is not defined",
+  "blueprint": "sentryIssue",
+  "properties": {
+    "action": "created",
+    "level": "error",
+    "platform": "python",
+    "status": "unresolved",
+    "projectID": "4504989602480128"
+  },
+  "relations": {}
+}
+```
+
+In addition, the following Port `sentryComment` entity will be generated:
+
+```json showLineNumbers
+{
+  "identifier": "1729635072",
+  "title": "Comment Event",
+  "blueprint": "sentryComment",
+  "properties": {
+    "action": "created",
+    "comment": "Hello admin please take a look at this",
+    "project": "python",
+    "issue_id": "4253613038",
+    "timestamp": "2023-06-15T17:15:53.383120Z"
+  },
+  "relations": {
+    "sentryIssue": "4253613038"
+  }
+}
+```
