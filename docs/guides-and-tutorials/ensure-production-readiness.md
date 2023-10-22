@@ -151,11 +151,11 @@ Add the following YAML block to the mapping under the `resources` key, then clic
 </details>
 
 What we just did was map the `Pagerduty service` to the relation between it and our `services`.  
-Now, if our `service` identifier is equal to the Pagerduty service's name, the `service` will automatically have its `on-call` property filled:
+Now, if our `service` identifier is equal to the Pagerduty service's name, the `service` will automatically have its `on-call` property filled: &nbsp;🎉
 
 ![entitiesAfterOnCallMapping](/img/guides/entitiesAfterOnCallMapping.png)
 
-Remember that you can always perform this assignment manually if you wish:
+**Note** that you can always perform this assignment manually if you wish:
 
 1. Go to your [Software catalog](https://app.getport.io/services), choose any service in the table under `Services`, click on the `...`, and click `Edit`:
 
