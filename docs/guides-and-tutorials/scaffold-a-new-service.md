@@ -89,7 +89,7 @@ If the Github organization which will house your workflow is not the same as the
 
 3. Now let's create the workflow file that contains our logic. Under ".github/workflows", create a new file named `portCreateRepo.yaml` and use the following snippet as its content:
 
-Change `<YOUR-ORG-NAME>` to the name of the organization in which you want to create the new repository.
+Change `<YOUR-ORG-NAME>` to the name of the organization in which you want to create the new repository. If you're using your personal Github (default organization), remove the `org:` parameter (line 22 below).
 
 <details>
 <summary><b>Github workflow (click to expand)</b></summary>
@@ -116,7 +116,7 @@ jobs:
         uses: octobay/create-repository-action@v1
         with:
           name: ${{ inputs.service_name }}
-          org: "<YOUR-ORG-NAME>" # change this to the org name in which you want to create the new repo
+          org: "<YOUR-ORG-NAME>" # if you're using your personal github, remove this line, otherwise - change this to the org name in which you want to create the new repo
           access-token: ${{ secrets.ORG_ADMIN_TOKEN }}
           private-repo: true
           initialize-repo: true

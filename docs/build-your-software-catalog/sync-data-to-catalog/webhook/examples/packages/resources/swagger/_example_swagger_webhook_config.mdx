@@ -1,0 +1,30 @@
+```json showLineNumbers
+{
+  "identifier": "swaggerPathMapper",
+  "title": "Swagger Path Mapper",
+  "description": "A webhook configuration to map Swagger JSON file",
+  "icon": "Swagger",
+  "mappings": [
+    {
+      "blueprint": "swaggerPath",
+      "itemsToParse": ".body.paths",
+      "entity": {
+        "identifier": ".item.id | sub(\"[^A-Za-z0-9@_.:/=-]\"; \"-\"; \"g\")",
+        "title": ".item.method + .item.path",
+        "properties": {
+          "method": ".item.method",
+          "host": ".item.host",
+          "path": ".item.path",
+          "parameters": ".item.parameters",
+          "responses": ".item.responses",
+          "description": ".item.description",
+          "version": ".item.version",
+          "summary": ".item.summary"
+        }
+      }
+    }
+  ],
+  "enabled": true,
+  "security": {}
+}
+```
