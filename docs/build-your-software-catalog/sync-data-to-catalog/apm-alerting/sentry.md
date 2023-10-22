@@ -3,9 +3,9 @@ import TabItem from "@theme/TabItem"
 
 # Sentry
 
-Our Sentry integration allows you to import `projects` and `issues` from your Sentry cloud account int o Port, according to your mapping and definition.
+Our Sentry integration allows you to import `projects` and `issues` from your Sentry cloud account into Port, according to your mapping and definition.
 
-A `Project` is a collection of scope events to a distinct application in your organization and assign responsibility to specific users and teams.
+A `Project` is essentially a container for all the data and information related to a specific application or service that you want to monitor.
 
 An `Issue` is a group of incidents that describe the underlying problem of your symptoms.
 
