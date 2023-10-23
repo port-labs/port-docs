@@ -124,17 +124,46 @@ Now that the blueprints are related, let's create a [mirror property](https://do
 
 <img src='/img/guides/mirrorPropertyCreation.png' width='40%' />
 
-2. Now that our mirror property is set, we need to assign the relevant Pagerduty service to each of our services. Let's see an example - go to your [Software catalog](https://app.getport.io/services), choose any service in the table under `Services`, click on the `...`, and click `Edit`:
+2. Now that our mirror property is set, we need to assign the relevant Pagerduty service to each of our services. This can be done by adding some mapping logic. Go to your [data sources page](https://app.getport.io/dev-portal/data-sources), and click on your Pagerduty integration:
+
+<img src='/img/guides/pdDataSources.png' width='60%' />
+
+Add the following YAML block to the mapping under the `resources` key, then click `resync`:
+
+<details>
+<summary>Relation mapping (click to expand)</summary>
+
+```yaml showLineNumbers
+- kind: services
+  selector:
+    query: "true"
+  port:
+    entity:
+      mappings:
+        identifier: .name | gsub("[^a-zA-Z0-9@_.:/=-]"; "-") | tostring
+        title: .name
+        blueprint: '"service"'
+        properties: {}
+        relations:
+          pagerdutyservice: .id
+```
+
+</details>
+
+What we just did was map the `Pagerduty service` to the relation between it and our `services`.  
+Now, if our `service` identifier is equal to the Pagerduty service's name, the `service` will automatically have its `on-call` property filled: &nbsp;🎉
+
+![entitiesAfterOnCallMapping](/img/guides/entitiesAfterOnCallMapping.png)
+
+**Note** that you can always perform this assignment manually if you wish:
+
+1. Go to your [Software catalog](https://app.getport.io/services), choose any service in the table under `Services`, click on the `...`, and click `Edit`:
 
 ![editServiceEntity](/img/guides/editServiceEntity.png)
 
-3. In the form you will now see a property named `PagerDutyService`, choose the `DemoPdService` we created from the dropdown, then click `Update`:
+2. In the form you will now see a property named `PagerDutyService`, choose the `DemoPdService` we created from the dropdown, then click `Update`:
 
 <img src='/img/guides/editServiceChoosePdService.png' width='40%' />
-
-You can now see the on-call in the service: 🎉
-
-![serviceAfterAssigningPdService](/img/guides/serviceAfterAssigningPdService.png)
 
 ### Display each service's code owners
 

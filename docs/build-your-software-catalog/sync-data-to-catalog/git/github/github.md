@@ -50,7 +50,7 @@ resources:
             creator: ".user.login"
             assignees: "[.assignees[].login]"
             reviewers: "[.requested_reviewers[].login]"
-            status: ".status" # merged, closed, opened
+            status: ".status" # merged, closed, open
             closedAt: ".closed_at"
             updatedAt: ".updated_at"
             mergedAt: ".merged_at"
