@@ -163,7 +163,7 @@ The following resources can be used to map data from Kafka, it is possible to re
             properties:
               controllerId: .controller_id
         # highlight-end
-    - kind: project # In this instance project is mapped again with a different filter
+    - kind: cluster # In this instance cluster is mapped again with a different filter
       selector:
         query: '.name == "MyClusterName"'
       port:
