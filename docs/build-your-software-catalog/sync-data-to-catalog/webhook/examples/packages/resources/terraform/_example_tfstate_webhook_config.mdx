@@ -1,15 +1,10 @@
 ```json showLineNumbers
-{
-  "identifier": "terraformResourceMapper",
-  "title": "Terraform Resources Mapper",
-  "description": "A webhook configuration to map Terraform tfstate file",
-  "icon": "Terraform",
-  "mappings": [
+[
     {
       "blueprint": "terraformResource",
       "itemsToParse": ".body.resources",
       "entity": {
-        "identifier": ".item.id",
+        "identifier": ".item.type + '-' + .item.name",
         "title": ".item.name",
         "properties": {
           "mode": ".item.mode",
@@ -20,8 +15,5 @@
         }
       }
     }
-  ],
-  "enabled": true,
-  "security": {}
-}
+  ]
 ```
