@@ -32,7 +32,7 @@ helm upgrade --install sentry port-labs/port-ocean \
 	--set initializePortResources=true  \
 	--set integration.identifier="sentry"  \
 	--set integration.type="sentry"  \
-	--set integration.eventListener.type="KAFKA"  \
+	--set integration.eventListener.type="POLLING"  \
 	--set integration.config.sentryHost="https://example.com"  \
 	--set integration.secrets.sentryToken="string"  \
 	--set integration.config.sentryOrganization="string"
