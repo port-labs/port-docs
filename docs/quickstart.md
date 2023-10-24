@@ -11,6 +11,12 @@ import TabItem from "@theme/TabItem"
 
 This guide takes 7 minutes to complete, and aims to demonstrate the potential of a developer portal for you and your developers.
 
+<center>
+
+<iframe width="60%" height="400" src="https://www.youtube.com/embed/Oqq-VA4a_fQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+
+</center>
+
 ### The goal of this guide
 
 In this guide we will model a repository from your Git provider in Port, using your real data.
