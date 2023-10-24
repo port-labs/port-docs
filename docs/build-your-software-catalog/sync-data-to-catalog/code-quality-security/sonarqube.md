@@ -85,7 +85,7 @@ The following resources can be used to map data from SonarQube, it is possible t
 :::
 
 :::note
-The current version of the Sonarqube integration does not support the `analysis` kind for clients using on-premise Sonarqube installation.
+The current version of the Sonarqube integration does not support the `analysis` kind for clients using on-premises Sonarqube installation.
 :::
 
 - The root key of the integration configuration is the `resources` key:
