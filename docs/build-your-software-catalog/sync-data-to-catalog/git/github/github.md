@@ -50,7 +50,7 @@ resources:
             creator: ".user.login"
             assignees: "[.assignees[].login]"
             reviewers: "[.requested_reviewers[].login]"
-            status: ".status" # merged, closed, opened
+            status: ".status" # merged, closed, open
             closedAt: ".closed_at"
             updatedAt: ".updated_at"
             mergedAt: ".merged_at"
@@ -142,6 +142,7 @@ resources:
       port:
         entity:
           mappings: # Mappings between one GitHub API object to a Port entity. Each value is a JQ query.
+            currentIdentifier: ".name" # OPTIONAL - keep it only in case you want to change the identifier of an existing entity from "currentIdentifier" to "identifier".
             identifier: ".name"
             title: ".name"
             blueprint: '"microservice"'
