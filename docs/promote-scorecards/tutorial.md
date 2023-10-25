@@ -301,7 +301,7 @@ In order to update a scorecard with the Terraform provider, you will need to run
 A Scorecard cannot be restored after deletion!
 :::
 
-You can dete Scorecards through the UI or the API:
+You can delete Scorecards through the UI or the API:
 
 ### From the UI
 
