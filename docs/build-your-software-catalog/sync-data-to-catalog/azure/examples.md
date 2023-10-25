@@ -9,13 +9,22 @@ import StorageAccountBlueprint from './examples/storage/\_storage_account_bluepr
 import StorageContainerBlueprint from './examples/storage/\_storage_container_blueprint.mdx'
 import StorageAppConfig from './examples/storage/\_port_app_config.mdx'
 
-import ResourcesAppConfig from './examples/resources/\_port_app_config.mdx'
-import AKSBlueprint from './examples/resources/\_aks_blueprint.mdx'
-import ContainerAppBlueprint from './examples/resources/\_container_app_blueprint.mdx'
-import LoadBalancerBlueprint from './examples/resources/\_load_balancer_blueprint.mdx'
-import VirtualMachineBlueprint from './examples/resources/\_virtual_machine_blueprint.mdx'
+import ResourcesAppConfig from './examples/compute_resources/\_port_app_config.mdx'
+import AKSBlueprint from './examples/compute_resources/\_aks_blueprint.mdx'
+import ContainerAppBlueprint from './examples/compute_resources/\_container_app_blueprint.mdx'
+import LoadBalancerBlueprint from './examples/compute_resources/\_load_balancer_blueprint.mdx'
+import VirtualMachineBlueprint from './examples/compute_resources/\_virtual_machine_blueprint.mdx'
+import webAppBlueprint from './examples/compute_resources/\_web_app_blueprint.mdx'
+
+import DatabaseAppConfig from './examples/database_resources/\_port_app_config.mdx'
+import PostgresFlexibleServerBlueprint from './examples/database_resources/\_postgres_flexible_server_blueprint.mdx'
 
 # Examples
+
+:::info
+The resources in this page are only few of the resources that the Azure Exporter supports.
+If you don't find the Azure resource you want to map to Port head to the [Mapping Extra Resources](mapping_extra_resources.md) section to learn about what kind of azure resources are supported by the Azure integration and how to map them into Port.
+:::
 
 ## Mapping Resource Groups
 
@@ -55,4 +64,18 @@ The Resources below have a relation to the Resource Group, so creation of the [R
 
 <VirtualMachineBlueprint/>
 
+<WepAppBlueprint/>
+
 <ResourcesAppConfig/>
+
+## Mapping Database Resources
+
+In the following example you will ingest your Azure Database Resources to Port, you may use the following Port blueprint definitions and integration configuration:
+
+:::note
+The Database Resources below have a relation to the Resource Group, so creation of the [Resource Group blueprint](#mapping-resource-groups) is required.
+:::
+
+<PostgresFlexibleServerBlueprint/>
+
+<DatabaseAppConfig/>
