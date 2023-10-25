@@ -78,8 +78,9 @@ resources:
           title: ".name"
           blueprint: '"microservice"'
           properties:
-            url: ".links.html.href"
             project: ".project.name"
+            url: ".links.html.href"
+            defaultBranch: ".main_branch"
 ```
 
 ### `port-app-config.yml` structure
@@ -144,8 +145,9 @@ resources:
             title: ".name"
             blueprint: '"microservice"'
             properties:
-              url: ".links.html.href"
               project: ".project.name"
+              url: ".links.html.href"
+              defaultBranch: ".main_branch"
       # highlight-end
   ```
 

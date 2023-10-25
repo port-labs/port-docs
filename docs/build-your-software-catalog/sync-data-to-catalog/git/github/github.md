@@ -147,8 +147,9 @@ resources:
             title: ".name"
             blueprint: '"microservice"'
             properties:
-              url: ".html_url"
               description: ".description"
+              url: ".html_url"
+              defaultBranch: ".default_branch"
       # highlight-end
     - kind: repository # In this instance repository is mapped again with a different filter
       selector:
