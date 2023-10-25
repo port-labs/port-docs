@@ -1,8 +1,8 @@
 <details>
 
 <summary>
-  Mapping Configuration for AKS, ContainerApp, LoadBalancer and
-  VirtualMachine{" "}
+  Mapping Configuration for AKS, ContainerApp, LoadBalancer, VirtualMachine and
+  WebApp
 </summary>
 
 ```yaml showLineNumbers
@@ -110,6 +110,24 @@ resources:
             tags: .tags
           relations:
             resourceGroup: '.id | split("/") | .[3] |= ascii_downcase | .[4] |= ascii_downcase | .[:5] |join("/")'
+  - kind: Microsoft.Web/sites
+    selector:
+      query: "true"
+      apiVersion: "2022-03-01"
+    port:
+      entity:
+        mappings:
+          identifier: '.id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase | join("/")'
+          title: .name
+          blueprint: '"webApp"'
+          properties:
+            location: .location
+            state: .properties.state
+            enabled: .properties.enabled
+            defaultHostName: .properties.defaultHostName
+            appServicePlanId: .properties.serverFarmId
+          relations:
+            resourceGroup: '.id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase | .[:5] |join("/")'
 ```
 
 </details>
