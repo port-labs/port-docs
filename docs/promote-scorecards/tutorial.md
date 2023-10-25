@@ -278,7 +278,7 @@ And just as we have shown earlier in the tutorial, you can update a Scorecard fr
 
 ### From the UI
 
-In order to update a Scorecard from the UI, go to the DevPortal Builder page, click on the 3 dots icon and select Scorecards.
+In order to update a Scorecard from the UI, go to the DevPortal Builder page, expand the desired blue print, and switch to the Scorecards tab.
 
 An editor window will open with the current scorecards of the Blueprint. In order to update the Scorecard, change the wanted scorecard within the scorecards array, click on `save` at the bottom right corner of the editor and view the updated Scorecards.
 
@@ -301,7 +301,11 @@ In order to update a scorecard with the Terraform provider, you will need to run
 A Scorecard cannot be restored after deletion!
 :::
 
-There are two ways to delete a Scorecard:
+You can delete Scorecards through the UI or the API:
+
+### From the UI
+
+To delete a Scorecard through the UI, go to the Builder page, expand the Blueprint and switch to the Scorecards tab. Hover the desired Scorecard and select "Delete Scorecard" from the three dot menu.
 
 ### From the API
 
