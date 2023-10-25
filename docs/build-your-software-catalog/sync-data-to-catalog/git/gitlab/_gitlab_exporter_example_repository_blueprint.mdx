@@ -1,10 +1,10 @@
 <details>
-<summary>Microservice blueprint</summary>
+<summary>Repository blueprint</summary>
 
 ```json showLineNumbers
 {
-  "identifier": "microservice",
-  "title": "Microservice",
+  "identifier": "repository",
+  "title": "Repository",
   "icon": "Microservice",
   "schema": {
     "properties": {
@@ -26,8 +26,12 @@
         "title": "Namespace",
         "type": "string"
       },
-      "full_path": {
+      "fullPath": {
         "title": "Full Path",
+        "type": "string"
+      },
+      "defaultBranch": {
+        "title": "Default Branch",
         "type": "string"
       }
     },

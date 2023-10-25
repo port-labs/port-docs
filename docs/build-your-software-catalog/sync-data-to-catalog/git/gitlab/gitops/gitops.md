@@ -14,7 +14,7 @@ Port's GitLab integration makes it possible to manage Port entities with a GitOp
 
 ## 💡 GitLab GitOps common use cases
 
-- Use GitLab as the source-of-truth for your **microservices**, **packages**, **libraries** and other software catalog assets;
+- Use GitLab as the source-of-truth for your **microservices**, **projects**, **packages**, **libraries** and other software catalog assets;
 - Allow developers to keep the catalog up-to-date, by making updates to files in their Git projects;
 - Create a standardized way to document software catalog assets in your organization;
 - etc.
