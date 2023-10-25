@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-import RepositoryBlueprint from '../\_git_exporter_example_repository_blueprint.mdx'
+import RepositoryBlueprint from './\_github_exporter_example_repository_blueprint.mdx'
 import PRBlueprint from './\_github_exporter_example_pull_request_blueprint.mdx'
 import PortAppConfig from './\_github_exporter_example_port_app_config.mdx'
 import GitHubResources from './\_github_exporter_supported_resources.mdx'

@@ -73,12 +73,13 @@ resources:
       mappings:
         identifier: .namespace.full_path | gsub("/";"-") # The Entity identifier will be the repository name.
         title: .name
-        blueprint: '"microservice"'
+        blueprint: '"repository"'
         properties:
           url: .web_link
           description: .description
           namespace: .namespace.name
-          full_path: .namespace.full_path | split("/") | .[:-1] | join("/")
+          fullPath: .namespace.full_path | split("/") | .[:-1] | join("/")
+          defaultBranch: .default_branch
 ```
 
 ### Integration configuration structure
@@ -141,12 +142,13 @@ resources:
           mappings: # Mappings between one GitLab API object to a Port entity. Each value is a JQ query.
             identifier: .namespace.full_path | gsub("/";"-")
             title: .name
-            blueprint: '"microservice"'
+            blueprint: '"repository"'
             properties:
               url: .web_link
               description: .description
               namespace: .namespace.name
-              full_path: .namespace.full_path | split("/") | .[:-1] | join("/")
+              fullPath: .namespace.full_path | split("/") | .[:-1] | join("/")
+              defaultBranch: .default_branch
         # highlight-end
     - kind: project # In this instance project is mapped again with a different filter
       selector:
