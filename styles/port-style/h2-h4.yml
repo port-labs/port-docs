@@ -1,0 +1,11 @@
+extends: existence
+message: "Subtitles (H2-H4) should have only the first word capitalized. The rest should be in lowercase. Example: 'Our building-space'."
+level: error
+scope:
+  - heading.h2
+  - heading.h3
+  - heading.h4
+nonword: false
+ignorecase: false
+tokens:
+  - '\b[A-Z][A-Z]+\b'

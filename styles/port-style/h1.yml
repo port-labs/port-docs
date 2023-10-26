@@ -1,0 +1,8 @@
+extends: existence
+message: "Headlines (H1) should have each word capitalized, including prepositions. Example: 'Port Platform Overview'."
+level: error
+scope: heading.h1
+nonword: false
+ignorecase: true
+tokens:
+  - '\b[a-z]'

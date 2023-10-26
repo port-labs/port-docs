@@ -1,0 +1,7 @@
+extends: existence
+message: "Links should not start with capital letters unless they're at the beginning of a sentence."
+level: error
+scope: paragraph
+ignorecase: false
+tokens:
+  - '(?<!\.\s)\[[A-Z][^\]]+\]\([^\)]+\)'

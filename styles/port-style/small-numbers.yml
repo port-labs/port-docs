@@ -1,0 +1,16 @@
+extends: substitution
+message: "Write out numbers up to ten as words instead of numerals."
+level: warning
+scope: paragraph
+ignorecase: false
+swap:
+  '\b1\b': "one"
+  '\b2\b': "two"
+  '\b3\b': "three"
+  '\b4\b': "four"
+  '\b5\b': "five"
+  '\b6\b': "six"
+  '\b7\b': "seven"
+  '\b8\b': "eight"
+  '\b9\b': "nine"
+  '\b10\b': "ten"

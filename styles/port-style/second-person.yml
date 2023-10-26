@@ -1,0 +1,7 @@
+extends: substitution
+message: "Use second-person ('you') instead of third-person ('we')."
+level: warning
+scope: paragraph
+ignorecase: true
+swap:
+  '(?i)\bwe\b': "you"

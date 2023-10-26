@@ -1,0 +1,8 @@
+extends: existence
+message: "Content inside info/note/caution/tip/danger boxes should be in all capital letters."
+level: error
+scope: raw
+nonword: false
+ignorecase: false
+tokens:
+  - '(?i)(:::(info|note|caution|tip|danger)[^:]*\n)(?=.*\b[a-z]+\b)(.*?)(:::)'
