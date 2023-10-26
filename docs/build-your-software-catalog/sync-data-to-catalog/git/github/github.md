@@ -142,12 +142,14 @@ resources:
       port:
         entity:
           mappings: # Mappings between one GitHub API object to a Port entity. Each value is a JQ query.
+            currentIdentifier: ".name" # OPTIONAL - keep it only in case you want to change the identifier of an existing entity from "currentIdentifier" to "identifier".
             identifier: ".name"
             title: ".name"
             blueprint: '"microservice"'
             properties:
-              url: ".html_url"
               description: ".description"
+              url: ".html_url"
+              defaultBranch: ".default_branch"
       # highlight-end
     - kind: repository # In this instance repository is mapped again with a different filter
       selector:

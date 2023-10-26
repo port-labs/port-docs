@@ -2,7 +2,7 @@
 sidebar_position: 5
 ---
 
-import MicroserviceBlueprint from './\_gitlab_exporter_example_microservice_blueprint.mdx'
+import RepositoryBlueprint from './\_gitlab_exporter_example_repository_blueprint.mdx'
 
 # Mapping Extensions
 
@@ -24,7 +24,7 @@ Possible Use Cases:
 
 In the following example you will define and export your GitLab projects and their **README.md** file contents to Port:
 
-<MicroserviceBlueprint/>
+<RepositoryBlueprint/>
 
 As we can see one of the properties is of type markdown, this means that we need to map the **README.md** file contents into Port.
 
@@ -39,14 +39,15 @@ To do so, we will use the `file://` prefix with the path of the file to tell the
         mappings:
           identifier: .path_with_namespace | gsub(" "; "")
           title: .name
-          blueprint: '"microservice"'
+          blueprint: '"repository"'
           properties:
             url: .web_url
             // highlight-next-line
             readme: file://README.md
             description: .description
             namespace: .namespace.name
-            full_path: .namespace.full_path
+            fullPath: .namespace.full_path
+            defaultBranch: .default_branch
 ```
 
 ## Search checks
@@ -89,19 +90,20 @@ This means that any search query supported by the GitLab Search API can be used 
         mappings:
           identifier: .path_with_namespace | gsub(" "; "")
           title: .name
-          blueprint: '"microservice"'
+          blueprint: '"repository"'
           properties:
             url: .web_link
             description: .description
             namespace: .namespace.name
-            full_path: .namespace.full_path
+            fullPath: .namespace.full_path
+            defaultBranch: .default_branch
             readme: file://README.md
             // highlight-start
-            has_license: search://scope=blobs&&query=filename:"LICENSE"
-            using_fastapi_package: search://scope=blobs&&query=fastapi filename:requirements.txt
-            has_ci: search://scope=blobs&&query=filename:.gitlab-ci.yml
-            using_old_logging_package: search://scope=blobs&&query=logging extension:py
-            has_tests: search://scope=blobs&&query=filename:test_* extension:py
+            hasLicense: search://scope=blobs&&query=filename:"LICENSE"
+            usingFastapiPackage: search://scope=blobs&&query=fastapi filename:requirements.txt
+            hasCI: search://scope=blobs&&query=filename:.gitlab-ci.yml
+            usingOldLoggingPackage: search://scope=blobs&&query=logging extension:py
+            hasTests: search://scope=blobs&&query=filename:test_* extension:py
             // highlight-end
 ```
 
