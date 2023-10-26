@@ -14,7 +14,7 @@ import AKSBlueprint from './examples/compute_resources/\_aks_blueprint.mdx'
 import ContainerAppBlueprint from './examples/compute_resources/\_container_app_blueprint.mdx'
 import LoadBalancerBlueprint from './examples/compute_resources/\_load_balancer_blueprint.mdx'
 import VirtualMachineBlueprint from './examples/compute_resources/\_virtual_machine_blueprint.mdx'
-import webAppBlueprint from './examples/compute_resources/\_web_app_blueprint.mdx'
+import WebAppBlueprint from './examples/compute_resources/\_web_app_blueprint.mdx'
 
 import DatabaseAppConfig from './examples/database_resources/\_port_app_config.mdx'
 import PostgresFlexibleServerBlueprint from './examples/database_resources/\_postgres_flexible_server_blueprint.mdx'
@@ -23,7 +23,7 @@ import PostgresFlexibleServerBlueprint from './examples/database_resources/\_pos
 
 :::info
 The resources in this page are only few of the resources that the Azure Exporter supports.
-If you don't find the Azure resource you want to map to Port head to the [Mapping Extra Resources](mapping_extra_resources.md) section to learn about what kind of azure resources are supported by the Azure integration and how to map them into Port.
+If you don't find the Azure resource you want to map to Port head to the [Mapping Extra Resources](mapping_extra_resources.md) page to learn about what kind of azure resources are supported by the Azure integration and how to map them into Port.
 :::
 
 ## Mapping Resource Groups
@@ -33,6 +33,10 @@ In the following example you will ingest your Azure Resource Groups to Port, you
 <ResourceGroupBlueprint/>
 
 <ResourceGroupAppConfig/>
+
+Here are the API references we used to create those blueprints and app config:
+
+- [Resource Group](https://docs.microsoft.com/en-us/rest/api/resources/resourcegroups/list)
 
 ## Mapping Storage Resources
 
@@ -47,6 +51,11 @@ The Storage Account has a relation to the Resource Group, so creation of the [Re
 <StorageContainerBlueprint/>
 
 <StorageAppConfig/>
+
+Here are the API references we used to create those blueprints and app config:
+
+- [Storage Account](https://docs.microsoft.com/en-us/rest/api/storagerp/storageaccounts/list)
+- [Storage Container](https://learn.microsoft.com/en-us/rest/api/storagerp/blob-containers/list?tabs=HTTP)
 
 ## Mapping Compute Resources
 
@@ -64,9 +73,17 @@ The Resources below have a relation to the Resource Group, so creation of the [R
 
 <VirtualMachineBlueprint/>
 
-<WepAppBlueprint/>
+<WebAppBlueprint/>
 
 <ResourcesAppConfig/>
+
+Here are the API references we used to create those blueprints and app config:
+
+- [AKS](https://learn.microsoft.com/en-us/rest/api/aks/managed-clusters/list?tabs=HTTP)
+- [Container App](https://learn.microsoft.com/en-us/rest/api/containerapps/stable/container-apps/list-by-subscription?tabs=HTTP)
+- [Load Balancer](https://learn.microsoft.com/en-us/rest/api/load-balancer/load-balancers/list-all?tabs=HTTP)
+- [Virtual Machine](https://learn.microsoft.com/en-us/rest/api/compute/virtual-machines/list-all?tabs=HTTP)
+- [Web App](https://learn.microsoft.com/en-us/rest/api/appservice/web-apps/list)
 
 ## Mapping Database Resources
 
@@ -79,3 +96,12 @@ The Database Resources below have a relation to the Resource Group, so creation 
 <PostgresFlexibleServerBlueprint/>
 
 <DatabaseAppConfig/>
+
+Here are the API references we used to create those blueprints and app config:
+
+- [Postgres Flexible Server](https://docs.microsoft.com/en-us/rest/api/azure-postgresql/flexibleservers)
+
+:::info
+The resources in this page are only few of the resources that the Azure Exporter supports.
+If you don't find the Azure resource you want to map to Port head to the [Mapping Extra Resources](mapping_extra_resources.md) page to learn about what kind of azure resources are supported by the Azure integration and how to map them into Port.
+:::
