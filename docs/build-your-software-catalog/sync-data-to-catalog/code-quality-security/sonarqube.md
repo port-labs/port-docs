@@ -471,3 +471,261 @@ resources:
 ```
 
 </details>
+
+## Let's Test It
+
+This section includes a sample response data from SonarQube when a code repository is scanned for quality assurance. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+
+### Payload
+
+Here is an example of the payload structure from SonarQube:
+
+<details>
+<summary> Project response data</summary>
+
+```json showLineNumbers
+{
+  "organization": "peygis",
+  "key": "PeyGis_Chatbot_For_Social_Media_Transaction",
+  "name": "Chatbot_For_Social_Media_Transaction",
+  "isFavorite": true,
+  "tags": [],
+  "visibility": "public",
+  "eligibilityStatus": "COMPLETED",
+  "eligible": true,
+  "isNew": false,
+  "analysisDateAllBranches": "2023-09-09T03:03:20+0200",
+  "__measures": [
+    {
+      "metric": "bugs",
+      "value": "6",
+      "bestValue": false
+    },
+    {
+      "metric": "code_smells",
+      "value": "216",
+      "bestValue": false
+    },
+    {
+      "metric": "duplicated_files",
+      "value": "2",
+      "bestValue": false
+    },
+    {
+      "metric": "vulnerabilities",
+      "value": "1",
+      "bestValue": false
+    },
+    {
+      "metric": "security_hotspots",
+      "value": "8",
+      "bestValue": false
+    }
+  ],
+  "__branch": {
+    "name": "master",
+    "isMain": true,
+    "type": "LONG",
+    "status": {
+      "qualityGateStatus": "ERROR",
+      "bugs": 6,
+      "vulnerabilities": 1,
+      "codeSmells": 216
+    },
+    "analysisDate": "2023-09-07T14:38:41+0200",
+    "commit": {
+      "sha": "5b01b6dcb200df0bfd1c66df65be30f9ea5423d8",
+      "author": {
+        "name": "Username",
+        "login": "Username@github",
+        "avatar": "9df2ac1caa70b0a67ff0561f7d0363e5"
+      },
+      "date": "2023-09-07T14:38:36+0200",
+      "message": "Merge pull request #21 from PeyGis/test-sonar"
+    }
+  },
+  "__link": "https://sonarcloud.io/project/overview?id=PeyGis_Chatbot_For_Social_Media_Transaction"
+}
+```
+
+</details>
+
+<details>
+<summary> Issues response data</summary>
+
+```json showLineNumbers
+{
+  "key": "AYhnRlhI0rLhE5EBPGHW",
+  "rule": "xml:S1135",
+  "severity": "INFO",
+  "component": "PeyGis_Chatbot_For_Social_Media_Transaction:node_modules/json-schema/draft-zyp-json-schema-04.xml",
+  "project": "PeyGis_Chatbot_For_Social_Media_Transaction",
+  "line": 313,
+  "hash": "8346d5371c3d1b0d1d57937c7b967090",
+  "textRange": {
+    "startLine": 313,
+    "endLine": 313,
+    "startOffset": 3,
+    "endOffset": 56
+  },
+  "flows": [],
+  "status": "OPEN",
+  "message": "Complete the task associated to this \"TODO\" comment.",
+  "effort": "0min",
+  "debt": "0min",
+  "assignee": "Username@github",
+  "author": "email@gmail.com",
+  "tags": [],
+  "creationDate": "2018-04-06T02:44:46+0200",
+  "updateDate": "2023-05-29T13:30:14+0200",
+  "type": "CODE_SMELL",
+  "organization": "peygis",
+  "cleanCodeAttribute": "COMPLETE",
+  "cleanCodeAttributeCategory": "INTENTIONAL",
+  "impacts": [
+    {
+      "softwareQuality": "MAINTAINABILITY",
+      "severity": "LOW"
+    }
+  ],
+  "__link": "https://sonarcloud.io/project/issues?open=AYhnRlhI0rLhE5EBPGHW&id=PeyGis_Chatbot_For_Social_Media_Transaction"
+}
+```
+
+</details>
+
+<details>
+<summary> Analysis response data</summary>
+
+```json showLineNumbers
+{
+  "analysisId": "AYpvptJNv89mE9ClYP-q",
+  "firstAnalysis": false,
+  "measures": {
+    "violations_added": "0",
+    "violations_fixed": "0",
+    "coverage_change": "0.0",
+    "duplicated_lines_density_change": "0.0",
+    "ncloc_change": "0"
+  },
+  "branch": {
+    "analysisDate": "2023-09-07T12:38:41.279Z",
+    "isMain": true,
+    "name": "master",
+    "commit": {
+      "sha": "5b01b6dcb200df0bfd1c66df65be30f9ea5423d8",
+      "author": {
+        "avatar": "9df2ac1caa70b0a67ff0561f7d0363e5",
+        "login": "Username@github",
+        "name": "Username"
+      },
+      "date": "2023-09-07T12:38:36Z",
+      "message": "Merge pull request #21 from PeyGis/test-sonar"
+    },
+    "type": "LONG",
+    "status": {
+      "qualityGateStatus": "ERROR"
+    }
+  },
+  "__branchName": "master",
+  "__analysisDate": "2023-09-07T12:38:41.279Z",
+  "__commit": {
+    "sha": "5b01b6dcb200df0bfd1c66df65be30f9ea5423d8",
+    "author": {
+      "avatar": "9df2ac1caa70b0a67ff0561f7d0363e5",
+      "login": "Username@github",
+      "name": "Username"
+    },
+    "date": "2023-09-07T12:38:36Z",
+    "message": "Merge pull request #21 from PeyGis/test-sonar"
+  },
+  "__project": "PeyGis_Chatbot_For_Social_Media_Transaction"
+}
+```
+
+</details>
+
+### Mapping Result
+
+The combination of the sample payload and the Ocean configuration generates the following Port entity:
+
+<details>
+<summary> Project entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "PeyGis_Chatbot_For_Social_Media_Transaction",
+  "title": "Chatbot_For_Social_Media_Transaction",
+  "blueprint": "sonarQubeProject",
+  "team": [],
+  "properties": {
+    "organization": "peygis",
+    "link": "https://sonarcloud.io/project/overview?id=PeyGis_Chatbot_For_Social_Media_Transaction",
+    "lastAnalysisDate": "2023-09-07T12:38:41.000Z",
+    "numberOfBugs": 6,
+    "numberOfCodeSmells": 216,
+    "numberOfVulnerabilities": 1,
+    "numberOfHotSpots": 8,
+    "numberOfDuplications": 2,
+    "mainBranch": "master",
+    "tags": []
+  },
+  "relations": {},
+  "icon": "sonarqube"
+}
+```
+
+</details>
+
+<details>
+<summary> Issue entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "AYhnRlhI0rLhE5EBPGHW",
+  "title": "Complete the task associated to this \"TODO\" comment.",
+  "blueprint": "sonarQubeIssue",
+  "team": [],
+  "properties": {
+    "type": "CODE_SMELL",
+    "severity": "INFO",
+    "link": "https://sonarcloud.io/project/issues?open=AYhnRlhI0rLhE5EBPGHW&id=PeyGis_Chatbot_For_Social_Media_Transaction",
+    "status": "OPEN",
+    "assignees": "Username@github",
+    "tags": [],
+    "createdAt": "2018-04-06T00:44:46.000Z"
+  },
+  "relations": {
+    "sonarQubeProject": "PeyGis_Chatbot_For_Social_Media_Transaction"
+  },
+  "icon": "sonarqube"
+}
+```
+
+</details>
+
+<details>
+<summary> Analysis entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "AYpvptJNv89mE9ClYP-q",
+  "title": "Merge pull request #21 from PeyGis/test-sonar",
+  "blueprint": "sonarQubeAnalysis",
+  "team": [],
+  "properties": {
+    "branch": "master",
+    "fixedIssues": 0,
+    "newIssues": 0,
+    "coverage": 0,
+    "duplications": 0,
+    "createdAt": "2023-09-07T12:38:41.279Z"
+  },
+  "relations": {
+    "sonarQubeProject": "PeyGis_Chatbot_For_Social_Media_Transaction"
+  },
+  "icon": "sonarqube"
+}
+```
+
+</details>
