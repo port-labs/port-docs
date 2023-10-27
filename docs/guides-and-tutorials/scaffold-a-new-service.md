@@ -55,13 +55,15 @@ After completing it, you will get a sense of how your organization's daily routi
 5. Now we'll define the backend of the action. Port supports multiple invocation types, for this tutorial we will use a `Github workflow`.
    - Replace the `Organization` and `Repository` values with your values (this is where the workflow will reside and run).
    - Name the workflow `portCreateRepo.yaml`.
-   - set omit user inputs to `yes`.
+   - Set `Omit user inputs` to `Yes`.
    - Fill out the rest of the form like this, then click `Next`:
 
-:::info notes
+:::tip Important
 
-In our workflow, the cookiecutter uses the payload for the inputs. We omit the payload in order to not send additional inputs to the workflow.
-If you are using your own workflow, you can use the data from the inputs, and then set Omit user input to `no`
+In our workflow, the cookiecutter uses the payload for the inputs. We omit the payload in order to not send additional inputs to the workflow.  
+If you are using your personal Github (default organization), set `Omit user inputs` to `No`.
+
+:::
 
 <img src='/img/guides/backendGithub.png' width='75%' />
 
@@ -103,7 +105,7 @@ Change `<YOUR-ORG-NAME>` to the name of the organization in which you want to cr
 ```yaml showLineNumbers
 # portCreateRepo.yaml
 
-name: scaffold
+name: Scaffold a new service
 on:
   workflow_dispatch:
     inputs:
@@ -119,9 +121,9 @@ on:
       PORT_CLIENT_SECRET:
         required: true
 jobs:
-  scaffold:
+  scaffold-service:
     env:
-      ORG_NAME: INSERT_ORG_NAME_HERE
+      ORG_NAME: <YOUR-ORG-NAME>
     runs-on: ubuntu-latest
     steps:
       - uses: port-labs/cookiecutter-gha@v1
@@ -136,7 +138,7 @@ jobs:
           cookiecutterTemplate: https://github.com/lacion/cookiecutter-golang
           blueprintIdentifier: "service"
           organizationName: ${{ env.ORG_NAME }}
-        
+
       - name: "Report deployment Entity to port 🚢"
         uses: port-labs/port-github-action@v1
         with:
@@ -149,8 +151,6 @@ jobs:
               "url": "https://github.com/${{ env.ORG_NAME }}/${{ fromJson(inputs.port_payload).payload.properties.service_name }}",
               "language": "golang"
             }
-
-
 ```
 
 </details>
