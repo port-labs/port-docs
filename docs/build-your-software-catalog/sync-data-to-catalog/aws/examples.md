@@ -3665,3 +3665,174 @@ In this step-by-step example, you will export your `Load balancers` to Port.
    </details>
 
 Done! soon, you will be able to see any `Load balancers`
+
+## Mapping EKS clusters
+
+In this step-by-step example, you will export your `EKS clusters` to Port.
+
+1. Create the following Port blueprint:
+
+   **EKS Cluster** - will represent EKS clusters from the AWS account.
+
+   You may use the following definitions:
+
+     <details>
+     <summary> EKS  blueprint </summary>
+
+   ```json showLineNumbers
+   {
+     "identifier": "eks",
+     "description": "",
+     "title": "EKS Cluster",
+     "icon": "Service",
+     "schema": {
+       "properties": {
+         "name": {
+           "type": "string",
+           "title": "Name"
+         },
+         "roleArn": {
+           "type": "string",
+           "title": "Role ARN"
+         },
+         "tags": {
+           "type": "array",
+           "title": "Tags"
+         },
+         "version": {
+           "type": "string",
+           "title": "Version"
+         }
+       },
+       "required": []
+     },
+     "mirrorProperties": {},
+     "calculationProperties": {},
+     "relations": {
+       "region": {
+         "title": "Region",
+         "target": "region",
+         "required": false,
+         "many": false
+       }
+     }
+   }
+   ```
+
+     </details>
+
+2. Upload the `config.json` file to the exporter's S3 bucket:
+
+   <details>
+   <summary> Port AWS exporter config.json </summary>
+
+   ```json showLineNumbers
+   {
+     "resources": [
+       {
+         "kind": "AWS::EKS::Cluster",
+         "port": {
+           "entity": {
+             "mappings": [
+               {
+                 "identifier": ".Name",
+                 "title": ".Name",
+                 "blueprint": "eks",
+                 "properties": {
+                   "name": ".Name",
+                   "roleArn": ".RoleArn",
+                   "version": ".Version",
+                   "tags": ".Tags"
+                 }
+               }
+             ],
+             "relations": {
+               "region": ".Arn | split(\":\")[3]",
+               "cloudAccount": ".Arn | split(\":\")[4]"
+             }
+           }
+         }
+       }
+     ]
+   }
+   ```
+
+   </details>
+
+3. Update the exporter's `IAM policy`:
+
+   <details>
+   <summary> IAM policy </summary>
+
+   ```json showLineNumbers
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Sid": "VisualEditor0",
+         "Effect": "Allow",
+         "Action": ["eks:DescribeCluster", "eks:ListClusters"],
+         "Resource": "*"
+       }
+     ]
+   }
+   ```
+
+   </details>
+
+4. Optional: create an event rule to trigger automatic syncing of changes in EKS clusters.
+
+   You may use the following CloudFormation template:
+
+    <details>
+    <summary> Event rule CloudFormation template </summary>
+
+   ```yaml showLineNumbers
+   AWSTemplateFormatVersion: "2010-09-09"
+   Description: The template used to create event rules for the Port AWS exporter.
+   Parameters:
+     PortAWSExporterStackName:
+       Description: Name of the Port AWS exporter stack name
+       Type: String
+       MinLength: 1
+       MaxLength: 255
+       AllowedPattern: ^[a-zA-Z][-a-zA-Z0-9]*$
+       Default: serverlessrepo-port-aws-exporter
+   ```
+
+Resources:
+EksClusterEventRule:
+Type: AWS::Events::Rule
+Properties:
+EventBusName: default
+EventPattern:
+detail-type: - AWS API Call via CloudTrail
+source: - aws.eks
+detail:
+eventSource: - eks.amazonaws.com
+eventName: - prefix: CreateCluster - prefix: DeleteCluster
+Name: port-aws-exporter-sync-eks-trails
+State: ENABLED
+Targets: - Id: PortAWSExporterEventsQueue
+Arn:
+Fn::ImportValue:
+Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+InputTransformer:
+InputPathsMap:
+awsRegion: $.detail.awsRegion
+clusterArn: $.detail.responseElements.cluster.arn
+eventName: $.detail.eventName
+clusterName: $.detail.responseElements.cluster.name
+InputTemplate: >-
+{
+"resource_type": "AWS::EKS::Cluster",
+"region": "<awsRegion>",
+"identifier": "<clusterName>",
+"action": "if \"<eventName>\" | startswith(\"Delete\") then \"delete\" else \"upsert\" end"
+}
+
+```
+</details>
+
+Done! soon, you will be able to see any `EKS clusters`
+```
