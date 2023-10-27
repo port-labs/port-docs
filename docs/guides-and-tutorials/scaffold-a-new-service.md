@@ -60,7 +60,7 @@ After completing it, you will get a sense of how your organization's daily routi
 
 :::info notes
 
-In our workflow, the cookiecutter uses the payload for the inputs. We omit the payload in order to not send additional inputs to the workflow.
+In our workflow, the cookiecutter uses the payload for the inputs. We omit the user inputs in order to avoid sending additional inputs to the workflow.  
 If you are using your own workflow, you can use the data from the inputs, and then set Omit user input to `no`
 
 <img src='/img/guides/backendGithub.png' width='75%' />
