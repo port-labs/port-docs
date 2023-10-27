@@ -65,7 +65,7 @@ If you are using your personal Github (default organization), set `Omit user inp
 
 :::
 
-<img src='/img/guides/backendGithub.png' width='75%' />
+<img src='/img/guides/scaffoldBackend.png' width='75%' />
 
 6. The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Create`.
 
