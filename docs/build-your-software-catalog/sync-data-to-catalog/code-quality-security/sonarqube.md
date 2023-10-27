@@ -551,7 +551,7 @@ Here is an example of the payload structure from SonarQube:
 </details>
 
 <details>
-<summary> Issues response data</summary>
+<summary> Issue response data</summary>
 
 ```json showLineNumbers
 {
