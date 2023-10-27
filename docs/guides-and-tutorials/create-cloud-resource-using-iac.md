@@ -5,7 +5,7 @@ sidebar_position: 3
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Create cloud resource using IaC
+# Create cloud resources using IaC
 
 This guide takes 7 minutes to complete, and aims to demonstrate:
 
@@ -26,13 +26,13 @@ In this guide we will open a pull-request in our Github repository from within P
 
 After completing it, you will get a sense of how your organization's daily routine could look like:
 
-- Platform engineers will be able to define powerful actions that developers can use without unnecessary overhead.
+- Platform engineers will be able to define powerful actions that developers can use within controlled permission boundaries.
 - Developers will be able to easily create and track cloud resources from Port.
 - R&D managers will get a bird's-eye-view of the cloud resources in the organization.
 
-### Add an IaC URL to your services
+### Add a URL to your new resource's definition
 
-In this guide we will add a new property to our `service` blueprint, which we can use to access the definition of its cloud resource.
+In this guide we will add a new property to our `service` blueprint, which we can use to access our cloud resource definitions.
 
 1. Go to your [Builder](https://app.getport.io/dev-portal/data-model).
 2. Click on your `service` blueprint, then click on `New property`.
@@ -46,21 +46,25 @@ This property is empty for now in all services, we will fill it as part of the a
 
 1. Head to the [Self-service tab](https://app.getport.io/self-serve) in your Port application, and click on `+ New action`.
 
-2. Each action in Port is directly tied to a blueprint. Our action creates a resource for an existing `service` in our environment, so choose `Service` from the dropdown list.
+2. Each action in Port is directly tied to a blueprint. Our action creates a resource that is associated with a service and will be provisioned as part of the service's CD process.  
+   Choose `Service` from the dropdown list.
 
-3. Fill out the form like this and click `Next`:
+3. This action does not create/delete entites, but rather performs an operation on an existing entity. Therefore, we will choose `Day-2` as the action type.  
+   Fill out the form like this and click `Next`:
 
 <img src='/img/guides/iacActionDetails.png' width='50%' />
 
 <br/><br/>
 
-4. We want our s3 bucket to be given a name and a public/private visibility. Click on `+ New input`, fill out the form like this and click `Create`:
+4. We want the developer who uses this action to specify simple inputs and not be overwhelmed with all the configurations available for an S3 bucket. For this action, we will define a name and a public/private visibility.  
+   Click on `+ New input`, fill out the form like this and click `Create`:
 
 <img src='/img/guides/iacActionInputName.png' width='50%' />
 
 <br/><br/>
 
-5. Now let's create the visibility input. Click on `+ New input`, fill out the form like this and click `Create`:
+5. Now let's create the visibility input, which will later serve as the `acl` of our resource.  
+   Click on `+ New input`, fill out the form like this and click `Create`:
 
 <img src='/img/guides/iacActionInputVisibility.png' width='50%' />
 
@@ -83,9 +87,9 @@ The action's frontend is now ready 🥳
 
 Now we want to write the logic that our action will trigger.
 
-1. First, let's create the necessary token and secrets:
+1. First, let's create the necessary token and secrets. If you've already completed the [scaffold a new service guide](/guides-and-tutorials/scaffold-a-new-service), you should already have these configured and you can skip this step.
 
-- Go to your [Github tokens page](https://github.com/settings/tokens), create a personal access token with `repo` scope, and copy it (this token is needed to create a pull-request from our workflow).
+- Go to your [Github tokens page](https://github.com/settings/tokens), create a personal access token with `repo` and `admin:org` scope, and copy it (this token is needed to create a pull-request from our workflow).
 
   <img src='/img/guides/personalAccessToken.png' width='80%' />
 
@@ -93,11 +97,11 @@ Now we want to write the logic that our action will trigger.
 
 2. In the repository where your workflow will reside, create 3 new secrets under `Settings->Secrets and variables->Actions`:
 
-- `PAT` - the personal access token you created in the previous step.
+- `ORG_ADMIN_TOKEN` - the personal access token you created in the previous step.
 - `PORT_CLIENT_ID` - the client ID you copied from your Port app.
 - `PORT_CLIENT_SECRET` - the client secret you copied from your Port app.
 
-<img src='/img/guides/iacRepositorySecrets.png' width='60%' />
+<img src='/img/guides/repositorySecret.png' width='60%' />
 
 <br/><br/>
 
@@ -125,9 +129,9 @@ acl = "{{ bucket_acl }}"
 
 <br/><br/>
 
-- Create a copy of the template file and replace its variables with the data from the action's input.
-- Create a pull request in the repository to add the new resource.
-- Report & log the action result back to Port and update the relevant service's `IaC_file` property with the URL of the new resource file.
+- Creating a copy of the template file and replacing its variables with the data from the action's input.
+- Creating a pull request in the repository to add the new resource.
+- Reporting & logging the action result back to Port, and updating the relevant service's `Resource definitions` property with the URL of the new resource file.
 
 Under ".github/workflows", create a new file named `portCreateBucket.yaml` and use the following snippet as its content:
 
@@ -152,17 +156,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+        with:
+          repository: "${{ github.repository_owner }}/${{fromJson(inputs.port_payload).context.entity}}"
+          path: ./targetRepo
+          token: ${{ secrets.ORG_ADMIN_TOKEN }}
       - name: Copy template file
         run: |
-          cp templates/cloudResource.tf resources/${{ inputs.name }}.tf
+          mkdir -p ./targetRepo/resources
+          cp templates/cloudResource.tf ./targetRepo/resources/${{ inputs.name }}.tf
       - name: Update new file data
         run: |
-          sed -i 's/{{ bucket_name }}/${{ inputs.name }}/' resources/${{ inputs.name }}.tf
-          sed -i 's/{{ bucket_acl }}/${{ inputs.visibility }}/' resources/${{ inputs.name }}.tf
+          sed -i 's/{{ bucket_name }}/${{ inputs.name }}/' ./targetRepo/resources/${{ inputs.name }}.tf
+          sed -i 's/{{ bucket_acl }}/${{ inputs.visibility }}/' ./targetRepo/resources/${{ inputs.name }}.tf
       - name: Open a pull request
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.PAT }}
+          path: ./targetRepo
           commit-message: Create new resource - ${{ inputs.name }}
           committer: GitHub <noreply@github.com>
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
@@ -173,17 +184,18 @@ jobs:
           body: |
             Create new ${{ inputs.visibility }} resource - ${{ inputs.name }}
           draft: false
-  updateEntity:
+  create-entity-in-port-and-update-run:
     runs-on: ubuntu-latest
+    needs: createResource
     steps:
-      - name: Update Entity
+      - name: UPSERT Entity
         uses: port-labs/port-github-action@v1
         with:
           identifier: ${{fromJson(inputs.port_payload).context.entity}}
           blueprint: service
           properties: |-
             {
-              "iac_file": "${{ github.server_url }}/${{ github.repository }}/blob/main/resources/${{ inputs.name }}.tf"
+              "resource_definitions": "${{ github.server_url }}/${{fromJson(inputs.port_payload).context.entity}}/blob/main/resources/"
             }
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
@@ -221,14 +233,14 @@ After creating an action, it will appear under the `Self-service` tab of your Po
 
 #### Access the bucket's definition from Port
 
-You may have noticed that even though we updated the service's IaC file URL, it still leads to a non-existent page. This is because our new resource does not exist in the repository yet, let's take care of that:
+You may have noticed that even though we updated the service's `Resource definitions` URL, it still leads to a non-existent page. This is because we do not have any resources in the repository yet, let's take care of that:
 
 1. Merge the pull-request.
 2. Go to the entity page of the service that you executed the action for:
 
 <img src='/img/guides/iacEntityAfterAction.png' width='50%' />
 
-3. Click on the IaC file link to access the definition of your new resource.
+3. Click on the `Resource definitions` link to access the service's resources.
 
 All done! You can now create resources for your services directly from Port 💪🏽
 

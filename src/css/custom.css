@@ -18,6 +18,7 @@
 
 :root {
   --ifm-font-family-base: "Inter";
+  --doc-sidebar-width: 305px !important;
 }
 
 h1,
