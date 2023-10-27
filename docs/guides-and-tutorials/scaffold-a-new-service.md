@@ -55,7 +55,13 @@ After completing it, you will get a sense of how your organization's daily routi
 5. Now we'll define the backend of the action. Port supports multiple invocation types, for this tutorial we will use a `Github workflow`.
    - Replace the `Organization` and `Repository` values with your values (this is where the workflow will reside and run).
    - Name the workflow `portCreateRepo.yaml`.
+   - set omit user inputs to `yes`.
    - Fill out the rest of the form like this, then click `Next`:
+
+:::info notes
+
+In our workflow, the cookiecutter uses the payload for the inputs. We omit the payload in order to not send additional inputs to the workflow.
+If you are using your own workflow, you can use the data from the inputs, and then set Omit user input to `no`
 
 <img src='/img/guides/backendGithub.png' width='75%' />
 
@@ -89,7 +95,7 @@ If the Github organization which will house your workflow is not the same as the
 
 3. Now let's create the workflow file that contains our logic. Under ".github/workflows", create a new file named `portCreateRepo.yaml` and use the following snippet as its content:
 
-Change `<YOUR-ORG-NAME>` to the name of the organization in which you want to create the new repository. If you're using your personal Github (default organization), remove the `org:` parameter (line 22 below).
+Change `<YOUR-ORG-NAME>` to the name of the organization in which you want to create the new repository.
 
 <details>
 <summary><b>Github workflow (click to expand)</b></summary>
@@ -97,40 +103,54 @@ Change `<YOUR-ORG-NAME>` to the name of the organization in which you want to cr
 ```yaml showLineNumbers
 # portCreateRepo.yaml
 
-name: Port action - create repository
+name: scaffold
 on:
   workflow_dispatch:
     inputs:
-      service_name:
-        type: string
       port_payload:
         required: true
-        description: Port's payload, including details for who triggered the action and general context
+        description: "Port's payload, including details for who triggered the action and general context (blueprint, run id, etc...)"
         type: string
+    secrets:
+      ORG_ADMIN_TOKEN:
+        required: true
+      PORT_CLIENT_ID:
+        required: true
+      PORT_CLIENT_SECRET:
+        required: true
 jobs:
-  create-repository:
+  scaffold:
+    env:
+      ORG_NAME: INSERT_ORG_NAME_HERE
     runs-on: ubuntu-latest
-    name: Create repository
     steps:
-      - name: Create service
-        uses: octobay/create-repository-action@v1
+      - uses: port-labs/cookiecutter-gha@v1
+        id: scaff
         with:
-          name: ${{ inputs.service_name }}
-          org: "<YOUR-ORG-NAME>" # if you're using your personal github, remove this line, otherwise - change this to the org name in which you want to create the new repo
-          access-token: ${{ secrets.ORG_ADMIN_TOKEN }}
-          private-repo: true
-          initialize-repo: true
-  reflect-action-result: # Send action progress/result back to Port
-    runs-on: ubuntu-latest
-    steps:
-      - name: Create a log message
+          portClientId: ${{ secrets.PORT_CLIENT_ID }}
+          portClientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          token: ${{ secrets.ORG_ADMIN_TOKEN }}
+          portRunId: ${{ fromJson(inputs.port_payload).context.runId }}
+          repositoryName: ${{ fromJson(inputs.port_payload).payload.properties.service_name }}
+          portUserInputs: '{"cookiecutter_app_name": "${{ fromJson(inputs.port_payload).payload.properties.service_name }}" }'
+          cookiecutterTemplate: https://github.com/lacion/cookiecutter-golang
+          blueprintIdentifier: "service"
+          organizationName: ${{ env.ORG_NAME }}
+        
+      - name: "Report deployment Entity to port 🚢"
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
-          logMessage: New service "${{ inputs.service_name }}" created successfully 🚀
+          identifier: ${{ fromJson(inputs.port_payload).payload.properties.service_name }}
+          blueprint: microservice
+          properties: |
+            {
+              "url": "https://github.com/${{ env.ORG_NAME }}/${{ fromJson(inputs.port_payload).payload.properties.service_name }}",
+              "language": "golang"
+            }
+
+
 ```
 
 </details>
