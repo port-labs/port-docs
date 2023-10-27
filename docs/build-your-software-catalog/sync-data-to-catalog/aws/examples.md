@@ -3798,41 +3798,44 @@ In this step-by-step example, you will export your `EKS clusters` to Port.
        MaxLength: 255
        AllowedPattern: ^[a-zA-Z][-a-zA-Z0-9]*$
        Default: serverlessrepo-port-aws-exporter
+   Resources:
+     EksClusterEventRule:
+       Type: AWS::Events::Rule
+       Properties:
+         EventBusName: default
+         EventPattern:
+           detail-type:
+             - AWS API Call via CloudTrail
+           source:
+             - aws.eks
+           detail:
+             eventSource:
+               - eks.amazonaws.com
+             eventName:
+               - prefix: CreateCluster
+               - prefix: DeleteCluster
+         Name: port-aws-exporter-sync-eks-trails
+         State: ENABLED
+         Targets:
+           - Id: PortAWSExporterEventsQueue
+             Arn:
+               Fn::ImportValue:
+                 Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+             InputTransformer:
+               InputPathsMap:
+                 awsRegion: $.detail.awsRegion
+                 clusterArn: $.detail.responseElements.cluster.arn
+                 eventName: $.detail.eventName
+                 clusterName: $.detail.responseElements.cluster.name
+               InputTemplate: >-
+                 {
+                   "resource_type": "AWS::EKS::Cluster",
+                   "region": "<awsRegion>",
+                   "identifier": "<clusterName>",
+                   "action": "if \"<eventName>\" | startswith(\"Delete\") then \"delete\" else \"upsert\" end"
+                 }
    ```
 
-Resources:
-EksClusterEventRule:
-Type: AWS::Events::Rule
-Properties:
-EventBusName: default
-EventPattern:
-detail-type: - AWS API Call via CloudTrail
-source: - aws.eks
-detail:
-eventSource: - eks.amazonaws.com
-eventName: - prefix: CreateCluster - prefix: DeleteCluster
-Name: port-aws-exporter-sync-eks-trails
-State: ENABLED
-Targets: - Id: PortAWSExporterEventsQueue
-Arn:
-Fn::ImportValue:
-Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
-InputTransformer:
-InputPathsMap:
-awsRegion: $.detail.awsRegion
-clusterArn: $.detail.responseElements.cluster.arn
-eventName: $.detail.eventName
-clusterName: $.detail.responseElements.cluster.name
-InputTemplate: >-
-{
-"resource_type": "AWS::EKS::Cluster",
-"region": "<awsRegion>",
-"identifier": "<clusterName>",
-"action": "if \"<eventName>\" | startswith(\"Delete\") then \"delete\" else \"upsert\" end"
-}
-
-```
-</details>
+    </details>
 
 Done! soon, you will be able to see any `EKS clusters`
-```
