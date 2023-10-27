@@ -143,7 +143,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           identifier: ${{ fromJson(inputs.port_payload).payload.properties.service_name }}
-          blueprint: microservice
+          blueprint: service
           properties: |
             {
               "url": "https://github.com/${{ env.ORG_NAME }}/${{ fromJson(inputs.port_payload).payload.properties.service_name }}",
