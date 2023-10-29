@@ -28,7 +28,6 @@ After completing it, you will get a sense of how your organization's daily routi
 
 - Platform engineers will be able to define powerful actions that developers can use within controlled permission boundaries.
 - Developers will be able to easily create and track cloud resources from Port.
-- R&D managers will get a bird's-eye-view of the cloud resources in the organization.
 
 ### Add a URL to your new resource's definition
 
@@ -129,9 +128,9 @@ acl = "{{ bucket_acl }}"
 
 <br/><br/>
 
-- Creating a copy of the template file and replacing its variables with the data from the action's input.
-- Creating a pull request in the repository to add the new resource.
-- Reporting & logging the action result back to Port, and updating the relevant service's `Resource definitions` property with the URL of the new resource file.
+- Creating a copy of the template file in the selected service's repository and replacing its variables with the data from the action's input.
+- Creating a pull request in the selected service's repository to add the new resource.
+- Reporting & logging the action result back to Port, and updating the relevant service's `Resource definitions` property with the URL of the service's resources.
 
 Under ".github/workflows", create a new file named `portCreateBucket.yaml` and use the following snippet as its content:
 
@@ -172,7 +171,7 @@ jobs:
       - name: Open a pull request
         uses: peter-evans/create-pull-request@v5
         with:
-          token: ${{ secrets.PAT }}
+          token: ${{ secrets.ORG_ADMIN_TOKEN }}
           path: ./targetRepo
           commit-message: Create new resource - ${{ inputs.name }}
           committer: GitHub <noreply@github.com>
@@ -195,7 +194,7 @@ jobs:
           blueprint: service
           properties: |-
             {
-              "resource_definitions": "${{ github.server_url }}/${{fromJson(inputs.port_payload).context.entity}}/blob/main/resources/"
+              "resource_definitions": "${{ github.server_url }}/${{ github.repository_owner }}/${{fromJson(inputs.port_payload).context.entity}}/blob/main/resources/"
             }
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
