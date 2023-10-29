@@ -7,7 +7,7 @@ import TabItem from "@theme/TabItem"
 
 # Create cloud resources using IaC
 
-This guide takes 7 minutes to complete, and aims to demonstrate:
+This guide takes 8 minutes to complete, and aims to demonstrate:
 
 - A complete flow to create a resource using IaC.
 - The simplicity of communicating with Port from a self-service action backend.
@@ -130,7 +130,7 @@ acl = "{{ bucket_acl }}"
 
 - Creating a copy of the template file in the selected service's repository and replacing its variables with the data from the action's input.
 - Creating a pull request in the selected service's repository to add the new resource.
-- Reporting & logging the action result back to Port, and updating the relevant service's `Resource definitions` property with the URL of the service's resources.
+- Reporting & logging the action result back to Port, and updating the relevant service's `Resource definitions` property with the URL of the service's resources directory.
 
 Under ".github/workflows", create a new file named `portCreateBucket.yaml` and use the following snippet as its content:
 
@@ -244,6 +244,9 @@ You may have noticed that even though we updated the service's `Resource definit
 All done! You can now create resources for your services directly from Port 💪🏽
 
 ### Possible daily routine integrations
+
+- Send a slack message to relevant people in the organization, notifying about the new resource.
+- Send a weekly/monthly report for managers/devops showing the new resources created in this timeframe and their owners.
 
 ### Conclusion
 
