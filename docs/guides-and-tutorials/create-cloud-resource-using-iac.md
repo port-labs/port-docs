@@ -18,6 +18,8 @@ This guide takes 8 minutes to complete, and aims to demonstrate:
 
 - You will need a Github repository in which you can place a workflow that we will use in this guide. If you don't have one, we recommend [creating a new repository](https://docs.github.com/en/get-started/quickstart/create-a-repo) named `Port-actions`.
 
+- You will need to have [Port's Github app](https://github.com/apps/getport-io) installed in your Github organization (the one that contains the repository you'll work with).
+
 :::
 
 ### The goal of this guide
