@@ -252,7 +252,7 @@ All done! You can now create resources for your services directly from Port 💪
 
 ### Conclusion
 
-Developer portals need to support and integrate with git-ops practices seamlessly. Developers should be able to perform routine tasks independantly, without having to create bottlenecks within the organization.  
+Developer portals need to support and integrate with git-ops practices seamlessly. Developers should be able to perform routine tasks independently, without having to create bottlenecks within the organization.  
 With Port, platform engineers can design precise and flexible self-service actions for their developers, while integrating with many different backends to suit your specific needs.
 
 More guides & tutorials will be available soon, in the meantime feel free to reach out with any questions via our [community slack](https://www.getport.io/community) or [Github project](https://github.com/port-labs?view_as=public).
