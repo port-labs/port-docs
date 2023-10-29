@@ -33,6 +33,8 @@ resources:
             protectedBranches: .protected_branches
             createdAt: .created_at
             updatedAt: .updated_at
+          relations:
+            repository: .repo
   - kind: deployment
     selector:
       query: "true"
