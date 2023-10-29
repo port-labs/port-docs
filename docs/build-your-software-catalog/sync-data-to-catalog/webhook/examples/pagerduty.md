@@ -1,5 +1,5 @@
 ---
-sidebar_position: 11
+sidebar_position: 10
 description: Ingest PagerDuty incidents and services into Port
 ---
 
@@ -10,6 +10,13 @@ import PagerDutyWebhookHistory from "./resources/pagerduty/\_example_pagerduty_w
 import PagerDutyScript from "./resources/pagerduty/\_example_pagerduty_shell_history_config.mdx";
 
 # PagerDuty
+
+:::tip Supported by Ocean!
+Ocean's [PagerDuty integration](../../incident-management/pagerduty.md) is simpler to use and provides more capabilities than the webhook, we recommend using it instead.  
+Read more about Ocean [here](https://ocean.getport.io/).
+
+If you'd still prefer to use the webhook, proceed with the instructions on this page.
+:::
 
 In this example you are going to create a webhook integration between [PagerDuty](https://www.pagerduty.com/) and Port, which will ingest PagerDuty services and its related incidents into Port. This integration will involve setting up a webhook to receive notifications from PagerDuty whenever an incident is created or updated, allowing Port to ingest and process the incident entities accordingly.
 

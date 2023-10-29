@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 4
 description: Ingest SonarQube analysis into your catalog
 ---
 
@@ -7,6 +7,13 @@ import SonarcloudAnalysisBlueprint from "./resources/sonarqube/\_example_sonarcl
 import SonarcloudAnalysisConfiguration from "./resources/sonarqube/\_example_sonarcloud_analysis_configuration.mdx";
 
 # SonarQube
+
+:::tip Supported by Ocean!
+Ocean's [SonarQube integration](../../code-quality-security/sonarqube.md) is simpler to use and provides more capabilities than the webhook, we recommend using it instead.  
+Read more about Ocean [here](https://ocean.getport.io/).
+
+If you'd still prefer to use the webhook, proceed with the instructions on this page.
+:::
 
 In this example you are going to create a webhook integration between [SonarQube's SonarCloud](https://www.sonarsource.com/products/sonarcloud/) and Port, which will ingest SonarQube code quality analysis entities.
 

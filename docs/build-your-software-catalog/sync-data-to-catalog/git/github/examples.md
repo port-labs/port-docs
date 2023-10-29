@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-import RepositoryBlueprint from '../\_git_exporter_example_repository_blueprint.mdx'
+import RepositoryBlueprint from './\_github_exporter_example_repository_blueprint.mdx'
 import PRBlueprint from './\_github_exporter_example_pull_request_blueprint.mdx'
 import PortAppConfig from './\_github_exporter_example_port_app_config.mdx'
 import GitHubResources from './\_github_exporter_supported_resources.mdx'
@@ -19,6 +19,13 @@ import PortIssueAppConfig from './example-issue/\_github_exporter_example_issue_
 import PRFolderBlueprint from './example-repository-folders/\_github_exporter_example_pull_request_blueprint.mdx'
 import FolderBlueprint from './example-repository-folders/\_github_exporter_example_folder_blueprint.mdx'
 import PortFolderMappingAppConfig from './example-repository-folders/\_github_exporter_example_repo_folders_port_app_config.mdx'
+
+import TeamBlueprint from './example-repository-teams/\_github_export_example_team_blueprint.mdx'
+import RepositoryTeamBlueprint from './example-repository-teams/\_github_export_example_repository_with_teams_relation_blueprint.mdx'
+import PortRepositoryTeamMappingAppConfig from './example-repository-teams/\_github_exporter_example_repository_with_teams_port_app_config.mdx'
+
+import DependabotAlertBlueprint from './example-repository-dependabot-alerts/\_github_exporter_example_dependabot_alert_blueprint.mdx'
+import PortRepositoryDependabotAlertMappingAppConfig from './example-repository-dependabot-alerts/\_github_exporter_example_repo_dependabot_port_app_config.mdx'
 
 # Examples
 
@@ -131,6 +138,43 @@ In the following example you will ingest your GitHub repositories, the repositor
 <FolderBlueprint/>
 
 <PortFolderMappingAppConfig/>
+
+## Mapping repositories and teams
+
+In the following example you will ingest your GitHub repositories and their teams to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+
+:::note
+Teams are GitHub organization level resources, therefore you will need to specify the mapping of the teams in a [global integration configuration](github.md#setup) (Through Port's UI or through the `port-app-config.yml` file in the `.github-private` repository).
+:::
+
+<TeamBlueprint/>
+
+<RepositoryTeamBlueprint/>
+
+<PortRepositoryTeamMappingAppConfig/>
+
+:::tip
+To retrieve the teams of your repositories, you will need to add the `teams` property to the `selector` in the repository resource kind in your `port-app-config.yml`:
+
+```yaml
+- kind: repository
+	selector:
+		query: 'true'  # JQ boolean query. If evaluated to false - skip syncing the object.
+	  // highlight-next-line
+		teams: true  # Boolean flag to indicate whether to include the repository teams.
+```
+
+:::
+
+## Mapping repositories and Dependabot Alerts
+
+In the following example you will ingest your GitHub repositories and their Dependabot Alerts to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+
+<RepositoryBlueprint/>
+
+<DependabotAlertBlueprint/>
+
+<PortRepositoryDependabotAlertMappingAppConfig/>
 
 ## Mapping supported resources
 

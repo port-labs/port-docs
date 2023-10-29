@@ -39,27 +39,31 @@ Refer to the [Users and Teams](#users-and-teams-management) section for more inf
 
 In Port, you can control and manage all your users and teams, in one place.
 
-This allows admins to manage their users and teams inside Port:
+This allows admins to:
 
-1. Invite users to your organization and assign them specific roles and teams.
-2. Manage teams and their members.
-3. Promote ownership of assets within the organization (with team assignments).
-4. Set granular permissions on the portal (permission management).
+- Invite users to their organization and assign them specific roles and teams.
+- Manage teams and their members.
+- Promote ownership of assets within the organization (with team assignments).
+- Set granular permissions on the portal (permission management).
 
 It will also benefit developers, who could:
 
-1. Know what software assets they own and are responsible for.
-2. View and perform actions on their assets, according to their role and team belonging.
-
-### Users & Teams Page
-
-Users and teams management is done from the **Users & Teams page**.
+- Know what software assets they own and are responsible for.
+- View and perform actions on their assets, according to their role and team.
 
 Each user is defined by the following properties:
 
 1. Basic information - image, name, and email.
 2. Role - the user’s permissions level (see the [set catalog RBAC](../../build-your-software-catalog/set-catalog-rbac/set-catalog-rbac.md) section);
 3. Teams - a `team` is a group of users that owns Entities (see the [team](#team-meta-property) section).
+
+Users and teams can be managed via:
+
+- The [Users & Teams page](#users--teams-page)
+- Port's [Terraform provider](#terraform-provider)
+- The [Port API](#port-api)
+
+### Users & Teams Page
 
 ![Teams and Users page](../../../static/img/software-catalog/role-based-access-control/users-and-teams/usersAndTeams.png)
 
@@ -96,6 +100,29 @@ If you try to perform one of the disabled actions, the interface will display an
 
 ![Managed by SSO notice](../../../static/img/software-catalog/role-based-access-control/users-and-teams/createTeamNoticeWithSSO.png)
 :::
+
+### Terraform provider
+
+You can perform the aforementioned actions via the [Terraform provider](https://registry.terraform.io/providers/port-labs/port-labs/latest).  
+Here is a basic example of a `main.tf` file that defines a team with 3 users:
+
+```bash showLineNumbers
+resource "port_team" "example" {
+  name        = "example"
+  description = "example"
+  users = [
+    "user1@test.com",
+    "user2@test.com",
+    "user3@test.com",
+  ]
+}
+```
+
+You can browse the `team` schema [here](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/port_team).
+
+### Port API
+
+The API allows you to manage [teams](https://api.getport.io/static/index.html#/Teams) and [users](https://api.getport.io/static/index.html#/Users).
 
 ### `Team` meta property
 

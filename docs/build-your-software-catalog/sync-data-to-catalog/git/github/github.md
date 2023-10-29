@@ -10,7 +10,7 @@ Our integration with GitHub allows you to export GitHub objects to Port as entit
 
 Our GitHub integration makes it easy to fill the software catalog with data directly from your GitHub organization, for example:
 
-- Map all of the resources in your GitHub organization, including **repositories**, **pull requests**, **workflows**, **workflow runs** and other GitHub objects;
+- Map all the resources in your GitHub organization, including **repositories**, **pull requests**, **workflows**, **workflow runs**, **teams** , **dependabot alerts** and other GitHub objects;
 - Watch for GitHub object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port;
 - Manage Port entities using GitOps;
 - Trigger GitHub workflows directly from Port;
@@ -50,7 +50,7 @@ resources:
             creator: ".user.login"
             assignees: "[.assignees[].login]"
             reviewers: "[.requested_reviewers[].login]"
-            status: ".status" # merged, closed, opened
+            status: ".status" # merged, closed, open
             closedAt: ".closed_at"
             updatedAt: ".updated_at"
             mergedAt: ".merged_at"
@@ -142,12 +142,14 @@ resources:
       port:
         entity:
           mappings: # Mappings between one GitHub API object to a Port entity. Each value is a JQ query.
+            currentIdentifier: ".name" # OPTIONAL - keep it only in case you want to change the identifier of an existing entity from "currentIdentifier" to "identifier".
             identifier: ".name"
             title: ".name"
             blueprint: '"microservice"'
             properties:
-              url: ".html_url"
               description: ".description"
+              url: ".html_url"
+              defaultBranch: ".default_branch"
       # highlight-end
     - kind: repository # In this instance repository is mapped again with a different filter
       selector:
@@ -212,17 +214,25 @@ Port's GitHub integration requires the following permissions:
 - Repository permissions:
 
   - **Actions:** Read and Write (for executing self-service action using GitHub workflow);
+  - **Administration:** Readonly (for exporting repository teams)
   - **Checks:** Read and Write (for validating `port.yml`);
   - **Contents:** Readonly;
   - **Metadata:** Readonly;
   - **Issues:** Readonly;
   - **Pull requests:** Read and write;
+  - **Dependabot alerts:** Readonly;
+
+- Organization permissions:
+
+  - **Members:** Readonly (for exporting organization teams);
 
 - Repository events (required to receive changes via webhook from GitHub and apply the `port-app-config.yml` configuration on them):
   - Issues;
   - Pull requests;
   - Push;
-  - Workflow run.
+  - Workflow run;
+  - Team.
+  - Dependabot Alerts;
 
 :::note
 You will be prompted to confirm these permissions when first installing the App.

@@ -143,7 +143,7 @@ Port has 2 types of search rule operators:
 
 #### Operators
 
-<Tabs groupId="comparison" defaultValue="=" values={[
+<Tabs className="operators-tabs" groupId="comparison" defaultValue="=" values={[
 {label: "=", value: "="},
 {label: "!=", value: "!="},
 {label: ">", value: ">"},

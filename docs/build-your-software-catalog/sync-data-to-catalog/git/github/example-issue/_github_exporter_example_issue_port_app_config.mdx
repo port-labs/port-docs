@@ -16,6 +16,7 @@ resources:
           properties:
             readme: file://README.md
             url: .html_url
+            defaultBranch: .default_branch
   - kind: issue
     selector:
       query: ".pull_request == null" # JQ boolean query. If evaluated to false - skip syncing the object.

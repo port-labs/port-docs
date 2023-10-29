@@ -37,20 +37,27 @@ In organizations that have a self-hosted GitHub installation there is no access 
 
 - **GitHub App name:** port.io
 - **Homepage URL:** https://getport.io
+- **Setup URL:** https://app.getport.io
 - **Webhook URL:** HTTP Server URL, if you don't yet know the value of this step, leave it blank until you deploy the GitHub backend
 - **Webhook secret:** Webhook secret (Any string you would like)
 - **Repository Permissions:**
   - Actions: Read and Write (for executing self-service action using GitHub workflow)
   - Checks: Read and Write (for validating `Port.yml`)
-  - Contents: Readonly
+  - Contents: Readonly (for reading port configuration files and repository files)
   - Metadata: Readonly
   - Issues: Readonly
   - Pull Request: Read and Write
+  - Dependabot alerts: Readonly
+  - Administration: Readonly (for syncing github teams)
+- **Organization Permissions:**
+  - Members: Readonly (for syncing github teams)
 - **Repository Events** (required to receive webhook changes from GitHub):
   - Issues
   - Pull Request
   - Push
   - Workflow Run
+  - Team
+  - Dependabot alerts
 
 Then select "Create GitHub App"
 
@@ -81,7 +88,7 @@ It can be deployed on any platform that allows deploying images as containers su
 You can pull the Docker image by running:
 
 ```bash showLineNumbers
-docker pull ghcr.io/port-labs/port-self-hosted-github-app:0.6.0
+docker pull ghcr.io/port-labs/port-self-hosted-github-app:0.12.0
 ```
 
 Run the following command to start the app:
@@ -96,19 +103,20 @@ docker run \
   -e PORT_CLIENT_ID=<CLIENT_ID> \
   -e PORT_CLIENT_SECRET=<CLIENT_SECRET> \
   -e PRIVATE_KEY=<BASE 64 PRIVATEKEY> \
+  -p <PORT>:<PORT> \
   ghcr.io/port-labs/port-self-hosted-github-app
 ```
 
-| Env variable         | Description                                                                                           |
-| -------------------- | ----------------------------------------------------------------------------------------------------- |
-| `APP_ID`             | Application ID, you can find it in the edit GitHub App page                                           |
-| `WEBHOOK_SECRET`     | The same string that was used to register the application in the previous step                        |
-| `GHE_HOST`           | Your organization's self-hosted GitHub hostname                                                       |
-| `PORT`               | The port that the GitHub App will listen to                                                           |
-| `PORT_URL`           | Port's API Base URL                                                                                   |
-| `PORT_CLIENT_ID`     | Port client id for interacting with the API                                                           |
-| `PORT_CLIENT_SECRET` | Port client secret for interacting with the API                                                       |
-| `PRIVATE_KEY`        | A base64 encoded private key. Receive it by running the command `base64 -i private-key-file-path.pem` |
+| Env variable         | Description                                                                         |
+| -------------------- | ----------------------------------------------------------------------------------- |
+| `APP_ID`             | Application ID, you can find it in the edit GitHub App page                         |
+| `WEBHOOK_SECRET`     | The same string that was used to register the application in the previous step      |
+| `GHE_HOST`           | Your organization's self-hosted GitHub hostname                                     |
+| `PORT`               | The port that the GitHub App will listen to                                         |
+| `PORT_URL`           | Port's API Base URL                                                                 |
+| `PORT_CLIENT_ID`     | Port client id for interacting with the API                                         |
+| `PORT_CLIENT_SECRET` | Port client secret for interacting with the API                                     |
+| `PRIVATE_KEY`        | A base64 encoded private key. You can use a tool like https://www.base64encode.org/ |
 
 ## Health check route
 
@@ -137,3 +145,11 @@ After you have the app registered in your organization and the Docker is up and 
 5. Choose the repositories you want the app to be installed for:
 
 ![GitHub app installation chooses repositories](../../../../../static/img/integrations/github-app/SelfHostedInstallationRepoSelection.png)
+
+## Limitations
+
+As this is a self-hosted version, there are some limitations due to security considerations and the fact that we don't have access to your GitHub instance
+
+- You must include configuration as part of the repository, and you can't configure it via Port's UI/API;
+
+- To use self-service actions, you will need [Kafka Credentials](../../../../create-self-service-experiences/setup-backend/kafka/kafka.md) configured for your organization;

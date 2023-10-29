@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-import MicroserviceBlueprint from '../\_git_exporter_example_repository_blueprint.mdx'
+import RepositoryBlueprint from './\_gitlab_exporter_example_repository_blueprint.mdx'
 import PRBlueprint from './\_gitlab_exporter_example_merge_request_blueprint.mdx'
 import PortAppConfig from './\_gitlab_exporter_example_port_app_config.mdx'
 import GitlabResources from './\_gitlab_exporter_supported_resources.mdx'
@@ -20,7 +20,7 @@ import PortIssueAppConfig from './example-issue/\_gitlab_exporter_example_issue_
 
 In the following example you will ingest your GitLab projects, their README.md file contents and merge requests to Port, you may use the following Port blueprint definitions and integration configuration:
 
-<MicroserviceBlueprint/>
+<RepositoryBlueprint/>
 
 <PRBlueprint/>
 
@@ -41,7 +41,7 @@ After creating the blueprints and saving the integration configuration, you will
 
 In the following example you will ingest your GitLab projects, their pipelines and jobs runs to Port, you may use the following Port blueprint definitions and integration configuration:
 
-<MicroserviceBlueprint/>
+<RepositoryBlueprint/>
 
 <PipelineBlueprint/>
 
@@ -65,7 +65,7 @@ After creating the blueprints and saving the integration configuration, you will
 
 In the following example you will ingest your GitLab projects and their issues to Port, you may use the following Port blueprint definitions and integration configuration:
 
-<MicroserviceBlueprint/>
+<RepositoryBlueprint/>
 
 <IssueBlueprint/>
 
