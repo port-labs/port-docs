@@ -32,7 +32,7 @@ helm upgrade --install my-argocd-integration port-labs/port-ocean \
     --set integration.config.serverUrl="<your-server-url>"  \
 ```
 
-### Generating argoCD token
+### Generating ArgoCD token
 
 1. Navigate to `<serverURL>/settings/accounts/<user>`. For example, if you access your ArgoCD at `https://localhost:8080`, you should navigate to `https://localhost:8080/settings/accounts/<user>`.
 2. Under Tokens, Click **Generate New** to create a new token.
@@ -59,7 +59,6 @@ resources:
           properties:
             gitRepo: .spec.source.repoURL
             gitPath: .spec.source.path
-            sourceType: .status.sourceType
             destinationServer: .spec.destination.server
             namespace: .metadata.namespace
             syncStatus: .status.sync.status
@@ -133,7 +132,6 @@ The following resources can be used to map data from ArgoCD, it is possible to r
             properties:
               gitRepo: .spec.source.repoURL
               gitPath: .spec.source.path
-              sourceType: .status.sourceType
               destinationServer: .spec.destination.server
               namespace: .metadata.namespace
               syncStatus: .status.sync.status
@@ -167,27 +165,27 @@ Currently, the ArgoCD REST API lacks support for programmatic webhook creation. 
 
 1. Install ArgoCD notifications manifest;
 
-   ```bash
-   kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj-labs/argocd-notifications/release-1.0/manifests/install.yaml
-   ```
+```bash showLineNumbers
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj-labs/argocd-notifications/release-1.0/manifests/install.yaml
+```
 
 2. Install ArgoCD triggers and templates manifest;
 
-   ```bash
-   kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj-labs/argocd-notifications/release-1.0/catalog/install.yaml
-   ```
+```bash showLineNumbers
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj-labs/argocd-notifications/release-1.0/catalog/install.yaml
+```
 
 3. Use `kubectl` to connect to the Kubernetes cluster where your ArgoCD instance is deployed;
 
-   ```bash
-   kubectl config use-context <your-cluster-context>
-   ```
+```bash showLineNumbers
+kubectl config use-context <your-cluster-context>
+```
 
 4. Set the current namespace to your ArgoCD namespace, use the following command;
 
-   ```bash
-   kubectl config set-context --current --namespace=<your-namespace>
-   ```
+```bash showLineNumbers
+kubectl config set-context --current --namespace=<your-namespace>
+```
 
 5. Create a YAML file (e.g. `argocd-webhook-config.yaml`) that configures the webhook notification service. The example below shows how to set up a webhook to send real-time events whenever ArgoCD applications are updated. The YAML file includes the following components:
 
@@ -251,11 +249,11 @@ Currently, the ArgoCD REST API lacks support for programmatic webhook creation. 
 
 6. Use `kubectl` to apply the YAML file to your cluster. Run the following command, replacing `<your-namespace>` with your ArgoCD namespace and `<path-to-yaml-file>` with the actual path to your YAML file:
 
-   ```bash
-   kubectl apply -n <your-namespace> -f <path-to-yaml-file>
-   ```
+```bash
+kubectl apply -n <your-namespace> -f <path-to-yaml-file>
+```
 
-   This command deploys the webhook notification configuration to your ArgoCD notification configmap (`argocd-notifications-cm`), allowing Ocean to receive real-time events.
+This command deploys the webhook notification configuration to your ArgoCD notification configmap (`argocd-notifications-cm`), allowing Ocean to receive real-time events.
 
 ### Ingest data into Port
 
@@ -462,10 +460,6 @@ resources:
         "title": "Path",
         "description": "The path within the Git repository where the application manifests are located"
       },
-      "sourceType": {
-        "type": "string",
-        "title": "Source Type"
-      },
       "destinationServer": {
         "type": "string",
         "title": "Destination Server",
@@ -549,7 +543,6 @@ resources:
           properties:
             gitRepo: .spec.source.repoURL
             gitPath: .spec.source.path
-            sourceType: .status.sourceType
             destinationServer: .spec.destination.server
             namespace: .metadata.namespace
             syncStatus: .status.sync.status
