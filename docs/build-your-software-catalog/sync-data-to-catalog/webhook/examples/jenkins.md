@@ -30,7 +30,7 @@ Create the following blueprint definition:
 
 </details>
 
-Create the following webhook configuration [using Port UI](../../?operation=ui#configuring-webhook-endpoints)
+Create the following webhook configuration [using Port UI](../../webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
 
