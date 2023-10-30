@@ -16,8 +16,10 @@ resources:
           properties:
             url: .web_url
             description: .description
+            language: .__languages | to_entries | max_by(.value) | .key
             namespace: .namespace.name
-            full_path: .namespace.full_path
+            fullPath: .namespace.full_path
+            defaultBranch: .default_branch
   - kind: issue
     selector:
       query: "true"

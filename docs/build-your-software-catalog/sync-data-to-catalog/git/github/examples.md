@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-import RepositoryBlueprint from '../\_git_exporter_example_repository_blueprint.mdx'
+import RepositoryBlueprint from './\_github_exporter_example_repository_blueprint.mdx'
 import PRBlueprint from './\_github_exporter_example_pull_request_blueprint.mdx'
 import PortAppConfig from './\_github_exporter_example_port_app_config.mdx'
 import GitHubResources from './\_github_exporter_supported_resources.mdx'
@@ -26,6 +26,10 @@ import PortRepositoryTeamMappingAppConfig from './example-repository-teams/\_git
 
 import DependabotAlertBlueprint from './example-repository-dependabot-alerts/\_github_exporter_example_dependabot_alert_blueprint.mdx'
 import PortRepositoryDependabotAlertMappingAppConfig from './example-repository-dependabot-alerts/\_github_exporter_example_repo_dependabot_port_app_config.mdx'
+
+import RepoEnvironmentBlueprint from './example-deployments-environments/\_github_exporter_example_environment_blueprint.mdx'
+import DeploymentBlueprint from './example-deployments-environments/\_github_exporter_example_deployment_blueprint.mdx'
+import PortRepoDeploymentAndEnvironmentAppConfig from './example-deployments-environments/\_github_exporter_example_deployments_and_environments_port_app_config.mdx'
 
 # Examples
 
@@ -165,6 +169,18 @@ To retrieve the teams of your repositories, you will need to add the `teams` pro
 ```
 
 :::
+
+## Mapping repositories, deployments and environments
+
+In the following example you will ingest your GitHub repositories, their deployments and environments to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+
+<RepositoryBlueprint/>
+
+<RepoEnvironmentBlueprint/>
+
+<DeploymentBlueprint/>
+
+<PortRepoDeploymentAndEnvironmentAppConfig/>
 
 ## Mapping repositories and Dependabot Alerts
 

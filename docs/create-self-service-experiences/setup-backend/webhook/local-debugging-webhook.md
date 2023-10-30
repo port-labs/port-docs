@@ -70,10 +70,6 @@ Let’s configure a `VM` Blueprint, its base structure is:
     },
     "required": []
   },
-  "disableEditing": false,
-  "enableResponsibleTeamEdit": false,
-  "disabledProperties": [],
-  "disabledRelations": [],
   "calculationProperties": {}
 }
 ```
@@ -140,10 +136,6 @@ blueprint = {
         },
         "required": []
     },
-    "disableEditing": False,
-    "enableResponsibleTeamEdit": False,
-    "disabledProperties": [],
-    "disabledRelations": [],
     "calculationProperties": {},
 
 }

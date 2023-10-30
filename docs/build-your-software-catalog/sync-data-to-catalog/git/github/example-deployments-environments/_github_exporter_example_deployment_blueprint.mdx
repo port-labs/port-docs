@@ -1,0 +1,58 @@
+<details>
+<summary>Deployment blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "deployment",
+  "title": "Deployment",
+  "icon": "Deployment",
+  "schema": {
+    "properties": {
+      "description": {
+        "title": "Description",
+        "type": "string"
+      },
+      "ref": {
+        "title": "Ref",
+        "type": "string"
+      },
+      "sha": {
+        "title": "Sha",
+        "type": "string"
+      },
+      "transientEnvironment": {
+        "title": "Transient Environment",
+        "type": "boolean"
+      },
+      "productionEnvironment": {
+        "title": "Production Environment",
+        "type": "boolean"
+      },
+      "createdAt": {
+        "title": "Created At",
+        "type": "string",
+        "format": "date-time"
+      },
+      "url": {
+        "title": "URL",
+        "type": "string",
+        "icon": "Link",
+        "format": "url"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "environment": {
+      "title": "Environment",
+      "target": "repoEnvironment",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
