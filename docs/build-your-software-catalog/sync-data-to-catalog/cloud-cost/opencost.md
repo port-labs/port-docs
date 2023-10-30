@@ -334,3 +334,136 @@ resources:
 ```
 
 </details>
+
+## Let's Test It
+
+This section includes a sample response data from OpenCost. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+
+### Payload
+
+Here is an example of the payload structure from OpenCost aggregated on the `namespace` level:
+
+<details>
+<summary> Cost response data</summary>
+
+```json showLineNumbers
+{
+  "name": "ingress-nginx",
+  "properties": {
+    "cluster": "cluster-one",
+    "node": "minikube",
+    "container": "controller",
+    "controller": "ingress-nginx-controller",
+    "controllerKind": "deployment",
+    "namespace": "ingress-nginx",
+    "pod": "ingress-nginx-controller-7799c6795f-29n7j",
+    "services": [
+      "ingress-nginx-controller-admission",
+      "ingress-nginx-controller"
+    ],
+    "labels": {
+      "app_kubernetes_io_component": "controller",
+      "app_kubernetes_io_instance": "ingress-nginx",
+      "app_kubernetes_io_name": "ingress-nginx",
+      "gcp_auth_skip_secret": "true",
+      "kubernetes_io_metadata_name": "ingress-nginx",
+      "pod_template_hash": "7799c6795f"
+    },
+    "namespaceLabels": {
+      "app_kubernetes_io_instance": "ingress-nginx",
+      "app_kubernetes_io_name": "ingress-nginx",
+      "kubernetes_io_metadata_name": "ingress-nginx"
+    }
+  },
+  "window": {
+    "start": "2023-10-30T00:00:00Z",
+    "end": "2023-10-31T00:00:00Z"
+  },
+  "start": "2023-10-30T09:05:00Z",
+  "end": "2023-10-30T11:50:00Z",
+  "minutes": 165,
+  "cpuCores": 0.1,
+  "cpuCoreRequestAverage": 0.1,
+  "cpuCoreUsageAverage": 0,
+  "cpuCoreHours": 0.275,
+  "cpuCost": 0.00869,
+  "cpuCostAdjustment": 0,
+  "cpuEfficiency": 0,
+  "gpuCount": 0,
+  "gpuHours": 0,
+  "gpuCost": 0,
+  "gpuCostAdjustment": 0,
+  "networkTransferBytes": 0,
+  "networkReceiveBytes": 0,
+  "networkCost": 0,
+  "networkCrossZoneCost": 0,
+  "networkCrossRegionCost": 0,
+  "networkInternetCost": 0,
+  "networkCostAdjustment": 0,
+  "loadBalancerCost": 0,
+  "loadBalancerCostAdjustment": 0,
+  "pvBytes": 0,
+  "pvByteHours": 0,
+  "pvCost": 0,
+  "pvs": "None",
+  "pvCostAdjustment": 0,
+  "ramBytes": 94371840,
+  "ramByteRequestAverage": 94371840,
+  "ramByteUsageAverage": 0,
+  "ramByteHours": 259522560,
+  "ramCost": 0.00102,
+  "ramCostAdjustment": 0,
+  "ramEfficiency": 0,
+  "externalCost": 0,
+  "sharedCost": 0,
+  "totalCost": 0.00972,
+  "totalEfficiency": 0,
+  "lbAllocations": "None"
+}
+```
+
+</details>
+
+### Mapping Result
+
+The combination of the sample payload and the Ocean configuration generates the following Port entity:
+
+<details>
+<summary> Cost entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "ingress-nginx",
+  "title": "ingress-nginx",
+  "blueprint": "openCostResourceAllocation",
+  "team": [],
+  "properties": {
+    "cluster": "cluster-one",
+    "namespace": "ingress-nginx",
+    "startDate": "2023-10-30T09:05:00.000Z",
+    "endDate": "2023-10-30T11:50:00.000Z",
+    "cpuCoreHours": 0.275,
+    "cpuCost": 0.00869,
+    "cpuEfficiency": 0,
+    "gpuHours": 0,
+    "gpuCost": 0,
+    "networkCost": 0,
+    "loadBalancerCost": 0,
+    "pvCost": 0,
+    "ramBytes": 94371840,
+    "ramCost": 0.00102,
+    "ramEfficiency": 0,
+    "sharedCost": 0,
+    "externalCost": 0,
+    "totalCost": 0.00972,
+    "totalEfficiency": 0
+  },
+  "relations": {},
+  "createdAt": "2023-10-15T09:30:57.924Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2023-10-30T11:49:20.881Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
