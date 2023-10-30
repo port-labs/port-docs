@@ -52,7 +52,7 @@ To do so, we will use the `file://` prefix with the path of the file to tell the
 
 ## Ingesting project language
 
-Gitlab's API return the languages used as a JSON object structured in pairs of `language: Percent` of the project. When using `language` in the selector we will receive the entire list used. Add aa JSON object property to the blueprint, and add the following line to the project mapping
+Gitlab's API return the languages used as a JSON object structured in pairs of `language: Percent` of the project. When using `language` in the selector we will receive the entire list used. Add a JSON object property to the blueprint, and add the following line to the project mapping:
 
 ```yaml
 ...
