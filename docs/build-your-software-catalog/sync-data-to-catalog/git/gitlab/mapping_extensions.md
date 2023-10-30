@@ -50,6 +50,20 @@ To do so, we will use the `file://` prefix with the path of the file to tell the
             defaultBranch: .default_branch
 ```
 
+## Ingesting project language
+
+Gitlab's API returns the languages used as a JSON object structured in pairs of `language: Usage Percent` of the project. When using `language` in the selector we will receive the entire list used. Add a JSON object property to the blueprint, and add the following line to the project mapping:
+
+```yaml
+...
+  properties:
+    ...
+    myJsonObjectIdentifier: .__languages | to_entries | max_by(.value) | .key
+```
+This property scans the list of languages, and extracts the one with the highest percent. If you want to hold the entire list in the property, simply use:
+```yaml
+myJsonObjectIdentifier: .__languages
+```
 ## Search checks
 
 We can use the GitLab exporter to perform search checks on our repositories to ensure that they are compliant with our organization's policies and standards.
