@@ -16,6 +16,7 @@ resources:
           properties:
             url: .web_url
             description: .description
+            language: .__languages | to_entries | max_by(.value) | .key
             namespace: .namespace.name
             fullPath: .namespace.full_path
             defaultBranch: .default_branch
