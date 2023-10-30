@@ -125,7 +125,7 @@ Install [BitBucket app](https://marketplace.atlassian.com/apps/1229886/port-conn
 
 <TabItem value="Gitlab">
 
-Install the [Gitlab integration](../docs/build-your-software-catalog/sync-data-to-catalog/git/gitlab/installation.md)
+Port supports Gitlab using the [ocean integration](http://ocean.getport.io). Follow [these instructions](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/gitlab/installation) to install the integration, and then continue following this guide.
 
 </TabItem>
 
