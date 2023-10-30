@@ -28,7 +28,7 @@ After completing it, you will get a sense of how your organization's daily routi
 - R&D managers will be able to get an overview of new services - how many were created and by who.
 - Platform engineers will be able to control permissions to ensure only the relevant people can create new services.
 
-### Create the action's frontend
+### Setup the action's frontend
 
 1. To get started, head to the [Self-service tab](https://app.getport.io/self-serve) in your Port application, and click on `New action`:
 
@@ -71,7 +71,7 @@ If you are using your personal Github (default organization), set `Omit user inp
 
 The action's frontend is now ready 🥳
 
-### Create the action's backend
+### Setup the action's backend
 
 Now we want to write the logic that our action will trigger.
 
