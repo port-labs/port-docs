@@ -10,7 +10,7 @@ Our integration with GitHub allows you to export GitHub objects to Port as entit
 
 Our GitHub integration makes it easy to fill the software catalog with data directly from your GitHub organization, for example:
 
-- Map all the resources in your GitHub organization, including **repositories**, **pull requests**, **workflows**, **workflow runs**, **teams** , **dependabot alerts** and other GitHub objects;
+- Map all the resources in your GitHub organization, including **repositories**, **pull requests**, **workflows**, **workflow runs**, **teams** , **dependabot alerts**, **deployment environments** and other GitHub objects;
 - Watch for GitHub object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port;
 - Manage Port entities using GitOps;
 - Trigger GitHub workflows directly from Port;
@@ -221,6 +221,8 @@ Port's GitHub integration requires the following permissions:
   - **Issues:** Readonly;
   - **Pull requests:** Read and write;
   - **Dependabot alerts:** Readonly;
+  - **Deployments:** Readonly;
+  - **Environments:** Readonly;
 
 - Organization permissions:
 
@@ -233,6 +235,7 @@ Port's GitHub integration requires the following permissions:
   - Workflow run;
   - Team.
   - Dependabot Alerts;
+  - Deployment;
 
 :::note
 You will be prompted to confirm these permissions when first installing the App.

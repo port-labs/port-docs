@@ -107,7 +107,8 @@ Now let's connect our blueprint to a data source and fill it with real data!
 
 <Tabs values={[
 {label: "Github", value: "Github"},
-{label: "BitBucket", value: "BitBucket"}
+{label: "BitBucket", value: "BitBucket"},
+{label: "Gitlab", value: "Gitlab"}
 ]}>
 
 <TabItem value="Github">
@@ -119,6 +120,12 @@ Install [Github app](https://github.com/apps/getport-io) in the entire organizat
 <TabItem value="BitBucket">
 
 Install [BitBucket app](https://marketplace.atlassian.com/apps/1229886/port-connector-for-bitbucket?hosting=cloud&tab=overview) in the entire organization.
+
+</TabItem>
+
+<TabItem value="Gitlab">
+
+Port supports Gitlab using the [ocean integration](http://ocean.getport.io). Follow [these instructions](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/gitlab/installation) to install the integration, and then continue following this guide.
 
 </TabItem>
 
@@ -138,7 +145,8 @@ In the `Data sources` page, click on the exporter you installed. In the `Mapping
 
 <Tabs values={[
 {label: "Github", value: "Github"},
-{label: "BitBucket", value: "BitBucket"}
+{label: "BitBucket", value: "BitBucket"},
+{label: "Gitlab", value: "Gitlab"}
 ]}>
 
 <TabItem value="Github">
@@ -186,6 +194,30 @@ resources:
             readme: file://README.md
             url: ".links.html.href"
             language: ".language"
+```
+
+</details>
+</TabItem>
+
+<TabItem value="Gitlab">
+<details>
+<summary><b>Gitlab blueprint mapping (click to expand)</b></summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: project
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .path_with_namespace | gsub(" "; "")
+          title: .name
+          blueprint: '"service"'
+          properties:
+            readme: file://README.md
+            url: .web_url
+            language: .__languages | to_entries | max_by(.value) | .key
 ```
 
 </details>
