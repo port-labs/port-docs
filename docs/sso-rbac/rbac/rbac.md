@@ -88,13 +88,15 @@ In the teams tab, you can:
 - Etc.
 
 :::tip Using SSO for users and teams
+
+**Note:** the following limitations do not apply to teams created manually inside Port.
+
 When Single Sign-On (SSO) is enabled, users and teams information (including team membership) is taken directly from your identity provider (IdP).
 
-Since the information is taken from your IdP, some actions can't be performed when SSO is active, such as:
+Since those teams are synced from your IdP the following actions cannot be performed on them:
 
-- Create teams;
-- Edit team membership;
-- Delete teams.
+- Edit SSO team membership;
+- Delete SSO teams.
 
 If you try to perform one of the disabled actions, the interface will display an explanation:
 
