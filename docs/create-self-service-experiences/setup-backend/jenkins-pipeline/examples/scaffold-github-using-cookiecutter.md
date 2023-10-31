@@ -2,9 +2,9 @@
 sidebar_position: 2
 ---
 
-# Scaffold Repositories Using Cookiecutter
+# Scaffold GitHub Repositories Using Cookiecutter
 
-[This Jenkins pipeline](https://github.com/port-labs/cookiecutter-gha) allows you to quickly scaffold repositories using a [Cookiecutter Template](https://www.cookiecutter.io/templates) via Port Actions.
+This example demonstrates how to quickly scaffold GitHub repositories using a [Cookiecutter Template](https://www.cookiecutter.io/templates) via Port Actions.
 
 In addition, as cookiecutter is an open-source project you can make your own project template, learn more about it [here](https://cookiecutter.readthedocs.io/en/2.0.2/tutorials.html#create-your-very-own-cookiecutter-project-template).
 
@@ -15,8 +15,8 @@ Follow these steps to get started with the Golang template:
 1. Create the following as Jenkins Credentials:
 
    1. `GITHUB_TOKEN` - a [fine-grained PAT](https://github.com/settings/tokens?type=beta) with permissions to create repositories.
-   2. `PORT_CLIENT_ID` - Port Client ID [learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
-   3. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
+   2. `PORT_CLIENT_ID` - Port Client ID [learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+   3. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
 
 2. Create a Port blueprint with the following properties:
 
