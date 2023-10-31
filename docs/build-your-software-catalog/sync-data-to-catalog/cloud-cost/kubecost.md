@@ -466,3 +466,130 @@ resources:
 ```
 
 </details>
+
+## Let's Test It
+
+This section includes a sample response data from Kubecost. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+
+### Payload
+
+Here is an example of the payload structure from Kubecost:
+
+<details>
+<summary> Cost response data</summary>
+
+```json showLineNumbers
+{
+  "name": "argocd",
+  "properties": {
+    "cluster": "cluster-one",
+    "node": "gke-my-regional-cluster-default-pool-e8093bfa-0bjg",
+    "namespace": "argocd",
+    "providerID": "gke-my-regional-cluster-default-pool-e8093bfa-0bjg",
+    "namespaceLabels": {
+      "kubernetes_io_metadata_name": "argocd"
+    }
+  },
+  "window": {
+    "start": "2023-10-30T00:00:00Z",
+    "end": "2023-10-30T01:00:00Z"
+  },
+  "start": "2023-10-30T00:00:00Z",
+  "end": "2023-10-30T01:00:00Z",
+  "minutes": 60,
+  "cpuCores": 0.00515,
+  "cpuCoreRequestAverage": 0,
+  "cpuCoreUsageAverage": 0.00514,
+  "cpuCoreHours": 0.00515,
+  "cpuCost": 0.00012,
+  "cpuCostAdjustment": 0,
+  "cpuEfficiency": 1,
+  "gpuCount": 0,
+  "gpuHours": 0,
+  "gpuCost": 0,
+  "gpuCostAdjustment": 0,
+  "networkTransferBytes": 2100541.53,
+  "networkReceiveBytes": 2077024.88318,
+  "networkCost": 0,
+  "networkCrossZoneCost": 0,
+  "networkCrossRegionCost": 0,
+  "networkInternetCost": 0,
+  "networkCostAdjustment": 0,
+  "loadBalancerCost": 0.02708,
+  "loadBalancerCostAdjustment": 0,
+  "pvBytes": 0,
+  "pvByteHours": 0,
+  "pvCost": 0,
+  "pvs": "None",
+  "pvCostAdjustment": 0,
+  "ramBytes": 135396181.33333,
+  "ramByteRequestAverage": 0,
+  "ramByteUsageAverage": 135394433.70477,
+  "ramByteHours": 135396181.33333,
+  "ramCost": 0.00041,
+  "ramCostAdjustment": 0,
+  "ramEfficiency": 1,
+  "externalCost": 0,
+  "sharedCost": 0,
+  "totalCost": 0.02761,
+  "totalEfficiency": 1,
+  "proportionalAssetResourceCosts": {},
+  "lbAllocations": {
+    "cluster-one/argocd/argocd-server": {
+      "service": "argocd/argocd-server",
+      "cost": 0.027083333333333334,
+      "private": false,
+      "ip": ""
+    }
+  },
+  "sharedCostBreakdown": {}
+}
+```
+
+</details>
+
+### Mapping Result
+
+The combination of the sample payload and the Ocean configuration generates the following Port entity:
+
+<details>
+<summary> Cost entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "argocd",
+  "title": "argocd",
+  "icon": null,
+  "blueprint": "kubecostResourceAllocation",
+  "team": [],
+  "properties": {
+    "cluster": "cluster-one",
+    "namespace": "argocd",
+    "startDate": "2023-10-30T04:00:00.000Z",
+    "endDate": "2023-10-30T05:00:00.000Z",
+    "cpuCoreHours": 0.0051,
+    "cpuCost": 0.00012,
+    "cpuEfficiency": 1,
+    "gpuHours": 0,
+    "gpuCost": 0,
+    "networkCost": 0,
+    "loadBalancerCost": 0.02708,
+    "pvCost": 0,
+    "pvBytes": 0,
+    "ramBytes": 135396181.33333,
+    "ramCost": 0.00041,
+    "ramEfficiency": 1,
+    "sharedCost": 0,
+    "externalCost": 0,
+    "totalCost": 0.02761,
+    "totalEfficiency": 1
+  },
+  "relations": {},
+  "createdAt": "2023-10-30T13:25:42.717Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2023-10-30T13:28:37.379Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
