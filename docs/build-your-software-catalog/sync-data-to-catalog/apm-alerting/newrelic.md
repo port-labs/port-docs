@@ -1,5 +1,6 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
 
 # New relic
 
@@ -12,6 +13,10 @@ An `Issue` is a group of incidents that describe the underlying problem of your 
 
 - Map your monitored applications and services in New Relic with their current open alerts.
 - Watch for new alerts and updates raised on your monitored applications and automatically synchronize them into Port.
+
+## Prerequisites
+
+<Prerequisites />
 
 ## Installation
 

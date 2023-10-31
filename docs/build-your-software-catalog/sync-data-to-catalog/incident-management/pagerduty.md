@@ -4,6 +4,7 @@ sidebar_position: 1
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
 
 # PagerDuty
 
@@ -13,6 +14,10 @@ Our PagerDuty integration allows you to import `services` and `incidents` from y
 
 - Map `services` and `incidents` in your PagerDuty organization environment.
 - Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
+
+## Prerequisites
+
+<Prerequisites />
 
 ## installation
 

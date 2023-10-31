@@ -1,5 +1,6 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
 
 # OpenCost
 
@@ -8,6 +9,10 @@ Our OpenCost integration allows you to import `cost` from your OpenCost instance
 ## Common use cases
 
 - Map your monitored Kubernetes resources and cost allocations in OpenCost.
+
+## Prerequisites
+
+<Prerequisites />
 
 ## installation
 
