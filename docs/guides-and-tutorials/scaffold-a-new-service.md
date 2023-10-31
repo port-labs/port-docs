@@ -125,7 +125,7 @@ jobs:
       ORG_NAME: <YOUR-ORG-NAME>
     runs-on: ubuntu-latest
     steps:
-      - uses: port-labs/cookiecutter-gha@v1
+      - uses: port-labs/cookiecutter-gha@v1.1
         id: scaff
         with:
           portClientId: ${{ secrets.PORT_CLIENT_ID }}

@@ -116,7 +116,7 @@ jobs:
   scaffold:
     runs-on: ubuntu-latest
     steps:
-      - uses: port-labs/cookiecutter-gha@v1
+      - uses: port-labs/cookiecutter-gha@v1.1
         with:
           portClientId: ${{ secrets.PORT_CLIENT_ID }}
           portClientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
