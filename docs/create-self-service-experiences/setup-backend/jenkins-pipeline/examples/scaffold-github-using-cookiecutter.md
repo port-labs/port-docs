@@ -2,9 +2,9 @@
 sidebar_position: 2
 ---
 
-# Scaffold Repositories Using Cookiecutter
+# Scaffold GitHub Repositories Using Cookiecutter
 
-[This Jenkins pipeline](https://github.com/port-labs/cookiecutter-gha) allows you to quickly scaffold repositories using a [Cookiecutter Template](https://www.cookiecutter.io/templates) via Port Actions.
+This example demonstrates how to quickly scaffold GitHub repositories using a [Cookiecutter Template](https://www.cookiecutter.io/templates) via Port Actions.
 
 In addition, as cookiecutter is an open-source project you can make your own project template, learn more about it [here](https://cookiecutter.readthedocs.io/en/2.0.2/tutorials.html#create-your-very-own-cookiecutter-project-template).
 
