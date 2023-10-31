@@ -80,7 +80,7 @@ If the Github organization which will house your workflow is not the same as the
 
 1. First, let's create the necessary token and secrets:
 
-- Go to your [Github tokens page](https://github.com/settings/tokens), create a personal access token with `repo` and `admin:org` scope, and copy it (this token is needed to create a repo from our workflow).
+- Go to your [Github tokens page](https://github.com/settings/tokens), create a personal access token with `repo`, `admin:repo_hook` and `admin:org` scope, and copy it (this token is needed to create a repo from our workflow).
 
   <img src='/img/guides/personalAccessToken.png' width='80%' />
 
