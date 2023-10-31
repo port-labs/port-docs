@@ -60,8 +60,7 @@ After completing it, you will get a sense of how your organization's daily routi
 
 :::tip Important
 
-In our workflow, the cookiecutter uses the payload for the inputs. We omit the user inputs in order to avoid sending additional inputs to the workflow.  
-If you are using your personal Github (default organization), set `Omit user inputs` to `No`.
+In our workflow, the cookiecutter uses the payload for the inputs. We omit the user inputs in order to avoid sending additional inputs to the workflow.
 
 :::
 
@@ -81,7 +80,7 @@ If the Github organization which will house your workflow is not the same as the
 
 1. First, let's create the necessary token and secrets:
 
-- Go to your [Github tokens page](https://github.com/settings/tokens), create a personal access token with `repo` and `admin:org` scope, and copy it (this token is needed to create a repo from our workflow).
+- Go to your [Github tokens page](https://github.com/settings/tokens), create a personal access token with `repo`, `admin:repo_hook` and `admin:org` scope, and copy it (this token is needed to create a repo from our workflow).
 
   <img src='/img/guides/personalAccessToken.png' width='80%' />
 
@@ -126,7 +125,7 @@ jobs:
       ORG_NAME: <YOUR-ORG-NAME>
     runs-on: ubuntu-latest
     steps:
-      - uses: port-labs/cookiecutter-gha@v1
+      - uses: port-labs/cookiecutter-gha@v1.1
         id: scaff
         with:
           portClientId: ${{ secrets.PORT_CLIENT_ID }}

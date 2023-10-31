@@ -14,6 +14,11 @@ import PortPipelineJobAppConfig from './example-pipeline-job/\_gitlab_exporter_e
 import IssueBlueprint from './example-issue/\_git_exporter_example_issue_blueprint.mdx'
 import PortIssueAppConfig from './example-issue/\_gitlab_exporter_example_issue_port_app_config.mdx'
 
+import MonoRepoAppConfig from './example-repository-folders/\_gitlab_export_example_monorepo_port_app_config.mdx'
+
+import FolderBlueprint from './example-repository-folders/\_gitlab_exporter_example_folder_blueprint.mdx'
+import PortFoldersAppConfig from './example-repository-folders/\_gitlab_exporter_example_repo_folders_port_app_config.mdx'
+
 # Examples
 
 ## Mapping projects, file contents and merge requests
@@ -60,6 +65,77 @@ In the following example you will ingest your GitLab projects, their pipelines a
 :::
 
 After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your projects alongside their pipelines and jobs.
+
+## Mapping projects and monorepos
+
+In the following example you will ingest your GitLab projects and their monorepo folders to Port, you may use the following Port blueprint definitions and integration configuration:
+
+<RepositoryBlueprint/>
+
+<MonoRepoAppConfig/>
+
+:::tip
+To retrieve the root folders of your monorepo, you can use this following syntax in your `port-app-config.yml`:
+
+```yaml
+- kind: folder
+  selector:
+    query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
+    folders: # Specify the repositories and folders to include under this relative path.
+      - path: "/" # Relative path to the folders within the repositories
+        repos: # List of repositories to include folders from.
+          - backend-service
+          - frontend-service
+```
+
+:::
+
+:::tip
+
+You can also specify different path for each monorepo repository, for example:
+
+```yaml
+- kind: folder
+  selector:
+    query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
+    folders: # Specify the repositories and folders to include under this relative path.
+      - path: "apps/"
+        repos:
+          - gaming-apps
+      - path: "microservices/"
+        repos:
+          - backend-services
+```
+
+:::
+
+:::tip
+
+- Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process;
+- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities;
+- Click [Here](https://docs.gitlab.com/ee/api/groups.html#list-a-groups-projects) for the GitLab project object structure.
+- Click [Here](https://docs.gitlab.com/ee/api/repositories.html#list-repository-tree) for the GitLab repository tree object structure.
+
+:::
+
+## Mapping projects and folders
+
+In the following example you will ingest your GitLab projects and their folders to Port, you may use the following Port blueprint definitions and integration configuration:
+
+<RepositoryBlueprint/>
+
+<FolderBlueprint/>
+
+<PortFoldersAppConfig/>
+
+:::tip
+
+- Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process;
+- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities;
+- Click [Here](https://docs.gitlab.com/ee/api/groups.html#list-a-groups-projects) for the GitLab project object structure.
+- Click [Here](https://docs.gitlab.com/ee/api/repositories.html#list-repository-tree) for the GitLab repository tree object structure.
+
+:::
 
 ## Mapping projects and issues
 
