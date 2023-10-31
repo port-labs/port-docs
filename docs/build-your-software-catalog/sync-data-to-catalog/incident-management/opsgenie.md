@@ -507,3 +507,382 @@ resources:
 ```
 
 </details>
+
+## Let's Test It
+
+This section includes a sample response data from Opsgenie. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+
+### Payload
+
+Here is an example of the payload structure from Opsgenie:
+
+<details>
+<summary> Service response data</summary>
+
+```json showLineNumbers
+{
+  "id": "daa0d66f-ad35-4396-b30d-70f0314c697a",
+  "name": "Port Outbound Service",
+  "description": "For outbound communications and integrations",
+  "teamId": "63374eee-0b03-42d4-bb8c-50d1fa64827c",
+  "tags": ["communication", "channel"],
+  "links": {
+    "web": "https://mytestaccount.app.opsgenie.com/service/daa0d66f-ad35-4396-b30d-70f0314c697a/status",
+    "api": "https://api.opsgenie.com/v1/services/daa0d66f-ad35-4396-b30d-70f0314c697a"
+  },
+  "isExternal": false,
+  "__team": {
+    "id": "63374eee-0b03-42d4-bb8c-50d1fa64827c",
+    "name": "Data Science Team",
+    "description": "",
+    "members": [
+      {
+        "user": {
+          "id": "ce544b61-7b35-43ea-89ee-a8750638d3a4",
+          "username": "testuser@gmail.com"
+        },
+        "role": "admin"
+      },
+      {
+        "user": {
+          "id": "9ea8f86a-6648-46d6-a2fc-1a6eb5f739c8",
+          "username": "devtester@gmail.com"
+        },
+        "role": "user"
+      }
+    ],
+    "links": {
+      "web": "https://app.opsgenie.com/teams/dashboard/63374eee-0b03-42d4-bb8c-50d1fa64827c/main",
+      "api": "https://api.opsgenie.com/v2/teams/63374eee-0b03-42d4-bb8c-50d1fa64827c"
+    }
+  },
+  "__incidents": [
+    {
+      "id": "652f14b3-019a-4d4c-8b83-e4da527a416c",
+      "description": "summary",
+      "impactedServices": ["daa0d66f-ad35-4396-b30d-70f0314c697a"],
+      "tinyId": "3",
+      "message": "OpenAI Incident",
+      "status": "open",
+      "tags": ["tags"],
+      "createdAt": "2023-09-26T17:06:16.824Z",
+      "updatedAt": "2023-09-26T17:49:10.17Z",
+      "priority": "P3",
+      "ownerTeam": "",
+      "responders": [
+        {
+          "type": "team",
+          "id": "63374eee-0b03-42d4-bb8c-50d1fa64827c"
+        },
+        {
+          "type": "user",
+          "id": "ce544b61-7b35-43ea-89ee-a8750638d3a4"
+        }
+      ],
+      "extraProperties": {},
+      "links": {
+        "web": "https://mytestaccount.app.opsgenie.com/incident/detail/652f14b3-019a-4d4c-8b83-e4da527a416c",
+        "api": "https://api.opsgenie.com/v1/incidents/652f14b3-019a-4d4c-8b83-e4da527a416c"
+      },
+      "impactStartDate": "2023-09-26T17:06:16.824Z",
+      "impactEndDate": "2023-09-26T17:45:25.719Z",
+      "actions": []
+    },
+    {
+      "id": "4a0c5e6d-b239-4cd9-a7e8-a5f880e99473",
+      "description": "descirption",
+      "impactedServices": [
+        "59591948-d418-4bb9-af16-170d6b232b7d",
+        "daa0d66f-ad35-4396-b30d-70f0314c697a"
+      ],
+      "tinyId": "2",
+      "message": "My Incident",
+      "status": "open",
+      "tags": ["hello"],
+      "createdAt": "2023-09-20T13:33:00.941Z",
+      "updatedAt": "2023-09-26T17:48:54.48Z",
+      "priority": "P3",
+      "ownerTeam": "",
+      "responders": [
+        {
+          "type": "team",
+          "id": "63374eee-0b03-42d4-bb8c-50d1fa64827c"
+        },
+        {
+          "type": "user",
+          "id": "ce544b61-7b35-43ea-89ee-a8750638d3a4"
+        },
+        {
+          "type": "user",
+          "id": "9ea8f86a-6648-46d6-a2fc-1a6eb5f739c8"
+        }
+      ],
+      "extraProperties": {},
+      "links": {
+        "web": "https://mytestaccount.app.opsgenie.com/incident/detail/4a0c5e6d-b239-4cd9-a7e8-a5f880e99473",
+        "api": "https://api.opsgenie.com/v1/incidents/4a0c5e6d-b239-4cd9-a7e8-a5f880e99473"
+      },
+      "impactStartDate": "2023-09-20T13:33:00.941Z",
+      "actions": []
+    }
+  ],
+  "__oncalls": {
+    "_parent": {
+      "id": "d55e148e-d320-4766-9dcf-4fc2ce9daef1",
+      "name": "Data Science Team_schedule",
+      "enabled": true
+    },
+    "onCallRecipients": ["testuser@gmail.com"]
+  }
+}
+```
+
+</details>
+
+<details>
+<summary> Incident response data</summary>
+
+```json showLineNumbers
+{
+  "id": "4a0c5e6d-b239-4cd9-a7e8-a5f880e99473",
+  "description": "descirption",
+  "impactedServices": [
+    "59591948-d418-4bb9-af16-170d6b232b7d",
+    "daa0d66f-ad35-4396-b30d-70f0314c697a"
+  ],
+  "tinyId": "2",
+  "message": "My Incident",
+  "status": "open",
+  "tags": ["hello"],
+  "createdAt": "2023-09-20T13:33:00.941Z",
+  "updatedAt": "2023-09-26T17:48:54.48Z",
+  "priority": "P3",
+  "ownerTeam": "",
+  "responders": [
+    {
+      "type": "team",
+      "id": "63374eee-0b03-42d4-bb8c-50d1fa64827c"
+    },
+    {
+      "type": "user",
+      "id": "ce544b61-7b35-43ea-89ee-a8750638d3a4"
+    },
+    {
+      "type": "user",
+      "id": "9ea8f86a-6648-46d6-a2fc-1a6eb5f739c8"
+    }
+  ],
+  "extraProperties": {},
+  "links": {
+    "web": "https://mytestaccount.app.opsgenie.com/incident/detail/4a0c5e6d-b239-4cd9-a7e8-a5f880e99473",
+    "api": "https://api.opsgenie.com/v1/incidents/4a0c5e6d-b239-4cd9-a7e8-a5f880e99473"
+  },
+  "impactStartDate": "2023-09-20T13:33:00.941Z",
+  "actions": [],
+  "__impactedServices": [
+    {
+      "id": "59591948-d418-4bb9-af16-170d6b232b7d",
+      "name": "My Test Service",
+      "description": "This is for Opsgenie testing",
+      "teamId": "63374eee-0b03-42d4-bb8c-50d1fa64827c",
+      "tags": ["port", "devops", "ai"],
+      "links": {
+        "web": "https://mytestaccount.app.opsgenie.com/service/59591948-d418-4bb9-af16-170d6b232b7d/status",
+        "api": "https://api.opsgenie.com/v1/services/59591948-d418-4bb9-af16-170d6b232b7d"
+      },
+      "isExternal": false
+    },
+    {
+      "id": "daa0d66f-ad35-4396-b30d-70f0314c697a",
+      "name": "Port Outbound Service",
+      "description": "For outbound communications and integrations",
+      "teamId": "63374eee-0b03-42d4-bb8c-50d1fa64827c",
+      "tags": ["ui", "comment"],
+      "links": {
+        "web": "https://mytestaccount.app.opsgenie.com/service/daa0d66f-ad35-4396-b30d-70f0314c697a/status",
+        "api": "https://api.opsgenie.com/v1/services/daa0d66f-ad35-4396-b30d-70f0314c697a"
+      },
+      "isExternal": false
+    }
+  ]
+}
+```
+
+</details>
+
+<details>
+<summary> Alert response data</summary>
+
+```json showLineNumbers
+{
+  "seen": true,
+  "id": "580e9625-ecc7-42b0-8836-3d3637438bc4-169486700232",
+  "tinyId": "2",
+  "alias": "355f1681-f6e3-4355-a927-897cd8edaf8f_4d37bc8a-030b-4e8f-a230-aa429947253c",
+  "message": "Login Auth not working",
+  "status": "open",
+  "integration": "Default API",
+  "acknowledged": false,
+  "isSeen": true,
+  "tags": ["auth", "login"],
+  "snoozed": false,
+  "count": 1,
+  "lastOccurredAt": "2023-04-21T08:36:18.46Z",
+  "createdAt": "2023-04-21T08:36:18.46Z",
+  "updatedAt": "2023-08-11T10:41:16.533Z",
+  "source": "testuser@gmail.com",
+  "owner": "testuser@gmail.com",
+  "priority": "P3",
+  "teams": [],
+  "responders": [
+    {
+      "type": "user",
+      "id": "ce544b61-7b35-43ea-89ee-a8750638d3a4"
+    }
+  ],
+  "report": {
+    "ackTime": 4852912663
+  },
+  "ownerTeamId": "",
+  "__relatedIncident": {
+    "id": "4a0c5e6d-b239-4cd9-a7e8-a5f880e99473",
+    "description": "descirption",
+    "impactedServices": [
+      "59591948-d418-4bb9-af16-170d6b232b7d",
+      "daa0d66f-ad35-4396-b30d-70f0314c697a"
+    ],
+    "tinyId": "2",
+    "message": "My Incident",
+    "status": "open",
+    "tags": ["hello"],
+    "createdAt": "2023-09-20T13:33:00.941Z",
+    "updatedAt": "2023-09-26T17:48:54.48Z",
+    "priority": "P3",
+    "ownerTeam": "",
+    "responders": [
+      {
+        "type": "team",
+        "id": "63374eee-0b03-42d4-bb8c-50d1fa64827c"
+      },
+      {
+        "type": "user",
+        "id": "ce544b61-7b35-43ea-89ee-a8750638d3a4"
+      },
+      {
+        "type": "user",
+        "id": "9ea8f86a-6648-46d6-a2fc-1a6eb5f739c8"
+      }
+    ],
+    "extraProperties": {},
+    "links": {
+      "web": "https://mytestaccount.app.opsgenie.com/incident/detail/4a0c5e6d-b239-4cd9-a7e8-a5f880e99473",
+      "api": "https://api.opsgenie.com/v1/incidents/4a0c5e6d-b239-4cd9-a7e8-a5f880e99473"
+    }
+  }
+}
+```
+
+</details>
+
+### Mapping Result
+
+The combination of the sample payload and the Ocean configuration generates the following Port entity:
+
+<details>
+<summary> Service entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "Port-Outbound-Service",
+  "title": "Port Outbound Service",
+  "team": [],
+  "properties": {
+    "description": "For outbound communications and integrations",
+    "url": "https://mytestaccount.app.opsgenie.com/service/daa0d66f-ad35-4396-b30d-70f0314c697a/status",
+    "tags": ["communication", "channel"],
+    "oncallTeam": "Data Science Team",
+    "teamMembers": ["testuser@gmail.com", "devtester@gmail.com"],
+    "oncallUsers": ["testuser@gmail.com"],
+    "numOpenIncidents": 2
+  },
+  "relations": {},
+  "icon": "OpsGenie"
+}
+```
+
+</details>
+
+<details>
+<summary> Incident entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "4a0c5e6d-b239-4cd9-a7e8-a5f880e99473",
+  "blueprint": "opsGenieIncident",
+  "title": "My Incident",
+  "properties": {
+    "status": "open",
+    "responders": [
+      {
+        "type": "team",
+        "id": "63374eee-0b03-42d4-bb8c-50d1fa64827c"
+      },
+      {
+        "type": "user",
+        "id": "ce544b61-7b35-43ea-89ee-a8750638d3a4"
+      },
+      {
+        "type": "user",
+        "id": "9ea8f86a-6648-46d6-a2fc-1a6eb5f739c8"
+      }
+    ],
+    "priority": "P3",
+    "tags": ["hello"],
+    "url": "https://mytestaccount.app.opsgenie.com/incident/detail/4a0c5e6d-b239-4cd9-a7e8-a5f880e99473",
+    "createdAt": "2023-09-20T13:33:00.941Z",
+    "updatedAt": "2023-09-26T17:48:54.48Z",
+    "description": "descirption"
+  },
+  "relations": {
+    "services": ["Port-Outbound-Service", "My-Test-Service"]
+  },
+  "icon": "OpsGenie"
+}
+```
+
+</details>
+
+<details>
+<summary> Alert entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "580e9625-ecc7-42b0-8836-3d3637438bc4-1694867002321",
+  "title": "Login Auth not working",
+  "team": [],
+  "properties": {
+    "status": "open",
+    "acknowledged": true,
+    "tags": ["auth", "login"],
+    "responders": [
+      {
+        "type": "user",
+        "id": "ce544b61-7b35-43ea-89ee-a8750638d3a4"
+      }
+    ],
+    "integration": "Default API",
+    "priority": "P3",
+    "sourceName": "testuser@gmail.com",
+    "createdBy": "testuser@gmail.com",
+    "createdAt": "2023-09-16T12:23:22.321Z",
+    "updatedAt": "2023-09-26T17:51:00.346Z",
+    "count": 1
+  },
+  "relations": {
+    "relatedIncident": "4a0c5e6d-b239-4cd9-a7e8-a5f880e99473"
+  },
+  "icon": "OpsGenie"
+}
+```
+
+</details>
