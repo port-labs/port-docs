@@ -307,4 +307,4 @@ default_context:
 
 </details>
 
-6. Trigger the action from Port's UI with the relevant Repository Name and GitHub Organization Name.
+6. Trigger the action from the [Self-service](https://app.getport.io/self-serve) tab of your Port application.
