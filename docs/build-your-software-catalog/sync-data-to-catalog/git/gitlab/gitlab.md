@@ -10,7 +10,7 @@ Our integration with GitLab allows you to export GitLab objects to Port as entit
 
 Our GitLab integration makes it easy to fill the software catalog with data directly from your GitLab organization, for example:
 
-- Map all of the resources in your GitLab organization, including **projects**, **merge requests**, **issues**, **pipelines** and other GitLab objects;
+- Map all of the resources in your GitLab organization, including **projects**, **monorepos**, **merge requests**, **issues**, **pipelines** and other GitLab objects;
 - Watch for GitLab object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port;
 - Manage Port entities using GitOps;
 - etc.
