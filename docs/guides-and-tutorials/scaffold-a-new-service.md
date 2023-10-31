@@ -60,8 +60,7 @@ After completing it, you will get a sense of how your organization's daily routi
 
 :::tip Important
 
-In our workflow, the cookiecutter uses the payload for the inputs. We omit the user inputs in order to avoid sending additional inputs to the workflow.  
-If you are using your personal Github (default organization), set `Omit user inputs` to `No`.
+In our workflow, the cookiecutter uses the payload for the inputs. We omit the user inputs in order to avoid sending additional inputs to the workflow.
 
 :::
 
