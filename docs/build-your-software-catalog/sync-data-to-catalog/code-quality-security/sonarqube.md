@@ -1,5 +1,6 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
 
 # SonarQube
 
@@ -10,6 +11,10 @@ Our SonarQube integration allows you to import `projects`, `issues` and `analyse
 - Map `projects`, `issues` and `analyses` in your SonarQube organization environment.
 - Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 - Create/delete SonarQube objects using self-service actions.
+
+## Prerequisites
+
+<Prerequisites />
 
 ## Installation
 

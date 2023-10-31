@@ -4,6 +4,7 @@ sidebar_position: 2
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
 
 # Opsgenie
 
@@ -13,6 +14,10 @@ Our Opsgenie integration allows you to import `alert`, `service` and `incident` 
 
 - Map `alert`, `service` and `incident` in your Opsgenie account.
 - Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
+
+## Prerequisites
+
+<Prerequisites />
 
 ## Installation
 

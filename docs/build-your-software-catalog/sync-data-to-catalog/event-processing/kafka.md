@@ -1,5 +1,6 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
 
 # Kafka
 
@@ -10,6 +11,10 @@ Our Kafka integration allows you to import `brokers` and `topics` from your Kafk
 - Map brokers and topics in your Kafka clusters.
 - Watch for object changes (create/update/delete) on schedule, and automatically apply the changes to your entities in Port.
 - Create/delete Kafka objects using self-service actions.
+
+## Prerequisites
+
+<Prerequisites />
 
 ## installation
 

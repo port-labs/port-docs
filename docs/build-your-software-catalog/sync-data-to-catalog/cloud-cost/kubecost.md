@@ -1,5 +1,6 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
 
 # Kubecost
 
@@ -8,6 +9,10 @@ Our Kubecost integration allows you to import `kubesystem` and `cloud` cost allo
 ## Common use cases
 
 - Map your monitored Kubernetes resources and cloud cost allocations in Kubecost.
+
+## Prerequisites
+
+<Prerequisites />
 
 ## installation
 

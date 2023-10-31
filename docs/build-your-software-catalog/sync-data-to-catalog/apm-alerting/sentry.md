@@ -1,5 +1,6 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
 
 # Sentry
 
@@ -12,6 +13,10 @@ An `Issue` is a group of incidents that describe the underlying problem of your 
 ## Common use cases
 
 - Map your monitored projects and issues into Port.
+
+## Prerequisites
+
+<Prerequisites />
 
 ## Installation
 

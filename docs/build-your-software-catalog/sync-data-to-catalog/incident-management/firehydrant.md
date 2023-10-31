@@ -4,6 +4,7 @@ sidebar_position: 3
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
 
 # FireHydrant
 
@@ -13,6 +14,10 @@ Our FireHydrant integration allows you to import `environment`, `service`, `inci
 
 - Map `environment`, `service`, `incident` and `retrospective` in your FireHydrant account.
 - Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
+
+## Prerequisites
+
+<Prerequisites />
 
 ## Installation
 

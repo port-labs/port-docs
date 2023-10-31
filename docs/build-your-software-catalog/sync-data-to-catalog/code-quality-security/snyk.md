@@ -1,5 +1,6 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
 
 # Snyk
 
@@ -10,6 +11,10 @@ Our Snyk integration allows you to import `targets`, `projects` and `issues` fro
 - Map `targets`, `projects` and `issues` in your Snyk organization environment.
 - Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 - Create/delete Snyk objects using self-service actions.
+
+## Prerequisites
+
+<Prerequisites />
 
 ## installation
 
