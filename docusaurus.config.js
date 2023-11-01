@@ -228,7 +228,17 @@ const config = {
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
-        additionalLanguages: ["hcl", "groovy"],
+        additionalLanguages: [
+          "hcl",
+          "groovy",
+          "bash",
+          "yaml",
+          "json",
+          "python",
+          "javascript",
+          "go",
+          "typescript",
+        ],
       },
       liveCodeBlock: {
         /**
