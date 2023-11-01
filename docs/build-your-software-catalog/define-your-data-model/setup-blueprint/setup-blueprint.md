@@ -158,6 +158,7 @@ resource "port_blueprint" "myBlueprint" {
 :::tip TIP
 For full example, check the [Terraform-Managed Blueprint Example](../Iac/terraform-managed-blueprint.md) page.
 :::
+
 </TabItem>
 
 <TabItem value="pulumi">
@@ -302,10 +303,11 @@ func main() {
 
 </TabItem>
 
+</Tabs>
+
 :::tip TIP
 For full example, check the [Pulumi-Managed Blueprint Example](../Iac/pulumi-managed-blueprint.md) page.
 :::
-</Tabs>
 
 </TabItem>
 
