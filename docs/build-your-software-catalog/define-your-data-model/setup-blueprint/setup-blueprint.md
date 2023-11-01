@@ -306,7 +306,7 @@ func main() {
 </Tabs>
 
 :::tip TIP
-For full example, check the [Pulumi-Managed Blueprint Example](../Iac/pulumi-managed-blueprint.md) page.
+For a full example, check the [Pulumi-Managed Blueprint Example](../Iac/pulumi-managed-blueprint.md) page.
 :::
 
 </TabItem>
