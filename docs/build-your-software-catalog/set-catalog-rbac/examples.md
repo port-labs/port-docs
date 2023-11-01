@@ -246,7 +246,7 @@ The following change will allow **Member** users to update _every_ property/rela
 
 </Tabs>
 
-:::caution
+:::warning
 Using global permissions override any granular permission that have been set.
 
 If both permission types are set, then the global setting will be used when evaluating permissions.
