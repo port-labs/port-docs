@@ -51,8 +51,8 @@ Create the following webhook configuration [using Port UI](../../webhook/?operat
 6. Enter the value of the `url` key you received after creating the webhook configuration.
 7. Click Save.
 
-Done! any time an impression is triggered, the webhook will send the data to Port which will turn into a new entity with the data mapped.
+Done! any time an impression is triggered, the webhook will send the data to Port and create a new `split impression` entity
 
 :::info
-To see all available data for an impression, visit [Split's documentation](https://help.split.io/hc/en-us/articles/360020700232-Webhook-impressions)\
+To see all available data for an impression, visit [Split's documentation](https://help.split.io/hc/en-us/articles/360020700232-Webhook-impressions)
 :::
