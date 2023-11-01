@@ -90,7 +90,7 @@ Keep in mind this can be any blueprint you would like and this is just an exampl
    1. [Enable webhook trigger for a pipeline](../jenkins-pipeline.md#enabling-webhook-trigger-for-a-pipeline)
    2. [Define variables for a pipeline](../jenkins-pipeline.md#defining-variables): Define the REPO_NAME,GITHUB_ORG_NAME and RUN_ID variables.
       ![Define Vars](../../../../../static/img/self-service-actions/setup-backend/jenkins-pipeline/scaffold-jenkins-vars.png)
-   3. [Token Setup](../jenkins-pipeline.md#token-setup): Define the token to match <JOB_TOKEN> as configured in your Port Action.
+   3. [Token Setup](../jenkins-pipeline.md#token-setup): Define the token to match `JOB_TOKEN` as configured in your Port Action.
 
 5. Create a Jenkins Pipeline with the following content:
 
