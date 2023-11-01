@@ -1,0 +1,18 @@
+```json showLineNumbers
+[
+  {
+    "blueprint": "split_impression",
+    "itemsToParse": ".body",
+    "entity": {
+      "identifier": ".item.key + \"-\" + .item.time",
+      "title": ".item.split",
+      "properties": {
+       "environment_id": ".item.environmentId",
+       "environment_name": ".item.environmentName",
+       "label": ".item.label",
+       "sdk": ".item.sdk",
+       "sdk_version": ".item.sdkVersion"
+      }
+  }
+]
+```
