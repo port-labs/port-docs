@@ -172,7 +172,7 @@ After creating the Relation, you will see a visual indicator in the Blueprints g
 
 When updating a Relation, it is only possible to update the `title`, `required` and `many` keys.
 
-:::caution
+:::warning
 A few points to consider when updating an existing Relation:
 
 - If you change a Relation identifier, it will effectively delete the old Relation and create a new one under the new identifier;

@@ -622,3 +622,1049 @@ resources:
 ```
 
 </details>
+
+## Let's Test It
+
+This section includes a sample response data from FireHydrant. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+
+### Payload
+
+Here is an example of the payload structure from FireHydrant:
+
+<details>
+<summary> Environment response data</summary>
+
+```json showLineNumbers
+{
+  "id": "21011924-215e-4aa4-abbf-6155ecf237ae",
+  "name": "Production",
+  "slug": "production",
+  "description": "",
+  "updated_at": "2023-09-05T17:01:48.348Z",
+  "created_at": "2023-09-05T17:01:48.348Z",
+  "active_incidents": [
+    "71bdfd6f-4ee7-4222-a9a3-832637174ae7",
+    "fcd05e8b-e66b-46b7-9210-d6607fdc8894"
+  ],
+  "external_resources": []
+}
+```
+
+</details>
+
+<details>
+<summary> Service response data</summary>
+
+```json showLineNumbers
+{
+  "id": "87aeea3d-4dcd-4c1e-bf8c-e68e73892e44",
+  "name": "My Test Service",
+  "description": "For testing this service",
+  "slug": "my-test-service",
+  "service_tier": 3,
+  "created_at": "2023-09-06T12:37:37.378Z",
+  "updated_at": "2023-09-20T10:25:32.730Z",
+  "labels": {
+    "myket": "service",
+    "keyval": "app"
+  },
+  "active_incidents": [
+    "71bdfd6f-4ee7-4222-a9a3-832637174ae7",
+    "fcd05e8b-e66b-46b7-9210-d6607fdc8894"
+  ],
+  "alert_on_add": true,
+  "auto_add_responding_team": false,
+  "checklists": [],
+  "completed_checks": 0,
+  "external_resources": [],
+  "functionalities": [
+    {
+      "id": "8861c55d-042d-43f1-9aab-c44c056dcbff",
+      "name": "Platform - Deployments",
+      "slug": "platform-deployments",
+      "description": "",
+      "created_at": "2023-09-05T17:01:48.484Z",
+      "updated_at": "2023-09-05T17:01:48.484Z",
+      "labels": {},
+      "active_incidents": ["71bdfd6f-4ee7-4222-a9a3-832637174ae7"],
+      "links": [],
+      "owner": "None",
+      "alert_on_add": false,
+      "auto_add_responding_team": "None",
+      "updated_by": {
+        "id": "5ffe7fce-539f-40e7-a6fe-762897190694",
+        "name": "FireHydrant",
+        "source": "patchy",
+        "email": ""
+      },
+      "services": [
+        {
+          "id": "87aeea3d-4dcd-4c1e-bf8c-e68e73892e44",
+          "name": "My Test Service",
+          "description": "For testing this service",
+          "slug": "my-test-service",
+          "service_tier": 3,
+          "created_at": "2023-09-06T12:37:37.378Z",
+          "updated_at": "2023-09-20T10:25:32.730Z",
+          "labels": {
+            "myket": "service",
+            "keyval": "app"
+          },
+          "alert_on_add": true,
+          "auto_add_responding_team": false
+        }
+      ],
+      "external_resources": [],
+      "teams": []
+    }
+  ],
+  "last_import": "None",
+  "links": [
+    {
+      "id": "109feace-3aab-415f-9b67-c52418992570",
+      "href_url": "https://example.com",
+      "icon_url": "None",
+      "name": "link text"
+    }
+  ],
+  "managed_by": "None",
+  "managed_by_settings": "None",
+  "owner": {
+    "id": "653c66f8-c14e-4f74-bf9d-9970382f6638",
+    "name": "Test Escalation Team",
+    "description": "This team is for us",
+    "slug": "test-escalation-team",
+    "created_at": "2023-09-06T12:44:16.021Z",
+    "updated_at": "2023-09-06T12:44:16.021Z"
+  },
+  "service_checklist_updated_at": "None",
+  "teams": [
+    {
+      "id": "653c66f8-c14e-4f74-bf9d-9970382f6638",
+      "name": "Test Escalation Team",
+      "description": "This team is for us",
+      "slug": "test-escalation-team",
+      "created_at": "2023-09-06T12:44:16.021Z",
+      "updated_at": "2023-09-06T12:44:16.021Z"
+    }
+  ],
+  "updated_by": {
+    "id": "184eb568-c1a9-4f99-9d52-8f7dd6672158",
+    "name": "My Username",
+    "source": "firehydrant_user",
+    "email": "testuser@gmail.com"
+  },
+  "__incidents": {
+    "milestones": [
+      [
+        {
+          "id": "e1c487c2-5479-47e7-96d8-d9a65f3a5288",
+          "created_at": "2023-09-07T21:25:15.876Z",
+          "updated_at": "2023-09-07T21:25:15.876Z",
+          "type": "started",
+          "occurred_at": "2023-09-07T21:25:15.865Z",
+          "duration": "None"
+        },
+        {
+          "id": "a4b3fab9-3992-49bd-ae01-d277c99e2b97",
+          "created_at": "2023-09-07T21:25:46.535Z",
+          "updated_at": "2023-09-07T21:25:46.543Z",
+          "type": "detected",
+          "occurred_at": "2023-09-07T21:25:46.530Z",
+          "duration": "PT30S"
+        },
+        {
+          "id": "47920f14-a0c7-4003-a773-dd07eb33d8e5",
+          "created_at": "2023-09-07T21:28:30.792Z",
+          "updated_at": "2023-09-07T21:28:30.805Z",
+          "type": "mitigated",
+          "occurred_at": "2023-09-07T21:28:30.787Z",
+          "duration": "PT2M44S"
+        }
+      ],
+      [
+        {
+          "id": "293808a2-d214-4f6e-9b46-d055aa5f2540",
+          "created_at": "2023-09-07T21:12:45.129Z",
+          "updated_at": "2023-09-07T21:12:45.129Z",
+          "type": "started",
+          "occurred_at": "2023-09-07T21:12:45.121Z",
+          "duration": "None"
+        },
+        {
+          "id": "bd073d71-391b-46fd-98b3-62518a9fed8a",
+          "created_at": "2023-09-07T21:12:45.177Z",
+          "updated_at": "2023-09-07T21:12:45.185Z",
+          "type": "acknowledged",
+          "occurred_at": "2023-09-07T21:12:45.121Z",
+          "duration": "PT0S"
+        },
+        {
+          "id": "4e4db026-710f-4492-913f-9add2ee1b9cb",
+          "created_at": "2023-09-07T21:15:05.564Z",
+          "updated_at": "2023-09-07T21:15:05.576Z",
+          "type": "identified",
+          "occurred_at": "2023-09-07T21:15:05.559Z",
+          "duration": "PT2M20S"
+        },
+        {
+          "id": "e02eeb8c-2f5c-4f77-a8c0-bda3485e644c",
+          "created_at": "2023-09-07T21:22:39.862Z",
+          "updated_at": "2023-09-07T21:22:39.862Z",
+          "type": "mitigated",
+          "occurred_at": "2023-09-07T21:22:39.817Z",
+          "duration": "PT7M34S"
+        },
+        {
+          "id": "ee672221-8917-4628-ae8a-ef06e34d02cf",
+          "created_at": "2023-09-07T21:22:39.822Z",
+          "updated_at": "2023-09-07T21:22:39.869Z",
+          "type": "resolved",
+          "occurred_at": "2023-09-07T21:22:39.817Z",
+          "duration": "PT0S"
+        }
+      ],
+      [
+        {
+          "id": "785599df-be6a-4c13-80ea-11b15eeffa2e",
+          "created_at": "2023-09-05T17:05:25.681Z",
+          "updated_at": "2023-09-05T17:05:25.681Z",
+          "type": "started",
+          "occurred_at": "2023-09-05T17:05:25.671Z",
+          "duration": "None"
+        },
+        {
+          "id": "a4ee606e-221a-44e2-9c6d-6f83795d0b16",
+          "created_at": "2023-09-07T20:37:07.289Z",
+          "updated_at": "2023-09-07T20:37:07.303Z",
+          "type": "detected",
+          "occurred_at": "2023-09-07T20:37:07.285Z",
+          "duration": "P2DT3H31M41S"
+        },
+        {
+          "id": "7077e41c-ba30-48c6-9cf1-548c9a692275",
+          "created_at": "2023-09-07T21:13:25.337Z",
+          "updated_at": "2023-09-07T21:13:25.351Z",
+          "type": "identified",
+          "occurred_at": "2023-09-07T21:13:25.333Z",
+          "duration": "PT36M18S"
+        }
+      ]
+    ]
+  }
+}
+```
+
+</details>
+
+<details>
+<summary> Incident response data</summary>
+
+```json showLineNumbers
+{
+  "id": "eb03f3f2-1a58-4d19-9f85-b3e46dbf5c2e",
+  "name": "System outage",
+  "created_at": "2023-09-08T10:58:06.791Z",
+  "started_at": "2023-09-08T10:58:07.013Z",
+  "discarded_at": "None",
+  "summary": "",
+  "customer_impact_summary": "",
+  "description": "A system that isn't customer-facing or doesn't impact customer data processing is unavailable",
+  "current_milestone": "acknowledged",
+  "number": 6,
+  "priority": "P2",
+  "severity": "SEV2",
+  "severity_color": "orange",
+  "severity_impact": "None",
+  "severity_condition": "None",
+  "tag_list": ["internal"],
+  "private_id": "4303c837eeb640b39cab772c2f03668e65168041f504eb645027ff362cbac64ad1908268fa802d80205f21e7438516270f607b0f3406564f6d4056985efffdb6e8d2843bb3314426b404a20150cab0a8e9ddcb6114d9cd0140ad9148fb7f7993f827b5e0",
+  "organization_id": "0445b04e-5ed5-4fdc-aef7-5d68046ed78e",
+  "milestones": [
+    {
+      "id": "64aca0c7-4c92-42f1-9482-7910e46d88bf",
+      "created_at": "2023-09-08T10:58:07.026Z",
+      "updated_at": "2023-09-08T10:58:07.026Z",
+      "type": "started",
+      "occurred_at": "2023-09-08T10:58:07.013Z",
+      "duration": "None"
+    },
+    {
+      "id": "0778f6c0-999e-47a9-9d53-6cb9df872356",
+      "created_at": "2023-09-08T10:58:07.076Z",
+      "updated_at": "2023-09-08T10:58:07.085Z",
+      "type": "acknowledged",
+      "occurred_at": "2023-09-08T10:58:07.013Z",
+      "duration": "PT0S"
+    }
+  ],
+  "active": true,
+  "labels": {},
+  "role_assignments": [
+    {
+      "id": "d8724146-9dcd-4be1-8673-71d48e6192e8",
+      "status": "active",
+      "created_at": "2023-09-08T10:58:08.031Z",
+      "updated_at": "2023-09-08T10:58:08.031Z",
+      "incident_role": {
+        "id": "dace9563-adf1-47a4-889d-a4048b2c07bf",
+        "name": "Commander",
+        "summary": "The incident commander holds the high-level state about the incident",
+        "description": "",
+        "created_at": "2023-09-05T17:01:47.908Z",
+        "updated_at": "2023-09-05T17:01:47.908Z",
+        "discarded_at": "None"
+      },
+      "user": {
+        "id": "184eb568-c1a9-4f99-9d52-8f7dd6672158",
+        "name": "My Username",
+        "email": "testuser@gmail.com",
+        "slack_user_id": "None",
+        "slack_linked?": false,
+        "created_at": "2023-09-05T17:01:49.368Z",
+        "updated_at": "2023-09-05T17:01:49.368Z"
+      }
+    }
+  ],
+  "status_pages": [],
+  "incident_url": "https://app.firehydrant.io/org/port-5478/incidents/eb03f3f2-1a58-4d19-9f85-b3e46dbf5c2e/incident/overview",
+  "private_status_page_url": "",
+  "organization": {
+    "name": "Port",
+    "id": "0445b04e-5ed5-4fdc-aef7-5d68046ed78e"
+  },
+  "customers_impacted": 0,
+  "monetary_impact": "None",
+  "monetary_impact_cents": "None",
+  "last_update": "None",
+  "last_note": "None",
+  "report_id": "1d9f12b8-b8ee-458d-a720-7f2429303213",
+  "services": [
+    {
+      "id": "4e5bb8f3-4eab-4a13-b354-de7fc47f3554",
+      "name": "Port Internal Service Tested"
+    }
+  ],
+  "environments": [],
+  "functionalities": [],
+  "channel_name": "None",
+  "channel_reference": "None",
+  "channel_id": "None",
+  "channel_status": "None",
+  "incident_tickets": [],
+  "ticket": "None",
+  "impacts": [
+    {
+      "id": "8bbadcd0-9be7-4137-b5f2-9e6df6c26faa",
+      "type": "service",
+      "impact": {
+        "id": "4e5bb8f3-4eab-4a13-b354-de7fc47f3554",
+        "name": "Port Internal Service Tested"
+      },
+      "condition": {
+        "id": "b1fc9184-b3f3-4af1-a111-68abcad9bf34",
+        "name": "Unavailable",
+        "position": 0
+      },
+      "conversations": [
+        {
+          "id": "Z2lkOi8vbGFkZGVydHJ1Y2svSW5jaWRlbnRzOjpJbXBhY3QvOGJiYWRjZDAtOWJlNy00MTM3LWI1ZjItOWU2ZGY2YzI2ZmFh",
+          "resource_class": "Incidents::Impact",
+          "resource_id": "8bbadcd0-9be7-4137-b5f2-9e6df6c26faa",
+          "field": "None",
+          "comments_url": "/v1/conversations/Z2lkOi8vbGFkZGVydHJ1Y2svSW5jaWRlbnRzOjpJbXBhY3QvOGJiYWRjZDAtOWJlNy00MTM3LWI1ZjItOWU2ZGY2YzI2ZmFh/comments",
+          "channel": {
+            "name": "private-conversations-Z2lkOi8vbGFkZGVydHJ1Y2svSW5jaWRlbnRzOjpJbXBhY3QvOGJiYWRjZDAtOWJlNy00MTM3LWI1ZjItOWU2ZGY2YzI2ZmFh"
+          }
+        }
+      ]
+    }
+  ],
+  "conference_bridges": [],
+  "incident_channels": [],
+  "retro_exports": [],
+  "created_by": {
+    "id": "184eb568-c1a9-4f99-9d52-8f7dd6672158",
+    "name": "My Username",
+    "source": "firehydrant_user",
+    "email": "testuser@gmail.com"
+  },
+  "context_object": "None",
+  "restricted": false,
+  "team_assignments": [],
+  "conversations": [
+    {
+      "id": "Z2lkOi8vbGFkZGVydHJ1Y2svSW5jaWRlbnQvZWIwM2YzZjItMWE1OC00ZDE5LTlmODUtYjNlNDZkYmY1YzJl",
+      "resource_class": "Incident",
+      "resource_id": "eb03f3f2-1a58-4d19-9f85-b3e46dbf5c2e",
+      "field": "None",
+      "comments_url": "/v1/conversations/Z2lkOi8vbGFkZGVydHJ1Y2svSW5jaWRlbnQvZWIwM2YzZjItMWE1OC00ZDE5LTlmODUtYjNlNDZkYmY1YzJl/comments",
+      "channel": {
+        "name": "private-conversations-Z2lkOi8vbGFkZGVydHJ1Y2svSW5jaWRlbnQvZWIwM2YzZjItMWE1OC00ZDE5LTlmODUtYjNlNDZkYmY1YzJl"
+      }
+    },
+    {
+      "id": "Z2lkOi8vbGFkZGVydHJ1Y2svSW5jaWRlbnQvZWIwM2YzZjItMWE1OC00ZDE5LTlmODUtYjNlNDZkYmY1YzJlP2ZpZWxkPWRlc2NyaXB0aW9u",
+      "resource_class": "Incident",
+      "resource_id": "eb03f3f2-1a58-4d19-9f85-b3e46dbf5c2e",
+      "field": "description",
+      "comments_url": "/v1/conversations/Z2lkOi8vbGFkZGVydHJ1Y2svSW5jaWRlbnQvZWIwM2YzZjItMWE1OC00ZDE5LTlmODUtYjNlNDZkYmY1YzJlP2ZpZWxkPWRlc2NyaXB0aW9u/comments",
+      "channel": {
+        "name": "private-conversations-Z2lkOi8vbGFkZGVydHJ1Y2svSW5jaWRlbnQvZWIwM2YzZjItMWE1OC00ZDE5LTlmODUtYjNlNDZkYmY1YzJlP2ZpZWxkPWRlc2NyaXB0aW9u"
+      }
+    },
+    {
+      "id": "Z2lkOi8vbGFkZGVydHJ1Y2svSW5jaWRlbnQvZWIwM2YzZjItMWE1OC00ZDE5LTlmODUtYjNlNDZkYmY1YzJlP2ZpZWxkPWN1c3RvbWVyX2ltcGFjdF9zdW1tYXJ5",
+      "resource_class": "Incident",
+      "resource_id": "eb03f3f2-1a58-4d19-9f85-b3e46dbf5c2e",
+      "field": "customer_impact_summary",
+      "comments_url": "/v1/conversations/Z2lkOi8vbGFkZGVydHJ1Y2svSW5jaWRlbnQvZWIwM2YzZjItMWE1OC00ZDE5LTlmODUtYjNlNDZkYmY1YzJlP2ZpZWxkPWN1c3RvbWVyX2ltcGFjdF9zdW1tYXJ5/comments",
+      "channel": {
+        "name": "private-conversations-Z2lkOi8vbGFkZGVydHJ1Y2svSW5jaWRlbnQvZWIwM2YzZjItMWE1OC00ZDE5LTlmODUtYjNlNDZkYmY1YzJlP2ZpZWxkPWN1c3RvbWVyX2ltcGFjdF9zdW1tYXJ5"
+      }
+    },
+    {
+      "id": "Z2lkOi8vbGFkZGVydHJ1Y2svSW5jaWRlbnQvZWIwM2YzZjItMWE1OC00ZDE5LTlmODUtYjNlNDZkYmY1YzJlP2ZpZWxkPWltcGFjdA==",
+      "resource_class": "Incident",
+      "resource_id": "eb03f3f2-1a58-4d19-9f85-b3e46dbf5c2e",
+      "field": "impact",
+      "comments_url": "/v1/conversations/Z2lkOi8vbGFkZGVydHJ1Y2svSW5jaWRlbnQvZWIwM2YzZjItMWE1OC00ZDE5LTlmODUtYjNlNDZkYmY1YzJlP2ZpZWxkPWltcGFjdA==/comments",
+      "channel": {
+        "name": "private-conversations-Z2lkOi8vbGFkZGVydHJ1Y2svSW5jaWRlbnQvZWIwM2YzZjItMWE1OC00ZDE5LTlmODUtYjNlNDZkYmY1YzJlP2ZpZWxkPWltcGFjdA=="
+      }
+    }
+  ]
+}
+```
+
+</details>
+
+<details>
+<summary> Retrospective response data</summary>
+
+```json showLineNumbers
+{
+  "id": "da2ff7ef-6faf-4e4e-9577-985ffa739c9f",
+  "name": "Bump request library",
+  "summary": "",
+  "incident_id": "81b628c8-8612-4877-803d-22a1dc187ba5",
+  "created_at": "2023-09-05T17:32:52.095Z",
+  "updated_at": "2023-09-05T17:35:20.413Z",
+  "tag_list": [],
+  "additional_details": "None",
+  "incident": {
+    "id": "81b628c8-8612-4877-803d-22a1dc187ba5",
+    "name": "Bump request library",
+    "created_at": "2023-09-05T17:32:51.926Z",
+    "started_at": "2023-09-05T17:32:52.144Z",
+    "discarded_at": "None",
+    "summary": "",
+    "customer_impact_summary": "",
+    "description": "add request library",
+    "current_milestone": "postmortem_completed",
+    "number": 2,
+    "priority": "P1",
+    "severity": "SEV1",
+    "severity_color": "red",
+    "severity_impact": "None",
+    "severity_condition": "None",
+    "tag_list": ["security"],
+    "private_id": "1838d08fe38a7bc92188bc6338918085e521f6cad829101c95f2ba0381da9e26aa7f1bc4247be660735097019bb237351bf451a06d8683310774ca5817661be2b73ad5bf5923d76b79a658667008fc8a8977e9823f2750efebdbbf2fd275f4406e6c870d",
+    "organization_id": "0445b04e-5ed5-4fdc-aef7-5d68046ed78e",
+    "milestones": [
+      {
+        "id": "9f2e3e86-c306-4b84-a3bb-7b74d6af9747",
+        "created_at": "2023-09-05T17:32:52.161Z",
+        "updated_at": "2023-09-05T17:32:52.161Z",
+        "type": "started",
+        "occurred_at": "2023-09-05T17:32:52.144Z",
+        "duration": "None"
+      },
+      {
+        "id": "dc8fc26e-3ce4-4a8c-863c-7853367ad81a",
+        "created_at": "2023-09-05T17:32:52.207Z",
+        "updated_at": "2023-09-05T17:32:52.222Z",
+        "type": "acknowledged",
+        "occurred_at": "2023-09-05T17:32:52.144Z",
+        "duration": "PT0S"
+      },
+      {
+        "id": "d3746e2f-fc65-4a4a-b0db-b784056d7e05",
+        "created_at": "2023-09-05T17:33:28.298Z",
+        "updated_at": "2023-09-05T17:33:28.317Z",
+        "type": "identified",
+        "occurred_at": "2023-09-05T17:33:28.292Z",
+        "duration": "PT36S"
+      },
+      {
+        "id": "6fd7261d-dceb-40ac-8a3c-7d7fbef4fefe",
+        "created_at": "2023-09-05T17:33:37.592Z",
+        "updated_at": "2023-09-05T17:33:37.592Z",
+        "type": "mitigated",
+        "occurred_at": "2023-09-05T17:33:37.520Z",
+        "duration": "PT9S"
+      },
+      {
+        "id": "50618295-c422-408d-9880-a077a3c3faa9",
+        "created_at": "2023-09-05T17:33:37.525Z",
+        "updated_at": "2023-09-05T17:33:37.603Z",
+        "type": "resolved",
+        "occurred_at": "2023-09-05T17:33:37.520Z",
+        "duration": "PT0S"
+      },
+      {
+        "id": "6f95ec3a-165d-4e5e-b3c4-768b28c3d1ee",
+        "created_at": "2023-09-05T17:33:42.693Z",
+        "updated_at": "2023-09-05T17:33:42.717Z",
+        "type": "postmortem_started",
+        "occurred_at": "2023-09-05T17:33:42.689Z",
+        "duration": "PT5S"
+      },
+      {
+        "id": "3adaac3f-5dd0-4378-b8cd-d33cf9855ae6",
+        "created_at": "2023-09-05T17:36:57.496Z",
+        "updated_at": "2023-09-05T17:36:57.518Z",
+        "type": "postmortem_completed",
+        "occurred_at": "2023-09-05T17:36:57.491Z",
+        "duration": "PT3M14S"
+      }
+    ],
+    "active": false,
+    "labels": {},
+    "role_assignments": [
+      {
+        "id": "ea0ff4d9-5efe-4fec-b27f-8eaa82eeb81d",
+        "status": "active",
+        "created_at": "2023-09-05T17:32:52.951Z",
+        "updated_at": "2023-09-05T17:32:52.951Z",
+        "incident_role": {
+          "id": "dace9563-adf1-47a4-889d-a4048b2c07bf",
+          "name": "Commander",
+          "summary": "The incident commander holds the high-level state about the incident",
+          "description": "",
+          "created_at": "2023-09-05T17:01:47.908Z",
+          "updated_at": "2023-09-05T17:01:47.908Z",
+          "discarded_at": "None"
+        },
+        "user": {
+          "id": "184eb568-c1a9-4f99-9d52-8f7dd6672158",
+          "name": "My Username",
+          "email": "testuser@gmail.com",
+          "slack_user_id": "None",
+          "slack_linked?": false,
+          "created_at": "2023-09-05T17:01:49.368Z",
+          "updated_at": "2023-09-05T17:01:49.368Z"
+        }
+      }
+    ],
+    "status_pages": [],
+    "incident_url": "https://app.firehydrant.io/org/port-5478/incidents/81b628c8-8612-4877-803d-22a1dc187ba5/incident/overview",
+    "private_status_page_url": "",
+    "organization": {
+      "name": "Port",
+      "id": "0445b04e-5ed5-4fdc-aef7-5d68046ed78e"
+    },
+    "customers_impacted": 0,
+    "monetary_impact": "None",
+    "monetary_impact_cents": "None",
+    "last_update": "None",
+    "last_note": "None",
+    "report_id": "da2ff7ef-6faf-4e4e-9577-985ffa739c9f",
+    "services": [],
+    "environments": [
+      {
+        "id": "21011924-215e-4aa4-abbf-6155ecf237ae",
+        "name": "Production"
+      }
+    ],
+    "functionalities": [
+      {
+        "id": "8861c55d-042d-43f1-9aab-c44c056dcbff",
+        "name": "Platform - Deployments"
+      }
+    ],
+    "channel_name": "None",
+    "channel_reference": "None",
+    "channel_id": "None",
+    "channel_status": "None",
+    "incident_tickets": [],
+    "ticket": "None",
+    "impacts": [
+      {
+        "id": "749de40b-9368-4145-aa75-2d7177d60828",
+        "type": "environment",
+        "impact": {
+          "id": "21011924-215e-4aa4-abbf-6155ecf237ae",
+          "name": "Production"
+        },
+        "condition": {
+          "id": "b1fc9184-b3f3-4af1-a111-68abcad9bf34",
+          "name": "Unavailable",
+          "position": 0
+        },
+        "conversations": [
+          {
+            "id": "Z2lkOi8vbGFkZGVydHJ1Y2svSW5jaWRlbnRzOjpJbXBhY3QvNzQ5ZGU0MGItOTM2OC00MTQ1LWFhNzUtMmQ3MTc3ZDYwODI4",
+            "resource_class": "Incidents::Impact",
+            "resource_id": "749de40b-9368-4145-aa75-2d7177d60828",
+            "field": "None",
+            "comments_url": "/v1/conversations/Z2lkOi8vbGFkZGVydHJ1Y2svSW5jaWRlbnRzOjpJbXBhY3QvNzQ5ZGU0MGItOTM2OC00MTQ1LWFhNzUtMmQ3MTc3ZDYwODI4/comments",
+            "channel": {
+              "name": "private-conversations-Z2lkOi8vbGFkZGVydHJ1Y2svSW5jaWRlbnRzOjpJbXBhY3QvNzQ5ZGU0MGItOTM2OC00MTQ1LWFhNzUtMmQ3MTc3ZDYwODI4"
+            }
+          }
+        ]
+      },
+      {
+        "id": "b6833302-01f8-4705-b863-178e35cd7b23",
+        "type": "functionality",
+        "impact": {
+          "id": "8861c55d-042d-43f1-9aab-c44c056dcbff",
+          "name": "Platform - Deployments"
+        },
+        "condition": {
+          "id": "c2bc11e8-7fcc-428d-9007-26f00700834a",
+          "name": "Bug",
+          "position": 2
+        },
+        "conversations": [
+          {
+            "id": "Z2lkOi8vbGFkZGVydHJ1Y2svSW5jaWRlbnRzOjpJbXBhY3QvYjY4MzMzMDItMDFmOC00NzA1LWI4NjMtMTc4ZTM1Y2Q3YjIz",
+            "resource_class": "Incidents::Impact",
+            "resource_id": "b6833302-01f8-4705-b863-178e35cd7b23",
+            "field": "None",
+            "comments_url": "/v1/conversations/Z2lkOi8vbGFkZGVydHJ1Y2svSW5jaWRlbnRzOjpJbXBhY3QvYjY4MzMzMDItMDFmOC00NzA1LWI4NjMtMTc4ZTM1Y2Q3YjIz/comments",
+            "channel": {
+              "name": "private-conversations-Z2lkOi8vbGFkZGVydHJ1Y2svSW5jaWRlbnRzOjpJbXBhY3QvYjY4MzMzMDItMDFmOC00NzA1LWI4NjMtMTc4ZTM1Y2Q3YjIz"
+            }
+          }
+        ]
+      }
+    ],
+    "conference_bridges": [],
+    "incident_channels": [],
+    "retro_exports": [],
+    "created_by": {
+      "id": "184eb568-c1a9-4f99-9d52-8f7dd6672158",
+      "name": "My Username",
+      "source": "firehydrant_user",
+      "email": "testuser@gmail.com"
+    },
+    "context_object": "None",
+    "restricted": false,
+    "team_assignments": [],
+    "conversations": [
+      {
+        "id": "Z2lkOi8vbGFkZGVydHJ1Y2svSW5jaWRlbnQvODFiNjI4YzgtODYxMi00ODc3LTgwM2QtMjJhMWRjMTg3YmE1",
+        "resource_class": "Incident",
+        "resource_id": "81b628c8-8612-4877-803d-22a1dc187ba5",
+        "field": "None",
+        "comments_url": "/v1/conversations/Z2lkOi8vbGFkZGVydHJ1Y2svSW5jaWRlbnQvODFiNjI4YzgtODYxMi00ODc3LTgwM2QtMjJhMWRjMTg3YmE1/comments",
+        "channel": {
+          "name": "private-conversations-Z2lkOi8vbGFkZGVydHJ1Y2svSW5jaWRlbnQvODFiNjI4YzgtODYxMi00ODc3LTgwM2QtMjJhMWRjMTg3YmE1"
+        }
+      },
+      {
+        "id": "Z2lkOi8vbGFkZGVydHJ1Y2svSW5jaWRlbnQvODFiNjI4YzgtODYxMi00ODc3LTgwM2QtMjJhMWRjMTg3YmE1P2ZpZWxkPWRlc2NyaXB0aW9u",
+        "resource_class": "Incident",
+        "resource_id": "81b628c8-8612-4877-803d-22a1dc187ba5",
+        "field": "description",
+        "comments_url": "/v1/conversations/Z2lkOi8vbGFkZGVydHJ1Y2svSW5jaWRlbnQvODFiNjI4YzgtODYxMi00ODc3LTgwM2QtMjJhMWRjMTg3YmE1P2ZpZWxkPWRlc2NyaXB0aW9u/comments",
+        "channel": {
+          "name": "private-conversations-Z2lkOi8vbGFkZGVydHJ1Y2svSW5jaWRlbnQvODFiNjI4YzgtODYxMi00ODc3LTgwM2QtMjJhMWRjMTg3YmE1P2ZpZWxkPWRlc2NyaXB0aW9u"
+        }
+      },
+      {
+        "id": "Z2lkOi8vbGFkZGVydHJ1Y2svSW5jaWRlbnQvODFiNjI4YzgtODYxMi00ODc3LTgwM2QtMjJhMWRjMTg3YmE1P2ZpZWxkPWN1c3RvbWVyX2ltcGFjdF9zdW1tYXJ5",
+        "resource_class": "Incident",
+        "resource_id": "81b628c8-8612-4877-803d-22a1dc187ba5",
+        "field": "customer_impact_summary",
+        "comments_url": "/v1/conversations/Z2lkOi8vbGFkZGVydHJ1Y2svSW5jaWRlbnQvODFiNjI4YzgtODYxMi00ODc3LTgwM2QtMjJhMWRjMTg3YmE1P2ZpZWxkPWN1c3RvbWVyX2ltcGFjdF9zdW1tYXJ5/comments",
+        "channel": {
+          "name": "private-conversations-Z2lkOi8vbGFkZGVydHJ1Y2svSW5jaWRlbnQvODFiNjI4YzgtODYxMi00ODc3LTgwM2QtMjJhMWRjMTg3YmE1P2ZpZWxkPWN1c3RvbWVyX2ltcGFjdF9zdW1tYXJ5"
+        }
+      },
+      {
+        "id": "Z2lkOi8vbGFkZGVydHJ1Y2svSW5jaWRlbnQvODFiNjI4YzgtODYxMi00ODc3LTgwM2QtMjJhMWRjMTg3YmE1P2ZpZWxkPWltcGFjdA==",
+        "resource_class": "Incident",
+        "resource_id": "81b628c8-8612-4877-803d-22a1dc187ba5",
+        "field": "impact",
+        "comments_url": "/v1/conversations/Z2lkOi8vbGFkZGVydHJ1Y2svSW5jaWRlbnQvODFiNjI4YzgtODYxMi00ODc3LTgwM2QtMjJhMWRjMTg3YmE1P2ZpZWxkPWltcGFjdA==/comments",
+        "channel": {
+          "name": "private-conversations-Z2lkOi8vbGFkZGVydHJ1Y2svSW5jaWRlbnQvODFiNjI4YzgtODYxMi00ODc3LTgwM2QtMjJhMWRjMTg3YmE1P2ZpZWxkPWltcGFjdA=="
+        }
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "0ee80dda-a6b0-418d-aca2-8d12cfe58523",
+      "title": "What went well?",
+      "body": "able to resolve it fast",
+      "tooltip": "What process went well during your incident? What mitigation steps went well?",
+      "kind": "freeform",
+      "is_required": true,
+      "conversations": [
+        {
+          "id": "Z2lkOi8vbGFkZGVydHJ1Y2svUG9zdE1vcnRlbXM6OlF1ZXN0aW9uLzBlZTgwZGRhLWE2YjAtNDE4ZC1hY2EyLThkMTJjZmU1ODUyMw==",
+          "resource_class": "PostMortems::Question",
+          "resource_id": "0ee80dda-a6b0-418d-aca2-8d12cfe58523",
+          "field": "None",
+          "comments_url": "/v1/conversations/Z2lkOi8vbGFkZGVydHJ1Y2svUG9zdE1vcnRlbXM6OlF1ZXN0aW9uLzBlZTgwZGRhLWE2YjAtNDE4ZC1hY2EyLThkMTJjZmU1ODUyMw==/comments",
+          "channel": {
+            "name": "private-conversations-Z2lkOi8vbGFkZGVydHJ1Y2svUG9zdE1vcnRlbXM6OlF1ZXN0aW9uLzBlZTgwZGRhLWE2YjAtNDE4ZC1hY2EyLThkMTJjZmU1ODUyMw=="
+          }
+        }
+      ]
+    },
+    {
+      "id": "7fbe151b-6040-49ab-9c5b-348866cabad6",
+      "title": "What could be improved?",
+      "body": "nothing",
+      "tooltip": "What parts of your incident response process can you improve? What additional things could you put in place to ensure that an issue like this can be mitigated in the future?",
+      "kind": "freeform",
+      "is_required": true,
+      "conversations": [
+        {
+          "id": "Z2lkOi8vbGFkZGVydHJ1Y2svUG9zdE1vcnRlbXM6OlF1ZXN0aW9uLzdmYmUxNTFiLTYwNDAtNDlhYi05YzViLTM0ODg2NmNhYmFkNg==",
+          "resource_class": "PostMortems::Question",
+          "resource_id": "7fbe151b-6040-49ab-9c5b-348866cabad6",
+          "field": "None",
+          "comments_url": "/v1/conversations/Z2lkOi8vbGFkZGVydHJ1Y2svUG9zdE1vcnRlbXM6OlF1ZXN0aW9uLzdmYmUxNTFiLTYwNDAtNDlhYi05YzViLTM0ODg2NmNhYmFkNg==/comments",
+          "channel": {
+            "name": "private-conversations-Z2lkOi8vbGFkZGVydHJ1Y2svUG9zdE1vcnRlbXM6OlF1ZXN0aW9uLzdmYmUxNTFiLTYwNDAtNDlhYi05YzViLTM0ODg2NmNhYmFkNg=="
+          }
+        }
+      ]
+    },
+    {
+      "id": "d77a6858-6763-4e84-8aec-b37f924c2428",
+      "title": "Where did we get lucky?",
+      "body": "everything",
+      "tooltip": "What near misses did you have during your incident?",
+      "kind": "freeform",
+      "is_required": true,
+      "conversations": [
+        {
+          "id": "Z2lkOi8vbGFkZGVydHJ1Y2svUG9zdE1vcnRlbXM6OlF1ZXN0aW9uL2Q3N2E2ODU4LTY3NjMtNGU4NC04YWVjLWIzN2Y5MjRjMjQyOA==",
+          "resource_class": "PostMortems::Question",
+          "resource_id": "d77a6858-6763-4e84-8aec-b37f924c2428",
+          "field": "None",
+          "comments_url": "/v1/conversations/Z2lkOi8vbGFkZGVydHJ1Y2svUG9zdE1vcnRlbXM6OlF1ZXN0aW9uL2Q3N2E2ODU4LTY3NjMtNGU4NC04YWVjLWIzN2Y5MjRjMjQyOA==/comments",
+          "channel": {
+            "name": "private-conversations-Z2lkOi8vbGFkZGVydHJ1Y2svUG9zdE1vcnRlbXM6OlF1ZXN0aW9uL2Q3N2E2ODU4LTY3NjMtNGU4NC04YWVjLWIzN2Y5MjRjMjQyOA=="
+          }
+        }
+      ]
+    },
+    {
+      "id": "4558de04-11f2-4a06-9253-4970d25610b0",
+      "title": "What were we wrong about?",
+      "body": "none",
+      "tooltip": "What ideas did you have during your mitigation that were incorrect?",
+      "kind": "freeform",
+      "is_required": false,
+      "conversations": [
+        {
+          "id": "Z2lkOi8vbGFkZGVydHJ1Y2svUG9zdE1vcnRlbXM6OlF1ZXN0aW9uLzQ1NThkZTA0LTExZjItNGEwNi05MjUzLTQ5NzBkMjU2MTBiMA==",
+          "resource_class": "PostMortems::Question",
+          "resource_id": "4558de04-11f2-4a06-9253-4970d25610b0",
+          "field": "None",
+          "comments_url": "/v1/conversations/Z2lkOi8vbGFkZGVydHJ1Y2svUG9zdE1vcnRlbXM6OlF1ZXN0aW9uLzQ1NThkZTA0LTExZjItNGEwNi05MjUzLTQ5NzBkMjU2MTBiMA==/comments",
+          "channel": {
+            "name": "private-conversations-Z2lkOi8vbGFkZGVydHJ1Y2svUG9zdE1vcnRlbXM6OlF1ZXN0aW9uLzQ1NThkZTA0LTExZjItNGEwNi05MjUzLTQ5NzBkMjU2MTBiMA=="
+          }
+        }
+      ]
+    },
+    {
+      "id": "4dc6dc62-b366-4028-84c7-367dc09c2496",
+      "title": "Additional Details",
+      "body": "None",
+      "tooltip": "",
+      "kind": "freeform",
+      "is_required": false,
+      "conversations": [
+        {
+          "id": "Z2lkOi8vbGFkZGVydHJ1Y2svUG9zdE1vcnRlbXM6OlF1ZXN0aW9uLzRkYzZkYzYyLWIzNjYtNDAyOC04NGM3LTM2N2RjMDljMjQ5Ng==",
+          "resource_class": "PostMortems::Question",
+          "resource_id": "4dc6dc62-b366-4028-84c7-367dc09c2496",
+          "field": "None",
+          "comments_url": "/v1/conversations/Z2lkOi8vbGFkZGVydHJ1Y2svUG9zdE1vcnRlbXM6OlF1ZXN0aW9uLzRkYzZkYzYyLWIzNjYtNDAyOC04NGM3LTM2N2RjMDljMjQ5Ng==/comments",
+          "channel": {
+            "name": "private-conversations-Z2lkOi8vbGFkZGVydHJ1Y2svUG9zdE1vcnRlbXM6OlF1ZXN0aW9uLzRkYzZkYzYyLWIzNjYtNDAyOC04NGM3LTM2N2RjMDljMjQ5Ng=="
+          }
+        }
+      ]
+    }
+  ],
+  "__incident": {
+    "tasks": [
+      {
+        "id": "e56c4194-0070-4d8d-bc75-9df60f699c90",
+        "title": "Update Incident Details",
+        "description": "Determine the severity and impact of the incident and update the details",
+        "state": "open",
+        "assignee": {
+          "id": "184eb568-c1a9-4f99-9d52-8f7dd6672158",
+          "name": "My Username",
+          "source": "firehydrant_user",
+          "email": "testuser@gmail.com"
+        },
+        "created_by": {
+          "id": "5ffe7fce-539f-40e7-a6fe-762897190694",
+          "name": "FireHydrant",
+          "source": "patchy",
+          "email": ""
+        },
+        "created_at": "2023-09-05T17:32:53.269Z",
+        "updated_at": "2023-09-05T17:32:53.300Z"
+      },
+      {
+        "id": "ee23f50b-a30a-4005-b2cd-74a711cf8c88",
+        "title": "Assign Teams and/or Roles",
+        "description": "Assign any teams or specific roles for the incident",
+        "state": "done",
+        "assignee": {
+          "id": "184eb568-c1a9-4f99-9d52-8f7dd6672158",
+          "name": "My Username",
+          "source": "firehydrant_user",
+          "email": "testuser@gmail.com"
+        },
+        "created_by": {
+          "id": "5ffe7fce-539f-40e7-a6fe-762897190694",
+          "name": "FireHydrant",
+          "source": "patchy",
+          "email": ""
+        },
+        "created_at": "2023-09-05T17:32:53.320Z",
+        "updated_at": "2023-09-05T18:11:16.371Z"
+      },
+      {
+        "id": "5ed1c84f-187a-4899-84a9-361d7a32f62a",
+        "title": "Status Update",
+        "description": "Add an update to your status page",
+        "state": "done",
+        "assignee": {
+          "id": "184eb568-c1a9-4f99-9d52-8f7dd6672158",
+          "name": "My Username",
+          "source": "firehydrant_user",
+          "email": "testuser@gmail.com"
+        },
+        "created_by": {
+          "id": "5ffe7fce-539f-40e7-a6fe-762897190694",
+          "name": "FireHydrant",
+          "source": "patchy",
+          "email": ""
+        },
+        "created_at": "2023-09-05T17:32:53.366Z",
+        "updated_at": "2023-09-05T17:34:30.190Z"
+      },
+      {
+        "id": "09520e6b-d6d4-42a0-aaa0-0596b0d8a424",
+        "title": "Resolve Incident",
+        "description": "Star important timeline items and resolve incident",
+        "state": "open",
+        "assignee": {
+          "id": "184eb568-c1a9-4f99-9d52-8f7dd6672158",
+          "name": "My Username",
+          "source": "firehydrant_user",
+          "email": "testuser@gmail.com"
+        },
+        "created_by": {
+          "id": "5ffe7fce-539f-40e7-a6fe-762897190694",
+          "name": "FireHydrant",
+          "source": "patchy",
+          "email": ""
+        },
+        "created_at": "2023-09-05T17:32:53.410Z",
+        "updated_at": "2023-09-05T17:32:53.439Z"
+      },
+      {
+        "id": "73a6a22e-5464-423a-99f1-e497a81a630a",
+        "title": "Schedule Retro",
+        "description": "Schedule a retrospective with the responding team",
+        "state": "open",
+        "assignee": {
+          "id": "184eb568-c1a9-4f99-9d52-8f7dd6672158",
+          "name": "My Username",
+          "source": "firehydrant_user",
+          "email": "testuser@gmail.com"
+        },
+        "created_by": {
+          "id": "5ffe7fce-539f-40e7-a6fe-762897190694",
+          "name": "FireHydrant",
+          "source": "patchy",
+          "email": ""
+        },
+        "created_at": "2023-09-05T17:32:53.454Z",
+        "updated_at": "2023-09-05T17:32:53.482Z"
+      }
+    ]
+  }
+}
+```
+
+</details>
+
+### Mapping Result
+
+The combination of the sample payload and the Ocean configuration generates the following Port entity:
+
+<details>
+<summary> Environment entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "21011924-215e-4aa4-abbf-6155ecf237ae",
+  "title": "Production",
+  "icon": null,
+  "blueprint": "firehydrantEnvironment",
+  "team": [],
+  "properties": {
+    "description": "",
+    "activeIncidents": 2,
+    "createdAt": "2023-09-05T17:01:48.348Z",
+    "updatedAt": "2023-09-05T17:01:48.348Z"
+  },
+  "relations": {},
+  "createdAt": "2023-11-01T11:42:52.458Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2023-11-01T11:42:52.458Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+<details>
+<summary> Service entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "87aeea3d-4dcd-4c1e-bf8c-e68e73892e44",
+  "title": "My Test Service",
+  "icon": null,
+  "blueprint": "firehydrantService",
+  "team": [],
+  "properties": {
+    "description": "For testing this service",
+    "slug": "my-test-service",
+    "links": ["https://example.com"],
+    "labels": {
+      "myket": "service",
+      "keyval": "app"
+    },
+    "owner": "Test Escalation Team",
+    "createdAt": "2023-09-06T12:37:37.378Z",
+    "updatedAt": "2023-09-20T10:25:32.730Z",
+    "activeIncidents": 2,
+    "meanTimeToAcknowledge": null,
+    "meanTimeToDetect": 25,
+    "meanTimeToMitigate": null,
+    "meanTimeToResolve": null
+  },
+  "relations": {},
+  "createdAt": "2023-09-20T10:19:34.745Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2023-09-20T14:48:30.523Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+<details>
+<summary> Incident entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "eb03f3f2-1a58-4d19-9f85-b3e46dbf5c2e",
+  "title": "System outage",
+  "icon": null,
+  "blueprint": "firehydrantIncident",
+  "team": [],
+  "properties": {
+    "url": "https://app.firehydrant.io/org/port-5478/incidents/eb03f3f2-1a58-4d19-9f85-b3e46dbf5c2e/incident/overview",
+    "priority": "P2",
+    "severity": "SEV2",
+    "tags": ["internal"],
+    "currentMilestone": "acknowledged",
+    "functionalities": null,
+    "customerImpact": "0",
+    "createdBy": "testuser@gmail.com",
+    "createdAt": "2023-09-08T10:58:06.791Z",
+    "description": "A system that isn't customer-facing or doesn't impact customer data processing is unavailable",
+    "commander": "testuser@gmail.com"
+  },
+  "relations": {
+    "service": ["4e5bb8f3-4eab-4a13-b354-de7fc47f3554"],
+    "environment": []
+  },
+  "createdAt": "2023-11-01T11:43:00.904Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2023-11-01T11:43:00.904Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+<details>
+<summary> Retrospective entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "da2ff7ef-6faf-4e4e-9577-985ffa739c9f",
+  "title": "Bump request library",
+  "icon": null,
+  "blueprint": "firehydrantRetrospective",
+  "team": [],
+  "properties": {
+    "url": "https://app.firehydrant.io/org/port-5478/incidents/81b628c8-8612-4877-803d-22a1dc187ba5/incident/overview",
+    "tags": [],
+    "services": null,
+    "environments": ["Production"],
+    "functionalities": ["Platform - Deployments"],
+    "createdBy": "testuser@gmail.com",
+    "createdAt": "2023-09-05T17:32:51.926Z",
+    "customerImpact": "0",
+    "commander": "testuser@gmail.com",
+    "resolvedAt": "2023-09-05T17:33:37.525Z",
+    "publishedAt": "2023-09-05T17:36:57.496Z",
+    "duration": null,
+    "completedTasks": null,
+    "incompletedTasks": null,
+    "questions": [
+      {
+        "question": "What went well?",
+        "answer": "able to resolve it fast"
+      },
+      {
+        "question": "What could be improved?",
+        "answer": "nothing"
+      },
+      {
+        "question": "Where did we get lucky?",
+        "answer": "everything"
+      },
+      {
+        "question": "What were we wrong about?",
+        "answer": "none"
+      },
+      {
+        "question": "Additional Details"
+      }
+    ]
+  },
+  "relations": {
+    "incident": "81b628c8-8612-4877-803d-22a1dc187ba5"
+  },
+  "createdAt": "2023-11-01T11:43:05.551Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2023-11-01T11:43:05.551Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>

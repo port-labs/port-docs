@@ -68,7 +68,7 @@ We will provide your `{CONNECTION_NAME}` (Contact us on Slack/Intercom).
 
 Click `Save`.
 
-:::caution
+:::warning
 Be sure to click save before moving on to the next step because without the `Redirect URI's` filled in, trying to save any other application parameter will result in an error.
 :::
 
