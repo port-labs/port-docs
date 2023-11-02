@@ -59,7 +59,7 @@ Remember to replace the `WEBHOOK_SECRET` with the real secret you specify when c
 2. Click on **Settings** at the left of the page and copy your organization ID under the **Organization ID** section;
 3. Navigate to your [Snyk accounts page](https://snyk.io/account/) and copy your API token. You will use this value to authorize the REST API;
 4. Open any REST API client such as POSTMAN and make the following API call to create your webhook:
-   1. `API URL` - use https://api.snyk.io/v1/org/<YOUR_ORG_ID>/webhooks;
+   1. `API URL` - use https://api.snyk.io/v1/org/`YOUR_ORG_ID`/webhooks;
    2. `Method` - select POST
    3. `Authorization` - The API token should be supplied in an Authorization header as `Authorization: token YOUR_API_KEY`;
    4. `Request Body` - The body of your request should be in a JSON format. Past the following information in the body text

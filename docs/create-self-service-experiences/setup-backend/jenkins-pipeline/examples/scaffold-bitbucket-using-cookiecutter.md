@@ -107,7 +107,7 @@ Make sure to replace the placeholders for JENKINS_URL and JOB_TOKEN.
 
       ![Define Vars](../../../../../static/img/self-service-actions/setup-backend/jenkins-pipeline/scaffold-jenkins-bitbucket-vars.png)
 
-   3. [Token Setup](../jenkins-pipeline.md#token-setup): Define the token to match <JOB_TOKEN> as configured in your Port Action.
+   3. [Token Setup](../jenkins-pipeline.md#token-setup): Define the token to match `JOB_TOKEN` as configured in your Port Action.
 
 5. Create a Jenkins Pipeline with the following content:
 

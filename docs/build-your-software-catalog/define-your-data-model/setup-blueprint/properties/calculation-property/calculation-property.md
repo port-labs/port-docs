@@ -124,15 +124,15 @@ export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
   properties: {
-      // blueprint properties
+    // blueprint properties
   },
   // highlight-start
-  calculationProperties:{
+  calculationProperties: {
     myCalculation: {
       title: "My calculation property",
       calculation: ".properties.myStringProp + .properties.myStringProp",
-      type: "string"
-    }
+      type: "string",
+    },
   },
   // highlight-end
 });
@@ -154,12 +154,12 @@ const entity = new port.Blueprint("myBlueprint", {
     // blueprint properties
   },
   // highlight-start
-  calculationProperties:{
+  calculationProperties: {
     myCalculation: {
       title: "My calculation property",
       calculation: ".properties.myStringProp + .properties.myStringProp",
-      type: "string"
-    }
+      type: "string",
+    },
   },
   // highlight-end
 });
@@ -371,7 +371,7 @@ For example, if you want to colorize a calculation property called `status-calcu
 
 ---
 
-:::caution Parameters with special characters
+:::warning Parameters with special characters
 Parameter contains special characters (for example: `-`) or starts with a digit (for example: `@/#/$/1/2/3`), should be surrounded with single quotes.
 
 ```json showLineNumbers

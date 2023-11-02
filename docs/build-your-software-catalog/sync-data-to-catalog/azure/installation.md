@@ -20,7 +20,7 @@ The Azure exporter uses the following Azure infrastructure:
   - Azure Event Grid System Topic of type `Microsoft.Resources.Subscriptions`;
   - Azure Event Grid Subscription;
 
-:::caution
+:::warning
 Due to a limitation in Azure **only one** Event Grid system topic of type `Microsoft.Resources.Subscriptions` can be created per subscription, so if you already have one you'll need to pass it to the integration using `event_grid_system_topic_name=<your-event-grid-system-topic-name>`.
 
 In case a system topic already exists and is not provided to the deployment of the integration, the integration will due to not being able to create a new one.
