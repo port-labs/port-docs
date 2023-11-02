@@ -84,7 +84,7 @@ If the Github organization which will house your workflow is not the same as the
 
   <img src='/img/guides/personalAccessToken.png' width='80%' />
   
-  :::info
+  :::info SAML SSO
   If your organization uses SAML SSO, you will need to authorize your token. Follow [these instructions](https://docs.github.com/en/enterprise-cloud@latest/authentication/authenticating-with-saml-single-sign-on/authorizing-a-personal-access-token-for-use-with-saml-single-sign-on) and then continue this guide.
   :::
 
