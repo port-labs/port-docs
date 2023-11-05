@@ -1,0 +1,198 @@
+---
+title: Integrations
+sidebar_label: ⚙️ Integrations
+slug: /integrations
+---
+
+# ⚙️ Integrations
+
+This page contains a list of Port's available integrations, organized by the platform or product which they integrate with
+
+## Git
+
+### GitHub
+
+- [GitHub app](./build-your-software-catalog/sync-data-to-catalog/git/github/github.md)
+- [GitHub self-hosted app](./build-your-software-catalog/sync-data-to-catalog/git/github/self-hosted-installation.md)
+- [GitHub GitOps](./build-your-software-catalog/sync-data-to-catalog/git/github/gitops/gitops.md)
+- [GitHub action for GitHub workflow](./build-your-software-catalog/sync-data-to-catalog/ci-cd/github-workflow/github-workflow.md)
+- [GitHub Webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/git/github.md)
+- [GitHub workflow self-service actions](./create-self-service-experiences/setup-backend/github-workflow/github-workflow.md)
+- [Sync repositories, file contents, pull-requests, workflows, teams, dependebot alerts and more](./build-your-software-catalog/sync-data-to-catalog/git/github/examples.md)
+
+### GitLab
+
+- [GitLab app](./build-your-software-catalog/sync-data-to-catalog/git/gitlab/gitlab.md)
+- [GitLab GitOps](./build-your-software-catalog/sync-data-to-catalog/git/gitlab/gitops/gitops.md)
+- [GitLab advanced file search and search checks](./build-your-software-catalog/sync-data-to-catalog/git/gitlab/mapping_extensions.md)
+- [GitLab Webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/git/gitlab.md)
+- [GitLab pipeline self-service actions](./create-self-service-experiences/setup-backend/gitlab-pipeline/gitlab-pipeline.md)
+- [Sync projects, file contents, merge-requests and more](./build-your-software-catalog/sync-data-to-catalog/git/gitlab/examples.md)
+
+### Bitbucket
+
+- [Bitbucket app](./build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket.md)
+- [Sync repositories, file contents, pull-requests, monorepos and more](./build-your-software-catalog/sync-data-to-catalog/git/bitbucket/examples.md)
+
+### GitOps using Port CRDs
+
+- [Mapping resources using Port CRDs](./build-your-software-catalog/sync-data-to-catalog/git/gitops-using-port-crd.md)
+
+## Kubernetes
+
+- [K8s exporter](./build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md)
+- [Map ArgoCD](./build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/argocd.md)
+- [Map Istio](./build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/istio.md)
+- [Map Knative](./build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/knative.md)
+- [Map Red Hat Openshift](./build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/openshift.md)
+- [Map CRDs](./build-your-software-catalog/sync-data-to-catalog/kubernetes/custom-crds.md)
+- [Port entity CRD](./build-your-software-catalog/sync-data-to-catalog/kubernetes/port-crd.md)
+
+## Infrastructure as Code (IaC)
+
+### Terraform
+
+- [Terraform provider](./build-your-software-catalog/sync-data-to-catalog/iac/terraform/terraform.md)
+- [Terraform managed blueprint](./build-your-software-catalog/define-your-data-model/Iac/terraform-managed-blueprint.md)
+- [Terraform manage S3 buckets lifecycle](./build-your-software-catalog/sync-data-to-catalog/iac/terraform/examples/s3-bucket.md)
+- [Terraform manage developer environment](./build-your-software-catalog/sync-data-to-catalog/iac/terraform/examples/create-dev-env.md)
+- [Terraform no-code resource provisioning using self-service actions](./create-self-service-experiences/setup-backend/webhook/examples/terraform-no-code-resource-provisioning.md)
+- [Import Terraform state using webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/packages/terraform.md)
+
+### Pulumi
+
+- [Pulumi provider](./build-your-software-catalog/sync-data-to-catalog/iac/pulumi/pulumi.md)
+- [Pulumi managed blueprint](./build-your-software-catalog/define-your-data-model/Iac/pulumi-managed-blueprint.md)
+
+## Cloud providers
+
+### AWS
+
+- [AWS exporter](./build-your-software-catalog/sync-data-to-catalog/aws/aws.md)
+- [AWS exporter Terraform module](./build-your-software-catalog/sync-data-to-catalog/iac/terraform/modules/aws-exporter-module.md)
+- [Map ECS, EC2, RDS, API GW, Cloudfront and more](./build-your-software-catalog/sync-data-to-catalog/aws/examples.md)
+- [AWS Cost](./build-your-software-catalog/sync-data-to-catalog/cloud-cost/aws-cost.md)
+- [Terraform manage S3 buckets lifecycle](./build-your-software-catalog/sync-data-to-catalog/iac/terraform/examples/s3-bucket.md)
+- [Terraform manage developer environment](./build-your-software-catalog/sync-data-to-catalog/iac/terraform/examples/create-dev-env.md)
+
+### Azure
+
+- [Azure exporter](./build-your-software-catalog/sync-data-to-catalog/azure/azure.md)
+- [Azure Active Directory (AD) SSO](./sso-rbac/sso-providers/azure-ad.md)
+- [Map resource groups, storage groups, compute resources database resources and more](./build-your-software-catalog/sync-data-to-catalog/azure/examples.md)
+
+#### Azure DevOps
+
+- [Sync Azure pipelines](./build-your-software-catalog/sync-data-to-catalog/ci-cd/azure-pipelines/azure-pipelines.md)
+- [Azure pipelines self-service actions](./create-self-service-experiences/setup-backend/azure-pipeline/azure-pipeline.md)
+
+### GCP
+
+- [GCP asset inventory](./build-your-software-catalog/sync-data-to-catalog/gcp/examples/generic-assets.md)
+- [Sync organizations, folders, projects, buckets, service accounts, compute instances and more](./build-your-software-catalog/sync-data-to-catalog/gcp/examples/extended-specific-assets.md)
+
+#### Google cloud build
+
+- [Cloud build self-service action](./create-self-service-experiences/setup-backend/cloudbuild-pipeline/cloudbuild-pipeline.md)
+
+## SonarQube / SonarCloud
+
+- [SonarQube integration](./build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube.md)
+- [SonarCloud integration](./build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube.md)
+- [SonarQube webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/sonarqube.md)
+- [SonarCloud webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/sonarqube.md)
+
+## Snyk
+
+- [Snyk integration](./build-your-software-catalog/sync-data-to-catalog/code-quality-security/snyk.md)
+- [Snyk webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/snyk.md)
+
+## PagerDuty
+
+- [PagerDuty integration](./build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty.md)
+- [PagerDuty webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/pagerduty.md)
+
+## Jira
+
+- [Jira integration](./build-your-software-catalog/sync-data-to-catalog/project-management/jira.md)
+- [Jira webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/jira.md)
+
+## Sentry
+
+- [Sentry integration](./build-your-software-catalog/sync-data-to-catalog/apm-alerting/sentry.md)
+- [Sentry webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/sentry.md)
+
+## New Relic
+
+- [New Relic integration](./build-your-software-catalog/sync-data-to-catalog/apm-alerting/newrelic.md)
+
+## OpsGenie
+
+- [OpsGenie integration](./build-your-software-catalog/sync-data-to-catalog/incident-management/opsgenie.md)
+- [OpsGenie webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/opsgenie.md)
+
+## FireHydrant
+
+- [FireHydrant integration](./build-your-software-catalog/sync-data-to-catalog/incident-management/firehydrant.md)
+
+## KubeCost
+
+- [KubeCost integration](./build-your-software-catalog/sync-data-to-catalog/cloud-cost/kubecost.md)
+
+## OpenCost
+
+- [OpenCost integration](./build-your-software-catalog/sync-data-to-catalog/cloud-cost/opencost.md)
+
+## Dynatrace
+
+- [Dynatrace webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/dynatrace.md)
+
+## Kafka
+
+- [Kafka integration](./build-your-software-catalog/sync-data-to-catalog/event-processing/kafka.md)
+- [Kafka queue for self-service actions](./create-self-service-experiences/setup-backend/kafka/kafka.md)
+
+## Split
+
+- [Split webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/split.md)
+
+## Grafana
+
+- [Grafana webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/grafana.md)
+
+## StackHawk
+
+- [StackHawk webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/stackhawk.md)
+
+## Jenkins
+
+- [Sync Jenkins pipelines](./build-your-software-catalog/sync-data-to-catalog/ci-cd/jenkins-deployment/jenkins-deployment.md)
+- [Jenkins pipeline self-service actions](./create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md)
+
+## CodeFresh
+
+- [CodeFresh workflow template](./build-your-software-catalog/sync-data-to-catalog/ci-cd/codefresh-workflow-template/codefresh-workflow-template.md)
+
+## CircleCI
+
+- [Sync CircleCI workflows](./build-your-software-catalog/sync-data-to-catalog/ci-cd/circleci-workflow/circleci-workflow.md)
+
+## Okta
+
+- [Okta SSO](./sso-rbac/sso-providers/okta.md)
+
+## OneLogin
+
+- [OneLogin SSO](./sso-rbac/sso-providers/onelogin.md)
+
+## JumpCloud
+
+- [JumpCloud SSO](./sso-rbac/sso-providers/jumpcloud.md)
+
+## Google workspace
+
+- [Google workspace SSO](./sso-rbac/sso-providers/google-workspace.md)
+
+## Backstage
+
+- [Import catalog from Backstage](./build-your-software-catalog/sync-data-to-catalog/backstage/backstage.md)
