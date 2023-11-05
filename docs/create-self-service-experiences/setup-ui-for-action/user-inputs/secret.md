@@ -40,7 +40,7 @@ A secret input is defined as a regular input, but with the additional `encryptio
 }
 ```
 
-- [aes256-gcm](https://www.nist.gov/publications/advanced-encryption-standard-aes) - This will encrypt the property data using AES with 256 bits using GCM mode. The encrypted value will be prefixed by the 16 bits IV and suffixed by the 16 bits MAC, encoded to base-64. The encryption key will be the first 32 bytes of your organization's [Client Secret](../../../build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
+- [aes256-gcm](https://www.nist.gov/publications/advanced-encryption-standard-aes) - This will encrypt the property data using 256 bits AES in [GCM mode](https://csrc.nist.gov/glossary/term/aes_gcm). The encrypted value will be prefixed by the 16 bits IV and suffixed by the 16 bits MAC, encoded to base-64. The encryption key will be the first 32 bytes of your organization's [Client Secret](../../../build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
 - [fernet](https://cryptography.io/en/latest/fernet/) - When using Fernet for symmetric encryption the encryption key will be the first 32 bytes of your organization's [Client Secret](../../../build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials). Note: this encryption protocol has been depracated by Port as of < INSER DATE HERE > actions with this encryption will not be accepted by the api, causing a 400 http error.
 
 ### Supported Types
@@ -93,7 +93,14 @@ The payload sent to your infrastructure will contain the encrypted value of your
 
 ### Examples
 
-<Tabs groupId="examples" queryString defaultValue="python" values={[
+<Tabs groupId="algorithm" queryString defaultValue="aes256-gcm" values={[
+{label: "AES 256 GCM", value: "aes256-gcm"},
+{label: "Fernet", value: "fernet"}
+]}>
+
+<TabItem value="fernet">
+
+<Tabs groupId="language" queryString defaultValue="python" values={[
 {label: "Python Webhook", value: "python"},
 {label: "NodeJs Webhook", value: "nodeJs"}
 ]}>
@@ -270,6 +277,9 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
 ```
+
+</TabItem>
+</Tabs>
 
 </TabItem>
 </Tabs>
