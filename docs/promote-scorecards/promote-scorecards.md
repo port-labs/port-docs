@@ -256,6 +256,15 @@ For example, this `service` blueprint has 4 rules configured, and we can see a c
 
 ![catalogPageScorecardColumns](../../static/img/software-catalog/scorecard/catalogPageScorecardColumns.png)
 
+### Customizing views
+
+You can use table operations (sort, edit, group-by, etc.) to create various helpful views of your scorecards.  
+For example, here are the scores of all `Services` in an organization grouped by team:
+
+![catalogViewScorecardsByTeam](../../static/img/software-catalog/scorecard/catalogViewScorecardsByTeam.png)
+
+Note that every coloumn (scorecard metric) in the table has an aggregation in the bottom, hover over it to see the compliance of this metric across all entities in the table.
+
 ## Next steps
 
 [Explore How to Create, Edit, and Delete Scorecards with basic examples](./tutorial)
