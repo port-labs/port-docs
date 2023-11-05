@@ -32,7 +32,7 @@ helm upgrade --install my-snyk-integration port-labs/port-ocean \
 	--set port.clientSecret="PORT_CLIENT_SECRET"  \
 	--set port.baseUrl="https://api.getport.io"  \
 	--set initializePortResources=true  \
-  --set scheduledResyncInterval=120 \
+	--set scheduledResyncInterval=120 \
 	--set integration.identifier="my-snyk-integration"  \
 	--set integration.type="snyk"  \
 	--set integration.eventListener.type="POLLING"  \

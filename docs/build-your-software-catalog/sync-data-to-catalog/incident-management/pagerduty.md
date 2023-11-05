@@ -37,7 +37,7 @@ helm upgrade --install my-pagerduty-integration port-labs/port-ocean \
   --set port.clientSecret="PORT_CLIENT_SECRET"  \
   --set port.baseUrl="https://api.getport.io"  \
   --set initializePortResources=true  \
-  --set scheduledResyncInterval=120  \
+	--set scheduledResyncInterval=120  \
   --set integration.identifier="my-pagerduty-integration"  \
   --set integration.type="pagerduty"  \
   --set integration.eventListener.type="POLLING"  \

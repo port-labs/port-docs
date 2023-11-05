@@ -20,24 +20,39 @@ Our SonarQube integration allows you to import `projects`, `issues` and `analyse
 
 Install the integration via Helm by running this command for your preferred Sonarqube deployment:
 
-### Sonarcloud
+<Tabs groupId="sonarqube" queryString="showLineNumbers">
+
+<TabItem value="real-time-always-on" label="Real Time & Always On">
+
+Using this installation option means that the integration will be able to update Port in real time using webhooks.
+
+The following script will install an Ocean integration at your K8s cluster using helm
+
+Make sure to specify the following values:
+
+| Parameter                                | Description                                                                                                   | Required |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------- |
+| `port.clientId`                          | Your port client id                                                                                           | ✅       |
+| `port.clientSecret`                      | Your port client secret                                                                                       | ✅       |
+| `port.baseUrl`                           | Your port base url, relevant only if not using the default port app                                           | ❌       |
+| `integration.identifier`                 | Change the identifier to describe your integration                                                            | ✅       |
+| `integration.type`                       | The integration type                                                                                          | ✅       |
+| `integration.eventListener.type`         | The event listener type                                                                                       | ✅       |
+| `integration.secrets.sonarApiToken`      | The SonarQube API token                                                                                       | ✅       |
+| `integration.config.sonarOrganizationId` | The SonarQube organization ID                                                                                 | ✅       |
+| `integration.config.appHost`             | The host to subscribe webhooks to , specify if you want to subscribe to webhooks                              | ❌       |
+| `integration.config.sonarUrl`            | Required if using **On-Prem**, specify the SonarQube URL                                                      | ❌       |
+| `scheduledResyncInterval`                | The number of minutes between each resync                                                                     | ❌       |
+| `initializePortResources`                | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
 
 ```bash showLineNumbers
-# The following script will install an Ocean integration at your K8s cluster using helm
-# initializePortResources: When set to true the integration will create default blueprints + JQ Mappings
-# scheduledResyncInterval: the number of minutes between each resync
-# integration.identifier: Change the identifier to describe your integration
-# integration.secrets.sonarApiToken: The SonarQube API token
-# integration.config.sonarOrganizationId: The SonarQube organization ID
-# integration.config.appHost: The host to subscribe webhooks to
-
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-sonarqube-integration port-labs/port-ocean \
 	--set port.clientId="PORT_CLIENT_ID"  \
 	--set port.clientSecret="PORT_CLIENT_SECRET"  \
 	--set port.baseUrl="https://api.getport.io"  \
 	--set initializePortResources=true  \
-  --set scheduledResyncInterval=120  \
+	--set scheduledResyncInterval=120  \
 	--set integration.identifier="my-sonarqube-integration"  \
 	--set integration.type="sonarqube"  \
 	--set integration.eventListener.type="POLLING"  \
@@ -45,30 +60,65 @@ helm upgrade --install my-sonarqube-integration port-labs/port-ocean \
 	--set integration.config.sonarOrganizationId="string"
 ```
 
-### On-premises
+</TabItem>
 
-```bash showLineNumbers
-# The following script will install an Ocean integration at your K8s cluster using helm
-# initializePortResources: When set to true the integration will create default blueprints + JQ Mappings
-# scheduledResyncInterval: the number of minutes between each resync
-# integration.identifier: Change the identifier to describe your integration
-# integration.secrets.sonarApiToken: The SonarQube API token
-# integration.config.sonarUrl: The SonarQube URL
-# integration.config.appHost: The host to subscribe webhooks to
+<TabItem value="one-time" label="One Time">
 
-helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install my-sonarqube-integration port-labs/port-ocean \
-	--set port.clientId="PORT_CLIENT_ID"  \
-	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
-	--set initializePortResources=true  \
-  --set scheduledResyncInterval=120  \
-	--set integration.identifier="my-sonarqube-integration"  \
-	--set integration.type="sonarqube"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.secrets.sonarApiToken="string"  \
-	--set integration.config.sonarUrl="string"
+This workflow will run the SonarQube integration once and then exit, this is useful for **one time** ingestion of data.
+
+:::warning
+
+Using this workflow means that the integration will not be able to update Port in real time using webhooks.
+
+If you want the integration to update Port in real time using webhooks you should use the **Real Time & Always On** installation option
+:::
+
+Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
+
+| Parameter                                           | Description                                                                             | Required |
+| --------------------------------------------------- | --------------------------------------------------------------------------------------- | -------- |
+| `OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN`       | The SonarQube API token                                                                 | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID` | The SonarQube organization ID                                                           | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__SONAR_URL`             | Required if using **On-Prem**, specify the SonarQube URL                                | ❌       |
+| `OCEAN__INTEGRATION__IDENTIFIER`                    | Change the identifier to describe your integration, if not set will use the default one | ❌       |
+| `OCEAN__PORT__CLIENT_ID`                            | Your port client id                                                                     | ✅       |
+| `OCEAN__PORT__CLIENT_SECRET`                        | Your port client secret                                                                 | ✅       |
+| `OCEAN__PORT__BASE_URL`                             | Your port base url, relevant only if not using the default port app                     | ❌       |
+
+```yaml showLineNumbers
+name: SonarQube Exporter Workflow
+
+# This workflow responsible for running SonarQube exporter.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-integration:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run Sonarqube Integration
+        run: |
+          # Set Docker image and run the container
+          integration_type="sonarqube"
+          version="latest"
+
+          image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
+
+          docker run -i --rm --platform=linux/amd64 \
+          -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+          -e OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN=${{ secrets.OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN }} \
+          -e OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID=${{ secrets.OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID }} \
+          -e OCEAN__INTEGRATION__CONFIG__SONAR_URL=${{ secrets.OCEAN__INTEGRATION__CONFIG__SONAR_URL }} \
+          -e OCEAN__PORT__CLIENT_ID=${{ secrets.OCEAN__PORT__CLIENT_ID }} \
+          -e OCEAN__PORT__CLIENT_SECRET=${{ secrets.OCEAN__PORT__CLIENT_SECRET }} \
+          $image_name
 ```
+
+</TabItem>
+
+</Tabs>
 
 ## Ingesting SonarQube objects
 
