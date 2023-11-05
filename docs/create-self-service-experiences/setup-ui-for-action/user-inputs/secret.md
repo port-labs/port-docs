@@ -33,14 +33,15 @@ A secret input is defined as a regular input, but with the additional `encryptio
     "icon": "My icon",
     "type": "string",
     // highlight-start
-    "encryption": "fernet",
+    "encryption": "aes256-gcm",
     // highlight-end
     "description": "My entity input"
   }
 }
 ```
 
-- [fernet](https://cryptography.io/en/latest/fernet/) - when using Fernet for symmetric encryption the encryption key will be the first 32 bytes of your organization's [Client Secret](../../../build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
+- [aes256-gcm](https://www.nist.gov/publications/advanced-encryption-standard-aes) - This will encrypt the property data using AES with 256 bits using GCM mode. The encrypted value will be prefixed by the 16 bits IV and suffixed by the 16 bits MAC, encoded to base-64. The encryption key will be the first 32 bytes of your organization's [Client Secret](../../../build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
+- [fernet](https://cryptography.io/en/latest/fernet/) - When using Fernet for symmetric encryption the encryption key will be the first 32 bytes of your organization's [Client Secret](../../../build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials). Note: this encryption protocol has been depracated by Port as of < INSER DATE HERE > actions with this encryption will not be accepted by the api, causing a 400 http error.
 
 ### Supported Types
 
@@ -131,7 +132,7 @@ def webhook():
     encrypted_property_value = req.get('payload').get('properties').get('secret-property')
 
     # decrypt the property
-    decrypted_property_value = fernet_instance.decrypt(str.encode(encrypted_property_value))
+    decrypted_property_value = fernet_instance.decrypt(encrypted_property_value)
 
     return decrypted_property_value # this is the original value the user sent
 
