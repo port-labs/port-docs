@@ -118,7 +118,7 @@ from flask import Flask, request
 from Crypto.Cipher import AES
 
 PORT_CLIENT_SECRET = 'YOUR PORT CLIENT SECRET'
-PROPERY_IS_JSON = False # wether the property is defined as json or not (string otherwise)
+PROPERY_IS_JSON = False # whether the property is defined as json or not (string otherwise)
 
 app = Flask(__name__)
 
@@ -161,7 +161,7 @@ const bodyParser = require("body-parser");
 const crypto = require("node:crypto");
 
 const PORT_CLIENT_SECRET = "YOUR PORT CLIENT SECRET";
-const PROPERY_IS_JSON = false; // wether the property is defined as json or not (string otherwise)
+const PROPERY_IS_JSON = false; // whether the property is defined as json or not (string otherwise)
 
 const port = 80;
 
@@ -251,10 +251,9 @@ def webhook():
 
     # decrypt the property
     decrypted_property_value = fernet_instance.decrypt(encrypted_property_value)
-    dict_property_value = json.loads(decrypted_property_value)
+    property_value = json.loads(decrypted_property_value) if PROPERY_IS_JSON else decrypted_property_value
 
-
-    return dict_property_value # this is the original value the user sent
+    return property_value # this is the original value the user sent
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 80))
@@ -278,6 +277,7 @@ const port = 80;
 const app = express();
 
 const PORT_CLIENT_SECRET = "YOUR PORT CLIENT SECRET";
+const PROPERY_IS_JSON = false; // whether the property is defined as json or not (string otherwise)
 
 app.post("/", bodyParser.json(), (req, res) => {
   // initialize the fernet decrypter
@@ -294,9 +294,11 @@ app.post("/", bodyParser.json(), (req, res) => {
 
   // decrypt the property
   decrypted_property_value = fernetToken.decode(encrypted_property_value);
-  object_property_value = JSON.parse(decrypted_property_value);
+  const property_value = PROPERY_IS_JSON
+    ? JSON.parse(decrypted_property_value)
+    : decrypted_property_value;
 
-  return object_property_value; // this is the original value the user sent
+  return property_value; // this is the original value the user sent
 });
 
 app.listen(port, () => {
