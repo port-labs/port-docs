@@ -41,7 +41,7 @@ Make sure to specify the following values:
 | `integration.secrets.sonarApiToken`      | The SonarQube API token                                                                                       | ✅       |
 | `integration.config.sonarOrganizationId` | The SonarQube organization ID                                                                                 | ✅       |
 | `integration.config.appHost`             | The host to subscribe webhooks to , specify if you want to subscribe to webhooks                              | ❌       |
-| `integration.config.sonarUrl`            | Required if using **On-Prem**, specify the SonarQube URL                                                      | ❌       |
+| `integration.config.sonarUrl`            | Required if using **On-Prem**, The SonarQube URL                                                              | ❌       |
 | `scheduledResyncInterval`                | The number of minutes between each resync                                                                     | ❌       |
 | `initializePortResources`                | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
 
@@ -79,7 +79,7 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 | --------------------------------------------------- | --------------------------------------------------------------------------------------- | -------- |
 | `OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN`       | The SonarQube API token                                                                 | ✅       |
 | `OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID` | The SonarQube organization ID                                                           | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__SONAR_URL`             | Required if using **On-Prem**, specify the SonarQube URL                                | ❌       |
+| `OCEAN__INTEGRATION__CONFIG__SONAR_URL`             | Required if using **On-Prem**, The SonarQube URL                                        | ❌       |
 | `OCEAN__INTEGRATION__IDENTIFIER`                    | Change the identifier to describe your integration, if not set will use the default one | ❌       |
 | `OCEAN__PORT__CLIENT_ID`                            | Your port client id                                                                     | ✅       |
 | `OCEAN__PORT__CLIENT_SECRET`                        | Your port client secret                                                                 | ✅       |
