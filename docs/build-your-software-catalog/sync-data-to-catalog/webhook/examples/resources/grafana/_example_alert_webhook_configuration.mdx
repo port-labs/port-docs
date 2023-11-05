@@ -1,0 +1,26 @@
+```json showLineNumbers
+[
+  {
+    "blueprint": "grafanaAlert",
+    "filter": "true",
+    "itemsToParse": ".body.alerts",
+    "entity": {
+      "identifier": ".item.labels.alertname + \"-\" + .item.fingerprint | gsub(\"[^a-zA-Z0-9@_.:/=-]\"; \"-\") | tostring",
+      "title": ".item.labels.alertname",
+      "properties": {
+        "status": ".item.status",
+        "labels": ".item.labels",
+        "description": ".item.annotations.description",
+        "summary": ".item.annotations.summary",
+        "runbookURL": ".item.annotations.runbook_url",
+        "createdAt": ".item.startsAt",
+        "resolvedAt": ".item.endsAt",
+        "values": ".item.values",
+        "generatorURL": "if .item.generatorURL != \"\" then .item.generatorURL else null end",
+        "fingerprint": ".item.fingerprint",
+        "silenceURL": "if .item.silenceURL != \"\" then .item.silenceURL else null end"
+      }
+    }
+  }
+]
+```
