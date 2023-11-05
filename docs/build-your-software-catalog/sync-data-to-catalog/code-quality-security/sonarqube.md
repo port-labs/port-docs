@@ -18,15 +18,13 @@ Our SonarQube integration allows you to import `projects`, `issues` and `analyse
 
 ## Installation
 
-Install the integration via Helm by running this command for your preferred Sonarqube deployment:
+Choose one of the following installation methods:
 
-<Tabs groupId="sonarqube" queryString="showLineNumbers">
+<Tabs groupId="installation-methods" queryString="installation-methods">
 
 <TabItem value="real-time-always-on" label="Real Time & Always On">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
-
-The following script will install an Ocean integration at your K8s cluster using helm
 
 Make sure to specify the following values:
 
@@ -44,6 +42,8 @@ Make sure to specify the following values:
 | `integration.config.sonarUrl`            | Required if using **On-Prem**, The SonarQube URL                                                              | ❌       |
 | `scheduledResyncInterval`                | The number of minutes between each resync                                                                     | ❌       |
 | `initializePortResources`                | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
+
+The following script will install an Ocean integration at your K8s cluster using helm
 
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
@@ -70,7 +70,7 @@ This workflow will run the SonarQube integration once and then exit, this is use
 
 Using this workflow means that the integration will not be able to update Port in real time using webhooks.
 
-If you want the integration to update Port in real time using webhooks you should use the **Real Time & Always On** installation option
+If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
 :::
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
@@ -84,6 +84,10 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 | `OCEAN__PORT__CLIENT_ID`                            | Your port client id                                                                     | ✅       |
 | `OCEAN__PORT__CLIENT_SECRET`                        | Your port client secret                                                                 | ✅       |
 | `OCEAN__PORT__BASE_URL`                             | Your port base url, relevant only if not using the default port app                     | ❌       |
+
+<br/>
+
+Here is an example for `sonarqube-integration.yml` workflow file:
 
 ```yaml showLineNumbers
 name: SonarQube Exporter Workflow
