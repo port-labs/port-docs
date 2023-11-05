@@ -41,7 +41,7 @@ A secret input is defined as a regular input, but with the additional `encryptio
 ```
 
 - [aes256-gcm](https://www.nist.gov/publications/advanced-encryption-standard-aes) - This will encrypt the property data using 256 bits AES in [GCM mode](https://csrc.nist.gov/glossary/term/aes_gcm). The encrypted value will be prefixed by the 16 bits IV and suffixed by the 16 bits MAC, encoded to base-64. The encryption key will be the first 32 bytes of your organization's [Client Secret](../../../build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
-- [fernet](https://cryptography.io/en/latest/fernet/) - When using Fernet for symmetric encryption the encryption key will be the first 32 bytes of your organization's [Client Secret](../../../build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials). Note: this encryption protocol has been depracated by Port as of < INSER DATE HERE > actions with this encryption will not be accepted by the api, causing a 400 http error.
+- [fernet](https://cryptography.io/en/latest/fernet/) - **Deprecation Warning: Port is depracating properties' encryption with this algorithm, and starting on < INSER DATE HERE > actions configured with this algorithm could no longer be invoked.** When using Fernet for symmetric encryption the encryption key will be the first 32 bytes of your organization's [Client Secret](../../../build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
 
 ### Supported Types
 
@@ -100,14 +100,16 @@ The payload sent to your infrastructure will contain the encrypted value of your
 
 <TabItem value="aes256-gcm">
 
-<Tabs groupId="language" queryString defaultValue="python" values={[
-{label: "Python Webhook", value: "python"},
-{label: "NodeJs Webhook", value: "nodeJs"}
+Examples for decrypting properties encrypted with the `aes256-gcm` algorithm.
+
+<Tabs groupId="language" queryString defaultValue="aes256-gcm-python" values={[
+{label: "Python Webhook", value: "aes256-gcm-python"},
+{label: "NodeJs Webhook", value: "aes256-gcm-nodeJs"}
 ]}>
 
-<TabItem value="python">
+<TabItem value="aes256-gcm-python">
 
-The following examples use the `flask` and `pycryptodome` packages:
+The following example uses the `flask` and `pycryptodome` packages:
 
 ```python showLineNumbersimport base64
 import base64
@@ -151,9 +153,9 @@ if __name__ == '__main__':
 ```
 
 </TabItem>
-<TabItem value="nodeJs">
+<TabItem value="aes256-gcm-nodeJs">
 
-The following examples use the `express` package and node's built-in crypto module:
+The following example uses the `express` package and node's built-in crypto module:
 
 ```js showLineNumbers
 const express = require("express");
@@ -218,6 +220,8 @@ app.listen(port, () => {
 
 <TabItem value="fernet">
 
+Examples for decrypting properties encrypted with the `fernet` algorithm.
+
 <Tabs groupId="language" queryString defaultValue="fernet-python" values={[
 {label: "Python Webhook", value: "fernet-python"},
 {label: "NodeJs Webhook", value: "fernet-nodeJs"}
@@ -225,7 +229,7 @@ app.listen(port, () => {
 
 <TabItem value="fernet-python">
 
-The following examples use the `flask` and `cryptography` packages:
+The following example uses the `flask` and `cryptography` packages:
 
 ```python showLineNumbers
 import base64
@@ -266,7 +270,7 @@ if __name__ == '__main__':
 </TabItem>
 <TabItem value="fernet-nodeJs">
 
-The following examples use the `express` and `fernet` packages:
+The following example use the `express` and `fernet` packages:
 
 ```js showLineNumbers
 const express = require("express");
