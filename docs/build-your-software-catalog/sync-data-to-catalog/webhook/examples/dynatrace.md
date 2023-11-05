@@ -50,7 +50,7 @@ The webhook configuration's relation mapping will function properly only when th
 
 If there is a mismatch, you can utilize [Dynatrace Tags](https://www.dynatrace.com/support/help/manage/tags-and-metadata) to align the actual identifier in Port.
 
-To do this, create a tag with the key proj and value <microservice_identifier>.
+To do this, create a tag with the key proj and value `microservice_identifier`.
 
 Then, update the relation JQ syntax to establish a connection between the Dynatrace problem and the Port microservice. Here is the updated JQ Mappings:
 
