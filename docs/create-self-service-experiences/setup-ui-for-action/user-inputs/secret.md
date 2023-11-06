@@ -241,6 +241,7 @@ from cryptography.fernet import Fernet
 
 
 PORT_CLIENT_SECRET = 'YOUR PORT CLIENT SECRET'
+PROPERY_IS_JSON = False # whether the property is defined as json or not (string otherwise)
 
 app = Flask(__name__)
 
