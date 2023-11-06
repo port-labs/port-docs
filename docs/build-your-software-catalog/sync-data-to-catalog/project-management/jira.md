@@ -39,7 +39,7 @@ helm upgrade --install my-jira-integration port-labs/port-ocean \
 	--set port.clientSecret="PORT_CLIENT_SECRET"  \
 	--set port.baseUrl="https://api.getport.io"  \
 	--set initializePortResources=true  \
-  --set scheduledResyncInterval=120 \
+	--set scheduledResyncInterval=120 \
 	--set integration.identifier="my-jira-integration"  \
 	--set integration.type="jira"  \
 	--set integration.eventListener.type="POLLING"  \
