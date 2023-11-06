@@ -68,9 +68,6 @@ helm upgrade --install my-sonarqube-integration port-labs/port-ocean \
 This workflow will run the SonarQube integration once and then exit, this is useful for **one time** ingestion of data.
 
 :::warning
-
-Using this workflow means that the integration will not be able to update Port in real time using webhooks.
-
 If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
 :::
 
