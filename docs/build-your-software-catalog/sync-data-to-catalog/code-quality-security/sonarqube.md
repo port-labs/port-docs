@@ -22,11 +22,12 @@ Choose one of the following installation methods:
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="real-time-always-on" label="Real Time & Always On">
+<TabItem value="real-time-always-on" label="Real Time & Always On" default>
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
-Make sure to specify the following values:
+This table summarizes the available parameters for the installation.
+Set them as you wish in the script below, then copy it and run it in your terminal:
 
 | Parameter                                | Description                                                                                                   | Required |
 | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------- |
@@ -43,7 +44,7 @@ Make sure to specify the following values:
 | `scheduledResyncInterval`                | The number of minutes between each resync                                                                     | ❌       |
 | `initializePortResources`                | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
 
-The following script will install an Ocean integration at your K8s cluster using helm
+<br/>
 
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
