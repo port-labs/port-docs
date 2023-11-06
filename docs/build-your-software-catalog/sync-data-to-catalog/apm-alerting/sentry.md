@@ -283,3 +283,207 @@ resources:
 ```
 
 </details>
+
+## Let's Test It
+
+This section includes a sample response data from Sentry. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+
+### Payload
+
+Here is an example of the payload structure from Sentry:
+
+<details>
+<summary> Project response data</summary>
+
+```json showLineNumbers
+{
+  "id": "4504931759095808",
+  "slug": "python-fastapi",
+  "name": "python-fastapi",
+  "platform": "python-fastapi",
+  "dateCreated": "2023-03-31T06:18:37.290732Z",
+  "isBookmarked": false,
+  "isMember": false,
+  "features": [
+    "alert-filters",
+    "minidump",
+    "race-free-group-creation",
+    "similarity-indexing",
+    "similarity-view",
+    "span-metrics-extraction",
+    "span-metrics-extraction-resource",
+    "releases"
+  ],
+  "firstEvent": "2023-03-31T06:25:54.666640Z",
+  "firstTransactionEvent": false,
+  "access": [],
+  "hasAccess": true,
+  "hasMinifiedStackTrace": false,
+  "hasMonitors": false,
+  "hasProfiles": false,
+  "hasReplays": false,
+  "hasFeedbacks": false,
+  "hasSessions": false,
+  "isInternal": false,
+  "isPublic": false,
+  "avatar": {
+    "avatarType": "letter_avatar",
+    "avatarUuid": null
+  },
+  "color": "#913fbf",
+  "status": "active",
+  "organization": {
+    "id": "4504931754901504",
+    "slug": "test-org",
+    "status": {
+      "id": "active",
+      "name": "active"
+    },
+    "name": "Test Org",
+    "dateCreated": "2023-03-31T06:17:33.619189Z",
+    "isEarlyAdopter": false,
+    "require2FA": false,
+    "requireEmailVerification": false,
+    "avatar": {
+      "avatarType": "letter_avatar",
+      "avatarUuid": null,
+      "avatarUrl": null
+    },
+    "features": [
+      "performance-tracing-without-performance",
+      "performance-consecutive-http-detector",
+      "performance-large-http-payload-detector",
+      "escalating-issues",
+      "minute-resolution-sessions",
+      "performance-issues-render-blocking-assets-detector",
+      "event-attachments"
+    ],
+    "links": {
+      "organizationUrl": "https://test-org.sentry.io",
+      "regionUrl": "https://us.sentry.io"
+    },
+    "hasAuthProvider": false
+  }
+}
+```
+
+</details>
+
+<details>
+<summary> Issue response data</summary>
+
+```json showLineNumbers
+{
+  "id": "4605173695",
+  "shareId": "None",
+  "shortId": "PYTHON-FASTAPI-2",
+  "title": "ZeroDivisionError: division by zero",
+  "culprit": "index",
+  "permalink": "https://test-org.sentry.io/issues/4605173695/",
+  "logger": "None",
+  "level": "error",
+  "status": "unresolved",
+  "statusDetails": {},
+  "substatus": "new",
+  "isPublic": false,
+  "platform": "python",
+  "project": {
+    "id": "4504931759095808",
+    "name": "python-fastapi",
+    "slug": "python-fastapi",
+    "platform": "python-fastapi"
+  },
+  "type": "error",
+  "metadata": {
+    "value": "division by zero",
+    "type": "ZeroDivisionError",
+    "filename": "app.py",
+    "function": "index",
+    "display_title_with_tree_label": false,
+    "in_app_frame_mix": "mixed"
+  },
+  "numComments": 0,
+  "assignedTo": "None",
+  "isBookmarked": false,
+  "isSubscribed": false,
+  "subscriptionDetails": "None",
+  "hasSeen": false,
+  "annotations": [],
+  "issueType": "error",
+  "issueCategory": "error",
+  "isUnhandled": true,
+  "count": "1",
+  "userCount": 0,
+  "firstSeen": "2023-11-06T08:31:27.058163Z",
+  "lastSeen": "2023-11-06T08:31:27.058163Z",
+  "stats": {
+    "24h": [
+      [1699174800, 0],
+      [1699178400, 0],
+      [1699182000, 0],
+      [1699250400, 0],
+      [1699254000, 0],
+      [1699257600, 1]
+    ]
+  }
+}
+```
+
+</details>
+
+### Mapping Result
+
+The combination of the sample payload and the Ocean configuration generates the following Port entity:
+
+<details>
+<summary> Project entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "python-fastapi",
+  "title": "python-fastapi",
+  "icon": null,
+  "blueprint": "project",
+  "team": [],
+  "properties": {
+    "dateCreated": "2023-03-31T06:18:37.290732Z",
+    "platform": "python-fastapi",
+    "status": "active",
+    "link": "https://test-org.sentry.io/projects/python-fastapi"
+  },
+  "relations": {},
+  "createdAt": "2023-11-06T08:49:17.700Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2023-11-06T08:59:11.446Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+<details>
+<summary> Issue entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "4605173695",
+  "title": "ZeroDivisionError: division by zero",
+  "icon": null,
+  "blueprint": "issue",
+  "team": [],
+  "properties": {
+    "link": "https://test-org.sentry.io/issues/4605173695/",
+    "status": "unresolved",
+    "isUnhandled": true
+  },
+  "relations": {
+    "project": "python-fastapi"
+  },
+  "createdAt": "2023-11-06T08:49:20.406Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2023-11-06T08:49:20.406Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
