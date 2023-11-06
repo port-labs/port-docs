@@ -41,7 +41,7 @@ A secret input is defined as a regular input, but with the additional `encryptio
 ```
 
 - [aes256-gcm](https://www.nist.gov/publications/advanced-encryption-standard-aes) - This will encrypt the property data using 256 bits AES in [GCM mode](https://csrc.nist.gov/glossary/term/aes_gcm). The encrypted value will be prefixed by the 16 bits IV and suffixed by the 16 bits MAC, encoded to base-64. The encryption key will be the first 32 bytes of your organization's [Client Secret](../../../build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
-- [fernet](https://cryptography.io/en/latest/fernet/) - **Deprecation Warning: Port is depracating properties' encryption with this algorithm, and starting on < INSER DATE HERE > actions configured with this algorithm could no longer be invoked.** When using Fernet for symmetric encryption the encryption key will be the first 32 bytes of your organization's [Client Secret](../../../build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
+- [fernet](https://cryptography.io/en/latest/fernet/) - **Deprecation Warning: Port is depracating properties' encryption with this algorithm, and starting on Nov 14, 2023 actions configured with this algorithm could no longer be invoked.** When using Fernet for symmetric encryption the encryption key will be the first 32 bytes of your organization's [Client Secret](../../../build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
 
 ### Supported Types
 
