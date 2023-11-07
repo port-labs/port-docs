@@ -20,15 +20,34 @@ An `Issue` is a group of incidents that describe the underlying problem of your 
 
 ## Installation
 
-Install the integration via Helm by running this command:
+Choose one of the following installation methods:
+
+<Tabs groupId="installation-methods" queryString="installation-methods">
+
+<TabItem value="real-time-always-on" label="Real Time & Always On" default>
+
+Using this installation option means that the integration will be able to update Port in real time using webhooks.
+
+This table summarizes the available parameters for the installation.
+Set them as you wish in the script below, then copy it and run it in your terminal:
+
+| Parameter                               | Description                                                                                                   | Required |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------- |
+| `port.clientId`                         | Your port client id                                                                                           | ✅       |
+| `port.clientSecret`                     | Your port client secret                                                                                       | ✅       |
+| `port.baseUrl`                          | Your port base url, relevant only if not using the default port app                                           | ❌       |
+| `integration.identifier`                | Change the identifier to describe your integration                                                            | ✅       |
+| `integration.type`                      | The integration type                                                                                          | ✅       |
+| `integration.eventListener.type`        | The event listener type                                                                                       | ✅       |
+| `integration.secrets.sentryToken`       | The Sentry API token token                                                                                    | ✅       |
+| `integration.config.sentryHost`         | The Sentry host. For example https://sentry.io                                                                | ✅       |
+| `integration.config.sentryOrganization` | The Sentry organization slug                                                                                  | ✅       |
+| `scheduledResyncInterval`               | The number of minutes between each resync                                                                     | ❌       |
+| `initializePortResources`               | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
+
+<br/>
 
 ```bash showLineNumbers
-# The following script will install an Ocean integration at your K8s cluster using helm
-# initializePortResources: When set to true the integration will create default blueprints + JQ Mappings
-# integration.identifier: Change the identifier to describe your integration
-# integration.config.sentryHost: Sentry host URL
-# integration.secrets.sentryToken: Sentry token
-# integration.config.sentryOrganization: Sentry organization
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install sentry port-labs/port-ocean \
 	--set port.clientId="PORT_CLIENT_ID"  \
@@ -38,10 +57,71 @@ helm upgrade --install sentry port-labs/port-ocean \
 	--set integration.identifier="sentry"  \
 	--set integration.type="sentry"  \
 	--set integration.eventListener.type="POLLING"  \
-	--set integration.config.sentryHost="https://example.com"  \
+	--set integration.config.sentryHost="https://sentry.io"  \
 	--set integration.secrets.sentryToken="string"  \
 	--set integration.config.sentryOrganization="string"
 ```
+
+</TabItem>
+
+<TabItem value="one-time" label="One Time">
+
+This workflow will run the Sentry integration once and then exit, this is useful for **one time** ingestion of data.
+
+:::warning
+If you want the integration to update Port in real time you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
+:::
+
+Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
+
+| Parameter                                         | Description                                                                             | Required |
+| ------------------------------------------------- | --------------------------------------------------------------------------------------- | -------- |
+| `OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN`        | The Sentry API token                                                                    | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__SENTRY_HOST`         | The Sentry host. For example https://sentry.io                                          | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION` | The Sentry organization slug                                                            | ✅       |
+| `OCEAN__INTEGRATION__IDENTIFIER`                  | Change the identifier to describe your integration, if not set will use the default one | ❌       |
+| `OCEAN__PORT__CLIENT_ID`                          | Your port client id                                                                     | ✅       |
+| `OCEAN__PORT__CLIENT_SECRET`                      | Your port client secret                                                                 | ✅       |
+| `OCEAN__PORT__BASE_URL`                           | Your port base url, relevant only if not using the default port app                     | ❌       |
+
+<br/>
+
+Here is an example for `sentry-integration.yml` workflow file:
+
+```yaml showLineNumbers
+name: Sentry Exporter Workflow
+
+# This workflow responsible for running Sentry exporter.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-integration:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run Sentry Integration
+        run: |
+          # Set Docker image and run the container
+          integration_type="sentry"
+          version="latest"
+
+          image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
+
+          docker run -i --rm --platform=linux/amd64 \
+          -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+          -e OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN=${{ secrets.OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN }} \
+          -e OCEAN__INTEGRATION__CONFIG__SENTRY_HOST=${{ secrets.OCEAN__INTEGRATION__CONFIG__SENTRY_HOST }} \
+          -e OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION=${{ secrets.OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION }} \
+          -e OCEAN__PORT__CLIENT_ID=${{ secrets.OCEAN__PORT__CLIENT_ID }} \
+          -e OCEAN__PORT__CLIENT_SECRET=${{ secrets.OCEAN__PORT__CLIENT_SECRET }} \
+          $image_name
+```
+
+</TabItem>
+
+</Tabs>
 
 ### Event listener
 
