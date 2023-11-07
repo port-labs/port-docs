@@ -265,6 +265,16 @@ For example, here are the scores of all `Services` in an organization grouped by
 
 Note that every coloumn (scorecard metric) in the table has an aggregation in the bottom, hover over it to see the compliance of this metric across all entities in the table.
 
+### Rule result summaries
+
+Scorecard rules are automatically added as columns in the relevant catalog page, and each such column is summarized on the bottom.  
+For example, these services have some rules defined in their scorecards, and we can see that:
+
+- 100% of `Team Batman's` services have an on-call defined, but only 67% of them have a PR cycle time shorter than 1500 minutes.
+- The bottom of the table contains an aggregation of the results of each rule for all services (across all teams). 11 out of 18 services in total have a build success rate that is higher than 70%.
+
+![catalogRuleSummaries](../../static/img/software-catalog/scorecard/catalogRuleSummaries.png)
+
 ## Next steps
 
 [Explore How to Create, Edit, and Delete Scorecards with basic examples](./tutorial)
