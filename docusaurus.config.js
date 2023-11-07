@@ -88,9 +88,16 @@ const config = {
             position: "right",
           },
           {
-            href: "https://github.com/port-labs/port-docs",
-            label: "GitHub",
+            to: "https://github.com/port-labs/port-docs",
             position: "right",
+            target: "_blank",
+            className: "header-github-link",
+          },
+          {
+            to: "https://www.getport.io/community",
+            position: "right",
+            target: "_blank",
+            className: "header-slack-link",
           },
         ],
       },
