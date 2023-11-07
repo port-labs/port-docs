@@ -41,7 +41,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `integration.type`               | The integration type                                                                                                      | ✅       |
 | `integration.eventListener.type` | The event listener type                                                                                                   | ✅       |
 | `integration.secrets.token`      | The FireHydrant API token                                                                                                 | ✅       |
-| `integration.config.apiUrl`      | The FireHydrant API URL. If not specified, the default will be https://api.firehydrant.io                                 | ✅       |
+| `integration.config.apiUrl`      | The FireHydrant API URL. If not specified, the default will be https://api.firehydrant.io                                 | ❌       |
 | `integration.config.appHost`     | The host of the Port Ocean app. Used to set up the integration endpoint as the target for Webhooks created in FireHydrant | ❌       |
 | `scheduledResyncInterval`        | The number of minutes between each resync                                                                                 | ❌       |
 | `initializePortResources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping             | ❌       |
@@ -73,14 +73,14 @@ If you want the integration to update Port in real time using webhooks you shoul
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
-| Parameter                                           | Description                                                                             | Required |
-| --------------------------------------------------- | --------------------------------------------------------------------------------------- | -------- |
-| `OCEAN__INTEGRATION__CONFIG__FIREHYDRANT_API_TOKEN` | The FireHydrant API token                                                               | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__FIREHYDRANT_API_URL`   | The FireHydrant API URL. For example https://api.firehydrant.io                         | ✅       |
-| `OCEAN__INTEGRATION__IDENTIFIER`                    | Change the identifier to describe your integration, if not set will use the default one | ❌       |
-| `OCEAN__PORT__CLIENT_ID`                            | Your port client id                                                                     | ✅       |
-| `OCEAN__PORT__CLIENT_SECRET`                        | Your port client secret                                                                 | ✅       |
-| `OCEAN__PORT__BASE_URL`                             | Your port base url, relevant only if not using the default port app                     | ❌       |
+| Parameter                             | Description                                                                               | Required |
+| ------------------------------------- | ----------------------------------------------------------------------------------------- | -------- |
+| `OCEAN__INTEGRATION__CONFIG__TOKEN`   | The FireHydrant API token                                                                 | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__API_URL` | The FireHydrant API URL. If not specified, the default will be https://api.firehydrant.io | ❌       |
+| `OCEAN__INTEGRATION__IDENTIFIER`      | Change the identifier to describe your integration, if not set will use the default one   | ❌       |
+| `OCEAN__PORT__CLIENT_ID`              | Your port client id                                                                       | ✅       |
+| `OCEAN__PORT__CLIENT_SECRET`          | Your port client secret                                                                   | ✅       |
+| `OCEAN__PORT__BASE_URL`               | Your port base url, relevant only if not using the default port app                       | ❌       |
 
 <br/>
 
@@ -109,8 +109,7 @@ jobs:
 
           docker run -i --rm --platform=linux/amd64 \
           -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
-          -e OCEAN__INTEGRATION__CONFIG__FIREHYDRANT_API_TOKEN=${{ secrets.OCEAN__INTEGRATION__CONFIG__FIREHYDRANT_API_TOKEN }} \
-          -e OCEAN__INTEGRATION__CONFIG__FIREHYDRANT_API_URL=${{ secrets.OCEAN__INTEGRATION__CONFIG__FIREHYDRANT_API_URL }} \
+          -e OCEAN__INTEGRATION__CONFIG__TOKEN=${{ secrets.OCEAN__INTEGRATION__CONFIG__TOKEN }} \
           -e OCEAN__PORT__CLIENT_ID=${{ secrets.OCEAN__PORT__CLIENT_ID }} \
           -e OCEAN__PORT__CLIENT_SECRET=${{ secrets.OCEAN__PORT__CLIENT_SECRET }} \
           $image_name
