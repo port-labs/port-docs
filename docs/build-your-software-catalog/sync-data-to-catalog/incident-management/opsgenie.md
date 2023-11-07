@@ -21,14 +21,33 @@ Our Opsgenie integration allows you to import `alert`, `service` and `incident` 
 
 ## Installation
 
-Install the integration via Helm by running this command:
+Choose one of the following installation methods:
+
+<Tabs groupId="installation-methods" queryString="installation-methods">
+
+<TabItem value="real-time-always-on" label="Real Time & Always On" default>
+
+Using this installation option means that the integration will be able to update Port in real time using webhooks.
+
+This table summarizes the available parameters for the installation.
+Set them as you wish in the script below, then copy it and run it in your terminal:
+
+| Parameter                        | Description                                                                                                   | Required |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------- |
+| `port.clientId`                  | Your port client id                                                                                           | ✅       |
+| `port.clientSecret`              | Your port client secret                                                                                       | ✅       |
+| `port.baseUrl`                   | Your port base url, relevant only if not using the default port app                                           | ❌       |
+| `integration.identifier`         | Change the identifier to describe your integration                                                            | ✅       |
+| `integration.type`               | The integration type                                                                                          | ✅       |
+| `integration.eventListener.type` | The event listener type                                                                                       | ✅       |
+| `integration.secrets.apiToken`   | The Opsgenie API token                                                                                        | ✅       |
+| `integration.config.apiUrl`      | The Opsgenie API URL. If not specified, the default will be https://api.opsgenie.com                          | ✅       |
+| `scheduledResyncInterval`        | The number of minutes between each resync                                                                     | ❌       |
+| `initializePortResources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
+
+<br/>
 
 ```bash showLineNumbers
-# The following script will install an Ocean integration at your K8s cluster using helm
-# integration.identifier: Change the identifier to describe your integration
-# integration.secrets.apiToken: The OpsGenie API token
-# integration.config.apiUrl: The OpsGenie api url. If not specified, the default will be https://api.opsgenie.com. If you are using the EU instance of Opsgenie, the apiURL needs to be https://api.eu.opsgenie.com for requests to be executed.
-
 helm upgrade --install my-opsgenie-integration port-labs/port-ocean \
 	--set port.clientId="CLIENT_ID"  \
 	--set port.clientSecret="CLIENT_SECRET"  \
@@ -39,6 +58,65 @@ helm upgrade --install my-opsgenie-integration port-labs/port-ocean \
 	--set integration.secrets.apiToken="token"  \
 	--set integration.config.apiUrl="https://api.opsgenie.com"
 ```
+
+</TabItem>
+
+<TabItem value="one-time" label="One Time">
+
+This workflow will run the Opsgenie integration once and then exit, this is useful for **one time** ingestion of data.
+
+:::warning
+If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
+:::
+
+Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
+
+| Parameter                               | Description                                                                             | Required |
+| --------------------------------------- | --------------------------------------------------------------------------------------- | -------- |
+| `OCEAN__INTEGRATION__CONFIG__API_TOKEN` | The Opsgenie API token                                                                  | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__API_URL`   | The Opsgenie API URL                                                                    | ✅       |
+| `OCEAN__INTEGRATION__IDENTIFIER`        | Change the identifier to describe your integration, if not set will use the default one | ❌       |
+| `OCEAN__PORT__CLIENT_ID`                | Your port client id                                                                     | ✅       |
+| `OCEAN__PORT__CLIENT_SECRET`            | Your port client secret                                                                 | ✅       |
+| `OCEAN__PORT__BASE_URL`                 | Your port base url, relevant only if not using the default port app                     | ❌       |
+
+<br/>
+
+Here is an example for `opsgenie-integration.yml` workflow file:
+
+```yaml showLineNumbers
+name: Opsgenie Exporter Workflow
+
+# This workflow responsible for running Opsgenie exporter.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-integration:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run Opsgenie Integration
+        run: |
+          # Set Docker image and run the container
+          integration_type="opsgenie"
+          version="latest"
+
+          image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
+
+          docker run -i --rm --platform=linux/amd64 \
+          -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+          -e OCEAN__INTEGRATION__CONFIG__API_TOKEN=${{ secrets.OCEAN__INTEGRATION__CONFIG__API_TOKEN }} \
+          -e OCEAN__INTEGRATION__CONFIG__API_URL=${{ secrets.OCEAN__INTEGRATION__CONFIG__API_URL }} \
+          -e OCEAN__PORT__CLIENT_ID=${{ secrets.OCEAN__PORT__CLIENT_ID }} \
+          -e OCEAN__PORT__CLIENT_SECRET=${{ secrets.OCEAN__PORT__CLIENT_SECRET }} \
+          $image_name
+```
+
+</TabItem>
+
+</Tabs>
 
 ## Ingesting Opsgenie objects
 
