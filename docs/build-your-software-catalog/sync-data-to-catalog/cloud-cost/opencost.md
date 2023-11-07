@@ -14,15 +14,35 @@ Our OpenCost integration allows you to import `cost` from your OpenCost instance
 
 <Prerequisites />
 
-## installation
+## Installation
 
-Install the integration via Helm by running this command:
+Choose one of the following installation methods:
+
+<Tabs groupId="installation-methods" queryString="installation-methods">
+
+<TabItem value="real-time-always-on" label="Real Time & Always On" default>
+
+Using this installation option means that the integration will be able to update Port in real time.
+
+This table summarizes the available parameters for the installation.
+Set them as you wish in the script below, then copy it and run it in your terminal:
+
+| Parameter                         | Description                                                                                                   | Required |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------- |
+| `port.clientId`                   | Your port client id                                                                                           | ✅       |
+| `port.clientSecret`               | Your port client secret                                                                                       | ✅       |
+| `port.baseUrl`                    | Your port base url, relevant only if not using the default port app                                           | ❌       |
+| `integration.identifier`          | Change the identifier to describe your integration                                                            | ✅       |
+| `integration.type`                | The integration type                                                                                          | ✅       |
+| `integration.eventListener.type`  | The event listener type                                                                                       | ✅       |
+| `integration.config.opencostHost` | The Opencost server URL                                                                                       | ✅       |
+| `scheduledResyncInterval`         | The number of minutes between each resync                                                                     | ❌       |
+| `initializePortResources`         | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
+
+<br/>
 
 ```bash showLineNumbers
-# The following script will install an Ocean integration in your K8s cluster using helm
-# integration.identifier: Change the identifier to describe your integration
-# integration.config.opencostHost: The URL of you OpenCost server. Used to make API calls
-
+helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-opencost-integration port-labs/port-ocean \
 	--set port.clientId="CLIENT_ID"  \
 	--set port.clientSecret="CLIENT_SECRET"  \
@@ -32,6 +52,63 @@ helm upgrade --install my-opencost-integration port-labs/port-ocean \
 	--set integration.eventListener.type="POLLING"  \
 	--set integration.config.opencostHost="https://myOpenCostInstance:9003"
 ```
+
+</TabItem>
+
+<TabItem value="one-time" label="One Time">
+
+This workflow will run the Opencost integration once and then exit, this is useful for **one time** ingestion of data.
+
+:::warning
+If you want the integration to update Port in real time you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
+:::
+
+Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
+
+| Parameter                                   | Description                                                                             | Required |
+| ------------------------------------------- | --------------------------------------------------------------------------------------- | -------- |
+| `OCEAN__INTEGRATION__CONFIG__OPENCOST_HOST` | The Opencost server URL                                                                 | ✅       |
+| `OCEAN__INTEGRATION__IDENTIFIER`            | Change the identifier to describe your integration, if not set will use the default one | ❌       |
+| `OCEAN__PORT__CLIENT_ID`                    | Your port client id                                                                     | ✅       |
+| `OCEAN__PORT__CLIENT_SECRET`                | Your port client secret                                                                 | ✅       |
+| `OCEAN__PORT__BASE_URL`                     | Your port base url, relevant only if not using the default port app                     | ❌       |
+
+<br/>
+
+Here is an example for `opencost-integration.yml` workflow file:
+
+```yaml showLineNumbers
+name: Opencost Exporter Workflow
+
+# This workflow responsible for running Opencost exporter.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-integration:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run Opencost Integration
+        run: |
+          # Set Docker image and run the container
+          integration_type="opencost"
+          version="latest"
+
+          image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
+
+          docker run -i --rm --platform=linux/amd64 \
+          -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+          -e OCEAN__INTEGRATION__CONFIG__OPENCOST_HOST=${{ secrets.OCEAN__INTEGRATION__CONFIG__OPENCOST_HOST }} \
+          -e OCEAN__PORT__CLIENT_ID=${{ secrets.OCEAN__PORT__CLIENT_ID }} \
+          -e OCEAN__PORT__CLIENT_SECRET=${{ secrets.OCEAN__PORT__CLIENT_SECRET }} \
+          $image_name
+```
+
+</TabItem>
+
+</Tabs>
 
 ## Ingesting OpenCost objects
 
