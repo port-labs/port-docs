@@ -398,3 +398,283 @@ resources:
 ```
 
 </details>
+
+## Let's Test It
+
+This section includes a sample response data from Jira. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+
+### Payload
+
+Here is an example of the payload structure from Jira:
+
+<details>
+<summary> Project response data</summary>
+
+```json showLineNumbers
+{
+  "expand": "description,lead,issueTypes,url,projectKeys,permissions,insight",
+  "self": "https://myaccount.atlassian.net/rest/api/3/project/10000",
+  "id": "10000",
+  "key": "PA",
+  "name": "Port-AI",
+  "avatarUrls": {
+    "48x48": "https://myaccount.atlassian.net/rest/api/3/universal_avatar/view/type/project/avatar/10413",
+    "24x24": "https://myaccount.atlassian.net/rest/api/3/universal_avatar/view/type/project/avatar/10413?size=small",
+    "16x16": "https://myaccount.atlassian.net/rest/api/3/universal_avatar/view/type/project/avatar/10413?size=xsmall",
+    "32x32": "https://myaccount.atlassian.net/rest/api/3/universal_avatar/view/type/project/avatar/10413?size=medium"
+  },
+  "projectTypeKey": "software",
+  "simplified": true,
+  "style": "next-gen",
+  "isPrivate": false,
+  "properties": {},
+  "entityId": "7f4f8d6f-705b-4074-84be-46f0d012cd8e",
+  "uuid": "7f4f8d6f-705b-4074-84be-46f0d012cd8e"
+}
+```
+
+</details>
+
+<details>
+<summary> Issue response data</summary>
+
+```json showLineNumbers
+{
+  "expand": "operations,versionedRepresentations,editmeta,changelog,customfield_10010.requestTypePractice,renderedFields",
+  "id": "10000",
+  "self": "https://myaccount.atlassian.net/rest/api/3/issue/10000",
+  "key": "PA-1",
+  "fields": {
+    "statuscategorychangedate": "2023-11-06T11:02:59.341+0000",
+    "issuetype": {
+      "self": "https://myaccount.atlassian.net/rest/api/3/issuetype/10001",
+      "id": "10001",
+      "description": "Tasks track small, distinct pieces of work.",
+      "iconUrl": "https://myaccount.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium",
+      "name": "Task",
+      "subtask": false,
+      "avatarId": 10318,
+      "entityId": "a7309bf9-70c5-4237-bdaf-0261037b6ecc",
+      "hierarchyLevel": 0
+    },
+    "timespent": "None",
+    "customfield_10030": "None",
+    "project": {
+      "self": "https://myaccount.atlassian.net/rest/api/3/project/10000",
+      "id": "10000",
+      "key": "PA",
+      "name": "Port-AI",
+      "projectTypeKey": "software",
+      "simplified": true,
+      "avatarUrls": {
+        "48x48": "https://myaccount.atlassian.net/rest/api/3/universal_avatar/view/type/project/avatar/10413",
+        "24x24": "https://myaccount.atlassian.net/rest/api/3/universal_avatar/view/type/project/avatar/10413?size=small",
+        "16x16": "https://myaccount.atlassian.net/rest/api/3/universal_avatar/view/type/project/avatar/10413?size=xsmall",
+        "32x32": "https://myaccount.atlassian.net/rest/api/3/universal_avatar/view/type/project/avatar/10413?size=medium"
+      }
+    },
+    "customfield_10031": "None",
+    "customfield_10032": "None",
+    "fixVersions": [],
+    "aggregatetimespent": "None",
+    "resolution": "None",
+    "customfield_10027": "None",
+    "customfield_10028": "None",
+    "customfield_10029": "None",
+    "resolutiondate": "None",
+    "workratio": -1,
+    "watches": {
+      "self": "https://myaccount.atlassian.net/rest/api/3/issue/PA-1/watchers",
+      "watchCount": 1,
+      "isWatching": true
+    },
+    "lastViewed": "None",
+    "created": "2023-11-06T11:02:59.000+0000",
+    "customfield_10020": "None",
+    "customfield_10021": "None",
+    "customfield_10022": "None",
+    "priority": {
+      "self": "https://myaccount.atlassian.net/rest/api/3/priority/3",
+      "iconUrl": "https://myaccount.atlassian.net/images/icons/priorities/medium.svg",
+      "name": "Medium",
+      "id": "3"
+    },
+    "customfield_10023": "None",
+    "customfield_10024": "None",
+    "customfield_10025": "None",
+    "labels": ["infra"],
+    "customfield_10026": "None",
+    "customfield_10016": "None",
+    "customfield_10017": "None",
+    "customfield_10018": {
+      "hasEpicLinkFieldDependency": false,
+      "showField": false,
+      "nonEditableReason": {
+        "reason": "PLUGIN_LICENSE_ERROR",
+        "message": "The Parent Link is only available to Jira Premium users."
+      }
+    },
+    "customfield_10019": "0|hzzzzz:",
+    "timeestimate": "None",
+    "aggregatetimeoriginalestimate": "None",
+    "versions": [],
+    "issuelinks": [],
+    "assignee": {
+      "self": "https://myaccount.atlassian.net/rest/api/3/user?accountId=712020%3A05acda87-42da-44d8-b21e-f71a508e5d11",
+      "accountId": "712020:05acda87-42da-44d8-b21e-f71a508e5d11",
+      "emailAddress": "username@example.com.io",
+      "avatarUrls": {
+        "48x48": "https://secure.gravatar.com/avatar/0d5d34ceb820d324d69046a1b2f51dc0?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-3.png",
+        "24x24": "https://secure.gravatar.com/avatar/0d5d34ceb820d324d69046a1b2f51dc0?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-3.png",
+        "16x16": "https://secure.gravatar.com/avatar/0d5d34ceb820d324d69046a1b2f51dc0?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-3.png",
+        "32x32": "https://secure.gravatar.com/avatar/0d5d34ceb820d324d69046a1b2f51dc0?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-3.png"
+      },
+      "displayName": "User Name",
+      "active": true,
+      "timeZone": "UTC",
+      "accountType": "atlassian"
+    },
+    "updated": "2023-11-06T11:03:18.244+0000",
+    "status": {
+      "self": "https://myaccount.atlassian.net/rest/api/3/status/10000",
+      "description": "",
+      "iconUrl": "https://myaccount.atlassian.net/",
+      "name": "To Do",
+      "id": "10000",
+      "statusCategory": {
+        "self": "https://myaccount.atlassian.net/rest/api/3/statuscategory/2",
+        "id": 2,
+        "key": "new",
+        "colorName": "blue-gray",
+        "name": "To Do"
+      }
+    },
+    "components": [],
+    "timeoriginalestimate": "None",
+    "description": "None",
+    "customfield_10010": "None",
+    "customfield_10014": "None",
+    "customfield_10015": "None",
+    "customfield_10005": "None",
+    "customfield_10006": "None",
+    "security": "None",
+    "customfield_10007": "None",
+    "customfield_10008": "None",
+    "aggregatetimeestimate": "None",
+    "customfield_10009": "None",
+    "summary": "Setup infra",
+    "creator": {
+      "self": "https://myaccount.atlassian.net/rest/api/3/user?accountId=712020%3A05acda87-42da-44d8-b21e-f71a508e5d11",
+      "accountId": "712020:05acda87-42da-44d8-b21e-f71a508e5d11",
+      "emailAddress": "username@example.com.io",
+      "avatarUrls": {
+        "48x48": "https://secure.gravatar.com/avatar/0d5d34ceb820d324d69046a1b2f51dc0?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-3.png",
+        "24x24": "https://secure.gravatar.com/avatar/0d5d34ceb820d324d69046a1b2f51dc0?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-3.png",
+        "16x16": "https://secure.gravatar.com/avatar/0d5d34ceb820d324d69046a1b2f51dc0?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-3.png",
+        "32x32": "https://secure.gravatar.com/avatar/0d5d34ceb820d324d69046a1b2f51dc0?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-3.png"
+      },
+      "displayName": "User Name",
+      "active": true,
+      "timeZone": "UTC",
+      "accountType": "atlassian"
+    },
+    "subtasks": [],
+    "reporter": {
+      "self": "https://myaccount.atlassian.net/rest/api/3/user?accountId=712020%3A05acda87-42da-44d8-b21e-f71a508e5d11",
+      "accountId": "712020:05acda87-42da-44d8-b21e-f71a508e5d11",
+      "emailAddress": "username@example.com.io",
+      "avatarUrls": {
+        "48x48": "https://secure.gravatar.com/avatar/0d5d34ceb820d324d69046a1b2f51dc0?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-3.png",
+        "24x24": "https://secure.gravatar.com/avatar/0d5d34ceb820d324d69046a1b2f51dc0?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-3.png",
+        "16x16": "https://secure.gravatar.com/avatar/0d5d34ceb820d324d69046a1b2f51dc0?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-3.png",
+        "32x32": "https://secure.gravatar.com/avatar/0d5d34ceb820d324d69046a1b2f51dc0?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-3.png"
+      },
+      "displayName": "User Name",
+      "active": true,
+      "timeZone": "UTC",
+      "accountType": "atlassian"
+    },
+    "aggregateprogress": {
+      "progress": 0,
+      "total": 0
+    },
+    "customfield_10001": "None",
+    "customfield_10002": "None",
+    "customfield_10003": "None",
+    "customfield_10004": "None",
+    "environment": "None",
+    "duedate": "None",
+    "progress": {
+      "progress": 0,
+      "total": 0
+    },
+    "votes": {
+      "self": "https://myaccount.atlassian.net/rest/api/3/issue/PA-1/votes",
+      "votes": 0,
+      "hasVoted": false
+    }
+  }
+}
+```
+
+</details>
+
+### Mapping Result
+
+The combination of the sample payload and the Ocean configuration generates the following Port entity:
+
+<details>
+<summary> Project entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "PA",
+  "title": "Port-AI",
+  "icon": null,
+  "blueprint": "project",
+  "team": [],
+  "properties": {
+    "url": "https://myaccount.atlassian.net/projects/PA"
+  },
+  "relations": {},
+  "createdAt": "2023-11-06T11:22:05.433Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2023-11-06T11:22:05.433Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+<details>
+<summary> Issue entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "PA-1",
+  "title": "Setup infra",
+  "icon": null,
+  "blueprint": "issue",
+  "team": [],
+  "properties": {
+    "url": "https://myaccount.atlassian.net/browse/PA-1",
+    "status": "To Do",
+    "issueType": "Task",
+    "components": [],
+    "assignee": "User Name",
+    "reporter": "User Name",
+    "creator": "User Name"
+  },
+  "relations": {
+    "parentIssue": null,
+    "project": "PA",
+    "subtasks": []
+  },
+  "createdAt": "2023-11-06T11:22:07.550Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2023-11-06T11:22:07.550Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
