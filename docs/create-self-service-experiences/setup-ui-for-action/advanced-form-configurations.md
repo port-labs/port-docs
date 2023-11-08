@@ -637,7 +637,7 @@ values={[
 {
   "some_input": {
     "type": "array",
-    "default" {
+    "default": {
       "jqQuery": ".entity.properties.tags"
     }
   }
