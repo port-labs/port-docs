@@ -77,7 +77,7 @@ Make sure to replace the placeholders for GITHUB_ORG_NAME, GITHUB_REPO_NAME and 
           "icon": "DefaultProperty",
           "title": "Secret Value",
           "type": "string",
-          "encryption": "fernet"
+          "encryption": "aes256-gcm"
         }
       },
       "required": ["secret_key", "secret_value"],

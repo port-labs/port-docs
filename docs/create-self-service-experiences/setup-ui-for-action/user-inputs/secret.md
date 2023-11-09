@@ -59,7 +59,7 @@ A secret input is defined as a regular input, but with the additional `encryptio
     // highlight-start
     "type": "string",
     // highlight-end
-    "encryption": "fernet",
+    "encryption": "aes256-gcm",
     "description": "My entity input"
   }
 }
@@ -78,7 +78,7 @@ A secret input is defined as a regular input, but with the additional `encryptio
     // highlight-start
     "type": "object",
     // highlight-end
-    "encryption": "fernet",
+    "encryption": "aes256-gcm",
     "description": "My entity input"
   }
 }
