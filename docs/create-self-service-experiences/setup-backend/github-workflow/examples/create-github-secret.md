@@ -14,7 +14,10 @@ Follow these steps to get started:
 
 1. Create the following GitHub Action secrets:
 
-   1. `PA_TOKEN` - a [fine-grained PAT](https://github.com/settings/tokens?type=beta) with permissions to create secrets in your repository.
+   1. `PERSONAL_ACCESS_TOKEN` - a [Classic Personal Access Token](hhttps://github.com/settings/tokens) with the following scopes:
+
+      ![Token Scopes](../../../../../static/img/self-service-actions/setup-backend/github-workflow/pat-scopes.png)
+
    2. `PORT_CLIENT_ID` - Port Client ID [learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
    3. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
 
@@ -37,6 +40,7 @@ Keep in mind this can be any blueprint you would like and this is just an exampl
         "icon": "DefaultProperty",
         "title": "Secret Key",
         "type": "string",
+        "description": "All Uppercase",
         "pattern": "^[^a-z]*$"
       },
       "secret_value": {
@@ -56,7 +60,7 @@ Keep in mind this can be any blueprint you would like and this is just an exampl
 4. Create Port action using the following JSON definition:
 
 :::note
-Make sure to replace the placeholders for GITHUB_ORG_NAME, GITHUB_REPO_NAME and GITHUB_WORKFLOW_FILE in your Port Action to match your GitHub environment.
+Make sure to replace the placeholders for GITHUB_ORG_NAME and GITHUB_REPO_NAME in your Port Action to match your GitHub environment.
 :::
 
 ```json showLineNumbers
@@ -90,7 +94,7 @@ Make sure to replace the placeholders for GITHUB_ORG_NAME, GITHUB_REPO_NAME and 
       "reportWorkflowStatus": true,
       "org": "<GITHUB_ORG_NAME>",
       "repo": "<GITHUB_REPO_NAME>",
-      "workflow": "<GITHUB_WORKFLOW_FILE>"
+      "workflow": "create-repo-secret.yml"
     },
     "trigger": "CREATE",
     "description": "Creates a GitHub secret in my repository",
@@ -99,7 +103,7 @@ Make sure to replace the placeholders for GITHUB_ORG_NAME, GITHUB_REPO_NAME and 
 ]
 ```
 
-5. Create a workflow file under `.github/workflows/<GITHUB_WORKFLOW_FILE>` with the following content:
+5. Create a workflow file under `.github/workflows/create-repo-secret.yml` with the following content:
 
 ```yml showLineNumbers
 name: Create Repository Secret
@@ -128,7 +132,7 @@ jobs:
         with:
           name: ${{ inputs.secret_key }}
           value: ${{ inputs.secret_value }}
-          pa_token: ${{ secrets.PA_TOKEN }}
+          pa_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
       - name: UPSERT Entity
         uses: port-labs/port-github-action@v1
