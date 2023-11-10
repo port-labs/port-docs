@@ -37,8 +37,8 @@ After completing it, you will get a sense of how your organization's daily routi
 2. Replace `CLIENT-ID` and `CLIENT-SECRET` in the following snippet, then copy it and run it in your terminal:
 
 ```bash showLineNumbers
-export CUSTOM_BP_PATH="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/blueprints/lean_kubernetes_usecase_bps.json"
-export CONFIG_YAML_URL="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/full-configs/lean_kubernetes_usecase.yaml"
+export CUSTOM_BP_PATH="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/full-configs/k8s-guide/k8s_guide_bps.json"
+export CONFIG_YAML_URL="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/full-configs/k8s-guide/k8s_guide_config.yaml"
 export CLUSTER_NAME="my-cluster"
 export PORT_CLIENT_ID="CLIENT-ID"
 export PORT_CLIENT_SECRET="CLIENT-SECRET"
@@ -55,7 +55,7 @@ The Kubernetes exporter is now installed 🚀
 
 <img src='/img/guides/k8sEntitiesCreated.png' width='100%' />
 
-### Connect your services to their workloads
+### Define the connection between services and workloads
 
 Now that we have our blueprints set up, we will relate the `Service` blueprint to the `Workload` blueprint. In this guide we will create one relation named `Prod_runtime` which will represent the production environment of a service. In a real-world setting, we could have another relation for our staging environment, for example.
 
@@ -317,7 +317,8 @@ Now that all of our k8s data has been ingested into Port, let's create some scor
 
 <br/><br/>
 
-We now have 2 scorecards configured - one for the workload's configuration, and another for its availability 😎
+We now have 2 scorecards configured - one for the workload's configuration validity, and another for its availability.  
+We will come back to these later 😎
 
 ### Visualize your Kubernetes runtime
 
