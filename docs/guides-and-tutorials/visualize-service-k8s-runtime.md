@@ -8,7 +8,7 @@ import TabItem from "@theme/TabItem"
 
 # Visualize your services' k8s runtime
 
-This guide takes 7 minutes to complete, and aims to demonstrate the value of Port's integration with Kubernetes.
+This guide takes 10 minutes to complete, and aims to demonstrate the value of Port's integration with Kubernetes.
 
 :::tip Prerequisites
 
@@ -51,6 +51,8 @@ The Kubernetes exporter is now installed 🚀
 
 <img src='/img/guides/k8sBlueprintsCreated.png' width='95%' />
 
+<br/><br/>
+
 - In your [Software catalog](https://app.getport.io/services), you will see a new page for each blueprint containing your resources, filled with data from your Kubernetes cluster:
 
 <img src='/img/guides/k8sEntitiesCreated.png' width='100%' />
@@ -65,15 +67,21 @@ Now that we have our blueprints set up, we will relate the `Service` blueprint t
 
 <img src='/img/guides/k8sCreateRelation.png' width='50%' />
 
+<br/><br/>
+
 When looking at a `Service`, some of its `Workload` properties may be especially important to us, and we would like to see them directly in the `Service's` context. This can be achieved using [mirror properties](https://docs.getport.io/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/mirror-property/), so let's create some:
 
 3. The first one will be the workload's health. Under the relation we just created, click on `New mirror property`:
 
 <img src='/img/guides/k8sCreateMirrorProp.png' width='50%' />
 
+<br/><br/>
+
 4. Fill the form out like this, then click `Create`:
 
 <img src='/img/guides/k8sCreateMirrorPropHealth.png' width='50%' />
+
+<br/><br/>
 
 5. The second one will be the workload's image tag/s. Create another mirror property, fill the form out like this, then click `Create`:
 
@@ -364,9 +372,13 @@ To get an overall picture of our workloads' availability, we can use a table ope
 
 <img src='/img/guides/k8sGroupByAvailability.png' width='40%' />
 
+<br/><br/>
+
 3. Click on any of the metric levels to see the corresponding workloads:
 
 <img src='/img/guides/k8sWorkloadsAfterGroupByAvailability.png' width='90%' />
+
+<br/><br/>
 
 Note that you can also set this as the default view by click on the `Save this view` button 📝
 
