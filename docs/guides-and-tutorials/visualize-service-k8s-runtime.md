@@ -89,6 +89,9 @@ For example, a k8s deployment with the label `portService: myService` will be as
 
 We achieved this by adding a mapping definition in the configuration YAML we used when installing the exporter. The definition uses `jq` to calculate the identifier, and looks like this:
 
+<details>
+<summary><b>Mapping definition (Click to expand)</b></summary>
+
 ```yaml showLineNumbers
 - kind: apps/v1/deployments
   port:
@@ -105,10 +108,12 @@ We achieved this by adding a mapping definition in the configuration YAML we use
     query: .metadata.namespace | startswith("kube") | not
 ```
 
+</details>
+
 **Let's see this in action:**
 
 1. Create a `Deployment` resource in your cluster with a label matching the identifier of a `service` in your [Software catalog](https://app.getport.io/services).  
-   You can use the simple example below and change the `metadata.labels.portService` value to match your desired `service`. Copy it into a file named `deployment.yaml`, then run the following command in your terminal to apply it:
+   You can use the simple example below and change the `metadata.labels.portService` value to match your desired `service`. Copy it into a file named `deployment.yaml`, then apply it:
 
 ```bash showLineNumbers
 kubectl apply -f deployment.yaml
@@ -316,15 +321,64 @@ We now have 2 scorecards configured - one for the workload's configuration, and 
 
 ### Visualize your Kubernetes runtime
 
+We now have a lot of data about our workloads, and some metrics to track their quality. Let's see how we can visualize this information in ways that will benefit the routine of our developers and managers.
+
+#### Add an "Unhealthy services" table to your homepage
+
+In the configuration provided for this guide, a `workload` is considered `Healthy` if its defined number of replicas is equal to its available replicas (of course, you can change this definition).
+
+1. Go to your [homepage](https://app.getport.io/home), click on the `+ Add` button in the top right corner, then select `Table`.
+
+2. Fill the form out like this, then click `Save`:
+
+<img src='/img/guides/k8sHomepageTableUnhealthyServices.png' width='50%' />
+
+<br/><br/>
+
+3. In your new table, click on `Filter`, then on `+ Add new filter`. Fill out the fields like this:
+
+<img src='/img/guides/k8sHomepageTableFilterUnhealthy.png' width='50%' />
+
+<br/><br/>
+
+Now you can keep track of services that need your attention right from your homepage.
+
+<img src='/img/guides/k8sHomepageTableUnhealthyFilter.png' width='40%' />
+
+_These services were not included in this guide, but serve to show an example of how this table might look._
+
+#### Use your scorecards to get a clear overview of your workloads' availability
+
+In the configuration provided for this guide, the availability metric is defined like this:
+
+- Bronze: >=1 replica
+- Silver: >=2 replicas
+- Gold: >=3 replicas
+
+To get an overall picture of our workloads' availability, we can use a table operation.
+
+1. Go to the [`Workloads` catalog page](https://app.getport.io/workloads).
+
+2. Click on the `Group by` button, then choose `High availability` from the dropdown:
+
+<img src='/img/guides/k8sGroupByAvailability.png' width='40%' />
+
+3. Click on any of the metric levels to see the corresponding workloads:
+
+<img src='/img/guides/k8sWorkloadsAfterGroupByAvailability.png' width='90%' />
+
+Note that you can also set this as the default view by click on the `Save this view` button 📝
+
 ### Possible daily routine integrations
 
-- Send a slack message in the R&D channel to let everyone know that a new service was created.
-- Send a weekly/monthly report for managers showing all the new services created in this timeframe and their owners.
+- Send a slack message in the R&D channel to let everyone know that a new deployment was created.
+- Notify Devops engineers when a service's availability drops.
+- Send a weekly/monthly report to R&D managers displaying the health of services' production runtime.
 
 ### Conclusion
 
-Creating a service is not just a periodic task developers undertake, but a vital step that can occur on a monthly basis. However, it's crucial to recognize that this is only a fragment of the broader experience that we're striving to create for developers.  
-Our ultimate goal is to facilitate a seamless transition from ideation to production. In doing so, we aim to eliminate the need for developers to navigate through a plethora of tools, reducing friction and accelerating the time-to-production.  
-In essence, we're not just building a tool, but sculpting an ecosystem that empowers developers to bring new features to life with utmost efficiency.
+Kubernetes is a complex environment that requires high-quality observability. Port's Kubernetes integration allows you to easily model and visualize your Kubernetes resources, and integrate them into your daily routine.  
+Customize your views to display the data that matters to you, grouped or filtered by teams, namespaces, or any other criteria.  
+With Port, you can seamlessly fit your organization's needs, and create a single source of truth for your Kubernetes resources.
 
 More guides & tutorials will be available soon, in the meantime feel free to reach out with any questions via our [community slack](https://www.getport.io/community) or [Github project](https://github.com/port-labs?view_as=public).
