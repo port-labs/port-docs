@@ -135,7 +135,7 @@ Port supports Gitlab using the [ocean integration](http://ocean.getport.io). Fol
 Make sure to install the app in the entire organization (and not in a single repository). This way Port will automatically create entities for all repositories.
 :::
 
-Once installed, you should now see new data sources in your `Builder` tab waiting to be used (may take a few seconds to appear):
+Once installed, you will now see new data sources in your `Data Sources` tab of the builder page, waiting to be used (may take a few seconds to appear):
 
 ![dataSourcesGithub](/img/quickstart/dataSourcesGithub.png)
 
@@ -325,7 +325,7 @@ Let's create a simple pie chart showing the language distribution in our service
 
 <img src='/img/quickstart/pieChartLanguagesForm.png' width='380rem' />
 
-You should now see a pie chart with the number of services and their language distribution in the `Home` tab of your Port app:
+You will now see a pie chart with the number of services and their language distribution in the `Home` tab of your Port app:
 
 <img src='/img/quickstart/pieChartLanguages.png' width='300rem' />
 
@@ -337,5 +337,5 @@ Hopefully you now have a basic grasp of what you can do with Port, but this is j
 
 ### What's next?
 
-- [Self-service actions guide](/guides-and-tutorials/scaffold-a-new-service)(~7 minutes)  
+- [Self-service actions guide](/guides-and-tutorials/scaffold-a-new-service) (~7 minutes)  
   Increase your developers' productivity and independence by creating powerful actions for them to use.
