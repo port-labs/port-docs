@@ -19,12 +19,16 @@ This page contains a list of Port's available integrations, organized by the pla
 - [GitHub Webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/git/github.md)
 - [GitHub workflow self-service actions](./create-self-service-experiences/setup-backend/github-workflow/github-workflow.md)
 - [Sync repositories, file contents, pull-requests, workflows, teams, dependebot alerts and more](./build-your-software-catalog/sync-data-to-catalog/git/github/examples.md)
+- [GitHub scaffolder using GitHub workflows](./create-self-service-experiences/setup-backend/github-workflow/examples/scaffold-repositories-using-cookiecutter.md)
+- [GitHub scaffolder using Jenkins](./create-self-service-experiences/setup-backend/jenkins-pipeline/examples/scaffold-github-using-cookiecutter.md)
+- [Create GitHub secret using GitHub workflows](./create-self-service-experiences/setup-backend/github-workflow/examples/create-github-secret.md)
 
 ### GitLab
 
 - [GitLab app](./build-your-software-catalog/sync-data-to-catalog/git/gitlab/gitlab.md)
 - [GitLab GitOps](./build-your-software-catalog/sync-data-to-catalog/git/gitlab/gitops/gitops.md)
 - [GitLab advanced file search and search checks](./build-your-software-catalog/sync-data-to-catalog/git/gitlab/mapping_extensions.md)
+- [Sync GitLab pipelines](./build-your-software-catalog/sync-data-to-catalog/ci-cd/gitlab-pipelines/gitlab-pipelines.md)
 - [GitLab Webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/git/gitlab.md)
 - [GitLab pipeline self-service actions](./create-self-service-experiences/setup-backend/gitlab-pipeline/gitlab-pipeline.md)
 - [Sync projects, file contents, merge-requests and more](./build-your-software-catalog/sync-data-to-catalog/git/gitlab/examples.md)
@@ -33,6 +37,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 - [Bitbucket app](./build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket.md)
 - [Sync repositories, file contents, pull-requests, monorepos and more](./build-your-software-catalog/sync-data-to-catalog/git/bitbucket/examples.md)
+- [Bitbucket scaffolder](./create-self-service-experiences/setup-backend/jenkins-pipeline/examples/scaffold-bitbucket-using-cookiecutter.md)
 
 ### GitOps using Port CRDs
 
@@ -94,6 +99,12 @@ This page contains a list of Port's available integrations, organized by the pla
 #### Google cloud build
 
 - [Cloud build self-service action](./create-self-service-experiences/setup-backend/cloudbuild-pipeline/cloudbuild-pipeline.md)
+
+## Cookiecutter
+
+- [Cookiecutter GitHub scaffolder using GitHub workflows](./create-self-service-experiences/setup-backend/github-workflow/examples/scaffold-repositories-using-cookiecutter.md)
+- [Cookiecutter GitHub scaffolder using Jenkins](./create-self-service-experiences/setup-backend/jenkins-pipeline/examples/scaffold-github-using-cookiecutter.md)
+- [Cookiecutter Bitbucket scaffolder using Jenkins](./create-self-service-experiences/setup-backend/jenkins-pipeline/examples/scaffold-bitbucket-using-cookiecutter.md)
 
 ## SonarQube / SonarCloud
 
@@ -168,6 +179,8 @@ This page contains a list of Port's available integrations, organized by the pla
 
 - [Sync Jenkins pipelines](./build-your-software-catalog/sync-data-to-catalog/ci-cd/jenkins-deployment/jenkins-deployment.md)
 - [Jenkins pipeline self-service actions](./create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md)
+- [GitHub scaffolder using Jenkins](./create-self-service-experiences/setup-backend/jenkins-pipeline/examples/scaffold-github-using-cookiecutter.md)
+- [Bitbucket scaffolder using Jenkins](./create-self-service-experiences/setup-backend/jenkins-pipeline/examples/scaffold-bitbucket-using-cookiecutter.md)
 
 ## CodeFresh
 
@@ -177,21 +190,13 @@ This page contains a list of Port's available integrations, organized by the pla
 
 - [Sync CircleCI workflows](./build-your-software-catalog/sync-data-to-catalog/ci-cd/circleci-workflow/circleci-workflow.md)
 
-## Okta
+## SSO
 
 - [Okta SSO](./sso-rbac/sso-providers/okta.md)
-
-## OneLogin
-
 - [OneLogin SSO](./sso-rbac/sso-providers/onelogin.md)
-
-## JumpCloud
-
 - [JumpCloud SSO](./sso-rbac/sso-providers/jumpcloud.md)
-
-## Google workspace
-
 - [Google workspace SSO](./sso-rbac/sso-providers/google-workspace.md)
+- [Azure Active Directory (AD) SSO](./sso-rbac/sso-providers/azure-ad.md)
 
 ## Backstage
 
