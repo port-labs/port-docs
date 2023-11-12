@@ -13,12 +13,10 @@ This guide takes 10 minutes to complete, and aims to demonstrate the value of Po
 :::tip Prerequisites
 
 - This guide assumes you have a Port account and a basic knowledge of working with Port. If you haven't done so, go ahead and complete the [quickstart](/quickstart).
-
 - You will need an accessible k8s cluster. If you don't have one, here is how to quickly set-up a [minikube cluster](https://minikube.sigs.k8s.io/docs/start/).
-
 - [Helm](https://helm.sh/docs/intro/install/) - required to install Port's Kubernetes exporter.
-
 - [jq](https://jqlang.github.io/jq/download/) - required to install Port's Kubernetes exporter.
+- [yq](https://github.com/mikefarah/yq/#install) - required to install Port's Kubernetes exporter.
 
 :::
 
