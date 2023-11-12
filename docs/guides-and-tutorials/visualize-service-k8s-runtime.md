@@ -35,7 +35,7 @@ After completing it, you will get a sense of how your organization's daily routi
 
 1. Go to your [Port application](https://app.getport.io/), hover over the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
 
-2. Replace `CLIENT-ID` and `CLIENT-SECRET` in the following snippet, then copy it and run it in your terminal:
+2. Replace `CLIENT-ID` and `CLIENT-SECRET` in the following command, then copy it and run it in your terminal:
 
 ```bash showLineNumbers
 export CUSTOM_BP_PATH="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/full-configs/k8s-guide/k8s_guide_bps.json"
@@ -46,13 +46,13 @@ export PORT_CLIENT_SECRET="CLIENT-SECRET"
 curl -s https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/install.sh | bash
 ```
 
-The Kubernetes exporter is now installed 🚀
+#### What does the exporter do?
 
-- In your [Builder](https://app.getport.io/dev-portal/data-model), you will see 3 new blueprints that represent Kubernetes resources:
+After installation, the exporter will:
+
+1. Create blueprints in your [Builder](https://app.getport.io/dev-portal/data-model) (as defined in `CUSTOM_BP_PATH`) that represent Kubernetes resources:
 
 <img src='/img/guides/k8sBlueprintsCreated.png' width='95%' />
-
-<br/><br/>
 
 :::info Note
 
@@ -60,9 +60,29 @@ The Kubernetes exporter is now installed 🚀
 
 :::
 
-- In your [Software catalog](https://app.getport.io/services), you will see a new page for each blueprint containing your resources, filled with data from your Kubernetes cluster:
+<br/>
+
+2. Create entities in your [Software catalog](https://app.getport.io/services). You will see a new page for each blueprint containing your resources, filled with data from your Kubernetes cluster (as defined in `CONFIG_YAML_URL`):
 
 <img src='/img/guides/k8sEntitiesCreated.png' width='100%' />
+
+:::info Updating your configuration
+
+To change the configuration YAML deployed on your Kubernetes cluster, replace `PATH_TO_CONFIG_YAML` with the path (either local or URL) to your desired configuration file, then run the following command:
+
+```bash showLineNumbers
+helm upgrade --install port-k8s-exporter port-labs/port-k8s-exporter \
+--namespace port-k8s-exporter \
+--set secret.secrets.portClientId=CLIENT_ID --set secret.secrets.portClientSecret=CLIENT_SECRET \
+--set-file configMap.config=PATH_TO_CONFIG_YAML
+```
+
+_Don't forget to replace `CLIENT_ID` and `CLIENT_SECRET` accordingly._
+:::
+
+<br/>
+
+3. Listen to changes in your Kubernetes cluster and update your entities accordingly.
 
 ### Define the connection between services and workloads
 
