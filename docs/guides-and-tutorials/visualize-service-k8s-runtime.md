@@ -18,6 +18,8 @@ This guide takes 10 minutes to complete, and aims to demonstrate the value of Po
 
 - [Helm](https://helm.sh/docs/intro/install/) - required to install Port's Kubernetes exporter.
 
+- [jq](https://jqlang.github.io/jq/download/) - required to install Port's Kubernetes exporter.
+
 :::
 
 ### The goal of this guide
