@@ -1,8 +1,8 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-const lightCodeTheme = require("prism-react-renderer/themes/github");
-const darkCodeTheme = require("prism-react-renderer/themes/dracula");
+const lightCodeTheme = require("prism-react-renderer").themes.github;
+const darkCodeTheme = require("prism-react-renderer").themes.dracula;
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -88,9 +88,16 @@ const config = {
             position: "right",
           },
           {
-            href: "https://github.com/port-labs/port-docs",
-            label: "GitHub",
+            to: "https://github.com/port-labs/port-docs",
             position: "right",
+            target: "_blank",
+            className: "header-github-link",
+          },
+          {
+            to: "https://www.getport.io/community",
+            position: "right",
+            target: "_blank",
+            className: "header-slack-link",
           },
         ],
       },
@@ -228,7 +235,17 @@ const config = {
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
-        additionalLanguages: ["hcl", "groovy"],
+        additionalLanguages: [
+          "hcl",
+          "groovy",
+          "bash",
+          "yaml",
+          "json",
+          "python",
+          "javascript",
+          "go",
+          "typescript",
+        ],
       },
       liveCodeBlock: {
         /**

@@ -47,7 +47,7 @@ Create the following webhook configuration [using Port ui](../../?operation=ui#c
 3. Scroll down to **Advanced settings** and input the following details:
 
    1. secret: `WEBHOOK_SECRET`;
-   2. Signature Header Name : `X-Sonar-Webhook-HMAC-SHA256`;
+   2. Signature Header Name : `x-sonar-webhook-hmac-sha256`;
    3. Signature Algorithm : Select `sha256` from dropdown option;
    4. Click **Save** at the bottom of the page.
 

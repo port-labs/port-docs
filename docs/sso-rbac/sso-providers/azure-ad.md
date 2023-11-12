@@ -250,6 +250,6 @@ Port needs the following information for this process:
 
 ## Permissions required to pull AzureAD groups to Port
 
-Port can query the group membership of users who log in through the AzureAD SSO, and add their teams as team entities inside Port. This allows the platform engineers to take advantage of existing groups from AzureAD to manage permissions and access to resources inside Port's catalog.
+Port can query the group membership of users who log in through the AzureAD SSO, and add their teams as team entities inside Port. This allows the platform engineers to take advantage of both existing groups from AzureAD and teams created manually inside Port to manage permissions and access to resources inside Port's catalog.
 
 **Important:** In order to import Azure AD groups into Port, Port will require the connection app to approve the `Directory.Read.All` permission

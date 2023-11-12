@@ -1,5 +1,6 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
 
 # Sentry
 
@@ -13,17 +14,40 @@ An `Issue` is a group of incidents that describe the underlying problem of your 
 
 - Map your monitored projects and issues into Port.
 
+## Prerequisites
+
+<Prerequisites />
+
 ## Installation
 
-Install the integration via Helm by running this command:
+Choose one of the following installation methods:
+
+<Tabs groupId="installation-methods" queryString="installation-methods">
+
+<TabItem value="real-time-always-on" label="Real Time & Always On" default>
+
+Using this installation option means that the integration will be able to update Port in real time using webhooks.
+
+This table summarizes the available parameters for the installation.
+Set them as you wish in the script below, then copy it and run it in your terminal:
+
+| Parameter                               | Description                                                                                                   | Required |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------- |
+| `port.clientId`                         | Your port client id                                                                                           | ✅       |
+| `port.clientSecret`                     | Your port client secret                                                                                       | ✅       |
+| `port.baseUrl`                          | Your port base url, relevant only if not using the default port app                                           | ❌       |
+| `integration.identifier`                | Change the identifier to describe your integration                                                            | ✅       |
+| `integration.type`                      | The integration type                                                                                          | ✅       |
+| `integration.eventListener.type`        | The event listener type                                                                                       | ✅       |
+| `integration.secrets.sentryToken`       | The Sentry API token token                                                                                    | ✅       |
+| `integration.config.sentryHost`         | The Sentry host. For example https://sentry.io                                                                | ✅       |
+| `integration.config.sentryOrganization` | The Sentry organization slug                                                                                  | ✅       |
+| `scheduledResyncInterval`               | The number of minutes between each resync                                                                     | ❌       |
+| `initializePortResources`               | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
+
+<br/>
 
 ```bash showLineNumbers
-# The following script will install an Ocean integration at your K8s cluster using helm
-# initializePortResources: When set to true the integration will create default blueprints + JQ Mappings
-# integration.identifier: Change the identifier to describe your integration
-# integration.config.sentryHost: Sentry host URL
-# integration.secrets.sentryToken: Sentry token
-# integration.config.sentryOrganization: Sentry organization
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install sentry port-labs/port-ocean \
 	--set port.clientId="PORT_CLIENT_ID"  \
@@ -33,10 +57,71 @@ helm upgrade --install sentry port-labs/port-ocean \
 	--set integration.identifier="sentry"  \
 	--set integration.type="sentry"  \
 	--set integration.eventListener.type="POLLING"  \
-	--set integration.config.sentryHost="https://example.com"  \
+	--set integration.config.sentryHost="https://sentry.io"  \
 	--set integration.secrets.sentryToken="string"  \
 	--set integration.config.sentryOrganization="string"
 ```
+
+</TabItem>
+
+<TabItem value="one-time" label="One Time">
+
+This workflow will run the Sentry integration once and then exit, this is useful for **one time** ingestion of data.
+
+:::warning
+If you want the integration to update Port in real time you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
+:::
+
+Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
+
+| Parameter                                         | Description                                                                             | Required |
+| ------------------------------------------------- | --------------------------------------------------------------------------------------- | -------- |
+| `OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN`        | The Sentry API token                                                                    | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__SENTRY_HOST`         | The Sentry host. For example https://sentry.io                                          | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION` | The Sentry organization slug                                                            | ✅       |
+| `OCEAN__INTEGRATION__IDENTIFIER`                  | Change the identifier to describe your integration, if not set will use the default one | ❌       |
+| `OCEAN__PORT__CLIENT_ID`                          | Your port client id                                                                     | ✅       |
+| `OCEAN__PORT__CLIENT_SECRET`                      | Your port client secret                                                                 | ✅       |
+| `OCEAN__PORT__BASE_URL`                           | Your port base url, relevant only if not using the default port app                     | ❌       |
+
+<br/>
+
+Here is an example for `sentry-integration.yml` workflow file:
+
+```yaml showLineNumbers
+name: Sentry Exporter Workflow
+
+# This workflow responsible for running Sentry exporter.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-integration:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run Sentry Integration
+        run: |
+          # Set Docker image and run the container
+          integration_type="sentry"
+          version="latest"
+
+          image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
+
+          docker run -i --rm --platform=linux/amd64 \
+          -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+          -e OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN=${{ secrets.OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN }} \
+          -e OCEAN__INTEGRATION__CONFIG__SENTRY_HOST=${{ secrets.OCEAN__INTEGRATION__CONFIG__SENTRY_HOST }} \
+          -e OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION=${{ secrets.OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION }} \
+          -e OCEAN__PORT__CLIENT_ID=${{ secrets.OCEAN__PORT__CLIENT_ID }} \
+          -e OCEAN__PORT__CLIENT_SECRET=${{ secrets.OCEAN__PORT__CLIENT_SECRET }} \
+          $image_name
+```
+
+</TabItem>
+
+</Tabs>
 
 ### Event listener
 
@@ -275,6 +360,210 @@ resources:
             isUnhandled: ".isUnhandled"
           relations:
             project: ".project.slug"
+```
+
+</details>
+
+## Let's Test It
+
+This section includes a sample response data from Sentry. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+
+### Payload
+
+Here is an example of the payload structure from Sentry:
+
+<details>
+<summary> Project response data</summary>
+
+```json showLineNumbers
+{
+  "id": "4504931759095808",
+  "slug": "python-fastapi",
+  "name": "python-fastapi",
+  "platform": "python-fastapi",
+  "dateCreated": "2023-03-31T06:18:37.290732Z",
+  "isBookmarked": false,
+  "isMember": false,
+  "features": [
+    "alert-filters",
+    "minidump",
+    "race-free-group-creation",
+    "similarity-indexing",
+    "similarity-view",
+    "span-metrics-extraction",
+    "span-metrics-extraction-resource",
+    "releases"
+  ],
+  "firstEvent": "2023-03-31T06:25:54.666640Z",
+  "firstTransactionEvent": false,
+  "access": [],
+  "hasAccess": true,
+  "hasMinifiedStackTrace": false,
+  "hasMonitors": false,
+  "hasProfiles": false,
+  "hasReplays": false,
+  "hasFeedbacks": false,
+  "hasSessions": false,
+  "isInternal": false,
+  "isPublic": false,
+  "avatar": {
+    "avatarType": "letter_avatar",
+    "avatarUuid": null
+  },
+  "color": "#913fbf",
+  "status": "active",
+  "organization": {
+    "id": "4504931754901504",
+    "slug": "test-org",
+    "status": {
+      "id": "active",
+      "name": "active"
+    },
+    "name": "Test Org",
+    "dateCreated": "2023-03-31T06:17:33.619189Z",
+    "isEarlyAdopter": false,
+    "require2FA": false,
+    "requireEmailVerification": false,
+    "avatar": {
+      "avatarType": "letter_avatar",
+      "avatarUuid": null,
+      "avatarUrl": null
+    },
+    "features": [
+      "performance-tracing-without-performance",
+      "performance-consecutive-http-detector",
+      "performance-large-http-payload-detector",
+      "escalating-issues",
+      "minute-resolution-sessions",
+      "performance-issues-render-blocking-assets-detector",
+      "event-attachments"
+    ],
+    "links": {
+      "organizationUrl": "https://test-org.sentry.io",
+      "regionUrl": "https://us.sentry.io"
+    },
+    "hasAuthProvider": false
+  }
+}
+```
+
+</details>
+
+<details>
+<summary> Issue response data</summary>
+
+```json showLineNumbers
+{
+  "id": "4605173695",
+  "shareId": "None",
+  "shortId": "PYTHON-FASTAPI-2",
+  "title": "ZeroDivisionError: division by zero",
+  "culprit": "index",
+  "permalink": "https://test-org.sentry.io/issues/4605173695/",
+  "logger": "None",
+  "level": "error",
+  "status": "unresolved",
+  "statusDetails": {},
+  "substatus": "new",
+  "isPublic": false,
+  "platform": "python",
+  "project": {
+    "id": "4504931759095808",
+    "name": "python-fastapi",
+    "slug": "python-fastapi",
+    "platform": "python-fastapi"
+  },
+  "type": "error",
+  "metadata": {
+    "value": "division by zero",
+    "type": "ZeroDivisionError",
+    "filename": "app.py",
+    "function": "index",
+    "display_title_with_tree_label": false,
+    "in_app_frame_mix": "mixed"
+  },
+  "numComments": 0,
+  "assignedTo": "None",
+  "isBookmarked": false,
+  "isSubscribed": false,
+  "subscriptionDetails": "None",
+  "hasSeen": false,
+  "annotations": [],
+  "issueType": "error",
+  "issueCategory": "error",
+  "isUnhandled": true,
+  "count": "1",
+  "userCount": 0,
+  "firstSeen": "2023-11-06T08:31:27.058163Z",
+  "lastSeen": "2023-11-06T08:31:27.058163Z",
+  "stats": {
+    "24h": [
+      [1699174800, 0],
+      [1699178400, 0],
+      [1699182000, 0],
+      [1699250400, 0],
+      [1699254000, 0],
+      [1699257600, 1]
+    ]
+  }
+}
+```
+
+</details>
+
+### Mapping Result
+
+The combination of the sample payload and the Ocean configuration generates the following Port entity:
+
+<details>
+<summary> Project entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "python-fastapi",
+  "title": "python-fastapi",
+  "icon": null,
+  "blueprint": "project",
+  "team": [],
+  "properties": {
+    "dateCreated": "2023-03-31T06:18:37.290732Z",
+    "platform": "python-fastapi",
+    "status": "active",
+    "link": "https://test-org.sentry.io/projects/python-fastapi"
+  },
+  "relations": {},
+  "createdAt": "2023-11-06T08:49:17.700Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2023-11-06T08:59:11.446Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+<details>
+<summary> Issue entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "4605173695",
+  "title": "ZeroDivisionError: division by zero",
+  "icon": null,
+  "blueprint": "issue",
+  "team": [],
+  "properties": {
+    "link": "https://test-org.sentry.io/issues/4605173695/",
+    "status": "unresolved",
+    "isUnhandled": true
+  },
+  "relations": {
+    "project": "python-fastapi"
+  },
+  "createdAt": "2023-11-06T08:49:20.406Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2023-11-06T08:49:20.406Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
 ```
 
 </details>

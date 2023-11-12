@@ -125,7 +125,7 @@ Install [BitBucket app](https://marketplace.atlassian.com/apps/1229886/port-conn
 
 <TabItem value="Gitlab">
 
-Port supports Gitlab using the [ocean integration](http://ocean.getport.io). Follow [these instructions](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/gitlab/installation) to install the integration, and then continue following this guide.
+Port supports Gitlab using the [ocean integration](http://ocean.getport.io). Follow [these instructions](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/gitlab/installation) to install the integration, then come back to this guide.
 
 </TabItem>
 
@@ -135,13 +135,13 @@ Port supports Gitlab using the [ocean integration](http://ocean.getport.io). Fol
 Make sure to install the app in the entire organization (and not in a single repository). This way Port will automatically create entities for all repositories.
 :::
 
-Once installed, you should now see new data sources in your `Builder` tab waiting to be used (may take a few seconds to appear):
+Once installed, you will see new data sources in the `Data Sources` tab of the builder page, waiting to be used (may take a few seconds to appear):
 
 ![dataSourcesGithub](/img/quickstart/dataSourcesGithub.png)
 
 2. Finally, we need to map the desired information from our Git provider's API to the properties of the blueprint we created in Port. For this guide, we will provide you with mapping so you do not need to do anything yourself. If you want to dive further into this, see [Port's Git integrations](/build-your-software-catalog/sync-data-to-catalog/git/).
 
-In the `Data sources` page, click on the exporter you installed. In the `Mapping` tab paste the following snippet (choose your Git provider), then click `Save & Resync`:
+In the `Data sources` tab, click on the exporter you installed. In the `Mapping` tab paste the following snippet (choose your Git provider), then click `Save & Resync`:
 
 <Tabs values={[
 {label: "Github", value: "Github"},
@@ -325,7 +325,7 @@ Let's create a simple pie chart showing the language distribution in our service
 
 <img src='/img/quickstart/pieChartLanguagesForm.png' width='380rem' />
 
-You should now see a pie chart with the number of services and their language distribution in the `Home` tab of your Port app:
+You will now see a pie chart with the number of services and their language distribution in the `Home` tab of your Port app:
 
 <img src='/img/quickstart/pieChartLanguages.png' width='300rem' />
 
@@ -337,5 +337,5 @@ Hopefully you now have a basic grasp of what you can do with Port, but this is j
 
 ### What's next?
 
-- [Self-service actions guide](/guides-and-tutorials/scaffold-a-new-service)(~7 minutes)  
+- [Self-service actions guide](/guides-and-tutorials/scaffold-a-new-service) (~7 minutes)  
   Increase your developers' productivity and independence by creating powerful actions for them to use.

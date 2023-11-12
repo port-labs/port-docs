@@ -1,5 +1,6 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
 
 # Kubecost
 
@@ -9,25 +10,106 @@ Our Kubecost integration allows you to import `kubesystem` and `cloud` cost allo
 
 - Map your monitored Kubernetes resources and cloud cost allocations in Kubecost.
 
-## installation
+## Prerequisites
 
-Install the integration via Helm by running this command:
+<Prerequisites />
+
+## Installation
+
+Choose one of the following installation methods:
+
+<Tabs groupId="installation-methods" queryString="installation-methods">
+
+<TabItem value="real-time-always-on" label="Real Time & Always On" default>
+
+Using this installation option means that the integration will be able to update Port in real time.
+
+This table summarizes the available parameters for the installation.
+Set them as you wish in the script below, then copy it and run it in your terminal:
+
+| Parameter                         | Description                                                                                                   | Required |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------- |
+| `port.clientId`                   | Your port client id                                                                                           | ✅       |
+| `port.clientSecret`               | Your port client secret                                                                                       | ✅       |
+| `port.baseUrl`                    | Your port base url, relevant only if not using the default port app                                           | ❌       |
+| `integration.identifier`          | Change the identifier to describe your integration                                                            | ✅       |
+| `integration.type`                | The integration type                                                                                          | ✅       |
+| `integration.eventListener.type`  | The event listener type                                                                                       | ✅       |
+| `integration.config.kubecostHost` | The Kubecost server URL                                                                                       | ✅       |
+| `scheduledResyncInterval`         | The number of minutes between each resync                                                                     | ❌       |
+| `initializePortResources`         | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
+
+<br/>
 
 ```bash showLineNumbers
-# The following script will install an Ocean integration in your K8s cluster using helm
-# integration.identifier: Change the identifier to describe your integration
-# integration.config.kubecostHost: The URL of you Kubecost server. Used to make API calls
-
+helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-kubecost-integration port-labs/port-ocean \
-	--set port.clientId="CLIENT_ID"  \
-	--set port.clientSecret="CLIENT_SECRET"  \
-	--set initializePortResources=true  \
-    --set scheduledResyncInterval=60 \
-	--set integration.identifier="my-kubecost-integration"  \
-	--set integration.type="kubecost"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.config.kubecostHost="https://kubecostInstance:9090"
+  --set port.clientId="CLIENT_ID"  \
+  --set port.clientSecret="CLIENT_SECRET"  \
+  --set initializePortResources=true  \
+  --set scheduledResyncInterval=60 \
+  --set integration.identifier="my-kubecost-integration"  \
+  --set integration.type="kubecost"  \
+  --set integration.eventListener.type="POLLING"  \
+  --set integration.config.kubecostHost="https://kubecostInstance:9090"
 ```
+
+</TabItem>
+
+<TabItem value="one-time" label="One Time">
+
+This workflow will run the Kubecost integration once and then exit, this is useful for **one time** ingestion of data.
+
+:::warning
+If you want the integration to update Port in real time you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
+:::
+
+Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
+
+| Parameter                                   | Description                                                                             | Required |
+| ------------------------------------------- | --------------------------------------------------------------------------------------- | -------- |
+| `OCEAN__INTEGRATION__CONFIG__KUBECOST_HOST` | The Kubecost server URL                                                                 | ✅       |
+| `OCEAN__INTEGRATION__IDENTIFIER`            | Change the identifier to describe your integration, if not set will use the default one | ❌       |
+| `OCEAN__PORT__CLIENT_ID`                    | Your port client id                                                                     | ✅       |
+| `OCEAN__PORT__CLIENT_SECRET`                | Your port client secret                                                                 | ✅       |
+| `OCEAN__PORT__BASE_URL`                     | Your port base url, relevant only if not using the default port app                     | ❌       |
+
+<br/>
+
+Here is an example for `kubecost-integration.yml` workflow file:
+
+```yaml showLineNumbers
+name: Kubecost Exporter Workflow
+
+# This workflow responsible for running Kubecost exporter.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-integration:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run Kubecost Integration
+        run: |
+          # Set Docker image and run the container
+          integration_type="kubecost"
+          version="latest"
+
+          image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
+
+          docker run -i --rm --platform=linux/amd64 \
+          -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+          -e OCEAN__INTEGRATION__CONFIG__KUBECOST_HOST=${{ secrets.OCEAN__INTEGRATION__CONFIG__KUBECOST_HOST }} \
+          -e OCEAN__PORT__CLIENT_ID=${{ secrets.OCEAN__PORT__CLIENT_ID }} \
+          -e OCEAN__PORT__CLIENT_SECRET=${{ secrets.OCEAN__PORT__CLIENT_SECRET }} \
+          $image_name
+```
+
+</TabItem>
+
+</Tabs>
 
 ## Ingesting Kubecost objects
 
@@ -463,6 +545,133 @@ resources:
             amortizedNetCostPercent: .amortizedNetCost.kubernetesPercent
             invoicedCost: .invoicedCost.cost
             invoicedCostPercent: .invoicedCost.kubernetesPercent
+```
+
+</details>
+
+## Let's Test It
+
+This section includes a sample response data from Kubecost. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+
+### Payload
+
+Here is an example of the payload structure from Kubecost:
+
+<details>
+<summary> Cost response data</summary>
+
+```json showLineNumbers
+{
+  "name": "argocd",
+  "properties": {
+    "cluster": "cluster-one",
+    "node": "gke-my-regional-cluster-default-pool-e8093bfa-0bjg",
+    "namespace": "argocd",
+    "providerID": "gke-my-regional-cluster-default-pool-e8093bfa-0bjg",
+    "namespaceLabels": {
+      "kubernetes_io_metadata_name": "argocd"
+    }
+  },
+  "window": {
+    "start": "2023-10-30T00:00:00Z",
+    "end": "2023-10-30T01:00:00Z"
+  },
+  "start": "2023-10-30T00:00:00Z",
+  "end": "2023-10-30T01:00:00Z",
+  "minutes": 60,
+  "cpuCores": 0.00515,
+  "cpuCoreRequestAverage": 0,
+  "cpuCoreUsageAverage": 0.00514,
+  "cpuCoreHours": 0.00515,
+  "cpuCost": 0.00012,
+  "cpuCostAdjustment": 0,
+  "cpuEfficiency": 1,
+  "gpuCount": 0,
+  "gpuHours": 0,
+  "gpuCost": 0,
+  "gpuCostAdjustment": 0,
+  "networkTransferBytes": 2100541.53,
+  "networkReceiveBytes": 2077024.88318,
+  "networkCost": 0,
+  "networkCrossZoneCost": 0,
+  "networkCrossRegionCost": 0,
+  "networkInternetCost": 0,
+  "networkCostAdjustment": 0,
+  "loadBalancerCost": 0.02708,
+  "loadBalancerCostAdjustment": 0,
+  "pvBytes": 0,
+  "pvByteHours": 0,
+  "pvCost": 0,
+  "pvs": "None",
+  "pvCostAdjustment": 0,
+  "ramBytes": 135396181.33333,
+  "ramByteRequestAverage": 0,
+  "ramByteUsageAverage": 135394433.70477,
+  "ramByteHours": 135396181.33333,
+  "ramCost": 0.00041,
+  "ramCostAdjustment": 0,
+  "ramEfficiency": 1,
+  "externalCost": 0,
+  "sharedCost": 0,
+  "totalCost": 0.02761,
+  "totalEfficiency": 1,
+  "proportionalAssetResourceCosts": {},
+  "lbAllocations": {
+    "cluster-one/argocd/argocd-server": {
+      "service": "argocd/argocd-server",
+      "cost": 0.027083333333333334,
+      "private": false,
+      "ip": ""
+    }
+  },
+  "sharedCostBreakdown": {}
+}
+```
+
+</details>
+
+### Mapping Result
+
+The combination of the sample payload and the Ocean configuration generates the following Port entity:
+
+<details>
+<summary> Cost entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "argocd",
+  "title": "argocd",
+  "icon": null,
+  "blueprint": "kubecostResourceAllocation",
+  "team": [],
+  "properties": {
+    "cluster": "cluster-one",
+    "namespace": "argocd",
+    "startDate": "2023-10-30T04:00:00.000Z",
+    "endDate": "2023-10-30T05:00:00.000Z",
+    "cpuCoreHours": 0.0051,
+    "cpuCost": 0.00012,
+    "cpuEfficiency": 1,
+    "gpuHours": 0,
+    "gpuCost": 0,
+    "networkCost": 0,
+    "loadBalancerCost": 0.02708,
+    "pvCost": 0,
+    "pvBytes": 0,
+    "ramBytes": 135396181.33333,
+    "ramCost": 0.00041,
+    "ramEfficiency": 1,
+    "sharedCost": 0,
+    "externalCost": 0,
+    "totalCost": 0.02761,
+    "totalEfficiency": 1
+  },
+  "relations": {},
+  "createdAt": "2023-10-30T13:25:42.717Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2023-10-30T13:28:37.379Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
 ```
 
 </details>

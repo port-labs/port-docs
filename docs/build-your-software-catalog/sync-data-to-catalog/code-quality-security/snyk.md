@@ -1,5 +1,6 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
 
 # Snyk
 
@@ -11,29 +12,115 @@ Our Snyk integration allows you to import `targets`, `projects` and `issues` fro
 - Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 - Create/delete Snyk objects using self-service actions.
 
+## Prerequisites
+
+<Prerequisites />
+
 ## installation
 
-Install the integration via Helm by running this command:
+Choose one of the following installation methods:
+
+<Tabs groupId="installation-methods" queryString="installation-methods">
+
+<TabItem value="real-time-always-on" label="Real Time & Always On" default>
+
+Using this installation option means that the integration will be able to update Port in real time using webhooks.
+
+This table summarizes the available parameters for the installation.
+Set them as you wish in the script below, then copy it and run it in your terminal:
+
+| Parameter                           | Description                                                                                                        | Required |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
+| `port.clientId`                     | Your port client id                                                                                                | ✅       |
+| `port.clientSecret`                 | Your port client secret                                                                                            | ✅       |
+| `port.baseUrl`                      | Your port base url, relevant only if not using the default port app                                                | ❌       |
+| `integration.identifier`            | Change the identifier to describe your integration                                                                 | ✅       |
+| `integration.type`                  | The integration type                                                                                               | ✅       |
+| `integration.eventListener.type`    | The event listener type                                                                                            | ✅       |
+| `integration.secrets.token`         | The Snyk API token                                                                                                 | ✅       |
+| `integration.config.organizationId` | The Snyk organization ID                                                                                           | ✅       |
+| `integration.config.apiUrl`         | The Snyk API URL. If not specified, the default will be https://api.snyk.io                                        | ❌       |
+| `integration.config.appHost`        | The host of the Port Ocean app. Used to set up the integration endpoint as the target for Webhooks created in Snyk | ❌       |
+| `integration.secret.webhookSecret`  | This is a password you create, that Snyk uses to sign webhook events to Port                                       | ❌       |
+| `scheduledResyncInterval`           | The number of minutes between each resync                                                                          | ❌       |
+| `initializePortResources`           | Default true, When set to true the integration will create default blueprints and the port App config Mapping      | ❌       |
+
+<br/>
 
 ```bash showLineNumbers
-# The following script will install an Ocean integration at your K8s cluster using helm
-# initializePortResources: When set to true the integration will create default blueprints + JQ Mappings
-# scheduledResyncInterval: the number of minutes between each resync
-# integration.identifier: Change the identifier to describe your integration
-
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-snyk-integration port-labs/port-ocean \
 	--set port.clientId="PORT_CLIENT_ID"  \
 	--set port.clientSecret="PORT_CLIENT_SECRET"  \
 	--set port.baseUrl="https://api.getport.io"  \
 	--set initializePortResources=true  \
-  --set scheduledResyncInterval=120 \
+	--set scheduledResyncInterval=120 \
 	--set integration.identifier="my-snyk-integration"  \
 	--set integration.type="snyk"  \
 	--set integration.eventListener.type="POLLING"  \
 	--set integration.secrets.token="SNYK_TOKEN"  \
 	--set integration.config.organizationId="ORG_ID"
 ```
+
+</TabItem>
+
+<TabItem value="one-time" label="One Time">
+
+This workflow will run the Snyk integration once and then exit, this is useful for **one time** ingestion of data.
+
+:::warning
+If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
+:::
+
+Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
+
+| Parameter                                     | Description                                                                             | Required |
+| --------------------------------------------- | --------------------------------------------------------------------------------------- | -------- |
+| `OCEAN__INTEGRATION__CONFIG__TOKEN`           | The Snyk API token                                                                      | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID` | The Snyk organization ID                                                                | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__API_URL`         | The Snyk API URL. If not specified, the default will be https://api.snyk.io             | ❌       |
+| `OCEAN__INTEGRATION__IDENTIFIER`              | Change the identifier to describe your integration, if not set will use the default one | ❌       |
+| `OCEAN__PORT__CLIENT_ID`                      | Your port client id                                                                     | ✅       |
+| `OCEAN__PORT__CLIENT_SECRET`                  | Your port client secret                                                                 | ✅       |
+| `OCEAN__PORT__BASE_URL`                       | Your port base url, relevant only if not using the default port app                     | ❌       |
+
+<br/>
+
+Here is an example for `snyk-integration.yml` workflow file:
+
+```yaml showLineNumbers
+name: Snyk Exporter Workflow
+
+# This workflow responsible for running Snyk exporter.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-integration:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run Snyk Integration
+        run: |
+          # Set Docker image and run the container
+          integration_type="snyk"
+          version="latest"
+
+          image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
+
+          docker run -i --rm --platform=linux/amd64 \
+          -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+          -e OCEAN__INTEGRATION__CONFIG__TOKEN=${{ secrets.OCEAN__INTEGRATION__CONFIG__TOKEN }} \
+          -e OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID=${{ secrets.OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID }} \
+          -e OCEAN__PORT__CLIENT_ID=${{ secrets.OCEAN__PORT__CLIENT_ID }} \
+          -e OCEAN__PORT__CLIENT_SECRET=${{ secrets.OCEAN__PORT__CLIENT_SECRET }} \
+          $image_name
+```
+
+</TabItem>
+
+</Tabs>
 
 ## Ingesting Snyk objects
 

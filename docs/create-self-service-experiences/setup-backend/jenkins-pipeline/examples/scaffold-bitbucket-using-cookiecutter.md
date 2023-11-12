@@ -2,9 +2,9 @@
 sidebar_position: 2
 ---
 
-# Scaffold Repositories Using Cookiecutter
+# Scaffold BitBucket Repositories Using Cookiecutter
 
-[This Jenkins pipeline](https://github.com/port-labs/cookiecutter-gha) allows you to quickly scaffold repositories using a [Cookiecutter Template](https://www.cookiecutter.io/templates) via Port Actions.
+This example demonstrates how to quickly scaffold BitBucket repositories using a [Cookiecutter Template](https://www.cookiecutter.io/templates) via Port Actions.
 
 In addition, as cookiecutter is an open-source project you can make your own project template, learn more about it [here](https://cookiecutter.readthedocs.io/en/2.0.2/tutorials.html#create-your-very-own-cookiecutter-project-template).
 
@@ -14,9 +14,10 @@ Follow these steps to get started with the Golang template:
 
 1. Create the following as Jenkins Credentials:
 
-   1. `GITHUB_TOKEN` - a [fine-grained PAT](https://github.com/settings/tokens?type=beta) with permissions to create repositories.
-   2. `PORT_CLIENT_ID` - Port Client ID [learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
-   3. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
+   1. `BITBUCKET_USERNAME` - a user with access to the BitBucket Workspace and Project.
+   2. `BITBUCKET_APP_PASSWORD` - an [App Password](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/) with permissions to create repositories.
+   3. `PORT_CLIENT_ID` - Port Client ID [learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+   4. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
 
 2. Create a Port blueprint with the following properties:
 
@@ -51,12 +52,16 @@ Keep in mind this can be any blueprint you would like and this is just an exampl
 
 3. Create Port action using the following JSON definition:
 
+:::note
+Make sure to replace the placeholders for JENKINS_URL and JOB_TOKEN.
+:::
+
 ```json showLineNumbers
 [
   {
-    "identifier": "scaffold",
-    "title": "Scaffold Golang Microservice",
-    "description": "Scaffold a new Microservice from a Cookiecutter teplate",
+    "identifier": "scaffold_bitbucket",
+    "title": "Scaffold Golang Microservice - BitBucket",
+    "description": "Creates a repo for new golang Microservice on Bitbucket",
     "icon": "Go",
     "userInputs": {
       "properties": {
@@ -65,13 +70,23 @@ Keep in mind this can be any blueprint you would like and this is just an exampl
           "title": "Repo Name",
           "type": "string"
         },
-        "github_org_name": {
-          "icon": "Github",
-          "title": "Github Org Name",
+        "bitbucket_workspace_name": {
+          "icon": "BitBucket",
+          "title": "Bitbucket Workspace Name",
+          "type": "string"
+        },
+        "bitbucket_project_key": {
+          "title": "Bitbucket Project Key",
+          "icon": "BitBucket",
+          "description": "Bitbucket project key symbol",
           "type": "string"
         }
       },
-      "required": ["repo_name", "github_org_name"]
+      "required": [
+        "repo_name",
+        "bitbucket_workspace_name",
+        "bitbucket_project_key"
+      ]
     },
     "invocationMethod": {
       "type": "WEBHOOK",
@@ -88,9 +103,11 @@ Keep in mind this can be any blueprint you would like and this is just an exampl
 4. Create a Jenkins Pipeline with the following configuration:
 
    1. [Enable webhook trigger for a pipeline](../jenkins-pipeline.md#enabling-webhook-trigger-for-a-pipeline)
-   2. [Define variables for a pipeline](../jenkins-pipeline.md#defining-variables): Define the REPO_NAME,GITHUB_ORG_NAME and RUN_ID variables.
-      ![Define Vars](../../../../../static/img/self-service-actions/setup-backend/jenkins-pipeline/scaffold-jenkins-vars.png)
-   3. [Token Setup](../jenkins-pipeline.md#token-setup): Define the token to match <JOB_TOKEN> as configured in your Port Action.
+   2. [Define variables for a pipeline](../jenkins-pipeline.md#defining-variables): Define the REPO_NAME, BITBUCKET_WORKSPACE_NAME, BITBUCKET_PROJECT_KEY and RUN_ID variables.
+
+      ![Define Vars](../../../../../static/img/self-service-actions/setup-backend/jenkins-pipeline/scaffold-jenkins-bitbucket-vars.png)
+
+   3. [Token Setup](../jenkins-pipeline.md#token-setup): Define the token to match `JOB_TOKEN` as configured in your Port Action.
 
 5. Create a Jenkins Pipeline with the following content:
 
@@ -106,7 +123,8 @@ pipeline {
     environment {
         COOKIECUTTER_TEMPLATE = 'https://github.com/lacion/cookiecutter-golang'
         REPO_NAME = "${REPO_NAME}"
-        GITHUB_ORG_NAME = "${GITHUB_ORG_NAME}"
+        BITBUCKET_WORKSPACE_NAME = "${BITBUCKET_WORKSPACE_NAME}"
+        BITBUCKET_PROJECT_KEY = "${BITBUCKET_PROJECT_KEY}"
         SCAFFOLD_DIR = "scaffold_${REPO_NAME}"
         PORT_ACCESS_TOKEN = ""
         PORT_BLUEPRINT_ID = "microservice"
@@ -142,33 +160,33 @@ pipeline {
             }
         } // end of stage Get access token
 
-        stage('Create Github Repository') {
+        stage('Create BitBucket Repository') {
             steps {
                 script {
                     def logs_report_response = sh(script: """
                         curl -X POST \
                           -H "Content-Type: application/json" \
                           -H "Authorization: Bearer ${PORT_ACCESS_TOKEN}" \
-                          -d '{"message": "Creating GitHub repository: ${REPO_NAME} in GitHub org: ${GITHUB_ORG_NAME}..."}' \
+                          -d '{"message": "Creating BitBucket repository: ${REPO_NAME} in Workspace: ${BITBUCKET_WORKSPACE_NAME}, Project: ${BITBUCKET_PROJECT_KEY}..."}' \
                              "https://api.getport.io/v1/actions/runs/${PORT_RUN_ID}/logs"
                     """, returnStdout: true)
 
                     println(logs_report_response)
                 }
                 script {
-                    withCredentials([string(credentialsId: 'GITHUB_TOKEN', variable: 'GITHUB_TOKEN')]) {
+                    withCredentials([
+                        string(credentialsId: 'BITBUCKET_USERNAME', variable: 'BITBUCKET_USERNAME'),
+                        string(credentialsId: 'BITBUCKET_APP_PASSWORD', variable: 'BITBUCKET_APP_PASSWORD')
+                    ]) {
                         sh """
-
-                            curl -i -H 'Authorization: token ${GITHUB_TOKEN}' \\
-                            -d '{
-                                "name": "${REPO_NAME}", "private": true
-                                }' \\
-                            https://api.github.com/orgs/${GITHUB_ORG_NAME}/repos
+                            curl -i -u ${BITBUCKET_USERNAME}:${BITBUCKET_APP_PASSWORD} \\
+                            -d '{"is_private": true, "scm": "git", "project": {"key": "${BITBUCKET_PROJECT_KEY}"}}' \\
+                            https://api.bitbucket.org/2.0/repositories/${BITBUCKET_WORKSPACE_NAME}/${REPO_NAME}
                         """
                     }
                 }
             }
-        } // end of stage Create Github Repository
+        } // end of stage Create BitBucket Repository
 
         stage('Scaffold Cookiecutter Template') {
             steps {
@@ -185,13 +203,13 @@ pipeline {
                 }
                 script {
                     withCredentials([
-                        string(credentialsId: 'GITHUB_USERNAME', variable: 'GITHUB_USERNAME'),
-                        string(credentialsId: 'GITHUB_TOKEN', variable: 'GITHUB_TOKEN')
+                        string(credentialsId: 'BITBUCKET_USERNAME', variable: 'BITBUCKET_USERNAME'),
+                        string(credentialsId: 'BITBUCKET_APP_PASSWORD', variable: 'BITBUCKET_APP_PASSWORD')
                     ]) {
                         def yamlContent = """
 default_context:
   full_name: "Full Name"
-  github_username: "githubuser"
+  github_username: "bitbucketuser"
   app_name: "${REPO_NAME}"
   project_short_description": "A Golang project."
   docker_hub_username: "dockerhubuser"
@@ -203,7 +221,7 @@ default_context:
 
                         sh("""
                             rm -rf ${SCAFFOLD_DIR} ${REPO_NAME}
-                            git clone https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com/${GITHUB_ORG_NAME}/${REPO_NAME}
+                            git clone https://${BITBUCKET_USERNAME}:${BITBUCKET_APP_PASSWORD}@bitbucket.org/${BITBUCKET_WORKSPACE_NAME}/${REPO_NAME}.git
 
                             cookiecutter ${COOKIECUTTER_TEMPLATE} --output-dir ${SCAFFOLD_DIR} --no-input --config-file cookiecutter.yaml -f
 
@@ -215,7 +233,7 @@ default_context:
                             git config user.email "jenkins-pipeline[bot]@users.noreply.jenkins.com"
                             git add .
                             git commit -m "Scaffolded project ${REPO_NAME}"
-                            git push -u origin main
+                            git push -u origin master
                             cd ..
 
                             rm -rf ${SCAFFOLD_DIR} ${REPO_NAME}
@@ -247,7 +265,7 @@ default_context:
         --data-raw '{
 				"identifier": "${REPO_NAME}",
 				"title": "${REPO_NAME}",
-				"properties": {"description":"${REPO_NAME} golang project","url":"https://github.com/${GITHUB_ORG_NAME}/${REPO_NAME}"},
+				"properties": {"description":"${REPO_NAME} golang project","url":"https://bitbucket.org/${BITBUCKET_WORKSPACE_NAME}/${REPO_NAME}/src"},
 				"relations": {}
 			}'
 
@@ -307,4 +325,4 @@ default_context:
 
 </details>
 
-6. Trigger the action from Port's UI with the relevant Repository Name and GitHub Organization Name.
+6. Trigger the action from the [Self-service](https://app.getport.io/self-serve) tab of your Port application.

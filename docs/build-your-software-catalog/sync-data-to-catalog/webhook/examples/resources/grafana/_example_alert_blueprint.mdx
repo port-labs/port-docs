@@ -1,0 +1,79 @@
+```json showLineNumbers
+{
+  "identifier": "grafanaAlert",
+  "description": "This blueprint represents a Grafana alert in your software catalog",
+  "title": "Grafana Alert",
+  "icon": "Grafana",
+  "schema": {
+    "properties": {
+      "status": {
+        "title": "Status",
+        "description": "Current status of the alert, firing or resolved",
+        "type": "string",
+        "enum": ["firing", "resolved"],
+        "enumColors": {
+          "firing": "red",
+          "resolved": "green"
+        }
+      },
+      "labels": {
+        "title": "Labels",
+        "type": "object",
+        "description": "Labels that are part of this alert, map of string keys to string values"
+      },
+      "description": {
+        "title": "Description",
+        "type": "string"
+      },
+      "createdAt": {
+        "title": "Created at",
+        "description": "Start time of the alert",
+        "type": "string",
+        "format": "date-time"
+      },
+      "resolvedAt": {
+        "title": "Resolved At",
+        "type": "string",
+        "description": "End time of the alert",
+        "format": "date-time"
+      },
+      "values": {
+        "title": "Values",
+        "type": "object",
+        "description": "Values that triggered the current status"
+      },
+      "generatorURL": {
+        "title": "Generator URL",
+        "type": "string",
+        "description": "URL of the alert rule in the Grafana UI",
+        "format": "url"
+      },
+      "fingerprint": {
+        "title": "Fingerprint",
+        "description": "The labels fingerprint, alarms with the same labels will have the same fingerprint",
+        "type": "string"
+      },
+      "silenceURL": {
+        "title": "Silence URL",
+        "description": "URL to silence the alert rule in the Grafana UI",
+        "type": "string",
+        "format": "url"
+      },
+      "summary": {
+        "title": "Summary",
+        "type": "string"
+      },
+      "runbookURL": {
+        "title": "Runbook URL",
+        "type": "string",
+        "description": "URL of the runbook in the Grafana UI",
+        "format": "url"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {}
+}
+```
