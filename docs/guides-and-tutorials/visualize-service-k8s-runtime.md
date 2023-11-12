@@ -66,7 +66,9 @@ The Kubernetes exporter is now installed 🚀
 
 ### Define the connection between services and workloads
 
-Now that we have our blueprints set up, we will relate the `Service` blueprint to the `Workload` blueprint. In this guide we will create one relation named `Prod_runtime` which will represent the production environment of a service. In a real-world setting, we could have another relation for our staging environment, for example.
+Now that we have our blueprints set up, we want to model the logical connection between them by relating the `Service` blueprint to the `Workload` blueprint. This will grant us some helpful context in our Software catalog, allowing us to see relevant `Workloads` in a `Service`'s context, or a `Workload`'s property directly in its corresponding `Service`.
+
+In this guide we will create one relation named `Prod_runtime` which will represent the production environment of a service. In a real-world setting, we could have another relation for our staging environment, for example.
 
 1. Go to your [Builder](https://app.getport.io/dev-portal/data-model), expand the `Service` blueprint, and click on `New relation`.
 
