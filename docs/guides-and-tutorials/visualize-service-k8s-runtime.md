@@ -28,6 +28,7 @@ After completing it, you will get a sense of how your organization's daily routi
 
 - Developers will be able to easily view the health and status of their services' K8s runtime.
 - Platform engineers will be able to create custom views and visualizations for different stakeholders in the organization.
+- Platform engineers will be able to set, maintain and track standards for K8s resources.
 - R&D managers will be able to track any data about services' K8s resources, using tailor-made views and dashboards.
 
 ### Install Port's Kubernetes exporter
@@ -52,6 +53,12 @@ The Kubernetes exporter is now installed 🚀
 <img src='/img/guides/k8sBlueprintsCreated.png' width='95%' />
 
 <br/><br/>
+
+:::info Note
+
+`Workload` is an abstraction of Kubernetes objects which create and manage pods (e.g. `Deployment`, `StatefulSet`, `DaemonSet`).
+
+:::
 
 - In your [Software catalog](https://app.getport.io/services), you will see a new page for each blueprint containing your resources, filled with data from your Kubernetes cluster:
 
@@ -89,41 +96,21 @@ When looking at a `Service`, some of its `Workload` properties may be especially
 
 ### Map your workloads to their services
 
-Our services now have properties related to their workload, but we need to specify which `workload` belongs to which `service`. This can be done manually, or via mapping by using a convention of your choice.
+You may have noticed that the `Prod_runtime` property and the mirror properties we created are empty for all of our `services`. This is because we haven't specified which `workload` belongs to which `service`. This can be done manually, or via mapping by using a convention of your choice.
 
 In this guide we will use the following convention:  
-A `workload` with a label in the form of `portService: <service-identifier>` will automatically be assigned to a `service` with that identifier.  
+A `workload` with a label in the form of `portService: <service-identifier>` will automatically be assigned to a `service` with that identifier.
+
 For example, a k8s deployment with the label `portService: myService` will be assigned to a `service` with the identifier `myService`.
 
-We achieved this by adding a mapping definition in the configuration YAML we used when installing the exporter. The definition uses `jq` to calculate the identifier, and looks like this:
-
-<details>
-<summary><b>Mapping definition (Click to expand)</b></summary>
-
-```yaml showLineNumbers
-- kind: apps/v1/deployments
-  port:
-    entity:
-      mappings:
-        - blueprint: '"service"'
-          icon: '"Deployment"'
-          identifier: .metadata.labels.portService
-          properties: {}
-          relations:
-            prod_runtime: .metadata.name + "-Deployment-" + .metadata.namespace + "-" + "my-cluster"
-          title: .metadata.name
-  selector:
-    query: .metadata.namespace | startswith("kube") | not
-```
-
-</details>
+We achieved this by adding a [mapping definition](https://github.com/port-labs/template-assets/blob/main/kubernetes/full-configs/k8s-guide/k8s_guide_config.yaml#L111-L123) in the configuration YAML we used when installing the exporter. The definition uses `jq` to perform calculations between properties.
 
 **Let's see this in action:**
 
 1. Create a `Deployment` resource in your cluster with a label matching the identifier of a `service` in your [Software catalog](https://app.getport.io/services).  
    You can use the simple example below and change the `metadata.labels.portService` value to match your desired `service`. Copy it into a file named `deployment.yaml`, then apply it:
 
-```bash showLineNumbers
+```bash
 kubectl apply -f deployment.yaml
 ```
 
@@ -175,7 +162,11 @@ kubectl rollout restart deploy/port-k8s-exporter -n port-k8s-exporter
 
 Now that all of our k8s data has been ingested into Port, let's create some scorecards to set standards for our workloads. To add a definition of multiple scorecards at once, we can edit the blueprint's JSON directly from the UI:
 
-1. Go to your [Builder](https://app.getport.io/dev-portal/data-model), expand the `Workload` blueprint, click on the `...` button, then click on `Edit JSON`.
+1. Go to your [Builder](https://app.getport.io/dev-portal/data-model), expand the `Workload` blueprint, click on the `...` button, then click on `Edit JSON`:
+
+<img src='/img/guides/k8sWorkloadBlueprintEditJson.png' width='60%' />
+
+<br/><br/>
 
 2. Click on the `Scorecards` tab, replace the contents with the following definition and click `Save`:
 
@@ -328,7 +319,7 @@ Now that all of our k8s data has been ingested into Port, let's create some scor
 We now have 2 scorecards configured - one for the workload's configuration validity, and another for its availability.  
 We will come back to these later 😎
 
-### Visualize your Kubernetes runtime
+### Visualize data from your Kubernetes environment
 
 We now have a lot of data about our workloads, and some metrics to track their quality. Let's see how we can visualize this information in ways that will benefit the routine of our developers and managers.
 
