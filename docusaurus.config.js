@@ -232,6 +232,13 @@ const config = {
         disableSwitch: false,
         respectPrefersColorScheme: true,
       },
+      zoom: {
+        selector: ".markdown img",
+        background: {
+          light: "rgb(255, 255, 255)",
+          dark: "rgb(50, 50, 50)",
+        },
+      },
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
@@ -279,6 +286,7 @@ const config = {
   ],
 
   plugins: [
+    require.resolve("docusaurus-plugin-image-zoom"),
     "@docusaurus/theme-live-codeblock",
     "docusaurus-plugin-hotjar",
     "@stackql/docusaurus-plugin-hubspot",
