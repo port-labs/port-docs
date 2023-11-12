@@ -135,13 +135,13 @@ Port supports Gitlab using the [ocean integration](http://ocean.getport.io). Fol
 Make sure to install the app in the entire organization (and not in a single repository). This way Port will automatically create entities for all repositories.
 :::
 
-Once installed, you will now see new data sources in your `Data Sources` tab of the builder page, waiting to be used (may take a few seconds to appear):
+Once installed, you will see new data sources in the `Data Sources` tab of the builder page, waiting to be used (may take a few seconds to appear):
 
 ![dataSourcesGithub](/img/quickstart/dataSourcesGithub.png)
 
 2. Finally, we need to map the desired information from our Git provider's API to the properties of the blueprint we created in Port. For this guide, we will provide you with mapping so you do not need to do anything yourself. If you want to dive further into this, see [Port's Git integrations](/build-your-software-catalog/sync-data-to-catalog/git/).
 
-In the `Data sources` page, click on the exporter you installed. In the `Mapping` tab paste the following snippet (choose your Git provider), then click `Save & Resync`:
+In the `Data sources` tab, click on the exporter you installed. In the `Mapping` tab paste the following snippet (choose your Git provider), then click `Save & Resync`:
 
 <Tabs values={[
 {label: "Github", value: "Github"},
