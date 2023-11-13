@@ -1,24 +1,12 @@
----
-sidebar_position: 1
----
-
-import FindCredentials from "../../../../build-your-software-catalog/sync-data-to-catalog/api/\_template_docs/\_find_credentials_collapsed.mdx";
-
-# Examples
-
-## Run a deployment for a service
+# Run a deployment for a service
 
 In the following guide, you are going to build a self-service action in Port that executes an Azure pipeline behind the scenes.
 
 ### Prerequisites
 
-- You will need your [Port credentials](../../../../build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials) to create the action;
-- You will need your Azure DevOps organization;
-- You will need the name of the webhook that you configured in your Azure pipelines yaml;
-
-:::tip
-<FindCredentials />
-:::
+- You will need your [Port credentials](../../../../build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials) to create the action.
+- You will need your Azure DevOps organization.
+- You will need the name of the webhook that you configured in your Azure pipelines yaml.
 
 ### Create an Azure pipeline
 
