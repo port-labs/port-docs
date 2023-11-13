@@ -98,18 +98,11 @@ Also validate that `invocationMethod.webhook` equals `port_trigger`.
           "title": "Description",
           "type": "string",
           "description": "Service description"
-        },
-        "azure_username": {
-          "icon": "DefaultProperty",
-          "title": "Azure Username",
-          "type": "string",
-          "description": "Username with relevant PAT"
         }
       },
-      "required": ["service_name", "azure_username"],
+      "required": ["service_name"],
       "order": [
         "service_name",
-        "azure_username",
         "azure_organization",
         "azure_project",
         "description"
@@ -145,7 +138,6 @@ variables:
   BLUEPRINT_ID: "${{ parameters.port_trigger.context.blueprint }}"
   SERVICE_NAME: "${{ parameters.port_trigger.payload.properties.service_name }}"
   DESCRIPTION: "${{ parameters.port_trigger.payload.properties.description }}"
-  AZURE_USERNAME: "${{ parameters.port_trigger.payload.properties.azure_username }}"
   AZURE_ORGANIZATION: "${{ parameters.port_trigger.payload.properties.azure_organization }}"
   AZURE_PROJECT: "${{ parameters.port_trigger.payload.properties.azure_project }}"
   # PERSONAL_ACCESS_TOKEN: $(PERSONAL_ACCESS_TOKEN) // set up PERSONAL_ACCESS_TOKEN as a sercet variable
