@@ -12,16 +12,15 @@ The steps shown in the image above are as follows:
 1. An action is invoked in Port;
 2. Port signs the action payload using SHA-1 with the [`clientSecret`](../../../build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials) value and puts it in the `X-Port-Signature` request header.
 
-   :::info WEBHOOK SECURITY
+   :::info
    Verifying the webhook request using the request headers provides the following benefits:
 
    - Ensures that the request payload has not been tampered with
    - Ensures that the sender of the message is Port
    - Ensures that the received message is not a replay of an older message
-
    :::
 
-3. Port publishes an invoked `WEBHOOK` via a `POST` request to `https://{JENKINS_URL}/generic-webhook-trigger/invoke`
+4. Port publishes an invoked `WEBHOOK` via a `POST` request to `https://{JENKINS_URL}/generic-webhook-trigger/invoke`
 
 An example flow would be:
 
