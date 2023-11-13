@@ -5,7 +5,7 @@ sidebar_label: Slack Notifications
 
 # Slack Notifications
 
-Your developer portal contains valuable data about your entities, including their compliance with your standards (using scorecards or initiatives). For example, we can easily determine the production readiness (scorecard) of a microservice (an entity).
+Your developer portal contains valuable data about your entities, including their compliance with your standards (using scorecards or initiatives). For example, you can easily determine the production readiness (scorecard) of a microservice (an entity).
 
 The [Port slack sender](https://github.com/marketplace/actions/port-message-sender) will allow you to automatically send reports and reminders with regard to initiatives or scorecards, letting managers and developers know what standards need to be met that are relevant to them.
 
