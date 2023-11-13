@@ -18,7 +18,12 @@
 
 :root {
   --ifm-font-family-base: "Inter";
-  --doc-sidebar-width: 305px !important;
+  --ifm-sidebar-font: "Lexend";
+  --doc-sidebar-width: 308px !important;
+}
+
+.menu__link {
+  font-family: "Lexend";
 }
 
 h1,
