@@ -79,4 +79,4 @@ To define the Azure pipelines invocation method in Port, follow the steps below:
 
 ## Examples
 
-Refer to the [examples](./examples/examples.md) page for practical self-service actions using Azure pipelines.
+Refer to the [deployment example](./examples/run-service-deployment.md) page for practical self-service actions using Azure pipelines.
