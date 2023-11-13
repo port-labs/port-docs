@@ -16,12 +16,12 @@ This page contains a list of Port's available integrations, organized by the pla
 - [GitHub self-hosted app](./build-your-software-catalog/sync-data-to-catalog/git/github/self-hosted-installation.md)
 - [GitHub GitOps](./build-your-software-catalog/sync-data-to-catalog/git/github/gitops/gitops.md)
 - [GitHub action for GitHub workflow](./build-your-software-catalog/sync-data-to-catalog/ci-cd/github-workflow/github-workflow.md)
-- [GitHub Webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/git/github.md)
 - [GitHub workflow self-service actions](./create-self-service-experiences/setup-backend/github-workflow/github-workflow.md)
 - [Sync repositories, file contents, pull-requests, workflows, teams, dependebot alerts and more](./build-your-software-catalog/sync-data-to-catalog/git/github/examples.md)
 - [GitHub scaffolder using GitHub workflows](./create-self-service-experiences/setup-backend/github-workflow/examples/scaffold-repositories-using-cookiecutter.md)
 - [GitHub scaffolder using Jenkins](./create-self-service-experiences/setup-backend/jenkins-pipeline/examples/scaffold-github-using-cookiecutter.md)
 - [Create GitHub secret using GitHub workflows](./create-self-service-experiences/setup-backend/github-workflow/examples/create-github-secret.md)
+- [GitHub Webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/git/github.md)
 
 ### GitLab
 
@@ -29,9 +29,9 @@ This page contains a list of Port's available integrations, organized by the pla
 - [GitLab GitOps](./build-your-software-catalog/sync-data-to-catalog/git/gitlab/gitops/gitops.md)
 - [GitLab advanced file search and search checks](./build-your-software-catalog/sync-data-to-catalog/git/gitlab/mapping_extensions.md)
 - [Sync GitLab pipelines](./build-your-software-catalog/sync-data-to-catalog/ci-cd/gitlab-pipelines/gitlab-pipelines.md)
-- [GitLab Webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/git/gitlab.md)
 - [GitLab pipeline self-service actions](./create-self-service-experiences/setup-backend/gitlab-pipeline/gitlab-pipeline.md)
 - [Sync projects, file contents, merge-requests and more](./build-your-software-catalog/sync-data-to-catalog/git/gitlab/examples.md)
+- [GitLab Webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/git/gitlab.md)
 
 ### Bitbucket
 
@@ -77,6 +77,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [AWS exporter Terraform module](./build-your-software-catalog/sync-data-to-catalog/iac/terraform/modules/aws-exporter-module.md)
 - [Map ECS, EC2, RDS, API GW, Cloudfront and more](./build-your-software-catalog/sync-data-to-catalog/aws/examples.md)
 - [AWS Cost](./build-your-software-catalog/sync-data-to-catalog/cloud-cost/aws-cost.md)
+- [Deploy AWS resources using AWS CloudFormation](./create-self-service-experiences/setup-backend/github-workflow/examples/)
 - [Terraform manage S3 buckets lifecycle](./build-your-software-catalog/sync-data-to-catalog/iac/terraform/examples/s3-bucket.md)
 - [Terraform manage developer environment](./build-your-software-catalog/sync-data-to-catalog/iac/terraform/examples/create-dev-env.md)
 
