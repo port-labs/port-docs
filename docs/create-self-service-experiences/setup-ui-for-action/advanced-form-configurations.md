@@ -254,20 +254,25 @@ Keys that are supported with jqQuery expressions:
 The `displayCondition` property is used to dynamically hide/show inputs in the form.
 The `displayCondition` value could be set to either a boolean (`true` value is always shown, `false` value is always hidden), or to a `jqQuery` which evaluates to a boolean.
 
-In this example, the `displayCondition` checks if the exeuting user has the `"admin"` role, and if they don't have this role than the advanced option will be hidden for them. The default value will still be filled in and sent to the backend:
+In this example, the `runArguments` properties are configured with `displayCondition` so that they only show up in the form when the matching value is selected in the `language` input:
 
 ```json showLineNumbers
 {
   "properties": {
-    "simpleOption": {
+    "language": {
       "type": "string",
-      "enum": ["option1", "option2"]
+      "enum": ["javascript", "python"]
     },
-    "advancedOption": {
+    "pythonRunArguments": {
       "type": "string",
-      "default": "default advanced value",
       "displayCondition": {
-        "jqQuery": ".user.roles | any(.name == \"admin\")"
+        "jqQuery": ".form.language == \"python\""
+      }
+    },
+    "nodeRunArguments": {
+      "type": "string",
+      "displayCondition": {
+        "jqQuery": ".form.language == \"javascript\""
       }
     }
   }
@@ -343,7 +348,7 @@ resource "port_action" myAction {
 
 ### Hiding property based on the executing user's roles
 
-In this example, the `displayCondition` checks if the exeuting user has the `"admin"` role, and if they don't have this role than the advanced option will be hidden for them. The default value will still be filled in and sent to the backend:
+In this example, the `displayCondition` checks if the executing user has the `"admin"` role, and if they don't have this role than the advanced option will be hidden for them. The default value will still be filled in and sent to the backend:
 
 <Tabs
 defaultValue="api"
@@ -373,28 +378,6 @@ values={[
 
 </TabItem>
 
-<TabItem value="terraform">
-
-```hcl showLineNumbers
-resource "port_action" myAction {
-  # ...action configuration
-  {
-    user_properties = {
-      string_props = {
-        simpleOption = {
-          enum = ["option1", "option2"]
-        }
-        advancedOption = {
-          display_condition_jq_query = ".user.roles | any(.name == \"admin\")"
-          default = "default advanced value"
-        }
-      }
-    }
-  }
-}
-```
-
-</TabItem>
 </Tabs>
 
 This is how the run form would show up for non-admin users:
