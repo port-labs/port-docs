@@ -17,9 +17,11 @@ This page contains a list of Port's available integrations, organized by the pla
 - [GitHub GitOps](./build-your-software-catalog/sync-data-to-catalog/git/github/gitops/gitops.md)
 - [GitHub action for GitHub workflow](./build-your-software-catalog/sync-data-to-catalog/ci-cd/github-workflow/github-workflow.md)
 - [GitHub workflow self-service actions](./create-self-service-experiences/setup-backend/github-workflow/github-workflow.md)
-- [Sync repositories, file contents, pull-requests, workflows, teams, dependebot alerts and more](./build-your-software-catalog/sync-data-to-catalog/git/github/examples.md)
+- [Sync repositories, file contents, pull-requests, workflows, teams and more](./build-your-software-catalog/sync-data-to-catalog/git/github/examples.md)
+- [Sync Dependebot](./build-your-software-catalog/sync-data-to-catalog/git/github/examples.md#mapping-repositories-and-dependabot-alerts)
 - [GitHub scaffolder using GitHub workflows](./create-self-service-experiences/setup-backend/github-workflow/examples/scaffold-repositories-using-cookiecutter.md)
 - [GitHub scaffolder using Jenkins](./create-self-service-experiences/setup-backend/jenkins-pipeline/examples/scaffold-github-using-cookiecutter.md)
+- [Deploy AWS resources using AWS CloudFormation](./create-self-service-experiences/setup-backend/github-workflow/examples/deploy-cloudformation-template.md)
 - [Create GitHub secret using GitHub workflows](./create-self-service-experiences/setup-backend/github-workflow/examples/create-github-secret.md)
 - [GitHub Webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/git/github.md)
 
@@ -30,6 +32,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [GitLab advanced file search and search checks](./build-your-software-catalog/sync-data-to-catalog/git/gitlab/mapping_extensions.md)
 - [Sync GitLab pipelines](./build-your-software-catalog/sync-data-to-catalog/ci-cd/gitlab-pipelines/gitlab-pipelines.md)
 - [GitLab pipeline self-service actions](./create-self-service-experiences/setup-backend/gitlab-pipeline/gitlab-pipeline.md)
+- [GitLab scaffolder](./create-self-service-experiences/setup-backend/gitlab-pipeline/examples/scaffold-repositories-using-cookiecutter.md)
 - [Sync projects, file contents, merge-requests and more](./build-your-software-catalog/sync-data-to-catalog/git/gitlab/examples.md)
 - [GitLab Webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/git/gitlab.md)
 
@@ -59,6 +62,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 - [Terraform provider](./build-your-software-catalog/sync-data-to-catalog/iac/terraform/terraform.md)
 - [Terraform managed blueprint](./build-your-software-catalog/define-your-data-model/Iac/terraform-managed-blueprint.md)
+- [Create cloud resources using IaC](./guides-and-tutorials/create-cloud-resource-using-iac.md)
 - [Terraform manage S3 buckets lifecycle](./build-your-software-catalog/sync-data-to-catalog/iac/terraform/examples/s3-bucket.md)
 - [Terraform manage developer environment](./build-your-software-catalog/sync-data-to-catalog/iac/terraform/examples/create-dev-env.md)
 - [Terraform no-code resource provisioning using self-service actions](./create-self-service-experiences/setup-backend/webhook/examples/terraform-no-code-resource-provisioning.md)
@@ -77,7 +81,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [AWS exporter Terraform module](./build-your-software-catalog/sync-data-to-catalog/iac/terraform/modules/aws-exporter-module.md)
 - [Map ECS, EC2, RDS, API GW, Cloudfront and more](./build-your-software-catalog/sync-data-to-catalog/aws/examples.md)
 - [AWS Cost](./build-your-software-catalog/sync-data-to-catalog/cloud-cost/aws-cost.md)
-- [Deploy AWS resources using AWS CloudFormation](./create-self-service-experiences/setup-backend/github-workflow/examples/)
+- [Deploy AWS resources using AWS CloudFormation](./create-self-service-experiences/setup-backend/github-workflow/examples/deploy-cloudformation-template.md)
 - [Terraform manage S3 buckets lifecycle](./build-your-software-catalog/sync-data-to-catalog/iac/terraform/examples/s3-bucket.md)
 - [Terraform manage developer environment](./build-your-software-catalog/sync-data-to-catalog/iac/terraform/examples/create-dev-env.md)
 
@@ -107,6 +111,12 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Cookiecutter GitHub scaffolder using Jenkins](./create-self-service-experiences/setup-backend/jenkins-pipeline/examples/scaffold-github-using-cookiecutter.md)
 - [Cookiecutter Bitbucket scaffolder using Jenkins](./create-self-service-experiences/setup-backend/jenkins-pipeline/examples/scaffold-bitbucket-using-cookiecutter.md)
 
+## Slack
+
+- [Manual approval for self-service actions](./create-self-service-experiences/set-self-service-actions-rbac/examples.md#setting-up-a-slack-notification)
+- [Scorecard notifications](./promote-scorecards/slack-notifications.md)
+- [Setup a changelog listener notification](./create-self-service-experiences/setup-backend/webhook/examples/changelog-listener.md)
+
 ## SonarQube / SonarCloud
 
 - [SonarQube integration](./build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube.md)
@@ -122,6 +132,7 @@ This page contains a list of Port's available integrations, organized by the pla
 ## PagerDuty
 
 - [PagerDuty integration](./build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty.md)
+- [Ensure production readiness](./guides-and-tutorials/ensure-production-readiness.md)
 - [PagerDuty webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/pagerduty.md)
 
 ## Jira
@@ -159,6 +170,15 @@ This page contains a list of Port's available integrations, organized by the pla
 
 - [Dynatrace webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/dynatrace.md)
 
+## Datadog
+
+- [Embed dashboards from Datadog](./customize-pages-dashboards-and-plugins/tabs/embedded-url/embedded-url.md#datadog-dashboard)
+-
+
+## New Relic
+
+- [Embed dashboards from New Relic](./customize-pages-dashboards-and-plugins/tabs/embedded-url/embedded-url.md#new-relic-chart)
+
 ## Kafka
 
 - [Kafka integration](./build-your-software-catalog/sync-data-to-catalog/event-processing/kafka.md)
@@ -170,6 +190,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Grafana
 
+- [Embed dashboards from Grafana](./customize-pages-dashboards-and-plugins/tabs/embedded-url/authentication.md#examples)
 - [Grafana webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/grafana.md)
 
 ## StackHawk
