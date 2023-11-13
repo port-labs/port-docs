@@ -93,9 +93,16 @@ const config = {
             position: "right",
           },
           {
-            href: "https://github.com/port-labs/port-docs",
-            label: "GitHub",
+            to: "https://github.com/port-labs/port-docs",
             position: "right",
+            target: "_blank",
+            className: "header-github-link",
+          },
+          {
+            to: "https://www.getport.io/community",
+            position: "right",
+            target: "_blank",
+            className: "header-slack-link",
           },
         ],
       },
@@ -230,6 +237,13 @@ const config = {
         disableSwitch: false,
         respectPrefersColorScheme: true,
       },
+      zoom: {
+        selector: ".markdown img",
+        background: {
+          light: "rgb(255, 255, 255)",
+          dark: "rgb(50, 50, 50)",
+        },
+      },
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
@@ -277,6 +291,7 @@ const config = {
   ],
 
   plugins: [
+    require.resolve("docusaurus-plugin-image-zoom"),
     "@docusaurus/theme-live-codeblock",
     "docusaurus-plugin-hotjar",
     "@stackql/docusaurus-plugin-hubspot",

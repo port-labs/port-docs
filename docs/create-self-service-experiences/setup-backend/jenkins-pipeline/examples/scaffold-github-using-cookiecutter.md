@@ -17,6 +17,9 @@ Follow these steps to get started with the Golang template:
    1. `GITHUB_TOKEN` - a [fine-grained PAT](https://github.com/settings/tokens?type=beta) with permissions to create repositories.
    2. `PORT_CLIENT_ID` - Port Client ID [learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
    3. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+      :::note
+      Use `Secret text` as Credential type.
+      :::
 
 2. Create a Port blueprint with the following properties:
 
@@ -50,6 +53,9 @@ Keep in mind this can be any blueprint you would like and this is just an exampl
 ```
 
 3. Create Port action using the following JSON definition:
+   :::note
+   Make sure to replace the placeholders for JENKINS_URL and JOB_TOKEN.
+   :::
 
 ```json showLineNumbers
 [

@@ -15,3 +15,4 @@ All guides take less than 10 minutes to complete ✅
 - [Scaffold a new service](/guides-and-tutorials/scaffold-a-new-service)
 - [Ensure production readiness](/guides-and-tutorials/ensure-production-readiness)
 - [Create cloud resource using IaC](/guides-and-tutorials/create-cloud-resource-using-iac)
+- [Visualize your services' k8s runtime](/guides-and-tutorials/visualize-service-k8s-runtime)
