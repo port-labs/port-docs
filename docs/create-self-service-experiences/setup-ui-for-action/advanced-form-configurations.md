@@ -11,7 +11,7 @@ Advanced user form settings allow you to create more customizable experiences fo
 - Create a dependency between inputs to allow the user to select a value based on the value of another input.
 - Define dynamic default values based on the logged-in user properties(such as teams, email, role) or the entity that the action is being executed on (for day-2 or delete actions only).
 
-#### building such actions can be done by leveraging 3 keys in the action's schema:
+#### building such actions can be done by leveraging 4 keys in the action's schema:
 
 <Tabs
 defaultValue="DependsOn"
@@ -19,6 +19,7 @@ values={[
 { label: 'dependsOn', value: 'DependsOn', },
 { label: 'dataset', value: 'Dataset', },
 { label: 'jqQuery', value: 'jqQuery', },
+{ label: 'displayCondition', value: 'displayCondition', },
 ]}>
 <TabItem value="DependsOn">
 
@@ -246,6 +247,34 @@ Keys that are supported with jqQuery expressions:
 | default | the default value of any property |
 
 </TabItem>
+
+<TabItem value="displayCondition">
+
+The `displayCondition` property is used to dynamically hide/show inputs in the form.
+The `displayCondition` value could be set to either a boolean (`true` value is always shown, `false` value is always hidden), or to a `jqQuery` which evaluates to a boolean.
+
+In this example, the `displayCondition` checks if the exeuting user has the `"admin"` role, and if they don't have this role than the advanced option will be hidden for them. The default value will still be filled in and sent to the backend:
+
+```json showLineNumbers
+{
+  "properties": {
+    "simpleOption": {
+      "type": "string",
+      "enum": ["option1", "option2"]
+    },
+    "advancedOption": {
+      "type": "string",
+      "default": "default advanced value",
+      "displayCondition": {
+        "jqQuery": ".user.roles | any(.name == \"admin\")"
+      }
+    }
+  }
+}
+```
+
+</TabItem>
+
 </Tabs>
 
 ---
@@ -311,9 +340,72 @@ resource "port_action" myAction {
 
 ![Cluster And Namespace Action](../../../static/img/software-catalog/blueprint/javascriptSDK.png)
 
+### Hiding property based on the executing user's roles
+
+In this example, the `displayCondition` checks if the exeuting user has the `"admin"` role, and if they don't have this role than the advanced option will be hidden for them. The default value will still be filled in and sent to the backend:
+
+<Tabs
+defaultValue="api"
+values={[
+{label: 'API', value: 'api'},
+{label: 'Terraform', value: 'terraform'},
+]}>
+
+<TabItem value="api">
+
+```json showLineNumbers
+{
+  "properties": {
+    "simpleOption": {
+      "type": "string",
+      "enum": ["option1", "option2"]
+    },
+    "advancedOption": {
+      "type": "string",
+      "default": "default advanced value",
+      "displayCondition": {
+        "jqQuery": ".user.roles | any(.name == \"admin\")"
+      }
+    }
+  }
+}
+```
+
+</TabItem>
+
+<TabItem value="terraform">
+
+```hcl showLineNumbers
+resource "port_action" myAction {
+  # ...action configuration
+  {
+    user_properties = {
+      string_props = {
+        language = {
+          enum = ["javascript", "python"]
+        }
+        SDK = {
+          enum_jq_query = "if .form.language == \"javascript\" then [\"Node 16\", \"Node 18\"] else [\"Python 3.8\"] end"
+          depends_on: ["language"]
+        }
+      }
+    }
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
+This is how the run form would show up for non-admin users:
+![What Non-Admins See](../../../static/img/software-catalog/blueprint/hiddenPropertyExample.png)
+
+And this is how the form would show up for admin users:
+![What Admins See](../../../static/img/software-catalog/blueprint/hiddenPropertyShownExample.png)
+
 ### Filter the dropdown's available options based on a property
 
-This example contains a filter that will only display environment entities whose type is not `production`:
+This example contains a display-condition that will only display the advanced property for users with the `devops` role:
 
 <Tabs
 defaultValue="api"
