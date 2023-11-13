@@ -349,7 +349,6 @@ In this example, the `displayCondition` checks if the exeuting user has the `"ad
 defaultValue="api"
 values={[
 {label: 'API', value: 'api'},
-{label: 'Terraform', value: 'terraform'},
 ]}>
 
 <TabItem value="api">
@@ -382,12 +381,12 @@ resource "port_action" myAction {
   {
     user_properties = {
       string_props = {
-        language = {
-          enum = ["javascript", "python"]
+        simpleOption = {
+          enum = ["option1", "option2"]
         }
-        SDK = {
-          enum_jq_query = "if .form.language == \"javascript\" then [\"Node 16\", \"Node 18\"] else [\"Python 3.8\"] end"
-          depends_on: ["language"]
+        advancedOption = {
+          display_condition_jq_query = ".user.roles | any(.name == \"admin\")"
+          default = "default advanced value"
         }
       }
     }
