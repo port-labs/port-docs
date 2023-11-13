@@ -4,9 +4,7 @@ sidebar_position: 1
 
 import FindCredentials from "../../../../build-your-software-catalog/sync-data-to-catalog/api/\_template_docs/\_find_credentials_collapsed.mdx";
 
-# Examples
-
-## Run a deployment for a service
+# Run a deployment for a service
 
 In the following guide, you are going to build a self-service action in Port that executes an Azure pipeline behind the scenes.
 
