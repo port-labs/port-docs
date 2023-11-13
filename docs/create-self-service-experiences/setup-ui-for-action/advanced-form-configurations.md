@@ -240,11 +240,12 @@ The available logged-in user object:
 
 Keys that are supported with jqQuery expressions:
 
-| Key     | Description                       |
-| ------- | --------------------------------- |
-| enum    | any enum of a property            |
-| value   | the value inside a "dataset" rule |
-| default | the default value of any property |
+| Key              | Description                                       |
+| ---------------- | ------------------------------------------------- |
+| enum             | any enum of a property                            |
+| value            | the value inside a "dataset" rule                 |
+| default          | the default value of any property                 |
+| displayCondition | the condition to display any property in the form |
 
 </TabItem>
 
