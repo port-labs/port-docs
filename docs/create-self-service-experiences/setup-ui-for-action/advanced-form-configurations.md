@@ -19,7 +19,7 @@ values={[
 { label: 'dependsOn', value: 'DependsOn', },
 { label: 'dataset', value: 'Dataset', },
 { label: 'jqQuery', value: 'jqQuery', },
-{ label: 'displayCondition', value: 'displayCondition', },
+{ label: 'visible', value: 'visible', },
 ]}>
 <TabItem value="DependsOn">
 
@@ -240,21 +240,21 @@ The available logged-in user object:
 
 Keys that are supported with jqQuery expressions:
 
-| Key              | Description                                       |
-| ---------------- | ------------------------------------------------- |
-| enum             | any enum of a property                            |
-| value            | the value inside a "dataset" rule                 |
-| default          | the default value of any property                 |
-| displayCondition | the condition to display any property in the form |
+| Key     | Description                                       |
+| ------- | ------------------------------------------------- |
+| enum    | any enum of a property                            |
+| value   | the value inside a "dataset" rule                 |
+| default | the default value of any property                 |
+| visible | the condition to display any property in the form |
 
 </TabItem>
 
-<TabItem value="displayCondition">
+<TabItem value="visible">
 
-The `displayCondition` property is used to dynamically hide/show inputs in the form.
-The `displayCondition` value could be set to either a boolean (`true` value is always shown, `false` value is always hidden), or to a `jqQuery` which evaluates to a boolean.
+The `visible` property is used to dynamically hide/show inputs in the form.
+The `visible` value could be set to either a boolean (`true` value is always shown, `false` value is always hidden), or to a `jqQuery` which evaluates to a boolean.
 
-In this example, the `runArguments` properties are configured with `displayCondition` so that they only show up in the form when the matching value is selected in the `language` input:
+In this example, the `runArguments` properties are configured with `visible` so that they only show up in the form when the matching value is selected in the `language` input:
 
 ```json showLineNumbers
 {
@@ -265,13 +265,13 @@ In this example, the `runArguments` properties are configured with `displayCondi
     },
     "pythonRunArguments": {
       "type": "string",
-      "displayCondition": {
+      "visible": {
         "jqQuery": ".form.language == \"python\""
       }
     },
     "nodeRunArguments": {
       "type": "string",
-      "displayCondition": {
+      "visible": {
         "jqQuery": ".form.language == \"javascript\""
       }
     }
@@ -348,7 +348,7 @@ resource "port_action" myAction {
 
 ### Hiding property based on the executing user's roles
 
-In this example, the `displayCondition` checks if the executing user has the `"admin"` role, and if they don't have this role than the advanced option will be hidden for them. The default value will still be filled in and sent to the backend:
+In this example, the `visible` checks if the executing user has the `"admin"` role, and if they don't have this role than the advanced option will be hidden for them. The default value will still be filled in and sent to the backend:
 
 <Tabs
 defaultValue="api"
@@ -368,7 +368,7 @@ values={[
     "advancedOption": {
       "type": "string",
       "default": "default advanced value",
-      "displayCondition": {
+      "visible": {
         "jqQuery": ".user.roles | any(.name == \"admin\")"
       }
     }
@@ -388,7 +388,7 @@ And this is how the form would show up for admin users:
 
 ### Filter the dropdown's available options based on a property
 
-This example contains a display-condition that will only display the advanced property for users with the `devops` role:
+This example contains a filter that will only display the namespaces that are [related to](/search-and-query/#operators-1) the cluster that was selected in the `Cluster` input:
 
 <Tabs
 defaultValue="api"
