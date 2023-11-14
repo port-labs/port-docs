@@ -14,7 +14,7 @@ Follow these steps to get started:
 
 1. Create the following GitHub Action secrets:
 
-   1. `PERSONAL_ACCESS_TOKEN` - a [Classic Personal Access Token](hhttps://github.com/settings/tokens) with the following scopes:
+   1. `PERSONAL_ACCESS_TOKEN` - a [Classic Personal Access Token](https://github.com/settings/tokens) with the following scopes:
 
       ![Token Scopes](../../../../../static/img/self-service-actions/setup-backend/github-workflow/pat-scopes.png)
 
