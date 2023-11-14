@@ -166,3 +166,24 @@ For the following entity:
 ```
 
 The result will be `package_manager_url: "https://www.npmjs.com/package/axios"`.
+
+## Calculate K8S labels
+
+You can create a calculation property inside your Blueprint to display a specific tag. Assuming you are already ingesting the Labels object, create a new calculation property within the same Blueprint. then use the following JQ calculation:
+
+```json
+.properties.labels."Key"
+```
+
+The result will be a property that will hold the value of the key field.
+
+## Calculate Cloud resource tags
+
+Assuming you have a property `tags` in your Blueprint, you can use JQ to display the value of a tag.
+Create a calculation property, and use the following JQ (Insert your name of the key):
+
+```json
+.properties.tags.[] | select(.Key=="Insert Key name") | .Value
+```
+
+The result will be a property that will display the value of a given tag and key for the Cloud resource.
