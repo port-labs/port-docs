@@ -11,7 +11,7 @@ Advanced user form settings allow you to create more customizable experiences fo
 - Create a dependency between inputs to allow the user to select a value based on the value of another input.
 - Define dynamic default values based on the logged-in user properties(such as teams, email, role) or the entity that the action is being executed on (for day-2 or delete actions only).
 
-#### building such actions can be done by leveraging 3 keys in the action's schema:
+#### building such actions can be done by leveraging 4 keys in the action's schema:
 
 <Tabs
 defaultValue="DependsOn"
@@ -19,6 +19,7 @@ values={[
 { label: 'dependsOn', value: 'DependsOn', },
 { label: 'dataset', value: 'Dataset', },
 { label: 'jqQuery', value: 'jqQuery', },
+{ label: 'visible', value: 'visible', },
 ]}>
 <TabItem value="DependsOn">
 
@@ -239,13 +240,47 @@ The available logged-in user object:
 
 Keys that are supported with jqQuery expressions:
 
-| Key     | Description                       |
-| ------- | --------------------------------- |
-| enum    | any enum of a property            |
-| value   | the value inside a "dataset" rule |
-| default | the default value of any property |
+| Key     | Description                                       |
+| ------- | ------------------------------------------------- |
+| enum    | any enum of a property                            |
+| value   | the value inside a "dataset" rule                 |
+| default | the default value of any property                 |
+| visible | the condition to display any property in the form |
 
 </TabItem>
+
+<TabItem value="visible">
+
+The `visible` property is used to dynamically hide/show inputs in the form.
+The `visible` value could be set to either a boolean (`true` value is always shown, `false` value is always hidden), or to a `jqQuery` which evaluates to a boolean.
+
+In this example, the `runArguments` properties are configured with `visible` so that they only show up in the form when the matching value is selected in the `language` input:
+
+```json showLineNumbers
+{
+  "properties": {
+    "language": {
+      "type": "string",
+      "enum": ["javascript", "python"]
+    },
+    "pythonRunArguments": {
+      "type": "string",
+      "visible": {
+        "jqQuery": ".form.language == \"python\""
+      }
+    },
+    "nodeRunArguments": {
+      "type": "string",
+      "visible": {
+        "jqQuery": ".form.language == \"javascript\""
+      }
+    }
+  }
+}
+```
+
+</TabItem>
+
 </Tabs>
 
 ---
@@ -311,9 +346,49 @@ resource "port_action" myAction {
 
 ![Cluster And Namespace Action](../../../static/img/software-catalog/blueprint/javascriptSDK.png)
 
+### Hiding property based on the executing user's roles
+
+In this example, the `visible` checks if the executing user has the `"admin"` role, and if they don't have this role than the advanced option will be hidden for them. The default value will still be filled in and sent to the backend:
+
+<Tabs
+defaultValue="api"
+values={[
+{label: 'API', value: 'api'},
+]}>
+
+<TabItem value="api">
+
+```json showLineNumbers
+{
+  "properties": {
+    "simpleOption": {
+      "type": "string",
+      "enum": ["option1", "option2"]
+    },
+    "advancedOption": {
+      "type": "string",
+      "default": "default advanced value",
+      "visible": {
+        "jqQuery": ".user.roles | any(.name == \"admin\")"
+      }
+    }
+  }
+}
+```
+
+</TabItem>
+
+</Tabs>
+
+This is how the run form would show up for non-admin users:
+![What Non-Admins See](../../../static/img/software-catalog/blueprint/hiddenPropertyExample.png)
+
+And this is how the form would show up for admin users:
+![What Admins See](../../../static/img/software-catalog/blueprint/hiddenPropertyShownExample.png)
+
 ### Filter the dropdown's available options based on a property
 
-This example contains a filter that will only display environment entities whose type is not `production`:
+This example contains a filter that will only display the namespaces that are [related to](/search-and-query/#operators-1) the cluster that was selected in the `Cluster` input:
 
 <Tabs
 defaultValue="api"
