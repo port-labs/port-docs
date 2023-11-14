@@ -83,11 +83,6 @@ const config = {
         },
         items: [
           {
-            href: "/integrations",
-            label: "Integrations",
-            position: "left",
-          },
-          {
             href: "https://demo.getport.io",
             label: "Demo",
             position: "right",
