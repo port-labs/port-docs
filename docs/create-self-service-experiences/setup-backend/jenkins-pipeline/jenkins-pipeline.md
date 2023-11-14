@@ -20,14 +20,14 @@ The steps shown in the image above are as follows:
    - Ensures that the received message is not a replay of an older message
    :::
 
-4. Port publishes an invoked `WEBHOOK` via a `POST` request to `https://{JENKINS_URL}/generic-webhook-trigger/invoke`
+3. Port publishes an invoked `WEBHOOK` via a `POST` request to `https://{JENKINS_URL}/generic-webhook-trigger/invoke`
 
-An example flow would be:
+   An example flow would be:
 
-1. A developer asks to run a Jenkins pipeline;
-2. Port sends a `POST` request with the action payload to the Jenkins webhook `URL`;
-3. The Jenkins webhook receives the new action request;
-4. The Jenkins webhook triggers the pipeline;
+   1. A developer asks to run a Jenkins pipeline;
+   2. Port sends a `POST` request with the action payload to the Jenkins webhook `URL`;
+   3. The Jenkins webhook receives the new action request;
+   4. The Jenkins webhook triggers the pipeline;
 
 ## Prerequisites
 
