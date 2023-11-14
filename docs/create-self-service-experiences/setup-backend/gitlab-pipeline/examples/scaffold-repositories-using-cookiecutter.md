@@ -27,7 +27,7 @@ You can use any name that you like, just make sure to configure properly in your
 :::
 <br/>
 
-3. Install Port's Gitlab agent by following our guide [here](http://localhost:4000/create-self-service-experiences/setup-backend/gitlab-pipeline/Installation).
+3. Install Port's Gitlab agent by following our guide [here](../Installation).
 
 :::note
 Make sure to use your Pipeline Trigger Token while installing Port's Gitlab agent.
@@ -268,8 +268,3 @@ update-run-status:
 <br/>
 
 7. Trigger the action from the [Self-service](https://app.getport.io/self-serve) tab of your Port application.
-   :::note
-   inputs for your action should be:
-
-- Service Name :
-  :::
