@@ -108,8 +108,11 @@ This page contains a list of Port's available integrations, organized by the pla
 ## Cookiecutter
 
 - [Cookiecutter GitHub scaffolder using GitHub workflows](./create-self-service-experiences/setup-backend/github-workflow/examples/scaffold-repositories-using-cookiecutter.md)
-- [Cookiecutter GitHub scaffolder using Jenkins](./create-self-service-experiences/setup-backend/jenkins-pipeline/examples/scaffold-github-using-cookiecutter.md)
-- [Cookiecutter Bitbucket scaffolder using Jenkins](./create-self-service-experiences/setup-backend/jenkins-pipeline/examples/scaffold-bitbucket-using-cookiecutter.md)
+- [Cookiecutter GitHub scaffolder using Jenkins pipelines](./create-self-service-experiences/setup-backend/jenkins-pipeline/examples/scaffold-github-using-cookiecutter.md)
+- [Cookiecutter GitHub scaffolder using FastAPI backend](./create-self-service-experiences/setup-backend/webhook/examples/software-templates.md)
+- [Cookiecutter GitLab scaffolder using GitLab pipelines](./create-self-service-experiences/setup-backend/gitlab-pipeline/examples/scaffold-repositories-using-cookiecutter.md)
+- [Cookiecutter Bitbucket scaffolder using Jenkins pipelines](./create-self-service-experiences/setup-backend/jenkins-pipeline/examples/scaffold-bitbucket-using-cookiecutter.md)
+- [Cookiecutter Azure DevOps scaffolder using Azure DevOps pipelines](./create-self-service-experiences/setup-backend/azure-pipeline/examples/examples.md)
 
 ## Slack
 
