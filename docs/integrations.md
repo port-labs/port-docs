@@ -20,7 +20,8 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Sync repositories, file contents, pull-requests, workflows, teams and more](./build-your-software-catalog/sync-data-to-catalog/git/github/examples.md)
 - [Sync Dependebot](./build-your-software-catalog/sync-data-to-catalog/git/github/examples.md#mapping-repositories-and-dependabot-alerts)
 - [GitHub scaffolder using GitHub workflows](./create-self-service-experiences/setup-backend/github-workflow/examples/scaffold-repositories-using-cookiecutter.md)
-- [GitHub scaffolder using Jenkins](./create-self-service-experiences/setup-backend/jenkins-pipeline/examples/scaffold-github-using-cookiecutter.md)
+- [GitHub scaffolder using Jenkins pipelines](./create-self-service-experiences/setup-backend/jenkins-pipeline/examples/scaffold-github-using-cookiecutter.md)
+- [GitHub scaffolder using FastAPI backend](./create-self-service-experiences/setup-backend/webhook/examples/software-templates.md)
 - [Deploy AWS resources using AWS CloudFormation](./create-self-service-experiences/setup-backend/github-workflow/examples/deploy-cloudformation-template.md)
 - [Create GitHub secret using GitHub workflows](./create-self-service-experiences/setup-backend/github-workflow/examples/create-github-secret.md)
 - [GitHub Webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/git/github.md)
@@ -95,6 +96,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 - [Sync Azure pipelines](./build-your-software-catalog/sync-data-to-catalog/ci-cd/azure-pipelines/azure-pipelines.md)
 - [Azure pipelines self-service actions](./create-self-service-experiences/setup-backend/azure-pipeline/azure-pipeline.md)
+- [Cookiecutter Azure DevOps scaffolder using Azure DevOps pipelines](./create-self-service-experiences/setup-backend/azure-pipeline/examples/scaffold-repositories-using-cookiecutter.md)
 
 ### GCP
 
