@@ -1,10 +1,10 @@
 ---
-title: Integrations
-sidebar_label: ⚙️ Integrations
-slug: /integrations
+title: Integrations Index
+sidebar_label: ⚙️ Integrations Index
+sidebar_position: 11
 ---
 
-# ⚙️ Integrations
+# ⚙️ Integrations Index
 
 This page contains a list of Port's available integrations, organized by the platform or product which they integrate with
 
