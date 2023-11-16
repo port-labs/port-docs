@@ -41,7 +41,6 @@ A secret input is defined as a regular input, but with the additional `encryptio
 ```
 
 - [aes256-gcm](https://www.nist.gov/publications/advanced-encryption-standard-aes) - This will encrypt the property data using 256 bits AES in [GCM mode](https://csrc.nist.gov/glossary/term/aes_gcm). The encrypted value will be prefixed by the 16 bits IV and suffixed by the 16 bits MAC, encoded to base-64. The encryption key will be the first 32 bytes of your organization's [Client Secret](../../../build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
-- [fernet](https://cryptography.io/en/latest/fernet/) - **Deprecation Warning: Port is depracating properties' encryption with this algorithm, and starting on Nov 14, 2023 actions configured with this algorithm could no longer be invoked.** When using Fernet for symmetric encryption the encryption key will be the first 32 bytes of your organization's [Client Secret](../../../build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
 
 ### Supported Types
 
@@ -95,7 +94,6 @@ The payload sent to your infrastructure will contain the encrypted value of your
 
 <Tabs groupId="algorithm" queryString defaultValue="aes256-gcm" values={[
 {label: "AES 256 GCM", value: "aes256-gcm"},
-{label: "Fernet", value: "fernet"}
 ]}>
 
 <TabItem value="aes256-gcm">
@@ -201,104 +199,6 @@ app.post("/", bodyParser.json(), (req, res) => {
 
   // encode the value
   const decrypted_property_value = decrypted_property_buffer.toString(ENCODING);
-  const property_value = PROPERY_IS_JSON
-    ? JSON.parse(decrypted_property_value)
-    : decrypted_property_value;
-
-  return property_value; // this is the original value the user sent
-});
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
-```
-
-</TabItem>
-</Tabs>
-
-</TabItem>
-
-<TabItem value="fernet">
-
-Examples for decrypting properties encrypted with the `fernet` algorithm.
-
-<Tabs groupId="language" queryString defaultValue="fernet-python" values={[
-{label: "Python Webhook", value: "fernet-python"},
-{label: "NodeJs Webhook", value: "fernet-nodeJs"}
-]}>
-
-<TabItem value="fernet-python">
-
-The following example uses the `flask` and `cryptography` packages:
-
-```python showLineNumbers
-import base64
-import json
-import os
-
-from flask import Flask, request
-from cryptography.fernet import Fernet
-
-
-PORT_CLIENT_SECRET = 'YOUR PORT CLIENT SECRET'
-PROPERY_IS_JSON = False # whether the property is defined as json or not (string otherwise)
-
-app = Flask(__name__)
-
-@app.route('/', methods=['POST'])
-def webhook():
-    # initialize the fernet decrypter
-    key = base64.urlsafe_b64encode(PORT_CLIENT_SECRET[:32].encode())
-    fernet_instance = Fernet(key)
-
-    req = request.get_json(silent=True, force=True)
-    encrypted_property_value = req.get('payload').get('properties').get('secret-property')
-
-    # decrypt the property
-    decrypted_property_value = fernet_instance.decrypt(encrypted_property_value)
-    property_value = json.loads(decrypted_property_value) if PROPERY_IS_JSON else decrypted_property_value
-
-    return property_value # this is the original value the user sent
-
-if __name__ == '__main__':
-    port = int(os.getenv('PORT', 80))
-
-    print ("Starting app on port %d" % port)
-
-    app.run(debug=False, port=port, host='0.0.0.0')
-```
-
-</TabItem>
-<TabItem value="fernet-nodeJs">
-
-The following example use the `express` and `fernet` packages:
-
-```js showLineNumbers
-const express = require("express");
-const bodyParser = require("body-parser");
-const fernet = require("fernet");
-const port = 80;
-
-const app = express();
-
-const PORT_CLIENT_SECRET = "YOUR PORT CLIENT SECRET";
-const PROPERY_IS_JSON = false; // whether the property is defined as json or not (string otherwise)
-
-app.post("/", bodyParser.json(), (req, res) => {
-  // initialize the fernet decrypter
-  const encodedSecret = Buffer.from(
-    PORT_CLIENT_SECRET.substring(0, 32)
-  ).toString("base64");
-  const fernetSecret = new fernet.Secret(encodedSecret);
-  const fernetToken = new fernet.Token({
-    secret: fernetSecret,
-    ttl: 0,
-  });
-
-  encrypted_property_value = req.body.payload.properties["secret-property"];
-
-  // decrypt the property
-  decrypted_property_value = fernetToken.decode(encrypted_property_value);
   const property_value = PROPERY_IS_JSON
     ? JSON.parse(decrypted_property_value)
     : decrypted_property_value;

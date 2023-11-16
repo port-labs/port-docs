@@ -354,6 +354,7 @@ In this example, the `visible` checks if the executing user has the `"admin"` ro
 defaultValue="api"
 values={[
 {label: 'API', value: 'api'},
+{label: 'Terraform', value: 'terraform'},
 ]}>
 
 <TabItem value="api">
@@ -369,7 +370,7 @@ values={[
       "type": "string",
       "default": "default advanced value",
       "visible": {
-        "jqQuery": ".user.roles | any(.name == \"admin\")"
+        "jqQuery": ".user.roles | any(.name == \"Admin\")"
       }
     }
   }
@@ -378,6 +379,27 @@ values={[
 
 </TabItem>
 
+<TabItem value="terraform">
+
+```hcl showLineNumbers
+resource "port_action" myAction {
+  # ...action configuration
+  {
+    user_properties = {
+      string_props = {
+        simpleOption = {
+          enum = ["option1", "option2"]
+        }
+        advancedOption = {
+          visible_jq_query = ".user.roles | any(.name == \"Admin\")"
+        }
+      }
+    }
+  }
+}
+```
+
+</TabItem>
 </Tabs>
 
 This is how the run form would show up for non-admin users:
