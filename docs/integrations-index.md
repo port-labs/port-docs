@@ -178,7 +178,7 @@ This page contains a list of Port's available integrations, organized by the pla
 ## Datadog
 
 - [Embed dashboards from Datadog](./customize-pages-dashboards-and-plugins/tabs/embedded-url/embedded-url.md#datadog-dashboard)
--
+- [Datadog webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/datadog.md)
 
 ## New Relic
 
