@@ -40,7 +40,7 @@ The `specPath` parameter specifies a string that Port's Bitbucket app will use w
 
 The `enableMergeEntity` parameter specifies whether to use the [create/update](../../api/api.md?operation=create-update#usage) or [create/override](../../api/api.md?operation=create-override#usage) strategy when creating entities listed in a `port.yml` file.
 
-- Default value: `true` (use create/override)
+- Default value: `true` (use create/update)
 - Use case: use `false` if you want Bitbucket to be the source-of-truth for catalog entities. Use `true` if you want to use Bitbucket as the source for some properties of entities in the catalog, and use other sources to for properties which are subject to change automatically.
 
 </TabItem>
