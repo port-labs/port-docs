@@ -169,7 +169,7 @@ The result will be `package_manager_url: "https://www.npmjs.com/package/axios"`.
 
 ## Calculate K8S labels
 
-You can create a calculation property inside your Blueprint to display a specific tag. Looking at the Node Blueprint, you can find the following property
+You can create a calculation property inside your Blueprint to display a specific tag. Looking at the Node Blueprint, you can find the following property:
 
 ```json
 "properties": {
@@ -181,7 +181,7 @@ You can create a calculation property inside your Blueprint to display a specifi
       },
 ```
 
-And the labels object looks like
+And the labels object looks like:
 
 ```json
 {
@@ -196,7 +196,7 @@ To display the value of `name`, create a new calculation property within the sam
 .properties.labels."name"
 ```
 
-The result will be a property that displays `port-k8s-exporter`
+The result will be a property that displays `port-k8s-exporter`.
 
 ## Calculate Cloud resource tags
 
@@ -227,4 +227,4 @@ To display a Value of `applyId`, create a new calculation property within the Bl
 .properties.tags.[] | select(.Key=="applyId") | .Value
 ```
 
-The result will be a property that will display `1a23-4bc5d-67efg-89k10`
+The result will be a property that will display `1a23-4bc5d-67efg-89k10`.
