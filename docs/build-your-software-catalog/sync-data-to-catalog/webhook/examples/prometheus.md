@@ -43,11 +43,13 @@ Create the following webhook configuration [using Port UI](../../webhook/?operat
 ## Configure Alertmanager to send webhook
 
 1. Ensure you have the Prometheus Alertmanager installed as described in [prometheus/alertmanager](https://github.com/prometheus/alertmanager#installation);
-2. Configure the Alertmanager to send alert information from your server to Port. Edit your Alertmanager configuration file (`alertmanager.yaml`) to add the generated webhook from Port as a **receiver**;
-3. Create a new **receiver** object called `port_webhook`. Paste the webhook `URL` into the `url` field and set the `send_resolved` value to `true`.
-4. Add the `port_webhook` **receiver** to the **route** object;
+2. Configure the Alertmanager to send alert information from your server to Port. Edit your Alertmanager configuration file (`alertmanager.yaml`) to add the generated webhook from Port as a **receivers**;
+
+   1. Create a new **receivers** object called `port_webhook`. Paste the webhook `URL` into the `url` field and set the `send_resolved` value to `true`.
+   2. Add the `port_webhook` **receivers** to the **route** object;
 
    <details>
+
    <summary>Example configuration file.</summary>
 
    ```yaml showLineNumbers
@@ -69,6 +71,6 @@ Create the following webhook configuration [using Port UI](../../webhook/?operat
 
    </details>
 
-5. Save the `alertmanager.yaml` file and restart the alertmanager to apply the changes.
+3. Save the `alertmanager.yaml` file and restart the alertmanager to apply the changes.
 
 Done! Any change that happens to your alerts in your server will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
