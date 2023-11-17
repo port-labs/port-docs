@@ -5,7 +5,7 @@ a [new pipeline](https://circleci.com/docs/api/v2/index.html?utm_source=google&u
 using a customer provided input
 and [`port_payload`](../../self-service-actions-deep-dive/self-service-actions-deep-dive.md#action-message-structure).
 
-![Port Kafka Architecture](../../../../static/img/self-service-actions/setup-backend/terraform-cloud/terraform-cloud-agent-architecture.png)
+![Port Kafka Architecture](../../../../static/img/self-service-actions/setup-backend/circleci/circle-ci-agent-architecture.png)
 
 The steps shown in the image above are as follows:
 
