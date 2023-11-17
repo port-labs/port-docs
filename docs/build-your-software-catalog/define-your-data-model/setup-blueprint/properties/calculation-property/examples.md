@@ -169,21 +169,62 @@ The result will be `package_manager_url: "https://www.npmjs.com/package/axios"`.
 
 ## Calculate K8S labels
 
-You can create a calculation property inside your Blueprint to display a specific tag. Assuming you are already ingesting the Labels object, create a new calculation property within the same Blueprint. then use the following JQ calculation:
+You can create a calculation property inside your Blueprint to display a specific tag. Looking at the Node Blueprint, you can find the following property:
 
 ```json
-.properties.labels."Key"
+"properties": {
+      ...
+      "labels": {
+        "type": "object",
+        "title": "Labels",
+        "description": "Labels of the Node"
+      },
 ```
 
-The result will be a property that will hold the value of the key field.
+And the labels object looks like:
+
+```json
+{
+  "kubernetes.io/metadata.name": "port-k8s-exporter",
+  "name": "port-k8s-exporter"
+}
+```
+
+To display the value of `name`, create a new calculation property within the same Blueprint. then use the following JQ calculation:
+
+```json
+.properties.labels."name"
+```
+
+The result will be a property that displays `port-k8s-exporter`.
 
 ## Calculate Cloud resource tags
 
 Assuming you have a property `tags` in your Blueprint, you can use JQ to display the value of a tag.
-Create a calculation property, and use the following JQ (Insert your name of the key):
+
+In Port's AWS exporter, you can find the following array:
 
 ```json
-.properties.tags.[] | select(.Key=="Insert Key name") | .Value
+"tags": [
+      {
+        "Value": "authentication-service",
+        "Key": "server-application"
+      },
+      {
+        "Value": "1a23-4bc5d-67efg-89k10",
+        "Key": "applyId"
+      },
+      {
+        "Value": "0.0.11",
+        "Key": "server-version"
+      }
+    ]
 ```
 
-The result will be a property that will display the value of a given tag and key for the Cloud resource.
+To display a Value of `applyId`, create a new calculation property within the Blueprint of the entity, and use the following JQ calculation:
+
+```json
+.properties.tags.[] | select(.Key=="applyId") | .Value
+```
+
+The result will be a property that will display `1a23-4bc5d-67efg-89k10`.
