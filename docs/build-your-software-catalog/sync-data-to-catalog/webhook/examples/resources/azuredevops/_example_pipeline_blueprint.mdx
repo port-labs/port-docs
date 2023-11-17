@@ -1,0 +1,32 @@
+```json showLineNumbers
+{
+  "identifier": "azure_devops_pipeline",
+  "description": "A software catalog for Azure Devops pipeline",
+  "title": "Azure Devops Pipeline",
+  "icon": "AzureDevops",
+  "schema": {
+    "properties": {
+      "url": {
+        "title": "URL",
+        "type": "string",
+        "format": "url"
+      },
+      "revision": {
+        "title": "Revision",
+        "type": "number"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "project": {
+      "title": "Project",
+      "target": "azure_devops_project",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
