@@ -61,9 +61,9 @@ Create the following webhook configuration [using Port UI](../../webhook/?operat
      receiver: port_webhook
 
    receivers:
-     - name: port_webhook
-   webhook_configs:
-     - url: https://port-webhook-url
+    - name: port_webhook
+    webhook_configs:
+    - url: https://port-webhook-url
        send_resolved: true
    ```
 
