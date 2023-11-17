@@ -66,7 +66,11 @@ python app.py
 
 ```
 
+:::tip
+Find more information about the python script [here](https://github.com/port-labs/azure-devops-resources)
+
 Follow the official documentation on how to [create an azure devops app password](https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=Windows).
+:::
 
 ## Port Webhook Configuration
 
