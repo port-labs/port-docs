@@ -1,0 +1,76 @@
+```json showLineNumbers
+[
+  {
+    "blueprint": "azure_devops_work_item",
+    "filter": ".body.eventType == \"workitem.created\"",
+    "entity": {
+      "identifier": ".body.resource.id | tostring",
+      "title": ".body.resource.fields.\"System.Title\"",
+      "properties": {
+        "revision": ".body.resource.rev",
+        "url": ".body.resource.url",
+        "type": ".body.resource.fields.\"System.WorkItemType\"",
+        "state": ".body.resource.fields.\"System.State\"",
+        "created_date": ".body.resource.fields.\"System.CreatedDate\"",
+        "created_by": ".body.resource.fields.\"System.CreatedBy\"",
+        "updated_date": ".body.resource.fields.\"System.ChangedDate\"",
+        "priority": ".body.resource.fields.\"Microsoft.VSTS.Common.Priority\""
+      },
+      "relations": {
+        "project": ".body.resourceContainers.project.id"
+      }
+    }
+  },
+  {
+    "blueprint": "azure_devops_work_item",
+    "filter": ".body.eventType == \"workitem.updated\"",
+    "entity": {
+      "identifier": ".body.resource.workItemId | tostring",
+      "title": ".body.resource.revision.fields.\"System.Title\"",
+      "properties": {
+        "revision": ".body.resource.rev",
+        "url": ".body.resource.url",
+        "type": ".body.resource.revision.fields.\"System.WorkItemType\"",
+        "state": ".body.resource.revision.fields.\"System.State\"",
+        "created_date": ".body.resource.revision.fields.\"System.CreatedDate\"",
+        "created_by": ".body.resource.revision.fields.\"System.CreatedBy\"",
+        "updated_date": ".body.resource.revision.fields.\"System.ChangedDate\"",
+        "priority": ".body.resource.revision.fields.\"Microsoft.VSTS.Common.Priority\""
+      },
+      "relations": {
+        "project": ".body.resourceContainers.project.id"
+      }
+    }
+  },
+  {
+    "blueprint": "azure_devops_pipeline",
+    "filter": ".body.eventType | startswith(\"ms.vss-pipelines\")",
+    "entity": {
+      "identifier": ".body.resource.run.pipeline.id // .body.resource.pipeline.id | tostring",
+      "title": ".body.resource.run.pipeline.name // .body.resource.pipeline.name",
+      "properties": {
+        "url": ".body.resource.run.pipeline.url // .body.resource.pipeline.name",
+        "revision": ".body.resource.run.pipeline.revision // .body.resource.pipeline.revision"
+      },
+      "relations": {
+        "project": ".body.resourceContainers.project.id"
+      }
+    }
+  },
+  {
+    "blueprint": "azure_devops_repository",
+    "filter": ".body.eventType == \"git.push\"",
+    "entity": {
+      "identifier": ".body.resource.repository.id | tostring",
+      "title": ".body.resource.repository.name",
+      "properties": {
+        "url": ".body.resource.repository.url",
+        "default_branch": ".body.resource.repository.defaultBranch"
+      },
+      "relations": {
+        "project": ".body.resource.repository.project.id"
+      }
+    }
+  }
+]
+```
