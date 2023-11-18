@@ -1,0 +1,72 @@
+```json showLineNumbers
+{
+  "identifier": "azure_devops_work_item",
+  "description": "A software catalog for Azure Devops work item",
+  "title": "Azure Devops Work Item",
+  "icon": "AzureDevops",
+  "schema": {
+    "properties": {
+      "url": {
+        "title": "URL",
+        "type": "string",
+        "format": "url",
+        "icon": "DefaultProperty"
+      },
+      "revision": {
+        "title": "Revision",
+        "type": "number",
+        "icon": "DefaultProperty"
+      },
+      "type": {
+        "title": "Type",
+        "type": "string",
+        "icon": "DefaultProperty"
+      },
+      "state": {
+        "icon": "DefaultProperty",
+        "title": "State",
+        "type": "string",
+        "enum": ["To Do", "Doing", "Done"],
+        "enumColors": {
+          "To Do": "blue",
+          "Doing": "yellow",
+          "Done": "green"
+        }
+      },
+      "created_date": {
+        "title": "Created Date",
+        "type": "string",
+        "format": "date-time",
+        "icon": "DefaultProperty"
+      },
+      "created_by": {
+        "icon": "TwoUsers",
+        "title": "Created By",
+        "type": "string"
+      },
+      "updated_date": {
+        "title": "Updated Date",
+        "type": "string",
+        "format": "date-time",
+        "icon": "DefaultProperty"
+      },
+      "priority": {
+        "title": "Priority",
+        "type": "number",
+        "icon": "DefaultProperty"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "project": {
+      "title": "Project",
+      "target": "azure_devops_project",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```

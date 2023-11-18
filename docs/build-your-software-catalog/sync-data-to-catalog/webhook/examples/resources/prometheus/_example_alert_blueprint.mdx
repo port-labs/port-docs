@@ -1,0 +1,80 @@
+```json showLineNumbers
+{
+  "identifier": "prometheusAlerts",
+  "description": "Prometheus alerts in your software catalog",
+  "title": "Prometheus Alerts",
+  "icon": "Prometheus",
+  "schema": {
+    "properties": {
+      "status": {
+        "title": "Status",
+        "description": "Current status of the alert, firing or resolved",
+        "type": "string",
+        "enum": ["firing", "resolved"],
+        "enumColors": {
+          "firing": "red",
+          "resolved": "green"
+        }
+      },
+      "labels": {
+        "title": "Labels",
+        "type": "object",
+        "description": "Labels that are part of this alert, map of string keys to string values"
+      },
+      "createdAt": {
+        "title": "Created at",
+        "description": "Start time of the alert",
+        "type": "string",
+        "format": "date-time"
+      },
+      "resolvedAt": {
+        "title": "Resolved At",
+        "type": "string",
+        "description": "End time of the alert",
+        "format": "date-time"
+      },
+      "generatorURL": {
+        "title": "Generator URL",
+        "type": "string",
+        "description": "URL of the alert rule in the Prometheus UI",
+        "format": "url"
+      },
+      "fingerprint": {
+        "title": "Fingerprint",
+        "description": "The labels fingerprint, alarms with the same labels will have the same fingerprint",
+        "type": "string"
+      },
+      "summary": {
+        "title": "Summary",
+        "type": "string"
+      },
+      "severity": {
+        "title": "Severity",
+        "type": "string",
+        "enum": [
+          "indeterminate",
+          "information",
+          "warning",
+          "minor",
+          "major",
+          "critical",
+          "fatal"
+        ],
+        "enumColors": {
+          "indeterminate": "purple",
+          "information": "blue",
+          "warning": "yellow",
+          "minor": "lightGray",
+          "major": "pink",
+          "critical": "red",
+          "fatal": "red"
+        }
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {}
+}
+```
