@@ -535,7 +535,7 @@ To delete an existing webhook, make an HTTP DELETE request to `https://api.getpo
 Here's the breakdown of the steps to create a new webhook using the Port UI:
 
 1. Login to your [Port account](https://app.getport.io)
-2. From the top menu, select **Buexapilder**
+2. From the top menu, select **Builder**
 3. Choose your existing [blueprint](/docs/quickstart.md#define-a-blueprint)
 4. Click on the blueprint **expand** button
 5. Click on the `...` icon and select **Ingest data**.
