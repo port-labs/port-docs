@@ -66,9 +66,9 @@ After installation, the exporter will:
 
 <img src='/img/guides/k8sEntitiesCreated.png' width='100%' />
 
-:::info Updating your configuration
+:::info TIP - Updating your configuration
 
-To change the configuration YAML deployed on your Kubernetes cluster, replace `PATH_TO_CONFIG_YAML` with the path (either local or URL) to your desired configuration file, then run the following command:
+To change the configuration YAML deployed on your Kubernetes cluster, replace `PATH_TO_CONFIG_YAML` with the path (either local or URL) to your desired configuration file, replace `CLIENT_ID` and `CLIENT_SECRET`, then run the following command:
 
 ```bash showLineNumbers
 helm upgrade --install port-k8s-exporter port-labs/port-k8s-exporter \
@@ -77,7 +77,7 @@ helm upgrade --install port-k8s-exporter port-labs/port-k8s-exporter \
 --set-file configMap.config=PATH_TO_CONFIG_YAML
 ```
 
-_Don't forget to replace `CLIENT_ID` and `CLIENT_SECRET` accordingly._
+💁🏽 _You don't need to change anything in the configuration for this guide, this is just an FYI_
 :::
 
 <br/>

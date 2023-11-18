@@ -123,7 +123,7 @@ jobs:
           token: ${{ secrets.ORG_TOKEN }}
           portRunId: ${{ fromJson(inputs.port_payload).context.runId }}
           repositoryName: ${{ fromJson(inputs.port_payload).payload.properties.name }}
-          portUserInputs: ${{ toJson(fromJson(inputs.port_payload).payload.properties) }}
+          portUserInputs: ${{ fromJson(inputs.port_payload).payload.properties }}
           cookiecutterTemplate: https://github.com/lacion/cookiecutter-golang
           blueprintIdentifier: "microservice"
           organizationName: INSERT_ORG_NAME

@@ -65,13 +65,14 @@ If you want the integration to update Port in real time you should use the [Real
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
-| Parameter                                   | Description                                                                             | Required |
-| ------------------------------------------- | --------------------------------------------------------------------------------------- | -------- |
-| `OCEAN__INTEGRATION__CONFIG__OPENCOST_HOST` | The Opencost server URL                                                                 | ✅       |
-| `OCEAN__INTEGRATION__IDENTIFIER`            | Change the identifier to describe your integration, if not set will use the default one | ❌       |
-| `OCEAN__PORT__CLIENT_ID`                    | Your port client id                                                                     | ✅       |
-| `OCEAN__PORT__CLIENT_SECRET`                | Your port client secret                                                                 | ✅       |
-| `OCEAN__PORT__BASE_URL`                     | Your port base url, relevant only if not using the default port app                     | ❌       |
+| Parameter                                   | Description                                                                                                        | Required |
+| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
+| `OCEAN__INTEGRATION__CONFIG__OPENCOST_HOST` | The Opencost server URL                                                                                            | ✅       |
+| `OCEAN__INITIALIZE_PORT_RESOURCES`          | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
+| `OCEAN__INTEGRATION__IDENTIFIER`            | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
+| `OCEAN__PORT__CLIENT_ID`                    | Your port client id                                                                                                | ✅       |
+| `OCEAN__PORT__CLIENT_SECRET`                | Your port client secret                                                                                            | ✅       |
+| `OCEAN__PORT__BASE_URL`                     | Your port base url, relevant only if not using the default port app                                                | ❌       |
 
 <br/>
 
@@ -100,6 +101,7 @@ jobs:
 
           docker run -i --rm --platform=linux/amd64 \
           -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+          -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
           -e OCEAN__INTEGRATION__CONFIG__OPENCOST_HOST=${{ secrets.OCEAN__INTEGRATION__CONFIG__OPENCOST_HOST }} \
           -e OCEAN__PORT__CLIENT_ID=${{ secrets.OCEAN__PORT__CLIENT_ID }} \
           -e OCEAN__PORT__CLIENT_SECRET=${{ secrets.OCEAN__PORT__CLIENT_SECRET }} \

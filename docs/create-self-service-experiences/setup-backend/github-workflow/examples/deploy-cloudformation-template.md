@@ -354,7 +354,7 @@ Please make sure to modify GITHUB_ORG, GITHUB_REPO and GITHUB_WORKFLOW_FILE plac
       "db_master_password": {
         "title": "DB Master Password",
         "type": "string",
-        "encryption": "fernet"
+        "encryption": "aes256-gcm"
       },
       "db_master_username": {
         "title": "DB Master Username",
@@ -850,12 +850,12 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Decrypt Fernet String
+      - name: Decrypt aes256-gcm String
         id: decrypt_password
         run: |
           pip install --upgrade pip
-          pip install cryptography
-          python decrypt_fernet.py
+          pip install pycryptodome
+          python decrypt_password.py
         env:
           PORT_CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
           PASSWORD: ${{ inputs.db_master_password }}
@@ -899,23 +899,26 @@ jobs:
 
   </details>
   <br/>
-  Create decrypt_fernet.py file with the following content to decrypt the password values:
+  Create decrypt_password.py file with the following content to decrypt the password values:
   <details>
   <summary>Decrypt Password Script</summary>
 
 ```python showLineNumbers
 import base64
 import os
-from cryptography.fernet import Fernet
+from Crypto.Cipher import AES
 
-key = base64.urlsafe_b64encode(os.getenv('PORT_CLIENT_SECRET')[:32].encode())
+key = os.getenv('PORT_CLIENT_SECRET')[:32].encode()
 
-fernet_instance = Fernet(key)
+encrypted_property_value = base64.b64decode(os.getenv('PASSWORD'))
 
-encrypted_property_value = os.getenv('PASSWORD')
+iv = encrypted_property_value[:16]
+ciphertext = encrypted_property_value[16:-16]
+mac = encrypted_property_value[-16:]
+cipher = AES.new(key, AES.MODE_GCM, iv)
 
-decrypted_property_value = fernet_instance.decrypt(str.encode(encrypted_property_value))
-
+# decrypt the property
+decrypted_property_value = cipher.decrypt_and_verify(ciphertext, mac)
 print(f"::set-output name=decrypted_value::{decrypted_property_value}")
 ```
 
