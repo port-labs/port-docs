@@ -37,27 +37,15 @@ Head over to [app.getport.io](https://app.getport.io) and create an account.
 [Blueprints](/build-your-software-catalog/define-your-data-model/setup-blueprint/) are one of Port's basic building blocks, used to represent any data source in your infrastructure.  
 We will now create a `Service` blueprint to model a Git repository on Github/Bitbucket.
 
-We will use Port's API to create the blueprint:
+1. Go to your [Builder](https://app.getport.io/dev-portal/data-model), click on the `Add` button in the top right corner, then choose `Custom blueprint`:
 
-1. You will need to authorize your Port account against the API:
-   - Get your bearer token:
-     - Go to your [Port app](https://app.getport.io).
-     - Hover over the `...` icon at the top right.
-     - Click on `Credentials`, then click on `Generate API token` and copy the token.
+<img src='/img/quickstart/builderAddCustomBlueprint.png' width='30%' />
 
-![credentials](/img/quickstart/credentials.png)
+<br/><br/>
 
-2. Go to [api.getport.io](https://api.getport.io), click on `Authorize`, paste your token, and click `Authorize` again.
+2. Click on the `Edit JSON` button in the top right corner. Here you can define a blueprint and its properties using JSON.
 
-![apiAuthorize](/img/quickstart/apiAuthorize.png)
-
-Now that we can use the API, let's go ahead and create our `Service` blueprint:
-
-1. Select the [POST request for blueprints](https://api.getport.io/static/index.html#/Blueprints/post_v1_blueprints), then click on `Try it out`:
-
-![apiBlueprintPost](/img/quickstart/apiBlueprintPost.png)
-
-2. In the request body, replace the existing example with the following definition, then click `Execute`:
+3. Replace the example content with the following definition, then click `Create`:
 
 <details>
 <summary><b>Blueprint JSON (click to expand)</b></summary>
@@ -95,7 +83,7 @@ Now that we can use the API, let's go ahead and create our `Service` blueprint:
 </details>
 
 Congratulations, you have successfully modeled a basic Git repository 🥳  
-You can now see the blueprint in the `Builder` tab of your Port app:
+You can now see the blueprint in your `Builder`:
 
 ![builderAfterBpCreate](/img/quickstart/builderAfterBpCreate.png)
 
