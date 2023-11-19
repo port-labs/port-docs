@@ -40,6 +40,7 @@ This page contains a list of Port's available integrations, organized by the pla
 ### Bitbucket
 
 - [Bitbucket app](./build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket.md)
+- [BitBucket GitOps](./build-your-software-catalog/sync-data-to-catalog/git/bitbucket/gitops/gitops.md)
 - [Sync repositories, file contents, pull-requests, monorepos and more](./build-your-software-catalog/sync-data-to-catalog/git/bitbucket/examples.md)
 - [Bitbucket scaffolder](./create-self-service-experiences/setup-backend/jenkins-pipeline/examples/scaffold-bitbucket-using-cookiecutter.md)
 
