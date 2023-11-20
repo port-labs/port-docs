@@ -40,6 +40,7 @@ This page contains a list of Port's available integrations, organized by the pla
 ### Bitbucket
 
 - [Bitbucket app](./build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket.md)
+- [BitBucket GitOps](./build-your-software-catalog/sync-data-to-catalog/git/bitbucket/gitops/gitops.md)
 - [Sync repositories, file contents, pull-requests, monorepos and more](./build-your-software-catalog/sync-data-to-catalog/git/bitbucket/examples.md)
 - [Bitbucket scaffolder](./create-self-service-experiences/setup-backend/jenkins-pipeline/examples/scaffold-bitbucket-using-cookiecutter.md)
 
@@ -153,6 +154,7 @@ This page contains a list of Port's available integrations, organized by the pla
 ## New Relic
 
 - [New Relic integration](./build-your-software-catalog/sync-data-to-catalog/apm-alerting/newrelic.md)
+- [Embed dashboards from New Relic](./customize-pages-dashboards-and-plugins/tabs/embedded-url/embedded-url.md#new-relic-chart)
 
 ## OpsGenie
 
@@ -179,10 +181,6 @@ This page contains a list of Port's available integrations, organized by the pla
 
 - [Embed dashboards from Datadog](./customize-pages-dashboards-and-plugins/tabs/embedded-url/embedded-url.md#datadog-dashboard)
 - [Datadog webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/datadog.md)
-
-## New Relic
-
-- [Embed dashboards from New Relic](./customize-pages-dashboards-and-plugins/tabs/embedded-url/embedded-url.md#new-relic-chart)
 
 ## Kafka
 

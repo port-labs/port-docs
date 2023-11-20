@@ -1,0 +1,23 @@
+```json showLineNumbers
+[
+  {
+    "blueprint": "prometheusAlerts",
+    "filter": "true",
+    "itemsToParse": ".body.alerts",
+    "entity": {
+      "identifier": ".item.labels.alertname + \"-\" + .item.fingerprint | gsub(\"[^a-zA-Z0-9@_.:/=-]\"; \"-\") | tostring",
+      "title": ".item.labels.alertname",
+      "properties": {
+        "status": ".item.status",
+        "severity": ".item.labels.severity",
+        "labels": ".item.labels",
+        "summary": ".item.annotations.summary",
+        "createdAt": ".item.startsAt",
+        "resolvedAt": ".item.endsAt",
+        "generatorURL": "if .item.generatorURL != \"\" then .item.generatorURL else null end",
+        "fingerprint": ".item.fingerprint"
+      }
+    }
+  }
+]
+```

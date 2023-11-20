@@ -1,0 +1,37 @@
+```json showLineNumbers
+{
+  "identifier": "azure_devops_repository",
+  "description": "A software catalog for Azure Devops repositories",
+  "title": "Azure Devops Repository",
+  "icon": "AzureDevops",
+  "schema": {
+    "properties": {
+      "url": {
+        "title": "URL",
+        "type": "string",
+        "format": "url"
+      },
+      "default_branch": {
+        "title": "Default Branch",
+        "type": "string"
+      },
+      "is_disabled": {
+        "title": "Is Disabled",
+        "type": "boolean",
+        "default": false
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "project": {
+      "title": "Project",
+      "target": "azure_devops_project",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
