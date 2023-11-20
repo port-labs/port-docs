@@ -80,13 +80,32 @@ In the Port app, go to the `SSO` menu and follow these steps:
 
 Click `Save`.
 
-### Step #3: Add `email_verified` constant attribute to the Port App
+### Step #3: Add user attributes to the app configuration
+
+The `family_name` and `given_name` attributes are required. These are used by Port to show the full name of a logged in user. To create these attributes follow these steps:
+
+:::note
+The `email` user attribute is created by default when creating the app.
+:::
+
+1. In the Port app, go to the `SSO` tab, under the **User Attribute Mapping** section:
+2. Click on `add attribute`.
+3. Set the `Service Provider Attribute Name` to `given_name`
+4. In the `Value` field enter the value: `firstname`
+5. Click on `add attribute` again.
+6. Set the `Service Provider Attribute Name` to `family_name`
+7. In the `Value` field enter the value: `lastname`
+
+![JumpCloud user attributes](../../../static/img/sso/jumpcloud/JumpcloudAttributes.png)
+
+### Step #4: Add `email_verified` constant attribute to the Port App
 
 The use of Auth0 requires that JumpCloud passes to Port an `email_verified` field upon user login. JumpCloud does not store and expose that field by default, so in this step, you are going to configure that field and apply it to all users in your JumpCloud account.
 
 1. In the Port app, go to the `SSO` tab, under the **Constant Attributes** section:
 2. Click on `add attribute`.
-3. In the _include group attribute_ field enter the value: `memberOf`
+3. Set the `Service Provider Attribute Name` to `email_verified`
+4. In the `Value` field enter the value: `true`
 
 ![JumpCloud email verified attribute](../../../static/img/sso/jumpcloud/JumpCloudEmailVerified.png)
 
@@ -94,7 +113,7 @@ The use of Auth0 requires that JumpCloud passes to Port an `email_verified` fiel
 It is also possible to manually change the value of the `email_verified` field to `true` for each user that requires access to Port in your organization. However, granting access manually to a large number of users is not scalable.
 :::
 
-### Step #4: Exposing the application to your organization
+### Step #5: Exposing the application to your organization
 
 1. In the Port app, go to the `User Groups` tab.
 2. Select the user groups you want to expose the Port app to:
