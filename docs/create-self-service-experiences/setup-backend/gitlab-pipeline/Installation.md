@@ -48,6 +48,8 @@ helm install my-port-agent port-labs/port-agent \
     --set env.normal.KAFKA_CONSUMER_GROUP_ID=YOUR_KAFKA_CONSUMER_GROUP \
     --set env.secret.KAFKA_CONSUMER_USERNAME=YOUR_KAFKA_USERNAME \
     --set env.secret.KAFKA_CONSUMER_PASSWORD=YOUR_KAFKA_PASSWORD \
+    --set env.normal.PORT_CLIENT_ID=YOUR_PORT_CLIENT_ID \
+    --set env.secret.PORT_CLIENT_SECRET=YOUR_PORT_CLIENT_SECRET \
     --set env.secret.<YOUR GITLAB GROUP>_<YOUR GITLAB PROJECT>=YOUR_GITLAB_TOKEN
 ```
 

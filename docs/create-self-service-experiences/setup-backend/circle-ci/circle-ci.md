@@ -131,15 +131,12 @@ the latest versions of the charts. You can then run `helm search repo port-labs`
 ```sh showLineNumbers
 helm install my-port-agent port-labs/port-agent \
     --create-namespace --namespace port-agent \
-    --set env.normal.STREAMER_NAME=KAFKA \
-    --set env.normal.KAFKA_CONSUMER_AUTHENTICATION_MECHANISM=SCRAM-SHA-512 \
-    --set env.normal.KAFKA_CONSUMER_AUTO_OFFSET_RESET=earliest \
-    --set env.normal.KAFKA_CONSUMER_SECURITY_PROTOCOL=SASL_SSL \
     --set-file controlThePayloadConfig=./invocations.json \
     --set env.normal.PORT_ORG_ID=YOUR_ORG_ID \
     --set env.normal.KAFKA_CONSUMER_GROUP_ID=YOUR_KAFKA_CONSUMER_GROUP \
     --set env.secret.KAFKA_CONSUMER_USERNAME=YOUR_KAFKA_USERNAME \
     --set env.secret.KAFKA_CONSUMER_PASSWORD=YOUR_KAFKA_PASSWORD \
-    --set env.normal.KAFKA_CONSUMER_BROKERS=PORT_KAFKA_BROKERS \
+    --set env.normal.PORT_CLIENT_ID=YOUR_PORT_CLIENT_ID \
+    --set env.secret.PORT_CLIENT_SECRET=YOUR_PORT_CLIENT_SECRET \
     --set env.secret.CIRCLE_CI_TOKEN=YOUR_CIRCLE_CI_PERSONAL_TOKEN
 ```
