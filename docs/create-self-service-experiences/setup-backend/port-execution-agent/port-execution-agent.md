@@ -27,3 +27,4 @@ The data flow when using the Port execution agent is as follows:
 ## Next steps
 
 - [Explore How to install and use the agent](./Installation.md)
+- [Control the payload sent to your endpoint](./port-execution-agent.md)
