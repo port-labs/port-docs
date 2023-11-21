@@ -140,7 +140,7 @@ Make sure to replace the placeholders for PROJECT_NAME and GROUP_NAME of your `c
 </details>
 <br/>
 
-6. In your `crossplane_deployer` Gitlab Project, create a template file named `s3bucket-crossplane.yaml` in `crossplane-templates` directory in the `main` branch with the following content:
+6. In your `crossplane_deployer` Gitlab Project, create a template file named `s3bucket-crossplane.yaml` in the `crossplane-templates` directory in the `main` branch with the following content:
 
 <details>
 <summary>s3bucket-crossplane.yaml</summary>
