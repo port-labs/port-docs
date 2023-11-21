@@ -130,7 +130,7 @@ The agent is capable of reporting the action status back to Port using the `repo
 The report request will be sent to the Port API right after the request to the 3rd party application is sent and update
 the run status in Port.
 
-The agent use the JQ in the `report` field to construct the report request body.
+The agent uses the JQ in the `report` field to construct the report request body.
 
 The available fields are:
 
