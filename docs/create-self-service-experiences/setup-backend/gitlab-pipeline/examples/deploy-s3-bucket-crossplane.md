@@ -34,8 +34,8 @@ Follow these steps to get started:
 
    1. `ACCESS_TOKEN` - a [Personal Access Token](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html) with the following scopes:  
       api, read_api, read_user, read_repository, write_repository.
-   2. `PORT_CLIENT_ID` - Port Client ID [learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
-   3. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+   2. `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+   3. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
       <br/>
 
 2. Create a Gitlab Project called `crossplane_deployer` in your Gitlab Group and configure a [Pipeline Trigger Token](https://docs.gitlab.com/ee/ci/triggers/index.html).
@@ -45,7 +45,7 @@ You can use any name that you like, just make sure to configure properly in your
 :::
 <br/>
 
-3. Install Port's Gitlab agent by following our guide [here](../Installation).
+3. Install Port's Gitlab agent by following our guide [here](/create-self-service-experiences/setup-backend/gitlab-pipeline/Installation).
 
 :::note
 Make sure to use your Pipeline Trigger Token while installing Port's Gitlab agent.
@@ -255,7 +255,7 @@ update-run-status:
 
 In this example we did not create the Port entity for the S3 bucket.
 
-- You can [Connect Port's AWS exporter](../../../../build-your-software-catalog/sync-data-to-catalog/aws/aws.md)
+- You can [Connect Port's AWS exporter](/build-your-software-catalog/sync-data-to-catalog/aws/aws.md)
   to make sure all of the properties and entities are automatically ingested from AWS.
-  - You can learn how to setup Port's AWS exporter [here](../../../../build-your-software-catalog/sync-data-to-catalog/aws/Installation.md).
-  - You can see example configurations and use cases [here](../../../../build-your-software-catalog/sync-data-to-catalog/aws/examples.md).
+  - You can learn how to setup Port's AWS exporter [here](/build-your-software-catalog/sync-data-to-catalog/aws/Installation.md).
+  - You can see example configurations and use cases [here](/build-your-software-catalog/sync-data-to-catalog/aws/examples.md).
