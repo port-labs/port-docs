@@ -145,3 +145,10 @@ The report mapping can use the following fields:
 `.body` - The incoming message as mentioned [above](#the-incoming-message-to-base-your-mapping-on)
 `.request` - The request that was calculated using the control the payload mapping and sent to the 3rd party application
 `.response` - The response that was received from the 3rd party application
+
+The `response` field contains the following fields:
+
+- `statusCode` - The status code of the response
+- `json` - The response body as a json object
+- `text` - The response body as a string
+- `headers` - The response headers as a json object
