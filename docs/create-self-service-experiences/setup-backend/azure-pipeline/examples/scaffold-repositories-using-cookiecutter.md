@@ -12,7 +12,7 @@ In addition, as cookiecutter is an open-source project you can make your own pro
 
 Follow these steps to get started with the Python template:
 
-1. Create an Azure DevOps Repository called `python_scaffolder` in your Azure Devops Organization/Project and configure a [Service Connection](../).
+1. Create an Azure DevOps Repository called `python_scaffolder` in your Azure Devops Organization/Project and configure a [Service Connection](/create-self-service-experiences/setup-backend/azure-pipeline#define-incoming-webhook-in-azure).
 
 :::note
 Use `port_trigger` for both `WebHook Name` and `Service connection name` when configuring your [Service Connection](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/service-endpoints?view=azure-devops&tabs=yaml)
