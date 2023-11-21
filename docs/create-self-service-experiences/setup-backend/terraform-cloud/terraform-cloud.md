@@ -127,8 +127,8 @@ the [Control the payload](../port-execution-agent/control-the-payload.md) docume
     },
     "report": {
       "status": "if .response.statusCode == 201 then \"SUCCESS\" else \"FAILURE\" end",
-      "link": "\"https://app.terraform.io/app/\" + .body.payload.entity.properties.organization_name + \"/workspaces/\" + .body.payload.entity.properties.workspace_name + \"/runs/\" + .response.jsonData.data.id",
-      "externalRunId": ".response.jsonData.data.id"
+      "link": "\"https://app.terraform.io/app/\" + .body.payload.entity.properties.organization_name + \"/workspaces/\" + .body.payload.entity.properties.workspace_name + \"/runs/\" + .response.json.data.id",
+      "externalRunId": ".response.json.data.id"
     }
   }
 ]
