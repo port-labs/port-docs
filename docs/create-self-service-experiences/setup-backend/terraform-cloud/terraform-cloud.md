@@ -159,7 +159,7 @@ helm install my-port-agent port-labs/port-agent \
     --set-file controlThePayloadConfig=./invocations.json \
     --set env.normal.PORT_ORG_ID=YOUR_ORG_ID \
     --set env.normal.KAFKA_CONSUMER_GROUP_ID=YOUR_KAFKA_CONSUMER_GROUP \
-    --set env.normal.PORT_CLIENT_ID=YOUR_PORT_CLIENT_ID \
+    --set env.secret.PORT_CLIENT_ID=YOUR_PORT_CLIENT_ID \
     --set env.secret.PORT_CLIENT_SECRET=YOUR_PORT_CLIENT_SECRET \
     --set env.secret.TF_TOKEN=YOUR_TERRAFORM_CLOUD_TOKEN
 ```
