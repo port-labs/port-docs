@@ -14,13 +14,46 @@ Advanced user form settings allow you to create more customizable experiences fo
 #### building such actions can be done by leveraging 4 keys in the action's schema:
 
 <Tabs
-defaultValue="DependsOn"
+defaultValue="visible"
 values={[
+{ label: 'visible', value: 'visible', },
 { label: 'dependsOn', value: 'DependsOn', },
 { label: 'dataset', value: 'Dataset', },
 { label: 'jqQuery', value: 'jqQuery', },
-{ label: 'visible', value: 'visible', },
 ]}>
+
+<TabItem value="visible">
+
+The `visible` property is used to dynamically hide/show inputs in the form.
+The `visible` value could be set to either a boolean (`true` value is always shown, `false` value is always hidden), or to a `jqQuery` which evaluates to a boolean.
+
+In this example, the `runArguments` properties are configured with `visible` so that they only show up in the form when the matching value is selected in the `language` input:
+
+```json showLineNumbers
+{
+  "properties": {
+    "language": {
+      "type": "string",
+      "enum": ["javascript", "python"]
+    },
+    "pythonRunArguments": {
+      "type": "string",
+      "visible": {
+        "jqQuery": ".form.language == \"python\""
+      }
+    },
+    "nodeRunArguments": {
+      "type": "string",
+      "visible": {
+        "jqQuery": ".form.language == \"javascript\""
+      }
+    }
+  }
+}
+```
+
+</TabItem>
+
 <TabItem value="DependsOn">
 
 The `dependsOn` property is used to create a dependency between inputs. If input X depends on input Y, input X will be disabled until input Y is filled.  
@@ -246,38 +279,6 @@ Keys that are supported with jqQuery expressions:
 | value   | the value inside a "dataset" rule                 |
 | default | the default value of any property                 |
 | visible | the condition to display any property in the form |
-
-</TabItem>
-
-<TabItem value="visible">
-
-The `visible` property is used to dynamically hide/show inputs in the form.
-The `visible` value could be set to either a boolean (`true` value is always shown, `false` value is always hidden), or to a `jqQuery` which evaluates to a boolean.
-
-In this example, the `runArguments` properties are configured with `visible` so that they only show up in the form when the matching value is selected in the `language` input:
-
-```json showLineNumbers
-{
-  "properties": {
-    "language": {
-      "type": "string",
-      "enum": ["javascript", "python"]
-    },
-    "pythonRunArguments": {
-      "type": "string",
-      "visible": {
-        "jqQuery": ".form.language == \"python\""
-      }
-    },
-    "nodeRunArguments": {
-      "type": "string",
-      "visible": {
-        "jqQuery": ".form.language == \"javascript\""
-      }
-    }
-  }
-}
-```
 
 </TabItem>
 
