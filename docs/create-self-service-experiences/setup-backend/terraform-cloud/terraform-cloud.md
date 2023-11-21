@@ -100,31 +100,38 @@ the [Control the payload](../port-execution-agent/control-the-payload.md) docume
 :::
 
 ```json
-{
-  "enabled": ".action == \"trigger_tf_run\"",
-  "headers": {
-    "Authorization": "\"Bearer \" + env.TF_TOKEN",
-    "Content-Type": "\"application/vnd.api+json\""
-  },
-  "body": {
-    "data": {
-      "attributes": {
-        "is-destroy": false,
-        "message": "\"Triggered via Port\"",
-        "variables": ".payload.properties | to_entries | map({key: .key, value: .value})"
-      },
-      "type": "\"runs\"",
-      "relationships": {
-        "workspace": {
-          "data": {
-            "type": "\"workspaces\"",
-            "id": ".payload.entity.properties.workspace_id"
+[
+  {
+    "enabled": ".action == \"trigger_tf_run\"",
+    "headers": {
+      "Authorization": "\"Bearer \" + env.TF_TOKEN",
+      "Content-Type": "\"application/vnd.api+json\""
+    },
+    "body": {
+      "data": {
+        "attributes": {
+          "is-destroy": false,
+          "message": "\"Triggered via Port\"",
+          "variables": ".payload.properties | to_entries | map({key: .key, value: .value})"
+        },
+        "type": "\"runs\"",
+        "relationships": {
+          "workspace": {
+            "data": {
+              "type": "\"workspaces\"",
+              "id": ".payload.entity.properties.workspace_id"
+            }
           }
         }
       }
+    },
+    "report": {
+      "status": "if .response.statusCode == 201 then \"SUCCESS\" else \"FAILURE\" end",
+      "link": "\"https://app.terraform.io/app/\" + .body.payload.entity.properties.organization_name + \"/workspaces/\" + .body.payload.entity.properties.workspace_name + \"/runs/\" + .response.json.data.id",
+      "externalRunId": ".response.json.data.id"
     }
   }
-}
+]
 ```
 
 </details>
@@ -149,15 +156,10 @@ the latest versions of the charts. You can then run `helm search repo port-labs`
 ```sh showLineNumbers
 helm install my-port-agent port-labs/port-agent \
     --create-namespace --namespace port-agent \
-    --set env.normal.KAFKA_CONSUMER_AUTHENTICATION_MECHANISM=SCRAM-SHA-512 \
-    --set env.normal.KAFKA_CONSUMER_AUTO_OFFSET_RESET=earliest \
-    --set env.normal.KAFKA_CONSUMER_SECURITY_PROTOCOL=SASL_SSL \
-    --set env.normal.STREAMER_NAME=KAFKA \
     --set-file controlThePayloadConfig=./invocations.json \
     --set env.normal.PORT_ORG_ID=YOUR_ORG_ID \
     --set env.normal.KAFKA_CONSUMER_GROUP_ID=YOUR_KAFKA_CONSUMER_GROUP \
-    --set env.secret.KAFKA_CONSUMER_USERNAME=YOUR_KAFKA_USERNAME \
-    --set env.secret.KAFKA_CONSUMER_PASSWORD=YOUR_KAFKA_PASSWORD \
-    --set env.normal.KAFKA_CONSUMER_BROKERS=PORT_KAFKA_BROKERS \
+    --set env.secret.PORT_CLIENT_ID=YOUR_PORT_CLIENT_ID \
+    --set env.secret.PORT_CLIENT_SECRET=YOUR_PORT_CLIENT_SECRET \
     --set env.secret.TF_TOKEN=YOUR_TERRAFORM_CLOUD_TOKEN
 ```
