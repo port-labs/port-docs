@@ -1,0 +1,24 @@
+```json showLineNumbers
+[
+  {
+    "blueprint": "argocdApplication",
+    "filter": "true",
+    "entity": {
+      "identifier": ".body.uid | tostring",
+      "title": ".body.name | tostring",
+      "properties": {
+        "gitRepo": ".body.git_repo",
+        "gitPath": ".body.git_path",
+        "destinationServer": ".body.destination_server",
+        "namespace": ".body.namespace",
+        "syncStatus": ".body.sync_status",
+        "healthStatus": ".body.health_status",
+        "createdAt": ".body.created_at"
+      },
+      "relations": {
+        "project": ".body.project"
+      }
+    }
+  }
+]
+```
