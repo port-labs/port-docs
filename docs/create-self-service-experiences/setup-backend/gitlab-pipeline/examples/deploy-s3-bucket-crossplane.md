@@ -59,7 +59,7 @@ Keep in mind this can be any blueprint you would like and this is just an exampl
 :::
 
 <details>
-  <summary>Port Microservice Blueprint</summary>
+  <summary>Port S3Bucket Blueprint</summary>
 
 ```json showLineNumbers
 {
@@ -140,7 +140,29 @@ Make sure to replace the placeholders for PROJECT_NAME and GROUP_NAME of your `c
 </details>
 <br/>
 
-6. In your `crossplane_deployer` Gitlab Project, create a Gitlab CI file under `.gitlab-ci.yml` in the `main` branch with the following content:
+6. In your `crossplane_deployer` Gitlab Project, create a template file named `s3bucket-crossplane.yaml` in the `crossplane-templates` directory in the `main` branch with the following content:
+
+<details>
+<summary>s3bucket-crossplane.yaml</summary>
+
+```yml
+# s3bucket-crossplane.yaml
+
+apiVersion: s3.aws.upbound.io/v1beta1
+kind: Bucket
+metadata:
+  name: BUCKET_NAME_PLACEHOLDER
+spec:
+  forProvider:
+    region: AWS_REGION_PLACEHOLDER
+  providerConfigRef:
+    name: default
+```
+
+</details>
+<br/>
+
+7. In your `crossplane_deployer` Gitlab Project, create a Gitlab CI file under `.gitlab-ci.yml` in the `main` branch with the following content:
 
 <details>
 <summary>Gitlab CI Script</summary>
@@ -151,6 +173,7 @@ image: python:3.10.0-alpine
 stages: # List of stages for jobs, and their order of execution
   - fetch-port-access-token
   - generate-crossplane-bucket-yaml
+  - create-entity
   - update-run-status
 
 fetch-port-access-token: # Example - get the Port API access token and RunId
@@ -179,7 +202,8 @@ fetch-port-access-token: # Example - get the Port API access token and RunId
 generate-crossplane-bucket-yaml:
   variables:
     BUCKET_FILE_PATH: "manifests"
-    BRANCH_NAME: "add-bucket-$bucket_name"
+    CROSSPLANE_TEMPLATE_PATH: "crossplane-templates/s3bucket-crossplane.yaml"
+    BRANCH_NAME: "add-bucket-$bucket_name-$CI_JOB_ID"
   before_script:
     - |
       apk update -q
@@ -189,23 +213,13 @@ generate-crossplane-bucket-yaml:
     - pushes
   script:
     - |
-      BUCKET_FILE_NAME="$BUCKET_FILE_PATH/s3bucket-$bucket_name-crossplane.yaml"
+      BUCKET_FILE_NAME="$BUCKET_FILE_PATH/s3bucket-crossplane-$bucket_name.yaml"
       COMMIT_MESSAGE="Added $bucket_name s3 bucket crossplane manifest"
-
       mkdir -p $BUCKET_FILE_PATH
 
-      # Generate BUCKET_FILE_NAME file
-      cat <<EOF > $BUCKET_FILE_NAME
-      apiVersion: s3.aws.upbound.io/v1beta1
-      kind: Bucket
-      metadata:
-        name: $bucket_name
-      spec:
-        forProvider:
-          region: $AWS_REGOIN
-        providerConfigRef:
-          name: default
-      EOF
+      cp $CROSSPLANE_TEMPLATE_PATH $BUCKET_FILE_NAME
+      sed -i "s/BUCKET_NAME_PLACEHOLDER/$bucket_name/g" $BUCKET_FILE_NAME
+      sed -i "s/AWS_REGION_PLACEHOLDER/$aws_region/g" $BUCKET_FILE_NAME
 
       git config --global user.email "gitlab-pipeline[bot]@gitlab.com"
       git config --global user.name "Gitlab Pipeline Bot"
@@ -248,7 +262,7 @@ update-run-status:
 </details>
 <br/>
 
-7. Trigger the action from the [Self-service](https://app.getport.io/self-serve) tab of your Port application.<br/>
+8. Trigger the action from the [Self-service](https://app.getport.io/self-serve) tab of your Port application.<br/>
    You will notice a new Merge Request was created, commiting the S3 Bucket manifest.
 
 ## Next steps
