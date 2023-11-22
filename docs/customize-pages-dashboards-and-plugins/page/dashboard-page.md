@@ -35,6 +35,6 @@ To move a widget, drag it from the top-left corner to your desired position:
 
 <br/><br/>
 
-To resize a widget, hover over its side until the blue bar appears, then drag it left/right:
+To resize a widget, hover over one of its sides until the blue bar appears, then drag it to expand/shrink:
 
 <img src='/img/software-catalog/pages/widgetResizeExample.png' width='70%' />
