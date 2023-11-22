@@ -151,10 +151,10 @@ Make sure to replace the placeholders for PROJECT_NAME and GROUP_NAME of your `c
 apiVersion: s3.aws.upbound.io/v1beta1
 kind: Bucket
 metadata:
-  name: BUCKET_NAME_PLACEHOLDER
+  name: {{ bucket_name }}
 spec:
   forProvider:
-    region: AWS_REGION_PLACEHOLDER
+    region: {{ aws_region }}
   providerConfigRef:
     name: default
 ```
@@ -218,8 +218,8 @@ generate-crossplane-bucket-yaml:
       mkdir -p $BUCKET_FILE_PATH
 
       cp $CROSSPLANE_TEMPLATE_PATH $BUCKET_FILE_NAME
-      sed -i "s/BUCKET_NAME_PLACEHOLDER/$bucket_name/g" $BUCKET_FILE_NAME
-      sed -i "s/AWS_REGION_PLACEHOLDER/$aws_region/g" $BUCKET_FILE_NAME
+      sed -i "s/{{ bucket_name }}/$bucket_name/g" $BUCKET_FILE_NAME
+      sed -i "s/{{ aws_region }}/$aws_region/g" $BUCKET_FILE_NAME
 
       git config --global user.email "gitlab-pipeline[bot]@gitlab.com"
       git config --global user.name "Gitlab Pipeline Bot"
