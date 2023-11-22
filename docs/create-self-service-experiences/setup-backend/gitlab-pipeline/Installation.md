@@ -46,8 +46,8 @@ helm install my-port-agent port-labs/port-agent \
     --create-namespace --namespace port-agent \
     --set env.normal.PORT_ORG_ID=YOUR_ORG_ID \
     --set env.normal.KAFKA_CONSUMER_GROUP_ID=YOUR_KAFKA_CONSUMER_GROUP \
-    --set env.secret.KAFKA_CONSUMER_USERNAME=YOUR_KAFKA_USERNAME \
-    --set env.secret.KAFKA_CONSUMER_PASSWORD=YOUR_KAFKA_PASSWORD \
+    --set env.secret.PORT_CLIENT_ID=YOUR_PORT_CLIENT_ID \
+    --set env.secret.PORT_CLIENT_SECRET=YOUR_PORT_CLIENT_SECRET \
     --set env.secret.<YOUR GITLAB GROUP>_<YOUR GITLAB PROJECT>=YOUR_GITLAB_TOKEN
 ```
 
@@ -60,3 +60,33 @@ If you are using a private GitLab environment, pass the `GITLAB_URL` environment
 ```
 
 Done! **Port's execution agent** is now running in your environment and will trigger any GitLab pipeline that you have configured.
+
+## Control the payload
+
+The Port agent allows you to control the payload that is sent to gitlab api when triggering a pipeline.
+
+By customizing the payload you can control the data that is sent to gitlab and the way the pipeline is triggered.
+
+By default, the Port agent use the this default mapping to trigger gitlab pipelines:
+
+<details>
+<summary>Default Gitlab port agent mapping</summary>
+
+```json showLineNumbers
+[
+  {
+    "enabled": ".payload.action.invocationMethod.type == \"GITLAB\"",
+    "url": "(env.GITLAB_URL // \"https://gitlab.com/\") as $baseUrl | (.payload.action.invocationMethod.groupName + \"/\" +.payload.action.invocationMethod.projectName) | @uri as $path | $baseUrl + \"api/v4/projects/\" + $path + \"/trigger/pipeline\"",
+    "body": {
+      "ref": ".payload.properties.ref // .payload.action.invocationMethod.defaultRef // \"main\"",
+      "token": ".payload.action.invocationMethod.groupName as $gitlab_group | .payload.action.invocationMethod.projectName as $gitlab_project | env[($gitlab_group | gsub(\"/\"; \"_\")) + \"_\" + $gitlab_project]",
+      "variables": ".payload.action.invocationMethod as $invocationMethod | .payload.properties | to_entries | map({(.key): (.value | tostring)}) | add | if $invocationMethod.omitUserInputs then {} else . end",
+      "port_payload": "if .payload.action.invocationMethod.omitPayload then {} else . end"
+    }
+  }
+]
+```
+
+</details>
+
+You can read more about the payload mapping in the [Control the payload mapping](../port-execution-agent/control-the-payload.md) page.

@@ -12,11 +12,10 @@ In addition, as cookiecutter is an open-source project you can make your own pro
 
 Follow these steps to get started with the Python template:
 
-1. Create an Azure DevOps Repository called `python_scaffolder` in your Azure Devops Organization/Project and configure a [Service Connection](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/service-endpoints?view=azure-devops&tabs=yaml).
+1. Create an Azure DevOps Repository called `python_scaffolder` in your Azure Devops Organization/Project and configure a [Service Connection](/create-self-service-experiences/setup-backend/azure-pipeline#define-incoming-webhook-in-azure).
 
 :::note
-Use [Port's Docs](https://docs.getport.io/create-self-service-experiences/setup-backend/azure-pipeline/) to configure it securely,
-and use `port_trigger` for both `WebHook Name` and `Service connection name`
+Use `port_trigger` for both `WebHook Name` and `Service connection name` when configuring your [Service Connection](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/service-endpoints?view=azure-devops&tabs=yaml)
 :::
 <br/>
 
@@ -183,6 +182,11 @@ stages:
               -H "Content-Type: application/json" \
               -H "Content-Length: 0" | jq .id)
 
+              if [[ -z "$PROJECT_ID" ]]; then
+                echo "Failed to fetch Azure Devops Project ID."
+                exit 1
+              fi
+
               PAYLOAD='{"name":"${{ variables.SERVICE_NAME }}","project":{"id":'$PROJECT_ID'}}'
 
               CREATE_REPO_RESPONSE=$(curl -X POST "https://dev.azure.com/${{ variables.AZURE_ORGANIZATION }}/_apis/git/repositories?api-version=7.0" \
@@ -193,7 +197,7 @@ stages:
               PROJECT_URL=$(echo $CREATE_REPO_RESPONSE | jq -r .webUrl)
 
               if [[ -z "$PROJECT_URL" ]]; then
-                echo "Failed to create GitLab repository."
+                echo "Failed to create Azure Devops repository."
                 exit 1
               fi
 
@@ -265,6 +269,24 @@ stages:
                 -H 'Authorization: Bearer $(accessToken)' \
                 -d '{"status":"SUCCESS", "message": {"run_status": "Scaffold ${{ variables.SERVICE_NAME }} finished successfully!\\n Project URL: $(PROJECT_URL)" }}' \
                 "https://api.getport.io/v1/actions/runs/${{ variables.RUN_ID }}"
+
+  - stage: update_run_status_failed
+    dependsOn:
+      - upsert_entity
+      - fetch_port_access_token
+      - scaffold
+    condition: failed()
+    jobs:
+      - job: update_run_status_failed
+        variables:
+          accessToken: $[ stageDependencies.fetch_port_access_token.fetch_port_access_token.outputs['getToken.accessToken'] ]
+        steps:
+          - script: |
+              curl -X PATCH \
+                -H 'Content-Type: application/json' \
+                -H 'Authorization: Bearer $(accessToken)' \
+                -d '{"status":"FAILURE", "message": {"run_status": "Scaffold ${{ variables.SERVICE_NAME }} failed" }}' \
+                "https://api.getport.io/v1/actions/runs/${{ variables.RUN_ID }}"
 ```
 
 </details>
@@ -284,12 +306,12 @@ stages:
 
       ```bash
       MY_PAT=YourPAT
-      B64_PAT=$(printf ":%s" "$MY_PAT" | base64)\n
+      B64_PAT=$(printf ":%s" "$MY_PAT" | base64)
       echo $B64_PAT
       ```
 
-   2. `PORT_CLIENT_ID` - Port Client ID [learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
-   3. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+   2. `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+   3. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
 
 <br/>
 
