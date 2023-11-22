@@ -75,7 +75,7 @@ helm upgrade --install my-jira-integration port-labs/port-ocean \
 This workflow will run the Jira integration once and then exit, this is useful for **one time** ingestion of data.
 
 :::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
+If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
 :::
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
@@ -131,8 +131,11 @@ jobs:
   <TabItem value="jenkins" label="Jenkins">
 This pipeline will run the Jira integration once and then exit, this is useful for **one time** ingestion of data.
 
+:::tip
+Your Jenkins agent should be able to run docker commands.
+:::
 :::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
+If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
 :::
 
 Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) of `Secret Text` type:
