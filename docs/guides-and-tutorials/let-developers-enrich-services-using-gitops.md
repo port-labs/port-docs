@@ -28,11 +28,29 @@ After completing it, you will get a sense of how your organization's daily routi
 - Platform engineers will be able to create RBAC-controlled actions for developers, empowering their independence.
 - R&D managers will be able to track additional, valuable data about services in the organization.
 
+### Add new properties to your `Service` blueprint
+
+Let's start by adding two new properties to the `Service` blueprint, that we will later populate using Gitops.
+
+1. Go to your [Builder](https://app.getport.io/dev-portal/data-model), expand the `Service` blueprint, and click on `New property`.
+
+2. The first property will be the service's type, chosen from a predefined list of options. Fill out the form like this, then click `Create`:
+
+<img src='/img/guides/gitopsServicePropType.png' width='50%' />
+
+<br/><br/>
+
+3. The second property will be the lifecycle state of the service, also chosen from a predefined list of options. Fill out the form like this, then click `Create`:
+
+_Note the colors of the inputs, this will make it easier to see a service's lifecycle in your catalog_ 😎
+
+<img src='/img/guides/gitopsServicePropLifecycle.png' width='50%' />
+
 ### Model domains for your services
 
 Services that share a business purpose (e.g. payments, shipping) are often grouped together using domains. Let's create a blueprint to represent a domain in Port:
 
-1. Go to your [Builder](https://app.getport.io/dev-portal/data-model), click on the `Add` button in the top right corner, then choose `Custom blueprint`:
+1. In your [Builder](https://app.getport.io/dev-portal/data-model), click on the `Add` button in the top right corner, then choose `Custom blueprint`:
 
 <img src='/img/quickstart/builderAddCustomBlueprint.png' width='30%' />
 
@@ -85,7 +103,7 @@ Now that we have a blueprint to represent a domain, let's connect it to our serv
 
 Now that we have a `Domain` blueprint, we can create some domains in Port. This can be done manually from the UI, or via Gitops which is the method we will use in this guide.
 
-1. In a Github repository, create a new file named `port.yml` in the root directory, and use the following snippet as its content:
+1. In your `Port-actions` (or equivalent) Github repository, create a new file named `port.yml` in the root directory, and use the following snippet as its content:
 
 <details>
 <summary><b>port.yml (click to expand)</b></summary>
@@ -105,7 +123,7 @@ Now that we have a `Domain` blueprint, we can create some domains in Port. This 
 
 </details>
 
-2. Head back to your [software catalog](https://app.getport.io/domains), you will see that Port created two new `domain` entities:
+2. Head back to your [software catalog](https://app.getport.io/domains), you will see that Port has created two new `domain` entities:
 
 <img src='/img/guides/gitopsDomainEntities.png' width='50%' />
 
@@ -117,18 +135,170 @@ As platform engineers, we want to enable our developers to perform certain actio
 
 #### Create the action's frontend
 
-1. Go to your [Self-service page](https://app.getport.io/self-serve), click on the `Add` button in the top right corner, then choose `Create self-service action`:
+1. Go to your [Self-service page](https://app.getport.io/self-serve), then click on the `+ New action` button in the top right corner.
+
+2. From the dropdown, choose the `Service` blueprint.
+
+3. Fill out the basic details like this, then click `Next`:
+
+<img src='/img/guides/gitopsActionBasicDetails.png' width='50%' />
+
+<br/><br/>
+
+3. We want the developer to be able to choose the domain to which the service will be assigned. Click on `Add input`, fill out the form like this, then click `Next`:
+
+<img src='/img/guides/gitopsActionInputDomain.png' width='50%' />
+
+#### Create the action's backend
+
+Our action will create a pull-request in the service's repository, containing a `port.yml` file that will add data to the service in Port. We will use a Github workflow to implement the action's backend.
+
+1. First, let's create the necessary token and secrets. If you've already completed the [`scaffold a new service guide`](/guides-and-tutorials/scaffold-a-new-service), you should already have these configured and you can skip this step.
+
+- Go to your [Github tokens page](https://github.com/settings/tokens), create a personal access token with `repo` and `admin:org` scope, and copy it (this token is needed to create a pull-request from our workflow).
+
+  <img src='/img/guides/personalAccessToken.png' width='80%' />
+
+- Go to your [Port application](https://app.getport.io/), hover over the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
+
+2. In your `Port-actions` (or equivalent) Github repository, create 3 new secrets under `Settings->Secrets and variables->Actions`:
+
+- `ORG_ADMIN_TOKEN` - the personal access token you created in the previous step.
+- `PORT_CLIENT_ID` - the client ID you copied from your Port app.
+- `PORT_CLIENT_SECRET` - the client secret you copied from your Port app.
+
+<img src='/img/guides/repositorySecret.png' width='60%' />
+
+<br/><br/>
+
+3. We will now create a YML file that will serve as a template for our services' `port.yml` configuration file.
+
+- In your Github repository, create a file named `enrichService.yml` under `/templates/` (it's path should be `/templates/enrichService.yml`).
+- Copy the following snippet and paste it in the file's contents:
+
+<details>
+<summary><b>enrichService.yml (click to expand)</b></summary>
+
+```yaml showLineNumbers
+# enrichService.yml
+
+- identifier: "{{ service_identifier }}"
+  blueprint: service
+  properties:
+    type: backend
+    lifecycle: Production
+  relations:
+    domain: "{{ domain_identifier }}"
+```
+
+</details>
+
+4. Now let's create the workflow file that contains our logic. In the same repository, under ".github/workflows", create a new file named `portEnrichService.yaml` and use the following snippet as its content:
+
+<details>
+<summary><b>Github workflow (click to expand)</b></summary>
+
+```yaml showLineNumbers
+name: Enrich service
+on:
+  workflow_dispatch:
+    inputs:
+      domain:
+        required: true
+        description: The domain to which the service will be assigned
+        type: string
+      port_payload:
+        required: true
+        description: Port's payload, including details for who triggered the action and general context
+        type: string
+jobs:
+  enrichService:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+        with:
+          repository: "${{ github.repository_owner }}/${{fromJson(inputs.port_payload).context.entity}}"
+          path: ./targetRepo
+          token: ${{ secrets.ORG_ADMIN_TOKEN }}
+      - name: Copy template yml file
+        run: |
+          cp templates/enrichService.yml ./targetRepo/port.yml
+      - name: Update new file data
+        run: |
+          sed -i 's/{{ service_identifier }}/${{fromJson(inputs.port_payload).context.entity}}/' ./targetRepo/port.yml
+          sed -i 's/{{ domain_identifier }}/${{ inputs.domain }}/' ./targetRepo/port.yml
+      - name: Open a pull request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.ORG_ADMIN_TOKEN }}
+          path: ./targetRepo
+          commit-message: Enrich service - ${{fromJson(inputs.port_payload).context.entity}}
+          committer: GitHub <noreply@github.com>
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          signoff: false
+          branch: add-port-yml
+          delete-branch: true
+          title: Create port.yml - ${{fromJson(inputs.port_payload).context.entity}}
+          body: |
+            Add port.yaml to enrich service in Port.
+          draft: false
+      - name: Create a log message
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          operation: PATCH_RUN
+          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          logMessage: Pull request to add port.yml created successfully for service "${{fromJson(inputs.port_payload).context.entity}}" 🚀
+```
+
+</details>
+
+The action is ready to be executed 🚀
+
+#### Execute the action
+
+1. After creating an action, it will appear under the [Self-service page](https://app.getport.io/self-serve). Find your new `Enrich service` action, and click on `Execute`.
+
+2. Choose a service from the dropdown, and choose a domain to assign it to, then click `Execute`:
+
+<img src='/img/guides/gitopsEnrichActionExecute.png' width='50%' />
+
+<br/><br/>
+
+3. A small popup will appear, click on `View details`:
+
+<img src='/img/guides/gitopsActionExecutePopup.png' width='50%' />
+
+<br/><br/>
+
+This page provides details about the action run. We can see that the backend returned `Success` and the pull-request was created successfully.
+
+4. Head over to your service's Github repository, you will see that a new pull-request was created:
+
+<img src='/img/guides/gitopsActionRepoPullRequest.png' width='70%' />
+
+<br/>
+
+5. Merge the pull-request, then head back to your [software catalog](https://app.getport.io/services).
+
+6. Find your service, and click on its identifier. This will take you to the service's catalog page, where you can see your new properties populated with data:
+
+<img src='/img/guides/gitopsServicePageAfterAction.png' width='80%' />
+
+<br/><br/>
+
+All done! 💪🏽
 
 ### Possible daily routine integrations
 
-- Send a slack message in the R&D channel to let everyone know that a new deployment was created.
-- Notify Devops engineers when a service's availability drops.
-- Send a weekly/monthly report to R&D managers displaying the health of services' production runtime.
+- Fetch data from a Sentry project and reflect it in your software catalog.
+- Create and onboard services with a few clicks from your developer portal.
 
 ### Conclusion
 
-Kubernetes is a complex environment that requires high-quality observability. Port's Kubernetes integration allows you to easily model and visualize your Kubernetes resources, and integrate them into your daily routine.  
-Customize your views to display the data that matters to you, grouped or filtered by teams, namespaces, or any other criteria.  
-With Port, you can seamlessly fit your organization's needs, and create a single source of truth for your Kubernetes resources.
+Gitops is a common practice in modern software development, as it ensures that the state of your infrastructure is always in sync with your codebase.  
+Port allows you to easily integrate your Gitops practices with your software catalog, reflecting the state of your infrastructure, and allowing you to empower your developers with controlled actions.
 
 More guides & tutorials will be available soon, in the meantime feel free to reach out with any questions via our [community slack](https://www.getport.io/community) or [Github project](https://github.com/port-labs?view_as=public).
