@@ -1,6 +1,6 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
+import HelmPrerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
 import HelmParameters from "../templates/\_ocean-advanced-parameters-helm.mdx"
 import ResourceMapping from "../templates/\_resource-mapping.mdx"
 import DockerParameters from "./\_docker-parameters.mdx"
@@ -20,7 +20,7 @@ Port, according to your mapping and definitions.
 
 ## Prerequisites
 
-<Prerequisites />
+<HelmPrerequisites />
 
 ## Installation
 
