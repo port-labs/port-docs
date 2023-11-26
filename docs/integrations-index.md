@@ -44,6 +44,13 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Sync repositories, file contents, pull-requests, monorepos and more](./build-your-software-catalog/sync-data-to-catalog/git/bitbucket/examples.md)
 - [Bitbucket scaffolder](./create-self-service-experiences/setup-backend/jenkins-pipeline/examples/scaffold-bitbucket-using-cookiecutter.md)
 
+### Azure DevOps
+
+- [Sync Azure pipelines](./build-your-software-catalog/sync-data-to-catalog/ci-cd/azure-pipelines/azure-pipelines.md)
+- [Azure pipelines self-service actions](./create-self-service-experiences/setup-backend/azure-pipeline/azure-pipeline.md)
+- [Cookiecutter Azure DevOps scaffolder using Azure DevOps pipelines](./create-self-service-experiences/setup-backend/azure-pipeline/examples/scaffold-repositories-using-cookiecutter.md)
+- [Azure DevOps Webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/azuredevops.md)
+
 ### GitOps using Port CRDs
 
 - [Mapping resources using Port CRDs](./build-your-software-catalog/sync-data-to-catalog/git/gitops-using-port-crd.md)
@@ -92,12 +99,6 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Azure exporter](./build-your-software-catalog/sync-data-to-catalog/azure/azure.md)
 - [Azure Active Directory (AD) SSO](./sso-rbac/sso-providers/azure-ad.md)
 - [Map resource groups, storage groups, compute resources database resources and more](./build-your-software-catalog/sync-data-to-catalog/azure/examples.md)
-
-#### Azure DevOps
-
-- [Sync Azure pipelines](./build-your-software-catalog/sync-data-to-catalog/ci-cd/azure-pipelines/azure-pipelines.md)
-- [Azure pipelines self-service actions](./create-self-service-experiences/setup-backend/azure-pipeline/azure-pipeline.md)
-- [Cookiecutter Azure DevOps scaffolder using Azure DevOps pipelines](./create-self-service-experiences/setup-backend/azure-pipeline/examples/scaffold-repositories-using-cookiecutter.md)
 
 ### GCP
 
