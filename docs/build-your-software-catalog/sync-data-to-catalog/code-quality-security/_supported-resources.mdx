@@ -1,0 +1,16 @@
+:::tip Supported resources
+The following resources can be used to map data from SonarQube, it is possible to reference any field that appears in
+the API responses linked below for the mapping configuration.
+
+- `Project` - represents a SonarQube project. Retrieves data
+  from [`components`](https://next.sonarqube.com/sonarqube/web_api/api/components), [`measures`](https://next.sonarqube.com/sonarqube/web_api/api/measures),
+  and [`branches`](https://next.sonarqube.com/sonarqube/web_api/api/project_branches).
+- [`Issue`](https://next.sonarqube.com/sonarqube/web_api/api/issues)
+- `Analysis` - represents a SonarQube analysis and latest activity.
+
+:::
+
+:::note
+The current version of the Sonarqube integration does not support the `analysis` kind for clients using on-premise
+Sonarqube installation.
+:::
