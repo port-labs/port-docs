@@ -1,0 +1,5 @@
+:::tip
+To manage entities using GitOps and the `port.yml` file, the app listens to a `push` event sent from the Git provider.
+
+This means that if the `port.yml` file exists in the repository before installing the Git app, that file will not be picked up automatically. You will need to make some update to the `port.yml` file and push it to the repository in order for the Git app to properly track and ingest the entity information.
+:::
