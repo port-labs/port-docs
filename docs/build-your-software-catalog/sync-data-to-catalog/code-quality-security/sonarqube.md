@@ -2,7 +2,9 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
 import HelmParameters from "../templates/\_ocean-advanced-parameters-helm.mdx"
+import ResourceMapping from "../templates/\_resource-mapping.mdx"
 import DockerParameters from "./\_docker-parameters.mdx"
+import SupportedResources from "./\_supported-resources.mdx"
 
 # SonarQube
 
@@ -213,114 +215,44 @@ resources:
 The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify,
 concatenate, transform and perform other operations on existing fields and values from SonarQube's API events.
 
-### Configuration structure
+<ResourceMapping name="SonarQube" category="Code quality & security providers" components={{
+SupportedResources: SupportedResources
+}}>
 
-The integration configuration determines which resources will be queried from SonarQube, and which entities and
-properties will be created in Port.
-
-:::tip Supported resources
-The following resources can be used to map data from SonarQube, it is possible to reference any field that appears in
-the API responses linked below for the mapping configuration.
-
-- `Project` - represents a SonarQube project. Retrieves data
-  from [`components`](https://next.sonarqube.com/sonarqube/web_api/api/components), [`measures`](https://next.sonarqube.com/sonarqube/web_api/api/measures),
-  and [`branches`](https://next.sonarqube.com/sonarqube/web_api/api/project_branches).
-- [`Issue`](https://next.sonarqube.com/sonarqube/web_api/api/issues)
-- `Analysis` - represents a SonarQube analysis and latest activity.
-
-:::
-
-:::note
-The current version of the Sonarqube integration does not support the `analysis` kind for clients using on-premise
-Sonarqube installation.
-:::
-
-- The root key of the integration configuration is the `resources` key:
-
-  ```yaml showLineNumbers
-  # highlight-next-line
-  resources:
-    - kind: projects
-      selector:
-      ...
-  ```
-
-- The `kind` key is a specifier for a SonarQube object:
-
-  ```yaml showLineNumbers
-    resources:
-      # highlight-next-line
-      - kind: projects
-        selector:
-        ...
-  ```
-
-- The `selector` and the `query` keys allow you to filter which objects of the specified `kind` will be ingested into
-  your software catalog:
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: projects
-      # highlight-start
-      selector:
-        query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
+```yaml showLineNumbers
+resources:
+  - kind: projects
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          blueprint: '"sonarQubeProject"'
+          identifier: .key
+          title: .name
+          properties:
+            organization: .organization
+            link: .__link
+            lastAnalysisStatus: .__branch.status.qualityGateStatus
+            lastAnalysisDate: .__branch.analysisDate
+            numberOfBugs: .__measures[]? | select(.metric == "bugs") | .value
+            numberOfCodeSmells: .__measures[]? | select(.metric == "code_smells") | .value
+            numberOfVulnerabilities: .__measures[]? | select(.metric == "vulnerabilities") | .value
+            numberOfHotSpots: .__measures[]? | select(.metric == "security_hotspots") | .value
+            numberOfDuplications: .__measures[]? | select(.metric == "duplicated_files") | .value
+            coverage: .__measures[]? | select(.metric == "coverage") | .value
+            mainBranch: .__branch.name
+            tags: .tags
       # highlight-end
-      port:
-  ```
+  - kind: projects # In this instance project is mapped again with a different filter
+    selector:
+      query: '.name == "MyProjectName"'
+    port:
+      entity:
+        mappings: ...
+```
 
-- The `port`, `entity` and the `mappings` keys are used to map the SonarQube object fields to Port entities. To create
-  multiple mappings of the same kind, you can add another item in the `resources` array;
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: projects
-      selector:
-        query: "true"
-      port:
-        entity:
-          mappings:
-            blueprint: '"sonarQubeProject"'
-            identifier: .key
-            title: .name
-            properties:
-              organization: .organization
-              link: .__link
-              lastAnalysisStatus: .__branch.status.qualityGateStatus
-              lastAnalysisDate: .__branch.analysisDate
-              numberOfBugs: .__measures[]? | select(.metric == "bugs") | .value
-              numberOfCodeSmells: .__measures[]? | select(.metric == "code_smells") | .value
-              numberOfVulnerabilities: .__measures[]? | select(.metric == "vulnerabilities") | .value
-              numberOfHotSpots: .__measures[]? | select(.metric == "security_hotspots") | .value
-              numberOfDuplications: .__measures[]? | select(.metric == "duplicated_files") | .value
-              coverage: .__measures[]? | select(.metric == "coverage") | .value
-              mainBranch: .__branch.name
-              tags: .tags
-        # highlight-end
-    - kind: projects # In this instance project is mapped again with a different filter
-      selector:
-        query: '.name == "MyProjectName"'
-      port:
-        entity:
-          mappings: ...
-  ```
-
-:::tip Blueprint key
-Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of
-quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-
-:::
-
-### Ingest data into Port
-
-To ingest SonarQube objects using the [integration configuration](#configuration-structure), you can follow the steps
-below:
-
-1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using SonarQube.
-3. Choose the **Ingest Data** option from the menu.
-4. Select SonarQube under the Code quality & security providers category.
-5. Modify the [configuration](#configuration-structure) according to your needs.
-6. Click `Resync`.
+</ ResourceMapping>
 
 ## Examples
 
