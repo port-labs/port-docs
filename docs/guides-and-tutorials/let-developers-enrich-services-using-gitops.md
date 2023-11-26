@@ -145,9 +145,17 @@ As platform engineers, we want to enable our developers to perform certain actio
 
 <br/><br/>
 
-3. We want the developer to be able to choose the domain to which the service will be assigned. Click on `Add input`, fill out the form like this, then click `Next`:
+4. We want our developers to be able to choose the domain to which the service will be assigned. Click on `Add input`, fill out the form like this, then click `Next`:
 
 <img src='/img/guides/gitopsActionInputDomain.png' width='50%' />
+
+<br/><br/>
+
+5. Let's add two more inputs for our new service properties - `type` and `lifecycle`. Create two new inputs and fill out the forms like this:
+
+<img src='/img/guides/gitopsActionInputType.png' width='50%' />
+
+<img src='/img/guides/gitopsActionInputLifecycle.png' width='50%' />
 
 #### Create the action's backend
 
@@ -185,8 +193,8 @@ Our action will create a pull-request in the service's repository, containing a 
 - identifier: "{{ service_identifier }}"
   blueprint: service
   properties:
-    type: backend
-    lifecycle: Production
+    type: "{{ service_type }}"
+    lifecycle: "{{ service_lifecycle }}"
   relations:
     domain: "{{ domain_identifier }}"
 ```
@@ -206,6 +214,14 @@ on:
       domain:
         required: true
         description: The domain to which the service will be assigned
+        type: string
+      type:
+        required: true
+        description: The service's type
+        type: string
+      lifecycle:
+        required: true
+        description: The service's lifecycle
         type: string
       port_payload:
         required: true
@@ -228,6 +244,8 @@ jobs:
         run: |
           sed -i 's/{{ service_identifier }}/${{fromJson(inputs.port_payload).context.entity}}/' ./targetRepo/port.yml
           sed -i 's/{{ domain_identifier }}/${{ inputs.domain }}/' ./targetRepo/port.yml
+          sed -i 's/{{ service_type }}/${{ inputs.type }}/' ./targetRepo/port.yml
+          sed -i 's/{{ service_lifecycle }}/${{ inputs.lifecycle }}/' ./targetRepo/port.yml
       - name: Open a pull request
         uses: peter-evans/create-pull-request@v5
         with:
@@ -261,7 +279,7 @@ The action is ready to be executed 🚀
 
 1. After creating an action, it will appear under the [Self-service page](https://app.getport.io/self-serve). Find your new `Enrich service` action, and click on `Execute`.
 
-2. Choose a service from the dropdown, and choose a domain to assign it to, then click `Execute`:
+2. Choose a service from the dropdown, a domain to assign it to, and any values for its type and lifecycle, then click `Execute`:
 
 <img src='/img/guides/gitopsEnrichActionExecute.png' width='50%' />
 
@@ -269,7 +287,7 @@ The action is ready to be executed 🚀
 
 3. A small popup will appear, click on `View details`:
 
-<img src='/img/guides/gitopsActionExecutePopup.png' width='50%' />
+<img src='/img/guides/gitopsActionExecutePopup.png' width='40%' />
 
 <br/><br/>
 
