@@ -1,20 +1,26 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
+import HelmPrerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
+import HelmParameters from "../templates/\_ocean-advanced-parameters-helm.mdx"
+import ResourceMapping from "../templates/\_resource-mapping.mdx"
+import DockerParameters from "./\_docker-parameters.mdx"
+import SupportedResources from "./\_supported-resources.mdx"
 
 # SonarQube
 
-Our SonarQube integration allows you to import `projects`, `issues` and `analyses` from your SonarQube account into Port, according to your mapping and definitions.
+Our SonarQube integration allows you to import `projects`, `issues` and `analyses` from your SonarQube account into
+Port, according to your mapping and definitions.
 
 ## Common use cases
 
 - Map `projects`, `issues` and `analyses` in your SonarQube organization environment.
-- Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
+- Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in
+  Port.
 - Create/delete SonarQube objects using self-service actions.
 
 ## Prerequisites
 
-<Prerequisites />
+<HelmPrerequisites />
 
 ## Installation
 
@@ -29,20 +35,16 @@ Using this installation option means that the integration will be able to update
 This table summarizes the available parameters for the installation.
 Set them as you wish in the script below, then copy it and run it in your terminal:
 
-| Parameter                                | Description                                                                                                   | Required |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------- |
-| `port.clientId`                          | Your port client id                                                                                           | ✅       |
-| `port.clientSecret`                      | Your port client secret                                                                                       | ✅       |
-| `port.baseUrl`                           | Your port base url, relevant only if not using the default port app                                           | ❌       |
-| `integration.identifier`                 | Change the identifier to describe your integration                                                            | ✅       |
-| `integration.type`                       | The integration type                                                                                          | ✅       |
-| `integration.eventListener.type`         | The event listener type                                                                                       | ✅       |
-| `integration.secrets.sonarApiToken`      | The SonarQube API token                                                                                       | ✅       |
-| `integration.config.sonarOrganizationId` | The SonarQube organization ID                                                                                 | ✅       |
-| `integration.config.appHost`             | The host to subscribe webhooks to , specify if you want to subscribe to webhooks                              | ❌       |
-| `integration.config.sonarUrl`            | Required if using **On-Prem**, The SonarQube URL                                                              | ❌       |
-| `scheduledResyncInterval`                | The number of minutes between each resync                                                                     | ❌       |
-| `initializePortResources`                | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
+| Parameter                                | Description                                                                                                                                                                                      | Example | Required |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- | -------- |
+| `port.clientId`                          | Your port client id ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))                                     |         | ✅       |
+| `port.clientSecret`                      | Your port client secret ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))                                 |         | ✅       |
+| `integration.secrets.sonarApiToken`      | The [SonarQube API token](https://docs.sonarsource.com/sonarqube/9.8/user-guide/user-account/generating-and-using-tokens/#generating-a-token)                                                    |         | ✅       |
+| `integration.config.sonarOrganizationId` | The SonarQube [organization Key](https://docs.sonarsource.com/sonarcloud/appendices/project-information/#project-and-organization-keys) (Leave this empty when using on-prem sonarqube instance) |         | ✅       |
+| `integration.config.appHost`             | A URL bounded to the integration container that can be accessed by sonarqube. When used the integration will create webhooks on top of sonarqube to listen to any live changes in the data       |         | ❌       |
+| `integration.config.sonarUrl`            | Required if using **On-Prem**, Your SonarQube instance URL                                                                                                                                       |         | ❌       |
+
+<HelmParameters />
 
 <br/>
 
@@ -51,38 +53,32 @@ helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-sonarqube-integration port-labs/port-ocean \
 	--set port.clientId="PORT_CLIENT_ID"  \
 	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
 	--set initializePortResources=true  \
 	--set scheduledResyncInterval=120  \
 	--set integration.identifier="my-sonarqube-integration"  \
 	--set integration.type="sonarqube"  \
 	--set integration.eventListener.type="POLLING"  \
-	--set integration.secrets.sonarApiToken="string"  \
-	--set integration.config.sonarOrganizationId="string"
+	--set integration.secrets.sonarApiToken="MY_API_TOKEN"  \
+	--set integration.config.sonarOrganizationId="MY_ORG_KEY"
 ```
 
 </TabItem>
 
 <TabItem value="one-time" label="One Time">
 
+  <Tabs groupId="cicd-method" queryString="cicd-method">
+  <TabItem value="github" label="GitHub">
 This workflow will run the SonarQube integration once and then exit, this is useful for **one time** ingestion of data.
 
 :::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
+If you want the integration to update Port in real time using webhooks you should use
+the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
 :::
 
-Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
+Make sure to configure the
+following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
-| Parameter                                           | Description                                                                                                        | Required |
-| --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
-| `OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN`       | The SonarQube API token                                                                                            | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID` | The SonarQube organization ID                                                                                      | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__SONAR_URL`             | Required if using **On-Prem**, The SonarQube URL                                                                   | ❌       |
-| `OCEAN__INITIALIZE_PORT_RESOURCES`                  | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
-| `OCEAN__INTEGRATION__IDENTIFIER`                    | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
-| `OCEAN__PORT__CLIENT_ID`                            | Your port client id                                                                                                | ✅       |
-| `OCEAN__PORT__CLIENT_SECRET`                        | Your port client secret                                                                                            | ✅       |
-| `OCEAN__PORT__BASE_URL`                             | Your port base url, relevant only if not using the default port app                                                | ❌       |
+<DockerParameters />
 
 <br/>
 
@@ -120,6 +116,66 @@ jobs:
           $image_name
 ```
 
+  </TabItem>
+  <TabItem value="jenkins" label="Jenkins">
+This pipeline will run the SonarQube integration once and then exit, this is useful for **one time** ingestion of data.
+
+:::tip
+Your Jenkins agent should be able to run docker commands.
+:::
+:::warning
+If you want the integration to update Port in real time using webhooks you should use
+the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+:::
+
+Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
+of `Secret Text` type:
+
+<DockerParameters />
+
+<br/>
+
+Here is an example for `Jenkinsfile` groovy pipeline file:
+
+```text showLineNumbers
+pipeline {
+    agent any
+
+    stages {
+        stage('Run SonarQube Integration') {
+            steps {
+                script {
+                    withCredentials([
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN', variable: 'OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN'),
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID', variable: 'OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID'),
+                        string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
+                        string(credentialsId: 'OCEAN__PORT__CLIENT_SECRET', variable: 'OCEAN__PORT__CLIENT_SECRET'),
+                    ]) {
+                        sh('''
+                            #Set Docker image and run the container
+                            integration_type="sonarqube"
+                            version="latest"
+                            image_name="ghcr.io/port-labs/port-ocean-${integration_type}:${version}"
+                            docker run -i --rm --platform=linux/amd64 \
+                                -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+                                -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+                                -e OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN=$OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN \
+                                -e OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID=$OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID \
+                                -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
+                                -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
+                                $image_name
+                        ''')
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+  </TabItem>
+  </Tabs>
+
 </TabItem>
 
 </Tabs>
@@ -156,107 +212,47 @@ resources:
             tags: .tags
 ```
 
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from SonarQube's API events.
+The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify,
+concatenate, transform and perform other operations on existing fields and values from SonarQube's API events.
 
-### Configuration structure
+<ResourceMapping name="SonarQube" category="Code quality & security providers" components={{
+SupportedResources: SupportedResources
+}}>
 
-The integration configuration determines which resources will be queried from SonarQube, and which entities and properties will be created in Port.
-
-:::tip Supported resources
-The following resources can be used to map data from SonarQube, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
-
-- `Project` - represents a SonarQube project. Retrieves data from [`components`](https://next.sonarqube.com/sonarqube/web_api/api/components), [`measures`](https://next.sonarqube.com/sonarqube/web_api/api/measures), and [`branches`](https://next.sonarqube.com/sonarqube/web_api/api/project_branches).
-- [`Issue`](https://next.sonarqube.com/sonarqube/web_api/api/issues)
-- `Analysis` - represents a SonarQube analysis and latest activity.
-
-:::
-
-:::note
-The current version of the Sonarqube integration does not support the `analysis` kind for clients using on-premise Sonarqube installation.
-:::
-
-- The root key of the integration configuration is the `resources` key:
-
-  ```yaml showLineNumbers
-  # highlight-next-line
-  resources:
-    - kind: projects
-      selector:
-      ...
-  ```
-
-- The `kind` key is a specifier for a SonarQube object:
-
-  ```yaml showLineNumbers
-    resources:
-      # highlight-next-line
-      - kind: projects
-        selector:
-        ...
-  ```
-
-- The `selector` and the `query` keys allow you to filter which objects of the specified `kind` will be ingested into your software catalog:
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: projects
-      # highlight-start
-      selector:
-        query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
+```yaml showLineNumbers
+resources:
+  - kind: projects
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          blueprint: '"sonarQubeProject"'
+          identifier: .key
+          title: .name
+          properties:
+            organization: .organization
+            link: .__link
+            lastAnalysisStatus: .__branch.status.qualityGateStatus
+            lastAnalysisDate: .__branch.analysisDate
+            numberOfBugs: .__measures[]? | select(.metric == "bugs") | .value
+            numberOfCodeSmells: .__measures[]? | select(.metric == "code_smells") | .value
+            numberOfVulnerabilities: .__measures[]? | select(.metric == "vulnerabilities") | .value
+            numberOfHotSpots: .__measures[]? | select(.metric == "security_hotspots") | .value
+            numberOfDuplications: .__measures[]? | select(.metric == "duplicated_files") | .value
+            coverage: .__measures[]? | select(.metric == "coverage") | .value
+            mainBranch: .__branch.name
+            tags: .tags
       # highlight-end
-      port:
-  ```
+  - kind: projects # In this instance project is mapped again with a different filter
+    selector:
+      query: '.name == "MyProjectName"'
+    port:
+      entity:
+        mappings: ...
+```
 
-- The `port`, `entity` and the `mappings` keys are used to map the SonarQube object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: projects
-      selector:
-        query: "true"
-      port:
-        entity:
-          mappings:
-            blueprint: '"sonarQubeProject"'
-            identifier: .key
-            title: .name
-            properties:
-              organization: .organization
-              link: .__link
-              lastAnalysisStatus: .__branch.status.qualityGateStatus
-              lastAnalysisDate: .__branch.analysisDate
-              numberOfBugs: .__measures[]? | select(.metric == "bugs") | .value
-              numberOfCodeSmells: .__measures[]? | select(.metric == "code_smells") | .value
-              numberOfVulnerabilities: .__measures[]? | select(.metric == "vulnerabilities") | .value
-              numberOfHotSpots: .__measures[]? | select(.metric == "security_hotspots") | .value
-              numberOfDuplications: .__measures[]? | select(.metric == "duplicated_files") | .value
-              coverage: .__measures[]? | select(.metric == "coverage") | .value
-              mainBranch: .__branch.name
-              tags: .tags
-        # highlight-end
-    - kind: projects # In this instance project is mapped again with a different filter
-      selector:
-        query: '.name == "MyProjectName"'
-      port:
-        entity:
-          mappings: ...
-  ```
-
-:::tip Blueprint key
-Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-
-:::
-
-### Ingest data into Port
-
-To ingest SonarQube objects using the [integration configuration](#configuration-structure), you can follow the steps below:
-
-1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using SonarQube.
-3. Choose the **Ingest Data** option from the menu.
-4. Select SonarQube under the Code quality & security providers category.
-5. Modify the [configuration](#configuration-structure) according to your needs.
-6. Click `Resync`.
+</ ResourceMapping>
 
 ## Examples
 
@@ -555,7 +551,9 @@ resources:
 
 ## Let's Test It
 
-This section includes a sample response data from SonarQube when a code repository is scanned for quality assurance. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+This section includes a sample response data from SonarQube when a code repository is scanned for quality assurance. In
+addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous
+section.
 
 ### Payload
 
