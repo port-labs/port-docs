@@ -151,11 +151,24 @@ As platform engineers, we want to enable our developers to perform certain actio
 
 <br/><br/>
 
-5. Let's add two more inputs for our new service properties - `type` and `lifecycle`. Create two new inputs and fill out the forms like this:
+5. Let's add two more inputs for our new service properties - `type` and `lifecycle`. Create two new inputs, fill out their forms like this, then click `Next`:
 
 <img src='/img/guides/gitopsActionInputType.png' width='50%' />
 
 <img src='/img/guides/gitopsActionInputLifecycle.png' width='50%' />
+
+<br/><br/>
+
+6. Now we'll define the backend of the action. Port supports multiple invocation types, for this tutorial we will use a `Github workflow`.
+   - Replace the `Organization` and `Repository` values with your values (this is where the workflow will reside and run).
+   - Name the workflow `portEnrichService.yaml`.
+   - Fill out the rest of the form like this, then click `Next`:
+
+<img src='/img/guides/gitopsActionBackendForm.png' width='75%' />
+
+<br/><br/>
+
+7. The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Create`.
 
 #### Create the action's backend
 
