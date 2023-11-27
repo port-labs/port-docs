@@ -97,9 +97,9 @@ In order to deploy the application, you will need to fill in the following param
 
 2. Create the [`IAM policy`](#iam-policy) that provides permissions to `list` and `read` the AWS resources in the `config.json`;
 
-   :::tip Create a policy
-   An IAM policy reference is available [here](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_create.html).
-   :::
+:::tip Create a policy
+An IAM policy reference is available [here](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_create.html).
+:::
 
 3. Deploy our [`serverless application`](#exporter-aws-serverless-application).
 
@@ -169,37 +169,39 @@ In order to deploy the application, you will need to fill in the following param
 
    </Tabs>
 
-   :::info
+:::info
 
-   After the deployment is complete, use the following AWS SAM CLI command to get a useful list of the exporter's resources:
+After the deployment is complete, use the following AWS SAM CLI command to get a useful list of the exporter's resources:
 
-   ```bash showLineNumbers
-   sam list stack-outputs --stack-name serverlessrepo-port-aws-exporter
-   ```
+```bash showLineNumbers
+sam list stack-outputs --stack-name serverlessrepo-port-aws-exporter
+```
 
-   The list includes:
+The list includes:
 
-   - `Lambda Function ARN` - the ARN of the exporter's Lambda;
-   - `Port Credentials Secret ARN` - the ARN of the Port credentials secret;
-   - `ConfigBucketName` - the exporter's bucket name.
+- `Lambda Function ARN` - the ARN of the exporter's Lambda;
+- `Port Credentials Secret ARN` - the ARN of the Port credentials secret;
+- `ConfigBucketName` - the exporter's bucket name.
 
-   :::
+:::
 
-   :::tip Deploy a serverless application
-   For more information regarding how to deploy a serverless application, click [here](https://docs.aws.amazon.com/serverlessrepo/latest/devguide/serverlessrepo-how-to-consume.html).
-   :::
+:::tip Deploy a serverless application
+
+For more information regarding how to deploy a serverless application, click [here](https://docs.aws.amazon.com/serverlessrepo/latest/devguide/serverlessrepo-how-to-consume.html).
+
+:::
 
 4. Update the [`Port credentials secret`](#port-credentials-secret) with your credentials;
 
-   :::tip Modify a secret
-   To learn how to modify a secret's value, look [here](https://docs.aws.amazon.com/secretsmanager/latest/userguide/manage_update-secret.html).
-   :::
+:::tip Modify a secret
+To learn how to modify a secret's value, look [here](https://docs.aws.amazon.com/secretsmanager/latest/userguide/manage_update-secret.html).
+:::
 
 5. Upload the `config.json` to the [exporter's S3 bucket](#exporter-s3-bucket).
 
-   :::tip Upload a file to an S3 bucket
-   To learn how to upload a file to S3, look [here](https://docs.aws.amazon.com/AmazonS3/latest/userguide/upload-objects.html).
-   :::
+:::tip Upload a file to an S3 bucket
+To learn how to upload a file to S3, look [here](https://docs.aws.amazon.com/AmazonS3/latest/userguide/upload-objects.html).
+:::
 
 ### Test the application
 
