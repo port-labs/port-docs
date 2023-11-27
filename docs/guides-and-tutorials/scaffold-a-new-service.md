@@ -13,7 +13,6 @@ This guide takes 7 minutes to complete, and aims to demonstrate the power of sel
 :::tip Prerequisites
 
 - This guide assumes you have a Port account and a basic knowledge of working with Port. If you haven't done so, go ahead and complete the [quickstart](/quickstart).
-
 - You will need a Github repository in which you can place a workflow that we will use in this guide. If you don't have one, we recommend [creating a new repository](https://docs.github.com/en/get-started/quickstart/create-a-repo) named `Port-actions`.
 
 :::
