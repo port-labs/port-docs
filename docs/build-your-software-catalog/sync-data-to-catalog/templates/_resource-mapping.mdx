@@ -1,0 +1,62 @@
+### Configuration structure
+
+The integration configuration determines which resources will be queried from {props.name}, and which entities and
+properties will be created in Port.
+
+<SupportedResources />
+
+- The root key of the integration configuration is the `resources` key:
+
+```yaml showLineNumbers
+# highlight-next-line
+resources:
+  - kind: ONE_OF_THE_SUPPORTED_KINDS
+    selector:
+    ...
+```
+
+- The `kind` key is a specifier for a {props.name} object:
+
+```yaml showLineNumbers
+  resources:
+    # highlight-next-line
+    - kind: ONE_OF_THE_SUPPORTED_KINDS
+      selector:
+      ...
+```
+
+- The `selector` and the `query` keys allow you to filter which objects of the specified `kind` will be ingested into
+  your software catalog:
+
+```yaml showLineNumbers
+resources:
+  - kind: { props.customKind }
+    # highlight-start
+    selector:
+      query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
+    # highlight-end
+    port:
+```
+
+- The `port`, `entity` and the `mappings` keys are used to map the {props.name} object fields to Port entities. To create
+  multiple mappings of the same kind, you can add another item in the `resources` array;
+
+{props.children}
+
+:::tip Blueprint key
+Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of
+quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
+
+:::
+
+### Ingest data into Port
+
+To ingest SonarQube objects using the [integration configuration](#configuration-structure), you can follow the steps
+below:
+
+1. Go to the DevPortal Builder page.
+2. Select a blueprint you want to ingest using SonarQube.
+3. Choose the **Ingest Data** option from the menu.
+4. Select {props.name} under the {props.category} category.
+5. Modify the [configuration](#configuration-structure) according to your needs.
+6. Click `Resync`.
