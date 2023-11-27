@@ -102,3 +102,9 @@ The provided example demonstrates how to pull data from Datadog's REST API at sc
 In this example, you will create a `service` blueprint that ingests all services and their related dependencies in your Datadog APM using REST API. You will then add some shell script to create new entities in Port every time GitLab CI is triggered by a schedule.
 
 - [GitLab CI Pipeline Example](https://github.com/port-labs/datadog-service-dependency-example)
+
+## Ingest service catalog
+
+In this example, you will create a `datadogServiceCatalog` blueprint that ingests all service catalogs from your Datadog account. You will then add some python script to make API calls to Datadog REST API and fetch data for your account.
+
+- [Code Repository Example](https://github.com/port-labs/datadog-service-catalog)
