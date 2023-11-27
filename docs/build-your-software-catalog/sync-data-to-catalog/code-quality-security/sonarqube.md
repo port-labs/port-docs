@@ -44,6 +44,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `integration.config.appHost`             | A URL bounded to the integration container that can be accessed by sonarqube. When used the integration will create webhooks on top of sonarqube to listen to any live changes in the data   | https://my-ocean-integration.com    | ❌       |
 | `integration.config.sonarUrl`            | Required if using **On-Prem**, Your SonarQube instance URL                                                                                                                                   | https://my-sonar-cloud-instance.com | ❌       |
 
+
 <HelmParameters />
 
 <br/>
