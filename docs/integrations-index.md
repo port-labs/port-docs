@@ -182,6 +182,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 - [Embed dashboards from Datadog](./customize-pages-dashboards-and-plugins/tabs/embedded-url/embedded-url.md#datadog-dashboard)
 - [Datadog webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/datadog.md)
+- [Datadog service catalog](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/datadog.md#ingest-service-catalog)
 
 ## Kafka
 
