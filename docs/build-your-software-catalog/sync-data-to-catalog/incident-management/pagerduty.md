@@ -242,8 +242,11 @@ Examples of blueprints and the relevant integration configurations:
       },
       "oncall": {
         "title": "On Call",
-        "type": "string",
-        "format": "user"
+        "type": "array",
+        "items": {
+          "type": "string",
+          "format": "email"
+        }
       }
     },
     "required": []
@@ -275,7 +278,7 @@ resources:
           properties:
             status: .status
             url: .html_url
-            oncall: .__oncall_user[0].user.email
+            oncall: "[.__oncall_user[].user.email]"
 ```
 
 </details>
