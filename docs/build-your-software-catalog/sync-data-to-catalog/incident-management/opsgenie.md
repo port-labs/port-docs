@@ -62,7 +62,8 @@ helm upgrade --install my-opsgenie-integration port-labs/port-ocean \
 </TabItem>
 
 <TabItem value="one-time" label="One Time">
-
+  <Tabs groupId="cicd-method" queryString="cicd-method">
+  <TabItem value="github" label="GitHub">
 This workflow will run the Opsgenie integration once and then exit, this is useful for **one time** ingestion of data.
 
 :::warning
@@ -116,6 +117,71 @@ jobs:
           $image_name
 ```
 
+  </TabItem>
+  <TabItem value="jenkins" label="Jenkins">
+This pipeline will run the Kubecost integration once and then exit, this is useful for **one time** ingestion of data.
+
+:::tip
+Your Jenkins agent should be able to run docker commands.
+:::
+:::warning
+If you want the integration to update Port in real time using webhooks you should use
+the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+:::
+
+Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
+of `Secret Text` type:
+
+| Parameter                               | Description                                                                                                        | Required |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
+| `OCEAN__INTEGRATION__CONFIG__API_TOKEN` | The Opsgenie API token                                                                                             | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__API_URL`   | The Opsgenie API URL                                                                                               | ✅       |
+| `OCEAN__INITIALIZE_PORT_RESOURCES`      | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
+| `OCEAN__INTEGRATION__IDENTIFIER`        | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
+| `OCEAN__PORT__CLIENT_ID`                | Your port client id                                                                                                | ✅       |
+| `OCEAN__PORT__CLIENT_SECRET`            | Your port client secret                                                                                            | ✅       |
+| `OCEAN__PORT__BASE_URL`                 | Your port base url, relevant only if not using the default port app                                                | ❌       |
+
+<br/>
+
+Here is an example for `Jenkinsfile` groovy pipeline file:
+
+```text showLineNumbers
+pipeline {
+    agent any
+
+    stages {
+        stage('Run Opsgenie Integration') {
+            steps {
+                script {
+                    withCredentials([
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__KUBECOST_HOST', variable: 'OCEAN__INTEGRATION__CONFIG__KUBECOST_HOST'),
+                        string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
+                        string(credentialsId: 'OCEAN__PORT__CLIENT_SECRET', variable: 'OCEAN__PORT__CLIENT_SECRET'),
+                    ]) {
+                        sh('''
+                            #Set Docker image and run the container
+                            integration_type="kubecost"
+                            version="latest"
+                            image_name="ghcr.io/port-labs/port-ocean-${integration_type}:${version}"
+                            docker run -i --rm --platform=linux/amd64 \
+                                -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+                                -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+                                -e OCEAN__INTEGRATION__CONFIG__KUBECOST_HOST=$OCEAN__INTEGRATION__CONFIG__KUBECOST_HOST \
+                                -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
+                                -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
+                                $image_name
+                        ''')
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+  </TabItem>
+  </Tabs>
 </TabItem>
 
 </Tabs>
