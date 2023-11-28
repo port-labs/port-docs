@@ -58,7 +58,6 @@ This page contains a list of Port's available integrations, organized by the pla
 ## Kubernetes
 
 - [K8s exporter](./build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md)
-- [Map ArgoCD](./build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/argocd.md)
 - [Map Istio](./build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/istio.md)
 - [Map Knative](./build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/knative.md)
 - [Map Red Hat Openshift](./build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/openshift.md)
