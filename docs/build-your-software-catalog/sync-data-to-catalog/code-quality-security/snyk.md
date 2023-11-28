@@ -65,7 +65,8 @@ helm upgrade --install my-snyk-integration port-labs/port-ocean \
 </TabItem>
 
 <TabItem value="one-time" label="One Time">
-
+  <Tabs groupId="cicd-method" queryString="cicd-method">
+  <TabItem value="github" label="GitHub">
 This workflow will run the Snyk integration once and then exit, this is useful for **one time** ingestion of data.
 
 :::warning
@@ -120,6 +121,74 @@ jobs:
           $image_name
 ```
 
+</TabItem>
+  <TabItem value="jenkins" label="Jenkins">
+This pipeline will run the Snyk integration once and then exit, this is useful for **one time** ingestion of data.
+
+:::tip
+Your Jenkins agent should be able to run docker commands.
+:::
+:::warning
+If you want the integration to update Port in real time using webhooks you should use
+the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+:::
+
+Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
+of `Secret Text` type:
+
+| Parameter                                     | Description                                                                                                                                                      | Required |
+| --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `OCEAN__INTEGRATION__CONFIG__TOKEN`           | The Snyk API token                                                                                                                                               | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID` | The Snyk organization ID                                                                                                                                         | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__API_URL`         | The Snyk API URL. If not specified, the default will be https://api.snyk.io                                                                                      | ❌       |
+| `OCEAN__INITIALIZE_PORT_RESOURCES`            | Default true, When set to false the integration will not create default blueprints and the port App config Mapping                                               | ❌       |
+| `OCEAN__INTEGRATION__IDENTIFIER`              | Change the identifier to describe your integration, if not set will use the default one                                                                          | ❌       |
+| `OCEAN__PORT__CLIENT_ID`                      | Your port client id ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))     | ✅       |
+| `OCEAN__PORT__CLIENT_SECRET`                  | Your port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)) secret | ✅       |
+| `OCEAN__PORT__BASE_URL`                       | Your port base url, relevant only if not using the default port app                                                                                              | ❌       |
+
+<br/>
+
+Here is an example for `Jenkinsfile` groovy pipeline file:
+
+```text showLineNumbers
+pipeline {
+    agent any
+
+    stages {
+        stage('Run Snyk Integration') {
+            steps {
+                script {
+                    withCredentials([
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__TOKEN', variable: 'OCEAN__INTEGRATION__CONFIG__TOKEN'),
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID', variable: 'OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID'),
+                        string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
+                        string(credentialsId: 'OCEAN__PORT__CLIENT_SECRET', variable: 'OCEAN__PORT__CLIENT_SECRET'),
+                    ]) {
+                        sh('''
+                            #Set Docker image and run the container
+                            integration_type="snyk"
+                            version="latest"
+                            image_name="ghcr.io/port-labs/port-ocean-${integration_type}:${version}"
+                            docker run -i --rm --platform=linux/amd64 \
+                                -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+                                -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+                                -e OCEAN__INTEGRATION__CONFIG__TOKEN=$OCEAN__INTEGRATION__CONFIG__TOKEN \
+                                -e OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID=$OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID \
+                                -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
+                                -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
+                                $image_name
+                        ''')
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+  </TabItem>
+  </Tabs>
 </TabItem>
 
 </Tabs>
