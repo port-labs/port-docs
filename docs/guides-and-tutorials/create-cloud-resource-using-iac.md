@@ -78,7 +78,7 @@ This property is empty for now in all services, we will fill it as part of the a
 
 <br/><br/>
 
-6. The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Create`.
+7. The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Create`.
 
 The action's frontend is now ready 🥳
 
