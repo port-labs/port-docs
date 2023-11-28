@@ -394,7 +394,7 @@ The `containsAny` operator checks if **any** of the specified strings exist in t
 
 <TabItem value="in">
 
-The `in` operator checks if a sub group of values exist in a specified property of type array:
+The `in` operator checks if a `string` property is equal to one or more specified `string` values:
 
 <Tabs values={[
 {label: "Standard", value: "array"},
@@ -405,7 +405,7 @@ The `in` operator checks if a sub group of values exist in a specified property 
 
 ```json showLineNumbers
 {
-  "property": "myArrayProperty",
+  "property": "myStringProperty",
   "operator": "in",
   "value": ["Value1", "Value2"]
 }
