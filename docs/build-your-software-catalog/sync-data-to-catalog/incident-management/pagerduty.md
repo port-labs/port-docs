@@ -65,9 +65,9 @@ helm upgrade --install my-pagerduty-integration port-labs/port-ocean \
 
 </TabItem>
 
-<TabItem value="one-time" label="One Time">
+<TabItem value="one-time" label="Scheduled">
 
-This workflow will run the PagerDuty integration once and then exit, this is useful for **one time** ingestion of data.
+This workflow will run the PagerDuty integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::warning
 If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
