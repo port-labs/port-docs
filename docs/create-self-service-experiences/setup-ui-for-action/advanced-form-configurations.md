@@ -1,17 +1,27 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Advanced Form Configurations
+# Advanced input configurations
 
-Advanced user form settings allow you to create more customizable experiences for users who perform self-service actions. This is done by creating an adaptive user form that changes according to data about the entity, the user, and the user form inputs.
+Advanced input settings allow you to create more customizable experiences for users who perform self-service actions. This is done by creating adaptive inputs that change according to data about the entity, the user, and other inputs.
 
-### Common Use Cases
+### Common use-cases
 
 - Filter the available options in a dropdown input.
 - Create a dependency between inputs to allow the user to select a value based on the value of another input.
 - Define dynamic default values based on the logged-in user properties(such as teams, email, role) or the entity that the action is being executed on (for day-2 or delete actions only).
 
-#### building such actions can be done by leveraging 4 keys in the action's schema:
+### Usage
+
+Defining advanced inputs is currently supported in JSON-mode only.
+
+When creating an action, the second step is defining its inputs. After defining at least one input, an `Advanced configuration` section will appear in the bottom of the form. Click on `Edit JSON`, then add your configuration in JSON format.
+
+<img src='/img/self-service-actions/advancedInputsFormExample.png' width='60%' />
+
+#### Writing your configuration schema
+
+Port provides 4 keys that you can leverage to create complex inputs:
 
 <Tabs
 defaultValue="visible"
@@ -77,7 +87,7 @@ In the example below, the `SDK` input depends on the `Language` input:
 </TabItem>
 <TabItem value="Dataset">
 
-The `dataset` property is used to filter the displayed options in an "entity" input. It is comprised of two properties:
+The `dataset` property is used to filter the displayed options in an [entity](/create-self-service-experiences/setup-ui-for-action/user-inputs/entity) input. It is comprised of two properties:
 
 - `Combinator` - the logical operation to apply between the rules of the dataset. [Read more](/search-and-query/#combinator).
 - `Rules` - an array of [rules](/search-and-query/#rules), only entities that pass them will be displayed in the form.
@@ -286,7 +296,7 @@ Keys that are supported with jqQuery expressions:
 
 ---
 
-## Usage examples
+## Schema examples
 
 ### Creating a dependency between two form inputs
 
