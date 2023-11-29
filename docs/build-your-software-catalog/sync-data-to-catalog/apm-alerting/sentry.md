@@ -135,16 +135,16 @@ If you want the integration to update Port in real time using webhooks you shoul
 
 Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) of `Secret Text` type:
 
-| Parameter                                         | Description                                                                                                        | Required |
-| ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
-| `OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN`        | The Sentry API token                                                                                               | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__SENTRY_HOST`         | The Sentry host. For example https://sentry.io                                                                     | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION` | The Sentry organization slug                                                                                       | ✅       |
-| `OCEAN__INITIALIZE_PORT_RESOURCES`                | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
-| `OCEAN__INTEGRATION__IDENTIFIER`                  | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
-| `OCEAN__PORT__CLIENT_ID`                          | Your port client id                                                                                                | ✅       |
-| `OCEAN__PORT__CLIENT_SECRET`                      | Your port client secret                                                                                            | ✅       |
-| `OCEAN__PORT__BASE_URL`                           | Your port base url, relevant only if not using the default port app                                                | ❌       |
+| Parameter                                         | Description                                                                                                                                                      | Required |
+| ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN`        | The Sentry API token                                                                                                                                             | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__SENTRY_HOST`         | The Sentry host. For example https://sentry.io                                                                                                                   | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION` | The Sentry organization slug                                                                                                                                     | ✅       |
+| `OCEAN__INITIALIZE_PORT_RESOURCES`                | Default true, When set to false the integration will not create default blueprints and the port App config Mapping                                               | ❌       |
+| `OCEAN__INTEGRATION__IDENTIFIER`                  | Change the identifier to describe your integration, if not set will use the default one                                                                          | ❌       |
+| `OCEAN__PORT__CLIENT_ID`                          | Your port client id ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))     | ✅       |
+| `OCEAN__PORT__CLIENT_SECRET`                      | Your port client secret ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)) | ✅       |
+| `OCEAN__PORT__BASE_URL`                           | Your port base url, relevant only if not using the default port app                                                                                              | ❌       |
 
 <br/>
 
