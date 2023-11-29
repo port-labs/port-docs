@@ -102,7 +102,7 @@ Here is an example for `newrelic-integration.yml` workflow file:
 :::note
 If you are using New Relic's EU region, add the following flag to the docker command:
 
-`-e OCEAN__INTEGRATION__CONFIG__NEW_RELIC_GRAPHQL_URL=https://api.eu.newrelic.com/graphql`
+`-e OCEAN__INTEGRATION__CONFIG__NEW_RELIC_URL=https://api.eu.newrelic.com/graphql`
 :::
 
 ```yaml showLineNumbers
@@ -166,7 +166,7 @@ Here is an example for `Jenkinsfile` groovy pipeline file:
 :::note
 If you are using New Relic's EU region, add the following flag to the docker command:
 
-`-e OCEAN__INTEGRATION__CONFIG__NEW_RELIC_GRAPHQL_URL=https://api.eu.newrelic.com/graphql`
+`-e OCEAN__INTEGRATION__CONFIG__NEW_RELIC_URL=https://api.eu.newrelic.com/graphql`
 :::
 
 ```yml showLineNumbers
