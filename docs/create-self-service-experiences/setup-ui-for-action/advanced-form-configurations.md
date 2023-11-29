@@ -87,7 +87,7 @@ In the example below, the `SDK` input depends on the `Language` input:
 </TabItem>
 <TabItem value="Dataset">
 
-The `dataset` property is used to filter the displayed options in an "entity" input. It is comprised of two properties:
+The `dataset` property is used to filter the displayed options in an [entity](/create-self-service-experiences/setup-ui-for-action/user-inputs/entity) input. It is comprised of two properties:
 
 - `Combinator` - the logical operation to apply between the rules of the dataset. [Read more](/search-and-query/#combinator).
 - `Rules` - an array of [rules](/search-and-query/#rules), only entities that pass them will be displayed in the form.
