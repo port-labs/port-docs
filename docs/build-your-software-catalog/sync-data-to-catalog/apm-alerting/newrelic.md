@@ -2,9 +2,9 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
 
-# New relic
+# New Relic
 
-Our Newrelic integration allows you to import `entities` and `issues` from your Newrelic cloud account into Port, according to your mapping and definition.
+Our New Relic integration allows you to import `entities` and `issues` from your New Relic cloud account into Port, according to your mapping and definition.
 
 An `Entity` can be a host, an application, a service, a database, or any other component that sends data to New Relic.  
 An `Issue` is a group of incidents that describe the underlying problem of your symptoms.
@@ -20,10 +20,34 @@ An `Issue` is a group of incidents that describe the underlying problem of your 
 
 ## Installation
 
-Install the integration via Helm by running this command:
+Choose one of the following installation methods:
+
+<Tabs groupId="installation-methods" queryString="installation-methods">
+
+<TabItem value="real-time-always-on" label="Real Time & Always On" default>
+
+Using this installation option means that the integration will be able to update Port in real time.
+
+This table summarizes the available parameters for the installation.
+Set them as you wish in the script below, then copy it and run it in your terminal:
+
+| Parameter                               | Description                                                                                                   | Required |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------- |
+| `port.clientId`                         | Your port client id                                                                                           | ✅       |
+| `port.clientSecret`                     | Your port client secret                                                                                       | ✅       |
+| `port.baseUrl`                          | Your port base url, relevant only if not using the default port app                                           | ❌       |
+| `integration.identifier`                | Change the identifier to describe your integration                                                            | ✅       |
+| `integration.type`                      | The integration type                                                                                          | ✅       |
+| `integration.eventListener.type`        | The event listener type                                                                                       | ✅       |
+| `integration.secrets.newRelicAPIKey`    | The New Relic API key                                                                                         | ✅       |
+| `integration.secrets.newRelicAccountID` | The New Relic account ID                                                                                      | ✅       |
+| `scheduledResyncInterval`               | The number of minutes between each resync                                                                     | ❌       |
+| `initializePortResources`               | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
+
+<br/>
 
 :::note
-If you are using new relic's EU region, add the following flag to the command:
+If you are using New Relic's EU region, add the following flag to the command:
 
 `--set integration.config.newRelicGraphqlURL="https://api.eu.newrelic.com/graphql"`
 :::
@@ -47,6 +71,145 @@ helm upgrade --install my-newrelic-integration port-labs/port-ocean \
 	--set integration.secrets.newRelicAPIKey="<NR_API_KEY>"  \
 	--set-string integration.secrets.newRelicAccountID=<NR_ACCOUNT_ID>
 ```
+
+</TabItem>
+
+<TabItem value="one-time" label="Scheduled">
+ <Tabs groupId="cicd-method" queryString="cicd-method">
+  <TabItem value="github" label="GitHub">
+This workflow will run the New Relic integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::warning
+If you want the integration to update Port in real time you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
+:::
+
+Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
+
+| Parameter                                          | Description                                                                                                        | Required |
+| -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
+| `OCEAN__INTEGRATION__CONFIG__NEW_RELIC_API_KEY`    | The New Relic API key                                                                                              | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__NEW_RELIC_ACCOUNT_ID` | The New Relic account ID                                                                                           | ✅       |
+| `OCEAN__INITIALIZE_PORT_RESOURCES`                 | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
+| `OCEAN__INTEGRATION__IDENTIFIER`                   | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
+| `OCEAN__PORT__CLIENT_ID`                           | Your port client id                                                                                                | ✅       |
+| `OCEAN__PORT__CLIENT_SECRET`                       | Your port client secret                                                                                            | ✅       |
+| `OCEAN__PORT__BASE_URL`                            | Your port base url, relevant only if not using the default port app                                                | ❌       |
+
+<br/>
+
+Here is an example for `newrelic-integration.yml` workflow file:
+
+:::note
+If you are using New Relic's EU region, add the following flag to the docker command:
+
+`-e OCEAN__INTEGRATION__CONFIG__NEW_RELIC_GRAPHQL_URL=https://api.eu.newrelic.com/graphql`
+:::
+
+```yaml showLineNumbers
+name: New Relic Exporter Workflow
+
+# This workflow responsible for running New Relic exporter.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-integration:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run New Relic Integration
+        run: |
+          # Set Docker image and run the container
+          integration_type="newrelic"
+          version="latest"
+
+          image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
+
+          docker run -i --rm --platform=linux/amd64 \
+          -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+          -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+          -e OCEAN__INTEGRATION__CONFIG__NEW_RELIC_API_KEY=${{ secrets.OCEAN__INTEGRATION__CONFIG__NEW_RELIC_API_KEY }} \
+          -e OCEAN__INTEGRATION__CONFIG__NEW_RELIC_ACCOUNT_ID=${{ secrets.OCEAN__INTEGRATION__CONFIG__NEW_RELIC_ACCOUNT_ID }} \
+          -e OCEAN__PORT__CLIENT_ID=${{ secrets.OCEAN__PORT__CLIENT_ID }} \
+          -e OCEAN__PORT__CLIENT_SECRET=${{ secrets.OCEAN__PORT__CLIENT_SECRET }} \
+          $image_name
+```
+
+  </TabItem>
+  <TabItem value="jenkins" label="Jenkins">
+This pipeline will run the New Relic integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::tip
+Your Jenkins agent should be able to run docker commands.
+:::
+:::warning
+If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+:::
+
+Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) of `Secret Text` type:
+
+| Parameter                                          | Description                                                                                                        | Required |
+| -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
+| `OCEAN__INTEGRATION__CONFIG__NEW_RELIC_API_KEY`    | The New Relic API key                                                                                              | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__NEW_RELIC_ACCOUNT_ID` | The New Relic account ID                                                                                           | ✅       |
+| `OCEAN__INITIALIZE_PORT_RESOURCES`                 | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
+| `OCEAN__INTEGRATION__IDENTIFIER`                   | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
+| `OCEAN__PORT__CLIENT_ID`                           | Your port client id                                                                                                | ✅       |
+| `OCEAN__PORT__CLIENT_SECRET`                       | Your port client secret                                                                                            | ✅       |
+| `OCEAN__PORT__BASE_URL`                            | Your port base url, relevant only if not using the default port app                                                | ❌       |
+
+<br/>
+
+Here is an example for `Jenkinsfile` groovy pipeline file:
+
+:::note
+If you are using New Relic's EU region, add the following flag to the docker command:
+
+`-e OCEAN__INTEGRATION__CONFIG__NEW_RELIC_GRAPHQL_URL=https://api.eu.newrelic.com/graphql`
+:::
+
+```yml showLineNumbers
+pipeline {
+    agent any
+
+    stages {
+        stage('Run New Relic Integration') {
+            steps {
+                script {
+                    withCredentials([
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__NEW_RELIC_API_KEY', variable: 'OCEAN__INTEGRATION__CONFIG__NEW_RELIC_API_KEY'),
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__NEW_RELIC_ACCOUNT_ID', variable: 'OCEAN__INTEGRATION__CONFIG__NEW_RELIC_ACCOUNT_ID'),
+                        string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
+                        string(credentialsId: 'OCEAN__PORT__CLIENT_SECRET', variable: 'OCEAN__PORT__CLIENT_SECRET'),
+                    ]) {
+                        sh('''
+                            #Set Docker image and run the container
+                            integration_type="newrelic"
+                            version="latest"
+                            image_name="ghcr.io/port-labs/port-ocean-${integration_type}:${version}"
+                            docker run -i --rm --platform=linux/amd64 \
+                                -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+                                -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+                                -e OCEAN__INTEGRATION__CONFIG__NEW_RELIC_API_KEY=$OCEAN__INTEGRATION__CONFIG__NEW_RELIC_API_KEY \
+                                -e OCEAN__INTEGRATION__CONFIG__NEW_RELIC_ACCOUNT_ID=$OCEAN__INTEGRATION__CONFIG__NEW_RELIC_ACCOUNT_ID \
+                                -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
+                                -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
+                                $image_name
+                        ''')
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+  </TabItem>
+  </Tabs>
+</TabItem>
+
+</Tabs>
 
 ### Event listener
 
