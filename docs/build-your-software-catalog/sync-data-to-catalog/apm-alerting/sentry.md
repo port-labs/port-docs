@@ -64,9 +64,10 @@ helm upgrade --install sentry port-labs/port-ocean \
 
 </TabItem>
 
-<TabItem value="one-time" label="One Time">
-
-This workflow will run the Sentry integration once and then exit, this is useful for **one time** ingestion of data.
+<TabItem value="one-time" label="Scheduled">
+ <Tabs groupId="cicd-method" queryString="cicd-method">
+  <TabItem value="github" label="GitHub">
+This workflow will run the Sentry integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::warning
 If you want the integration to update Port in real time you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
@@ -121,6 +122,74 @@ jobs:
           $image_name
 ```
 
+  </TabItem>
+  <TabItem value="jenkins" label="Jenkins">
+This pipeline will run the Sentry integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::tip
+Your Jenkins agent should be able to run docker commands.
+:::
+:::warning
+If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+:::
+
+Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) of `Secret Text` type:
+
+| Parameter                                         | Description                                                                                                        | Required |
+| ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
+| `OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN`        | The Sentry API token                                                                                               | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__SENTRY_HOST`         | The Sentry host. For example https://sentry.io                                                                     | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION` | The Sentry organization slug                                                                                       | ✅       |
+| `OCEAN__INITIALIZE_PORT_RESOURCES`                | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
+| `OCEAN__INTEGRATION__IDENTIFIER`                  | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
+| `OCEAN__PORT__CLIENT_ID`                          | Your port client id                                                                                                | ✅       |
+| `OCEAN__PORT__CLIENT_SECRET`                      | Your port client secret                                                                                            | ✅       |
+| `OCEAN__PORT__BASE_URL`                           | Your port base url, relevant only if not using the default port app                                                | ❌       |
+
+<br/>
+
+Here is an example for `Jenkinsfile` groovy pipeline file:
+
+```yml showLineNumbers
+pipeline {
+    agent any
+
+    stages {
+        stage('Run Sentry Integration') {
+            steps {
+                script {
+                    withCredentials([
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN', variable: 'OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN'),
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__SENTRY_HOST', variable: 'OCEAN__INTEGRATION__CONFIG__SENTRY_HOST'),
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION', variable: 'OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION'),
+                        string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
+                        string(credentialsId: 'OCEAN__PORT__CLIENT_SECRET', variable: 'OCEAN__PORT__CLIENT_SECRET'),
+                    ]) {
+                        sh('''
+                            #Set Docker image and run the container
+                            integration_type="sentry"
+                            version="latest"
+                            image_name="ghcr.io/port-labs/port-ocean-${integration_type}:${version}"
+                            docker run -i --rm --platform=linux/amd64 \
+                                -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+                                -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+                                -e OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN=$OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN \
+                                -e OCEAN__INTEGRATION__CONFIG__SENTRY_HOST=$OCEAN__INTEGRATION__CONFIG__SENTRY_HOST \
+                                -e OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION=$OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION \
+                                -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
+                                -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
+                                $image_name
+                        ''')
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+  </TabItem>
+  </Tabs>
 </TabItem>
 
 </Tabs>
