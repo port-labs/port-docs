@@ -7,7 +7,7 @@ import ApiRef from "../../api-reference/\_learn_more_reference.mdx";
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# 📄 Setup Actions
+# Setup Actions
 
 <center>
 

@@ -1,10 +1,10 @@
 ---
 sidebar_position: 1
 title: Define Your Data Model
-sidebar_label: 📋 Define Your Data Model
+sidebar_label: Define Your Data Model
 ---
 
-# 📋 Define Your Data Model
+# Define Your Data Model
 
 <center>
 
