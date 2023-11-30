@@ -14,6 +14,7 @@
   --ifm-color-primary-lighter: #1a939b;
   --ifm-color-primary-lightest: #1ea6af;
   --ifm-code-font-size: 95%;
+  --ifm-menu-link-padding-vertical: 0.5rem;
 }
 
 :root {
@@ -23,6 +24,10 @@
 
 .theme-doc-sidebar-menu {
   font-size: 15px;
+}
+
+.menu__list-item:last-child {
+  padding-bottom: 0.5rem;
 }
 
 .menu__link {
