@@ -123,7 +123,7 @@ jobs:
 
   </TabItem>
   <TabItem value="jenkins" label="Jenkins">
-This pipeline will run the PagerDuty integration once and then exit, this is useful for **schedulede** ingestion of data.
+This pipeline will run the PagerDuty integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::tip
 Your Jenkins agent should be able to run docker commands.
