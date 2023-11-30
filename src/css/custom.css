@@ -14,12 +14,20 @@
   --ifm-color-primary-lighter: #1a939b;
   --ifm-color-primary-lightest: #1ea6af;
   --ifm-code-font-size: 95%;
+  --ifm-menu-link-padding-vertical: 0.5rem;
 }
 
 :root {
   --ifm-font-family-base: "Inter";
-  --ifm-sidebar-font: "Lexend";
   --doc-sidebar-width: 308px !important;
+}
+
+.theme-doc-sidebar-menu {
+  font-size: 15px;
+}
+
+.menu__list-item:last-child {
+  padding-bottom: 0.5rem;
 }
 
 .menu__link {
@@ -52,6 +60,7 @@ h6::first-letter {
   --ifm-color-primary-light: #56d6e1;
   --ifm-color-primary-lighter: #62d9e3;
   --ifm-color-primary-lightest: #86e2ea;
+  --ifm-menu-color: #f2eded;
 }
 
 :root {

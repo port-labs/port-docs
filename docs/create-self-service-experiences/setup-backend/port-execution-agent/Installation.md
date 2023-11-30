@@ -33,7 +33,7 @@ the latest versions of the charts. You can then run `helm search repo port-labs`
 ## Install for Webhook invocation
 
 :::note
-Remember to replace the placeholders for `YOUR_ORG_ID`, `YOUR_KAFKA_CONSUMER_GROUP`, `YOUR_KAFKA_USERNAME` and `YOUR_KAFKA_PASSWORD`.
+Remember to replace the placeholders for `YOUR_ORG_ID`, `YOUR_KAFKA_CONSUMER_GROUP`, `YOUR_PORT_CLIENT_ID` and `YOUR_PORT_CLIENT_SECRET`.
 :::
 
 ```bash showLineNumbers

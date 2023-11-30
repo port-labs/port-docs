@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
 title: Relate Blueprints
-sidebar_label: 🔀 Relate Blueprints
+sidebar_label: Relate Blueprints
 ---
 
 import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"
@@ -9,7 +9,7 @@ import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# 🔀 Relate Blueprints
+# Relate Blueprints
 
 <center>
 

@@ -2,7 +2,7 @@
 title: Security
 ---
 
-# 🚥 Security
+# Security
 
 This page includes additional configurations required to allow Port to interact with your [backend](../setup-backend/setup-backend.md) when using self-service actions.
 

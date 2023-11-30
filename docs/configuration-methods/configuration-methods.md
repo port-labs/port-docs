@@ -1,7 +1,6 @@
 ---
 sidebar_position: 4
-title: Setup Methods
-sidebar_label: 🔧 Setup Methods
+sidebar_label: 🛠️ Usage Methods
 ---
 
 import CredentialsGuide from "../build-your-software-catalog/sync-data-to-catalog/api/\_template_docs/\_find_credentials.mdx";
@@ -11,7 +10,7 @@ import InstallTerraform from "../build-your-software-catalog/sync-data-to-catalo
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-# 🔧 Setup Methods
+# 🛠️ Usage Methods
 
 Port supports a variety integrations, apps and tools that allow you to model your software catalog, ingest data and invoke actions, some of the core setup methods are:
 

@@ -1,9 +1,9 @@
 ---
 title: Set Self-Service Actions RBAC
-sidebar_label: 🔐 Set Self-Service Actions RBAC
+sidebar_label: Set Self-Service Actions RBAC
 ---
 
-# 🔐 Set Self-Service Actions RBAC
+# Set Self-Service Actions RBAC
 
 Port provides granular control to make sure every user can only execute and invoke the actions that are relevant for them.
 
