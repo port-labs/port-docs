@@ -4,7 +4,7 @@ title: Setup Backend
 
 import DocCardList from '@theme/DocCardList';
 
-# ⚙️ Setup Backend
+# Setup Backend
 
 <center>
 
