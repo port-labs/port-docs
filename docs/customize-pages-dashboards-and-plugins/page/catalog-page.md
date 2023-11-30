@@ -14,6 +14,27 @@ In this example we can see all of the cluster entities we created from the `K8s 
 When a blueprint is created, a catalog page is automatically generated in the Software Catalog.  
 You can also manually create additional catalog pages for any existing blueprint, and customize them as you wish. Read on to see the available customization options.
 
+### Initial filters
+
+In some cases, an entities table may be very large, resulting in long loading times. To prevent this, you can define filters that resolve when Port queries the data (rather than after querying).  
+To define such a filter, use the `Initial filters` field when creating a page:
+
+<img src='/img/software-catalog/pages/initialFiltersForm.png' width='50%' />
+
+<br/><br/>
+
+You can define any [supported rule](/search-and-query/#rules) in JSON format. Here is an example filter that fetches all `Deployments` that were created in the past month:
+
+```json showLineNumbers
+[
+  {
+    "property": "$updatedAt",
+    "operator": "between",
+    "value": { "preset": "lastMonth" }
+  }
+]
+```
+
 ## Customization
 
 The entities table can be customized, which will define the users' view of the Port platform.
