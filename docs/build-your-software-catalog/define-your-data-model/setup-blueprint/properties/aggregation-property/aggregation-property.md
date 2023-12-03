@@ -10,13 +10,13 @@ import TabItem from "@theme/TabItem"
 
 # 🧬 Aggregation Property
 
-Aggregation property allow you to calculate metrics based on the relations in your catalog.
+Aggregation properties allow you to calculate metrics based on the [relations](/build-your-software-catalog/define-your-data-model/relate-blueprints/#what-is-a-relation) in your catalog.
 
 Using the aggregation property enables you to see relevant metrics on related entities, without having to manually calculate them.
 
-Aggregation can be performed on any blueprint that is somehow related to the current blueprint (directly, indirectly, upstream or downstream).
+Aggregations can be performed on any blueprint that is related in any way to the current blueprint (directly, indirectly, upstream or downstream).
 
-## When to use aggregation property?
+## When to use Aggregation Properties?
 
 Aggregation property ideally will be defined on blueprints which are in the **higher abstraction level** in your catalog.
 
@@ -31,10 +31,10 @@ For example, if you have a microservice blueprint, you can define aggregation pr
 - Average deployment frequency in the last week.
 - Build success rate in the last month.
 
-The aggregation property unlocks the ability to specify scorecards and initiative rules based on metrics of related entities.
+The aggregation property enables you to specify scorecards and initiative rules based on metrics of related entities.
 
 :::tip
-For example - If Microservice X has more any open critical / high vulnerabilities, then do not pass the security initiative.
+For example - If you have a microservice blueprint, with related Alert blueprint, you can define a rule that will check if the number of open CRITICAL and HIGH alerts that are related to each microservice is greater than 0.
 :::
 
 ## API definition
@@ -237,7 +237,7 @@ The `aggregationProperties` contains a key called `averageCpuUsage` which is the
 - `title` - The title of the aggregation property.
 - `targetBlueprint` - The blueprint we want to aggregate data from.
 - `calculationSpec` - The calculation specification.
-  - `calculationBy` - The calculation will be performed on the property of the entities that match the query (e.g. average the value of the property of the entities that match the query).
+  - `calculationBy` - `property` The calculation will be performed on the property of the entities that match the query (e.g. average the value of the property of the entities that match the query).
   - `func` - `average` is the function we want to use for the calculation.
   - `property` - The property we want to calculate the average of. The property type must be a number.
   - `query` - The query that will be performed on the target blueprint. The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](../../../../../search-and-query/search-and-query.md#rules)
@@ -281,7 +281,7 @@ The `aggregationProperties` contains a key called `minAlertSeverity` which is th
 - `title` - The title of the aggregation property.
 - `targetBlueprint` - The blueprint we want to aggregate data from.
 - `calculationSpec` - The calculation specification.
-  - `calculationBy` - The calculation will be performed on the property of the entities that match the query (e.g. minimum value of the property of the entities that match the query).
+  - `calculationBy` - `property` The calculation will be performed on the property of the entities that match the query (e.g. minimum value of the property of the entities that match the query).
   - `func` - `min` is the function we want to use for the calculation.
   - `property` - The property we want to calculate the minimum of. The property type must be a number.
   - `query` - The query that will be performed on the target blueprint. The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](../../../../../search-and-query/search-and-query.md#rules)
@@ -372,7 +372,7 @@ The `aggregationProperties` contains a key called `medianCpuUsage` which is the 
 - `title` - The title of the aggregation property.
 - `targetBlueprint` - The blueprint we want to aggregate data from.
 - `calculationSpec` - The calculation specification.
-  - `calculationBy` - The calculation will be performed on the property of the entities that match the query (e.g. median value of the property of the entities that match the query).
+  - `calculationBy` - `property` The calculation will be performed on the property of the entities that match the query (e.g. median value of the property of the entities that match the query).
   - `func` - `median` is the function we want to use for the calculation.
   - `property` - The property we want to calculate the median of. The property type must be a number.
   - `query` - The query that will be performed on the target blueprint. The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](../../../../../search-and-query/search-and-query.md#rules)
@@ -383,4 +383,4 @@ The `aggregationProperties` contains a key called `medianCpuUsage` which is the 
 
 ### Limitations
 
-- The aggregation property result for all entities of a blueprint will be recalculated every 15 minutes.
+The aggregation property result for all entities of a blueprint will be recalculated every 15 minutes.
