@@ -11,7 +11,7 @@ import PagerDutyScript from "./resources/pagerduty/\_example_pagerduty_shell_his
 
 # PagerDuty
 
-:::tip Supported by Ocean!
+:::warning Ocean integration available
 Ocean's [PagerDuty integration](../../incident-management/pagerduty.md) is simpler to use and provides more capabilities than the webhook, we recommend using it instead.  
 Read more about Ocean [here](https://ocean.getport.io/).
 
