@@ -267,6 +267,13 @@ In this example, we have a microservice blueprint, and we want to calculate the 
               "property": "status",
               "operator": "=",
               "value": "OPEN"
+            },
+            {
+              "property": "$createdAt",
+              "operator": "between",
+              "value": {
+                "preset": "lastWeek"
+              }
             }
           ]
         }
@@ -358,6 +365,13 @@ In this example, we have a microservice blueprint, and we want to calculate the 
               "property": "status",
               "operator": "=",
               "value": "SUCCESS"
+            },
+            {
+              "property": "$createdAt",
+              "operator": "between",
+              "value": {
+                "preset": "lastWeek"
+              }
             }
           ]
         }
