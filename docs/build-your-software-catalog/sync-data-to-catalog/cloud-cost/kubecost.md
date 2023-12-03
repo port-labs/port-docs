@@ -57,10 +57,10 @@ helm upgrade --install my-kubecost-integration port-labs/port-ocean \
 
 </TabItem>
 
-<TabItem value="one-time" label="One Time">
+<TabItem value="one-time" label="Scheduled">
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
-This workflow will run the Kubecost integration once and then exit, this is useful for **one time** ingestion of data.
+This workflow will run the Kubecost integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::warning
 If you want the integration to update Port in real time you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
@@ -106,7 +106,7 @@ jobs:
 
   </TabItem>
   <TabItem value="jenkins" label="Jenkins">
-This pipeline will run the Kubecost integration once and then exit, this is useful for **one time** ingestion of data.
+This pipeline will run the Kubecost integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::tip
 Your Jenkins agent should be able to run docker commands.
