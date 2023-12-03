@@ -9,7 +9,7 @@ import JiraIssueConfigurationPython from "./resources/jira/\_example_jira_issue_
 
 # Jira
 
-:::tip Supported by Ocean!
+:::warning Ocean integration available
 Ocean's [Jira integration](../../project-management/jira.md) is simpler to use and provides more capabilities than the webhook, we recommend using it instead.  
 Read more about Ocean [here](https://ocean.getport.io/).
 

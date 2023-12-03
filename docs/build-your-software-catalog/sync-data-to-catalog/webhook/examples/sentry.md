@@ -10,6 +10,13 @@ import SentryIssuesConfiguration from "./resources/sentry/\_example_sentry_issue
 
 # Sentry
 
+:::warning Ocean integration available
+Ocean's [Sentry integration](../../apm-alerting/sentry.md) is simpler to use and provides more capabilities than the webhook, we recommend using it instead.  
+Read more about Ocean [here](https://ocean.getport.io/).
+
+If you'd still prefer to use the webhook, proceed with the instructions on this page.
+:::
+
 In this example you are going to create a webhook integration between [Sentry](https://sentry.io) and Port, which will ingest issues entities.
 
 ## Port configuration

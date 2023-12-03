@@ -8,7 +8,7 @@ import SnykConfiguration from "./resources/snyk/\_example_snyk_vulnerability_web
 
 # Snyk
 
-:::tip Supported by Ocean!
+:::warning Ocean integration available
 Ocean's [Snyk integration](../../code-quality-security/snyk.md) is simpler to use and provides more capabilities than the webhook, we recommend using it instead.  
 Read more about Ocean [here](https://ocean.getport.io/).
 
