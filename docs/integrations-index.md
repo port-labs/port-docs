@@ -176,6 +176,7 @@ This page contains a list of Port's available integrations, organized by the pla
 ## Dynatrace
 
 - [Dynatrace webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/dynatrace.md)
+- [Dynatrace entities](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/dynatrace.md#ingest-dynatrace-entities)
 
 ## Datadog
 

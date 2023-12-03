@@ -106,3 +106,9 @@ In order to view the different payloads and events available in Dynatrace webhoo
 :::
 
 Done! any problem detected on your Dynatrace entity will trigger a webhook event. Port will parse the events according to the mapping and update the catalog entities accordingly.
+
+## Ingest Dynatrace Entities
+
+In this example you will create a `dynatrace_entity` blueprint that ingests monitored entities from your Dynatrace account. You will then add some python script to make API calls to Dynatrace REST API and fetch data for your account.
+
+- [Code Repository Example](https://github.com/port-labs/example-dynatrace-entities)
