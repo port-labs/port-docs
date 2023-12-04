@@ -21,7 +21,7 @@ Head to the Port sender Slack section [action page](https://github.com/marketpla
 
 ## Syncing Jira issues
 
-For every scorecard level that is not completed, creating a Jira task will be created and Subtasks for the level rules.
+For every scorecard level that is not completed, a Jira task will be created and Subtasks for the level rules.
 
 Head to the Port sender Jira section [action page](https://github.com/marketplace/actions/port-message-sender#manage-scorecards-with-jira-issues) to learn more about the integration and how to use it.
 
