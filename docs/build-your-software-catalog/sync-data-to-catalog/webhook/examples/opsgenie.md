@@ -8,6 +8,13 @@ import OpsGenieAlertConfiguration from "./resources/opsgenie/\_example_opsgenie_
 
 # OpsGenie
 
+:::warning Ocean integration available
+Ocean's [Opsgenie integration](../../incident-management/opsgenie.md) is simpler to use and provides more capabilities than the webhook, we recommend using it instead.  
+Read more about Ocean [here](https://ocean.getport.io/).
+
+If you'd still prefer to use the webhook, proceed with the instructions on this page.
+:::
+
 In this example you are going to create a webhook integration between [OpsGenie](https://www.atlassian.com/software/opsgenie) and Port, which will ingest alert entities.
 
 ## Port configuration

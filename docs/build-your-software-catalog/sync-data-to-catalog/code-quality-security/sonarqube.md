@@ -44,7 +44,6 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `integration.config.appHost`             | A URL bounded to the integration container that can be accessed by sonarqube. When used the integration will create webhooks on top of sonarqube to listen to any live changes in the data   | https://my-ocean-integration.com    | ❌       |
 | `integration.config.sonarUrl`            | Required if using **On-Prem**, Your SonarQube instance URL                                                                                                                                   | https://my-sonar-cloud-instance.com | ❌       |
 
-
 <HelmParameters />
 
 <br/>
@@ -65,11 +64,11 @@ helm upgrade --install my-sonarqube-integration port-labs/port-ocean \
 
 </TabItem>
 
-<TabItem value="one-time" label="One Time">
+<TabItem value="one-time" label="Scheduled">
 
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
-This workflow will run the SonarQube integration once and then exit, this is useful for **one time** ingestion of data.
+This workflow will run the SonarQube integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::warning
 If you want the integration to update Port in real time using webhooks you should use
@@ -119,7 +118,7 @@ jobs:
 
   </TabItem>
   <TabItem value="jenkins" label="Jenkins">
-This pipeline will run the SonarQube integration once and then exit, this is useful for **one time** ingestion of data.
+This pipeline will run the SonarQube integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::tip
 Your Jenkins agent should be able to run docker commands.

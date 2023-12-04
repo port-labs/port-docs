@@ -10,15 +10,11 @@ import TabItem from "@theme/TabItem"
 
 ## Prerequisites
 
-- You will need your [Port credentials](../api/api.md#find-your-port-credentials) to install the AWS exporter.
+- You will need your [Port credentials](../api/api.md#find-your-port-credentials) to install the AWS exporter:
 
-:::tip
-<FindCredentials />
-:::
+  <FindCredentials />
 
-To run some optional commands in this guide, you will need to install:
-
-- [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+- The [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) is required for authentication. Make sure your AWS `Access key id` and `Secret access key` are set. If not, run `aws configure` in your terminal to configure them.
 
 For the [step-by-step installation](#step-by-step-installation) (not using Terraform), also install:
 
