@@ -3842,7 +3842,7 @@ In this step-by-step example, you will export your `ECR repositories` to Port.
    You may use the following definitions:
 
      <details>
-     <summary> ECR  blueprint </summary>
+     <summary> ECR Repository blueprint </summary>
 
    ```json showLineNumbers
    {
@@ -3851,29 +3851,38 @@ In this step-by-step example, you will export your `ECR repositories` to Port.
      "icon": "Service",
      "schema": {
        "properties": {
-         "image_tag_mutability": {
+         "link": {
+           "title": "Link",
+           "type": "string",
+           "format": "url"
+         },
+         "imageTagMutability": {
            "title": "Image Tag Mutability",
            "type": "string"
          },
-         "scanning_configuration": {
+         "scanningConfiguration": {
            "title": "Scanning Configuration",
            "type": "object"
          },
-         "repository_arn": {
+         "repositoryArn": {
            "title": "Repository ARN",
            "type": "string"
          },
-         "repository_uri": {
+         "repositoryUri": {
            "title": "Repository URI",
            "type": "string"
          },
-         "encryption_configuration": {
+         "encryptionConfiguration": {
            "title": "Encryption Configuration",
            "type": "object"
          },
-         "lifecycle_policy": {
+         "lifecyclePolicy": {
            "title": "Lifecycle Policy",
            "type": "object"
+         },
+         "tags": {
+           "title": "Tags",
+           "type": "array"
          }
        },
        "required": []
@@ -3912,12 +3921,13 @@ In this step-by-step example, you will export your `ECR repositories` to Port.
                  "title": ".RepositoryName",
                  "blueprint": "ecr_repository",
                  "properties": {
-                   "image_tag_mutability": ".ImageTagMutability",
-                   "scanning_configuration": ".ImageScanningConfiguration",
-                   "repository_arn": ".Arn",
-                   "repository_uri": ".RepositoryUri",
-                   "encryption_configuration": ".EncryptionConfiguration",
-                   "lifecycle_policy": ".LifecyclePolicy",
+                   "imageTagMutability": ".ImageTagMutability",
+                   "scanningConfiguration": ".ImageScanningConfiguration",
+                   "repositoryArn": ".Arn",
+                   "link": "\"https://console.aws.amazon.com/go/view?arn=\" + .Arn",
+                   "repositoryUri": ".RepositoryUri",
+                   "encryptionConfiguration": ".EncryptionConfiguration",
+                   "lifecyclePolicy": ".LifecyclePolicy",
                    "tags": ".Tags"
                  },
                  "relations": {
@@ -3947,17 +3957,10 @@ In this step-by-step example, you will export your `ECR repositories` to Port.
          "Sid": "VisualEditor0",
          "Effect": "Allow",
          "Action": [
-           "ecr:BatchCheckLayerAvailability",
-           "ecr:GetDownloadUrlForLayer",
-           "ecr:GetRepositoryPolicy",
            "ecr:DescribeRepositories",
-           "ecr:ListImages",
-           "ecr:DescribeImages",
-           "ecr:BatchGetImage",
            "ecr:GetLifecyclePolicy",
-           "ecr:GetLifecyclePolicyPreview",
-           "ecr:ListTagsForResource",
-           "ecr:DescribeImageScanFindings"
+           "ecr:GetRepositoryPolicy",
+           "ecr:ListTagsForResource"
          ],
          "Resource": "*"
        }
