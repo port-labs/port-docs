@@ -120,7 +120,7 @@ This page contains a list of Port's available integrations, organized by the pla
 ## Slack
 
 - [Manual approval for self-service actions](./create-self-service-experiences/set-self-service-actions-rbac/examples.md#setting-up-a-slack-notification)
-- [Scorecard notifications](./promote-scorecards/slack-notifications.md)
+- [Scorecard notifications](./promote-scorecards/manage-using-3rd-party-apps/slack)
 - [Setup a changelog listener notification](./create-self-service-experiences/setup-backend/webhook/examples/changelog-listener.md)
 
 ## SonarQube / SonarCloud
@@ -145,6 +145,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 - [Jira integration](./build-your-software-catalog/sync-data-to-catalog/project-management/jira.md)
 - [Jira webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/jira.md)
+- [Initiate scorecards handling with Jira issues](./promote-scorecards/manage-using-3rd-party-apps/jira)
 
 ## Sentry
 
