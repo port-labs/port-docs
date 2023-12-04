@@ -3830,3 +3830,198 @@ In this step-by-step example, you will export your `EKS clusters` to Port.
     </details>
 
 Done! soon, you will be able to see any `EKS clusters`
+
+## Mapping ECR repositories
+
+In this step-by-step example, you will export your `ECR repositories` to Port.
+
+1. Create the following Port blueprint:
+
+   **ECR Repository** - will represent ECR repositories from the AWS account.
+
+   You may use the following definitions:
+
+     <details>
+     <summary> ECR  blueprint </summary>
+
+   ```json showLineNumbers
+   {
+     "identifier": "ecr_repository",
+     "title": "ECR Repository",
+     "icon": "Service",
+     "schema": {
+       "properties": {
+         "image_tag_mutability": {
+           "title": "Image Tag Mutability",
+           "type": "string"
+         },
+         "scanning_configuration": {
+           "title": "Scanning Configuration",
+           "type": "object"
+         },
+         "repository_arn": {
+           "title": "Repository ARN",
+           "type": "string"
+         },
+         "repository_uri": {
+           "title": "Repository URI",
+           "type": "string"
+         },
+         "encryption_configuration": {
+           "title": "Encryption Configuration",
+           "type": "object"
+         },
+         "lifecycle_policy": {
+           "title": "Lifecycle Policy",
+           "type": "object"
+         }
+       },
+       "required": []
+     },
+     "mirrorProperties": {},
+     "calculationProperties": {},
+     "aggregationProperties": {},
+     "relations": {
+       "region": {
+         "title": "Region",
+         "target": "region",
+         "required": false,
+         "many": false
+       }
+     }
+   }
+   ```
+
+     </details>
+
+2. Upload the `config.json` file to the exporter's S3 bucket:
+
+   <details>
+   <summary> Port AWS exporter config.json </summary>
+
+   ```json showLineNumbers
+   {
+     "resources": [
+       {
+         "kind": "AWS::ECR::Repository",
+         "port": {
+           "entity": {
+             "mappings": [
+               {
+                 "identifier": ".RepositoryName",
+                 "title": ".RepositoryName",
+                 "blueprint": "ecr_repository",
+                 "properties": {
+                   "image_tag_mutability": ".ImageTagMutability",
+                   "scanning_configuration": ".ImageScanningConfiguration",
+                   "repository_arn": ".Arn",
+                   "repository_uri": ".RepositoryUri",
+                   "encryption_configuration": ".EncryptionConfiguration",
+                   "lifecycle_policy": ".LifecyclePolicy",
+                   "tags": ".Tags"
+                 },
+                 "relations": {
+                   "region": ".Arn | split(\":\") | .[3]"
+                 }
+               }
+             ]
+           }
+         }
+       }
+     ]
+   }
+   ```
+
+   </details>
+
+3. Update the exporter's `IAM policy`:
+
+   <details>
+   <summary> IAM policy </summary>
+
+   ```json showLineNumbers
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Sid": "VisualEditor0",
+         "Effect": "Allow",
+         "Action": [
+           "ecr:BatchCheckLayerAvailability",
+           "ecr:GetDownloadUrlForLayer",
+           "ecr:GetRepositoryPolicy",
+           "ecr:DescribeRepositories",
+           "ecr:ListImages",
+           "ecr:DescribeImages",
+           "ecr:BatchGetImage",
+           "ecr:GetLifecyclePolicy",
+           "ecr:GetLifecyclePolicyPreview",
+           "ecr:ListTagsForResource",
+           "ecr:DescribeImageScanFindings"
+         ],
+         "Resource": "*"
+       }
+     ]
+   }
+   ```
+
+   </details>
+
+4. Optional: create an event rule to trigger automatic syncing of changes in ECR repositories.
+
+   You may use the following CloudFormation template:
+
+    <details>
+    <summary> Event rule CloudFormation template </summary>
+
+   ```yaml showLineNumbers
+   AWSTemplateFormatVersion: "2010-09-09"
+   Description: The template used to create event rules for the Port AWS exporter.
+   Parameters:
+     PortAWSExporterStackName:
+       Description: Name of the Port AWS exporter stack name
+       Type: String
+       MinLength: 1
+       MaxLength: 255
+       AllowedPattern: ^[a-zA-Z][-a-zA-Z0-9]*$
+       Default: serverlessrepo-port-aws-exporter
+   Resources:
+     EksClusterEventRule:
+       Type: AWS::Events::Rule
+       Properties:
+         EventBusName: default
+         EventPattern:
+           detail-type:
+             - AWS API Call via CloudTrail
+           source:
+             - aws.ecr
+           detail:
+             eventSource:
+               - ecr.amazonaws.com
+             eventName:
+               - prefix: CreateRepository
+               - prefix: DeleteRepository
+         Name: port-aws-exporter-sync-ecr-trails
+         State: ENABLED
+         Targets:
+           - Id: PortAWSExporterEventsQueue
+             Arn:
+               Fn::ImportValue:
+                 Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+             InputTransformer:
+               InputPathsMap:
+                 awsRegion: $.detail.awsRegion
+                 eventName: $.detail.eventName
+                 repositoryName: $.detail.requestParameters.repositoryName
+               InputTemplate: >-
+                 {
+                   "resource_type": "AWS::ECR::Repository",
+                   "region": "<awsRegion>",
+                   "identifier": "<repositoryName>",
+                   "action": "if \"<eventName>\" | startswith(\"Delete\") then \"delete\" else \"upsert\" end"
+                 }
+   ```
+
+    </details>
+
+Done! soon, you will be able to see any `ECR repositories`
