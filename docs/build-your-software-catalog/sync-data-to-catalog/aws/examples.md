@@ -3989,7 +3989,7 @@ In this step-by-step example, you will export your `ECR repositories` to Port.
        AllowedPattern: ^[a-zA-Z][-a-zA-Z0-9]*$
        Default: serverlessrepo-port-aws-exporter
    Resources:
-     EksClusterEventRule:
+     ECRRepositoryEventRule:
        Type: AWS::Events::Rule
        Properties:
          EventBusName: default
@@ -4004,6 +4004,8 @@ In this step-by-step example, you will export your `ECR repositories` to Port.
              eventName:
                - prefix: CreateRepository
                - prefix: DeleteRepository
+               - prefix: DeleteLifecyclePolicy
+               - prefix: PutLifecyclePolicy
          Name: port-aws-exporter-sync-ecr-trails
          State: ENABLED
          Targets:
@@ -4022,6 +4024,40 @@ In this step-by-step example, you will export your `ECR repositories` to Port.
                    "region": "<awsRegion>",
                    "identifier": "<repositoryName>",
                    "action": "if \"<eventName>\" | startswith(\"Delete\") then \"delete\" else \"upsert\" end"
+                 }
+     ECRRepositoryTagRule:
+       Type: AWS::Events::Rule
+       Properties:
+         EventBusName: default
+         EventPattern:
+           source:
+             - aws.ecr
+           detail-type:
+             - AWS API Call via CloudTrail
+           detail:
+             eventSource:
+               - ecr.amazonaws.com
+             eventName:
+               - prefix: TagResource
+               - prefix: UntagResource
+         Name: port-aws-exporter-sync-ecr-tags-trails
+         State: ENABLED
+         Targets:
+           - Id: PortAWSExporterEventsQueue
+             Arn:
+               Fn::ImportValue:
+                 Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+             InputTransformer:
+               InputPathsMap:
+                 awsRegion: $.detail.awsRegion
+                 eventName: $.detail.eventName
+                 resourceArn: $.detail.requestParameters.resourceArn
+               InputTemplate: |-
+                 {
+                   "resource_type": "AWS::ECR::Repository",
+                   "region": "\"<awsRegion>\"",
+                   "identifier": "\"<resourceArn>\" | split(\"/\") | .[1]",
+                   "action": "\"upsert\""
                  }
    ```
 
