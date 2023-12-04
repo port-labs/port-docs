@@ -70,17 +70,17 @@ In this example, we have a microservice blueprint and we want to calculate the n
       "targetBlueprint": "jiraIssue",
       "calculationSpec": {
         "calculationBy": "entities",
-        "func": "count",
-        "query": {
-          "combinator": "and",
-          "rules": [
-            {
-              "property": "status",
-              "operator": "=",
-              "value": "OPEN"
-            }
-          ]
-        }
+        "func": "count"
+      },
+      "query": {
+        "combinator": "and",
+        "rules": [
+          {
+            "property": "status",
+            "operator": "=",
+            "value": "OPEN"
+          }
+        ]
       }
     }
   }
@@ -91,10 +91,10 @@ The `aggregationProperties` contains a key called `numberOfOpenJiraIssues` which
 
 - `title` - The title of the aggregation property.
 - `targetBlueprint` - The blueprint we want to aggregate data from.
+- `query` - **Optional** - The query that will be performed on the target blueprint. The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](../../../../../search-and-query/search-and-query.md#rules)
 - `calculationSpec` - The calculation specification.
-  - `calculationBy` - The calculation will be performed on the entities that match the query (e.g. count the number of entities that match the query).
-  - `func` - `count` is the function we want to use for the calculation.
-  - `query` - The query that will be performed on the target blueprint. The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](../../../../../search-and-query/search-and-query.md#rules)
+  - `"calculationBy": "entities"` - The calculation will be performed on the **entities** that match the query.
+  - `"func": "count"` - is the function we want to use for the calculation.
 
 </TabItem>
 
@@ -112,17 +112,17 @@ In this example, we have a microservice blueprint, and we want to calculate the 
         "calculationBy": "entities",
         "func": "average",
         "averageOf": "week",
-        "measureTimeBy": "$createdAt",
-        "query": {
-          "combinator": "and",
-          "rules": [
-            {
-              "property": "status",
-              "operator": "=",
-              "value": "SUCCESS"
-            }
-          ]
-        }
+        "measureTimeBy": "$createdAt"
+      },
+      "query": {
+        "combinator": "and",
+        "rules": [
+          {
+            "property": "status",
+            "operator": "=",
+            "value": "SUCCESS"
+          }
+        ]
       }
     }
   }
@@ -133,12 +133,12 @@ The `aggregationProperties` contains a key called `averageDeploymentFrequency` w
 
 - `title` - The title of the aggregation property.
 - `targetBlueprint` - The blueprint we want to aggregate data from.
+- `query` - **Optional** - The query that will be performed on the target blueprint. The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](../../../../../search-and-query/search-and-query.md#rules)
 - `calculationSpec` - The calculation specification.
-  - `calculationBy` - The calculation will be performed on the entities that match the query (e.g. count the number of entities that match the query).
-  - `func` - `average` is the function we want to use for the calculation.
-  - `averageOf` - The time period we want to calculate the average for. Supported Options are: `hour, day ,week and month` In this example, we want to calculate the average deployment frequency for each week.
-  - `measureTimeBy` - The time property we want to measure the average by. You can use any date property in the target blueprint by default, we add $createdAt and $updatedAt as [meta-properties](../meta-properties.md) to each entity.
-  - `query` - The query that will be performed on the target blueprint. The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](../../../../../search-and-query/search-and-query.md#rules)
+  - `"calculationBy": "entities"` - The calculation will be performed on the entities that match the query (e.g. count the number of entities that match the query).
+  - `"func": "average"` - is the function we want to use for the calculation.
+  - `"averageOf": "week"` - The time period we want to calculate the average for. In this example, we want to calculate the average deployment frequency for each week. Supported Options are: `hour, day ,week and month`
+  - `"measureTimeBy": "$createdAt"` - The time property we want to measure the average by. You can use any date property in the target blueprint by default, we add $createdAt and $updatedAt as [meta-properties](../meta-properties.md) to each entity.
 
 </TabItem>
 
@@ -173,17 +173,17 @@ In this example, we have a microservice blueprint, and we want to calculate the 
       "calculationSpec": {
         "calculationBy": "property",
         "func": "sum",
-        "property": "storyPoints",
-        "query": {
-          "combinator": "and",
-          "rules": [
-            {
-              "property": "status",
-              "operator": "=",
-              "value": "OPEN"
-            }
-          ]
-        }
+        "property": "storyPoints"
+      },
+      "query": {
+        "combinator": "and",
+        "rules": [
+          {
+            "property": "status",
+            "operator": "=",
+            "value": "OPEN"
+          }
+        ]
       }
     }
   }
@@ -194,11 +194,11 @@ The `aggregationProperties` contains a key called `sumOfStoryPoints` which is th
 
 - `title` - The title of the aggregation property.
 - `targetBlueprint` - The blueprint we want to aggregate data from.
+- `query` - **Optional** - The query that will be performed on the target blueprint. The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](../../../../../search-and-query/search-and-query.md#rules)
 - `calculationSpec` - The calculation specification.
-  - `calculationBy` - The calculation will be performed on the property of the entities that match the query (e.g. sum the value of the property of the entities that match the query).
-  - `func` - `sum` is the function we want to use for the calculation.
-  - `property` - The property we want to calculate the sum of. The property type must be a number.
-  - `query` - The query that will be performed on the target blueprint. The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](../../../../../search-and-query/search-and-query.md#rules)
+  - `"calculationBy": "property"` - The calculation will be performed on the property of the entities that match the query (e.g. sum the value of the property of the entities that match the query).
+  - `"func": "sum"` is the function we want to use for the calculation.
+  - `"property": "storyPoints"` - The property we want to calculate the sum of. The property type must be a number.
 
 </TabItem>
 
@@ -216,16 +216,18 @@ In this example, we have a microservice blueprint, and we want to calculate the 
         "calculationBy": "property",
         "func": "average",
         "property": "cpuUsage",
-        "query": {
-          "combinator": "and",
-          "rules": [
-            {
-              "property": "status",
-              "operator": "=",
-              "value": "SUCCESS"
-            }
-          ]
-        }
+        "averageOf": "week",
+        "measureTimeBy": "$createdAt"
+      },
+      "query": {
+        "combinator": "and",
+        "rules": [
+          {
+            "property": "status",
+            "operator": "=",
+            "value": "SUCCESS"
+          }
+        ]
       }
     }
   }
@@ -236,13 +238,13 @@ The `aggregationProperties` contains a key called `averageCpuUsage` which is the
 
 - `title` - The title of the aggregation property.
 - `targetBlueprint` - The blueprint we want to aggregate data from.
+- `query` - **Optional** - The query that will be performed on the target blueprint. The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](../../../../../search-and-query/search-and-query.md#rules)
 - `calculationSpec` - The calculation specification.
   - `calculationBy` - `property` The calculation will be performed on the property of the entities that match the query (e.g. average the value of the property of the entities that match the query).
-  - `func` - `average` is the function we want to use for the calculation.
-  - `property` - The property we want to calculate the average of. The property type must be a number.
-  - `query` - The query that will be performed on the target blueprint. The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](../../../../../search-and-query/search-and-query.md#rules)
-  - `averageOf` - The time period we want to calculate the average for. Supported Options are: `hour, day ,week and month` In this example, we want to calculate the average cpu usage for each week.
-  - `measureTimeBy` - The time property we want to measure the average by. You can use any date property in the target blueprint by default, we add $createdAt and $updatedAt as [meta-properties](../meta-properties.md) to each entity.
+  - `"func": "average"` - is the function we want to use for the calculation.
+  - `"property": "cpuUsage"` - The property we want to calculate the average of. The property type must be a number.
+  - `"averageOf": "week"` - The time period we want to calculate the average for. In this example, we want to calculate the average deployment frequency for each week. Supported Options are: `hour, day ,week, month and total
+  - `"measureTimeBy": "$createdAt"` - The time property we want to measure the average by. You can use any date property in the target blueprint by default, we add $createdAt and $updatedAt as [meta-properties](../meta-properties.md) to each entity.
 
 </TabItem>
 
@@ -259,24 +261,24 @@ In this example, we have a microservice blueprint, and we want to calculate the 
       "calculationSpec": {
         "calculationBy": "property",
         "func": "min",
-        "property": "severity",
-        "query": {
-          "combinator": "and",
-          "rules": [
-            {
-              "property": "status",
-              "operator": "=",
-              "value": "OPEN"
-            },
-            {
-              "property": "$createdAt",
-              "operator": "between",
-              "value": {
-                "preset": "lastWeek"
-              }
+        "property": "severity"
+      },
+      "query": {
+        "combinator": "and",
+        "rules": [
+          {
+            "property": "status",
+            "operator": "=",
+            "value": "OPEN"
+          },
+          {
+            "property": "$createdAt",
+            "operator": "between",
+            "value": {
+              "preset": "lastWeek"
             }
-          ]
-        }
+          }
+        ]
       }
     }
   }
@@ -287,11 +289,11 @@ The `aggregationProperties` contains a key called `minAlertSeverity` which is th
 
 - `title` - The title of the aggregation property.
 - `targetBlueprint` - The blueprint we want to aggregate data from.
+- `query` - **Optional** - The query that will be performed on the target blueprint. The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](../../../../../search-and-query/search-and-query.md#rules)
 - `calculationSpec` - The calculation specification.
-  - `calculationBy` - `property` The calculation will be performed on the property of the entities that match the query (e.g. minimum value of the property of the entities that match the query).
-  - `func` - `min` is the function we want to use for the calculation.
-  - `property` - The property we want to calculate the minimum of. The property type must be a number.
-  - `query` - The query that will be performed on the target blueprint. The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](../../../../../search-and-query/search-and-query.md#rules)
+  - `"calculationBy": "property"` The calculation will be performed on the property of the entities that match the query (e.g. minimum value of the property of the entities that match the query).
+  - `"func": "min"` - is the function we want to use for the calculation.
+  - `"property": "severity"` - The property we want to calculate the minimum of. The property type must be a number.
 
 </TabItem>
 
@@ -308,24 +310,24 @@ In this example, we have a microservice blueprint, and we want to calculate the 
       "calculationSpec": {
         "calculationBy": "property",
         "func": "max",
-        "property": "severity",
-        "query": {
-          "combinator": "and",
-          "rules": [
-            {
-              "property": "status",
-              "operator": "=",
-              "value": "OPEN"
-            },
-            {
-              "property": "$createdAt",
-              "operator": "between",
-              "value": {
-                "preset": "lastWeek"
-              }
+        "property": "severity"
+      },
+      "query": {
+        "combinator": "and",
+        "rules": [
+          {
+            "property": "status",
+            "operator": "=",
+            "value": "OPEN"
+          },
+          {
+            "property": "$createdAt",
+            "operator": "between",
+            "value": {
+              "preset": "lastWeek"
             }
-          ]
-        }
+          }
+        ]
       }
     }
   }
@@ -336,11 +338,11 @@ The `aggregationProperties` contains a key called `maxAlertSeverity` which is th
 
 - `title` - The title of the aggregation property.
 - `targetBlueprint` - The blueprint we want to aggregate data from.
+- `query` - **Optional** - The query that will be performed on the target blueprint. The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](../../../../../search-and-query/search-and-query.md#rules)
 - `calculationSpec` - The calculation specification.
-  - `calculationBy` - `property` The calculation will be performed on the property of the entities that match the query (e.g. maximum value of the property of the entities that match the query).
-  - `func` - `max` is the function we want to use for the calculation.
-  - `property` - The property we want to calculate the maximum of. The property type must be a number.
-  - `query` - The query that will be performed on the target blueprint. The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](../../../../../search-and-query/search-and-query.md#rules)
+  - `"calculationBy": "property"` The calculation will be performed on the property of the entities that match the query (e.g. maximum value of the property of the entities that match the query).
+  - `"func": "max"` - is the function we want to use for the calculation.
+  - `"property": "severity"` - The property we want to calculate the maximum of. The property type must be a number.
 
 </TabItem>
 
@@ -357,24 +359,24 @@ In this example, we have a microservice blueprint, and we want to calculate the 
       "calculationSpec": {
         "calculationBy": "property",
         "func": "median",
-        "property": "cpuUsage",
-        "query": {
-          "combinator": "and",
-          "rules": [
-            {
-              "property": "status",
-              "operator": "=",
-              "value": "SUCCESS"
-            },
-            {
-              "property": "$createdAt",
-              "operator": "between",
-              "value": {
-                "preset": "lastWeek"
-              }
+        "property": "cpuUsage"
+      },
+      "query": {
+        "combinator": "and",
+        "rules": [
+          {
+            "property": "status",
+            "operator": "=",
+            "value": "OPEN"
+          },
+          {
+            "property": "$createdAt",
+            "operator": "between",
+            "value": {
+              "preset": "lastWeek"
             }
-          ]
-        }
+          }
+        ]
       }
     }
   }
@@ -385,11 +387,11 @@ The `aggregationProperties` contains a key called `medianCpuUsage` which is the 
 
 - `title` - The title of the aggregation property.
 - `targetBlueprint` - The blueprint we want to aggregate data from.
+- `query` - **Optional** - The query that will be performed on the target blueprint. The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](../../../../../search-and-query/search-and-query.md#rules)
 - `calculationSpec` - The calculation specification.
-  - `calculationBy` - `property` The calculation will be performed on the property of the entities that match the query (e.g. median value of the property of the entities that match the query).
-  - `func` - `median` is the function we want to use for the calculation.
-  - `property` - The property we want to calculate the median of. The property type must be a number.
-  - `query` - The query that will be performed on the target blueprint. The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](../../../../../search-and-query/search-and-query.md#rules)
+  - `"calculationBy": "property"` The calculation will be performed on the property of the entities that match the query (e.g. median value of the property of the entities that match the query).
+  - `"func": "median"` is the function we want to use for the calculation.
+  - `"property": "cpuUsage"` - The property we want to calculate the median of. The property type must be a number.
 
 </TabItem>
 
