@@ -779,7 +779,7 @@ resource "port_action" myAction {
 
 :point_up: The namespace tags are already inserted into the form. :point_up:
 
-### Setting a required inputs with the jqQuery
+### Setting required inputs with the jqQuery
 
 This example contains an array input with a default value that will be equal to the tags of the entity on which the action is performed:
 
