@@ -781,7 +781,7 @@ resource "port_action" myAction {
 
 ### Setting required inputs with the jqQuery
 
-This example contains two user inputs: one which will always be required, and one that will be required based on the entity's properties.
+This example contains two user inputs: one will always be required, and the other will be required based on the entity's properties.
 
 <Tabs
 defaultValue="api"
