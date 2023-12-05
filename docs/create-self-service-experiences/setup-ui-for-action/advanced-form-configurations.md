@@ -779,6 +779,36 @@ resource "port_action" myAction {
 
 :point_up: The namespace tags are already inserted into the form. :point_up:
 
+### Setting a required inputs with the jqQuery
+
+This example contains an array input with a default value that will be equal to the tags of the entity on which the action is performed:
+
+<Tabs
+defaultValue="api"
+values={[
+{label: 'API', value: 'api'},
+]}>
+
+<TabItem value="api">
+
+```json showLineNumbers
+{
+  "properties": {
+    "alwaysRequiredInput": {
+      "type": "string"
+    },
+    "inputRequiredBasedOnData": {
+      "type": "string"
+    }
+  },
+  "required": {
+    "jqQuery": "if .entity.properties.conditionBooleanProperty then [\"alwaysRequiredInput\", \"inputRequiredBasedOnData\"] else [\"alwaysRequiredInput\"] end"
+  }
+}
+```
+
+</TabItem>
+
 ## Complete Example
 
 In this example, we will create an action that lets the user select a cluster and a namespace in that cluster. The user will also be able to select a service that is already running in the cluster. The action will then deploy the selected service to the selected namespace in the cluster. The user will only be able to select a service that is linked to his team.
