@@ -4023,7 +4023,7 @@ In this step-by-step example, you will export your `ECR repositories` to Port.
                    "resource_type": "AWS::ECR::Repository",
                    "region": "<awsRegion>",
                    "identifier": "<repositoryName>",
-                   "action": "if \"<eventName>\" | startswith(\"Delete\") then \"delete\" else \"upsert\" end"
+                   "action": "if \"<eventName>\" | startswith(\"DeleteRepository\") then \"delete\" else \"upsert\" end"
                  }
      ECRRepositoryTagRule:
        Type: AWS::Events::Rule
@@ -4056,7 +4056,7 @@ In this step-by-step example, you will export your `ECR repositories` to Port.
                  {
                    "resource_type": "AWS::ECR::Repository",
                    "region": "\"<awsRegion>\"",
-                   "identifier": "\"<resourceArn>\" | split(\"/\") | .[1]",
+                   "identifier": "\"<resourceArn>\" | split(\"/\") | .[-1]",
                    "action": "\"upsert\""
                  }
    ```
