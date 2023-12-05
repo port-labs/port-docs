@@ -808,6 +808,7 @@ values={[
 ```
 
 </TabItem>
+</Tabs>
 
 ## Complete Example
 
