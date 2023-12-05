@@ -5,13 +5,13 @@ sidebar_label: Open/close JIRA issues
 
 # Open/close JIRA issues
 
-The [Port message sender](https://github.com/marketplace/actions/port-message-sender) allows you to automatically create Jira issues for entities with violated scorecard rules, and close them once the violations are fixed.
+The [Port message sender](https://github.com/marketplace/actions/port-sender) allows you to automatically create Jira issues for entities with violated scorecard rules, and close them once the violations are fixed.
 
 ## Syncing Jira issues
 
 For every scorecard level that is not completed, a Jira task will be created, along with subtasks for the level rules.
 
-Head to the Port sender [Jira section](https://github.com/marketplace/actions/port-message-sender#manage-scorecards-with-jira-issues) to learn more about the integration and how to use it.
+Head to the Port sender [Jira section](https://github.com/marketplace/actions/port-sender#manage-scorecards-with-jira-issues) to learn more about the integration and how to use it.
 
 ### Created task example
 
