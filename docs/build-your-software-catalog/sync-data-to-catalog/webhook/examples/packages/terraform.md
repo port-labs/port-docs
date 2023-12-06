@@ -129,12 +129,15 @@ def read_tfstate_file(tfstate_json_path):
 
     resources = data.get('resources', [])
     outputs = data.get('outputs', {})
+    lineage = data.get('lineage')
+
     tf_resources = parse_tf_resources(resources)
     tf_outputs = parse_tf_outputs(outputs)
 
     entity_object = {
         "resources": tf_resources,
-        "outputs": tf_outputs
+        "outputs": tf_outputs,
+        "lineage": lineage
     }
     webhook_response = add_entity_to_port(entity_object)
     return webhook_response
@@ -175,6 +178,7 @@ read_tfstate_file() {
     local package_json_path="$1"
     local data=$(cat "$package_json_path")
     local resources=$(echo "$data" | jq -c '.resources[]')
+    local lineage=$(echo "$data" | jq -r '.lineage')
 
     index=1
     tf_resources=()
@@ -192,7 +196,7 @@ read_tfstate_file() {
       ((index++))
     done <<< "$resources"
 
-    local entity_object="{\"resources\":[${tf_resources%,}]}"
+    local entity_object="{\"resources\":[${tf_resources%,}],\"lineage\":\"$lineage\"}"
 
     # since some tfstate may be quite large, we can write the data unto a temporary file
     local entity_object_file=$(mktemp)
