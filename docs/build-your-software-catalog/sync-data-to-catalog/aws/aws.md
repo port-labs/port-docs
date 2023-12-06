@@ -249,9 +249,10 @@ To make a change to the configuration (e.g. change the mapping of a certain prop
 1. Create a copy of the `config.json` file from the bucket, make the desired changes, and save it locally.
 2. Use the AWS CLI to upload the file to the bucket, replacing the existing file.  
    Replace `<BUCKET_NAME>` and `<PATH_TO_CONFIG_FILE>` with your values, then run the following command:
-   `bash
-    aws s3api put-object --bucket "<BUCKET_NAME>" --key "config.json" --body "<PATH_TO_CONFIG_FILE>"
-    `
+
+```bash
+  aws s3api put-object --bucket "<BUCKET_NAME>" --key "config.json" --body "<PATH_TO_CONFIG_FILE>"
+```
 
 ### IAM Policy
 
