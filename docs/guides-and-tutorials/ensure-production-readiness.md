@@ -25,7 +25,7 @@ This guide takes 10 minutes to complete, and aims to cover:
 
 In this guide we will set various standards for the production readiness of our services, and see how to use them as part of our CI.
 
-After completing it, you will get a sense of how your organization's daily routine could look like:
+After completing it, you will get a sense of how it can benefit different personas in your organization:
 
 - Platform engineers will be able to define policies for any service, and automatically pass/fail releases accordingly.
 - Developers will be able to easily see which policies set by the platform engineer are not met, and what they need to fix.
