@@ -46,7 +46,7 @@ terraform apply -var 'resources=["ecs_service", "lambda", "sns", "sqs", "s3_buck
 The above script performs the following actions:
 
 1. Creates the resource blueprints in your Port environment.
-2. Deploys the AWS exporter in your AWS environment with the following resources - [S3 bucket](./aws.md#exporter-s3-bucket), [mapping configuration file](./aws.md#exporter-configjson-file), [AWS secret](./aws.md#port-credentials-secret), [AWS IAM policy](./aws.md#iam-policy);
+2. Deploys the AWS exporter in your AWS environment with the following resources - [S3 bucket](https://aws.amazon.com/s3/), [mapping configuration file](./aws.md#exporter-configjson-file), [AWS secret](./aws.md#port-credentials-secret), [AWS IAM policy](./aws.md#iam-policy);
 3. Setting up [Event Bridge Rules](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-rules.html) that trigger the exporter to update resources;
 4. Invokes the AWS exporter Lambda function for the first time to get the current resources state.
 
@@ -193,7 +193,7 @@ For more information regarding how to deploy a serverless application, click [he
 To learn how to modify a secret's value, look [here](https://docs.aws.amazon.com/secretsmanager/latest/userguide/manage_update-secret.html).
 :::
 
-5. Upload the `config.json` to the [exporter's S3 bucket](#exporter-s3-bucket).
+5. Upload the `config.json` to the exporter's S3 bucket.
 
 :::tip Upload a file to an S3 bucket
 To learn how to upload a file to S3, look [here](https://docs.aws.amazon.com/AmazonS3/latest/userguide/upload-objects.html).

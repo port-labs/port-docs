@@ -309,7 +309,7 @@ The `Exporter AWS serverless application` is how you install the exporter's [Clo
 
 The stack consists of several components:
 
-- [S3 bucket](#exporter-s3-bucket) - where the [`config.json`](#exporter-configjson-file) should be saved;
+- [S3 bucket](#changing-the-configuration) - where the [`config.json`](#exporter-configjson-file) should be saved;
 - [ASM secret](#port-credentials-secret) - where you should save your Port credentials (client id and secret), to allow the exporter to interact with Port's API;
 - [Lambda function](https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-concepts.html#gettingstarted-concepts-function) - a resource that you can invoke to run the exporter code. The [IAM policy](#iam-policy) is attached to the execution role of the Lambda function;
 - [SQS queue](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html) - a queue of events, to be consumed by the exporter. Read [here](./event-based-updates.md) to learn how to use the exporter to consume and act on live events from different AWS services;

@@ -16,7 +16,7 @@ This guide takes 4 minutes to complete, and aims to quickly integrate your AWS e
 - While it is not mandatory for this guide, we recommend that you complete the [quickstart](/quickstart) before proceeding.
 - You will need an active [Port account](https://app.getport.io/).
 - The [Terraform CLI](https://learn.hashicorp.com/tutorials/terraform/install-cli) is required to install the AWS exporter.
-- The [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) is required for authentication. Make sure your AWS `Access key id` and `Secret access key` are set. If not, run `aws configure` in your terminal to configure them.
+- The [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) is used for authentication. Make sure your AWS `Access key id` and `Secret access key` are set. If not, run `aws configure` in your terminal to configure them.
 
 :::
 
