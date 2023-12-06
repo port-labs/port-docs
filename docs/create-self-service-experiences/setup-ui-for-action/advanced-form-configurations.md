@@ -283,12 +283,13 @@ The available logged-in user object:
 
 Keys that are supported with jqQuery expressions:
 
-| Key     | Description                                       |
-| ------- | ------------------------------------------------- |
-| enum    | any enum of a property                            |
-| value   | the value inside a "dataset" rule                 |
-| default | the default value of any property                 |
-| visible | the condition to display any property in the form |
+| Key      | Description                                       |
+| -------- | ------------------------------------------------- |
+| enum     | any enum of a property                            |
+| default  | the default value of any property                 |
+| required | the properties which will be required in the form |
+| value    | the value inside a "dataset" rule                 |
+| visible  | the condition to display any property in the form |
 
 </TabItem>
 
@@ -777,6 +778,37 @@ resource "port_action" myAction {
 ![entity tags action](../../../static/img/software-catalog/blueprint/defaultEntityTags.png)
 
 :point_up: The namespace tags are already inserted into the form. :point_up:
+
+### Setting required inputs with the jqQuery
+
+This example contains two user inputs: one will always be required, and the other will be required based on the entity's properties.
+
+<Tabs
+defaultValue="api"
+values={[
+{label: 'API', value: 'api'},
+]}>
+
+<TabItem value="api">
+
+```json showLineNumbers
+{
+  "properties": {
+    "alwaysRequiredInput": {
+      "type": "string"
+    },
+    "inputRequiredBasedOnData": {
+      "type": "string"
+    }
+  },
+  "required": {
+    "jqQuery": "if .entity.properties.conditionBooleanProperty then [\"alwaysRequiredInput\", \"inputRequiredBasedOnData\"] else [\"alwaysRequiredInput\"] end"
+  }
+}
+```
+
+</TabItem>
+</Tabs>
 
 ## Complete Example
 
