@@ -21,9 +21,8 @@ Port's AWS exporter is open source, view the source code [**here**](https://gith
 
 Our AWS exporter allows you to easily enrich your software catalog with data from your AWS accounts, for instance:
 
-- Map resources in your accounts, including **S3 buckets**, **lambda functions**, **SQS queues**, **RDS DB instances**, **ECS services** and many other resource types;
-- Use relations to create a complete, easily digestible map of your AWS accounts inside Port;
-- etc.
+- Map resources in your accounts, including **S3 buckets**, **lambda functions**, **SQS queues**, **RDS DB instances**, **ECS services** and many other resource types.
+- Use relations to create a complete, easily digestible map of your AWS accounts inside Port.
 
 ## How it works
 
