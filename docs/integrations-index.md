@@ -24,7 +24,6 @@ This page contains a list of Port's available integrations, organized by the pla
 - [GitHub scaffolder using FastAPI backend](./create-self-service-experiences/setup-backend/webhook/examples/software-templates.md)
 - [Deploy AWS resources using AWS CloudFormation](./create-self-service-experiences/setup-backend/github-workflow/examples/deploy-cloudformation-template.md)
 - [Create GitHub secret using GitHub workflows](./create-self-service-experiences/setup-backend/github-workflow/examples/create-github-secret.md)
-- [GitHub Webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/git/github.md)
 
 ### GitLab
 
