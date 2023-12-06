@@ -34,7 +34,6 @@ This page contains a list of Port's available integrations, organized by the pla
 - [GitLab pipeline self-service actions](./create-self-service-experiences/setup-backend/gitlab-pipeline/gitlab-pipeline.md)
 - [GitLab scaffolder](./create-self-service-experiences/setup-backend/gitlab-pipeline/examples/scaffold-repositories-using-cookiecutter.md)
 - [Sync projects, file contents, merge-requests and more](./build-your-software-catalog/sync-data-to-catalog/git/gitlab/examples.md)
-- [GitLab Webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/git/gitlab.md)
 
 ### Bitbucket
 
