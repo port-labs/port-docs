@@ -70,9 +70,18 @@ The exporter installation did three things:
 
 1. It created blueprints for the resources you specified in the installation command, you can see them in your [builder](https://app.getport.io/dev-portal/data-model).
 2. It created entities for the resources fetched from your AWS environment, you can see them in your [software catalog](https://app.getport.io/catalog).
-3. It used a preconfigured mapping definition to fill the entities' properties with data from your AWS environment. For example, your [lambdas catalog page](https://app.getport.io/lambdas) contains the following entity with its properties filled:
+3. It creates a JSON configuration file in an s3 bucket in your AWS environment, which contains a mapping definition to fill the entities' properties with data from your environment. For example, your [lambdas catalog page](https://app.getport.io/lambdas) contains the following entity with its properties filled:
 
 <img src='/img/guides/awsLambdaEntityPage.png' width='100%' />
+
+<br/><br/>
+
+:::info TIP - Updating your configuration
+
+To make changes to your configuration after installation, use the command described in the [AWS exporter page](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/aws/#changing-the-configuration).
+
+💁🏽 _You don't need to change anything in the configuration for this guide, this is just an FYI_
+:::
 
 ### Visualize data from your AWS resources
 

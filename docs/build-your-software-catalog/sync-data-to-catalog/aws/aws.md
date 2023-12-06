@@ -73,7 +73,7 @@ Here is an example snippet of the `config.json` file which demonstrates the ETL 
 }
 ```
 
-#### structure
+#### Structure
 
 - The root key of the `config.json` file is the `resources` key;
 - The `kind` key is a specifier for a resource type from the AWS Cloud Control API following the `service-provider::service-name::data-type-name` format:
@@ -239,6 +239,20 @@ Here is an example snippet of the `config.json` file which demonstrates the ETL 
   For additional options and information, read [here](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/resource-types.html#resource-types-schemas).
   :::
 
+#### Changing the configuration
+
+By default, the exporter saves a preconfigured `config.json` file to an [`AWS S3 Bucket`](https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingBucket.html) upon installation.  
+The S3 bucket is named `port-aws-exporter-<AWS_REGION>-<AWS_ACCOUNT_ID>`, and is created by the exporter.
+
+To make a change to the configuration (e.g. change the mapping of a certain property):
+
+1. Create a copy of the `config.json` file from the bucket, make the desired changes, and save it locally.
+2. Use the AWS CLI to upload the file to the bucket, replacing the existing file.  
+   Replace `<BUCKET_NAME>` and `<PATH_TO_CONFIG_FILE>` with your values, then run the following command:
+   `bash
+    aws s3api put-object --bucket "<BUCKET_NAME>" --key "config.json" --body "<PATH_TO_CONFIG_FILE>"
+    `
+
 ### IAM Policy
 
 The AWS exporter uses an [`AWS IAM Policy`](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html) which specifies the permissions to `list` and `read` the AWS resources you want to export (the ones you configured in the [`config.json`](#exporter-configjson-file)).
@@ -274,13 +288,6 @@ aws cloudformation describe-type --type RESOURCE --type-name <RESOURCE_TYPE> --q
 
 More details can be found [here](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/resource-types.html#resource-types-schemas).
 :::
-
-### Exporter S3 Bucket
-
-The exporter's [`config.json`](#exporter-configjson-file) file needs to be saved to an [`AWS S3 Bucket`](https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingBucket.html).
-
-You can create and manage your own bucket or let the exporter do that for you.
-In any case, you need to upload the [`config.json`](#exporter-configjson-file) to the bucket, when it's available.
 
 ### Port Credentials Secret
 
