@@ -50,8 +50,8 @@ Set them as you wish in the script below, then copy it and run it in your termin
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install opsgenie port-labs/port-ocean \
-  --set port.clientId="72sRMMHkH9mluc4gTAUOKs4RmDKqkxcn"  \
-  --set port.clientSecret="lPkUMbs-r0zFTub9_TdAAnHN_Ycumyipmq2MfgSuLwpAaizFIiG8ibcVLE7lSBdu"  \
+  --set port.clientId="CLIENT_ID"  \
+  --set port.clientSecret="CLIENT_SECRET"  \
   --set port.baseUrl="https://api.getport.io"  \
   --set initializePortResources=true  \
   --set integration.identifier="opsgenie"  \
