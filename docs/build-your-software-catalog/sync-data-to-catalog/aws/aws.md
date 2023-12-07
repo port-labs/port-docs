@@ -220,24 +220,24 @@ Here is an example snippet of the `config.json` file which demonstrates the ETL 
     ...
   ```
 
-  :::info **IMPORTANT**
+:::info **IMPORTANT**
 
-  - **The order of the resources matters** when you have relations between resources.
-    The AWS exporter will sync the resources in the same order as they appear in the `config.json`, so make sure to sort the resources by a logical order.
+- **The order of the resources matters** when you have relations between resources.
+  The AWS exporter will sync the resources in the same order as they appear in the `config.json`, so make sure to sort the resources by a logical order.
 
-    For example, if you have a relation from SNS Topic to lambda function, put the Lambda function configuration first.
+  For example, if you have a relation from SNS Topic to lambda function, put the Lambda function configuration first.
 
-  - By its nature, the AWS exporter will keep the values of unmapped properties untouched. Go [here](../api/api.md?operation=create-update#usage) for further explanation about different entity creation strategies.
+- By its nature, the AWS exporter will keep the values of unmapped properties untouched. Go [here](../api/api.md?operation=create-update#usage) for further explanation about different entity creation strategies.
 
-  :::
+:::
 
-  :::tip View a resource type schema
-  To view a resource type schema and use it to compose a mapping, use [this](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html) reference.
+:::tip View a resource type schema
+To view a resource type schema and use it to compose a mapping, use [this](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html) reference.
 
-  Note that not all of the resource types listed in the reference are available for use with the Cloud Control API. A method to determine if a resource type is available discussed [here](#structure).
+Note that not all of the resource types listed in the reference are available for use with the Cloud Control API. A method to determine if a resource type is available discussed [here](#structure).
 
-  For additional options and information, read [here](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/resource-types.html#resource-types-schemas).
-  :::
+For additional options and information, read [here](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/resource-types.html#resource-types-schemas).
+:::
 
 #### Changing the configuration
 
