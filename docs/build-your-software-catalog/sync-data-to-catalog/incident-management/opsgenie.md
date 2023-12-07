@@ -52,13 +52,12 @@ helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install opsgenie port-labs/port-ocean \
   --set port.clientId="CLIENT_ID"  \
   --set port.clientSecret="CLIENT_SECRET"  \
-  --set port.baseUrl="https://api.getport.io"  \
   --set initializePortResources=true  \
   --set integration.identifier="opsgenie"  \
   --set integration.type="opsgenie"  \
   --set integration.eventListener.type="POLLING"  \
-  --set integration.secrets.apiToken="string"  \
-  --set integration.config.apiUrl="string"
+  --set integration.secrets.apiToken="API_TOKEN"  \
+  --set integration.config.apiUrl="https://api.opsgenie.com"
 ```
 
 </TabItem>
