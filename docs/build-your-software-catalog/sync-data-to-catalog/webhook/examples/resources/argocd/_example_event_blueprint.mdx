@@ -1,0 +1,36 @@
+```json showLineNumbers
+{
+  "identifier": "argocdEvent",
+  "description": "This blueprint represents ArgoCD events",
+  "title": "ArgoCD Events",
+  "icon": "Argo",
+  "schema": {
+    "properties": {
+      "event": {
+        "type": "string",
+        "title": "Event Name"
+      },
+      "namespace": {
+        "type": "string",
+        "title": "Namespace"
+      },
+      "description": {
+        "type": "string",
+        "title": "Description"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "application": {
+      "title": "Application",
+      "target": "argocdApplication",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```

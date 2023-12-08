@@ -227,3 +227,9 @@ This page contains a list of Port's available integrations, organized by the pla
 ## Backstage
 
 - [Import catalog from Backstage](./build-your-software-catalog/sync-data-to-catalog/backstage/backstage.md)
+
+## ArgoCD
+
+- [ArgoCD exporter](./build-your-software-catalog/sync-data-to-catalog/kubernetes/argocd.md)
+- [ArgoCD webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/argocd.md)
+- [ArgoCD events](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/argocd.md#argocd-events)
