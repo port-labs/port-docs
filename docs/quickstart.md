@@ -6,6 +6,7 @@ sidebar_label: ⏱️ Quickstart
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 # ⏱️ Quickstart
 
@@ -220,7 +221,7 @@ Now head back to your `Catalog`, and go to the `Services` page. We can see that 
 
 ![catalogAfterRepoCreation](/img/quickstart/catalogAfterRepoCreation.png)
 
-Clicking on a service name in the table will take us to its entity page:
+Clicking on a service name in the table will take us to its <PortTooltip id="entity">entity</PortTooltip> page:
 
 ![entityAfterIngestion](/img/quickstart/entityAfterIngestion.png)
 
