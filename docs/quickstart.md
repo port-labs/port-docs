@@ -21,7 +21,7 @@ This guide takes 7 minutes to complete, and aims to demonstrate the potential of
 
 In this guide we will model a repository from your Git provider in Port, using your real data.
 
-After completing it, you will get a sense of how your organization's daily routine could look like:
+After completing it, you will get a sense of how it can benefit different personas in your organization:
 
 - Developers will be able to see all the services in the organization and their relevant metadata.
 - Developers will be able to follow the organization's standards for production readiness.
