@@ -4064,3 +4064,255 @@ In this step-by-step example, you will export your `ECR repositories` to Port.
     </details>
 
 Done! soon, you will be able to see any `ECR repositories`
+
+## Mapping Elasticache serverless cache
+
+In this step-by-step example, you will export your `Serverless cache` to Port.
+
+1. Create the following Port blueprint:
+
+   **Serverless cache** - will represent Serverless cache from the AWS account.
+
+   You may use the following definitions:
+
+     <details>
+     <summary> Serverless cache blueprint </summary>
+
+   ```json showLineNumbers
+   {
+     "identifier": "aws_elasticache",
+     "title": "Serverless Cache",
+     "icon": "Service",
+     "schema": {
+       "properties": {
+         "status": {
+           "title": "Status",
+           "type": "string"
+         },
+         "description": {
+           "title": "Description",
+           "type": "string"
+         },
+         "engine": {
+           "title": "Engine",
+           "type": "string"
+         },
+         "tags": {
+           "title": "Tags",
+           "type": "array"
+         },
+         "link": {
+           "title": "Link",
+           "type": "string",
+           "format": "url"
+         },
+         "majorEngineVersion": {
+           "title": "Major Engine Version",
+           "type": "string"
+         },
+         "arn": {
+           "title": "ARN",
+           "type": "string"
+         },
+         "createdTime": {
+           "title": "Created Time",
+           "type": "string",
+           "format": "date-time"
+         },
+         "dailySnapshotTime": {
+           "title": "Daily Snapshot Time",
+           "type": "string"
+         },
+         "readerEndpoint": {
+           "title": "Reader Endpoint",
+           "type": "object"
+         },
+         "endpoint": {
+           "title": "Endpoint",
+           "type": "object"
+         },
+         "securityGroup": {
+           "title": "Security Group",
+           "type": "array"
+         }
+       },
+       "required": []
+     },
+     "mirrorProperties": {},
+     "calculationProperties": {},
+     "aggregationProperties": {},
+     "relations": {
+       "region": {
+         "title": "Region",
+         "target": "region",
+         "required": false,
+         "many": false
+       }
+     }
+   }
+   ```
+
+     </details>
+
+2. Upload the `config.json` file to the exporter's S3 bucket:
+
+   <details>
+   <summary> Port AWS exporter config.json </summary>
+
+   ```json showLineNumbers
+   {
+     "resources": [
+       {
+         "kind": "AWS::ElastiCache::ServerlessCache",
+         "port": {
+           "entity": {
+             "mappings": [
+               {
+                 "identifier": ".ServerlessCacheName",
+                 "title": ".ServerlessCacheName",
+                 "blueprint": "aws_elasticache",
+                 "properties": {
+                   "status": ".Status",
+                   "description": ".Description",
+                   "majorEngineVersion": ".MajorEngineVersion",
+                   "createdTime": ".CreateTime",
+                   "dailySnapshotTime": ".DailySnapshotTime",
+                   "readerEndpoint": ".ReaderEndpoint",
+                   "endpoint": ".Endpoint",
+                   "securityGroup": ".SecurityGroupIds",
+                   "link": "\"https://console.aws.amazon.com/go/view?arn=\" + .ARN",
+                   "arn": ".ARN",
+                   "engine": ".Engine",
+                   "tags": ".Tags"
+                 },
+                 "relations": {
+                   "region": ".ARN | split(\":\") | .[3]"
+                 }
+               }
+             ]
+           }
+         }
+       }
+     ]
+   }
+   ```
+
+   </details>
+
+3. Update the exporter's `IAM policy`:
+
+   <details>
+   <summary> IAM policy </summary>
+
+   ```json showLineNumbers
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Sid": "VisualEditor0",
+         "Effect": "Allow",
+         "Action": [
+           "elasticache:DescribeServerlessCaches",
+           "elasticache:ListTagsForResource"
+         ],
+         "Resource": "*"
+       }
+     ]
+   }
+   ```
+
+   </details>
+
+4. Optional: create an event rule to trigger automatic syncing of changes in Elasticach serveless caches.
+
+   You may use the following CloudFormation template:
+
+    <details>
+    <summary> Event rule CloudFormation template </summary>
+
+   ```yaml showLineNumbers
+   AWSTemplateFormatVersion: "2010-09-09"
+   Description: The template used to create event rules for the Port AWS exporter.
+   Parameters:
+     PortAWSExporterStackName:
+       Description: Name of the Port AWS exporter stack name
+       Type: String
+       MinLength: 1
+       MaxLength: 255
+       AllowedPattern: ^[a-zA-Z][-a-zA-Z0-9]*$
+       Default: serverlessrepo-port-aws-exporter
+   Resources:
+     ElasticacheEventRule:
+       Type: AWS::Events::Rule
+       Properties:
+         EventBusName: default
+         EventPattern:
+           detail-type:
+             - AWS API Call via CloudTrail
+           source:
+             - aws.elasticache
+           detail:
+             eventSource:
+               - elasticache.amazonaws.com
+             eventName:
+               - prefix: CreateServerlessCache
+               - prefix: DeleteServerlessCache
+               - prefix: ModifyServerlessCache
+         Name: port-aws-exporter-sync-serverless-cache-trails
+         State: ENABLED
+         Targets:
+           - Id: PortAWSExporterEventsQueue
+             Arn:
+               Fn::ImportValue:
+                 Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+             InputTransformer:
+               InputPathsMap:
+                 awsRegion: $.detail.awsRegion
+                 eventName: $.detail.eventName
+                 cacheName: $.detail.responseElements.serverlessCache.serverlessCacheName
+               InputTemplate: >-
+                 {
+                   "resource_type": "AWS::ElastiCache::ServerlessCache",
+                   "region": "<awsRegion>",
+                   "identifier": "<cacheName>",
+                   "action": "if \"<eventName>\" | startswith(\"DeleteServerlessCache") then \"delete\" else \"upsert\" end"
+                 }
+     ElasticacheTagRule:
+       Type: AWS::Events::Rule
+       Properties:
+         EventBusName: default
+         EventPattern:
+           source:
+             - aws.elasticache
+           detail-type:
+             - AWS API Call via CloudTrail
+           detail:
+             eventSource:
+               - elasticache.amazonaws.com
+             eventName:
+               - prefix: AddTagsToResource
+               - prefix: RemoveTagsFromResource
+         Name: port-aws-exporter-sync-serverless-cache-tags-trails
+         State: ENABLED
+         Targets:
+           - Id: PortAWSExporterEventsQueue
+             Arn:
+               Fn::ImportValue:
+                 Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+             InputTransformer:
+               InputPathsMap:
+                 awsRegion: $.detail.awsRegion
+                 eventName: $.detail.eventName
+                 resourceArn: $.detail.requestParameters.resourceName
+               InputTemplate: |-
+                 {
+                   "resource_type": "AWS::ElastiCache::ServerlessCache",
+                   "region": "\"<awsRegion>\"",
+                   "identifier": "\"<resourceArn>\" | split(\":\") | .[-1]",
+                   "action": "\"upsert\""
+                 }
+   ```
+
+    </details>
+
+Done! soon, you will be able to see any `Serverless cache`

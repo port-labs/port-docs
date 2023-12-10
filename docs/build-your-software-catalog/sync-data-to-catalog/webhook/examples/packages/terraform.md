@@ -5,14 +5,15 @@ description: Ingest Terraform resources into your catalog
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import TerraformBlueprint from './resources/terraform/\_example_tfstate_blueprint.mdx'
+import TerraformResourceBlueprint from './resources/terraform/\_example_tfstate_resource_blueprint.mdx'
+import TerraformOutputBlueprint from './resources/terraform/\_example_tfstate_output_blueprint.mdx'
 import TerraformWebhookConfig from './resources/terraform/\_example_tfstate_webhook_config.mdx'
 
-# Terraform
+# Terraform State
 
-In this example you are going to create a `terraformResource` blueprint that ingests all resources in your `terraform.tfstate` file using a combination of Port's [API](../../../api/api.md) and [webhook functionality](../../webhook.md).
+In this example you are going to create a `terraformResource` and `tarraformOutput` blueprint that ingests all resources and outputs in your `terraform.tfstate` file using a combination of Port's [API](../../../api/api.md) and [webhook functionality](../../webhook.md).
 
-To ingest the resources to Port, a script that sends information about resources according to the webhook configuration is used.
+To ingest the resources to Port, a script that sends information about resources and outputs according to the webhook configuration is used.
 
 ## Prerequisites
 
@@ -20,7 +21,12 @@ Create the following blueprint definition and webhook configuration:
 
 <details>
 <summary>Terraform resources blueprint</summary>
-<TerraformBlueprint/>
+<TerraformResourceBlueprint/>
+</details>
+
+<details>
+<summary>Terraform outputs blueprint</summary>
+<TerraformOutputBlueprint/>
 </details>
 
 <details>
@@ -73,9 +79,39 @@ def add_entity_to_port(entity_object):
     response = requests.post(WEBHOOK_URL, json=entity_object, headers=headers)
     return response.json()
 
+def parse_tf_outputs(output_data):
+    tf_outputs = []
+    for output_name, output_info in output_data.items():
+        output_type = type(output_info.get("value")).__name__
+        tf_outputs.append({
+            'name': output_name,
+            'description': output_info.get("description"),
+            'type': output_type,
+            'sensitive': output_info.get('sensitive'),
+            'value': str(output_info.get('value'))
+        })
+    return tf_outputs
+
+def parse_tf_resources(resources):
+    tf_resources = []
+    index = 1
+    for resource in resources:
+        resource_id = f"tf-rs-{index}"
+        tf_resources.append({
+            'name': resource.get('name'),
+            'mode': resource.get('mode'),
+            'module': resource.get('module'),
+            'type': resource.get('type'),
+            'provider': resource.get('provider'),
+            'instances': resource.get('instances'),
+            'id': resource_id
+        })
+        index+=1
+    return tf_resources
+
 
 def read_tfstate_file(tfstate_json_path):
-    """This function takes a tfstate_json_path file path, converts the "resources" property into a
+    """This function takes a tfstate_json_path file path, converts the resources and outputs property into a
     JSON array and then sends the data to Port
 
     Params
@@ -92,25 +128,16 @@ def read_tfstate_file(tfstate_json_path):
         data = json.load(file)
 
     resources = data.get('resources', [])
+    outputs = data.get('outputs', {})
+    lineage = data.get('lineage')
 
-    tf_resources = []
-    index = 1
-    for resource in resources:
-        resource_id = f"tf-rs-{index}"
-        tf_resources.append({
-            'name': resource.get('name'),
-            'mode': resource.get('mode'),
-            'module': resource.get('module'),
-            'type': resource.get('type'),
-            'provider': resource.get('provider'),
-            'instances': resource.get('instances'),
-            'id': resource_id
-        })
-        index+=1
+    tf_resources = parse_tf_resources(resources)
+    tf_outputs = parse_tf_outputs(outputs)
 
     entity_object = {
-        "service": SERVICE_ID,
-        "resources": tf_resources
+        "resources": tf_resources,
+        "outputs": tf_outputs,
+        "lineage": lineage
     }
     webhook_response = add_entity_to_port(entity_object)
     return webhook_response
@@ -151,6 +178,7 @@ read_tfstate_file() {
     local package_json_path="$1"
     local data=$(cat "$package_json_path")
     local resources=$(echo "$data" | jq -c '.resources[]')
+    local lineage=$(echo "$data" | jq -r '.lineage')
 
     index=1
     tf_resources=()
@@ -168,7 +196,7 @@ read_tfstate_file() {
       ((index++))
     done <<< "$resources"
 
-    local entity_object="{\"resources\":[${tf_resources%,}]}"
+    local entity_object="{\"resources\":[${tf_resources%,}],\"lineage\":\"$lineage\"}"
 
     # since some tfstate may be quite large, we can write the data unto a temporary file
     local entity_object_file=$(mktemp)
