@@ -53,7 +53,6 @@ resources:
             status: ".state"
             createdAt: ".created_on"
             updatedAt: ".updated_on"
-            description: ".description"
             link: ".links.html.href"
             # highlight-end
 ```

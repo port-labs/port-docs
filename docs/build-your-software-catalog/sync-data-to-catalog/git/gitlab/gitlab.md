@@ -50,7 +50,6 @@ resources:
             status: .state
             createdAt: .created_at
             updatedAt: .updated_at
-            description: .description
             link: .web_url
         # highlight-end
 ```
