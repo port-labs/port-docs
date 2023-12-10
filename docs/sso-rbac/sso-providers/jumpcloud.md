@@ -86,7 +86,7 @@ The `family_name` and `given_name` attributes are required. These are used by Po
 
 :::note
 The `email` user attribute is created by default when creating the app.
-Make sure the switch next to the `email` field is switched to `on`.
+Make sure the switch next to the `email` field is set to `on`.
 :::
 
 1. In the Port app, go to the `SSO` tab, under the **User Attribute Mapping** section:
