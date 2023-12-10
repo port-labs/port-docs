@@ -1,0 +1,20 @@
+```json showLineNumbers
+[
+  {
+    "blueprint": "argocdEvent",
+    "filter": "true",
+    "entity": {
+      "identifier": ".body.app_name + \"-\" + .body.event_name | tostring",
+      "title": ".body.event_name | tostring",
+      "properties": {
+        "event": ".body.event_name",
+        "namespace": ".body.namespace",
+        "description": ".body.description"
+      },
+      "relations": {
+        "application": ".body.uid"
+      }
+    }
+  }
+]
+```
