@@ -93,7 +93,7 @@ Now let's connect our blueprint to a data source and fill it with real data!
 
 1. To export and sync data from Github or BitBucket, Port provides a simple application. Choose your preferred provider and install the app:
 
-<Tabs values={[
+<Tabs groupId="Git provider" values={[
 {label: "Github", value: "Github"},
 {label: "BitBucket", value: "BitBucket"},
 {label: "Gitlab", value: "Gitlab"}
@@ -131,7 +131,7 @@ Once installed, you will see new data sources in the `Data Sources` tab of the b
 
 In the `Data sources` tab, click on the exporter you installed. In the `Mapping` tab paste the following snippet (choose your Git provider), then click `Save & Resync`:
 
-<Tabs values={[
+<Tabs groupId="Git provider" values={[
 {label: "Github", value: "Github"},
 {label: "BitBucket", value: "BitBucket"},
 {label: "Gitlab", value: "Gitlab"}
@@ -236,6 +236,8 @@ Let's add a scorecard to the `Service` blueprint:
 
 <img src='/img/quickstart/blueprintAddScorecard.png' width='250rem' />
 
+<br/><br/>
+
 2. Replace the contents with the following JSON and click `Save`:
 
 <details>
@@ -294,6 +296,7 @@ Say you really like this view, and want your developers to see the `Services` ta
 2. Click on `Save this view`, then click on `Save as a new page`:
 
 <img src='/img/quickstart/saveAsNewPage.png' width='500rem' />
+
 <br/><br/>
 
 Choose a name and icon, and click on `Save page`.  
@@ -313,9 +316,13 @@ Let's create a simple pie chart showing the language distribution in our service
 
 <img src='/img/quickstart/pieChartLanguagesForm.png' width='380rem' />
 
+<br/><br/>
+
 You will now see a pie chart with the number of services and their language distribution in the `Home` tab of your Port app:
 
 <img src='/img/quickstart/pieChartLanguages.png' width='300rem' />
+
+<br/><br/>
 
 This is just an example, in a real-life environment with many different resources you can visualize more complex data based on any property in any of your blueprints.
 
