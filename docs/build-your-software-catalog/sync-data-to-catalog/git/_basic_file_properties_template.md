@@ -17,12 +17,13 @@ root
 ...
 ```
 
-port.yml:
+`port.yml` file:
 
 ```yaml showLineNumbers
 blueprint: code_module
 title: Module 1
 identifier: module_1_entity
 properties:
+  # highlight-next-line
   myStringProp: file://module1/README.md
 ```
