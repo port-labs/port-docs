@@ -6,9 +6,9 @@ description: Ingest Falco alerts into your catalog
 import AlertBlueprint from './resources/falco/\_example_alert_blueprint.mdx'
 import AlertWebhookConfig from './resources/falco/\_example_webhook_configuration.mdx'
 
-# Falco Sidekicks
+# Falco Sidekick
 
-In this example you are going to create a webhook integration between [Falco Sidekicks](https://github.com/falcosecurity/falcosidekick) and Port, which will ingest alert entities.
+In this example you are going to create a webhook integration between [Falco Sidekick](https://github.com/falcosecurity/falcosidekick) and Port, which will ingest alert entities.
 
 ## Port configuration
 
@@ -40,7 +40,7 @@ Create the following webhook configuration [using Port UI](../../webhook/?operat
 
 </details>
 
-## Configure Falcosidekicks to send webhook
+## Configure Falco Sidekick to send webhook
 
 1. If you're using Falcosidekick with [Docker](https://github.com/falcosecurity/falcosidekick#with-docker), use the following command for installation. Replace `YOUR_WEBHOOK_URL` with the value of the `url` key you received after creating the webhook configuration;
 
