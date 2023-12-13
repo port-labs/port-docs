@@ -31,7 +31,7 @@ Create the following webhook configuration [using Port UI](../../webhook/?operat
    1. Title : `Falco Alert Mapper`;
    2. Identifier : `falco_alert_mapper`;
    3. Description : `A webhook configuration to map Falco sidekicks alerts to Port`;
-   4. Icon : `Service`;
+   4. Icon : `Alert`;
 2. **Integration configuration** tab - fill the following JQ mapping:
 
    <AlertWebhookConfig/>
