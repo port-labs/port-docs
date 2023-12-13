@@ -4332,8 +4332,8 @@ In this step-by-step example, you will export your `Cache clusters` to Port.
 
    ```json showLineNumbers
    {
-     "identifier": "aws_cache_cluster",
-     "title": "AWS Cache Cluster",
+     "identifier": "elasticache_cluster",
+     "title": "Elasticache Cluster",
      "icon": "Service",
      "schema": {
        "properties": {
