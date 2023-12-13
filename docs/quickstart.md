@@ -37,11 +37,19 @@ Head over to [app.getport.io](https://app.getport.io) and create an account.
 [Blueprints](/build-your-software-catalog/define-your-data-model/setup-blueprint/) are one of Port's basic building blocks, used to represent any data source in your infrastructure.  
 We will now create a `Service` blueprint to model a Git repository on Github/Bitbucket.
 
-1. Go to your [Builder](https://app.getport.io/dev-portal/data-model), click on the `Add` button in the top right corner, then choose `Custom blueprint`:
+1. Go to your [Builder](https://app.getport.io/dev-portal/data-model), click on the `+ Blueprint` button:
 
-<img src='/img/quickstart/builderAddCustomBlueprint.png' width='30%' />
+<img src='/img/quickstart/builderAddCustomBlueprint.png' width='50%' />
 
-<br/><br/>
+<br/>
+
+:::tip TIP
+If you already have one or more blueprints in your Builder, the button to create a new custom blueprint will appear in the top right corner:
+
+<img src='/img/quickstart/builderAddCustomBlueprintExisting.png' width='30%' />
+:::
+
+<br/>
 
 2. Click on the `Edit JSON` button in the top right corner. Here you can define a blueprint and its properties using JSON.
 
