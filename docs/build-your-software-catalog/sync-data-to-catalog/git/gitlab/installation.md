@@ -115,6 +115,4 @@ In both options you'll need to provide the `useSystemHook` parameter with the va
     - `push`
     - `merge_request`
 
-    But you can choose all events as we will roll out support for more events in the future.
-
   ![GitLab System Hook](../../../../../static/img/integrations/gitlab/GitLabSystemHook.png)

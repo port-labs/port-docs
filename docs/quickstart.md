@@ -93,10 +93,10 @@ Now let's connect our blueprint to a data source and fill it with real data!
 
 1. To export and sync data from Github or BitBucket, Port provides a simple application. Choose your preferred provider and install the app:
 
-<Tabs groupId="Git provider" values={[
-{label: "Github", value: "Github"},
-{label: "BitBucket", value: "BitBucket"},
-{label: "Gitlab", value: "Gitlab"}
+<Tabs groupId="git-provider" queryString values={[
+{label: "Github", value: "github"},
+{label: "BitBucket", value: "bitbucket"},
+{label: "Gitlab", value: "gitlab"}
 ]}>
 
 <TabItem value="Github">
@@ -131,10 +131,10 @@ Once installed, you will see new data sources in the `Data Sources` tab of the b
 
 In the `Data sources` tab, click on the exporter you installed. In the `Mapping` tab paste the following snippet (choose your Git provider), then click `Save & Resync`:
 
-<Tabs groupId="Git provider" values={[
-{label: "Github", value: "Github"},
-{label: "BitBucket", value: "BitBucket"},
-{label: "Gitlab", value: "Gitlab"}
+<Tabs groupId="git-provider" queryString values={[
+{label: "Github", value: "github"},
+{label: "BitBucket", value: "bitbucket"},
+{label: "Gitlab", value: "gitlab"}
 ]}>
 
 <TabItem value="Github">
@@ -293,7 +293,7 @@ This table is now grouped by the scorecard we created in the previous step.
 
 Say you really like this view, and want your developers to see the `Services` table in this format. Notice that the `Save this view` button is now enabled?
 
-2. Click on `Save this view`, then click on `Save as a new page`:
+2. Click on the arrow to the right of the `Save this view` button, then click on `Save as a new page`:
 
 <img src='/img/quickstart/saveAsNewPage.png' width='500rem' />
 
