@@ -66,3 +66,55 @@ Example:
 
 In order for the GitLab integration to update the data in Port on every change in the GitLab repository, you need to specify the `appHost` parameter.
 The `appHost` parameter should be set to the `url` of your GitLab integration instance. In addition, your GitLab instance (whether it is GItLab SaaS or a self-hosted version of GitLab) needs to have the option to send webhook requests to the Gitlab integration instance, so please configure your network accordingly.
+
+### Hooks
+
+The Gitlab integration supports listening to Gitlab webhooks and updating the relevant entities in Port accordingly.
+
+Supported webhooks are [Group webhooks](https://docs.gitlab.com/ee/user/project/integrations/webhooks.html#group-webhooks) and [System hooks](https://docs.gitlab.com/ee/system_hooks/system_hooks.html).
+
+As part of the installation process, the integration will create a webhook in your Gitlab instance, and will use it to listen to the relevant events.
+
+**_There are a few points to consider before deciding on which webhook to choose_**:
+
+- If you choose group webhooks, the integration will create a webhook for each group in your Gitlab instance. If you choose system hooks, the integration will create a single webhook for the entire Gitlab instance.
+- The system hooks has much less event types than the group webhooks.
+
+  - Group Webhooks supported event types:
+
+    - `push`
+    - `issues`
+    - `jobs`
+    - `merge_requests`
+    - `pipeline`
+
+  - System Hooks supported event types:
+
+    - `push`
+    - `merge_request`
+
+    This means that if you choose system hooks, the integration will not be able to update the relevant entities in Port on events such as `issues` or `pipeline`.
+
+- Creating a system hook requires admin privileges in Gitlab. Due to this, the integration supports that the system hook will be created manually, and the integration will use it to listen to the relevant events.
+
+#### Configuring integration to use hooks
+
+By default, if `appHost` is provided, the integration will create group webhooks for each group in your Gitlab instance.
+
+To create the system hook there are two options:
+
+In both options you'll need to provide the `useSystemHook` parameter with the value `true`.
+
+- Provide a token with admin privileges in Gitlab using the `tokenMapping` parameter.
+- Create the system hook manually
+
+  - Follow the instructions for creating a system hook in Gitlab [here](https://docs.gitlab.com/ee/administration/system_hooks.html#create-a-system-hook).
+  - In the `URL` field, provide the `appHost` parameter value with the path `/integration/system/hook`. e.g. `https://my-gitlab-integration.com/integration/system/hook`.
+  - From the `Triggers` section, the Gitlab integration currently supports the following events:
+
+    - `push`
+    - `merge_request`
+
+    But you can choose all events as we will roll out support for more events in the future.
+
+  ![GitLab System Hook](../../../../../static/img/integrations/gitlab/GitLabSystemHook.png)
