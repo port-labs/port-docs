@@ -127,8 +127,6 @@ acl = "{{ bucket_acl }}"
   
 4. Now let's create the workflow file that contains our logic. Our workflow will consist of 3 steps:
 
-<br/><br/>
-
 - Creating a copy of the template file in the selected service's repository and replacing its variables with the data from the action's input.
 - Creating a pull request in the selected service's repository to add the new resource.
 - Reporting & logging the action result back to Port, and updating the relevant service's `Resource definitions` property with the URL of the service's resources directory.
