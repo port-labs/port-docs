@@ -5,6 +5,7 @@ title: Let developers enrich services using Gitops
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 # Let developers enrich services using Gitops
 
@@ -30,9 +31,9 @@ After completing it, you will get a sense of how your organization's daily routi
 
 ### Add new properties to your `Service` blueprint
 
-Let's start by adding two new properties to the `Service` blueprint, that we will later populate using Gitops.
+Let's start by adding two new properties to the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>, that we will later populate using Gitops.
 
-1. Go to your [Builder](https://app.getport.io/dev-portal/data-model), expand the `Service` blueprint, and click on `New property`.
+1. Go to your [Builder](https://app.getport.io/dev-portal/data-model), expand the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New property`.
 
 2. The first property will be the service's type, chosen from a predefined list of options. Fill out the form like this, then click `Create`:
 
@@ -48,7 +49,7 @@ _Note the colors of the inputs, this will make it easier to see a service's life
 
 ### Model domains for your services
 
-Services that share a business purpose (e.g. payments, shipping) are often grouped together using domains. Let's create a blueprint to represent a domain in Port:
+Services that share a business purpose (e.g. payments, shipping) are often grouped together using domains. Let's create a <PortTooltip id="blueprint">blueprint</PortTooltip> to represent a domain in Port:
 
 1. In your [Builder](https://app.getport.io/dev-portal/data-model), click on the `Add` button in the top right corner, then choose `Custom blueprint`:
 
@@ -87,7 +88,7 @@ Services that share a business purpose (e.g. payments, shipping) are often group
 
 ### Connect your services to their domains
 
-Now that we have a blueprint to represent a domain, let's connect it to our services. We will do this by adding a relation to the `Service` blueprint:
+Now that we have a <PortTooltip id="blueprint">blueprint</PortTooltip> to represent a domain, let's connect it to our services. We will do this by adding a relation to the `Service` blueprint:
 
 1. Go to your [Builder](https://app.getport.io/dev-portal/data-model), expand the `Service` blueprint, and click on `New relation`:
 
@@ -101,7 +102,7 @@ Now that we have a blueprint to represent a domain, let's connect it to our serv
 
 ### Create domains via Gitops
 
-Now that we have a `Domain` blueprint, we can create some domains in Port. This can be done manually from the UI, or via Gitops which is the method we will use in this guide.
+Now that we have a `Domain` <PortTooltip id="blueprint">blueprint</PortTooltip>, we can create some domains in Port. This can be done manually from the UI, or via Gitops which is the method we will use in this guide.
 
 1. In your `Port-actions` (or equivalent) Github repository, create a new file named `port.yml` in the root directory, and use the following snippet as its content:
 
@@ -123,7 +124,7 @@ Now that we have a `Domain` blueprint, we can create some domains in Port. This 
 
 </details>
 
-2. Head back to your [software catalog](https://app.getport.io/domains), you will see that Port has created two new `domain` entities:
+2. Head back to your [software catalog](https://app.getport.io/domains), you will see that Port has created two new `domain` <PortTooltip id="entity">entities</PortTooltip>:
 
 <img src='/img/guides/gitopsDomainEntities.png' width='50%' />
 
@@ -137,7 +138,7 @@ As platform engineers, we want to enable our developers to perform certain actio
 
 1. Go to your [Self-service page](https://app.getport.io/self-serve), then click on the `+ New action` button in the top right corner.
 
-2. From the dropdown, choose the `Service` blueprint.
+2. From the dropdown, choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>.
 
 3. Fill out the basic details like this, then click `Next`:
 
