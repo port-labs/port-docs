@@ -5,12 +5,13 @@ title: Ensure production readiness
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 # Ensure production readiness
 
 This guide takes 10 minutes to complete, and aims to cover:
 
-- Some advanced types of properties that can be added to blueprints, and what can be achieved by using them.
+- Some advanced types of properties that can be added to <PortTooltip id="blueprint">blueprints</PortTooltip>, and what can be achieved by using them.
 - The value and flexibility of scorecards in Port.
 
 :::tip Prerequisites
@@ -33,7 +34,7 @@ After completing it, you will get a sense of how it can benefit different person
 
 ## Expand your service blueprint
 
-In this guide we will add 3 new properties to our `service` blueprint, which we will then use to set production readiness standards:
+In this guide we will add 3 new properties to our `service` <PortTooltip id="blueprint">blueprint</PortTooltip>, which we will then use to set production readiness standards:
 
 1. The service's `on-call`, fetched from Pagerduty.
 2. The service's `Code owners`, fetched from Github.
@@ -47,7 +48,7 @@ In this guide we will use Pagerduty to get our services' on-call. Note that Port
 
 If you already have a Pagerduty account that you can play around with, feel free to skip this step.
 
-1. Create a [Pagerduty account](https://www.pagerduty.com/sign-up/)(free 14-day trial).
+1. Create a [Pagerduty account](https://www.pagerduty.com/sign-up/) (free 14-day trial).
 
 2. Create a new service:
 
@@ -60,7 +61,7 @@ If you already have a Pagerduty account that you can play around with, feel free
 
 #### Integrate Pagerduty into Port
 
-Now let's bring our Pagerduty data into Port. Port's Pagerduty integration automatically fetches `Services` and `Incidents`, and creates blueprints and entities for them.
+Now let's bring our Pagerduty data into Port. Port's Pagerduty integration automatically fetches `Services` and `Incidents`, and creates <PortTooltip id="blueprint">blueprints</PortTooltip> and <PortTooltip id="entity">entities</PortTooltip> for them.
 
 :::info Note
 For this installation you will need Helm and a running K8s cluster (see [prerequisites](/guides-and-tutorials/ensure-production-readiness)).
@@ -99,15 +100,15 @@ helm upgrade --install my-pagerduty-integration port-labs/port-ocean \
 
 Great! Now that the integration is installed, we should see some new components in Port:
 
-- Go to your [Builder](https://app.getport.io/dev-portal/data-model), you should now see two new blueprints created by the integration - `PagerDuty Service` and `PagerDuty Incident`.
-- Go to your [Software catalog](https://app.getport.io/services), click on `PagerDuty Services` in the sidebar, you should now see a new entity created for our `DemoPdService`, with a populated `On-call` property.
+- Go to your [Builder](https://app.getport.io/dev-portal/data-model), you should now see two new <PortTooltip id="blueprint">blueprints</PortTooltip> created by the integration - `PagerDuty Service` and `PagerDuty Incident`.
+- Go to your [Software catalog](https://app.getport.io/services), click on `PagerDuty Services` in the sidebar, you should now see a new <PortTooltip id="entity">entity</PortTooltip> created for our `DemoPdService`, with a populated `On-call` property.
 
 #### Add an on-call property to the service blueprint
 
 Now that Port is synced with our Pagerduty resources, let's reflect the Pagerduty service's on-call in our services.  
 First, we will need to create a [relation](/build-your-software-catalog/define-your-data-model/relate-blueprints/#what-is-a-relation) between our services and the corresponding Pagerduty services.
 
-1. Head back to the [Builder](https://app.getport.io/dev-portal/data-model), choose the `Service` blueprint, and click on `New relation`:
+1. Head back to the [Builder](https://app.getport.io/dev-portal/data-model), choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New relation`:
 
 <img src='/img/guides/serviceCreateRelation.png' width='30%' />
 
@@ -115,9 +116,9 @@ First, we will need to create a [relation](/build-your-software-catalog/define-y
 
 <img src='/img/guides/relationCreation.png' width='40%' />
 
-Now that the blueprints are related, let's create a [mirror property](https://docs.getport.io/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/mirror-property/) in our service to display its on-call.
+Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, let's create a [mirror property](https://docs.getport.io/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/mirror-property/) in our service to display its on-call.
 
-1. Choose the `Service` blueprint again, and under the `PagerDutyService` relation, click on `New mirror property`.  
+1. Choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip> again, and under the `PagerDutyService` relation, click on `New mirror property`.  
    Fill the form out like this, then click `Create`:
 
 <img src='/img/guides/mirrorPropertyCreation.png' width='40%' />
@@ -169,7 +170,7 @@ Github allows adding a `CODEOWNERS` file to a repository. Let's see how we can e
 
 #### Add a codeowners property to the service blueprint
 
-1. Go to your [Builder](https://app.getport.io/dev-portal/data-model) again, choose the `Service` blueprint, and click `New property`.
+1. Go to your [Builder](https://app.getport.io/dev-portal/data-model) again, choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click `New property`.
 
 2. Fill in the form like this:  
    _Note the `identifier` field value, we will need it in the next step._
@@ -186,7 +187,7 @@ Github allows adding a `CODEOWNERS` file to a repository. Let's see how we can e
 
 _Remember the `identifier` from step 2? This tells Port how to populate the new property_ 😎
 
-Going back to our Catalog, we can now see that our entities have their code owners displayed:
+Going back to our Catalog, we can now see that our <PortTooltip id="entity">entities</PortTooltip> have their code owners displayed:
 
 ![entityAfterCodeowners](/img/guides/entityAfterCodeowners.png)
 
@@ -194,7 +195,7 @@ Going back to our Catalog, we can now see that our entities have their code owne
 
 We will now use a [calculation property](https://docs.getport.io/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/calculation-property/) to build a URL to the relevant Slack channel.
 
-1. Go to your [Builder](https://app.getport.io/dev-portal/data-model) yet again, choose the `Service` blueprint, and click `New property`.
+1. Go to your [Builder](https://app.getport.io/dev-portal/data-model) yet again, choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click `New property`.
 
 2. Fill out the form like this, then click `Create`:  
    The `JQ calculation` field for copy-paste convenience: `"https://slack.com/" + .identifier`
@@ -225,7 +226,7 @@ We can model it like this, for example:
 
 Now let's implement it:
 
-1. Go to your [Builder](https://app.getport.io/dev-portal/data-model), choose the `Service` blueprint, click on `Scorecards`, then click our existing `Production readiness` scorecard:
+1. Go to your [Builder](https://app.getport.io/dev-portal/data-model), choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>, click on `Scorecards`, then click our existing `Production readiness` scorecard:
 
 <img src='/img/guides/editReadinessScorecard.png' width='30%' />
 
