@@ -22,7 +22,7 @@ This guide takes 7 minutes to complete, and aims to demonstrate the power of sel
 
 In this guide we will create an action that initializes a new Github repository. In reality, such an action can be used by developers to scaffold new services.
 
-After completing it, you will get a sense of how your organization's daily routine could look like:
+After completing it, you will get a sense of how it can benefit different personas in your organization:
 
 - Developers will be able to scaffold new services easily.
 - R&D managers will be able to get an overview of new services - how many were created and by who.

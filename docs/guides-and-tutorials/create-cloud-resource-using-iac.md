@@ -25,7 +25,7 @@ This guide takes 8 minutes to complete, and aims to demonstrate:
 
 In this guide we will open a pull-request in our Github repository from within Port to create a new cloud resource using gitops.
 
-After completing it, you will get a sense of how your organization's daily routine could look like:
+After completing it, you will get a sense of how it can benefit different personas in your organization:
 
 - Platform engineers will be able to define powerful actions that developers can use within controlled permission boundaries.
 - Developers will be able to easily create and track cloud resources from Port.

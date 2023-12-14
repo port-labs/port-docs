@@ -48,15 +48,16 @@ Set them as you wish in the script below, then copy it and run it in your termin
 <br/>
 
 ```bash showLineNumbers
-helm upgrade --install my-opsgenie-integration port-labs/port-ocean \
-	--set port.clientId="CLIENT_ID"  \
-	--set port.clientSecret="CLIENT_SECRET"  \
-	--set initializePortResources=true  \
-	--set integration.identifier="my-opsgenie-integration"  \
-	--set integration.type="opsgenie"  \
-	--set integration.triggerChannel.type="POLLING"  \
-	--set integration.secrets.apiToken="token"  \
-	--set integration.config.apiUrl="https://api.opsgenie.com"
+helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
+helm upgrade --install opsgenie port-labs/port-ocean \
+  --set port.clientId="CLIENT_ID"  \
+  --set port.clientSecret="CLIENT_SECRET"  \
+  --set initializePortResources=true  \
+  --set integration.identifier="opsgenie"  \
+  --set integration.type="opsgenie"  \
+  --set integration.eventListener.type="POLLING"  \
+  --set integration.secrets.apiToken="API_TOKEN"  \
+  --set integration.config.apiUrl="https://api.opsgenie.com"
 ```
 
 </TabItem>

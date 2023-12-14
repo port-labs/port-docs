@@ -22,7 +22,7 @@ This guide takes 7 minutes to complete, and aims to demonstrate the potential of
 
 In this guide we will model a repository from your Git provider in Port, using your real data.
 
-After completing it, you will get a sense of how your organization's daily routine could look like:
+After completing it, you will get a sense of how it can benefit different personas in your organization:
 
 - Developers will be able to see all the services in the organization and their relevant metadata.
 - Developers will be able to follow the organization's standards for production readiness.
@@ -94,10 +94,10 @@ Now let's connect our <PortTooltip id="blueprint">blueprint</PortTooltip> to a d
 
 1. To export and sync data from Github or BitBucket, Port provides a simple application. Choose your preferred provider and install the app:
 
-<Tabs values={[
-{label: "Github", value: "Github"},
-{label: "BitBucket", value: "BitBucket"},
-{label: "Gitlab", value: "Gitlab"}
+<Tabs groupId="git-provider" queryString values={[
+{label: "Github", value: "github"},
+{label: "BitBucket", value: "bitbucket"},
+{label: "Gitlab", value: "gitlab"}
 ]}>
 
 <TabItem value="Github">
@@ -132,10 +132,10 @@ Once installed, you will see new data sources in the `Data Sources` tab of the b
 
 In the `Data sources` tab, click on the exporter you installed. In the `Mapping` tab paste the following snippet (choose your Git provider), then click `Save & Resync`:
 
-<Tabs values={[
-{label: "Github", value: "Github"},
-{label: "BitBucket", value: "BitBucket"},
-{label: "Gitlab", value: "Gitlab"}
+<Tabs groupId="git-provider" queryString values={[
+{label: "Github", value: "github"},
+{label: "BitBucket", value: "bitbucket"},
+{label: "Gitlab", value: "gitlab"}
 ]}>
 
 <TabItem value="Github">
@@ -237,6 +237,8 @@ Let's add a scorecard to the `Service` <PortTooltip id="blueprint">blueprint</Po
 
 <img src='/img/quickstart/blueprintAddScorecard.png' width='250rem' />
 
+<br/><br/>
+
 2. Replace the contents with the following JSON and click `Save`:
 
 <details>
@@ -292,9 +294,10 @@ This table is now grouped by the scorecard we created in the previous step.
 
 Say you really like this view, and want your developers to see the `Services` table in this format. Notice that the `Save this view` button is now enabled?
 
-2. Click on `Save this view`, then click on `Save as a new page`:
+2. Click on the arrow to the right of the `Save this view` button, then click on `Save as a new page`:
 
 <img src='/img/quickstart/saveAsNewPage.png' width='500rem' />
+
 <br/><br/>
 
 Choose a name and icon, and click on `Save page`.  
@@ -313,6 +316,8 @@ Let's create a simple pie chart showing the language distribution in our service
 3. Fill the form out like this, then click `Save`:
 
 <img src='/img/quickstart/pieChartLanguagesForm.png' width='380rem' />
+
+<br/><br/>
 
 You will now see a pie chart with the number of services and their language distribution in the `Home` tab of your Port app:
 

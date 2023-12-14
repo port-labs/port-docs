@@ -5,6 +5,8 @@ sidebar_position: 3
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortYmlStructure from '../../\_port_yml_gitops_structure_template.md'
+import BasicFileProperties from '../../\_basic_file_properties_template.md'
+import RelativeFileProperties from '../../\_relative_file_properties_template.md'
 import GitOpsPushEvent from '../../\_git_gitops_push_events_explanation.mdx'
 
 # GitOps
@@ -88,6 +90,14 @@ Since both of the valid `port.yml` formats follow the same structure, the follow
 ### `port.yml` structure
 
 <PortYmlStructure/>
+
+### Ingesting repository file contents
+
+<BasicFileProperties/>
+
+#### Using relative paths
+
+<RelativeFileProperties/>
 
 ## Examples
 

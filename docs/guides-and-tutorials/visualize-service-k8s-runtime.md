@@ -25,7 +25,7 @@ This guide takes 10 minutes to complete, and aims to demonstrate the value of Po
 
 In this guide we will model and visualize out services' Kubernetes resources.
 
-After completing it, you will get a sense of how your organization's daily routine could look like:
+After completing it, you will get a sense of how it can benefit different personas in your organization:
 
 - Developers will be able to easily view the health and status of their services' K8s runtime.
 - Platform engineers will be able to create custom views and visualizations for different stakeholders in the organization.

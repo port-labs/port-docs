@@ -5,8 +5,11 @@ description: Ingest ArgoCD applications into your catalog
 
 import ProjecttBlueprint from './resources/argocd/\_example_project_blueprint.mdx'
 import ApplicationBlueprint from './resources/argocd/\_example_application_blueprint.mdx'
+import EventBlueprint from './resources/argocd/\_example_event_blueprint.mdx'
 
 import ArgoCDWebhookConfig from './resources/argocd/\_example_webhook_configuration.mdx'
+import ArgoCDEventWebhookConfig from './resources/argocd/\_example_events_webhook_config.mdx'
+import ArgoCDEventManifest from './resources/argocd/\_example_events_manifest.mdx'
 
 # ArgoCD
 
@@ -148,6 +151,101 @@ kubectl config set-context --current --namespace=<your-namespace>
      - on-health-degraded
      - on-sync-operation-change
    ```
+
+   </details>
+
+6. Use `kubectl` to apply the YAML file to your cluster. Run the following command, replacing `<your-namespace>` with your ArgoCD namespace and `<path-to-yaml-file>` with the actual path to your YAML file:
+
+```bash
+kubectl apply -n <your-namespace> -f <path-to-yaml-file>
+```
+
+This command deploys the webhook notification configuration to your ArgoCD notification configmap (`argocd-notifications-cm`), allowing Port to receive real-time events.
+
+Done! any change that happens to your applications in ArgoCD will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+
+## Argocd Events
+
+In this example you are going to create a webhook integration between [ArgoCD](https://argo-cd.readthedocs.io/en/stable/) and Port, which will ingest all events entities and map them to your ArgoCD applications.
+
+## Port configuration
+
+Create the following blueprint definition:
+
+<details>
+<summary>Events blueprint</summary>
+
+<EventBlueprint/>
+
+</details>
+
+Create the following webhook configuration [using Port UI](../../webhook/?operation=ui#configuring-webhook-endpoints)
+
+<details>
+
+<summary>Application webhook configuration</summary>
+
+1. **Basic details** tab - fill the following details:
+   1. Title : `ArgoCD Event Mapper`;
+   2. Identifier : `argocd_event_mapper`;
+   3. Description : `A webhook configuration to map ArgoCD events to Port`;
+   4. Icon : `Argo`;
+2. **Integration configuration** tab - fill the following JQ mapping:
+
+   <ArgoCDEventWebhookConfig/>
+
+3. Click **Save** at the bottom of the page.
+
+</details>
+
+## Create a webhook in ArgoCD
+
+To set up a webhook configuration in ArgoCD for sending notifications to Port, follow these steps:
+
+### Prerequisite
+
+1. You have access to a Kubernetes cluster where ArgoCD is deployed.
+2. You have `kubectl` installed and configured to access your cluster.
+
+### Steps
+
+1. Install ArgoCD notifications manifest;
+
+```bash showLineNumbers
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj-labs/argocd-notifications/release-1.0/manifests/install.yaml
+```
+
+2. Install ArgoCD triggers and templates manifest;
+
+```bash showLineNumbers
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj-labs/argocd-notifications/release-1.0/catalog/install.yaml
+```
+
+3. Use `kubectl` to connect to the Kubernetes cluster where your ArgoCD instance is deployed;
+
+```bash showLineNumbers
+kubectl config use-context <your-cluster-context>
+```
+
+4. Set the current namespace to your ArgoCD namespace, use the following command;
+
+```bash showLineNumbers
+kubectl config set-context --current --namespace=<your-namespace>
+```
+
+5. Create a YAML file (e.g. `argocd-events-config.yaml`) that configures the webhook notification service. The example below shows how to set up a webhook to send real-time events from ArgoCD. The YAML file includes the following components:
+
+   1. Notification service definition;
+   2. Template for the webhook message body;
+   3. Trigger definitions;
+   4. Subscriptions to the notifications.
+
+   Here's an example YAML. Make sure to replace `<YOUR_WEBHOOK_URL>` with the value of `url` key you received after creating the webhook configuration.
+
+   <details>
+
+   <summary>event manifest file </summary>
+   <ArgoCDEventManifest/>
 
    </details>
 
