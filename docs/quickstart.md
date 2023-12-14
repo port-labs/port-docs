@@ -6,6 +6,7 @@ sidebar_label: ⏱️ Quickstart
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 # ⏱️ Quickstart
 
@@ -91,11 +92,11 @@ If you already have one or more blueprints in your Builder, the button to create
 </details>
 
 Congratulations, you have successfully modeled a basic Git repository 🥳  
-You can now see the blueprint in your `Builder`:
+You can now see the <PortTooltip id="blueprint">blueprint</PortTooltip> in your `Builder`:
 
 ![builderAfterBpCreate](/img/quickstart/builderAfterBpCreate.png)
 
-Now let's connect our blueprint to a data source and fill it with real data!
+Now let's connect our <PortTooltip id="blueprint">blueprint</PortTooltip> to a data source and fill it with real data!
 
 ### 3. Ingest data into your repository
 
@@ -107,19 +108,19 @@ Now let's connect our blueprint to a data source and fill it with real data!
 {label: "Gitlab", value: "gitlab"}
 ]}>
 
-<TabItem value="Github">
+<TabItem value="github">
 
 Install [Github app](https://github.com/apps/getport-io) in the entire organization.
 
 </TabItem>
 
-<TabItem value="BitBucket">
+<TabItem value="bitbucket">
 
 Install [BitBucket app](https://marketplace.atlassian.com/apps/1229886/port-connector-for-bitbucket?hosting=cloud&tab=overview) in the entire organization.
 
 </TabItem>
 
-<TabItem value="Gitlab">
+<TabItem value="gitlab">
 
 Port supports Gitlab using the [ocean integration](http://ocean.getport.io). Follow [these instructions](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/gitlab/installation) to install the integration, then come back to this guide.
 
@@ -128,14 +129,14 @@ Port supports Gitlab using the [ocean integration](http://ocean.getport.io). Fol
 </Tabs>
 
 :::info NOTE
-Make sure to install the app in the entire organization (and not in a single repository). This way Port will automatically create entities for all repositories.
+Make sure to install the app in the entire organization (and not in a single repository). This way Port will automatically create <PortTooltip id="entity">entities</PortTooltip> for all repositories.
 :::
 
 Once installed, you will see new data sources in the `Data Sources` tab of the builder page, waiting to be used (may take a few seconds to appear):
 
 ![dataSourcesGithub](/img/quickstart/dataSourcesGithub.png)
 
-2. Finally, we need to map the desired information from our Git provider's API to the properties of the blueprint we created in Port. For this guide, we will provide you with mapping so you do not need to do anything yourself. If you want to dive further into this, see [Port's Git integrations](/build-your-software-catalog/sync-data-to-catalog/git/).
+2. Finally, we need to map the desired information from our Git provider's API to the properties of the <PortTooltip id="blueprint">blueprint</PortTooltip> we created in Port. For this guide, we will provide you with mapping so you do not need to do anything yourself. If you want to dive further into this, see [Port's Git integrations](/build-your-software-catalog/sync-data-to-catalog/git/).
 
 In the `Data sources` tab, click on the exporter you installed. In the `Mapping` tab paste the following snippet (choose your Git provider), then click `Save & Resync`:
 
@@ -145,7 +146,7 @@ In the `Data sources` tab, click on the exporter you installed. In the `Mapping`
 {label: "Gitlab", value: "gitlab"}
 ]}>
 
-<TabItem value="Github">
+<TabItem value="github">
 
 <details>
 <summary><b>Github blueprint mapping (click to expand)</b></summary>
@@ -170,7 +171,7 @@ resources:
 </details>
 </TabItem>
 
-<TabItem value="BitBucket">
+<TabItem value="bitbucket">
 
 <details>
 <summary><b>BitBucket blueprint mapping (click to expand)</b></summary>
@@ -195,7 +196,7 @@ resources:
 </details>
 </TabItem>
 
-<TabItem value="Gitlab">
+<TabItem value="gitlab">
 <details>
 <summary><b>Gitlab blueprint mapping (click to expand)</b></summary>
 
@@ -224,23 +225,23 @@ resources:
 
 ---
 
-Now head back to your `Catalog`, and go to the `Services` page. We can see that Port has created entities for us representing our repositories, filled with real data: 🥳
+Now head back to your `Catalog`, and go to the `Services` page. We can see that Port has created <PortTooltip id="entity">entities</PortTooltip> for us representing our repositories, filled with real data: 🥳
 
 ![catalogAfterRepoCreation](/img/quickstart/catalogAfterRepoCreation.png)
 
-Clicking on a service name in the table will take us to its entity page:
+Clicking on a service name in the table will take us to its <PortTooltip id="entity">entity</PortTooltip> page:
 
 ![entityAfterIngestion](/img/quickstart/entityAfterIngestion.png)
 
-As you can see, Port has pulled the repository's name, url and language, and its readme file is displayed in a new `README` tab in the entity page.
+As you can see, Port has pulled the repository's name, url and language, and its readme file is displayed in a new `README` tab in the <PortTooltip id="entity">entity</PortTooltip> page.
 
 ### 4. Set standards using **scorecards**
 
 In this step we will see how to set metrics for our resources.
 
-Let's add a scorecard to the `Service` blueprint:
+Let's add a scorecard to the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>:
 
-1. Head over to the `Builder` page and double-click on the blueprint. Choose the `Scorecards` tab, then click on `New scorecard`:
+1. Head over to the `Builder` page and double-click on the <PortTooltip id="blueprint">blueprint</PortTooltip>. Choose the `Scorecards` tab, then click on `New scorecard`:
 
 <img src='/img/quickstart/blueprintAddScorecard.png' width='250rem' />
 
@@ -277,7 +278,7 @@ Let's add a scorecard to the `Service` blueprint:
 </details>
 
 What we have just done is add a "Bronze" level metric that ensures all `Services` have a readme file.  
-Going back to the entity we created in our `Catalog`, we can see that its `Scorecards` tab displays our new metric. Since our repository has a readme file, we pass with flying colors:
+Going back to the <PortTooltip id="entity">entity</PortTooltip> we created in our `Catalog`, we can see that its `Scorecards` tab displays our new metric. Since our repository has a readme file, we pass with flying colors:
 
 ![entityPageAfterScorecard](/img/quickstart/entityPageAfterScorecard.png)
 
@@ -330,9 +331,7 @@ You will now see a pie chart with the number of services and their language dist
 
 <img src='/img/quickstart/pieChartLanguages.png' width='300rem' />
 
-<br/><br/>
-
-This is just an example, in a real-life environment with many different resources you can visualize more complex data based on any property in any of your blueprints.
+This is just an example, in a real-life environment with many different resources you can visualize more complex data based on any property in any of your <PortTooltip id="blueprint">blueprints</PortTooltip>.
 
 ### Conclusion
 
