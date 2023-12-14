@@ -1,0 +1,38 @@
+```json showLineNumbers
+{
+  "identifier": "terraformOutput",
+  "title": "Terraform Output",
+  "description": "This blueprint represents a Terraform output in our software catalog",
+  "icon": "Terraform",
+  "schema": {
+    "properties": {
+      "type": {
+        "title": "Type",
+        "type": "string"
+      },
+      "value": {
+        "title": "Value",
+        "type": "string"
+      },
+      "sensitive": {
+        "title": "Sensitive",
+        "type": "boolean",
+        "default": false
+      },
+      "description": {
+        "title": "Description",
+        "type": "string"
+      },
+      "lineage": {
+        "title": "Lineage",
+        "type": "string"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
+}
+```

@@ -24,7 +24,6 @@ This page contains a list of Port's available integrations, organized by the pla
 - [GitHub scaffolder using FastAPI backend](./create-self-service-experiences/setup-backend/webhook/examples/software-templates.md)
 - [Deploy AWS resources using AWS CloudFormation](./create-self-service-experiences/setup-backend/github-workflow/examples/deploy-cloudformation-template.md)
 - [Create GitHub secret using GitHub workflows](./create-self-service-experiences/setup-backend/github-workflow/examples/create-github-secret.md)
-- [GitHub Webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/git/github.md)
 
 ### GitLab
 
@@ -35,7 +34,6 @@ This page contains a list of Port's available integrations, organized by the pla
 - [GitLab pipeline self-service actions](./create-self-service-experiences/setup-backend/gitlab-pipeline/gitlab-pipeline.md)
 - [GitLab scaffolder](./create-self-service-experiences/setup-backend/gitlab-pipeline/examples/scaffold-repositories-using-cookiecutter.md)
 - [Sync projects, file contents, merge-requests and more](./build-your-software-catalog/sync-data-to-catalog/git/gitlab/examples.md)
-- [GitLab Webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/git/gitlab.md)
 
 ### Bitbucket
 
@@ -229,3 +227,9 @@ This page contains a list of Port's available integrations, organized by the pla
 ## Backstage
 
 - [Import catalog from Backstage](./build-your-software-catalog/sync-data-to-catalog/backstage/backstage.md)
+
+## ArgoCD
+
+- [ArgoCD exporter](./build-your-software-catalog/sync-data-to-catalog/kubernetes/argocd.md)
+- [ArgoCD webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/argocd.md)
+- [ArgoCD events](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/argocd.md#argocd-events)

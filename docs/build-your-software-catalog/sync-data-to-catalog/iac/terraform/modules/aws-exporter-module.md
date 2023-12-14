@@ -128,5 +128,5 @@ terraform destroy
 
 - See the [AWS exporter docs](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/aws/) for further information about the exporter.
 - Visit the Terraform module [Github repository](https://github.com/port-labs/terraform-aws-port-exporter):
-  - The [module exmaple](https://github.com/port-labs/terraform-aws-port-exporter/tree/main/examples/run_module_example) folder for a more complete example of the Terraform module.
+  - The [module example](https://github.com/port-labs/terraform-aws-port-exporter/tree/main/examples/run_module_example) folder for a more complete example of the Terraform module.
   - The Event Bridge rule [Terraform example](https://github.com/port-labs/terraform-aws-port-exporter/tree/main/examples/terraform_deploy_eventbridge_rule) for example of deploying an [Eventbridge rule](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-rules.html) for the AWS exporter.
