@@ -100,19 +100,19 @@ Now let's connect our <PortTooltip id="blueprint">blueprint</PortTooltip> to a d
 {label: "Gitlab", value: "gitlab"}
 ]}>
 
-<TabItem value="Github">
+<TabItem value="github">
 
 Install [Github app](https://github.com/apps/getport-io) in the entire organization.
 
 </TabItem>
 
-<TabItem value="BitBucket">
+<TabItem value="bitbucket">
 
 Install [BitBucket app](https://marketplace.atlassian.com/apps/1229886/port-connector-for-bitbucket?hosting=cloud&tab=overview) in the entire organization.
 
 </TabItem>
 
-<TabItem value="Gitlab">
+<TabItem value="gitlab">
 
 Port supports Gitlab using the [ocean integration](http://ocean.getport.io). Follow [these instructions](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/gitlab/installation) to install the integration, then come back to this guide.
 
@@ -138,7 +138,7 @@ In the `Data sources` tab, click on the exporter you installed. In the `Mapping`
 {label: "Gitlab", value: "gitlab"}
 ]}>
 
-<TabItem value="Github">
+<TabItem value="github">
 
 <details>
 <summary><b>Github blueprint mapping (click to expand)</b></summary>
@@ -163,7 +163,7 @@ resources:
 </details>
 </TabItem>
 
-<TabItem value="BitBucket">
+<TabItem value="bitbucket">
 
 <details>
 <summary><b>BitBucket blueprint mapping (click to expand)</b></summary>
@@ -188,7 +188,7 @@ resources:
 </details>
 </TabItem>
 
-<TabItem value="Gitlab">
+<TabItem value="gitlab">
 <details>
 <summary><b>Gitlab blueprint mapping (click to expand)</b></summary>
 
