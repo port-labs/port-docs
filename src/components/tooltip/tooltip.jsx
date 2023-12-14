@@ -24,7 +24,7 @@ const PortTooltip = ({ id, children }) => {
         id={id}
         className={"tooltip"}
         clickable={true}
-        style={{ borderRadius: "10px 10px 10px 10px" }}
+        style={{ borderRadius: "10px 10px 10px 10px", zIndex: 99 }}
       ></Tooltip>
     </>
   );
