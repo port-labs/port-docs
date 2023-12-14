@@ -44,7 +44,7 @@ Create the following webhook configuration [using Port UI](../../?operation=ui#c
 
 3. Scroll down to **Advanced settings** and input the following details:
    1. secret: `WEBHOOK_SECRET`;
-   2. Signature Header Name : `X-Hub-Signature`;
+   2. Signature Header Name : `x-hub-signature`;
    3. Signature Algorithm : Select `sha256` from dropdown option;
    4. Signature Prefix : `sha256=`
    5. Click **Save** at the bottom of the page.
