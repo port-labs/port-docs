@@ -6,7 +6,6 @@ description: Terraform integration in Port
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import Prerequisites from "../\_terraform_provider_base.mdx"
 import DockerParameters from "../\_terraform_one_time_docker_parameters.mdx"
 
 # Terraform
@@ -26,7 +25,9 @@ A `Run` represents an instance of Terraform operations (plan, apply, or destroy)
 
 ## Prerequisites
 
-<Prerequisites />
+To install the integration, you need a Kubernetes cluster that the integration's container chart will be deployed to.
+
+Please make sure that you have [`kubectl`](https://kubernetes.io/docs/tasks/tools/#kubectl) and [`helm`](https://helm.sh/) installed on your machine, and that your `kubectl` CLI is connected to the Kubernetes cluster where you plan to install the integration.
 
 ## Installation
 
@@ -55,10 +56,6 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `integration.config.appHost`               | Your application's host url                                                                                   | ❌       |
 | `scheduledResyncInterval`                  | The number of minutes between each resync                                                                     | ❌       |
 | `initializePortResources`                  | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
-
-To install the integration, you need a Kubernetes cluster that the integration's container chart will be deployed to.
-
-Please make sure that you have [`kubectl`](https://kubernetes.io/docs/tasks/tools/#kubectl) and [`helm`](https://helm.sh/) installed on your machine, and that your `kubectl` CLI is connected to the Kubernetes cluster where you plan to install the integration.
 
 <br/>
 
