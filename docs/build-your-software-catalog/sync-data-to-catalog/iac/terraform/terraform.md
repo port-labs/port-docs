@@ -6,8 +6,8 @@ description: Terraform integration in Port
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import Prerequisites from "../\_terraform_provider_base.mdx"
-import DockerParameters from "../\_terraform_one_time_docker_parameters.mdx"
+import Prerequisites from "./\_terraform_provider_base.mdx"
+import DockerParameters from "./\_terraform_one_time_docker_parameters.mdx"
 
 # Terraform
 
