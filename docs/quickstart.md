@@ -112,11 +112,19 @@ Now let's connect our <PortTooltip id="blueprint">blueprint</PortTooltip> to a d
 
 Install [Github app](https://github.com/apps/getport-io) in the entire organization.
 
+:::info NOTE
+Make sure to install the app in the entire organization (and not in a single repository). This way Port will automatically create <PortTooltip id="entity">entities</PortTooltip> for all repositories.
+:::
+
 </TabItem>
 
 <TabItem value="bitbucket">
 
 Install [BitBucket app](https://marketplace.atlassian.com/apps/1229886/port-connector-for-bitbucket?hosting=cloud&tab=overview) in the entire organization.
+
+:::info NOTE
+Make sure to install the app in the entire organization (and not in a single repository). This way Port will automatically create <PortTooltip id="entity">entities</PortTooltip> for all repositories.
+:::
 
 </TabItem>
 
@@ -128,17 +136,13 @@ Port supports Gitlab using the [ocean integration](http://ocean.getport.io). Fol
 
 </Tabs>
 
-:::info NOTE
-Make sure to install the app in the entire organization (and not in a single repository). This way Port will automatically create <PortTooltip id="entity">entities</PortTooltip> for all repositories.
-:::
-
 Once installed, you will see new data sources in the `Data Sources` tab of the builder page, waiting to be used (may take a few seconds to appear):
 
 ![dataSourcesGithub](/img/quickstart/dataSourcesGithub.png)
 
 2. Finally, we need to map the desired information from our Git provider's API to the properties of the <PortTooltip id="blueprint">blueprint</PortTooltip> we created in Port. For this guide, we will provide you with mapping so you do not need to do anything yourself. If you want to dive further into this, see [Port's Git integrations](/build-your-software-catalog/sync-data-to-catalog/git/).
 
-In the `Data sources` tab, click on the exporter you installed. In the `Mapping` tab paste the following snippet (choose your Git provider), then click `Save & Resync`:
+In the `Data sources` tab, click on the exporter you installed. In the `Mapping` tab paste the following snippet (according to your Git provider), then click `Save & Resync`:
 
 <Tabs groupId="git-provider" queryString values={[
 {label: "Github", value: "github"},
@@ -225,7 +229,8 @@ resources:
 
 ---
 
-Now head back to your `Catalog`, and go to the `Services` page. We can see that Port has created <PortTooltip id="entity">entities</PortTooltip> for us representing our repositories, filled with real data: 🥳
+Now head back to your `Catalog`, and go to the `Services` page.  
+We can see that Port has created <PortTooltip id="entity">entities</PortTooltip> for us representing our repositories, filled with real data: 🥳
 
 ![catalogAfterRepoCreation](/img/quickstart/catalogAfterRepoCreation.png)
 
