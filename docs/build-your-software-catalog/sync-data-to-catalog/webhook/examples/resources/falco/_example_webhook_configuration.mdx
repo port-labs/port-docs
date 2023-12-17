@@ -1,0 +1,22 @@
+```json showLineNumbers
+[
+  {
+    "blueprint": "falco_alert",
+    "filter": "true",
+    "entity": {
+      "identifier": ".body.hostname + \"-\" + .body.time | tostring",
+      "title": ".body.hostname + \"-\" + .body.time | tostring",
+      "properties": {
+        "priority": ".body.priority",
+        "rule": ".body.rule",
+        "time": ".body.time",
+        "source": ".body.source",
+        "tags": ".body.tags",
+        "hostname": ".body.hostname",
+        "output_field": ".body.output_fields",
+        "output": ".body.output"
+      }
+    }
+  }
+]
+```
