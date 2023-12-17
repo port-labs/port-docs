@@ -5,6 +5,7 @@ title: Scaffold a new service
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 # Scaffold a new service
 
@@ -33,7 +34,7 @@ After completing it, you will get a sense of how it can benefit different person
 
 <img src='/img/guides/actionsCreateNew.png' width='50%' />
 
-2. Each action in Port is directly tied to a blueprint. Since we are creating a repository, the `Service` blueprint we created in the [quickstart guide](/quickstart) is an obvious candidate. Choose it from the dropdown.
+2. Each action in Port is directly tied to a <PortTooltip id="blueprint">blueprint</PortTooltip>. Since we are creating a repository, the `Service` blueprint we created in the [quickstart guide](/quickstart) is an obvious candidate. Choose it from the dropdown.
 
 3. Fill in the basic details of the action like this, then click `Next`:
 

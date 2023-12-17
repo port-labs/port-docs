@@ -122,3 +122,7 @@ html[data-theme="light"] .header-github-link:before {
   width: 24px;
   color: var(--ifm-navbar-link-color);
 }
+
+.tooltip {
+  max-width: 420px;
+}
