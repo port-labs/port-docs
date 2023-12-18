@@ -1,20 +1,20 @@
 ---
-sidebar_position: 3
-title: Terraform Integration
+sidebar_position: 1
+title: Terraform Cloud
 description: Terraform integration in Port
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import DockerParameters from "../\_terraform_one_time_docker_parameters.mdx"
+import DockerParameters from "./\_terraform_one_time_docker_parameters.mdx"
 
-# Terraform
+# Terraform Cloud
 
 Our Terraform integration allows you to import `workspaces` and `runs` from your Terraform Cloud account into Port, according to your mapping and definition.
 
-The Terraform Integration for Port enables seamless import and synchronization of `workspaces` and `runs` from your Terraform infrastructure management into Port. This integration allows you to effectively monitor and manage your Terraform workspaces and runs within the Port platform.
+The Terraform Cloud Integration for Port enables seamless import and synchronization of `workspaces` and `runs` from your Terraform infrastructure management into Port. This integration allows you to effectively monitor and manage your Terraform Cloud workspaces and runs within the Port platform.
 
-A `Workspace` represents a workspace in Terraform. A workspace is a logical environment where Terraform manages infrastructure, such as a set of cloud resources.
+A `Workspace` represents a workspace in Terraform cloud. A workspace is a logical environment where Terraform manages infrastructure, such as a set of cloud resources.
 
 A `Run` represents an instance of Terraform operations (plan, apply, or destroy) executed within a workspace. Each run holds information about the operation status, duration, and other relevant metadata.
 
@@ -81,7 +81,7 @@ helm upgrade --install terraform port-labs/port-ocean \
 
  <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
-This workflow will run the Terraform integration once and then exit, this is useful for **scheduled** ingestion of data.
+This workflow will run the Terraform cloud integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::warning
 If you want the integration to update Port in real time you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
@@ -109,7 +109,7 @@ jobs:
       - name: Run Terraform Integration
         run: |
           # Set Docker image and run the container
-          integration_type="terraform"
+          integration_type="terraform-cloud"
           version="latest"
 
           image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
@@ -130,7 +130,7 @@ jobs:
 
   </TabItem>
   <TabItem value="jenkins" label="Jenkins">
-This pipeline will run the Terraform integration once and then exit, this is useful for **scheduled** ingestion of data.
+This pipeline will run the Terraform  cloud integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::tip
 Your Jenkins agent should be able to run docker commands.
@@ -165,7 +165,7 @@ pipeline {
                     ]) {
                         sh('''
                             #Set Docker image and run the container
-                            integration_type="terraform"
+                            integration_type="terraform-cloud"
                             version="latest"
                             image_name="ghcr.io/port-labs/port-ocean-${integration_type}:${version}"
                             docker run -i --rm --platform=linux/amd64 \
@@ -199,11 +199,11 @@ pipeline {
 
 The integration uses polling to pull the configuration from Port every minute and check it for changes. If there is a change, a resync will occur.
 
-## Ingesting Terraform objects
+## Ingesting Terraform Cloud objects
 
 The Terraform integration uses a YAML configuration to describe the process of loading data into the developer portal.
 
-Here is an example snippet from the config which demonstrates the process for getting `Workspace` from Terraform:
+Here is an example snippet from the config which demonstrates the process for getting `Workspace` from Terraform cloud:
 
 ```yaml showLineNumbers
 resources:
@@ -231,10 +231,10 @@ The integration makes use of the [JQ JSON processor](https://stedolan.github.io/
 
 ### Configuration structure
 
-The integration configuration determines which resources will be queried from Terraform, and which entities and properties will be created in Port.
+The integration configuration determines which resources will be queried from Terraform Cloud, and which entities and properties will be created in Port.
 
 :::tip Supported resources
-The following resources can be used to map data from Terraform, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
+The following resources can be used to map data from Terraform Cloud, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
 
 - [`Workspace`](https://www.terraform.io/docs/cloud/api/workspaces.html)
 - [`Run`](https://www.terraform.io/docs/cloud/api/runs.html)
@@ -312,7 +312,7 @@ Examples of blueprints and the relevant integration configurations:
 ```json showLineNumbers
 {
   "identifier": "terraformWorkspace",
-  "description": "This blueprint represents a workspace in Terraform",
+  "description": "This blueprint represents a workspace in Terraform Cloud",
   "title": "Terraform Workspace",
   "icon": "Terraform",
   "schema": {
@@ -320,7 +320,7 @@ Examples of blueprints and the relevant integration configurations:
       "workspaceName": {
         "type": "string",
         "title": "Workspace Name",
-        "description": "The name of the Terraform workspace"
+        "description": "The name of the Terraform cloud workspace"
       },
       "createdAt": {
         "type": "string",
@@ -337,7 +337,7 @@ Examples of blueprints and the relevant integration configurations:
       "terraformVersion": {
         "type": "string",
         "title": "Terraform Version",
-        "description": "Version of Terraform used by the workspace"
+        "description": "Version of Terraform cloud used by the workspace"
       },
       "locked": {
         "type": "boolean",
@@ -403,7 +403,7 @@ resources:
 {
   "data": {
     "identifier": "terraformRun",
-    "description": "This blueprint represents a run in Terraform",
+    "description": "This blueprint represents a run in Terraform cloud",
     "title": "Terraform Run",
     "icon": "Terraform",
     "schema": {
@@ -442,7 +442,7 @@ resources:
         "terraformVersion": {
           "type": "string",
           "title": "Terraform Version",
-          "description": "Version of Terraform used in the run"
+          "description": "Version of Terraform cloud used in the run"
         },
         "appliedAt": {
           "type": "string",
