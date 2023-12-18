@@ -24,7 +24,7 @@
         "buildStatus": ".body.data.result",
         "buildUrl": ".body.url",
         "buildDuration": ".body.data.duration",
-        "timestamp": ".body.data.timestamp"
+        "timestamp": ".body.data.timestamp / 1000 | todate"
       },
       "relations": {
         "jenkinsJob": ".body.source | tostring | sub(\"%20\"; \"-\"; \"g\") | sub(\"/\"; \"-\"; \"g\") | .[:-1]"

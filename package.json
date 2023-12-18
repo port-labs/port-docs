@@ -31,7 +31,8 @@
     "prettier": "^2.8.2",
     "prism-react-renderer": "^2.1.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-tooltip": "^5.25.0"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "^3.0.1",

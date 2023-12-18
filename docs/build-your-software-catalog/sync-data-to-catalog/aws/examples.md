@@ -4021,8 +4021,8 @@ In this step-by-step example, you will export your `ECR repositories` to Port.
                InputTemplate: >-
                  {
                    "resource_type": "AWS::ECR::Repository",
-                   "region": "<awsRegion>",
-                   "identifier": "<repositoryName>",
+                   "region": "\"<awsRegion>\"",
+                   "identifier": "\"<repositoryName>\"",
                    "action": "if \"<eventName>\" | startswith(\"DeleteRepository\") then \"delete\" else \"upsert\" end"
                  }
      ECRRepositoryTagRule:
@@ -4223,7 +4223,7 @@ In this step-by-step example, you will export your `Serverless cache` to Port.
 
    </details>
 
-4. Optional: create an event rule to trigger automatic syncing of changes in Elasticach serveless caches.
+4. Optional: create an event rule to trigger automatic syncing of changes in Elasticache serveless caches.
 
    You may use the following CloudFormation template:
 
@@ -4273,9 +4273,9 @@ In this step-by-step example, you will export your `Serverless cache` to Port.
                InputTemplate: >-
                  {
                    "resource_type": "AWS::ElastiCache::ServerlessCache",
-                   "region": "<awsRegion>",
-                   "identifier": "<cacheName>",
-                   "action": "if \"<eventName>\" | startswith(\"DeleteServerlessCache") then \"delete\" else \"upsert\" end"
+                   "region": "\"<awsRegion>\"",
+                   "identifier": "\"<cacheName>\"",
+                   "action": "if \"<eventName>\" | startswith(\"DeleteServerlessCache\") then \"delete\" else \"upsert\" end"
                  }
      ElasticacheTagRule:
        Type: AWS::Events::Rule
@@ -4316,3 +4316,266 @@ In this step-by-step example, you will export your `Serverless cache` to Port.
     </details>
 
 Done! soon, you will be able to see any `Serverless cache`
+
+## Mapping Elasticache cluster
+
+In this step-by-step example, you will export your `Cache clusters` to Port.
+
+1. Create the following Port blueprint:
+
+   **Cache cluster** - will represent cache clusters from the AWS account.
+
+   You may use the following definitions:
+
+     <details>
+     <summary>Cache cluster blueprint </summary>
+
+   ```json showLineNumbers
+   {
+     "identifier": "elasticache_cluster",
+     "title": "Elasticache Cluster",
+     "icon": "Service",
+     "schema": {
+       "properties": {
+         "engine": {
+           "title": "Engine",
+           "type": "string"
+         },
+         "engineVersion": {
+           "title": "Engine Version",
+           "type": "string"
+         },
+         "preferredAvailabilityZone": {
+           "title": "Preferred Availability Zone",
+           "type": "string"
+         },
+         "createdDate": {
+           "title": "Created Date",
+           "type": "string",
+           "format": "date-time"
+         },
+         "arn": {
+           "title": "ARN",
+           "type": "string"
+         },
+         "transitEncryptionEnabled": {
+           "title": "Transit Encryption Enabled",
+           "type": "boolean"
+         },
+         "atRestEncryptionEnabled": {
+           "title": "At Rest Encryption Enabled",
+           "type": "boolean"
+         },
+         "nodeType": {
+           "icon": "DefaultProperty",
+           "title": "Node Type",
+           "type": "string"
+         },
+         "status": {
+           "title": "Cache Cluster Status",
+           "type": "string"
+         },
+         "numNodes": {
+           "title": "Num Nodes",
+           "type": "number"
+         },
+         "securityGroups": {
+           "title": "Security Groups",
+           "type": "array"
+         },
+         "subnetGroupName": {
+           "title": "Subnet Group Name",
+           "type": "string"
+         },
+         "link": {
+           "title": "Link",
+           "type": "string",
+           "format": "url"
+         },
+         "tags": {
+           "title": "Tags",
+           "type": "array"
+         }
+       },
+       "required": []
+     },
+     "mirrorProperties": {},
+     "calculationProperties": {},
+     "aggregationProperties": {},
+     "relations": {
+       "region": {
+         "title": "Region",
+         "target": "region",
+         "required": false,
+         "many": false
+       }
+     }
+   }
+   ```
+
+     </details>
+
+2. Upload the `config.json` file to the exporter's S3 bucket:
+
+   <details>
+   <summary> Port AWS exporter config.json </summary>
+
+   ```json showLineNumbers
+   {
+     "resources": [
+       {
+         "kind": "AWS::ElastiCache::CacheCluster",
+         "port": {
+           "entity": {
+             "mappings": [
+               {
+                 "identifier": ".CacheClusterId",
+                 "title": ".CacheClusterId",
+                 "blueprint": "aws_cache_cluster",
+                 "properties": {
+                   "engine": ".Engine",
+                   "engineVersion": ".EngineVersion",
+                   "preferredAvailabilityZone": ".PreferredAvailabilityZone",
+                   "createdDate": ".CacheClusterCreateTime",
+                   "arn": ".ARN",
+                   "transitEncryptionEnabled": ".TransitEncryptionEnabled",
+                   "atRestEncryptionEnabled": ".AtRestEncryptionEnabled",
+                   "link": "\"https://console.aws.amazon.com/go/view?arn=\" + .ARN",
+                   "nodeType": ".CacheNodeType",
+                   "status": ".CacheClusterStatus",
+                   "tags": ".Tags",
+                   "numNodes": ".NumCacheNodes",
+                   "securityGroups": ".CacheSecurityGroups",
+                   "subnetGroupName": ".CacheSubnetGroupName"
+                 },
+                 "relations": {
+                   "region": ".ARN | split(\":\") | .[3]"
+                 }
+               }
+             ]
+           }
+         }
+       }
+     ]
+   }
+   ```
+
+   </details>
+
+3. Update the exporter's `IAM policy`:
+
+   <details>
+   <summary> IAM policy </summary>
+
+   ```json showLineNumbers
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Sid": "VisualEditor0",
+         "Effect": "Allow",
+         "Action": [
+           "elasticache:DescribeCacheClusters",
+           "elasticache:ListTagsForResource"
+         ],
+         "Resource": "*"
+       }
+     ]
+   }
+   ```
+
+   </details>
+
+4. Optional: create an event rule to trigger automatic syncing of changes in Elasticache clusters.
+
+   You may use the following CloudFormation template:
+
+    <details>
+    <summary> Event rule CloudFormation template </summary>
+
+   ```yaml showLineNumbers
+   AWSTemplateFormatVersion: "2010-09-09"
+   Description: The template used to create event rules for the Port AWS exporter.
+   Parameters:
+     PortAWSExporterStackName:
+       Description: Name of the Port AWS exporter stack name
+       Type: String
+       MinLength: 1
+       MaxLength: 255
+       AllowedPattern: ^[a-zA-Z][-a-zA-Z0-9]*$
+       Default: serverlessrepo-port-aws-exporter
+   Resources:
+     ElasticacheEventRule:
+       Type: AWS::Events::Rule
+       Properties:
+         EventBusName: default
+         EventPattern:
+           detail-type:
+             - AWS API Call via CloudTrail
+           source:
+             - aws.elasticache
+           detail:
+             eventSource:
+               - elasticache.amazonaws.com
+             eventName:
+               - prefix: CreateCacheCluster
+               - prefix: DeleteCacheCluster
+               - prefix: ModifyCacheCluster
+         Name: port-aws-exporter-sync-cache-cluster-trails
+         State: ENABLED
+         Targets:
+           - Id: PortAWSExporterEventsQueue
+             Arn:
+               Fn::ImportValue:
+                 Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+             InputTransformer:
+               InputPathsMap:
+                 awsRegion: $.detail.awsRegion
+                 eventName: $.detail.eventName
+                 cacheName: $.detail.responseElements.cacheClusterId
+               InputTemplate: >-
+                 {
+                   "resource_type": "AWS::ElastiCache::CacheCluster",
+                   "region": "\"<awsRegion>\"",
+                   "identifier": "\"<cacheName>\"",
+                   "action": "if \"<eventName>\" | startswith(\"DeleteCacheCluster\") then \"delete\" else \"upsert\" end"
+                 }
+     ElasticacheTagRule:
+       Type: AWS::Events::Rule
+       Properties:
+         EventBusName: default
+         EventPattern:
+           source:
+             - aws.elasticache
+           detail-type:
+             - AWS API Call via CloudTrail
+           detail:
+             eventSource:
+               - elasticache.amazonaws.com
+             eventName:
+               - prefix: AddTagsToResource
+               - prefix: RemoveTagsFromResource
+         Name: port-aws-exporter-sync-cache-cluster-tags-trails
+         State: ENABLED
+         Targets:
+           - Id: PortAWSExporterEventsQueue
+             Arn:
+               Fn::ImportValue:
+                 Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+             InputTransformer:
+               InputPathsMap:
+                 awsRegion: $.detail.awsRegion
+                 eventName: $.detail.eventName
+                 resourceArn: $.detail.requestParameters.resourceName
+               InputTemplate: |-
+                 {
+                   "resource_type": "AWS::ElastiCache::CacheCluster",
+                   "region": "\"<awsRegion>\"",
+                   "identifier": "\"<resourceArn>\" | split(\":\") | .[-1]",
+                   "action": "\"upsert\""
+                 }
+   ```
+
+    </details>
+
+Done! soon, you will be able to see any `Cache clusters`
