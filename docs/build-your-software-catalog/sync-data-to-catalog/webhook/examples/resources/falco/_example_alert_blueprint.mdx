@@ -1,0 +1,49 @@
+```json showLineNumbers
+{
+  "identifier": "falco_alert",
+  "title": "Falco Alert",
+  "icon": "Alert",
+  "schema": {
+    "properties": {
+      "priority": {
+        "title": "Priority",
+        "type": "string"
+      },
+      "output": {
+        "title": "Output",
+        "type": "string"
+      },
+      "rule": {
+        "title": "Rule",
+        "type": "string"
+      },
+      "time": {
+        "title": "Time",
+        "type": "string",
+        "format": "date-time"
+      },
+      "source": {
+        "title": "Source",
+        "type": "string"
+      },
+      "tags": {
+        "title": "Tags",
+        "type": "array"
+      },
+      "output_field": {
+        "title": "Output Field",
+        "type": "object"
+      },
+      "hostname": {
+        "title": "Hostname",
+        "type": "string"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
+}
+```

@@ -4,6 +4,7 @@ sidebar_position: 3
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 # Create cloud resources using IaC
 
@@ -31,10 +32,10 @@ After completing it, you will get a sense of how it can benefit different person
 
 ### Add a URL to your new resource's definition
 
-In this guide we will add a new property to our `service` blueprint, which we can use to access our cloud resource definitions.
+In this guide we will add a new property to our `service` <PortTooltip id="blueprint">blueprint</PortTooltip>, which we can use to access our cloud resource definitions.
 
 1. Go to your [Builder](https://app.getport.io/dev-portal/data-model).
-2. Click on your `service` blueprint, then click on `New property`.
+2. Click on your `service` <PortTooltip id="blueprint">blueprint</PortTooltip>, then click on `New property`.
 3. Choose `URL` as the type, fill it like this and click `Save`:
 
 <img src='/img/guides/iacPropertyForm.png' width='40%' />
@@ -45,10 +46,10 @@ This property is empty for now in all services, we will fill it as part of the a
 
 1. Head to the [Self-service tab](https://app.getport.io/self-serve) in your Port application, and click on `+ New action`.
 
-2. Each action in Port is directly tied to a blueprint. Our action creates a resource that is associated with a service and will be provisioned as part of the service's CD process.  
+2. Each action in Port is directly tied to a <PortTooltip id="blueprint">blueprint</PortTooltip>. Our action creates a resource that is associated with a service and will be provisioned as part of the service's CD process.  
    Choose `Service` from the dropdown list.
 
-3. This action does not create/delete entites, but rather performs an operation on an existing entity. Therefore, we will choose `Day-2` as the action type.  
+3. This action does not create/delete entites, but rather performs an operation on an existing <PortTooltip id="entity">entity</PortTooltip>. Therefore, we will choose `Day-2` as the action type.  
    Fill out the form like this and click `Next`:
 
 <img src='/img/guides/iacActionDetails.png' width='50%' />
@@ -125,8 +126,6 @@ acl = "{{ bucket_acl }}"
 </details>
   
 4. Now let's create the workflow file that contains our logic. Our workflow will consist of 3 steps:
-
-<br/><br/>
 
 - Creating a copy of the template file in the selected service's repository and replacing its variables with the data from the action's input.
 - Creating a pull request in the selected service's repository to add the new resource.
@@ -235,7 +234,7 @@ After creating an action, it will appear under the `Self-service` tab of your Po
 You may have noticed that even though we updated the service's `Resource definitions` URL, it still leads to a non-existent page. This is because we do not have any resources in the repository yet, let's take care of that:
 
 1. Merge the pull-request.
-2. Go to the entity page of the service that you executed the action for:
+2. Go to the <PortTooltip id="entity">entity</PortTooltip> page of the service that you executed the action for:
 
 <img src='/img/guides/iacEntityAfterAction.png' width='50%' />
 
