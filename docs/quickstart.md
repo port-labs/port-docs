@@ -63,21 +63,25 @@ If you already have one or more blueprints in your Builder, the button to create
 {
   "identifier": "service",
   "title": "Service",
+  "description": "A microservice in your organization",
   "icon": "Microservice",
   "schema": {
     "properties": {
       "readme": {
         "title": "README",
+        "description": "This service's readme file",
         "type": "string",
         "format": "markdown"
       },
       "url": {
         "title": "Repository URL",
+        "description": "A link to this service's Git repository",
         "type": "string",
         "format": "url"
       },
       "language": {
         "title": "Language",
+        "description": "This service's main code language",
         "type": "string"
       }
     },
@@ -98,7 +102,9 @@ You can now see the <PortTooltip id="blueprint">blueprint</PortTooltip> in your 
 
 Now let's connect our <PortTooltip id="blueprint">blueprint</PortTooltip> to a data source and fill it with real data!
 
-### 3. Ingest data into your repository
+### 3. Ingest your services' data into Port
+
+We will now see how to import services (Git repositories) into your <PortTooltip id="catalog">software catalog</PortTooltip>.
 
 1. To export and sync data from Github or BitBucket, Port provides a simple application. Choose your preferred provider and install the app:
 
@@ -244,9 +250,9 @@ As you can see, Port has pulled the repository's name, url and language, and its
 
 In this step we will see how to set metrics for our resources.
 
-Let's add a scorecard to the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>:
+Let's add a <PortTooltip id="scorecard">scorecard</PortTooltip> to the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>:
 
-1. Head over to the `Builder` page and double-click on the <PortTooltip id="blueprint">blueprint</PortTooltip>. Choose the `Scorecards` tab, then click on `New scorecard`:
+1. Head over to the `Builder` page and double-click on the blueprint. Choose the `Scorecards` tab, then click on `New scorecard`:
 
 <img src='/img/quickstart/blueprintAddScorecard.png' width='250rem' />
 
@@ -265,6 +271,7 @@ Let's add a scorecard to the `Service` <PortTooltip id="blueprint">blueprint</Po
     {
       "identifier": "hasReadme",
       "title": "Has readme",
+      "description": "Checks if a service has a readme file",
       "level": "Bronze",
       "query": {
         "combinator": "and",
@@ -283,7 +290,7 @@ Let's add a scorecard to the `Service` <PortTooltip id="blueprint">blueprint</Po
 </details>
 
 What we have just done is add a "Bronze" level metric that ensures all `Services` have a readme file.  
-Going back to the <PortTooltip id="entity">entity</PortTooltip> we created in our `Catalog`, we can see that its `Scorecards` tab displays our new metric. Since our repository has a readme file, we pass with flying colors:
+Going back to the <PortTooltip id="entity">entity</PortTooltip> we created in our <PortTooltip id="catalog">catalog</PortTooltip>, we can see that its `Scorecards` tab displays our new metric. Since our repository has a readme file, we pass with flying colors:
 
 ![entityPageAfterScorecard](/img/quickstart/entityPageAfterScorecard.png)
 
@@ -303,7 +310,7 @@ Let's create a simple new view for our service (and future services):
 
 ![groupByView](/img/quickstart/groupByView.png)
 
-This table is now grouped by the scorecard we created in the previous step.
+This table is now grouped by the <PortTooltip id="scorecard">scorecard</PortTooltip> we created in the previous step.
 
 Say you really like this view, and want your developers to see the `Services` table in this format. Notice that the `Save this view` button is now enabled?
 
@@ -314,7 +321,7 @@ Say you really like this view, and want your developers to see the `Services` ta
 <br/><br/>
 
 Choose a name and icon, and click on `Save page`.  
-A second `Services` page is now created in your `Catalog`. You can further customize views and create pages in any way that suits you.
+A second `Services` page is now created in your <PortTooltip id="catalog">catalog</PortTooltip>. You can further customize views and create pages in any way that suits you.
 
 #### Create a dashboard
 
