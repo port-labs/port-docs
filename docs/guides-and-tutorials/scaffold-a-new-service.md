@@ -129,7 +129,7 @@ jobs:
       ORG_NAME: <YOUR-ORG-NAME>
     runs-on: ubuntu-latest
     steps:
-      - uses: port-labs/cookiecutter-gha@v1.1
+      - uses: port-labs/cookiecutter-gha@v1.1.1
         id: scaff
         with:
           portClientId: ${{ secrets.PORT_CLIENT_ID }}
@@ -141,22 +141,15 @@ jobs:
           cookiecutterTemplate: https://github.com/lacion/cookiecutter-golang
           blueprintIdentifier: "service"
           organizationName: ${{ env.ORG_NAME }}
-
-      - name: "Report deployment Entity to port 🚢"
-        uses: port-labs/port-github-action@v1
-        with:
-          clientId: ${{ secrets.PORT_CLIENT_ID }}
-          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          identifier: ${{ fromJson(inputs.port_payload).payload.properties.service_name }}
-          blueprint: service
-          properties: |
-            {
-              "url": "https://github.com/${{ env.ORG_NAME }}/${{ fromJson(inputs.port_payload).payload.properties.service_name }}",
-              "language": "golang"
-            }
 ```
 
 </details>
+
+:::tip
+This workflow uses Port's [cookiecutter Github action](https://github.com/port-labs/cookiecutter-gha) to scaffold the new repository.
+:::
+
+<br/>
 
 All done! The action is ready to be used 🚀
 
@@ -176,9 +169,11 @@ After creating an action, it will appear under the `Self-service` tab of your Po
 
 <img src='/img/guides/runStatus.png' width='90%' />
 
-💡 Note the `Log stream` at the bottom, this can be used to report progress, results and errors
+:::tip Logging action progress
+💡 Note the `Log stream` at the bottom, this can be used to report progress, results and errors. Click [here](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/) to learn more.
+:::
 
-Congrats! You can now create services easily from Port 💪🏽
+Congratulations! You can now create services easily from Port 💪🏽
 
 ### Possible daily routine integrations
 
@@ -191,4 +186,7 @@ Creating a service is not just a periodic task developers undertake, but a vital
 Our ultimate goal is to facilitate a seamless transition from ideation to production. In doing so, we aim to eliminate the need for developers to navigate through a plethora of tools, reducing friction and accelerating the time-to-production.  
 In essence, we're not just building a tool, but sculpting an ecosystem that empowers developers to bring new features to life with utmost efficiency.
 
-More guides & tutorials will be available soon, in the meantime feel free to reach out with any questions via our [community slack](https://www.getport.io/community) or [Github project](https://github.com/port-labs?view_as=public).
+More scaffolding examples can be found here:
+
+- [Scaffold Gitlab repositories](/create-self-service-experiences/setup-backend/gitlab-pipeline/examples/scaffold-repositories-using-cookiecutter)
+- [Scaffold BitBucket repositories](/create-self-service-experiences/setup-backend/jenkins-pipeline/examples/scaffold-bitbucket-using-cookiecutter)
