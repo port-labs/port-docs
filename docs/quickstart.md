@@ -63,21 +63,25 @@ If you already have one or more blueprints in your Builder, the button to create
 {
   "identifier": "service",
   "title": "Service",
+  "description": "A microservice in your organization",
   "icon": "Microservice",
   "schema": {
     "properties": {
       "readme": {
         "title": "README",
+        "description": "This service's readme file",
         "type": "string",
         "format": "markdown"
       },
       "url": {
         "title": "Repository URL",
+        "description": "A link to this service's Git repository",
         "type": "string",
         "format": "url"
       },
       "language": {
         "title": "Language",
+        "description": "This service's main code language",
         "type": "string"
       }
     },
@@ -267,6 +271,7 @@ Let's add a <PortTooltip id="scorecard">scorecard</PortTooltip> to the `Service`
     {
       "identifier": "hasReadme",
       "title": "Has readme",
+      "description": "Checks if a service has a readme file",
       "level": "Bronze",
       "query": {
         "combinator": "and",
