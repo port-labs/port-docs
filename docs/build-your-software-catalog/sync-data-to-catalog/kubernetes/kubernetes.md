@@ -187,12 +187,17 @@ The exporter helm chart can be found [here](https://github.com/port-labs/helm-ch
 
 Done! the exporter will begin creating and updating objects from your Kubernetes cluster as Port entities shortly.
 
-:::tip Updating exporter configuration
-In order to **update** the `config.yml` file deployed on your Kubernetes cluster, you can run the installation command again:
+### Updating exporter configuration
+
+In order to **update** the `config.yml` file deployed on your Kubernetes cluster, make your changes to the file and save it locally, then run the installation command again:
 
 <ExporterBaseInstallCommand />
 
-:::
+To update the file in-place, you can edit the configmap directly by running:
+
+```bash
+kubectl edit cm port-k8s-exporter -n port-k8s-exporter
+```
 
 ## Examples
 

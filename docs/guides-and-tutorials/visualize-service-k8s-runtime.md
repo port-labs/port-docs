@@ -63,7 +63,7 @@ After installation, the exporter will:
 
 <br/>
 
-2. Create <PortTooltip id="entity">entities</PortTooltip> in your [Software catalog](https://app.getport.io/services). You will see a new page for each <PortTooltip id="blueprint">blueprint</PortTooltip> containing your resources, filled with data from your Kubernetes cluster (as defined in `CONFIG_YAML_URL`):
+2. Create <PortTooltip id="entity">entities</PortTooltip> in your [Software catalog](https://app.getport.io/services). You will see a new page for each <PortTooltip id="blueprint">blueprint</PortTooltip> containing your resources, filled with data from your Kubernetes cluster (as defined in [`CONFIG_YAML_URL`](https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/full-configs/k8s-guide/k8s_guide_config.yaml)):
 
 <img src='/img/guides/k8sEntitiesCreated.png' width='100%' />
 
