@@ -10,7 +10,7 @@ import JiraServerConfigurationPython from "./resources/jira-server/\_example_jir
 
 # Jira (Self-Hosted)
 
-In this example you are going to create a webhook integration between your Jira Server and Port, which will ingest Jira project and issue entities into Port.
+In this example you are going to create a webhook integration between your Jira Server and Port. The integration will facilitate the ingestion of Jira project and issue entities into Port.
 
 ## Port configuration
 
@@ -31,7 +31,7 @@ Create the following blueprint definitions:
 </details>
 
 :::tip Blueprint Properties
-You may add (or remove) properties in your blueprints depending on you want to track in your Jira projects and issues
+You may modify the properties in your blueprints depending on what you want to track in your Jira projects and issues.
 :::
 
 Create the following webhook configuration [using Port UI](../../?operation=ui#configuring-webhook-endpoints)
