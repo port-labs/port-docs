@@ -18,7 +18,6 @@ Port's GitLab integration makes it possible to manage Port entities with a GitOp
 - Use GitLab as the source-of-truth for your **microservices**, **projects**, **packages**, **libraries** and other software catalog assets;
 - Allow developers to keep the catalog up-to-date, by making updates to files in their Git projects;
 - Create a standardized way to document software catalog assets in your organization;
-- etc.
 
 ## Managing entities using GitOps
 
@@ -27,8 +26,6 @@ To manage entities using GitOps, you will need to add a `port.yml` file to the *
 The `port.yml` file can specify one or more Port entities that will be ingested to Port, and any change made to the `port.yml` file will also be reflected inside Port.
 
 This configuration turns your GitLab projects to the source-of-truth for the software catalog.
-
-<GitOpsPushEvent/>
 
 ### GitOps `port.yml` file
 
