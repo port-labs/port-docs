@@ -57,7 +57,7 @@ Create the following webhook configuration [using Port UI](../../?operation=ui#c
 
 ## Create a webhook in Jira
 
-1. Log in to Jira as a user with the Administrator global permission;
+1. Log in to Jira as a user with the Administer global permission;
 2. Click the gear icon at the top right corner;
 3. Choose **System**;
 4. At the bottom of the sidebar on the left, under **Advanced**, choose **WebHooks**;
