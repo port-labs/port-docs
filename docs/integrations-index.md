@@ -226,7 +226,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Backstage
 
-- [Import catalog from Backstage](./build-your-software-catalog/sync-data-to-catalog/backstage/backstage.md)
+- [Import catalog from Backstage](/guides-and-tutorials/import-backstage-resources.md)
 
 ## ArgoCD
 
