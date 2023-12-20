@@ -1,0 +1,37 @@
+```json showLineNumbers
+[
+  {
+    "blueprint": "jiraProject",
+    "filter": ".body.webhookEvent | IN(\"project_created\", \"project_updated\")",
+    "entity": {
+      "identifier": ".body.project.key",
+      "title": ".body.project.name",
+      "properties": {
+        "url": ".body.project.self"
+      }
+    }
+  },
+  {
+    "blueprint": "jiraIssue",
+    "filter": ".body.webhookEvent | IN(\"jira:issue_updated\", \"jira:issue_created\")",
+    "entity": {
+      "identifier": ".body.issue.key",
+      "title": ".body.issue.fields.summary",
+      "properties": {
+        "url": ".body.issue.self",
+        "status": ".body.issue.fields.status.name",
+        "assignee": ".body.issue.fields.assignee.name",
+        "issueType": ".body.issue.fields.issuetype.name",
+        "reporter": ".body.issue.fields.reporter.name",
+        "priority": ".body.issue.fields.priority.name",
+        "creator": ".body.issue.fields.creator.name"
+      },
+      "relations": {
+        "project": ".body.issue.fields.project.key",
+        "parentIssue": ".body.issue.fields.parent.key",
+        "subtasks": ".body.issue.fields.subtasks | map(.key)"
+      }
+    }
+  }
+]
+```
