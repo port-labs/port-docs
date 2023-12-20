@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-import FindCredentials from "../api/\_template_docs/\_find_credentials_collapsed.mdx";
+import FindCredentials from "/docs//build-your-software-catalog/sync-data-to-catalog/api/\_template_docs/\_find_credentials_collapsed.mdx";
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
@@ -10,7 +10,7 @@ import TabItem from "@theme/TabItem"
 
 ## Prerequisites
 
-- You will need your [Port credentials](../api/api.md#find-your-port-credentials) to install the AWS exporter:
+- You will need your [Port credentials](/build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials) to install the AWS exporter:
 
   <FindCredentials />
 
@@ -60,7 +60,7 @@ You can delete resources you don't want to export by removing them from the reso
 
 After setting up the basic configuration, the template above deploys the AWS exporter Terraform module.
 
-For more information, visit the [AWS exporter module docs](../iac/terraform/modules/aws-exporter-module.md)
+For more information, visit the [AWS exporter module docs](/build-your-software-catalog/sync-data-to-catalog/iac/terraform/modules/aws-exporter-module.md)
 
 ## Step-by-step installation
 

@@ -6,6 +6,7 @@ The script initializes the [blueprints](../../define-your-data-model/setup-bluep
 :::tip
 
 The source code of the import script is open and available on [**GitHub**](https://github.com/port-labs/backstage-import.git)
+
 :::
 
 ## Prerequisites
