@@ -78,7 +78,7 @@ The exporter installation did three things:
 
 :::info TIP - Updating your configuration
 
-To make changes to your configuration after installation, use the command described in the [AWS exporter page](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/aws/#changing-the-configuration).
+To make changes to your configuration after installation, use the command described in the [AWS exporter page](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/#changing-the-configuration).
 
 💁🏽 _You don't need to change anything in the configuration for this guide, this is just an FYI_
 :::
@@ -105,6 +105,6 @@ You should now see the pie chart in your homepage:
 AWS environments are complex and data-rich. Port's AWS exporter allows you to easily ingest resources from your AWS environment into Port, but this is just the starting point.  
 Once your data has been ingested, you can use Port to visualize relevant data, automate routine tasks using self-service actions, track metrics for your resources, and much more.
 
-For a deeper dive into Port's integration with AWS (including examples), see the [AWS integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/aws/) section.
+For a deeper dive into Port's integration with AWS (including examples), see the [AWS integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/) section.
 
 More guides & tutorials will be available soon, in the meantime feel free to reach out with any questions via our [community slack](https://www.getport.io/community) or [Github project](https://github.com/port-labs?view_as=public).

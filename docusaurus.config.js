@@ -161,7 +161,7 @@ const config = {
               },
               {
                 label: "AWS",
-                to: "/build-your-software-catalog/sync-data-to-catalog/aws",
+                to: "/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws",
               },
               {
                 label: "Terraform",

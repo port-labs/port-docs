@@ -251,7 +251,7 @@ That way you can configure a resource to be synced as soon as it changed, in rea
 
 To configure the AWS exporter to use events as triggers, follow these steps:
 
-1. Prepare an [event rule](/build-your-software-catalog/sync-data-to-catalog/aws/event-based-updates#definition), based on specific events matching resources you want the AWS exporter to update in real time and save it to a Cloudformation YAML template (`template.yml`).
+1. Prepare an [event rule](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/event-based-updates#definition), based on specific events matching resources you want the AWS exporter to update in real time and save it to a Cloudformation YAML template (`template.yml`).
 
 2. Deploy the event rule using this command:
 
