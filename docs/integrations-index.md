@@ -138,12 +138,14 @@ This page contains a list of Port's available integrations, organized by the pla
 - [PagerDuty integration](./build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty.md)
 - [Ensure production readiness](./guides-and-tutorials/ensure-production-readiness.md)
 - [PagerDuty webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/pagerduty.md)
+- [Self service for a new PagerDuty incident using GitHub workflows](https://github.com/port-labs/self-service-actions-examples/tree/main/github-workflows/pagerduty)
 
 ## Jira
 
 - [Jira integration](./build-your-software-catalog/sync-data-to-catalog/project-management/jira.md)
 - [Jira webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/jira.md)
 - [Initiate scorecards handling with Jira issues](./promote-scorecards/manage-using-3rd-party-apps/jira)
+- [Self service for a new Jira bug using GitHub workflows](https://github.com/port-labs/self-service-actions-examples/tree/main/github-workflows/jira)
 
 ## Sentry
 
