@@ -29,6 +29,7 @@ const config = {
           editUrl: ({ locale, docPath }) => {
             return `https://github.com/port-labs/port-docs/edit/main/docs/${docPath}`;
           },
+          showLastUpdateTime: true,
         },
         blog: false,
         theme: {
