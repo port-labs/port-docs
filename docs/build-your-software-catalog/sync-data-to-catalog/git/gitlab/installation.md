@@ -85,30 +85,20 @@ The `tokenMapping` parameter supports specifying the paths that the integration 
 
 Mapping format:
 
-```json showLineNumbers
-{
-  "MY_FIRST_GITLAB_PROJECT_GROUP_TOKEN": [
-    "*/MyFirstGitLabProject/**",
-    "*/MySecondGitLabProject/*"
-  ]
-}
+```text showLineNumbers
+{"MY_FIRST_GITLAB_PROJECT_GROUP_TOKEN": ["*/MyFirstGitLabProject/**","*/MySecondGitLabProject/*"]}
 ```
 
 Example:
 
-```json showLineNumbers
-{
-  "glpat-QXbeg-Ev9xtu5_5FsaAQ": ["*/DevopsTeam/*Service", "*/RnDTeam/*Service"]
-}
+```text showLineNumbers
+{"glpat-QXbeg-Ev9xtu5_5FsaAQ": ["*/DevopsTeam/*Service", "*/RnDTeam/*Service"]}
 ```
 
 Multiple GitLab group access tokens example:
 
-```json showLineNumbers
-{
-  "glpat-QXbeg-Ev9xtu5_5FsaAQ": ["*/DevopsTeam/*Service", "*/RnDTeam/*Service"],
-  "glpat-xF7Ae-vXu5ts5_QbEgAQ9": ["*/MarketingTeam/*Service"]
-}
+```text showLineNumbers
+{"glpat-QXbeg-Ev9xtu5_5FsaAQ": ["*/DevopsTeam/*Service", "*/RnDTeam/*Service"],"glpat-xF7Ae-vXu5ts5_QbEgAQ9": ["*/MarketingTeam/*Service"]}
 ```
 
 ### `appHost` & listening to hooks
@@ -284,11 +274,11 @@ deploy_gitlab:
 :::note
 When saving the `OCEAN__INTEGRATION__CONFIG__TOKEN_MAPPING` variable, be sure to save it **as-is**, for example given the following token mapping:
 
-```json
-{
-  "glpat-QXbeg-Ev9xtu5_5FsaAQ": ["*/DevopsTeam/*Service", "*/RnDTeam/*Service"]
-}
+```text showLineNumbers
+{"glpat-QXbeg-Ev9xtu5_5FsaAQ": ["*/DevopsTeam/*Service", "*/RnDTeam/*Service"]}
 ```
+
+(Note that this is a one-liner)
 
 Save it as a GitLab variable without any changes (there is no need to wrap it in single-quotes (`'`) or double-quotes (`"`).
 
