@@ -151,10 +151,10 @@ Make sure to replace the placeholders for PROJECT_NAME and GROUP_NAME of your `c
 apiVersion: s3.aws.upbound.io/v1beta1
 kind: Bucket
 metadata:
-  name: { { bucket_name } }
+  name: {{ bucket_name }}
 spec:
   forProvider:
-    region: { { aws_region } }
+    region: {{ aws_region }}
   providerConfigRef:
     name: default
 ```

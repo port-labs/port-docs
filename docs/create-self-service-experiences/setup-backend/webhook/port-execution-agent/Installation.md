@@ -55,8 +55,8 @@ When using the execution agent, in the `url` field you need to provide a URL to 
 
 <!-- TODO: add back the URLs here for changelog destination -->
 
-- [Self-Service Action invocation method](../../self-service-actions-deep-dive/self-service-actions-deep-dive.md#invocation-method-structure-fields) / Change Log destination `type` field value should be equal to `WEBHOOK`.
-- [Self-Service Action invocation method](../../self-service-actions-deep-dive/self-service-actions-deep-dive.md#invocation-method-structure-fields) / Change Log `agent` field value should be equal to `true`.
+- [Self-Service Action invocation method](/create-self-service-experiences/self-service-actions-deep-dive/self-service-actions-deep-dive.md#invocation-method-structure-fields) / Change Log destination `type` field value should be equal to `WEBHOOK`.
+- [Self-Service Action invocation method](/create-self-service-experiences/self-service-actions-deep-dive/self-service-actions-deep-dive.md#invocation-method-structure-fields) / Change Log `agent` field value should be equal to `true`.
 
 For example:
 
@@ -70,12 +70,12 @@ Well Done! **Port Agent** is now running in your environment and will trigger an
 
 When a new invocation is detected, the agent will pull it from your Kafka topic and forward it to the internal API in your private network.
 
-![Port Execution Agent Logs](../../../../static/img/self-service-actions/port-execution-agent/portAgentLogs.png)
+![Port Execution Agent Logs](/img/self-service-actions/port-execution-agent/portAgentLogs.png)
 
 ### Next steps
 
 Follow one of the guides below:
 
-- [Self-Service Actions Deep Dive](../../self-service-actions-deep-dive/self-service-actions-deep-dive.md) - Set up a blueprint and self-service actions.
-- [Changelog Listener](../webhook/examples/changelog-listener.md) - Create a blueprint with `changelogDestination` to listen and act on changes in the software catalog.
-- [GitLab Pipeline Trigger](../gitlab-pipeline/gitlab-pipeline.md) - Create an action that triggers GitLab Pipeline execution.
+- [Self-Service Actions Deep Dive](/create-self-service-experiences/self-service-actions-deep-dive/self-service-actions-deep-dive.md) - Set up a blueprint and self-service actions.
+- [Changelog Listener](/create-self-service-experiences/setup-backend/webhook/examples/changelog-listener.md) - Create a blueprint with `changelogDestination` to listen and act on changes in the software catalog.
+- [GitLab Pipeline Trigger](/create-self-service-experiences/setup-backend/gitlab-pipeline/gitlab-pipeline.md) - Create an action that triggers GitLab Pipeline execution.
