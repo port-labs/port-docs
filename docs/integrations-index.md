@@ -83,8 +83,8 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ### AWS
 
-- [AWS exporter](./build-your-software-catalog/sync-data-to-catalog/aws/aws.md)
-- [Map ECS, EC2, RDS, API GW, Cloudfront and more](./build-your-software-catalog/sync-data-to-catalog/aws/examples.md)
+- [AWS exporter](./build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws.md)
+- [Map ECS, EC2, RDS, API GW, Cloudfront and more](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples.md)
 - [AWS Cost](./build-your-software-catalog/sync-data-to-catalog/cloud-cost/aws-cost.md)
 - [Deploy AWS resources using AWS CloudFormation](./create-self-service-experiences/setup-backend/github-workflow/examples/deploy-cloudformation-template.md)
 - [AWS exporter Terraform module](./build-your-software-catalog/sync-data-to-catalog/iac/terraform/modules/aws-exporter-module.md)
@@ -93,14 +93,14 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ### Azure
 
-- [Azure exporter](./build-your-software-catalog/sync-data-to-catalog/azure/azure.md)
+- [Azure exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure.md)
 - [Azure Active Directory (AD) SSO](./sso-rbac/sso-providers/azure-ad.md)
-- [Map resource groups, storage groups, compute resources database resources and more](./build-your-software-catalog/sync-data-to-catalog/azure/examples.md)
+- [Map resource groups, storage groups, compute resources database resources and more](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/examples.md)
 
 ### GCP
 
-- [GCP asset inventory](./build-your-software-catalog/sync-data-to-catalog/gcp/examples/generic-assets.md)
-- [Sync organizations, folders, projects, buckets, service accounts, compute instances and more](./build-your-software-catalog/sync-data-to-catalog/gcp/examples/extended-specific-assets.md)
+- [GCP asset inventory](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/examples/generic-assets.md)
+- [Sync organizations, folders, projects, buckets, service accounts, compute instances and more](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/examples/extended-specific-assets.md)
 
 #### Google cloud build
 
@@ -138,12 +138,14 @@ This page contains a list of Port's available integrations, organized by the pla
 - [PagerDuty integration](./build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty.md)
 - [Ensure production readiness](./guides-and-tutorials/ensure-production-readiness.md)
 - [PagerDuty webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/pagerduty.md)
+- [Self service for a new PagerDuty incident using GitHub workflows](https://github.com/port-labs/self-service-actions-examples/tree/main/github-workflows/pagerduty)
 
 ## Jira
 
-- [Jira integration](./build-your-software-catalog/sync-data-to-catalog/project-management/jira.md)
+- [Jira integration](/build-your-software-catalog/sync-data-to-catalog/jira/jira.md)
 - [Jira webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/jira.md)
 - [Initiate scorecards handling with Jira issues](./promote-scorecards/manage-using-3rd-party-apps/jira)
+- [Self service for a new Jira bug using GitHub workflows](https://github.com/port-labs/self-service-actions-examples/tree/main/github-workflows/jira)
 
 ## Sentry
 
@@ -226,7 +228,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Backstage
 
-- [Import catalog from Backstage](./build-your-software-catalog/sync-data-to-catalog/backstage/backstage.md)
+- [Import catalog from Backstage](/guides-and-tutorials/import-backstage-resources.md)
 
 ## ArgoCD
 
