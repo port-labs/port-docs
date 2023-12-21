@@ -187,8 +187,8 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Kafka
 
-- [Kafka integration](./build-your-software-catalog/sync-data-to-catalog/event-processing/kafka.md)
-- [Kafka queue for self-service actions](./create-self-service-experiences/setup-backend/kafka/kafka.md)
+- [Kafka integration](/build-your-software-catalog/sync-data-to-catalog/event-processing/kafka.md)
+- [Kafka queue for self-service actions](/create-self-service-experiences/setup-backend/webhook/kafka/kafka.md)
 
 ## Split
 
