@@ -290,11 +290,12 @@ Our ServiceNow integration currently supports the below resources for the mappin
 To ingest ServiceNow objects using the [integration configuration](#configuration-structure), you can follow the steps below:
 
 1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using ServiceNow.
-3. Choose the **Ingest Data** option from the menu.
-4. Select ServiceNow under the Incident management category.
+2. Select the Data Sources tab at the left sidebar.
+3. Click on `+ Data Source` at the top right corner.
+4. Select ServiceNow under the Incident Management category.
 5. Modify the [configuration](#configuration-structure) according to your needs.
-6. Click `Resync`.
+6. Run the installation command.
+7. Click `Next` and you can view the integration configuration and update it as necessary.
 
 ## Examples
 
