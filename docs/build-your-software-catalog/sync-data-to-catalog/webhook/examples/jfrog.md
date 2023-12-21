@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 18
 description: Ingest JFrog artifacts, Docker tags and builds into your catalog
 ---
 
@@ -304,7 +304,6 @@ Create the following webhook configuration [using Port UI](../../?operation=ui#c
     :::
 
 3. Click **Save** at the bottom of the page.
-
 </details>
 
 ## Create a webhook in JFrog
@@ -346,7 +345,7 @@ This section includes a sample webhook event sent from JFrog when a build is upl
 Here is an example of the payload structure sent to the webhook URL when a JFrob build is uploaded:
 
 <details>
-<summary> Webhook event payload</summary>
+<summary>Webhook event payload</summary>
 
 ```json showLineNumbers
 {
