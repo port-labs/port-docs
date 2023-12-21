@@ -5,6 +5,7 @@ sidebar_position: 3
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
+import HelmParameters from "../templates/\_ocean-advanced-parameters-helm.mdx"
 
 # ServiceNow
 
@@ -35,19 +36,16 @@ Using this installation option means that the integration will be able to update
 This table summarizes the available parameters for the installation.
 Set them as you wish in the script below, then copy it and run it in your terminal:
 
-| Parameter                                | Description                                                                                                   | Required |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------- |
-| `port.clientId`                          | Your port client id                                                                                           | ✅       |
-| `port.clientSecret`                      | Your port client secret                                                                                       | ✅       |
-| `port.baseUrl`                           | Your port base url, relevant only if not using the default port app                                           | ❌       |
-| `integration.identifier`                 | Change the identifier to describe your integration                                                            | ✅       |
-| `integration.type`                       | The integration type                                                                                          | ✅       |
-| `integration.eventListener.type`         | The event listener type                                                                                       | ✅       |
-| `integration.config.servicenowUsername`  | The ServiceNow account username                                                                               | ✅       |
-| `integration.secrets.servicenowPassword` | The ServiceNow account password                                                                               | ✅       |
-| `integration.config.servicenowUrl`       | The ServiceNow instance URL. For example https://example-id.service-now.com                                   | ✅       |
-| `scheduledResyncInterval`                | The number of minutes between each resync                                                                     | ❌       |
-| `initializePortResources`                | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
+| Parameter                                | Description                                                                                                                                                      | Required |
+| ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `port.clientId`                          | Your Port client id ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))     | ✅       |
+| `port.clientSecret`                      | Your Port client secret ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)) | ✅       |
+| `integration.identifier`                 | Change the identifier to describe your integration                                                                                                               | ✅       |
+| `integration.config.servicenowUsername`  | The ServiceNow account username                                                                                                                                  | ✅       |
+| `integration.secrets.servicenowPassword` | The ServiceNow account password                                                                                                                                  | ✅       |
+| `integration.config.servicenowUrl`       | The ServiceNow instance URL. For example https://example-id.service-now.com                                                                                      | ✅       |
+
+<HelmParameters />
 
 <br/>
 
@@ -79,16 +77,16 @@ If you want the integration to update Port in real time using webhooks you shoul
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
-| Parameter                                         | Description                                                                                                        | Required |
-| ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
-| `OCEAN__INTEGRATION__CONFIG__SERVICENOW_USERNAME` | The ServiceNow account username                                                                                    | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__SERVICENOW_PASSWORD` | The ServiceNow account password                                                                                    | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__SERVICENOW_URL`      | The ServiceNow instance URL                                                                                        | ✅       |
-| `OCEAN__INITIALIZE_PORT_RESOURCES`                | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
-| `OCEAN__INTEGRATION__IDENTIFIER`                  | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
-| `OCEAN__PORT__CLIENT_ID`                          | Your port client id                                                                                                | ✅       |
-| `OCEAN__PORT__CLIENT_SECRET`                      | Your port client secret                                                                                            | ✅       |
-| `OCEAN__PORT__BASE_URL`                           | Your port base url, relevant only if not using the default port app                                                | ❌       |
+| Parameter                                         | Description                                                                                                                                                      | Required |
+| ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `OCEAN__INTEGRATION__CONFIG__SERVICENOW_USERNAME` | The ServiceNow account username                                                                                                                                  | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__SERVICENOW_PASSWORD` | The ServiceNow account password                                                                                                                                  | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__SERVICENOW_URL`      | The ServiceNow instance URL                                                                                                                                      | ✅       |
+| `OCEAN__INITIALIZE_PORT_RESOURCES`                | Default true, When set to false the integration will not create default blueprints and the port App config Mapping                                               | ❌       |
+| `OCEAN__INTEGRATION__IDENTIFIER`                  | Change the identifier to describe your integration, if not set will use the default one                                                                          | ❌       |
+| `OCEAN__PORT__CLIENT_ID`                          | Your Port client id ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))     | ✅       |
+| `OCEAN__PORT__CLIENT_SECRET`                      | Your Port client secret ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)) | ✅       |
+| `OCEAN__PORT__BASE_URL`                           | Your Port base url, relevant only if not using the default Port app                                                                                              | ❌       |
 
 <br/>
 
@@ -143,16 +141,16 @@ the [Real Time & Always On](?installation-methods=real-time-always-on#installati
 Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
 of `Secret Text` type:
 
-| Parameter                                         | Description                                                                                                        | Required |
-| ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
-| `OCEAN__INTEGRATION__CONFIG__SERVICENOW_USERNAME` | The ServiceNow account username                                                                                    | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__SERVICENOW_PASSWORD` | The ServiceNow account password                                                                                    | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__SERVICENOW_URL`      | The ServiceNow instance URL                                                                                        | ✅       |
-| `OCEAN__INITIALIZE_PORT_RESOURCES`                | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
-| `OCEAN__INTEGRATION__IDENTIFIER`                  | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
-| `OCEAN__PORT__CLIENT_ID`                          | Your port client id                                                                                                | ✅       |
-| `OCEAN__PORT__CLIENT_SECRET`                      | Your port client secret                                                                                            | ✅       |
-| `OCEAN__PORT__BASE_URL`                           | Your port base url, relevant only if not using the default port app                                                | ❌       |
+| Parameter                                         | Description                                                                                                                                                      | Required |
+| ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `OCEAN__INTEGRATION__CONFIG__SERVICENOW_USERNAME` | The ServiceNow account username                                                                                                                                  | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__SERVICENOW_PASSWORD` | The ServiceNow account password                                                                                                                                  | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__SERVICENOW_URL`      | The ServiceNow instance URL                                                                                                                                      | ✅       |
+| `OCEAN__INITIALIZE_PORT_RESOURCES`                | Default true, When set to false the integration will not create default blueprints and the port App config Mapping                                               | ❌       |
+| `OCEAN__INTEGRATION__IDENTIFIER`                  | Change the identifier to describe your integration, if not set will use the default one                                                                          | ❌       |
+| `OCEAN__PORT__CLIENT_ID`                          | Your Port client id ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))     | ✅       |
+| `OCEAN__PORT__CLIENT_SECRET`                      | Your Port client secret ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)) | ✅       |
+| `OCEAN__PORT__BASE_URL`                           | Your Port base url, relevant only if not using the default Port app                                                                                              | ❌       |
 
 <br/>
 
