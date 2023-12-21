@@ -153,13 +153,7 @@ Create the following blueprint definitions:
         "type": "string",
         "title": "Repository Type",
         "description": "Type of the repository",
-        "enum": [
-          "LOCAL",
-          "REMOTE",
-          "VIRTUAL",
-          "FEDERATED",
-          "DISTRIBUTION"
-        ],
+        "enum": ["LOCAL", "REMOTE", "VIRTUAL", "FEDERATED", "DISTRIBUTION"],
         "enumColors": {
           "LOCAL": "blue",
           "REMOTE": "bronze",
@@ -247,61 +241,62 @@ Create the following webhook configuration [using Port UI](../../?operation=ui#c
 
 ```json
 [
-    {
-        "blueprint": "jfrogBuild",
-        "filter": ".body.event_type == 'uploaded'",
-        "entity": {
-        "identifier": ".body.build_name",
-        "title": ".body.build_name",
-        "properties": {
-            "name": ".body.build_name",
-            "uri": "'/' + .body.build_name",
-            "lastStarted": ".body.build_started"
-        }
-        }
-    },
-    {
-        "blueprint": "jfrogDockerTag",
-        "filter": ".body.event_type == 'pushed'",
-        "entity": {
-        "identifier": ".body.name",
-        "title": ".body.name",
-        "properties": {
-            "name": ".body.name",
-            "imageName": ".body.image_name",
-            "path": ".body.path",
-            "sha256": ".body.sha256",
-            "size": ".body.size",
-            "tag": ".body.tag",
-            "platforms": ".body.platforms[] | \"(.os):(.architecture)\""
-        },
-        "relations": {
-            "repository": ".body.repo_key"
-        }
-        }
-    },
-    {
-        "blueprint": "jfrogArtifact",
-        "filter": ".body.event_type == 'deployed'",
-        "entity": {
-        "identifier": ".body.data.name",
-        "title": ".body.data.name",
-        "properties": {
-            "name": ".body.data.name",
-            "path": ".body.data.path",
-            "sha256": ".body.data.sha256",
-            "size": ".body.data.size"
-        },
-        "relations": {
-            "repository": ".body.data.repo_key"
-        }
-        }
+  {
+    "blueprint": "jfrogBuild",
+    "filter": ".body.event_type == 'uploaded'",
+    "entity": {
+      "identifier": ".body.build_name",
+      "title": ".body.build_name",
+      "properties": {
+        "name": ".body.build_name",
+        "uri": "'/' + .body.build_name",
+        "lastStarted": ".body.build_started"
+      }
     }
+  },
+  {
+    "blueprint": "jfrogDockerTag",
+    "filter": ".body.event_type == 'pushed'",
+    "entity": {
+      "identifier": ".body.name",
+      "title": ".body.name",
+      "properties": {
+        "name": ".body.name",
+        "imageName": ".body.image_name",
+        "path": ".body.path",
+        "sha256": ".body.sha256",
+        "size": ".body.size",
+        "tag": ".body.tag",
+        "platforms": ".body.platforms[] | \"(.os):(.architecture)\""
+      },
+      "relations": {
+        "repository": ".body.repo_key"
+      }
+    }
+  },
+  {
+    "blueprint": "jfrogArtifact",
+    "filter": ".body.event_type == 'deployed'",
+    "entity": {
+      "identifier": ".body.data.name",
+      "title": ".body.data.name",
+      "properties": {
+        "name": ".body.data.name",
+        "path": ".body.data.path",
+        "sha256": ".body.data.sha256",
+        "size": ".body.data.size"
+      },
+      "relations": {
+        "repository": ".body.data.repo_key"
+      }
+    }
+  }
 ]
 ```
-    :::note
-    Take note of, and copy the Webhook URL that is provided in this tab
-    :::
+
+:::note
+Take note of, and copy the Webhook URL that is provided in this tab
+:::
 
 3. Click **Save** at the bottom of the page.
 </details>
@@ -320,21 +315,20 @@ Create the following webhook configuration [using Port UI](../../?operation=ui#c
    4. `Events` - Under **Artifacts**, select **Artifact was deployed** and select all repositories that apply;
 7. Click **Create** at the bottom of the page.
 8. Create two more webhooks using the details:
-    1. For builds:
-        - Name: **Port-Build**;
-        - Events: Under **Builds**, select **Build was uploaded** and select all builds that apply;
-        - `Description` - enter a description for the webhook;
-        - `URL` - enter the value of the `url` key you received after creating the webhook configuration in Port;
-    2. For Docker tags:
-        - Name: **Port-Docker-Tag**;
-        - Events: Under **Docker**, select **Docker tag was pushed** and select all repositories that apply
+   1. For builds:
+      - Name: **Port-Build**;
+      - Events: Under **Builds**, select **Build was uploaded** and select all builds that apply;
+      - `Description` - enter a description for the webhook;
+      - `URL` - enter the value of the `url` key you received after creating the webhook configuration in Port;
+   2. For Docker tags:
+      - Name: **Port-Docker-Tag**;
+      - Events: Under **Docker**, select **Docker tag was pushed** and select all repositories that apply
 
 :::tip
 In order to view the different payloads and events available in JFrog webhooks, [look here](https://jfrog.com/help/r/jfrog-platform-administration-documentation/event-types)
 :::
 
 Done! Any artifact you publish, build you trigger, or artifact you upload will trigger a webhook event that JFrog will send to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
-
 
 ## Let's Test It
 
@@ -349,9 +343,9 @@ Here is an example of the payload structure sent to the webhook URL when a JFrob
 
 ```json showLineNumbers
 {
-  "build_name":"sample_build_name",
-  "event_type":"uploaded",
-  "build_number":"1",
+  "build_name": "sample_build_name",
+  "event_type": "uploaded",
+  "build_number": "1",
   "build_started": "2020-06-18T14:40:49.869+0300"
 }
 ```
