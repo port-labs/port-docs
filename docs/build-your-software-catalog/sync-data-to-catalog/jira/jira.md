@@ -9,7 +9,7 @@ import DockerParameters from "./\_jira_one_time_docker_parameters.mdx"
 Our Jira integration allows you to import `issues` and `projects` from your Jira cloud account into Port, according to your mapping and definition.
 
 :::info Note
-This integration supports Jira Cloud at the moment, support for Jira Server can be found [in this section](../webhook/examples/jira-server.md)
+This integration supports Jira Cloud at the moment, support for Jira Server can be found [in this section](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/jira-server.md)
 :::
 
 ## Common use cases
