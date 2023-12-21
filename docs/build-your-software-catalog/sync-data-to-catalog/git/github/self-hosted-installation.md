@@ -152,4 +152,4 @@ As this is a self-hosted version, there are some limitations due to security con
 
 - You must include configuration as part of the repository, and you can't configure it via Port's UI/API;
 
-- To use self-service actions, you will need [Kafka Credentials](../../../../create-self-service-experiences/setup-backend/kafka/kafka.md) configured for your organization;
+- To use self-service actions, you will need [Kafka Credentials](/create-self-service-experiences/setup-backend/webhook/kafka/kafka.md) configured for your organization;
