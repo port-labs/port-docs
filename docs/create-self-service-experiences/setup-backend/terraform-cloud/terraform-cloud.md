@@ -96,7 +96,7 @@ Create the following blueprint, action and mapping to trigger a Terraform Cloud 
 
 :::info
 To read more about the `controlThePayload` configuration, please refer to
-the [Control the payload](../port-execution-agent/control-the-payload.md) documentation.
+the [Control the payload](/create-self-service-experiences/setup-backend/webhook/port-execution-agent/control-the-payload.md) documentation.
 :::
 
 ```json
