@@ -50,10 +50,8 @@ GitLab account
 
 In this example:
 
-- To map the `microservices-group`, we require only one group access token - one for the `microservices-group`.
+- To map **only** the `microservices-group`, we require one group access token - one for the `microservices-group`.
 - To map the `microservices-group` **and** all of its subgroups, we require only one group access token - one for the `microservices-group`.
-- To map the `apis-group`, we require only one group access token - one for the `apis-group`.
-- To map the `apis-group` **and** all of its subgroups, we require only one group access token - one for the `apis-group`.
 - To map the `microservices-group`, **the** `apis-group` **and** all of their subgroups, we require only two group access tokens - one for the `microservices-group` and one for the `apis-group`.
 - To map the `microservice1-group`, we have 2 options:
   - Create a group access token for the `microservices-group` and use the [token mapping](#tokenmapping) to select just the `microservice1-group`.
@@ -153,13 +151,13 @@ In both options you'll need to provide the `useSystemHook` parameter with the va
 :::
 
 1. Provide a token with admin privileges in GitLab using the `tokenMapping` parameter.
-   1. In this option, the integration will create the system hook in your GitLab account automatically.
+   - When choosing this option, the integration will create the system hook in your GitLab account automatically.
 2. Create the system hook manually
-   1. Follow the instructions for creating a system hook in GitLab [here](https://docs.gitlab.com/ee/administration/system_hooks.html#create-a-system-hook).
-   2. In the `URL` field, provide the `appHost` parameter value with the path `/integration/system/hook`. e.g. `https://my-gitlab-integration.com/integration/system/hook`.
-   3. From the `Triggers` section, the GitLab integration currently supports the following events:
-      1. `push`
-      2. `merge_request`
+   - Follow the instructions for creating a system hook in GitLab [here](https://docs.gitlab.com/ee/administration/system_hooks.html#create-a-system-hook).
+   - In the `URL` field, provide the `appHost` parameter value with the path `/integration/system/hook`. e.g. `https://my-gitlab-integration.com/integration/system/hook`.
+   - From the `Triggers` section, the GitLab integration currently supports the following events:
+      - `push`
+      - `merge_request`
 
 ![GitLab System Hook](../../../../../static/img/integrations/gitlab/GitLabSystemHook.png)
 
@@ -284,55 +282,6 @@ Save it as a GitLab variable without any changes (there is no need to wrap it in
 
 Also make sure to keep the double-quotes (`"`) when passing the `OCEAN__INTEGRATION__CONFIG__TOKEN_MAPPING` parameter to the Docker CLI (see the pipeline example above).
 :::
-
-  </TabItem>
-<TabItem value="github" label="GitHub">
-
-This workflow will run the GitLab integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
-
-Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
-
-<DockerParameters/>
-
-<br/>
-
-Here is an example for `gitlab-integration.yml` workflow file:
-
-```yaml showLineNumbers
-name: GitLab Exporter Workflow
-
-# This workflow responsible for running GitLab exporter.
-
-on:
-  workflow_dispatch:
-
-jobs:
-  run-integration:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Run GitLab Integration
-        run: |
-          # Set Docker image and run the container
-          integration_type="gitlab"
-          version="latest"
-
-          image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
-
-          docker run -i --rm --platform=linux/amd64 \
-          -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
-          -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-          -e OCEAN__INTEGRATION__CONFIG__TOKEN_MAPPING="${{ secrets.OCEAN__INTEGRATION__CONFIG__TOKEN_MAPPING }}" \
-          -e OCEAN__PORT__CLIENT_ID=${{ secrets.OCEAN__PORT__CLIENT_ID }} \
-          -e OCEAN__PORT__CLIENT_SECRET=${{ secrets.OCEAN__PORT__CLIENT_SECRET }} \
-          $image_name
-
-          exit $?
-```
 
   </TabItem>
   <TabItem value="jenkins" label="Jenkins">
