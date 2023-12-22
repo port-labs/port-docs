@@ -65,11 +65,11 @@ The following steps will guide you how to create a GitLab group access token.
 
 1. Sign in to GitLab and go to your desired group's settings page:
 
-   ![GitLab group settings](../../../../../static/img/integrations/gitlab/GitLabGroupSettings.png)
+   ![GitLab group settings](/img/integrations/gitlab/GitLabGroupSettings.png)
 
 2. In the "Access Tokens" section, you need to provide the token details, including the name and an optional expiration date. Additionally, select the api scope, and then proceed to click on the "Create access token" button.
 
-   ![GitLab group access tokens](../../../../../static/img/integrations/gitlab/GitLabGroupAccessTokens.png)
+   ![GitLab group access tokens](/img/integrations/gitlab/GitLabGroupAccessTokens.png)
 
 3. Click "Create group access token".
 4. Copy the generated token and use it when deploying the integration in the following steps.
@@ -159,7 +159,7 @@ In both options you'll need to provide the `useSystemHook` parameter with the va
       - `push`
       - `merge_request`
 
-![GitLab System Hook](../../../../../static/img/integrations/gitlab/GitLabSystemHook.png)
+![GitLab System Hook](/img/integrations/gitlab/GitLabSystemHook.png)
 
 ## Deploying the GitLab integration
 
@@ -206,11 +206,11 @@ Follow these steps to setup the integration through Port's UI:
 
 1. Click the ingest button in Port Builder Page for the blueprint you want to ingest using GitLab:
 
-   ![DevPortal Builder ingest button](../../../../../static/img/integrations/gitlab/DevPortalBuilderIngestButton.png)
+   ![DevPortal Builder ingest button](/img/integrations/gitlab/DevPortalBuilderIngestButton.png)
 
 2. Select GitLab under the Git providers category:
 
-   ![DevPortal Builder GitLab option](../../../../../static/img/integrations/gitlab/DevPortalBuilderGitLabOption.png)
+   ![DevPortal Builder GitLab option](/img/integrations/gitlab/DevPortalBuilderGitLabOption.png)
 
 3. Copy the helm installation command and set the [required configuration](#configuring-the-gitlab-integration);
 
