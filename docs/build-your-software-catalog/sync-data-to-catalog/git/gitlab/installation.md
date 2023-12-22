@@ -285,6 +285,7 @@ Also make sure to keep the double-quotes (`"`) when passing the `OCEAN__INTEGRAT
 
   </TabItem>
   <TabItem value="jenkins" label="Jenkins">
+  
 This pipeline will run the GitLab integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::tip
