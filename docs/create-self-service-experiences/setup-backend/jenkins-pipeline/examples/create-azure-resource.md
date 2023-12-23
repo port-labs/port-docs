@@ -10,7 +10,7 @@ The workflow is executed through a Jenkins pipeline.
 
 ## Prerequisites
 1. Install the following plugins in Jenkins: 
-   1. Azure Credentials
+   1. Azure Credentials - This plugin provides the `Azure Service Principal` kind in Jenkins Credentials.
    2. Terraform Plugin
 
 ## Example - creating a storage account
@@ -18,15 +18,15 @@ The workflow is executed through a Jenkins pipeline.
 Follow these steps to get started:
 
 1. Create the following as Jenkins Credentials:
-
-   1. `PORT_CLIENT_ID` - Port Client ID [learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
-   2. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
-   3. We will create the Azure Credentials using the `Azure Service Principal` option under "Manage Jenkins->Credentials->System->Global credentials"
-      
-      1. `ARM_CLIENT_ID` - Azure Client ID (APP ID) of the application
-      2. `ARM_CLIENT_SECRET` - Azure Client Secret (Password) of the application
-      3. `ARM_SUBSCRIPTION_ID` - Azure Subscription ID.
-      4. `ARM_TENANT_ID` - The Azure Tenant ID
+    1. Create the Port Credentials using the `Username with password` kind.
+        1. `PORT_CLIENT_ID` - Port Client ID [learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+        2. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+    2. Create the Azure Credentials using the `Azure Service Principal` kind.
+        1. `ARM_CLIENT_ID` - Azure Client ID (APP ID) of the application.
+        2. `ARM_CLIENT_SECRET` - Azure Client Secret (Password) of the application.
+        3. `ARM_SUBSCRIPTION_ID` - Azure Subscription ID.
+        4. `ARM_TENANT_ID` - The Azure Tenant ID.
+    3. `WEBHOOK_TOKEN` - The webhook token so that the job can only be triggered if that token is supplied.
 
 :::tip
 Follow this [article](https://learn.microsoft.com/en-us/cli/azure/azure-cli-sp-tutorial-1?tabs=bash) to create a service principal in order to get the Azure credentials.
@@ -191,6 +191,10 @@ Please make sure to modify JENKINS_HOST and TOKEN placeholders to match your env
     }
   ```
 </details>
+
+:::tip
+See all the resources that the port terraform provider supports [here](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs)
+:::
 
 <details>
   <summary>Terraform `variables.tf` template</summary>
