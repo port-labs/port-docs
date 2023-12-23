@@ -3,6 +3,9 @@ title: Set Self-Service Actions RBAC
 sidebar_label: Set Self-Service Actions RBAC
 ---
 
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+
 # Set Self-Service Actions RBAC
 
 Port provides granular control to make sure every user can only execute and invoke the actions that are relevant for them.
@@ -20,6 +23,33 @@ Self-service actions RBAC allows admins to finely control which users can execut
 - Let a developer provision a database only to his microservice or developer environment;
 - Specify that a new cluster provision request requires manual approval by the DevOps team;
 - etc.
+
+## Configure permissions for actions
+
+When creating/editing self-service actions, you can set permissions using one of the following methods:
+
+<Tabs groupId="config-method" queryString values={[
+{label: "UI", value: "ui"},
+{label: "Terraform", value: "terraform"},
+]}>
+
+<TabItem value="ui">
+
+The last step of creating an action is configuring permissions.  
+By default, the `Give access to everyone in the organization` toggle is enabled. To limit execution access to selected users/teams, switch off the toggle and use the dropdowns to select them.
+
+<img src='/img/self-service-actions/rbac/actionFormPermissions.png' width='70%' />
+
+</TabItem>
+
+<TabItem value="terraform">
+
+Port's Terraform provider allows you to control permissions via Terraform.  
+Click [here](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/port_action_permissions) for more information and examples.
+
+</TabItem>
+
+</Tabs>
 
 ## Configure manual approval for actions & give approval permissions
 

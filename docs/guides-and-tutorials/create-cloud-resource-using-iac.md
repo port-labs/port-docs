@@ -4,6 +4,7 @@ sidebar_position: 3
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 # Create cloud resources using IaC
 
@@ -11,6 +12,8 @@ This guide takes 8 minutes to complete, and aims to demonstrate:
 
 - A complete flow to create a resource using IaC.
 - The simplicity of communicating with Port from a self-service action backend.
+
+<br/>
 
 :::tip Prerequisites
 
@@ -24,17 +27,17 @@ This guide takes 8 minutes to complete, and aims to demonstrate:
 
 In this guide we will open a pull-request in our Github repository from within Port to create a new cloud resource using gitops.
 
-After completing it, you will get a sense of how your organization's daily routine could look like:
+After completing it, you will get a sense of how it can benefit different personas in your organization:
 
 - Platform engineers will be able to define powerful actions that developers can use within controlled permission boundaries.
 - Developers will be able to easily create and track cloud resources from Port.
 
 ### Add a URL to your new resource's definition
 
-In this guide we will add a new property to our `service` blueprint, which we can use to access our cloud resource definitions.
+In this guide we will add a new property to our `service` <PortTooltip id="blueprint">blueprint</PortTooltip>, which we can use to access our cloud resource definitions.
 
 1. Go to your [Builder](https://app.getport.io/dev-portal/data-model).
-2. Click on your `service` blueprint, then click on `New property`.
+2. Click on your `service` <PortTooltip id="blueprint">blueprint</PortTooltip>, then click on `New property`.
 3. Choose `URL` as the type, fill it like this and click `Save`:
 
 <img src='/img/guides/iacPropertyForm.png' width='40%' />
@@ -45,10 +48,10 @@ This property is empty for now in all services, we will fill it as part of the a
 
 1. Head to the [Self-service tab](https://app.getport.io/self-serve) in your Port application, and click on `+ New action`.
 
-2. Each action in Port is directly tied to a blueprint. Our action creates a resource that is associated with a service and will be provisioned as part of the service's CD process.  
+2. Each action in Port is directly tied to a <PortTooltip id="blueprint">blueprint</PortTooltip>. Our action creates a resource that is associated with a service and will be provisioned as part of the service's CD process.  
    Choose `Service` from the dropdown list.
 
-3. This action does not create/delete entites, but rather performs an operation on an existing entity. Therefore, we will choose `Day-2` as the action type.  
+3. This action does not create/delete entites, but rather performs an operation on an existing <PortTooltip id="entity">entity</PortTooltip>. Therefore, we will choose `Day-2` as the action type.  
    Fill out the form like this and click `Next`:
 
 <img src='/img/guides/iacActionDetails.png' width='50%' />
@@ -125,8 +128,6 @@ acl = "{{ bucket_acl }}"
 </details>
   
 4. Now let's create the workflow file that contains our logic. Our workflow will consist of 3 steps:
-
-<br/><br/>
 
 - Creating a copy of the template file in the selected service's repository and replacing its variables with the data from the action's input.
 - Creating a pull request in the selected service's repository to add the new resource.
@@ -235,7 +236,7 @@ After creating an action, it will appear under the `Self-service` tab of your Po
 You may have noticed that even though we updated the service's `Resource definitions` URL, it still leads to a non-existent page. This is because we do not have any resources in the repository yet, let's take care of that:
 
 1. Merge the pull-request.
-2. Go to the entity page of the service that you executed the action for:
+2. Go to the <PortTooltip id="entity">entity</PortTooltip> page of the service that you executed the action for:
 
 <img src='/img/guides/iacEntityAfterAction.png' width='50%' />
 
@@ -253,4 +254,8 @@ All done! You can now create resources for your services directly from Port 💪
 Developer portals need to support and integrate with git-ops practices seamlessly. Developers should be able to perform routine tasks independently, without having to create bottlenecks within the organization.  
 With Port, platform engineers can design precise and flexible self-service actions for their developers, while integrating with many different backends to suit your specific needs.
 
-More guides & tutorials will be available soon, in the meantime feel free to reach out with any questions via our [community slack](https://www.getport.io/community) or [Github project](https://github.com/port-labs?view_as=public).
+More relevant guides and examples:
+
+- [Deploy AWS resources using AWS CloudFormation
+  ](https://docs.getport.io/create-self-service-experiences/setup-backend/github-workflow/examples/deploy-cloudformation-template)
+- [Create an S3 bucket using Self-Service Actions](https://docs.getport.io/create-self-service-experiences/setup-backend/webhook/examples/s3-using-webhook/)

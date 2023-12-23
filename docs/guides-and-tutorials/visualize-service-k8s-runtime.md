@@ -5,6 +5,7 @@ sidebar_label: Visualize services' k8s runtime
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 # Visualize your services' k8s runtime
 
@@ -24,7 +25,7 @@ This guide takes 10 minutes to complete, and aims to demonstrate the value of Po
 
 In this guide we will model and visualize out services' Kubernetes resources.
 
-After completing it, you will get a sense of how your organization's daily routine could look like:
+After completing it, you will get a sense of how it can benefit different personas in your organization:
 
 - Developers will be able to easily view the health and status of their services' K8s runtime.
 - Platform engineers will be able to create custom views and visualizations for different stakeholders in the organization.
@@ -50,7 +51,7 @@ curl -s https://raw.githubusercontent.com/port-labs/template-assets/main/kuberne
 
 After installation, the exporter will:
 
-1. Create blueprints in your [Builder](https://app.getport.io/dev-portal/data-model) (as defined in `CUSTOM_BP_PATH`) that represent Kubernetes resources:
+1. Create <PortTooltip id="blueprint">blueprints</PortTooltip> in your [Builder](https://app.getport.io/dev-portal/data-model) (as defined in `CUSTOM_BP_PATH`) that represent Kubernetes resources:
 
 <img src='/img/guides/k8sBlueprintsCreated.png' width='95%' />
 
@@ -62,7 +63,7 @@ After installation, the exporter will:
 
 <br/>
 
-2. Create entities in your [Software catalog](https://app.getport.io/services). You will see a new page for each blueprint containing your resources, filled with data from your Kubernetes cluster (as defined in `CONFIG_YAML_URL`):
+2. Create <PortTooltip id="entity">entities</PortTooltip> in your [Software catalog](https://app.getport.io/services). You will see a new page for each <PortTooltip id="blueprint">blueprint</PortTooltip> containing your resources, filled with data from your Kubernetes cluster (as defined in [`CONFIG_YAML_URL`](https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/full-configs/k8s-guide/k8s_guide_config.yaml)):
 
 <img src='/img/guides/k8sEntitiesCreated.png' width='100%' />
 
@@ -82,11 +83,11 @@ helm upgrade --install port-k8s-exporter port-labs/port-k8s-exporter \
 
 <br/>
 
-3. Listen to changes in your Kubernetes cluster and update your entities accordingly.
+3. Listen to changes in your Kubernetes cluster and update your <PortTooltip id="entity">entities</PortTooltip> accordingly.
 
 ### Define the connection between services and workloads
 
-Now that we have our blueprints set up, we want to model the logical connection between them by relating the `Service` blueprint to the `Workload` blueprint. This will grant us some helpful context in our Software catalog, allowing us to see relevant `Workloads` in a `Service`'s context, or a `Workload`'s property directly in its corresponding `Service`.
+Now that we have our <PortTooltip id="blueprint">blueprints</PortTooltip> set up, we want to model the logical connection between them by relating the `Service` blueprint to the `Workload` blueprint. This will grant us some helpful context in our Software catalog, allowing us to see relevant `Workloads` in a `Service`'s context, or a `Workload`'s property directly in its corresponding `Service`.
 
 In this guide we will create one relation named `Prod_runtime` which will represent the production environment of a service. In a real-world setting, we could have another relation for our staging environment, for example.
 
@@ -182,7 +183,7 @@ kubectl rollout restart deploy/port-k8s-exporter -n port-k8s-exporter
 
 ### Create scorecards for your workloads
 
-Now that all of our k8s data has been ingested into Port, let's create some scorecards to set standards for our workloads. To add a definition of multiple scorecards at once, we can edit the blueprint's JSON directly from the UI:
+Now that all of our k8s data has been ingested into Port, let's create some scorecards to set standards for our workloads. To add a definition of multiple scorecards at once, we can edit the <PortTooltip id="blueprint">blueprint's</PortTooltip> JSON directly from the UI:
 
 1. Go to your [Builder](https://app.getport.io/dev-portal/data-model), expand the `Workload` blueprint, click on the `...` button, then click on `Edit JSON`:
 

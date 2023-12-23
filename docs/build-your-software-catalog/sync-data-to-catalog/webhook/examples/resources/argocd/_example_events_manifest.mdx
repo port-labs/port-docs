@@ -1,0 +1,162 @@
+```yaml showLineNumbers
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-notifications-cm
+data:
+  trigger.on-created: |
+    - description: Application is created
+      send:
+      - app-created
+      when: true
+      oncePer: app.metadata.name
+  trigger.on-sync-running: |
+    - description: Application is being synced
+      send:
+      - app-sync-running
+      when: app.status.operationState.phase in ['Running']
+  trigger.on-sync-succeeded: |
+    - description: Application syncing has succeeded
+      send:
+      - app-sync-succeeded
+      when: app.status.operationState.phase in ['Succeeded']
+  trigger.on-sync-failed: |
+    - description: Application syncing has failed
+      send:
+      - app-sync-failed
+      when: app.status.operationState.phase in ['Error', 'Failed']
+  trigger.on-sync-status-unknown: |
+    - description: Application status is Unknown
+      send:
+      - app-sync-status-unknown
+      when: app.status.sync.status == 'Unknown'
+  trigger.on-deployed: |
+    - description: Application is synced and healthy
+      send:
+      - app-deployed
+      when: app.status.operationState.phase in ['Succeeded'] and app.status.health.status == 'Healthy'
+  trigger.on-health-degraded: |
+    - description: Application has degraded
+      send:
+      - app-health-degraded
+      when: app.status.health.status == 'Degraded'
+  trigger.on-deleted: |
+    - description: Application is deleted
+      send:
+      - app-deleted
+      when: app.metadata.deletionTimestamp != nil
+      oncePer: app.metadata.name
+  service.webhook.port-webhook: |
+    url: YOUR_WEBHOOK_URL
+    headers:
+    - name: Content-Type
+      value: application/json
+  template.app-created: |
+    webhook:
+      port-webhook:
+        method: POST
+        body: |
+          {
+            "uid": "{{.app.metadata.uid}}",
+            "event_name": "on-created",
+            "app_name": "{{.app.metadata.name}}",
+            "namespace": "{{.app.metadata.namespace}}",
+            "description": "Application is created"
+          }
+  template.app-sync-succeeded: |
+    webhook:
+      port-webhook:
+        method: POST
+        body: |
+          {
+            "uid": "{{.app.metadata.uid}}",
+            "event_name": "on-sync-succeeded",
+            "app_name": "{{.app.metadata.name}}",
+            "namespace": "{{.app.metadata.namespace}}",
+            "description": "Application syncing has succeeded"
+          }
+  template.app-sync-running: |
+    webhook:
+      port-webhook:
+        method: POST
+        body: |
+          {
+            "uid": "{{.app.metadata.uid}}",
+            "event_name": "on-sync-running",
+            "app_name": "{{.app.metadata.name}}",
+            "namespace": "{{.app.metadata.namespace}}",
+            "description": "Application is being synced"
+          }
+  template.app-sync-failed: |
+    webhook:
+      port-webhook:
+        method: POST
+        body: |
+          {
+            "uid": "{{.app.metadata.uid}}",
+            "event_name": "on-sync-failed",
+            "app_name": "{{.app.metadata.name}}",
+            "namespace": "{{.app.metadata.namespace}}",
+            "description": "Application syncing has failed"
+          }
+  template.app-health-degraded: |
+    webhook:
+      port-webhook:
+        method: POST
+        body: |
+          {
+            "uid": "{{.app.metadata.uid}}",
+            "event_name": "on-health-degraded",
+            "app_name": "{{.app.metadata.name}}",
+            "namespace": "{{.app.metadata.namespace}}",
+            "description": "Application has degraded"
+          }
+  template.app-deployed: |
+    webhook:
+      port-webhook:
+        method: POST
+        body: |
+          {
+            "uid": "{{.app.metadata.uid}}",
+            "event_name": "on-deployed",
+            "app_name": "{{.app.metadata.name}}",
+            "namespace": "{{.app.metadata.namespace}}",
+            "description": "Application is synced healthy"
+          }
+  template.app-sync-status-unknown: |
+    webhook:
+      port-webhook:
+        method: POST
+        body: |
+          {
+            "uid": "{{.app.metadata.uid}}",
+            "event_name": "on-sync-status-unknown",
+            "app_name": "{{.app.metadata.name}}",
+            "namespace": "{{.app.metadata.namespace}}",
+            "description": "Application status is Unknown"
+          }
+  template.app-deleted: |
+    webhook:
+      port-webhook:
+        method: POST
+        body: |
+          {
+            "uid": "{{.app.metadata.uid}}",
+            "event_name": "on-deleted",
+            "app_name": "{{.app.metadata.name}}",
+            "namespace": "{{.app.metadata.namespace}}",
+            "description": "Application  deleted"
+          }
+  subscriptions: |
+    - recipients:
+        - port-webhook
+      triggers:
+        - on-created
+        - on-deployed
+        - on-health-degraded
+        - on-sync-failed
+        - on-sync-status-unknown
+        - on-sync-succeeded
+        - on-sync-running
+        - on-deleted
+```

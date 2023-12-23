@@ -23,7 +23,7 @@ root
 ...
 ```
 
-port.yml:
+`port.yml` file:
 
 ```yaml showLineNumbers
 blueprint: code_module

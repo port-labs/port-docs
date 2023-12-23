@@ -6,7 +6,24 @@
   "icon": "Terraform",
   "mappings": [
     {
+      "blueprint": "terraformOutput",
+      "filter": ".body | has(\"outputs\")",
+      "itemsToParse": ".body.outputs",
+      "entity": {
+        "identifier": ".item.name | tostring",
+        "title": ".item.name | tostring",
+        "properties": {
+          "description": ".item.description",
+          "sensitive": ".item.sensitive",
+          "type": ".item.type",
+          "value": ".item.value",
+          "lineage": ".body.lineage"
+        }
+      }
+    },
+    {
       "blueprint": "terraformResource",
+      "filter": ".body | has(\"resources\")",
       "itemsToParse": ".body.resources",
       "entity": {
         "identifier": ".item.id",
@@ -16,7 +33,8 @@
           "module": ".item.module",
           "type": ".item.type",
           "provider": ".item.provider",
-          "instances": ".item.instances"
+          "instances": ".item.instances",
+          "lineage": ".body.lineage"
         }
       }
     }

@@ -1,0 +1,42 @@
+```json showLineNumbers
+{
+  "identifier": "terraformResource",
+  "description": "This blueprint represents a Terraform resource in our software catalog",
+  "title": "Terraform Resources",
+  "icon": "Terraform",
+  "schema": {
+    "properties": {
+      "mode": {
+        "type": "string",
+        "title": "Mode",
+        "default": "data",
+        "enum": ["data", "managed", "module", "import", "state"]
+      },
+      "module": {
+        "type": "string",
+        "title": "Module"
+      },
+      "type": {
+        "title": "Type",
+        "type": "string"
+      },
+      "provider": {
+        "title": "Provider",
+        "type": "string"
+      },
+      "instances": {
+        "title": "Instances",
+        "type": "array"
+      },
+      "lineage": {
+        "title": "Lineage",
+        "type": "string"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {}
+}
+```

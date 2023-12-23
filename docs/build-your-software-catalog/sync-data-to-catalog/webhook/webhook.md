@@ -461,7 +461,7 @@ When using the `plain` algorithm, no hashing will be performed and the value of 
 :::
 
 - The `signaturePrefix` key is used to specify a static prefix string that appears before the hashedSignature in the `signatureHeaderName` key:
-  - For example, in GitHub webhooks, the header containing the hashed signature always starts with `sha256=`, so the webhook should be configured with: `"signaturePrefix": "sha256"`;
+  - For example, in GitHub webhooks, the header containing the hashed signature always starts with `sha256=`, so the webhook should be configured with: `"signaturePrefix": "sha256="`;
 
 ```json showLineNumbers
   ...

@@ -22,7 +22,7 @@ This is an [open-source](https://github.com/port-labs/port-aws-cost-exporter) in
    - [Docker](#docker)
    - [GitHub Workflow](#github-workflow)
 
-![Catalog Architecture](../../../../static/img/sync-data-to-catalog/aws_cost.png)
+![Catalog Architecture](/img/sync-data-to-catalog/aws_cost.png)
 
 ### AWS
 

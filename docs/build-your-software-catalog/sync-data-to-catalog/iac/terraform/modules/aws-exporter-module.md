@@ -9,7 +9,7 @@ The AWS exporter module is used to deploy the Port AWS Exporter in your AWS acco
 :::note NOTE
 For full installation, including the resources blueprints and updating AWS blueprints based on AWS events,
 
-Please use the full **[AWS exporter Terraform installation](../../../aws/Installation.md#terraform-installation-recommended)**
+Please use the full **[AWS exporter Terraform installation](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/Installation.md#terraform-installation-recommended)**
 :::
 
 ## Prerequisites
@@ -29,7 +29,7 @@ Before using this module, make sure you have completed the following prerequisit
 
 ## Deploying the exporter
 
-1. Create the AWS exporter [config.json](../../../aws/aws.md#exporter-configjson-file) file.
+1. Create the AWS exporter [config.json](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws.md#exporter-configjson-file) file.
 
 2. Add the module to your HCL configuration. You can use this simple HCL.
 
@@ -126,7 +126,7 @@ terraform destroy
 
 ## Further Information
 
-- See the [AWS exporter docs](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/aws/) for further information about the exporter.
+- See the [AWS exporter docs](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/) for further information about the exporter.
 - Visit the Terraform module [Github repository](https://github.com/port-labs/terraform-aws-port-exporter):
-  - The [module exmaple](https://github.com/port-labs/terraform-aws-port-exporter/tree/main/examples/run_module_example) folder for a more complete example of the Terraform module.
+  - The [module example](https://github.com/port-labs/terraform-aws-port-exporter/tree/main/examples/run_module_example) folder for a more complete example of the Terraform module.
   - The Event Bridge rule [Terraform example](https://github.com/port-labs/terraform-aws-port-exporter/tree/main/examples/terraform_deploy_eventbridge_rule) for example of deploying an [Eventbridge rule](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-rules.html) for the AWS exporter.
