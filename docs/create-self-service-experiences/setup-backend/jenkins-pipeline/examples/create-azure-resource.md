@@ -141,21 +141,26 @@ Please make sure to modify JENKINS_HOST and TOKEN placeholders to match your env
     terraform {
         required_providers {
             azurerm = {
-            source  = "hashicorp/azurerm"
-            version = "~> 3.0.2"
+                source  = "hashicorp/azurerm"
+                version = "~> 3.0.2"
+            }
+            port = {
+                source  = "port-labs/port-labs"
+                version = "~> 1.0.0"
+            }
         }
-    }
 
-    required_version = ">= 1.1.0"
+        required_version = ">= 1.1.0"
     }
 
     provider "azurerm" {
-        client_id       = var.client_id
-        client_secret   = var.client_secret
-        subscription_id = var.subscription_id
-        tenant_id       = var.tenant_id
 
         features {}
+    }
+
+    provider "port" {
+        client_id = var.port_client_id
+        secret    = var.port_client_secret
     }
 
     resource "azurerm_storage_account" "storage_account" {
@@ -167,6 +172,23 @@ Please make sure to modify JENKINS_HOST and TOKEN placeholders to match your env
         account_replication_type = "LRS"
         account_kind             = "StorageV2"
     }
+
+    resource "port_entity" "azure_storage_account" {
+        count      = length(azurerm_storage_account.storage_account) > 0 ? 1 : 0
+        identifier = var.storage_account_name
+        title      = var.storage_account_name
+        blueprint  = "azureStorage"
+        run_id     = var.port_run_id
+        properties = {
+            string_props = {
+            "storage_name"     = var.storage_account_name,
+            "storage_location" = var.location,
+            "endpoint"         = azurerm_storage_account.storage_account.primary_web_endpoint
+            }
+        }
+
+        depends_on = [azurerm_storage_account.storage_account]
+    }
   ```
 </details>
 
@@ -175,33 +197,10 @@ Please make sure to modify JENKINS_HOST and TOKEN placeholders to match your env
   
   ```yaml
     # Service Principal Variables
-    variable "client_id" {
-        description =   "Client ID (APP ID) of the application"
-        default     = "XXXXXX-1111-2222-3333-YYYYYYYYYY"
-        type        =   string
-    }
-
-    variable "client_secret" {
-        description =   "Client Secret (Password) of the application"
-        default     = "XXXXXX-1111-2222-3333-YYYYYYYYYY"
-        type        =   string
-    }
-
-    variable "subscription_id" {
-        description =   "Subscription ID"
-        default     = "XXXXXX-1111-2222-3333-YYYYYYYYYY"
-        type        =   string
-    }
-
-    variable "tenant_id" {
-        description =   "Tenant ID"
-        default     = "XXXXXX-1111-2222-3333-YYYYYYYYYY"
-        type        =   string
-    }
 
     variable "resource_group_name" {
         type        = string
-        default     = "YourResourceGroup"
+        default     = "myTFResourceGroup"
         description = "RG name in Azure"
     }
 
@@ -217,6 +216,20 @@ Please make sure to modify JENKINS_HOST and TOKEN placeholders to match your env
         default     = "demo"
     }
 
+    variable "port_run_id" {
+        type        = string
+        description = "The runID of the action run that created the entity"
+    }
+
+    variable "port_client_id" {
+        type        = string
+        description = "The Port client ID"
+    }
+
+    variable "port_client_secret" {
+        type        = string
+        description = "The Port client secret"
+    }
   ```
 </details>
 
@@ -232,7 +245,7 @@ Please make sure to modify JENKINS_HOST and TOKEN placeholders to match your env
 
 5. Create a Jenkins pipeline file  with the following content:
 :::note
-Please make sure to modify `YOUR_USERNAME` and `YOUR_REPO` placeholder in the pipeline.
+Please make sure to modify `YOUR_USERNAME` and `YOUR_REPO` placeholder in the git repo of the `Checkout` stage.
 :::
 
 <details>
@@ -251,15 +264,11 @@ pipeline {
         TF_IN_AUTOMATION = "true"
         PATH = "$TF_HOME:$PATH"
         
-        PORT_CLIENT_ID = credentials('PORT_CLIENT_ID')
-        PORT_CLIENT_SECRET = credentials('PORT_CLIENT_SECRET')
-        
         PORT_ACCESS_TOKEN = ""
         endpoint_url = ""
 
     }
     
-    // uncomment for webhook trigger
     triggers {
         GenericTrigger(
             genericVariables: [
@@ -287,27 +296,32 @@ pipeline {
         }
         stage('Get access token') {
             steps {
-                script {
-                    // Execute the curl command and capture the output
-                    def result = sh(returnStdout: true, script: """
-                        accessTokenPayload=\$(curl -X POST \
-                            -H "Content-Type: application/json" \
-                            -d '{"clientId": "${PORT_CLIENT_ID}", "clientSecret": "${PORT_CLIENT_SECRET}"}' \
-                            -s "https://api.getport.io/v1/auth/access_token")
-                        echo \$accessTokenPayload
-                    """)
+                withCredentials([usernamePassword(
+                    credentialsId: 'port-credentials', 
+                    usernameVariable: 'PORT_CLIENT_ID', 
+                    passwordVariable: 'PORT_CLIENT_SECRET')]) {
+                    script {
+                        // Execute the curl command and capture the output
+                        def result = sh(returnStdout: true, script: """
+                            accessTokenPayload=\$(curl -X POST \
+                                -H "Content-Type: application/json" \
+                                -d '{"clientId": "${PORT_CLIENT_ID}", "clientSecret": "${PORT_CLIENT_SECRET}"}' \
+                                -s "https://api.getport.io/v1/auth/access_token")
+                            echo \$accessTokenPayload
+                        """)
 
-                    // Parse the JSON response using JsonSlurper
-                    def jsonSlurper = new JsonSlurper()
-                    def payloadJson = jsonSlurper.parseText(result.trim())
+                        // Parse the JSON response using JsonSlurper
+                        def jsonSlurper = new JsonSlurper()
+                        def payloadJson = jsonSlurper.parseText(result.trim())
 
-                    // Access the desired data from the payload
-                    PORT_ACCESS_TOKEN = payloadJson.accessToken
+                        // Access the desired data from the payload
+                        PORT_ACCESS_TOKEN = payloadJson.accessToken
+                    }
                 }
             }
         }
         
-        stage('Terraform') {
+        stage('Terraform Azure') {
             steps {
                 withCredentials([azureServicePrincipal(
                     credentialsId: 'azure',
@@ -315,7 +329,7 @@ pipeline {
                     clientIdVariable: 'ARM_CLIENT_ID',
                     clientSecretVariable: 'ARM_CLIENT_SECRET',
                     tenantIdVariable: 'ARM_TENANT_ID'
-                )]) {
+                ), usernamePassword(credentialsId: 'port-credentials', usernameVariable: 'TF_VAR_port_client_id', passwordVariable: 'TF_VAR_port_client_secret')]) {
                     script {
                         echo 'Initializing Terraform'
                         sh 'terraform init'
@@ -325,48 +339,24 @@ pipeline {
                         
                         echo 'Creating Terraform Plan'
                         sh """
-                        terraform plan -out=tfplan -var storage_account_name=$storage_name -var location=$storage_location -var "client_id=$ARM_CLIENT_ID" -var "client_secret=$ARM_CLIENT_SECRET" -var "subscription_id=$ARM_SUBSCRIPTION_ID" -var "tenant_id=$ARM_TENANT_ID"
+                        terraform plan -out=tfazure -var storage_account_name=$storage_name -var location=$storage_location -var port_run_id=$PORT_RUN_ID -target=azurerm_storage_account.storage_account
                         """
                         
                         echo 'Applying Terraform changes'
-                        sh 'terraform apply -auto-approve -input=false tfplan'
+                        sh 'terraform apply -auto-approve -input=false tfazure'
                     }
                 }
             }
-        }
-		stage('Create entity') {
-            steps {
-                script {
-                    def terraformOutput = sh(script: 'terraform output endpoint_url | sed \'s/"//g\'', returnStdout: true)
-                    // Remove any newline characters
-                    terraformOutput = terraformOutput.replaceAll('\n', '')
-                    
-                    // Maintain the previous functionality of trimming the string
-                    endpoint_url = terraformOutput.trim()
-                
-                    def status_report_response = sh(script: """
-						curl --location --request POST "https://api.getport.io/v1/blueprints/$BLUEPRINT_ID/entities?upsert=true&run_id=$PORT_RUN_ID&create_missing_related_entities=true" \
-        --header "Authorization: Bearer $PORT_ACCESS_TOKEN" \
-        --header "Content-Type: application/json" \
-        --data-raw '{
-				"identifier": "$storage_name",
-				"title": "$storage_name",
-				"properties": {"storage_name":"$storage_name","storage_location":"$storage_location", "endpoint": "$endpoint_url"},
-				"relations": {}
-			}'""", returnStdout: true)
 
-                    println(status_report_response)
-                }
-            }
         }
-        stage('Send logs example') {
+        stage('Notify Azure Stage') {
             steps {
                 script {
                     def logs_report_response = sh(script: """
                         curl -X POST \
                             -H "Content-Type: application/json" \
                             -H "Authorization: Bearer ${PORT_ACCESS_TOKEN}" \
-                            -d '{"message": "this is a log test message example"}' \
+                            -d '{"message": "Created azure resource"}' \
                             "https://api.getport.io/v1/actions/runs/$PORT_RUN_ID/logs"
                     """, returnStdout: true)
 
@@ -374,7 +364,47 @@ pipeline {
                 }
             }
         }
-        stage('Update status example') {
+        stage('Terraform Port') {
+            steps {
+                withCredentials([azureServicePrincipal(
+                    credentialsId: 'azure',
+                    subscriptionIdVariable: 'ARM_SUBSCRIPTION_ID',
+                    clientIdVariable: 'ARM_CLIENT_ID',
+                    clientSecretVariable: 'ARM_CLIENT_SECRET',
+                    tenantIdVariable: 'ARM_TENANT_ID'
+                ), usernamePassword(credentialsId: 'port-credentials', usernameVariable: 'TF_VAR_port_client_id', passwordVariable: 'TF_VAR_port_client_secret')]) {
+                    script {
+
+                        echo 'Creating Terraform Plan'
+                        sh """
+                        terraform plan -out=tfport -var storage_account_name=$storage_name -var location=$storage_location -var port_run_id=$PORT_RUN_ID
+                        """
+                        
+                        echo 'Applying Terraform changes'
+                        sh 'terraform apply -auto-approve -input=false tfport'
+                    }
+                }
+            }
+
+        }
+
+        stage('Notify Port Stage') {
+            steps {
+                script {
+                    def logs_report_response = sh(script: """
+                        curl -X POST \
+                            -H "Content-Type: application/json" \
+                            -H "Authorization: Bearer ${PORT_ACCESS_TOKEN}" \
+                            -d '{"message": "Created port entity"}' \
+                            "https://api.getport.io/v1/actions/runs/$PORT_RUN_ID/logs"
+                    """, returnStdout: true)
+
+                    println(logs_report_response)
+                }
+            }
+        }
+
+        stage('Update Run Status') {
             steps {
                 script {
                     def status_report_response = sh(script: """
