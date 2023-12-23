@@ -11,7 +11,7 @@ The workflow is executed through a Jenkins pipeline.
 ## Prerequisites
 1. Install the following plugins in Jenkins: 
    1. Azure Credentials - This plugin provides the `Azure Service Principal` kind in Jenkins Credentials.
-   2. Terraform Plugin
+   2. [Terraform Plugin](https://plugins.jenkins.io/terraform/)
 
 ## Example - creating a storage account
 
@@ -283,7 +283,7 @@ pipeline {
             ],
             causeString: 'Triggered by Port',
             allowSeveralTriggersPerBuild: true,
-            tokenCredentialId: "webhook-token",
+            tokenCredentialId: "WEBHOOK_TOKEN",
             
             regexpFilterExpression: '',
             regexpFilterText: '',
