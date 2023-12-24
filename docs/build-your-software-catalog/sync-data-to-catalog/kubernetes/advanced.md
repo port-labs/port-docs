@@ -120,3 +120,36 @@ For example, to set the parameters from the [security configuration](#security-c
 
 - A complete list of configuration parameters available when using the helm chart is available [here](https://github.com/port-labs/helm-charts/tree/main/charts/port-k8s-exporter#chart);
 - An example skeleton `config.yml` file is available [here](https://github.com/port-labs/helm-charts/blob/main/charts/port-k8s-exporter/values.yaml).
+
+
+## Extra configuration
+The Port's K9s exporter's HTTP client accepts configuration using environment variables. To pass extra environment variables to the exporter's runtime, you can use the the Helm chart provided with the installation. You can do this in on of two ways:
+
+1. Using Helm's `--set` flag:
+```sh showLineNumbers
+helm upgrade --install <MY_INSTALLATION_NAME> port-labs/port-ocean \
+  # Standard installation flags
+  # ...
+  --set extraEnv[0].name=HTTP_PROXY \
+  --set extraEnv[0].value=http://my-proxy.com:1111
+```
+
+2. The Helm `values.yaml` file:
+```yaml showLineNumbers
+# The rest of the configuration
+# ...
+extraEnvs:
+  - name: HTTP_PROXY
+    value: http://my-proxy.com:1111
+```
+### Proxy Configuration
+
+#### `HTTP_PROXY` & `HTTPS_PROXY`
+`HTTP_PROXY` and `HTTPS_PROXY` are environment variables used to specify a proxy server for handling HTTP, HTTPS, or all types of requests, respectively. The values assigned to these settings should be the URL of the proxy server.
+
+For example:
+```sh showLineNumbers
+HTTP_PROXY=http://my-proxy.com:1111
+HTTS_PROXY=http://my-proxy.com:2222
+```
+
