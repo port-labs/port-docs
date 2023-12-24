@@ -59,7 +59,7 @@ You can define any filtering operator with a suitable value.
 
 You can filter one or more values while setting the relation between each field with a `And/Or`.
 
-#### My Teams Filter
+#### `My Teams` filter
 
 By using the `My Teams` filter you will only see entities that belong to one of your teams. This means you will only see entities from teams that you are a member of.
 
@@ -69,6 +69,14 @@ This filter works on:
 - The [meta property](../../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/meta-properties) `Team`.
 
 ![My Teams Filter](../../../static/img/software-catalog/pages/MyTeamsFilter.png)
+
+#### `Me` filter
+
+By using the `Me` filter you will only see entities that belong to the logged-in user.
+
+This filter works on [`User`](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/user) properties.
+
+![Me Filter](../../../static/img/software-catalog/pages/meFilter.png)
 
 ### Sort
 

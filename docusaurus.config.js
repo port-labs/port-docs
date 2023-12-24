@@ -29,6 +29,7 @@ const config = {
           editUrl: ({ locale, docPath }) => {
             return `https://github.com/port-labs/port-docs/edit/main/docs/${docPath}`;
           },
+          showLastUpdateTime: true,
         },
         blog: false,
         theme: {
@@ -161,7 +162,7 @@ const config = {
               },
               {
                 label: "AWS",
-                to: "/build-your-software-catalog/sync-data-to-catalog/aws",
+                to: "/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws",
               },
               {
                 label: "Terraform",

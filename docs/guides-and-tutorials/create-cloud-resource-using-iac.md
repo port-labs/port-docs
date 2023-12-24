@@ -13,6 +13,8 @@ This guide takes 8 minutes to complete, and aims to demonstrate:
 - A complete flow to create a resource using IaC.
 - The simplicity of communicating with Port from a self-service action backend.
 
+<br/>
+
 :::tip Prerequisites
 
 - This guide assumes you have a Port account and a basic knowledge of working with Port. If you haven't done so, go ahead and complete the [quickstart](/quickstart).
@@ -252,4 +254,8 @@ All done! You can now create resources for your services directly from Port 💪
 Developer portals need to support and integrate with git-ops practices seamlessly. Developers should be able to perform routine tasks independently, without having to create bottlenecks within the organization.  
 With Port, platform engineers can design precise and flexible self-service actions for their developers, while integrating with many different backends to suit your specific needs.
 
-More guides & tutorials will be available soon, in the meantime feel free to reach out with any questions via our [community slack](https://www.getport.io/community) or [Github project](https://github.com/port-labs?view_as=public).
+More relevant guides and examples:
+
+- [Deploy AWS resources using AWS CloudFormation
+  ](https://docs.getport.io/create-self-service-experiences/setup-backend/github-workflow/examples/deploy-cloudformation-template)
+- [Create an S3 bucket using Self-Service Actions](https://docs.getport.io/create-self-service-experiences/setup-backend/webhook/examples/s3-using-webhook/)
