@@ -104,7 +104,7 @@ Multiple GitLab group access tokens example:
 :::tip
 The `appHost` parameter is used specifically to enable the real-time functionality of the integration.
 
-If it is not provided, the integration will continue to function correctly, but in order to retrieve the latest information from the target system, it will require either an [event listener](https://ocean.getport.io/framework/features/event-listener) of type `SCHEDULE` or a manual resync periodically through Port's UI.
+If it is not provided, the integration will continue to function correctly. In such a configuration, to retrieve the latest information from the target system, the [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) parameter has to be set, or a manual resync will need to be triggered through Port's UI.
 :::
 
 In order for the GitLab integration to update the data in Port on every change in the GitLab repository, you need to specify the `appHost` parameter.
@@ -283,8 +283,8 @@ Save it as a GitLab variable without any changes (there is no need to wrap it in
 Also make sure to keep the double-quotes (`"`) when passing the `OCEAN__INTEGRATION__CONFIG__TOKEN_MAPPING` parameter to the Docker CLI (see the pipeline example above).
 :::
 
-  </TabItem>
-  <TabItem value="jenkins" label="Jenkins">
+</TabItem>
+<TabItem value="jenkins" label="Jenkins">
   
 This pipeline will run the GitLab integration once and then exit, this is useful for **scheduled** ingestion of data.
 

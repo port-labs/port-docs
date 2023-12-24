@@ -17,15 +17,15 @@ Our GitLab integration makes it easy to fill the software catalog with data dire
 
 ## Installation
 
-To install Port's GitLab app, follow the [installation](./installation.md) guide.
+To install Port's GitLab integration, follow the [installation](./installation.md) guide.
 
 ## Ingesting Git objects
 
 By using Port's GitLab integration, you can automatically ingest GitLab resources into Port based on real-time events.
 
-Port's GitLab app allows you to ingest a variety of objects resources provided by the GitLab API, including projects, merge requests, pipelines and more. The GitLab app allows you to perform extract, transform, load (ETL) on data from the GitLab API into the desired software catalog data model.
+Port's GitLab integration allows you to ingest a variety of objects resources provided by the GitLab API, including projects, merge requests, pipelines and more. The GitLab integration allows you to perform extract, transform, load (ETL) on data from the GitLab API into the desired software catalog data model.
 
-The GitLab app uses a YAML configuration to describe the ETL process to load data into the developer portal. The approach reflects a golden middle between an overly opinionated Git visualization that might not work for everyone and a too-broad approach that could introduce unneeded complexity into the developer portal.
+The GitLab integration uses a YAML configuration to describe the ETL process to load data into the developer portal. The approach reflects a golden middle between an overly opinionated Git visualization that might not work for everyone and a too-broad approach that could introduce unneeded complexity into the developer portal.
 
 Here is an example snippet from the config which demonstrates the ETL process for getting `merge-request` data from GitLab and into the software catalog:
 
