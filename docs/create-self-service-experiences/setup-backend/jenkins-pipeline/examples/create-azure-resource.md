@@ -2,37 +2,41 @@
 sidebar_position: 1
 ---
 
+import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+
+
 # Create resource in Azure Cloud with Terraform
 
-This example demonstrates how to deploy a storage account in Azure using a Terraform template via Port Actions.
+This example demonstrates how to deploy a storage account in Azure using Terraform templates via Port Actions.
 
 The workflow is executed through a Jenkins pipeline.
 
 ## Prerequisites
 1. Install the following plugins in Jenkins: 
-   1. Azure Credentials - This plugin provides the `Azure Service Principal` kind in Jenkins Credentials.
+   1. [Azure Credentials](https://plugins.jenkins.io/azure-credentials/) - This plugin provides the `Azure Service Principal` kind in Jenkins Credentials.
    2. [Terraform Plugin](https://plugins.jenkins.io/terraform/)
+   3. [Generic Webhook Trigger](https://plugins.jenkins.io/generic-webhook-trigger/)
 
 ## Example - creating a storage account
 
 Follow these steps to get started:
 
 1. Create the following as Jenkins Credentials:
-    1. Create the Port Credentials using the `Username with password` kind.
+    1. Create the Port Credentials using the `Username with password` kind and the id `port-credentials`.
         1. `PORT_CLIENT_ID` - Port Client ID [learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
         2. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
-    2. Create the Azure Credentials using the `Azure Service Principal` kind.
+    2. Create the Azure Credentials using the `Azure Service Principal` kind and the id `azure`.
+        :::info NOTE
+        Follow this [guide](https://learn.microsoft.com/en-us/azure/developer/terraform/get-started-cloud-shell-bash?tabs=bash#create-a-service-principal) to create a service principal in order to get the Azure credentials.
+        :::
         1. `ARM_CLIENT_ID` - Azure Client ID (APP ID) of the application.
         2. `ARM_CLIENT_SECRET` - Azure Client Secret (Password) of the application.
         3. `ARM_SUBSCRIPTION_ID` - Azure Subscription ID.
-        4. `ARM_TENANT_ID` - The Azure Tenant ID.
+        4. `ARM_TENANT_ID` - The Azure [Tenant ID](https://learn.microsoft.com/en-us/azure/azure-portal/get-subscription-tenant-id).
     3. `WEBHOOK_TOKEN` - The webhook token so that the job can only be triggered if that token is supplied.
 
-:::tip
-Follow this [article](https://learn.microsoft.com/en-us/cli/azure/azure-cli-sp-tutorial-1?tabs=bash) to create a service principal in order to get the Azure credentials.
-:::
 
-2. Create a Port blueprint with the following properties:
+2. Create a Port <PortTooltip id="blueprint">blueprint</PortTooltip> with the following properties:
 
 :::note
 Keep in mind this can be any blueprint you would like and this is just an example.
@@ -81,10 +85,10 @@ Keep in mind this can be any blueprint you would like and this is just an exampl
   </details>
 
 
-3. Create Port Action from [here](https://app.getport.io/self-serve) using the following JSON definition:
+3. Create a Port Action in the [self-service hub](https://app.getport.io/self-serve) using the following JSON definition:
 
 :::note
-Please make sure to modify JENKINS_HOST and TOKEN placeholders to match your environment.
+Make sure to replace the placeholders for `JENKINS_URL` and `JOB_TOKEN`.
 :::
 
   <details>
@@ -120,7 +124,7 @@ Please make sure to modify JENKINS_HOST and TOKEN placeholders to match your env
     "invocationMethod": {
         "type": "WEBHOOK",
         "agent": false,
-        "url": "https://<JENKINS_HOST>/generic-webhook-trigger/invoke?token=<TOKEN>",
+        "url": "https://<JENKINS_HOST>/generic-webhook-trigger/invoke?token=<JOB_TOKEN>",
         "synchronized": false,
         "method": "POST"
     },
@@ -131,7 +135,10 @@ Please make sure to modify JENKINS_HOST and TOKEN placeholders to match your env
 
   </details>
 
-4. Create a Terraform templates in your GitHub repository:
+4. Create the following terraform templates in a `terraform` folder in the root of your GitHub repository:
+    1. `main.tf` - This file will contain the resource blocks which defines the Storage Account to be created in the Azure cloud and the entity to be createed in Port.
+    2. `variables.tf` – This file will contain the variable declarations that will be used in the resource blocks e.g. the port credentials and port run id.
+    3. `output.tf` – This file will contain the url of the Storage Account that needs to be generated on successful completion of “apply” operation. This url will be used in the `endpoint` property when creating the Port entity.
 
 <details>
   <summary>Terraform `main.tf` template</summary>
@@ -192,13 +199,13 @@ Please make sure to modify JENKINS_HOST and TOKEN placeholders to match your env
   ```
 </details>
 
-:::tip
-See all the resources that the port terraform provider supports [here](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs)
-:::
 
 <details>
+  :::note
+  Replace the default `resource_group_name` with your resource group from your Azure account. Check this [guide](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal) to find your resource groups. You may also wish to set the default values of other variables.
+  :::
   <summary>Terraform `variables.tf` template</summary>
-  
+
   ```yaml
     # Service Principal Variables
 
@@ -247,9 +254,14 @@ See all the resources that the port terraform provider supports [here](https://r
   ```
 </details>
 
-5. Create a Jenkins pipeline file  with the following content:
+5. Create a Jenkins pipeline:
+
+    1. [Enable webhook trigger for a pipeline](../jenkins-pipeline.md#enabling-webhook-trigger-for-a-pipeline)
+    2. [Define variables for a pipeline](../jenkins-pipeline.md#defining-variables): Define the STORAGE_NAME, STORAGE_LOCATION, PORT_RUN_ID and BLUEPRINT_ID variables.
+    3. [Token Setup](../jenkins-pipeline.md#token-setup): Define the token to match `JOB_TOKEN` as configured in your Port Action.
+
 :::note
-Please make sure to modify `YOUR_USERNAME` and `YOUR_REPO` placeholder in the git repo of the `Checkout` stage.
+Please make sure to modify `YOUR_USERNAME` and `YOUR_REPO` placeholder in the git repo of the `Checkout` stage. Alternatively you can use our [example repository](https://github.com/port-labs/jenkins-terraform-azure).
 :::
 
 <details>
@@ -276,8 +288,8 @@ pipeline {
     triggers {
         GenericTrigger(
             genericVariables: [
-                [key: 'storage_name', value: '$.payload.properties.storage_name'],
-                [key: 'storage_location', value: '$.payload.properties.storage_location'],
+                [key: 'STORAGE_NAME', value: '$.payload.properties.storage_name'],
+                [key: 'STORAGE_LOCATION', value: '$.payload.properties.storage_location'],
                 [key: 'PORT_RUN_ID', value: '$.context.runId'],
                 [key: 'BLUEPRINT_ID', value: '$.context.blueprint']
             ],
@@ -295,6 +307,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
+                // example repo: git@github.com:port-labs/jenkins-terraform-azure.git
                 git branch: 'main', credentialsId: 'github', url: 'git@github.com:<YOUR_USERNAME>/<YOUR_REPO>.git'
             }
         }
@@ -334,65 +347,35 @@ pipeline {
                     clientSecretVariable: 'ARM_CLIENT_SECRET',
                     tenantIdVariable: 'ARM_TENANT_ID'
                 ), usernamePassword(credentialsId: 'port-credentials', usernameVariable: 'TF_VAR_port_client_id', passwordVariable: 'TF_VAR_port_client_secret')]) {
-                    script {
-                        echo 'Initializing Terraform'
-                        sh 'terraform init'
-                        
-                        echo 'Validating Terraform configuration'
-                        sh 'terraform validate'
-                        
-                        echo 'Creating Terraform Plan'
-                        sh """
-                        terraform plan -out=tfazure -var storage_account_name=$storage_name -var location=$storage_location -var port_run_id=$PORT_RUN_ID -target=azurerm_storage_account.storage_account
-                        """
-                        
-                        echo 'Applying Terraform changes'
-                        sh 'terraform apply -auto-approve -input=false tfazure'
+                    dir('terraform') {
+                        script {
+                            echo 'Initializing Terraform'
+                            sh 'terraform init'
+                            
+                            echo 'Validating Terraform configuration'
+                            sh 'terraform validate'
+                            
+                            echo 'Creating Terraform Plan for Azure changes'
+                            sh """
+                            terraform plan -out=tfazure -var storage_account_name=$STORAGE_NAME -var location=$STORAGE_LOCATION -var port_run_id=$PORT_RUN_ID -target=azurerm_storage_account.storage_account
+                            """
+                            
+                            echo 'Applying Terraform changes to Azure'
+                            sh 'terraform apply -auto-approve -input=false tfazure'
+
+                            echo 'Creating Terraform Plan for Port changes'
+                            sh """
+                            terraform plan -out=tfport -var storage_account_name=$STORAGE_NAME -var location=$STORAGE_LOCATION -var port_run_id=$PORT_RUN_ID
+                            """
+                            
+                            echo 'Applying Terraform changes to Port'
+                            sh 'terraform apply -auto-approve -input=false tfport'
+                        }
                     }
                 }
             }
-
         }
-        stage('Notify Azure Stage') {
-            steps {
-                script {
-                    def logs_report_response = sh(script: """
-                        curl -X POST \
-                            -H "Content-Type: application/json" \
-                            -H "Authorization: Bearer ${PORT_ACCESS_TOKEN}" \
-                            -d '{"message": "Created azure resource"}' \
-                            "https://api.getport.io/v1/actions/runs/$PORT_RUN_ID/logs"
-                    """, returnStdout: true)
-
-                    println(logs_report_response)
-                }
-            }
-        }
-        stage('Terraform Port') {
-            steps {
-                withCredentials([azureServicePrincipal(
-                    credentialsId: 'azure',
-                    subscriptionIdVariable: 'ARM_SUBSCRIPTION_ID',
-                    clientIdVariable: 'ARM_CLIENT_ID',
-                    clientSecretVariable: 'ARM_CLIENT_SECRET',
-                    tenantIdVariable: 'ARM_TENANT_ID'
-                ), usernamePassword(credentialsId: 'port-credentials', usernameVariable: 'TF_VAR_port_client_id', passwordVariable: 'TF_VAR_port_client_secret')]) {
-                    script {
-
-                        echo 'Creating Terraform Plan'
-                        sh """
-                        terraform plan -out=tfport -var storage_account_name=$storage_name -var location=$storage_location -var port_run_id=$PORT_RUN_ID
-                        """
-                        
-                        echo 'Applying Terraform changes'
-                        sh 'terraform apply -auto-approve -input=false tfport'
-                    }
-                }
-            }
-
-        }
-
-        stage('Notify Port Stage') {
+        stage('Notify Port') {
             steps {
                 script {
                     def logs_report_response = sh(script: """
@@ -434,7 +417,7 @@ pipeline {
                     curl -X PATCH \
                         -H "Content-Type: application/json" \
                         -H "Authorization: Bearer ${PORT_ACCESS_TOKEN}" \
-                        -d '{"status":"FAILURE", "message": {"run_status": "Failed to create azure resource ${storage_name}"}}' \
+                        -d '{"status":"FAILURE", "message": {"run_status": "Failed to create azure resource ${STORAGE_NAME}"}}' \
                             "https://api.getport.io/v1/actions/runs/${PORT_RUN_ID}"
                 """, returnStdout: true)
 
