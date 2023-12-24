@@ -2,6 +2,7 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
 import DockerParameters from "./\_kubecost-docker-parameters.mdx"
+import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
 
 # Kubecost
 
@@ -169,6 +170,8 @@ pipeline {
 </TabItem>
 
 </Tabs>
+
+<AdvancedConfig/>
 
 ## Ingesting Kubecost objects
 
