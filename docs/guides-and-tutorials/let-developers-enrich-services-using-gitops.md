@@ -221,7 +221,6 @@ Our action will create a pull-request in the service's repository, containing a 
 </TabItem>
 
 <TabItem value="gitlab">
-To do: check with hadar about adding a link here and update accordingly
 
 1. Under your [root group](https://gitlab.com/dashboard/groups), access Settings, Access Tokens, and create a `Maintainer` role token with the `api`, `read_repository`, and `write_repository` scopes. Copy the token's value.
 
