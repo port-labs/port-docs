@@ -223,7 +223,7 @@ Our action will create a pull-request in the service's repository, containing a 
 <TabItem value="gitlab">
 To do: check with hadar about adding a link here and update accordingly
 
-1. Under your [root group](<(https://gitlab.com/dashboard/groups)>), access Settings, Access Tokens, and create a `Maintainer` role token with the `api`, `read_repository`, and `write_repository` scopes. Copy the token's value.
+1. Under your [root group](https://gitlab.com/dashboard/groups), access Settings, Access Tokens, and create a `Maintainer` role token with the `api`, `read_repository`, and `write_repository` scopes. Copy the token's value.
 
 2. Create a new project named `Port-pipelines`. Copy its GitLab project ID and replace the `(PROJECT_ID)` in the webhook URL . Then. under Settings, CI/CD, create a new Pipeline trigger token. Then, paste it in the Action webhook URL in the place of `INSERT_TRIGGER_TOKEN`.
 
