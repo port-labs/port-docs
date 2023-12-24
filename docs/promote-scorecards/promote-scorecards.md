@@ -13,8 +13,8 @@ import TabItem from "@theme/TabItem"
 
 ## What is a Scorecard?
 
-**Scorecards** enable us to create a set of rules that will determine the level of our Port entities, based on their properties.
-Each scorecard has a set of rules that affects its total level, a rule has a `level` property which is one of the following: `Gold`, `Silver` or `Bronze`. Each rule has specific conditions, and the scorecard level increases when they pass.
+**Scorecards** enable us to define and track metrics/standards for our Port entities, based on their properties.
+Each scorecard is comprised of a set of rules, where each rule defines one or more conditions that need to be met. Each rule has a `level` property whose value can be one of the following: `Gold`, `Silver` or `Bronze`. 
 
 **For example**, to keep track of your organization's `Services` maturity, we can create a set of scorecards on top of a `Service` [blueprint](../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) that will keep track of their progress.
 
@@ -25,7 +25,7 @@ Scorecards can be used to evaluate the maturity, producton readiness and enginee
 - Does a service has an on-call defined?
 - Does a README.md file exist in the repository?
 - Is Grafana defined for the K8s cluster?
-- etc.
+- Is the relation of a certain entity empty?
 
 In this [live demo](https://demo.getport.io/serviceEntity?identifier=load-generator&activeTab=8) example, you can see the scorecards defined on a service and their evaluation. 🎬
 
@@ -178,73 +178,6 @@ A scorecard filter is used to make sure only relevant entities are evaluated, on
 | [`combinator`](#combinator) | Defines the logical operation to apply to the query rules |
 | [`conditions`](#conditions) | An array of boolean conditions to filter entities with    |
 
-## Scorecard example
-
-Please see the following example of an ownership scorecard.
-
-It has one filter:
-
-1. Only evaluate entities that are related to production (indicated by checking that the `is_production` property is set to `true`).
-
-It has two rules:
-
-1. Check that a defined on-call exists and that the number of `open_incidents` is lower than 5;
-2. Check if a team exists.
-
-```json showLineNumbers
-[
-  {
-    "title": "Ownership",
-    "identifier": "ownership",
-    "filter": {
-      "combinator": "and",
-      "conditions": [
-        {
-          "property": "is_production",
-          "operator": "=",
-          "value": true
-        }
-      ]
-    },
-    "rules": [
-      {
-        "title": "Has on call?",
-        "identifier": "has_on_call",
-        "level": "Gold",
-        "query": {
-          "combinator": "and",
-          "conditions": [
-            {
-              "operator": "isNotEmpty",
-              "property": "on_call"
-            },
-            {
-              "operator": "<",
-              "property": "open_incidents",
-              "value": 5
-            }
-          ]
-        }
-      },
-      {
-        "title": "Has a team?",
-        "identifier": "has_team",
-        "level": "Silver",
-        "query": {
-          "combinator": "and",
-          "conditions": [
-            {
-              "operator": "isNotEmpty",
-              "property": "$team"
-            }
-          ]
-        }
-      }
-    ]
-  }
-]
-```
-
 ## Scorecard UI indications
 
 After configuring scorecards for the blueprint, each entity created from it will have a `Scorecards` tab in its [entity page](/customize-pages-dashboards-and-plugins/page/entity-page), detailing the different checks and their results:
@@ -277,6 +210,6 @@ For example, these services have some rules defined in their scorecards, and we 
 
 ## Next steps
 
-[Explore How to Create, Edit, and Delete Scorecards with basic examples](./tutorial)
+[Explore How to Create, Edit, and Delete Scorecards with basic examples](/promote-scorecards/usage)
 
-[Dive into advanced operations on Scorecards with our API ➡️ ](../api-reference/api-reference.mdx)
+[Dive into advanced operations on Scorecards with our API ➡️ ](/api-reference/api-reference.mdx)
