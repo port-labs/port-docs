@@ -160,7 +160,7 @@ As platform engineers, we want to enable our developers to perform certain actio
 
 <br/><br/>
 
-6. Now we'll define the backend of the action. Port supports multiple invocation types, for this tutorial we will use a `Github workflow` or `Gitlab pipelines`.
+6. Now we'll define the backend of the action. Port supports multiple invocation types, for this tutorial you can use a `Github workflow` or a `Gitlab pipeline`.
 
 <Tabs groupId="git-provider" queryString values={[
 {label: "Github", value: "github"},
