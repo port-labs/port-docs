@@ -5,6 +5,7 @@ sidebar_position: 4
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import DeleteDependents from '../../../../generalTemplates/\_delete_dependents_git_explanation_template.md'
+import AdvancedConfig from '../../../../generalTemplates/_ocean_advanced_configuration_note.md'
 
 # Advanced
 
@@ -71,3 +72,6 @@ The `createMissingRelatedEntities` parameter is used to enable the creation of m
 </TabItem>
 
 </Tabs>
+
+
+<AdvancedConfig/>
