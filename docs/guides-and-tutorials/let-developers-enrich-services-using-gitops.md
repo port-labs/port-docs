@@ -221,20 +221,19 @@ Our action will create a pull-request in the service's repository, containing a 
 </TabItem>
 
 <TabItem value="gitlab">
+To do: check with hadar about adding a link here and update accordingly
 
-1. Under your root group, access [Settings](ADD LINK HERE)->Access Tokens, and create a `Maintainer` role token with the `api`, `read-repository`, and `write-repository` scopes. Copy the token's value.
-
-- api
-- read-repository
-- write_repository
-  and copy its value.
+1. Under your root group, access [Settings](ADD LINK HERE)->Access Tokens, and create a `Maintainer` role token with the `api`, `read_repository`, and `write_repository` scopes. Copy the token's value.
 
 2. Create a new project named `Port-pipelines`. Copy its GitLab project ID and replace the `(PROJECT_ID)` in the webhook URL . Then. under Settings, CI/CD, create a new Pipeline trigger token. Then, paste it in the Action webhook URL in the place of `INSERT_TRIGGER_TOKEN`.
 
 3. Inside the same menu (CI/CD), add the following variables to the pipeline:
 
-- PORT_CLIENT_ID - Taken from Port
-- PORT_CLIENT_SECRET - Taken from port
+- PORT_CLIENT_ID
+- PORT_CLIENT_SECRET
+  :::tip
+  You can find the secrets in the credential window, under the 3 dot menu in the top right.
+  :::
 - GITLAB_ACCESS_TOKEN - the token created in step 1
 
 <img src='/img/guides/gitlabVariables.png' width='60%' />
