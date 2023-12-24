@@ -176,7 +176,7 @@ As platform engineers, we want to enable our developers to perform certain actio
 </TabItem>
 
 <TabItem value="gitlab">
-   - Invocation type: `Trigger Webhook URL`
+   - Choose `Trigger Webhook URL` as the invocation type. 
    - Endpoint URL: https://gitlab.com/api/v4/projects/(PROJECT_ID)/ref/main/trigger/pipeline?token=(INSERT_TRIGGER_TOKEN)
    - Leave out the rest of the form like this, then click `Next`
 
