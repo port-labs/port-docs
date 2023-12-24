@@ -9,7 +9,7 @@ import DockerParameters from "./\_jira_one_time_docker_parameters.mdx"
 Our Jira integration allows you to import `issues` and `projects` from your Jira cloud account into Port, according to your mapping and definition.
 
 :::info Note
-This integration supports Jira Cloud at the moment, support for Jira Server is in development.
+This integration supports Jira Cloud at the moment, support for Jira Server can be found [in this section](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/jira-server.md)
 :::
 
 ## Common use cases
@@ -347,6 +347,23 @@ Examples of blueprints and the relevant integration configurations:
         "type": "string",
         "description": "The user that created to the issue",
         "format": "user"
+      },
+      "priority": {
+        "title": "Priority",
+        "type": "string",
+        "description": "The priority of the issue"
+      },
+      "created": {
+        "title": "Created At",
+        "type": "string",
+        "description": "The created datetime of the issue",
+        "format": "date-time"
+      },
+      "updated": {
+        "title": "Updated At",
+        "type": "string",
+        "description": "The updated datetime of the issue",
+        "format": "date-time"
       }
     }
   },
@@ -400,6 +417,9 @@ resources:
             assignee: .fields.assignee.displayName
             reporter: .fields.reporter.displayName
             creator: .fields.creator.displayName
+            priority: .fields.priority.id
+            created: .fields.created
+            updated: .fields.updated
           relations:
             project: .fields.project.key
             parentIssue: .fields.parent.key
@@ -720,7 +740,10 @@ The combination of the sample payload and the Ocean configuration generates the 
     "components": [],
     "assignee": "User Name",
     "reporter": "User Name",
-    "creator": "User Name"
+    "creator": "User Name",
+    "priority": "3",
+    "created": "2023-11-06T11:02:59.000+0000",
+    "updated": "2023-11-06T11:03:18.244+0000"
   },
   "relations": {
     "parentIssue": null,
