@@ -229,7 +229,7 @@ Our action will create a pull-request in the service's repository, containing a 
 - write_repository
   and copy its value.
 
-2. Create a new project, named Port-pipelines. Copy its GitLab project ID and replace the `(PROJECT_ID)` in the webhook URL . Then. under Settings, CI/CD, create a new Pipeline trigger token. Then, paste it in the Action webhook URL in the place of `INSERT_TRIGGER_TOKEN`
+2. Create a new project named `Port-pipelines`. Copy its GitLab project ID and replace the `(PROJECT_ID)` in the webhook URL . Then. under Settings, CI/CD, create a new Pipeline trigger token. Then, paste it in the Action webhook URL in the place of `INSERT_TRIGGER_TOKEN`.
 
 3. Inside the same menu (CI/CD), add the following variables to the pipeline:
 
