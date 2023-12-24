@@ -72,6 +72,3 @@ The `createMissingRelatedEntities` parameter is used to enable the creation of m
 </TabItem>
 
 </Tabs>
-
-
-<AdvancedConfig/>
