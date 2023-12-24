@@ -84,7 +84,7 @@ resource "port_entity" "myEntity" {
     string_props = {
       "myStringProp" = "My string"
       }
-  
+
     number_props = {
       "myNumberProp" = 7
       }

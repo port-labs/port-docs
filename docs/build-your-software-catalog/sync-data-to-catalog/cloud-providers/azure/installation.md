@@ -116,11 +116,11 @@ In order to successfully deploy the Azure exporter, it's crucial to ensure that 
 1. Login to [Port](https://app.getport.io) and browse to the [builder page](https://app.getport.io/dev-portal)
 2. Open the ingest modal by expanding one of the blueprints and clicking the ingest button on the blueprints.
 
-   ![Dev Portal Builder Ingest Button](../../../../static/img/integrations/azure-exporter/DevPortalBuilderIngestButton.png)
+   ![Dev Portal Builder Ingest Button](/img/integrations/azure-exporter/DevPortalBuilderIngestButton.png)
 
 3. Click on the Azure Exporter option under the Cloud Providers section:
 
-   ![Dev Portal Builder Azure Exporter Option](../../../../static/img/integrations/azure-exporter/DevPortalIngestCloudProvider.png)
+   ![Dev Portal Builder Azure Exporter Option](/img/integrations/azure-exporter/DevPortalIngestCloudProvider.png)
 
 4. Edit and copy the installation command.
    :::tip
@@ -132,7 +132,7 @@ In order to successfully deploy the Azure exporter, it's crucial to ensure that 
 
    :::
 
-   ![Dev Portal Builder Azure Exporter Installation](../../../../static/img/integrations/azure-exporter/DevPortalIngestAzureInstallation.png)
+   ![Dev Portal Builder Azure Exporter Installation](/img/integrations/azure-exporter/DevPortalIngestAzureInstallation.png)
 
 5. Run the command in your terminal to deploy the Azure exporter.
 
@@ -140,7 +140,7 @@ In order to successfully deploy the Azure exporter, it's crucial to ensure that 
 
 You can update the exporter's configuration in the integration page, you can use the configuration to add or remove Azure resources that will be ingested from your subscription.
 
-![Dev Portal Ingest Azure Mapping Configuration](../../../../static/img/integrations/azure-exporter/DevPortalIngestAzureMappingConfiguration.png)
+![Dev Portal Ingest Azure Mapping Configuration](/img/integrations/azure-exporter/DevPortalIngestAzureMappingConfiguration.png)
 
 ## Further information
 

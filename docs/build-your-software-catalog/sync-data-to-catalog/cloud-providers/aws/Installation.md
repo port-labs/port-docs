@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-import FindCredentials from "../api/\_template_docs/\_find_credentials_collapsed.mdx";
+import FindCredentials from "/docs/build-your-software-catalog/sync-data-to-catalog/api/\_template_docs/\_find_credentials_collapsed.mdx";
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
@@ -10,7 +10,7 @@ import TabItem from "@theme/TabItem"
 
 ## Prerequisites
 
-- You will need your [Port credentials](../api/api.md#find-your-port-credentials) to install the AWS exporter:
+- You will need your [Port credentials](/build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials) to install the AWS exporter:
 
   <FindCredentials />
 
@@ -60,7 +60,7 @@ You can delete resources you don't want to export by removing them from the reso
 
 After setting up the basic configuration, the template above deploys the AWS exporter Terraform module.
 
-For more information, visit the [AWS exporter module docs](../iac/terraform/modules/aws-exporter-module.md)
+For more information, visit the [AWS exporter module docs](/build-your-software-catalog/sync-data-to-catalog/iac/terraform/modules/aws-exporter-module.md)
 
 ## Step-by-step installation
 
@@ -251,7 +251,7 @@ That way you can configure a resource to be synced as soon as it changed, in rea
 
 To configure the AWS exporter to use events as triggers, follow these steps:
 
-1. Prepare an [event rule](/build-your-software-catalog/sync-data-to-catalog/aws/event-based-updates#definition), based on specific events matching resources you want the AWS exporter to update in real time and save it to a Cloudformation YAML template (`template.yml`).
+1. Prepare an [event rule](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/event-based-updates#definition), based on specific events matching resources you want the AWS exporter to update in real time and save it to a Cloudformation YAML template (`template.yml`).
 
 2. Deploy the event rule using this command:
 

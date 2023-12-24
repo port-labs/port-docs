@@ -170,7 +170,7 @@ Here is an example snippet of the `config.json` file which demonstrates the ETL 
   The table of the special resources with the required properties can be found [here](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/resource-operations-list.html#resource-operations-list-containers).
   :::
 
-- The `port`, `entity` and the `mappings` keys open the section used to map the AWS resource fields to Port entities, the `mappings` key is an array where each object matches the structure of an [entity](../sync-data-to-catalog.md#entity-json-structure).
+- The `port`, `entity` and the `mappings` keys open the section used to map the AWS resource fields to Port entities, the `mappings` key is an array where each object matches the structure of an [entity](/build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md#entity-json-structure).
 - Each mapping value is a JQ query, except for `blueprint` which has to be a static string.
 - The `itemsToParse` key in a mapping, makes it possible to create multiple entities from a single AWS resource.
 
@@ -227,7 +227,7 @@ Here is an example snippet of the `config.json` file which demonstrates the ETL 
 
   For example, if you have a relation from SNS Topic to lambda function, put the Lambda function configuration first.
 
-- By its nature, the AWS exporter will keep the values of unmapped properties untouched. Go [here](../api/api.md?operation=create-update#usage) for further explanation about different entity creation strategies.
+- By its nature, the AWS exporter will keep the values of unmapped properties untouched. Go [here](/build-your-software-catalog/sync-data-to-catalog/api/api.md?operation=create-update#usage) for further explanation about different entity creation strategies.
 
 :::
 

@@ -18,9 +18,9 @@ If it is a resource that is not documented in the Examples page, you can map it 
 
 1. Find the resource in the [Azure REST API reference](https://learn.microsoft.com/en-us/rest/api/azure/).
 2. If it's a base resource (in the format of `Microsoft.<Provider>/<resourceName>`) can be found in the type example response and in the API URL
-   ![Storage Account Type](../../../../static/img/integrations/azure-exporter/StorageAccountTypeInAPIURL.png)
+   ![Storage Account Type](/img/integrations/azure-exporter/StorageAccountTypeInAPIURL.png)
    - If it has a List API by subscription it will be supported by the Azure Exporter.
-     ![Storage Account List API](../../../../static/img/integrations/azure-exporter/StorageAccountListAPIIsValid.png)
+     ![Storage Account List API](/img/integrations/azure-exporter/StorageAccountListAPIIsValid.png)
 3. If it's an extension resource (in the format of `Microsoft.<Provider>/<resourceName>/<extensionName>`) such as `Microsoft.Storage/storageAccounts/blobServices/containers`.
    - Then, if the base resource is supported by the Azure Exporter, the extension resource will be supported as well.
 
@@ -156,9 +156,10 @@ Create an integration configuration for the resource. The integration configurat
     ```yaml showLineNumbers
     apiVersion: "2023-01-01"
     ```
-    ![Storage Account API Version](../../../../static/img/integrations/azure-exporter/StorageAccountAPIVersion.png)
+    ![Storage Account API Version](/img/integrations/azure-exporter/StorageAccountAPIVersion.png)
 
 - The `port` field describes the Port entity to be created from the Azure resource.
+
   ```yaml showLineNumbers
   resources:
   	- kind: Microsoft.Storage/storageAccounts
@@ -177,6 +178,7 @@ Create an integration configuration for the resource. The integration configurat
   						provisioningState: .properties.provisioningState
   		# highlight-end
   ```
+
   - The `entity` field describes the Port entity to be created from the Azure resource.
 
     - The `mappings` field describes the mapping between the Azure resource and the Port entity.

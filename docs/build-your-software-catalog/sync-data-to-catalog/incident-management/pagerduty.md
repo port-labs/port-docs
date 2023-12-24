@@ -8,11 +8,11 @@ import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
 
 # PagerDuty
 
-Our PagerDuty integration allows you to import `services` and `incidents` from your PagerDuty account into Port, according to your mapping and definitions.
+Our PagerDuty integration allows you to import `schedules`, `services` and `incidents` from your PagerDuty account into Port, according to your mapping and definitions.
 
 ## Common use cases
 
-- Map `services` and `incidents` in your PagerDuty organization environment.
+- Map `schedules`, `services` and `incidents` in your PagerDuty organization environment.
 - Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
 ## Prerequisites
@@ -290,6 +290,73 @@ To ingest PagerDuty objects using the [integration configuration](#configuration
 
 Examples of blueprints and the relevant integration configurations:
 
+### Schedule
+
+<details>
+<summary>Schedule blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "pagerdutySchedule",
+  "description": "This blueprint represents a PagerDuty schedule in our software catalog",
+  "title": "PagerDuty Schedule",
+  "icon": "pagerduty",
+  "schema": {
+    "properties": {
+      "url": {
+        "title": "Schedule URL",
+        "type": "string",
+        "format": "url"
+      },
+      "timezone": {
+        "title": "Timezone",
+        "type": "string"
+      },
+      "description": {
+        "title": "Description",
+        "type": "string"
+      },
+      "users": {
+        "title": "Users",
+        "type": "array"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: schedules
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .id
+          title: .name
+          blueprint: '"pagerdutySchedule"'
+          properties:
+            url: .html_url
+            timezone: .time_zone
+            description: .description
+            users: "[.users[].summary]"
+```
+
+</details>
+
 ### Service
 
 <details>
@@ -462,6 +529,72 @@ This section includes a sample response data from Pagerduty. In addition, it inc
 ### Payload
 
 Here is an example of the payload structure from Pagerduty:
+
+<details>
+<summary> Schedule response data</summary>
+
+```json showLineNumbers
+{
+  "id": "PWAXLIH",
+  "type": "schedule",
+  "summary": "Port Test Service - Weekly Rotation",
+  "self": "https://api.pagerduty.com/schedules/PWAXLIH",
+  "html_url": "https://getport-io.pagerduty.com/schedules/PWAXLIH",
+  "name": "Port Test Service - Weekly Rotation",
+  "time_zone": "Asia/Jerusalem",
+  "description": "This is the weekly on call schedule for Port Test Service associated with your first escalation policy.",
+  "users": [
+    {
+      "id": "PJCRRLH",
+      "type": "user_reference",
+      "summary": "Adam",
+      "self": "https://api.pagerduty.com/users/PJCRRLH",
+      "html_url": "https://getport-io.pagerduty.com/users/PJCRRLH"
+    },
+    {
+      "id": "P4K4DLP",
+      "type": "user_reference",
+      "summary": "Alice",
+      "self": "https://api.pagerduty.com/users/P4K4DLP",
+      "html_url": "https://getport-io.pagerduty.com/users/P4K4DLP"
+    },
+    {
+      "id": "PFZ63E2",
+      "type": "user_reference",
+      "summary": "Doe",
+      "self": "https://api.pagerduty.com/users/PFZ63E2",
+      "html_url": "https://getport-io.pagerduty.com/users/PFZ63E2"
+    },
+    {
+      "id": "PRGAUI4",
+      "type": "user_reference",
+      "summary": "Pages",
+      "self": null,
+      "html_url": "https://getport-io.pagerduty.com/users/PRGAUI4",
+      "deleted_at": "2023-10-17T18:58:07+03:00"
+    },
+    {
+      "id": "PYIEKLY",
+      "type": "user_reference",
+      "summary": "Demo",
+      "self": "https://api.pagerduty.com/users/PYIEKLY",
+      "html_url": "https://getport-io.pagerduty.com/users/PYIEKLY"
+    }
+  ],
+  "escalation_policies": [
+    {
+      "id": "P7LVMYP",
+      "type": "escalation_policy_reference",
+      "summary": "Test Escalation Policy",
+      "self": "https://api.pagerduty.com/escalation_policies/P7LVMYP",
+      "html_url": "https://getport-io.pagerduty.com/escalation_policies/P7LVMYP"
+    }
+  ],
+  "teams": []
+}
+```
+
+</details>
 
 <details>
 <summary> Service response data</summary>
@@ -647,6 +780,32 @@ Here is an example of the payload structure from Pagerduty:
 ### Mapping Result
 
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
+
+<details>
+<summary> Schedule entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "PWAXLIH",
+  "title": "Port Test Service - Weekly Rotation",
+  "icon": null,
+  "blueprint": "pagerdutySchedule",
+  "team": [],
+  "properties": {
+    "url": "https://getport-io.pagerduty.com/schedules/PWAXLIH",
+    "timezone": "Asia/Jerusalem",
+    "description": "Asia/Jerusalem",
+    "users": ["Adam", "Alice", "Doe", "Demo", "Pages"]
+  },
+  "relations": {},
+  "createdAt": "2023-12-01T13:18:02.215Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2023-12-01T13:18:02.215Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
 
 <details>
 <summary> Service entity in Port</summary>
