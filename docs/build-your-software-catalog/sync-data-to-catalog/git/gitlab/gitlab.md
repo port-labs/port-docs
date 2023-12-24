@@ -15,17 +15,17 @@ Our GitLab integration makes it easy to fill the software catalog with data dire
 - Manage Port entities using GitOps;
 - etc.
 
-## installation
+## Installation
 
-To install Port's GitLab app, follow the [installation](./installation.md) guide.
+To install Port's GitLab integration, follow the [installation](./installation.md) guide.
 
 ## Ingesting Git objects
 
 By using Port's GitLab integration, you can automatically ingest GitLab resources into Port based on real-time events.
 
-Port's GitLab app allows you to ingest a variety of objects resources provided by the GitLab API, including projects, merge requests, pipelines and more. The GitLab app allows you to perform extract, transform, load (ETL) on data from the GitLab API into the desired software catalog data model.
+Port's GitLab integration allows you to ingest a variety of objects resources provided by the GitLab API, including projects, merge requests, pipelines and more. The GitLab integration allows you to perform extract, transform, load (ETL) on data from the GitLab API into the desired software catalog data model.
 
-The GitLab app uses a YAML configuration to describe the ETL process to load data into the developer portal. The approach reflects a golden middle between an overly opinionated Git visualization that might not work for everyone and a too-broad approach that could introduce unneeded complexity into the developer portal.
+The GitLab integration uses a YAML configuration to describe the ETL process to load data into the developer portal. The approach reflects a golden middle between an overly opinionated Git visualization that might not work for everyone and a too-broad approach that could introduce unneeded complexity into the developer portal.
 
 Here is an example snippet from the config which demonstrates the ETL process for getting `merge-request` data from GitLab and into the software catalog:
 
@@ -161,26 +161,11 @@ resources:
   Pay attention to the value of the `blueprint` key, if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
   :::
 
-### Setup
-
-To ingest GitLab objects using the [integration configuration](#the-integration-configuration), you can follow the steps below:
-
-1. Go to the DevPortal Builder page;
-2. Select a blueprint you want to ingest using GitLab;
-3. Choose the **Ingest Data** option from the menu;
-4. Select GitLab under the Git providers category;
-5. Add the contents of your [integration configuration](#the-integration-configuration) to the editor;
-6. Click `Save & Resync`.
-
 ## Permissions
 
-Port's GitLab integration requires a group access token with permissions over the `api` scope. To create a group access token, follow the steps below:
+Port's GitLab integration requires a group access token with the `api` scope.
 
-1. Sign in to GitLab and go to your desired group's settings;
-2. In the "Access Tokens" section, click "Create access token";
-3. Fill in the token details: name, expiration (optional), and select API scope;
-4. Click "Create group access token";
-5. Copy the generated token and use it in the integration installation process.
+To create a group access token, follow the instructions in the [installation](./installation.md#creating-a-gitlab-group-access-token) guide
 
 ## Examples
 
