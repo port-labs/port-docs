@@ -123,7 +123,7 @@ For example, to set the parameters from the [security configuration](#security-c
 
 
 ## Extra configuration
-The Port's K9s exporter's HTTP client accepts configuration using environment variables. To pass extra environment variables to the exporter's runtime, you can use the the Helm chart provided with the installation. You can do this in on of two ways:
+Port's K8s exporter's HTTP client accepts configuration using environment variables. To pass extra environment variables to the exporter's runtime, you can use the the Helm chart provided with the installation. You can do this in on of two ways:
 
 1. Using Helm's `--set` flag:
 ```sh showLineNumbers
