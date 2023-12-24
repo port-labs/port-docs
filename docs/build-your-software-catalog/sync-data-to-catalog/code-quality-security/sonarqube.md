@@ -5,6 +5,7 @@ import HelmParameters from "../templates/\_ocean-advanced-parameters-helm.mdx"
 import ResourceMapping from "../templates/\_resource-mapping.mdx"
 import DockerParameters from "./\_docker-parameters.mdx"
 import SupportedResources from "./\_supported-resources.mdx"
+import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
 
 # SonarQube
 
@@ -183,6 +184,8 @@ pipeline {
 </TabItem>
 
 </Tabs>
+
+<AdvancedConfig/>
 
 ## Ingesting SonarQube objects
 
