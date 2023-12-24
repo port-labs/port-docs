@@ -222,7 +222,7 @@ Our action will create a pull-request in the service's repository, containing a 
 
 <TabItem value="gitlab">
 
-1. Under your root group, access Settings, Access Tokens, and create a `Maintainer` role token with the following scopes:
+1. Under your root group, access [Settings](ADD LINK HERE)->Access Tokens, and create a `Maintainer` role token with the `api`, `read-repository`, and `write-repository` scopes. Copy the token's value.
 
 - api
 - read-repository
