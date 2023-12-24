@@ -146,6 +146,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Jira webhook](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/jira.md)
 - [Initiate scorecards handling with Jira issues](./promote-scorecards/manage-using-3rd-party-apps/jira)
 - [Self service for a new Jira bug using GitHub workflows](https://github.com/port-labs/self-service-actions-examples/tree/main/github-workflows/jira)
+- [Jira Server](./build-your-software-catalog/sync-data-to-catalog/webhook/examples/jira-server.md)
 
 ## Sentry
 
