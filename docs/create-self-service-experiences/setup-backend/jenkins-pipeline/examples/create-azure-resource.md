@@ -4,18 +4,18 @@ sidebar_position: 1
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
-
 # Create resource in Azure Cloud with Terraform
 
-This example demonstrates how to deploy a storage account in Azure using Terraform templates via Port Actions.
+This example demonstrates how to deploy a [storage account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-overview) in Azure using Terraform templates via Port Actions.
 
 The workflow is executed through a Jenkins pipeline.
 
 ## Prerequisites
-1. Install the following plugins in Jenkins: 
+
+1. Install the following plugins in Jenkins:
    1. [Azure Credentials](https://plugins.jenkins.io/azure-credentials/) - This plugin provides the `Azure Service Principal` kind in Jenkins Credentials.
-   2. [Terraform Plugin](https://plugins.jenkins.io/terraform/)
-   3. [Generic Webhook Trigger](https://plugins.jenkins.io/generic-webhook-trigger/)
+   2. [Terraform](https://plugins.jenkins.io/terraform/) - This plugin provides a build wrapper that simplifies the execution of Terraform commands, such as apply, plan, and destroy.
+   3. [Generic Webhook Trigger](https://plugins.jenkins.io/generic-webhook-trigger/) - This plugin enables Jenkins to receive and trigger jobs based on incoming HTTP requests, extracting data from JSON or XML payloads and making it available as variables.
 
 ## Example - creating a storage account
 
@@ -23,10 +23,10 @@ Follow these steps to get started:
 
 1. Create the following as Jenkins Credentials:
     1. Create the Port Credentials using the `Username with password` kind and the id `port-credentials`.
-        1. `PORT_CLIENT_ID` - Port Client ID [learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
-        2. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+        1. `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+        2. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
     2. Create the Azure Credentials using the `Azure Service Principal` kind and the id `azure`.
-        :::info NOTE
+        :::tip
         Follow this [guide](https://learn.microsoft.com/en-us/azure/developer/terraform/get-started-cloud-shell-bash?tabs=bash#create-a-service-principal) to create a service principal in order to get the Azure credentials.
         :::
         1. `ARM_CLIENT_ID` - Azure Client ID (APP ID) of the application.
@@ -35,15 +35,13 @@ Follow these steps to get started:
         4. `ARM_TENANT_ID` - The Azure [Tenant ID](https://learn.microsoft.com/en-us/azure/azure-portal/get-subscription-tenant-id).
     3. `WEBHOOK_TOKEN` - The webhook token so that the job can only be triggered if that token is supplied.
 
-
 2. Create a Port <PortTooltip id="blueprint">blueprint</PortTooltip> with the following properties:
 
-:::note
-Keep in mind this can be any blueprint you would like and this is just an example.
-:::
-
 <details>
-    <summary>Port Azure Storage Account Blueprint</summary>
+   <summary>Port Azure Storage Account Blueprint</summary>
+   :::note
+   Keep in mind that this can be any blueprint you require; the provided example is just for reference.
+   :::
 
 ```json showLineNumbers
 {
@@ -84,21 +82,20 @@ Keep in mind this can be any blueprint you would like and this is just an exampl
 
   </details>
 
+3. Create a Port action in the [self-service hub](https://app.getport.io/self-serve) using the following JSON definition:
 
-3. Create a Port Action in the [self-service hub](https://app.getport.io/self-serve) using the following JSON definition:
+<details>
 
-:::note
-Make sure to replace the placeholders for `JENKINS_URL` and `JOB_TOKEN`.
-:::
-
-  <details>
   <summary>Port Action</summary>
+   :::note
+   Make sure to replace the placeholders for `JENKINS_URL` and `JOB_TOKEN`.
+   :::
 
 ```json showLineNumbers
 {
     "identifier": "create_azure_storage",
     "title": "Create Azure Storage",
-    "icon": "S3",
+    "icon": "Azure",
     "userInputs": {
         "properties": {
             "storage_name": {
@@ -133,17 +130,17 @@ Make sure to replace the placeholders for `JENKINS_URL` and `JOB_TOKEN`.
 }
 ```
 
-  </details>
+</details>
 
-4. Create the following terraform templates in a `terraform` folder in the root of your GitHub repository:
-    1. `main.tf` - This file will contain the resource blocks which defines the Storage Account to be created in the Azure cloud and the entity to be createed in Port.
-    2. `variables.tf` – This file will contain the variable declarations that will be used in the resource blocks e.g. the port credentials and port run id.
-    3. `output.tf` – This file will contain the url of the Storage Account that needs to be generated on successful completion of “apply” operation. This url will be used in the `endpoint` property when creating the Port entity.
+4. Create the following Terraform templates in a `terraform` folder at the root of your GitHub repository:
+    1. `main.tf` - This file will contain the resource blocks which define the Storage Account to be created in the Azure cloud and the entity to be created in Port.
+    2. `variables.tf` – This file will contain the variable declarations that will be used in the resource blocks e.g. the Port credentials and Port run id.
+    3. `output.tf` – This file will contain the URL of the Storage Account that needs to be generated on successful completion of an “apply” operation. This URL will be used in the `endpoint` property when creating the Port entity.
 
 <details>
   <summary>Terraform `main.tf` template</summary>
   
-  ```yaml
+  ```yaml showLineNumbers
     # Configure the Azure provider
     terraform {
         required_providers {
@@ -197,18 +194,17 @@ Make sure to replace the placeholders for `JENKINS_URL` and `JOB_TOKEN`.
         depends_on = [azurerm_storage_account.storage_account]
     }
   ```
+
 </details>
 
-
 <details>
-  :::note
-  Replace the default `resource_group_name` with your resource group from your Azure account. Check this [guide](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal) to find your resource groups. You may also wish to set the default values of other variables.
-  :::
+  
   <summary>Terraform `variables.tf` template</summary>
+  :::note
+  Replace the default `resource_group_name` with a resource group from your Azure account. Check this [guide](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal) to find your resource groups. You may also wish to set the default values of other variables.
+  :::
 
-  ```yaml
-    # Service Principal Variables
-
+  ```yaml showLineNumbers
     variable "resource_group_name" {
         type        = string
         default     = "myTFResourceGroup"
@@ -242,16 +238,18 @@ Make sure to replace the placeholders for `JENKINS_URL` and `JOB_TOKEN`.
         description = "The Port client secret"
     }
   ```
+
 </details>
 
 <details>
 <summary>Terraform `output.tf` template</summary>
   
-  ```yaml
+  ```yaml showLineNumbers
     output "endpoint_url" {
         value = azurerm_storage_account.storage_account.primary_web_endpoint
     }
   ```
+
 </details>
 
 5. Create a Jenkins pipeline:
@@ -260,14 +258,14 @@ Make sure to replace the placeholders for `JENKINS_URL` and `JOB_TOKEN`.
     2. [Define variables for a pipeline](../jenkins-pipeline.md#defining-variables): Define the STORAGE_NAME, STORAGE_LOCATION, PORT_RUN_ID and BLUEPRINT_ID variables.
     3. [Token Setup](../jenkins-pipeline.md#token-setup): Define the token to match `JOB_TOKEN` as configured in your Port Action.
 
+<details>
+
+<summary>Jenkins Pipeline Script</summary>
 :::note
-Please make sure to modify `YOUR_USERNAME` and `YOUR_REPO` placeholder in the git repo of the `Checkout` stage. Alternatively you can use our [example repository](https://github.com/port-labs/jenkins-terraform-azure).
+Please make sure to modify `YOUR_USERNAME` and `YOUR_REPO` placeholder in the URL of the git repository in the `Checkout` stage. Alternatively you can use our [example repository](https://github.com/port-labs/jenkins-terraform-azure).
 :::
 
-<details>
-<summary>Jenkins Pipeline Script</summary>
-
-```yml showLineNumbers
+```groovy showLineNumbers
 import groovy.json.JsonSlurper
 
 pipeline {
@@ -440,4 +438,4 @@ pipeline {
 
 </details>
 
-6. Trigger the action from the [Self-service](https://app.getport.io/self-serve) tab of your Port application.
+6. Trigger the action from the [self-service](https://app.getport.io/self-serve) tab of your Port application.
