@@ -10,31 +10,19 @@ import DockerParameters from "./\_terraform_one_time_docker_parameters.mdx"
 
 # Terraform Cloud
 
-<<<<<<< HEAD
-Our Terraform integration allows you to import `workspaces` and `runs` from your Terraform Cloud account into Port, according to your mapping and definition.
-
-The Terraform Cloud Integration for Port enables seamless import and synchronization of `workspaces` and `runs` from your Terraform infrastructure management into Port. This integration allows you to effectively monitor and manage your Terraform Cloud workspaces and runs within the Port platform.
-=======
 Our Terraform Cloud integration allows you to import `workspaces`, `runs` and `state versions` from your Terraform Cloud account into Port, according to your mapping and definition.
 
 The Terraform Cloud Integration for Port enables seamless import and synchronization of `workspaces`, `runs`, and `state versions` from your Terraform infrastructure management into Port. This integration allows you to effectively monitor and manage your Terraform Cloud workspaces and runs within the Port platform.
->>>>>>> 312a903e11d3abfd6d9d3687a048ddf86b6528da
 
 A `Workspace` represents a workspace in Terraform cloud. A workspace is a logical environment where Terraform manages infrastructure, such as a set of cloud resources.
 
 A `Run` represents an instance of Terraform operations (plan, apply, or destroy) executed within a workspace. Each run holds information about the operation status, duration, and other relevant metadata.
 
-<<<<<<< HEAD
-## Common use cases
-
-- Synchronization of Infrastructure Management: Automatically synchronize workspace and run data from Terraform into Port for centralized tracking and management.
-=======
 A `State Version` represents a versioned state file in Terraform. Each state version is immutable and represents the state of your managed infrastructure at a particular point in time. State versions are used to track the changes in your infrastructure and help with auditing, rollbacks, and historical analysis.
 
 ## Common use cases
 
 - Synchronization of Infrastructure Management: Automatically synchronize workspace, run and state version data from Terraform Cloud into Port for centralized tracking and management.
->>>>>>> 312a903e11d3abfd6d9d3687a048ddf86b6528da
 - Monitoring Run Statuses: Keep track of run outcomes (success, failure, etc.) and durations, providing insights into the health and performance of your infrastructure management processes.
 
 ## Prerequisites
@@ -118,11 +106,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-<<<<<<< HEAD
-      - name: Run Terraform Integration
-=======
       - name: Run Terraform Cloud Integration
->>>>>>> 312a903e11d3abfd6d9d3687a048ddf86b6528da
         run: |
           # Set Docker image and run the container
           integration_type="terraform-cloud"
