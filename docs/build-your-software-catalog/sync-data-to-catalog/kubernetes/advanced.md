@@ -153,3 +153,12 @@ HTTP_PROXY=http://my-proxy.com:1111
 HTTS_PROXY=http://my-proxy.com:2222
 ```
 
+### `NO_PROXY`
+
+`NO_PROXY` allows blacklisting certain addresses from being handled through a proxy. This vairable accepts a comma-seperated list of hostnames or urls.
+
+For example:
+```sh showLineNumbers
+NO_PROXY=http://127.0.0.1,google.com
+```
+
