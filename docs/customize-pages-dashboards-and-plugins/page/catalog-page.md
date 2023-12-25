@@ -120,24 +120,18 @@ Just create your `group by` setting, add additional viewing settings if needed, 
 
 Port provides a free-text search option on tables. To search a table, click here:
 
-![Table search bar marked](../../../static/img/software-catalog/pages/TableSearchBar.png)
+![Table search bar marked](/img/software-catalog/pages/TableSearchBar.png)
 
 -> [Explore how to control page visibility and permissions](./page-permissions.md)
 
 ## Page operations
 
-Each page type has a set of operations that can be performed from the UI.  
-The table below summarizes the available operations for every type:
-
-| Page type                      | Save a view | Save view as<br /> a new page | Edit page | Delete page | Lock page |
-| ------------------------------ | :---------: | :---------------------------: | :-------: | :---------: | :-------: |
-| Blueprint page (Default Page)  |     ✅      |              ✅               |    ❌     |     ❌      |    ✅     |
-| Custom page (manually created) |     ✅      |              ✅               |    ✅     |     ✅      |    ✅     |
+Pages have a set of operations that can be performed from the UI.  
 
 :::info Default page
-The default page is automatically generated when a new Blueprint is created. This page is directly tied to its Blueprint and cannot be edited or deleted.
+The default page is automatically generated when a new Blueprint is created. This page is directly tied to its Blueprint, meaning that if the blueprint is deleted, the default page will be deleted as well.
 
-In order to edit or delete the default Blueprint page, you need to edit or delete the Blueprint itself.
+You can still edit or delete a default page if you'd like.
 
 It's possible to filter, sort, group by, and use the table widget controls to change the layout of the default page.
 :::
@@ -147,7 +141,7 @@ It's possible to filter, sort, group by, and use the table widget controls to ch
 Every change made on a specific page, such as filtering or sorting, enables the `Save this view` button.  
 Clicking on it will save the new view for all users.
 
-![Page operations marked](../../../static/img/software-catalog/pages/PageOperationsMarked.png)
+![Page operations marked](/img/software-catalog/pages/PageOperationsMarked.png)
 
 :::note
 The ability to save a view for all users is available only for the [Admin role](../../sso-rbac/rbac/rbac.md#roles)
@@ -159,13 +153,13 @@ Each time a change is made on a page, and the `Save this view` becomes enabled, 
 
 <center>
 
-![Save view menu button marked](../../../static/img/software-catalog/pages/SaveViewDropMenuButton.png)
+![Save view menu button marked](/img/software-catalog/pages/SaveViewDropMenuButton.png)
 
 </center>
 
 After clicking the `Save as a new page` button, a window will pop up:
 
-![Save as a new page popup](../../../static/img/software-catalog/pages/SaveAPageForm.png)
+![Save as a new page popup](/img/software-catalog/pages/SaveAPageForm.png)
 
 #### Choose page icon
 
@@ -173,7 +167,7 @@ When saving a new page or editing an existing one, a set of icons is available t
 
 <center>
 
-![Page Icons dropdown menu](../../../static/img/software-catalog/pages/PageIcons.png)
+![Page Icons dropdown menu](/img/software-catalog/pages/PageIcons.png)
 
 </center>
 
@@ -203,4 +197,8 @@ To learn how to lock pages, refer to [page permissions](./page-permissions.md#lo
 
 #### Deleting pages
 
-A manually-created catalog page can be deleted by clicking the `Delete page` button.
+Any page (whether created automatically or manually) can be deleted by clicking the `Delete page` button.
+
+:::warning Default pages
+When deleting a blueprint from your portal, the default page that was created for it will be deleted as well.
+:::
