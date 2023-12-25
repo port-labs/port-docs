@@ -129,7 +129,7 @@ Port provides a free-text search option on tables. To search a table, click here
 Pages have a set of operations that can be performed from the UI.  
 
 :::info Default page
-The default page is automatically generated when a new Blueprint is created. This page is directly tied to its Blueprint, meaning that if the blueprint is deleted, the default page will be deleted as well.
+A default catalog page is automatically created when a new Blueprint is created. This page is directly tied to its Blueprint, meaning that if the blueprint is deleted, the default page will be deleted as well.
 
 You can still edit or delete a default page if you'd like.
 
