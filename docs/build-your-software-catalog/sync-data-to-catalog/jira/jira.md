@@ -3,6 +3,7 @@ import TabItem from "@theme/TabItem"
 import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
 import HelmParameters from "../templates/\_ocean-advanced-parameters-helm.mdx"
 import DockerParameters from "./\_jira_one_time_docker_parameters.mdx"
+import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
 
 # Jira
 
@@ -22,7 +23,7 @@ This integration supports Jira Cloud at the moment, support for Jira Server can 
 
 <Prerequisites />
 
-## installation
+## Installation
 
 Choose one of the following installation methods:
 
@@ -183,6 +184,8 @@ pipeline {
 </TabItem>
 
 </Tabs>
+
+<AdvancedConfig/>
 
 ## Ingesting Jira objects
 
