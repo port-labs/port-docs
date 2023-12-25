@@ -26,5 +26,5 @@ The data flow when using the Port execution agent is as follows:
 
 ## Next steps
 
-- [Explore How to install and use the agent](/create-self-service-experiences/setup-backend/webhook/port-execution-agent/installation-methods/installation-methods.md)
+- [Explore How to install and use the agent](/create-self-service-experiences/setup-backend/webhook/port-execution-agent/installation-methods/helm.md)
 - [Control the payload sent to your endpoint](/create-self-service-experiences/setup-backend/webhook/port-execution-agent/control-the-payload.md)

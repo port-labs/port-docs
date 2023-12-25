@@ -32,15 +32,6 @@ When a new invocation is detected, the agent will pull it from your Kafka topic 
 ![Port Execution Agent Logs](/img/self-service-actions/port-execution-agent/portAgentLogs.png)
 
 
-## Next Steps
-
-Follow one of the guides below:
-
-- [Self-Service Actions Deep Dive](/create-self-service-experiences/self-service-actions-deep-dive/self-service-actions-deep-dive.md) - Set up a blueprint and self-service actions.
-- [Changelog Listener](/create-self-service-experiences/setup-backend/webhook/examples/changelog-listener.md) - Create a blueprint with `changelogDestination` to listen and act on changes in the software catalog.
-- [GitLab Pipeline Trigger](/create-self-service-experiences/setup-backend/gitlab-pipeline/gitlab-pipeline.md) - Create an action that triggers GitLab Pipeline execution.
-
-
 ## Advanced configuration
 Some environments require special configuration when working with the Port agent. This includes working with self-signed certificates and/or proxies.
 
@@ -73,7 +64,7 @@ env:
 For example:
 ```sh showLineNumbers
 HTTP_PROXY=http://my-proxy.com:1111
-HTTS_PROXY=http://my-proxy.com:2222
+HTTPS_PROXY=http://my-proxy.com:2222
 ALL_PROXY=http://my-proxy.com:3333
 ```
 
@@ -102,3 +93,12 @@ REQUESTS_CA_BUNDLE=/path/to/cacert.pem
 ```
 
 This configuration directs the `requests` library to use the specified CA bundle for SSL/TLS certificate verification, overriding default system settings. It's useful for trusting self-signed certificates or certificates from a private CA.
+
+
+## Next Steps
+
+Follow one of the guides below:
+
+- [Self-Service Actions Deep Dive](/create-self-service-experiences/self-service-actions-deep-dive/self-service-actions-deep-dive.md) - Set up a blueprint and self-service actions.
+- [Changelog Listener](/create-self-service-experiences/setup-backend/webhook/examples/changelog-listener.md) - Create a blueprint with `changelogDestination` to listen and act on changes in the software catalog.
+- [GitLab Pipeline Trigger](/create-self-service-experiences/setup-backend/gitlab-pipeline/gitlab-pipeline.md) - Create an action that triggers GitLab Pipeline execution.
