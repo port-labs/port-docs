@@ -1,6 +1,8 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
+import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
+
 
 # Kafka
 
@@ -16,7 +18,7 @@ Our Kafka integration allows you to import `brokers` and `topics` from your Kafk
 
 <Prerequisites />
 
-## installation
+## Installation
 
 Install the integration via Helm by running this command:
 
@@ -37,6 +39,8 @@ helm upgrade --install kafka port-labs/port-ocean \
 	--set integration.eventListener.type="POLLING"  \
 	--set-json integration.secrets.clusterConfMapping='{"local": {"bootstrap.servers": "localhost:9092"}}'
 ```
+
+<AdvancedConfig/>
 
 ## Ingesting Kafka objects
 

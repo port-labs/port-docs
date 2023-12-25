@@ -5,6 +5,7 @@ sidebar_position: 1
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
+import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
 
 # PagerDuty
 
@@ -19,7 +20,7 @@ Our PagerDuty integration allows you to import `schedules`, `services` and `inci
 
 <Prerequisites />
 
-## installation
+## Installation
 
 Choose one of the following installation methods:
 
@@ -195,6 +196,8 @@ pipeline {
 </TabItem>
 
 </Tabs>
+
+<AdvancedConfig/>
 
 ## Ingesting PagerDuty objects
 
