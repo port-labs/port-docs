@@ -6,6 +6,7 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import HelmParameters from "../../templates/\_ocean-advanced-parameters-helm.mdx"
 import DockerParameters from "./\_gitlab_one_time_docker_parameters.mdx"
+import AdvancedConfig from '../../../../generalTemplates/_ocean_advanced_configuration_note.md'
 
 # Installation
 
@@ -345,3 +346,5 @@ pipeline {
 </TabItem>
 
 </Tabs>
+
+<AdvancedConfig/>

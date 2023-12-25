@@ -1,6 +1,7 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
+import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
 
 # Sentry
 
@@ -201,6 +202,8 @@ pipeline {
 ### Event listener
 
 The integration uses polling to pull the configuration from Port every minute and check it for changes. If there is a change, a resync will occur.
+
+<AdvancedConfig/>
 
 ## Ingesting Sentry objects
 
