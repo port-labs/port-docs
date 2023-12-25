@@ -150,7 +150,7 @@ extraEnvs:
 For example:
 ```sh showLineNumbers
 HTTP_PROXY=http://my-proxy.com:1111
-HTTS_PROXY=http://my-proxy.com:2222
+HTTPS_PROXY=http://my-proxy.com:2222
 ```
 
 ### `NO_PROXY`
