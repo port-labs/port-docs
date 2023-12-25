@@ -12,7 +12,7 @@ resources:
         mappings:
           identifier: ".name" # The Entity identifier will be the repository name.
           title: ".name"
-          blueprint: '"repository"'
+          blueprint: '"githubRepository"'
           properties:
             readme: file://README.md
             url: .html_url
@@ -25,7 +25,7 @@ resources:
         mappings:
           identifier: ".repo + (.id|tostring)"
           title: ".title"
-          blueprint: '"issue"'
+          blueprint: '"githubIssue"'
           properties:
             creator: ".user.login"
             assignees: "[.assignees[].login]"
