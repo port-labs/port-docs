@@ -23,8 +23,8 @@ Follow these steps to get started:
 
 1. Create the following as Jenkins Credentials:
     1. Create the Port Credentials using the `Username with password` kind and the id `port-credentials`.
-        1. `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
-        2. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+        1. `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+        2. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
     2. Create the Azure Credentials using the `Azure Service Principal` kind and the id `azure`.
         :::tip
         Follow this [guide](https://learn.microsoft.com/en-us/azure/developer/terraform/get-started-cloud-shell-bash?tabs=bash#create-a-service-principal) to create a service principal in order to get the Azure credentials.
