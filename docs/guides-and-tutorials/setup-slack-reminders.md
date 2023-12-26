@@ -46,18 +46,11 @@ After completing it, you will get a sense of how it can benefit different person
 5. Now we'll define the backend of the action. Port supports multiple invocation types, for this tutorial we will use a `Github workflow`.
    - Replace the `Organization` and `Repository` values with your values (this is where the workflow will reside and run).
    - Name the workflow `portSlackReminder.yaml`.
-   - Set `Omit user inputs` to `Yes`.
    - Fill out the rest of the form like this, then click `Next`:
 
-:::tip Important
+<img src='/img/guides/slackReminderBackend.png' width=' %' />
 
-In our workflow, we don't have user inputs to use. We omit the user inputs in order to avoid sending additional inputs to the workflow.
-
-:::
-
-<img src='/img/guides/slackReminderBackend.png' width='75%' />
-
-6. The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Create`.
+1. The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Create`.
 
 The action's frontend is now ready 🥳
 
@@ -80,8 +73,6 @@ Now we want to write the logic that our action will trigger.
 <img src='/img/guides/repositorySecretSlack.png' width='80%' />
 
 3. Now let's create the workflow file that contains our logic. Under `.github/workflows`, create a new file named `portSlackReminder.yaml` and use the following snippet as its content:
-
-Change `<YOUR-ORG-NAME>` to the name of the organization in which you want to create the new repository.
 
 <details>
 <summary><b>Github workflow (click to expand)</b></summary>
