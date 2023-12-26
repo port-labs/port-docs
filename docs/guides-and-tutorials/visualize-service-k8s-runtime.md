@@ -16,8 +16,6 @@ This guide takes 10 minutes to complete, and aims to demonstrate the value of Po
 - This guide assumes you have a Port account and a basic knowledge of working with Port. If you haven't done so, go ahead and complete the [quickstart](/quickstart).
 - You will need an accessible k8s cluster. If you don't have one, here is how to quickly set-up a [minikube cluster](https://minikube.sigs.k8s.io/docs/start/).
 - [Helm](https://helm.sh/docs/intro/install/) - required to install Port's Kubernetes exporter.
-- [jq](https://jqlang.github.io/jq/download/) - required to install Port's Kubernetes exporter.
-- [yq](https://github.com/mikefarah/yq/#install) - required to install Port's Kubernetes exporter.
 
 :::
 
@@ -34,24 +32,28 @@ After completing it, you will get a sense of how it can benefit different person
 
 ### Install Port's Kubernetes exporter
 
-1. Go to your [Port application](https://app.getport.io/), hover over the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
+1. Go to your [data sources page](https://app.getport.io/dev-portal/data-sources), click on `Add data source` and select `Kubernetes`:
 
-2. Replace `CLIENT-ID` and `CLIENT-SECRET` in the following command, then copy it and run it in your terminal:
+2. Copy the installation command after specifying your cluster's name, it should look something like this:
 
 ```bash showLineNumbers
-export CUSTOM_BP_PATH="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/full-configs/k8s-guide/k8s_guide_bps.json"
-export CONFIG_YAML_URL="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/full-configs/k8s-guide/k8s_guide_config.yaml"
-export CLUSTER_NAME="my-cluster"
-export PORT_CLIENT_ID="CLIENT-ID"
-export PORT_CLIENT_SECRET="CLIENT-SECRET"
-curl -s https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/install.sh | bash
+# The following script will install a K8s integration at your K8s cluster using helm
+# stateKey: Change the stateKey to describe your integration
+helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
+helm upgrade --install k8s-exportera port-labs/port-k8s-exporter \
+	--set secret.secrets.portClientId="YOUR_PORT_CLIENT_ID"  \
+	--set secret.secrets.portClientSecret="YOUR_PORT_CLIENT_SECRET"  \
+	--set portBaseUrl="https://api.getport.io"  \
+	--set stateKey="k8s-exporter"  \
+	--set eventListenerType="POLLING"  \
+	--set extraEnv=[{"name":"CLUSTER_NAME","value":"my-cluster"}] 
 ```
 
 #### What does the exporter do?
 
 After installation, the exporter will:
 
-1. Create <PortTooltip id="blueprint">blueprints</PortTooltip> in your [Builder](https://app.getport.io/dev-portal/data-model) (as defined in `CUSTOM_BP_PATH`) that represent Kubernetes resources:
+1. Create <PortTooltip id="blueprint">blueprints</PortTooltip> in your [Builder](https://app.getport.io/dev-portal/data-model) (as defined [here](https://github.com/port-labs/port-k8s-exporter/blob/main/assets/defaults/blueprints.json)) that represent Kubernetes resources:
 
 <img src='/img/guides/k8sBlueprintsCreated.png' width='95%' />
 
