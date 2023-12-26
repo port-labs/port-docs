@@ -7,7 +7,7 @@ sidebar_position: 1
 A catalog page displays a table of all existing [entities](/build-your-software-catalog/sync-data-to-catalog/#creating-entities) created from a [blueprint](/build-your-software-catalog/define-your-data-model/setup-blueprint/#what-is-a-blueprint).  
 In this example we can see all of the cluster entities we created from the `K8s Cluster` blueprint:
 
-![Microservice blueprint page](../../../static/img/software-catalog/pages/catalogPage.png)
+![Microservice blueprint page](/img/software-catalog/pages/catalogPage.png)
 
 ## Page creation
 
@@ -47,13 +47,13 @@ We highly recommend using these customizations to provide a clean and accurate v
 
 All table customizations are available on the top bar of the table:
 
-![Table operations bar](../../../static/img/software-catalog/pages/TableOperationsBar.png)
+![Table operations bar](/img/software-catalog/pages/TableOperationsBar.png)
 
 ### Filter
 
 You can filter the table by using the following menu:
 
-![Table filter menu marked](../../../static/img/software-catalog/pages/TableFilterMenu.png)
+![Table filter menu marked](/img/software-catalog/pages/TableFilterMenu.png)
 
 You can define any filtering operator with a suitable value.
 
@@ -66,9 +66,9 @@ By using the `My Teams` filter you will only see entities that belong to one of 
 This filter works on:
 
 - `string` properties with the format `team`.
-- The [meta property](../../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/meta-properties) `Team`.
+- The [meta property](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/meta-properties) `Team`.
 
-![My Teams Filter](../../../static/img/software-catalog/pages/MyTeamsFilter.png)
+![My Teams Filter](/img/software-catalog/pages/MyTeamsFilter.png)
 
 #### `Me` filter
 
@@ -82,7 +82,7 @@ This filter works on [`User`](/build-your-software-catalog/define-your-data-mode
 
 You can sort the table by using the following menu:
 
-![Table sort menu marked](../../../static/img/software-catalog/pages/TableSortMenu.png)
+![Table sort menu marked](/img/software-catalog/pages/TableSortMenu.png)
 
 You can sort by one or more fields of any kind.
 
@@ -94,7 +94,7 @@ To sort a specific column, click on the column title.
 
 You can hide table columns by using the following menu:
 
-![Table hide menu marked](../../../static/img/software-catalog/pages/TableHideMenu.png)
+![Table hide menu marked](/img/software-catalog/pages/TableHideMenu.png)
 
 You can decide whether each field is viewable to users or not.
 
@@ -106,7 +106,7 @@ We highly recommend hiding irrelevant data from users, to provide them with a cl
 
 You can group by entities by using the following menu:
 
-![Table group by menu marked](../../../static/img/software-catalog/pages/TableGroupByMenu.png)
+![Table group by menu marked](/img/software-catalog/pages/TableGroupByMenu.png)
 
 You can group results according to any field in the table.
 
@@ -177,7 +177,7 @@ You can edit, lock or delete a page by clicking the `...` button in the top righ
 
 <center>
 
-![Page menu](../../../static/img/software-catalog/pages/PageMenu.png)
+![Page menu](/img/software-catalog/pages/PageMenu.png)
 
 </center>
 
@@ -185,7 +185,7 @@ You can edit, lock or delete a page by clicking the `...` button in the top righ
 
 Editing a page allows you to change its name and/or icon:
 
-![Edit Page popup window](../../../static/img/software-catalog/pages/EditPageForm.png)
+![Edit Page popup window](/img/software-catalog/pages/EditPageForm.png)
 
 #### Locking pages
 
@@ -200,5 +200,5 @@ To learn how to lock pages, refer to [page permissions](./page-permissions.md#lo
 Any page (whether created automatically or manually) can be deleted by clicking the `Delete page` button.
 
 :::warning Default pages
-When deleting a blueprint from your portal, the default page that was created for it will be deleted as well.
+When deleting a blueprint from your portal, all pages tied to that blueprint (including the default page that was created for it) will be deleted as well.
 :::
