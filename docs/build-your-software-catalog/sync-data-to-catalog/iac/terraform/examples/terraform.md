@@ -120,7 +120,6 @@ jobs:
           -e OCEAN__INTEGRATION__CONFIG__TERRAFORM_TOKEN=${{ secrets.OCEAN__INTEGRATION__CONFIG__TERRAFORM_TOKEN }} \
           -e OCEAN__INTEGRATION__CONFIG__TERRAFORM_HOST=${{ secrets.OCEAN__INTEGRATION__CONFIG__TERRAFORM_HOST }} \
           -e OCEAN__INTEGRATION__CONFIG__TERRAFORM_ORGANIZATION=${{ secrets.OCEAN__INTEGRATION__CONFIG__TERRAFORM_ORGANIZATION }} \
-          -e OCEAN__INTEGRATION__CONFIG__APP_HOST=${{ secrets.OCEAN__INTEGRATION__CONFIG__APP_HOST }}\
           -e OCEAN__PORT__CLIENT_ID=${{ secrets.OCEAN__PORT__CLIENT_ID }} \
           -e OCEAN__PORT__CLIENT_SECRET=${{ secrets.OCEAN__PORT__CLIENT_SECRET }} \
           $image_name
@@ -159,7 +158,6 @@ pipeline {
                         string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__TERRAFORM_TOKEN', variable: 'OCEAN__INTEGRATION__CONFIG__TERRAFORM_TOKEN'),
                         string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__TERRAFORM_HOST', variable: 'OCEAN__INTEGRATION__CONFIG__TERRAFORM_HOST'),
                         string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__TERRAFORM_ORGANIZATION', variable: 'OCEAN__INTEGRATION__CONFIG__TERRAFORM_ORGANIZATION'),
-                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__APP_HOST', variable: 'OCEAN__INTEGRATION__CONFIG__APP_HOST'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_SECRET', variable: 'OCEAN__PORT__CLIENT_SECRET')
                     ]) {
@@ -174,7 +172,6 @@ pipeline {
                                 -e OCEAN__INTEGRATION__CONFIG__TERRAFORM_TOKEN=$OCEAN__INTEGRATION__CONFIG__TERRAFORM_TOKEN \
                                 -e OCEAN__INTEGRATION__CONFIG__TERRAFORM_HOST=$OCEAN__INTEGRATION__CONFIG__TERRAFORM_HOST \
                                 -e OCEAN__INTEGRATION__CONFIG__TERRAFORM_ORGANIZATION=$OCEAN__INTEGRATION__CONFIG__TERRAFORM_ORGANIZATION \
-                                -e OCEAN__INTEGRATION__CONFIG__APP_HOST=$OCEAN__INTEGRATION__CONFIG__APP_HOST \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
                                 $image_name
