@@ -54,7 +54,7 @@ The `stateKey` parameter specifies a unique state key per K8s exporter installat
 
 <TabItem value="eventListenerType">
 
-The K8S exporter provides a support for multiple event listeners. The event listener is used to receive events and resync requests from Port and forward them to the exporter.
+The K8S exporter provides support for multiple event listeners. The event listener is used to receive events and resync requests from Port and forward them to the exporter.
 
 By configuring an event listener the integration will listen to and react to the following events sent from Port:
 
