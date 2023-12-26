@@ -4,7 +4,7 @@ sidebar_position: 5
 
 # Custom CRDs
 
-In addition to builtin Kubernetes API resources, it is possible to use Port's Kubernetes exporter to export and map [CRDs](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) from your Kubernetes cluster.
+In addition to built-in Kubernetes API resources, it is possible to use Port's Kubernetes exporter to export and map [CRDs](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) from your Kubernetes cluster.
 
 We created several pre-built Port K8s [exporter templates](./templates/), which use CRD exporting, for a quick start when using common 3rd party k8s tools.
 
