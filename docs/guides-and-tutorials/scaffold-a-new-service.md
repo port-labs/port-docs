@@ -38,11 +38,11 @@ After completing it, you will get a sense of how it can benefit different person
 
 3. Fill in the basic details of the action like this, then click `Next`:
 
-<img src='/img/guides/actionBasicDetails.png' width='60%' />
+<img src='/img/guides/actionScaffoldBasicDetails.png' width='60%' />
 
 4. The next step is to define the action's inputs. When someone uses this action, all we want them to enter is the new repository's name. Click on `New input`, fill in the form like this, then click on `Create`:
 
-<img src='/img/guides/actionInputName.png' width='50%' />
+<img src='/img/guides/actionScaffoldInputName.png' width='50%' />
 
 :::info notes
 
@@ -96,11 +96,9 @@ If your organization uses SAML SSO, you will need to authorize your token. Follo
 - `PORT_CLIENT_ID` - the client ID you copied from your Port app.
 - `PORT_CLIENT_SECRET` - the client secret you copied from your Port app.
 
-<img src='/img/guides/repositorySecret.png' width='80%' />
+<img src='/img/guides/repositorySecretScaffold.png' width='80%' />
 
-3. Now let's create the workflow file that contains our logic. Under ".github/workflows", create a new file named `portCreateRepo.yaml` and use the following snippet as its content:
-
-Change `<YOUR-ORG-NAME>` to the name of the organization in which you want to create the new repository.
+3. Now let's create the workflow file that contains our logic. Under `.github/workflows`, create a new file named `portCreateRepo.yaml` and use the following snippet as its content:
 
 <details>
 <summary><b>Github workflow (click to expand)</b></summary>
@@ -157,7 +155,7 @@ All done! The action is ready to be used 🚀
 
 After creating an action, it will appear under the `Self-service` tab of your Port application:
 
-<img src='/img/guides/selfServiceAfterCreation.png' width='75%' />
+<img src='/img/guides/selfServiceAfterScaffoldCreation.png' width='75%' />
 
 1. Click on `Create` to begin executing the action.
 
@@ -167,7 +165,7 @@ After creating an action, it will appear under the `Self-service` tab of your Po
 
 3. This page provides details about the action run. As you can see, the backend returned `Success` and the repo was successfully created:
 
-<img src='/img/guides/runStatus.png' width='90%' />
+<img src='/img/guides/runStatusScaffolding.png' width='90%' />
 
 :::tip Logging action progress
 💡 Note the `Log stream` at the bottom, this can be used to report progress, results and errors. Click [here](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/) to learn more.
@@ -182,7 +180,7 @@ Congratulations! You can now create services easily from Port 💪🏽
 
 ### Conclusion
 
-Creating a service is not just a periodic task developers undertake, but a vital step that can occur on a monthly basis. However, it's crucial to recognize that this is only a fragment of the broader experience that we're striving to create for developers.  
+Creating a service is not just a periodic task developers undertake, but a vital step that can occur on a monthly basis. However, it's crucial to recognize that this is only a fragment of the broader experience that we're striving to create for developers.
 Our ultimate goal is to facilitate a seamless transition from ideation to production. In doing so, we aim to eliminate the need for developers to navigate through a plethora of tools, reducing friction and accelerating the time-to-production.  
 In essence, we're not just building a tool, but sculpting an ecosystem that empowers developers to bring new features to life with utmost efficiency.
 
