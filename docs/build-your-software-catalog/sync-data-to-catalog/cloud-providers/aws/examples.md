@@ -6,7 +6,9 @@ import Image from "@theme/IdealImage";
 
 # Examples
 
-## Mapping ECS clusters and ECS services
+Use the index on the right side of the page to find to example with the resource you’re looking to export.
+
+## ECS clusters and ECS services
 
 In this step-by-step example, you will export your `ECS clusters` and `ECS services` to Port.
 
@@ -331,7 +333,7 @@ In this step-by-step example, you will export your `ECS clusters` and `ECS servi
 
 Done! soon, you will be able to see any `ECS clusters` and `ECS services`.
 
-## Mapping App Runner services
+## App Runner services
 
 In this step-by-step example, you will export your `App Runner services` to Port.
 
@@ -558,7 +560,7 @@ In this step-by-step example, you will export your `App Runner services` to Port
 
 Done! soon, you will be able to see any `App Runner services`.
 
-## Mapping Lambda functions {#lambda}
+## Lambda functions {#lambda}
 
 In this step-by-step example, you will export your `Lambda functions` to Port.
 
@@ -782,7 +784,7 @@ In this step-by-step example, you will export your `Lambda functions` to Port.
 
 Done! soon, you will be able to see any `Lambda functions`.
 
-## Mapping SNS topics and SQS queues
+## SNS topics and SQS queues
 
 In this step-by-step example, you will export your `SNS topics` and `SQS queues` to Port.
 
@@ -1098,7 +1100,7 @@ In this step-by-step example, you will export your `SNS topics` and `SQS queues`
 
 Done! soon, you will be able to see any `SNS queue` and its `SQS queues` subscriptions.
 
-## Mapping S3 buckets
+## S3 buckets
 
 In this step-by-step example, you will export your `S3 buckets` to Port.
 
@@ -1303,7 +1305,7 @@ In this step-by-step example, you will export your `S3 buckets` to Port.
 
 Done! soon, you will be able to see any `S3 buckets`.
 
-## Mapping API Gateway APIs
+## API Gateway APIs
 
 In this step-by-step example, you will export your `API Gateway APIs` to Port.
 
@@ -1564,7 +1566,7 @@ In this step-by-step example, you will export your `API Gateway APIs` to Port.
 
 Done! soon, you will be able to see any `API Gateway APIs`.
 
-## Mapping Cloudfront distributions
+## Cloudfront distributions
 
 In this step-by-step example, you will export your `Cloudfront distributions` to Port.
 
@@ -1787,7 +1789,7 @@ For more information, read [here](https://docs.aws.amazon.com/awscloudtrail/late
 
 Done! soon, you will be able to see any `Cloudfront distributions`.
 
-## Mapping DynamoDB tables
+## DynamoDB tables
 
 In this step-by-step example, you will export your `DynamoDB tables` to Port.
 
@@ -2004,7 +2006,7 @@ In this step-by-step example, you will export your `DynamoDB tables` to Port.
 
 Done! soon, you will be able to see any `DynamoDB tables`.
 
-## Mapping RDS instances
+## RDS instances
 
 In this step-by-step example, you will export your `RDS instances` to Port.
 
@@ -2303,7 +2305,7 @@ In this step-by-step example, you will export your `RDS instances` to Port.
 
 Done! soon, you will be able to see any `RDS instances`.
 
-## Mapping Step Functions state machines
+## Step Functions state machines
 
 In this step-by-step example, you will export your `Step Functions state machines` to Port.
 
@@ -2498,7 +2500,7 @@ In this step-by-step example, you will export your `Step Functions state machine
 
 Done! soon, you will be able to see any `Step Functions state machines`.
 
-## Mapping Elastic Beanstalk applications and environments
+## Elastic Beanstalk applications and environments
 
 In this step-by-step example, you will export your `Elastic Beanstalk applications and environments` to Port.
 
@@ -2780,7 +2782,7 @@ In this step-by-step example, you will export your `Elastic Beanstalk applicatio
 
 Done! soon, you will be able to see any `Elastic Beanstalk applications and environments`.
 
-## Mapping CloudFormation Stacks
+## CloudFormation Stacks
 
 In this step-by-step example, you will export your `CloudFormation Stacks` to Port.
 
@@ -3062,7 +3064,7 @@ Make sure your [Lambda function configuration](#lambda) appears before your Clou
 
 Done! soon, you will be able to see any `CloudFormation Stacks`.
 
-## Mapping EC2 instances
+## EC2 instances
 
 In this step-by-step example, you will export your `EC2 instances` to Port.
 
@@ -3293,7 +3295,7 @@ In this step-by-step example, you will export your `EC2 instances` to Port.
 
 Done! soon, you will be able to see any `EC2 instances`
 
-## Mapping Elastic load balancers
+## Elastic load balancers
 
 In this step-by-step example, you will export your `Load balancers` to Port.
 
@@ -3657,7 +3659,7 @@ In this step-by-step example, you will export your `Load balancers` to Port.
 
 Done! soon, you will be able to see any `Load balancers`
 
-## Mapping EKS clusters
+## EKS clusters
 
 In this step-by-step example, you will export your `EKS clusters` to Port.
 
@@ -3831,7 +3833,7 @@ In this step-by-step example, you will export your `EKS clusters` to Port.
 
 Done! soon, you will be able to see any `EKS clusters`
 
-## Mapping ECR repositories
+## ECR repositories
 
 In this step-by-step example, you will export your `ECR repositories` to Port.
 
@@ -4065,7 +4067,7 @@ In this step-by-step example, you will export your `ECR repositories` to Port.
 
 Done! soon, you will be able to see any `ECR repositories`
 
-## Mapping Elasticache serverless cache
+## Elasticache serverless cache
 
 In this step-by-step example, you will export your `Serverless cache` to Port.
 
@@ -4317,7 +4319,7 @@ In this step-by-step example, you will export your `Serverless cache` to Port.
 
 Done! soon, you will be able to see any `Serverless cache`
 
-## Mapping Elasticache cluster
+## Elasticache cluster
 
 In this step-by-step example, you will export your `Cache clusters` to Port.
 
