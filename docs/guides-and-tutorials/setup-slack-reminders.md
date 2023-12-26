@@ -69,7 +69,7 @@ Now we want to write the logic that our action will trigger.
 
    - Go to your desired Slack channel and [setup incoming webhooks](https://api.slack.com/messaging/webhooks). Make sure you copy the webhook URL, we will use it in the Github workflow.
 
-   - Go to your [Port application](https://app.getport.io/), hover over the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
+   - Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
 
 2. In the repository where your workflow will reside, create 3 new secrets under `Settings -> Secrets and variables -> Actions`:
 
