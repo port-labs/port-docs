@@ -74,7 +74,7 @@ Available event listeners configuration parameters can be found [here](https://g
 The event listeners that are currently available do not support multiple instances of the same exporter
 :::
 
-:::danger
+:::danger resync
 If a resync event is received by your integration while it is actively performing a resync, the currently running resync will be aborted and a new resync process will start.
 
 If a new resync trigger consistently aborts a running resync, it means that your integration never finishes a complete resync process (which means some information from the cluster might never appear in Port).
