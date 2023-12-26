@@ -25,22 +25,6 @@ You can observe the Helm chart and the available parameters [here](https://githu
 
 ## Installation
 
-1. Add Port's Helm repo by using the following command:
-
-```bash
-helm repo add port-labs https://port-labs.github.io/helm-charts
-helm repo update
-```
-
-You can then run `helm search repo port-labs` to see the charts.
-
-2. In your git repo, create a directory called `argocd` and changedir into it. Then pull the `port-k8s-exporter` helm chart:
- ```bash showLineNumbers
-mkdir argocd
-cd argocd
-helm pull port-labs/port-k8s-exporter --untar
-```
-
 3. Prepare a [`config.yml`](/build-your-software-catalog/sync-data-to-catalog/kubernetes/#exporter-configyml-file) file that will define which Kubernetes objects to ingest to Port.
 We will use the following file in this guide:
 
@@ -61,13 +45,17 @@ resources:
               status: .status
 ```
 
-4. Add the contents of your `config.yml` file to the `values.yaml` file in `argocd/port-k8s-exporter/values.yaml` to the `configMap.config` value. 
+2. In your git repo, create a directory called `argocd`.
+ ```bash
+mkdir argocd
+```
 
-In our example it looks like that:
+3. Inside your argocd create a directory for the current deployment. For our example we use `my-port-k8s-exporter`.
+
+4. Create a `values.yaml` file in your `my-port-k8s-exporter` directory, with the content of your `config.yml` to the `configMap.config` key:
 
 ```yaml showLineNumbers
 configMap:
-  annotations: {}
   config: |
     resources:
       - kind: apps/v1/replicasets
@@ -90,6 +78,8 @@ configMap:
 6. Install the `my-port-k8s-exporter` ArgoCD Application by using the following yaml:
 :::note
 Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+
+For the full chart versions list refer to the ***[Releases](https://github.com/port-labs/helm-charts/releases?q=port-k8s-exporter&expanded=true)*** page.
 :::
 
 <details>
@@ -106,16 +96,21 @@ spec:
     namespace: my-port-k8s-exporter
     server: https://kubernetes.default.svc
   project: default
-  source:
+  sources:
+  - repoURL: 'https://port-labs.github.io/helm-charts/'
+    chart: port-k8s-exporter
+    targetRevision: 0.2.3
     helm:
+      valueFiles:
+      - $values/argocd/my-port-k8s-exporter/values.yaml
       parameters:
         - name: secret.secrets.portClientId
           value: YOUR_PORT_CLIENT_ID
         - name: secret.secrets.portClientSecret
           value: YOUR_PORT_CLIENT_SECRET
-    path: argocd/port-k8s-exporter
-    repoURL: YOUR_GIT_REPO_URL
+  - repoURL: YOUR_GIT_REPO_URL
     targetRevision: main
+    ref: values
   syncPolicy:
     automated:
       prune: true
@@ -127,11 +122,11 @@ spec:
 </details>
 <br/>
 
-Done! the exporter will begin creating and updating objects from your Kubernetes cluster as Port entities shortly.
+Done! The exporter will begin creating and updating objects from your Kubernetes cluster as Port entities shortly.
 
 ## Updating exporter configuration
 
-In order to **update** the `config.yml` file deployed on your Kubernetes cluster, simply commit changes to your `values.yaml` file in `argocd/port-k8s-exporter/values.yaml`.
+In order to **update** the `config.yml` file deployed on your Kubernetes cluster, simply commit changes to your `values.yaml` file in `argocd/my-port-k8s-exporter/values.yaml`.
 
 ArgoCD will synchronize your new configuration to the ConfigMap
 
