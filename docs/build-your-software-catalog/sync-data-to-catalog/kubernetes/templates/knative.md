@@ -2,6 +2,8 @@
 sidebar_position: 2
 description: Knative quickstart
 ---
+import TemplateInstallation from "./_template_installation.mdx";
+import TemplatePrerequisites from "./_template_prerequisites.mdx";
 
 # Knative
 
@@ -15,29 +17,14 @@ Get to know the basics of our Kubernetes exporter [here!](../kubernetes.md)
 
 ## Prerequisites
 
-- [Helm](https://helm.sh) must be installed to use the chart. Please refer to
-  Helm's [documentation](https://helm.sh/docs) to get started;
-- The `jq` command must installed;
-- The `yq` command must installed;
-- The `kubectl` command must be installed;
-- Have your [Port credentials](../../../sync-data-to-catalog/api/#find-your-port-credentials) ready.
+<TemplatePrerequisites />
 
-In this use-case, you will use a custom bash script which will assist you in the process of installing Port's K8s exporter.
+## Setting up blueprints & resource mapping
 
-:::note
-For more information about the k8s exporter installation script click **[here](../installation-script.md)**!
-:::
+The following section will guide you through the process of setting up your blueprints and resource mapping using the
+installation script. You can read more about the installation script [here](#how-does-the-installation-script-work).
 
-The script will install the helm chart to the Kubernetes cluster which is currently in kubectl context.
-To view the context name of the cluster the exporter will be installed on, run:
-
-```bash showLineNumbers
-kubectl config current-context
-```
-
-## Setting up your blueprints
-
-### Creating blueprints using the installation script
+### Creating blueprints
 
 The installation script provides a convenient way to create your blueprints. Using the `CUSTOM_BP_PATH` environment variable, you can fetch a pre-defined `blueprints.json` to create your blueprints. For this use-case, you will use [this file](https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/kubernetes_knative_usecase.json) to define your blueprints. Do this by running:
 
@@ -69,11 +56,9 @@ This `blueprints.json` file defines the following blueprints:
 
 :::
 
-## Exporting your Kubernetes cluster
+### Exporting custom resource mapping
 
-### Installing the Kubernetes exporter using the script
-
-Using the `CONFIG_YAML_URL` parameter, you can define a custom `config.yaml` to use when installing the exporter.
+Using the `CONFIG_YAML_URL` parameter, you can define a custom resource mapping to use when installing the exporter.
 
 In this use-case you will be using **[this configuration file](https://github.com/port-labs/template-assets/blob/main/kubernetes/full-configs/kubernetes_kantive_usecase.yaml)**. To achieve this, run:
 
@@ -91,3 +76,7 @@ curl -s https://raw.githubusercontent.com/port-labs/template-assets/main/kuberne
 ```
 
 You can now browse to your Port environment to see that your blueprints have been created, and your k8s and Knative resources are being reported to Port using the freshly installed k8s exporter.
+
+## How does the installation script work?
+
+<TemplateInstallation />

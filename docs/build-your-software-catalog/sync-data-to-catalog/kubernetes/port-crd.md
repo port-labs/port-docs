@@ -13,7 +13,7 @@ All CRDs provided by Port can be found [here.](https://github.com/port-labs/port
 
 # Port CRDs
 
-A Port entity can represent any kind of data in your infrastructure, from nodes to pods to non-Kuberenetes related entities such as repositories or microservices. To achieve this level of abstraction, 2 CRDs are provided:
+A Port entity can represent any kind of data in your infrastructure, from nodes to pods to non-Kubernetes related entities such as repositories or microservices. To achieve this level of abstraction, 2 CRDs are provided:
 
 ## Namespace scoped entity CRD - `getport.io/v1/Entity`
 
@@ -208,7 +208,7 @@ kubectl apply -f https://raw.githubusercontent.com/port-labs/port-crds/main/port
 
 ## Exporting Port's custom resources
 
-To export the Port entity CRDs using Port's K8s exporter, you will need to create a custom configuration for your [config.yaml](./kubernetes.md#exporter-configyml-file). This mapping configuration will match the blueprint data model you defined in your software catalog.
+To export the Port entity CRDs using Port's K8s exporter, you will need to add a new resources to your exporter configuration. This mapping configuration will match the blueprint data model you defined in your software catalog.
 
 To learn how to use Port CRDs to fit your needs, you will follow an example. It will give you a general understanding of how to map any data you would like.
 
@@ -301,9 +301,15 @@ spec:
 kubectl apply -f port-entity.yaml
 ```
 
-4. **Create a mapping configuration for the K8s exporter** - create (or add to an existing) the following `config.yaml` configuration to map this CRD using Port's k8s exporter:
+4. **Create a mapping configuration for the K8s exporter** - create (or add to an existing) the following exporter configuration to map this CRD using Port's k8s exporter:
+   
+   1. Open the [data sources](https://app.getport.io/dev-portal/data-sources) page in your Port environment and click on the integration you wish to add the mapping to;
 
-   1. Create your `config.yaml`:
+   2. Add the following mapping configuration to your exporter configuration:
+   
+   :::tip Adding the mapping configuration
+   If you already have an exporter configuration, you can add the following mapping to your existing configuration by appending the lines after the `resources` key to your existing configuration.
+   :::
 
    ```yaml showLineNumbers
    resources:
@@ -324,14 +330,6 @@ kubectl apply -f port-entity.yaml
                  language: .spec.properties.language
    ```
 
-   2. Install Port's K8s exporter using your new `config.yaml`:
-
-   ```bash showLineNumbers
-   export CLUSTER_NAME="<YOUR_CLUSTER_NAME>" # Defaults to 'my-cluster'
-   export CONFIG_YAML_URL="<PATH_TO_CONFIG_YAML>/config.yaml"
-   export PORT_CLIENT_ID="<PORT_CLIENT_ID>"
-   export PORT_CLIENT_SECRET="<PORT_CLIENT_SECRET>"
-   curl -s https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/install.sh | bash
-   ```
+   3. Click on the `Save & Resync` button to apply the configuration to your integration.
 
 You will now be able to see the newly exported entity in your Port environment.

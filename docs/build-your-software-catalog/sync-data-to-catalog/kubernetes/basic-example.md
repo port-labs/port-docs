@@ -12,7 +12,7 @@ import AuditLogPage from "../../../../static/img/integrations/k8s-exporter/Audit
 
 ## Basic Pod and ReplicaSet solution
 
-In the following example you will export your Kubernetes `Replica Sets` and `Pods` to Port, you may use the following Port blueprint definitions, and `config.yaml`:
+In the following example you will export your Kubernetes `Replica Sets` and `Pods` to Port, you may use the following Port blueprint definitions, and exporter configuration:
 
 - **Deployment config** - will represent replica sets from the K8s cluster;
 - **Deployed service pod** - will represent pods from the K8s cluster.
@@ -135,7 +135,7 @@ In the following example you will export your Kubernetes `Replica Sets` and `Pod
 </details>
 
 <details>
-<summary> Port K8s Exporter config.yaml </summary>
+<summary> Port K8s Exporter configuration </summary>
 
 ```yaml showLineNumbers
 resources: # List of K8s resources to list, watch, and export to Port.
@@ -173,11 +173,9 @@ resources: # List of K8s resources to list, watch, and export to Port.
 
 </details>
 
-After creating the blueprints, apply the provided `config.yml` file using the installation command:
+After creating the blueprints, open your integration in the [data sources](https://app.getport.io/dev-portal/data-sources) page, apply the provided configuration and click on the `Save & Resync` button.
 
-<ExporterBaseInstallCommand />
-
-Done! the exporter will begin creating and updating objects from your Kubernetes cluster as Port entities shortly.
+Done! The exporter will begin creating and updating objects from your Kubernetes cluster as Port entities shortly.
 
 For instance, you can see a `Deployment Config` and its `Pods` in a single Port entity page:
 
@@ -187,7 +185,7 @@ For instance, you can see a `Deployment Config` and its `Pods` in a single Port 
 
 </center>
 
-:::note
+:::Note
 The Kubernetes exporter was instructed to fill in only some properties in a `Deployment Config` Entity. By its nature, it will keep the values of other properties untouched.
 :::
 
