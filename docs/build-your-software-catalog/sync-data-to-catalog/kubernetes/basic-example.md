@@ -185,7 +185,7 @@ For instance, you can see a `Deployment Config` and its `Pods` in a single Port 
 
 </center>
 
-:::Note
+:::note Note
 The Kubernetes exporter was instructed to fill in only some properties in a `Deployment Config` Entity. By its nature, it will keep the values of other properties untouched.
 :::
 
