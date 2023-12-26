@@ -53,7 +53,6 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `integration.type`                       | The integration type                                                                                          | ✅       |
 | `integration.eventListener.type`         | The event listener type                                                                                       | ✅       |
 | `integration.config.terraformCloudToken` | The Terraform cloud API token token                                                                           | ✅       |
-| `integration.config.terraformCloudHost`  | The Terraform cloud host, e.g., https://app.terraform.io                                                      | ✅       |
 | `integration.config.appHost`             | Your application's host url                                                                                   | ❌       |
 | `scheduledResyncInterval`                | The number of minutes between each resync                                                                     | ❌       |
 | `initializePortResources`                | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
@@ -70,8 +69,7 @@ helm upgrade --install terraform port-labs/port-ocean \
 	--set integration.identifier="my-terraform-cloud-integration"  \
 	--set integration.type="terraform-cloud"  \
 	--set integration.eventListener.type="POLLING"  \
-	--set integration.config.terraformCloudHost="https://app.terraform.io"  \
-  --set integration.config.appHost= "url"\
+    --set integration.config.appHost= "url"\
 	--set integration.secrets.terraformCloudToken="string" \
 ```
 
@@ -118,8 +116,6 @@ jobs:
           -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
           -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
           -e OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_TOKEN=${{ secrets.OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_TOKEN }} \
-          -e OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_HOST=${{ secrets.OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_HOST }} \
-          -e OCEAN__INTEGRATION__CONFIG__APP_HOST=${{ secrets.OCEAN__INTEGRATION__CONFIG__APP_HOST }}\
           -e OCEAN__PORT__CLIENT_ID=${{ secrets.OCEAN__PORT__CLIENT_ID }} \
           -e OCEAN__PORT__CLIENT_SECRET=${{ secrets.OCEAN__PORT__CLIENT_SECRET }} \
           $image_name
@@ -156,8 +152,6 @@ pipeline {
                 script {
                     withCredentials([
                         string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_TOKEN', variable: 'OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_TOKEN'),
-                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_HOST', variable: 'OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_HOST'),
-                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__APP_HOST', variable: 'OCEAN__INTEGRATION__CONFIG__APP_HOST'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_SECRET', variable: 'OCEAN__PORT__CLIENT_SECRET')
                     ]) {
@@ -170,8 +164,6 @@ pipeline {
                                 -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
                                 -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
                                 -e OCEAN__INTEGRATION__CONFIG__TERRAFORM_COUD_TOKEN=$OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_TOKEN \
-                                -e OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_HOST=$OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_HOST \
-                                -e OCEAN__INTEGRATION__CONFIG__APP_HOST=$OCEAN__INTEGRATION__CONFIG__APP_HOST \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
                                 $image_name
