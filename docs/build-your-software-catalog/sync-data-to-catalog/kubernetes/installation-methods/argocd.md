@@ -9,11 +9,13 @@ import FindCredentials from "../../api/\_template_docs/\_find_credentials_collap
 This page will walk you through the installation of the Port Kubernetes Exporter in your Kubernetes cluster using ArgoCD, utilizing it's [Helm Capabilities](https://argo-cd.readthedocs.io/en/stable/user-guide/helm/).
 
 :::info
-You can observe the Helm chart and the available parameters [here](https://github.com/port-labs/helm-charts/tree/main/charts/port-k8s-exporter).
+- You can observe the Helm chart and the available parameters [here](https://github.com/port-labs/helm-charts/tree/main/charts/port-k8s-exporter).
+- For the full chart versions list refer to the [Releases](https://github.com/port-labs/helm-charts/releases?q=port-k8s-exporter&expanded=true) page.
 :::
 
 ## Prerequisites
 
+- [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl) must be installed to apply your installation manifest.
 - [Helm](https://helm.sh) must be installed to use the chart. Please refer to the Helm [documentation](https://helm.sh/docs/intro/install/) for further details about the installation.
 - [ArgoCD](https://argoproj.github.io/cd/) must be installed in your Kubernetes cluster. Please refer to ArgoCD's [documentation](https://argo-cd.readthedocs.io/en/stable/getting_started/#1-install-argo-cd) for further details about the installation.
 - You will need your [Port credentials](/build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials) to install the Kubernetes exporter.
@@ -25,7 +27,7 @@ You can observe the Helm chart and the available parameters [here](https://githu
 
 ## Installation
 
-3. Prepare a [`config.yml`](/build-your-software-catalog/sync-data-to-catalog/kubernetes/#exporter-configyml-file) file that will define which Kubernetes objects to ingest to Port.
+1. Prepare a [`config.yml`](/build-your-software-catalog/sync-data-to-catalog/kubernetes/#exporter-configyml-file) file that will define which Kubernetes objects to ingest to Port.
 We will use the following file in this guide:
 
 ```yaml showLineNumbers
@@ -44,15 +46,16 @@ resources:
               annotations: .metadata.annotations
               status: .status
 ```
+<br/>
 
 2. In your git repo, create a directory called `argocd`.
- ```bash
+```bash
 mkdir argocd
 ```
 
-3. Inside your argocd create a directory for the current deployment. For our example we use `my-port-k8s-exporter`.
+3. Inside your `argocd` directory create another directory for the current installation. For our example we use `my-port-k8s-exporter`.
 
-4. Create a `values.yaml` file in your `my-port-k8s-exporter` directory, with the content of your `config.yml` to the `configMap.config` key:
+4. Create a `values.yaml` file in your `my-port-k8s-exporter` directory, with the content of your `config.yml` from step 1 to the `configMap.config` key and commit the changes to your git repository:
 
 ```yaml showLineNumbers
 configMap:
@@ -72,14 +75,13 @@ configMap:
                   annotations: .metadata.annotations
                   status: .status
 ```
+<br/>
 
-5. Commit the changes to your git repository.
-
-6. Install the `my-port-k8s-exporter` ArgoCD Application by using the following yaml:
+5. Install the `my-port-k8s-exporter` ArgoCD Application by creating the following `my-port-k8s-exporter.yaml` manifest:
 :::note
 Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
 
-For the full chart versions list refer to the ***[Releases](https://github.com/port-labs/helm-charts/releases?q=port-k8s-exporter&expanded=true)*** page.
+Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
 :::
 
 <details>
@@ -122,13 +124,17 @@ spec:
 </details>
 <br/>
 
+6. Apply your application manifest with `kubectl`:
+```bash
+kubectl apply -f my-port-k8s-exporter.yaml
+```
 Done! The exporter will begin creating and updating objects from your Kubernetes cluster as Port entities shortly.
 
 ## Updating exporter configuration
 
 In order to **update** the `config.yml` file deployed on your Kubernetes cluster, simply commit changes to your `values.yaml` file in `argocd/my-port-k8s-exporter/values.yaml`.
 
-ArgoCD will synchronize your new configuration to the ConfigMap
+ArgoCD will synchronize your new configuration.
 
 ## Next Steps
 
