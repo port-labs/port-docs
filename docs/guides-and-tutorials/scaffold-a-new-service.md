@@ -100,8 +100,6 @@ If your organization uses SAML SSO, you will need to authorize your token. Follo
 
 3. Now let's create the workflow file that contains our logic. Under `.github/workflows`, create a new file named `portCreateRepo.yaml` and use the following snippet as its content:
 
-Change `<YOUR-ORG-NAME>` to the name of the organization in which you want to create the new repository.
-
 <details>
 <summary><b>Github workflow (click to expand)</b></summary>
 
