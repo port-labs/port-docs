@@ -10,17 +10,19 @@ import DockerParameters from "./\_terraform_one_time_docker_parameters.mdx"
 
 # Terraform Cloud
 
-Our Terraform integration allows you to import `workspaces` and `runs` from your Terraform Cloud account into Port, according to your mapping and definition.
+Our Terraform Cloud integration allows you to import `workspaces`, `runs` and `state versions` from your Terraform Cloud account into Port, according to your mapping and definition.
 
-The Terraform Cloud Integration for Port enables seamless import and synchronization of `workspaces` and `runs` from your Terraform infrastructure management into Port. This integration allows you to effectively monitor and manage your Terraform Cloud workspaces and runs within the Port platform.
+The Terraform Cloud Integration for Port enables seamless import and synchronization of `workspaces`, `runs`, and `state versions` from your Terraform infrastructure management into Port. This integration allows you to effectively monitor and manage your Terraform Cloud workspaces and runs within the Port platform.
 
 A `Workspace` represents a workspace in Terraform cloud. A workspace is a logical environment where Terraform manages infrastructure, such as a set of cloud resources.
 
 A `Run` represents an instance of Terraform operations (plan, apply, or destroy) executed within a workspace. Each run holds information about the operation status, duration, and other relevant metadata.
 
+A `State Version` represents a versioned state file in Terraform. Each state version is immutable and represents the state of your managed infrastructure at a particular point in time. State versions are used to track the changes in your infrastructure and help with auditing, rollbacks, and historical analysis.
+
 ## Common use cases
 
-- Synchronization of Infrastructure Management: Automatically synchronize workspace and run data from Terraform into Port for centralized tracking and management.
+- Synchronization of Infrastructure Management: Automatically synchronize workspace, run and state version data from Terraform Cloud into Port for centralized tracking and management.
 - Monitoring Run Statuses: Keep track of run outcomes (success, failure, etc.) and durations, providing insights into the health and performance of your infrastructure management processes.
 
 ## Prerequisites
@@ -42,20 +44,18 @@ Using this installation option means that the integration will be able to update
 This table summarizes the available parameters for the installation.
 Set them as you wish in the script below, then copy it and run it in your terminal:
 
-| Parameter                                  | Description                                                                                                   | Required |
-| ------------------------------------------ | ------------------------------------------------------------------------------------------------------------- | -------- |
-| `port.clientId`                            | Your port client id                                                                                           | ✅       |
-| `port.clientSecret`                        | Your port client secret                                                                                       | ✅       |
-| `port.baseUrl`                             | Your port base url, relevant only if not using the default port app                                           | ❌       |
-| `integration.identifier`                   | Change the identifier to describe your integration                                                            | ✅       |
-| `integration.type`                         | The integration type                                                                                          | ✅       |
-| `integration.eventListener.type`           | The event listener type                                                                                       | ✅       |
-| `integration.config.terraformToken`        | The Terraform API token                                                                                       | ✅       |
-| `integration.config.terraformHost`         | The Terraform host, e.g., https://app.terraform.io                                                            | ✅       |
-| `integration.config.terraformOrganization` | The Terraform Organization ID                                                                                 | ✅       |
-| `integration.config.appHost`               | Your application's host url                                                                                   | ❌       |
-| `scheduledResyncInterval`                  | The number of minutes between each resync                                                                     | ❌       |
-| `initializePortResources`                  | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
+| Parameter                                | Description                                                                                                   | Required |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------- |
+| `port.clientId`                          | Your port client id                                                                                           | ✅       |
+| `port.clientSecret`                      | Your port client secret                                                                                       | ✅       |
+| `port.baseUrl`                           | Your port base url, relevant only if not using the default port app                                           | ❌       |
+| `integration.identifier`                 | Change the identifier to describe your integration                                                            | ✅       |
+| `integration.type`                       | The integration type                                                                                          | ✅       |
+| `integration.eventListener.type`         | The event listener type                                                                                       | ✅       |
+| `integration.config.terraformCloudToken` | The Terraform cloud API token token                                                                           | ✅       |
+| `integration.config.appHost`             | Your application's host url                                                                                   | ❌       |
+| `scheduledResyncInterval`                | The number of minutes between each resync                                                                     | ❌       |
+| `initializePortResources`                | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
 
 <br/>
 
@@ -66,13 +66,11 @@ helm upgrade --install terraform port-labs/port-ocean \
 	--set port.clientSecret="PORT_CLIENT_SECRET"  \
 	--set port.baseUrl="https://api.getport.io"  \
 	--set initializePortResources=true  \
-	--set integration.identifier="my-terraform-integration"  \
-	--set integration.type="terraform"  \
+	--set integration.identifier="my-terraform-cloud-integration"  \
+	--set integration.type="terraform-cloud"  \
 	--set integration.eventListener.type="POLLING"  \
-	--set integration.config.terraformHost="https://app.terraform.io"  \
-  --set integration.config.appHost= "url"\
-	--set integration.secrets.terraformToken="string" \
-    --set integration.secrets.terraformOrganization="string"
+    --set integration.config.appHost= "url"\
+	--set integration.secrets.terraformCloudToken="string" \
 ```
 
 </TabItem>
@@ -106,7 +104,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Run Terraform Integration
+      - name: Run Terraform Cloud Integration
         run: |
           # Set Docker image and run the container
           integration_type="terraform-cloud"
@@ -117,10 +115,7 @@ jobs:
           docker run -i --rm --platform=linux/amd64 \
           -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
           -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-          -e OCEAN__INTEGRATION__CONFIG__TERRAFORM_TOKEN=${{ secrets.OCEAN__INTEGRATION__CONFIG__TERRAFORM_TOKEN }} \
-          -e OCEAN__INTEGRATION__CONFIG__TERRAFORM_HOST=${{ secrets.OCEAN__INTEGRATION__CONFIG__TERRAFORM_HOST }} \
-          -e OCEAN__INTEGRATION__CONFIG__TERRAFORM_ORGANIZATION=${{ secrets.OCEAN__INTEGRATION__CONFIG__TERRAFORM_ORGANIZATION }} \
-          -e OCEAN__INTEGRATION__CONFIG__APP_HOST=${{ secrets.OCEAN__INTEGRATION__CONFIG__APP_HOST }}\
+          -e OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_TOKEN=${{ secrets.OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_TOKEN }} \
           -e OCEAN__PORT__CLIENT_ID=${{ secrets.OCEAN__PORT__CLIENT_ID }} \
           -e OCEAN__PORT__CLIENT_SECRET=${{ secrets.OCEAN__PORT__CLIENT_SECRET }} \
           $image_name
@@ -139,7 +134,7 @@ Your Jenkins agent should be able to run docker commands.
 If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
 :::
 
-Make sure to configure the following [Terraf Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) of `Secret Text` type:
+Make sure to configure the following [Terraform Cloud Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) of `Secret Text` type:
 
 <DockerParameters/>
 
@@ -156,10 +151,7 @@ pipeline {
             steps {
                 script {
                     withCredentials([
-                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__TERRAFORM_TOKEN', variable: 'OCEAN__INTEGRATION__CONFIG__TERRAFORM_TOKEN'),
-                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__TERRAFORM_HOST', variable: 'OCEAN__INTEGRATION__CONFIG__TERRAFORM_HOST'),
-                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__TERRAFORM_ORGANIZATION', variable: 'OCEAN__INTEGRATION__CONFIG__TERRAFORM_ORGANIZATION'),
-                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__APP_HOST', variable: 'OCEAN__INTEGRATION__CONFIG__APP_HOST'),
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_TOKEN', variable: 'OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_TOKEN'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_SECRET', variable: 'OCEAN__PORT__CLIENT_SECRET')
                     ]) {
@@ -171,10 +163,7 @@ pipeline {
                             docker run -i --rm --platform=linux/amd64 \
                                 -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
                                 -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-                                -e OCEAN__INTEGRATION__CONFIG__TERRAFORM_TOKEN=$OCEAN__INTEGRATION__CONFIG__TERRAFORM_TOKEN \
-                                -e OCEAN__INTEGRATION__CONFIG__TERRAFORM_HOST=$OCEAN__INTEGRATION__CONFIG__TERRAFORM_HOST \
-                                -e OCEAN__INTEGRATION__CONFIG__TERRAFORM_ORGANIZATION=$OCEAN__INTEGRATION__CONFIG__TERRAFORM_ORGANIZATION \
-                                -e OCEAN__INTEGRATION__CONFIG__APP_HOST=$OCEAN__INTEGRATION__CONFIG__APP_HOST \
+                                -e OCEAN__INTEGRATION__CONFIG__TERRAFORM_COUD_TOKEN=$OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_TOKEN \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
                                 $image_name
@@ -215,9 +204,9 @@ resources:
         mappings:
           identifier: .id
           title: .attributes.name
-          blueprint: '"terraformWorkspace"'
+          blueprint: '"terrafomCloudWorkspace"'
           properties:
-            workspaceName: .attributes.name
+            organization: .relationships.organization.data.id
             createdAt: .attributes."created-at"
             updatedAt: .attributes."updated-at"
             terraformVersion: .attributes."terraform-version"
@@ -238,6 +227,7 @@ The following resources can be used to map data from Terraform Cloud, it is poss
 
 - [`Workspace`](https://www.terraform.io/docs/cloud/api/workspaces.html)
 - [`Run`](https://www.terraform.io/docs/cloud/api/runs.html)
+- [`State Version`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/state-versions)
 
 :::
 
@@ -261,7 +251,7 @@ The following resources can be used to map data from Terraform Cloud, it is poss
         ...
   ```
 
-- The `port`, `entity` and the `mappings` keys are used to map the Terraform object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
+- The `port`, `entity` and the `mappings` keys are used to map the Terraform Cloud object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
 
 ```yaml showLineNumbers
 resources:
@@ -273,9 +263,9 @@ resources:
         mappings:
           identifier: .id
           title: .attributes.name
-          blueprint: '"terraformWorkspace"'
+          blueprint: '"terrafomCloudWorkspace"'
           properties:
-            workspaceName: .attributes.name
+            organization: .relationships.organization.data.id
             createdAt: .attributes."created-at"
             updatedAt: .attributes."updated-at"
             terraformVersion: .attributes."terraform-version"
@@ -283,6 +273,8 @@ resources:
             executionMode: .attributes."execution-mode"
             resourceCount: .attributes."resource-count"
             latestChangeAt: .attributes."latest-change-at"
+          relations:
+            currentStateVersion: .relationships."current-state-version".data.id
 ```
 
 :::tip Blueprint key
@@ -291,12 +283,12 @@ Note the value of the `blueprint` key - if you want to use a hardcoded string, y
 
 ### Ingest data into Port
 
-To ingest Terraform objects using the [integration configuration](#configuration-structure), you can follow the steps below:
+To ingest Terraform Cloud objects using the [integration configuration](#configuration-structure), you can follow the steps below:
 
 1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using Terraform.
+2. Select a blueprint you want to ingest using Terraform Cloud.
 3. Choose the **Ingest Data** option from the menu.
-4. Select Terraform under the IaC category.
+4. Select Terraform Cloud under the IaC category.
 5. Add the contents of your [integration configuration](#configuration-structure) to the editor.
 6. Click `Resync`.
 
@@ -311,16 +303,16 @@ Examples of blueprints and the relevant integration configurations:
 
 ```json showLineNumbers
 {
-  "identifier": "terraformWorkspace",
+  "identifier": "terraformCloudWorkspace",
   "description": "This blueprint represents a workspace in Terraform Cloud",
-  "title": "Terraform Workspace",
+  "title": "Terraform Cloud Workspace",
   "icon": "Terraform",
   "schema": {
     "properties": {
-      "workspaceName": {
+      "organization": {
         "type": "string",
-        "title": "Workspace Name",
-        "description": "The name of the Terraform cloud workspace"
+        "title": "Organization",
+        "description": "The organization within which the workspace belongs to"
       },
       "createdAt": {
         "type": "string",
@@ -336,7 +328,7 @@ Examples of blueprints and the relevant integration configurations:
       },
       "terraformVersion": {
         "type": "string",
-        "title": "Terraform Version",
+        "title": "Terraform Cloud Version",
         "description": "Version of Terraform cloud used by the workspace"
       },
       "locked": {
@@ -361,6 +353,14 @@ Examples of blueprints and the relevant integration configurations:
         "description": "Timestamp of the latest change in the workspace"
       }
     }
+  },
+  "relations": {
+    "currentStateVersion": {
+      "title": "Current State Version",
+      "target": "terraformCloudStateVersion",
+      "required": false,
+      "many": false
+    }
   }
 }
 ```
@@ -371,25 +371,26 @@ Examples of blueprints and the relevant integration configurations:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
-resources:
-  - kind: workspace
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: .id
-          title: .attributes.name
-          blueprint: '"terraformWorkspace"'
-          properties:
-            workspaceName: .attributes.name
-            createdAt: .attributes."created-at"
-            updatedAt: .attributes."updated-at"
-            terraformVersion: .attributes."terraform-version"
-            locked: .attributes.locked
-            executionMode: .attributes."execution-mode"
-            resourceCount: .attributes."resource-count"
-            latestChangeAt: .attributes."latest-change-at"
+- kind: workspace
+  selector:
+    query: "true"
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .attributes.name
+        blueprint: '"terraformCloudWorkspace"'
+        properties:
+          organization: .relationships.organization.data.id
+          createdAt: .attributes."created-at"
+          updatedAt: .attributes."updated-at"
+          terraformVersion: .attributes."terraform-version"
+          locked: .attributes.locked
+          executionMode: .attributes."execution-mode"
+          resourceCount: .attributes."resource-count"
+          latestChangeAt: .attributes."latest-change-at"
+        relations:
+          currentStateVersion: .relationships."current-state-version".data.id
 ```
 
 </details>
@@ -401,75 +402,68 @@ resources:
 
 ```json showLineNumbers
 {
-  "data": {
-    "identifier": "terraformRun",
-    "description": "This blueprint represents a run in Terraform cloud",
-    "title": "Terraform Run",
-    "icon": "Terraform",
-    "schema": {
-      "properties": {
-        "runId": {
-          "type": "string",
-          "title": "Run ID",
-          "description": "The unique identifier of the Terraform run"
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "Creation Time",
-          "description": "The creation timestamp of the run"
-        },
-        "status": {
-          "type": "string",
-          "title": "Run Status",
-          "description": "The current status of the run"
-        },
-        "hasChanges": {
-          "type": "boolean",
-          "title": "Has Changes",
-          "description": "Indicates whether the run has changes"
-        },
-        "isDestroy": {
-          "type": "boolean",
-          "title": "Is Destroy",
-          "description": "Indicates whether the run is a destroy operation"
-        },
-        "message": {
-          "type": "string",
-          "title": "Run Message",
-          "description": "Message associated with the run"
-        },
-        "terraformVersion": {
-          "type": "string",
-          "title": "Terraform Version",
-          "description": "Version of Terraform cloud used in the run"
-        },
-        "appliedAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "Applied Time",
-          "description": "Timestamp when the run was applied"
-        },
-        "plannedAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "Planned Time",
-          "description": "Timestamp when the run was planned"
-        },
-        "source": {
-          "type": "string",
-          "title": "Run Source",
-          "description": "The source of the run initiation"
-        }
+  "identifier": "terraformCloudRun",
+  "description": "This blueprint represents a run in Terraform cloud",
+  "title": "Terraform Cloud Run",
+  "icon": "Terraform",
+  "schema": {
+    "properties": {
+      "createdAt": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Creation Time",
+        "description": "The creation timestamp of the run"
+      },
+      "status": {
+        "type": "string",
+        "title": "Run Status",
+        "description": "The current status of the run"
+      },
+      "hasChanges": {
+        "type": "boolean",
+        "title": "Has Changes",
+        "description": "Indicates whether the run has changes"
+      },
+      "isDestroy": {
+        "type": "boolean",
+        "title": "Is Destroy",
+        "description": "Indicates whether the run is a destroy operation"
+      },
+      "message": {
+        "type": "string",
+        "title": "Run Message",
+        "description": "Message associated with the run"
+      },
+      "terraformVersion": {
+        "type": "string",
+        "title": "Terraform Cloud Version",
+        "description": "Version of Terraform cloud used in the run"
+      },
+      "appliedAt": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Applied Time",
+        "description": "Timestamp when the run was applied"
+      },
+      "plannedAt": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Planned Time",
+        "description": "Timestamp when the run was planned"
+      },
+      "source": {
+        "type": "string",
+        "title": "Run Source",
+        "description": "The source of the run initiation"
       }
-    },
-    "relations": {
-      "terraformWorkspace": {
-        "title": "Terraform Workspace",
-        "target": "terraformWorkspace",
-        "required": true,
-        "many": false
-      }
+    }
+  },
+  "relations": {
+    "terraformCloudWorkspace": {
+      "title": "Terraform Cloud Workspace",
+      "target": "terraformCloudWorkspace",
+      "required": false,
+      "many": false
     }
   }
 }
@@ -489,9 +483,8 @@ resources:
       mappings:
         identifier: .id
         title: .attributes.message
-        blueprint: '"terraformRun"'
+        blueprint: '"terraformCloudRun"'
         properties:
-          runId: .id
           createdAt: .attributes."created-at"
           status: .attributes.status
           hasChanges: .attributes."has-changes"
@@ -502,14 +495,114 @@ resources:
           plannedAt: .attributes."status-timestamps"."planned-at"
           source: .attributes.source
         relations:
-          terraformWorkspace: .relationships.workspace.data.id
+          terraformCloudWorkspace: .relationships.workspace.data.id
+```
+
+</details>
+
+### State Version
+
+<details>
+<summary>State Version blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "terraformCloudStateVersion",
+  "description": "This blueprint represents a version of a Terraform state version",
+  "title": "Terraform Cloud State Versions",
+  "icon": "Terraform",
+  "schema": {
+    "properties": {
+      "createdAt": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Creation Time",
+        "description": "Timestamp when the state version was created"
+      },
+      "serial": {
+        "type": "number",
+        "title": "Serial Number",
+        "description": "A unique identifier for this version within the workspace"
+      },
+      "status": {
+        "type": "string",
+        "title": "Status",
+        "description": "The current status of the state version (e.g., 'queued', 'finished')"
+      },
+      "size": {
+        "type": "number",
+        "title": "Size",
+        "description": "The size of the resources"
+      },
+      "isResourcesProcessed": {
+        "type": "boolean",
+        "title": "Is Resources Processed",
+        "description": "Whethere the resources has been processed"
+      },
+      "hostedStateDownloadUrl": {
+        "type": "string",
+        "title": "Download Url",
+        "format": "url",
+        "description": "Hosted state version download url "
+      },
+      "hostedJsonDownloadUrl": {
+        "type": "string",
+        "title": "Download Url",
+        "format": "url",
+        "description": "Url for downloading state version in json format"
+      },
+      "outputData": {
+        "type": "array",
+        "title": "Output",
+        "description": "output returned from state version"
+      },
+      "vcsCommitUrl": {
+        "type": "string",
+        "title": "VCS Commit URL",
+        "format": "url",
+        "description": "URL of the VCS commit that triggered this state version"
+      }
+    }
+  },
+  "relations": {},
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {}
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+- kind: state-version
+  selector:
+    query: "true"
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .id
+        blueprint: '"terraformCloudStateVersion"'
+        properties:
+          createdAt: .attributes."created-at"
+          serial: .attributes.serial
+          status: .attributes.status
+          size: .attributes.size
+          isResourcesProcessed: .attributes."resources-processed"
+          hostedStateDownloadUrl: .attributes."hosted-state-download-url"
+          hostedJsonDownloadUrl: .attributes."hosted-json-state-download-url"
+          vcsCommitUrl: .attributes."vcs-commit-url"
+          outputData: .__output
 ```
 
 </details>
 
 ## Let's Test It
 
-This section includes a sample response data from Terrform. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+This section includes a sample response data from Terrform Cloud. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
 
 ### Payload
 
@@ -679,7 +772,7 @@ Here is an example of the payload structure from Terraform:
 </details>
 
 <details>
-<summary> Runs response data</summary>
+<summary> Run response data</summary>
 
 ```json showLineNumbers
 {
@@ -826,6 +919,418 @@ Here is an example of the payload structure from Terraform:
 
 </details>
 
+<details>
+<summary> State Version response data</summary>
+
+```json showLineNumbers
+{
+  "id": "sv-wZEoyjPg1KYsjYZg",
+  "type": "state-versions",
+  "attributes": {
+    "created-at": "2023-12-20T07:08:14.113Z",
+    "size": 8554,
+    "hosted-state-download-url": "https://app.terraform.io/api/state-versions/sv-wZEoyjPg1KYsjYZg/hosted_state",
+    "hosted-json-state-download-url": "https://app.terraform.io/api/state-versions/sv-wZEoyjPg1KYsjYZg/hosted_json_state",
+    "modules": {
+      "root": {
+        "random_string": 1,
+        "aws_db_instance": 1,
+        "aws_db_subnet_group": 1,
+        "data.aws_availability_zones": 1
+      },
+      "root.vpc": {
+        "aws_eip": 2,
+        "aws_vpc": 1,
+        "aws_route": 3,
+        "aws_subnet": 4,
+        "aws_nat_gateway": 2,
+        "aws_route_table": 3,
+        "aws_internet_gateway": 1,
+        "aws_route_table_association": 4
+      },
+      "root.elb-http.elb": {
+        "aws_elb": 1
+      },
+      "root.ec2-instances": {
+        "aws_instance": 4,
+        "data.aws_ami": 1
+      },
+      "root.lb-security-group.sg": {
+        "aws_security_group": 1,
+        "aws_security_group_rule": 6
+      },
+      "root.app-security-group.sg": {
+        "aws_security_group": 1,
+        "aws_security_group_rule": 6
+      },
+      "root.elb-http.elb-attachment": {
+        "aws_elb_attachment": 4
+      }
+    },
+    "providers": {
+      "provider[\"registry.terraform.io/hashicorp/aws\"]": {
+        "aws_eip": 2,
+        "aws_elb": 1,
+        "aws_vpc": 1,
+        "aws_route": 3,
+        "aws_subnet": 4,
+        "aws_instance": 4,
+        "data.aws_ami": 1,
+        "aws_db_instance": 1,
+        "aws_nat_gateway": 2,
+        "aws_route_table": 3,
+        "aws_elb_attachment": 4,
+        "aws_security_group": 2,
+        "aws_db_subnet_group": 1,
+        "aws_internet_gateway": 1,
+        "aws_security_group_rule": 12,
+        "aws_route_table_association": 4,
+        "data.aws_availability_zones": 1
+      },
+      "provider[\"registry.terraform.io/hashicorp/random\"]": {
+        "random_string": 1
+      }
+    },
+    "resources": [
+      {
+        "name": "available",
+        "type": "data.aws_availability_zones",
+        "count": 1,
+        "module": "root",
+        "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+        "index-keys": []
+      },
+      {
+        "name": "database",
+        "type": "aws_db_instance",
+        "count": 1,
+        "module": "root",
+        "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+        "index-keys": []
+      },
+      {
+        "name": "private",
+        "type": "aws_db_subnet_group",
+        "count": 1,
+        "module": "root",
+        "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+        "index-keys": []
+      },
+      {
+        "name": "lb_id",
+        "type": "random_string",
+        "count": 1,
+        "module": "root",
+        "provider": "provider[\"registry.terraform.io/hashicorp/random\"]",
+        "index-keys": []
+      },
+      {
+        "name": "this_name_prefix",
+        "type": "aws_security_group",
+        "count": 1,
+        "module": "root.app_security_group.sg",
+        "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+        "index-keys": []
+      },
+      {
+        "name": "egress_rules",
+        "type": "aws_security_group_rule",
+        "count": 1,
+        "module": "root.app_security_group.sg",
+        "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+        "index-keys": []
+      },
+      {
+        "name": "ingress_rules",
+        "type": "aws_security_group_rule",
+        "count": 4,
+        "module": "root.app_security_group.sg",
+        "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+        "index-keys": []
+      },
+      {
+        "name": "ingress_with_self",
+        "type": "aws_security_group_rule",
+        "count": 1,
+        "module": "root.app_security_group.sg",
+        "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+        "index-keys": []
+      },
+      {
+        "name": "amazon_linux",
+        "type": "data.aws_ami",
+        "count": 1,
+        "module": "root.ec2_instances",
+        "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+        "index-keys": []
+      },
+      {
+        "name": "app",
+        "type": "aws_instance",
+        "count": 4,
+        "module": "root.ec2_instances",
+        "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+        "index-keys": []
+      },
+      {
+        "name": "this",
+        "type": "aws_elb",
+        "count": 1,
+        "module": "root.elb_http.elb",
+        "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+        "index-keys": []
+      },
+      {
+        "name": "this",
+        "type": "aws_elb_attachment",
+        "count": 4,
+        "module": "root.elb_http.elb_attachment",
+        "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+        "index-keys": []
+      },
+      {
+        "name": "this_name_prefix",
+        "type": "aws_security_group",
+        "count": 1,
+        "module": "root.lb_security_group.sg",
+        "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+        "index-keys": []
+      },
+      {
+        "name": "egress_rules",
+        "type": "aws_security_group_rule",
+        "count": 1,
+        "module": "root.lb_security_group.sg",
+        "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+        "index-keys": []
+      },
+      {
+        "name": "ingress_rules",
+        "type": "aws_security_group_rule",
+        "count": 4,
+        "module": "root.lb_security_group.sg",
+        "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+        "index-keys": []
+      },
+      {
+        "name": "ingress_with_self",
+        "type": "aws_security_group_rule",
+        "count": 1,
+        "module": "root.lb_security_group.sg",
+        "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+        "index-keys": []
+      },
+      {
+        "name": "nat",
+        "type": "aws_eip",
+        "count": 2,
+        "module": "root.vpc",
+        "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+        "index-keys": []
+      },
+      {
+        "name": "this",
+        "type": "aws_internet_gateway",
+        "count": 1,
+        "module": "root.vpc",
+        "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+        "index-keys": []
+      },
+      {
+        "name": "this",
+        "type": "aws_nat_gateway",
+        "count": 2,
+        "module": "root.vpc",
+        "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+        "index-keys": []
+      },
+      {
+        "name": "private_nat_gateway",
+        "type": "aws_route",
+        "count": 2,
+        "module": "root.vpc",
+        "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+        "index-keys": []
+      },
+      {
+        "name": "public_internet_gateway",
+        "type": "aws_route",
+        "count": 1,
+        "module": "root.vpc",
+        "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+        "index-keys": []
+      },
+      {
+        "name": "private",
+        "type": "aws_route_table",
+        "count": 2,
+        "module": "root.vpc",
+        "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+        "index-keys": []
+      },
+      {
+        "name": "public",
+        "type": "aws_route_table",
+        "count": 1,
+        "module": "root.vpc",
+        "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+        "index-keys": []
+      },
+      {
+        "name": "private",
+        "type": "aws_route_table_association",
+        "count": 2,
+        "module": "root.vpc",
+        "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+        "index-keys": []
+      },
+      {
+        "name": "public",
+        "type": "aws_route_table_association",
+        "count": 2,
+        "module": "root.vpc",
+        "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+        "index-keys": []
+      },
+      {
+        "name": "private",
+        "type": "aws_subnet",
+        "count": 2,
+        "module": "root.vpc",
+        "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+        "index-keys": []
+      },
+      {
+        "name": "public",
+        "type": "aws_subnet",
+        "count": 2,
+        "module": "root.vpc",
+        "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+        "index-keys": []
+      },
+      {
+        "name": "this",
+        "type": "aws_vpc",
+        "count": 1,
+        "module": "root.vpc",
+        "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+        "index-keys": []
+      }
+    ],
+    "resources-processed": true,
+    "serial": 3,
+    "state-version": 4,
+    "status": "finalized",
+    "terraform-version": "1.6.6",
+    "vcs-commit-url": "None",
+    "vcs-commit-sha": "None"
+  },
+  "relationships": {
+    "run": {
+      "data": {
+        "id": "run-9XBzSuHzfgwTZNak",
+        "type": "runs"
+      }
+    },
+    "rollback-state-version": {
+      "data": "None"
+    },
+    "created-by": {
+      "data": {
+        "id": "user-VGzYMVaTX6nVYZ3U",
+        "type": "users"
+      },
+      "links": {
+        "self": "/api/v2/users/user-VGzYMVaTX6nVYZ3U",
+        "related": "/api/v2/runs/run-9XBzSuHzfgwTZNak/created-by"
+      }
+    },
+    "workspace": {
+      "data": {
+        "id": "ws-pN259iR1J3cW8ivr",
+        "type": "workspaces"
+      }
+    },
+    "outputs": {
+      "data": [
+        {
+          "id": "wsout-uJCPifEGM1fC5UF1",
+          "type": "state-version-outputs"
+        },
+        {
+          "id": "wsout-SD3QFXBkcK41c8Vq",
+          "type": "state-version-outputs"
+        },
+        {
+          "id": "wsout-ryDfZJ4dwxuqR5NU",
+          "type": "state-version-outputs"
+        },
+        {
+          "id": "wsout-5vnxsMuMaorwojVL",
+          "type": "state-version-outputs"
+        },
+        {
+          "id": "wsout-cP7abYGPeXpgJfrt",
+          "type": "state-version-outputs"
+        }
+      ],
+      "links": {
+        "related": "/api/v2/state-versions/sv-wZEoyjPg1KYsjYZg/outputs"
+      }
+    }
+  },
+  "links": {
+    "self": "/api/v2/state-versions/sv-wZEoyjPg1KYsjYZg"
+  },
+  "__output": [
+    {
+      "id": "wsout-syLHF4vVm1ELesRH",
+      "type": "state-version-outputs",
+      "attributes": {
+        "name": "lb_url",
+        "sensitive": false,
+        "type": "string",
+        "value": "http://lb-r4c-project-alpha-dev-81440499.eu-west-1.elb.amazonaws.com/",
+        "detailed-type": "string"
+      },
+      "links": {
+        "self": "/api/v2/state-version-outputs/wsout-syLHF4vVm1ELesRH"
+      }
+    },
+    {
+      "id": "wsout-yCuZCAT1MBrpW9rL",
+      "type": "state-version-outputs",
+      "attributes": {
+        "name": "vpc_id",
+        "sensitive": false,
+        "type": "string",
+        "value": "vpc-085a343aa3f06a9d7",
+        "detailed-type": "string"
+      },
+      "links": {
+        "self": "/api/v2/state-version-outputs/wsout-yCuZCAT1MBrpW9rL"
+      }
+    },
+    {
+      "id": "wsout-ujnf5q4ZS3LTEFmL",
+      "type": "state-version-outputs",
+      "attributes": {
+        "name": "web_server_count",
+        "sensitive": false,
+        "type": "number",
+        "value": 4,
+        "detailed-type": "number"
+      },
+      "links": {
+        "self": "/api/v2/state-version-outputs/wsout-ujnf5q4ZS3LTEFmL"
+      }
+    }
+  ]
+}
+```
+
+</details>
+
 ### Mapping Result
 
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
@@ -876,6 +1381,74 @@ The combination of the sample payload and the Ocean configuration generates the 
     "source": "tfe-api"
   },
   "relations": {}
+}
+```
+
+</details>
+
+<details>
+<summary> State Version in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "sv-wZEoyjPg1KYsjYZg",
+  "title": "sv-wZEoyjPg1KYsjYZg",
+  "team": [],
+  "properties": {
+    "createdAt": "2023-12-20T07:08:14.113Z",
+    "serial": 3,
+    "status": "finalized",
+    "hostedStateDownloadUrl": "https://app.terraform.io/api/state-versions/sv-wZEoyjPg1KYsjYZg/hosted_state",
+    "hostedJsonDownloadUrl": "https://app.terraform.io/api/state-versions/sv-wZEoyjPg1KYsjYZg/hosted_json_state",
+    "outputData": [
+      {
+        "id": "wsout-syLHF4vVm1ELesRH",
+        "type": "state-version-outputs",
+        "attributes": {
+          "name": "lb_url",
+          "sensitive": false,
+          "type": "string",
+          "value": "http://lb-r4c-project-alpha-dev-81440499.eu-west-1.elb.amazonaws.com/",
+          "detailed-type": "string"
+        },
+        "links": {
+          "self": "/api/v2/state-version-outputs/wsout-syLHF4vVm1ELesRH"
+        }
+      },
+      {
+        "id": "wsout-yCuZCAT1MBrpW9rL",
+        "type": "state-version-outputs",
+        "attributes": {
+          "name": "vpc_id",
+          "sensitive": false,
+          "type": "string",
+          "value": "vpc-085a343aa3f06a9d7",
+          "detailed-type": "string"
+        },
+        "links": {
+          "self": "/api/v2/state-version-outputs/wsout-yCuZCAT1MBrpW9rL"
+        }
+      },
+      {
+        "id": "wsout-ujnf5q4ZS3LTEFmL",
+        "type": "state-version-outputs",
+        "attributes": {
+          "name": "web_server_count",
+          "sensitive": false,
+          "type": "number",
+          "value": 4,
+          "detailed-type": "number"
+        },
+        "links": {
+          "self": "/api/v2/state-version-outputs/wsout-ujnf5q4ZS3LTEFmL"
+        }
+      }
+    ],
+    "size": 8554,
+    "isResourcesProcessed": true
+  },
+  "relations": {},
+  "icon": "Terraform"
 }
 ```
 
