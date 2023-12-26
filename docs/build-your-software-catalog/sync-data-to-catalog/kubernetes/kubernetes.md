@@ -40,7 +40,7 @@ Port's Kubernetes exporter allows you to bring all the data supported by the K8s
 
 The exporter is deployed using a Helm chart installed on the cluster. Once it is set up, it continues to sync changes, meaning that all changes, deletions or additions are accurately and automatically reflected in Port.
 
-The helm chart uses a YAML configuration stored in the integration within your Portal. This configuration describe the ETL process responsible for loading data into the developer portal. The approach reflects a golden middle between an overly opinionated K8s visualization that might not work for everyone and a too-broad approach that could introduce unneeded complexity into the developer portal.
+The helm chart uses a YAML configuration stored in the integration within your Portal. This configuration describes the ETL process responsible for loading data into the developer portal. The approach reflects a golden middle between an overly opinionated K8s visualization that might not work for everyone and a too-broad approach that could introduce unneeded complexity into the developer portal.
 
 Here is an example snippet from the integration configuration which demonstrates the ETL process for getting `ReplicaSet` data from the cluster and into the software catalog:
 
