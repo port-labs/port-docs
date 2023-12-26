@@ -100,8 +100,6 @@ If your organization uses SAML SSO, you will need to authorize your token. Follo
 
 3. Now let's create the workflow file that contains our logic. Under `.github/workflows`, create a new file named `portCreateRepo.yaml` and use the following snippet as its content:
 
-Change `<YOUR-ORG-NAME>` to the name of the organization in which you want to create the new repository.
-
 <details>
 <summary><b>Github workflow (click to expand)</b></summary>
 
@@ -182,9 +180,7 @@ Congratulations! You can now create services easily from Port 💪🏽
 
 ### Conclusion
 
-Creating a service is not just a periodic task developers undertake, but a vital step that can occur on a monthly basis. However, it's crucial to recognize that this is only a fragment of the broader experience that we're striving to create for developers.  
-Our ultimate goal is to facilitate a seamless transition from ideation to production. In doing so, we aim to eliminate the need for developers to navigate through a plethora of tools, reducing friction and accelerating the time-to-production.  
-In essence, we're not just building a tool, but sculpting an ecosystem that empowers developers to bring new features to life with utmost efficiency.
+Creating scorecards is the first step in setting standards in our development lifecycle. However, to ensure these standards are met, we need to turn rule violations into action items. By automating Slack reminders and the creation of Jira tasks, we can drive change across the entire organization using familiar tools to combine it natively within our delievery lifecycle.
 
 More scaffolding examples can be found here:
 
