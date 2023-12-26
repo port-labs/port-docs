@@ -70,7 +70,7 @@ The following event listener types are supported:
 
 Available event listeners configuration parameters can be found [here](https://github.com/port-labs/helm-charts/blob/main/charts/port-k8s-exporter/README.md#chart)
 
-:::caution
+:::caution multiple exporter instances
 The event listeners that are currently available do not support multiple instances of the same exporter
 :::
 
