@@ -1,355 +1,127 @@
 ---
 sidebar_position: 2
-title: Quickstart
-sidebar_label: ⏱️ Quickstart
+title: Getting started
+sidebar_label: ⏱️ Getting started
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
-# ⏱️ Quickstart
+# ⏱️ Getting started
 
-This guide takes 7 minutes to complete, and aims to demonstrate the potential of a developer portal for you and your developers.
+After [signing up](https://app.getport.io) to Port, you will be prompted to follow an onboarding process that includes ingesting your Git repositories into your developer portal.  
 
-<center>
+After completing the onboarding process, Port will create some components for you (using your real data 😎) in order to show you the potential of your portal.  
 
-<iframe width="60%" height="400" src="https://www.youtube.com/embed/Oqq-VA4a_fQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+We highly recommend completing the onboarding process in order to get a basic understanding of Port and an idea of how a good developer portal can help you and your developers.  
 
-</center>
-
-### The goal of this guide
-
-In this guide we will model a repository from your Git provider in Port, using your real data.
-
-After completing it, you will get a sense of how it can benefit different personas in your organization:
-
-- Developers will be able to see all the services in the organization and their relevant metadata.
-- Developers will be able to follow the organization's standards for production readiness.
-- R&D managers will be able to get a bird's eye view of the organization's production readiness.
-- Platform engineers will be able to customize Port to curate the developer's and R&D manager's experience.
-
-### 1. Sign-up to Port
-
-Head over to [app.getport.io](https://app.getport.io) and create an account.
-
-### 2. Create your first blueprint!
-
-[Blueprints](/build-your-software-catalog/define-your-data-model/setup-blueprint/) are one of Port's basic building blocks, used to represent any data source in your infrastructure.  
-We will now create a `Service` blueprint to model a Git repository on Github/Bitbucket.
-
-1. Go to your [Builder](https://app.getport.io/dev-portal/data-model), click on the `+ Blueprint` button:
-
-<img src='/img/quickstart/builderAddCustomBlueprint.png' width='50%' />
-
-<br/>
-
-:::tip TIP
-If you already have one or more blueprints in your Builder, the button to create a new custom blueprint will appear in the top right corner:
-
-<img src='/img/quickstart/builderAddCustomBlueprintExisting.png' width='30%' />
+:::info onboarding skipped
+If you chose to **skip** the onboarding process, you can bridge the gap by connecting Port to your desired Git provider:
+- Go to the [data-sources page](https://app.getport.io/dev-portal/data-sources) of your portal.
+- Click on `+ Data source` in the top right corner, and choose your desired Git provider.
 :::
 
-<br/>
+## Initial portal experience
 
-2. Click on the `Edit JSON` button in the top right corner. Here you can define a blueprint and its properties using JSON.
+After completing the onboarding process, Port will create some components for you (using your real data 😎) in order to show you the potential of your portal. In this walkthrough, we will go over them and learn about the different pillars of Port.
 
-3. Replace the example content with the following definition, then click `Create`:
+### Homepage
 
-<details>
-<summary><b>Blueprint JSON (click to expand)</b></summary>
+Let's start in our [homepage](https://app.getport.io/organization/home). The homepage serves as a hub that accomodates your developers' routines. It is a fully-customizable dashboard, where you can create widgets to visualize & track data that matters to you and your developers.  
 
-```json showLineNumbers
-{
-  "identifier": "service",
-  "title": "Service",
-  "description": "A microservice in your organization",
-  "icon": "Microservice",
-  "schema": {
-    "properties": {
-      "readme": {
-        "title": "README",
-        "description": "This service's readme file",
-        "type": "string",
-        "format": "markdown"
-      },
-      "url": {
-        "title": "Repository URL",
-        "description": "A link to this service's Git repository",
-        "type": "string",
-        "format": "url"
-      },
-      "language": {
-        "title": "Language",
-        "description": "This service's main code language",
-        "type": "string"
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "relations": {}
-}
-```
+Initially, your homepage contains two widgets:
+1. A markdown file that introduces the portal and its contents. Such a widget can be used to relay information to your developers or describe actions, blueprints and entities in the portal.
+2. An iframe widget with a walkthrough video.
 
-</details>
+**Learn more:**
 
-Congratulations, you have successfully modeled a basic Git repository 🥳  
-You can now see the <PortTooltip id="blueprint">blueprint</PortTooltip> in your `Builder`:
-
-![builderAfterBpCreate](/img/quickstart/builderAfterBpCreate.png)
-
-Now let's connect our <PortTooltip id="blueprint">blueprint</PortTooltip> to a data source and fill it with real data!
-
-### 3. Ingest your services' data into Port
-
-We will now see how to import services (Git repositories) into your <PortTooltip id="catalog">software catalog</PortTooltip>.
-
-1. To export and sync data from Github or BitBucket, Port provides a simple application. Choose your preferred provider and install the app:
-
-<Tabs groupId="git-provider" queryString values={[
-{label: "Github", value: "github"},
-{label: "BitBucket", value: "bitbucket"},
-{label: "Gitlab", value: "gitlab"}
-]}>
-
-<TabItem value="github">
-
-Install [Github app](https://github.com/apps/getport-io) in the entire organization.
-
-:::info NOTE
-Make sure to install the app in the entire organization (and not in a single repository). This way Port will automatically create <PortTooltip id="entity">entities</PortTooltip> for all repositories.
-:::
-
-</TabItem>
-
-<TabItem value="bitbucket">
-
-Install [BitBucket app](https://marketplace.atlassian.com/apps/1229886/port-connector-for-bitbucket?hosting=cloud&tab=overview) in the entire organization.
-
-:::info NOTE
-Make sure to install the app in the entire organization (and not in a single repository). This way Port will automatically create <PortTooltip id="entity">entities</PortTooltip> for all repositories.
-:::
-
-</TabItem>
-
-<TabItem value="gitlab">
-
-Port supports Gitlab using the [ocean integration](http://ocean.getport.io). Follow [these instructions](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/gitlab/installation) to install the integration, then come back to this guide.
-
-</TabItem>
-
-</Tabs>
-
-Once installed, you will see new data sources in the `Data Sources` tab of the builder page, waiting to be used (may take a few seconds to appear):
-
-![dataSourcesGithub](/img/quickstart/dataSourcesGithub.png)
-
-2. Finally, we need to map the desired information from our Git provider's API to the properties of the <PortTooltip id="blueprint">blueprint</PortTooltip> we created in Port. For this guide, we will provide you with mapping so you do not need to do anything yourself. If you want to dive further into this, see [Port's Git integrations](/build-your-software-catalog/sync-data-to-catalog/git/).
-
-In the `Data sources` tab, click on the exporter you installed. In the `Mapping` tab paste the following snippet (according to your Git provider), then click `Save & Resync`:
-
-<Tabs groupId="git-provider" queryString values={[
-{label: "Github", value: "github"},
-{label: "BitBucket", value: "bitbucket"},
-{label: "Gitlab", value: "gitlab"}
-]}>
-
-<TabItem value="github">
-
-<details>
-<summary><b>Github blueprint mapping (click to expand)</b></summary>
-
-```yaml showLineNumbers
-resources:
-  - kind: repository
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: .name
-          title: .name
-          blueprint: '"service"'
-          properties:
-            readme: file://README.md
-            url: .html_url
-            language: .language
-```
-
-</details>
-</TabItem>
-
-<TabItem value="bitbucket">
-
-<details>
-<summary><b>BitBucket blueprint mapping (click to expand)</b></summary>
-
-```yaml showLineNumbers
-resources:
-  - kind: repository
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: ".name"
-          title: ".name"
-          blueprint: '"service"'
-          properties:
-            readme: file://README.md
-            url: ".links.html.href"
-            language: ".language"
-```
-
-</details>
-</TabItem>
-
-<TabItem value="gitlab">
-<details>
-<summary><b>Gitlab blueprint mapping (click to expand)</b></summary>
-
-```yaml showLineNumbers
-resources:
-  - kind: project
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: .path_with_namespace | gsub(" "; "")
-          title: .name
-          blueprint: '"service"'
-          properties:
-            readme: file://README.md
-            url: .web_url
-            language: .__languages | to_entries | max_by(.value) | .key
-```
-
-</details>
-</TabItem>
-</Tabs>
-
-<img src='/img/quickstart/githubRepoMapping.png' width='750rem' />
+- [Dashboard widgets](https://docs.getport.io/customize-pages-dashboards-and-plugins/dashboards/#widget-types)
 
 ---
 
-Now head back to your `Catalog`, and go to the `Services` page.  
-We can see that Port has created <PortTooltip id="entity">entities</PortTooltip> for us representing our repositories, filled with real data: 🥳
+### Blueprints
 
-![catalogAfterRepoCreation](/img/quickstart/catalogAfterRepoCreation.png)
+A blueprint is Port's basic building block, used to model any data source you would like to add to your software catalog.  
+Head over to your [builder](https://app.getport.io/dev-portal/data-model) - this is where you create, edit and relate blueprints.  
 
-Clicking on a service name in the table will take us to its <PortTooltip id="entity">entity</PortTooltip> page:
+As you can see, after connecting your Git provider to Port, a new `Service` blueprint is automatically created. This blueprint represents a service in your organization, implemented in a Git repository. It comes with some predefined [properties](https://docs.getport.io/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/).
 
-![entityAfterIngestion](/img/quickstart/entityAfterIngestion.png)
+**Learn more:**
 
-As you can see, Port has pulled the repository's name, url and language, and its readme file is displayed in a new `README` tab in the <PortTooltip id="entity">entity</PortTooltip> page.
+- [Setup blueprints](https://docs.getport.io/build-your-software-catalog/define-your-data-model/setup-blueprint/)
+- [Relate Blueprints](https://docs.getport.io/build-your-software-catalog/define-your-data-model/relate-blueprints/)
 
-### 4. Set standards using **scorecards**
+---
 
-In this step we will see how to set metrics for our resources.
+### Entities
 
-Let's add a <PortTooltip id="scorecard">scorecard</PortTooltip> to the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>:
+An entity is an instance of a blueprint, representing the data defined by that blueprint's properties. Entities are displayed in the [software catalog](https://app.getport.io/Services) page of the portal.  
 
-1. Head over to the `Builder` page and double-click on the blueprint. Choose the `Scorecards` tab, then click on `New scorecard`:
+After connecting your Git provider to Port, you will see all of your services (Git repositories) in the `Services` page of the catalog.
 
-<img src='/img/quickstart/blueprintAddScorecard.png' width='250rem' />
+**Learn more:**
 
-<br/><br/>
+- [Creating entities](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#creating-entities)
 
-2. Replace the contents with the following JSON and click `Save`:
+---
 
-<details>
-<summary><b>Scorecard JSON (click to expand)</b></summary>
+### Self-service actions
 
-```json showLineNumbers
-{
-  "identifier": "ProductionReadiness",
-  "title": "Production Readiness",
-  "rules": [
-    {
-      "identifier": "hasReadme",
-      "title": "Has readme",
-      "description": "Checks if a service has a readme file",
-      "level": "Bronze",
-      "query": {
-        "combinator": "and",
-        "conditions": [
-          {
-            "operator": "isNotEmpty",
-            "property": "readme"
-          }
-        ]
-      }
-    }
-  ]
-}
-```
+Port allows you to create flexible, permission-controlled actions for your developers to use. Actions are created and executed from the [self-service](https://app.getport.io/self-serve) page of the portal.  
 
-</details>
+You should see four actions in your portal. An action in Port has two parts:
+- A frontend - this is where you define the action type and its inputs.
+- A backend - this is where the action's logic is triggered. Port supports a variety of backends.
 
-What we have just done is add a "Bronze" level metric that ensures all `Services` have a readme file.  
-Going back to the <PortTooltip id="entity">entity</PortTooltip> we created in our <PortTooltip id="catalog">catalog</PortTooltip>, we can see that its `Scorecards` tab displays our new metric. Since our repository has a readme file, we pass with flying colors:
+:::info completing your actions
+The four actions in your portal only have their frontends defined. To finish setting up an action, click on the link attached to it to follow a dedicated guide.
+:::
 
-![entityPageAfterScorecard](/img/quickstart/entityPageAfterScorecard.png)
+**Learn more:**
 
-#### What more can you achieve with scorecards?
+- [Self-service experiences](https://docs.getport.io/create-self-service-experiences/)
 
-- Evaluate the maturity & producton readiness of your services.
-- Enforce the standards that matter to you (e.g. ensure each service has an on-call defined).
-- Track DORA metrics.
-- Define thresholds (gold/silver/bronze) and prioritize metrics & KPIs.
+---
 
-### 5. Customize views and dashboards
+### Scorecards
 
-Port is designed to be very flexible when it comes to data visualization and presentation.  
-Let's create a simple new view for our service (and future services):
+Another one of Port's main pillars is scorecards. Scorecards are used to define and track metrics for your resources, and can be used to enforce standards in your organization.  
+Scorecards are defined per blueprint, and can be created/modified from the blueprint itself in your [builder](https://app.getport.io/dev-portal/data-model).
 
-1. Head back to the `Services` page in your `Catalog`. Click on `Group by` and choose `Production Readiness` from the dropdown:
+Take a look at your `Service` blueprint, it has a `Production Readiness` scorecard that defines and track three rules.  
 
-![groupByView](/img/quickstart/groupByView.png)
+**Learn more:**
 
-This table is now grouped by the <PortTooltip id="scorecard">scorecard</PortTooltip> we created in the previous step.
+- [Promote scorecards](https://docs.getport.io/promote-scorecards/)
 
-Say you really like this view, and want your developers to see the `Services` table in this format. Notice that the `Save this view` button is now enabled?
+---
 
-2. Click on the arrow to the right of the `Save this view` button, then click on `Save as a new page`:
+### Dashboards
 
-<img src='/img/quickstart/saveAsNewPage.png' width='500rem' />
+In addition to your [homepage](#homepage), you can also create dashboards in your [software catalog](https://app.getport.io/Services). These are used to track and visualize data about your [entities](#entities).
 
-<br/><br/>
+Your software catalog should already have two dashboard pages:
 
-Choose a name and icon, and click on `Save page`.  
-A second `Services` page is now created in your <PortTooltip id="catalog">catalog</PortTooltip>. You can further customize views and create pages in any way that suits you.
+#### Services overview
 
-#### Create a dashboard
+This dashboard contains widgets with real data about your services. It is completely customizable, and serves as an example of how you can use dashboards to track and visualize data about your entities.
 
-Dashboards allow you to visualize data that interests you and your developers.  
-Let's create a simple pie chart showing the language distribution in our services:
+#### Scorecard dashboard
 
-1. Go to the `Home` tab of your Port app.
-2. In the top-right corner, click on `Add` and choose `Pie chart`.
+This dashboard also visualizes data about your services, but this time the focus is on the services' scorecards. It serves as an example of how you can use dashboards to track metrics and easily see how well your standards are enforced across your resources.
 
-![createPieChart](/img/quickstart/createPieChart.png)
+**Learn more:**
 
-3. Fill the form out like this, then click `Save`:
+- [Dashboard page](https://docs.getport.io/customize-pages-dashboards-and-plugins/page/dashboard-page)
+- [Dashboard widgets](https://docs.getport.io/customize-pages-dashboards-and-plugins/dashboards/)
 
-<img src='/img/quickstart/pieChartLanguagesForm.png' width='380rem' />
+---
 
-<br/><br/>
+## What's next?
 
-You will now see a pie chart with the number of services and their language distribution in the `Home` tab of your Port app:
+Now that you have a basic understanding of Port's main pillars, you can start customizing your portal to suit your needs. Here are some great ways to begin:
 
-<img src='/img/quickstart/pieChartLanguages.png' width='300rem' />
-
-This is just an example, in a real-life environment with many different resources you can visualize more complex data based on any property in any of your <PortTooltip id="blueprint">blueprints</PortTooltip>.
-
-### Conclusion
-
-Hopefully you now have a basic grasp of what you can do with Port, but this is just the tip of the iceberg. With Port's full suite of features, you can create a truly powerful, personalized developer portal.
-
-### What's next?
-
-- [Self-service actions guide](/guides-and-tutorials/scaffold-a-new-service) (~7 minutes)  
-  Increase your developers' productivity and independence by creating powerful actions for them to use.
+&nbsp;&nbsp;&nbsp; ❇️ Finish setting up your [self-service actions](#self-service-actions) and take them for a spin.  
+&nbsp;&nbsp;&nbsp; ❇️ Complete one of our [guides](https://docs.getport.io/guides-and-tutorials) to learn how to use Port to address real use-cases.  
+&nbsp;&nbsp;&nbsp; ❇️ Join our [community Slack](https://www.getport.io/community) to ask questions and share your experience with Port.

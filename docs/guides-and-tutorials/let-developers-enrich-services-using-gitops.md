@@ -181,7 +181,7 @@ Our action will create a pull-request in the service's repository, containing a 
 
   <img src='/img/guides/personalAccessToken.png' width='80%' />
 
-- Go to your [Port application](https://app.getport.io/), hover over the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
+- Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
 
 2. In your `Port-actions` (or equivalent) Github repository, create 3 new secrets under `Settings->Secrets and variables->Actions`:
 

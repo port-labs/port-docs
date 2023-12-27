@@ -31,7 +31,7 @@ After completing it, you will get a sense of how it can benefit different person
 
 ### Install Port's AWS exporter
 
-1. Go to your [Port application](https://app.getport.io/), hover over the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
+1. Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
 
 2. Replace `YOUR-PORT-CLIENT-ID` and `YOUR-PORT-CLIENT-SECRET` in the following command, then copy it and run it in your terminal:
 
