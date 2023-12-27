@@ -54,6 +54,9 @@ mkdir argocd
 ```
 
 3. Inside your `argocd` directory create another directory for the current installation. For our example we use `my-port-k8s-exporter`.
+```bash
+mkdir -p argocd/my-port-k8s-exporter
+```
 
 4. Create a `values.yaml` file in your `my-port-k8s-exporter` directory, with the content of your `config.yml` from step 1 to the `configMap.config` key and commit the changes to your git repository:
 
