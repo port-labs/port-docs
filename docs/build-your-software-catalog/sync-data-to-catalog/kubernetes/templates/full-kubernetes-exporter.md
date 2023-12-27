@@ -9,7 +9,7 @@ import TemplatePrerequisites from "./_template_prerequisites.mdx";
 # Kubernetes (extended)
 
 :::info
-This use-case is an extension of the [basic Kubernetes use-case](../kubernetes.md). If you haven't already, we recommend you to read it first.
+This use-case is an extension of the [basic Kubernetes use-case](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md). If you haven't already, we recommend you to read it first.
 :::
 
 Kubernetes has become one of the most popular ways to deploy microservice based applications. As the number of your microservices grow, and more clusters are deployed across several regions, it becomes complicated and tedious to keep track of all of your deployments, services, and jobs.

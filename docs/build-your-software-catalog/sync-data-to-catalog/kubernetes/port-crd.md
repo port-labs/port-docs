@@ -5,7 +5,7 @@ sidebar_position: 7
 # Port Entity CRD
 
 [Port's K8s exporter](./kubernetes.md) allows exporting data from any resource in your Kubernetes clusters, including [Custom Resource Definitions](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/)(CRDs).
-To take advantage of the flexibility of Port's K8s exporter, Port provides additional CRDs which make it possible to use K8s resource definitions as a source of [entities](../../sync-data-to-catalog/sync-data-to-catalog.md#creating-entities) in your software catalog.
+To take advantage of the flexibility of Port's K8s exporter, Port provides additional CRDs which make it possible to use K8s resource definitions as a source of [entities](/build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md#creating-entities) in your software catalog.
 
 :::tip
 All CRDs provided by Port can be found [here.](https://github.com/port-labs/port-crds)
@@ -139,10 +139,10 @@ spec:
 
 Port CRDs provide four key attributes:
 
-- `Blueprint ID` **Required**: The [blueprint](../../define-your-data-model/setup-blueprint/setup-blueprint.md#what-is-a-blueprint) identifier (string) of the entity you wish to map;
-- `Entity ID` **Required**: The [entity](../../sync-data-to-catalog/sync-data-to-catalog.md#creating-entities) identifier (string) of the entity you wish to map;
-- `Properties` **Optional**: The [properties](../../define-your-data-model/setup-blueprint/properties/properties.md) field (object) holds the properties data of the entity you want to map;
-- `Relations` **Optional**: The [relations](../../define-your-data-model/relate-blueprints/relate-blueprints.md) field (object) holds the relations data of the entity you want to map.
+- `Blueprint ID` **Required**: The [blueprint](/build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md#what-is-a-blueprint) identifier (string) of the entity you wish to map;
+- `Entity ID` **Required**: The [entity](/build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md#creating-entities) identifier (string) of the entity you wish to map;
+- `Properties` **Optional**: The [properties](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/properties.md) field (object) holds the properties data of the entity you want to map;
+- `Relations` **Optional**: The [relations](/build-your-software-catalog/define-your-data-model/relate-blueprints/relate-blueprints.md) field (object) holds the relations data of the entity you want to map.
 
 <details>
   <summary>CRD examples</summary>
@@ -219,13 +219,13 @@ The goal for this example is to map a microservice using Port's CRD and Port's K
 :::note Prerequisites
 Before getting started:
 
-- Prepare your [Port credentials](../../../build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials);
-- Be familiar with [Port's K8s exporter](./kubernetes.md) and configuration;
+- Prepare your [Port credentials](/build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials);
+- Be familiar with [Port's K8s exporter](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md) and configuration;
 - Make sure you are connected to a K8s cluster using `kubectl`.
 
 :::
 
-1. **Deploy the Port CRD** - follow the [deployment step](./port-crd.md#deploying-ports-crds) to deploy the Port CRD. You will only need the cluster-scoped entity CRD.
+1. **Deploy the Port CRD** - follow the [deployment step](/build-your-software-catalog/sync-data-to-catalog/kubernetes/port-crd.md#deploying-ports-crds) to deploy the Port CRD. You will only need the cluster-scoped entity CRD.
 
 2. **Creating the blueprint** - You will begin by defining the blueprint which will represent a microservice in your software catalog.
    Create the following blueprint in your Port environment:

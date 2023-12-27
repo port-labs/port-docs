@@ -5,8 +5,8 @@ description: Basic Example
 
 import Image from "@theme/IdealImage";
 import ExporterBaseInstallCommand from "./\_exporter_base_install_command.mdx"
-import SpecificEntityPage from "../../../../static/img/integrations/k8s-exporter/DeploymentConfigAndPods.png"
-import AuditLogPage from "../../../../static/img/integrations/k8s-exporter/AuditLog.png"
+import SpecificEntityPage from "/static/img/integrations/k8s-exporter/DeploymentConfigAndPods.png"
+import AuditLogPage from "/static/img/integrations/k8s-exporter/AuditLog.png"
 
 # Basic example
 
