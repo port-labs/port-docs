@@ -6,7 +6,7 @@ import Image from "@theme/IdealImage";
 
 # Examples
 
-Use the index on the right side of the page to find to example with the resource you’re looking to export.
+Use the index on the right side of the page to find an example for the resource/s you’re looking to export.
 
 ## ECS clusters and ECS services
 
