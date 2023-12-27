@@ -6,7 +6,7 @@ import FindCredentials from "../../api/\_template_docs/\_find_credentials_collap
 
 # ArgoCD
 
-This page will walk you through the installation of the Port Kubernetes Exporter in your Kubernetes cluster using ArgoCD, utilizing it's [Helm Capabilities](https://argo-cd.readthedocs.io/en/stable/user-guide/helm/).
+This page will walk you through the installation of the Port Kubernetes exporter in your Kubernetes cluster using ArgoCD, utilizing it's [Helm Capabilities](https://argo-cd.readthedocs.io/en/stable/user-guide/helm/).
 
 :::info
 - You can observe the Helm chart and the available parameters [here](https://github.com/port-labs/helm-charts/tree/main/charts/port-k8s-exporter).
