@@ -9,12 +9,14 @@ import FindCredentials from "@site/docs/build-your-software-catalog/sync-data-to
 This page will walk you through the installation of the Port execution agent in your Kubernetes cluster using ArgoCD, utilizing it's [Helm Capabilities](https://argo-cd.readthedocs.io/en/stable/user-guide/helm/).
 
 :::info
-You can observe the Helm chart and the available parameters [here](https://github.com/port-labs/helm-charts/tree/main/charts/port-agent).
+- You can observe the Helm chart and the available parameters [here](https://github.com/port-labs/helm-charts/tree/main/charts/port-k8s-exporter).
+- For the full chart versions list refer to the [Releases](https://github.com/port-labs/helm-charts/releases?q=port-k8s-exporter&expanded=true) page.
 :::
 
 :::note prerequisites
 ## Prerequisites
 
+- [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl) must be installed to apply your installation manifest.
 - [Helm](https://helm.sh) must be installed to use the chart. Please refer to the Helm [documentation](https://helm.sh/docs/intro/install/) for further details about the installation.
 - [ArgoCD](https://argoproj.github.io/cd/) must be installed in your Kubernetes cluster. Please refer to ArgoCD's [documentation](https://argo-cd.readthedocs.io/en/stable/getting_started/#1-install-argo-cd) for further details about the installation.
 - The connection credentials to Kafka are provided to you by Port.
@@ -27,6 +29,13 @@ You can observe the Helm chart and the available parameters [here](https://githu
 
 
 ## Installation
+
+2. In your git repo, create a directory called `argocd`.
+```bash
+mkdir argocd
+```
+
+3. Inside your `argocd` directory create another directory for the current installation. For our example we use `my-port-agent`.
 
 1. Add Port's Helm repo by using the following command:
 
