@@ -4,9 +4,9 @@ sidebar_position: 1
 
 import Image from "@theme/IdealImage";
 import ExporterBaseInstallCommand from "./\_exporter_base_install_command.mdx"
-import KubernetesIllustration from "../../../../static/img/build-your-software-catalog/sync-data-to-catalog/kubernetes/k8s-exporter-illustration.png";
-import KubernetesEtl from "../../../../static/img/build-your-software-catalog/sync-data-to-catalog/kubernetes/k8s-etl.png";
-import FindCredentials from "../api/\_template_docs/\_find_credentials_collapsed.mdx";
+import KubernetesIllustration from "/static/img/build-your-software-catalog/sync-data-to-catalog/kubernetes/k8s-exporter-illustration.png";
+import KubernetesEtl from "/static/img/build-your-software-catalog/sync-data-to-catalog/kubernetes/k8s-etl.png";
+import FindCredentials from "/docs/build-your-software-catalog/sync-data-to-catalog/api/\_template_docs/\_find_credentials_collapsed.mdx";
 
 # Kubernetes
 
@@ -130,7 +130,7 @@ resources: # List of K8s resources to list, watch, and export to Port.
 
   - etc.
 
-- The `port`, `entity` and the `mappings` keys open the section used to map the Kubernetes object fields to Port entities, the `mappings` key is an array where each object matches the structure of an [entity](../sync-data-to-catalog.md#entity-json-structure)
+- The `port`, `entity` and the `mappings` keys open the section used to map the Kubernetes object fields to Port entities, the `mappings` key is an array where each object matches the structure of an [entity](/build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md#entity-json-structure)
 
   ```yaml showLineNumbers
   resources:
@@ -157,7 +157,7 @@ resources: # List of K8s resources to list, watch, and export to Port.
 
 - Port's Kubernetes exporter is installed using [Helm](https://helm.sh), so Helm must be installed to use the exporter's chart. Please refer to
   Helm's [documentation](https://helm.sh/docs) for installation instructions;
-- You will need your [Port credentials](../api/api.md#find-your-port-credentials) to install the Kubernetes exporter.
+- You will need your [Port credentials](/build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials) to install the Kubernetes exporter.
 
 :::tip
 <FindCredentials />
