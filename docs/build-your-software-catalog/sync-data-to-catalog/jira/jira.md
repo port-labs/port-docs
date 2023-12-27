@@ -205,7 +205,7 @@ resources:
         mappings:
           identifier: .key
           title: .name
-          blueprint: '"project"'
+          blueprint: '"jiraProject"'
           properties:
             url: (.self | split("/") | .[:3] | join("/")) + "/projects/" + .key
 ```
@@ -269,7 +269,7 @@ The following resources can be used to map data from Jira, it is possible to ref
           mappings: # Mappings between one Jira object to a Port entity. Each value is a JQ query.
             identifier: .key
             title: .name
-            blueprint: '"project"'
+            blueprint: '"jiraProject"'
             properties:
               url: (.self | split("/") | .[:3] | join("/")) + "/projects/" + .key
         # highlight-end
@@ -307,7 +307,7 @@ Examples of blueprints and the relevant integration configurations:
 
 ```json showLineNumbers
 {
-  "identifier": "issue",
+  "identifier": "jiraIssue",
   "title": "Jira Issue",
   "icon": "Jira",
   "schema": {
@@ -372,20 +372,20 @@ Examples of blueprints and the relevant integration configurations:
   },
   "relations": {
     "project": {
-      "target": "project",
+      "target": "jiraProject",
       "title": "Project",
       "description": "The Jira project that contains this issue",
       "required": false,
       "many": false
     },
     "parentIssue": {
-      "target": "issue",
+      "target": "jiraIssue",
       "title": "Parent Issue",
       "required": false,
       "many": false
     },
     "subtasks": {
-      "target": "issue",
+      "target": "jiraIssue",
       "title": "Subtasks",
       "required": false,
       "many": true
@@ -411,7 +411,7 @@ resources:
         mappings:
           identifier: .key
           title: .fields.summary
-          blueprint: '"issue"'
+          blueprint: '"jiraIssue"'
           properties:
             url: (.self | split("/") | .[:3] | join("/")) + "/browse/" + .key
             status: .fields.status.name
@@ -438,7 +438,7 @@ resources:
 
 ```json showLineNumbers
 {
-  "identifier": "project",
+  "identifier": "jiraProject",
   "title": "Jira Project",
   "icon": "Jira",
   "description": "A Jira project",
@@ -472,7 +472,7 @@ resources:
         mappings:
           identifier: .key
           title: .name
-          blueprint: '"project"'
+          blueprint: '"jiraProject"'
           properties:
             url: (.self | split("/") | .[:3] | join("/")) + "/projects/" + .key
 ```
@@ -711,7 +711,7 @@ The combination of the sample payload and the Ocean configuration generates the 
   "identifier": "PA",
   "title": "Port-AI",
   "icon": null,
-  "blueprint": "project",
+  "blueprint": "jiraProject",
   "team": [],
   "properties": {
     "url": "https://myaccount.atlassian.net/projects/PA"
@@ -734,7 +734,7 @@ The combination of the sample payload and the Ocean configuration generates the 
   "identifier": "PA-1",
   "title": "Setup infra",
   "icon": null,
-  "blueprint": "issue",
+  "blueprint": "jiraIssue",
   "team": [],
   "properties": {
     "url": "https://myaccount.atlassian.net/browse/PA-1",

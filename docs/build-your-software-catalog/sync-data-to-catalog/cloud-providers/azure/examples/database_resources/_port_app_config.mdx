@@ -12,7 +12,7 @@ resources:
         mappings:
           identifier: '.id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase | join("/")'
           title: .name
-          blueprint: '"postgresFlexibleServer"'
+          blueprint: '"azurePostgresFlexibleServer"'
           properties:
             location: .location
             version: .properties.version

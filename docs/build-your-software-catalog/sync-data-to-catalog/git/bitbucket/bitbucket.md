@@ -45,7 +45,7 @@ resources:
           # highlight-start
           identifier: ".destination.repository.name + (.id|tostring)" # The Entity identifier will be the repository name + the pull request ID. After the Entity is created, the exporter will send `PATCH` requests to update this pull request within Port.
           title: ".title"
-          blueprint: '"pullRequest"'
+          blueprint: '"bitbucketPullRequest"'
           properties:
             creator: ".author.display_name"
             assignees: "[.participants[].user.display_name]"
@@ -75,7 +75,7 @@ resources:
         mappings:
           identifier: ".name" # The Entity identifier will be the repository name.
           title: ".name"
-          blueprint: '"microservice"'
+          blueprint: '"bitbucketRepository"'
           properties:
             project: ".project.name"
             url: ".links.html.href"
@@ -142,7 +142,7 @@ resources:
           mappings: # Mappings between one Bitbucket API object to a Port entity. Each value is a JQ query.
             identifier: ".name"
             title: ".name"
-            blueprint: '"microservice"'
+            blueprint: '"bitbucketRepository"'
             properties:
               project: ".project.name"
               url: ".links.html.href"

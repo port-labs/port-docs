@@ -46,9 +46,9 @@ Set them as you wish in the script below, then copy it and run it in your termin
 
 | Parameter                                | Description                                                                                                   | Required |
 | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------- |
-| `port.clientId`                          | Your port client id                                                                                           | ✅       |
-| `port.clientSecret`                      | Your port client secret                                                                                       | ✅       |
-| `port.baseUrl`                           | Your port base url, relevant only if not using the default port app                                           | ❌       |
+| `port.clientId`                          | Your Port client id                                                                                           | ✅       |
+| `port.clientSecret`                      | Your Port client secret                                                                                       | ✅       |
+| `port.baseUrl`                           | Your Port base url, relevant only if not using the default Port app                                           | ❌       |
 | `integration.identifier`                 | Change the identifier to describe your integration                                                            | ✅       |
 | `integration.type`                       | The integration type                                                                                          | ✅       |
 | `integration.eventListener.type`         | The event listener type                                                                                       | ✅       |
@@ -1342,6 +1342,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "ws-WWhD18B59v5ndTTP",
   "title": "getting-started",
+  "blueprint": "terraformWorkspace",
   "team": [],
   "properties": {
     "workspaceName": "getting-started",
