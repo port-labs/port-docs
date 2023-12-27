@@ -109,7 +109,7 @@ When installing the K8s exporter, it is possible to override default values in t
 By using the `--set` flag, you can override specific exporter configuration parameters during exporter installation/upgrade:
 
 ```bash showLineNumbers
-helm upgrade --install k8s-exportera port-labs/port-k8s-exporter \
+helm upgrade --install k8s-exporter port-labs/port-k8s-exporter \
     --create-namespace --namespace port-k8s-exporter \
 	--set secret.secrets.portClientId="YOUR_PORT_CLIENT_ID"  \
 	--set secret.secrets.portClientSecret="YOUR_PORT_CLIENT_SECRET"  \
