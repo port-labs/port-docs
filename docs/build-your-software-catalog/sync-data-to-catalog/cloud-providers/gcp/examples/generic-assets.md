@@ -72,7 +72,7 @@ data "google_cloud_asset_resources_search_all" "my_assets" {
 resource "port_blueprint" "gcp_org_blueprint" {
   title      = "Organization"
   icon       = "GCP"
-  identifier = "organization"
+  identifier = "gcpOrganization"
   properties {
     identifier = "link"
     type       = "string"
@@ -104,7 +104,7 @@ resource "port_entity" "gcp_org_entity" {
 resource "port_blueprint" "gcp_folder_blueprint" {
   title      = "Folder"
   icon       = "GCP"
-  identifier = "folder"
+  identifier = "gcpFolder"
   properties {
     identifier = "link"
     type       = "string"
@@ -145,7 +145,7 @@ resource "port_entity" "gcp_folder_entity" {
 resource "port_blueprint" "gcp_project_blueprint" {
   title      = "Project"
   icon       = "GCP"
-  identifier = "project"
+  identifier = "gcpProject"
   properties {
     identifier = "link"
     type       = "string"
@@ -405,7 +405,7 @@ This part includes configuring the `organization` blueprint and creating an enti
 resource "port_blueprint" "gcp_org_blueprint" {
   title      = "Organization"
   icon       = "GCP"
-  identifier = "organization"
+  identifier = "gcpOrganization"
   properties {
     identifier = "link"
     type       = "string"
@@ -443,7 +443,7 @@ This part includes configuring the `folder` blueprint and creating an entities f
 resource "port_blueprint" "gcp_folder_blueprint" {
   title      = "Folder"
   icon       = "GCP"
-  identifier = "folder"
+  identifier = "gcpFolder"
   properties {
     identifier = "link"
     type       = "string"
@@ -490,7 +490,7 @@ This part includes configuring the `project` blueprint and creating an entities 
 resource "port_blueprint" "gcp_project_blueprint" {
   title      = "Project"
   icon       = "GCP"
-  identifier = "project"
+  identifier = "gcpProject"
   properties {
     identifier = "link"
     type       = "string"
