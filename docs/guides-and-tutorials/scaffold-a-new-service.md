@@ -13,14 +13,14 @@ This guide takes 7 minutes to complete, and aims to demonstrate the power of sel
 
 :::tip Prerequisites
 
-- This guide assumes you have a Port account and a basic knowledge of working with Port. If you haven't done so, go ahead and complete the [quickstart](/quickstart).
-- You will need a Github repository in which you can place a workflow that we will use in this guide. If you don't have one, we recommend [creating a new repository](https://docs.github.com/en/get-started/quickstart/create-a-repo) named `Port-actions`.
+- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
+- You will need a Git repository in which you can place a workflow/pipeline that we will use in this guide. If you don't have one, we recommend creating a new repository named `Port-actions`.
 
 :::
 
 ### The goal of this guide
 
-In this guide we will create an action that initializes a new Github repository. In reality, such an action can be used by developers to scaffold new services.
+In this guide we will create an action that initializes a new Git repository. In reality, such an action can be used by developers to scaffold new services.
 
 After completing it, you will get a sense of how it can benefit different personas in your organization:
 
@@ -30,11 +30,22 @@ After completing it, you will get a sense of how it can benefit different person
 
 ### Setup the action's frontend
 
-1. To get started, head to the [Self-service tab](https://app.getport.io/self-serve) in your Port application, and click on `New action`:
+:::tip Onboarding
+
+As part of the onboarding process, you should already have an action named `Scaffold a new service` in your [self-service tab](https://app.getport.io/self-serve). In that case, you can skip to the [Define action type](#define-backend-type) step.  
+
+If you **skipped** the onboarding, or you want to create the action from scratch, complete steps 1-4 below.
+
+:::
+
+<details>
+<summary>Create the action's frontend</summary>
+
+1. Click on `New action`:
 
 <img src='/img/guides/actionsCreateNew.png' width='50%' />
 
-2. Each action in Port is directly tied to a <PortTooltip id="blueprint">blueprint</PortTooltip>. Since we are creating a repository, the `Service` blueprint we created in the [quickstart guide](/quickstart) is an obvious candidate. Choose it from the dropdown.
+2. Each action in Port is directly tied to a <PortTooltip id="blueprint">blueprint</PortTooltip>. Since we are creating a repository, let's use the `Service` blueprint that was created for us as part of the [onboarding](/quickstart) process. Choose it from the dropdown.
 
 3. Fill in the basic details of the action like this, then click `Next`:
 
@@ -52,7 +63,13 @@ After completing it, you will get a sense of how it can benefit different person
 
 :::
 
-5. Now we'll define the backend of the action. Port supports multiple invocation types, for this tutorial we will use a `Github workflow`.
+</details>
+
+#### Define backend type
+
+Now we'll define the backend of the action. Port supports multiple invocation types, one of them should be selected for you depending on the Git provider you selected in the beginning of the onboarding process.  
+
+Fill out the form with your values. For example, when using a Github backend:
    - Replace the `Organization` and `Repository` values with your values (this is where the workflow will reside and run).
    - Name the workflow `portCreateRepo.yaml`.
    - Set `Omit user inputs` to `Yes`.
@@ -66,7 +83,9 @@ In our workflow, the cookiecutter uses the payload for the inputs. We omit the u
 
 <img src='/img/guides/scaffoldBackend.png' width='75%' />
 
-6. The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Create`.
+<br/><br/>
+
+The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Create`.
 
 The action's frontend is now ready 🥳
 
