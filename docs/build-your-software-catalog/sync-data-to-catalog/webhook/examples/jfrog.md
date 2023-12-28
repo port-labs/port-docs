@@ -3,7 +3,7 @@ sidebar_position: 18
 description: Ingest JFrog artifacts, Docker tags and builds into your catalog
 ---
 
-# JFrog (Self-Hosted and Cloud)
+# JFrog
 
 In this example you are going to create a webhook integration between your JFrog Server and Port. The integration will facilitate the ingestion of JFrog artifact, Docker tag and build entities into Port.
 
