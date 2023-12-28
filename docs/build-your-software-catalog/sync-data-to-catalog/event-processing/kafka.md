@@ -60,7 +60,7 @@ resources:
         mappings:
           identifier: .name
           title: .name
-          blueprint: '"cluster"'
+          blueprint: '"kafkaCluster"'
           properties:
             controllerId: .controller_id
 ```
@@ -168,7 +168,7 @@ The following resources can be used to map data from Kafka, it is possible to re
           mappings: # Mappings between one Kafka cluster to a Port entity. Each value is a JQ query.
             identifier: .name
             title: .name
-            blueprint: '"cluster"'
+            blueprint: '"kafkaCluster"'
             properties:
               controllerId: .controller_id
         # highlight-end
@@ -206,7 +206,7 @@ Examples of blueprints and the relevant integration configurations:
 
 ```json showLineNumbers
 {
-  "identifier": "cluster",
+  "identifier": "kafkaCluster",
   "title": "Cluster",
   "icon": "Kafka",
   "schema": {
@@ -237,7 +237,7 @@ resources:
         mappings:
           identifier: .name
           title: .name
-          blueprint: '"cluster"'
+          blueprint: '"kafkaCluster"'
           properties:
             controllerId: .controller_id
 ```
@@ -251,7 +251,7 @@ resources:
 
 ```json showLineNumbers
 {
-  "identifier": "broker",
+  "identifier": "kafkaBroker",
   "title": "Broker",
   "icon": "Kafka",
   "schema": {
@@ -276,7 +276,7 @@ resources:
   },
   "relations": {
     "cluster": {
-      "target": "cluster",
+      "target": "kafkaCluster",
       "required": true,
       "many": false
     }
@@ -301,7 +301,7 @@ resources:
         mappings:
           identifier: .cluster_name + "_" + (.id | tostring)
           title: .cluster_name + " " + (.id | tostring)
-          blueprint: '"broker"'
+          blueprint: '"kafkaBroker"'
           properties:
             address: .address
             region: .config."broker.rack"
@@ -320,7 +320,7 @@ resources:
 
 ```json showLineNumbers
 {
-  "identifier": "topic",
+  "identifier": "kafkaTopic",
   "title": "Topic",
   "icon": "Kafka",
   "schema": {
@@ -357,12 +357,12 @@ resources:
   },
   "relations": {
     "cluster": {
-      "target": "cluster",
+      "target": "kafkaCluster",
       "required": true,
       "many": false
     },
     "brokers": {
-      "target": "broker",
+      "target": "kafkaBroker",
       "required": false,
       "many": true
     }
@@ -387,7 +387,7 @@ resources:
         mappings:
           identifier: .cluster_name + "_" + .name
           title: .cluster_name + " " + .name
-          blueprint: '"topic"'
+          blueprint: '"kafkaTopic"'
           properties:
             replicas: .partitions[0].replicas | length
             partitions: .partitions | length

@@ -12,7 +12,7 @@ resources:
         mappings:
           identifier: ".name" # The Entity identifier will be the repository name.
           title: ".name"
-          blueprint: '"repository"'
+          blueprint: '"githubRepository"'
           properties:
             readme: file://README.md # fetching the README.md file that is within the root folder of the repository and ingesting its contents as a markdown property
             url: .html_url
@@ -25,7 +25,7 @@ resources:
         mappings:
           identifier: ".head.repo.name + (.id|tostring)" # The Entity identifier will be the repository name + the pull request ID.
           title: ".title"
-          blueprint: '"pullRequest"'
+          blueprint: '"githubPullRequest"'
           properties:
             creator: ".user.login"
             assignees: "[.assignees[].login]"

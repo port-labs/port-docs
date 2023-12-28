@@ -34,12 +34,12 @@ In this example you will map your Openshift clusters, their workloads and the Op
 - The `jq` command must installed;
 - The `yq` command must installed;
 - The `kubectl/oc` command must be installed;
-- Have your [Port credentials](../../../sync-data-to-catalog/api/#find-your-port-credentials) ready.
+- Have your [Port credentials](/build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials) ready.
 
 In this use-case, you will use a custom bash script which will assist you in the process of installing Port's K8s exporter.
 
 :::note
-For more information about the k8s exporter installation script click [here](../installation-script.md)!
+For more information about the k8s exporter installation script click [here](/build-your-software-catalog/sync-data-to-catalog/kubernetes/installation-methods/installation-script.md)!
 :::
 
 The script will install the helm chart in the Openshift cluster which is currently in `oc` context.
