@@ -55,13 +55,15 @@ The workflow involves adding a resource block to a Terraform `main.tf` file and 
    - Replace the `Webhook URL` with your jenkins job URL.
    - Make sure the URL is in the format `http://JENKINS_URL/generic-webhook-trigger/invoke?token=<JOB_TOKEN>`
    - Click `Next`:
-   :::tip
-   Learn more about the Jenkins invocation type [here](/create-self-service-experiences/setup-backend/jenkins-pipeline/).
-   :::
+   
 
 <img src='/img/self-service-actions/setup-backend/jenkins-pipeline/iacActionBackend.png' width='75%' />
 
 <br/><br/>
+   :::tip
+   Learn more about the Jenkins invocation type [here](/create-self-service-experiences/setup-backend/jenkins-pipeline/).
+   :::
+
 
 7. The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Create`.
 
