@@ -69,7 +69,6 @@ helm upgrade --install terraform port-labs/port-ocean \
 	--set integration.identifier="my-terraform-cloud-integration"  \
 	--set integration.type="terraform-cloud"  \
 	--set integration.eventListener.type="POLLING"  \
-    --set integration.config.appHost= "url"\
 	--set integration.secrets.terraformCloudToken="string" \
 ```
 
