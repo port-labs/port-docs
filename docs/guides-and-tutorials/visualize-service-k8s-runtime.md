@@ -13,11 +13,9 @@ This guide takes 10 minutes to complete, and aims to demonstrate the value of Po
 
 :::tip Prerequisites
 
-- This guide assumes you have a Port account and a basic knowledge of working with Port. If you haven't done so, go ahead and complete the [quickstart](/quickstart).
+- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
 - You will need an accessible k8s cluster. If you don't have one, here is how to quickly set-up a [minikube cluster](https://minikube.sigs.k8s.io/docs/start/).
 - [Helm](https://helm.sh/docs/intro/install/) - required to install Port's Kubernetes exporter.
-- [jq](https://jqlang.github.io/jq/download/) - required to install Port's Kubernetes exporter.
-- [yq](https://github.com/mikefarah/yq/#install) - required to install Port's Kubernetes exporter.
 
 :::
 
@@ -34,24 +32,28 @@ After completing it, you will get a sense of how it can benefit different person
 
 ### Install Port's Kubernetes exporter
 
-1. Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
+1. Go to your [data sources page](https://app.getport.io/dev-portal/data-sources), click on `+ Data source`, find the `Kubernetes Stack` category and select `Kubernetes`:
 
-2. Replace `CLIENT-ID` and `CLIENT-SECRET` in the following command, then copy it and run it in your terminal:
+2. Copy the installation command after specifying your cluster's name, it should look something like this:
 
 ```bash showLineNumbers
-export CUSTOM_BP_PATH="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/full-configs/k8s-guide/k8s_guide_bps.json"
-export CONFIG_YAML_URL="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/full-configs/k8s-guide/k8s_guide_config.yaml"
-export CLUSTER_NAME="my-cluster"
-export PORT_CLIENT_ID="CLIENT-ID"
-export PORT_CLIENT_SECRET="CLIENT-SECRET"
-curl -s https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/install.sh | bash
+# The following script will install a K8s integration at your K8s cluster using helm
+# stateKey: Change the stateKey to describe your integration
+helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
+helm upgrade --install k8s-exportera port-labs/port-k8s-exporter \
+	--set secret.secrets.portClientId="YOUR_PORT_CLIENT_ID"  \
+	--set secret.secrets.portClientSecret="YOUR_PORT_CLIENT_SECRET"  \
+	--set portBaseUrl="https://api.getport.io"  \
+	--set stateKey="k8s-exporter"  \
+	--set eventListenerType="POLLING"  \
+	--set extraEnv=[{"name":"CLUSTER_NAME","value":"my-cluster"}] 
 ```
 
 #### What does the exporter do?
 
 After installation, the exporter will:
 
-1. Create <PortTooltip id="blueprint">blueprints</PortTooltip> in your [Builder](https://app.getport.io/dev-portal/data-model) (as defined in `CUSTOM_BP_PATH`) that represent Kubernetes resources:
+1. Create <PortTooltip id="blueprint">blueprints</PortTooltip> in your [Builder](https://app.getport.io/dev-portal/data-model) (as defined [here](https://github.com/port-labs/port-k8s-exporter/blob/main/assets/defaults/blueprints.json)) that represent Kubernetes resources:
 
 <img src='/img/guides/k8sBlueprintsCreated.png' width='95%' />
 
@@ -63,20 +65,15 @@ After installation, the exporter will:
 
 <br/>
 
-2. Create <PortTooltip id="entity">entities</PortTooltip> in your [Software catalog](https://app.getport.io/services). You will see a new page for each <PortTooltip id="blueprint">blueprint</PortTooltip> containing your resources, filled with data from your Kubernetes cluster (as defined in [`CONFIG_YAML_URL`](https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/full-configs/k8s-guide/k8s_guide_config.yaml)):
+2. Create <PortTooltip id="entity">entities</PortTooltip> in your [Software catalog](https://app.getport.io/services). You will see a new page for each <PortTooltip id="blueprint">blueprint</PortTooltip> containing your resources, filled with data from your Kubernetes cluster (according to the default mapping that is defined [here](https://github.com/port-labs/port-k8s-exporter/blob/main/assets/defaults/appConfig.yaml)):
 
 <img src='/img/guides/k8sEntitiesCreated.png' width='100%' />
 
 :::info TIP - Updating your configuration
 
-To change the configuration YAML deployed on your Kubernetes cluster, replace `PATH_TO_CONFIG_YAML` with the path (either local or URL) to your desired configuration file, replace `CLIENT_ID` and `CLIENT_SECRET`, then run the following command:
+To change the mapping that the K8s exporter uses to fill Port with data from your K8s cluster, go to your [data sources page](https://app.getport.io/dev-portal/data-sources), find the K8s exporter card, click on it and you will see a YAML editor showing the current configuration. 
 
-```bash showLineNumbers
-helm upgrade --install port-k8s-exporter port-labs/port-k8s-exporter \
---namespace port-k8s-exporter \
---set secret.secrets.portClientId=CLIENT_ID --set secret.secrets.portClientSecret=CLIENT_SECRET \
---set-file configMap.config=PATH_TO_CONFIG_YAML
-```
+You use to YAML editor to edit the configuration and then click on `Resync` to apply the new configuration and also update all existing data according to it.
 
 💁🏽 _You don't need to change anything in the configuration for this guide, this is just an FYI_
 :::
@@ -285,7 +282,7 @@ Now that all of our k8s data has been ingested into Port, let's create some scor
     "rules": [
       {
         "identifier": "highAvalabilityB",
-        "title": "Highly Available",
+        "title": "\"Wanted Replicas\" >= 1",
         "level": "Bronze",
         "query": {
           "combinator": "and",
@@ -300,7 +297,7 @@ Now that all of our k8s data has been ingested into Port, let's create some scor
       },
       {
         "identifier": "highAvalabilityS",
-        "title": "Highly Available",
+        "title": "\"Wanted Replicas\" >= 2",
         "level": "Silver",
         "query": {
           "combinator": "and",
@@ -315,7 +312,7 @@ Now that all of our k8s data has been ingested into Port, let's create some scor
       },
       {
         "identifier": "highAvalabilityG",
-        "title": "Highly Available",
+        "title": "\"Wanted Replicas\" >= 3",
         "level": "Gold",
         "query": {
           "combinator": "and",

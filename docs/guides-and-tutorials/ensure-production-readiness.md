@@ -91,7 +91,6 @@ helm upgrade --install my-pagerduty-integration port-labs/port-ocean \
     --set integration.type="pagerduty"  \
     --set integration.eventListener.type="POLLING"  \
     --set integration.secrets.token="token"  \     # REPLACE VALUE
-    --set integration.config.appHost="https://example.com"  \     # NO NEED TO REPLACE FOR THIS GUIDE
     --set integration.config.apiUrl="https://api.pagerduty.com"
 ```
 
