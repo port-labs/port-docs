@@ -32,7 +32,7 @@ After completing it, you will get a sense of how it can benefit different person
 
 ### Install Port's Kubernetes exporter
 
-1. Go to your [data sources page](https://app.getport.io/dev-portal/data-sources), click on `Add data source` and select `Kubernetes`:
+1. Go to your [data sources page](https://app.getport.io/dev-portal/data-sources), click on `+ Data source`, find the `Kubernetes Stack` category and select `Kubernetes`:
 
 2. Copy the installation command after specifying your cluster's name, it should look something like this:
 
@@ -65,20 +65,15 @@ After installation, the exporter will:
 
 <br/>
 
-2. Create <PortTooltip id="entity">entities</PortTooltip> in your [Software catalog](https://app.getport.io/services). You will see a new page for each <PortTooltip id="blueprint">blueprint</PortTooltip> containing your resources, filled with data from your Kubernetes cluster (as defined in [`CONFIG_YAML_URL`](https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/full-configs/k8s-guide/k8s_guide_config.yaml)):
+2. Create <PortTooltip id="entity">entities</PortTooltip> in your [Software catalog](https://app.getport.io/services). You will see a new page for each <PortTooltip id="blueprint">blueprint</PortTooltip> containing your resources, filled with data from your Kubernetes cluster (according to the default mapping that is defined [here](https://github.com/port-labs/port-k8s-exporter/blob/main/assets/defaults/appConfig.yaml)):
 
 <img src='/img/guides/k8sEntitiesCreated.png' width='100%' />
 
 :::info TIP - Updating your configuration
 
-To change the configuration YAML deployed on your Kubernetes cluster, replace `PATH_TO_CONFIG_YAML` with the path (either local or URL) to your desired configuration file, replace `CLIENT_ID` and `CLIENT_SECRET`, then run the following command:
+To change the mapping that the K8s exporter uses to fill Port with data from your K8s cluster, go to your [data sources page](https://app.getport.io/dev-portal/data-sources), find the K8s exporter card, click on it and you will see a YAML editor showing the current configuration. 
 
-```bash showLineNumbers
-helm upgrade --install port-k8s-exporter port-labs/port-k8s-exporter \
---namespace port-k8s-exporter \
---set secret.secrets.portClientId=CLIENT_ID --set secret.secrets.portClientSecret=CLIENT_SECRET \
---set-file configMap.config=PATH_TO_CONFIG_YAML
-```
+You use to YAML editor to edit the configuration and then click on `Resync` to apply the new configuration and also update all existing data according to it.
 
 💁🏽 _You don't need to change anything in the configuration for this guide, this is just an FYI_
 :::
