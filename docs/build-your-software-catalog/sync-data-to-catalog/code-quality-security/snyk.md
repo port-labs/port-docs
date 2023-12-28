@@ -1,6 +1,7 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
+import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
 
 # Snyk
 
@@ -16,7 +17,7 @@ Our Snyk integration allows you to import `targets`, `projects` and `issues` fro
 
 <Prerequisites />
 
-## installation
+## Installation
 
 Choose one of the following installation methods:
 
@@ -31,9 +32,9 @@ Set them as you wish in the script below, then copy it and run it in your termin
 
 | Parameter                           | Description                                                                                                        | Required |
 | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
-| `port.clientId`                     | Your port client id                                                                                                | ✅       |
-| `port.clientSecret`                 | Your port client secret                                                                                            | ✅       |
-| `port.baseUrl`                      | Your port base url, relevant only if not using the default port app                                                | ❌       |
+| `port.clientId`                     | Your Port client id                                                                                                | ✅       |
+| `port.clientSecret`                 | Your Port client secret                                                                                            | ✅       |
+| `port.baseUrl`                      | Your Port base url, relevant only if not using the default Port app                                                | ❌       |
 | `integration.identifier`            | Change the identifier to describe your integration                                                                 | ✅       |
 | `integration.type`                  | The integration type                                                                                               | ✅       |
 | `integration.eventListener.type`    | The event listener type                                                                                            | ✅       |
@@ -196,6 +197,8 @@ pipeline {
 </TabItem>
 
 </Tabs>
+
+<AdvancedConfig/>
 
 ## Ingesting Snyk objects
 
@@ -564,10 +567,10 @@ resources:
 
 </details>
 
-## Issue
+### Vulnerability
 
 <details>
-<summary>Issue blueprint</summary>
+<summary>Vulnerability blueprint</summary>
 
 ```yaml showLineNumbers
 {

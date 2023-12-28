@@ -3,13 +3,14 @@ import TabItem from "@theme/TabItem"
 import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
 import HelmParameters from "../templates/\_ocean-advanced-parameters-helm.mdx"
 import DockerParameters from "./\_jira_one_time_docker_parameters.mdx"
+import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
 
 # Jira
 
 Our Jira integration allows you to import `issues` and `projects` from your Jira cloud account into Port, according to your mapping and definition.
 
 :::info Note
-This integration supports Jira Cloud at the moment, support for Jira Server is in development.
+This integration supports Jira Cloud at the moment, support for Jira Server can be found [in this section](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/jira-server.md)
 :::
 
 ## Common use cases
@@ -22,7 +23,7 @@ This integration supports Jira Cloud at the moment, support for Jira Server is i
 
 <Prerequisites />
 
-## installation
+## Installation
 
 Choose one of the following installation methods:
 
@@ -184,6 +185,8 @@ pipeline {
 
 </Tabs>
 
+<AdvancedConfig/>
+
 ## Ingesting Jira objects
 
 The Jira integration uses a YAML configuration to describe the process of loading data into the developer portal.
@@ -202,7 +205,7 @@ resources:
         mappings:
           identifier: .key
           title: .name
-          blueprint: '"project"'
+          blueprint: '"jiraProject"'
           properties:
             url: (.self | split("/") | .[:3] | join("/")) + "/projects/" + .key
 ```
@@ -266,7 +269,7 @@ The following resources can be used to map data from Jira, it is possible to ref
           mappings: # Mappings between one Jira object to a Port entity. Each value is a JQ query.
             identifier: .key
             title: .name
-            blueprint: '"project"'
+            blueprint: '"jiraProject"'
             properties:
               url: (.self | split("/") | .[:3] | join("/")) + "/projects/" + .key
         # highlight-end
@@ -304,7 +307,7 @@ Examples of blueprints and the relevant integration configurations:
 
 ```json showLineNumbers
 {
-  "identifier": "issue",
+  "identifier": "jiraIssue",
   "title": "Jira Issue",
   "icon": "Jira",
   "schema": {
@@ -347,25 +350,42 @@ Examples of blueprints and the relevant integration configurations:
         "type": "string",
         "description": "The user that created to the issue",
         "format": "user"
+      },
+      "priority": {
+        "title": "Priority",
+        "type": "string",
+        "description": "The priority of the issue"
+      },
+      "created": {
+        "title": "Created At",
+        "type": "string",
+        "description": "The created datetime of the issue",
+        "format": "date-time"
+      },
+      "updated": {
+        "title": "Updated At",
+        "type": "string",
+        "description": "The updated datetime of the issue",
+        "format": "date-time"
       }
     }
   },
   "relations": {
     "project": {
-      "target": "project",
+      "target": "jiraProject",
       "title": "Project",
       "description": "The Jira project that contains this issue",
       "required": false,
       "many": false
     },
     "parentIssue": {
-      "target": "issue",
+      "target": "jiraIssue",
       "title": "Parent Issue",
       "required": false,
       "many": false
     },
     "subtasks": {
-      "target": "issue",
+      "target": "jiraIssue",
       "title": "Subtasks",
       "required": false,
       "many": true
@@ -391,7 +411,7 @@ resources:
         mappings:
           identifier: .key
           title: .fields.summary
-          blueprint: '"issue"'
+          blueprint: '"jiraIssue"'
           properties:
             url: (.self | split("/") | .[:3] | join("/")) + "/browse/" + .key
             status: .fields.status.name
@@ -400,6 +420,9 @@ resources:
             assignee: .fields.assignee.displayName
             reporter: .fields.reporter.displayName
             creator: .fields.creator.displayName
+            priority: .fields.priority.id
+            created: .fields.created
+            updated: .fields.updated
           relations:
             project: .fields.project.key
             parentIssue: .fields.parent.key
@@ -415,7 +438,7 @@ resources:
 
 ```json showLineNumbers
 {
-  "identifier": "project",
+  "identifier": "jiraProject",
   "title": "Jira Project",
   "icon": "Jira",
   "description": "A Jira project",
@@ -449,7 +472,7 @@ resources:
         mappings:
           identifier: .key
           title: .name
-          blueprint: '"project"'
+          blueprint: '"jiraProject"'
           properties:
             url: (.self | split("/") | .[:3] | join("/")) + "/projects/" + .key
 ```
@@ -688,7 +711,7 @@ The combination of the sample payload and the Ocean configuration generates the 
   "identifier": "PA",
   "title": "Port-AI",
   "icon": null,
-  "blueprint": "project",
+  "blueprint": "jiraProject",
   "team": [],
   "properties": {
     "url": "https://myaccount.atlassian.net/projects/PA"
@@ -711,7 +734,7 @@ The combination of the sample payload and the Ocean configuration generates the 
   "identifier": "PA-1",
   "title": "Setup infra",
   "icon": null,
-  "blueprint": "issue",
+  "blueprint": "jiraIssue",
   "team": [],
   "properties": {
     "url": "https://myaccount.atlassian.net/browse/PA-1",
@@ -720,7 +743,10 @@ The combination of the sample payload and the Ocean configuration generates the 
     "components": [],
     "assignee": "User Name",
     "reporter": "User Name",
-    "creator": "User Name"
+    "creator": "User Name",
+    "priority": "3",
+    "created": "2023-11-06T11:02:59.000+0000",
+    "updated": "2023-11-06T11:03:18.244+0000"
   },
   "relations": {
     "parentIssue": null,

@@ -17,7 +17,7 @@ resources:
         mappings:
           identifier: '.id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase | join("/")'
           title: .name
-          blueprint: '"containerApp"'
+          blueprint: '"azureContainerApp"'
           properties:
             location: .location
             provisioningState: .properties.provisioningState
@@ -38,7 +38,7 @@ resources:
         mappings:
           identifier: '.id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase | join("/")'
           title: .name
-          blueprint: '"aks"'
+          blueprint: '"azureAks"'
           properties:
             location: .location
             provisioningState: .properties.provisioningState
@@ -70,7 +70,7 @@ resources:
         mappings:
           identifier: '.id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase | join("/")'
           title: .name
-          blueprint: '"loadBalancer"'
+          blueprint: '"azureLoadBalancer"'
           properties:
             location: .location
             provisioningState: .properties.provisioningState
@@ -92,7 +92,7 @@ resources:
         mappings:
           identifier: '.id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase | join("/")'
           title: .name
-          blueprint: '"virtualMachine"'
+          blueprint: '"azureVirtualMachine"'
           properties:
             location: .location
             provisioningState: .properties.provisioningState
@@ -119,7 +119,7 @@ resources:
         mappings:
           identifier: '.id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase | join("/")'
           title: .name
-          blueprint: '"webApp"'
+          blueprint: '"azureWebApp"'
           properties:
             location: .location
             state: .properties.state

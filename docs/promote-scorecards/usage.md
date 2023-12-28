@@ -1,12 +1,12 @@
 ---
 sidebar_position: 1
-sidebar_label: Tutorial
+sidebar_label: Usage
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Scorecards tutorial
+# How to use scorecards
 
 ## Create Scorecards
 

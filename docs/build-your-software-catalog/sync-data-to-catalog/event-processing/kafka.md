@@ -1,6 +1,8 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
+import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
+
 
 # Kafka
 
@@ -16,7 +18,7 @@ Our Kafka integration allows you to import `brokers` and `topics` from your Kafk
 
 <Prerequisites />
 
-## installation
+## Installation
 
 Install the integration via Helm by running this command:
 
@@ -38,6 +40,8 @@ helm upgrade --install kafka port-labs/port-ocean \
 	--set-json integration.secrets.clusterConfMapping='{"local": {"bootstrap.servers": "localhost:9092"}}'
 ```
 
+<AdvancedConfig/>
+
 ## Ingesting Kafka objects
 
 The Kafka integration uses a YAML configuration to describe the process of loading data into the developer portal.
@@ -56,7 +60,7 @@ resources:
         mappings:
           identifier: .name
           title: .name
-          blueprint: '"cluster"'
+          blueprint: '"kafkaCluster"'
           properties:
             controllerId: .controller_id
 ```
@@ -164,7 +168,7 @@ The following resources can be used to map data from Kafka, it is possible to re
           mappings: # Mappings between one Kafka cluster to a Port entity. Each value is a JQ query.
             identifier: .name
             title: .name
-            blueprint: '"cluster"'
+            blueprint: '"kafkaCluster"'
             properties:
               controllerId: .controller_id
         # highlight-end
@@ -202,7 +206,7 @@ Examples of blueprints and the relevant integration configurations:
 
 ```json showLineNumbers
 {
-  "identifier": "cluster",
+  "identifier": "kafkaCluster",
   "title": "Cluster",
   "icon": "Kafka",
   "schema": {
@@ -233,7 +237,7 @@ resources:
         mappings:
           identifier: .name
           title: .name
-          blueprint: '"cluster"'
+          blueprint: '"kafkaCluster"'
           properties:
             controllerId: .controller_id
 ```
@@ -247,7 +251,7 @@ resources:
 
 ```json showLineNumbers
 {
-  "identifier": "broker",
+  "identifier": "kafkaBroker",
   "title": "Broker",
   "icon": "Kafka",
   "schema": {
@@ -272,7 +276,7 @@ resources:
   },
   "relations": {
     "cluster": {
-      "target": "cluster",
+      "target": "kafkaCluster",
       "required": true,
       "many": false
     }
@@ -297,7 +301,7 @@ resources:
         mappings:
           identifier: .cluster_name + "_" + (.id | tostring)
           title: .cluster_name + " " + (.id | tostring)
-          blueprint: '"broker"'
+          blueprint: '"kafkaBroker"'
           properties:
             address: .address
             region: .config."broker.rack"
@@ -316,7 +320,7 @@ resources:
 
 ```json showLineNumbers
 {
-  "identifier": "topic",
+  "identifier": "kafkaTopic",
   "title": "Topic",
   "icon": "Kafka",
   "schema": {
@@ -353,12 +357,12 @@ resources:
   },
   "relations": {
     "cluster": {
-      "target": "cluster",
+      "target": "kafkaCluster",
       "required": true,
       "many": false
     },
     "brokers": {
-      "target": "broker",
+      "target": "kafkaBroker",
       "required": false,
       "many": true
     }
@@ -383,7 +387,7 @@ resources:
         mappings:
           identifier: .cluster_name + "_" + .name
           title: .cluster_name + " " + .name
-          blueprint: '"topic"'
+          blueprint: '"kafkaTopic"'
           properties:
             replicas: .partitions[0].replicas | length
             partitions: .partitions | length

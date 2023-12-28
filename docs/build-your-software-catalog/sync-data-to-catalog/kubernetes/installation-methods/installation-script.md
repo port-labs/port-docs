@@ -9,9 +9,9 @@ Port's K8s exporter installation script will assist you in the process of instal
 
 This script will help you with:
 
-- setting up your custom Port [blueprints](../../define-your-data-model/setup-blueprint);
-- installing Port's k8s exporter using helm (check out the Helm chart's [installation documentation](./kubernetes.md#installation));
-- deploying your custom [`config.yaml`](./kubernetes.md#exporter-configyml-file)
+- setting up your custom Port [blueprints](/build-your-software-catalog/define-your-data-model/setup-blueprint);
+- installing Port's k8s exporter using helm (check out the Helm chart's [installation documentation](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md#installation));
+- deploying your custom [`config.yaml`](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md#exporter-configyml-file)
 
 :::tip
 You can view the bash script [here](https://github.com/port-labs/template-assets/blob/main/kubernetes/install.sh).
@@ -39,14 +39,14 @@ export {VARIABLE_NAME}={value}
 
 :::note
 
-- **CLUSTER_NAME:** The script replaces all occurrences of the string `{CLUSTER_NAME}` from the `config.yaml` set in the `CONFIG_YAML_URL`([defined here](./templates/full-kubernetes-exporter.md#helm-chart-installation-configuration)) with the value of the environment variable `CLUSTER_NAME`. This is useful when creating a generic `config.yaml` which has no static cluster name.
+- **CLUSTER_NAME:** The script replaces all occurrences of the string `{CLUSTER_NAME}` from the `config.yaml` set in the `CONFIG_YAML_URL`([defined here](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/full-kubernetes-exporter.md#helm-chart-installation-configuration)) with the value of the environment variable `CLUSTER_NAME`. This is useful when creating a generic `config.yaml` which has no static cluster name.
 - **CUSTOM_BP_PATH:** It is important to order the blueprints while taking in to account the necessary relations for each blueprint. Once a blueprint was created, attempting to recreate it using the script will fail. To recreate a blueprint using the script, first delete the blueprint.
 
 :::
 
 #### Helm Chart Installation configuration
 
-Required configuration as defined in the exporter's [advanced configuration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/kubernetes/advanced#required-configuration) section.
+Required configuration as defined in the exporter's [advanced configuration](/build-your-software-catalog/sync-data-to-catalog/kubernetes/advanced#required-configuration) section.
 
 | Environment Variable | Description                                                                                                                                                                               | Default                                                                                    |
 | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
