@@ -16,7 +16,7 @@ This guide takes 10 minutes to complete, and aims to cover:
 
 :::tip Prerequisites
 
-- This guide assumes you have a Port account and a basic knowledge of working with Port. If you haven't done so, go ahead and complete the [quickstart](/quickstart).
+- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
 - You will need an accessible k8s cluster. If you don't have one, here is how to quickly set-up a [minikube cluster](https://minikube.sigs.k8s.io/docs/start/).
 - [Helm](https://helm.sh/docs/intro/install/) - required to install a relevant integration.
 
@@ -34,11 +34,10 @@ After completing it, you will get a sense of how it can benefit different person
 
 ## Expand your service blueprint
 
-In this guide we will add 3 new properties to our `service` <PortTooltip id="blueprint">blueprint</PortTooltip>, which we will then use to set production readiness standards:
+In this guide we will add two new properties to our `service` <PortTooltip id="blueprint">blueprint</PortTooltip>, which we will then use to set production readiness standards:
 
 1. The service's `on-call`, fetched from Pagerduty.
 2. The service's `Code owners`, fetched from Github.
-3. A url to the relevant `Slack channel`, calculated using the service's data.
 
 ### Add an on-call to your services
 
@@ -170,8 +169,32 @@ Now, if our `service` identifier is equal to the Pagerduty service's name, the `
 
 ### Display each service's code owners
 
-Github allows adding a `CODEOWNERS` file to a repository (see [Github documentation](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners) for details and examples).  
-Let's see how we can easily ingest this into our existing services:
+Git providers allow you to add a `CODEOWNERS` file to a repository specifiying its owner/s. See the relevant documentation for details and examples:
+
+<Tabs>
+
+<TabItem value="github" label="Github">
+
+[Github codeowners documentation](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners)
+
+</TabItem>
+
+<TabItem value="gitlab" label="Gitlab">
+
+[Gitlab codeowners documentation](https://docs.gitlab.com/ee/user/project/codeowners/)
+
+</TabItem>
+
+<TabItem value="bitbucket" label="BitBucket">
+
+[BitBucket codeowners documentation](https://confluence.atlassian.com/bitbucketserver/code-owners-1296171116.html)
+
+</TabItem>
+
+</Tabs>
+
+<br/>
+Let's see how we can easily ingest a CODEOWNERS file into our existing services:
 
 #### Add a codeowners property to the service blueprint
 
@@ -196,38 +219,17 @@ Going back to our Catalog, we can now see that our <PortTooltip id="entity">enti
 
 ![entityAfterCodeowners](/img/guides/entityAfterCodeowners.png)
 
-### Display each service's relevant Slack channel
-
-We will now use a [calculation property](https://docs.getport.io/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/calculation-property/) to build a URL to the relevant Slack channel.
-
-1. Go to your [Builder](https://app.getport.io/dev-portal/data-model) yet again, choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click `New property`.
-
-2. Fill out the form like this, then click `Create`:  
-   The `JQ calculation` field for copy-paste convenience: `"https://slack.com/" + .identifier`
-
-<img src='/img/guides/createSlackClaculationProp.png' width='50%' />
-
-Now each service has a Slack link that is composed of a base and the service's identifier:
-
-![serviceAfterSlackProp](/img/guides/serviceAfterSlackProp.png)
-
-This is an example of what can be achieved with calculation properties, you can use jq to craft and combine expressions/urls/numbers while also using the service's properties 🛠️
-
-### Update our service's scorecards
+### Update your service's scorecard
 
 Now let's use the properties we created to set standards for our services.  
-We already have a `bronze` level scorecard from the quickstart guide, so we'll add ones for other levels.
 
-#### Add `silver` and `gold` metrics to your scorecard
+#### Add rules to existing scorecard
 
-Say we want to ensure each service meets several requirements, with different levels of importance.  
-We can model it like this, for example:
+Say we want to ensure each service meets our new requirements, with different levels of importance. Our `Service` blueprint already has a scorecard called `Production readiness`, with three rules.  
+Let's add our metrics to it: 
 
 - `Bronze` - each service must have a `Readme` (we have already defined this in the quickstart guide).
-- `Silver`:
-  - Each service must have a `CODEOWNERS` file.
-  - Each service must have a link to a Slack channel.
-- `Gold` - each service must have an on-call defined.
+- `Silver` - each service must have an on-call defined.
 
 Now let's implement it:
 
@@ -247,8 +249,7 @@ Now let's implement it:
   "rules": [
     {
       "identifier": "hasReadme",
-      "title": "Has readme",
-      "description": "Checks if a service has a readme file",
+      "title": "Has a readme",
       "level": "Bronze",
       "query": {
         "combinator": "and",
@@ -256,6 +257,34 @@ Now let's implement it:
           {
             "operator": "isNotEmpty",
             "property": "readme"
+          }
+        ]
+      }
+    },
+    {
+      "identifier": "hasTeam",
+      "title": "Has Team",
+      "level": "Silver",
+      "query": {
+        "combinator": "and",
+        "conditions": [
+          {
+            "operator": "isNotEmpty",
+            "property": "$team"
+          }
+        ]
+      }
+    },
+    {
+      "identifier": "hasSlackChannel",
+      "title": "Has a Slack channel",
+      "level": "Gold",
+      "query": {
+        "combinator": "and",
+        "conditions": [
+          {
+            "operator": "isNotEmpty",
+            "property": "slack"
           }
         ]
       }
@@ -271,21 +300,6 @@ Now let's implement it:
           {
             "operator": "isNotEmpty",
             "property": "code_owners"
-          }
-        ]
-      }
-    },
-    {
-      "identifier": "hasSlackChannel",
-      "title": "Has a Slack channel",
-      "description": "Checks if a service has a configured Slack channel",
-      "level": "Silver",
-      "query": {
-        "combinator": "and",
-        "conditions": [
-          {
-            "operator": "isNotEmpty",
-            "property": "slack_channel"
           }
         ]
       }
