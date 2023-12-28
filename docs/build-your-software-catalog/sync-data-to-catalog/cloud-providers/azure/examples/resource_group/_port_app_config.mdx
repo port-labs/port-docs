@@ -12,7 +12,7 @@ resources:
         mappings:
           identifier: '.id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase | join("/")'
           title: .name
-          blueprint: '"resourceGroup"'
+          blueprint: '"azureResourceGroup"'
           properties:
             location: .location
             # the provisioning state property is returned in lower case when using the SDK and in camelCase when using the REST API

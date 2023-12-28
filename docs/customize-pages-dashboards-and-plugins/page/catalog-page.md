@@ -7,7 +7,7 @@ sidebar_position: 1
 A catalog page displays a table of all existing [entities](/build-your-software-catalog/sync-data-to-catalog/#creating-entities) created from a [blueprint](/build-your-software-catalog/define-your-data-model/setup-blueprint/#what-is-a-blueprint).  
 In this example we can see all of the cluster entities we created from the `K8s Cluster` blueprint:
 
-![Microservice blueprint page](../../../static/img/software-catalog/pages/catalogPage.png)
+![Microservice blueprint page](/img/software-catalog/pages/catalogPage.png)
 
 ## Page creation
 
@@ -47,13 +47,13 @@ We highly recommend using these customizations to provide a clean and accurate v
 
 All table customizations are available on the top bar of the table:
 
-![Table operations bar](../../../static/img/software-catalog/pages/TableOperationsBar.png)
+![Table operations bar](/img/software-catalog/pages/TableOperationsBar.png)
 
 ### Filter
 
 You can filter the table by using the following menu:
 
-![Table filter menu marked](../../../static/img/software-catalog/pages/TableFilterMenu.png)
+![Table filter menu marked](/img/software-catalog/pages/TableFilterMenu.png)
 
 You can define any filtering operator with a suitable value.
 
@@ -66,9 +66,9 @@ By using the `My Teams` filter you will only see entities that belong to one of 
 This filter works on:
 
 - `string` properties with the format `team`.
-- The [meta property](../../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/meta-properties) `Team`.
+- The [meta property](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/meta-properties) `Team`.
 
-![My Teams Filter](../../../static/img/software-catalog/pages/MyTeamsFilter.png)
+![My Teams Filter](/img/software-catalog/pages/MyTeamsFilter.png)
 
 #### `Me` filter
 
@@ -82,7 +82,7 @@ This filter works on [`User`](/build-your-software-catalog/define-your-data-mode
 
 You can sort the table by using the following menu:
 
-![Table sort menu marked](../../../static/img/software-catalog/pages/TableSortMenu.png)
+![Table sort menu marked](/img/software-catalog/pages/TableSortMenu.png)
 
 You can sort by one or more fields of any kind.
 
@@ -94,7 +94,7 @@ To sort a specific column, click on the column title.
 
 You can hide table columns by using the following menu:
 
-![Table hide menu marked](../../../static/img/software-catalog/pages/TableHideMenu.png)
+![Table hide menu marked](/img/software-catalog/pages/TableHideMenu.png)
 
 You can decide whether each field is viewable to users or not.
 
@@ -106,7 +106,7 @@ We highly recommend hiding irrelevant data from users, to provide them with a cl
 
 You can group by entities by using the following menu:
 
-![Table group by menu marked](../../../static/img/software-catalog/pages/TableGroupByMenu.png)
+![Table group by menu marked](/img/software-catalog/pages/TableGroupByMenu.png)
 
 You can group results according to any field in the table.
 
@@ -120,24 +120,18 @@ Just create your `group by` setting, add additional viewing settings if needed, 
 
 Port provides a free-text search option on tables. To search a table, click here:
 
-![Table search bar marked](../../../static/img/software-catalog/pages/TableSearchBar.png)
+![Table search bar marked](/img/software-catalog/pages/TableSearchBar.png)
 
 -> [Explore how to control page visibility and permissions](./page-permissions.md)
 
 ## Page operations
 
-Each page type has a set of operations that can be performed from the UI.  
-The table below summarizes the available operations for every type:
-
-| Page type                      | Save a view | Save view as<br /> a new page | Edit page | Delete page | Lock page |
-| ------------------------------ | :---------: | :---------------------------: | :-------: | :---------: | :-------: |
-| Blueprint page (Default Page)  |     ✅      |              ✅               |    ❌     |     ❌      |    ✅     |
-| Custom page (manually created) |     ✅      |              ✅               |    ✅     |     ✅      |    ✅     |
+Pages have a set of operations that can be performed from the UI.  
 
 :::info Default page
-The default page is automatically generated when a new Blueprint is created. This page is directly tied to its Blueprint and cannot be edited or deleted.
+A default catalog page is automatically created when a new Blueprint is created. This page is directly tied to its Blueprint, meaning that if the blueprint is deleted, the default page will be deleted as well.
 
-In order to edit or delete the default Blueprint page, you need to edit or delete the Blueprint itself.
+You can still edit or delete a default page if you'd like.
 
 It's possible to filter, sort, group by, and use the table widget controls to change the layout of the default page.
 :::
@@ -147,7 +141,7 @@ It's possible to filter, sort, group by, and use the table widget controls to ch
 Every change made on a specific page, such as filtering or sorting, enables the `Save this view` button.  
 Clicking on it will save the new view for all users.
 
-![Page operations marked](../../../static/img/software-catalog/pages/PageOperationsMarked.png)
+![Page operations marked](/img/software-catalog/pages/PageOperationsMarked.png)
 
 :::note
 The ability to save a view for all users is available only for the [Admin role](../../sso-rbac/rbac/rbac.md#roles)
@@ -159,13 +153,13 @@ Each time a change is made on a page, and the `Save this view` becomes enabled, 
 
 <center>
 
-![Save view menu button marked](../../../static/img/software-catalog/pages/SaveViewDropMenuButton.png)
+![Save view menu button marked](/img/software-catalog/pages/SaveViewDropMenuButton.png)
 
 </center>
 
 After clicking the `Save as a new page` button, a window will pop up:
 
-![Save as a new page popup](../../../static/img/software-catalog/pages/SaveAPageForm.png)
+![Save as a new page popup](/img/software-catalog/pages/SaveAPageForm.png)
 
 #### Choose page icon
 
@@ -173,7 +167,7 @@ When saving a new page or editing an existing one, a set of icons is available t
 
 <center>
 
-![Page Icons dropdown menu](../../../static/img/software-catalog/pages/PageIcons.png)
+![Page Icons dropdown menu](/img/software-catalog/pages/PageIcons.png)
 
 </center>
 
@@ -183,7 +177,7 @@ You can edit, lock or delete a page by clicking the `...` button in the top righ
 
 <center>
 
-![Page menu](../../../static/img/software-catalog/pages/PageMenu.png)
+![Page menu](/img/software-catalog/pages/PageMenu.png)
 
 </center>
 
@@ -191,7 +185,7 @@ You can edit, lock or delete a page by clicking the `...` button in the top righ
 
 Editing a page allows you to change its name and/or icon:
 
-![Edit Page popup window](../../../static/img/software-catalog/pages/EditPageForm.png)
+![Edit Page popup window](/img/software-catalog/pages/EditPageForm.png)
 
 #### Locking pages
 
@@ -203,4 +197,8 @@ To learn how to lock pages, refer to [page permissions](./page-permissions.md#lo
 
 #### Deleting pages
 
-A manually-created catalog page can be deleted by clicking the `Delete page` button.
+Any page (whether created automatically or manually) can be deleted by clicking the `Delete page` button.
+
+:::warning Default pages
+When deleting a blueprint from your portal, all pages tied to that blueprint (including the default page that was created for it) will be deleted as well.
+:::

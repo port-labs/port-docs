@@ -22,9 +22,9 @@ The data flow when using the Port execution agent is as follows:
 - Port sends the invocation event to your dedicated Kafka topic;
 - The execution agent pulls the new invocation event from your Kafka topic, and sends it to the URL you specified.
 
-![Port Agent Architecture](../../../../static/img/self-service-actions/portExecutionAgentArchitecture.png)
+![Port Agent Architecture](/img/self-service-actions/portExecutionAgentArchitecture.png)
 
 ## Next steps
 
-- [Explore How to install and use the agent](./Installation.md)
-- [Control the payload sent to your endpoint](./port-execution-agent.md)
+- [Explore How to install and use the agent](/create-self-service-experiences/setup-backend/webhook/port-execution-agent/installation-methods/helm.md)
+- [Control the payload sent to your endpoint](/create-self-service-experiences/setup-backend/webhook/port-execution-agent/control-the-payload.md)

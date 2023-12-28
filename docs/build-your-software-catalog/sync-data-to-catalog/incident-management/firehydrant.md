@@ -5,6 +5,7 @@ sidebar_position: 3
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
+import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
 
 # FireHydrant
 
@@ -192,6 +193,8 @@ pipeline {
 </TabItem>
 
 </Tabs>
+
+<AdvancedConfig/>
 
 ## Ingesting FireHydrant objects
 
