@@ -57,7 +57,7 @@ resources:
           # highlight-start
           identifier: '.id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase | join("/")' # lowercase only the resourceGroups namespace and name to align how azure API returns the resource group reference
           title: .name
-          blueprint: '"containerApp"'
+          blueprint: '"azureContainerApp"'
           properties:
             location: .location
             provisioningState: .properties.provisioningState
@@ -129,7 +129,7 @@ The integration configuration is a YAML file that describes the ETL process to l
           mappings:
             identifier: .id
             title: .name
-            blueprint: '"containerApp"'
+            blueprint: '"azureContainerApp"'
             properties:
               location: .location
               provisioningState: .properties.provisioningState
@@ -155,7 +155,7 @@ The integration configuration is a YAML file that describes the ETL process to l
             mappings:
               identifier: .id
               title: .name
-              blueprint: '"containerApp"'
+              blueprint: '"azureContainerApp"'
               properties:
                 location: .location
                 provisioningState: .properties.provisioningState
