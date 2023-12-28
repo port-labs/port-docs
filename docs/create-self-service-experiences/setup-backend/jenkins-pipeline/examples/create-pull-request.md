@@ -3,18 +3,19 @@ sidebar_position: 3
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+import FindCredentials from "/docs/build-your-software-catalog/sync-data-to-catalog/api/_template_docs/_find_credentials.mdx";
+
 
 # Create pull request
 
-This example illustrates how to open a pull-request in our Github repository from within Port using a Jenkins pipeline.
+This example illustrates how to open a pull-request in a GitHub repository from within Port using a Jenkins pipeline.
 
 The workflow involves adding a resource block to a Terraform `main.tf` file and subsequently generating a PR for the modification on GitHub. In this specific instance, the added resource is a storage account in the Azure cloud.
 
 :::info Prerequisites
 
-- This guide assumes you have a Port account and a basic knowledge of working with Port. If you haven't done so, go ahead and complete the [quickstart](/quickstart). **Setup the service blueprint that you will be using in this guide.**
-- You will need a Github repository in which you can place a workflow that we will use in this guide. If you don't have one, we recommend [creating a new repository](https://docs.github.com/en/get-started/quickstart/create-a-repo) named `port-actions`.
-- You will need to have [Port's Github app](https://github.com/apps/getport-io) installed in your Github organization (the one that contains the repository you'll work with).
+- This guide assumes you have a Port account and a basic knowledge of working with Port. If you haven't done so, go ahead and complete the [quickstart](/quickstart). **Setup the `Service` blueprint that you will be using in this guide.**
+- You will need a GitHub repository in which you can place the files that we will use in this guide. If you don't have one, we recommend [creating a new repository](https://docs.github.com/en/get-started/quickstart/create-a-repo) named `port-actions`.
 - [Generic Webhook Trigger](https://plugins.jenkins.io/generic-webhook-trigger/) - This plugin enables Jenkins to receive and trigger jobs based on incoming HTTP requests, extracting data from JSON or XML payloads and making it available as variables.
 :::
 
@@ -54,6 +55,9 @@ The workflow involves adding a resource block to a Terraform `main.tf` file and 
    - Replace the `Webhook URL` with your jenkins job URL.
    - Make sure the URL is in the format `http://JENKINS_URL/generic-webhook-trigger/invoke?token=<JOB_TOKEN>`
    - Click `Next`:
+   :::tip
+   Learn more about the Jenkins invocation type [here](/create-self-service-experiences/setup-backend/jenkins-pipeline/).
+   :::
 
 <img src='/img/self-service-actions/setup-backend/jenkins-pipeline/iacActionBackend.png' width='75%' />
 
@@ -69,11 +73,11 @@ Now we want to write the Jenkins pipeline that our action will trigger.
 
 1. First, let's obtain the necessary token and secrets:
 
-    - Go to your [Github tokens page](https://github.com/settings/tokens), create a personal access token with `repo` and `admin:org` scope, and copy it (this token is needed to create a pull-request from our pipeline).
+    - Go to your [GitHub tokens page](https://github.com/settings/tokens), create a personal access token with `repo` and `admin:org` scope, and copy it (this token is needed to create a pull-request from our pipeline).
 
     <img src='/img/guides/personalAccessToken.png' width='80%' />
 
-    - Go to your [Port application](https://app.getport.io/), hover over the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`. [Learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+    - <FindCredentials />
 
 2. Create the following as Jenkins Credentials:
     1. Create the Port Credentials using the `Username with password` kind and the id `port-credentials`.
@@ -84,14 +88,13 @@ Now we want to write the Jenkins pipeline that our action will trigger.
 
 3. We will now create a simple `.tf` file that will serve as a template for our new resource:
 
-- In your Github repository, create a file named `create-azure-storage.tf` under `/templates/` (it's path should be `/templates/create-azure-storage.tf`).
+- In your GitHub repository, create a file named `create-azure-storage.tf` under `/templates/` (it's path should be `/templates/create-azure-storage.tf`).
 - Copy the following snippet and paste it in the file's contents:
 
 <details>
 <summary><b>create-azure-storage.tf</b></summary>
 
-```hcl showLineNumbers
-# create-azure-storage.tf
+```hcl showLineNumbers title="create-azure-storage.tf"
 
 resource "azurerm_storage_account" "storage_account" {
   name                = "{{ storage_name }}"
@@ -111,7 +114,7 @@ Add the `main.tf` file in the root of your repository.
 <details>
 <summary><b>main.tf</b></summary>
 
-```hcl showLineNumbers
+```hcl showLineNumbers title="main.tf"
 # Configure the Azure provider
 terraform {
   required_providers {
@@ -149,7 +152,7 @@ In your Jenkins pipeline, use the following snippet as its content:
 <details>
 <summary><b>Jenkins pipeline</b></summary>
 
-```groovy showLineNumbers
+```groovy showLineNumbers title="Jenkinsfile"
 import groovy.json.JsonSlurper
 
 pipeline {
@@ -346,12 +349,12 @@ All done! The action is ready to be executed 🚀
 
 After creating an action, it will appear under the `Self-service` tab of your Port application:
 
-<img src='/img/self-service-actions/setup-backend/jenkins-pipeline/iacActionAfterCreation.png' width='35%' />
+<img src='/img/self-service-actions/setup-backend/jenkins-pipeline/iacActionExecute.png' />
 
 1. Click on `Execute`.
 
 2. Enter a name for your Azure storage account and a location, select any service from the list and click `Execute`. A small popup will appear, click on `View details`:
-
+<img src='/img/self-service-actions/setup-backend/jenkins-pipeline/iacActionAfterCreation.png' width='35%' />
 <img src='/img/self-service-actions/setup-backend/jenkins-pipeline/iacActionExecutePopup.png' width='40%' />
 
 3. This page provides details about the action run. We can see that the backend returned `Success` and the pull-request was created successfully:
