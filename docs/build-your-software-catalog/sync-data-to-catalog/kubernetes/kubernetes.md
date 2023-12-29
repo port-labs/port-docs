@@ -3,7 +3,7 @@ sidebar_position: 1
 ---
 
 import Image from "@theme/IdealImage";
-import ExporterBaseInstallCommand from "./\_exporter_base_install_command.mdx"
+import Tabs from "@theme/Tabs";
 import KubernetesIllustration from "/static/img/build-your-software-catalog/sync-data-to-catalog/kubernetes/k8s-exporter-illustration.png";
 import KubernetesEtl from "/static/img/build-your-software-catalog/sync-data-to-catalog/kubernetes/k8s-etl.png";
 import FindCredentials from "/docs/build-your-software-catalog/sync-data-to-catalog/api/\_template_docs/\_find_credentials_collapsed.mdx";
@@ -169,6 +169,12 @@ The exporter helm chart can be found [here](https://github.com/port-labs/helm-ch
 
 ## Installation
 
+Choose one of the following installation methods:
+
+<Tabs groupId="installation-methods" queryString="installation-methods">
+
+<TabItem value="helm" label="Helm" default>
+
 1. Add Port's Helm repo by using the following command:
 
    ```bash showLineNumbers
@@ -181,7 +187,73 @@ The exporter helm chart can be found [here](https://github.com/port-labs/helm-ch
 
 2. Install the exporter service on your Kubernetes cluster by running the following command:
 
-   <ExporterBaseInstallCommand />
+   ```bash showLineNumbers
+    helm upgrade --install my-port-k8s-exporter port-labs/port-k8s-exporter \
+        --create-namespace --namespace port-k8s-exporter \
+        --set secret.secrets.portClientId=CLIENT_ID --set secret.secrets.portClientSecret=CLIENT_SECRET \
+        --set stateKey="k8s-exporter"  \
+        --set eventListenerType="POLLING"  \
+        --set extraEnv=[{"name":"CLUSTER_NAME","value":"my-cluster"}]
+    ```
+</TabItem>
+
+<TabItem value="argo" label="ArgoCD">
+
+1. Install the `my-port-k8s-exporter` ArgoCD Application by creating the following `my-port-k8s-exporter.yaml` manifest:
+    :::note
+    Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+    
+    Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
+    :::
+
+    <details>
+      <summary>ArgoCD Application</summary>
+    
+    ```yaml showLineNumbers
+    apiVersion: argoproj.io/v1alpha1
+    kind: Application
+    metadata:
+      name: my-port-k8s-exporter
+      namespace: argocd
+    spec:
+      destination:
+        namespace: port-k8s-exporter
+        server: https://kubernetes.default.svc
+      project: default
+      sources:
+      - repoURL: 'https://port-labs.github.io/helm-charts/'
+        chart: port-k8s-exporter
+        helm:
+          parameters:
+            - name: secret.secrets.portClientId
+              value: YOUR_PORT_CLIENT_ID
+            - name: secret.secrets.portClientSecret
+              value: YOUR_PORT_CLIENT_SECRET
+            - name: stateKey
+              value: YOUR_CLUSTER_NAME
+           - name: extraEnv
+             value: '[{"name":"CLUSTER_NAME","value":"YOUR_CLUSTER_NAME"}]' 
+      - repoURL: YOUR_GIT_REPO_URL
+        targetRevision: main
+        ref: values
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+        - CreateNamespace=true
+    ```
+    
+    </details>
+    <br/>
+
+2. Apply your application manifest with `kubectl`:
+```bash
+kubectl apply -f my-port-k8s-exporter.yaml
+```
+
+</TabItem>
+</Tabs>
 
 :::info
 By default, the exporter will try to initiate pre-defined blueprints and resource mapping.
