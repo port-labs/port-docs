@@ -13,7 +13,7 @@ This guide takes 10 minutes to complete, and aims to demonstrate Port's flexibil
 
 :::tip Prerequisites
 
-- This guide assumes you have a Port account and a basic knowledge of working with Port. If you haven't done so, go ahead and complete the [quickstart](/quickstart).
+- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
 - You will need a Github repository in which you can place a workflow that we will use in this guide. If you don't have one, we recommend [creating a new repository](https://docs.github.com/en/get-started/quickstart/create-a-repo) named `Port-actions`.
 - You will need to have [Port's Github app](https://github.com/apps/getport-io) installed in your Github organization (the one that contains the repository you'll work with).
 
@@ -134,7 +134,18 @@ The `architecture` property is a URL to a Lucidchart diagram. This is a handy wa
 
 As platform engineers, we want to enable our developers to perform certain actions on their own. Let's create an action that developers can use to add data to a service, and allocate it to a domain.
 
-#### Create the action's frontend
+#### Setup the action's frontend
+
+:::tip Onboarding
+
+As part of the onboarding process, you should already have an action named `Enrich service` in your [self-service tab](https://app.getport.io/self-serve). In that case, you can skip to the [Define action type](#define-backend-type) step.  
+
+If you **skipped** the onboarding, or you want to create the action from scratch, complete steps 1-5 below.
+
+:::
+
+<details>
+<summary><b>Create the action's frontend (steps 1-5)</b></summary>
 
 1. Go to your [Self-service page](https://app.getport.io/self-serve), then click on the `+ New action` button in the top right corner.
 
@@ -156,11 +167,17 @@ As platform engineers, we want to enable our developers to perform certain actio
 
 <img src='/img/guides/gitopsActionInputType.png' width='50%' />
 
+<br/>
+
 <img src='/img/guides/gitopsActionInputLifecycle.png' width='50%' />
 
 <br/><br/>
 
-6. Now we'll define the backend of the action. Port supports multiple invocation types, for this tutorial we will use a `Github workflow`.
+</details>
+
+#### Define backend type
+
+Now we'll define the backend of the action. Port supports multiple invocation types, for this tutorial we will use a `Github workflow`.
    - Replace the `Organization` and `Repository` values with your values (this is where the workflow will reside and run).
    - Name the workflow `portEnrichService.yaml`.
    - Fill out the rest of the form like this, then click `Next`:
@@ -169,9 +186,9 @@ As platform engineers, we want to enable our developers to perform certain actio
 
 <br/><br/>
 
-7. The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Create`.
+The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Create`.
 
-#### Create the action's backend
+#### Setup the action's backend
 
 Our action will create a pull-request in the service's repository, containing a `port.yml` file that will add data to the service in Port. We will use a Github workflow to implement the action's backend.
 

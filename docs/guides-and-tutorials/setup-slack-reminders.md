@@ -15,7 +15,7 @@ This guide takes 7 minutes to complete, and aims to demonstrate:
 
 :::tip Prerequisites
 
-- This guide assumes you have a Port account and a basic knowledge of working with Port. If you haven't done so, go ahead and complete the [quickstart](/quickstart).
+- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
 - You will need a Github repository in which you can place a workflow that we will use in this guide. If you don't have one, we recommend [creating a new repository](https://docs.github.com/en/get-started/quickstart/create-a-repo) named `Port-actions`.
 :::
 
@@ -31,6 +31,17 @@ After completing it, you will get a sense of how it can benefit different person
 
 ### Setup the action's frontend
 
+:::tip Onboarding
+
+As part of the onboarding process, you should already have an action named `Send scorecard reminder` in your [self-service tab](https://app.getport.io/self-serve). In that case, you can skip to the [Define action type](#define-backend-type) step.  
+
+If you **skipped** the onboarding, or you want to create the action from scratch, complete steps 1-4 below.
+
+:::
+
+<details>
+<summary><b>Create the action's frontend (steps 1-4)</b></summary>
+
 1. To get started, head to the [Self-service tab](https://app.getport.io/self-serve) in your Port application, and click on `New action`:
 
 <img src='/img/guides/actionsCreateNew.png' width='50%' />
@@ -43,14 +54,20 @@ After completing it, you will get a sense of how it can benefit different person
 
 4. Click `Next` again, since we won't need inputs from the user in this action.
 
-5. Now we'll define the backend of the action. Port supports multiple invocation types, for this tutorial we will use a `Github workflow`.
+</details>
+
+#### Define backend type
+
+Now we'll define the backend of the action. Port supports multiple invocation types, for this tutorial we will use a `Github workflow`.
    - Replace the `Organization` and `Repository` values with your values (this is where the workflow will reside and run).
    - Name the workflow `portSlackReminder.yaml`.
    - Fill out the rest of the form like this, then click `Next`:
 
-<img src='/img/guides/slackReminderBackend.png' width=' %' />
+<img src='/img/guides/slackReminderBackend.png' width='70%' />
 
-6. The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Create`.
+<br/><br/>
+
+The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Create`.
 
 The action's frontend is now ready 🥳
 
@@ -71,6 +88,8 @@ Now we want to write the logic that our action will trigger.
 - `PORT_CLIENT_SECRET` - the client secret you copied from your Port app.
 
 <img src='/img/guides/repositorySecretSlack.png' width='80%' />
+
+<br/><br/>
 
 3. Now let's create the workflow file that contains our logic. Under `.github/workflows`, create a new file named `portSlackReminder.yaml` and use the following snippet as its content:
 

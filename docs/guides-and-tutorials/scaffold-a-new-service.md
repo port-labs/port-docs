@@ -39,7 +39,7 @@ If you **skipped** the onboarding, or you want to create the action from scratch
 :::
 
 <details>
-<summary>Create the action's frontend</summary>
+<summary><b>Create the action's frontend (steps 1-4)</b></summary>
 
 1. Click on `New action`:
 
@@ -115,7 +115,7 @@ If your organization uses SAML SSO, you will need to authorize your token. Follo
 - `PORT_CLIENT_ID` - the client ID you copied from your Port app.
 - `PORT_CLIENT_SECRET` - the client secret you copied from your Port app.
 
-<img src='/img/guides/repositorySecretScaffold.png' width='80%' />
+<img src='/img/guides/repositorySecret.png' width='80%' />
 
 3. Now let's create the workflow file that contains our logic. Under `.github/workflows`, create a new file named `portCreateRepo.yaml` and use the following snippet as its content:
 
