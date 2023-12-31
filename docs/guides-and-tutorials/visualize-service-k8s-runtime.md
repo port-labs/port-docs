@@ -38,7 +38,8 @@ After completing it, you will get a sense of how it can benefit different person
 
 ```bash showLineNumbers
 # The following script will install a K8s integration at your K8s cluster using helm
-# stateKey: Change the stateKey to describe your integration
+# Change the stateKey to describe your integration.
+# For example, the name of the cluster it will be installed on.
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install k8s-exportera port-labs/port-k8s-exporter \
 	--set secret.secrets.portClientId="YOUR_PORT_CLIENT_ID"  \
