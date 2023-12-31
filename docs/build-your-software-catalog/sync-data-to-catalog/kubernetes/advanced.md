@@ -140,8 +140,8 @@ To pass extra environment variables to the exporter's runtime, you can use the H
 helm upgrade --install <MY_INSTALLATION_NAME> port-labs/port-k8s-exporter \
   # Standard installation flags
   # ...
-  --set extraEnv[0].name=HTTP_PROXY \
-  --set extraEnv[0].value=http://my-proxy.com:1111
+  --set "extraEnv[0].name"=HTTP_PROXY \
+  --set "extraEnv[0].value"=http://my-proxy.com:1111
 ```
 
 2. The Helm `values.yaml` file:
