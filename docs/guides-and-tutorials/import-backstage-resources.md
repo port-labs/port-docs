@@ -14,7 +14,7 @@ The source code of the import script is open and available on [**GitHub**](https
 
 :::tip Prerequisites
 
-- This guide assumes you have a Port account and a basic knowledge of working with Port. If you haven't done so, go ahead and complete the [quickstart](/quickstart).
+- While it is not mandatory for this guide, we recommend that you complete the [onboarding process](/quickstart) before proceeding.
 - [Docker](https://docs.docker.com/engine/install/).
 - A Backstage instance.
 
