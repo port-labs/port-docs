@@ -75,7 +75,7 @@ To change the mapping that the K8s exporter uses to fill Port with data from you
 
 You use to YAML editor to edit the configuration and then click on `Resync` to apply the new configuration and also update all existing data according to it.
 
-💁🏽 _You don't need to change anything in the configuration for this guide, this is just an FYI_
+💁🏽 _You will need to make another update to the configuration later in this guide, so these instructions will come in handy soon_ ⏰
 :::
 
 <br/>
@@ -170,10 +170,24 @@ spec:
 
 <br/>
 
-2. Since we've already added the mapping ahead of time, let's restart the exporter to make sure our changes are applied. Run the following command in your terminal:
+2. To see the new data, we need to update the mapping configuration that the K8s exporter uses to ingest data. To edit the configuration, you can follow the instructions in the `tip - updating your configuration` block, when you reach the YAML editor, add the following block to the mapping configuration and click `Resync`:
 
-```bash
-kubectl rollout restart deploy/port-k8s-exporter -n port-k8s-exporter
+```yaml showLineNumbers
+resources:
+  # ... Other resource mappings installed by the K8s exporter
+  - kind: apps/v1/deployments
+      port:
+        entity:
+          mappings:
+          - blueprint: '"service"'
+            icon: '"Deployment"'
+            identifier: .metadata.labels.portService
+            properties: {}
+            relations:
+              prod_runtime: .metadata.name + "-Deployment-" + .metadata.namespace + "-" + "my-cluster"
+            title: .metadata.name
+      selector:
+        query: .metadata.namespace | startswith("kube") | not
 ```
 
 <br/>
@@ -181,167 +195,6 @@ kubectl rollout restart deploy/port-k8s-exporter -n port-k8s-exporter
 3. Go to your [Software catalog](https://app.getport.io/services), and click on `Services`. Click on the `Service` for which you created the deployment, and you should see the `Prod_runtime` property filled, along with the `Health` and `Images` properties that we mirrored:
 
 <img src='/img/guides/k8sEntityAfterIngestion.png' width='80%' />
-
-### Create scorecards for your workloads
-
-Now that all of our k8s data has been ingested into Port, let's create some scorecards to set standards for our workloads. To add a definition of multiple scorecards at once, we can edit the <PortTooltip id="blueprint">blueprint's</PortTooltip> JSON directly from the UI:
-
-1. Go to your [Builder](https://app.getport.io/dev-portal/data-model), expand the `Workload` blueprint, click on the `...` button, then click on `Edit JSON`:
-
-<img src='/img/guides/k8sWorkloadBlueprintEditJson.png' width='60%' />
-
-<br/><br/>
-
-2. Click on the `Scorecards` tab, replace the contents with the following definition and click `Save`:
-
-<details>
-<summary><b>Scorecard definition (Click to expand)</b></summary>
-
-```json showLineNumbers
-[
-  {
-    "identifier": "configuration",
-    "title": "Configuration Checks",
-    "rules": [
-      {
-        "identifier": "notPrivileged",
-        "title": "No privilged containers",
-        "level": "Bronze",
-        "query": {
-          "combinator": "and",
-          "conditions": [
-            {
-              "property": "hasPrivileged",
-              "operator": "!=",
-              "value": true
-            }
-          ]
-        }
-      },
-      {
-        "identifier": "hasLimits",
-        "title": "All containers have CPU and Memory limits",
-        "level": "Bronze",
-        "query": {
-          "combinator": "and",
-          "conditions": [
-            {
-              "property": "hasLimits",
-              "operator": "=",
-              "value": true
-            }
-          ]
-        }
-      },
-      {
-        "identifier": "notDefaultNamespace",
-        "title": "Not in 'default' namespace",
-        "level": "Bronze",
-        "query": {
-          "combinator": "and",
-          "conditions": [
-            {
-              "property": "namespace",
-              "operator": "!=",
-              "value": "default"
-            }
-          ]
-        }
-      },
-      {
-        "identifier": "rolloutStrategy",
-        "title": "Using Rolling update strategy",
-        "level": "Silver",
-        "query": {
-          "combinator": "and",
-          "conditions": [
-            {
-              "property": "strategy",
-              "operator": "=",
-              "value": "RollingUpdate"
-            }
-          ]
-        }
-      },
-      {
-        "identifier": "imageTag",
-        "title": "Doesn't have a container with image tag 'latest'",
-        "level": "Gold",
-        "query": {
-          "combinator": "and",
-          "conditions": [
-            {
-              "property": "hasLatest",
-              "operator": "!=",
-              "value": "false"
-            }
-          ]
-        }
-      }
-    ]
-  },
-  {
-    "identifier": "highAvailability",
-    "title": "High Availability",
-    "rules": [
-      {
-        "identifier": "highAvalabilityB",
-        "title": "\"Wanted Replicas\" >= 1",
-        "level": "Bronze",
-        "query": {
-          "combinator": "and",
-          "conditions": [
-            {
-              "property": "replicas",
-              "operator": ">=",
-              "value": 1
-            }
-          ]
-        }
-      },
-      {
-        "identifier": "highAvalabilityS",
-        "title": "\"Wanted Replicas\" >= 2",
-        "level": "Silver",
-        "query": {
-          "combinator": "and",
-          "conditions": [
-            {
-              "property": "replicas",
-              "operator": ">=",
-              "value": 2
-            }
-          ]
-        }
-      },
-      {
-        "identifier": "highAvalabilityG",
-        "title": "\"Wanted Replicas\" >= 3",
-        "level": "Gold",
-        "query": {
-          "combinator": "and",
-          "conditions": [
-            {
-              "property": "replicas",
-              "operator": ">=",
-              "value": 3
-            }
-          ]
-        }
-      }
-    ]
-  }
-]
-```
-
-</details>
-
-<img src='/img/guides/k8sAddScorecardJson.png' width='80%' />
-
-<br/><br/>
-
-We now have 2 scorecards configured - one for the workload's configuration validity, and another for its availability.  
-We will come back to these later 😎
 
 ### Visualize data from your Kubernetes environment
 
