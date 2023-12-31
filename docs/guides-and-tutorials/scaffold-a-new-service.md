@@ -115,7 +115,9 @@ If your organization uses SAML SSO, you will need to authorize your token. Follo
 - `PORT_CLIENT_ID` - the client ID you copied from your Port app.
 - `PORT_CLIENT_SECRET` - the client secret you copied from your Port app.
 
-<img src='/img/guides/repositorySecret.png' width='80%' />
+<img src='/img/guides/repositorySecret.png' width='50%' />
+
+<br/><br/>
 
 3. Now let's create the workflow file that contains our logic. Under `.github/workflows`, create a new file named `portCreateRepo.yaml` and use the following snippet as its content:
 
