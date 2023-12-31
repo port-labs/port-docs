@@ -12,7 +12,7 @@ resources:
         mappings:
           identifier: .path_with_namespace | gsub(" "; "")
           title: .name
-          blueprint: '"repository"'
+          blueprint: '"gitlabRepository"'
           properties:
             url: .web_url
             description: .description
@@ -28,7 +28,7 @@ resources:
         mappings:
           identifier: .id | tostring
           title: .title // (.id | tostring)
-          blueprint: '"pipeline"'
+          blueprint: '"gitlabPipeline"'
           properties:
             creator: .user.name
             status: .status
@@ -46,7 +46,7 @@ resources:
         mappings:
           identifier: .id | tostring
           title: .name
-          blueprint: '"job"'
+          blueprint: '"gitlabJob"'
           properties:
             creator: .user.name
             startedAt: .started_at
