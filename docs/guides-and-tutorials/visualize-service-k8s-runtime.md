@@ -80,7 +80,11 @@ You use to YAML editor to edit the configuration and then click on `Resync` to a
 
 <br/>
 
-3. Listen to changes in your Kubernetes cluster and update your <PortTooltip id="entity">entities</PortTooltip> accordingly.
+3. Create <PortTooltip id="scorecard">scorecards</PortTooltip> for the blueprints that represent your K8s resources (as defined [here](https://github.com/port-labs/port-k8s-exporter/blob/main/assets/defaults/scorecards.json)). These scorecards define rules and checks over the data ingested from your K8s cluster, making it easy to check that your K8s resources meet your standards.
+
+4. Create dashboards that provide you with a visual view of the data ingested from your K8s cluster.
+
+5. Listen to changes in your Kubernetes cluster and update your <PortTooltip id="entity">entities</PortTooltip> accordingly.
 
 ### Define the connection between services and workloads
 
