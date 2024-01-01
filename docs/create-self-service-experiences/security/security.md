@@ -13,5 +13,5 @@ When Port makes outbound calls (for example when using the [Webhook](../setup-ba
 Port outbound calls will originate from one of the following IP addresses:
 
 ```text showLineNumbers
-3.251.12.205
+44.221.30.248, 44.193.148.179, 34.197.132.205, 3.251.12.205
 ```
