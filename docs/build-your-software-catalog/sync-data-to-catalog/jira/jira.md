@@ -51,6 +51,8 @@ Set them as you wish in the script below, then copy it and run it in your termin
 <Tabs groupId="deploy" queryString="deploy">
 
 <TabItem value="helm" label="Helm" default>
+To install the integration using Helm, run the following command:
+
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-jira-integration port-labs/port-ocean \
@@ -68,6 +70,8 @@ helm upgrade --install my-jira-integration port-labs/port-ocean \
 ```
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
+To install the integration using ArgoCD, follow these steps:
+
 1. Create a `values.yaml` file in `argocd/my-ocean-jira-integration` in your git repository with the content:
 
 :::note
@@ -82,10 +86,13 @@ integration:
   eventListener:
     type: POLLING
   config:
+  // highlight-next-line
     jiraHost: ATLASSIAN_JIRA_HOST
   secrets:
+  // highlight-start
     atlassianUserEmail: ATLASSIAN_USER_EMAIL
     atlassianUserToken: ATLASSIAN_USER_TOKEN
+  // highlight-end
 ```
 <br/>
 
@@ -117,12 +124,14 @@ spec:
     helm:
       valueFiles:
       - $values/argocd/my-ocean-jira-integration/values.yaml
+      // highlight-start
       parameters:
         - name: port.clientId
           value: YOUR_PORT_CLIENT_ID
         - name: port.clientSecret
           value: YOUR_PORT_CLIENT_SECRET
   - repoURL: YOUR_GIT_REPO_URL
+  // highlight-end
     targetRevision: main
     ref: values
   syncPolicy:
