@@ -8,7 +8,6 @@ import DocCardList from '@theme/DocCardList';
 
 To allow for a quick start when implementing Port's k8s exporter, custom pre-built templates were created. These configurations will map common use-cases for when working with kubernetes.
 
-All pre-built configurations will be installed using Port's K8s [installation script](/build-your-software-catalog/sync-data-to-catalog/kubernetes/installation-methods/installation-script.md).
 :::note
 
 - Files used in the pre-built configurations can be found [here](https://github.com/port-labs/template-assets/tree/main/kubernetes)

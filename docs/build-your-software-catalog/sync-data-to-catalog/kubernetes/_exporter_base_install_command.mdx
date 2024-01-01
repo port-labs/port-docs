@@ -1,7 +1,0 @@
-```bash showLineNumbers
-helm upgrade --install my-port-k8s-exporter port-labs/port-k8s-exporter \
---create-namespace --namespace port-k8s-exporter \
---set secret.secrets.portClientId=CLIENT_ID \
---set secret.secrets.portClientSecret=CLIENT_SECRET \
---set-file configMap.config=config.yml
-```
