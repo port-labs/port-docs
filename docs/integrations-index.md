@@ -2,6 +2,7 @@
 title: Integrations Index
 sidebar_label: ⚙️ Integrations Index
 sidebar_position: 11
+slug: /integrations-index/
 ---
 
 # ⚙️ Integrations Index
