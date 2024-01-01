@@ -93,6 +93,14 @@ The action's frontend is now ready 🥳
 
 Now we want to write the logic that our action will trigger.
 
+<Tabs groupId="git-provider" queryString defaultValue="github" values={[
+{label: "GitHub", value: "github"},
+{label: "GitLab", value: "gitlab"},
+{label: "Bitbucket", value: "bitbucket"}
+]}>
+
+<TabItem value="github">
+
 :::info Important
 If the Github organization which will house your workflow is not the same as the one you'll create the new repository in, install Port's [Github app](https://github.com/apps/getport-io) in the other organization as well.
 :::
@@ -124,9 +132,7 @@ If your organization uses SAML SSO, you will need to authorize your token. Follo
 <details>
 <summary><b>Github workflow (click to expand)</b></summary>
 
-```yaml showLineNumbers
-# portCreateRepo.yaml
-
+```yaml showLineNumbers title="portCreateRepo.yaml"
 name: Scaffold a new service
 on:
   workflow_dispatch:
@@ -169,6 +175,215 @@ This workflow uses Port's [cookiecutter Github action](https://github.com/port-l
 :::
 
 <br/>
+</TabItem> 
+
+<TabItem value="gitlab">
+
+1. First, let's create a GitLab group that will store our new scaffolder pipeline - Go to your GitLab account and create a new group.
+
+2. Next, let's create the necessary token and secrets:
+
+- Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
+- Go to your [root group](https://gitlab.com/dashboard/groups), and follow the steps [here](https://docs.gitlab.com/ee/user/group/settings/group_access_tokens.html#create-a-group-access-token-using-ui) to create a new group access token with the following permission scopes: `api, read_api, read_repository, write_repository`, then save its value as it will be required in the next step.
+  <img src='/img/guides/gitlabGroupAccessTokenPerms.png' width='80%' />
+- Go to the new GitLab group you created, from the `Settings` menu at the sidebar on the left, select `CI/CD`.
+- Expand the `Variables` section and save the following secrets:
+  - `PORT_CLIENT_ID` - Your Port client ID.
+  - `PORT_CLIENT_SECRET` - Your Port client secret.
+  - `GITLAB_PAT` - The GitLab project access token you created in the previous step.
+  <img src='/img/guides/gitlabPipelineVariables.png' width='80%' />
+- Expand the `Pipeline trigger tokens` section and add a new token, give it a meaningful description such as `Scaffolder token` and save its value.
+
+  <img src='/img/guides/gitlabPipelineTriggerToken.png' width='80%' />
+
+<br/><br/>
+
+3. Now let's create the pipeline file that contains our logic. In the GitLab project, at the root of the project, create a new file named `.gitlab-ci.yml` and use the following snippet as its content:
+
+<details>
+<summary><b>GitLab pipeline (click to expand)</b></summary>
+
+```yaml showLineNumbers title=".gitlab-ci.yml"
+image: python:3.10.0-alpine
+
+variables:
+  COOKIECUTTER_TEMPLATE_URL: "https://gitlab.com/AdriaanRol/cookiecutter-pypackage-gitlab"
+
+stages: # List of stages for jobs, and their order of execution
+  - fetch-port-access-token
+  - scaffold
+  - create-entity
+  - update-run-status
+
+fetch-port-access-token: # Example - get the Port API access token and RunId
+  stage: fetch-port-access-token
+  except:
+    - pushes
+  before_script:
+    - apk update
+    - apk add jq curl -q
+  script:
+    - |
+      echo "Getting access token from Port API"
+      accessToken=$(curl -X POST \
+        -H 'Content-Type: application/json' \
+        -d '{"clientId": "'"$PORT_CLIENT_ID"'", "clientSecret": "'"$PORT_CLIENT_SECRET"'"}' \
+        -s 'https://api.getport.io/v1/auth/access_token' | jq -r '.accessToken')
+      echo "ACCESS_TOKEN=$accessToken" >> data.env
+      runId=$(cat $TRIGGER_PAYLOAD | jq -r '.context.runId')
+      echo "RUN_ID=$runId" >> data.env
+      curl -X POST \
+        -H 'Content-Type: application/json' \
+        -H "Authorization: Bearer $accessToken" \
+        -d '{"message":"🏃‍♂️ Starting new GitLab project scaffold"}' \
+        "https://api.getport.io/v1/actions/runs/$runId/logs"
+      curl -X PATCH \
+        -H 'Content-Type: application/json' \
+        -H "Authorization: Bearer $accessToken" \
+        -d '{"link":"'"$CI_PIPELINE_URL"'"}' \
+        "https://api.getport.io/v1/actions/runs/$runId"
+        echo "$CI_PIPELINE_URL"
+  artifacts:
+    reports:
+      dotenv: data.env
+
+scaffold:
+  before_script: |
+    apk update
+    apk add jq curl git -q
+    pip3 install cookiecutter==2.3.0 -q
+  stage: scaffold
+  except:
+    - pushes
+  script:
+    - |
+      echo "Creating new GitLab repository"
+      curl -X POST \
+        -H 'Content-Type: application/json' \
+        -H "Authorization: Bearer $ACCESS_TOKEN" \
+        -d '{"message":"⚙️ Creating new GitLab repository"}' \
+        "https://api.getport.io/v1/actions/runs/$RUN_ID/logs"
+
+      service_name=$(cat $TRIGGER_PAYLOAD | jq -r '.payload.properties.service_name')
+      CREATE_REPO_RESPONSE=$(curl -X POST -s "$CI_API_V4_URL/projects" --header "Private-Token: $GITLAB_ACCESS_TOKEN" --form "name=$service_name" --form "namespace_id=$CI_PROJECT_NAMESPACE_ID")
+      PROJECT_URL=$(echo $CREATE_REPO_RESPONSE | jq -r .http_url_to_repo)
+
+      echo "Checking if the repository creation was successful"
+      if [[ -z "$PROJECT_URL" ]]; then
+          echo "Failed to create GitLab repository."
+          exit 1
+      fi
+      echo "Repository created"
+      curl -X POST \
+        -H 'Content-Type: application/json' \
+        -H "Authorization: Bearer $ACCESS_TOKEN" \
+        -d '{"message":"✅ Repository created"}' \
+        "https://api.getport.io/v1/actions/runs/$RUN_ID/logs"
+
+      FIRST_NAME=$(cat $TRIGGER_PAYLOAD | jq -r '.trigger.by.user.firstName')
+      LAST_NAME=$(cat $TRIGGER_PAYLOAD | jq -r '.trigger.by.user.lastName')
+      EMAIL=$(cat $TRIGGER_PAYLOAD | jq -r '.trigger.by.user.email')
+      BLUEPRINT_ID=$(cat $TRIGGER_PAYLOAD | jq -r '.context.blueprint')
+
+      echo "PROJECT_URL=$PROJECT_URL" >> data.env
+      echo "BLUEPRINT_ID=$BLUEPRINT_ID" >> data.env
+      echo "SERVICE_NAME=$service_name" >> data.env
+
+      curl -X POST \
+        -H 'Content-Type: application/json' \
+        -H "Authorization: Bearer $ACCESS_TOKEN" \
+        -d '{"message":"🏗️ Generating new project template from Cookiecutter"}' \
+        "https://api.getport.io/v1/actions/runs/$RUN_ID/logs"
+
+      # Generate cookiecutter.yaml file
+      cat <<EOF > cookiecutter.yaml
+      default_context:
+        full_name: "${FIRST_NAME} ${LAST_NAME}"
+        email: "${EMAIL}"
+        project_short_description: "Project scaffolded by Port"
+        gitlab_username: "${gitlab_username}"
+        project_name: "${service_name}"
+      EOF
+      cookiecutter $COOKIECUTTER_TEMPLATE_URL --no-input --config-file cookiecutter.yaml --output-dir scaffold_out
+
+      echo "Initializing new repository..."
+      git config --global user.email "scaffolder@email.com"
+      git config --global user.name "Mighty Scaffolder"
+      git config --global init.defaultBranch "main"
+
+      curl -X POST \
+        -H 'Content-Type: application/json' \
+        -H "Authorization: Bearer $ACCESS_TOKEN" \
+        -d '{"message":"📡 Uploading repository template"}' \
+        "https://api.getport.io/v1/actions/runs/$RUN_ID/logs"
+
+      modified_service_name=$(echo "$service_name" | sed 's/[[:space:]-]/_/g')
+      cd scaffold_out/$modified_service_name
+      git init
+      git add .
+      git commit -m "Initial commit"
+      GITLAB_HOSTNAME=$(echo "$CI_API_V4_URL" | cut -d'/' -f3)
+      git remote add origin https://$gitlab_username:$GITLAB_ACCESS_TOKEN@$GITLAB_HOSTNAME/${CI_PROJECT_NAMESPACE}/${service_name}.git
+      git push -u origin main
+
+      curl -X POST \
+        -H 'Content-Type: application/json' \
+        -H "Authorization: Bearer $ACCESS_TOKEN" \
+        -d '{"message":"👍 Repository updated"}' \
+        "https://api.getport.io/v1/actions/runs/$RUN_ID/logs"
+  artifacts:
+    reports:
+      dotenv: data.env
+
+create-entity:
+  stage: create-entity
+  except:
+    - pushes
+  before_script:
+    - apk update
+    - apk add jq curl -q
+  script:
+    - |
+      echo "Creating Port entity to match new repository"
+      curl -X POST \
+          -H 'Content-Type: application/json' \
+          -H "Authorization: Bearer $ACCESS_TOKEN" \
+          -d '{"message":"🚀 Creating new '"$BLUEPRINT_ID"' entity: '"$SERVICE_NAME"'"}' \
+          "https://api.getport.io/v1/actions/runs/$RUN_ID/logs"
+      curl --location --request POST "https://api.getport.io/v1/blueprints/$BLUEPRINT_ID/entities?upsert=true&run_id=$RUN_ID&create_missing_related_entities=true" \
+        --header "Authorization: Bearer $ACCESS_TOKEN" \
+        --header "Content-Type: application/json" \
+        -d '{"identifier": "'"$SERVICE_NAME"'","title": "'"$SERVICE_NAME"'","properties": {"url": "'"$PROJECT_URL"'"}, "relations": {}}'
+
+update-run-status:
+  stage: update-run-status
+  except:
+    - pushes
+  image: curlimages/curl:latest
+  script:
+    - |
+      echo "Updating Port action run status and final logs"
+      curl -X POST \
+        -H 'Content-Type: application/json' \
+        -H "Authorization: Bearer $ACCESS_TOKEN" \
+        -d '{"message":"✅ Scaffold '"$SERVICE_NAME"' finished successfully!"}' \
+        "https://api.getport.io/v1/actions/runs/$RUN_ID/logs"
+      curl -X POST \
+        -H 'Content-Type: application/json' \
+        -H "Authorization: Bearer $ACCESS_TOKEN" \
+        -d '{"message":"🔗 Project URL: '"$PROJECT_URL"'"}' \
+        "https://api.getport.io/v1/actions/runs/$RUN_ID/logs"
+      curl -X PATCH \
+        -H 'Content-Type: application/json' \
+        -H "Authorization: Bearer $ACCESS_TOKEN" \
+        -d '{"status":"SUCCESS", "message": {"run_status": "Scaffold '"$SERVICE_NAME"' finished successfully! Project URL: '"$PROJECT_URL"'"}}' \
+        "https://api.getport.io/v1/actions/runs/$RUN_ID"
+```
+
+</details>
+</TabItem>
+
+</Tabs>
 
 All done! The action is ready to be used 🚀
 
