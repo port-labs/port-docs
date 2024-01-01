@@ -36,7 +36,7 @@ To get started, we will write the logic that our action will trigger.
 {label: "Github", value: "github"},
 {label: "Gitlab", value: "gitlab"}
 ]}>
-  <TabItem value="github-backend" label="Github">
+  <TabItem value="github" label="Github">
 
 1. First, let's create the necessary token and secrets:
 
@@ -95,7 +95,7 @@ jobs:
 </details>
 
 </TabItem>
-  <TabItem value="gitlab-backend" label="Gitlab">
+  <TabItem value="gitlab" label="Gitlab">
 
 1. First, let's create the required webhooks and variables:
 
@@ -222,7 +222,7 @@ If you **skipped** the onboarding, or you want to create the action from scratch
 {label: "Gitlab", value: "gitlab"}
 ]}>
 
-  <TabItem value="github-frontend" label="Github">
+  <TabItem value="github" label="Github">
 
 1. To get started, head to the [Self-service tab](https://app.getport.io/self-serve) in your Port application, and click on `New action`:
 
@@ -247,7 +247,7 @@ If you **skipped** the onboarding, or you want to create the action from scratch
 
   </TabItem >
 
-<TabItem value="gitlab-frontend" label="GitLab">
+<TabItem value="gitlab" label="GitLab">
 
 1. To get started, head to the [Self-service tab](https://app.getport.io/self-serve) in your Port application, and click on `New action`:
 
