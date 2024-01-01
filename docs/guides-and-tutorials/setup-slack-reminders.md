@@ -15,7 +15,7 @@ This guide takes 7 minutes to complete, and aims to demonstrate:
 
 :::tip Prerequisites
 
-- This guide assumes you have a Port account and a basic knowledge of working with Port. If you haven't done so, go ahead and complete the [quickstart](/quickstart).
+- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
 - You will need a Git repository in which you can place a workflow/pipeline that we will use in this guide. If you don't have one, we recommend [creating a new repository](https://docs.github.com/en/get-started/quickstart/create-a-repo) named `Port-actions`.
 :::
 
@@ -32,8 +32,11 @@ After completing it, you will get a sense of how it can benefit different person
 ### Setup the action's backend
 To get started, we will write the logic that our action will trigger.
 
-<Tabs>
-  <TabItem value="github-backend" label="GitHub">
+<Tabs groupId="git-provider" queryString values={[
+{label: "Github", value: "github"},
+{label: "Gitlab", value: "gitlab"}
+]}>
+  <TabItem value="github-backend" label="Github">
 
 1. First, let's create the necessary token and secrets:
 
@@ -92,7 +95,7 @@ jobs:
 </details>
 
 </TabItem>
-  <TabItem value="gitlab-backend" label="GitLab">
+  <TabItem value="gitlab-backend" label="Gitlab">
 
 1. First, let's create the required webhooks and variables:
 
@@ -204,11 +207,22 @@ variables:
   </TabItem>
 </Tabs>
 
+:::tip Onboarding
+
+As part of the onboarding process, you should already have an action named `Send scorecard reminder` in your [self-service tab](https://app.getport.io/self-serve). In that case, you can skip to the [Setup the action's frontend](#setup-the-actions-frontend) step.  
+
+If you **skipped** the onboarding, or you want to create the action from scratch, complete steps 1-4 below.
+
+:::
+
 ### Setup the action's frontend
 
-<Tabs groupId="cicd-method-frontend" queryString="cicd-method-frontend">
+<Tabs groupId="git-provider" queryString values={[
+{label: "Github", value: "github"},
+{label: "Gitlab", value: "gitlab"}
+]}>
 
-  <TabItem value="github-frontend" label="GitHub">
+  <TabItem value="github-frontend" label="Github">
 
 1. To get started, head to the [Self-service tab](https://app.getport.io/self-serve) in your Port application, and click on `New action`:
 
