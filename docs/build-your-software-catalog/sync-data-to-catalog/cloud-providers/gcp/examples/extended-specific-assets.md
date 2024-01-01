@@ -18,7 +18,7 @@ terraform {
   required_providers {
     port-labs = {
       source  = "port-labs/port-labs"
-      version = "~> 0.10.3"
+      version = "~> 1"
     }
     google-beta = {
       source  = "hashicorp/google-beta"
@@ -31,7 +31,7 @@ locals {
   domain = "GCP_ORGANIZATION_DOMAIN_NAME" # set the organization's domain
 }
 
-provider "port-labs" {
+provider "port" {
   client_id = "PORT_CLIENT_ID"     # or set the env var PORT_CLIENT_ID
   secret    = "PORT_CLIENT_SECRET" # or set the env var PORT_CLIENT_SECRET
 }
@@ -164,28 +164,28 @@ resource "port-labs_entity" "gcp_org_entity" {
 }
 }
 
-resource "port-labs_blueprint" "gcp_folder_blueprint" {
+resource "port_blueprint" "gcp_folder_blueprint" {
   title      = "Folder"
   icon       = "GCP"
   identifier = "folder"
   properties = {
     string_props = {
       "link" = {
-        format     = "url"
-        title      = "Link"
+        format = "url"
+        title  = "Link"
       }
       "createTime" = {
-        format     = "date-time"
-        title      = "Create Time"
+        format = "date-time"
+        title  = "Create Time"
       }
-      relations = {
-        "organization" = {
-          target   = port-labs_blueprint.gcp_org_blueprint.identifier
-          title    = "Organization"
-          many     = false
-          required = false
-        }
-      }
+    }
+  }
+  relations = {
+    "organization" = {
+      target   = port_blueprint.gcp_org_blueprint.identifier
+      title    = "Organization"
+      many     = false
+      required = false
     }
   }
 }
@@ -323,7 +323,7 @@ resource "port-labs_blueprint" "gcp_bucket_blueprint" {
   }
   relations = {
     "project" = {
-      target   = "port-labs_blueprint.gcp_project_blueprint"
+      target   = port-labs_blueprint.gcp_project_blueprint.identifier
       title    = "GCP Project"
       required = false
       many     = false
@@ -373,7 +373,7 @@ resource "port-labs_blueprint" "gcp_service_account_blueprint" {
   title      = "Service Account"
   icon       = "Lock"
   identifier = "serviceAccount"
-  properties {
+  properties = {
     string_props = {
       "link" = {
         format = "url"
@@ -420,7 +420,7 @@ resource "port-labs_blueprint" "gcp_disk_blueprint" {
   title      = "Disk"
   icon       = "GoogleComputeEngine"
   identifier = "disk"
-  properties {
+  properties = {
     string_props = {
       "link" = {
         format = "url"
@@ -459,7 +459,7 @@ resource "port-labs_blueprint" "gcp_disk_blueprint" {
   }
   relations = {
     "project" = {
-      target   = port-labs_blueprint.gcp_project_blueprint
+      target   = port-labs_blueprint.gcp_project_blueprint.identifier
       title    = "Project"
       required = false
       many     = false
@@ -473,7 +473,7 @@ resource "port-labs_entity" "gcp_disk_entity" {
   identifier = "${each.value.project}_${each.value.zone}_${each.value.name}"
   title      = each.value.name
   blueprint  = port-labs_blueprint.gcp_disk_blueprint.identifier
-  properties {
+  properties = {
     string_props = {
       "link"              = "https://console.cloud.google.com/compute/disksDetail/zones/${each.value.zone}/disks/${each.value.name}?project=${each.value.project}"
       "description"       = each.value.description
@@ -593,7 +593,7 @@ resource "port-labs_entity" "gcp_memorystore_entity" {
       "labels" = jsonencode(each.value.labels)
     }
     array_props = {
-      string_items = {
+      object_items = {
         "nodes" = [for item in each.value.nodes : jsonencode(item)]
       }
     }
@@ -619,9 +619,6 @@ resource "port-labs_blueprint" "gcp_compute_instance_blueprint" {
       }
       "zone" = {
         title = "Zone"
-      }
-      "description" = {
-        title = "Description"
       }
       "currentStatus" = {
         enum = ["PROVISIONING", "STAGING", "RUNNING", "STOPPING", "REPAIRING", "TERMINATED", "SUSPENDING", "SUSPENDED"]
@@ -675,7 +672,6 @@ resource "port-labs_entity" "gcp_compute_instance_entity" {
     string_props = {
       "link"          = "https://console.cloud.google.com/compute/instancesDetail/zones/${each.value.zone}/instances/${each.value.name}?project=${each.value.project}"
       "zone"          = each.value.zone
-      "description"   = each.value.description
       "currentStatus" = each.value.current_status
       "machineType"   = each.value.machine_type
       "cpuPlatform"   = each.value.cpu_platform
@@ -1226,7 +1222,7 @@ resource "port-labs_blueprint" "gcp_bucket_blueprint" {
   }
   relations = {
     "project" = {
-      target   = "port-labs_blueprint.gcp_project_blueprint"
+      target   = port-labs_blueprint.gcp_project_blueprint.identifier
       title    = "GCP Project"
       required = false
       many     = false
@@ -1251,12 +1247,10 @@ resource "port-labs_entity" "gcp_bucket_entity" {
     string_props = {
       "link"     = "https://console.cloud.google.com/storage/browser/${each.value.id};tab=objects?project=${each.value.project}"
       "location" = each.value.location
+      publicAccessPrevention = each.value.public_access_prevention
+      storageClass           = each.value.storage_class
     }
     array_props = {
-      string_items = {
-        publicAccessPrevention = each.value.public_access_prevention
-        storageClass           = each.value.storage_class
-      }
       object_items = {
         lifecycleRule = [for item in each.value.lifecycle_rule : jsonencode(item)]
         encryption    = [for item in each.value.encryption : jsonencode(item)]
@@ -1280,7 +1274,7 @@ resource "port-labs_blueprint" "gcp_service_account_blueprint" {
   title      = "Service Account"
   icon       = "Lock"
   identifier = "serviceAccount"
-  properties {
+  properties = {
     string_props = {
       "link" = {
         format = "url"
@@ -1295,7 +1289,7 @@ resource "port-labs_blueprint" "gcp_service_account_blueprint" {
   relations = {
     "project" = {
       title    = "Project"
-      target   = "port-labs_blueprint.gcp_project_blueprint"
+      target   = port-labs_blueprint.gcp_project_blueprint.identifier
       required = false
       many = false
     }
@@ -1333,7 +1327,7 @@ resource "port-labs_blueprint" "gcp_disk_blueprint" {
   title      = "Disk"
   icon       = "GoogleComputeEngine"
   identifier = "disk"
-  properties {
+  properties = {
     string_props = {
       "link" = {
         format = "url"
@@ -1372,7 +1366,7 @@ resource "port-labs_blueprint" "gcp_disk_blueprint" {
   }
   relations = {
     "project" = {
-      target   = port-labs_blueprint.gcp_project_blueprint
+      target   = port-labs_blueprint.gcp_project_blueprint.identifier
       title    = "Project"
       required = false
       many     = false
@@ -1386,7 +1380,7 @@ resource "port-labs_entity" "gcp_disk_entity" {
   identifier = "${each.value.project}_${each.value.zone}_${each.value.name}"
   title      = each.value.name
   blueprint  = port-labs_blueprint.gcp_disk_blueprint.identifier
-  properties {
+  properties = {
     string_props = {
       "link"              = "https://console.cloud.google.com/compute/disksDetail/zones/${each.value.zone}/disks/${each.value.name}?project=${each.value.project}"
       "description"       = each.value.description
@@ -1511,7 +1505,7 @@ resource "port-labs_entity" "gcp_memorystore_entity" {
       "labels" = jsonencode(each.value.labels)
     }
     array_props = {
-      string_items = {
+      object_items = {
         "nodes" = [for item in each.value.nodes : jsonencode(item)]
       }
     }
@@ -1542,9 +1536,6 @@ resource "port-labs_blueprint" "gcp_compute_instance_blueprint" {
       }
       "zone" = {
         title = "Zone"
-      }
-      "description" = {
-        title = "Description"
       }
       "currentStatus" = {
         enum = ["PROVISIONING", "STAGING", "RUNNING", "STOPPING", "REPAIRING", "TERMINATED", "SUSPENDING", "SUSPENDED"]
@@ -1598,7 +1589,6 @@ resource "port-labs_entity" "gcp_compute_instance_entity" {
     string_props = {
       "link"          = "https://console.cloud.google.com/compute/instancesDetail/zones/${each.value.zone}/instances/${each.value.name}?project=${each.value.project}"
       "zone"          = each.value.zone
-      "description"   = each.value.description
       "currentStatus" = each.value.current_status
       "machineType"   = each.value.machine_type
       "cpuPlatform"   = each.value.cpu_platform
