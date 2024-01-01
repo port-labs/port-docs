@@ -1,0 +1,15 @@
+- [Helm](https://helm.sh) must be installed to use the chart. Please refer to
+  Helm's [documentation](https://helm.sh/docs) to get started;
+- The `jq` command must installed;
+- The `yq` command must installed;
+- The `kubectl` command must be installed;
+- Have your [Port credentials](/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials) ready.
+
+In this use-case, you will use a custom bash script which will assist you in the process of installing Port's K8s exporter.
+
+The script will install the helm chart to the Kubernetes cluster which is currently in kubectl context.
+To view the context name of the cluster the exporter will be installed on, run:
+
+```bash showLineNumbers
+kubectl config current-context
+```
