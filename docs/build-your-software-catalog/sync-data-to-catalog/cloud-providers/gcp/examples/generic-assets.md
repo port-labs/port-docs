@@ -515,13 +515,13 @@ resource "port_blueprint" "gcp_project_blueprint" {
     "organization" = {
       title    = "Organization"
       target   = port_blueprint.gcp_org_blueprint.identifier
-      many     = true
+      many     = false
       required = false
     }
     "folder" = {
       title    = "Folder"
       target   = port_blueprint.gcp_folder_blueprint.identifier
-      many     = true
+      many     = false
       required = false
     }
   }
@@ -544,14 +544,13 @@ resource "port_entity" "gcp_project_entity" {
       "labels" = jsonencode(each.value.labels)
     }
   }
-
   relations = {
-    many_relations = {
-      "organization" = [for item in each.value.parent : item.id if item.type == "organization"]
-      "folder"       = [for item in each.value.parent : item.id if item.type == "folder"]
+    single_relations = {
+      "organization" = each.value.parent.type == "organization" ? each.value.parent.id : ""
+      "folder"       = each.value.parent.type == "folder" ? each.value.parent.id : ""
     }
-    depends_on = [port_entity.gcp_org_entity, port_entity.gcp_folder_entity]
   }
+  depends_on = [port_entity.gcp_org_entity, port_entity.gcp_folder_entity]
 }
 
 ```
@@ -620,8 +619,8 @@ resource "port_entity" "gcp_asset_entity" {
     }
     array_props = {
       string_items = {
-        "additionalAttributes" = [for item in each.value.additional_attributes : item]
-        "networkTags"          = [for item in each.value.network_tags : item]
+        "additional_attributes" = each.value.additional_attributes
+        "networkTags"           = each.value.network_tags
       }
     }
     object_props = {
