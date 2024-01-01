@@ -28,7 +28,7 @@ After completing the onboarding process, Port will create some components for yo
 
 ### Homepage
 
-Let's start in our [homepage](https://app.getport.io/organization/home). The homepage serves as a hub that accomodates your developers' routines. It is a fully-customizable dashboard, where you can create widgets to visualize & track data that matters to you and your developers.  
+Let's start in our [homepage](https://app.getport.io/organization/home). The homepage serves as a hub that accommodates your developers' routines. It is a fully-customizable dashboard, where you can create widgets to visualize & track data that matters to you and your developers.  
 
 Initially, your homepage contains two widgets:
 1. A markdown file that introduces the portal and its contents. Such a widget can be used to relay information to your developers or describe actions, blueprints and entities in the portal.
@@ -70,12 +70,12 @@ After connecting your Git provider to Port, you will see all of your services (G
 
 Port allows you to create flexible, permission-controlled actions for your developers to use. Actions are created and executed from the [self-service](https://app.getport.io/self-serve) page of the portal.  
 
-You should see four actions in your portal. An action in Port has two parts:
+You should see several actions in your portal. An action in Port has two parts:
 - A frontend - this is where you define the action type and its inputs.
 - A backend - this is where the action's logic is triggered. Port supports a variety of backends.
 
 :::info completing your actions
-The four actions in your portal only have their frontends defined. To finish setting up an action, click on the link attached to it to follow a dedicated guide.
+The existing actions in your portal only have their frontends defined. To finish setting up an action, click on the link attached to it to follow a dedicated guide.
 :::
 
 **Learn more:**

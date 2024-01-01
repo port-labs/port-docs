@@ -177,20 +177,65 @@ If you **skipped** the onboarding, or you want to create the action from scratch
 
 #### Define backend type
 
-Now we'll define the backend of the action. Port supports multiple invocation types, for this tutorial we will use a `Github workflow`.
+Now we'll define the backend of the action. Port supports multiple invocation types, for this tutorial we will use a `Github workflow`, a `Gitlab pipeline`, or a `Jenkins pipeline`(choose this option if you are using Bitbucket).
+
+<Tabs groupId="git-provider" queryString values={[
+{label: "Github", value: "github"},
+{label: "Gitlab", value: "gitlab"},
+{label: "Bitbucket (Jenkins)", value: "bitbucket"},
+]}>
+
+<TabItem value="github">
+
    - Replace the `Organization` and `Repository` values with your values (this is where the workflow will reside and run).
    - Name the workflow `portEnrichService.yaml`.
    - Fill out the rest of the form like this, then click `Next`:
 
 <img src='/img/guides/gitopsActionBackendForm.png' width='75%' />
 
-<br/><br/>
+</TabItem>
+
+<TabItem value="gitlab">
+
+   - Choose `Trigger Webhook URL` as the invocation type. 
+   
+   - The endpoint URL should look like this: `https://gitlab.com/api/v4/projects/(PROJECT_ID)/ref/main/trigger/pipeline?token=(TRIGGER_TOKEN)`.  
+   We will create the `PROJECT_ID` and `TRIGGER_TOKEN` in the next section and come back to update the URL.
+   
+   - Fill out the rest of the form like this, then click `Next`:
+
+<img src='/img/guides/gitLabWebhookSetup.png' width='75%' />
+
+:::info Webhook protection
+
+The webhook URL can be triggered by anyone with access to it.  
+In order to protect the webhook, see the [Validating webhook signatures page](../create-self-service-experiences/setup-backend/webhook/signature-verification.md).
+
+:::
+
+</TabItem>
+
+<TabItem value="bitbucket">
+
+
+
+</TabItem>
+
+</Tabs>
 
 The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Create`.
 
 #### Setup the action's backend
 
-Our action will create a pull-request in the service's repository, containing a `port.yml` file that will add data to the service in Port. We will use a Github workflow to implement the action's backend.
+Our action will create a pull-request in the service's repository, containing a `port.yml` file that will add data to the service in Port. Choose a backend type below to setup the workflow:
+
+<Tabs groupId="git-provider" queryString values={[
+{label: "Github", value: "github"},
+{label: "Gitlab", value: "gitlab"},
+{label: "Bitbucket (Jenkins)", value: "bitbucket"},
+]}>
+
+<TabItem value="github">
 
 1. First, let's create the necessary token and secrets. If you've already completed the [`scaffold a new service guide`](/guides-and-tutorials/scaffold-a-new-service), you should already have these configured and you can skip this step.
 
@@ -208,11 +253,34 @@ Our action will create a pull-request in the service's repository, containing a 
 
 <img src='/img/guides/repositorySecret.png' width='60%' />
 
-<br/><br/>
+</TabItem>
 
-3. We will now create a YML file that will serve as a template for our services' `port.yml` configuration file.
+<TabItem value="gitlab">
 
-- In your Github repository, create a file named `enrichService.yml` under `/templates/` (it's path should be `/templates/enrichService.yml`).
+1. Under your [root group](https://gitlab.com/dashboard/groups), access `Settings->Access Tokens`, and create a `Maintainer` role token with the `api`, `read_repository`, and `write_repository` scopes. Copy the token's value.
+
+2. Create a new project named `Port-pipelines`. Copy its GitLab project ID and replace the `(PROJECT_ID)` in the webhook URL . Then. under Settings, CI/CD, create a new Pipeline trigger token, and use it to replace `(TRIGGER_TOKEN)` in the webhook URL.
+
+3. In the same menu (CI/CD), add the following variables to the pipeline:
+
+- PORT_CLIENT_ID
+- PORT_CLIENT_SECRET  
+  :::tip
+  To find your Port credentials, go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`.
+  :::
+- GITLAB_ACCESS_TOKEN - the token created in step 1.
+
+<img src='/img/guides/gitlabVariables.png' width='80%' />
+
+</TabItem>
+
+</Tabs>
+
+---
+
+We will now create a YML file that will serve as a template for our services' `port.yml` configuration file.
+
+- In your repository, create a file named `enrichService.yml` under `/templates/` (it's path should be `/templates/enrichService.yml`).
 - Copy the following snippet and paste it in the file's contents:
 
 <details>
@@ -232,7 +300,19 @@ Our action will create a pull-request in the service's repository, containing a 
 
 </details>
 
-4. Now let's create the workflow file that contains our logic. In the same repository, under ".github/workflows", create a new file named `portEnrichService.yaml` and use the following snippet as its content:
+---
+
+Now let's create the file that contains our logic.
+
+<Tabs groupId="git-provider" queryString values={[
+{label: "Github", value: "github"},
+{label: "Gitlab", value: "gitlab"},
+{label: "Bitbucket (Jenkins)", value: "bitbucket"},
+]}>
+
+<TabItem value="github">
+
+In the same repository, under ".github/workflows", create a new file named `portEnrichService.yaml` and use the following snippet as its content:
 
 <details>
 <summary><b>Github workflow (click to expand)</b></summary>
@@ -304,6 +384,88 @@ jobs:
 
 </details>
 
+</TabItem>
+
+<TabItem value="gitlab">
+
+In the same repository, create a new file called `.gitlab-ci.yml` and inside it paste the following:
+<details>
+<summary><b> Gitlab pipeline (click to expand)</b></summary>
+
+```yaml showLineNumbers
+stages:
+  - enrichService
+
+enrichService:
+  stage: enrichService
+  only:
+    - triggers # This pipeline will be triggered via the GitLab webhook service.
+  before_script:
+    - apt-get update && apt-get install -y jq && apt-get install -y yq
+  script:
+    - PAYLOAD=$(cat $TRIGGER_PAYLOAD)
+    - runID=$(echo $PAYLOAD | jq -r '.context.runId')
+    - >
+      access_token=$(curl --location --request POST 'https://api.getport.io/v1/auth/access_token' --header 'Content-Type: application/json' --data-raw "{\"clientId\": \"$PORT_CLIENT_ID\",\"clientSecret\": \"$PORT_CLIENT_SECRET\"}" | jq '.accessToken' | sed 's/"//g')
+    - >
+      curl --location --request PATCH "https://api.getport.io/v1/actions/runs/$runID" --header "Authorization: $access_token" --header 'Content-Type: application/json' --data-raw "{\"link\": [\"$CI_PIPELINE_URL\"]
+      }"
+    - git config --global user.email "gitRunner@git.com"
+    - git config --global user.name "Git Runner"
+    - SERVICE_IDENTIFIER=$(echo $PAYLOAD | jq -r '.payload.entity.identifier')
+    - DOMAIN_IDENTIFIER=$(echo $PAYLOAD | jq -r '.payload.properties.domain')
+    - SERVICE_TYPE=$(echo $PAYLOAD | jq -r '.payload.properties.type')
+    - SERVICE_LIFECYCLE=$(echo $PAYLOAD | jq -r '.payload.properties.lifecycle')
+    - git clone https://:${GITLAB_ACCESS_TOKEN}@gitlab.com/${CI_PROJECT_PATH}.git
+    - git clone https://:${GITLAB_ACCESS_TOKEN}@gitlab.com/${SERVICE_IDENTIFIER}.git ./targetRepo
+    - cp templates/enrichService.yml ./targetRepo/port.yml
+    - yq --in-place --arg SERVICE_ID $SERVICE_IDENTIFIER  '.[0].identifier = $SERVICE_ID' ./targetRepo/port.yml -y
+    - yq --in-place --arg TYPE $SERVICE_TYPE  '.[0].properties.type = $TYPE' ./targetRepo/port.yml -y
+    - yq --in-place --arg LIFECYCLE $SERVICE_LIFECYCLE '.[0].properties.lifecycle = $LIFECYCLE' ./targetRepo/port.yml -Y
+    - yq --in-place --arg DOMAIN $DOMAIN_IDENTIFIER  '.[0].relations.domain = $DOMAIN' ./targetRepo/port.yml -Y
+    - cd targetRepo
+    - git pull
+    - git checkout -b add-port-yml
+    - git add port.yml
+    - git commit -m "Enrich service - ${SERVICE_IDENTIFIER}"
+    - set +e
+    - output=$(git push origin add-port-yml -o merge_request.create 2>&1)
+    - echo "$output"
+    - runStatus="SUCCESS"
+    - |
+      if echo "$output" | grep -qi "rejected"; then
+          runStatus="FAILURE"
+      elif echo "$output" | grep -qi "error"; then
+          runStatus="FAILURE"
+      fi
+    - echo "$runStatus"
+    - |
+      if [ "$runStatus" = "SUCCESS" ]; then
+          # Generic regex for GitLab merge request URLs
+          mergeRequestUrl=$(echo "$output" | grep -oP 'https:\/\/gitlab\.com\/[^\/]+\/[^\/]+\/-\/merge_requests\/\d+')
+          echo "Merge Request URL: $mergeRequestUrl"
+          curl --location --request POST "https://api.getport.io/v1/actions/runs/$runID/logs" \
+          --header 'Content-Type: application/json' \
+          --header "Authorization: $access_token" \
+          --data-raw "{\"message\": \"PR opened at $mergeRequestUrl\"}"
+      else
+          curl --location --request POST "https://api.getport.io/v1/actions/runs/$runID/logs" \
+          --header 'Content-Type: application/json' \
+          --header "Authorization: $access_token" \
+          --data-raw "{\"message\": \"The Job failed. Please check the job logs for more information.\"}"
+      fi
+    - >
+      curl --location --request PATCH "https://api.getport.io/v1/actions/runs/$runID" --header "Authorization: $access_token" --header 'Content-Type: application/json' --data-raw "{\"status\": \"${runStatus}\"}"
+```
+
+</details>
+
+</TabItem>
+
+</Tabs>
+
+---
+
 The action is ready to be executed 🚀
 
 #### Execute the action
@@ -324,7 +486,7 @@ The action is ready to be executed 🚀
 
 This page provides details about the action run. We can see that the backend returned `Success` and the pull-request was created successfully.
 
-4. Head over to your service's Github repository, you will see that a new pull-request was created:
+4. Head over to your service's repository, you will see that a new pull-request was created:
 
 <img src='/img/guides/gitopsActionRepoPullRequest.png' width='70%' />
 
