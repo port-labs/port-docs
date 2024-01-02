@@ -180,13 +180,13 @@ resource "port_blueprint" "gcp_project_blueprint" {
       target   = port_blueprint.gcp_org_blueprint.identifier
       title    = "Organization"
       required = false
-      many     = true
+      many     = false
     }
     "folder" = {
       target   = port_blueprint.gcp_folder_blueprint.identifier
       title    = "Folder"
       required = false
-      many     = true
+      many     = false
     }
   }
 }
@@ -207,11 +207,10 @@ resource "port_entity" "gcp_project_entity" {
     }
   }
   relations = {
-    many_relation = {
-      "organization" = [for item in each.value.parent : item.id if item.type == "organization"]
-      "folder"       = [for item in each.value.parent : item.id if item.type == "folder"]
+    single_relations = {
+      "organization" = each.value.parent.type == "organization" ? each.value.parent.id : ""
+      "folder"       = each.value.parent.type == "folder" ? each.value.parent.id : ""
     }
-  }
   depends_on = [port_entity.gcp_org_entity, port_entity.gcp_folder_entity]
 }
 
