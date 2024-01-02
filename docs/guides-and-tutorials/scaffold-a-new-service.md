@@ -236,6 +236,10 @@ This workflow uses Port's [cookiecutter Github action](https://github.com/port-l
 
 <br/><br/>
 
+:::tip
+Now that you have both the new GitLab project and its respective trigger token, you can go to the [define backend type](#define-backend-type) section and complete the action.
+:::
+
 3. Now let's create the pipeline file that contains our logic. In the new GitLab project you created at step 1, at the root of the project, create a new file named `.gitlab-ci.yml` and use the following snippet as its content:
 
 <details>
