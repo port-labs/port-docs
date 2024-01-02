@@ -18,7 +18,7 @@ terraform {
   required_providers {
     port = {
       source  = "port-labs/port-labs"
-      version = "~> 1.0.0"
+      version = "~> 1"
     }
     google-beta = {
       source  = "hashicorp/google-beta"
@@ -107,7 +107,7 @@ resource "port_blueprint" "gcp_folder_blueprint" {
   title      = "Folder"
   icon       = "GCP"
   identifier = "gcpFolder"
-  properties {
+  properties = {
     string_props = {
       "link" = {
         type   = "string"
@@ -144,7 +144,7 @@ resource "port_entity" "gcp_folder_entity" {
   }
   relations = {
     single_relations = {
-      "organization" = data.google_organization.my_org.org_id.identifier
+      "organization" = data.google_organization.my_org.org_id
     }
   }
 }
@@ -251,7 +251,6 @@ resource "port_blueprint" "gcp_asset_blueprint" {
     }
   }
   relations = {
-    single_relations = {
       "project" = {
         target   = port_blueprint.gcp_project_blueprint.identifier
         title    = "Project"
