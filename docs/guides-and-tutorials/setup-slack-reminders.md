@@ -22,7 +22,7 @@ This guide takes 7 minutes to complete, and aims to demonstrate:
 
 ### The goal of this guide
 
-In this guide we will create a self-service action that sends a Slack reminder. In reality, such an action can be used by R&D managers / Platform engineers to remind developers of unmet standards.
+In this guide we will create a self-service action that sends a Slack reminder for uncompleted [scorecard rules](/promote-scorecards/#what-is-a-scorecard). In reality, such an action can be used by R&D managers / Platform engineers to remind developers of unmet standards.
 
 After completing it, you will get a sense of how it can benefit different personas in your organization:
 
