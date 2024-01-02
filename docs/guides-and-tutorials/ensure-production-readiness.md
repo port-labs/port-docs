@@ -182,9 +182,9 @@ Git providers allow you to add a `CODEOWNERS` file to a repository specifiying i
 
 </TabItem>
 
-<TabItem value="gitlab" label="Gitlab">
+<TabItem value="gitlab" label="GitLab">
 
-[Gitlab codeowners documentation](https://docs.gitlab.com/ee/user/project/codeowners/)
+[GitLab codeowners documentation](https://docs.gitlab.com/ee/user/project/codeowners/)
 
 </TabItem>
 
