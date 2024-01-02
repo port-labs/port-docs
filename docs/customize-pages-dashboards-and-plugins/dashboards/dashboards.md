@@ -99,6 +99,15 @@ Tables can be [searched, filtered and customized](/customize-pages-dashboards-an
 
 <img src='/img/software-catalog/widgets/tableExample.png' width='400rem' />
 
+### Action runs
+
+This widget allows you to create a table displaying all past runs of a [self-service action](/create-self-service-experiences) in your portal.  
+The table will automatically display data about each run, including status, input parameters, the executing user, and more. 
+
+<img src='/img/software-catalog/widgets/actionRunsTableExample.png' width='100%' />
+
+
+
 ## Chart filters
 
 [Pie charts](#pie-chart), [number charts](#number-chart) and [tables](#table) support filters, which allow you to include or exclude specific data from them. The filters are based on Port's [Search Rules](../../search-and-query/search-and-query.md#rules), and are set when creating the widget:
