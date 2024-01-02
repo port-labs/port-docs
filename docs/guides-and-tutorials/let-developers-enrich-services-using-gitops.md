@@ -498,7 +498,7 @@ enrichService:
 
 <TabItem value="bitbucket">
 
-Create a Jenkins pipeline script with the following content:
+Create a Jenkins pipeline script with the following content (replace `<PORT-ACTIONS-REPO-URL>` with the URL of the repository you used in the previous step):
 
 <details>
 <summary><b>Jenkins pipeline script (click to expand)</b></summary>
@@ -520,7 +520,7 @@ pipeline {
     stages {
         stage('checkoutTemplate') {
             steps {
-                git credentialsId: 'BITBUCKET_CREDENTIALS', url: 'https://hadar-co@bitbucket.org/portsamples/port-actions.git', branch: 'main'
+                git credentialsId: 'BITBUCKET_CREDENTIALS', url: '<PORT-ACTIONS-REPO-URL>', branch: 'main'
             }
         }
         stage('checkoutDestination') {
