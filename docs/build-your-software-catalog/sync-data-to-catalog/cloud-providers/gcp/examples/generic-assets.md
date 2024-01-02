@@ -73,229 +73,222 @@ resource "port_blueprint" "gcp_org_blueprint" {
   title      = "Organization"
   icon       = "GCP"
   identifier = "gcpOrganization"
-  properties {
-    identifier = "link"
-    type       = "string"
-    format     = "url"
-    title      = "Link"
-  }
-  properties {
-    identifier = "createTime"
-    type       = "string"
-    format     = "date-time"
-    title      = "Create Time"
+  properties = {
+    string_props = {
+      "link" = {
+        type   = "string"
+        format = "url"
+        title  = "Link"
+      }
+      "createTime" = {
+        type   = "string"
+        format = "date-time"
+        title  = "Create Time"
+      }
+    }
   }
 }
 
+
 resource "port_entity" "gcp_org_entity" {
   identifier = data.google_organization.my_org.org_id
-  title     = data.google_organization.my_org.domain
-  blueprint = port_blueprint.gcp_org_blueprint.identifier
-  properties {
-    name  = "link"
-    value = "https://console.cloud.google.com/welcome?organizationId=${data.google_organization.my_org.org_id}"
-  }
-  properties {
-    name  = "createTime"
-    value = data.google_organization.my_org.create_time
+  title      = data.google_organization.my_org.domain
+  blueprint  = port_blueprint.gcp_org_blueprint.identifier
+  properties = {
+    string_props = {
+      "link"       = "https://console.cloud.google.com/welcome?organizationId=${data.google_organization.my_org.org_id}"
+      "createTime" = data.google_organization.my_org.create_time
+    }
   }
 }
+
 
 resource "port_blueprint" "gcp_folder_blueprint" {
   title      = "Folder"
   icon       = "GCP"
   identifier = "gcpFolder"
   properties {
-    identifier = "link"
-    type       = "string"
-    format     = "url"
-    title      = "Link"
+    string_props = {
+      "link" = {
+        type   = "string"
+        format = "url"
+        title  = "Link"
+      }
+      "createTime" = {
+        type   = "string"
+        format = "date-time"
+        title  = "Create Time"
+      }
+    }
   }
-  properties {
-    identifier = "createTime"
-    type       = "string"
-    format     = "date-time"
-    title      = "Create Time"
-  }
-  relations {
-    identifier = port_blueprint.gcp_org_blueprint.identifier
-    target = port_blueprint.gcp_org_blueprint.identifier
+  relations = {
+    "organization" = {
+      title    = "Organization"
+      target   = port_blueprint.gcp_org_blueprint.identifier
+      required = false
+    }
   }
 }
 
+
 resource "port_entity" "gcp_folder_entity" {
-  for_each = {for idx, folder in data.google_folder.my_folders: idx => folder}
+  for_each   = { for idx, folder in data.google_folder.my_folders : idx => folder }
   identifier = each.value.folder_id
-  title     = each.value.display_name
-  blueprint = port_blueprint.gcp_folder_blueprint.identifier
-  properties {
-    name  = "link"
-    value = "https://console.cloud.google.com/welcome?folder=${each.value.folder_id}"
+  title      = each.value.display_name
+  blueprint  = port_blueprint.gcp_folder_blueprint.identifier
+  properties = {
+    string_props = {
+      "link"       = "https://console.cloud.google.com/welcome?folder=${each.value.folder_id}"
+      "createTime" = each.value.create_time
+    }
   }
-  properties {
-    name  = "createTime"
-    value = each.value.create_time
-  }
-  relations {
-    name = port_blueprint.gcp_org_blueprint.identifier
-    identifier = data.google_organization.my_org.org_id
+  relations = {
+    single_relations = {
+      "organization" = data.google_organization.my_org.org_id.identifier
+    }
   }
 }
+
+
 
 resource "port_blueprint" "gcp_project_blueprint" {
   title      = "Project"
   icon       = "GCP"
   identifier = "gcpProject"
-  properties {
-    identifier = "link"
-    type       = "string"
-    format     = "url"
-    title      = "Link"
+  properties = {
+    string_props = {
+      "link" = {
+        format = "url"
+        title  = "Link"
+      }
+      "createTime" = {
+        format = "date-time"
+        title  = "Create Time"
+      }
+      "number" = {
+        title = "Number"
+      }
+    }
+    object_props = {
+      "labels" = {
+        title = "Labels"
+      }
+    }
   }
-  properties {
-    identifier = "number"
-    type       = "string"
-    title      = "Number"
-  }
-  properties {
-    identifier = "createTime"
-    type       = "string"
-    format     = "date-time"
-    title      = "Create Time"
-  }
-  properties {
-    identifier = "labels"
-    type       = "object"
-    title      = "Labels"
-  }
-  relations {
-    identifier = port_blueprint.gcp_org_blueprint.identifier
-    target = port_blueprint.gcp_org_blueprint.identifier
-  }
-  relations {
-    identifier = port_blueprint.gcp_folder_blueprint.identifier
-    target = port_blueprint.gcp_folder_blueprint.identifier
+  relations = {
+    "organization" = {
+      target   = port_blueprint.gcp_org_blueprint.identifier
+      title    = "Organization"
+      required = false
+      many     = true
+    }
+    "folder" = {
+      target   = port_blueprint.gcp_folder_blueprint.identifier
+      title    = "Folder"
+      required = false
+      many     = true
+    }
   }
 }
 
 resource "port_entity" "gcp_project_entity" {
-  for_each = {for idx, project in data.google_projects.my_projects.projects : idx => project}
+  for_each   = { for idx, project in data.google_projects.my_projects.projects : idx => project }
   identifier = each.value.project_id
-  title     = each.value.name
-  blueprint = port_blueprint.gcp_project_blueprint.identifier
-  properties {
-    name  = "link"
-    value = "https://console.cloud.google.com/welcome?project=${each.value.project_id}"
-  }
-  properties {
-    name  = "number"
-    value = each.value.number
-  }
-  properties {
-    name  = "createTime"
-    value = each.value.create_time
-  }
-  properties {
-    name  = "labels"
-    value = jsonencode(each.value.labels)
-  }
-  dynamic "relations" {
-    for_each = each.value.parent.type == "organization" ? [1] : []
-    content {
-      name = port_blueprint.gcp_org_blueprint.identifier
-      identifier = each.value.parent.id
+  title      = each.value.name
+  blueprint  = port_blueprint.gcp_project_blueprint.identifier
+  properties = {
+    string_props = {
+      "link"       = "https://console.cloud.google.com/welcome?project=${each.value.project_id}"
+      "createTime" = each.value.create_time
+      "number" = each.value.number
+    }
+    object_props = {
+      "labels" = jsonencode(each.value.labels)
     }
   }
-  dynamic "relations" {
-    for_each = each.value.parent.type == "folder" ? [1] : []
-    content {
-      name = port_blueprint.gcp_folder_blueprint.identifier
-      identifier = each.value.parent.id
+  relations = {
+    many_relation = {
+      "organization" = [for item in each.value.parent : item.id if item.type == "organization"]
+      "folder"       = [for item in each.value.parent : item.id if item.type == "folder"]
     }
   }
   depends_on = [port_entity.gcp_org_entity, port_entity.gcp_folder_entity]
 }
 
+
 resource "port_blueprint" "gcp_asset_blueprint" {
   title      = "GCP Asset"
   icon       = "GCP"
   identifier = "gcpAsset"
-  properties {
-    identifier = "name"
-    type       = "string"
-    title      = "name"
+  properties = {
+    string_props = {
+      "name" = {
+        title = "name"
+      }
+      "assetType" = {
+        title = "Asset Type"
+      }
+      "dscription" = {
+        title = "Description"
+      }
+      "location" = {
+        title = "Location"
+      }
+    }
+    array_props = {
+      string_props = {
+        "networkTags" = {
+          title = "Network Tags"
+        }
+        "additionalAttributes" = {
+          title = "Additional Attributes"
+        }
+      }
+    }
+    object_props = {
+      "labels" = {
+        title = "Labels"
+      }
+    }
   }
-  properties {
-    identifier = "assetType"
-    type       = "string"
-    title      = "Asset Type"
-  }
-  properties {
-    identifier = "description"
-    type       = "string"
-    title      = "Description"
-  }
-  properties {
-    identifier = "additionalAttributes"
-    type       = "array"
-    title      = "Additional Attributes"
-  }
-  properties {
-    identifier = "location"
-    type       = "string"
-    title      = "Location"
-  }
-  properties {
-    identifier = "labels"
-    type       = "object"
-    title      = "Labels"
-  }
-  properties {
-    identifier = "networkTags"
-    type       = "array"
-    title      = "NetworkTags"
-  }
-  relations {
-    identifier = port_blueprint.gcp_project_blueprint.identifier
-    target = port_blueprint.gcp_project_blueprint.identifier
+  relations = {
+    single_relations = {
+      "project" = {
+        target   = port_blueprint.gcp_project_blueprint.identifier
+        title    = "Project"
+        required = false
+        many     = false
+      }
+    }
   }
 }
 
+
 resource "port_entity" "gcp_asset_entity" {
-  for_each = {for idx, result in flatten(values({for idx, project_assets in data.google_cloud_asset_resources_search_all.my_assets: idx => [for result in project_assets.results : merge(result, {project_id: project_assets.id})]})) : idx => result}
+  for_each  = { for idx, result in flatten(values({ for idx, project_assets in data.google_cloud_asset_resources_search_all.my_assets : idx => [for result in project_assets.results : merge(result, { project_id : project_assets.id })] })) : idx => result }
   title     = each.value.display_name == "" ? reverse(split("/", each.value.name))[0] : each.value.display_name
   blueprint = port_blueprint.gcp_asset_blueprint.identifier
-  properties {
-    name  = "name"
-    value = each.value.name
+  properties = {
+    string_props = {
+      "name"        = each.value.name
+      "assetType"   = each.value.asset_type
+      "description" = each.value.description
+      "location"    = each.value.location
+    }
+    array_props = {
+      string_items = {
+        "networkTags"          = [for item in each.value.network_tags : item]
+        "additionalAttributes" = [for item in each.value.additional_attributes : item]
+      }
+    }
+    object_props = {
+      "labels" = jsonencode(each.value.labels)
+    }
   }
-  properties {
-    name  = "assetType"
-    value = each.value.asset_type
-  }
-  properties {
-    name  = "description"
-    value = each.value.description
-  }
-  properties {
-    name  = "additionalAttributes"
-    items = each.value.additional_attributes
-  }
-  properties {
-    name  = "location"
-    value = each.value.location
-  }
-  properties {
-    name  = "labels"
-    value = jsonencode(each.value.labels)
-  }
-  properties {
-    name  = "networkTags"
-    items = each.value.network_tags
-  }
-  relations {
-    name = port_blueprint.gcp_project_blueprint.identifier
-    identifier = reverse(split("/", each.value.project_id))[0]
+  relations = {
+    single_relations = {
+      "project" = reverse(split("/", each.value.project_id))[0]
+    }
   }
 
   depends_on = [port_entity.gcp_project_entity]
@@ -406,33 +399,35 @@ resource "port_blueprint" "gcp_org_blueprint" {
   title      = "Organization"
   icon       = "GCP"
   identifier = "gcpOrganization"
-  properties {
-    identifier = "link"
-    type       = "string"
-    format     = "url"
-    title      = "Link"
-  }
-  properties {
-    identifier = "createTime"
-    type       = "string"
-    format     = "date-time"
-    title      = "Create Time"
+  properties = {
+    string_props = {
+      "link" = {
+        type   = "string"
+        format = "url"
+        title  = "Link"
+      }
+      "createTime" = {
+        type   = "string"
+        format = "date-time"
+        title  = "Create Time"
+      }
+    }
   }
 }
 
+
 resource "port_entity" "gcp_org_entity" {
   identifier = data.google_organization.my_org.org_id
-  title     = data.google_organization.my_org.domain
-  blueprint = port_blueprint.gcp_org_blueprint.identifier
-  properties {
-    name  = "link"
-    value = "https://console.cloud.google.com/welcome?organizationId=${data.google_organization.my_org.org_id}"
-  }
-  properties {
-    name  = "createTime"
-    value = data.google_organization.my_org.create_time
+  title      = data.google_organization.my_org.domain
+  blueprint  = port_blueprint.gcp_org_blueprint.identifier
+  properties = {
+    string_props = {
+      "link"       = "https://console.cloud.google.com/welcome?organizationId=${data.google_organization.my_org.org_id}"
+      "createTime" = data.google_organization.my_org.create_time
+    }
   }
 }
+
 ```
 
 ## Creating the Folder blueprint and the entities matching the folders
@@ -444,42 +439,47 @@ resource "port_blueprint" "gcp_folder_blueprint" {
   title      = "Folder"
   icon       = "GCP"
   identifier = "gcpFolder"
-  properties {
-    identifier = "link"
-    type       = "string"
-    format     = "url"
-    title      = "Link"
+  properties = {
+    string_props = {
+      "name" = {
+        format = "url"
+        title  = "Link"
+      }
+      "createTime" = {
+        format = "date-time"
+        title  = "Create Time"
+      }
+    }
   }
-  properties {
-    identifier = "createTime"
-    type       = "string"
-    format     = "date-time"
-    title      = "Create Time"
-  }
-  relations {
-    identifier = port_blueprint.gcp_org_blueprint.identifier
-    target = port_blueprint.gcp_org_blueprint.identifier
+  relations = {
+    "organization" = {
+      title    = "Organization"
+      target   = port_blueprint.gcp_org_blueprint.identifier
+      required = false
+      many     = false
+    }
   }
 }
 
+
 resource "port_entity" "gcp_folder_entity" {
-  for_each = {for idx, folder in data.google_folder.my_folders: idx => folder}
+  for_each   = { for idx, folder in data.google_folder.my_folders : idx => folder }
   identifier = each.value.folder_id
-  title     = each.value.display_name
-  blueprint = port_blueprint.gcp_folder_blueprint.identifier
-  properties {
-    name  = "link"
-    value = "https://console.cloud.google.com/welcome?folder=${each.value.folder_id}"
+  title      = each.value.display_name
+  blueprint  = port_blueprint.gcp_folder_blueprint.identifier
+  properties = {
+    string_props = {
+      "link"       = "https://console.cloud.google.com/welcome?folder=${each.value.folder_id}"
+      "createTime" = each.value.create_time
+    }
   }
-  properties {
-    name  = "createTime"
-    value = each.value.create_time
-  }
-  relations {
-    name = port_blueprint.gcp_org_blueprint.identifier
-    identifier = data.google_organization.my_org.org_id
+  relations = {
+    single_relations = {
+      organization = data.google_organization.my_org.org_id
+    }
   }
 }
+
 ```
 
 ## Creating the Project blueprint and the entities matching the projects
@@ -491,75 +491,68 @@ resource "port_blueprint" "gcp_project_blueprint" {
   title      = "Project"
   icon       = "GCP"
   identifier = "gcpProject"
-  properties {
-    identifier = "link"
-    type       = "string"
-    format     = "url"
-    title      = "Link"
+  properties = {
+    string_props = {
+      "link" = {
+        format = "url"
+        title  = "Link"
+      }
+      "createTime" = {
+        format = "date-time"
+        title  = "Create Time"
+      }
+      "number" = {
+        title = "Number"
+      }
+    }
+    object_props = {
+      "labels" = {
+        title = "Labels"
+      }
+    }
   }
-  properties {
-    identifier = "number"
-    type       = "string"
-    title      = "Number"
-  }
-  properties {
-    identifier = "createTime"
-    type       = "string"
-    format     = "date-time"
-    title      = "Create Time"
-  }
-  properties {
-    identifier = "labels"
-    type       = "object"
-    title      = "Labels"
-  }
-  relations {
-    identifier = port_blueprint.gcp_org_blueprint.identifier
-    target = port_blueprint.gcp_org_blueprint.identifier
-  }
-  relations {
-    identifier = port_blueprint.gcp_folder_blueprint.identifier
-    target = port_blueprint.gcp_folder_blueprint.identifier
+  relations = {
+    "organization" = {
+      title    = "Organization"
+      target   = port_blueprint.gcp_org_blueprint.identifier
+      many     = false
+      required = false
+    }
+    "folder" = {
+      title    = "Folder"
+      target   = port_blueprint.gcp_folder_blueprint.identifier
+      many     = false
+      required = false
+    }
   }
 }
 
+
+
 resource "port_entity" "gcp_project_entity" {
-  for_each = {for idx, project in data.google_projects.my_projects.projects : idx => project}
+  for_each   = { for idx, project in data.google_projects.my_projects.projects : idx => project }
   identifier = each.value.project_id
-  title     = each.value.name
-  blueprint = port_blueprint.gcp_project_blueprint.identifier
-  properties {
-    name  = "link"
-    value = "https://console.cloud.google.com/welcome?project=${each.value.project_id}"
-  }
-  properties {
-    name  = "number"
-    value = each.value.number
-  }
-  properties {
-    name  = "createTime"
-    value = each.value.create_time
-  }
-  properties {
-    name  = "labels"
-    value = jsonencode(each.value.labels)
-  }
-  dynamic "relations" {
-    for_each = each.value.parent.type == "organization" ? [1] : []
-    content {
-      name = port_blueprint.gcp_org_blueprint.identifier
-      identifier = each.value.parent.id
+  title      = each.value.name
+  blueprint  = port_blueprint.gcp_project_blueprint.identifier
+  properties = {
+    string_props = {
+      "link"       = "https://console.cloud.google.com/welcome?project=${each.value.project_id}"
+      "number"     = each.value.number
+      "createTime" = each.value.create_time
+    }
+    object_props = {
+      "labels" = jsonencode(each.value.labels)
     }
   }
-  dynamic "relations" {
-    for_each = each.value.parent.type == "folder" ? [1] : []
-    content {
-      name = port_blueprint.gcp_folder_blueprint.identifier
-      identifier = each.value.parent.id
+  relations = {
+    single_relations = {
+      "organization" = each.value.parent.type == "organization" ? each.value.parent.id : ""
+      "folder"       = each.value.parent.type == "folder" ? each.value.parent.id : ""
     }
   }
   depends_on = [port_entity.gcp_org_entity, port_entity.gcp_folder_entity]
 }
+
 ```
 
 ## Creating the GCP Assets blueprint and the entities matching the assets
@@ -571,84 +564,74 @@ resource "port_blueprint" "gcp_asset_blueprint" {
   title      = "GCP Asset"
   icon       = "GCP"
   identifier = "gcpAsset"
-  properties {
-    identifier = "name"
-    type       = "string"
-    title      = "name"
+  properties = {
+    string_props = {
+      "name" = {
+        title = "Name"
+      }
+      "assetType" = {
+        title = "Asset Type"
+      }
+      "description" = {
+        title = "Description"
+      }
+      "location" = {
+        title = "Location"
+      }
+    }
+    object_props = {
+      "labels" = {
+        title = "Labels"
+      }
+    }
+    array_props = {
+      string_items = {
+        "additionalAttributes" = {
+          title = "Additional Attributes"
+        }
+      }
+      "networkTags" = {
+        title = "Network Tags"
+      }
+    }
   }
-  properties {
-    identifier = "assetType"
-    type       = "string"
-    title      = "Asset Type"
-  }
-  properties {
-    identifier = "description"
-    type       = "string"
-    title      = "Description"
-  }
-  properties {
-    identifier = "additionalAttributes"
-    type       = "array"
-    title      = "Additional Attributes"
-  }
-  properties {
-    identifier = "location"
-    type       = "string"
-    title      = "Location"
-  }
-  properties {
-    identifier = "labels"
-    type       = "object"
-    title      = "Labels"
-  }
-  properties {
-    identifier = "networkTags"
-    type       = "array"
-    title      = "NetworkTags"
-  }
-  relations {
-    identifier = port_blueprint.gcp_project_blueprint.identifier
-    target = port_blueprint.gcp_project_blueprint.identifier
+  relations = {
+    "project" = {
+      title    = "Project"
+      target   = port_blueprint.gcp_project_blueprint.identifier
+      many     = false
+      required = false
+    }
   }
 }
 
+
 resource "port_entity" "gcp_asset_entity" {
-  for_each = {for idx, result in flatten(values({for idx, project_assets in data.google_cloud_asset_resources_search_all.my_assets: idx => [for result in project_assets.results : merge(result, {project_id: project_assets.id})]})) : idx => result}
+  for_each  = { for idx, result in flatten(values({ for idx, project_assets in data.google_cloud_asset_resources_search_all.my_assets : idx => [for result in project_assets.results : merge(result, { project_id : project_assets.id })] })) : idx => result }
   title     = each.value.display_name == "" ? reverse(split("/", each.value.name))[0] : each.value.display_name
   blueprint = port_blueprint.gcp_asset_blueprint.identifier
-  properties {
-    name  = "name"
-    value = each.value.name
+  properties = {
+    string_props = {
+      "name"        = each.value.name
+      "description" = each.value.description
+      "assetType"   = each.value.asset_type
+      "location"    = each.value.location
+    }
+    array_props = {
+      string_items = {
+        "additional_attributes" = each.value.additional_attributes
+        "networkTags"           = each.value.network_tags
+      }
+    }
+    object_props = {
+      "labels" = jsonencode(each.value.labels)
+    }
   }
-  properties {
-    name  = "assetType"
-    value = each.value.asset_type
+  relations = {
+    single_relations = {
+      "project" = reverse(split("/", each.value.project_id))[0]
+    }
   }
-  properties {
-    name  = "description"
-    value = each.value.description
-  }
-  properties {
-    name  = "additionalAttributes"
-    items = each.value.additional_attributes
-  }
-  properties {
-    name  = "location"
-    value = each.value.location
-  }
-  properties {
-    name  = "labels"
-    value = jsonencode(each.value.labels)
-  }
-  properties {
-    name  = "networkTags"
-    items = each.value.network_tags
-  }
-  relations {
-    name = port_blueprint.gcp_project_blueprint.identifier
-    identifier = reverse(split("/", each.value.project_id))[0]
-  }
-
   depends_on = [port_entity.gcp_project_entity]
 }
 ```
