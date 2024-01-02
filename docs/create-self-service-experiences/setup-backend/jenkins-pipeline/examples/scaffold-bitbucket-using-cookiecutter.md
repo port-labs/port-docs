@@ -109,7 +109,7 @@ Make sure to replace the placeholders for JENKINS_URL and JOB_TOKEN.
 
    3. [Token Setup](../jenkins-pipeline.md#token-setup): Define the token to match `JOB_TOKEN` as configured in your Port Action.
 
-5. Create a Jenkins Pipeline with the following content:
+5. Add the following content to the new pipeline:
 
 <details>
 <summary>Jenkins Pipeline Script</summary>

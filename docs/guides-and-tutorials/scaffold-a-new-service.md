@@ -41,6 +41,14 @@ If you **skipped** the onboarding, or you want to create the action from scratch
 <details>
 <summary><b>Create the action's frontend (steps 1-4)</b></summary>
 
+<Tabs groupId="git-provider" queryString defaultValue="github" values={[
+{label: "GitHub", value: "github"},
+{label: "GitLab", value: "gitlab"},
+{label: "Bitbucket (Jenkins)", value: "bitbucket"}
+]}>
+
+<TabItem value="github">
+
 1. Click on `New action`:
 
 <img src='/img/guides/actionsCreateNew.png' width='50%' />
@@ -54,6 +62,54 @@ If you **skipped** the onboarding, or you want to create the action from scratch
 4. The next step is to define the action's inputs. When someone uses this action, all we want them to enter is the new repository's name. Click on `New input`, fill in the form like this, then click on `Create`:
 
 <img src='/img/guides/actionScaffoldInputName.png' width='50%' />
+
+</TabItem>
+
+<TabItem value="gitlab">
+
+1. Click on `New action`:
+
+<img src='/img/guides/actionsCreateNew.png' width='50%' />
+
+2. Each action in Port is directly tied to a <PortTooltip id="blueprint">blueprint</PortTooltip>. Since we are creating a repository, let's use the `Service` blueprint that was created for us as part of the [onboarding](/quickstart) process. Choose it from the dropdown.
+
+3. Fill in the basic details of the action like this, then click `Next`:
+
+<img src='/img/guides/actionScaffoldBasicDetails.png' width='60%' />
+
+4. The next step is to define the action's inputs. When someone uses this action, all we want them to enter is the new repository's name. Click on `New input`, fill in the form like this, then click on `Create`:
+
+<img src='/img/guides/actionScaffoldInputName.png' width='50%' />
+
+</TabItem>
+
+<TabItem value="bitbucket">
+
+1. Click on `New action`:
+
+<img src='/img/guides/actionsCreateNew.png' width='50%' />
+
+2. Each action in Port is directly tied to a <PortTooltip id="blueprint">blueprint</PortTooltip>. Since we are creating a repository, let's use the `Service` blueprint that was created for us as part of the [onboarding](/quickstart) process. Choose it from the dropdown.
+
+3. Fill in the basic details of the action like this, then click `Next`:
+
+<img src='/img/guides/actionScaffoldBasicDetails.png' width='60%' />
+
+4. The next step is to define the action's inputs. When someone uses this action, all we want them to enter is the new repository's name. Click on `New input`, fill in the form like this, then click on `Create`:
+
+<img src='/img/guides/actionScaffoldInputName.png' width='50%' />
+
+5. The action requires two more inputs, so click on `New input` again and fill the form out like this:
+
+<img src='/img/guides/bitbucketWorkspaceActionInputConfig.png' width='50%' />
+
+<img src='/img/guides/bitbucketProjectKeyActionInputConfig.png' width='50%' />
+
+</TabItem>
+
+</Tabs>
+
+
 
 :::info notes
 
@@ -72,7 +128,7 @@ Now we'll define the backend of the action. Port supports multiple invocation ty
 <Tabs groupId="git-provider" queryString defaultValue="github" values={[
 {label: "GitHub", value: "github"},
 {label: "GitLab", value: "gitlab"},
-{label: "Bitbucket", value: "bitbucket"}
+{label: "Bitbucket (Jenkins)", value: "bitbucket"}
 ]}>
 
 <TabItem value="github">
@@ -115,9 +171,28 @@ Fill out the form with your values:
 
 </TabItem>
 
+<TabItem value="bitbucket">
+
+:::tip
+You will need a few parameters for this part that are generated in the [setup the action's backend](#setup-the-actions-backend) section, it is recommended to complete the steps there and then follow the instructions here with all of the required information in hand.
+:::
+
+Fill out the form with your values:
+- For the `Endpoint URL` you need to add a URL in the following format:
+  ```text showLineNumbers
+  https://{JENKINS_URL}/generic-webhook-trigger/invoke?token={JOB_TOKEN}
+  ```
+    - The value for `{JENKINS_URL}` is the URL of your Jenkins server.
+    - The value for `{JOB_TOKEN}` is the unique token used to trigger the pipeline you create in the [setup the action's backend](#setup-the-actions-backend) section.
+- Set `HTTP method` to `POST`.
+- Set `Request type` to `Async`.
+- Set `Use self-hosted agent` to `No`.
+
+<img src='/img/guides/bitbucketActionBackendForm.png' width='75%' />
+
+</TabItem>
+
 </Tabs>
-
-
 
 The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Create`.
 
@@ -130,7 +205,7 @@ Now we want to write the logic that our action will trigger.
 <Tabs groupId="git-provider" queryString defaultValue="github" values={[
 {label: "GitHub", value: "github"},
 {label: "GitLab", value: "gitlab"},
-{label: "Bitbucket", value: "bitbucket"}
+{label: "Bitbucket (Jenkins)", value: "bitbucket"}
 ]}>
 
 <TabItem value="github">
@@ -237,7 +312,7 @@ This workflow uses Port's [cookiecutter Github action](https://github.com/port-l
 <br/><br/>
 
 :::tip
-Now that you have both the new GitLab project and its respective trigger token, you can go to the [define backend type](#define-backend-type) section and complete the action.
+Now that you have both the new GitLab project and its respective trigger token, you can go to the [define backend type](#define-backend-type) section and complete the action configuration in Port.
 :::
 
 3. Now let's create the pipeline file that contains our logic. In the new GitLab project you created at step 1, at the root of the project, create a new file named `.gitlab-ci.yml` and use the following snippet as its content:
@@ -425,6 +500,248 @@ update-run-status:
 </details>
 </TabItem>
 
+<TabItem value="bitbucket">
+
+1. First, install the [generic webhook trigger](https://plugins.jenkins.io/generic-webhook-trigger/) plugin in your Jenkins.
+2. Next, let's create the necessary tokens and secrets
+   - Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
+   - Configure the following as Jenkins credentials:
+     - `BITBUCKET_USERNAME` - a user with access to the Bitbucket workspace and project.
+     - `BITBUCKET_APP_PASSWORD` - an [App Password](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/) with permissions to create permissions.
+     - `PORT_CLIENT_ID` - Your Port client ID.
+     - `PORT_CLIENT_SECRET` - Your Port client secret.
+     <br/>
+     <img src='/img/guides/bitbucketJenkinsCredentials.png' width='80%' />
+
+<br/>
+
+3. Create a Jenkins pipeline with the following configuration:
+   - [Enable the webhook trigger for the pipeline](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#enabling-webhook-trigger-for-a-pipeline)
+   - Define the value of the [`token`](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#token-setup) field, the token you specify will be used to trigger the scaffold pipeline specifically. For example, you can use `scaffolder-token`.
+   - [Define variables for the pipeline](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#defining-variables): define the `SERVICE_NAME`, `BITBUCKET_WORKSPACE_NAME`, `BITBUCKET_PROJECT_KEY`, and `RUN_ID` variables.
+   <img src='/img/guides/bitbucketJenkinsVariables.png' width='80%' />
+
+:::tip
+Now that you have the `JOB_TOKEN` value, you can go to the [define backend type](#define-backend-type) section and complete the action configuration in Port.
+:::
+
+4. Add the following content to the new Jenkins pipeline:
+
+<details>
+<summary><b>Jenkins pipeline (click to expand)</b></summary>
+
+```groovy showLineNumbers
+import groovy.json.JsonSlurper
+
+pipeline {
+    agent any
+
+    environment {
+        COOKIECUTTER_TEMPLATE = 'https://github.com/lacion/cookiecutter-golang'
+        SERVICE_NAME = "${SERVICE_NAME}"
+        BITBUCKET_WORKSPACE_NAME = "${BITBUCKET_WORKSPACE_NAME}"
+        BITBUCKET_PROJECT_KEY = "${BITBUCKET_PROJECT_KEY}"
+        SCAFFOLD_DIR = "scaffold_${SERVICE_NAME}"
+        PORT_ACCESS_TOKEN = ""
+        PORT_BLUEPRINT_ID = "microservice"
+        PORT_RUN_ID = "${RUN_ID}"
+    }
+
+    stages {
+        stage('Get access token') {
+            steps {
+                script {
+                    withCredentials([
+                        string(credentialsId: 'PORT_CLIENT_ID', variable: 'PORT_CLIENT_ID'),
+                        string(credentialsId: 'PORT_CLIENT_SECRET', variable: 'PORT_CLIENT_SECRET')
+                    ]) {
+                        // Execute the curl command and capture the output
+                        def result = sh(returnStdout: true, script: """
+                            accessTokenPayload=\$(curl -X POST \
+                                -H "Content-Type: application/json" \
+                                -d '{"clientId": "${PORT_CLIENT_ID}", "clientSecret": "${PORT_CLIENT_SECRET}"}' \
+                                -s "https://api.getport.io/v1/auth/access_token")
+                            echo \$accessTokenPayload
+                        """)
+
+                        // Parse the JSON response using JsonSlurper
+                        def jsonSlurper = new JsonSlurper()
+                        def payloadJson = jsonSlurper.parseText(result.trim())
+
+                        // Access the desired data from the payload
+                        PORT_ACCESS_TOKEN = payloadJson.accessToken
+                    }
+
+                }
+            }
+        } // end of stage Get access token
+
+        stage('Create BitBucket Repository') {
+            steps {
+                script {
+                    def logs_report_response = sh(script: """
+                        curl -X POST \
+                          -H "Content-Type: application/json" \
+                          -H "Authorization: Bearer ${PORT_ACCESS_TOKEN}" \
+                          -d '{"message": "Creating BitBucket repository: ${SERVICE_NAME} in Workspace: ${BITBUCKET_WORKSPACE_NAME}, Project: ${BITBUCKET_PROJECT_KEY}..."}' \
+                             "https://api.getport.io/v1/actions/runs/${PORT_RUN_ID}/logs"
+                    """, returnStdout: true)
+
+                    println(logs_report_response)
+                }
+                script {
+                    withCredentials([
+                        string(credentialsId: 'BITBUCKET_USERNAME', variable: 'BITBUCKET_USERNAME'),
+                        string(credentialsId: 'BITBUCKET_APP_PASSWORD', variable: 'BITBUCKET_APP_PASSWORD')
+                    ]) {
+                        sh """
+                            curl -i -u ${BITBUCKET_USERNAME}:${BITBUCKET_APP_PASSWORD} \\
+                            -d '{"is_private": true, "scm": "git", "project": {"key": "${BITBUCKET_PROJECT_KEY}"}}' \\
+                            https://api.bitbucket.org/2.0/repositories/${BITBUCKET_WORKSPACE_NAME}/${SERVICE_NAME}
+                        """
+                    }
+                }
+            }
+        } // end of stage Create BitBucket Repository
+
+        stage('Scaffold Cookiecutter Template') {
+            steps {
+                script {
+                    def logs_report_response = sh(script: """
+                        curl -X POST \
+                          -H "Content-Type: application/json" \
+                          -H "Authorization: Bearer ${PORT_ACCESS_TOKEN}" \
+                          -d '{"message": "Scaffolding ${SERVICE_NAME}..."}' \
+                             "https://api.getport.io/v1/actions/runs/${PORT_RUN_ID}/logs"
+                    """, returnStdout: true)
+
+                    println(logs_report_response)
+                }
+                script {
+                    withCredentials([
+                        string(credentialsId: 'BITBUCKET_USERNAME', variable: 'BITBUCKET_USERNAME'),
+                        string(credentialsId: 'BITBUCKET_APP_PASSWORD', variable: 'BITBUCKET_APP_PASSWORD')
+                    ]) {
+                        def yamlContent = """
+default_context:
+  full_name: "Full Name"
+  github_username: "bitbucketuser"
+  app_name: "${SERVICE_NAME}"
+  project_short_description": "A Golang project."
+  docker_hub_username: "dockerhubuser"
+  docker_image: "dockerhubuser/alpine-base-image:latest"
+  docker_build_image: "dockerhubuser/alpine-golang-buildimage"
+"""
+                    // Write the YAML content to a file
+                    writeFile(file: 'cookiecutter.yaml', text: yamlContent)
+
+                        sh("""
+                            rm -rf ${SCAFFOLD_DIR} ${SERVICE_NAME}
+                            git clone https://${BITBUCKET_USERNAME}:${BITBUCKET_APP_PASSWORD}@bitbucket.org/${BITBUCKET_WORKSPACE_NAME}/${SERVICE_NAME}.git
+
+                            cookiecutter ${COOKIECUTTER_TEMPLATE} --output-dir ${SCAFFOLD_DIR} --no-input --config-file cookiecutter.yaml -f
+
+                            rm -rf ${SCAFFOLD_DIR}/${SERVICE_NAME}/.git*
+                            cp -r ${SCAFFOLD_DIR}/${SERVICE_NAME}/* "${SERVICE_NAME}/"
+
+                            cd ${SERVICE_NAME}
+                            git config user.name "Jenkins Pipeline Bot"
+                            git config user.email "jenkins-pipeline[bot]@users.noreply.jenkins.com"
+                            git add .
+                            git commit -m "Scaffolded project ${SERVICE_NAME}"
+                            git push -u origin master
+                            cd ..
+
+                            rm -rf ${SCAFFOLD_DIR} ${SERVICE_NAME}
+                        """)
+                    }
+
+                }
+            }
+        } // end of stage Clone Cookiecutter Template
+
+        stage('CREATE Microservice entity') {
+            steps {
+                script {
+                    def logs_report_response = sh(script: """
+                        curl -X POST \
+                          -H "Content-Type: application/json" \
+                          -H "Authorization: Bearer ${PORT_ACCESS_TOKEN}" \
+                          -d '{"message": "Creating ${SERVICE_NAME} Microservice Port entity..."}' \
+                             "https://api.getport.io/v1/actions/runs/${PORT_RUN_ID}/logs"
+                    """, returnStdout: true)
+
+                    println(logs_report_response)
+                }
+                script {
+                    def status_report_response = sh(script: """
+						curl --location --request POST "https://api.getport.io/v1/blueprints/$PORT_BLUEPRINT_ID/entities?upsert=true&run_id=$PORT_RUN_ID&create_missing_related_entities=true" \
+        --header "Authorization: Bearer $PORT_ACCESS_TOKEN" \
+        --header "Content-Type: application/json" \
+        --data-raw '{
+				"identifier": "${SERVICE_NAME}",
+				"title": "${SERVICE_NAME}",
+				"properties": {"description":"${SERVICE_NAME} golang project","url":"https://bitbucket.org/${BITBUCKET_WORKSPACE_NAME}/${SERVICE_NAME}/src"},
+				"relations": {}
+			}'
+
+                    """, returnStdout: true)
+
+                    println(status_report_response)
+                }
+            }
+        } // end of stage CREATE Microservice entity
+
+        stage('Update Port Run Status') {
+            steps {
+                script {
+                    def status_report_response = sh(script: """
+                        curl -X PATCH \
+                          -H "Content-Type: application/json" \
+                          -H "Authorization: Bearer ${PORT_ACCESS_TOKEN}" \
+                          -d '{"status":"SUCCESS", "message": {"run_status": "Scaffold Jenkins Pipeline completed successfully!"}}' \
+                             "https://api.getport.io/v1/actions/runs/${PORT_RUN_ID}"
+                    """, returnStdout: true)
+
+                    println(status_report_response)
+                }
+            }
+        } // end of stage Update Port Run Status
+    }
+
+    post {
+
+        failure {
+            // Update Port Run failed.
+            script {
+                def status_report_response = sh(script: """
+                    curl -X PATCH \
+                        -H "Content-Type: application/json" \
+                        -H "Authorization: Bearer ${PORT_ACCESS_TOKEN}" \
+                        -d '{"status":"FAILURE", "message": {"run_status": "Failed to Scaffold ${SERVICE_NAME}"}}' \
+                            "https://api.getport.io/v1/actions/runs/${PORT_RUN_ID}"
+                """, returnStdout: true)
+
+                println(status_report_response)
+            }
+        }
+
+        // Clean after build
+        always {
+            cleanWs(cleanWhenNotBuilt: false,
+                    deleteDirs: true,
+                    disableDeferredWipeout: false,
+                    notFailBuild: true,
+                    patterns: [[pattern: '.gitignore', type: 'INCLUDE'],
+                               [pattern: '.propsfile', type: 'EXCLUDE']])
+        }
+    }
+}
+```
+
+</details>
+</TabItem>
+
 </Tabs>
 
 All done! The action is ready to be used 🚀
@@ -446,7 +763,7 @@ After creating an action, it will appear under the `Self-service` tab of your Po
 <img src='/img/guides/runStatusScaffolding.png' width='90%' />
 
 :::tip Logging action progress
-💡 Note the `Log stream` at the bottom, this can be used to report progress, results and errors. Click [here](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/) to learn more.
+💡 Note the `Log stream` at the bottom, this can be used to report progress, results and errors. Click [here](/create-self-service-experiences/reflect-action-progress/reflect-action-progress.md) to learn more.
 :::
 
 Congratulations! You can now create services easily from Port 💪🏽
