@@ -41,13 +41,15 @@ After completing it, you will get a sense of how it can benefit different person
 # Change the stateKey to describe your integration.
 # For example, the name of the cluster it will be installed on.
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install k8s-exportera port-labs/port-k8s-exporter \
+helm upgrade --install my-cluster port-labs/port-k8s-exporter \
+  --create-namespace --namespace port-k8s-exporter \
 	--set secret.secrets.portClientId="YOUR_PORT_CLIENT_ID"  \
 	--set secret.secrets.portClientSecret="YOUR_PORT_CLIENT_SECRET"  \
 	--set portBaseUrl="https://api.getport.io"  \
-	--set stateKey="k8s-exporter"  \
+	--set stateKey="my-cluster"  \
 	--set eventListenerType="POLLING"  \
-	--set extraEnv=[{"name":"CLUSTER_NAME","value":"my-cluster"}] 
+	--set "extraEnv[0].name"="CLUSTER_NAME"  \
+	--set "extraEnv[0].value"="my-cluster"
 ```
 
 #### What does the exporter do?
@@ -72,7 +74,7 @@ After installation, the exporter will:
 
 :::info TIP - Updating your configuration
 
-To change the mapping that the K8s exporter uses to fill Port with data from your K8s cluster, go to your [data sources page](https://app.getport.io/dev-portal/data-sources), find the K8s exporter card, click on it and you will see a YAML editor showing the current configuration. 
+To change the mapping that the K8s exporter uses to fill Port with data from your K8s cluster, go to your [data sources page](https://app.getport.io/dev-portal/data-sources), find the K8s exporter card, click on it and you will see a YAML editor showing the current configuration.
 
 You use to YAML editor to edit the configuration and then click on `Resync` to apply the new configuration and also update all existing data according to it.
 

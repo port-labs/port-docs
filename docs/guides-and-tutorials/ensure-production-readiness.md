@@ -170,7 +170,11 @@ Now, if our `service` identifier is equal to the Pagerduty service's name, the `
 
 Git providers allow you to add a `CODEOWNERS` file to a repository specifiying its owner/s. See the relevant documentation for details and examples:
 
-<Tabs>
+<Tabs groupId="git-provider" queryString defaultValue="github" values={[
+{label: "GitHub", value: "github"},
+{label: "GitLab", value: "gitlab"},
+{label: "Bitbucket", value: "bitbucket"}
+]}>
 
 <TabItem value="github" label="Github">
 
@@ -178,9 +182,9 @@ Git providers allow you to add a `CODEOWNERS` file to a repository specifiying i
 
 </TabItem>
 
-<TabItem value="gitlab" label="Gitlab">
+<TabItem value="gitlab" label="GitLab">
 
-[Gitlab codeowners documentation](https://docs.gitlab.com/ee/user/project/codeowners/)
+[GitLab codeowners documentation](https://docs.gitlab.com/ee/user/project/codeowners/)
 
 </TabItem>
 

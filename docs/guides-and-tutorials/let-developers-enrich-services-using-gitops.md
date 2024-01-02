@@ -14,7 +14,7 @@ This guide takes 10 minutes to complete, and aims to demonstrate Port's flexibil
 :::tip Prerequisites
 
 - This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
-- You will need a Git repository (Github, Gitlab, or Bitbucket) in which you can place a workflow/pipeline that we will use in this guide. If you don't have one, we recommend creating a new repository named `Port-actions`.
+- You will need a Git repository (Github, GitLab, or Bitbucket) in which you can place a workflow/pipeline that we will use in this guide. If you don't have one, we recommend creating a new repository named `Port-actions`.
 
 :::
 
@@ -176,11 +176,11 @@ If you **skipped** the onboarding, or you want to create the action from scratch
 
 #### Define backend type
 
-Now we'll define the backend of the action. Port supports multiple invocation types, for this tutorial we will use a `Github workflow`, a `Gitlab pipeline`, or a `Jenkins pipeline`(choose this option if you are using Bitbucket).
+Now we'll define the backend of the action. Port supports multiple invocation types, for this tutorial we will use a `Github workflow`, a `GitLab pipeline`, or a `Jenkins pipeline`(choose this option if you are using Bitbucket).
 
 <Tabs groupId="git-provider" queryString values={[
 {label: "Github", value: "github"},
-{label: "Gitlab", value: "gitlab"},
+{label: "GitLab", value: "gitlab"},
 {label: "Bitbucket (Jenkins)", value: "bitbucket"},
 ]}>
 
@@ -239,7 +239,7 @@ Our action will create a pull-request in the service's repository, containing a 
 
 <Tabs groupId="git-provider" queryString values={[
 {label: "Github", value: "github"},
-{label: "Gitlab", value: "gitlab"},
+{label: "GitLab", value: "gitlab"},
 {label: "Bitbucket (Jenkins)", value: "bitbucket"},
 ]}>
 
@@ -340,7 +340,7 @@ Now let's create the file that contains our logic:
 
 <Tabs groupId="git-provider" queryString values={[
 {label: "Github", value: "github"},
-{label: "Gitlab", value: "gitlab"},
+{label: "GitLab", value: "gitlab"},
 {label: "Bitbucket (Jenkins)", value: "bitbucket"},
 ]}>
 
@@ -424,7 +424,7 @@ jobs:
 
 In the same repository, create a new file called `.gitlab-ci.yml` and inside it paste the following:
 <details>
-<summary><b> Gitlab pipeline (click to expand)</b></summary>
+<summary><b> GitLab pipeline (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 stages:

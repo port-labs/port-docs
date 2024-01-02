@@ -35,7 +35,7 @@ Let's start by creating the action's frontend. This is the part that will be use
 
 <Tabs groupId="git-provider" queryString values={[
 {label: "Github", value: "github"},
-{label: "Gitlab", value: "gitlab"}
+{label: "GitLab", value: "gitlab"}
 ]}>
 
 <TabItem value="github" label="Github">
@@ -82,7 +82,7 @@ The last step is customizing the action's permissions. For simplicity's sake, we
 
 </TabItem>
 
-<TabItem value="gitlab" label="Gitlab">
+<TabItem value="gitlab" label="GitLab">
 
 :::tip Onboarding
 
@@ -133,7 +133,7 @@ Now we want to write the logic that our action will trigger:
 
 <Tabs groupId="git-provider" queryString values={[
 {label: "Github", value: "github"},
-{label: "Gitlab", value: "gitlab"}
+{label: "GitLab", value: "gitlab"}
 ]}>
 
 <TabItem value="github" label="Github">
@@ -202,7 +202,7 @@ This workflow uses Port's [Initiatives Sender GitHub Action](https://github.com/
 
 </TabItem>
 
-<TabItem value="gitlab" label="Gitlab">
+<TabItem value="gitlab" label="GitLab">
 
 1. First, let's create the required webhooks and variables:
 
