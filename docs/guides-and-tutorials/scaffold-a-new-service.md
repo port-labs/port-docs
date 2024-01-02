@@ -763,7 +763,7 @@ After creating an action, it will appear under the `Self-service` tab of your Po
 To trigger the Bitbucket scaffolder, you will need to provide two additional parameters:
 - Bitbucket Workspace Name - the name of the workspace to create the new repository in
 - Bitbucket Project Key - the key of the Bitbucket project to create the new repository in.
-  - To find the Bitbucket project key, go to `https://bitbucket.org/YOUR_BITBUCKET_ORGANIZATION/workspace/projects/`, find the desired project in the list, and copy the value seen in the `Key` column in the table
+  - To find the Bitbucket project key, go to `https://bitbucket.org/YOUR_BITBUCKET_WORKSPACE/workspace/projects/`, find the desired project in the list, and copy the value seen in the `Key` column in the table
 :::
 
 1. This page provides details about the action run. As you can see, the backend returned `Success` and the repo was successfully created:
