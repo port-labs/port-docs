@@ -67,13 +67,21 @@ If you **skipped** the onboarding, or you want to create the action from scratch
 
 #### Define backend type
 
-Now we'll define the backend of the action. Port supports multiple invocation types, one of them should be selected for you depending on the Git provider you selected in the beginning of the onboarding process.  
+Now we'll define the backend of the action. Port supports multiple invocation types, one of them should be selected for you depending on the Git provider you selected in the beginning of the onboarding process.
 
-Fill out the form with your values. For example, when using a Github backend:
-   - Replace the `Organization` and `Repository` values with your values (this is where the workflow will reside and run).
-   - Name the workflow `portCreateRepo.yaml`.
-   - Set `Omit user inputs` to `Yes`.
-   - Fill out the rest of the form like this, then click `Next`:
+<Tabs groupId="git-provider" queryString defaultValue="github" values={[
+{label: "GitHub", value: "github"},
+{label: "GitLab", value: "gitlab"},
+{label: "Bitbucket", value: "bitbucket"}
+]}>
+
+<TabItem value="github">
+
+Fill out the form with your values:
+- Replace the `Organization` and `Repository` values with your values (this is where the workflow will reside and run).
+- Name the workflow `portCreateRepo.yaml`.
+- Set `Omit user inputs` to `Yes`.
+- Fill out the rest of the form like this, then click `Next`:
 
 :::tip Important
 
@@ -83,7 +91,33 @@ In our workflow, the cookiecutter uses the payload for the inputs. We omit the u
 
 <img src='/img/guides/scaffoldBackend.png' width='75%' />
 
-<br/><br/>
+</TabItem>
+
+<TabItem value="gitlab">
+
+:::tip
+You will need a few parameters for this part that are generated in the [setup the action's backend](#setup-the-actions-backend) section, it is recommended to complete the steps there and then follow the instructions here with all of the required information in hand.
+:::
+
+Fill out the form with your values:
+- For the `Endpoint URL` you need to add a URL in the following format:
+  ```text showLineNumbers
+  https://gitlab.com/api/v4/projects/{GITLAB_PROJECT_ID}/ref/main/trigger/pipeline?token={GITLAB_TRIGGER_TOKEN}
+  ```
+    - The value for `{GITLAB_PROJECT_ID}` is the ID of the GitLab group that you create in the [setup the action's backend](#setup-the-actions-backend) section which stores the `.gitlab-cy.yml` pipeline file.
+      - To find the project ID, browse to the GitLab page of the group you created, at the top right corner of the page, click on the vertical 3 dots button (next to `Fork`) and select `Copy project ID`
+    - The value for `{GITLAB_TRIGGER_TOKEN}` is the trigger token you create in the [setup the action's backend](#setup-the-actions-backend) section.
+- Set `HTTP method` to `POST`.
+- Set `Request type` to `Async`.
+- Set `Use self-hosted agent` to `No`.
+
+<img src='/img/guides/gitlabActionBackendForm.png' width='75%' />
+
+</TabItem>
+
+</Tabs>
+
+
 
 The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Create`.
 
@@ -179,26 +213,34 @@ This workflow uses Port's [cookiecutter Github action](https://github.com/port-l
 
 <TabItem value="gitlab">
 
-1. First, let's create a GitLab group that will store our new scaffolder pipeline - Go to your GitLab account and create a new group.
+1. First, let's create a GitLab project that will store our new scaffolder pipeline - Go to your GitLab account and create a new project.
 
 2. Next, let's create the necessary token and secrets:
 
 - Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
 - Go to your [root group](https://gitlab.com/dashboard/groups), and follow the steps [here](https://docs.gitlab.com/ee/user/group/settings/group_access_tokens.html#create-a-group-access-token-using-ui) to create a new group access token with the following permission scopes: `api, read_api, read_repository, write_repository`, then save its value as it will be required in the next step.
   <img src='/img/guides/gitlabGroupAccessTokenPerms.png' width='80%' />
-- Go to the new GitLab group you created, from the `Settings` menu at the sidebar on the left, select `CI/CD`.
+- Go to the new GitLab project you created in step 1, from the `Settings` menu at the sidebar on the left, select `CI/CD`.
 - Expand the `Variables` section and save the following secrets:
   - `PORT_CLIENT_ID` - Your Port client ID.
   - `PORT_CLIENT_SECRET` - Your Port client secret.
-  - `GITLAB_PAT` - The GitLab project access token you created in the previous step.
+  - `GITLAB_ACCESS_TOKEN` - The GitLab group access token you created in the previous step.
+  <br/>
   <img src='/img/guides/gitlabPipelineVariables.png' width='80%' />
-- Expand the `Pipeline trigger tokens` section and add a new token, give it a meaningful description such as `Scaffolder token` and save its value.
+- Expand the `Pipeline trigger tokens` section and add a new token, give it a meaningful description such as `Scaffolder token` and save its value
+  - This is the `{GITLAB_TRIGGER_TOKEN}` that you need for the [define backend type](#define-backend-type) section.
+
+<br/>
 
   <img src='/img/guides/gitlabPipelineTriggerToken.png' width='80%' />
 
 <br/><br/>
 
-3. Now let's create the pipeline file that contains our logic. In the GitLab project, at the root of the project, create a new file named `.gitlab-ci.yml` and use the following snippet as its content:
+:::tip
+Now that you have both the new GitLab project and its respective trigger token, you can go to the [define backend type](#define-backend-type) section and complete the action.
+:::
+
+3. Now let's create the pipeline file that contains our logic. In the new GitLab project you created at step 1, at the root of the project, create a new file named `.gitlab-ci.yml` and use the following snippet as its content:
 
 <details>
 <summary><b>GitLab pipeline (click to expand)</b></summary>
@@ -323,7 +365,7 @@ scaffold:
       git add .
       git commit -m "Initial commit"
       GITLAB_HOSTNAME=$(echo "$CI_API_V4_URL" | cut -d'/' -f3)
-      git remote add origin https://$gitlab_username:$GITLAB_ACCESS_TOKEN@$GITLAB_HOSTNAME/${CI_PROJECT_NAMESPACE}/${service_name}.git
+      git remote add origin https://:$GITLAB_ACCESS_TOKEN@$GITLAB_HOSTNAME/${CI_PROJECT_NAMESPACE}/${service_name}.git
       git push -u origin main
 
       curl -X POST \
