@@ -14,8 +14,7 @@ This guide takes 10 minutes to complete, and aims to demonstrate Port's flexibil
 :::tip Prerequisites
 
 - This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
-- You will need a Github repository in which you can place a workflow that we will use in this guide. If you don't have one, we recommend [creating a new repository](https://docs.github.com/en/get-started/quickstart/create-a-repo) named `Port-actions`.
-- You will need to have [Port's Github app](https://github.com/apps/getport-io) installed in your Github organization (the one that contains the repository you'll work with).
+- You will need a Git repository (Github, Gitlab, or Bitbucket) in which you can place a workflow/pipeline that we will use in this guide. If you don't have one, we recommend creating a new repository named `Port-actions`.
 
 :::
 
@@ -138,7 +137,7 @@ As platform engineers, we want to enable our developers to perform certain actio
 
 :::tip Onboarding
 
-As part of the onboarding process, you should already have an action named `Enrich service` in your [self-service tab](https://app.getport.io/self-serve). In that case, you can skip to the [Define action type](#define-backend-type) step.  
+As part of the onboarding process, you should already have an action named `Enrich service` in your [self-service tab](https://app.getport.io/self-serve). In that case, you can skip to the [Define backend type](#define-backend-type) step.  
 
 If you **skipped** the onboarding, or you want to create the action from scratch, complete steps 1-5 below.
 
@@ -187,9 +186,10 @@ Now we'll define the backend of the action. Port supports multiple invocation ty
 
 <TabItem value="github">
 
-   - Replace the `Organization` and `Repository` values with your values (this is where the workflow will reside and run).
-   - Name the workflow `portEnrichService.yaml`.
-   - Fill out the rest of the form like this, then click `Next`:
+  - You will need to have [Port's Github app](https://github.com/apps/getport-io) installed in your Github organization (the one that contains the repository you'll work with).
+  - Replace the `Organization` and `Repository` values with your values (this is where the workflow will reside and run).
+  - Name the workflow `portEnrichService.yaml`.
+  - Fill out the rest of the form like this, then click `Next`:
 
 <img src='/img/guides/gitopsActionBackendForm.png' width='75%' />
 
@@ -199,12 +199,13 @@ Now we'll define the backend of the action. Port supports multiple invocation ty
 
    - Choose `Trigger Webhook URL` as the invocation type. 
    
-   - The endpoint URL should look like this: `https://gitlab.com/api/v4/projects/(PROJECT_ID)/ref/main/trigger/pipeline?token=(TRIGGER_TOKEN)`.  
+   - The endpoint URL should look like this:  
+   `https://gitlab.com/api/v4/projects/<PROJECT_ID>/ref/main/trigger/pipeline?token=<TRIGGER_TOKEN>`.  
    We will create the `PROJECT_ID` and `TRIGGER_TOKEN` in the next section and come back to update the URL.
    
    - Fill out the rest of the form like this, then click `Next`:
 
-<img src='/img/guides/gitLabWebhookSetup.png' width='75%' />
+<img src='/img/guides/gitLabWebhookSetup.png' width='70%' />
 
 :::info Webhook protection
 
@@ -217,7 +218,14 @@ In order to protect the webhook, see the [Validating webhook signatures page](..
 
 <TabItem value="bitbucket">
 
+    - You will need to have [Port's Bitbucket app](https://marketplace.atlassian.com/apps/1229886/port-connector-for-bitbucket?hosting=cloud&tab=overview) installed in your Bitbucket workspace (the one that contains the repository you'll work with).
+    - Choose `Run Jenkins pipeline` as the invocation type.
+    - The webhook URL should look like this:  
+    `http://<JENKINS_URL>/generic-webhook-trigger/invoke?token=enrichService`  
+      - Replace `JENKINS_URL` with your configured Jenkins URL.
+      - We will use `enrichService` as `JOB_TOKEN`, we will set this token in Jenkins in the next section.
 
+<img src='/img/guides/jenkinsWebhookSetup.png' width='75%' />
 
 </TabItem>
 
@@ -274,6 +282,32 @@ Our action will create a pull-request in the service's repository, containing a 
 
 </TabItem>
 
+<TabItem value="bitbucket">
+
+1. Create a Bitbucket [app password](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/) with `write` permissions for `Pull requests`, and copy its value.
+
+2. Create the following [Jenkins credentials](https://www.jenkins.io/doc/book/using/using-credentials/#configuring-credentials
+) in your Jenkins instance:
+
+  - A `username with password` credential named `BITBUCKET_CREDENTIALS` with your Bitbucket username as the username, and the `app password` you created in the previous step as the password.
+
+3. Create a Jenkins Pipeline with the following configuration:
+
+  - [Enable webhook trigger](https://docs.getport.io/create-self-service-experiences/setup-backend/jenkins-pipeline/#enabling-webhook-trigger-for-a-pipeline) for the pipeline.
+  - [Define post-content variables](https://docs.getport.io/create-self-service-experiences/setup-backend/jenkins-pipeline/#defining-variables) for the pipeline with the following names and values:
+    
+    | Name | Value |
+    | --- | --- |
+    | LIFECYCLE | $.payload.properties.lifecycle |
+    | TYPE | $.payload.properties.type |
+    | DOMAIN | $.payload.properties.domain |
+    | ENTITY_IDENTIFIER | $.payload.entity.identifier |
+    | REPO_URL | $.payload.entity.properties.url |
+
+  - Set `enrichService` as the pipeline's token.
+
+</TabItem>
+
 </Tabs>
 
 ---
@@ -302,7 +336,7 @@ We will now create a YML file that will serve as a template for our services' `p
 
 ---
 
-Now let's create the file that contains our logic.
+Now let's create the file that contains our logic:
 
 <Tabs groupId="git-provider" queryString values={[
 {label: "Github", value: "github"},
@@ -458,6 +492,122 @@ enrichService:
       curl --location --request PATCH "https://api.getport.io/v1/actions/runs/$runID" --header "Authorization: $access_token" --header 'Content-Type: application/json' --data-raw "{\"status\": \"${runStatus}\"}"
 ```
 
+</details>
+
+</TabItem>
+
+<TabItem value="bitbucket">
+
+Create a Jenkins pipeline script with the following content:
+
+<details>
+<summary><b>Jenkins pipeline script (click to expand)</b></summary>
+
+```groovy showLineNumbers
+pipeline {
+    agent any
+    
+    environment {
+        DOMAIN = "${DOMAIN}"
+        LIFECYCLE = "${LIFECYCLE}"
+        ENTITY_IDENTIFIER = "${ENTITY_IDENTIFIER}"
+        TYPE = "${TYPE}"
+        REPO_URL = "${REPO_URL}"
+        BITBUCKET_ORG_NAME = ""
+        BITBUCKET_CREDENTIALS = credentials("BITBUCKET_CREDENTIALS")
+    }
+
+    stages {
+        stage('checkoutTemplate') {
+            steps {
+                git credentialsId: 'BITBUCKET_CREDENTIALS', url: 'https://hadar-co@bitbucket.org/portsamples/port-actions.git', branch: 'main'
+            }
+        }
+        stage('checkoutDestination') {
+            steps {
+                sh 'mkdir -p destinationRepo'
+                dir('destinationRepo') {
+                    git credentialsId: 'BITBUCKET_CREDENTIALS', url: "${REPO_URL}", branch: 'master'
+                }
+            }
+        }
+        stage('copyTemplateFile') {
+            steps {
+                sh 'cp templates/enrichService.yml ./destinationRepo/port.yml'
+            }
+        }
+        stage('updateFileData') {
+            steps {
+                sh """#!/bin/bash
+                    sed -i .bak 's/{{ service_identifier }}/${ENTITY_IDENTIFIER}/' ./destinationRepo/port.yml
+                    sed -i .bak 's/{{ domain_identifier }}/${DOMAIN}/' ./destinationRepo/port.yml
+                    sed -i .bak 's/{{ service_type }}/${TYPE}/' ./destinationRepo/port.yml
+                    sed -i .bak 's/{{ service_lifecycle }}/${LIFECYCLE}/' ./destinationRepo/port.yml
+                """
+            }
+        }
+        stage('CreateBranch') {
+            steps {
+                dir('destinationRepo') {
+                    script {
+                        sh '''#!/bin/bash
+                            ORG_URL="${REPO_URL%/*}"
+                            BITBUCKET_ORG_NAME="${ORG_URL##*org/}"
+                            curl https://api.bitbucket.org/2.0/repositories/${BITBUCKET_ORG_NAME}/${ENTITY_IDENTIFIER}/refs/branches \
+                            -u ${BITBUCKET_CREDENTIALS} -X POST -H "Content-Type: application/json" \
+                            -d '{
+                                "name" : "add-port-yml",
+                                "target" : {
+                                    "hash" : "master"
+                                }
+                            }'
+                        '''
+                    }
+                }
+            }
+        }
+        stage('PushPortYml') {
+            steps {
+                dir('destinationRepo') {
+                   script {
+                        sh '''#!/bin/bash
+                            ORG_URL="${REPO_URL%/*}"
+                            BITBUCKET_ORG_NAME="${ORG_URL##*org/}"
+                            curl -X POST -u ${BITBUCKET_CREDENTIALS} https://api.bitbucket.org/2.0/repositories/${BITBUCKET_ORG_NAME}/${ENTITY_IDENTIFIER}/src \
+                            -F message="Add port.yml" -F branch=add-port-yml \
+                            -F port.yml=@port.yml
+                        '''
+                    }
+                }
+            }
+        }
+        stage('CreatePullRequest') {
+            steps {
+                dir('destinationRepo') {
+                    script {
+                        sh '''#!/bin/bash
+                            ORG_URL="${REPO_URL%/*}"
+                            BITBUCKET_ORG_NAME="${ORG_URL##*org/}"
+                            curl -v https://api.bitbucket.org/2.0/repositories/${BITBUCKET_ORG_NAME}/${ENTITY_IDENTIFIER}/pullrequests \
+                            -u ${BITBUCKET_CREDENTIALS} \
+                            --request POST \
+                            --header 'Content-Type: application/json' \
+                            --data '{
+                                "title": "Add port.yml",
+                                "source": {
+                                    "branch": {
+                                        "name": "add-port-yml"
+                                    }
+                                }
+                            }'
+                        '''
+                    }
+                }
+            }
+        }
+    }
+}
+```
 </details>
 
 </TabItem>
