@@ -220,7 +220,8 @@ This workflow uses Port's [Initiatives Sender GitHub Action](https://github.com/
 
 3. Create a webhook in GitLab for triggering your GitLab:
    - Create a [pipeline trigger token](https://docs.gitlab.com/ee/ci/triggers);
-   - Constract the [pipeline trigger webhook URL](https://docs.gitlab.com/ee/ci/triggers/#use-a-webhook) with your project details.
+   - Construct the [pipeline trigger webhook URL](https://docs.gitlab.com/ee/ci/triggers/#use-a-webhook) with your project details.
+   - Back in Port, edit your action and in its `backend` step paste the webhook URL in the `Endpoint URL` field.
 
 4. Now let's create the pipeline file that contains our logic. In your GitLab project create a new file named `gitlab-ci.yaml` and use the following snippet as its content:
 
