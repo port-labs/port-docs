@@ -84,9 +84,10 @@ const config = {
         },
         items: [
           {
-            href: "https://demo.getport.io",
-            label: "Demo",
+            to: "https://demo.getport.io",
             position: "right",
+            target: "_blank",
+            className: "header-demo-link",
           },
           {
             to: "https://github.com/port-labs/port-docs",
