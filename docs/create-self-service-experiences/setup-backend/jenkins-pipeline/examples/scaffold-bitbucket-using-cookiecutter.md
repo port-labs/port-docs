@@ -15,7 +15,7 @@ Follow these steps to get started with the Golang template:
 1. Create the following as Jenkins Credentials:
 
    1. `BITBUCKET_USERNAME` - a user with access to the BitBucket Workspace and Project.
-   2. `BITBUCKET_APP_PASSWORD` - an [App Password](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/) with permissions to create repositories.
+   2. `BITBUCKET_APP_PASSWORD` - an [App Password](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/) with the `Repositories:Read` and `Repositories:Write` permissions permissions.
    3. `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
    4. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
 
