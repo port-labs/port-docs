@@ -285,7 +285,7 @@ Our action will create a pull-request in the service's repository, containing a 
 
 <TabItem value="bitbucket">
 
-1. Create a Bitbucket [app password](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/) with `write` permissions for `Pull requests`, and copy its value.
+1. Create a Bitbucket [app password](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/) with `Pull requests:write` permissions, and copy its value.
 
 2. Create the following [Jenkins credentials](https://www.jenkins.io/doc/book/using/using-credentials/#configuring-credentials
 ) in your Jenkins instance:
