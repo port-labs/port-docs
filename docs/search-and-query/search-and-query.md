@@ -342,7 +342,11 @@ The `between` operator checks datetime values and returns entities whose relevan
 - today
 - yesterday
 - lastWeek
+- last2Weeks
 - lastMonth
+- last3Months
+- last6Months
+- last12Months
 
 The `between` operator also supports standard date ranges:
 
