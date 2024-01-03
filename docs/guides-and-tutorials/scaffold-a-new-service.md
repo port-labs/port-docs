@@ -34,12 +34,12 @@ After completing it, you will get a sense of how it can benefit different person
 
 As part of the onboarding process, you should already have an action named `Scaffold a new service` in your [self-service tab](https://app.getport.io/self-serve). In that case, you can skip to the [Define action type](#define-backend-type) step.  
 
-If you **skipped** the onboarding, or you want to create the action from scratch, complete steps 1-4 below.
+If you **skipped** the onboarding, or you want to create the action from scratch, complete the `Create the action's frontend` steps below.
 
 :::
 
 <details>
-<summary><b>Create the action's frontend (steps 1-4)</b></summary>
+<summary><b>Create the action's frontend</b></summary>
 
 <Tabs groupId="git-provider" queryString defaultValue="github" values={[
 {label: "GitHub", value: "github"},
