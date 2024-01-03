@@ -210,7 +210,7 @@ This workflow uses Port's [Initiatives Sender GitHub Action](https://github.com/
   
   - Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
 
-2. In the GitLab project where your pipeline will reside, create 3 new variables under `Settings -> CI/CD-> Variables`:
+2. In the GitLab project where your pipeline will reside, create 3 new variables under `Settings->CI/CD->Variables`:
 
 - `SLACK_WEBHOOK_URL` - the Slack Webhook URL of the destination channel.
 - `PORT_CLIENT_ID` - the client ID you copied from your Port app.

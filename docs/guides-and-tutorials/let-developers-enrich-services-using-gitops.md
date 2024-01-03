@@ -268,7 +268,7 @@ Our action will create a pull-request in the service's repository, containing a 
 
 1. Under your [root group](https://gitlab.com/dashboard/groups), access `Settings->Access Tokens`, and create a `Maintainer` role token with the `api`, `read_repository`, and `write_repository` scopes. Copy the token's value.
 
-2. Create a new project named `Port-pipelines`. Copy its GitLab project ID and replace the `(PROJECT_ID)` in the webhook URL . Then. under Settings, CI/CD, create a new Pipeline trigger token, and use it to replace `(TRIGGER_TOKEN)` in the webhook URL.
+2. Create a new project named `Port-pipelines`. Copy its GitLab project ID and replace the `(PROJECT_ID)` in the webhook URL . Then, under Settings->CI/CD, create a new Pipeline trigger token and use it to replace `(TRIGGER_TOKEN)` in the webhook URL.
 
 3. In the same menu (CI/CD), add the following variables to the pipeline:
 
@@ -319,7 +319,7 @@ Our action will create a pull-request in the service's repository, containing a 
 
 We will now create a YML file that will serve as a template for our services' `port.yml` configuration file.
 
-- In your repository, create a file named `enrichService.yml` under `/templates/` (it's path should be `/templates/enrichService.yml`).
+- In your repository, create a file named `enrichService.yml` under `/templates/` (its path should be `/templates/enrichService.yml`).
 - Copy the following snippet and paste it in the file's contents:
 
 <details>
@@ -351,7 +351,7 @@ Now let's create the file that contains our logic:
 
 <TabItem value="github">
 
-In the same repository, under ".github/workflows", create a new file named `portEnrichService.yaml` and use the following snippet as its content:
+In the same repository, under `.github/workflows`, create a new file named `portEnrichService.yaml` and use the following snippet as its content:
 
 <details>
 <summary><b>Github workflow (click to expand)</b></summary>

@@ -19,7 +19,8 @@ If you're working with a **monorepo** and would like to create an entity for eac
 
 <br/><br/>
 
-3. A window will open with a yaml mapping of the integration. Replace its contents with the following snippet (choose your desired Git provider):
+3. A window will open with a YAML mapping of the integration.  
+Use the following snippet as needed for your use-case (either add the `folder` entry to the `resources` array, or replace the entire YAML with it):
 
 :::info Choose repos and folders to include
 In the snippet below, change the `path` and `repos` fields to your desired values before copying.
@@ -81,9 +82,6 @@ resources:
             url: >-
               .repo.web_url + "/tree/" + .repo.default_branch  + "/" +
               .folder.path
-            description: .repo.description
-            namespace: .repo.namespace.name
-            full_path: .repo.path_with_namespace + "/" + folder.path
             language: .repo.__languages | to_entries | max_by(.value) | .key
             readme: file://README.md
 ```
