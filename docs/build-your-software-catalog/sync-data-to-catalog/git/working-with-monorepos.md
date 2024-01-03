@@ -8,7 +8,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 # Working with monorepos
 
-After connecting your Git provider to Port, Port will automatically create an <PortTooltip id="entity">entity</PortTooltip> for each repository in the organization in which you installed the integration.  
+After [connecting your Git provider](/build-your-software-catalog/sync-data-to-catalog/git/) to Port, Port will automatically create an <PortTooltip id="entity">entity</PortTooltip> for each repository in the organization in which you installed the integration.  
 
 If you're working with a **monorepo** and would like to create an entity for each microservice in a single repository instead, you can do that by making an adjustment to your Git integration's mapping:
 
