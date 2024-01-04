@@ -100,7 +100,7 @@ metadata:
   namespace: argocd
 spec:
   destination:
-    namespace: mmy-ocean-opencost-integration
+    namespace: my-ocean-opencost-integration
     server: https://kubernetes.default.svc
   project: default
   sources:
