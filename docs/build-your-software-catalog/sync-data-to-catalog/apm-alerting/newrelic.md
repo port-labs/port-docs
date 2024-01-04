@@ -46,6 +46,10 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `initializePortResources`               | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
 
 <br/>
+<Tabs groupId="deploy" queryString="deploy">
+
+<TabItem value="helm" label="Helm" default>
+To install the integration using Helm, run the following command:
 
 :::note
 If you are using New Relic's EU region, add the following flag to the command:
@@ -72,6 +76,107 @@ helm upgrade --install my-newrelic-integration port-labs/port-ocean \
 	--set integration.secrets.newRelicAPIKey="<NR_API_KEY>"  \
 	--set integration.secrets.newRelicAccountID="<NR_ACCOUNT_ID>"
 ```
+</TabItem>
+<TabItem value="argocd" label="ArgoCD" default>
+To install the integration using ArgoCD, follow these steps:
+
+1. Create a `values.yaml` file in `argocd/my-ocean-newrelic-integration` in your git repository with the content:
+
+:::note
+Remember to replace the placeholders for `NEW_RELIC_API_KEY` and `NEW_RELIC_ACCOUNT_ID`.
+:::
+```yaml showLineNumbers
+initializePortResources: true
+scheduledResyncInterval: 120
+integration:
+  identifier: my-ocean-newrelic-integration
+  type: newrelic
+  eventListener:
+    type: POLLING
+  secrets:
+  // highlight-start
+    newRelicAPIKey: NEW_RELIC_API_KEY
+    newRelicAccountID: NEW_RELIC_ACCOUNT_ID
+  // highlight-end
+```
+<br/>
+
+:::note
+If you are using New Relic's EU region, add the highlighted code (GraphQL configuration value) to the `values.yaml`:
+
+```yaml showLineNumbers
+initializePortResources: true
+scheduledResyncInterval: 120
+integration:
+  identifier: my-ocean-newrelic-integration
+  type: newrelic
+  eventListener:
+    type: POLLING
+  // highlight-start
+  config:
+    newRelicGraphqlURL: https://api.eu.newrelic.com/graphql
+  // highlight-end
+  secrets:
+    newRelicAPIKey: NEW_RELIC_API_KEY
+    newRelicAccountID: NEW_RELIC_ACCOUNT_ID
+```
+:::
+
+2. Install the `my-ocean-newrelic-integration` ArgoCD Application by creating the following `my-ocean-newrelic-integration.yaml` manifest:
+:::note
+Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+
+Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
+:::
+
+<details>
+  <summary>ArgoCD Application</summary>
+
+```yaml showLineNumbers
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: my-ocean-newrelic-integration
+  namespace: argocd
+spec:
+  destination:
+    namespace: mmy-ocean-newrelic-integration
+    server: https://kubernetes.default.svc
+  project: default
+  sources:
+  - repoURL: 'https://port-labs.github.io/helm-charts/'
+    chart: port-ocean
+    targetRevision: 0.1.14
+    helm:
+      valueFiles:
+      - $values/argocd/my-ocean-newrelic-integration/values.yaml
+      // highlight-start
+      parameters:
+        - name: port.clientId
+          value: YOUR_PORT_CLIENT_ID
+        - name: port.clientSecret
+          value: YOUR_PORT_CLIENT_SECRET
+  - repoURL: YOUR_GIT_REPO_URL
+  // highlight-end
+    targetRevision: main
+    ref: values
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+```
+
+</details>
+<br/>
+
+3. Apply your application manifest with `kubectl`:
+```bash
+kubectl apply -f my-ocean-newrelic-integration.yaml
+```
+</TabItem>
+</Tabs>
 
 </TabItem>
 
