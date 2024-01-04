@@ -397,6 +397,10 @@ By making a `GET` request to `https://api.getport.io/v1/actions/runs/{run_id}/lo
 
 ## Updating an action run
 
+:::info Github backend
+When using a `Github workflow` as the action backend, a `Report workflow status` option will be available and set to `Yes` by default. When using this option, Port will automatically update the status of the action run to `SUCCESS` or `FAILURE` according to the result of the Github workflow, so no manual update is required.
+:::
+
 Now let's take an action run and update it. The following updates can be performed:
 
 <Tabs groupId="interact" queryString="interact">
