@@ -110,7 +110,7 @@ metadata:
   namespace: argocd
 spec:
   destination:
-    namespace: mmy-ocean-snyk-integration
+    namespace: my-ocean-snyk-integration
     server: https://kubernetes.default.svc
   project: default
   sources:

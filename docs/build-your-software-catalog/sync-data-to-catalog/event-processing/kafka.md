@@ -102,7 +102,7 @@ metadata:
   namespace: argocd
 spec:
   destination:
-    namespace: mmy-ocean-kafka-integration
+    namespace: my-ocean-kafka-integration
     server: https://kubernetes.default.svc
   project: default
   sources:
