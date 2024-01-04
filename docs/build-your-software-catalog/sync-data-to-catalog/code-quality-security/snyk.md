@@ -49,7 +49,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 <br/>
 <Tabs groupId="deploy" queryString="deploy">
 
-<TabItem value="helm" label="Helm" default>
+<TabItem value="helm" label="Helm">
 To install the integration using Helm, run the following command:
 
 ```bash showLineNumbers
