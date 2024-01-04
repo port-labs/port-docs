@@ -13,7 +13,7 @@ This guide takes 4 minutes to complete, and aims to quickly integrate your AWS e
 
 :::tip Prerequisites
 
-- While it is not mandatory for this guide, we recommend that you complete the [quickstart](/quickstart) before proceeding.
+- While it is not mandatory for this guide, we recommend that you complete the [onboarding process](/quickstart) before proceeding.
 - You will need an active [Port account](https://app.getport.io/).
 - The [Terraform CLI](https://learn.hashicorp.com/tutorials/terraform/install-cli) is required to install the AWS exporter.
 - The [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) is used for authentication. Make sure your AWS `Access key id` and `Secret access key` are set. If not, run `aws configure` in your terminal to configure them.
@@ -31,7 +31,7 @@ After completing it, you will get a sense of how it can benefit different person
 
 ### Install Port's AWS exporter
 
-1. Go to your [Port application](https://app.getport.io/), hover over the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
+1. Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
 
 2. Replace `YOUR-PORT-CLIENT-ID` and `YOUR-PORT-CLIENT-SECRET` in the following command, then copy it and run it in your terminal:
 

@@ -243,12 +243,13 @@ stages:
   - deploy_gitlab
 
 variables:
-  # Define your secret variables in GitLab project settings
-  OCEAN__PORT__CLIENT_ID: $OCEAN__PORT__CLIENT_ID
-  OCEAN__PORT__CLIENT_SECRET: $OCEAN__PORT__CLIENT_SECRET
-  OCEAN__INTEGRATION__CONFIG__TOKEN_MAPPING: $OCEAN__INTEGRATION__CONFIG__TOKEN_MAPPING
+  # Define non-secret variables
   INTEGRATION_TYPE: "gitlab"
   VERSION: "latest"
+  # These variables should be set in GitLab's CI/CD variables for security
+  # OCEAN__PORT__CLIENT_ID: $OCEAN__PORT__CLIENT_ID
+  # OCEAN__PORT__CLIENT_SECRET: $OCEAN__PORT__CLIENT_SECRET
+  # OCEAN__INTEGRATION__CONFIG__TOKEN_MAPPING: $OCEAN__INTEGRATION__CONFIG__TOKEN_MAPPING
 
 deploy_gitlab:
   image: docker:24.0.7

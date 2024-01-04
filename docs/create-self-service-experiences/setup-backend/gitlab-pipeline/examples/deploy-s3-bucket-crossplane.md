@@ -33,7 +33,7 @@ Follow these steps to get started:
 1. Create the following variables as [Gitlab Variables](https://docs.gitlab.com/ee/ci/variables/index.html):
 
    1. `ACCESS_TOKEN` - a [Personal Access Token](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html) with the following scopes:  
-      api, read_api, read_user, read_repository, write_repository.
+      `api`, `read_api`, `read_user`, `read_repository`, `write_repository`.
    2. `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
    3. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
       <br/>
