@@ -17,7 +17,7 @@ This guide takes 8 minutes to complete, and aims to demonstrate:
 
 :::tip Prerequisites
 
-- This guide assumes you have a Port account and a basic knowledge of working with Port. If you haven't done so, go ahead and complete the [quickstart](/quickstart).
+- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
 - You will need a Github repository in which you can place a workflow that we will use in this guide. If you don't have one, we recommend [creating a new repository](https://docs.github.com/en/get-started/quickstart/create-a-repo) named `Port-actions`.
 - You will need to have [Port's Github app](https://github.com/apps/getport-io) installed in your Github organization (the one that contains the repository you'll work with).
 
@@ -95,7 +95,7 @@ Now we want to write the logic that our action will trigger.
 
   <img src='/img/guides/personalAccessToken.png' width='80%' />
 
-  - Go to your [Port application](https://app.getport.io/), hover over the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
+  - Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
 
 2. In the repository where your workflow will reside, create 3 new secrets under `Settings->Secrets and variables->Actions`:
 

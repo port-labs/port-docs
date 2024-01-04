@@ -221,7 +221,7 @@ resources:
         mappings:
           identifier: ".id"
           title: ".title"
-          blueprint: '"issue"'
+          blueprint: '"sentryIssue"'
           properties:
             link: ".permalink"
             status: ".status"
@@ -277,7 +277,7 @@ The following resources can be used to map data from Sentry, it is possible to r
           mappings:
             identifier: .slug
             title: .name
-            blueprint: '"project"'
+            blueprint: '"sentryProject"'
             properties:
               dateCreated: .dateCreated
               platform: .platform
@@ -312,7 +312,7 @@ Examples of blueprints and the relevant integration configurations:
 
 ```json showLineNumbers
 {
-  "identifier": "project",
+  "identifier": "sentryProject",
   "title": "project",
   "icon": "Sentry",
   "schema": {
@@ -365,7 +365,7 @@ resources:
         mappings:
           identifier: .slug
           title: .name
-          blueprint: '"project"'
+          blueprint: '"sentryProject"'
           properties:
             dateCreated: .dateCreated
             platform: .platform
@@ -382,7 +382,7 @@ resources:
 
 ```json showLineNumbers
 {
-  "identifier": "issue",
+  "identifier": "sentryIssue",
   "title": "issue",
   "icon": "Sentry",
   "schema": {
@@ -409,7 +409,7 @@ resources:
   "relations": {
     "project": {
       "title": "project",
-      "target": "project",
+      "target": "sentryProject",
       "required": false,
       "many": false
     }
@@ -431,7 +431,7 @@ resources:
         mappings:
           identifier: ".id"
           title: ".title"
-          blueprint: '"issue"'
+          blueprint: '"sentryIssue"'
           properties:
             link: ".permalink"
             status: ".status"
@@ -601,7 +601,7 @@ The combination of the sample payload and the Ocean configuration generates the 
   "identifier": "python-fastapi",
   "title": "python-fastapi",
   "icon": null,
-  "blueprint": "project",
+  "blueprint": "sentryProject",
   "team": [],
   "properties": {
     "dateCreated": "2023-03-31T06:18:37.290732Z",
@@ -627,7 +627,7 @@ The combination of the sample payload and the Ocean configuration generates the 
   "identifier": "4605173695",
   "title": "ZeroDivisionError: division by zero",
   "icon": null,
-  "blueprint": "issue",
+  "blueprint": "sentryIssue",
   "team": [],
   "properties": {
     "link": "https://test-org.sentry.io/issues/4605173695/",
