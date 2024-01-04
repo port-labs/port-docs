@@ -114,7 +114,7 @@ metadata:
   namespace: argocd
 spec:
   destination:
-    namespace: mmy-ocean-servicenow-integration
+    namespace: my-ocean-servicenow-integration
     server: https://kubernetes.default.svc
   project: default
   sources:

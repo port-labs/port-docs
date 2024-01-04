@@ -109,7 +109,7 @@ metadata:
   namespace: argocd
 spec:
   destination:
-    namespace: mmy-ocean-opsgenie-integration
+    namespace: my-ocean-opsgenie-integration
     server: https://kubernetes.default.svc
   project: default
   sources:

@@ -111,7 +111,7 @@ metadata:
   namespace: argocd
 spec:
   destination:
-    namespace: mmy-ocean-firehydrant-integration
+    namespace: my-ocean-firehydrant-integration
     server: https://kubernetes.default.svc
   project: default
   sources:
