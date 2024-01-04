@@ -140,7 +140,7 @@ metadata:
   namespace: argocd
 spec:
   destination:
-    namespace: mmy-ocean-newrelic-integration
+    namespace: my-ocean-newrelic-integration
     server: https://kubernetes.default.svc
   project: default
   sources:
