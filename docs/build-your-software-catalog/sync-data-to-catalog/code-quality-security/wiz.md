@@ -82,14 +82,13 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
 | `OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_ID`     | The Wiz Client ID                                                                                                | ✅       |
 | `OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_SECRET` | The Wiz Cient Secret                                                                                             | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__WIZ_API_URL`     | The Wiz API URL.                                                                                                   | ❌       |
-| `OCEAN__INTEGRATION__CONFIG__WIZ_TOKEN_URL`     | The Wiz Token URL.                                                                                               | ❌       |
+| `OCEAN__INTEGRATION__CONFIG__WIZ_API_URL`     | The Wiz API URL.                                                                                                   | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__WIZ_TOKEN_URL`     | The Wiz Token URL.                                                                                               | ✅       |
 | `OCEAN__INTEGRATION__CONFIG__WIZ_WEBHOOK_TOKEN` | The token used to verify webhook requests into Port.                                                              | ❌       |
 | `OCEAN__INITIALIZE_PORT_RESOURCES`            | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
 | `OCEAN__INTEGRATION__IDENTIFIER`              | Provide a unique identifier for your integration. If not provided, the default identifier will be used.            | ❌       |
 | `OCEAN__PORT__CLIENT_ID`                      | Your port client id                                                                                                | ✅       |
 | `OCEAN__PORT__CLIENT_SECRET`                  | Your port client secret                                                                                            | ✅       |
-| `OCEAN__PORT__BASE_URL`                       | Your port base url, relevant only if not using the default port app                                                | ❌       |
 
 <br/>
 
