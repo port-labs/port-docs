@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
-title: Promote Scorecards
-sidebar_label: 📊 Promote Scorecards
+title: Promote scorecards
+sidebar_label: 📊 Promote scorecards
 ---
 
 import CombinatorIntro from "../search-and-query/\_combinator_intro.md"
@@ -9,7 +9,7 @@ import CombinatorIntro from "../search-and-query/\_combinator_intro.md"
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# 📊 Promote Scorecards
+# 📊 Promote scorecards
 
 ## What is a Scorecard?
 

@@ -359,7 +359,6 @@ fetch-port-access-token: # Example - get the Port API access token and RunId
         -H "Authorization: Bearer $accessToken" \
         -d '{"link":"'"$CI_PIPELINE_URL"'"}' \
         "https://api.getport.io/v1/actions/runs/$runId"
-        echo "$CI_PIPELINE_URL"
   artifacts:
     reports:
       dotenv: data.env

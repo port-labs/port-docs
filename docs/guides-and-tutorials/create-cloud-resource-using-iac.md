@@ -18,14 +18,13 @@ This guide takes 8 minutes to complete, and aims to demonstrate:
 :::tip Prerequisites
 
 - This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
-- You will need a Github repository in which you can place a workflow that we will use in this guide. If you don't have one, we recommend [creating a new repository](https://docs.github.com/en/get-started/quickstart/create-a-repo) named `Port-actions`.
-- You will need to have [Port's Github app](https://github.com/apps/getport-io) installed in your Github organization (the one that contains the repository you'll work with).
+- You will need a Git repository (Github, GitLab, or Bitbucket) in which you can place a workflow/pipeline that we will use in this guide. If you don't have one, we recommend creating a new repository named `Port-actions`.
 
 :::
 
 ### The goal of this guide
 
-In this guide we will open a pull-request in our Github repository from within Port to create a new cloud resource using gitops.
+In this guide we will open a pull-request in our Git repository from within Port to create a new cloud resource using gitops.
 
 After completing it, you will get a sense of how it can benefit different personas in your organization:
 
@@ -51,7 +50,7 @@ This property is empty for now in all services, we will fill it as part of the a
 2. Each action in Port is directly tied to a <PortTooltip id="blueprint">blueprint</PortTooltip>. Our action creates a resource that is associated with a service and will be provisioned as part of the service's CD process.  
    Choose `Service` from the dropdown list.
 
-3. This action does not create/delete entites, but rather performs an operation on an existing <PortTooltip id="entity">entity</PortTooltip>. Therefore, we will choose `Day-2` as the action type.  
+3. This action does not create/delete entities, but rather performs an operation on an existing <PortTooltip id="entity">entity</PortTooltip>. Therefore, we will choose `Day-2` as the action type.  
    Fill out the form like this and click `Next`:
 
 <img src='/img/guides/iacActionDetails.png' width='50%' />
@@ -72,13 +71,77 @@ This property is empty for now in all services, we will fill it as part of the a
 
 <br/><br/>
 
-6. Now we'll define the backend of the action. Port supports multiple invocation types, for this tutorial we will use a `Github workflow`.
-   - Replace the `Organization` and `Repository` values with your values (this is where the workflow will reside and run).
-   - Name the workflow `portCreateBucket.yaml`.
-   - Fill out the rest of the form like this, then click `Next`:
+6. Now we'll define the backend of the action. Port supports multiple invocation types, one of them should be selected for you depending on the Git provider you selected in the beginning of the onboarding process.
 
-<img src='/img/guides/iacActionBackend.png' width='75%' />
+<Tabs groupId="git-provider" queryString defaultValue="github" values={[
+{label: "GitHub", value: "github"},
+{label: "GitLab", value: "gitlab"}
+]}>
 
+<!-- {label: "Bitbucket (Jenkins)", value: "bitbucket"} -->
+
+<TabItem value="github">
+
+Fill out the form with your values:
+- Replace the `Organization` and `Repository` values with your values (this is where the workflow will reside and run).
+- Name the workflow `portCreateBucket.yaml`.
+- Set `Omit user inputs` to `Yes`.
+- Fill out the rest of the form like this, then click `Next`:
+
+:::tip Important
+
+In our workflow, the payload is used as the input. We omit the user inputs in order to avoid sending additional inputs to the workflow.
+
+:::
+
+<img src='/img/guides/createBucketGHBackend.png' width='75%' />
+
+</TabItem>
+
+<TabItem value="gitlab">
+
+:::tip
+You will need a few parameters for this part that are generated in the [setup the action's backend](#setup-the-actions-backend) section, it is recommended to complete the steps there and then follow the instructions here with all of the required information in hand.
+:::
+
+Fill out the form with your values:
+- For the `Endpoint URL` you need to add a URL in the following format:
+  ```text showLineNumbers
+  https://gitlab.com/api/v4/projects/{GITLAB_PROJECT_ID}/ref/main/trigger/pipeline?token={GITLAB_TRIGGER_TOKEN}
+  ```
+    - The value for `{GITLAB_PROJECT_ID}` is the ID of the GitLab group that you create in the [setup the action's backend](#setup-the-actions-backend) section which stores the `.gitlab-ci.yml` pipeline file.
+      - To find the project ID, browse to the GitLab page of the group you created, at the top right corner of the page, click on the vertical 3 dots button (next to `Fork`) and select `Copy project ID`
+    - The value for `{GITLAB_TRIGGER_TOKEN}` is the trigger token you create in the [setup the action's backend](#setup-the-actions-backend) section.
+- Set `HTTP method` to `POST`.
+- Set `Request type` to `Async`.
+- Set `Use self-hosted agent` to `No`.
+
+<img src='/img/guides/gitlabActionBackendForm.png' width='75%' />
+
+</TabItem>
+
+<!-- <TabItem value="bitbucket">
+
+:::tip
+You will need a few parameters for this part that are generated in the [setup the action's backend](#setup-the-actions-backend) section, it is recommended to complete the steps there and then follow the instructions here with all of the required information in hand.
+:::
+
+Fill out the form with your values:
+- For the `Endpoint URL` you need to add a URL in the following format:
+  ```text showLineNumbers
+  https://{JENKINS_URL}/generic-webhook-trigger/invoke?token={JOB_TOKEN}
+  ```
+    - The value for `{JENKINS_URL}` is the URL of your Jenkins server.
+    - The value for `{JOB_TOKEN}` is the unique token used to trigger the pipeline you create in the [setup the action's backend](#setup-the-actions-backend) section.
+- Set `HTTP method` to `POST`.
+- Set `Request type` to `Async`.
+- Set `Use self-hosted agent` to `No`.
+
+<img src='/img/guides/bitbucketActionBackendForm.png' width='75%' />
+
+</TabItem> -->
+
+</Tabs>
 <br/><br/>
 
 7. The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Create`.
@@ -89,6 +152,13 @@ The action's frontend is now ready 🥳
 
 Now we want to write the logic that our action will trigger.
 
+<Tabs groupId="git-provider" queryString defaultValue="github" values={[
+{label: "GitHub", value: "github"},
+{label: "GitLab", value: "gitlab"}  
+]}>
+<!-- {label: "Bitbucket (Jenkins)", value: "bitbucket"} -->
+
+<TabItem value="github">
 1. First, let's create the necessary token and secrets. If you've already completed the [scaffold a new service guide](/guides-and-tutorials/scaffold-a-new-service), you should already have these configured and you can skip this step.
 
 - Go to your [Github tokens page](https://github.com/settings/tokens), create a personal access token with `repo` and `admin:org` scope, and copy it (this token is needed to create a pull-request from our workflow).
@@ -133,7 +203,7 @@ acl = "{{ bucket_acl }}"
 - Creating a pull request in the selected service's repository to add the new resource.
 - Reporting & logging the action result back to Port, and updating the relevant service's `Resource definitions` property with the URL of the service's resources directory.
 
-Under ".github/workflows", create a new file named `portCreateBucket.yaml` and use the following snippet as its content:
+Under `.github/workflows/`, create a new file named `portCreateBucket.yaml` and use the following snippet as its content:
 
 <details>
 <summary><b>Github workflow (click to expand)</b></summary>
@@ -212,6 +282,179 @@ jobs:
 ```
 
 </details>
+
+</TabItem>
+
+<TabItem value="gitlab">
+
+1. First, let's create a GitLab project that will store our new bucket creation pipeline - Go to your GitLab account and create a new project.
+
+2. Next, let's create the necessary token and secrets:
+
+- Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
+- Go to your [project](https://gitlab.com/), and follow the steps [here](https://docs.gitlab.com/ee/user/project/settings/project_access_tokens.html#create-a-project-access-token) to create a new project access token with the following permission scopes: `write_repository`, then save its value as it will be required in the next step.
+  <img src='/img/guides/gitlabProjectAccessTokenPerms.png' width='80%' />
+- Go to the new GitLab project you created in step 1, from the `Settings` menu at the sidebar on the left, select `CI/CD`.
+- Expand the `Variables` section and save the following secrets:
+  - `PORT_CLIENT_ID` - Your Port client ID.
+  - `PORT_CLIENT_SECRET` - Your Port client secret.
+  - `GITLAB_ACCESS_TOKEN` - The GitLab group access token you created in the previous step.
+  <br/>
+  <img src='/img/guides/gitlabPipelineVariables.png' width='80%' />
+- Expand the `Pipeline trigger tokens` section and add a new token, give it a meaningful description such as `Bucket creator token` and save its value
+  - This is the `{GITLAB_TRIGGER_TOKEN}` that you need for the defining the backend of the Action.
+
+<br/>
+
+  <img src='/img/guides/gitlabPipelineTriggerToken.png' width='80%' />
+
+<br/><br/>
+
+3. Now let's create the pipeline file that contains our logic. In the new GitLab project you created at step 1, at the root of the project, create a new file named `.gitlab-ci.yml` and use the following snippet as its content:
+
+<details>
+<summary><b>GitLab pipeline (click to expand)</b></summary>
+
+```yaml showLineNumbers title=".gitlab-ci.yml"
+image: python:3.10.0-alpine
+
+stages: # List of stages for jobs, and their order of execution
+  - fetch-port-access-token
+  - create-tf-resource-pr
+  - create-entity
+  - update-run-status
+
+fetch-port-access-token: # Example - get the Port API access token and RunId
+  stage: fetch-port-access-token
+  except:
+    - pushes
+  before_script:
+    - apk update
+    - apk add jq curl -q
+  script:
+    - |
+      echo "Getting access token from Port API"
+      accessToken=$(curl -X POST \
+        -H 'Content-Type: application/json' \
+        -d '{"clientId": "'"$PORT_CLIENT_ID"'", "clientSecret": "'"$PORT_CLIENT_SECRET"'"}' \
+        -s 'https://api.getport.io/v1/auth/access_token' | jq -r '.accessToken')
+      echo "ACCESS_TOKEN=$accessToken" >> data.env
+      runId=$(cat $TRIGGER_PAYLOAD | jq -r '.context.runId')
+      echo "RUN_ID=$runId" >> data.env
+      curl -X POST \
+        -H 'Content-Type: application/json' \
+        -H "Authorization: Bearer $accessToken" \
+        -d '{"message":"🏃‍♂️ Starting S3 bucket creation process..."}' \
+        "https://api.getport.io/v1/actions/runs/$runId/logs"
+      curl -X PATCH \
+        -H 'Content-Type: application/json' \
+        -H "Authorization: Bearer $accessToken" \
+        -d '{"link":"'"$CI_PIPELINE_URL"'"}' \
+        "https://api.getport.io/v1/actions/runs/$runId"
+  artifacts:
+    reports:
+      dotenv: data.env
+
+create-tf-resource-pr:
+  before_script: |
+    apk update
+    apk add jq curl git -q
+  stage: create-tf-resource-pr
+  except:
+    - pushes
+  script:
+    - | 
+      git config --global user.email "bucketCreator@email.com"
+      git config --global user.name "Bucket Creator"
+      git config --global init.defaultBranch "main"
+      git clone https://:${GITLAB_ACCESS_TOKEN}@gitlab.com/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}.git sourceRepo
+      cat $TRIGGER_PAYLOAD
+      git clone https://:${GITLAB_ACCESS_TOKEN}@gitlab.com/${CI_PROJECT_NAMESPACE}/$(cat $TRIGGER_PAYLOAD | jq -r '.context.entity').git targetRepo
+    - |
+      bucket_name=$(cat $TRIGGER_PAYLOAD | jq -r '.payload.properties.name')
+      visibility=$(cat $TRIGGER_PAYLOAD | jq -r '.payload.properties.visibility')
+      echo "BUCKET_NAME=${bucket_name}" >> data.env
+      echo "Creating a new S3 bucket Terraform resource file"
+      mkdir -p targetRepo/resources/
+      cp sourceRepo/templates/cloudResource.tf targetRepo/resources/${bucket_name}.tf
+      sed -i "s/{{ bucket_name }}/${bucket_name}/" ./targetRepo/resources/${bucket_name}.tf
+      sed -i "s/{{ bucket_acl }}/${visibility}/" ./targetRepo/resources/${bucket_name}.tf
+    - |
+      cd ./targetRepo
+      git add resources/${bucket_name}.tf
+      git commit -m "Added ${bucket_name} resource file"
+      git checkout -b new-bucket-branch-${bucket_name}
+      git push origin new-bucket-branch-${bucket_name}
+      PROJECT_NAME=$(cat $TRIGGER_PAYLOAD | jq -r '.context.entity | @uri')
+      PROJECTS=$(curl --header "PRIVATE-TOKEN: $GITLAB_ACCESS_TOKEN" "https://gitlab.com/api/v4/groups/$CI_PROJECT_NAMESPACE_ID/projects?search=$(cat $TRIGGER_PAYLOAD | jq -r '.context.entity')")
+      PROJECT_ID=$(echo ${PROJECTS} | jq '.[] | select(.name=="'$PROJECT_NAME'") | .id' | head -n1)
+
+      PR_RESPONSE=$(curl --request POST --header "PRIVATE-TOKEN: ${GITLAB_ACCESS_TOKEN}" "https://gitlab.com/api/v4/projects/${PROJECT_ID}/merge_requests?source_branch=new-bucket-branch-${bucket_name}&target_branch=main&title=New-Bucket-Request")
+      PR_URL=$(echo ${PR_RESPONSE} | jq -r '.web_url')
+      curl -X POST \
+        -H 'Content-Type: application/json' \
+        -H "Authorization: Bearer $ACCESS_TOKEN" \
+        -d "{\"message\":\"📡 Opened pull request with new bucket resource!\nPR Url: ${PR_URL}\"}" \
+        "https://api.getport.io/v1/actions/runs/$RUN_ID/logs"
+
+  artifacts:
+    reports:
+      dotenv: data.env
+
+create-entity:
+  stage: create-entity
+  except:
+    - pushes
+  before_script:
+    - apk update
+    - apk add jq curl -q
+  script:
+    - |
+      echo "Creating Port entity to match new S3 bucket"
+      SERVICE_ID=$(cat $TRIGGER_PAYLOAD | jq -r '.context.entity')
+      PROJECT_URL="https://gitlab.com/${CI_PROJECT_NAMESPACE_ID}/${SERVICE_ID}/-/blob/main/resources/"
+      echo "SERVICE_ID=${SERVICE_ID}" >> data.env
+      echo "PROJECT_URL=${PROJECT_URL}" >> data.env
+      curl -X POST \
+          -H 'Content-Type: application/json' \
+          -H "Authorization: Bearer $ACCESS_TOKEN" \
+          -d '{"message":"🚀 Updating the service with the new resource definition!"}' \
+          "https://api.getport.io/v1/actions/runs/$RUN_ID/logs"
+      curl --location --request POST "https://api.getport.io/v1/blueprints/service/entities?upsert=true&run_id=$RUN_ID&create_missing_related_entities=true" \
+        --header "Authorization: Bearer $ACCESS_TOKEN" \
+        --header "Content-Type: application/json" \
+        -d '{"identifier": "'"$SERVICE_ID"'","title": "'"$SERVICE_ID"'","properties": {"resource_definitions": "'"$PROJECT_URL"'"}, "relations": {}}'
+
+update-run-status:
+  stage: update-run-status
+  except:
+    - pushes
+  image: curlimages/curl:latest
+  script:
+    - |
+      echo "Updating Port action run status and final logs"
+      curl -X POST \
+        -H 'Content-Type: application/json' \
+        -H "Authorization: Bearer $ACCESS_TOKEN" \
+        -d '{"message":"✅ PR Opened for bucket '"$BUCKET_NAME"'!"}' \
+        "https://api.getport.io/v1/actions/runs/$RUN_ID/logs"
+      curl -X PATCH \
+        -H 'Content-Type: application/json' \
+        -H "Authorization: Bearer $ACCESS_TOKEN" \
+        -d '{"status":"SUCCESS",  "message": {"run_status": "Run completed successfully!"}}' \
+        "https://api.getport.io/v1/actions/runs/$RUN_ID"
+```
+
+</details>
+</TabItem>
+
+<!-- <TabItem value="bitbucket">
+TODO: Add bitbucket
+</TabItem> -->
+
+
+</Tabs>
+
 
 All done! The action is ready to be executed 🚀
 
