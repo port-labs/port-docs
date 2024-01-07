@@ -113,7 +113,7 @@ const config = {
             title: "Documentation",
             items: [
               {
-                label: "Port Overview",
+                label: "Port overview",
                 to: "/",
               },
               {
@@ -121,29 +121,29 @@ const config = {
                 to: "/quickstart",
               },
               {
-                label: "Build Software Catalog",
+                label: "Build a software catalog",
                 to: "/build-your-software-catalog",
               },
               {
-                label: "Create Self-Service Experiences",
+                label: "Create self-service actions",
                 to: "/create-self-service-experiences",
               },
               {
-                label: "Promote Scorecards",
+                label: "Promote scorecards",
                 to: "/promote-scorecards",
               },
               {
-                label: "Search & Query",
+                label: "Search & query",
                 to: "/search-and-query",
               },
               {
-                label: "API Reference",
+                label: "API reference",
                 to: "/api-reference",
               },
             ],
           },
           {
-            title: "Ingest Data to Catalog",
+            title: "Ingest data to catalog",
             items: [
               {
                 label: "API",

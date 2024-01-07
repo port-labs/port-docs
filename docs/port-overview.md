@@ -1,11 +1,11 @@
 ---
 sidebar_position: 1
 slug: /
-title: Port Overview
-sidebar_label: 👋 Port Overview
+title: Port overview
+sidebar_label: 👋 Port overview
 ---
 
-# 👋 Port Overview
+# 👋 Port overview
 
 <center>
 
