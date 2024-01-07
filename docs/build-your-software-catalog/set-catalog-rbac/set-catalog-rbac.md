@@ -1,6 +1,6 @@
 ---
-title: Set Catalog RBAC
-sidebar_label: Set Catalog RBAC
+title: Set catalog RBAC
+sidebar_label: Set catalog RBAC
 ---
 
 import OwnershipTemplate from "./\_ownership_explanation_template.mdx";
@@ -8,7 +8,7 @@ import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import styles from "./styles.module.css";
 
-# Set Catalog RBAC
+# Set catalog RBAC
 
 <center>
 

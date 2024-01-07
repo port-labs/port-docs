@@ -1,9 +1,9 @@
 ---
-title: Ingest Data Into The Software Catalog
-sidebar_label: Ingest data into the Software Catalog
+title: Ingest data into the software catalog
+sidebar_label: Ingest data into the software catalog
 ---
 
-# Ingest Data Into The Software Catalog
+# Ingest data into the software catalog
 
 <center>
 
