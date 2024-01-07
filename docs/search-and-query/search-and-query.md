@@ -1,9 +1,9 @@
 ---
-title: Search & Query
-sidebar_label: 🔍 Search & Query
+title: Search & query
+sidebar_label: 🔍 Search & query
 ---
 
-# 🔍 Search & Query
+# 🔍 Search & query
 
 import CombinatorIntro from "./\_combinator_intro.md"
 
