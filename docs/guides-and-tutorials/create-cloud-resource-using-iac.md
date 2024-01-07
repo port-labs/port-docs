@@ -351,7 +351,6 @@ fetch-port-access-token: # Example - get the Port API access token and RunId
         -H "Authorization: Bearer $accessToken" \
         -d '{"link":"'"$CI_PIPELINE_URL"'"}' \
         "https://api.getport.io/v1/actions/runs/$runId"
-        echo "$CI_PIPELINE_URL"
   artifacts:
     reports:
       dotenv: data.env
@@ -392,7 +391,6 @@ create-tf-resource-pr:
 
       PR_RESPONSE=$(curl --request POST --header "PRIVATE-TOKEN: ${GITLAB_ACCESS_TOKEN}" "https://gitlab.com/api/v4/projects/${PROJECT_ID}/merge_requests?source_branch=new-bucket-branch-${bucket_name}&target_branch=main&title=New-Bucket-Request")
       PR_URL=$(echo ${PR_RESPONSE} | jq -r '.web_url')
-      echo ${PR_RESPONSE}
       curl -X POST \
         -H 'Content-Type: application/json' \
         -H "Authorization: Bearer $ACCESS_TOKEN" \
