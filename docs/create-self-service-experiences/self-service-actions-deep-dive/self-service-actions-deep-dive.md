@@ -1,9 +1,9 @@
 ---
 sidebar_position: 1
-sidebar_label: Self-Service Actions Deep Dive
+sidebar_label: Self-service actions deep dive
 ---
 
-# Self-Service Actions Deep Dive
+# Self-service actions deep dive
 
 **Self-Service Actions** in Port enable developer self-service by configuring one of the 3 Self-Service Action types on Blueprints and the Entities that originated from them:
 

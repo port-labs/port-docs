@@ -1,10 +1,10 @@
 ---
-title: Setup Backend
+title: Setup backend
 ---
 
 import DocCardList from '@theme/DocCardList';
 
-# Setup Backend
+# Setup backend
 
 <center>
 

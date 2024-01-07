@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Service Locking
+# Service locking
 
 Using Port's search capabilities, it is very simple to implement convenient service locking for services in your different development and production environments.
 
