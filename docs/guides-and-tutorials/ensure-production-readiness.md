@@ -129,7 +129,7 @@ Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, l
 
 <img src='/img/guides/pdDataSources.png' width='60%' />
 
-Add the following YAML block to the mapping under the `resources` key, then click `resync`:
+Add the following YAML block to the mapping under the `resources` key, then click `save & resync`:
 
 <details>
 <summary>Relation mapping (click to expand)</summary>

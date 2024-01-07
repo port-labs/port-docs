@@ -34,12 +34,12 @@ After completing it, you will get a sense of how it can benefit different person
 
 As part of the onboarding process, you should already have an action named `Scaffold a new service` in your [self-service tab](https://app.getport.io/self-serve). In that case, you can skip to the [Define action type](#define-backend-type) step.  
 
-If you **skipped** the onboarding, or you want to create the action from scratch, complete steps 1-4 below.
+If you **skipped** the onboarding, or you want to create the action from scratch, complete the `Create the action's frontend` steps below.
 
 :::
 
 <details>
-<summary><b>Create the action's frontend (steps 1-4)</b></summary>
+<summary><b>Create the action's frontend</b></summary>
 
 <Tabs groupId="git-provider" queryString defaultValue="github" values={[
 {label: "GitHub", value: "github"},
@@ -160,7 +160,7 @@ Fill out the form with your values:
   ```text showLineNumbers
   https://gitlab.com/api/v4/projects/{GITLAB_PROJECT_ID}/ref/main/trigger/pipeline?token={GITLAB_TRIGGER_TOKEN}
   ```
-    - The value for `{GITLAB_PROJECT_ID}` is the ID of the GitLab group that you create in the [setup the action's backend](#setup-the-actions-backend) section which stores the `.gitlab-ci.yml` pipeline file.
+    - The value for `{GITLAB_PROJECT_ID}` is the ID of the GitLab group that you create in the [setup the action's backend](#setup-the-actions-backend) section which stores the `.gitlab-cy.yml` pipeline file.
       - To find the project ID, browse to the GitLab page of the group you created, at the top right corner of the page, click on the vertical 3 dots button (next to `Fork`) and select `Copy project ID`
     - The value for `{GITLAB_TRIGGER_TOKEN}` is the trigger token you create in the [setup the action's backend](#setup-the-actions-backend) section.
 - Set `HTTP method` to `POST`.
@@ -507,7 +507,7 @@ update-run-status:
    - Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
    - Configure the following as Jenkins credentials:
      - `BITBUCKET_USERNAME` - a user with access to the Bitbucket workspace and project.
-     - `BITBUCKET_APP_PASSWORD` - an [App Password](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/) with permissions to create permissions.
+     - `BITBUCKET_APP_PASSWORD` - an [App Password](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/) with the `Repositories:Read` and `Repositories:Write` permissions permissions.
      - `PORT_CLIENT_ID` - Your Port client ID.
      - `PORT_CLIENT_SECRET` - Your Port client secret.
      <br/>
@@ -515,7 +515,7 @@ update-run-status:
 
 <br/>
 
-3. Create a Jenkins pipeline with the following configuration:
+1. Create a Jenkins pipeline with the following configuration:
    - [Enable the webhook trigger for the pipeline](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#enabling-webhook-trigger-for-a-pipeline)
    - Define the value of the [`token`](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#token-setup) field, the token you specify will be used to trigger the scaffold pipeline specifically. For example, you can use `scaffolder-token`.
    - [Define variables for the pipeline](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#defining-variables): define the `SERVICE_NAME`, `BITBUCKET_WORKSPACE_NAME`, `BITBUCKET_PROJECT_KEY`, and `RUN_ID` variables.

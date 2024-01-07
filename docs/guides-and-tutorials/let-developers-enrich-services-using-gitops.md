@@ -6,6 +6,7 @@ title: Let developers enrich services using Gitops
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+import FindCredentials from "/docs/build-your-software-catalog/sync-data-to-catalog/api/\_template_docs/\_find_credentials_collapsed.mdx";
 
 # Let developers enrich services using Gitops
 
@@ -267,7 +268,7 @@ Our action will create a pull-request in the service's repository, containing a 
 
 1. Under your [root group](https://gitlab.com/dashboard/groups), access `Settings->Access Tokens`, and create a `Maintainer` role token with the `api`, `read_repository`, and `write_repository` scopes. Copy the token's value.
 
-2. Create a new project named `Port-pipelines`. Copy its GitLab project ID and replace the `(PROJECT_ID)` in the webhook URL . Then. under Settings, CI/CD, create a new Pipeline trigger token, and use it to replace `(TRIGGER_TOKEN)` in the webhook URL.
+2. Create a new project named `Port-pipelines`. Copy its GitLab project ID and replace the `(PROJECT_ID)` in the webhook URL . Then, under Settings->CI/CD, create a new Pipeline trigger token and use it to replace `(TRIGGER_TOKEN)` in the webhook URL.
 
 3. In the same menu (CI/CD), add the following variables to the pipeline:
 
@@ -284,12 +285,15 @@ Our action will create a pull-request in the service's repository, containing a 
 
 <TabItem value="bitbucket">
 
-1. Create a Bitbucket [app password](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/) with `write` permissions for `Pull requests`, and copy its value.
+1. Create a Bitbucket [app password](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/) with `Pull requests:write` permissions, and copy its value.
 
 2. Create the following [Jenkins credentials](https://www.jenkins.io/doc/book/using/using-credentials/#configuring-credentials
 ) in your Jenkins instance:
 
   - A `username with password` credential named `BITBUCKET_CREDENTIALS` with your Bitbucket username as the username, and the `app password` you created in the previous step as the password.
+  <FindCredentials />
+  - A `secret text` credential named `PORT_CLIENT_ID` with your Port client ID as the secret.
+  - A `secret text` credential named `PORT_CLIENT_SECRET` with your Port client secret as the secret.
 
 3. Create a Jenkins Pipeline with the following configuration:
 
@@ -303,6 +307,7 @@ Our action will create a pull-request in the service's repository, containing a 
     | DOMAIN | $.payload.properties.domain |
     | ENTITY_IDENTIFIER | $.payload.entity.identifier |
     | REPO_URL | $.payload.entity.properties.url |
+    | RUN_ID | $.context.runId |
 
   - Set `enrichService` as the pipeline's token.
 
@@ -314,7 +319,7 @@ Our action will create a pull-request in the service's repository, containing a 
 
 We will now create a YML file that will serve as a template for our services' `port.yml` configuration file.
 
-- In your repository, create a file named `enrichService.yml` under `/templates/` (it's path should be `/templates/enrichService.yml`).
+- In your repository, create a file named `enrichService.yml` under `/templates/` (its path should be `/templates/enrichService.yml`).
 - Copy the following snippet and paste it in the file's contents:
 
 <details>
@@ -346,7 +351,7 @@ Now let's create the file that contains our logic:
 
 <TabItem value="github">
 
-In the same repository, under ".github/workflows", create a new file named `portEnrichService.yaml` and use the following snippet as its content:
+In the same repository, under `.github/workflows`, create a new file named `portEnrichService.yaml` and use the following snippet as its content:
 
 <details>
 <summary><b>Github workflow (click to expand)</b></summary>
@@ -504,6 +509,8 @@ Create a Jenkins pipeline script with the following content (replace `<PORT-ACTI
 <summary><b>Jenkins pipeline script (click to expand)</b></summary>
 
 ```groovy showLineNumbers
+import groovy.json.JsonSlurper
+
 pipeline {
     agent any
     
@@ -515,12 +522,41 @@ pipeline {
         REPO_URL = "${REPO_URL}"
         BITBUCKET_ORG_NAME = ""
         BITBUCKET_CREDENTIALS = credentials("BITBUCKET_CREDENTIALS")
+        PORT_ACCESS_TOKEN = ""
+        PORT_RUN_ID = "${RUN_ID}"
     }
 
     stages {
+        stage('Get access token') {
+            steps {
+                script {
+                    withCredentials([
+                        string(credentialsId: 'PORT_CLIENT_ID', variable: 'PORT_CLIENT_ID'),
+                        string(credentialsId: 'PORT_CLIENT_SECRET', variable: 'PORT_CLIENT_SECRET')
+                    ]) {
+                        // Execute the curl command and capture the output
+                        def result = sh(returnStdout: true, script: """
+                            accessTokenPayload=\$(curl -X POST \
+                                -H "Content-Type: application/json" \
+                                -d '{"clientId": "${PORT_CLIENT_ID}", "clientSecret": "${PORT_CLIENT_SECRET}"}' \
+                                -s "https://api.getport.io/v1/auth/access_token")
+                            echo \$accessTokenPayload
+                        """)
+
+                        // Parse the JSON response using JsonSlurper
+                        def jsonSlurper = new JsonSlurper()
+                        def payloadJson = jsonSlurper.parseText(result.trim())
+
+                        // Access the desired data from the payload
+                        PORT_ACCESS_TOKEN = payloadJson.accessToken
+                    }
+
+                }
+            }
+        }
         stage('checkoutTemplate') {
             steps {
-                git credentialsId: 'BITBUCKET_CREDENTIALS', url: '<PORT-ACTIONS-REPO-URL>', branch: 'main'
+                git credentialsId: 'BITBUCKET_CREDENTIALS', url: 'https://hadar-co@bitbucket.org/portsamples/port-actions.git', branch: 'main'
             }
         }
         stage('checkoutDestination') {
@@ -602,6 +638,21 @@ pipeline {
                             }'
                         '''
                     }
+                }
+            }
+        }
+        stage('Update Port Run Status') {
+            steps {
+                script {
+                    def status_report_response = sh(script: """
+                        curl -X PATCH \
+                          -H "Content-Type: application/json" \
+                          -H "Authorization: Bearer ${PORT_ACCESS_TOKEN}" \
+                          -d '{"status":"SUCCESS", "message": {"run_status": "Scaffold Jenkins Pipeline completed successfully!"}}' \
+                             "https://api.getport.io/v1/actions/runs/${PORT_RUN_ID}"
+                    """, returnStdout: true)
+
+                    println(status_report_response)
                 }
             }
         }

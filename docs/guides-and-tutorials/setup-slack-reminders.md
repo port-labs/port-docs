@@ -206,11 +206,11 @@ This workflow uses Port's [Initiatives Sender GitHub Action](https://github.com/
 
 1. First, let's create the required webhooks and variables:
 
-   - Go to your desired Slack channel and [setup incoming webhooks](https://api.slack.com/messaging/webhooks). Make sure you copy the webhook URL, we will use it in the Github workflow.
+  - Go to your desired Slack channel and [setup incoming webhooks](https://api.slack.com/messaging/webhooks). Make sure you copy the webhook URL, we will use it in the Github workflow.
+  
+  - Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
 
-   - Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
-
-2. In the GitLab project where your pipeline will reside, create 3 new variables under `Settings -> CI/CD-> Variables`:
+2. In the GitLab project where your pipeline will reside, create 3 new variables under `Settings->CI/CD->Variables`:
 
 - `SLACK_WEBHOOK_URL` - the Slack Webhook URL of the destination channel.
 - `PORT_CLIENT_ID` - the client ID you copied from your Port app.
@@ -219,9 +219,9 @@ This workflow uses Port's [Initiatives Sender GitHub Action](https://github.com/
 <img src='/img/guides/repositorySecretSlackGitLab.png' width='75%' />
 
 3. Create a webhook in GitLab for triggering your GitLab:
-   - Create a [pipeline trigger token](https://docs.gitlab.com/ee/ci/triggers);
-   - Construct the [pipeline trigger webhook URL](https://docs.gitlab.com/ee/ci/triggers/#use-a-webhook) with your project details.
-   - Back in Port, edit your action and in its `backend` step paste the webhook URL in the `Endpoint URL` field.
+  - Create a [pipeline trigger token](https://docs.gitlab.com/ee/ci/triggers);
+  - Construct the [pipeline trigger webhook URL](https://docs.gitlab.com/ee/ci/triggers/#use-a-webhook) with your project details.
+  - Back in Port, edit your action and in its `backend` step paste the webhook URL in the `Endpoint URL` field.
 
 4. Now let's create the pipeline file that contains our logic. In your GitLab project create a new file named `gitlab-ci.yaml` and use the following snippet as its content:
 

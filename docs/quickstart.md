@@ -124,4 +124,5 @@ Now that you have a basic understanding of Port's main pillars, you can start cu
 
 &nbsp;&nbsp;&nbsp; ❇️ Finish setting up your [self-service actions](#self-service-actions) and take them for a spin.  
 &nbsp;&nbsp;&nbsp; ❇️ Complete one of our [guides](https://docs.getport.io/guides-and-tutorials) to learn how to use Port to address real use-cases.  
-&nbsp;&nbsp;&nbsp; ❇️ Join our [community Slack](https://www.getport.io/community) to ask questions and share your experience with Port.
+&nbsp;&nbsp;&nbsp; ❇️ Join our [community Slack](https://www.getport.io/community) to ask questions and share your experience with Port.  
+&nbsp;&nbsp;&nbsp; ❇️ Working with **monorepos**? See our [quick guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/working-with-monorepos) on how to adjust your configuration.

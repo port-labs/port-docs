@@ -106,7 +106,9 @@ resources:
 
   <BitbucketResources/>
 
-- The `selector` and the `query` keys let you filter exactly which objects from the specified `kind` will be ingested to the software catalog
+#### Filtering unwanted objects
+
+The `selector` and the `query` keys let you filter exactly which objects from the specified `kind` will be ingested to the software catalog
 
   ```yaml showLineNumbers
   resources:
@@ -118,18 +120,15 @@ resources:
       port:
   ```
 
-  Some example use cases:
+For example, to ingest only repositories that have a name starting with `"service"`, use the `query` key like this:
 
-  - To sync all objects from the specified `kind`: do not specify a `selector` and `query` key;
-  - To sync all objects from the specified `kind` that start with `service`, use:
+```yaml showLineNumbers
+query: .name | startswith("service")
+```
 
-    ```yaml showLineNumbers
-    query: .name | startswith("service")
-    ```
+<br/>
 
-  - etc.
-
-- The `port`, `entity` and the `mappings` keys open the section used to map the Bitbucket API object fields to Port entities. The `mappings` key can either be an object or an array of objects that matches the structure of an [entity](../../../sync-data-to-catalog/sync-data-to-catalog.md#entity-json-structure)
+The `port`, `entity` and the `mappings` keys open the section used to map the Bitbucket API object fields to Port entities. The `mappings` key can either be an object or an array of objects that matches the structure of an [entity](../../../sync-data-to-catalog/sync-data-to-catalog.md#entity-json-structure)
 
   ```yaml showLineNumbers
   resources:
