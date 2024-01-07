@@ -11,11 +11,13 @@ Our Wiz integration allows you to import `projects`, `issues`, `controls`, and `
 
 - Map `projects`, `issues`, `controls`, and `serviceTickets` in your Wiz organization environment.
 - Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
-- Create/delete Wiz objects using self-service actions.
 
 ## Prerequisites
 
 <Prerequisites />
+
+Your Wiz credentials should have the `read:projects` and `read:issues` permission scopes. Visit the Wiz [documentation](https://integrate.wiz.io/reference/prerequisites) for a guide on how to get your credentials as well as set permissions.
+
 
 ## Installation
 
@@ -32,8 +34,8 @@ Set them as you wish in the script below, then copy it and run it in your termin
 
 | Parameter                           | Description                                                                                                        | Required |
 | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
-| `port.clientId`                     | Your port client id                                                                                                | ✅       |
-| `port.clientSecret`                 | Your port client secret                                                                                            | ✅       |
+| `port.clientId`                     | Your port client id ([Get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))                                                                                               | ✅       |
+| `port.clientSecret`                 | Your port client secret ([Get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))                                                                                           | ✅       |
 | `integration.identifier`            | Change the identifier to describe your integration                                                                 | ✅       |
 | `integration.type`                  | The integration type                                                                                               | ✅       |
 | `integration.eventListener.type`    | The event listener type                                                                                            | ✅       |
@@ -61,8 +63,7 @@ helm upgrade --install my-wiz-integration port-labs/port-ocean \
 	--set integration.secrets.wizClientId="WIZ_CLIENT_ID"  \
 	--set integration.secrets.wizClientSecret="WIZ_CLIENT_SECRET" \
         --set integration.secrets.wizApiUrl="WIZ_API_URL"  \
-	--set integration.config.wizTokenUrl="WIZ_TOKEN_URL"  \
-        --set integration.config.wizWebhookToken="WIZ_WEBHOOK_TOKEN" 
+	--set integration.config.wizTokenUrl="WIZ_TOKEN_URL"  
 ```
 
 </TabItem>
@@ -87,8 +88,8 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 | `OCEAN__INTEGRATION__CONFIG__WIZ_WEBHOOK_TOKEN` | The token used to verify webhook requests into Port.                                                              | ❌       |
 | `OCEAN__INITIALIZE_PORT_RESOURCES`            | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
 | `OCEAN__INTEGRATION__IDENTIFIER`              | Provide a unique identifier for your integration. If not provided, the default identifier will be used.            | ❌       |
-| `OCEAN__PORT__CLIENT_ID`                      | Your port client id                                                                                                | ✅       |
-| `OCEAN__PORT__CLIENT_SECRET`                  | Your port client secret                                                                                            | ✅       |
+| `OCEAN__PORT__CLIENT_ID`                      | Your port client id ([Get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))                                                                                               | ✅       |
+| `OCEAN__PORT__CLIENT_SECRET`                  | Your port client secret ([Get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))                                                                                        | ✅       |
 
 <br/>
 
@@ -122,7 +123,6 @@ jobs:
           -e OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_SECRET=${{ secrets.OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_SECRET }} \
           -e OCEAN__INTEGRATION__CONFIG__WIZ_API_URL=${{ secrets.OCEAN__INTEGRATION__CONFIG__WIZ_API_URL }} \
           -e OCEAN__INTEGRATION__CONFIG__WIZ_TOKEN_URL=${{ secrets.OCEAN__INTEGRATION__CONFIG__WIZ_TOKEN_URL }} \
-          -e OCEAN__INTEGRATION__CONFIG__WIZ_WEBHOOK_TOKEN=${{ secrets.OCEAN__INTEGRATION__CONFIG__WIZ_WEBHOOK_TOKEN }} \
           -e OCEAN__PORT__CLIENT_ID=${{ secrets.OCEAN__PORT__CLIENT_ID }} \
           -e OCEAN__PORT__CLIENT_SECRET=${{ secrets.OCEAN__PORT__CLIENT_SECRET }} \
           $image_name
@@ -154,8 +154,8 @@ of `Secret Text` type:
 | `OCEAN__INTEGRATION__CONFIG__WIZ_WEBHOOK_TOKEN` | The token used to verify webhook requests into Port.                                                   | ❌       |
 | `OCEAN__INITIALIZE_PORT_RESOURCES`            | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
 | `OCEAN__INTEGRATION__IDENTIFIER`              | Provide a unique identifier for your integration. If not provided, the default identifier will be used.        | ❌       |
-| `OCEAN__PORT__CLIENT_ID`                      | Your port client id ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))     | ✅       |
-| `OCEAN__PORT__CLIENT_SECRET`                  | Your port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)) secret | ✅       |
+| `OCEAN__PORT__CLIENT_ID`                      | Your port client id ([Get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))     | ✅       |
+| `OCEAN__PORT__CLIENT_SECRET`                  | Your port client secret ([Get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)) | ✅       |
 | `OCEAN__PORT__BASE_URL`                       | Your port base url, relevant only if not using the default port app                                                                                              | ❌       |
 
 <br/>
@@ -175,7 +175,6 @@ pipeline {
                         string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_SECRET', variable: 'OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_SECRET'),
                         string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__WIZ_API_URL', variable: 'OCEAN__INTEGRATION__CONFIG__WIZ_API_URL'),
                         string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__WIZ_TOKEN_URL', variable: 'OCEAN__INTEGRATION__CONFIG__WIZ_TOKEN_URL'),
-                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__WIZ_WEBHOOK_TOKEN', variable: 'OCEAN__INTEGRATION__CONFIG__WIZ_WEBHOOK_TOKEN'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_SECRET', variable: 'OCEAN__PORT__CLIENT_SECRET'),
                     ]) {
@@ -191,7 +190,6 @@ pipeline {
                                 -e OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_SECRET=$OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_SECRET \
                                 -e OCEAN__INTEGRATION__CONFIG__WIZ_API_URL=$OCEAN__INTEGRATION__CONFIG__WIZ_API_URL \
                                 -e OCEAN__INTEGRATION__CONFIG__WIZ_TOKEN_URL=$OCEAN__INTEGRATION__CONFIG__WIZ_TOKEN_URL \
-                                -e OCEAN__INTEGRATION__CONFIG__WIZ_WEBHOOK_TOKEN=$OCEAN__INTEGRATION__CONFIG__WIZ_WEBHOOK_TOKEN \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
                                 $image_name
@@ -597,7 +595,6 @@ resources:
           identifier: .id
           title: .entitySnapshot.name + " | " + .entitySnapshot.type
           properties:
-            # https://integrate.wiz.io/reference/issues-query#:~:text=Direct%20a%20user%20to%20an%20Issue%20in%20Wiz
             url: .id as $id | "https://app.wiz.io/issues#~(issue~'" + $id + ")"
             status: .status
             severity: .severity
