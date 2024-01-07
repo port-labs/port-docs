@@ -75,9 +75,10 @@ This property is empty for now in all services, we will fill it as part of the a
 
 <Tabs groupId="git-provider" queryString defaultValue="github" values={[
 {label: "GitHub", value: "github"},
-{label: "GitLab", value: "gitlab"},
-{label: "Bitbucket (Jenkins)", value: "bitbucket"}
+{label: "GitLab", value: "gitlab"}
 ]}>
+
+<!-- {label: "Bitbucket (Jenkins)", value: "bitbucket"} -->
 
 <TabItem value="github">
 
@@ -119,7 +120,7 @@ Fill out the form with your values:
 
 </TabItem>
 
-<TabItem value="bitbucket">
+<!-- <TabItem value="bitbucket">
 
 :::tip
 You will need a few parameters for this part that are generated in the [setup the action's backend](#setup-the-actions-backend) section, it is recommended to complete the steps there and then follow the instructions here with all of the required information in hand.
@@ -138,7 +139,7 @@ Fill out the form with your values:
 
 <img src='/img/guides/bitbucketActionBackendForm.png' width='75%' />
 
-</TabItem>
+</TabItem> -->
 
 </Tabs>
 <br/><br/>
@@ -153,9 +154,9 @@ Now we want to write the logic that our action will trigger.
 
 <Tabs groupId="git-provider" queryString defaultValue="github" values={[
 {label: "GitHub", value: "github"},
-{label: "GitLab", value: "gitlab"},
-{label: "Bitbucket (Jenkins)", value: "bitbucket"}
+{label: "GitLab", value: "gitlab"}  
 ]}>
+<!-- {label: "Bitbucket (Jenkins)", value: "bitbucket"} -->
 
 <TabItem value="github">
 1. First, let's create the necessary token and secrets. If you've already completed the [scaffold a new service guide](/guides-and-tutorials/scaffold-a-new-service), you should already have these configured and you can skip this step.
@@ -449,9 +450,9 @@ update-run-status:
 </details>
 </TabItem>
 
-<TabItem value="bitbucket">
-<!-- TODO: Add bitbucket -->
-</TabItem>
+<!-- <TabItem value="bitbucket">
+TODO: Add bitbucket
+</TabItem> -->
 
 
 </Tabs>
