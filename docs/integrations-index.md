@@ -140,6 +140,11 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Snyk integration](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/snyk.md)
 - [Snyk webhook](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/snyk.md)
 
+## Wiz
+
+- [Wiz integration](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/wiz.md)
+- [Wiz webhook](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/wiz.md)
+
 ## PagerDuty
 
 - [PagerDuty integration](/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty.md)
