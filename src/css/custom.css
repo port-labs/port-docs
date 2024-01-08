@@ -85,9 +85,17 @@ h6::first-letter {
   display: flex;
 }
 
+.header-github-link:hover {
+  opacity: 0.6;
+}
+
 .header-demo-link {
   align-items: center;
   display: flex;
+}
+
+.header-demo-link:hover {
+  opacity: 0.7;
 }
 
 .header-demo-link:before {
@@ -125,6 +133,10 @@ html[data-theme="light"] .header-github-link:before {
 .header-slack-link {
   align-items: center;
   display: flex;
+}
+
+.header-slack-link:hover {
+  opacity: 0.6;
 }
 
 .header-slack-link:before {
