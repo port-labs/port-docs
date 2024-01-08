@@ -31,7 +31,7 @@ Internal developer portals need a context-rich software catalog with maturity an
 
 Give developers a holistic understanding of your development lifecycle and underlying architecture. Reduce cognitive load resulting from complex architectures, tool proliferation and tribal knowledge.
 
-[Software Catalog live demo](https://demo.getport.io/services) 🎬
+[Software Catalog live demo](https://demo.getport.io/service_catalog) 🎬
 
 #### Self-Service
 
