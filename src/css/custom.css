@@ -154,8 +154,8 @@ html[data-theme="light"] .header-github-link:before {
   max-width: 420px;
 }
 
-details details  {
-  background-color: rgb(253, 242, 238, 0.8) !important;
+html[data-theme="light"] details details  {
+  background-color: rgb(253, 242, 238, 0.7) !important;
 }
 
 html[data-theme="dark"] details details  {
