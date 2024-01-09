@@ -21,6 +21,7 @@ This is an [open-source](https://github.com/port-labs/port-aws-cost-exporter) in
    - [Local](#local)
    - [Docker](#docker)
    - [GitHub Workflow](#github-workflow)
+   - [GitLab Pipeline](#gitlab-pipeline)
 
 ![Catalog Architecture](/img/sync-data-to-catalog/aws_cost.png)
 
@@ -298,3 +299,58 @@ jobs:
 ```
 
 </details>
+
+#### GitLab Pipeline
+
+1. Create the following GitLab CI/CD variables: 
+:::tip
+Refer to this guide on how to [setup a GitLab CI variable](https://docs.gitlab.com/ee/ci/variables/index.html#define-a-cicd-variable-in-the-ui)
+:::
+
+Required:
+
+- `AWS_ACCESS_KEY_ID`
+- `AWS_ACCESS_KEY_ID`
+- `AWS_BUCKET_NAME`
+- `PORT_CLIENT_ID`
+- `PORT_CLIENT_SECRET`
+
+2. Use this GitLab CI Pipeline definition to allow scheduled and manual run of the exporter:
+
+<details>
+  <summary> GitLab Pipeline gitlab-ci.yml </summary>
+
+```yaml showLineNumbers
+image: docker:latest
+
+services:
+  - docker:dind
+
+variables:
+  PORT_CLIENT_ID: $PORT_CLIENT_ID
+  PORT_CLIENT_SECRET: $PORT_CLIENT_SECRET
+  AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+  AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+  AWS_BUCKET_NAME: $AWS_BUCKET_NAME
+
+stages:
+  - run
+
+run_job:
+  stage: run
+  script:
+    - docker run -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -e AWS_BUCKET_NAME=$AWS_BUCKET_NAME -e PORT_CLIENT_ID=$PORT_CLIENT_ID -e PORT_CLIENT_SECRET=$PORT_CLIENT_SECRET ghcr.io/port-labs/port-aws-cost-exporter:latest
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+      when: always
+```
+
+</details>
+
+3. Schedule the script:
+
+   1. Go to your GitLab project and select **Build** from the sidebar menu.
+   2. Click on **Pipeline schedules** and click on **New Schedule**.
+   3. Fill the form with the schedule details: description, interval pattern, timezone, target branch.
+   4. Ensure the **Activated** checkbox is selected.
+   5. Click on **Create pipeline schedule** to create the schedule.
