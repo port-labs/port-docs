@@ -153,3 +153,9 @@ html[data-theme="light"] .header-github-link:before {
 .tooltip {
   max-width: 420px;
 }
+
+details details  {
+  /* opacity: 70%; */
+  background-color: rgb(253, 242, 238, 0.8) !important;
+  ;
+}
