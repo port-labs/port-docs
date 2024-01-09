@@ -155,7 +155,9 @@ html[data-theme="light"] .header-github-link:before {
 }
 
 details details  {
-  /* opacity: 70%; */
   background-color: rgb(253, 242, 238, 0.8) !important;
-  ;
+}
+
+html[data-theme="dark"] details details  {
+  background-color: rgb(71, 36, 25, 0.6) !important;
 }
