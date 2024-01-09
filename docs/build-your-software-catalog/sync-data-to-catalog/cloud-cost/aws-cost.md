@@ -349,7 +349,7 @@ run_job:
 
 3. Schedule the script:
 
-   1. Go to your GitLab project and select **Build** from the sidebar menu.
+   1. Go to your GitLab repository and select **Build** from the sidebar menu.
    2. Click on **Pipeline schedules** and click on **New Schedule**.
    3. Fill the form with the schedule details: description, interval pattern, timezone, target branch.
    4. Ensure the **Activated** checkbox is selected.
