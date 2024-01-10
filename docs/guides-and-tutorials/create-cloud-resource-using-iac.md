@@ -681,7 +681,7 @@ pipeline {
 <details>
 <summary><b>cloudResource.tf (click to expand)</b></summary>
 
-```hcl title="cloudResource.tf"
+```hcl showLineNumbers title="cloudResource.tf"
 resource "aws_s3_bucket" "example" {
 provider = aws.bucket_region
 name = "{{ bucket_name }}"
