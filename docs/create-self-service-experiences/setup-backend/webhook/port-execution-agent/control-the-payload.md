@@ -22,10 +22,10 @@ Setting up the mapping depends on how you install the agent.
 
 <TabItem value="helm">
 
-In order to provide the mapping configuration to the agent, run the installation command again, but at the end add `\` and add the following line below:
+In order to provide the mapping configuration to the agent, run the installation command again, but the following parameter
 
-```
-        --set-file controlThePayloadConfig
+```bash showLineNumbers
+        --set-file controlThePayloadConfig=/PATH/TO/LOCAL/FILE.yml
 ```
 
 </TabItem>
@@ -36,7 +36,7 @@ In order to provide the mapping to the agent, add the mapping to the values.yaml
 
 Below you can find the default mapping to use as a starting point:
 
-```
+```yaml showLineNumbers
 controlThePayloadConfig: |
   [
     {
@@ -104,17 +104,15 @@ In each mapping, we will show the relevant fields.
 
 Assuming you have a few different invocations method for your actions, you can create a mapping configuration that is only applied to actions that are of type `GitLab` like so:
 
-```
+```text showLineNumbers
 "enabled": ".payload.invocationMethod.type == \"GITLAB\""
 ```
-
-This will apply the current mapping configuration only to actions that are of type `GitLab`.
 
 #### Create a URL based on a property
 
 Assuming a webhook invocation action is configured toward the url `http://test.com/`, and a number input in the action form named `port`, here is how you can construct the url:
 
-```
+```showLineNumbers
 "url": ".payload.invocationMethod.url + .payload.properties.port"
 ```
 
