@@ -11,12 +11,6 @@ import SonarcloudAnalysisConfiguration from "/docs/build-your-software-catalog/s
 
 # SonarQube
 
-<!-- <Tabs groupId="installation" queryString defaultValue="ocean" values={[
-  {label: 'Ocean', value: 'ocean'},
-  {label: 'Webhook', value: 'webhook'}]}>
-
-<TabItem value="ocean"> -->
-
 Our SonarQube integration (powered by [Ocean](https://ocean.getport.io)) allows you to import `projects`, `issues` and `analyses` from your SonarQube account into
 Port, according to your mapping and definitions.
 
@@ -908,13 +902,6 @@ The combination of the sample payload and the Ocean configuration generates the 
 ```
 
 </details>
-
-<!-- </TabItem>
-
-</Tabs> -->
-<!-- <TabItem value="webhook"> -->
-
-
 
 ## Alternative installation via webhook
 
