@@ -8,7 +8,7 @@ sidebar_label: ❓ FAQ
 
 ## How can I get started?
 
-Port is self-service-friendly. You can create a Port account and start building your internal developer portal right away. We suggest completing the [onboarding process](/quickstart), which will help you get a basic understanding of Port and an idea of how a good developer portal can help you and your developers.
+You can create a free [Port account](https://app.getport.io) and start building your internal developer portal right away. We suggest completing the [onboarding process](/quickstart), which will help you get a basic understanding of Port and an idea of how a good developer portal can help you and your developers.
 
 You can also schedule an [in-person demo](https://www.getport.io/demo-request) with us, and we’ll be happy to show you a demo and discuss your needs.
 
