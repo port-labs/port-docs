@@ -22,7 +22,7 @@ Setting up the mapping depends on how you install the agent.
 
 <TabItem value="helm">
 
-In order to provide the mapping configuration to the agent, run the installation command again, but the following parameter
+In order to provide the mapping configuration to the agent, run the installation command again, and add the following parameter:
 
 ```bash showLineNumbers
         --set-file controlThePayloadConfig=/PATH/TO/LOCAL/FILE.yml
