@@ -4,6 +4,9 @@ sidebar_position: 5
 description: Openshift quickstart
 ---
 
+import TemplateInstallation from "./_template_installation.mdx";
+import TemplatePrerequisites from "./_template_prerequisites.mdx";
+
 # Red Hat Openshift
 
 [Red Hat Openshift](https://www.redhat.com/en/technologies/cloud-computing/openshift) is a versatile platform for scalable application development, modernization, and deployment over Kubernetes, offering a complete service set for app delivery on your preferred infrastructure.
@@ -11,7 +14,7 @@ description: Openshift quickstart
 Using Port's Kubernetes Exporter, you can keep track of important Openshift resources across your different clusters and export the data to Port. You will use built in metadata from your Openshift resources and CRDs to create entities in Port and keep track of their state.
 
 :::tip
-Get to know the basics of our Kubernetes exporter [here!](../kubernetes.md)
+Get to know the basics of our Kubernetes exporter [here!](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md)
 :::
 
 ## Mapping Red Hat Openshift - Goals
@@ -27,31 +30,20 @@ Importing your Openshift resources to Port makes it easy to create multiple tail
 
 In this example you will map your Openshift clusters, their workloads and the Openshift routes which are exposed by your different clusters.
 
-## Prerequisites
-
-- [Helm](https://helm.sh) must be installed to use the chart. Please refer to
-  Helm's [documentation](https://helm.sh/docs) to get started;
-- The `jq` command must installed;
-- The `yq` command must installed;
-- The `kubectl/oc` command must be installed;
-- Have your [Port credentials](../../../sync-data-to-catalog/api/#find-your-port-credentials) ready.
-
-In this use-case, you will use a custom bash script which will assist you in the process of installing Port's K8s exporter.
-
-:::note
-For more information about the k8s exporter installation script click [here](../installation-script.md)!
+:::tip
+Get to know the basics of our Kubernetes exporter [here!](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md)
 :::
 
-The script will install the helm chart in the Openshift cluster which is currently in `oc` context.
-To view the context name of the cluster the exporter will be installed on, run:
+## Prerequisites
 
-```bash showLineNumbers
-oc config current-context
-```
+<TemplatePrerequisites />
 
-## Setting up your blueprints
+## Setting up blueprints & resource mapping
 
-### Creating blueprints using the installation script
+The following section will guide you through the process of setting up your blueprints and resource mapping using the
+installation script. You can read more about the installation script [here](#how-does-the-installation-script-work).
+
+### Creating blueprints
 
 The installation script provides a convenient way to create your blueprints. Using the `CUSTOM_BP_PATH` environment variable, you can fetch a pre-defined `blueprints.json` to create your blueprints. For this use-case, you will use [this file](https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/openshift-blueprints.json) to define your blueprints. Do this by running:
 
@@ -83,9 +75,9 @@ This `blueprints.json` file defines the following blueprints:
 
 :::
 
-### Installing the Kubernetes exporter using the script
+### Exporting custom resource mapping
 
-Using the `CONFIG_YAML_URL` parameter, you can define a custom `config.yaml` to use when installing the exporter.
+Using the `CONFIG_YAML_URL` parameter, you can define a custom resource configuration to use when installing the exporter.
 
 In this use-case you will be using **[this configuration file](https://github.com/port-labs/template-assets/blob/main/kubernetes/full-configs/openshift_usecase.yaml)**. To achieve this, run:
 
@@ -103,3 +95,7 @@ curl -s https://raw.githubusercontent.com/port-labs/template-assets/main/kuberne
 ```
 
 You can now browse to your Port environment to see that your blueprints have been created, and your Kubernetes resources, including Openshift routes are being reported to Port using the freshly installed k8s exporter.
+
+## How does the installation script work?
+
+<TemplateInstallation />

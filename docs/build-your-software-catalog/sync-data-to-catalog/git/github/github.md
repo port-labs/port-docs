@@ -28,7 +28,7 @@ Port's GitHub app allows you to ingest a variety of objects resources provided b
 
 The GitHub app uses a YAML configuration file to describe the ETL process to load data into the developer portal. The approach reflects a golden middle between an overly opinionated Git visualization that might not work for everyone and a too-broad approach that could introduce unneeded complexity into the developer portal.
 
-Here is an example snippet from the `port-app-config.yml` file which demonstrates the ETL process for getting `pullRequest` data from the GitHub organization and into the software catalog:
+Here is an example snippet from the `port-app-config.yml` file which demonstrates the ETL process for getting `githubPullRequest` data from the GitHub organization and into the software catalog:
 
 ```yaml showLineNumbers
 resources:
@@ -45,7 +45,7 @@ resources:
           # highlight-start
           identifier: ".head.repo.name + (.id|tostring)" # The Entity identifier will be the repository name + the pull request ID. After the Entity is created, the exporter will send `PATCH` requests to update this pull request within Port.
           title: ".title"
-          blueprint: '"pullRequest"'
+          blueprint: '"githubPullRequest"'
           properties:
             creator: ".user.login"
             assignees: "[.assignees[].login]"
@@ -77,7 +77,7 @@ resources:
         mappings:
           identifier: ".name" # The Entity identifier will be the repository name.
           title: ".name"
-          blueprint: '"microservice"'
+          blueprint: '"githubRepository"'
           properties:
             url: ".html_url"
             description: ".description"
@@ -107,7 +107,9 @@ resources:
 
   <GitHubResources/>
 
-- The `selector` and the `query` keys let you filter exactly which objects from the specified `kind` will be ingested to the software catalog
+#### Filtering unwanted objects
+
+The `selector` and the `query` keys let you filter exactly which objects from the specified `kind` will be ingested into the software catalog:
 
   ```yaml showLineNumbers
   resources:
@@ -119,18 +121,15 @@ resources:
       port:
   ```
 
-  Some example use cases:
+For example, to ingest only repositories that have a name starting with `"service"`, use the `query` key like this:
 
-  - To sync all objects from the specified `kind`: do not specify a `selector` and `query` key;
-  - To sync all objects from the specified `kind` that start with `service`, use:
+```yaml showLineNumbers
+query: .name | startswith("service")
+```
 
-    ```yaml showLineNumbers
-    query: .name | startswith("service")
-    ```
+<br/>
 
-  - etc.
-
-- The `port`, `entity` and the `mappings` keys open the section used to map the GitHub API object fields to Port entities. To create multiple mappings of the same kind, you can add another item to the `resources` array;
+The `port`, `entity` and the `mappings` keys open the section used to map the GitHub API object fields to Port entities. To create multiple mappings of the same kind, you can add another item to the `resources` array;
 
   ```yaml showLineNumbers
   resources:
@@ -144,7 +143,7 @@ resources:
             currentIdentifier: ".name" # OPTIONAL - keep it only in case you want to change the identifier of an existing entity from "currentIdentifier" to "identifier".
             identifier: ".name"
             title: ".name"
-            blueprint: '"microservice"'
+            blueprint: '"githubRepository"'
             properties:
               description: ".description"
               url: ".html_url"

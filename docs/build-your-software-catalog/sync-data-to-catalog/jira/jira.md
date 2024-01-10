@@ -48,6 +48,10 @@ Set them as you wish in the script below, then copy it and run it in your termin
 <HelmParameters/>
 
 <br/>
+<Tabs groupId="deploy" queryString="deploy">
+
+<TabItem value="helm" label="Helm" default>
+To install the integration using Helm, run the following command:
 
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
@@ -64,6 +68,89 @@ helm upgrade --install my-jira-integration port-labs/port-ocean \
 	--set integration.secrets.atlassianUserEmail="string"  \
 	--set integration.secrets.atlassianUserToken="string"
 ```
+</TabItem>
+<TabItem value="argocd" label="ArgoCD" default>
+To install the integration using ArgoCD, follow these steps:
+
+1. Create a `values.yaml` file in `argocd/my-ocean-jira-integration` in your git repository with the content:
+
+:::note
+Remember to replace the placeholders for `ATLASSIAN_JIRA_HOST` `ATLASSIAN_USER_EMAIL` and `ATLASSIAN_USER_TOKEN`.
+:::
+```yaml showLineNumbers
+initializePortResources: true
+scheduledResyncInterval: 120
+integration:
+  identifier: my-ocean-jira-integration
+  type: jira
+  eventListener:
+    type: POLLING
+  config:
+  // highlight-next-line
+    jiraHost: ATLASSIAN_JIRA_HOST
+  secrets:
+  // highlight-start
+    atlassianUserEmail: ATLASSIAN_USER_EMAIL
+    atlassianUserToken: ATLASSIAN_USER_TOKEN
+  // highlight-end
+```
+<br/>
+
+2. Install the `my-ocean-jira-integration` ArgoCD Application by creating the following `my-ocean-jira-integration.yaml` manifest:
+:::note
+Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+
+Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
+:::
+
+<details>
+  <summary>ArgoCD Application</summary>
+
+```yaml showLineNumbers
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: my-ocean-jira-integration
+  namespace: argocd
+spec:
+  destination:
+    namespace: mmy-ocean-jira-integration
+    server: https://kubernetes.default.svc
+  project: default
+  sources:
+  - repoURL: 'https://port-labs.github.io/helm-charts/'
+    chart: port-ocean
+    targetRevision: 0.1.14
+    helm:
+      valueFiles:
+      - $values/argocd/my-ocean-jira-integration/values.yaml
+      // highlight-start
+      parameters:
+        - name: port.clientId
+          value: YOUR_PORT_CLIENT_ID
+        - name: port.clientSecret
+          value: YOUR_PORT_CLIENT_SECRET
+  - repoURL: YOUR_GIT_REPO_URL
+  // highlight-end
+    targetRevision: main
+    ref: values
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+```
+
+</details>
+<br/>
+
+3. Apply your application manifest with `kubectl`:
+```bash
+kubectl apply -f my-ocean-jira-integration.yaml
+```
+</TabItem>
+</Tabs>
 
 </TabItem>
 
@@ -205,7 +292,7 @@ resources:
         mappings:
           identifier: .key
           title: .name
-          blueprint: '"project"'
+          blueprint: '"jiraProject"'
           properties:
             url: (.self | split("/") | .[:3] | join("/")) + "/projects/" + .key
 ```
@@ -216,7 +303,7 @@ The integration makes use of the [JQ JSON processor](https://stedolan.github.io/
 
 The integration configuration determines which resources will be queried from Jira, and which entities and properties will be created in Port.
 
-:::tip Supported resources
+:::tip Supported resources (`Kind`)
 The following resources can be used to map data from Jira, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
 
 - [`Project`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-projects/#api-rest-api-3-project-search-get)
@@ -256,6 +343,23 @@ The following resources can be used to map data from Jira, it is possible to ref
       port:
   ```
 
+:::tip JQL Support
+The Ocean Jira integration supports querying objects from the `issue` kind using [JQL](https://support.atlassian.com/jira-service-management-cloud/docs/use-advanced-search-with-jira-query-language-jql/), making it possible to specifically filter the issues that are queried from Jira and ingested to Port.
+
+To use JQL filtering, add to the `selector` object a `jql` key with your desired JQL query as the value. For example:
+
+```yaml showLineNumbers
+resources:
+      # highlight-next-line
+    - kind: issue # JQL filtering can only be used with the "issue" kind
+      selector:
+        query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
+      # highlight-next-line
+        jql: "status != Done" # JQL query, will only ingest issues whose status is not "Done"
+      port:
+```
+:::
+
 - The `port`, `entity` and the `mappings` keys are used to map the Jira object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
 
   ```yaml showLineNumbers
@@ -269,7 +373,7 @@ The following resources can be used to map data from Jira, it is possible to ref
           mappings: # Mappings between one Jira object to a Port entity. Each value is a JQ query.
             identifier: .key
             title: .name
-            blueprint: '"project"'
+            blueprint: '"jiraProject"'
             properties:
               url: (.self | split("/") | .[:3] | join("/")) + "/projects/" + .key
         # highlight-end
@@ -307,7 +411,7 @@ Examples of blueprints and the relevant integration configurations:
 
 ```json showLineNumbers
 {
-  "identifier": "issue",
+  "identifier": "jiraIssue",
   "title": "Jira Issue",
   "icon": "Jira",
   "schema": {
@@ -372,20 +476,20 @@ Examples of blueprints and the relevant integration configurations:
   },
   "relations": {
     "project": {
-      "target": "project",
+      "target": "jiraProject",
       "title": "Project",
       "description": "The Jira project that contains this issue",
       "required": false,
       "many": false
     },
     "parentIssue": {
-      "target": "issue",
+      "target": "jiraIssue",
       "title": "Parent Issue",
       "required": false,
       "many": false
     },
     "subtasks": {
-      "target": "issue",
+      "target": "jiraIssue",
       "title": "Subtasks",
       "required": false,
       "many": true
@@ -411,7 +515,7 @@ resources:
         mappings:
           identifier: .key
           title: .fields.summary
-          blueprint: '"issue"'
+          blueprint: '"jiraIssue"'
           properties:
             url: (.self | split("/") | .[:3] | join("/")) + "/browse/" + .key
             status: .fields.status.name
@@ -438,7 +542,7 @@ resources:
 
 ```json showLineNumbers
 {
-  "identifier": "project",
+  "identifier": "jiraProject",
   "title": "Jira Project",
   "icon": "Jira",
   "description": "A Jira project",
@@ -472,7 +576,7 @@ resources:
         mappings:
           identifier: .key
           title: .name
-          blueprint: '"project"'
+          blueprint: '"jiraProject"'
           properties:
             url: (.self | split("/") | .[:3] | join("/")) + "/projects/" + .key
 ```
@@ -711,7 +815,7 @@ The combination of the sample payload and the Ocean configuration generates the 
   "identifier": "PA",
   "title": "Port-AI",
   "icon": null,
-  "blueprint": "project",
+  "blueprint": "jiraProject",
   "team": [],
   "properties": {
     "url": "https://myaccount.atlassian.net/projects/PA"
@@ -734,7 +838,7 @@ The combination of the sample payload and the Ocean configuration generates the 
   "identifier": "PA-1",
   "title": "Setup infra",
   "icon": null,
-  "blueprint": "issue",
+  "blueprint": "jiraIssue",
   "team": [],
   "properties": {
     "url": "https://myaccount.atlassian.net/browse/PA-1",

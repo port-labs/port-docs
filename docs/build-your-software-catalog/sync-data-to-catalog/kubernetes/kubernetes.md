@@ -3,14 +3,15 @@ sidebar_position: 1
 ---
 
 import Image from "@theme/IdealImage";
-import ExporterBaseInstallCommand from "./\_exporter_base_install_command.mdx"
-import KubernetesIllustration from "../../../../static/img/build-your-software-catalog/sync-data-to-catalog/kubernetes/k8s-exporter-illustration.png";
-import KubernetesEtl from "../../../../static/img/build-your-software-catalog/sync-data-to-catalog/kubernetes/k8s-etl.png";
-import FindCredentials from "../api/\_template_docs/\_find_credentials_collapsed.mdx";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem"
+import KubernetesIllustration from "/static/img/build-your-software-catalog/sync-data-to-catalog/kubernetes/k8s-exporter-illustration.png";
+import KubernetesEtl from "/static/img/build-your-software-catalog/sync-data-to-catalog/kubernetes/k8s-etl.png";
+import FindCredentials from "/docs/build-your-software-catalog/sync-data-to-catalog/api/\_template_docs/\_find_credentials_collapsed.mdx";
 
 # Kubernetes
 
-Our integration with Kubernetes queries your Kubernetes clusters directly according to your definition. By using our Kubernetes integration you can ingest live data, directly from your K8s clusters into Port in a transparent, efficient and precise manner, thus making sure only the information you need appears in the software catalog, and remains up to date.
+Our integration with Kubernetes queries your Kubernetes clusters directly according to your definition. By using our Kubernetes integration, you can ingest live data directly from your K8s clusters into Port in a transparent, efficient and precise manner, thus making sure only the information you need appears in the software catalog, and remains up to date.
 
 Our integration with Kubernetes provides real-time event processing, this allows for an accurate **real-time** representation of your K8s cluster inside Port.
 
@@ -28,7 +29,7 @@ Port's Kubernetes exporter is open source, view the source code [**here**](https
 
 Our Kubernetes exporter makes it easy to fill the software catalog with live data directly from your clusters, for example:
 
-- Map all of the resources in your clusters, including **namespaces**, **pods**, **replica sets**, **cluster nodes**, **deployments** and other cluster objects;
+- Map all the resources in your clusters, including **namespaces**, **pods**, **replica sets**, **cluster nodes**, **deployments** and other cluster objects;
 - Get real-time metadata from your cluster such as _replica counts_, _deployment health_, _node health_ and more;
 - Use relations to create a complete, easily digestible map of your K8s cluster inside Port;
 - Map your Kubernetes resources from common CRDs such as ArgoCD, Istio and more;
@@ -38,11 +39,11 @@ Our Kubernetes exporter makes it easy to fill the software catalog with live dat
 
 Port's Kubernetes exporter allows you to bring all the data supported by the K8s API to show running services, environments and more. The open source Kubernetes exporter allows you to perform extract, transform, load (ETL) on data from K8s into the desired software catalog data model.
 
-The exporter is deployed using a Helm chart that is installed on the cluster. Once it is set up, it continues to sync changes, meaning that all changes, deletions or additions are accurately and automatically reflected in Port.
+The exporter is deployed using a Helm chart installed on the cluster. Once it is set up, it continues to sync changes, meaning that all changes, deletions or additions are accurately and automatically reflected in Port.
 
-The helm chart uses a YAML configuration file to describe the ETL process to load data into the developer portal. The approach reflects a golden middle between an overly opinionated K8s visualization that might not work for everyone and a too-broad approach that could introduce unneeded complexity into the developer portal.
+The helm chart uses a YAML configuration stored in the integration within your Portal. This configuration describes the ETL process responsible for loading data into the developer portal. The approach reflects a golden middle between an overly opinionated K8s visualization that might not work for everyone and a too-broad approach that could introduce unneeded complexity into the developer portal.
 
-Here is an example snippet from the `config.yml` file which demonstrates the ETL process for getting `ReplicaSet` data from the cluster and into the software catalog:
+Here is an example snippet from the integration configuration which demonstrates the ETL process for getting `ReplicaSet` data from the cluster and into the software catalog:
 
 <center>
 
@@ -52,11 +53,11 @@ Here is an example snippet from the `config.yml` file which demonstrates the ETL
 
 The exporter makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the Kubernetes objects.
 
-### Exporter `config.yml` file
+### Exporter JQ configuration
 
-The `config.yml` file is how you specify the exact resources you want to query from your K8s cluster, and also how you specify which entities and which properties you want to fill with data from the cluster.
+The exporter configuration is how you specify the exact resources you want to query from your K8s cluster, and also how you specify which entities and which properties you want to fill with data from the cluster.
 
-Here is an example `config.yml` block:
+Here is an example configuration block:
 
 ```yaml showLineNumbers
 resources: # List of K8s resources to list, watch, and export to Port.
@@ -75,9 +76,9 @@ resources: # List of K8s resources to list, watch, and export to Port.
               status: .status
 ```
 
-### `config.yml` structure
+### Exporter configuration structure
 
-- The root key of the `config.yml` file is the `resources` key:
+- The root key of the configuration YAML is the `resources` key:
 
   ```yaml showLineNumbers
   # highlight-next-line
@@ -130,7 +131,7 @@ resources: # List of K8s resources to list, watch, and export to Port.
 
   - etc.
 
-- The `port`, `entity` and the `mappings` keys open the section used to map the Kubernetes object fields to Port entities, the `mappings` key is an array where each object matches the structure of an [entity](../sync-data-to-catalog.md#entity-json-structure)
+- The `port`, `entity` and the `mappings` keys open the section used to map the Kubernetes object fields to Port entities, the `mappings` key is an array where each object matches the structure of an [entity](/build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md#entity-json-structure)
 
   ```yaml showLineNumbers
   resources:
@@ -157,7 +158,7 @@ resources: # List of K8s resources to list, watch, and export to Port.
 
 - Port's Kubernetes exporter is installed using [Helm](https://helm.sh), so Helm must be installed to use the exporter's chart. Please refer to
   Helm's [documentation](https://helm.sh/docs) for installation instructions;
-- You will need your [Port credentials](../api/api.md#find-your-port-credentials) to install the Kubernetes exporter.
+- You will need your [Port credentials](/build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials) to install the Kubernetes exporter.
 
 :::tip
 <FindCredentials />
@@ -169,6 +170,12 @@ The exporter helm chart can be found [here](https://github.com/port-labs/helm-ch
 
 ## Installation
 
+Choose one of the following installation methods:
+
+<Tabs groupId="installation-methods" queryString="installation-methods">
+
+<TabItem value="helm" label="Helm" default>
+
 1. Add Port's Helm repo by using the following command:
 
    ```bash showLineNumbers
@@ -179,25 +186,86 @@ The exporter helm chart can be found [here](https://github.com/port-labs/helm-ch
    If you already added Port's Helm repo earlier, run `helm repo update` to retrieve the latest versions of the charts. You can then run `helm search repo port-labs` to see the charts.
    :::
 
-2. Prepare a [`config.yml`](#exporter-configyml-file) file that will define which Kubernetes objects to ingest to Port;
+2. Install the exporter service on your Kubernetes cluster by running the following command:
 
-3. Install the exporter service on your Kubernetes cluster by running the following command:
+   ```bash showLineNumbers
+    helm upgrade --install my-port-k8s-exporter port-labs/port-k8s-exporter \
+        --create-namespace --namespace port-k8s-exporter \
+        --set secret.secrets.portClientId=YOUR_PORT_CLIENT_ID --set secret.secrets.portClientSecret=YOUR_PORT_CLIENT_SECRET \
+        --set stateKey="k8s-exporter"  \
+        --set eventListenerType="POLLING"  \
+        --set "extraEnv[0].name"="CLUSTER_NAME" \
+        --set "extraEnv[0].value"=YOUR_PORT_CLUSTER_NAME
+    ```
+</TabItem>
 
-   <ExporterBaseInstallCommand />
+<TabItem value="argo" label="ArgoCD">
 
-Done! the exporter will begin creating and updating objects from your Kubernetes cluster as Port entities shortly.
+1. Install the `my-port-k8s-exporter` ArgoCD Application by creating the following `my-port-k8s-exporter.yaml` manifest:
+    :::note
+    Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+    
+    Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
+    :::
+
+    <details>
+      <summary>ArgoCD Application</summary>
+    
+    ```yaml showLineNumbers
+    apiVersion: argoproj.io/v1alpha1
+    kind: Application
+    metadata:
+      name: my-port-k8s-exporter
+      namespace: argocd
+    spec:
+      destination:
+        namespace: port-k8s-exporter
+        server: https://kubernetes.default.svc
+      project: default
+      sources:
+      - repoURL: 'https://port-labs.github.io/helm-charts/'
+        chart: port-k8s-exporter
+        helm:
+          parameters:
+            - name: secret.secrets.portClientId
+              value: YOUR_PORT_CLIENT_ID
+            - name: secret.secrets.portClientSecret
+              value: YOUR_PORT_CLIENT_SECRET
+            - name: stateKey
+              value: YOUR_CLUSTER_NAME
+           - name: extraEnv
+             value: '[{"name":"CLUSTER_NAME","value":"YOUR_CLUSTER_NAME"}]' 
+      - repoURL: YOUR_GIT_REPO_URL
+        targetRevision: main
+        ref: values
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+        - CreateNamespace=true
+    ```
+    
+    </details>
+    <br/>
+
+2. Apply your application manifest with `kubectl`:
+```bash
+kubectl apply -f my-port-k8s-exporter.yaml
+```
+
+</TabItem>
+</Tabs>
+
+:::info
+By default, the exporter will try to initiate pre-defined blueprints and resource mapping.
+:::
+
+Done! The exporter will begin creating and updating objects from Kubernetes cluster as Port entities shortly.
 
 ### Updating exporter configuration
 
-In order to **update** the `config.yml` file deployed on your Kubernetes cluster, make your changes to the file and save it locally, then run the installation command again:
-
-<ExporterBaseInstallCommand />
-
-To update the file in-place, you can edit the configmap directly by running:
-
-```bash
-kubectl edit cm port-k8s-exporter -n port-k8s-exporter
-```
+To **update** the exporter resource mapping, open the [data sources](https://app.getport.io/dev-portal/data-sources) page in Port and click on your Kubernetes integration. Then edit the exporter configuration and click on the `Save & Resync` button.
 
 ## Examples
 

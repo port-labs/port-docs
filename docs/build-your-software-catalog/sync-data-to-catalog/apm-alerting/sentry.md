@@ -48,20 +48,108 @@ Set them as you wish in the script below, then copy it and run it in your termin
 
 <br/>
 
+<Tabs groupId="deploy" queryString="deploy">
+
+<TabItem value="helm" label="Helm" default>
+To install the integration using Helm, run the following command:
+
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install sentry port-labs/port-ocean \
+helm upgrade --install my-sentry-integration port-labs/port-ocean \
 	--set port.clientId="PORT_CLIENT_ID"  \
 	--set port.clientSecret="PORT_CLIENT_SECRET"  \
 	--set port.baseUrl="https://api.getport.io"  \
 	--set initializePortResources=true  \
-	--set integration.identifier="sentry"  \
+	--set integration.identifier="my-sentry-integration"  \
 	--set integration.type="sentry"  \
 	--set integration.eventListener.type="POLLING"  \
 	--set integration.config.sentryHost="https://sentry.io"  \
 	--set integration.secrets.sentryToken="string"  \
 	--set integration.config.sentryOrganization="string"
 ```
+</TabItem>
+<TabItem value="argocd" label="ArgoCD" default>
+To install the integration using ArgoCD, follow these steps:
+
+1. Create a `values.yaml` file in `argocd/my-ocean-sentry-integration` in your git repository with the content:
+
+:::note
+Remember to replace the placeholders for `SENTRY_HOST` `SENTRY_ORGANIZATION` and `SENTRY_TOKEN`.
+:::
+```yaml showLineNumbers
+initializePortResources: true
+scheduledResyncInterval: 120
+integration:
+  identifier: my-ocean-sentry-integration
+  type: sentry
+  eventListener:
+    type: POLLING
+  config:
+  // highlight-start
+    sentryHost: SENTRY_HOST
+    sentryOrganization: SENTRY_ORGANIZATION
+  // highlight-end
+  secrets:
+  // highlight-next-line
+    sentryToken: SENTRY_TOKEN
+```
+<br/>
+
+2. Install the `my-ocean-sentry-integration` ArgoCD Application by creating the following `my-ocean-sentry-integration.yaml` manifest:
+:::note
+Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+
+Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
+:::
+
+<details>
+  <summary>ArgoCD Application</summary>
+
+```yaml showLineNumbers
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: my-ocean-sentry-integration
+  namespace: argocd
+spec:
+  destination:
+    namespace: my-ocean-sentry-integration
+    server: https://kubernetes.default.svc
+  project: default
+  sources:
+  - repoURL: 'https://port-labs.github.io/helm-charts/'
+    chart: port-ocean
+    targetRevision: 0.1.14
+    helm:
+      valueFiles:
+      - $values/argocd/my-ocean-sentry-integration/values.yaml
+      // highlight-start
+      parameters:
+        - name: port.clientId
+          value: YOUR_PORT_CLIENT_ID
+        - name: port.clientSecret
+          value: YOUR_PORT_CLIENT_SECRET
+  - repoURL: YOUR_GIT_REPO_URL
+  // highlight-end
+    targetRevision: main
+    ref: values
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+```
+
+</details>
+<br/>
+
+3. Apply your application manifest with `kubectl`:
+```bash
+kubectl apply -f my-ocean-sentry-integration.yaml
+```
+</TabItem>
+</Tabs>
 
 </TabItem>
 
@@ -221,7 +309,7 @@ resources:
         mappings:
           identifier: ".id"
           title: ".title"
-          blueprint: '"issue"'
+          blueprint: '"sentryIssue"'
           properties:
             link: ".permalink"
             status: ".status"
@@ -277,7 +365,7 @@ The following resources can be used to map data from Sentry, it is possible to r
           mappings:
             identifier: .slug
             title: .name
-            blueprint: '"project"'
+            blueprint: '"sentryProject"'
             properties:
               dateCreated: .dateCreated
               platform: .platform
@@ -312,7 +400,7 @@ Examples of blueprints and the relevant integration configurations:
 
 ```json showLineNumbers
 {
-  "identifier": "project",
+  "identifier": "sentryProject",
   "title": "project",
   "icon": "Sentry",
   "schema": {
@@ -365,7 +453,7 @@ resources:
         mappings:
           identifier: .slug
           title: .name
-          blueprint: '"project"'
+          blueprint: '"sentryProject"'
           properties:
             dateCreated: .dateCreated
             platform: .platform
@@ -382,7 +470,7 @@ resources:
 
 ```json showLineNumbers
 {
-  "identifier": "issue",
+  "identifier": "sentryIssue",
   "title": "issue",
   "icon": "Sentry",
   "schema": {
@@ -409,7 +497,7 @@ resources:
   "relations": {
     "project": {
       "title": "project",
-      "target": "project",
+      "target": "sentryProject",
       "required": false,
       "many": false
     }
@@ -431,7 +519,7 @@ resources:
         mappings:
           identifier: ".id"
           title: ".title"
-          blueprint: '"issue"'
+          blueprint: '"sentryIssue"'
           properties:
             link: ".permalink"
             status: ".status"
@@ -601,7 +689,7 @@ The combination of the sample payload and the Ocean configuration generates the 
   "identifier": "python-fastapi",
   "title": "python-fastapi",
   "icon": null,
-  "blueprint": "project",
+  "blueprint": "sentryProject",
   "team": [],
   "properties": {
     "dateCreated": "2023-03-31T06:18:37.290732Z",
@@ -627,7 +715,7 @@ The combination of the sample payload and the Ocean configuration generates the 
   "identifier": "4605173695",
   "title": "ZeroDivisionError: division by zero",
   "icon": null,
-  "blueprint": "issue",
+  "blueprint": "sentryIssue",
   "team": [],
   "properties": {
     "link": "https://test-org.sentry.io/issues/4605173695/",

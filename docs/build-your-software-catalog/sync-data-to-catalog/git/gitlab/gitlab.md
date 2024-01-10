@@ -44,7 +44,7 @@ resources:
           # highlight-start
           identifier: .id | tostring
           title: .title
-          blueprint: '"mergeRequest"'
+          blueprint: '"gitlabMergeRequest"'
           properties:
             creator: .author.name
             status: .state
@@ -72,7 +72,7 @@ resources:
       mappings:
         identifier: .namespace.full_path | gsub("/";"-") # The Entity identifier will be the repository name.
         title: .name
-        blueprint: '"repository"'
+        blueprint: '"gitlabRepository"'
         properties:
           url: .web_link
           description: .description
@@ -105,7 +105,9 @@ resources:
 
   <GitlabResources/>
 
-- The `selector` and the `query` keys let you filter exactly which objects from the specified `kind` will be ingested to the software catalog
+#### Filtering unwanted objects
+
+The `selector` and the `query` keys let you filter exactly which objects from the specified `kind` will be ingested to the software catalog
 
   ```yaml showLineNumbers
   resources:
@@ -117,18 +119,15 @@ resources:
       port:
   ```
 
-  Some example use cases:
+For example, to ingest only repositories that have a name starting with `"service"`, use the `query` key like this:
 
-  - To sync all objects from the specified `kind`: do not specify a `selector` and `query` key;
-  - To sync all objects from the specified `kind` that start with `service`, use:
+```yaml showLineNumbers
+query: .name | startswith("service")
+```
 
-    ```yaml showLineNumbers
-    query: .name | startswith("service")
-    ```
+<br/>
 
-  - etc.
-
-- The `port`, `entity` and the `mappings` keys open the section used to map the GitLab API object fields to Port entities. To create multiple mappings of the same kind, you can add another item to the `resources` array;
+The `port`, `entity` and the `mappings` keys open the section used to map the GitLab API object fields to Port entities. To create multiple mappings of the same kind, you can add another item to the `resources` array;
 
   ```yaml showLineNumbers
   resources:
@@ -141,7 +140,7 @@ resources:
           mappings: # Mappings between one GitLab API object to a Port entity. Each value is a JQ query.
             identifier: .namespace.full_path | gsub("/";"-")
             title: .name
-            blueprint: '"repository"'
+            blueprint: '"gitlabRepository"'
             properties:
               url: .web_link
               description: .description

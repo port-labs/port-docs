@@ -1,10 +1,10 @@
 ---
-sidebar_position: 1
+sidebar_position: 4
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
-# Create resource in Azure Cloud with Terraform
+# Deploy resource in Azure Cloud with Terraform
 
 This example demonstrates how to deploy a [storage account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-overview) in Azure using Terraform templates via Port Actions.
 

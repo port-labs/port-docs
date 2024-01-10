@@ -1,0 +1,98 @@
+```json showLineNumbers
+{
+  "identifier": "bitbucketPullrequest",
+  "description": "A software catalog to represent Bitbucket pull requests",
+  "title": "Bitbucket Pull Request",
+  "icon": "BitBucket",
+  "schema": {
+    "properties": {
+      "created_on": {
+        "title": "Created On",
+        "type": "string",
+        "format": "date-time",
+        "icon": "DefaultProperty"
+      },
+      "updated_on": {
+        "title": "Updated On",
+        "type": "string",
+        "format": "date-time",
+        "icon": "DefaultProperty"
+      },
+      "description": {
+        "title": "Description",
+        "type": "string",
+        "icon": "DefaultProperty"
+      },
+      "state": {
+        "icon": "DefaultProperty",
+        "title": "State",
+        "type": "string",
+        "enum": [
+          "OPEN",
+          "MERGED",
+          "DECLINED",
+          "SUPERSEDED"
+        ],
+        "enumColors": {
+          "OPEN": "yellow",
+          "MERGED": "green",
+          "DECLINED": "red",
+          "SUPERSEDED": "purple"
+        }
+      },
+      "owner": {
+        "title": "Owner",
+        "type": "string",
+        "icon": "DefaultProperty"
+      },
+      "link": {
+        "title": "Link",
+        "icon": "DefaultProperty",
+        "type": "string"
+      },
+      "destination": {
+        "title": "Destination Branch",
+        "type": "string",
+        "icon": "DefaultProperty"
+      },
+      "source": {
+        "title": "Source Branch",
+        "type": "string",
+        "icon": "DefaultProperty"
+      },
+      "reviewers": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Reviewers",
+        "type": "array",
+        "icon": "DefaultProperty"
+      },
+      "participants": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Participants",
+        "type": "array",
+        "icon": "DefaultProperty"
+      },
+      "merge_commit": {
+        "title": "Merge Commit",
+        "type": "string",
+        "icon": "DefaultProperty"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "repository": {
+      "title": "Repository",
+      "target": "bitbucketRepository",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```

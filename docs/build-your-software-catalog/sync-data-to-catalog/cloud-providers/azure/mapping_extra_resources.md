@@ -172,7 +172,7 @@ Create an integration configuration for the resource. The integration configurat
   				mappings: # Mappings between one Azure object to a Port entity. Each value is a JQ query.
   					identifier: .id
   					title: .name
-  					blueprint: '"storageAccount"'
+  					blueprint: '"azureStorageAccount"'
   					properties:
   						location: .location
   						provisioningState: .properties.provisioningState
@@ -202,7 +202,7 @@ Create an integration configuration for the resource. The integration configurat
         ```yaml showLineNumbers
         mappings:
         	# highlight-start
-        	blueprint: '"storageAccount"'
+        	blueprint: '"azureStorageAccount"'
         	# highlight-end
         ```
 
@@ -211,7 +211,7 @@ Create an integration configuration for the resource. The integration configurat
         	mappings:
         		identifier: .id
         		title: .name
-        		blueprint: '"storageAccount"'
+        		blueprint: '"azureStorageAccount"'
         		# highlight-start
         		properties:
         			location: .location
