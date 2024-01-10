@@ -354,3 +354,6 @@ run_job:
    3. Fill the form with the schedule details: description, interval pattern, timezone, target branch.
    4. Ensure the **Activated** checkbox is selected.
    5. Click on **Create pipeline schedule** to create the schedule.
+   :::tip
+   It is recommended to schedule the pipeline to run at most once a day, as AWS refreshes the data once a day.
+   :::
