@@ -97,12 +97,14 @@ Here is the mapping file schema:
 
 ### Mapping examples
 
-Below you can find some mapping examples to demonstate how you can use JQ and the action payload to change the payload.
+Below you can find some mapping examples to demonstate how you can use JQ and the action payload sent from Port to change the payload sent to your target endpoint by the agent.
 In each mapping, we will show the relevant fields.
 
 #### Apply a filter to the mapping
 
-Assuming you have a few different invocations method for your actions, you can create a mapping configuration that is only applied to actions that are of type `GitLab` like so:
+Assuming you have a few different invocation methods for your actions, you can create a mapping configuration that is only applied to actions that are of a specific type.
+
+For example, to create a filter that applies only to actions with the `GitLab` method:
 
 ```text showLineNumbers
 "enabled": ".payload.invocationMethod.type == \"GITLAB\""
