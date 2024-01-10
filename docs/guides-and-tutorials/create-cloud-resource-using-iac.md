@@ -452,7 +452,7 @@ update-run-status:
 3. Create a Jenkins pipeline with the following configuration:
    - [Enable the webhook trigger for the pipeline](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#enabling-webhook-trigger-for-a-pipeline)
    - Define the value of the [`token`](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#token-setup) field, the token you specify will be used to trigger the scaffold pipeline specifically. For example, you can use `bucket-creator-token`. Return to the [frontend setup](#setup-the-actions-frontend) to step #6, and set the `{JOB_TOKEN}` for the trigger URL.
-   - [Define variables for the pipeline](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#defining-variables): define the `SERVICE_NAME`, `BITBUCKET_WORKSPACE_NAME`, `BITBUCKET_PROJECT_KEY`, `BUCKET_NAME`, `VISIBILITY` and `RUN_ID` variables. Scroll down to the `Post content parameters` and **for each variable** add configuration like so (look at the table bellow for full variable list):
+   - [Define variables for the pipeline](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#defining-variables): define the `SERVICE_NAME`, `BITBUCKET_WORKSPACE_NAME`, `BITBUCKET_PROJECT_KEY`, `BUCKET_NAME`, `VISIBILITY` and `RUN_ID` variables. Scroll down to the `Post content parameters` and **for each variable** add configuration like so (look at the table bellow for the full variable list):
 
    <img src='/img/guides/jenkinsGenericVariable.png' width='100%' />
 
@@ -681,9 +681,7 @@ pipeline {
 <details>
 <summary><b>cloudResource.tf (click to expand)</b></summary>
 
-```hcl
-# cloudResource.tf
-
+```hcl title="cloudResource.tf"
 resource "aws_s3_bucket" "example" {
 provider = aws.bucket_region
 name = "{{ bucket_name }}"
