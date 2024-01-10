@@ -118,7 +118,7 @@ Assuming a `webhook` invocation action is configured to forward the request to t
 "url": ".payload.invocationMethod.url + .payload.properties.network_port"
 ```
 
-Invoking the action with the input 80 to the property `port` will result with the agent sending the webhook request to `http://test.com/80`.
+Invoking the action with the input 8080 to the property `network_port` will cause the agent to send the webhook request to `http://test.com/8080`.
 
 ### The incoming message to base your mapping on
 
