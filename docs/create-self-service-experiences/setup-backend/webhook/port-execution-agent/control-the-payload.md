@@ -32,7 +32,7 @@ In order to provide the mapping configuration to the agent, run the installation
 
 <TabItem value="argo">
 
-In order to provide the mapping to the agent, add the mapping to the values.yaml created in the installation [here](https://docs.getport.io/create-self-service-experiences/setup-backend/webhook/port-execution-agent/installation-methods/argocd#installation).
+In order to provide the mapping to the agent, add the mapping to the `values.yaml` file created in the installation [here](https://docs.getport.io/create-self-service-experiences/setup-backend/webhook/port-execution-agent/installation-methods/argocd#installation).
 
 Below you can find the default mapping to use as a starting point:
 
