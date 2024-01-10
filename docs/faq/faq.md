@@ -8,21 +8,17 @@ sidebar_label: ❓ FAQ
 
 ## How can I get started?
 
-Port is open for self-service. You can open a Port account and start building your internal developer portal right away. It’s free forever. We don’t do free trials - if you’re opening an account and don’t need any of our paid features, we won’t send you a “pay now or else” message.
+Port is self-service-friendly. You can create a Port account and start building your internal developer portal right away. We suggest completing the [onboarding process](/quickstart), which will help you get a basic understanding of Port and an idea of how a good developer portal can help you and your developers.
 
-You can also schedule an [in-person demo](https://www.getport.io/demo-request) with us, and we’ll be happy to show you a demo and discuss your needs...
+You can also schedule an [in-person demo](https://www.getport.io/demo-request) with us, and we’ll be happy to show you a demo and discuss your needs.
 
 ## Do I need an expert to set up an Internal Developer Portal with Port?
 
 Port was designed to let you set up a developer portal in minutes, quickly defining your data model and then ingesting data about software and resources into it.
 
-We believe in “bring your own data model” since different engineering orgs differ in how they want to set up Port and model their software. The next simple step is adding developer self-service over existing automations, using our tools and wizards.
+We believe in “bring your own data model” since each organization differs in how it wants to set up Port and model its software. Our documentation and [other resources](/resources) can help you get started. 
 
-Our blog has several articles that deal with how to set up the portal, and our docs can also help. If not, feel free to drop us a note or ask for an in-person demo.
-
-## Is Port a cloud or self-hosted solution??
-
-Port is a SaaS based product. However, we're working on a version where Port can be deployed on the customer's cloud account. To apply for the beta write to us at [info@getport.io](mailto:info@getport.io).
+If you're trying to find out if Port is right for you, you can reach out to us by scheduling an [in-person demo](https://www.getport.io/demo-request), and we’ll be happy to escort you through the process of building a portal that's right for you.
 
 ## Why not backstage?
 
