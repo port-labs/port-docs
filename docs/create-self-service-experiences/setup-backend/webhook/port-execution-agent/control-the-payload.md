@@ -102,7 +102,9 @@ In each mapping, we will show the relevant fields.
 
 #### Apply a filter to the mapping
 
-Assuming you have a few different invocations method for your actions, you can create a mapping configuration that is only applied to actions that are of type `GitLab` like so:
+Assuming you have a few different invocation methods for your actions, you can create a mapping configuration that is only applied to actions that are of a specific type.
+
+For example, to create a filter that applies only to actions with the `GitLab` method:
 
 ```
 "enabled": ".payload.invocationMethod.type == \"GITLAB\""
