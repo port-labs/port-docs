@@ -1,11 +1,11 @@
 ---
-title: Integrations Index
-sidebar_label: ⚙️ Integrations Index
+title: Integrations index
+sidebar_label: ⚙️ Integrations index
 sidebar_position: 11
 slug: /integrations-index/
 ---
 
-# ⚙️ Integrations Index
+# ⚙️ Integrations index
 
 This page contains a list of Port's available integrations, organized by the platform or product which they integrate with
 
@@ -139,6 +139,11 @@ This page contains a list of Port's available integrations, organized by the pla
 
 - [Snyk integration](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/snyk.md)
 - [Snyk webhook](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/snyk.md)
+
+## Wiz
+
+- [Wiz integration](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/wiz.md)
+- [Wiz webhook](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/wiz.md)
 
 ## PagerDuty
 

@@ -303,7 +303,7 @@ The integration makes use of the [JQ JSON processor](https://stedolan.github.io/
 
 The integration configuration determines which resources will be queried from Jira, and which entities and properties will be created in Port.
 
-:::tip Supported resources
+:::tip Supported resources (`Kind`)
 The following resources can be used to map data from Jira, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
 
 - [`Project`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-projects/#api-rest-api-3-project-search-get)
@@ -342,6 +342,23 @@ The following resources can be used to map data from Jira, it is possible to ref
       # highlight-end
       port:
   ```
+
+:::tip JQL Support
+The Ocean Jira integration supports querying objects from the `issue` kind using [JQL](https://support.atlassian.com/jira-service-management-cloud/docs/use-advanced-search-with-jira-query-language-jql/), making it possible to specifically filter the issues that are queried from Jira and ingested to Port.
+
+To use JQL filtering, add to the `selector` object a `jql` key with your desired JQL query as the value. For example:
+
+```yaml showLineNumbers
+resources:
+      # highlight-next-line
+    - kind: issue # JQL filtering can only be used with the "issue" kind
+      selector:
+        query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
+      # highlight-next-line
+        jql: "status != Done" # JQL query, will only ingest issues whose status is not "Done"
+      port:
+```
+:::
 
 - The `port`, `entity` and the `mappings` keys are used to map the Jira object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
 
