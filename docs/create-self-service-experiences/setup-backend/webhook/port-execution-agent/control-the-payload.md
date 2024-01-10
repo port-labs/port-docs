@@ -115,7 +115,7 @@ This will apply the current mapping configuration only to actions that are of ty
 Assuming a `webhook` invocation action is configured to forward the request to the URL `http://test.com/`, and the action in Port contains a `number` type input called `network_port` meant to specify the network port to send the request to, here is how you can construct the complete URL using the URL and the additional input:
 
 ```
-"url": ".payload.invocationMethod.url + .payload.properties.port"
+"url": ".payload.invocationMethod.url + .payload.properties.network_port"
 ```
 
 Invoking the action with the input 80 to the property `port` will result with the agent sending the webhook request to `http://test.com/80`.
