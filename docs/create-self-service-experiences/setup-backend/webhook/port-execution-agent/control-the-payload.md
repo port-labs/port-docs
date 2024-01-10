@@ -32,7 +32,7 @@ In order to provide the mapping configuration to the agent, run the installation
 
 <TabItem value="argo">
 
-In order to provide the mapping to the agent, add the mapping to the values.yaml created in the installation [here](https://docs.getport.io/create-self-service-experiences/setup-backend/webhook/port-execution-agent/installation-methods/argocd#installation).
+In order to provide the mapping to the agent, add the mapping to the `values.yaml` file created in the installation [here](https://docs.getport.io/create-self-service-experiences/setup-backend/webhook/port-execution-agent/installation-methods/argocd#installation).
 
 Below you can find the default mapping to use as a starting point:
 
@@ -110,13 +110,13 @@ Assuming you have a few different invocations method for your actions, you can c
 
 #### Create a URL based on a property
 
-Assuming a webhook invocation action is configured toward the url `http://test.com/`, and a number input in the action form named `port`, here is how you can construct the url:
+Assuming a `webhook` invocation action is configured to forward the request to the URL `http://test.com/`, and the action in Port contains a `number` type input called `network_port` meant to specify the network port to send the request to, here is how you can construct the complete URL using the URL and the additional input:
 
 ```showLineNumbers
-"url": ".payload.invocationMethod.url + .payload.properties.port"
+"url": ".payload.invocationMethod.url + .payload.properties.network_port"
 ```
 
-Invoking the action with the input 80 to the property `port` will result with the agent sending the webhook request to `http://test.com/80`.
+Invoking the action with the input 8080 to the property `network_port` will cause the agent to send the webhook request to `http://test.com/8080`.
 
 ### The incoming message to base your mapping on
 
