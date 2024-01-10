@@ -112,7 +112,7 @@ metadata:
   namespace: argocd
 spec:
   destination:
-    namespace: mmy-ocean-sonarqube-integration
+    namespace: my-ocean-sonarqube-integration
     server: https://kubernetes.default.svc
   project: default
   sources:

@@ -8,20 +8,32 @@ import TabItem from "@theme/TabItem"
 
 # Page permissions
 
-Pages have 4 regular CRUD permissions:
+Pages have 4 regular CRUD permissions: `create`, `read`, `update` and `delete`.
 
-- Create, Read, Update and Delete.
-- Currently only read permission can be modified.
+Currently only `read` permission can be modified.
 
 ## Get page permissions
 
-- Any user can get the permissions of a specific page.
+Any user can get the permissions of a specific page:
 
-### From the API
+<Tabs groupId="view-permissions" queryString values={[
+{label: "From the UI", value: "ui"},
+{label: "From the API", value: "api"}
+]}>
 
-:::note
+<TabItem value="ui">
 
-- Remember that an access token is needed to make API requests, refer back to [Getting an API token](../../build-your-software-catalog/sync-data-to-catalog/api/api.md#get-api-token) if you need to generate a new one.
+In your software catalog, choose the page for which you would like to view permissions, then click on `Permissions`:
+
+<img src='/img/software-catalog/pages/viewPagePermissions.gif' width='70%' />
+
+</TabItem>
+
+<TabItem value="api">
+
+:::info
+
+- Remember that an access token is needed to make API requests, refer back to [Getting an API token](/build-your-software-catalog/sync-data-to-catalog/api/api.md#get-api-token) if you need to generate a new one.
 - Currently in order to see the page identifiers you can request all pages by making a  
   GET request to `https://api.getport.io/v1/pages`
 
@@ -44,16 +56,33 @@ The response will contain the roles and users that are allowed to read (view) th
 This response body indicates that those roles, users and teams have permissions to read the page.
 In addition, every role, user and team which does not appear in this request body does not have permission to view the page.
 
+</TabItem>
+
+</Tabs>
+
 :::note
-Only page permissions of software catalog pages can be requested. For example, the permissions for the DevPortal Builder page and the audit log page cannot be changed.
+Only page permissions of software catalog pages can be requested. For example, the permissions for the Builder page and the audit log page cannot be changed.
 :::
 
 ## Update page permissions
 
-- Only users with the admin role can update the permissions of a specific page;
-- Only page permissions of software catalog pages can be modified.
+Only users with the `admin` role can update the permissions of a catalog page:
 
-### From the API
+<Tabs groupId="edit-permissions" queryString values={[
+{label: "From the UI", value: "ui"},
+{label: "From the API", value: "api"}
+]}>
+
+<TabItem value="ui">
+
+In your software catalog, choose the page for which you would like to edit permissions, then click on `Permissions`.  
+Choose the user/s or team/s that you would like to give permissions to, then click on `Done`. 
+
+<img src='/img/software-catalog/pages/editPagePermissions.gif' width='70%' />
+
+</TabItem>
+
+<TabItem value="api">
 
 To update page permissions, you will need to specify the roles, teams or users that should have permissions for the page.
 
@@ -78,6 +107,10 @@ If you do not specify a specific key (for example `users` in the request, user p
 When making changes to permissions, any role, user or team that does not appear in the corresponding key in the request body will lose permissions to the page (this is how you remove permissions to a page).
 
 :::
+
+</TabItem>
+
+</Tabs>
 
 ### Examples
 
