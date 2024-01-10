@@ -262,7 +262,7 @@ Follow these steps to get started:
 
 <summary>Jenkins Pipeline Script</summary>
 :::note
-Please make sure to modify `YOUR_USERNAME` and `YOUR_REPO` placeholder in the URL of the git repository in the `Checkout` stage. Alternatively you can use our [example repository](https://github.com/port-labs/jenkins-terraform-azure).
+Please make sure to modify `YOUR_USERNAME` and `YOUR_REPO` placeholder in the URL of the git repository in the `Checkout` stage. Alternatively you can use our [example repository](https://github.com/port-labs/pipelines-terraform-azure).
 :::
 
 ```groovy showLineNumbers
@@ -305,7 +305,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // example repo: git@github.com:port-labs/jenkins-terraform-azure.git
+                // example repo: git@github.com:port-labs/pipelines-terraform-azure.git
                 git branch: 'main', credentialsId: 'github', url: 'git@github.com:<YOUR_USERNAME>/<YOUR_REPO>.git'
             }
         }
