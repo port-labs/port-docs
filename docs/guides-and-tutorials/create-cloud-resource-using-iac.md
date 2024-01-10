@@ -675,7 +675,7 @@ pipeline {
 
 4. We will now create a simple `.tf` file that will serve as a template for our new resource:
 
-- In your Github source repository (`port-actions` for example), create a file named `cloudResource.tf` under `/templates/` (it's path should be `/templates/cloudResource.tf`).
+- In your source repository (`port-actions` for example), create a file named `cloudResource.tf` under `/templates/` (it's path should be `/templates/cloudResource.tf`).
 - Copy the following snippet and paste it in the file's contents:
 
 <details>
