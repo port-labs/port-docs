@@ -1,4 +1,4 @@
-# SSO Providers
+# SSO providers
 
 import DocCardList from '@theme/DocCardList';
 
