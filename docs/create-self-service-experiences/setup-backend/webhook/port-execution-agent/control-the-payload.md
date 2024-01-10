@@ -112,7 +112,7 @@ This will apply the current mapping configuration only to actions that are of ty
 
 #### Create a URL based on a property
 
-Assuming a webhook invocation action is configured toward the url `http://test.com/`, and a number input in the action form named `port`, here is how you can construct the url:
+Assuming a `webhook` invocation action is configured to forward the request to the URL `http://test.com/`, and the action in Port contains a `number` type input called `network_port` meant to specify the network port to send the request to, here is how you can construct the complete URL using the URL and the additional input:
 
 ```
 "url": ".payload.invocationMethod.url + .payload.properties.port"
