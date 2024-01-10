@@ -32,7 +32,7 @@ In order to provide the mapping configuration to the agent, run the installation
 
 <TabItem value="argo">
 
-In order to provide the mapping to the agent, add the mapping to the `values.yaml` file created in the installation [here](https://docs.getport.io/create-self-service-experiences/setup-backend/webhook/port-execution-agent/installation-methods/argocd#installation).
+In order to provide the mapping to the agent, add the mapping to the `values.yaml` file created in the installation [here](https://docs.getport.io/create-self-service-experiences/setup-backend/webhook/port-execution-agent/installation-methods/argocd#installation). The needs to be added as a top level field.
 
 Below you can find the default mapping to use as a starting point:
 
@@ -112,7 +112,7 @@ Assuming you have a few different invocations method for your actions, you can c
 
 Assuming a `webhook` invocation action is configured to forward the request to the URL `http://test.com/`, and the action in Port contains a `number` type input called `network_port` meant to specify the network port to send the request to, here is how you can construct the complete URL using the URL and the additional input:
 
-```showLineNumbers
+```text showLineNumbers
 "url": ".payload.invocationMethod.url + .payload.properties.network_port"
 ```
 
