@@ -36,4 +36,4 @@ You can take a look at our secure, push-only architecture [here](https://docs.ge
 
 Security and privacy are a top priority at Port. We use industry-standard encryption protocols, data is encrypted both at rest and in transit, with complete isolation between clients and data access logging and auditing. Port is SOC2 compliant, and undergoes regular pentests, product security and compliance reviews.
 
-You may find the complete coverage of Port's security posture in our security [page](https://www.getport.io/security)
+You can find the complete coverage of Port's security policy in our security [page](https://www.getport.io/security).
