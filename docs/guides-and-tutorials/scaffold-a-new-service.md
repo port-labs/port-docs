@@ -260,6 +260,7 @@ on:
 jobs:
   scaffold-service:
     env:
+# highlight-next-line
       ORG_NAME: <YOUR-ORG-NAME>
     runs-on: ubuntu-latest
     steps:
