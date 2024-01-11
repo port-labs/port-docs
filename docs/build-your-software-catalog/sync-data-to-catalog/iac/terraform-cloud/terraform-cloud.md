@@ -10,15 +10,19 @@ import DockerParameters from "./\_terraform_one_time_docker_parameters.mdx"
 
 # Terraform Cloud
 
-Our Terraform Cloud integration allows you to import `workspaces`, `runs` and `state versions` from your Terraform Cloud account into Port, according to your mapping and definition.
+Our Terraform Cloud integration allows you to import `projects`, `workspaces`, `runs` and `state versions` from your Terraform Cloud account into Port, according to your mapping and definition.
 
-The Terraform Cloud Integration for Port enables seamless import and synchronization of `workspaces`, `runs`, and `state versions` from your Terraform infrastructure management into Port. This integration allows you to effectively monitor and manage your Terraform Cloud workspaces and runs within the Port platform.
+The Terraform Cloud Integration for Port enables seamless import and synchronization of `projects`, `workspaces`, `runs`, and `state versions` from your Terraform infrastructure management into Port. This integration allows you to effectively monitor and manage your Terraform Cloud workspaces and runs within the Port platform.
+
+
+A `Project` in Terraform Cloud is a collection of infrastructure configurations, often corresponding to a code repository. It serves as the primary organizational unit, grouping related `workspaces`, `runs`, and `state versions` to manage and structure Terraform code for efficient deployment and collaboration.
 
 A `Workspace` represents a workspace in Terraform cloud. A workspace is a logical environment where Terraform manages infrastructure, such as a set of cloud resources.
 
 A `Run` represents an instance of Terraform operations (plan, apply, or destroy) executed within a workspace. Each run holds information about the operation status, duration, and other relevant metadata.
 
 A `State Version` represents a versioned state file in Terraform. Each state version is immutable and represents the state of your managed infrastructure at a particular point in time. State versions are used to track the changes in your infrastructure and help with auditing, rollbacks, and historical analysis.
+
 
 ## Common use cases
 
@@ -52,12 +56,17 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `integration.identifier`                 | Change the identifier to describe your integration                                                            | ✅       |
 | `integration.type`                       | The integration type                                                                                          | ✅       |
 | `integration.eventListener.type`         | The event listener type                                                                                       | ✅       |
-| `integration.config.terraformCloudToken` | The Terraform cloud API token token                                                                           | ✅       |
+| `integration.config.terraformCloudHost` | Your Terraform host. For example https://app.terraform.io  token                                                                           | ✅       |
+| `integration.config.terraformCloudToken` | The Terraform cloud API token                                                                           | ✅       |
 | `integration.config.appHost`             | Your application's host url                                                                                   | ❌       |
 | `scheduledResyncInterval`                | The number of minutes between each resync                                                                     | ❌       |
 | `initializePortResources`                | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
 
 <br/>
+<Tabs groupId="deploy" queryString="deploy">
+
+<TabItem value="helm" label="Helm">
+To install the integration using Helm, run the following command:
 
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
@@ -69,8 +78,89 @@ helm upgrade --install terraform port-labs/port-ocean \
 	--set integration.identifier="my-terraform-cloud-integration"  \
 	--set integration.type="terraform-cloud"  \
 	--set integration.eventListener.type="POLLING"  \
+  --set integration.secrets.terraformCloudHost="string" \
 	--set integration.secrets.terraformCloudToken="string" \
 ```
+</TabItem>
+<TabItem value="argocd" label="ArgoCD" default>
+To install the integration using ArgoCD, follow these steps:
+
+1. Create a `values.yaml` file in `argocd/my-ocean-terraform-cloud-integration` in your git repository with the content:
+
+:::note
+Remember to replace the placeholders for  `TERRAFORM_CLOUD_HOST` and `TERRAFORM_CLOUD_TOKEN`.
+:::
+```yaml showLineNumbers
+initializePortResources: true
+scheduledResyncInterval: 120
+integration:
+  identifier: my-ocean-terraform-cloud-integration
+  type: terraform-cloud
+  eventListener:
+    type: POLLING
+  secrets:
+  // highlight-start
+    terraformCloudHost: TERRAFORM_CLOUD_HOST
+    terraformCloudToken: TERRAFORM_CLOUD_TOKEN
+  // highlight-end
+```
+<br/>
+
+2. Install the `my-ocean-terraform-cloud-integration` ArgoCD Application by creating the following `my-ocean-terraform-cloud-integration.yaml` manifest:
+:::note
+Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+
+Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
+:::
+
+<details>
+  <summary>ArgoCD Application</summary>
+
+```yaml showLineNumbers
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: my-ocean-terraform-cloud-integration
+  namespace: argocd
+spec:
+  destination:
+    namespace: my-ocean-terraform-cloud-integration
+    server: https://kubernetes.default.svc
+  project: default
+  sources:
+  - repoURL: 'https://port-labs.github.io/helm-charts/'
+    chart: port-ocean
+    targetRevision: 0.1.14
+    helm:
+      valueFiles:
+      - $values/argocd/my-ocean-terraform-cloud-integration/values.yaml
+      // highlight-start
+      parameters:
+        - name: port.clientId
+          value: YOUR_PORT_CLIENT_ID
+        - name: port.clientSecret
+          value: YOUR_PORT_CLIENT_SECRET
+  - repoURL: YOUR_GIT_REPO_URL
+  // highlight-end
+    targetRevision: main
+    ref: values
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+```
+
+</details>
+<br/>
+
+3. Apply your application manifest with `kubectl`:
+```bash
+kubectl apply -f my-ocean-terraform-cloud-integration.yaml
+```
+</TabItem>
+</Tabs>
 
 </TabItem>
 
@@ -114,6 +204,7 @@ jobs:
           docker run -i --rm --platform=linux/amd64 \
           -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
           -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+          -e OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_HOST=${{ secrets.OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_HOST }} \
           -e OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_TOKEN=${{ secrets.OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_TOKEN }} \
           -e OCEAN__PORT__CLIENT_ID=${{ secrets.OCEAN__PORT__CLIENT_ID }} \
           -e OCEAN__PORT__CLIENT_SECRET=${{ secrets.OCEAN__PORT__CLIENT_SECRET }} \
@@ -150,6 +241,7 @@ pipeline {
             steps {
                 script {
                     withCredentials([
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_HOST', variable: 'OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_HOST'),
                         string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_TOKEN', variable: 'OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_TOKEN'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_SECRET', variable: 'OCEAN__PORT__CLIENT_SECRET')
@@ -162,6 +254,7 @@ pipeline {
                             docker run -i --rm --platform=linux/amd64 \
                                 -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
                                 -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+                                -e OCEAN__INTEGRATION__CONFIG__TERRAFORM_COUD_HOST=$OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_HOST \
                                 -e OCEAN__INTEGRATION__CONFIG__TERRAFORM_COUD_TOKEN=$OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_TOKEN \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
@@ -224,6 +317,7 @@ The integration configuration determines which resources will be queried from Te
 :::tip Supported resources
 The following resources can be used to map data from Terraform Cloud, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
 
+- [`Project`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/projects)
 - [`Workspace`](https://www.terraform.io/docs/cloud/api/workspaces.html)
 - [`Run`](https://www.terraform.io/docs/cloud/api/runs.html)
 - [`State Version`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/state-versions)
@@ -295,6 +389,63 @@ To ingest Terraform Cloud objects using the [integration configuration](#configu
 
 Examples of blueprints and the relevant integration configurations:
 
+### Project
+<details>
+<summary>Project blueprint</summary>
+
+```json showLineNumbers
+{
+      "identifier": "terraformCloudProject",
+      "description": "This blueprint represents a project in Terraform Cloud",
+      "title": "Terraform Cloud Project",
+      "icon": "Terraform",
+      "schema": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Project Name",
+            "description": "The name of the Terraform Cloud project"
+          },
+          "permissions": {
+            "type": "object",
+            "title": "Permissions",
+            "description": "The permisssions on the project"
+          },
+          "organizationId": {
+            "type": "string",
+            "title": "Organization ID",
+            "description": "The ID of the organization the project belongs to"
+          }
+        }
+      },
+      "relations":{},
+      "mirrorProperties":{},
+      "calculationProperties":{},
+      "aggregationProperties":{}
+    }
+```
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+  - kind: project
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .id
+          title: .attributes.name
+          blueprint: '"terraformCloudProject"'
+          properties:
+            name: .attributes.name
+            permissions: .attributes.permissions
+            organizationId: .relationships.organization.data.id
+```
+</details>
+
 ### Workspace
 
 <details>
@@ -302,69 +453,76 @@ Examples of blueprints and the relevant integration configurations:
 
 ```json showLineNumbers
 {
-  "identifier": "terraformCloudWorkspace",
-  "description": "This blueprint represents a workspace in Terraform Cloud",
-  "title": "Terraform Cloud Workspace",
-  "icon": "Terraform",
-  "schema": {
-    "properties": {
-      "organization": {
-        "type": "string",
-        "title": "Organization",
-        "description": "The organization within which the workspace belongs to"
+      "identifier":"terraformCloudWorkspace",
+      "description":"This blueprint represents a workspace in Terraform Cloud",
+      "title":"Terraform Cloud Workspace",
+      "icon":"Terraform",
+      "schema":{
+         "properties":{
+            "organization":{
+               "type":"string",
+               "title":"Organization",
+               "description":"The organization within which the workspace belongs to"
+            },
+            "createdAt":{
+               "type":"string",
+               "format":"date-time",
+               "title":"Creation Time",
+               "description":"The creation timestamp of the workspace"
+            },
+            "updatedAt":{
+               "type":"string",
+               "format":"date-time",
+               "title":"Last Updated",
+               "description":"The last update timestamp of the workspace"
+            },
+            "terraformVersion":{
+               "type":"string",
+               "title":"Terraform Cloud Version",
+               "description":"Version of Terraform cloud used by the workspace"
+            },
+            "locked":{
+               "type":"boolean",
+               "title":"Locked Status",
+               "description":"Indicates whether the workspace is locked"
+            },
+            "executionMode":{
+               "type":"string",
+               "title":"Execution Mode",
+               "description":"The execution mode of the workspace"
+            },
+            "resourceCount":{
+               "type":"number",
+               "title":"Resource Count",
+               "description":"Number of resources managed by the workspace"
+            },
+            "latestChangeAt":{
+               "type":"string",
+               "format":"date-time",
+               "title":"Latest Change",
+               "description":"Timestamp of the latest change in the workspace"
+            }
+         }
       },
-      "createdAt": {
-        "type": "string",
-        "format": "date-time",
-        "title": "Creation Time",
-        "description": "The creation timestamp of the workspace"
-      },
-      "updatedAt": {
-        "type": "string",
-        "format": "date-time",
-        "title": "Last Updated",
-        "description": "The last update timestamp of the workspace"
-      },
-      "terraformVersion": {
-        "type": "string",
-        "title": "Terraform Cloud Version",
-        "description": "Version of Terraform cloud used by the workspace"
-      },
-      "locked": {
-        "type": "boolean",
-        "title": "Locked Status",
-        "description": "Indicates whether the workspace is locked"
-      },
-      "executionMode": {
-        "type": "string",
-        "title": "Execution Mode",
-        "description": "The execution mode of the workspace"
-      },
-      "resourceCount": {
-        "type": "number",
-        "title": "Resource Count",
-        "description": "Number of resources managed by the workspace"
-      },
-      "latestChangeAt": {
-        "type": "string",
-        "format": "date-time",
-        "title": "Latest Change",
-        "description": "Timestamp of the latest change in the workspace"
+      "mirrorProperties":{},
+      "calculationProperties":{},
+      "aggregationProperties":{},
+      "relations":{
+         "currentStateVersion":{
+            "title":"Current State Version",
+            "target":"terraformCloudStateVersion",
+            "required":false,
+            "many":false
+         },
+         "project":{"title":"Terraform Cloud Project",
+          "target":"terraformCloudProject",
+          "required":false,
+          "many":false}
       }
-    }
-  },
-  "relations": {
-    "currentStateVersion": {
-      "title": "Current State Version",
-      "target": "terraformCloudStateVersion",
-      "required": false,
-      "many": false
-    }
-  }
-}
+   }
 ```
-
 </details>
+
 
 <details>
 <summary>Integration configuration</summary>
@@ -606,6 +764,45 @@ This section includes a sample response data from Terrform Cloud. In addition, i
 ### Payload
 
 Here is an example of the payload structure from Terraform:
+
+<details>
+<summary> Project response data</summary>
+
+```json showLineNumbers
+{
+      "id":"prj-wnLLjhXa3XArrRFR",
+      "type":"projects",
+      "attributes":{
+         "name":"Default Project",
+         "permissions":{
+            "can-read":true,
+            "can-update":true,
+            "can-destroy":true,
+            "can-create-workspace":true,
+            "can-move-workspace":true,
+            "can-deploy-no-code-modules":true,
+            "can-read-teams":true,
+            "can-manage-teams":true
+         }
+      },
+      "relationships":{
+         "organization":{
+            "data":{
+               "id":"example-org-162af6",
+               "type":"organizations"
+            },
+            "links":{
+               "related":"/api/v2/organizations/example-org-162af6"
+            }
+         }
+      },
+      "links":{
+         "self":"/api/v2/projects/prj-wnLLjhXa3XArrRFR"
+      }
+   }
+```
+</details>
+
 
 <details>
 <summary> Workspace response data</summary>
@@ -1333,6 +1530,34 @@ Here is an example of the payload structure from Terraform:
 ### Mapping Result
 
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
+
+<details>
+<summary> project entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "prj-wnLLjhXa3XArrRFR",
+  "title": "Default Project",
+  "team": [],
+  "properties": {
+    "name": "Default Project",
+    "permissions": {
+      "can-read": true,
+      "can-update": true,
+      "can-destroy": true,
+      "can-create-workspace": true,
+      "can-move-workspace": true,
+      "can-deploy-no-code-modules": true,
+      "can-read-teams": true,
+      "can-manage-teams": true
+    },
+    "organizationId": "example-org-162af6"
+  },
+  "relations": {},
+  "icon": "Terraform"
+}
+```
+</details>
 
 <details>
 <summary> workspace entity in Port</summary>
