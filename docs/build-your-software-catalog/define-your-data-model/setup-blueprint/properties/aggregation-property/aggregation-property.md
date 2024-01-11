@@ -799,6 +799,12 @@ resource "port_aggregation_property" "median_cpu_usage" {
 
 </TabItem>
 
+<TabItem value="pulumi">
+
+## Coming soon...
+
+</TabItem>
+
 
 </Tabs>
 
