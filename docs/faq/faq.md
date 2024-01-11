@@ -26,7 +26,9 @@ Spotify’s backstage is spot-on in recognizing the need for a streamlined end-t
 
 ## Is Port really free?
 
-Yes. Anything that is free in our [pricing page](https://www.getport.io/pricing) is, well, free. Using the free version of Port you can set up an advanced, fully functioning internal developer portal, with no free trial limits.
+Yes. Anything that is free in our pricing page is, well, free. Using the free version of Port you can set up an advanced, fully functioning internal developer portal, unlimited in time.
+
+The free version includes all of the features in Port, except for SSO and a certain limitation on the number of software catalog entities (up to 10,000), for reasons of fair use. In case you're evaluating Port, it provides you with everything you need, and if you need SSO for a given period, contact us.
 
 ## What security does Port have in place?
 
