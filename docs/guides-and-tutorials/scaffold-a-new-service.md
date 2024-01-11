@@ -236,7 +236,7 @@ If your organization uses SAML SSO, you will need to authorize your token. Follo
 
 <br/><br/>
 
-3. Now let's create the workflow file that contains our logic. Under `.github/workflows`, create a new file named `portCreateRepo.yaml` and use the following snippet as its content:
+3. Now let's create the workflow file that contains our logic. Under `.github/workflows`, create a new file named `portCreateRepo.yaml` and use the following snippet as its content (remember to change `<YOUR-ORG-NAME>` on line 19 to your GitHub organization name):
 
 <details>
 <summary><b>Github workflow (click to expand)</b></summary>
@@ -260,6 +260,7 @@ on:
 jobs:
   scaffold-service:
     env:
+# highlight-next-line
       ORG_NAME: <YOUR-ORG-NAME>
     runs-on: ubuntu-latest
     steps:
