@@ -30,7 +30,7 @@ Yes. Anything that is free in our [pricing page](https://www.getport.io/pricing)
 
 ## What security does Port have in place?
 
-We put a lot of thought into Port’s design to make it secure. As a result, Port’s product doesn’t store secrets or credentials, and doesn't require whitelisting of IPs. 
+We put a lot of thought into Port’s design to make it secure. Consequently, it doesn’t store secrets or credentials, and doesn't require whitelisting of IPs. 
 
 You can find our secured push-only architecture [here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog)
 
