@@ -32,7 +32,7 @@ Yes. Anything that is free in our [pricing page](https://www.getport.io/pricing)
 
 We put a lot of thought into Port’s design to make it secure. Consequently, it doesn’t store secrets or credentials, and doesn't require whitelisting of IPs. 
 
-You can find our secured push-only architecture [here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog)
+You can take a look at our secure, push-only architecture [here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog).
 
 Security and privacy is top of mind at Port. We use industry standard encryption protocols, data is encrypted both at rest and in transit, with complete isolation between clients and data access logging and auditing. Port is SOC2 compliant, undergoes regular Pentests, product security and compliance review
 
