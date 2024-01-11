@@ -31,11 +31,9 @@ Yes. Anything that is free in our [pricing page](https://www.getport.io/pricing)
 ## What security does Port have in place?
 
 We put a lot of thought into Port’s design to make it secure. As a result, Port’s product doesn’t store secrets or credentials, and doesn't require whitelisting of IPs. 
-Port cannot make any inbound network calls into our customers’ networks. Port uses an open-source broker (either one of our exporters or a broker created using Port’s Ocean extensibility framework). All communication between the Port broker and Port is one-way, initiated from the Port broker, and encrypted with TLS. Port’s broker is stateless and requires no database migrations, no rollback concerns and doesn’t create downtime. 
+
 You can find our secured push-only architecture [here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog)
 
-Security and privacy is top of mind at Port. We use industry standard encryption protocols, data is encrypted both at rest and in transit, with complete isolation between clients and data access logging and auditing. 
-
-Port is SOC2 compliant, undergoes regular Pentests, product security and compliance review
+Security and privacy is top of mind at Port. We use industry standard encryption protocols, data is encrypted both at rest and in transit, with complete isolation between clients and data access logging and auditing. Port is SOC2 compliant, undergoes regular Pentests, product security and compliance review
 
 You may find the complete coverage of Port's security posture in our security [page](https://www.getport.io/security)
