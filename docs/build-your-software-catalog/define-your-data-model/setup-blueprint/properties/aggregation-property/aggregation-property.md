@@ -37,7 +37,7 @@ The aggregation property enables you to specify scorecards and initiative rules 
 For example - If you have a microservice blueprint, with related Alert blueprint, you can define a rule that will check if the number of open CRITICAL and HIGH alerts that are related to each microservice is greater than 0.
 :::
 
-## About Aggregation Properties
+## Specification
 
 The `aggregationProperties` key is a top-level key in the JSON of an entity (similar to `identifier`, `title`, `properties`, etc..)
 
@@ -50,7 +50,7 @@ The aggregation property supports calculations by entities or by property.
 
 ## Definitions
 
-<Tabs groupId="api-definition" defaultValue="api" values={[
+<Tabs groupId="api-definition" queryString defaultValue="api" values={[
 {label: "API", value: "api"},
 {label: "Terraform", value: "tf"},
 {label: "Pulumi", value: "pulumi"}
@@ -422,7 +422,7 @@ Supported methods:
 - `average_entities` - Calculate the average of entities per a defined time period. For example, calculate the average deployment frequency per week.
 
 
-<Tabs groupId="CalculateByEntities" defaultValue="Entities Count">
+<Tabs groupId="CalculateByEntities" queryString defaultValue="Entities Count">
 
 <TabItem value="Entities Count">
 
@@ -536,7 +536,7 @@ Supported methods:
 - `aggregate_by_property` - Aggregate the value of the property of the entities that match the query, supported aggregation functions are: `sum, min, max, median`. For example, sum the story points of open Jira issues related to a microservice.
 
 
-<Tabs groupId="CalculateByProperty" defaultValue="Sum">
+<Tabs groupId="CalculateByProperty" queryString defaultValue="Sum">
 
 <TabItem value="Sum">
 
