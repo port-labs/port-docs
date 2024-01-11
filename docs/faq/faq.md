@@ -32,6 +32,10 @@ The free version includes all of the features in Port, except for SSO and a cert
 
 ## What security does Port have in place?
 
-Port is SOC2 compliant.
+We put a lot of thought into Port’s design to make it secure. Consequently, it doesn’t store secrets or credentials, and doesn't require whitelisting of IPs. 
 
-We make use of industry standard encryption protocols. All data is encrypted both at rest and in transit, with complete isolation between clients and data access logging and auditing.
+You can take a look at our secure, push-only architecture [here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog).
+
+Security and privacy are a top priority at Port. We use industry-standard encryption protocols, data is encrypted both at rest and in transit, with complete isolation between clients and data access logging and auditing. Port is SOC2 compliant, and undergoes regular pentests, product security and compliance reviews.
+
+You can find the complete coverage of Port's security policy in our security [page](https://www.getport.io/security).
