@@ -272,12 +272,12 @@ resource "port_entity" "myEntity" {
 
 # highlight-start
   relations = {
-    single_relations =  {
+    single_relations = {
     "mySingleRelation" = "myTargetEntityIdentifier"
     }
   }
 
-  relations {
+  relations = {
     many_relations = {
       "myManyRelation" = ["myTargetEntityIdentifier", "myTargetEntityIdentifier2"]
     }
