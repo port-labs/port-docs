@@ -1,3 +1,6 @@
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+
 # Control the payload
 
 Some of the 3rd party applications that you may want to integrate with may not accept the raw payload incoming from
@@ -8,14 +11,45 @@ You can alter the requests sent to your third-party application by providing a p
 deploying the
 Port-agent container.
 
+### Setting up the mapping
+
+Setting up the mapping depends on how you install the agent.
+
+<Tabs groupId="installationMethod" queryString defaultValue="helm" values={[
+  {label: "Helm", value: "helm"},
+  {label: "Argo", value:"argo"}
+]}>
+
+<TabItem value="helm">
+
+In order to provide the mapping configuration to the agent, run the installation command again, and add the following parameter:
+
+```bash showLineNumbers
+        --set-file controlThePayloadConfig=/PATH/TO/LOCAL/FILE.yml
+```
+
+</TabItem>
+
+<TabItem value="argo">
+
+In order to provide the mapping to the agent, add the mapping to the `values.yaml` file created in the installation [here](https://docs.getport.io/create-self-service-experiences/setup-backend/webhook/port-execution-agent/installation-methods/argocd#installation). The needs to be added as a top level field.
+
+Below you can find the default mapping to use as a starting point:
+
+```yaml showLineNumbers
+controlThePayloadConfig: |
+  [
+    {
+    "enabled": true,
+    "url": ".payload.action.invocationMethod.url",
+    "method": ".payload.action.invocationMethod.method // \"POST\""
+    }
+  ]
+```
+</TabItem>
+</Tabs>
+
 ### Control the payload mapping
-
-The payload mapping file is a JSON file that specifies how to transform the request sent to the Port agent to the
-request that is sent to the third-party application.
-
-The payload mapping file is mounted to the Port agent as a volume. The path to the payload mapping file is set in the
-`CONTROL_THE_PAYLOAD_CONFIG_PATH` environment variable. By default, the Port agent will look for the payload mapping
-file at `~/control_the_payload_config.json`.
 
 The payload mapping file is a json file that contains a list of mappings. Each mapping contains the request fields that
 will be overridden and sent to the 3rd party application.
@@ -60,6 +94,31 @@ Here is the mapping file schema:
   }
 }
 ```
+
+### Mapping examples
+
+Below you can find some mapping examples to demonstate how you can use JQ and the action payload sent from Port to change the payload sent to your target endpoint by the agent.
+In each mapping, we will show the relevant fields.
+
+#### Apply a filter to the mapping
+
+Assuming you have a few different invocation methods for your actions, you can create a mapping configuration that is only applied to actions that are of a specific type.
+
+For example, to create a filter that applies only to actions with the `GitLab` method:
+
+```text showLineNumbers
+"enabled": ".payload.invocationMethod.type == \"GITLAB\""
+```
+
+#### Create a URL based on a property
+
+Assuming a `webhook` invocation action is configured to forward the request to the URL `http://test.com/`, and the action in Port contains a `number` type input called `network_port` meant to specify the network port to send the request to, here is how you can construct the complete URL using the URL and the additional input:
+
+```text showLineNumbers
+"url": ".payload.invocationMethod.url + .payload.properties.network_port"
+```
+
+Invoking the action with the input 8080 to the property `network_port` will cause the agent to send the webhook request to `http://test.com/8080`.
 
 ### The incoming message to base your mapping on
 

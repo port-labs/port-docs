@@ -72,15 +72,6 @@ After installation, the exporter will:
 
 <img src='/img/guides/k8sEntitiesCreated.png' width='100%' />
 
-:::info TIP - Updating your configuration
-
-To change the mapping that the K8s exporter uses to fill Port with data from your K8s cluster, go to your [data sources page](https://app.getport.io/dev-portal/data-sources), find the K8s exporter card, click on it and you will see a YAML editor showing the current configuration.
-
-You use to YAML editor to edit the configuration and then click on `Resync` to apply the new configuration and also update all existing data according to it.
-
-💁🏽 _You will need to make another update to the configuration later in this guide, so these instructions will come in handy soon_ ⏰
-:::
-
 <br/>
 
 3. Create <PortTooltip id="scorecard">scorecards</PortTooltip> for the blueprints that represent your K8s resources (as defined [here](https://github.com/port-labs/port-k8s-exporter/blob/main/assets/defaults/scorecards.json)). These scorecards define rules and checks over the data ingested from your K8s cluster, making it easy to check that your K8s resources meet your standards.
@@ -173,7 +164,9 @@ spec:
 
 <br/>
 
-2. To see the new data, we need to update the mapping configuration that the K8s exporter uses to ingest data. To edit the configuration, you can follow the instructions in the `tip - updating your configuration` block, when you reach the YAML editor, add the following block to the mapping configuration and click `Resync`:
+2. To see the new data, we need to update the mapping configuration that the K8s exporter uses to ingest data.  
+To edit the mapping, go to your [data sources page](https://app.getport.io/dev-portal/data-sources), find the K8s exporter card, click on it and you will see a YAML editor showing the current configuration.  
+Add the following block to the mapping configuration and click `Resync`:
 
 ```yaml showLineNumbers
 resources:

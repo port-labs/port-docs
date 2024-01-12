@@ -1,11 +1,11 @@
 ---
-title: Integrations Index
-sidebar_label: ⚙️ Integrations Index
+title: Integrations index
+sidebar_label: ⚙️ Integrations index
 sidebar_position: 11
 slug: /integrations-index/
 ---
 
-# ⚙️ Integrations Index
+# ⚙️ Integrations index
 
 This page contains a list of Port's available integrations, organized by the platform or product which they integrate with
 
@@ -25,6 +25,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [GitHub scaffolder using FastAPI backend](/create-self-service-experiences/setup-backend/webhook/examples/software-templates.md)
 - [Deploy AWS resources using AWS CloudFormation](/create-self-service-experiences/setup-backend/github-workflow/examples/deploy-cloudformation-template.md)
 - [Create GitHub secret using GitHub workflows](/create-self-service-experiences/setup-backend/github-workflow/examples/create-github-secret.md)
+- [Script to ingest GitHub packages](https://github.com/port-labs/example-github-packages)
 
 ### GitLab
 
@@ -97,6 +98,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [AWS exporter Terraform module](/build-your-software-catalog/sync-data-to-catalog/iac/terraform/modules/aws-exporter-module.md)
 - [Terraform manage S3 buckets lifecycle](/build-your-software-catalog/sync-data-to-catalog/iac/terraform/examples/s3-bucket.md)
 - [Terraform manage developer environment](/build-your-software-catalog/sync-data-to-catalog/iac/terraform/examples/create-dev-env.md)
+- [Script to ingest ECR Images and Repositories](https://github.com/port-labs/example-ecr-images)
 
 ### Azure
 
@@ -233,6 +235,11 @@ This page contains a list of Port's available integrations, organized by the pla
 ## Backstage
 
 - [Import catalog from Backstage](/guides-and-tutorials/import-backstage-resources.md)
+
+## JFrog
+- [Sync JFrog Artifacts, Docker tags, and build entities](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
+- [Script to ingest JFrog X-ray alerts, repositories and artifacts](https://github.com/port-labs/example-jfrog-xray-alerts)
+- [Script to ingest JFrog container image builds and repositories](https://github.com/port-labs/example-jfrog-container-images)
 
 ## Webhook
 
