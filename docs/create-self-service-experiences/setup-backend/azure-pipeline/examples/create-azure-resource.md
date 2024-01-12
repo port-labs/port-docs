@@ -6,7 +6,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 # Create Azure Resource with Terraform
 
-In the following guide, you are going to build a self-service action in Port that [executes](/create-self-service-experiences/setup-backend/azure-pipeline/azure-pipeline.md) an Azure pipeline to deploy a [storage account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-overview) in Azure using Terraform templates.
+In the following guide, you are going to build a self-service action in Port that executes an [Azure pipeline](/create-self-service-experiences/setup-backend/azure-pipeline/azure-pipeline.md) to deploy a [storage account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-overview) in Azure using Terraform templates.
 
 
 ## Prerequisites
@@ -32,7 +32,7 @@ Follow these steps to get started:
         3. `ARM_SUBSCRIPTION_ID` - Azure Subscription ID.
         4. `ARM_TENANT_ID` - The Azure [Tenant ID](https://learn.microsoft.com/en-us/azure/azure-portal/get-subscription-tenant-id).
 
-2. Create a Port <PortTooltip id="blueprint">blueprint</PortTooltip> with the following properties:
+2. Create a Port <PortTooltip id="blueprint">blueprint</PortTooltip> with the following JSON definition:
 
 <details>
    <summary>Port Azure Storage Account Blueprint</summary>
@@ -79,7 +79,7 @@ Follow these steps to get started:
 
   </details>
 
-3. Create a Port action in the [self-service hub](https://app.getport.io/self-serve) or with the following JSON definition:
+3. Create a Port action in the [self-service page](https://app.getport.io/self-serve) or with the following JSON definition:
 
 <details>
 
@@ -367,4 +367,4 @@ jobs:
 
 </details>
 
-6. Trigger the action from the [self-service](https://app.getport.io/self-serve) tab of your Port application.
+6. Trigger the action from the [self-service](https://app.getport.io/self-serve) page of your Port application.
