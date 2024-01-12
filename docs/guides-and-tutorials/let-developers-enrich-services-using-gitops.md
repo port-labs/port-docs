@@ -114,12 +114,12 @@ Now that we have a `Domain` <PortTooltip id="blueprint">blueprint</PortTooltip>,
   title: Payment
   blueprint: domain
   properties:
-    architecture: https://lucid.app/documents/embedded/533f05ad-aa68-43ce-9499-c5f767dc8ea5
+    architecture: https://lucid.app/documents/embedded/c3d64493-a5fe-4b18-98d5-66d355080de3
 - identifier: shipping
   title: Shipping
   blueprint: domain
   properties:
-    architecture: https://lucid.app/documents/embedded/533f05ad-aa68-43ce-9499-c5f767dc8ea5
+    architecture: https://lucid.app/documents/embedded/c3d64493-a5fe-4b18-98d5-66d355080de3
 ```
 
 </details>
