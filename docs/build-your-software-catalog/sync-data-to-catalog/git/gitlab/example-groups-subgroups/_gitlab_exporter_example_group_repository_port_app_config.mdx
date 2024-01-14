@@ -31,7 +31,12 @@ resources:
           blueprint: '"gitlabRepository"'
           properties:
             url: .web_url
+            readme: file://README.md
             description: .description
+            language: .__languages | to_entries | max_by(.value) | .key
+            namespace: .namespace.name
+            fullPath: .namespace.full_path
+            defaultBranch: .default_branch
           relations:
             group: >-
               .path_with_namespace | gsub(" "; "") | split("/") | .[:-1] |

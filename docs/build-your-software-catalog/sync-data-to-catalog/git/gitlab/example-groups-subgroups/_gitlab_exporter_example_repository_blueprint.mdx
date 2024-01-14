@@ -8,46 +8,35 @@
   "icon": "Microservice",
   "schema": {
     "properties": {
+      "url": {
+        "title": "URL",
+        "type": "string",
+        "format": "url"
+      },
       "readme": {
         "title": "README",
         "type": "string",
-        "format": "markdown",
-        "icon": "Book"
+        "format": "markdown"
       },
-      "url": {
-        "title": "URL",
-        "format": "url",
-        "type": "string",
-        "icon": "Link"
+      "description": {
+        "title": "Description",
+        "type": "string"
       },
       "language": {
-        "type": "string",
         "title": "Language",
-        "icon": "Git"
+        "type": "string"
       },
-      "slack": {
-        "icon": "Slack",
-        "type": "string",
-        "title": "Slack",
-        "format": "url"
+      "namespace": {
+        "title": "Namespace",
+        "type": "string"
       },
-      "tier": {
-        "title": "Tier",
-        "type": "string",
-        "description": "How mission-critical the service is",
-        "enum": [
-          "Mission Critical",
-          "Customer Facing",
-          "Internal Service",
-          "Other"
-        ],
-        "enumColors": {
-          "Mission Critical": "turquoise",
-          "Customer Facing": "green",
-          "Internal Service": "darkGray",
-          "Other": "yellow"
-        },
-        "icon": "DefaultProperty"
+      "fullPath": {
+        "title": "Full Path",
+        "type": "string"
+      },
+      "defaultBranch": {
+        "title": "Default Branch",
+        "type": "string"
       }
     },
     "required": []
