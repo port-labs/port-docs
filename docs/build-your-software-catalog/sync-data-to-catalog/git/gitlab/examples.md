@@ -35,10 +35,10 @@ In the following example you will ingest your GitLab projects, their README.md f
 
 <PortAppConfig/>
 
-:::tip
+:::tip To Learn more
 
-- Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process;
-- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities;
+- Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process.
+- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
 - Click [Here](https://docs.gitlab.com/ee/api/groups.html#list-a-groups-projects) for the GitLab project object structure.
 - Click [Here](https://docs.gitlab.com/ee/api/merge_requests.html#list-project-merge-requests) for the GitLab merge request object structure.
 
@@ -56,10 +56,10 @@ In the following example you will ingest your GitLab groups, subgroups and proje
 
 <PortGroupsAppConfig/>
 
-:::tip
+:::tip To Learn more
 
-- Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process;
-- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities;
+- Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process.
+- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
 - Click [Here](https://docs.gitlab.com/ee/api/groups.html#list-a-groups-projects) for the GitLab project object structure.
 - Click [Here](https://docs.gitlab.com/ee/api/groups.html#list-a-groups-subgroups) for the GitLab subgroup object structure.
 
@@ -77,10 +77,10 @@ In the following example you will ingest your GitLab projects, their pipelines a
 
 <PortPipelineJobAppConfig/>
 
-:::tip
+:::tip To Learn more
 
-- Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process;
-- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities;
+- Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process.
+- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
 - Click [Here](https://docs.gitlab.com/ee/api/groups.html#list-a-groups-projects) for the GitLab project object structure.
 - Click [Here](https://docs.gitlab.com/ee/api/pipelines.html#list-project-pipelines) for the GitLab pipeline object structure.
 - Click [Here](https://docs.gitlab.com/ee/api/jobs.html#list-project-jobs) for the GitLab job object structure.
@@ -97,7 +97,7 @@ In the following example you will ingest your GitLab projects and their monorepo
 
 <MonoRepoAppConfig/>
 
-:::tip
+:::tip To Learn more
 To retrieve the root folders of your monorepo, you can use this following syntax in your `port-app-config.yml`:
 
 ```yaml
@@ -134,8 +134,8 @@ You can also specify different path for each monorepo repository, for example:
 
 :::tip
 
-- Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process;
-- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities;
+- Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process.
+- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
 - Click [Here](https://docs.gitlab.com/ee/api/groups.html#list-a-groups-projects) for the GitLab project object structure.
 - Click [Here](https://docs.gitlab.com/ee/api/repositories.html#list-repository-tree) for the GitLab repository tree object structure.
 
@@ -151,10 +151,10 @@ In the following example you will ingest your GitLab projects and their folders 
 
 <PortFoldersAppConfig/>
 
-:::tip
+:::tip To Learn more
 
-- Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process;
-- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities;
+- Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process.
+- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
 - Click [Here](https://docs.gitlab.com/ee/api/groups.html#list-a-groups-projects) for the GitLab project object structure.
 - Click [Here](https://docs.gitlab.com/ee/api/repositories.html#list-repository-tree) for the GitLab repository tree object structure.
 
@@ -170,10 +170,10 @@ In the following example you will ingest your GitLab projects and their issues t
 
 <PortIssueAppConfig/>
 
-:::tip
+:::tip To Learn more
 
-- Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process;
-- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities;
+- Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process.
+- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
 - Click [Here](https://docs.gitlab.com/ee/api/groups.html#list-a-groups-projects) for the GitLab project object structure.
 - Click [Here](https://docs.gitlab.com/ee/api/issues.html#list-project-issues) for the GitLab issue object structure.
 
