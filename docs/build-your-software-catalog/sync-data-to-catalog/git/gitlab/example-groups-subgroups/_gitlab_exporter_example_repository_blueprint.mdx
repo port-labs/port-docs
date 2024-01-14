@@ -1,0 +1,69 @@
+<details>
+<summary>Repository blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "gitlabRepository",
+  "title": "Repository",
+  "icon": "Microservice",
+  "schema": {
+    "properties": {
+      "readme": {
+        "title": "README",
+        "type": "string",
+        "format": "markdown",
+        "icon": "Book"
+      },
+      "url": {
+        "title": "URL",
+        "format": "url",
+        "type": "string",
+        "icon": "Link"
+      },
+      "language": {
+        "type": "string",
+        "title": "Language",
+        "icon": "Git"
+      },
+      "slack": {
+        "icon": "Slack",
+        "type": "string",
+        "title": "Slack",
+        "format": "url"
+      },
+      "tier": {
+        "title": "Tier",
+        "type": "string",
+        "description": "How mission-critical the service is",
+        "enum": [
+          "Mission Critical",
+          "Customer Facing",
+          "Internal Service",
+          "Other"
+        ],
+        "enumColors": {
+          "Mission Critical": "turquoise",
+          "Customer Facing": "green",
+          "Internal Service": "darkGray",
+          "Other": "yellow"
+        },
+        "icon": "DefaultProperty"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "group": {
+      "title": "Group",
+      "target": "gitlabGroup",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

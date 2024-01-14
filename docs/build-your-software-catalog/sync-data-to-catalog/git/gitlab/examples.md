@@ -19,6 +19,10 @@ import MonoRepoAppConfig from './example-repository-folders/\_gitlab_export_exam
 import FolderBlueprint from './example-repository-folders/\_gitlab_exporter_example_folder_blueprint.mdx'
 import PortFoldersAppConfig from './example-repository-folders/\_gitlab_exporter_example_repo_folders_port_app_config.mdx'
 
+import RepositoryGroupBlueprint from './example-groups-subgroups/\_gitlab_exporter_example_repository_blueprint.mdx'
+import GroupBlueprint from './example-groups-subgroups/\_gitlab_exporter_example_group_blueprint.mdx'
+import PortGroupsAppConfig from './example-groups-subgroups/\_gitlab_exporter_example_group_repository_port_app_config.mdx'
+
 # Examples
 
 ## Mapping projects, file contents and merge requests
@@ -41,6 +45,25 @@ In the following example you will ingest your GitLab projects, their README.md f
 :::
 
 After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your projects alongside their `README.md` file contents and merge requests.
+
+## Mapping Groups, Subgroups and Projects
+
+In the following example you will ingest your GitLab groups, subgroups and projects to Port, you may use the following Port blueprint definitions and integration configuration:
+
+<GroupBlueprint/>
+
+<RepositoryGroupBlueprint/>
+
+<PortGroupsAppConfig/>
+
+:::tip
+
+- Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process;
+- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities;
+- Click [Here](https://docs.gitlab.com/ee/api/groups.html#list-a-groups-projects) for the GitLab project object structure.
+- Click [Here](https://docs.gitlab.com/ee/api/groups.html#list-a-groups-subgroups) for the GitLab subgroup object structure.
+
+:::
 
 ## Mapping projects, pipelines and jobs
 
