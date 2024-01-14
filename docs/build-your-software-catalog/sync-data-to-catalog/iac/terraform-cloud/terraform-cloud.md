@@ -10,8 +10,6 @@ import DockerParameters from "./\_terraform_one_time_docker_parameters.mdx"
 
 # Terraform Cloud
 
-Our Terraform Cloud integration allows you to import `organizations`, `projects`, `workspaces`, `runs` and `state versions` from your Terraform Cloud account into Port, according to your mapping and definition.
-
 The Terraform Cloud Integration for Port enables seamless import and synchronization of `organizations`, `projects`, `workspaces`, `runs`, and `state versions` from your Terraform infrastructure management into Port. This integration allows you to effectively monitor and manage your Terraform Cloud workspaces and runs within the Port platform.
 
 An `Organization` is a shared space for one or more teams to collaborate on workspaces.
@@ -29,6 +27,7 @@ A `State Version` represents a versioned state file in Terraform. Each state ver
 
 - Synchronization of Infrastructure Management: Automatically synchronize workspace, run and state version data from Terraform Cloud into Port for centralized tracking and management.
 - Monitoring Run Statuses: Keep track of run outcomes (success, failure, etc.) and durations, providing insights into the health and performance of your infrastructure management processes.
+- Identify drifts between your Terraform configuration and what's effectively deployed in your Cloud.
 
 ## Prerequisites
 
