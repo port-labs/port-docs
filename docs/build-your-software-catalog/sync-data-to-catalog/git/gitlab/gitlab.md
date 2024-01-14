@@ -10,7 +10,7 @@ Our integration with GitLab allows you to export GitLab objects to Port as entit
 
 Our GitLab integration makes it easy to fill the software catalog with data directly from your GitLab organization, for example:
 
-- Map all of the resources in your GitLab organization, including **projects**, **monorepos**, **merge requests**, **issues**, **pipelines** and other GitLab objects;
+- Map all of the resources in your GitLab organization, including **groups**, **projects**, **monorepos**, **merge requests**, **issues**, **pipelines** and other GitLab objects;
 - Watch for GitLab object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port;
 - Manage Port entities using GitOps;
 - etc.
@@ -23,7 +23,7 @@ To install Port's GitLab integration, follow the [installation](./installation.m
 
 By using Port's GitLab integration, you can automatically ingest GitLab resources into Port based on real-time events.
 
-Port's GitLab integration allows you to ingest a variety of objects resources provided by the GitLab API, including projects, merge requests, pipelines and more. The GitLab integration allows you to perform extract, transform, load (ETL) on data from the GitLab API into the desired software catalog data model.
+Port's GitLab integration allows you to ingest a variety of objects resources provided by the GitLab API, including groups, projects, merge requests, pipelines and more. The GitLab integration allows you to perform extract, transform, load (ETL) on data from the GitLab API into the desired software catalog data model.
 
 The GitLab integration uses a YAML configuration to describe the ETL process to load data into the developer portal. The approach reflects a golden middle between an overly opinionated Git visualization that might not work for everyone and a too-broad approach that could introduce unneeded complexity into the developer portal.
 
