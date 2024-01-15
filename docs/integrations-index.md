@@ -147,9 +147,8 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## PagerDuty
 
-- [PagerDuty integration](/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty.md)
+- [PagerDuty integration and webhook](/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty.md)
 - [Ensure production readiness](/guides-and-tutorials/ensure-production-readiness.md)
-- [PagerDuty webhook](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/pagerduty.md)
 - [Self service for a new PagerDuty incident using GitHub workflows](https://github.com/port-labs/self-service-actions-examples/tree/main/github-workflows/pagerduty)
 
 ## Jira
