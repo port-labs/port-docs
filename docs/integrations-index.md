@@ -82,6 +82,11 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Terraform no-code resource provisioning using self-service actions](/create-self-service-experiences/setup-backend/webhook/examples/terraform-no-code-resource-provisioning.md)
 - [Import Terraform state using webhook](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/packages/terraform.md)
 
+### Terraform Cloud
+
+- [Terraform cloud](/build-your-software-catalog/sync-data-to-catalog/iac/terraform-cloud)
+- [Terraform cloud actions](/create-self-service-experiences/setup-backend/terraform-cloud)
+
 ### Pulumi
 
 - [Pulumi provider](/build-your-software-catalog/sync-data-to-catalog/iac/pulumi/pulumi.md)
@@ -223,6 +228,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Jenkins pipeline self-service actions](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md)
 - [GitHub scaffolder using Jenkins](/create-self-service-experiences/setup-backend/jenkins-pipeline/examples/scaffold-github-using-cookiecutter.md)
 - [Bitbucket scaffolder using Jenkins](/create-self-service-experiences/setup-backend/jenkins-pipeline/examples/scaffold-bitbucket-using-cookiecutter.md)
+- [Create Github pull request](/create-self-service-experiences/setup-backend/jenkins-pipeline/examples/create-github-pull-request)
 
 ## CodeFresh
 
@@ -231,13 +237,14 @@ This page contains a list of Port's available integrations, organized by the pla
 ## CircleCI
 
 - [Sync CircleCI workflows](/build-your-software-catalog/sync-data-to-catalog/ci-cd/circleci-workflow/circleci-workflow.md)
+- [CircleCI actions](/create-self-service-experiences/setup-backend/circle-ci)
 
 ## Backstage
 
 - [Import catalog from Backstage](/guides-and-tutorials/import-backstage-resources.md)
 
 ## JFrog
-- [Sync JFrog Artifacts, Docker tags, and build entities](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
+- [Sync JFrog Artifacts, Docker tags, and build entities](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/jfrog)
 - [Script to ingest JFrog X-ray alerts, repositories and artifacts](https://github.com/port-labs/example-jfrog-xray-alerts)
 - [Script to ingest JFrog container image builds and repositories](https://github.com/port-labs/example-jfrog-container-images)
 
