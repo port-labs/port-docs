@@ -67,9 +67,8 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## ArgoCD
 
-- [ArgoCD exporter](/build-your-software-catalog/sync-data-to-catalog/kubernetes/argocd.md)
-- [ArgoCD webhook](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/argocd.md)
-- [ArgoCD events](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/argocd.md#argocd-events)
+- [ArgoCD exporter and webhook integration](/build-your-software-catalog/sync-data-to-catalog/kubernetes/argocd.md)
+- [ArgoCD events](/build-your-software-catalog/sync-data-to-catalog/kubernetes/argocd.md#argocd-events)
 
 ## Infrastructure as Code (IaC)
 

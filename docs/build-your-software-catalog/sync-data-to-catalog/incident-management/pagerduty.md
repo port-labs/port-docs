@@ -959,12 +959,11 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 ## Alternative installation via webhook
-:::warning Ocean integration available
-Ocean's [PagerDuty integration](#pagerduty) is simpler to use and provides more capabilities than the webhook, we recommend using it instead.  
-Read more about Ocean [here](https://ocean.getport.io/).
+While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from PagerDuty. If so, use the following instructions:
 
-If you'd still prefer to use the webhook, proceed with the instructions on this page.
-:::
+<details>
+
+<summary><b>Webhook installation (click to expand)</b></summary>
 
 In this example you are going to create a webhook integration between [PagerDuty](https://www.pagerduty.com/) and Port, which will ingest PagerDuty services and its related incidents into Port. This integration will involve setting up a webhook to receive notifications from PagerDuty whenever an incident is created or updated, allowing Port to ingest and process the incident entities accordingly.
 
@@ -1235,3 +1234,4 @@ The script writes the JSON payload for each service and incident to a file named
 :::
 
 Done! you can now import historical data from PagerDuty into Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+</details>
