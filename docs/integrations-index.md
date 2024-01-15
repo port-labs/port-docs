@@ -161,8 +161,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Sentry
 
-- [Sentry integration](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/sentry.md)
-- [Sentry webhook](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/sentry.md)
+- [Sentry integration and webhook](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/sentry.md)
 
 ## New Relic
 
