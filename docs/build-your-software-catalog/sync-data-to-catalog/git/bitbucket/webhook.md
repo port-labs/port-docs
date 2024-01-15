@@ -1,13 +1,13 @@
 ---
-sidebar_position: 19
+sidebar_position: 5
 description: Ingest Bitbucket Server projects, repositories and pull requests into your catalog
 ---
 
-import BitbucketProjectBlueprint from "./resources/bitbucket-server/\_example_bitbucket_project_blueprint.mdx";
-import BitbucketPullrequestBlueprint from "./resources/bitbucket-server/\_example_bitbucket_pull_request_blueprint.mdx";
-import BitbucketRepositoryBlueprint from "./resources/bitbucket-server/\_example_bitbucket_repository_blueprint.mdx";
-import BitbucketWebhookConfiguration from "./resources/bitbucket-server/\_example_bitbucket_webhook_config.mdx";
-import BitbucketServerPythonScript from "./resources/bitbucket-server/\_example_bitbucket_python_script.mdx";
+import BitbucketProjectBlueprint from "/resources/bitbucket-server/\_example_bitbucket_project_blueprint.mdx";
+import BitbucketPullrequestBlueprint from "/resources/bitbucket-server/\_example_bitbucket_pull_request_blueprint.mdx";
+import BitbucketRepositoryBlueprint from "/resources/bitbucket-server/\_example_bitbucket_repository_blueprint.mdx";
+import BitbucketWebhookConfiguration from "/resources/bitbucket-server/\_example_bitbucket_webhook_config.mdx";
+import BitbucketServerPythonScript from "/resources/bitbucket-server/\_example_bitbucket_python_script.mdx";
 
 # Bitbucket (Self-Hosted)
 

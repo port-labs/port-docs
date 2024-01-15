@@ -43,6 +43,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [BitBucket GitOps](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/gitops/gitops.md)
 - [Sync repositories, file contents, pull-requests, monorepos and more](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/examples.md)
 - [Bitbucket scaffolder](/create-self-service-experiences/setup-backend/jenkins-pipeline/examples/scaffold-bitbucket-using-cookiecutter.md)
+- [Webhook integration between Bitbucket (self-hosted) server and Port](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/webhook.md)
 
 ### Azure DevOps
 
@@ -137,10 +138,8 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## SonarQube / SonarCloud
 
-- [SonarQube integration](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube.md)
-- [SonarCloud integration](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube.md)
-- [SonarQube webhook](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/sonarqube.md)
-- [SonarCloud webhook](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/sonarqube.md)
+- [SonarQube integration and webhook](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube.md)
+- [SonarCloud integration and webhook](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube.md)
 
 ## Snyk
 
@@ -156,7 +155,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Jira
 
-- [Jira integration](/build-your-software-catalog/sync-data-to-catalog/jira/jira.md)
+- [Jira integration and webhook](/build-your-software-catalog/sync-data-to-catalog/jira/jira.md)
 - [Initiate scorecards handling with Jira issues](/promote-scorecards/manage-using-3rd-party-apps/jira)
 - [Self service for a new Jira bug using GitHub workflows](https://github.com/port-labs/self-service-actions-examples/tree/main/github-workflows/jira)
 
@@ -172,7 +171,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## OpsGenie
 
-- [OpsGenie integration](/build-your-software-catalog/sync-data-to-catalog/incident-management/opsgenie.md)
+- [OpsGenie integration and webhook](/build-your-software-catalog/sync-data-to-catalog/incident-management/opsgenie.md)
 
 ## FireHydrant
 
