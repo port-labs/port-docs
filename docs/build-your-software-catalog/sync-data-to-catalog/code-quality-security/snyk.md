@@ -776,12 +776,11 @@ resources:
 </details>
 
 ## Alternative installation via webhook
-:::warning Ocean integration available
-Ocean's [Snyk integration](#snyk) is simpler to use and provides more capabilities than the webhook, we recommend using it instead.  
-Read more about Ocean [here](https://ocean.getport.io/).
+While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from SonarQube. If so, use the following instructions:
 
-If you'd still prefer to use the webhook, proceed with the instructions on this page.
-:::
+<details>
+
+<summary><b>Webhook installation (click to expand)</b></summary>
 
 In this example you are going to create a webhook integration between [Snyk](https://snyk.io/) and Port, which will ingest Snyk code and infrastructure vulnerability entities into Port.
 
@@ -853,3 +852,4 @@ curl -X POST \
 :::
 
 Done! Any vulnerability detected on your source code will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+</details>

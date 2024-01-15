@@ -1132,12 +1132,11 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 ## Alternative installation via webhook
-:::warning Ocean integration available
-Ocean's [Opsgenie integration](#opsgenie) is simpler to use and provides more capabilities than the webhook, we recommend using it instead.  
-Read more about Ocean [here](https://ocean.getport.io/).
+While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from Opsgenie. If so, use the following instructions:
 
-If you'd still prefer to use the webhook, proceed with the instructions on this page.
-:::
+<details>
+
+<summary><b>Webhook installation (click to expand)</b></summary>
 
 In this example you are going to create a webhook integration between [OpsGenie](https://www.atlassian.com/software/opsgenie) and Port, which will ingest alert entities.
 
@@ -1271,3 +1270,4 @@ The examples below pull data from the OpsGenie REST Api, in a defined scheduled 
 
 - [Github Workflow](https://github.com/port-labs/opsgenie-oncall-example)
 - [GitLab CI Pipeline](https://gitlab.com/getport-labs/opsgenie-oncall-example)
+</details>

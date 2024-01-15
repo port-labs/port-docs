@@ -874,16 +874,16 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 ## Alternative installation via webhook
 
-:::warning Ocean integration available
-Ocean's [Jira integration](#jira) is simpler to use and provides more capabilities than the webhook, we recommend using it instead.  
-Read more about Ocean [here](https://ocean.getport.io/).
+While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from Jira. If so, use the following instructions:
 
-If you'd still prefer to use the webhook, proceed with the instructions below
-:::
+While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from SonarQube. If so, use the following instructions:
 
+<details>
+
+<summary><b>Webhook installation (click to expand)</b></summary>
 In this example you are going to create a webhook integration between [Jira](https://www.atlassian.com/software/jira) and Port, which will ingest Jira issue entities.
 
-### Port configuration
+## Port configuration
 
 Create the following blueprint definition:
 
@@ -1498,3 +1498,4 @@ Use the following Python script to ingest historical Jira issues into port:
 </details>
 
 Done! you can now import historical issues from Jira into Port. Port will parse the issues according to the mapping and update the catalog entities accordingly.
+</details>

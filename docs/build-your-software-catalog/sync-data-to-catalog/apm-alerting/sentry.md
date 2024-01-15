@@ -739,12 +739,11 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 ## Alternative installation via webhook
-:::warning Ocean integration available
-Ocean's [Sentry integration](#sentry) is simpler to use and provides more capabilities than the webhook, we recommend using it instead.  
-Read more about Ocean [here](https://ocean.getport.io/).
+While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from Sentry. If so, use the following instructions:
 
-If you'd still prefer to use the webhook, proceed with the instructions on this page.
-:::
+<details>
+
+<summary><b>Webhook installation (click to expand)</b></summary>
 
 In this example you are going to create a webhook integration between [Sentry](https://sentry.io) and Port, which will ingest issues entities.
 
@@ -982,3 +981,4 @@ In addition, the following Port `sentryComment` entity will be generated:
   }
 }
 ```
+</details>
