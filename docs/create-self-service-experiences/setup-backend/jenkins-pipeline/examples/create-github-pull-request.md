@@ -6,7 +6,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import FindCredentials from "/docs/build-your-software-catalog/sync-data-to-catalog/api/_template_docs/_find_credentials.mdx";
 
 
-# Create pull request
+# Create Github pull request
 
 This example illustrates how to open a pull-request in a GitHub repository from within Port using a Jenkins pipeline.
 

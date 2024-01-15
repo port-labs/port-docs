@@ -17,14 +17,14 @@ After completing the onboarding process, Port will create some components for yo
 We highly recommend completing the onboarding process in order to get a basic understanding of Port and an idea of how a good developer portal can help you and your developers.  
 
 :::info onboarding skipped
-If you chose to **skip** the onboarding process, you can bridge the gap by connecting Port to your desired Git provider:
+If you chose to **skip** the onboarding process, you can still have these components created for you by connecting Port to your desired Git provider:
 - Go to the [data-sources page](https://app.getport.io/dev-portal/data-sources) of your portal.
 - Click on `+ Data source` in the top right corner, and choose your desired Git provider.
 :::
 
 ## Initial portal experience
 
-After completing the onboarding process, Port will create some components for you (using your real data 😎) in order to show you the potential of your portal. In this walkthrough, we will go over them and learn about the different pillars of Port.
+In this walkthrough, we will go over the components in your portal and learn about the different pillars of Port.
 
 ### Homepage
 
