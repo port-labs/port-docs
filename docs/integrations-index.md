@@ -173,7 +173,6 @@ This page contains a list of Port's available integrations, organized by the pla
 ## OpsGenie
 
 - [OpsGenie integration](/build-your-software-catalog/sync-data-to-catalog/incident-management/opsgenie.md)
-- [OpsGenie webhook](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/opsgenie.md)
 
 ## FireHydrant
 
