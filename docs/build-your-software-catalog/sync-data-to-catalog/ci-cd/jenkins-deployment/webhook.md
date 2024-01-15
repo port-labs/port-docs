@@ -8,7 +8,7 @@ import JenkinsBuildWebhookConfig from '../../webhook/examples/resources/jenkins/
 import JenkinsJobBlueprint from '../../webhook/examples/resources/jenkins/\_example_jenkins_job_blueprint.mdx'
 import JenkinsJobWebhookConfig from '../../webhook/examples/resources/jenkins/\_example_jenkins_job_webhook_configuration.mdx'
 
-# Jenkins
+# Webhook integration
 
 In this example you are going to create a webhook integration between [Jenkins](https://www.jenkins.io/) and Port, which will ingest job and build entities.
 

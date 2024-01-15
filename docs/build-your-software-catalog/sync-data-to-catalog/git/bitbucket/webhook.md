@@ -9,7 +9,7 @@ import BitbucketRepositoryBlueprint from "../../webhook/examples/resources/bitbu
 import BitbucketWebhookConfiguration from "../../webhook/examples/resources/bitbucket-server/\_example_bitbucket_webhook_config.mdx";
 import BitbucketServerPythonScript from "../../webhook/examples/resources/bitbucket-server/\_example_bitbucket_python_script.mdx";
 
-# Bitbucket (Self-Hosted)
+# Bitbucket webhook integration (Self-Hosted)
 
 In this example you are going to create a webhook integration between your Bitbucket Server and Port. The integration will facilitate the ingestion of Bitbucket project, repository and pull request entities into Port.
 
