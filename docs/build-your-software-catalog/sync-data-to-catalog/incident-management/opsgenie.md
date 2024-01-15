@@ -6,8 +6,8 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
 import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
-import OpsGenieAlertBlueprint from "/resources/opsgenie/\_example_opsgenie_alert_blueprint.mdx";
-import OpsGenieAlertConfiguration from "/resources/opsgenie/\_example_opsgenie_alert_configuration.mdx";
+import OpsGenieAlertBlueprint from "../webhook/examples/resources/opsgenie/\_example_opsgenie_alert_blueprint.mdx";
+import OpsGenieAlertConfiguration from "../webhook/examples/resources/opsgenie/\_example_opsgenie_alert_configuration.mdx";
 
 # Opsgenie
 

@@ -1,12 +1,12 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import ProjecttBlueprint from '/resources/argocd/\_example_project_blueprint.mdx'
-import ApplicationBlueprint from '/resources/argocd/\_example_application_blueprint.mdx'
-import EventBlueprint from '/resources/argocd/\_example_event_blueprint.mdx'
+import ProjecttBlueprint from '../webhook/examples/resources/argocd/\_example_project_blueprint.mdx'
+import ApplicationBlueprint from '../webhook/examples/resources/argocd/\_example_application_blueprint.mdx'
+import EventBlueprint from '../webhook/examples/resources/argocd/\_example_event_blueprint.mdx'
 
-import ArgoCDWebhookConfig from '/resources/argocd/\_example_webhook_configuration.mdx'
-import ArgoCDEventWebhookConfig from '/resources/argocd/\_example_events_webhook_config.mdx'
-import ArgoCDEventManifest from '/resources/argocd/\_example_events_manifest.mdx'
+import ArgoCDWebhookConfig from '../webhook/examples/resources/argocd/\_example_webhook_configuration.mdx'
+import ArgoCDEventWebhookConfig from '../webhook/examples/resources/argocd/\_example_events_webhook_config.mdx'
+import ArgoCDEventManifest from '../webhook/examples/resources/argocd/\_example_events_manifest.mdx'
 
 # ArgoCD
 
@@ -741,7 +741,7 @@ Create the following blueprint definition:
 
 </details>
 
-Create the following webhook configuration [using Port UI](../../webhook/?operation=ui#configuring-webhook-endpoints)
+Create the following webhook configuration [using Port UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
 
@@ -887,7 +887,7 @@ Create the following blueprint definition:
 
 </details>
 
-Create the following webhook configuration [using Port UI](../../webhook/?operation=ui#configuring-webhook-endpoints)
+Create the following webhook configuration [using Port UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
 
@@ -966,4 +966,5 @@ kubectl apply -n <your-namespace> -f <path-to-yaml-file>
 This command deploys the webhook notification configuration to your ArgoCD notification configmap (`argocd-notifications-cm`), allowing Port to receive real-time events.
 
 Done! any change that happens to your applications in ArgoCD will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+
 </details>

@@ -3,12 +3,12 @@ sidebar_position: 5
 description: Ingest Azure DevOps resources into your catalog
 ---
 
-import ProjectBlueprint from './resources/azuredevops/\_example_project_blueprint.mdx'
-import RepositoryBlueprint from './resources/azuredevops/\_example_repository_blueprint.mdx'
-import PipelineBlueprint from './resources/azuredevops/\_example_pipeline_blueprint.mdx'
-import WorkItemBlueprint from './resources/azuredevops/\_example_work_item_blueprint.mdx'
+import ProjectBlueprint from '../../webhook/examples/resources/azuredevops/\_example_project_blueprint.mdx'
+import RepositoryBlueprint from '../../webhook/examples/resources/azuredevops/\_example_repository_blueprint.mdx'
+import PipelineBlueprint from '../../webhook/examples/resources/azuredevops/\_example_pipeline_blueprint.mdx'
+import WorkItemBlueprint from '../../webhook/examples/resources/azuredevops/\_example_work_item_blueprint.mdx'
 
-import AzureDevopsWebhookConfig from './resources/azuredevops/\_example_webhook_configuration.mdx'
+import AzureDevopsWebhookConfig from '../../webhook/examples/resources/azuredevops/\_example_webhook_configuration.mdx'
 
 # Azure DevOps
 
@@ -74,7 +74,7 @@ Follow the official documentation on how to [create an azure devops app password
 
 ## Port Webhook Configuration
 
-Create the following webhook configuration [using Port UI](../../webhook/?operation=ui#configuring-webhook-endpoints)
+Create the following webhook configuration [using Port UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
 

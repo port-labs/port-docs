@@ -1,9 +1,9 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
-import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
-import SnykBlueprint from "/resources/snyk/\_example_snyk_vulnerability_blueprint.mdx";
-import SnykConfiguration from "/resources/snyk/\_example_snyk_vulnerability_webhook_configuration.mdx";
+import AdvancedConfig from '../../../generalTemplates/\_ocean_advanced_configuration_note.md'
+import SnykBlueprint from "../webhook/examples/resources/snyk/\_example_snyk_vulnerability_blueprint.mdx";
+import SnykConfiguration from "../webhook/examples/resources/snyk/\_example_snyk_vulnerability_webhook_configuration.mdx";
 
 # Snyk
 
@@ -795,7 +795,7 @@ Create the following blueprint definition:
 
 </details>
 
-Create the following webhook configuration [using Port UI](../../?operation=ui#configuring-webhook-endpoints)
+Create the following webhook configuration [using Port UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
 <summary>Snyk vulnerability webhook configuration</summary>

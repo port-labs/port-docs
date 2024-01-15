@@ -5,12 +5,12 @@ sidebar_position: 1
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
-import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
-import PagerDutyServiceBlueprint from "./resources/pagerduty/\_example_pagerduty_service.mdx";
-import PagerDutyIncidentBlueprint from "./resources/pagerduty/\_example_pagerduty_incident.mdx";
-import PagerDutyWebhookConfig from "./resources/pagerduty/\_example_pagerduty_webhook_config.mdx";
-import PagerDutyWebhookHistory from "./resources/pagerduty/\_example_pagerduty_webhook_history_config.mdx";
-import PagerDutyScript from "./resources/pagerduty/\_example_pagerduty_shell_history_config.mdx";
+import AdvancedConfig from '../../../generalTemplates/\_ocean_advanced_configuration_note.md'
+import PagerDutyServiceBlueprint from "../webhook/examples/resources/pagerduty/\_example_pagerduty_service.mdx"
+import PagerDutyIncidentBlueprint from "../webhook/examples/resources/pagerduty/\_example_pagerduty_incident.mdx"
+import PagerDutyWebhookConfig from "../webhook/examples/resources/pagerduty/\_example_pagerduty_webhook_config.mdx"
+import PagerDutyWebhookHistory from "../webhook/examples/resources/pagerduty/\_example_pagerduty_webhook_history_config.mdx"
+import PagerDutyScript from "../webhook/examples/resources/pagerduty/\_example_pagerduty_shell_history_config.mdx"
 
 # PagerDuty
 
@@ -987,7 +987,7 @@ Create the following blueprint definitions:
 
 </details>
 
-Create the following webhook configuration [using Port UI](../../?operation=ui#configuring-webhook-endpoints)
+Create the following webhook configuration [using Port UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
 <summary>PagerDuty webhook configuration</summary>
@@ -1018,7 +1018,7 @@ Create the following webhook configuration [using Port UI](../../?operation=ui#c
 1. Go to [PagerDuty](https://www.pagerduty.com/) and select the account you want to configure the webhook for.
 2. Navigate to **Integrations** in the navigation bar and click on **Generic Webhooks (v3)**.
 3. Click **New Webhook** and provide the following information:
-   1. `Webhook URL` - enter the value of the `url` key you received after [creating the webhook configuration](../webhook.md#configuring-webhook-endpoints).
+   1. `Webhook URL` - enter the value of the `url` key you received after [creating the webhook configuration](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints).
    2. `Scope Type` - select whether you want to receive webhook events for a specific service (select `Service` if applicable) or for all services in your account (select `Account` if applicable).
    3. `Description` - provide an optional description for your webhook.
    4. `Event Subscription` - choose the event types you would like to subscribe to.
@@ -1183,7 +1183,7 @@ The script extracts services and incidents from PagerDuty, and sends them to Por
 
 This example utilizes the same [blueprint](#prerequisites) definition from the previous section, along with a new webhook configuration:
 
-Create the following webhook configuration [using Port UI](../../?operation=ui#configuring-webhook-endpoints)
+Create the following webhook configuration [using Port UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
 <summary>PagerDuty webhook configuration for historical data</summary>

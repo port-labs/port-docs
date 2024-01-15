@@ -3,10 +3,10 @@ sidebar_position: 2
 description: Ingest Jenkins build and job events into your catalog
 ---
 
-import JenkinsBuildBlueprint from '/resources/jenkins/\_example_jenkins_build_blueprint.mdx'
-import JenkinsBuildWebhookConfig from '/resources/jenkins/\_example_jenkins_build_webhook_configuration.mdx'
-import JenkinsJobBlueprint from '/resources/jenkins/\_example_jenkins_job_blueprint.mdx'
-import JenkinsJobWebhookConfig from '/resources/jenkins/\_example_jenkins_job_webhook_configuration.mdx'
+import JenkinsBuildBlueprint from '../../webhook/examples/resources/jenkins/\_example_jenkins_build_blueprint.mdx'
+import JenkinsBuildWebhookConfig from '../../webhook/examples/resources/jenkins/\_example_jenkins_build_webhook_configuration.mdx'
+import JenkinsJobBlueprint from '../../webhook/examples/resources/jenkins/\_example_jenkins_job_blueprint.mdx'
+import JenkinsJobWebhookConfig from '../../webhook/examples/resources/jenkins/\_example_jenkins_job_webhook_configuration.mdx'
 
 # Jenkins
 
@@ -30,7 +30,7 @@ Create the following blueprint definition:
 
 </details>
 
-Create the following webhook configuration [using Port UI](../../webhook/?operation=ui#configuring-webhook-endpoints)
+Create the following webhook configuration [using Port UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
 

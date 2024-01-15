@@ -28,7 +28,7 @@ Create the following blueprint definition:
 
 </details>
 
-Create the following webhook configuration [using Port UI](../../?operation=ui#configuring-webhook-endpoints)
+Create the following webhook configuration [using Port UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
 <summary>Wiz issue webhook configuration</summary>
@@ -48,6 +48,5 @@ Create the following webhook configuration [using Port UI](../../?operation=ui#c
 
 1. Send an email to win@wiz.io requesting for access to the developer documentation or reach out to your Wiz account manager.
 2. Follow this [guide](https://integrate.wiz.io/reference/webhook-tutorial#create-a-custom-webhook) in the documentation to create a webhook.
-
 
 Done! Any issue created in Wiz will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.

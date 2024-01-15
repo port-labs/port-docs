@@ -74,7 +74,7 @@ Follow the official documentation on how to [create an azure devops app password
 
 ## Port Webhook Configuration
 
-Create the following webhook configuration [using Port UI](../../webhook/?operation=ui#configuring-webhook-endpoints)
+Create the following webhook configuration [using Port UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
 
