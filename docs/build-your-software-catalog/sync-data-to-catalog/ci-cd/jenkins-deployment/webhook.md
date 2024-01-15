@@ -1,12 +1,12 @@
 ---
-sidebar_position: 6
+sidebar_position: 2
 description: Ingest Jenkins build and job events into your catalog
 ---
 
-import JenkinsBuildBlueprint from './resources/jenkins/\_example_jenkins_build_blueprint.mdx'
-import JenkinsBuildWebhookConfig from './resources/jenkins/\_example_jenkins_build_webhook_configuration.mdx'
-import JenkinsJobBlueprint from './resources/jenkins/\_example_jenkins_job_blueprint.mdx'
-import JenkinsJobWebhookConfig from './resources/jenkins/\_example_jenkins_job_webhook_configuration.mdx'
+import JenkinsBuildBlueprint from '/resources/jenkins/\_example_jenkins_build_blueprint.mdx'
+import JenkinsBuildWebhookConfig from '/resources/jenkins/\_example_jenkins_build_webhook_configuration.mdx'
+import JenkinsJobBlueprint from '/resources/jenkins/\_example_jenkins_job_blueprint.mdx'
+import JenkinsJobWebhookConfig from '/resources/jenkins/\_example_jenkins_job_webhook_configuration.mdx'
 
 # Jenkins
 
