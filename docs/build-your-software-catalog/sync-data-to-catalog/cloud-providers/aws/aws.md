@@ -32,7 +32,7 @@ The open source AWS exporter allows you to perform extract, transform, load (ETL
 
 The exporter is deployed using an [AWS serverless application](https://aws.amazon.com/serverless/sam/) that is installed on the account.
 
-[The serverless application](#exporter-aws-serverless-application) requires a [JSON configuration file](#exporter-configjson-file) to describe the ETL process to load data into the developer portal, and an [IAM policy](#iam-policy) with the necessary permissions to list and read the configured resources.
+[The serverless application](#exporter-aws-serverless-application) requires a [JSON configuration file](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/#exporter-configjson-file) to describe the ETL process to load data into the developer portal, and an [IAM policy](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/#iam-policy) with the necessary permissions to list and read the configured resources.
 
 The exporter makes use of [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the AWS objects.
 

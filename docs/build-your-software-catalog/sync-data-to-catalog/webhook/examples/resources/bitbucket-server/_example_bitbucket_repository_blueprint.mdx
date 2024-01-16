@@ -1,0 +1,48 @@
+```json showLineNumbers
+{
+  "identifier": "bitbucketRepository",
+  "description": "A software catalog to represent Bitbucket repositories",
+  "title": "Bitbucket Repository",
+  "icon": "BitBucket",
+  "schema": {
+    "properties": {
+      "forkable": {
+        "icon": "DefaultProperty",
+        "title": "Is Forkable",
+        "type": "boolean"
+      },
+      "description": {
+        "title": "Description",
+        "type": "string",
+        "icon": "DefaultProperty"
+      },
+      "public": {
+        "icon": "DefaultProperty",
+        "title": "Is Public",
+        "type": "boolean"
+      },
+      "state": {
+        "icon": "DefaultProperty",
+        "title": "State",
+        "type": "string"
+      },
+      "link": {
+        "title": "Link",
+        "icon": "DefaultProperty",
+        "type": "string"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "project": {
+      "title": "Project",
+      "target": "bitbucketProject",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
