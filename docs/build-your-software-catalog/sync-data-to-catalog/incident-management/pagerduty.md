@@ -967,9 +967,9 @@ While the Ocean integration described above is the recommended installation meth
 
 In this example you are going to create a webhook integration between [PagerDuty](https://www.pagerduty.com/) and Port, which will ingest PagerDuty services and its related incidents into Port. This integration will involve setting up a webhook to receive notifications from PagerDuty whenever an incident is created or updated, allowing Port to ingest and process the incident entities accordingly.
 
-### Import PagerDuty services and incidents
+<h2>Import PagerDuty services and incidents<h2>
 
-#### Port configuration
+<h3>Port configuration</h3>
 
 Create the following blueprint definitions:
 
@@ -1013,7 +1013,7 @@ Create the following webhook configuration [using Port UI](/build-your-software-
 
 </details>
 
-#### Create a webhook in PagerDuty
+<h3>Create a webhook in PagerDuty</h3>
 
 1. Go to [PagerDuty](https://www.pagerduty.com/) and select the account you want to configure the webhook for.
 2. Navigate to **Integrations** in the navigation bar and click on **Generic Webhooks (v3)**.
@@ -1078,11 +1078,11 @@ In order to view the different events available in PagerDuty webhooks, [look her
 
 Done! any change that happens to your services or incidents in PagerDuty will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
 
-### Let's Test It
+<h2>Let's Test It</h2>
 
 This section includes a sample webhook event sent from PagerDuty when an incident is created or updated. In addition, it includes the entity created from the event based on the webhook configuration provided in the previous section.
 
-#### Payload
+<h3>Payload</h3>
 
 Here is an example of the payload structure sent to the webhook URL when a PagerDuty incident is created:
 
@@ -1149,7 +1149,7 @@ Here is an example of the payload structure sent to the webhook URL when a Pager
 
 </details>
 
-#### Mapping Result
+<h3>Mapping Result</h3>
 
 The combination of the sample payload and the webhook configuration generates the following Port entity:
 
@@ -1173,13 +1173,13 @@ The combination of the sample payload and the webhook configuration generates th
 }
 ```
 
-### Import PagerDuty historical data
+<h2>Import PagerDuty historical data</h2>
 
 In this example you are going to use the provided Bash script to fetch data from the PagerDuty API and ingest it to Port.
 
 The script extracts services and incidents from PagerDuty, and sends them to Port as microservice and incident entities respectively.
 
-#### Port configuration
+<h3>Port configuration</h3>
 
 This example utilizes the same [blueprint](#prerequisites) definition from the previous section, along with a new webhook configuration:
 
@@ -1214,7 +1214,7 @@ Remember to update the `WEBHOOK_SECRET` with the real secret you receive after s
 
 </details>
 
-#### How to Run the script
+<h3>How to Run the script</h3>
 
 This script requires two configuration values:
 

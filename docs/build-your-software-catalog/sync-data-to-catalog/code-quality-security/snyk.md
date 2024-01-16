@@ -784,7 +784,7 @@ While the Ocean integration described above is the recommended installation meth
 
 In this example you are going to create a webhook integration between [Snyk](https://snyk.io/) and Port, which will ingest Snyk code and infrastructure vulnerability entities into Port.
 
-### Port configuration
+<h3>Port configuration</h3>
 
 Create the following blueprint definition:
 
@@ -820,7 +820,7 @@ Remember to replace the `WEBHOOK_SECRET` with the real secret you specify when c
 
 </details>
 
-### Create a webhook in Snyk
+<h3>Create a webhook in Snyk</h3>
 
 1. Go to [Snyk](https://snyk.io/) and select an account you want to configure the webhook for;
 2. Click on **Settings** at the left of the page and copy your organization ID under the **Organization ID** section;

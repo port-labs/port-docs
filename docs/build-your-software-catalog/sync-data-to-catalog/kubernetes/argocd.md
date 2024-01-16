@@ -723,7 +723,7 @@ While the Ocean integration described above is the recommended installation meth
 <summary><b>Webhook installation (click to expand)</b></summary>
 In this example you are going to create a webhook integration between [ArgoCD](https://argo-cd.readthedocs.io/en/stable/) and Port, which will ingest application entities and map them to your ArgoCD projects.
 
-### Port configuration
+<h2>Port configuration</h2>
 
 Create the following blueprint definition:
 
@@ -760,16 +760,16 @@ Create the following webhook configuration [using Port UI](/build-your-software-
 
 </details>
 
-### Create a webhook in ArgoCD
+<h2>Create a webhook in ArgoCD</h2>
 
 To set up a webhook configuration in ArgoCD for sending notifications to Port, follow these steps:
 
-#### Prerequisite
+<h3>Prerequisite</h3>
 
 1. You have access to a Kubernetes cluster where ArgoCD is deployed.
 2. You have `kubectl` installed and configured to access your cluster.
 
-#### Steps
+<h3>Steps</h3>
 
 1. Install ArgoCD notifications manifest;
 
@@ -872,11 +872,11 @@ This command deploys the webhook notification configuration to your ArgoCD notif
 
 Done! any change that happens to your applications in ArgoCD will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
 
-### Argocd Events
+<h2>Argocd Events</h3>
 
 In this example you are going to create a webhook integration between [ArgoCD](https://argo-cd.readthedocs.io/en/stable/) and Port, which will ingest all events entities and map them to your ArgoCD applications.
 
-### Port configuration
+<h2>Port configuration</h3>
 
 Create the following blueprint definition:
 

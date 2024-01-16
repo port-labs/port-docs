@@ -1168,7 +1168,7 @@ Create the following webhook configuration [using Port UI](../../?operation=ui#c
 
 </details>
 
-### Create a webhook in OpsGenie
+<h2>Create a webhook in OpsGenie</h2>
 
 1. Go to OpsGenie;
 2. Select **Settings**;
@@ -1198,11 +1198,11 @@ In order to view the different payloads and events available in Opsgenie webhook
 
 Done! any change that happens to an OpsGenie alert (created, acknowledged, etc.) will trigger a webhook event that OpsGenie will send to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
 
-### Let's Test It
+<h2>Let's Test It</h2>
 
 This section includes a sample webhook event sent from OpsGenie when an alert is created. In addition, it includes the entity created from the event based on the webhook configuration provided in the previous section.
 
-#### Payload
+<h3>Payload</h3>
 
 Here is an example of the payload structure sent to the webhook URL when an OpsGenie alert is created:
 
@@ -1240,7 +1240,7 @@ Here is an example of the payload structure sent to the webhook URL when an OpsG
 
 </details>
 
-#### Mapping Result
+<h3>Mapping Result</h3>
 
 The combination of the sample payload and the webhook configuration generates the following Port entity:
 
@@ -1263,7 +1263,7 @@ The combination of the sample payload and the webhook configuration generates th
 }
 ```
 
-### Ingest who is on-call
+<h2>Ingest who is on-call</h2>
 
 In this example we will create a blueprint for `service` entities with an `on-call` property that will be ingested directly from OpsGenie.
 The examples below pull data from the OpsGenie REST Api, in a defined scheduled period using GitLab Pipelines or GitHub Workflows, and report the data to Port as a property to the `service` blueprint.
