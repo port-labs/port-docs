@@ -8,8 +8,8 @@ on:
   pull_request:
     types:
       - "ready_for_review"
-    paths:
-      - 'docs/**'
+    # paths:
+    #   - 'docs/**'
 jobs:
   sonarcloud:
     name: SonarCloud
