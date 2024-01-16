@@ -423,7 +423,7 @@ Examples of blueprints and the relevant integration configurations:
 ### Organization
 
 <details>
-<summary>Target blueprint</summary>
+<summary>Organization blueprint</summary>
 
 ```json showLineNumbers
 {
