@@ -5,11 +5,11 @@ import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configurat
 
 # Snyk
 
-Our Snyk integration allows you to import `targets`, `projects` and `issues` from your Snyk account into Port, according to your mapping and definitions.
+Our Snyk integration allows you to import `organizations`, `targets`, `projects` and `issues` from your Snyk account into Port, according to your mapping and definitions.
 
 ## Common use cases
 
-- Map `targets`, `projects` and `issues` in your Snyk organization environment.
+- Map `organizations`, `targets`, `projects` and `issues` in your Snyk environment.
 - Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 - Create/delete Snyk objects using self-service actions.
 
@@ -39,7 +39,8 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `integration.type`                  | The integration type                                                                                               | ✅       |
 | `integration.eventListener.type`    | The event listener type                                                                                            | ✅       |
 | `integration.secrets.token`         | The Snyk API token                                                                                                 | ✅       |
-| `integration.config.organizationId` | The Snyk organization ID                                                                                           | ✅       |
+| `integration.config.organizationId` | The Snyk organization ID. Fetches data for this organization when provided                                                                     |❌       |
+| `integration.config.groups` | A comma-separated list of Snyk group ids to filter data for. Fetches data for organizations within the specified groups                                                          |❌       |
 | `integration.config.apiUrl`         | The Snyk API URL. If not specified, the default will be https://api.snyk.io                                        | ❌       |
 | `integration.config.appHost`        | The host of the Port Ocean app. Used to set up the integration endpoint as the target for Webhooks created in Snyk | ❌       |
 | `integration.secret.webhookSecret`  | This is a password you create, that Snyk uses to sign webhook events to Port                                       | ❌       |
@@ -63,8 +64,7 @@ helm upgrade --install my-snyk-integration port-labs/port-ocean \
 	--set integration.identifier="my-snyk-integration"  \
 	--set integration.type="snyk"  \
 	--set integration.eventListener.type="POLLING"  \
-	--set integration.secrets.token="SNYK_TOKEN"  \
-	--set integration.config.organizationId="ORG_ID"
+	--set integration.secrets.token="SNYK_TOKEN"
 ```
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
@@ -73,7 +73,7 @@ To install the integration using ArgoCD, follow these steps:
 1. Create a `values.yaml` file in `argocd/my-ocean-snyk-integration` in your git repository with the content:
 
 :::note
-Remember to replace the placeholders for `SNYK_ORGANIZATION_ID` and `SNYK_TOKEN`.
+Remember to replace the placeholders for `SNYK_ORGANIZATION_ID`, `SNYK_GROUPS` and `SNYK_TOKEN`.
 :::
 ```yaml showLineNumbers
 initializePortResources: true
@@ -85,7 +85,8 @@ integration:
     type: POLLING
   config:
   // highlight-next-line
-    organizationId: SNYK_ORGANIZATION_ID
+    organizationId: SNYK_ORGANIZATION_ID  ## Required when you want to fetch data for a single organization
+    groups: SNYK_GROUPS  ## Required when you want to fetch data for all organizations within the specified group(s)
   secrets:
   // highlight-next-line
     token: SNYK_TOKEN
@@ -164,7 +165,8 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 | Parameter                                     | Description                                                                                                        | Required |
 | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
 | `OCEAN__INTEGRATION__CONFIG__TOKEN`           | The Snyk API token                                                                                                 | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID` | The Snyk organization ID                                                                                           | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID` | The Snyk organization ID                                                                                           | ❌      |
+| `OCEAN__INTEGRATION__CONFIG__GROUPS` | A comma-separated list of Snyk group ids to filter data for                                                    | ❌      |
 | `OCEAN__INTEGRATION__CONFIG__API_URL`         | The Snyk API URL. If not specified, the default will be https://api.snyk.io                                        | ❌       |
 | `OCEAN__INITIALIZE_PORT_RESOURCES`            | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
 | `OCEAN__INTEGRATION__IDENTIFIER`              | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
@@ -201,7 +203,6 @@ jobs:
           -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
           -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
           -e OCEAN__INTEGRATION__CONFIG__TOKEN=${{ secrets.OCEAN__INTEGRATION__CONFIG__TOKEN }} \
-          -e OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID=${{ secrets.OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID }} \
           -e OCEAN__PORT__CLIENT_ID=${{ secrets.OCEAN__PORT__CLIENT_ID }} \
           -e OCEAN__PORT__CLIENT_SECRET=${{ secrets.OCEAN__PORT__CLIENT_SECRET }} \
           $image_name
@@ -227,7 +228,8 @@ of `Secret Text` type:
 | Parameter                                     | Description                                                                                                                                                      | Required |
 | --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
 | `OCEAN__INTEGRATION__CONFIG__TOKEN`           | The Snyk API token                                                                                                                                               | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID` | The Snyk organization ID                                                                                                                                         | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID` | The Snyk organization ID                                                                                                                                         | ❌      |
+| `OCEAN__INTEGRATION__CONFIG__GROUPS` | A comma-separated list of Snyk group ids to filter data for                                                    | ❌      |
 | `OCEAN__INTEGRATION__CONFIG__API_URL`         | The Snyk API URL. If not specified, the default will be https://api.snyk.io                                                                                      | ❌       |
 | `OCEAN__INITIALIZE_PORT_RESOURCES`            | Default true, When set to false the integration will not create default blueprints and the port App config Mapping                                               | ❌       |
 | `OCEAN__INTEGRATION__IDENTIFIER`              | Change the identifier to describe your integration, if not set will use the default one                                                                          | ❌       |
@@ -249,7 +251,6 @@ pipeline {
                 script {
                     withCredentials([
                         string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__TOKEN', variable: 'OCEAN__INTEGRATION__CONFIG__TOKEN'),
-                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID', variable: 'OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_SECRET', variable: 'OCEAN__PORT__CLIENT_SECRET'),
                     ]) {
@@ -262,7 +263,6 @@ pipeline {
                                 -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
                                 -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
                                 -e OCEAN__INTEGRATION__CONFIG__TOKEN=$OCEAN__INTEGRATION__CONFIG__TOKEN \
-                                -e OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID=$OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
                                 $image_name
@@ -327,6 +327,7 @@ The integration configuration determines which resources will be queried from Sn
 :::tip Supported resources
 The following resources can be used to map data from Snyk, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
 
+- [`Organization`](https://snyk.docs.apiary.io/#reference/organizations/the-snyk-organization-for-a-request/list-all-the-organizations-a-user-belongs-to)
 - [`Target`](https://apidocs.snyk.io/?version=2023-08-21%7Ebeta#get-/orgs/-org_id-/targets)
 - [`Project`](https://apidocs.snyk.io/?version=2023-08-21#get-/orgs/-org_id-/projects)
 - [`Issue`](https://snyk.docs.apiary.io/#reference/projects/aggregated-project-issues/list-all-aggregated-issues)
@@ -418,6 +419,60 @@ To ingest Snyk objects using the [integration configuration](#configuration-stru
 ## Examples
 
 Examples of blueprints and the relevant integration configurations:
+
+## Organization
+
+<details>
+<summary>Target blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "snykOrganization",
+  "title": "Snyk Organization",
+  "icon": "Snyk",
+  "schema": {
+    "properties": {
+      "url": {
+        "type": "string",
+        "title": "URL",
+        "format": "url",
+        "icon": "Snyk"
+      },
+      "slug": {
+        "type": "string",
+        "title": "Slug"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+- kind: organization
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .name
+        blueprint: '"snykOrganization"'
+        properties:
+          slug: .slug
+          url: ("https://app.snyk.io/org/" + .slug | tostring)
+```
+</details>
+
 
 ### Target
 
@@ -526,7 +581,6 @@ Examples of blueprints and the relevant integration configurations:
 ```json showLineNumbers
 {
   "identifier": "snykProject",
-  "description": "This blueprint represents a snyk project in our software catalog",
   "title": "Snyk Project",
   "icon": "Snyk",
   "schema": {
@@ -548,7 +602,12 @@ Examples of blueprints and the relevant integration configurations:
         "type": "array",
         "items": {
           "type": "string",
-          "enum": ["critical", "high", "medium", "low"]
+          "enum": [
+            "critical",
+            "high",
+            "medium",
+            "low"
+          ]
         },
         "icon": "DefaultProperty"
       },
@@ -576,7 +635,11 @@ Examples of blueprints and the relevant integration configurations:
         "type": "array",
         "items": {
           "type": "string",
-          "enum": ["development", "sandbox", "production"]
+          "enum": [
+            "development",
+            "sandbox",
+            "production"
+          ]
         },
         "icon": "DefaultProperty"
       },
@@ -591,11 +654,6 @@ Examples of blueprints and the relevant integration configurations:
         "title": "Open Medium Vulnerabilities"
       },
       "lowOpenVulnerabilities": {
-        "icon": "Vulnerability",
-        "type": "number",
-        "title": "Open Low Vulnerabilities"
-      },
-      "criticalOpenVulnerabilities": {
         "icon": "Vulnerability",
         "type": "number",
         "title": "Open Low Vulnerabilities"
@@ -616,7 +674,20 @@ Examples of blueprints and the relevant integration configurations:
   },
   "mirrorProperties": {},
   "calculationProperties": {},
-  "relations": {}
+  "relations": {
+    "snykVulnerabilities": {
+      "title": "Snyk Vulnerabilities",
+      "target": "snykVulnerability",
+      "required": false,
+      "many": true
+    },
+    "snykOrganization": {
+      "title": "Snyk Organization",
+      "target": "snykOrganization",
+      "required": true,
+      "many": false
+    }
+  }
 }
 ```
 
@@ -626,28 +697,30 @@ Examples of blueprints and the relevant integration configurations:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
-resources:
-  - kind: project
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: .id
-          title: .attributes.name
-          blueprint: '"snykProject"'
-          properties:
-            url: ("https://app.snyk.io/org/" + .relationships.organization.data.id + "/project/" + .id | tostring)
-            owner: .__owner.email
-            businessCriticality: .attributes.business_criticality
-            environment: .attributes.environment
-            lifeCycle: .attributes.lifecycle
-            highOpenVulnerabilities: .meta.latest_issue_counts.high
-            mediumOpenVulnerabilities: .meta.latest_issue_counts.medium
-            lowOpenVulnerabilities: .meta.latest_issue_counts.low
-            criticalOpenVulnerabilities: .meta.latest_issue_counts.critical
-            importedBy: .__importer.email
-            tags: .attributes.tags
+- kind: project
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .attributes.name
+        blueprint: '"snykProject"'
+        properties:
+          url: ("https://app.snyk.io/org/" + .relationships.organization.data.id + "/project/" + .id | tostring)
+          owner: .__owner.email
+          businessCriticality: .attributes.business_criticality
+          environment: .attributes.environment
+          lifeCycle: .attributes.lifecycle
+          highOpenVulnerabilities: .meta.latest_issue_counts.high
+          mediumOpenVulnerabilities: .meta.latest_issue_counts.medium
+          lowOpenVulnerabilities: .meta.latest_issue_counts.low
+          criticalOpenVulnerabilities: .meta.latest_issue_counts.critical
+          importedBy: .__importer.email
+          tags: .attributes.tags
+        relations:
+          snykVulnerabilities: '[.__issues[] | select(.issueType == "vuln").issueData.id]'
+          snykOrganization: .relationships.organization.data.id
 ```
 
 </details>
@@ -660,84 +733,80 @@ resources:
 ```yaml showLineNumbers
 {
   "identifier": "snykVulnerability",
-  "description": "This blueprint represents a Snyk vulnerability in our software catalog",
   "title": "Snyk Vulnerability",
   "icon": "Snyk",
-  "schema":
-    {
-      "properties":
-        {
-          "score": { "icon": "Star", "type": "number", "title": "Score" },
-          "packageName":
-            {
-              "type": "string",
-              "title": "Package Name",
-              "icon": "DefaultProperty",
-            },
-          "packageVersions":
-            { "icon": "Package", "title": "Package Versions", "type": "array" },
-          "type":
-            {
-              "type": "string",
-              "title": "Type",
-              "enum": ["vuln", "license", "configuration"],
-              "icon": "DefaultProperty",
-            },
-          "severity":
-            {
-              "icon": "Alert",
-              "title": "Issue Severity",
-              "type": "string",
-              "enum": ["low", "medium", "high", "critical"],
-              "enumColors":
-                {
-                  "low": "green",
-                  "medium": "yellow",
-                  "high": "red",
-                  "critical": "red",
-                },
-            },
-          "url":
-            {
-              "icon": "Link",
-              "type": "string",
-              "title": "Issue URL",
-              "format": "url",
-            },
-          "language":
-            {
-              "type": "string",
-              "title": "Language",
-              "icon": "DefaultProperty",
-            },
-          "publicationTime":
-            {
-              "type": "string",
-              "format": "date-time",
-              "title": "Publication Time",
-              "icon": "DefaultProperty",
-            },
-          "isPatched":
-            {
-              "type": "boolean",
-              "title": "Is Patched",
-              "icon": "DefaultProperty",
-            },
-        },
-      "required": [],
+  "schema": {
+    "properties": {
+      "score": {
+        "icon": "Star",
+        "type": "number",
+        "title": "Score"
+      },
+      "packageName": {
+        "type": "string",
+        "title": "Package Name",
+        "icon": "DefaultProperty"
+      },
+      "packageVersions": {
+        "icon": "Package",
+        "title": "Package Versions",
+        "type": "array"
+      },
+      "type": {
+        "type": "string",
+        "title": "Type",
+        "enum": [
+          "vuln",
+          "license",
+          "configuration"
+        ],
+        "icon": "DefaultProperty"
+      },
+      "severity": {
+        "icon": "Alert",
+        "title": "Issue Severity",
+        "type": "string",
+        "enum": [
+          "low",
+          "medium",
+          "high",
+          "critical"
+        ],
+        "enumColors": {
+          "low": "green",
+          "medium": "yellow",
+          "high": "red",
+          "critical": "red"
+        }
+      },
+      "url": {
+        "icon": "Link",
+        "type": "string",
+        "title": "Issue URL",
+        "format": "url"
+      },
+      "language": {
+        "type": "string",
+        "title": "Language",
+        "icon": "DefaultProperty"
+      },
+      "publicationTime": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Publication Time",
+        "icon": "DefaultProperty"
+      },
+      "isPatched": {
+        "type": "boolean",
+        "title": "Is Patched",
+        "icon": "DefaultProperty"
+      }
     },
+    "required": []
+  },
   "mirrorProperties": {},
   "calculationProperties": {},
-  "relations":
-    {
-      "snykProject":
-        {
-          "title": "Project",
-          "target": "snykProject",
-          "required": false,
-          "many": false,
-        },
-    },
+  "relations": {}
 }
 ```
 
@@ -747,28 +816,25 @@ resources:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
-resources:
-  - kind: vulnerability
-    selector:
-      query: '.issueType == "vuln"'
-    port:
-      entity:
-        mappings:
-          identifier: .issueData.id
-          title: .issueData.title
-          blueprint: '"snykVulnerability"'
-          properties:
-            score: .priorityScore
-            packageName: .pkgName
-            packageVersions: .pkgVersions
-            type: .issueType
-            severity: .issueData.severity
-            url: .issueData.url
-            language: .issueData.language // .issueType
-            publicationTime: .issueData.publicationTime
-            isPatched: .isPatched
-          relations:
-            snykProject: .__project.id
+- kind: issue
+  selector:
+    query: '.issueType == "vuln"'
+  port:
+    entity:
+      mappings:
+        identifier: .issueData.id
+        title: .issueData.title
+        blueprint: '"snykVulnerability"'
+        properties:
+          score: .priorityScore
+          packageName: .pkgName
+          packageVersions: .pkgVersions
+          type: .issueType
+          severity: .issueData.severity
+          url: .issueData.url
+          language: .issueData.language // .issueType
+          publicationTime: .issueData.publicationTime
+          isPatched: .isPatched
 ```
 
 </details>
