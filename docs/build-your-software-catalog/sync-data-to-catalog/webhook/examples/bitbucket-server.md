@@ -1,15 +1,15 @@
 ---
-sidebar_position: 5
+sidebar_position: 19
 description: Ingest Bitbucket Server projects, repositories and pull requests into your catalog
 ---
 
-import BitbucketProjectBlueprint from "../../webhook/examples/resources/bitbucket-server/\_example_bitbucket_project_blueprint.mdx";
-import BitbucketPullrequestBlueprint from "../../webhook/examples/resources/bitbucket-server/\_example_bitbucket_pull_request_blueprint.mdx";
-import BitbucketRepositoryBlueprint from "../../webhook/examples/resources/bitbucket-server/\_example_bitbucket_repository_blueprint.mdx";
-import BitbucketWebhookConfiguration from "../../webhook/examples/resources/bitbucket-server/\_example_bitbucket_webhook_config.mdx";
-import BitbucketServerPythonScript from "../../webhook/examples/resources/bitbucket-server/\_example_bitbucket_python_script.mdx";
+import BitbucketProjectBlueprint from "./resources/bitbucket-server/\_example_bitbucket_project_blueprint.mdx";
+import BitbucketPullrequestBlueprint from "./resources/bitbucket-server/\_example_bitbucket_pull_request_blueprint.mdx";
+import BitbucketRepositoryBlueprint from "./resources/bitbucket-server/\_example_bitbucket_repository_blueprint.mdx";
+import BitbucketWebhookConfiguration from "./resources/bitbucket-server/\_example_bitbucket_webhook_config.mdx";
+import BitbucketServerPythonScript from "./resources/bitbucket-server/\_example_bitbucket_python_script.mdx";
 
-# Bitbucket webhook integration (Self-Hosted)
+# Bitbucket (Self-Hosted)
 
 In this example you are going to create a webhook integration between your Bitbucket Server and Port. The integration will facilitate the ingestion of Bitbucket project, repository and pull request entities into Port.
 
@@ -42,7 +42,7 @@ Create the following blueprint definitions:
 You may modify the properties in your blueprints depending on what you want to track in your Bitbucket account.
 :::
 
-Create the following webhook configuration [using Port UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
+Create the following webhook configuration [using Port's UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
 <summary>Bitbucket webhook configuration</summary>
@@ -64,19 +64,18 @@ Create the following webhook configuration [using Port UI](/build-your-software-
 </details>
 
 ## Create a webhook in Bitbucket
-
 1. From your Bitbucket account, open the project where you want to add the webhook;
 2. Click **Project settings** or the gear icon on the left sidebar;
 3. On the Workflow section, select **Webhooks** on the left sidebar;
-4. Click the **Add webhook** button to create a webhook for the repository;
+4. Click the **Add webhook** button to create a webhook for the repository; 
 5. Input the following details:
-   1. `Title` - use a meaningful name such as Port Webhook;
-   2. `URL` - enter the value of the webhook `URL` you received after creating the webhook configuration in Port;
-   3. `Secret` - enter the value of the secret you provided when configuring the webhook in Port;
-   4. `Triggers` -
-      1. Under **Project** select `modified`;
-      2. Under **Repository** select `modified`;
-      3. Under **Pull request** select any event based on your use case.
+    1. `Title` - use a meaningful name such as Port Webhook;
+    2. `URL` - enter the value of the webhook `URL` you received after creating the webhook configuration in Port;
+    3. `Secret` - enter the value of the secret you provided when configuring the webhook in Port;
+    4.  `Triggers` - 
+        1. Under **Project** select `modified`;
+        2. Under **Repository** select `modified`;
+        3. Under **Pull request** select any event based on your use case.
 6. Click **Save** to save the webhook;
 
 :::tip
@@ -295,25 +294,25 @@ Here is an example of the payload structure sent to the webhook URL when a Bitbu
 
 ```json showLineNumbers
 {
-  "identifier": "2",
-  "title": "lint code",
-  "blueprint": "bitbucketPullrequest",
-  "properties": {
-    "created_on": "2023-11-16T10:58:00Z",
-    "updated_on": "2023-11-16T11:03:42Z",
-    "merge_commit": "9e08604e14fa72265d65696608725c2b8f7850f2",
-    "state": "MERGED",
-    "owner": "Test User",
-    "link": "http://myhost:7990/projects/MOPP/repos/data-analyses/pull-requests/2",
-    "destination": "main",
-    "source": "dev",
-    "participants": [],
-    "reviewers": []
-  },
-  "relations": {
-    "repository": "data-analyses"
-  },
-  "filter": true
+   "identifier":"2",
+   "title":"lint code",
+   "blueprint":"bitbucketPullrequest",
+   "properties":{
+      "created_on":"2023-11-16T10:58:00Z",
+      "updated_on":"2023-11-16T11:03:42Z",
+      "merge_commit":"9e08604e14fa72265d65696608725c2b8f7850f2",
+      "state":"MERGED",
+      "owner":"Test User",
+      "link":"http://myhost:7990/projects/MOPP/repos/data-analyses/pull-requests/2",
+      "destination":"main",
+      "source":"dev",
+      "participants":[],
+      "reviewers":[]
+   },
+   "relations":{
+      "repository":"data-analyses"
+   },
+   "filter":true
 }
 ```
 

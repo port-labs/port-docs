@@ -43,7 +43,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [BitBucket GitOps](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/gitops/gitops.md)
 - [Sync repositories, file contents, pull-requests, monorepos and more](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/examples.md)
 - [Bitbucket scaffolder](/create-self-service-experiences/setup-backend/jenkins-pipeline/examples/scaffold-bitbucket-using-cookiecutter.md)
-- [Webhook integration between Bitbucket (self-hosted) server and Port](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/webhook.md)
+- [Webhook integration between Bitbucket (self-hosted) server and Port](docs/build-your-software-catalog/sync-data-to-catalog/webhook/examples/bitbucket-server.md)
 
 ### Azure DevOps
 
@@ -153,9 +153,11 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Jira
 
-- [Jira integration and webhook](/build-your-software-catalog/sync-data-to-catalog/jira/jira.md)
+- [Jira integration](/build-your-software-catalog/sync-data-to-catalog/jira/jira.md)
+- [Jira webhook](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/jira.md)
 - [Initiate scorecards handling with Jira issues](/promote-scorecards/manage-using-3rd-party-apps/jira)
 - [Self service for a new Jira bug using GitHub workflows](https://github.com/port-labs/self-service-actions-examples/tree/main/github-workflows/jira)
+- [Jira Server](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/jira-server.md)
 
 ## Sentry
 
@@ -218,7 +220,7 @@ This page contains a list of Port's available integrations, organized by the pla
 ## Jenkins
 
 - [Sync Jenkins pipelines](/build-your-software-catalog/sync-data-to-catalog/ci-cd/jenkins-deployment/jenkins-deployment.md)
-- [Webhook integration with Port](/build-your-software-catalog/sync-data-to-catalog/ci-cd/jenkins-deployment/webhook.md)
+- [Jenkins webhook integration with Port](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/jenkins.md)
 - [Jenkins pipeline self-service actions](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md)
 - [GitHub scaffolder using Jenkins](/create-self-service-experiences/setup-backend/jenkins-pipeline/examples/scaffold-github-using-cookiecutter.md)
 - [Bitbucket scaffolder using Jenkins](/create-self-service-experiences/setup-backend/jenkins-pipeline/examples/scaffold-bitbucket-using-cookiecutter.md)
