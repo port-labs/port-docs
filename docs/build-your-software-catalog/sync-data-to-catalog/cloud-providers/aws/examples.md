@@ -4069,6 +4069,7 @@ Done! soon, you will be able to see any `ECR repositories`
 
 ### Using Python script
 Alternatively you can use a Python script to export your ECR repositories and images to Port. The script is available in the [example-ecr-images](https://github.com/port-labs/example-ecr-images) repository.
+
 ## Elasticache serverless cache
 
 In this step-by-step example, you will export your `Serverless cache` to Port.
