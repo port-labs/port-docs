@@ -7,12 +7,12 @@ import ProjectBlueprint from './resources/azuredevops/\_example_project_blueprin
 import RepositoryBlueprint from './resources/azuredevops/\_example_repository_blueprint.mdx'
 import PipelineBlueprint from './resources/azuredevops/\_example_pipeline_blueprint.mdx'
 import WorkItemBlueprint from './resources/azuredevops/\_example_work_item_blueprint.mdx'
-
 import AzureDevopsWebhookConfig from './resources/azuredevops/\_example_webhook_configuration.mdx'
 
 # Azure DevOps
 
-In this example, you are going to use the provided script to fetch data from the Azure DevOps API and ingest it to Port. You will also create a webhook integration between [Azure DevOps](https://azure.microsoft.com/en-us/products/devops) and Port, which will ingest projects, repositories, work items and pipelines entities.
+In this example, we are going to use a script to fetch data from the Azure DevOps API and ingest it into Port.  
+We will also create a webhook integration between [Azure DevOps](https://azure.microsoft.com/en-us/products/devops) and Port, which will ingest `project`, `repository`, `work item` and `pipeline` entities.
 
 ## Port configuration
 
@@ -74,17 +74,17 @@ Follow the official documentation on how to [create an azure devops app password
 
 ## Port Webhook Configuration
 
-Create the following webhook configuration [using Port UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
+Create the following webhook configuration [using Port's UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
 
 <summary>Webhook configuration</summary>
 
 1. **Basic details** tab - fill the following details:
-   1. Title : `Azure DevOps Mapper`;
-   2. Identifier : `azure_devops_mapper`;
-   3. Description : `A webhook configuration to map Azure DevOps resources to Port`;
-   4. Icon : `AzureDevops`;
+   1. Title : `Azure DevOps Mapper`.
+   2. Identifier : `azure_devops_mapper`.
+   3. Description : `A webhook configuration to map Azure DevOps resources to Port`.
+   4. Icon : `AzureDevops`.
 2. **Integration configuration** tab - fill the following JQ mapping:
 
    <AzureDevopsWebhookConfig/>
@@ -95,11 +95,11 @@ Create the following webhook configuration [using Port UI](/build-your-software-
 
 ## Create a webhook in Azure DevOps
 
-1. From your Azure DevOps account, open the project where you want to add the webhook;
-2. Click **Project settings** on the left sidebar;
-3. On the General section, select **Service hook** on the left sidebar;
-4. Click the plus **+** button to create a webhook for the project;
-5. A pop up page will be shown. Select **Web Hooks** from the list and click **Next**;
+1. From your Azure DevOps account, open the project where you want to add the webhook.
+2. Click **Project settings** on the left sidebar.
+3. On the General section, select **Service hook** on the left sidebar.
+4. Click the plus **+** button to create a webhook for the project.
+5. A pop up page will be shown. Select **Web Hooks** from the list and click **Next**.
 6. Under **Trigger**, select the type of event you want to receive webhook notifications for. The example webhook configuration supports the following events:
    1. Code pushed
    2. Run state changed
@@ -107,9 +107,9 @@ Create the following webhook configuration [using Port UI](/build-your-software-
    4. Run stage state changed
    5. Work item created
    6. Work item updated
-7. Leave the **Filters** section unchanged and click **Next**;
-8. On the final page (**Action Settings**), enter the value of the webhook `URL` you received after creating the webhook configuration in Port in the `URL` textbox;
-9. Test your webhook subscription and click **Finish**
+7. Leave the **Filters** section unchanged and click **Next**.
+8. On the final page (**Action Settings**), enter the value of the webhook `URL` you received after creating the webhook configuration in Port in the `URL` textbox.
+9. Test your webhook subscription and click **Finish**.
 
 Follow [this documentation](https://learn.microsoft.com/en-us/azure/devops/service-hooks/events?toc=%2Fazure%2Fdevops%2Fmarketplace-extensibility%2Ftoc.json&view=azure-devops) to learn more about webhook events in Azure DevOps.
 

@@ -7,7 +7,7 @@ slug: /integrations-index/
 
 # ⚙️ Integrations index
 
-This page contains a list of Port's available integrations, organized by the platform or product which they integrate with
+This page contains a list of Port's available integrations, organized by the platform/product.
 
 ## Git
 
