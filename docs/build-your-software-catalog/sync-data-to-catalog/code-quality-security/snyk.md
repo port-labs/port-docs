@@ -73,7 +73,7 @@ To install the integration using ArgoCD, follow these steps:
 1. Create a `values.yaml` file in `argocd/my-ocean-snyk-integration` in your git repository with the content:
 
 :::note
-Remember to replace the placeholders for `SNYK_ORGANIZATION_ID`, `SNYK_GROUPS` and `SNYK_TOKEN`.
+Remember to replace the placeholders for `SNYK_TOKEN`.
 :::
 ```yaml showLineNumbers
 initializePortResources: true
@@ -83,10 +83,6 @@ integration:
   type: snyk
   eventListener:
     type: POLLING
-  config:
-  // highlight-next-line
-    organizationId: SNYK_ORGANIZATION_ID  ## Required when you want to fetch data for a single organization
-    groups: SNYK_GROUPS  ## Required when you want to fetch data for all organizations within the specified group(s)
   secrets:
   // highlight-next-line
     token: SNYK_TOKEN
@@ -165,8 +161,8 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 | Parameter                                     | Description                                                                                                        | Required |
 | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
 | `OCEAN__INTEGRATION__CONFIG__TOKEN`           | The Snyk API token                                                                                                 | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID` | The Snyk organization ID                                                                                           | ❌      |
-| `OCEAN__INTEGRATION__CONFIG__GROUPS` | A comma-separated list of Snyk group ids to filter data for                                                    | ❌      |
+| `OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID` | The Snyk organization ID. Provide this parameter to limit access to a specific organization.                                                                                       | ❌      |
+| `OCEAN__INTEGRATION__CONFIG__GROUPS` | A comma-separated list of Snyk group ids to filter data for. Provide this parameter to limit access to all organizations within specific group(s)                                                   | ❌      |
 | `OCEAN__INTEGRATION__CONFIG__API_URL`         | The Snyk API URL. If not specified, the default will be https://api.snyk.io                                        | ❌       |
 | `OCEAN__INITIALIZE_PORT_RESOURCES`            | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
 | `OCEAN__INTEGRATION__IDENTIFIER`              | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
@@ -228,8 +224,8 @@ of `Secret Text` type:
 | Parameter                                     | Description                                                                                                                                                      | Required |
 | --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
 | `OCEAN__INTEGRATION__CONFIG__TOKEN`           | The Snyk API token                                                                                                                                               | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID` | The Snyk organization ID                                                                                                                                         | ❌      |
-| `OCEAN__INTEGRATION__CONFIG__GROUPS` | A comma-separated list of Snyk group ids to filter data for                                                    | ❌      |
+| `OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID` | The Snyk organization ID. Provide this parameter to limit access to a specific organization | ❌  |
+| `OCEAN__INTEGRATION__CONFIG__GROUPS` | A comma-separated list of Snyk group ids to filter data for. Provide this parameter to limit access to all organizations within specific group(s)                                       | ❌      |
 | `OCEAN__INTEGRATION__CONFIG__API_URL`         | The Snyk API URL. If not specified, the default will be https://api.snyk.io                                                                                      | ❌       |
 | `OCEAN__INITIALIZE_PORT_RESOURCES`            | Default true, When set to false the integration will not create default blueprints and the port App config Mapping                                               | ❌       |
 | `OCEAN__INTEGRATION__IDENTIFIER`              | Change the identifier to describe your integration, if not set will use the default one                                                                          | ❌       |
@@ -284,6 +280,18 @@ pipeline {
 </Tabs>
 
 <AdvancedConfig/>
+
+## Default behavior and access restriction
+By default, the integration fetches all organizations associated with the provided Snyk token. If you wish to customize access, the following parameters are available:
+
+`OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID`: Use this parameter to restrict access to a specific organization. If specified, the integration will fetch data only for the provided organization.
+
+`OCEAN__INTEGRATION__CONFIG__GROUPS`: When you want to limit access to all organizations within specific Snyk groups, use this parameter. Provide a comma-separated list of Snyk group IDs, and the integration will filter data accordingly.
+
+:::note
+If neither parameter is provided, the integration will operate with the default behavior of fetching all organizations associated with the supplied Snyk token.
+:::
+
 
 ## Ingesting Snyk objects
 
