@@ -3,13 +3,9 @@ on:
   push:
       branches:
       - main
-      paths:
-      - 'docs/**'
   pull_request:
     types:
       - "ready_for_review"
-    # paths:
-    #   - 'docs/**'
 jobs:
   sonarcloud:
     name: SonarCloud
