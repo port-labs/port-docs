@@ -872,11 +872,11 @@ This command deploys the webhook notification configuration to your ArgoCD notif
 
 Done! any change that happens to your applications in ArgoCD will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
 
-<h2>Argocd Events</h3>
+<h2>Argocd Events</h2>
 
 In this example you are going to create a webhook integration between [ArgoCD](https://argo-cd.readthedocs.io/en/stable/) and Port, which will ingest all events entities and map them to your ArgoCD applications.
 
-<h2>Port configuration</h3>
+<h3>Port configuration</h3>
 
 Create the following blueprint definition:
 

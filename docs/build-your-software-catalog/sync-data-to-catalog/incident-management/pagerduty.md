@@ -967,7 +967,7 @@ While the Ocean integration described above is the recommended installation meth
 
 In this example you are going to create a webhook integration between [PagerDuty](https://www.pagerduty.com/) and Port, which will ingest PagerDuty services and its related incidents into Port. This integration will involve setting up a webhook to receive notifications from PagerDuty whenever an incident is created or updated, allowing Port to ingest and process the incident entities accordingly.
 
-<h2>Import PagerDuty services and incidents<h2>
+<h2>Import PagerDuty services and incidents</h2>
 
 <h3>Port configuration</h3>
 
