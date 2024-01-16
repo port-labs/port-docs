@@ -463,15 +463,18 @@ resource "port_blueprint" "child_blueprint" {
   }
 }
 
-resource "port_aggregation_property" "count_kids" {
-  aggregation_identifier      = "count_kids"
-  blueprint_identifier        = port_blueprint.parent_blueprint.identifier
-  target_blueprint_identifier = port_blueprint.child_blueprint.identifier
-  title                       = "Count Kids"
-  icon                        = "Terraform"
-  description                 = "Count Kids"
-  method = {
-    count_entities = true
+resource "port_aggregation_properties" "parent_aggregation_properties" {
+  blueprint_identifier = port_blueprint.parent_blueprint.identifier
+  properties           = {
+    count_kids = {
+      target_blueprint_identifier = port_blueprint.child_blueprint.identifier
+      title                       = "Count Kids"
+      icon                        = "Terraform"
+      description                 = "Count Kids"
+      method                      = {
+        count_entities = true
+      }
+    }
   }
 }
 ```
@@ -504,17 +507,20 @@ resource "port_blueprint" "deployment_blueprint" {
   }
 }
 
-resource "port_aggregation_property" "average_deployment_frequency" {
-  aggregation_identifier      = "average_deployment_frequency"
-  blueprint_identifier        = port_blueprint.microservice_blueprint.identifier
-  target_blueprint_identifier = port_blueprint.deployment_blueprint.identifier
-  title                       = "Average deployment frequency"
-  icon                        = "Terraform"
-  description                 = "Average deployment frequency"
-  method = {
-    average_entities = {
-      average_of = "week"
-      measure_time_by = "$createdAt"
+resource "port_aggregation_properties" "microservice_aggregation_properties" {
+  blueprint_identifier = port_blueprint.microservice_blueprint.identifier
+  properties           = {
+    average_deployment_frequency = {
+      target_blueprint_identifier = port_blueprint.deployment_blueprint.identifier
+      title                       = "Average deployment frequency"
+      icon                        = "Terraform"
+      description                 = "Average deployment frequency"
+      method                      = {
+        average_entities = {
+          average_of      = "week"
+          measure_time_by = "$createdAt"
+        }
+      }
     }
   }
 }
@@ -571,17 +577,20 @@ resource "port_blueprint" "jira_issue_blueprint" {
   }
 }
 
-resource "port_aggregation_property" "sum_of_story_points" {
-  aggregation_identifier      = "sum_of_story_points"
-  blueprint_identifier        = port_blueprint.microservice_blueprint.identifier
-  target_blueprint_identifier = port_blueprint.jira_issue_blueprint.identifier
-  title                       = "Sum of story points"
-  icon                        = "Terraform"
-  description                 = "Sum of story points"
-  method = {
-    aggregate_by_property = {
-      func     = "sum"
-      property = "storyPoints"
+resource "port_aggregation_properties" "microservice_aggregation_properties" {
+  blueprint_identifier = port_blueprint.microservice_blueprint.identifier
+  properties           = {
+    sum_of_story_points = {
+      target_blueprint_identifier = port_blueprint.jira_issue_blueprint.identifier
+      title                       = "Sum of story points"
+      icon                        = "Terraform"
+      description                 = "Sum of story points"
+      method                      = {
+        aggregate_by_property = {
+          func     = "sum"
+          property = "storyPoints"
+        }
+      }
     }
   }
 }
@@ -622,18 +631,21 @@ resource "port_blueprint" "deployment_blueprint" {
   }
 }
 
-resource "port_aggregation_property" "average_cpu_usage" {
-  aggregation_identifier      = "average_cpu_usage"
-  blueprint_identifier        = port_blueprint.microservice_blueprint.identifier
-  target_blueprint_identifier = port_blueprint.deployment_blueprint.identifier
-  title                       = "Average CPU usage"
-  icon                        = "Terraform"
-  description                 = "Average CPU usage"
-  method = {
-    average_by_property = {
-      average_of = "week"
-      measure_time_by = "$createdAt"
-      property = "cpuUsage"
+resource "port_aggregation_properties" "microservice_aggregation_properties" {
+  blueprint_identifier = port_blueprint.microservice_blueprint.identifier
+  properties           = {
+    average_cpu_usage = {
+      target_blueprint_identifier = port_blueprint.deployment_blueprint.identifier
+      title                       = "Average CPU usage"
+      icon                        = "Terraform"
+      description                 = "Average CPU usage"
+      method                      = {
+        average_by_property = {
+          average_of      = "week"
+          measure_time_by = "$createdAt"
+          property        = "cpuUsage"
+        }
+      }
     }
   }
 }
@@ -674,20 +686,24 @@ resource "port_blueprint" "alert_blueprint" {
   }
 }
 
-resource "port_aggregation_property" "min_alert_severity" {
-  aggregation_identifier      = "min_alert_severity"
-  blueprint_identifier        = port_blueprint.microservice_blueprint.identifier
-  target_blueprint_identifier = port_blueprint.alert_blueprint.identifier
-  title                       = "Minimum alert severity"
-  icon                        = "Terraform"
-  description                 = "Minimum alert severity"
-  method = {
-    aggregate_by_property = {
-      func     = "min"
-      property = "severity"
+resource "port_aggregation_properties" "microservice_aggregation_properties" {
+  blueprint_identifier = port_blueprint.microservice_blueprint.identifier
+  properties           = {
+    min_alert_severity = {
+      target_blueprint_identifier = port_blueprint.alert_blueprint.identifier
+      title                       = "Minimum alert severity"
+      icon                        = "Terraform"
+      description                 = "Minimum alert severity"
+      method                      = {
+        aggregate_by_property = {
+          func     = "min"
+          property = "severity"
+        }
+      }
     }
   }
 }
+
 ```
 
 </TabItem>
@@ -725,17 +741,20 @@ resource "port_blueprint" "alert_blueprint" {
   }
 }
 
-resource "port_aggregation_property" "max_alert_severity" {
-  aggregation_identifier      = "max_alert_severity"
-  blueprint_identifier        = port_blueprint.microservice_blueprint.identifier
-  target_blueprint_identifier = port_blueprint.alert_blueprint.identifier
-  title                       = "Maximum alert severity"
-  icon                        = "Terraform"
-  description                 = "Maximum alert severity"
-  method = {
-    aggregate_by_property = {
-      func     = "max"
-      property = "severity"
+resource "port_aggregation_properties" "microservice_aggregation_properties" {
+  blueprint_identifier = port_blueprint.microservice_blueprint.identifier
+  properties           = {
+    max_alert_severity = {
+      target_blueprint_identifier = port_blueprint.alert_blueprint.identifier
+      title                       = "Maximum alert severity"
+      icon                        = "Terraform"
+      description                 = "Maximum alert severity"
+      method                      = {
+        aggregate_by_property = {
+          func     = "max"
+          property = "severity"
+        }
+      }
     }
   }
 }
@@ -776,17 +795,20 @@ resource "port_blueprint" "pod_blueprint" {
   }
 }
 
-resource "port_aggregation_property" "median_cpu_usage" {
-  aggregation_identifier      = "median_cpu_usage"
-  blueprint_identifier        = port_blueprint.microservice_blueprint.identifier
-  target_blueprint_identifier = port_blueprint.pod_blueprint.identifier
-  title                       = "Median CPU usage"
-  icon                        = "Terraform"
-  description                 = "Median CPU usage"
-  method = {
-    aggregate_by_property = {
-      func     = "median"
-      property = "cpuUsage"
+resource "port_aggregation_properties" "microservice_aggregation_properties" {
+  blueprint_identifier = port_blueprint.microservice_blueprint.identifier
+  properties           = {
+    median_cpu_usage = {
+      target_blueprint_identifier = port_blueprint.pod_blueprint.identifier
+      title                       = "Median CPU usage"
+      icon                        = "Terraform"
+      description                 = "Median CPU usage"
+      method                      = {
+        aggregate_by_property = {
+          func     = "median"
+          property = "cpuUsage"
+        }
+      }
     }
   }
 }
@@ -838,31 +860,34 @@ resource "port_blueprint" "pull_request_blueprint" {
   }
 }
 
-resource "port_aggregation_property" "fix_pull_requests_per_day" {
-  aggregation_identifier      = "fix_pull_requests_count"
-  blueprint_identifier        = port_blueprint.repository_blueprint.identifier
-  target_blueprint_identifier = port_blueprint.pull_request_blueprint.identifier
-  title                       = "Pull Requests Per Day"
-  icon                        = "Terraform"
-  description                 = "Pull Requests Per Day"
-  method = {
-    average_entities = {
-      average_of      = "month"
-      measure_time_by = "$createdAt"
+resource "port_aggregation_properties" "repository_aggregation_properties" {
+  blueprint_identifier = port_blueprint.repository_blueprint.identifier
+  properties           = {
+    fix_pull_requests_count = {
+      target_blueprint_identifier = port_blueprint.pull_request_blueprint.identifier
+      title                       = "Pull Requests Per Day"
+      icon                        = "Terraform"
+      description                 = "Pull Requests Per Day"
+      method                      = {
+        average_entities = {
+          average_of      = "month"
+          measure_time_by = "$createdAt"
+        }
+      }
+      query = jsonencode(
+        {
+          "combinator" : "and",
+          "rules" : [
+            {
+              "property" : "$title",
+              "operator" : "ContainsAny",
+              "value" : ["fix", "fixed", "fixing", "Fix"]
+            }
+          ]
+        }
+      )
     }
   }
-  query = jsonencode(
-    {
-      "combinator" : "and",
-      "rules" : [
-        {
-          "property" : "$title",
-          "operator" : "ContainsAny",
-          "value" : ["fix", "fixed", "fixing", "Fix"]
-        }
-      ]
-    }
-  )
 }
 
 ```
