@@ -420,7 +420,7 @@ To ingest Snyk objects using the [integration configuration](#configuration-stru
 
 Examples of blueprints and the relevant integration configurations:
 
-## Organization
+### Organization
 
 <details>
 <summary>Target blueprint</summary>
