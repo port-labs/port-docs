@@ -118,7 +118,8 @@ Just create your `group by` setting, add additional viewing settings if needed, 
 
 ### Search
 
-Port provides a free-text search option on tables. To search a table, click here:
+Port provides a free-text search option on tables. This will search all of the entities' properties and display the entities that match the query.  
+If the query contains multiple words, entities that contain all of these words will be displayed, even if they are spread across different properties. 
 
 ![Table search bar marked](/img/software-catalog/pages/TableSearchBar.png)
 

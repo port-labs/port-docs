@@ -40,7 +40,7 @@ Create the following blueprint definitions:
 
 </details>
 
-Create the following webhook configuration [using Port UI](../../?operation=ui#configuring-webhook-endpoints)
+Create the following webhook configuration [using Port's UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
 <summary>PagerDuty webhook configuration</summary>
@@ -236,7 +236,7 @@ The script extracts services and incidents from PagerDuty, and sends them to Por
 
 This example utilizes the same [blueprint](#prerequisites) definition from the previous section, along with a new webhook configuration:
 
-Create the following webhook configuration [using Port UI](../../?operation=ui#configuring-webhook-endpoints)
+Create the following webhook configuration [using Port's UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
 <summary>PagerDuty webhook configuration for historical data</summary>
