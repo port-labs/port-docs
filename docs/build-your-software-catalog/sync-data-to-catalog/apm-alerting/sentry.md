@@ -739,6 +739,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 ## Alternative installation via webhook
+
 While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from Sentry. If so, use the following instructions:
 
 <details>
