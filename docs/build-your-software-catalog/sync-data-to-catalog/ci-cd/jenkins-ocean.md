@@ -9,7 +9,7 @@ import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configurat
 
 # Jenkins
 
-Our Jenkins integration allows you to import `jobs`, and `builds` from your Jenkins environment into Port, according to your mapping and definitions.
+Our Jenkins integration allows you to import `jobs` and `builds` from your Jenkins environment into Port, according to your mapping and definitions.
 
 ## Common use cases
 
