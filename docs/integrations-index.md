@@ -43,6 +43,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [BitBucket GitOps](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/gitops/gitops.md)
 - [Sync repositories, file contents, pull-requests, monorepos and more](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/examples.md)
 - [Bitbucket scaffolder](/create-self-service-experiences/setup-backend/jenkins-pipeline/examples/scaffold-bitbucket-using-cookiecutter.md)
+- [Webhook integration between Bitbucket (self-hosted) server and Port](docs/build-your-software-catalog/sync-data-to-catalog/webhook/examples/bitbucket-server.md)
 
 ### Azure DevOps
 
@@ -66,9 +67,8 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## ArgoCD
 
-- [ArgoCD exporter](/build-your-software-catalog/sync-data-to-catalog/kubernetes/argocd.md)
-- [ArgoCD webhook](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/argocd.md)
-- [ArgoCD events](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/argocd.md#argocd-events)
+- [ArgoCD exporter and webhook integration](/build-your-software-catalog/sync-data-to-catalog/kubernetes/argocd.md)
+- [ArgoCD events](/build-your-software-catalog/sync-data-to-catalog/kubernetes/argocd.md#argocd-events)
 
 ## Infrastructure as Code (IaC)
 
@@ -115,6 +115,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 - [GCP asset inventory](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/examples/generic-assets.md)
 - [Sync organizations, folders, projects, buckets, service accounts, compute instances and more](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/examples/extended-specific-assets.md)
+- [Script to ingest GCR Images and Repositories](https://github.com/port-labs/example-gcr-images)
 
 #### Google cloud build
 
@@ -137,35 +138,30 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## SonarQube / SonarCloud
 
-- [SonarQube integration](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube.md)
-- [SonarCloud integration](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube.md)
-- [SonarQube webhook](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/sonarqube.md)
-- [SonarCloud webhook](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/sonarqube.md)
+- [SonarQube integration and webhook](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube.md)
+- [SonarCloud integration and webhook](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube.md)
 
 ## Snyk
 
-- [Snyk integration](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/snyk.md)
-- [Snyk webhook](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/snyk.md)
+- [Snyk integration and webhook](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/snyk.md)
 
 ## PagerDuty
 
-- [PagerDuty integration](/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty.md)
+- [PagerDuty integration and webhook](/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty.md)
 - [Ensure production readiness](/guides-and-tutorials/ensure-production-readiness.md)
-- [PagerDuty webhook](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/pagerduty.md)
 - [Self service for a new PagerDuty incident using GitHub workflows](https://github.com/port-labs/self-service-actions-examples/tree/main/github-workflows/pagerduty)
 
 ## Jira
 
 - [Jira integration](/build-your-software-catalog/sync-data-to-catalog/jira/jira.md)
-- [Jira webhook](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/jira.md)
+- [Jira webhook](/build-your-software-catalog/sync-data-to-catalog/jira/#alternative-installation-via-webhook)
 - [Initiate scorecards handling with Jira issues](/promote-scorecards/manage-using-3rd-party-apps/jira)
 - [Self service for a new Jira bug using GitHub workflows](https://github.com/port-labs/self-service-actions-examples/tree/main/github-workflows/jira)
 - [Jira Server](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/jira-server.md)
 
 ## Sentry
 
-- [Sentry integration](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/sentry.md)
-- [Sentry webhook](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/sentry.md)
+- [Sentry integration and webhook](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/sentry.md)
 
 ## New Relic
 
@@ -174,8 +170,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## OpsGenie
 
-- [OpsGenie integration](/build-your-software-catalog/sync-data-to-catalog/incident-management/opsgenie.md)
-- [OpsGenie webhook](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/opsgenie.md)
+- [OpsGenie integration and webhook](/build-your-software-catalog/sync-data-to-catalog/incident-management/opsgenie.md)
 
 ## FireHydrant
 
@@ -225,6 +220,7 @@ This page contains a list of Port's available integrations, organized by the pla
 ## Jenkins
 
 - [Sync Jenkins pipelines](/build-your-software-catalog/sync-data-to-catalog/ci-cd/jenkins-deployment/jenkins-deployment.md)
+- [Jenkins webhook integration with Port](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/jenkins.md)
 - [Jenkins pipeline self-service actions](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md)
 - [GitHub scaffolder using Jenkins](/create-self-service-experiences/setup-backend/jenkins-pipeline/examples/scaffold-github-using-cookiecutter.md)
 - [Bitbucket scaffolder using Jenkins](/create-self-service-experiences/setup-backend/jenkins-pipeline/examples/scaffold-bitbucket-using-cookiecutter.md)

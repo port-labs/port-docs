@@ -1,9 +1,16 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import ProjecttBlueprint from '../webhook/examples/resources/argocd/\_example_project_blueprint.mdx'
+import ApplicationBlueprint from '../webhook/examples/resources/argocd/\_example_application_blueprint.mdx'
+import EventBlueprint from '../webhook/examples/resources/argocd/\_example_event_blueprint.mdx'
+
+import ArgoCDWebhookConfig from '../webhook/examples/resources/argocd/\_example_webhook_configuration.mdx'
+import ArgoCDEventWebhookConfig from '../webhook/examples/resources/argocd/\_example_events_webhook_config.mdx'
+import ArgoCDEventManifest from '../webhook/examples/resources/argocd/\_example_events_manifest.mdx'
 
 # ArgoCD
 
-Our ArgoCD integration allows you to import `cluster`, `project` and `application` from your ArgoCD instance into Port, according to your mapping and definition.
+Our ArgoCD integration allows you to import `cluster`, `project`, `application` and `deployment-history` resources from your ArgoCD instance into Port, according to your mapping and definition.
 
 ## Common use cases
 
@@ -233,6 +240,7 @@ The following resources can be used to map data from ArgoCD, it is possible to r
 - [`cluster`](https://cd.apps.argoproj.io/swagger-ui#operation/ClusterService_List)
 - [`project`](https://cd.apps.argoproj.io/swagger-ui#operation/ProjectService_List)
 - [`application`](https://cd.apps.argoproj.io/swagger-ui#operation/ApplicationService_List)
+- [`deployment-history`](https://cd.apps.argoproj.io/swagger-ui#operation/ApplicationService_List)
 
 :::
 
@@ -704,5 +712,354 @@ resources:
           relations:
             project: .spec.project
 ```
+
+</details>
+
+### Deployment history
+
+<details>
+<summary> Deployment history blueprint</summary>
+
+```json showlineNumbers
+{
+  "identifier": "argocdDeploymentHistory",
+  "description": "This blueprint represents an ArgoCD deployment history",
+  "title": "ArgoCD Deployment History",
+  "icon": "Argo",
+  "schema": {
+    "properties": {
+      "deployedAt": {
+        "title": "Deployed At",
+        "type": "string",
+        "format": "date-time",
+        "icon": "DefaultProperty"
+      },
+      "deployStartedAt": {
+        "title": "Deploy Started At",
+        "type": "string",
+        "format": "date-time",
+        "icon": "DefaultProperty"
+      },
+      "revision": {
+        "title": "Revision",
+        "type": "string",
+        "icon": "DefaultProperty"
+      },
+      "initiatedBy": {
+        "title": "Initiated By",
+        "type": "string",
+        "icon": "DefaultProperty"
+      },
+      "repoURL": {
+        "icon": "DefaultProperty",
+        "title": "Repository URL",
+        "type": "string",
+        "format": "url"
+      },
+      "sourcePath": {
+        "title": "Source Path",
+        "type": "string",
+        "icon": "DefaultProperty"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "application": {
+      "title": "Application",
+      "target": "argocdApplication",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: deployment-history
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .__applicationId + "-" + (.id | tostring)
+          title: .id | tostring
+          blueprint: '"argocdDeploymentHistory"'
+          properties:
+            deployedAt: .deployedAt
+            deployStartedAt: .deployStartedAt
+            revision: .revision
+            initiatedBy: .initiatedBy.username
+            repoURL: .source.repoURL
+            sourcePath: .source.path
+          relations:
+            application: .__applicationId
+```
+
+</details>
+
+## Alternative installation via webhook
+
+While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from ArgoCD. If so, use the following instructions:
+
+<details>
+<summary><b>Webhook installation (click to expand)</b></summary>
+
+In this example you are going to create a webhook integration between [ArgoCD](https://argo-cd.readthedocs.io/en/stable/) and Port, which will ingest application entities and map them to your ArgoCD projects.
+
+<h2>Port configuration</h2>
+
+Create the following blueprint definition:
+
+<details>
+<summary>Project blueprint</summary>
+
+<ProjecttBlueprint/>
+
+</details>
+
+<details>
+<summary>Application blueprint</summary>
+
+<ApplicationBlueprint/>
+
+</details>
+
+Create the following webhook configuration [using Port UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
+
+<details>
+
+<summary>Application webhook configuration</summary>
+
+1. **Basic details** tab - fill the following details:
+   1. Title : `ArgoCD Application Mapper`;
+   2. Identifier : `argocd_application_mapper`;
+   3. Description : `A webhook configuration to map ArgoCD applications to Port`;
+   4. Icon : `Argo`;
+2. **Integration configuration** tab - fill the following JQ mapping:
+
+   <ArgoCDWebhookConfig/>
+
+3. Click **Save** at the bottom of the page.
+
+</details>
+
+<h2>Create a webhook in ArgoCD</h2>
+
+To set up a webhook configuration in ArgoCD for sending notifications to Port, follow these steps:
+
+<h3>Prerequisite</h3>
+
+1. You have access to a Kubernetes cluster where ArgoCD is deployed.
+2. You have `kubectl` installed and configured to access your cluster.
+
+<h3>Steps</h3>
+
+1. Install ArgoCD notifications manifest;
+
+```bash showLineNumbers
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj-labs/argocd-notifications/release-1.0/manifests/install.yaml
+```
+
+2. Install ArgoCD triggers and templates manifest;
+
+```bash showLineNumbers
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj-labs/argocd-notifications/release-1.0/catalog/install.yaml
+```
+
+3. Use `kubectl` to connect to the Kubernetes cluster where your ArgoCD instance is deployed;
+
+```bash showLineNumbers
+kubectl config use-context <your-cluster-context>
+```
+
+4. Set the current namespace to your ArgoCD namespace, use the following command;
+
+```bash showLineNumbers
+kubectl config set-context --current --namespace=<your-namespace>
+```
+
+5. Create a YAML file (e.g. `argocd-webhook-config.yaml`) that configures the webhook notification service. The example below shows how to set up a webhook to send real-time events whenever ArgoCD applications are updated. The YAML file includes the following components:
+
+   1. Notification service definition;
+   2. Template for the webhook message body;
+   3. Trigger definitions;
+   4. Subscriptions to the notifications.
+
+   Here's an example YAML. Make sure to replace `<YOUR_WEBHOOK_URL>` with the value of `url` key you received after creating the webhook configuration.
+
+   <details>
+
+   <summary>webhook manifest file </summary>
+
+   ```yaml showLineNumbers
+   apiVersion: v1
+   kind: ConfigMap
+   metadata:
+   name: argocd-notifications-cm
+   data:
+   trigger.on-sync-operation-change: |
+     - description: Application syncing has updated
+     send:
+     - app-status-change
+     when: app.status.operationState.phase in ['Error', 'Failed', 'Succeeded', 'Running']
+   trigger.on-deployed: |
+     - description: Application is synced and healthy
+     send:
+     - app-status-change
+     when: app.status.operationState.phase in ['Succeeded'] and app.status.health.status == 'Healthy'
+   trigger.on-health-degraded: |
+     - description: Application has degraded
+     send:
+     - app-status-change
+     when: app.status.health.status == 'Degraded'
+   service.webhook.port-webhook: |
+     url: <YOUR_WEBHOOK_URL>
+     headers:
+     - name: Content-Type
+     value: application/json
+   template.app-status-change: |
+     webhook:
+     port-webhook:
+         method: POST
+         body: |
+         {
+             "uid": "{{.app.metadata.uid}}",
+             "name": "{{.app.metadata.name}}",
+             "namespace": "{{.app.metadata.namespace}}",
+             "sync_status": "{{.app.status.sync.status}}",
+             "health_status": "{{.app.status.health.status}}",
+             "git_repo": "{{.app.spec.source.repoURL}}",
+             "git_path": "{{.app.spec.source.path}}",
+             "destination_server": "{{.app.spec.destination.server}}",
+             "created_at": "{{.app.metadata.creationTimestamp}}",
+             "project": "{{.app.spec.project}}"
+         }
+   subscriptions: |
+     - recipients:
+     - port-webhook
+     triggers:
+     - on-deployed
+     - on-health-degraded
+     - on-sync-operation-change
+   ```
+
+   </details>
+
+6. Use `kubectl` to apply the YAML file to your cluster. Run the following command, replacing `<your-namespace>` with your ArgoCD namespace and `<path-to-yaml-file>` with the actual path to your YAML file:
+
+```bash
+kubectl apply -n <your-namespace> -f <path-to-yaml-file>
+```
+
+This command deploys the webhook notification configuration to your ArgoCD notification configmap (`argocd-notifications-cm`), allowing Port to receive real-time events.
+
+Done! any change that happens to your applications in ArgoCD will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+
+<h2>Argocd Events</h2>
+
+In this example you are going to create a webhook integration between [ArgoCD](https://argo-cd.readthedocs.io/en/stable/) and Port, which will ingest all events entities and map them to your ArgoCD applications.
+
+<h3>Port configuration</h3>
+
+Create the following blueprint definition:
+
+<details>
+<summary>Events blueprint</summary>
+
+<EventBlueprint/>
+
+</details>
+
+Create the following webhook configuration [using Port UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
+
+<details>
+
+<summary>Application webhook configuration</summary>
+
+1. **Basic details** tab - fill the following details:
+   1. Title : `ArgoCD Event Mapper`;
+   2. Identifier : `argocd_event_mapper`;
+   3. Description : `A webhook configuration to map ArgoCD events to Port`;
+   4. Icon : `Argo`;
+2. **Integration configuration** tab - fill the following JQ mapping:
+
+   <ArgoCDEventWebhookConfig/>
+
+3. Click **Save** at the bottom of the page.
+
+</details>
+
+<h3> Create a webhook in ArgoCD </h3>
+
+To set up a webhook configuration in ArgoCD for sending notifications to Port, follow these steps:
+
+<h4> Prerequisite </h4>
+
+1. You have access to a Kubernetes cluster where ArgoCD is deployed.
+2. You have `kubectl` installed and configured to access your cluster.
+
+<h4> Steps </h4>
+
+1. Install ArgoCD notifications manifest;
+
+```bash showLineNumbers
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj-labs/argocd-notifications/release-1.0/manifests/install.yaml
+```
+
+2. Install ArgoCD triggers and templates manifest;
+
+```bash showLineNumbers
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj-labs/argocd-notifications/release-1.0/catalog/install.yaml
+```
+
+3. Use `kubectl` to connect to the Kubernetes cluster where your ArgoCD instance is deployed;
+
+```bash showLineNumbers
+kubectl config use-context <your-cluster-context>
+```
+
+4. Set the current namespace to your ArgoCD namespace, use the following command;
+
+```bash showLineNumbers
+kubectl config set-context --current --namespace=<your-namespace>
+```
+
+5. Create a YAML file (e.g. `argocd-events-config.yaml`) that configures the webhook notification service. The example below shows how to set up a webhook to send real-time events from ArgoCD. The YAML file includes the following components:
+
+   1. Notification service definition;
+   2. Template for the webhook message body;
+   3. Trigger definitions;
+   4. Subscriptions to the notifications.
+
+   Here's an example YAML. Make sure to replace `<YOUR_WEBHOOK_URL>` with the value of `url` key you received after creating the webhook configuration.
+
+   <details>
+
+   <summary>event manifest file </summary>
+   <ArgoCDEventManifest/>
+
+   </details>
+
+6. Use `kubectl` to apply the YAML file to your cluster. Run the following command, replacing `<your-namespace>` with your ArgoCD namespace and `<path-to-yaml-file>` with the actual path to your YAML file:
+
+```bash
+kubectl apply -n <your-namespace> -f <path-to-yaml-file>
+```
+
+This command deploys the webhook notification configuration to your ArgoCD notification configmap (`argocd-notifications-cm`), allowing Port to receive real-time events.
+
+Done! any change that happens to your applications in ArgoCD will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
 
 </details>
