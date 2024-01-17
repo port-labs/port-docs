@@ -13,6 +13,17 @@ Our Snyk integration allows you to import `organizations`, `targets`, `projects`
 - Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 - Create/delete Snyk objects using self-service actions.
 
+## Default behavior and access restriction
+By default, the integration fetches all organizations associated with the provided Snyk token. If you wish to customize access, the following parameters are available:
+
+`OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID`: Use this parameter to restrict access to a specific organization. If specified, the integration will fetch data only for the provided organization.
+
+`OCEAN__INTEGRATION__CONFIG__GROUPS`: When you want to limit access to all organizations within specific Snyk groups, use this parameter. Provide a comma-separated list of Snyk group IDs, and the integration will filter data accordingly.
+
+:::note
+If neither parameter is provided, the integration will operate with the default behavior of fetching all organizations associated with the supplied Snyk token.
+:::
+
 ## Prerequisites
 
 <Prerequisites />
@@ -280,18 +291,6 @@ pipeline {
 </Tabs>
 
 <AdvancedConfig/>
-
-## Default behavior and access restriction
-By default, the integration fetches all organizations associated with the provided Snyk token. If you wish to customize access, the following parameters are available:
-
-`OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID`: Use this parameter to restrict access to a specific organization. If specified, the integration will fetch data only for the provided organization.
-
-`OCEAN__INTEGRATION__CONFIG__GROUPS`: When you want to limit access to all organizations within specific Snyk groups, use this parameter. Provide a comma-separated list of Snyk group IDs, and the integration will filter data accordingly.
-
-:::note
-If neither parameter is provided, the integration will operate with the default behavior of fetching all organizations associated with the supplied Snyk token.
-:::
-
 
 ## Ingesting Snyk objects
 
