@@ -9,11 +9,11 @@ import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configurat
 
 # Jenkins
 
-Our Jenkins integration allows you to import `jobs`, and `builds` from your build server into Port, according to your mapping and definitions.
+Our Jenkins integration allows you to import `jobs`, and `builds` from your Jenkins environment into Port, according to your mapping and definitions.
 
 ## Common use cases
 
-- Map `jobs` and `builds` in your Jenkins organization environment.
+- Map `jobs` and `builds` in your Jenkins environment.
 - Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
 ## Prerequisites
@@ -317,7 +317,7 @@ To ingest Jenkins objects using the [integration configuration](#configuration-s
 1. Go to the DevPortal Builder page.
 2. Select a blueprint you want to ingest using Jenkins.
 3. Choose the **Ingest Data** option from the menu.
-4. Select Jenkins under the Code quality & security providers category.
+4. Select Jenkins under the CI/CD category.
 5. Modify the [configuration](#configuration-structure) according to your needs.
 6. Click `Resync`.
 
