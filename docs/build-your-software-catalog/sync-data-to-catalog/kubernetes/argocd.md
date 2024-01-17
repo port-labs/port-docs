@@ -10,7 +10,7 @@ import ArgoCDEventManifest from '../webhook/examples/resources/argocd/\_example_
 
 # ArgoCD
 
-Our ArgoCD integration allows you to import `cluster`, `project` and `application` from your ArgoCD instance into Port, according to your mapping and definition.
+Our ArgoCD integration allows you to import `cluster`, `project`, `application` and `deployment-history` from your ArgoCD instance into Port, according to your mapping and definition.
 
 ## Common use cases
 
@@ -240,6 +240,7 @@ The following resources can be used to map data from ArgoCD, it is possible to r
 - [`cluster`](https://cd.apps.argoproj.io/swagger-ui#operation/ClusterService_List)
 - [`project`](https://cd.apps.argoproj.io/swagger-ui#operation/ProjectService_List)
 - [`application`](https://cd.apps.argoproj.io/swagger-ui#operation/ApplicationService_List)
+- [`deployment-history`](https://cd.apps.argoproj.io/swagger-ui#operation/ApplicationService_List)
 
 :::
 
@@ -710,6 +711,100 @@ resources:
             createdAt: .metadata.creationTimestamp
           relations:
             project: .spec.project
+```
+
+</details>
+
+### Deployment history
+
+<details>
+<summary> Deployment history blueprint</summary>
+
+```json showlineNumbers
+{
+  "identifier": "argocdDeploymentHistory",
+  "description": "This blueprint represents an ArgoCD deployment history",
+  "title": "ArgoCD Deployment History",
+  "icon": "Argo",
+  "schema": {
+    "properties": {
+      "deployedAt": {
+        "title": "Deployed At",
+        "type": "string",
+        "format": "date-time",
+        "icon": "DefaultProperty"
+      },
+      "deployStartedAt": {
+        "title": "Deploy Started At",
+        "type": "string",
+        "format": "date-time",
+        "icon": "DefaultProperty"
+      },
+      "revision": {
+        "title": "Revision",
+        "type": "string",
+        "icon": "DefaultProperty"
+      },
+      "initiatedBy": {
+        "title": "Initiated By",
+        "type": "string",
+        "icon": "DefaultProperty"
+      },
+      "repoURL": {
+        "icon": "DefaultProperty",
+        "title": "Repository URL",
+        "type": "string",
+        "format": "url"
+      },
+      "sourcePath": {
+        "title": "Source Path",
+        "type": "string",
+        "icon": "DefaultProperty"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "application": {
+      "title": "Application",
+      "target": "argocdApplication",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: deployment-history
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .__applicationId + "-" + (.id | tostring)
+          title: .id | tostring
+          blueprint: '"argocdDeploymentHistory"'
+          properties:
+            deployedAt: .deployedAt
+            deployStartedAt: .deployStartedAt
+            revision: .revision
+            initiatedBy: .initiatedBy.username
+            repoURL: .source.repoURL
+            sourcePath: .source.path
+          relations:
+            application: .__applicationId
 ```
 
 </details>
