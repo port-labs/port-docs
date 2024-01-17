@@ -719,8 +719,8 @@ resources:
 While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from ArgoCD. If so, use the following instructions:
 
 <details>
-
 <summary><b>Webhook installation (click to expand)</b></summary>
+
 In this example you are going to create a webhook integration between [ArgoCD](https://argo-cd.readthedocs.io/en/stable/) and Port, which will ingest application entities and map them to your ArgoCD projects.
 
 <h2>Port configuration</h2>
@@ -906,16 +906,16 @@ Create the following webhook configuration [using Port UI](/build-your-software-
 
 </details>
 
-### Create a webhook in ArgoCD
+<h3> Create a webhook in ArgoCD </h3>
 
 To set up a webhook configuration in ArgoCD for sending notifications to Port, follow these steps:
 
-#### Prerequisite
+<h4> Prerequisite </h4>
 
 1. You have access to a Kubernetes cluster where ArgoCD is deployed.
 2. You have `kubectl` installed and configured to access your cluster.
 
-#### Steps
+<h4> Steps </h4>
 
 1. Install ArgoCD notifications manifest;
 
