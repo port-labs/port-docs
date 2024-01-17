@@ -13,17 +13,6 @@ Our Snyk integration allows you to import `organizations`, `targets`, `projects`
 - Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 - Create/delete Snyk objects using self-service actions.
 
-## Default behavior and access restriction
-By default, the integration fetches all organizations associated with the provided Snyk token. If you wish to customize access, the following parameters are available:
-
-`OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID`: Use this parameter to restrict access to a specific organization. If specified, the integration will fetch data only for the provided organization.
-
-`OCEAN__INTEGRATION__CONFIG__GROUPS`: When you want to limit access to all organizations within specific Snyk groups, use this parameter. Provide a comma-separated list of Snyk group IDs, and the integration will filter data accordingly.
-
-:::note
-If neither parameter is provided, the integration will operate with the default behavior of fetching all organizations associated with the supplied Snyk token.
-:::
-
 ## Prerequisites
 
 <Prerequisites />
@@ -40,6 +29,7 @@ Using this installation option means that the integration will be able to update
 
 This table summarizes the available parameters for the installation.
 Set them as you wish in the script below, then copy it and run it in your terminal:
+
 
 | Parameter                           | Description                                                                                                        | Required |
 | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
@@ -59,9 +49,21 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `initializePortResources`           | Default true, When set to true the integration will create default blueprints and the port App config Mapping      | ❌       |
 
 <br/>
+
 <Tabs groupId="deploy" queryString="deploy">
 
 <TabItem value="helm" label="Helm">
+
+By default, the integration fetches all organizations associated with the provided Snyk token. If you wish to customize access, the following parameters are available:
+
+`integration.config.organizationId`: Use this parameter to restrict access to a specific organization. If specified, the integration will fetch data only for the provided organization.
+
+`integration.config.groups`: When you want to limit access to all organizations within specific Snyk groups, use this parameter. Provide a comma-separated list of Snyk group IDs, and the integration will filter data accordingly.
+
+:::note
+If neither parameter is provided, the integration will operate with the default behavior of fetching all organizations associated with the supplied Snyk token.
+:::
+
 To install the integration using Helm, run the following command:
 
 ```bash showLineNumbers
@@ -84,8 +86,11 @@ To install the integration using ArgoCD, follow these steps:
 1. Create a `values.yaml` file in `argocd/my-ocean-snyk-integration` in your git repository with the content:
 
 :::note
-Remember to replace the placeholders for `SNYK_TOKEN`.
+Remember to replace the placeholder for `SNYK_TOKEN`.
+
+By default, the integration fetches all organizations associated with the provided Snyk token.
 :::
+
 ```yaml showLineNumbers
 initializePortResources: true
 scheduledResyncInterval: 120
@@ -96,6 +101,52 @@ integration:
     type: POLLING
   secrets:
   // highlight-next-line
+    token: SNYK_TOKEN
+```
+<br/>
+
+ If you wish to customize access, the following configurations are available:
+
+ - The `organizationId` key is used to restrict access to a specific organization. If specified in the `values.yaml` file, the integration will fetch data only for the provided organization.
+
+:::note
+Remember to replace the placeholders for `SNYK_TOKEN` and `SNYK_ORGANIZATION_ID`.
+:::
+
+```yaml showLineNumbers
+initializePortResources: true
+scheduledResyncInterval: 120
+integration:
+  identifier: my-ocean-snyk-integration
+  type: snyk
+  eventListener:
+    type: POLLING
+  config:
+  // highlight-next-line
+    organizationId: SNYK_ORGANIZATION_ID
+  secrets:
+    token: SNYK_TOKEN
+```
+<br/>
+
+ - The `groups` key is used to restrict access to all organizations within specific Snyk groups. In the `values.yaml` file, provide a comma-separated list of Snyk group IDs to the `groups` key, and the integration will filter data for all organizations in the group(s).
+
+:::note
+Remember to replace the placeholders for `SNYK_TOKEN` and `SNYK_GROUPS`.
+:::
+
+```yaml showLineNumbers
+initializePortResources: true
+scheduledResyncInterval: 120
+integration:
+  identifier: my-ocean-snyk-integration
+  type: snyk
+  eventListener:
+    type: POLLING
+  config:
+  // highlight-next-line
+    groups: SNYK_GROUPS
+  secrets:
     token: SNYK_TOKEN
 ```
 <br/>
@@ -159,6 +210,17 @@ kubectl apply -f my-ocean-snyk-integration.yaml
 </TabItem>
 
 <TabItem value="one-time" label="Scheduled">
+
+  By default, the integration fetches all organizations associated with the provided Snyk token. If you wish to customize access, the following parameters are available:
+
+  `OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID`: Use this parameter to restrict access to a specific organization. If specified, the integration will fetch data only for the provided organization.
+
+  `OCEAN__INTEGRATION__CONFIG__GROUPS`: When you want to limit access to all organizations within specific Snyk groups, use this parameter. Provide a comma-separated list of Snyk group IDs, and the integration will filter data accordingly.
+
+  :::note
+  If neither parameter is provided, the integration will operate with the default behavior of fetching all organizations associated with the supplied Snyk token.
+  :::
+
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
 This workflow will run the Snyk integration once and then exit, this is useful for **scheduled** ingestion of data.
