@@ -10,7 +10,7 @@ import ArgoCDEventManifest from '../webhook/examples/resources/argocd/\_example_
 
 # ArgoCD
 
-Our ArgoCD integration allows you to import `cluster`, `project`, `application` and `deployment-history` from your ArgoCD instance into Port, according to your mapping and definition.
+Our ArgoCD integration allows you to import `cluster`, `project`, `application` and `deployment-history` resources from your ArgoCD instance into Port, according to your mapping and definition.
 
 ## Common use cases
 
