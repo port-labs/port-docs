@@ -60,7 +60,7 @@ By default, the integration fetches all organizations associated with the provid
 
 `integration.config.groups`: When you want to limit access to all organizations within specific Snyk groups, use this parameter. Provide a comma-separated list of Snyk group IDs, and the integration will filter data accordingly.
 
-:::note
+:::note Default behaviour
 If neither parameter is provided, the integration will operate with the default behavior of fetching all organizations associated with the supplied Snyk token.
 :::
 
@@ -85,10 +85,10 @@ To install the integration using ArgoCD, follow these steps:
 
 1. Create a `values.yaml` file in `argocd/my-ocean-snyk-integration` in your git repository with the content:
 
-:::note
-Remember to replace the placeholder for `SNYK_TOKEN`.
-
+:::note Default behaviour
 By default, the integration fetches all organizations associated with the provided Snyk token.
+
+Remember to replace the placeholder for `SNYK_TOKEN`.
 :::
 
 ```yaml showLineNumbers
@@ -109,7 +109,7 @@ integration:
 
  - The `organizationId` key is used to restrict access to a specific organization. If specified in the `values.yaml` file, the integration will fetch data only for the provided organization.
 
-:::note
+:::note Configuration variable replacement
 Remember to replace the placeholders for `SNYK_TOKEN` and `SNYK_ORGANIZATION_ID`.
 :::
 
@@ -131,7 +131,7 @@ integration:
 
  - The `groups` key is used to restrict access to all organizations within specific Snyk groups. In the `values.yaml` file, provide a comma-separated list of Snyk group IDs to the `groups` key, and the integration will filter data for all organizations in the group(s).
 
-:::note
+:::note Configuration variable replacement
 Remember to replace the placeholders for `SNYK_TOKEN` and `SNYK_GROUPS`.
 :::
 
@@ -152,7 +152,7 @@ integration:
 <br/>
 
 2. Install the `my-ocean-snyk-integration` ArgoCD Application by creating the following `my-ocean-snyk-integration.yaml` manifest:
-:::note
+:::note Configuration variable replacement
 Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
 
 Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
@@ -217,7 +217,7 @@ kubectl apply -f my-ocean-snyk-integration.yaml
 
   `OCEAN__INTEGRATION__CONFIG__GROUPS`: When you want to limit access to all organizations within specific Snyk groups, use this parameter. Provide a comma-separated list of Snyk group IDs, and the integration will filter data accordingly.
 
-  :::note
+  :::note Default behaviour
   If neither parameter is provided, the integration will operate with the default behavior of fetching all organizations associated with the supplied Snyk token.
   :::
 
