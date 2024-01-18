@@ -6,7 +6,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 # Deploy Azure Resource using Terraform
 
-In the following guide, you are going to create a self-service action in Port that executes an [GitHub workflow](/create-self-service-experiences/setup-backend/github-workflow/github-workflow.md) to deploy a [storage account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-overview) in Azure using Terraform templates.
+In the following guide, you are going to create a self-service action in Port that executes a [GitHub workflow](/create-self-service-experiences/setup-backend/github-workflow/github-workflow.md) to deploy a [storage account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-overview) in Azure using Terraform templates.
 
 
 ## Example - creating a storage account
