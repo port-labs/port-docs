@@ -82,7 +82,7 @@ Follow these steps to get started:
   <summary>Port Action</summary>
    :::tip
 - `<GITHUB-ORG>` - your GitHub organization or user name.
-- `<GITHUB-REPO-NAME>` - the name you gave to the webhook resource in the Azure yaml pipeline file.
+- `<GITHUB-REPO-NAME>` - your GitHub repository name.
 :::
 
 
