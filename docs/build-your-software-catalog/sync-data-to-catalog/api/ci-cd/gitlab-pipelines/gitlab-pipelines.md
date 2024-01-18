@@ -5,18 +5,18 @@ sidebar_position: 1
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Azure Pipelines
+# Gitlab CI Pipelines
 
-Using Azure Pipelines, you can easily create/update and query entities in Port.
+Using Gitlab CI Pipelines, you can easily create/update and query entities in Port.
 
 <br></br>
 <br></br>
 
-![Github Illustration](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/azure-pipelines/azure-pipelines-illustration.jpg)
+![Github Illustration](/img/build-your-software-catalog/sync-data-to-catalog/gitlab/gitlab-pipelines-illustration.png)
 
-## 💡 Common Azure Pipelines usage
+## 💡 Common Gitlab CI Pipelines usage
 
-Port's API allows for easy integration between Port and your Azure Pipeline jobs, for example:
+Port's API allows for easy integration between Port and your Gitlab CI Pipeline jobs, for example:
 
 - Report the status of a running **CI job**;
 - Update the software catalog about a new **build version** for a **microservice**;
@@ -24,40 +24,50 @@ Port's API allows for easy integration between Port and your Azure Pipeline jobs
 
 ## Setup
 
-To interact with Port using Azure Pipelines, you will first need to [define your Port credentials](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/set-secret-variables?view=azure-devops&tabs=yaml%2Cbash#secret-variable-in-the-ui) as variables for your pipeline.
-Then, pass the defined variables to your pipeline script, for example, `Python`:
+To interact with Port using Gitlab CI Pipeline, you will first need to [define your Port credentials](https://docs.gitlab.com/ee/ci/variables/index.html#define-a-cicd-variable-in-the-ui) as variables for your pipeline.
+Then, pass the defined variables to your ci pipeline script, for example, `Python`:
 
 ```yaml showLineNumbers
-- task: PythonScript@0
-  env:
-    PORT_CLIENT_ID: $(PORT_CLIENT_ID) # The variable name for your Port clientId
-    PORT_CLIENT_SECRET: $(PORT_CLIENT_SECRET) # The variable name for your Port clientSecret
-  inputs:
-    scriptSource: "filePath"
-    scriptPath: "main.py"
+image: python:3.9
+
+variables:
+  PORT_CLIENT_ID: $PORT_CLIENT_ID # The variable name for your Port clientId
+  PORT_CLIENT_SECRET: $PORT_CLIENT_SECRET # The variable name for your Port clientSecret
+
+report_to_port:
+  stage: build
+  script:
+    - python main.py
 ```
 
-Make sure you have an existing [Blueprint](../../../../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) in your Port installation to create/update entities.
+Make sure you have an existing [Blueprint](/build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) in your Port installation to create/update entities.
 
 ## Working with Port's API
 
-Here is an example snippet showing how to integrate a job that uses Port's API with your existing Azure pipelines using Python:
+Here is an example snippet showing how to integrate a job that uses Port's API with your existing Gitlab CI pipelines using Python:
 
-Add the following task to your Azure pipeline:
+Add the following task to your Gitlab pipeline:
 
 <details>
-  <summary> Azure pipeline YAML </summary>
+  <summary> Gitlab pipeline YAML </summary>
 
 ```yaml showLineNumbers
-- script: |
-    pip install -r port_requirements.txt
-- task: PythonScript@0
-  env:
-    PORT_CLIENT_ID: $(PORT_CLIENT_ID)
-    PORT_CLIENT_SECRET: $(PORT_CLIENT_SECRET)
-  inputs:
-    scriptSource: "filePath"
-    scriptPath: "port.py"
+image: python:3.9
+
+variables:
+  PORT_CLIENT_ID: $PORT_CLIENT_ID
+  PORT_CLIENT_SECRET: $PORT_CLIENT_SECRET
+
+stages:
+  - build
+
+report_to_port:
+  stage: build
+  before_script:
+    - python -m pip install --upgrade pip
+    - pip install -r requirements.txt
+  script:
+    - python main.py
 ```
 
 </details>
@@ -72,6 +82,7 @@ In the following example, we use Python modules which need to be installed. You 
 
 ```
 requests>=2.28.2
+
 ```
 
 </details>
@@ -95,16 +106,18 @@ import json
 # These are the credentials passed by the variables of your pipeline to your tasks and in to your env
 CLIENT_ID = os.environ['PORT_CLIENT_ID']
 CLIENT_SECRET = os.environ['PORT_CLIENT_SECRET']
+API_URL = 'https://api.getport.io/v1'
 
 credentials = {
     'clientId': CLIENT_ID,
     'clientSecret': CLIENT_SECRET
 }
 token_response = requests.post(f"{API_URL}/auth/access_token", json=credentials)
+# use this access token + header for all http requests to Port
 access_token = token_response.json()['accessToken']
 
 headers = {
-	'Authorization': f'Bearer {access_token}'
+    'Authorization': f'Bearer {access_token}'
 }
 
 entity_json = {
@@ -136,16 +149,18 @@ import json
 # These are the credentials passed by the variables of your pipeline to your tasks and in to your env
 CLIENT_ID = os.environ['PORT_CLIENT_ID']
 CLIENT_SECRET = os.environ['PORT_CLIENT_SECRET']
+API_URL = 'https://api.getport.io/v1'
 
 credentials = {
     'clientId': CLIENT_ID,
     'clientSecret': CLIENT_SECRET
 }
-token_response = requests.post(f"{API_URL}/auth/access_token", json=credentials)
-access_token = token_response.json()['accessToken']
 
+token_response = requests.post(f'{API_URL}/auth/access_token', json=credentials)
+# use this access token + header for all http requests to Port
+access_token = token_response.json()['accessToken']
 headers = {
-	'Authorization': f'Bearer {access_token}'
+  'Authorization': f'Bearer {access_token}'
 }
 
 # request url : {API_URL}/blueprints/<blueprint_id>/entities/<entity_id>
@@ -158,4 +173,4 @@ print(json.dumps(get_response.json(), indent=4))
 
 ## Examples
 
-Refer to the [examples](./examples.md) page for practical examples of working with Port using Azure Pipelines.
+Refer to the [examples](./examples.md) page for practical examples of working with Port using Gitlab CI Pipelines.
