@@ -13,7 +13,7 @@ In the following guide, you are going to create a self-service action in Port th
 
 Follow these steps to get started:
 
-1. Create the following GitHub action secrets:
+1. Create the following GitHub Action secrets:
     1. Create the Port credentials.
         1. `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
         2. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
@@ -31,7 +31,7 @@ Follow these steps to get started:
 3. Create a Port <PortTooltip id="blueprint">blueprint</PortTooltip> with the following JSON definition:
 
 <details>
-   <summary>Port Azure Storage Account Blueprint</summary>
+   <summary>Port Blueprint: Azure Storage Account</summary>
    :::note
    Keep in mind that this can be any blueprint you require; the provided example is just for reference.
    :::
@@ -79,7 +79,7 @@ Follow these steps to get started:
 
 <details>
 
-  <summary>Port Action</summary>
+  <summary>Port Action: Create Azure Storage</summary>
    :::tip
 - `<GITHUB-ORG>` - your GitHub organization or user name.
 - `<GITHUB-REPO-NAME>` - your GitHub repository name.
@@ -89,8 +89,8 @@ Follow these steps to get started:
 ```json showLineNumbers
 [
   {
-    "identifier": "github_terraform",
-    "title": "Github Terraform",
+    "identifier": "create_azure_storage",
+    "title": "Create Azure Storage",
     "icon": "Github",
     "userInputs": {
       "properties": {
