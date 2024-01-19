@@ -690,6 +690,62 @@ And the result shall be:
 
 </Tabs>
 
+### Dynamic properties
+
+When using Port's UI, you can use properties of the logged-in user when writing rules by using the following functions:
+
+- `getUserTeams` - a list of the teams the user belongs to.
+- `getUserEmail` - the user's email.
+- `getUserFullName` - the user's full name.
+- `blueprint` - the blueprint identifier of the current page.
+
+:::info UI only
+Since we don't have context of the logged-in user when using the API, these functions are only available when using the UI. This is useful when creating [chart/table widgets](/customize-pages-dashboards-and-plugins/dashboards/#chart-filters) and [catalog pages](/customize-pages-dashboards-and-plugins/page/catalog-page#page-creation).
+:::
+
+#### Usage examples
+
+```json showLineNumbers
+[
+  {
+    "property": "$team",
+    "operator": "containsAny",
+    "value": ["{{getUserTeams()}}"]
+  }
+]
+```
+
+```json showLineNumbers
+[
+  {
+    "property": "emails",
+    "operator": "contains",
+    "value": "{{getUserEmail()}}"
+  }
+]
+```
+
+```json showLineNumbers
+[
+  {
+    "property": "name",
+    "operator": "=",
+    "value": "{{getUserFullName()}}"
+  }
+]
+```
+
+```json showLineNumbers
+[
+  {
+    "property": "$blueprint",
+    "operator": "=",
+    "value": "{{blueprint}}"
+  }
+]
+```
+
+
 ## Examples
 
 Refer to the [examples](./examples.md) page for practical code snippets for search.

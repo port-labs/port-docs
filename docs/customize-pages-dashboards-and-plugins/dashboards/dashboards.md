@@ -121,7 +121,7 @@ The table will automatically display data about each run, including status, inpu
 
 <img src='/img/software-catalog/widgets/widgetFilterForm.png' width='400rem' />
 
-#### Filter example: only deployment entities from the last week
+### Filter example: only deployment entities from the last week
 
 Let's assume we have a [blueprint](/build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) that is called `Service` which is related to another blueprint called `Deployment`, and we want to create visualizations on top of the last week's deployments of this service.
 
@@ -141,51 +141,4 @@ To achieve this desired state, we can go into one of the `Service`'s profile pag
 
 ### Dynamic filters
 
-You can use properties of the logged-in user when filtering a widget, by using the following functions:
-
-- getUserTeams - a list of the teams the user belongs to.
-- getUserEmail - the user's email.
-- getUserFullName - the user's full name.
-- blueprint - the blueprint identifier of the current page.
-
-#### Usage examples
-
-```json showLineNumbers
-[
-  {
-    "property": "$team",
-    "operator": "containsAny",
-    "value": ["{{getUserTeams()}}"]
-  }
-]
-```
-
-```json showLineNumbers
-[
-  {
-    "property": "emails",
-    "operator": "contains",
-    "value": "{{getUserEmail()}}"
-  }
-]
-```
-
-```json showLineNumbers
-[
-  {
-    "property": "name",
-    "operator": "=",
-    "value": "{{getUserFullName()}}"
-  }
-]
-```
-
-```json showLineNumbers
-[
-  {
-    "property": "$blueprint",
-    "operator": "=",
-    "value": "{{blueprint}}"
-  }
-]
-```
+You can use [dynamic properties](/search-and-query/#dynamic-properties) of the logged-in user when filtering a widget.

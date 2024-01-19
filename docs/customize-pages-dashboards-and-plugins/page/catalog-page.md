@@ -37,6 +37,10 @@ You can define any [supported rule](/search-and-query/#rules) in JSON format. He
 ]
 ```
 
+#### Dynamic filters
+
+You can use [dynamic properties](/search-and-query/#dynamic-properties) of the logged-in user when creating a catalog page.
+
 ### Excluded properties
 
 Another way to reduce loading times is to exclude undesired properties from an entities table when querying the data. When using this option, the new table will not contain columns for the excluded properties.  
