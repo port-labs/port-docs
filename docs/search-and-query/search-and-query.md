@@ -690,6 +690,58 @@ And the result shall be:
 
 </Tabs>
 
+### Dynamic properties
+
+You can use properties of the logged-in user when writing rules by using the following functions:
+
+- getUserTeams - a list of the teams the user belongs to.
+- getUserEmail - the user's email.
+- getUserFullName - the user's full name.
+- blueprint - the blueprint identifier of the current page.
+
+#### Usage examples
+
+```json showLineNumbers
+[
+  {
+    "property": "$team",
+    "operator": "containsAny",
+    "value": ["{{getUserTeams()}}"]
+  }
+]
+```
+
+```json showLineNumbers
+[
+  {
+    "property": "emails",
+    "operator": "contains",
+    "value": "{{getUserEmail()}}"
+  }
+]
+```
+
+```json showLineNumbers
+[
+  {
+    "property": "name",
+    "operator": "=",
+    "value": "{{getUserFullName()}}"
+  }
+]
+```
+
+```json showLineNumbers
+[
+  {
+    "property": "$blueprint",
+    "operator": "=",
+    "value": "{{blueprint}}"
+  }
+]
+```
+
+
 ## Examples
 
 Refer to the [examples](./examples.md) page for practical code snippets for search.
