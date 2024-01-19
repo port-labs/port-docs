@@ -73,9 +73,9 @@ In order to deploy the application, you will need to fill in the following param
 - **Bucket related parameters:**
   - `CreateBucket` - `true` if you want the application to create and manage your bucket, or `false` if you want to create the bucket on your own.
   - `BucketName` - The name of your bucket, or a globally unique name for a new bucket.
-  - `ConfigJsonFileKey` - The file key (path) to the [`config.json`](#exporter-configjson-file) in the bucket.
+  - `ConfigJsonFileKey` - The file key (path) to the [`config.json`](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/#exporter-configjson-file) in the bucket.
 - **IAM Policy related parameters:**
-  - `CustomIAMPolicyARN` - The ARN of the [IAM policy](#iam-policy).
+  - `CustomIAMPolicyARN` - The ARN of the [IAM policy](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/#iam-policy).
 - **Secret related parameters:**
 
   - `CustomPortCredentialsSecretARN` - The ARN of the Port credentials secret;

@@ -99,6 +99,13 @@ Tables can be [searched, filtered and customized](/customize-pages-dashboards-an
 
 <img src='/img/software-catalog/widgets/tableExample.png' width='400rem' />
 
+#### Customization
+
+Just like catalog pages, tables support the following customization options:
+
+- [Initial filters](/customize-pages-dashboards-and-plugins/page/catalog-page/#initial-filters)
+- [Excluded properties](/customize-pages-dashboards-and-plugins/page/catalog-page/#excluded-properties)
+
 ### Action runs
 
 This widget allows you to create a table displaying all past runs of a [self-service action](/create-self-service-experiences) in your portal.  
@@ -116,7 +123,7 @@ The table will automatically display data about each run, including status, inpu
 
 #### Filter example: only deployment entities from the last week
 
-Let's assume we have a [blueprint](../../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) that is called `Service` which is related to another blueprint called `Deployment`, and we want to create visualizations on top of the last week's deployments of this service.
+Let's assume we have a [blueprint](/build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) that is called `Service` which is related to another blueprint called `Deployment`, and we want to create visualizations on top of the last week's deployments of this service.
 
 To achieve this desired state, we can go into one of the `Service`'s profile pages and create a new visualization. After selecting the `Deployment` blueprint in the dropdown, we can add the following filter to the `Filters` array:
 

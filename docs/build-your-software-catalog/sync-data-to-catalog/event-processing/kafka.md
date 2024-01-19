@@ -2,6 +2,8 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
 import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
+import DockerParameters from "./\_kafka_one_time_docker_params.mdx"
+import HelmParameters from "../templates/\_ocean-advanced-parameters-helm.mdx"
 
 
 # Kafka
@@ -20,13 +22,33 @@ Our Kafka integration allows you to import `brokers` and `topics` from your Kafk
 
 ## Installation
 
-Install the integration via Helm by running this command:
+Choose one of the following installation methods:
+
+<Tabs groupId="installation-methods" queryString="installation-methods">
+
+<TabItem value="real-time-always-on" label="Real Time & Always On" default>
+
+Using this installation option means that the integration will be able to update Port in real time using webhooks.
+
+This table summarizes the available parameters for the installation.
+Set them as you wish in the script below, then copy it and run it in your terminal:
+
+| Parameter                                | Description                                                                                                                                | Example                          | Required |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------- | -------- |
+| `port.clientId`                          | Your port [client id](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)            |                                  | ✅       |
+| `port.clientSecret`                      | Your port [client secret](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)        |                                  | ✅       |
+| `integration.secrets.clusterConfMapping` | The Mapping of Kafka cluster names to Kafka client config  |  | ✅       |
+
+
+<HelmParameters/>
+
+<br/>
+<Tabs groupId="deploy" queryString="deploy">
+
+<TabItem value="helm" label="Helm" default>
+To install the integration using Helm, run the following command:
 
 ```bash showLineNumbers
-# The following script will install an Ocean integration at your K8s cluster using helm
-# initializePortResources: When set to true the integration will create default blueprints + JQ Mappings
-# integration.identifier: Change the identifier to describe your integration
-# integration.secrets.clusterConfMapping: Mapping of Kafka cluster names to Kafka client config. example: {"local":{"bootstrap.servers": "localhost:9092"}}
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install kafka port-labs/port-ocean \
 	--set port.clientId="PORT_CLIENT_ID"  \
@@ -39,6 +61,197 @@ helm upgrade --install kafka port-labs/port-ocean \
 	--set integration.eventListener.type="POLLING"  \
 	--set-json integration.secrets.clusterConfMapping='{"local": {"bootstrap.servers": "localhost:9092"}}'
 ```
+</TabItem>
+<TabItem value="argocd" label="ArgoCD" default>
+To install the integration using ArgoCD, follow these steps:
+
+1. Create a `values.yaml` file in `argocd/my-ocean-kafka-integration` in your git repository with the content:
+
+:::note
+Remember to replace the placeholders for `KAFKA_CLUSTER_CONFIG_MAPPING`.
+:::
+```yaml showLineNumbers
+initializePortResources: true
+scheduledResyncInterval: 120
+integration:
+  identifier: my-ocean-kafka-integration
+  type: kafka
+  eventListener:
+    type: POLLING
+  secrets:
+  // highlight-next-line
+    clusterConfMapping: KAFKA_CLUSTER_CONFIG_MAPPING
+```
+<br/>
+
+2. Install the `my-ocean-kafka-integration` ArgoCD Application by creating the following `my-ocean-kafka-integration.yaml` manifest:
+:::note
+Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+
+Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
+:::
+
+<details>
+  <summary>ArgoCD Application</summary>
+
+```yaml showLineNumbers
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: my-ocean-kafka-integration
+  namespace: argocd
+spec:
+  destination:
+    namespace: my-ocean-kafka-integration
+    server: https://kubernetes.default.svc
+  project: default
+  sources:
+  - repoURL: 'https://port-labs.github.io/helm-charts/'
+    chart: port-ocean
+    targetRevision: 0.1.14
+    helm:
+      valueFiles:
+      - $values/argocd/my-ocean-kafka-integration/values.yaml
+      // highlight-start
+      parameters:
+        - name: port.clientId
+          value: YOUR_PORT_CLIENT_ID
+        - name: port.clientSecret
+          value: YOUR_PORT_CLIENT_SECRET
+  - repoURL: YOUR_GIT_REPO_URL
+  // highlight-end
+    targetRevision: main
+    ref: values
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+```
+
+</details>
+<br/>
+
+3. Apply your application manifest with `kubectl`:
+```bash
+kubectl apply -f my-ocean-kafka-integration.yaml
+```
+</TabItem>
+</Tabs>
+
+</TabItem>
+
+<TabItem value="one-time" label="Scheduled">
+
+  <Tabs groupId="cicd-method" queryString="cicd-method">
+  <TabItem value="github" label="GitHub">
+This workflow will run the Kafka integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::warning
+If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+:::
+
+Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
+
+<DockerParameters/>
+
+<br/>
+
+Here is an example for `kafka-integration.yml` workflow file:
+
+```yaml showLineNumbers
+name: Kafka Exporter Workflow
+
+# This workflow responsible for running Kafka exporter.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-integration:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run Kafka Integration
+        run: |
+          # Set Docker image and run the container
+          integration_type="kafka"
+          version="latest"
+          image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
+
+          docker run -i --rm --platform=linux/amd64 \
+          -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+          -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+          -e OCEAN__INTEGRATION__CONFIG__CLUSTER_CONF_MAPPING=${{ secrets.OCEAN__INTEGRATION__CONFIG__CLUSTER_CONF_MAPPING }} \
+          -e OCEAN__PORT__CLIENT_ID=${{ secrets.OCEAN__PORT__CLIENT_ID }} \
+          -e OCEAN__PORT__CLIENT_SECRET=${{ secrets.OCEAN__PORT__CLIENT_SECRET }} \
+          $image_name
+
+          exit $?
+```
+
+  </TabItem>
+  <TabItem value="jenkins" label="Jenkins">
+This pipeline will run the Kafka integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::tip
+Your Jenkins agent should be able to run docker commands.
+:::
+:::warning
+If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+:::
+
+Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) of `Secret Text` type:
+
+<DockerParameters/>
+
+<br/>
+
+Here is an example for `Jenkinsfile` groovy pipeline file:
+
+```yml showLineNumbers
+pipeline {
+    agent any
+
+    stages {
+        stage('Run Kafka Integration') {
+            steps {
+                script {
+                    withCredentials([
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__CLUSTER_CONF_MAPPING', variable: 'OCEAN__INTEGRATION__CONFIG__CLUSTER_CONF_MAPPING'),
+                        string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
+                        string(credentialsId: 'OCEAN__PORT__CLIENT_SECRET', variable: 'OCEAN__PORT__CLIENT_SECRET'),
+                    ]) {
+                        sh('''
+                            #Set Docker image and run the container
+                            integration_type="kafka"
+                            version="latest"
+                            image_name="ghcr.io/port-labs/port-ocean-${integration_type}:${version}"
+                            docker run -i --rm --platform=linux/amd64 \
+                                -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+                                -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+                                -e OCEAN__INTEGRATION__CONFIG__CLUSTER_CONF_MAPPING=$OCEAN__INTEGRATION__CONFIG__CLUSTER_CONF_MAPPING \
+                                -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
+                                -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
+                                $image_name
+
+                            exit $?
+                        ''')
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+  </TabItem>
+  </Tabs>
+
+</TabItem>
+
+</Tabs>
 
 <AdvancedConfig/>
 

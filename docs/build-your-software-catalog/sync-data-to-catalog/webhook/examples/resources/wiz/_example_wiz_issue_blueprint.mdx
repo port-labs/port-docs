@@ -1,0 +1,65 @@
+```json showLineNumbers
+{
+  "identifier": "wizIssue",
+  "description": "This blueprint represents a wiz issue",
+  "title": "Wiz Issue",
+  "icon": "Alert",
+  "schema": {
+    "properties": {
+      "status": {
+        "title": "Status",
+        "type": "string",
+        "enum": [
+          "OPEN",
+          "IN_PROGRESS",
+          "RESOLVED",
+          "REJECTED"
+        ],
+        "enumColors": {
+          "OPEN": "blue",
+          "IN_PROGRESS": "orange",
+          "RESOLVED": "green",
+          "REJECTED": "darkGray"
+        }
+      },
+      "severity": {
+        "title": "Severity",
+        "type": "string",
+        "enum": [
+          "INFORMATIONAL",
+          "LOW",
+          "MEDIUM",
+          "HIGH",
+          "CRITICAL"
+        ],
+        "enumColors": {
+          "INFORMATIONAL": "blue",
+          "LOW": "yellow",
+          "MEDIUM": "orange",
+          "HIGH": "red",
+          "CRITICAL": "red"
+        }
+      },
+      "control": {
+        "title": "Control",
+        "type": "string",
+        "description": "A security graph query defining a risk"
+      },
+      "vulnerability": {
+        "title": "Vulnerability",
+        "type": "object",
+        "description": "The identified security risk"
+      },
+      "createdAt": {
+        "title": "Created At",
+        "type": "string",
+        "format": "date-time"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {}
+}
+```
