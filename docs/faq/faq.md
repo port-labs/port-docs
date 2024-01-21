@@ -26,10 +26,16 @@ Spotify’s backstage is spot-on in recognizing the need for a streamlined end-t
 
 ## Is Port really free?
 
-Yes. Anything that is free in our [pricing page](https://www.getport.io/pricing) is, well, free. Using the free version of Port you can set up an advanced, fully functioning internal developer portal, with no free trial limits.
+Yes. Anything that is free in our pricing page is, well, free. Using the free version of Port you can set up an advanced, fully functioning internal developer portal, unlimited in time.
+
+The free version includes all of the features in Port, except for SSO and a certain limitation on the number of software catalog entities (up to 10,000), for reasons of fair use. In case you're evaluating Port, it provides you with everything you need, and if you need SSO for a given period, contact us.
 
 ## What security does Port have in place?
 
-Port is SOC2 compliant.
+We put a lot of thought into Port’s design to make it secure. Consequently, it doesn’t store secrets or credentials, and doesn't require whitelisting of IPs. 
 
-We make use of industry standard encryption protocols. All data is encrypted both at rest and in transit, with complete isolation between clients and data access logging and auditing.
+You can take a look at our secure, push-only architecture [here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog).
+
+Security and privacy are a top priority at Port. We use industry-standard encryption protocols, data is encrypted both at rest and in transit, with complete isolation between clients and data access logging and auditing. Port is SOC2 compliant, and undergoes regular pentests, product security and compliance reviews.
+
+You can find the complete coverage of Port's security policy in our security [page](https://www.getport.io/security).

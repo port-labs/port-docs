@@ -7,12 +7,17 @@ import TabItem from "@theme/TabItem"
 
 # Jenkins Deployment
 
+:::tip Available Ocean integration
+Port provides an [Ocean integration](/build-your-software-catalog/sync-data-to-catalog/ci-cd/jenkins.md) for Jenkins, which allows you to automatically sync your Jenkins resources with Port and provides more configuration options. This is the **recommended** way to integrate Port with Jenkins.  
+If you would still prefer to use Port's API, follow this page.
+:::
+
 Using Jenkins build, you can easily create/update and query entities in Port.
 
 <br></br>
 <br></br>
 
-![Github Illustration](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/jenkins/jenkins-pipeline-illustration.jpg)
+![Github Illustration](/img/build-your-software-catalog/sync-data-to-catalog/jenkins/jenkins-pipeline-illustration.jpg)
 
 ## 💡 Common Jenkins build usage
 
@@ -38,12 +43,12 @@ method groovy.json.JsonSlurperClassic parseText java.lang.String
 
 3. Add your `PORT_CLIENT_ID` and `PORT_CLIENT_SECRET` as [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) to use them in your CI pipelines.
 
-4. Make sure you have an existing [Blueprint](../../../../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) in your Port installation to create/update entities.
+4. Make sure you have an existing [Blueprint](/build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) in your Port installation to create/update entities.
 
 ## Set up
 
 :::tip
-All Port API routes used in this guide can be found in Port's [API documentation](../../../../api-reference/api-reference.mdx).
+All Port API routes used in this guide can be found in Port's [API documentation](/api-reference/api-reference.mdx).
 :::
 
 To interact with Port inside your Jenkins builds, follow these steps:

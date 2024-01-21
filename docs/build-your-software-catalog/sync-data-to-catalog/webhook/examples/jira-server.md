@@ -34,7 +34,7 @@ Create the following blueprint definitions:
 You may modify the properties in your blueprints depending on what you want to track in your Jira projects and issues.
 :::
 
-Create the following webhook configuration [using Port UI](../../?operation=ui#configuring-webhook-endpoints)
+Create the following webhook configuration [using Port's UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
 <summary>Jira webhook configuration</summary>

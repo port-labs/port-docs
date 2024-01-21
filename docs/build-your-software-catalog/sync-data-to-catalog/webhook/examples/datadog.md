@@ -25,7 +25,7 @@ Create the following blueprint definitions:
 <DatadogBlueprint/>
 </details>
 
-Create the following webhook configuration [using Port UI](../../?operation=ui#configuring-webhook-endpoints)
+Create the following webhook configuration [using Port UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
 <summary>Datadog webhook configuration</summary>

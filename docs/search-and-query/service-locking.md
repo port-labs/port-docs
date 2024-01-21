@@ -12,13 +12,13 @@ All relevant files and resources for this guide are available [**HERE**](https:/
 
 ## Goal
 
-In this guide you will implement a service locking mechanism using Port's [GitHub Action](../build-your-software-catalog/sync-data-to-catalog/ci-cd/github-workflow/github-workflow.md).
+In this guide you will implement a service locking mechanism using Port's [GitHub Action](/build-your-software-catalog/sync-data-to-catalog/api/ci-cd/github-workflow/github-workflow.md).
 
-The environment we're going to use includes 2 [Blueprints](../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) with a [Relation](../build-your-software-catalog/define-your-data-model/relate-blueprints/relate-blueprints.md) between them:
+The environment we're going to use includes 2 [Blueprints](/build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) with a [Relation](/build-your-software-catalog/define-your-data-model/relate-blueprints/relate-blueprints.md) between them:
 
-![Service locking layout](../../static/img/complete-use-cases/service-locking/service-locking-layout.png)
+![Service locking layout](/img/complete-use-cases/service-locking/service-locking-layout.png)
 
-Let's go over the different Blueprints shown above and how we'll create [Entities](../build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md#entity-json-structure) for each one of them:
+Let's go over the different Blueprints shown above and how we'll create [Entities](/build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md#entity-json-structure) for each one of them:
 
 - **Deployment Config** - a deployment config is a representation of the current “live” version of a service running in a specific environment. It will include references to the service, environment, and deployment, as well as real-time information such as status, uptime, and any other relevant metadata.
   - In this example deployment configs will be reported manually.
@@ -181,7 +181,7 @@ Now let's use the deployment config Entity to lock the `Notification Service` fo
 
 ## Reading the `locked` field during deployment
 
-In order to use the `locked` field on your deployment config, you will use Port's [GitHub Action](../build-your-software-catalog/sync-data-to-catalog/ci-cd/github-workflow/github-workflow.md).
+In order to use the `locked` field on your deployment config, you will use Port's [GitHub Action](/build-your-software-catalog/sync-data-to-catalog/api/ci-cd/github-workflow/github-workflow.md).
 
 Here is the deployment check flow:
 
@@ -312,18 +312,18 @@ the `report-deployment` job is configured with a `needs` key whose value is `[ch
 
 If you try to push code to your repository when the deployment config `locked` field is set to `true`, the deployment will stop:
 
-![Workflow fail graph](./../../static/img/complete-use-cases/service-locking/workflow-fail-graph.png)
+![Workflow fail graph](/img/complete-use-cases/service-locking/workflow-fail-graph.png)
 
 When you will look at the step that failed, you will see that the failure is due to the value of the `locked` field:
 
-![Lock check step](./../../static/img/complete-use-cases/service-locking/workflow-lock-message.png)
+![Lock check step](/img/complete-use-cases/service-locking/workflow-lock-message.png)
 
 If you set the value of the `locked` field to `false`, the workflow will perform the deployment without any issue:
 
-![Workflow success graph](./../../static/img/complete-use-cases/service-locking/workflow-success-graph.png)
+![Workflow success graph](/img/complete-use-cases/service-locking/workflow-success-graph.png)
 
 ## Summary
 
 This was just a single example of Port's GitHub Action value in your CI/CD pipelines. By querying and creating Entities during your CI process, you can make your CI jobs even more dynamic and responsive, without having to edit `yml` files and push new code to your repository.
 
-If you're using a different CI/CD provider, be sure to checkout the rest of our [CI/CD integrations](../build-your-software-catalog/sync-data-to-catalog/ci-cd/ci-cd.md) to find the integration that fits your use-case.
+If you're using a different CI/CD provider, be sure to checkout the rest of our [CI/CD integrations](/build-your-software-catalog/sync-data-to-catalog/api/ci-cd/ci-cd.md) to find the integration that fits your use-case.
