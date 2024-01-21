@@ -166,7 +166,7 @@ This page contains a list of Port's available integrations, organized by the pla
 ## New Relic
 
 - [New Relic integration](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/newrelic.md)
-- [Embed dashboards from New Relic](/customize-pages-dashboards-and-plugins/tabs/embedded-url/embedded-url.md#new-relic-chart)
+- [Embed dashboards from New Relic](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/embedded-url/#new-relic-chart)
 
 ## OpsGenie
 
@@ -191,7 +191,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Datadog
 
-- [Embed dashboards from Datadog](/customize-pages-dashboards-and-plugins/tabs/embedded-url/embedded-url.md#datadog-dashboard)
+- [Embed dashboards from Datadog](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/embedded-url/#datadog-dashboard)
 - [Datadog webhook](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/datadog.md)
 - [Datadog service catalog](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/datadog.md#ingest-service-catalog)
 
@@ -210,7 +210,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Grafana
 
-- [Embed dashboards from Grafana](/customize-pages-dashboards-and-plugins/tabs/embedded-url/authentication.md#examples)
+- [Embed dashboards from Grafana](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/embedded-url/authentication.md#examples)
 - [Grafana webhook](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/grafana.md)
 
 ## StackHawk
