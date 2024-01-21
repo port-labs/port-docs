@@ -1,23 +1,31 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 # Embedded URL
 
-You can use the embedded-url `spec` property to embed any publicly available webpage into an additional tab in the [specific entity page](../../page/entity-page.md).
+The `embedded URL` property is used to embed and display a webpage within an <PortTooltip id="entity">entity</PortTooltip> in Port.  
+Using this property will automatically create an additional tab in each [entity page](/customize-pages-dashboards-and-plugins/page/entity-page.md), displaying the embedded content.
 
-By using the `embedded_url` spec in a [Blueprint property](../../../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/properties.md#structure), Port will display the url as a new tab matching the provided URL in the blueprint's entity.
+In the following example, we see the `Shipping` entity page, which is an instance on the `Domain` blueprint.  
+The blueprint has an `embedded URL` property named `Architecture`, which is automatically displayed in a dedicated tab:
 
-:::note
-Make sure the URL you want to embed in Port is publicly available (i.e. not inside a private VPC or only accessible using a VPN)
-:::
+<img src='/img/software-catalog/blueprint/embeddedUrlExample.png' width='85%' />
 
-## Prerequisites
+## URL type
 
-In order to add an embedded view tab into your specific entity page, all you need is a publicly available URL with the data you want to embed.
+Port supports the following URL types:
 
-## Embedded URL property definition in Blueprint schema
+- **Public link** - A link to a public webpage, which does not require authentication.
+- **Private link** - A link to a webpage that is protected by SSO authentication. To use this type, you'll need to provide the required parameters, see the [authentication](./authentication) section for more information and examples.
 
-### Definition
+## 💡 Common embedded URL usage
+
+- Display a service's architecture
+- Display & track a service's Datadog dashboard
+- Display charts and diagrams from external tools
+
+## Schema definition
 
 <Tabs groupId="definition" defaultValue="api" values={[
 {label: "API", value: "api"},
@@ -35,7 +43,17 @@ In order to add an embedded view tab into your specific entity page, all you nee
     "format": "url",
     "spec": "embedded-url",
     // highlight-end
-    "description": "embedded-url Prop"
+    "description": "embedded-url Prop",
+    // specAuthentication is needed only when using a protected/private URL
+    "specAuthentication": {
+        "authorizationUrl": "https://app.com",
+        "tokenUrl": "https://app.com",
+        "clientId": "1234",
+        "authorizationScope": [
+          "api://xxxx-xxxx-xxxx-xxxx-xxxx/user.read"
+        ]
+      }
+
   }
 }
 ```
@@ -90,11 +108,11 @@ Add the `embedded-URL` property to a Blueprint:
 
 Create or edit an Entity of the Blueprint you added the `Datadog` property to, and specify the URL to the Datadog dashboard:
 
-![Datadog Entity edit example](../../../../static/img/software-catalog/widgets/editEntityDatadog.png)
+![Datadog Entity edit example](/img/software-catalog/widgets/editEntityDatadog.png)
 
 Now go to the specific entity page of your Entity and the Datadog dashboard will be visible in a dedicated tab:
 
-![Datadog dashboard example](../../../../static/img/software-catalog/widgets/datadog.png)
+![Datadog dashboard example](/img/software-catalog/widgets/datadog.png)
 
 ### New Relic Chart
 
@@ -119,12 +137,12 @@ Add the `embedded-URL` property to a Blueprint:
 </details>
 Go to new relic and extract the chart URL of a specific chart
 
-![New Relic get embed URL](../../../../static/img/software-catalog/widgets/GetEmbedUrlNewRelic.png)
+![New Relic get embed URL](/img/software-catalog/widgets/GetEmbedUrlNewRelic.png)
 
 Create or edit an Entity of the Blueprint you added the `cpuUsage` property to, and specify the URL to the CPU Usage chart:
 
-![New Relic Entity edit example](../../../../static/img/software-catalog/widgets/editEntityNewRelic.png)
+![New Relic Entity edit example](/img/software-catalog/widgets/editEntityNewRelic.png)
 
 Now go to the specific entity page of your Entity and the CPU Usage chart will be visible in a dedicated tab:
 
-![New Relic dashboard example](../../../../static/img/software-catalog/widgets/new-relic.png)
+![New Relic dashboard example](/img/software-catalog/widgets/new-relic.png)

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 10
+sidebar_position: 5
 description: Datetime is a data type used to reference a date and time
 ---
 
@@ -16,11 +16,10 @@ Datetime is a data type used to reference a date and time.
 
 The datetime property type can be used to store any date and time, for example:
 
-- Deployment time;
-- Release time;
-- Last incident date;
-- Creation timestamp;
-- etc.
+- Deployment time
+- Release time
+- Last incident date
+- Creation timestamp
 
 In this [live demo](https://demo.getport.io/services) example, we can see the `Last Update` datetime property. 🎬
 

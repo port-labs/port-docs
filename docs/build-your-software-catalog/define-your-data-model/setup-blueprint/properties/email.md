@@ -1,5 +1,5 @@
 ---
-sidebar_position: 7
+sidebar_position: 6
 description: Email is a data type used to save Email addresses
 ---
 

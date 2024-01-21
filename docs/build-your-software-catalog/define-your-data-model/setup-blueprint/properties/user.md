@@ -1,5 +1,5 @@
 ---
-sidebar_position: 8
+sidebar_position: 19
 description: User is a data type used to reference users that exist in Port
 ---
 
