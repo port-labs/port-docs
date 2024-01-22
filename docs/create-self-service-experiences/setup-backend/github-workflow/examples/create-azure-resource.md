@@ -25,9 +25,9 @@ Follow these steps to get started:
         2. `ARM_CLIENT_SECRET` - Azure Client Secret (Password) of the application.
         3. `ARM_SUBSCRIPTION_ID` - Azure Subscription ID.
         4. `ARM_TENANT_ID` - The Azure [Tenant ID](https://learn.microsoft.com/en-us/azure/azure-portal/get-subscription-tenant-id).
-
+<br />
 2. Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new).
-
+<br />
 3. Create a Port <PortTooltip id="blueprint">blueprint</PortTooltip> with the following JSON definition:
 
 <details>
@@ -74,7 +74,7 @@ Follow these steps to get started:
 ```
 
   </details>
-
+<br />
 3. Create a Port action in the [self-service page](https://app.getport.io/self-serve) or with the following JSON definition:
 
 <details>
@@ -131,7 +131,7 @@ Follow these steps to get started:
 ```
 
 </details>
-
+<br />
 4. Create the following Terraform templates in a `terraform` folder at the root of your GitHub repository:
     :::tip
     Fork our [example repository](https://github.com/port-labs/pipelines-terraform-azure) to get started.
@@ -254,7 +254,7 @@ output "endpoint_url" {
 ```
 
 </details>
-
+<br />
 5. Create a workflow file under `.github/workflows/terraform-azure.yml` with the following content:
 
 <details>
@@ -376,5 +376,5 @@ jobs:
 ```
 
 </details>
-
+<br />
 6. Trigger the action from the [self-service](https://app.getport.io/self-serve) page of your Port application.
