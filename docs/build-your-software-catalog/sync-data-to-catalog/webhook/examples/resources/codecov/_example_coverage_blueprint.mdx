@@ -1,0 +1,57 @@
+```json showLineNumbers
+{
+    "identifier": "codecov_coverage",
+    "title": "Codecov Coverage",
+    "icon": "Git",
+    "schema": {
+      "properties": {
+        "repository": {
+          "title": "Repository",
+          "type": "string",
+          "format": "url"
+        },
+        "coverage": {
+          "title": "Test Coverage",
+          "type": "string"
+        },
+        "service": {
+          "title": "Service",
+          "type": "string"
+        },
+        "author": {
+          "title": "Author",
+          "type": "string"
+        },
+        "createdAt": {
+          "title": "Created At",
+          "type": "string",
+          "format": "date-time"
+        },
+        "files": {
+          "title": "Tracked Files",
+          "type": "string",
+          "description": "Number of files tracked"
+        },
+        "lines": {
+          "title": "Tracked Lines",
+          "description": "Number of lines tracked",
+          "type": "string"
+        },
+        "branch": {
+          "title": "Branch",
+          "type": "string"
+        },
+        "report": {
+          "title": "Full Report Data",
+          "type": "object",
+          "description": "Detailed information about the codecov report"
+        }
+      },
+      "required": []
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "aggregationProperties": {},
+    "relations": {}
+}
+```
