@@ -16,7 +16,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [GitHub app](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md)
 - [GitHub self-hosted app](/build-your-software-catalog/sync-data-to-catalog/git/github/self-hosted-installation.md)
 - [GitHub GitOps](/build-your-software-catalog/sync-data-to-catalog/git/github/gitops/gitops.md)
-- [GitHub action for GitHub workflow](/build-your-software-catalog/sync-data-to-catalog/ci-cd/github-workflow/github-workflow.md)
+- [GitHub action for GitHub workflow](/build-your-software-catalog/sync-data-to-catalog/api/ci-cd/github-workflow/github-workflow.md)
 - [GitHub workflow self-service actions](/create-self-service-experiences/setup-backend/github-workflow/github-workflow.md)
 - [Sync repositories, file contents, pull-requests, workflows, teams and more](/build-your-software-catalog/sync-data-to-catalog/git/github/examples.md)
 - [Sync Dependebot](/build-your-software-catalog/sync-data-to-catalog/git/github/examples.md#mapping-repositories-and-dependabot-alerts)
@@ -32,7 +32,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [GitLab app](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/gitlab.md)
 - [GitLab GitOps](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/gitops/gitops.md)
 - [GitLab advanced file search and search checks](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/mapping_extensions.md)
-- [Sync GitLab pipelines](/build-your-software-catalog/sync-data-to-catalog/ci-cd/gitlab-pipelines/gitlab-pipelines.md)
+- [Sync GitLab pipelines](/build-your-software-catalog/sync-data-to-catalog/api/ci-cd/gitlab-pipelines/gitlab-pipelines.md)
 - [GitLab pipeline self-service actions](/create-self-service-experiences/setup-backend/gitlab-pipeline/gitlab-pipeline.md)
 - [GitLab scaffolder](/create-self-service-experiences/setup-backend/gitlab-pipeline/examples/scaffold-repositories-using-cookiecutter.md)
 - [Sync projects, file contents, merge-requests and more](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/examples.md)
@@ -47,7 +47,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ### Azure DevOps
 
-- [Sync Azure pipelines](/build-your-software-catalog/sync-data-to-catalog/ci-cd/azure-pipelines/azure-pipelines.md)
+- [Sync Azure pipelines](/build-your-software-catalog/sync-data-to-catalog/api/ci-cd/azure-pipelines/azure-pipelines.md)
 - [Azure pipelines self-service actions](/create-self-service-experiences/setup-backend/azure-pipeline/azure-pipeline.md)
 - [Cookiecutter Azure DevOps scaffolder using Azure DevOps pipelines](/create-self-service-experiences/setup-backend/azure-pipeline/examples/scaffold-repositories-using-cookiecutter.md)
 - [Azure DevOps Webhook](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/azuredevops.md)
@@ -166,7 +166,7 @@ This page contains a list of Port's available integrations, organized by the pla
 ## New Relic
 
 - [New Relic integration](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/newrelic.md)
-- [Embed dashboards from New Relic](/customize-pages-dashboards-and-plugins/tabs/embedded-url/embedded-url.md#new-relic-chart)
+- [Embed dashboards from New Relic](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/embedded-url/#new-relic-chart)
 
 ## OpsGenie
 
@@ -191,7 +191,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Datadog
 
-- [Embed dashboards from Datadog](/customize-pages-dashboards-and-plugins/tabs/embedded-url/embedded-url.md#datadog-dashboard)
+- [Embed dashboards from Datadog](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/embedded-url/#datadog-dashboard)
 - [Datadog webhook](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/datadog.md)
 - [Datadog service catalog](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/datadog.md#ingest-service-catalog)
 
@@ -210,7 +210,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Grafana
 
-- [Embed dashboards from Grafana](/customize-pages-dashboards-and-plugins/tabs/embedded-url/authentication.md#examples)
+- [Embed dashboards from Grafana](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/embedded-url/authentication.md#examples)
 - [Grafana webhook](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/grafana.md)
 
 ## StackHawk
@@ -219,7 +219,8 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Jenkins
 
-- [Sync Jenkins pipelines](/build-your-software-catalog/sync-data-to-catalog/ci-cd/jenkins-deployment/jenkins-deployment.md)
+- [Jenkins Integration](/build-your-software-catalog/sync-data-to-catalog/ci-cd/jenkins.md)
+- [Sync Jenkins pipelines via API](/build-your-software-catalog/sync-data-to-catalog/api/ci-cd/jenkins-deployment/jenkins-deployment.md)
 - [Jenkins webhook integration with Port](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/jenkins.md)
 - [Jenkins pipeline self-service actions](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md)
 - [GitHub scaffolder using Jenkins](/create-self-service-experiences/setup-backend/jenkins-pipeline/examples/scaffold-github-using-cookiecutter.md)
@@ -228,11 +229,11 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## CodeFresh
 
-- [CodeFresh workflow template](/build-your-software-catalog/sync-data-to-catalog/ci-cd/codefresh-workflow-template/codefresh-workflow-template.md)
+- [CodeFresh workflow template](/build-your-software-catalog/sync-data-to-catalog/api/ci-cd/codefresh-workflow-template/codefresh-workflow-template.md)
 
 ## CircleCI
 
-- [Sync CircleCI workflows](/build-your-software-catalog/sync-data-to-catalog/ci-cd/circleci-workflow/circleci-workflow.md)
+- [Sync CircleCI workflows](/build-your-software-catalog/sync-data-to-catalog/api/ci-cd/circleci-workflow/circleci-workflow.md)
 - [CircleCI actions](/create-self-service-experiences/setup-backend/circle-ci)
 
 ## Backstage
