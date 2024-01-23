@@ -44,7 +44,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `integration.config.wizApiUrl`      | The Wiz API URL.                                                                                                   | ✅       |
 | `integration.config.wizTokenUrl`    | The Wiz Token Authentication URL                                                                                   | ✅       |
 | `integration.config.appHost`        | The host of the Port Ocean app. Used to set up the integration endpoint as the target for Webhooks created in Wiz  | ❌       |
-| `integration.secret.wizWebhookToken`  | This is a password you create, that is used to verify webhook events to Port                                       | ❌       |
+| `integration.secret.wizWebhookVerificationToken`  | This is a password you create, that is used to verify webhook events to Port                                       | ❌       |
 | `scheduledResyncInterval`           | The number of minutes between each resync                                                                          | ❌       |
 | `initializePortResources`           | Default true, When set to true the integration will create default blueprints and the port App config Mapping      | ❌       |
 
@@ -85,7 +85,7 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 | `OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_SECRET` | The Wiz Cient Secret                                                                                             | ✅       |
 | `OCEAN__INTEGRATION__CONFIG__WIZ_API_URL`     | The Wiz API URL.                                                                                                   | ✅       |
 | `OCEAN__INTEGRATION__CONFIG__WIZ_TOKEN_URL`     | The Wiz Token URL.                                                                                               | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__WIZ_WEBHOOK_TOKEN` | The token used to verify webhook requests into Port.                                                              | ❌       |
+| `OCEAN__INTEGRATION__CONFIG__WIZ_WEBHOOK_VERIFICATION_TOKEN` | The token used to verify webhook requests into Port.                                                              | ❌       |
 | `OCEAN__INITIALIZE_PORT_RESOURCES`            | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
 | `OCEAN__INTEGRATION__IDENTIFIER`              | Provide a unique identifier for your integration. If not provided, the default identifier will be used.            | ❌       |
 | `OCEAN__PORT__CLIENT_ID`                      | Your port client id ([Get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))                                                                                               | ✅       |
@@ -151,7 +151,7 @@ of `Secret Text` type:
 | `OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_SECRET` | The Wiz Client Secret                                                                                        | ✅       |
 | `OCEAN__INTEGRATION__CONFIG__WIZ_API_URL`       | The Wiz API URL.                                                                                                 | ✅       |
 | `OCEAN__INTEGRATION__CONFIG__WIZ_TOKEN_URL`     | The Wiz Token URL.                                                                                               | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__WIZ_WEBHOOK_TOKEN` | The token used to verify webhook requests into Port.                                                   | ❌       |
+| `OCEAN__INTEGRATION__CONFIG__WIZ_WEBHOOK_VERIFICATION_TOKEN` | The token used to verify webhook requests into Port.                                                   | ❌       |
 | `OCEAN__INITIALIZE_PORT_RESOURCES`            | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
 | `OCEAN__INTEGRATION__IDENTIFIER`              | Provide a unique identifier for your integration. If not provided, the default identifier will be used.        | ❌       |
 | `OCEAN__PORT__CLIENT_ID`                      | Your port client id ([Get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))     | ✅       |
