@@ -33,8 +33,8 @@ A workflow triggered using the `workflow_dispatch` trigger is self-contained. Th
 
 :::
 
-## Next step
+## Examples
 
-To get started with GitHub self-service actions, please check the sources below:
+See the [examples](/create-self-service-experiences/setup-backend/github-workflow/examples/) page for implementations of various use-cases using a Github workflow backend.  
 
-- [Run a deployment for a service](./examples/run-service-deployment.md)
+Additional examples can be found in our [action examples Github repository](https://github.com/port-labs/self-service-actions-examples).
