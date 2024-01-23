@@ -24,6 +24,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [GitHub scaffolder using Jenkins pipelines](/create-self-service-experiences/setup-backend/jenkins-pipeline/examples/scaffold-github-using-cookiecutter.md)
 - [GitHub scaffolder using FastAPI backend](/create-self-service-experiences/setup-backend/webhook/examples/software-templates.md)
 - [Deploy AWS resources using AWS CloudFormation](/create-self-service-experiences/setup-backend/github-workflow/examples/deploy-cloudformation-template.md)
+- [Deploy Azure resources using Terraform](/create-self-service-experiences/setup-backend/github-workflow/examples/create-azure-resource.md)
 - [Create GitHub secret using GitHub workflows](/create-self-service-experiences/setup-backend/github-workflow/examples/create-github-secret.md)
 - [Script to ingest GitHub packages](https://github.com/port-labs/example-github-packages)
 
@@ -62,6 +63,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Map Istio](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/istio.md)
 - [Map Knative](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/knative.md)
 - [Map Red Hat Openshift](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/openshift.md)
+- [Map Trivy](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/trivy.md)
 - [Map CRDs](/build-your-software-catalog/sync-data-to-catalog/kubernetes/custom-crds.md)
 - [Port entity CRD](/build-your-software-catalog/sync-data-to-catalog/kubernetes/port-crd.md)
 
