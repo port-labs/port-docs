@@ -252,6 +252,9 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Script to ingest JFrog X-ray alerts, repositories and artifacts](https://github.com/port-labs/example-jfrog-xray-alerts)
 - [Script to ingest JFrog container image builds and repositories](https://github.com/port-labs/example-jfrog-container-images)
 
+## Codecov
+- [Codecov coverage script and webhook](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/codecov.md)
+
 ## Webhook
 
 - [Create generic webhook for 3rd-party](/build-your-software-catalog/sync-data-to-catalog/webhook/webhook.md)
