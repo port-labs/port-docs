@@ -35,7 +35,7 @@ Create the following webhook configuration [using Port's UI](/build-your-softwar
 2. **Integration configuration** tab - fill the following JQ mapping:
 
    <CodecovWebhookConfiguration/>
-    :::note
+    :::note Webhook URL
     Take note of, and copy the Webhook URL that is provided in this tab
     :::
 
