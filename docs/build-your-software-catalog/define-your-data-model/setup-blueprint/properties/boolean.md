@@ -16,11 +16,10 @@ Boolean is a primitive data type that has one of two possible values - `true` an
 
 The boolean property type can be used to store any true/false gate, for example:
 
-- Is environment locked for deployments;
-- Should environment perform nightly shutdown;
-- Does service handle PII;
-- Is environment public;
-- etc.
+- Is environment locked for deployments
+- Should environment perform nightly shutdown
+- Does service handle PII
+- Is environment public
 
 In this [live demo](https://demo.getport.io/packages) example, we can see the `In-House?` boolean property. 🎬
 

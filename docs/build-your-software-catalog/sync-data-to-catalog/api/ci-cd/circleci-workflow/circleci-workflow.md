@@ -12,7 +12,7 @@ Using CircleCI workflows, you can easily create/update and query entities in Por
 <br></br>
 <br></br>
 
-![Github Illustration](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/circleci/circleci-illustration.jpg)
+![Github Illustration](/img/build-your-software-catalog/sync-data-to-catalog/circleci/circleci-illustration.jpg)
 
 ## 💡 Common CircleCI workflow usage
 
@@ -38,7 +38,7 @@ workflows:
             # highlight-end
 ```
 
-Make sure you have an existing [Blueprint](../../../../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) in your Port installation to create/update entities.
+Make sure you have an existing [Blueprint](/build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) in your Port installation to create/update entities.
 
 ## Working with Port's API
 
