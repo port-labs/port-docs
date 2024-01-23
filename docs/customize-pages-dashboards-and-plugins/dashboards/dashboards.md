@@ -2,10 +2,11 @@
 
 Port supports various visualizations in the form of widgets, allowing you to display data from your software catalog using graphic elements, making it easier to make sense of large datasets.
 
-Dashboards are available in:
+Dashboards are available in the following locations:
 
 1. The [Home page](https://app.getport.io/organization/home) of your Port app - the home page itself is a dashboard, allowing you to add and customize any of the widgets described on this page.
 2. Every [entity page](/customize-pages-dashboards-and-plugins/page/entity-page#dashboard-widgets) can have a `dashboard` tab with its own widgets.
+3. The [software catalog](https://app.getport.io/services) allows you to create customizable [dashboard pages](/customize-pages-dashboards-and-plugins/page/dashboard-page).
 
 ## Widget types
 
@@ -13,7 +14,7 @@ Dashboards are available in:
 
 You can create a pie chart illustrating data from entities in your software catalog divided by categories and entity properties inside a specific entity page [**specific entity page**](../page/entity-page.md).
 
-![Pie Chart](../../../static/img/software-catalog/widgets/pieChartExample.png)
+![Pie Chart](/img/software-catalog/widgets/pieChartExample.png)
 
 #### Visualization properties
 
@@ -28,7 +29,7 @@ You can create a pie chart illustrating data from entities in your software cata
 
 ### Number chart
 
-You can create a number chart visualization from related entities in the [**specific entity page**](../page/entity-page.md). You can either count the entities or perform an aggregation function on a number property. You can also filter entities so the aggregation number chart will only apply to a limited set of entities with Port's [Search Rules](../../search-and-query/search-and-query.md#rules)
+You can create a number chart visualization from related entities in the [**specific entity page**](../page/entity-page.md). You can either count the entities or perform an aggregation function on a number property. You can also filter entities so the aggregation number chart will only apply to a limited set of entities with Port's [Search Rules](/search-and-query/search-and-query.md#rules)
 
 ![Number Chart](../../../static/img/software-catalog/widgets/numberChartExample.png)
 

@@ -19,7 +19,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [GitHub action for GitHub workflow](/build-your-software-catalog/sync-data-to-catalog/api/ci-cd/github-workflow/github-workflow.md)
 - [GitHub workflow self-service actions](/create-self-service-experiences/setup-backend/github-workflow/github-workflow.md)
 - [Sync repositories, file contents, pull-requests, workflows, teams and more](/build-your-software-catalog/sync-data-to-catalog/git/github/examples.md)
-- [Sync Dependebot](/build-your-software-catalog/sync-data-to-catalog/git/github/examples.md#mapping-repositories-and-dependabot-alerts)
+- [Sync Dependabot](/build-your-software-catalog/sync-data-to-catalog/git/github/examples.md#mapping-repositories-and-dependabot-alerts)
 - [GitHub scaffolder using GitHub workflows](/create-self-service-experiences/setup-backend/github-workflow/examples/scaffold-repositories-using-cookiecutter.md)
 - [GitHub scaffolder using Jenkins pipelines](/create-self-service-experiences/setup-backend/jenkins-pipeline/examples/scaffold-github-using-cookiecutter.md)
 - [GitHub scaffolder using FastAPI backend](/create-self-service-experiences/setup-backend/webhook/examples/software-templates.md)
@@ -144,6 +144,11 @@ This page contains a list of Port's available integrations, organized by the pla
 ## Snyk
 
 - [Snyk integration and webhook](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/snyk.md)
+
+## Wiz
+
+- [Wiz integration](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/wiz.md)
+- [Wiz webhook](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/wiz.md)
 
 ## PagerDuty
 

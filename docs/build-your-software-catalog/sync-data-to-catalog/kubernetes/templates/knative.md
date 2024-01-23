@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 description: Knative quickstart
 ---
 import TemplateInstallation from "./_template_installation.mdx";
