@@ -7,7 +7,7 @@ To do this, you'll need the required parameters to create a JWT token.
 
 The following diagram outlines the login scheme used to authenticate with your SSO and gain access to the private resource:
 
-![AuthorizationCodeFlow.png](../../../../static/img/software-catalog/widgets/embedded-url/AuthorizationCodeFlow.png)
+![AuthorizationCodeFlow.png](/img/software-catalog/widgets/embedded-url/AuthorizationCodeFlow.png)
 
 Here is an explanation of the login flow:
 
@@ -187,7 +187,7 @@ use_pkce = true
    1. In your application click on the Expose an API button on the left sidebar;
 
    2. Click on the `Add a scope` button to add a scope that will allow Admins and users to consent `Read User`;
-      ![Azure AD Scope](../../../../static/img/software-catalog/widgets/embedded-url/AzureAdScope.png)
+      ![Azure AD Scope](/img/software-catalog/widgets/embedded-url/AzureAdScope.png)
 
    3. Add the scope you just created under the `Authorization Scope` field in the property in your blueprint inside Port.
       ```json showLineNumbers

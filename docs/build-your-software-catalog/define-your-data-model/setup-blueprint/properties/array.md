@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 2
 description: Array is a data type used to save lists of data
 ---
 
@@ -16,10 +16,9 @@ Array is a data type used to save lists of data.
 
 The array property type can be used to store any list of data, for example:
 
-- Used packages;
-- Dependencies;
-- Badges;
-- etc.
+- Used packages
+- Dependencies
+- Badges
 
 In this [live demo](https://demo.getport.io/services) example, we can see the `Monitor Tooling` array property. 🎬
 

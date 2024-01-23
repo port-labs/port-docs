@@ -5,13 +5,13 @@ import TabItem from '@theme/TabItem';
 
 Advanced input settings allow you to create more customizable experiences for users who perform self-service actions. This is done by creating adaptive inputs that change according to data about the entity, the user, and other inputs.
 
-### Common use-cases
+## Common use-cases
 
 - Filter the available options in a dropdown input.
 - Create a dependency between inputs to allow the user to select a value based on the value of another input.
 - Define dynamic default values based on the logged-in user properties(such as teams, email, role) or the entity that the action is being executed on (for day-2 or delete actions only).
 
-### Usage
+## Usage
 
 Defining advanced inputs is currently supported in JSON-mode only.
 
@@ -19,105 +19,11 @@ When creating an action, the second step is defining its inputs. After defining 
 
 <img src='/img/self-service-actions/advancedInputsFormExample.png' width='60%' />
 
-#### Writing your configuration schema
+### Writing your configuration schema
 
-Port provides 4 keys that you can leverage to create complex inputs:
+Port provides a `jqQuery` property that can be used to extract data from the entity, the logged-in user, or the current action's form inputs. It can also be used to perform data manipulations.  
 
-<Tabs
-defaultValue="visible"
-values={[
-{ label: 'visible', value: 'visible', },
-{ label: 'dependsOn', value: 'DependsOn', },
-{ label: 'dataset', value: 'Dataset', },
-{ label: 'jqQuery', value: 'jqQuery', },
-]}>
-
-<TabItem value="visible">
-
-The `visible` property is used to dynamically hide/show inputs in the form.
-The `visible` value could be set to either a boolean (`true` value is always shown, `false` value is always hidden), or to a `jqQuery` which evaluates to a boolean.
-
-In this example, the `runArguments` properties are configured with `visible` so that they only show up in the form when the matching value is selected in the `language` input:
-
-```json showLineNumbers
-{
-  "properties": {
-    "language": {
-      "type": "string",
-      "enum": ["javascript", "python"]
-    },
-    "pythonRunArguments": {
-      "type": "string",
-      "visible": {
-        "jqQuery": ".form.language == \"python\""
-      }
-    },
-    "nodeRunArguments": {
-      "type": "string",
-      "visible": {
-        "jqQuery": ".form.language == \"javascript\""
-      }
-    }
-  }
-}
-```
-
-</TabItem>
-
-<TabItem value="DependsOn">
-
-The `dependsOn` property is used to create a dependency between inputs. If input X depends on input Y, input X will be disabled until input Y is filled.  
-In the example below, the `SDK` input depends on the `Language` input:
-
-```json showLineNumbers
-{
-  "properties": {
-    "language": {
-      "type": "string",
-      "enum": ["javascript", "python"]
-    },
-    "SDK": {
-      "type": "string",
-      "dependsOn": ["language"]
-    }
-  }
-}
-```
-
-</TabItem>
-<TabItem value="Dataset">
-
-The `dataset` property is used to filter the displayed options in an [entity](/create-self-service-experiences/setup-ui-for-action/user-inputs/entity) input. It is comprised of two properties:
-
-- `Combinator` - the logical operation to apply between the rules of the dataset. [Read more](/search-and-query/#combinator).
-- `Rules` - an array of [rules](/search-and-query/#rules), only entities that pass them will be displayed in the form.
-  Note that the `value` key in the dataset can be a constant (string, number, etc) or a "jqQuery" object.
-
-```json showLineNumbers
-{
-  "namespace": {
-    "type": "string",
-    "format": "entity",
-    "blueprint": "namespace",
-    "dataset": {
-      "combinator": "and",
-      "rules": [
-        {
-          "property": "$team",
-          "operator": "containsAny",
-          "value": "value here. this can also be a 'jqQuery' object"
-        }
-      ]
-    }
-  }
-}
-```
-
-</TabItem>
-<TabItem value="jqQuery">
-
-The `jqQuery` property is used to extract data from the entity, the logged-in user, or the current action's form inputs. It can also be used to perform data manipulations.  
-In this example, the `jqQuery` checks the value of another property (`language`) and determines the possible values of the `SDK` property accordingly:
+For example, the following `jqQuery` checks the value of another property (`language`) and determines the possible values of the `SDK` property accordingly:
 
 ```json showLineNumbers
 {
@@ -136,9 +42,11 @@ In this example, the `jqQuery` checks the value of another property (`language`)
 }
 ```
 
-### The properties you can access using the "jqQuery" object
+#### The properties you can access using the "jqQuery" object
 
 <Tabs
+groupId="jqquery-properties"
+queryString
 defaultValue="form"
 values={[
 {label: 'form', value: 'form'},
@@ -290,6 +198,103 @@ Keys that are supported with jqQuery expressions:
 | required | the properties which will be required in the form |
 | value    | the value inside a "dataset" rule                 |
 | visible  | the condition to display any property in the form |
+
+---
+
+#### Additional available properties
+
+You can use these additional properties to create more complex inputs:
+
+<Tabs
+defaultValue="visible"
+groupId="additional-inputs"
+queryString
+values={[
+{ label: 'visible', value: 'visible', },
+{ label: 'dependsOn', value: 'dependsOn', },
+{ label: 'dataset', value: 'dataset', },
+]}>
+
+<TabItem value="visible">
+
+The `visible` property is used to dynamically hide/show inputs in the form.
+The `visible` value could be set to either a boolean (`true` value is always shown, `false` value is always hidden), or to a `jqQuery` which evaluates to a boolean.
+
+In this example, the `runArguments` properties are configured with `visible` so that they only show up in the form when the matching value is selected in the `language` input:
+
+```json showLineNumbers
+{
+  "properties": {
+    "language": {
+      "type": "string",
+      "enum": ["javascript", "python"]
+    },
+    "pythonRunArguments": {
+      "type": "string",
+      "visible": {
+        "jqQuery": ".form.language == \"python\""
+      }
+    },
+    "nodeRunArguments": {
+      "type": "string",
+      "visible": {
+        "jqQuery": ".form.language == \"javascript\""
+      }
+    }
+  }
+}
+```
+
+</TabItem>
+
+<TabItem value="dependsOn">
+
+The `dependsOn` property is used to create a dependency between inputs. If input X depends on input Y, input X will be **disabled** until input Y is filled.  
+In the example below, the `SDK` input depends on the `Language` input:
+
+```json showLineNumbers
+{
+  "properties": {
+    "language": {
+      "type": "string",
+      "enum": ["javascript", "python"]
+    },
+    "SDK": {
+      "type": "string",
+      "dependsOn": ["language"]
+    }
+  }
+}
+```
+
+</TabItem>
+<TabItem value="dataset">
+
+The `dataset` property is used to filter the displayed options in an [entity](/create-self-service-experiences/setup-ui-for-action/user-inputs/entity) input. It is comprised of two properties:
+
+- `Combinator` - the logical operation to apply between the rules of the dataset. [Read more](/search-and-query/#combinator).
+- `Rules` - an array of [rules](/search-and-query/#rules), only entities that pass them will be displayed in the form.
+  Note that the `value` key in the dataset can be a constant (string, number, etc) or a "jqQuery" object.
+
+```json showLineNumbers
+{
+  "namespace": {
+    "type": "string",
+    "format": "entity",
+    "blueprint": "namespace",
+    "dataset": {
+      "combinator": "and",
+      "rules": [
+        {
+          "property": "$team",
+          "operator": "containsAny",
+          "value": "value here. this can also be a 'jqQuery' object"
+        }
+      ]
+    }
+  }
+}
+```
 
 </TabItem>
 

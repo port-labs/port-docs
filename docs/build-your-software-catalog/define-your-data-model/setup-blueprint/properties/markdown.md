@@ -1,14 +1,27 @@
 ---
-sidebar_position: 1
+sidebar_position: 8
 ---
+
+import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 # Markdown
 
+The `Markdown` property is used to display [Markdown](https://en.wikipedia.org/wiki/Markdown) content within an <PortTooltip id="entity">entity</PortTooltip> in Port.  
+Using this property will automatically create an additional tab in each [entity page](/customize-pages-dashboards-and-plugins/page/entity-page.md), displaying the formatted content.
+
+In the following example, we see the `awesome-kubectl-plugins` entity page, which is an instance on the `Service` blueprint.  
+The blueprint has a `Markdown` property that takes the Readme file from the service's Git repository, and automatically displays it in a dedicated tab:
+
+<img src='/img/software-catalog/blueprint/markdownExample.png' width='85%' />
+
 With Port, you can import and display [Markdown](https://en.wikipedia.org/wiki/Markdown) files as tabs.
 
-By using the combination of `"type": "string` and `"format": "markdown"` in a [Blueprint property](../../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/properties.md#structure), Port will format and display the markdown text in the [Specific entity page](../page/entity-page.md).
+## 💡 Common embedded URL usage
 
-## Definition in Blueprint
+- Display a service's Readme file
+- Display relevant documentation for a service/package
+
+## Schema definition
 
 ```json showLineNumbers
 {
@@ -19,24 +32,16 @@ By using the combination of `"type": "string` and `"format": "markdown"` in a [B
 }
 ```
 
-## Example
-
-Here is how the Markdown tab in the specific entity page appears when markdown text is provided:
-
-![Markdown Example](../../../static/img/software-catalog/widgets/markdown.png)
-
-![Markdown Edit Example](../../../static/img/software-catalog/widgets/markdownEdit.png)
-
-### Mermaid
+## Mermaid
 
 The markdown widget also supports [Mermaid](https://mermaid-js.github.io/mermaid/#/), a diagramming and charting tool that uses text and code to generate diagrams and charts.
 
 To use Mermaid with the markdown widget, all you need to do is add mermaid syntax to the markdown property. You can refer to the [Mermaid Examples](https://mermaid.js.org/syntax/examples.html) for more examples and information on how to use it.
 
-![Markdown Mermaid Example](../../../static/img/software-catalog/widgets/markdownMermaid.png)
+![Markdown Mermaid Example](/img/software-catalog/widgets/markdownMermaid.png)
 
 <details>
-<summary>Mermaid diagram example</summary>
+<summary><b>Mermaid diagram example (click to expand)</b></summary>
 
 ````
 ```mermaid
