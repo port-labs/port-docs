@@ -29,7 +29,7 @@ You can create a pie chart illustrating data from entities in your software cata
 
 ### Number chart
 
-You can create a number chart visualization from related entities in the [**specific entity page**](../page/entity-page.md). You can either count the entities or perform an aggregation function on a number property. You can also filter entities so the aggregation number chart will only apply to a limited set of entities with Port's [Search Rules](../../search-and-query/search-and-query.md#rules)
+You can create a number chart visualization from related entities in the [**specific entity page**](../page/entity-page.md). You can either count the entities or perform an aggregation function on a number property. You can also filter entities so the aggregation number chart will only apply to a limited set of entities with Port's [Search Rules](/search-and-query/search-and-query.md#rules)
 
 ![Number Chart](../../../static/img/software-catalog/widgets/numberChartExample.png)
 
