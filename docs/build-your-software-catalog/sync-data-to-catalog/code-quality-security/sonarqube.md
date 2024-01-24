@@ -302,7 +302,7 @@ steps:
 - script: |
     echo Add other tasks to build, test, and deploy your project.
     # Set Docker image and run the container
-    integration_type="snyk"
+    integration_type="sonarqube"
     version="latest"
 
     image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
