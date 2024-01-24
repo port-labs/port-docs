@@ -266,6 +266,63 @@ pipeline {
 ```
 
   </TabItem>
+
+  <TabItem value="azure" label="Azure Devops">
+This pipeline will run the SonarQube integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::tip
+Your Azure Devops agent should be able to run docker commands.
+:::
+:::warning
+If you want the integration to update Port in real time using webhooks you should use
+the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+:::
+
+Make sure to configure the following variables using [Azure Devops variable groups](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops&tabs=yaml). Add the Port credentials in a variable group named `port-credentials` and the SonarQube credentials in a variable group named `sonar-credentials`:
+
+<DockerParameters />
+
+<br/>
+
+Here is an example for `sonar-integration.yml` pipeline file:
+
+```yaml showLineNumbers
+trigger:
+- main
+
+pool:
+  vmImage: "ubuntu-latest"
+
+variables:
+  - group: port-credentials  # PORT_CLIENT_ID, PORT_CLIENT_SECRET
+  - group: sonar-credentials # SONAR_API_TOKEN, SONAR_ORGANIZATION_ID, SONAR_URL
+
+
+steps:
+- script: |
+    echo Add other tasks to build, test, and deploy your project.
+    # Set Docker image and run the container
+    integration_type="snyk"
+    version="latest"
+
+    image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
+
+    docker run -i --rm \
+    -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+    -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+    -e OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN=${SONAR_API_TOKEN} \
+    -e OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID=${SONAR_ORGANIZATION_ID} \
+    -e OCEAN__INTEGRATION__CONFIG__SONAR_URL=${SONAR_URL} \
+    -e OCEAN__PORT__CLIENT_ID=${PORT_CLIENT_ID} \
+    -e OCEAN__PORT__CLIENT_SECRET=${PORT_CLIENT_SECRET} \
+    $image_name
+
+    exit $?
+  displayName: 'Ingest SonarQube Data into Port'
+
+```
+
+  </TabItem>
   </Tabs>
 
 </TabItem>
