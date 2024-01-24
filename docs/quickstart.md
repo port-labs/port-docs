@@ -24,6 +24,13 @@ If you chose to **skip** the onboarding process, you can still have these compon
 
 ## Initial portal experience
 
+<br/>
+<center>
+
+<iframe width="60%" height="400" src="https://www.youtube.com/embed/ggXL2ZsPVQM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+
+</center>
+<br/>
 In this walkthrough, we will go over the components in your portal and learn about the different pillars of Port.
 
 ### Homepage
