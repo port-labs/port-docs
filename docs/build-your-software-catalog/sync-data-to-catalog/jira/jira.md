@@ -15,8 +15,8 @@ import JiraServerConfigurationPython from "../webhook/examples/resources/jira-se
 
 Our Jira integration allows you to import `issues` and `projects` from your Jira cloud account into Port, according to your mapping and definition.
 
-:::info Note
-This integration supports Jira Cloud at the moment, support for Jira Server can be found [in this section](#alternative-installation-via-webhook)
+:::info Jira cloud only
+This integration supports `Jira Cloud` at the moment. To integrate Port with `Jira Server`, use [Port's webhook integration](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/jira-server).
 :::
 
 ## Common use cases
@@ -874,7 +874,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 ## Alternative installation via webhook
 
-While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from SonarQube. If so, use the following instructions:
+While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from Jira. If so, use the following instructions:
 
 <details>
 
