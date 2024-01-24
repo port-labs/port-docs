@@ -387,8 +387,8 @@ pool:
   vmImage: "ubuntu-latest"
 
 variables:
-  - group: port-credentials # PORT_CLIENT_ID, PORT_CLIENT_SECRET
-  - group: synk-credentials # SYNK_TOKEN
+  - group: port-credentials # OCEAN__PORT__CLIENT_ID, OCEAN__PORT__CLIENT_SECRET
+  - group: synk-credentials # OCEAN__INTEGRATION__CONFIG__TOKEN
 
 
 steps:
@@ -403,9 +403,9 @@ steps:
     docker run -i --rm \
     -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
     -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-    -e OCEAN__INTEGRATION__CONFIG__TOKEN=${SYNK_TOKEN} \
-    -e OCEAN__PORT__CLIENT_ID=${PORT_CLIENT_ID} \
-    -e OCEAN__PORT__CLIENT_SECRET=${PORT_CLIENT_SECRET} \
+    -e OCEAN__INTEGRATION__CONFIG__TOKEN=${OCEAN__INTEGRATION__CONFIG__TOKEN} \
+    -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \
+    -e OCEAN__PORT__CLIENT_SECRET=${OCEAN__PORT__CLIENT_SECRET} \
     $image_name
 
     exit $?
