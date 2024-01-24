@@ -24,6 +24,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [GitHub scaffolder using Jenkins pipelines](/create-self-service-experiences/setup-backend/jenkins-pipeline/examples/scaffold-github-using-cookiecutter.md)
 - [GitHub scaffolder using FastAPI backend](/create-self-service-experiences/setup-backend/webhook/examples/software-templates.md)
 - [Deploy AWS resources using AWS CloudFormation](/create-self-service-experiences/setup-backend/github-workflow/examples/deploy-cloudformation-template.md)
+- [Deploy Azure resources using Terraform](/create-self-service-experiences/setup-backend/github-workflow/examples/create-azure-resource.md)
 - [Create GitHub secret using GitHub workflows](/create-self-service-experiences/setup-backend/github-workflow/examples/create-github-secret.md)
 - [Script to ingest GitHub packages](https://github.com/port-labs/example-github-packages)
 
@@ -62,6 +63,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Map Istio](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/istio.md)
 - [Map Knative](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/knative.md)
 - [Map Red Hat Openshift](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/openshift.md)
+- [Map Trivy](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/trivy.md)
 - [Map CRDs](/build-your-software-catalog/sync-data-to-catalog/kubernetes/custom-crds.md)
 - [Port entity CRD](/build-your-software-catalog/sync-data-to-catalog/kubernetes/port-crd.md)
 
@@ -144,6 +146,11 @@ This page contains a list of Port's available integrations, organized by the pla
 ## Snyk
 
 - [Snyk integration and webhook](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/snyk.md)
+
+## Wiz
+
+- [Wiz integration](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/wiz.md)
+- [Wiz webhook](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/wiz.md)
 
 ## PagerDuty
 
@@ -244,6 +251,9 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Sync JFrog Artifacts, Docker tags, and build entities](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/jfrog)
 - [Script to ingest JFrog X-ray alerts, repositories and artifacts](https://github.com/port-labs/example-jfrog-xray-alerts)
 - [Script to ingest JFrog container image builds and repositories](https://github.com/port-labs/example-jfrog-container-images)
+
+## Codecov
+- [Codecov coverage script and webhook](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/codecov.md)
 
 ## Webhook
 
