@@ -5,11 +5,7 @@ import HelmParameters from "../templates/\_ocean-advanced-parameters-helm.mdx"
 import ResourceMapping from "../templates/\_resource-mapping.mdx"
 import DockerParameters from "./\_docker-parameters.mdx"
 import SupportedResources from "./\_supported-resources.mdx"
-<<<<<<< HEAD
-import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
-=======
 import AdvancedConfig from '../../../generalTemplates/\_ocean_advanced_configuration_note.md'
->>>>>>> beddcac35dcf304159f2ceda698e11c6c2159938
 import SonarcloudAnalysisBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/webhook/examples/resources/sonarqube/\_example_sonarcloud_analysis_blueprint.mdx";
 import SonarcloudAnalysisConfiguration from "/docs/build-your-software-catalog/sync-data-to-catalog/webhook/examples/resources/sonarqube/\_example_sonarcloud_analysis_configuration.mdx";
 
