@@ -222,6 +222,15 @@ The `visible` value could be set to either a boolean (`true` value is always sho
 
 In this example, the `runArguments` properties are configured with `visible` so that they only show up in the form when the matching value is selected in the `language` input:
 
+<Tabs
+defaultValue="api"
+values={[
+{label: 'API', value: 'api'},
+{label: 'Terraform', value: 'terraform'},
+]}>
+
+<TabItem value="api">
+
 ```json showLineNumbers
 {
   "properties": {
@@ -246,11 +255,47 @@ In this example, the `runArguments` properties are configured with `visible` so 
 ```
 
 </TabItem>
+<TabItem value="terraform">
+
+```hcl showLineNumbers
+resource "port_action" myAction {
+  # ...action configuration
+  {
+    user_properties = {
+      string_props = {
+        language = {
+          enum = ["javascript", "python"]
+        }
+        pythonRunArguments = {
+          visible_jq_query = ".form.language == \"python\""
+        }
+        nodeRunArguments = {
+          visible_jq_query = ".form.language == \"javascript\""
+        }
+      }
+    }
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
 
 <TabItem value="dependsOn">
 
 The `dependsOn` property is used to create a dependency between inputs. If input X depends on input Y, input X will be **disabled** until input Y is filled.  
 In the example below, the `SDK` input depends on the `Language` input:
+
+<Tabs
+defaultValue="api"
+values={[
+{label: 'API', value: 'api'},
+{label: 'Terraform', value: 'terraform'},
+]}>
+
+<TabItem value="api">
 
 ```json showLineNumbers
 {
@@ -268,6 +313,29 @@ In the example below, the `SDK` input depends on the `Language` input:
 ```
 
 </TabItem>
+<TabItem value="terraform">
+
+```hcl showLineNumbers
+resource "port_action" myAction {
+  # ...action configuration
+  {
+    user_properties = {
+      string_props = {
+        language = {
+          enum = ["javascript", "python"]
+        }
+        SDK = {
+          depends_on: ["language"]
+        }
+      }
+    }
+  }
+}
+```
+</TabItem>
+</Tabs>
+
+</TabItem>
 <TabItem value="dataset">
 
 The `dataset` property is used to filter the displayed options in an [entity](/create-self-service-experiences/setup-ui-for-action/user-inputs/entity) input. It is comprised of two properties:
@@ -275,6 +343,15 @@ The `dataset` property is used to filter the displayed options in an [entity](/c
 - `Combinator` - the logical operation to apply between the rules of the dataset. [Read more](/search-and-query/#combinator).
 - `Rules` - an array of [rules](/search-and-query/#rules), only entities that pass them will be displayed in the form.
   Note that the `value` key in the dataset can be a constant (string, number, etc) or a "jqQuery" object.
+
+<Tabs
+defaultValue="api"
+values={[
+{label: 'API', value: 'api'},
+{label: 'Terraform', value: 'terraform'},
+]}>
+
+<TabItem value="api">
 
 ```json showLineNumbers
 {
@@ -295,6 +372,35 @@ The `dataset` property is used to filter the displayed options in an [entity](/c
   }
 }
 ```
+
+</TabItem>
+<TabItem value="terraform">
+
+```hcl showLineNumbers
+resource "port_action" "myAction" {
+  # ...action properties
+  user_properties = {
+    string_props = {
+      "namespace" = {
+        format      = "entity"
+        blueprint   = "namespace"
+        dataset = {
+          combinator = "and"
+          rules = [
+            {
+              property = "$team"
+              operator = "containsAny"
+              value = "value here. this can also be a 'jqQuery' object"
+            }
+          ]
+        }
+      }
+    }
+  }
+}
+```
+</TabItem>
+</Tabs>
 
 </TabItem>
 
@@ -792,6 +898,7 @@ This example contains two user inputs: one will always be required, and the othe
 defaultValue="api"
 values={[
 {label: 'API', value: 'api'},
+{label: 'Terraform', value: 'terraform'},
 ]}>
 
 <TabItem value="api">
@@ -808,6 +915,24 @@ values={[
   },
   "required": {
     "jqQuery": "if .entity.properties.conditionBooleanProperty then [\"alwaysRequiredInput\", \"inputRequiredBasedOnData\"] else [\"alwaysRequiredInput\"] end"
+  }
+}
+```
+
+</TabItem>
+<TabItem value="terraform">
+
+```hcl showLineNumbers
+resource "port_action" myAction {
+  # ...action configuration
+  {
+    user_properties = {
+      string_props = {
+        alwaysRequiredInput = {}
+        inputRequiredBasedOnData = {}
+      }
+    }
+    required_jq_query = "if .entity.properties.conditionBooleanProperty then [\"alwaysRequiredInput\", \"inputRequiredBasedOnData\"] else [\"alwaysRequiredInput\"] end"
   }
 }
 ```
