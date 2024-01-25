@@ -1,5 +1,5 @@
 ---
-sidebar_position: 4
+sidebar_position: 12
 description: Object is a data type used to save object definitions in JSON
 ---
 

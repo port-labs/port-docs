@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 11
 description: Number is a primitive data type used to save numeric data
 ---
 

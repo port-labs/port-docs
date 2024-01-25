@@ -1,4 +1,5 @@
 {
   "label": "Port Execution Agent",
-  "position": 1
+  "position": 1,
+  "className": "custom-sidebar-item"
 }

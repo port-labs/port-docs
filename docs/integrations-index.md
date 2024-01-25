@@ -19,11 +19,12 @@ This page contains a list of Port's available integrations, organized by the pla
 - [GitHub action for GitHub workflow](/build-your-software-catalog/sync-data-to-catalog/api/ci-cd/github-workflow/github-workflow.md)
 - [GitHub workflow self-service actions](/create-self-service-experiences/setup-backend/github-workflow/github-workflow.md)
 - [Sync repositories, file contents, pull-requests, workflows, teams and more](/build-your-software-catalog/sync-data-to-catalog/git/github/examples.md)
-- [Sync Dependebot](/build-your-software-catalog/sync-data-to-catalog/git/github/examples.md#mapping-repositories-and-dependabot-alerts)
+- [Sync Dependabot](/build-your-software-catalog/sync-data-to-catalog/git/github/examples.md#mapping-repositories-and-dependabot-alerts)
 - [GitHub scaffolder using GitHub workflows](/create-self-service-experiences/setup-backend/github-workflow/examples/scaffold-repositories-using-cookiecutter.md)
 - [GitHub scaffolder using Jenkins pipelines](/create-self-service-experiences/setup-backend/jenkins-pipeline/examples/scaffold-github-using-cookiecutter.md)
 - [GitHub scaffolder using FastAPI backend](/create-self-service-experiences/setup-backend/webhook/examples/software-templates.md)
 - [Deploy AWS resources using AWS CloudFormation](/create-self-service-experiences/setup-backend/github-workflow/examples/deploy-cloudformation-template.md)
+- [Deploy Azure resources using Terraform](/create-self-service-experiences/setup-backend/github-workflow/examples/create-azure-resource.md)
 - [Create GitHub secret using GitHub workflows](/create-self-service-experiences/setup-backend/github-workflow/examples/create-github-secret.md)
 - [Script to ingest GitHub packages](https://github.com/port-labs/example-github-packages)
 
@@ -62,6 +63,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Map Istio](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/istio.md)
 - [Map Knative](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/knative.md)
 - [Map Red Hat Openshift](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/openshift.md)
+- [Map Trivy](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/trivy.md)
 - [Map CRDs](/build-your-software-catalog/sync-data-to-catalog/kubernetes/custom-crds.md)
 - [Port entity CRD](/build-your-software-catalog/sync-data-to-catalog/kubernetes/port-crd.md)
 
@@ -145,6 +147,11 @@ This page contains a list of Port's available integrations, organized by the pla
 
 - [Snyk integration and webhook](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/snyk.md)
 
+## Wiz
+
+- [Wiz integration](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/wiz.md)
+- [Wiz webhook](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/wiz.md)
+
 ## PagerDuty
 
 - [PagerDuty integration and webhook](/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty.md)
@@ -166,7 +173,7 @@ This page contains a list of Port's available integrations, organized by the pla
 ## New Relic
 
 - [New Relic integration](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/newrelic.md)
-- [Embed dashboards from New Relic](/customize-pages-dashboards-and-plugins/tabs/embedded-url/embedded-url.md#new-relic-chart)
+- [Embed dashboards from New Relic](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/embedded-url/#new-relic-chart)
 
 ## OpsGenie
 
@@ -191,7 +198,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Datadog
 
-- [Embed dashboards from Datadog](/customize-pages-dashboards-and-plugins/tabs/embedded-url/embedded-url.md#datadog-dashboard)
+- [Embed dashboards from Datadog](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/embedded-url/#datadog-dashboard)
 - [Datadog webhook](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/datadog.md)
 - [Datadog service catalog](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/datadog.md#ingest-service-catalog)
 
@@ -210,7 +217,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Grafana
 
-- [Embed dashboards from Grafana](/customize-pages-dashboards-and-plugins/tabs/embedded-url/authentication.md#examples)
+- [Embed dashboards from Grafana](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/embedded-url/authentication.md#examples)
 - [Grafana webhook](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/grafana.md)
 
 ## StackHawk
@@ -244,6 +251,9 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Sync JFrog Artifacts, Docker tags, and build entities](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/jfrog)
 - [Script to ingest JFrog X-ray alerts, repositories and artifacts](https://github.com/port-labs/example-jfrog-xray-alerts)
 - [Script to ingest JFrog container image builds and repositories](https://github.com/port-labs/example-jfrog-container-images)
+
+## Codecov
+- [Codecov coverage script and webhook](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/codecov.md)
 
 ## Webhook
 

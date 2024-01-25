@@ -15,7 +15,8 @@ sidebar_label: 👋 Port overview
 
 ## Get started with Port
 
-If you want to jump right in and try out Port for yourself, our [quickstart guide](/quickstart) takes 7 minutes to complete and covers many of Port's key pillars.
+Trying out Port for yourself is free and easy, simply [create an account](https://app.getport.io) and follow the quick onboarding process.  
+The [Getting started](/quickstart) page will walk you through the different components of your portal and the value they provide.
 
 ## What is Port
 

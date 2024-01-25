@@ -1,15 +1,20 @@
 ---
-sidebar_position: 3
+sidebar_position: 15
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 # Swagger UI
 
-You can import and display [OpenAPI](https://www.openapis.org/) and/or [AsyncAPI](https://www.asyncapi.com/) specification files as [Swagger UI](https://swagger.io/) tabs.
+The `Swagger UI` property is used to import and display [OpenAPI](https://www.openapis.org/) and/or [AsyncAPI](https://www.asyncapi.com/) specification files within an <PortTooltip id="entity">entity</PortTooltip> in Port.  
 
-By utilizing the relevant Blueprint property, Port will display the Swagger UI matching the spec file provided in the [specific entity page](../page/entity-page.md). In addition, it will also provide advanced functionality such as performing HTTP calls to the spec target directly from Port.
+Using this property will automatically create an additional tab in each [entity page](/customize-pages-dashboards-and-plugins/page/entity-page.md), displaying the specification files in [Swagger UI](https://swagger.io/) format. Within this tab, you will be able to perform HTTP calls to the spec target directly from Port.
+
+The following is an example of a `Swagger UI` tab in an entity page:
+
+<img src='/img/software-catalog/blueprint/swaggerUiExample.png' width='85%' />
 
 ## OpenAPI
 
@@ -186,7 +191,7 @@ resource "port_blueprint" "myBlueprint" {
 
 Here is how the Swagger tab in the specific entity page appears when an OpenAPI spec is provided:
 
-![OpenAPI Example](../../../static/img/software-catalog/widgets/openAPI.png)
+![OpenAPI Example](/img/software-catalog/widgets/openAPI.png)
 
 ## AsyncAPI
 
@@ -363,7 +368,7 @@ resource "port_blueprint" "myBlueprint" {
 
 Here is how the Swagger tab in the specific entity page appears when an AsyncAPI spec is provided:
 
-![AsyncAPI Example](../../../static/img/software-catalog/widgets/asyncAPI.png)
+![AsyncAPI Example](/img/software-catalog/widgets/asyncAPI.png)
 
 :::note
 Only AsyncAPI versions 2.0.0 up to 2.4.0 are supported at the moment.

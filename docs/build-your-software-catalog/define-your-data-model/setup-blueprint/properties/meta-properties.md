@@ -1,6 +1,6 @@
 ---
-sidebar_position: 14
-title: 💲 Meta
+sidebar_position: 9
+title: Meta 💲
 ---
 
 # 💲 Meta-Properties
