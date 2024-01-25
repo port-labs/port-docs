@@ -14,6 +14,8 @@ In this example we can see all of the cluster entities we created from the `K8s 
 When a blueprint is created, a catalog page is automatically generated in the Software Catalog.  
 You can also manually create additional catalog pages for any existing blueprint, and customize them as you wish. Read on to see the available customization options.
 
+To create a new catalog page, go to your [Software Catalog](https://app.getport.io/services), click the `+ New` button in the top left corner, and select `New catalog page`.
+
 ### Initial filters
 
 In some cases, an entities table may be very large, resulting in long loading times. To prevent this, you can define filters that resolve when Port queries the data (rather than after querying).  
@@ -34,6 +36,17 @@ You can define any [supported rule](/search-and-query/#rules) in JSON format. He
   }
 ]
 ```
+
+#### Dynamic filters
+
+You can use [dynamic properties](/search-and-query/#dynamic-properties) of the logged-in user when creating a catalog page.
+
+### Excluded properties
+
+Another way to reduce loading times is to exclude undesired properties from an entities table when querying the data. When using this option, the new table will not contain columns for the excluded properties.  
+To do this, use the `Excluded properties` field when creating a page:
+
+<img src='/img/software-catalog/pages/excludePropertiesForm.png' width='50%' />
 
 ## Customization
 

@@ -157,7 +157,7 @@ If you **skipped** the onboarding, or you want to create the action from scratch
 
 <br/><br/>
 
-4. We want our developers to be able to choose the domain to which the service will be assigned. Click on `Add input`, fill out the form like this, then click `Next`:
+4. We want our developers to be able to choose the domain to which the service will be assigned. Click on `New input`, fill out the form like this, then click `Next`:
 
 <img src='/img/guides/gitopsActionInputDomain.png' width='50%' />
 

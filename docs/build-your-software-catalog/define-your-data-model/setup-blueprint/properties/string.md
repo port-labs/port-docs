@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 14
 description: String is a primitive data type used to save text data
 ---
 
