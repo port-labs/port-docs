@@ -361,7 +361,7 @@ If you want the integration to update Port in real time using webhooks you shoul
 the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
 :::
 
-Make sure to configure the following variables using [Azure Devops variable groups](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops&tabs=yaml). Add the Port credentials in a variable group named `port-credentials` and the Snyk credentials in a variable group named `synk-credentials`:
+Make sure to configure the following variables using [Azure Devops variable groups](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops&tabs=yaml). Add them into in a variable group named `port-ocean-credentials`:
 
 | Parameter                                     | Description                                                                                                                                                      | Required |
 | --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
@@ -387,8 +387,7 @@ pool:
   vmImage: "ubuntu-latest"
 
 variables:
-  - group: port-credentials # OCEAN__PORT__CLIENT_ID, OCEAN__PORT__CLIENT_SECRET
-  - group: synk-credentials # OCEAN__INTEGRATION__CONFIG__TOKEN
+  - group: port-ocean-credentials # OCEAN__PORT__CLIENT_ID, OCEAN__PORT__CLIENT_SECRET, OCEAN__INTEGRATION__CONFIG__TOKEN
 
 
 steps:
