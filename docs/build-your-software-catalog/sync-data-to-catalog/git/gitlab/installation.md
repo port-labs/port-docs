@@ -115,7 +115,7 @@ The `appHost` parameter should be set to the `url` of your GitLab integration in
 
 The GitLab integration supports listening to GitLab webhooks and updating the relevant entities in Port accordingly.
 
-Supported webhooks are [Group webhooks](https://docs.gitlab.com/ee/user/project/integrations/webhooks.html#group-webhooks) and [System hooks](https://docs.gitlab.com/ee/system_hooks/system_hooks.html).
+Supported webhooks are [Group webhooks](https://docs.gitlab.com/ee/user/project/integrations/webhooks.html#group-webhooks) and [System hooks](https://docs.gitlab.com/ee/administration/system_hooks.html).
 
 As part of the installation process, the integration will create a webhook in your GitLab instance, and will use it to listen to the relevant events.
 
