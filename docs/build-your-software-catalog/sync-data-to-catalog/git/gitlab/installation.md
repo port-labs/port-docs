@@ -85,19 +85,19 @@ The `tokenMapping` parameter supports specifying the paths that the integration 
 Mapping format:
 
 ```text showLineNumbers
-{"MY_FIRST_GITLAB_PROJECT_GROUP_TOKEN": ["*/MyFirstGitLabProject/**","*/MySecondGitLabProject/*"]}
+{"MY_FIRST_GITLAB_PROJECT_GROUP_TOKEN": ["**/MyFirstGitLabProject/**","**/MySecondGitLabProject/*"]}
 ```
 
 Example:
 
 ```text showLineNumbers
-{"glpat-QXbeg-Ev9xtu5_5FsaAQ": ["*/DevopsTeam/*Service", "*/RnDTeam/*Service"]}
+{"glpat-QXbeg-Ev9xtu5_5FsaAQ": ["**/DevopsTeam/*Service", "**/RnDTeam/*Service"]}
 ```
 
 Multiple GitLab group access tokens example:
 
 ```text showLineNumbers
-{"glpat-QXbeg-Ev9xtu5_5FsaAQ": ["*/DevopsTeam/*Service", "*/RnDTeam/*Service"],"glpat-xF7Ae-vXu5ts5_QbEgAQ9": ["*/MarketingTeam/*Service"]}
+{"glpat-QXbeg-Ev9xtu5_5FsaAQ": ["**/DevopsTeam/*Service", "**/RnDTeam/*Service"],"glpat-xF7Ae-vXu5ts5_QbEgAQ9": ["**/MarketingTeam/*Service"]}
 ```
 
 ### `appHost` & listening to hooks
@@ -115,7 +115,7 @@ The `appHost` parameter should be set to the `url` of your GitLab integration in
 
 The GitLab integration supports listening to GitLab webhooks and updating the relevant entities in Port accordingly.
 
-Supported webhooks are [Group webhooks](https://docs.gitlab.com/ee/user/project/integrations/webhooks.html#group-webhooks) and [System hooks](https://docs.gitlab.com/ee/system_hooks/system_hooks.html).
+Supported webhooks are [Group webhooks](https://docs.gitlab.com/ee/user/project/integrations/webhooks.html#group-webhooks) and [System hooks](https://docs.gitlab.com/ee/administration/system_hooks.html).
 
 As part of the installation process, the integration will create a webhook in your GitLab instance, and will use it to listen to the relevant events.
 
@@ -358,7 +358,7 @@ deploy_gitlab:
 When saving the `OCEAN__INTEGRATION__CONFIG__TOKEN_MAPPING` variable, be sure to save it **as-is**, for example given the following token mapping:
 
 ```text showLineNumbers
-{"glpat-QXbeg-Ev9xtu5_5FsaAQ": ["*/DevopsTeam/*Service", "*/RnDTeam/*Service"]}
+{"glpat-QXbeg-Ev9xtu5_5FsaAQ": ["**/DevopsTeam/*Service", "**/RnDTeam/*Service"]}
 ```
 
 (Note that this is a one-liner)

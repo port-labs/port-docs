@@ -46,7 +46,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `integration.identifier`         | Change the identifier to describe your integration                                                                      | ✅       |
 | `integration.type`               | The integration type                                                                                                    | ✅       |
 | `integration.eventListener.type` | The event listener type                                                                                                 | ✅       |
-| `integration.secrets.token`      | PagerDuty API token token                                                                                               | ✅       |
+| `integration.secrets.token`      | PagerDuty API token                                                                                                | ✅       |
 | `integration.config.apiUrl`      | Pagerduty api url. If not specified, the default will be https://api.pagerduty.com                                      | ✅       |
 | `integration.config.appHost`     | The host of the Port Ocean app. Used to set up the integration endpoint as the target for Webhooks created in PagerDuty | ❌       |
 | `scheduledResyncInterval`        | The number of minutes between each resync                                                                               | ❌       |
