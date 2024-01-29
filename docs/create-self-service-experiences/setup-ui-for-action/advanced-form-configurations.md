@@ -11,6 +11,10 @@ Advanced input settings allow you to create more customizable experiences for us
 - Create a dependency between inputs to allow the user to select a value based on the value of another input.
 - Define dynamic default values based on the logged-in user properties(such as teams, email, role) or the entity that the action is being executed on (for day-2 or delete actions only).
 
+:::warning Note 
+Unless otherwise specified, all **Pulumi** configuration examples are provided in Python. For usage in other languages, please see the Pulumi provider documentation [here](https://www.pulumi.com/registry/packages/port/api-docs/action/).
+:::
+
 ## Usage
 
 Defining advanced inputs is currently supported in JSON-mode only.
@@ -282,7 +286,7 @@ resource "port_action" myAction {
 </TabItem>
 <TabItem value="pulumi">
 
-```python showLineNumbers
+```python showLineNumbers title="pulumi.py"
 action = Action(
   # ...action properties
   user_properties={
@@ -357,7 +361,7 @@ resource "port_action" myAction {
 </TabItem>
 <TabItem value="pulumi">
 
-```python showLineNumbers
+```python showLineNumbers title="pulumi.py"
 action = Action(
   # ...action properties
   user_properties={
@@ -444,7 +448,7 @@ resource "port_action" "myAction" {
 </TabItem>
 <TabItem value="pulumi">
 
-```python showLineNumbers
+```python showLineNumbers title="pulumi.py"
 action = Action(
   # ...action properties
   user_properties={
@@ -537,7 +541,7 @@ resource "port_action" myAction {
 </TabItem>
 <TabItem value="pulumi">
 
-```python showLineNumbers
+```python showLineNumbers title="pulumi.py"
 action = Action(
   # ...action properties
   user_properties={
@@ -617,7 +621,7 @@ resource "port_action" myAction {
 
 <TabItem value="pulumi">
 
-```python showLineNumbers
+```python showLineNumbers title="pulumi.py"
 action = Action(
   "pulumi-resource-name",
   identifier="action-identifier",
@@ -714,7 +718,7 @@ resource "port_action" myAction {
 
 <TabItem value="pulumi">
 
-```python showLineNumbers
+```python showLineNumbers title="pulumi.py"
 action = Action(
   # ...action properties
   user_properties={
@@ -836,7 +840,7 @@ resource "port_action" myAction {
 
 <TabItem value="pulumi">
 
-```python showLineNumbers
+```python showLineNumbers title="pulumi.py"
 action = Action(
   # ...action properties
   user_properties={
@@ -947,7 +951,7 @@ resource "port_action" myAction {
 
 <TabItem value="pulumi">
 
-```python showLineNumbers
+```python showLineNumbers title="pulumi.py"
 action = Action(
   # ...action properties
   user_properties={
@@ -1052,7 +1056,7 @@ resource "port_action" myAction {
 
 <TabItem value="pulumi">
 
-```python showLineNumbers
+```python showLineNumbers title="pulumi.py"
 action = Action(
   # ...action properties
   user_properties = {
@@ -1128,7 +1132,7 @@ resource "port_action" myAction {
 </TabItem>
 <TabItem value="pulumi">
 
-```python showLineNumbers
+```python showLineNumbers title="pulumi.py"
 action = Action(
   # ...action properties
   user_properties={
@@ -1200,7 +1204,7 @@ resource "port_action" myAction {
 </TabItem>
 <TabItem value="pulumi">
 
-```python showLineNumbers
+```python showLineNumbers title="pulumi.py"
 action = Action(
   "budding-action",
   identifier="budding-action",
