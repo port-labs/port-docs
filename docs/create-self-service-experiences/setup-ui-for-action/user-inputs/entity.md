@@ -117,7 +117,6 @@ resource "port_action" "myAction" {
       "myEntityInput" = {
         title       = "My entity input"
         description = "My entity input"
-        required    = false
         format      = "entity"
         blueprint   = "myBlueprint"
       }
