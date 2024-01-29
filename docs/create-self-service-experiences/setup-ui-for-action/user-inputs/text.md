@@ -132,7 +132,6 @@ resource "port_action" "myAction" {
       myTextInput = {
         title       = "My text input"
         description = "My text input"
-        required    = false
         default     = "My default"
       }
     }
@@ -154,7 +153,6 @@ resource "port_action" "myAction" {
       myTextSelectInput = {
         title       = "My text select input"
         description = "My text select input"
-        required    = false
         enum        = ["my-option-1", "my-option-2"]
       }
     }
@@ -178,7 +176,6 @@ resource "port_action" "myAction" {
       myTextArrayInput = {
         title       = "My text array input"
         description = "My text array input"
-        required    = false
         string_items = {}
       }
     }
@@ -259,7 +256,6 @@ resource "port_action" "myAction" {
       myTextInput = {
         title       = "My text input"
         description = "My text input"
-        required    = false
         default     = "My default"
         minLength   = 1
         maxLength   = 32

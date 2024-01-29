@@ -68,7 +68,6 @@ resource "port_action" "myAction" {
       myBooleanInput = {
         title       = "My boolean input"
         description = "My boolean input"
-        required    = false
         default     = true
       }
     }
