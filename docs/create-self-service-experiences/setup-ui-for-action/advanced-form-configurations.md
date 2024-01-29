@@ -395,6 +395,7 @@ values={[
 {label: 'API', value: 'api'},
 {label: 'Terraform', value: 'terraform'},
 {label: 'Pulumi', value: 'pulumi'}
+
 ]}>
 
 <TabItem value="api">
@@ -473,6 +474,7 @@ action = Action(
 
 ```
 </TabItem>
+
 </Tabs>
 
 </TabItem>
