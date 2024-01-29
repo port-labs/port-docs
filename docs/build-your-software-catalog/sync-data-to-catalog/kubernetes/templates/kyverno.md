@@ -40,14 +40,14 @@ export CUSTOM_BP_PATH="https://github.com/port-labs/template-assets/blob/main/ku
 
 This `blueprints.json` file defines the following blueprints:
 
-- Cluster;
-- Namespace;
-- Node;
-- Pod;
-- ReplicaSet;
-- Workload \*;
-- Kyverno Policy;
-- Kyverno Policy Report.
+- Cluster
+- Namespace
+- Node
+- Pod
+- ReplicaSet
+- Workload
+- Kyverno Policy
+- Kyverno Policy Report
 
 :::note Blueprint information
 
@@ -56,9 +56,9 @@ This `blueprints.json` file defines the following blueprints:
   look pretty similar.
   Here is the list of kubernetes objects `Workload` will represent:
 
-    - Deployment;
-    - StatefulSet;
-    - DaemonSet.
+    - Deployment
+    - StatefulSet
+    - DaemonSet
 
 - `Kyverno Policy` is one of the most important Kyverno resources, giving developers the capability to set and enforce policy rules in their Kubernetes cluster.
 
