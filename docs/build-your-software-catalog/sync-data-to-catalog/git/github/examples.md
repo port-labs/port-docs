@@ -227,7 +227,7 @@ In the following example you will ingest your GitHub repositories and their main
 <PortBrAppConfig/>
 
 :::note
-Currently only main branch protection rules main branch are supported
+Currently only main branch protection rules are supported
 :::
 
 ## Mapping supported resources
