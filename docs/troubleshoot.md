@@ -51,4 +51,28 @@ Answer:
 2. Sometimes users apply [initial filters](https://docs.getport.io/customize-pages-dashboards-and-plugins/page/catalog-page/#initial-filters) to increase the loading speed of the catalog page. Make sure your missing entity is not being filtered out.
 
 
-<Troubleshoot />
+<!--Troubleshoot /-->
+
+---
+
+How can I set up SSO for my organization?
+<details>
+<summary><b>Answer (click to expand)</b></summary>
+
+1. Set up the Application in your SSO dashboard. You can find the documentation for each supported provider [here](https://docs.getport.io/sso-rbac/sso-providers/).
+2. Reach out to us with the required credentials in order to complete the set up.
+3. After completing the set up, Port will provide you with the CONNECTION_NAME. Head back to the documentation and replace it where noted.
+
+</details>
+
+---
+
+Another question?!
+<details>
+<summary><b>Another answer (click to expand)</b></summary>
+
+BLAHHHHHHH
+
+</details>
+
+---
