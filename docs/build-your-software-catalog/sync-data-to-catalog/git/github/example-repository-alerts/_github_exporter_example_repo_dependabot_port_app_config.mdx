@@ -45,7 +45,7 @@ resources:
     port:
       entity:
         mappings:
-          identifier: .repo + (.number|tostring)
+          identifier: .repo + "-" + (.number | tostring)
           title: .rule.name
           blueprint: '"code_scan_alerts"'
           properties:
