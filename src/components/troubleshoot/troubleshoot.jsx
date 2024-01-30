@@ -5,7 +5,7 @@ const data = {
     title: "Frequently asked questions",
     rows: [
         {
-            title: "How can I set up SSO for my organization",
+            title: "How can I set up SSO for my organization?",
             content:
                 <span>
                     1. Set up the Application in your SSO dashboard. You can find the documentation for each supported provider <a href="https://docs.getport.io/sso-rbac/sso-providers/" target="_blank" rel="noopener noreferrer">here</a>.
@@ -13,7 +13,7 @@ const data = {
                     2. Reach out to us with the required credentials in order to complete the set up.
                     <br></br>
                     3. After completing the set up, Port will provide you with the CONNECTION_NAME. Head back to the documentation and replace it where noted.
-                </span>,
+                </span>
         },
         {
             title: "How can I troubleshoot my SSO connection?",
@@ -29,7 +29,7 @@ const data = {
                     <br></br>
                     3. Make sure you are using the correct <code>CONNECTION_NAME</code> provided to you by Port, and that the application is set up correctly according to our setup docs.
                 </span>
-            ,
+
         },
         {
             title: "Why I cannot invite another member?",
@@ -38,7 +38,7 @@ const data = {
                     At the free tier, Port allows you to be connected to a single organization. If your colleague is in another organization, you will not be able to invite him.
                     <br></br>
                     Reach out to us in Slack or the Intercom, and we will help you resolve the issue.
-                </span>,
+                </span>
         },
         {
             title: "After triggering an action in Port, why is the action status stuck in progress and nothing happens in the backend?",
