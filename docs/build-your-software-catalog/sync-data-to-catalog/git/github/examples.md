@@ -204,18 +204,6 @@ In the following example you will ingest your GitHub repositories and their aler
 For Code scan alerts only open alerts on the default branch are supported
 :::
 
-## Mapping repositories, deployments and environments
-
-In the following example you will ingest your GitHub repositories, their deployments and environments to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
-
-<RepositoryBlueprint/>
-
-<RepoEnvironmentBlueprint/>
-
-<DeploymentBlueprint/>
-
-<PortRepoDeploymentAndEnvironmentAppConfig/>
-
 ## Mapping repositories and branch protection rules
 
 In the following example you will ingest your GitHub repositories and their main branch protection rules to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
