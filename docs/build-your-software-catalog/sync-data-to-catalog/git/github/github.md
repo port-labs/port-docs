@@ -156,9 +156,9 @@ The `port`, `entity` and the `mappings` keys open the section used to map the Gi
           mappings: ...
   ```
 
-  :::tip
-  Pay attention to the value of the `blueprint` key, if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-  :::
+:::tip
+Pay attention to the value of the `blueprint` key, if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
+:::
 
 ### Setup
 
@@ -199,7 +199,7 @@ When using global configuration **using GitHub**, the configuration specified in
 </Tabs>
 
 :::info Important
-When **using Port**, the specified configuration will override any other configuration source (both global configuration using GitHub and granular configuration using GitHub).  
+When **using Port**, the specified configuration will override any other configuration source (both global configuration using GitHub and granular configuration using GitHub).
 
 If you want to delete the configuration specified in Port and use Github instead, simply replace the mapping content in Port with `null`, then click `Save & resync`.
 :::
@@ -220,12 +220,13 @@ Port's GitHub integration requires the following permissions:
   - **Dependabot alerts:** Readonly.
   - **Deployments:** Readonly.
   - **Environments:** Readonly.
-  - **Code scanning alerts:** Readonly;
-
+  - **Code scanning alerts:** Readonly.
+  - 
 
 - Organization permissions:
 
   - **Members:** Readonly (for exporting organization teams).
+  - **Administration:** Readonly (for exporting organization users).
 
 - Repository events (required to receive changes via webhook from GitHub and apply the `port-app-config.yml` configuration on them):
   - Issues
@@ -235,34 +236,10 @@ Port's GitHub integration requires the following permissions:
   - Team
   - Dependabot Alerts
   - Deployment
-  - **Checks:** Read and Write (for validating `port.yml`);
-  - **Contents:** Readonly;
-  - **Metadata:** Readonly;
-  - **Issues:** Readonly;
-  - **Pull requests:** Read and write;
-  - **Dependabot alerts:** Readonly;
-  - **Deployments:** Readonly;
-  - **Environments:** Readonly;
-
-- Organization permissions:
-
-  - **Members:** Readonly (for exporting organization teams);
-  - **Administration:** Readonly (for exporting organization users);
-
-- Repository events (required to receive changes via webhook from GitHub and apply the `port-app-config.yml` configuration on them):
-  - Issues;
-  - Pull requests;
-  - Push;
-  - Workflow run;
-  - Team.
-  - Dependabot Alerts;
-  - Deployment;
-  - Branch protection rule;
-  - Code scanning alert;
-  - Member;
-  - Membership;
-  - Organization;
->>>>>>> 4fa99955 (Add codeQL and branch protection rules support)
+  - Branch protection rule
+  - Code scanning alert
+  - Member
+  - Membership
 
 :::note
 You will be prompted to confirm these permissions when first installing the App.
