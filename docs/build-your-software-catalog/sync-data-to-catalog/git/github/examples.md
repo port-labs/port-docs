@@ -29,7 +29,7 @@ import RepositoryTeamBlueprint from './example-repository-teams/\_github_export_
 import PortRepositoryTeamMappingAppConfig from './example-repository-teams/\_github_exporter_example_repository_with_teams_port_app_config.mdx'
 
 import DependabotAlertBlueprint from './example-repository-alerts/\_github_exporter_example_dependabot_alert_blueprint.mdx'
-import CodeScanAlertBlueprint from './example-repository-alerts/\_github_exporter_example_codeQL_alert_blueprint.mdx'
+import CodeScanAlertBlueprint from './example-repository-alerts/\_github_exporter_example_codeScan_alert_blueprint.mdx'
 
 import PortRepositoryDependabotAlertMappingAppConfig from './example-repository-alerts/\_github_exporter_example_repo_dependabot_port_app_config.mdx'
 

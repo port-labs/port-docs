@@ -212,7 +212,6 @@ Port's GitHub integration requires the following permissions:
 
   - **Actions:** Read and Write (for executing self-service action using GitHub workflow).
   - **Administration:** Readonly (for exporting repository teams)
-<<<<<<< HEAD
   - **Checks:** Read and Write (for validating `port.yml`).
   - **Contents:** Readonly.
   - **Metadata:** Readonly.
