@@ -200,7 +200,7 @@ In the following example you will ingest your GitHub repositories and their aler
 
 <PortRepositoryDependabotAlertMappingAppConfig/>
 
-:::note
+:::info supported alerts
 For Code scan alerts only open alerts on the default branch are supported
 :::
 
@@ -214,7 +214,7 @@ In the following example you will ingest your GitHub repositories and their main
 
 <PortBrAppConfig/>
 
-:::note
+:::info supported branch protection rules
 Currently only default branch protection rules are supported
 :::
 
