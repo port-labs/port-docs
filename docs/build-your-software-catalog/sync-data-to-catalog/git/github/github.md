@@ -220,6 +220,8 @@ Port's GitHub integration requires the following permissions:
   - **Dependabot alerts:** Readonly.
   - **Deployments:** Readonly.
   - **Environments:** Readonly.
+  - **Code scanning alerts:** Readonly;
+
 
 - Organization permissions:
 
@@ -233,7 +235,6 @@ Port's GitHub integration requires the following permissions:
   - Team
   - Dependabot Alerts
   - Deployment
-=======
   - **Checks:** Read and Write (for validating `port.yml`);
   - **Contents:** Readonly;
   - **Metadata:** Readonly;
@@ -242,7 +243,6 @@ Port's GitHub integration requires the following permissions:
   - **Dependabot alerts:** Readonly;
   - **Deployments:** Readonly;
   - **Environments:** Readonly;
-  - ** Code scanning alerts:** Readonly;
 
 - Organization permissions:
 
