@@ -37,6 +37,13 @@ import RepoEnvironmentBlueprint from './example-deployments-environments/\_githu
 import DeploymentBlueprint from './example-deployments-environments/\_github_exporter_example_deployment_blueprint.mdx'
 import PortRepoDeploymentAndEnvironmentAppConfig from './example-deployments-environments/\_github_exporter_example_deployments_and_environments_port_app_config.mdx'
 
+import UsersBlueprint from './example-repository-admins/\_github_exporter_example_users_blueprint.mdx'
+import GithubUsersBlueprint from './example-repository-admins/\_github_exporter_example_github_users_blueprint.mdx'
+import RepositoryAdminBlueprint from './example-repository-admins/\_github_export_example_repository_with_admins_relation_blueprint.mdx'
+import RepositoryAdminAppConfig from './example-repository-admins/\_github_exporter_example_admins_users_port_app_config.mdx'
+
+
+
 # Examples
 
 ## Mapping repositories, file contents and pull requests
@@ -217,6 +224,28 @@ In the following example you will ingest your GitHub repositories and their main
 :::info supported branch protection rules
 Currently only default branch protection rules are supported
 :::
+
+## Mapping repositories, repository admins and users
+
+In the following example you will ingest your GitHub repositories, their admins and related users to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+
+<RepositoryAdminBlueprint/>
+
+<GithubUsersBlueprint/>
+
+<UsersBlueprint/>
+
+<RepositoryAdminAppConfig/>
+
+:::info supported GitHub user types
+As Github has strict privacy policies, the GitHub API will only return emails in the following cases:
+1. The user has a public email address
+2. Your organization is working with a GitHub Enterprise Cloud plan, and the user has an SAML SSO identity configured inside the GitHub organization.
+
+In other cases, the GitHub API will return a `null` value for the user's email.
+:::
+
+>>>>>>> f776123d (Add docs for users and admins)
 
 ## Mapping supported resources
 
