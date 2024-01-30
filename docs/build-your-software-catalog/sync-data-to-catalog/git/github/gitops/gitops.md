@@ -11,14 +11,13 @@ import GitOpsPushEvent from '../../\_git_gitops_push_events_explanation.mdx'
 
 # GitOps
 
-Port's GitHub integration makes it possible to manage Port entities with a GitOps approach, making your code repositories into the source of truth for the various infrastructure assets you want to manage.
+Port's GitHub integration makes it possible to manage Port entities with a GitOps approach, making your code repositories the source of truth for the various infrastructure assets you want to manage.
 
 ## 💡 GitHub GitOps common use cases
 
-- Use GitHub as the source-of-truth for your **microservices**, **packages**, **libraries** and other software catalog assets;
-- Allow developers to keep the catalog up-to-date, by making updates to files in their Git repositories;
-- Create a standardized way to document software catalog assets in your organization;
-- etc.
+- Use GitHub as the source-of-truth for your **microservices**, **packages**, **libraries** and other software catalog assets.
+- Allow developers to keep the catalog up-to-date, by making updates to files in their Git repositories.
+- Create a standardized way to document software catalog assets in your organization.
 
 ## Managing entities using GitOps
 
@@ -26,9 +25,11 @@ To manage entities using GitOps, you will need to add a `port.yml` file to the *
 
 The `port.yml` file can specify one or more Port entities that will be ingested to Port, and any change made to the `port.yml` file will also be reflected inside Port.
 
-This configuration turns your GitHub repositories to the source-of-truth for the software catalog.
+:::tip Github app
+To manage entities using GitOps and the `port.yml` file, Port's [Github app](/build-your-software-catalog/sync-data-to-catalog/git/github/installation/) must be installed, as it listens to `push` events sent from Github.
 
-<GitOpsPushEvent/>
+This means that if the `port.yml` file exists in the repository before installing the app, it will not be picked up automatically. You will need to make some update to the `port.yml` file and push it to the repository in order for the Git app to properly track and ingest the entity information.
+:::
 
 ### GitOps `port.yml` file
 
