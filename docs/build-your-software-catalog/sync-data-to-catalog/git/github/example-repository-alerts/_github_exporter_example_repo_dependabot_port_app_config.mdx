@@ -39,6 +39,23 @@ resources:
             references: "[.security_advisory.references[].url]"
           relations:
             repository: .repo.name
+  - kind: code-scanning-alerts
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .repo + (.number|tostring)
+          title: .rule.name
+          blueprint: '"code_scan_alerts"'
+          properties:
+            state: .state
+            severity: .rule.severity
+            tags: .rule.tags
+            description: .rule.description
+            url: .html_url
+          relations:
+            repository: .repo
 ```
 
 </details>

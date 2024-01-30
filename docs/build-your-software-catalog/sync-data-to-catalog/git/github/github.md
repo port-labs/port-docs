@@ -212,6 +212,7 @@ Port's GitHub integration requires the following permissions:
 
   - **Actions:** Read and Write (for executing self-service action using GitHub workflow).
   - **Administration:** Readonly (for exporting repository teams)
+<<<<<<< HEAD
   - **Checks:** Read and Write (for validating `port.yml`).
   - **Contents:** Readonly.
   - **Metadata:** Readonly.
@@ -233,6 +234,36 @@ Port's GitHub integration requires the following permissions:
   - Team
   - Dependabot Alerts
   - Deployment
+=======
+  - **Checks:** Read and Write (for validating `port.yml`);
+  - **Contents:** Readonly;
+  - **Metadata:** Readonly;
+  - **Issues:** Readonly;
+  - **Pull requests:** Read and write;
+  - **Dependabot alerts:** Readonly;
+  - **Deployments:** Readonly;
+  - **Environments:** Readonly;
+  - ** Code scanning alerts:** Readonly;
+
+- Organization permissions:
+
+  - **Members:** Readonly (for exporting organization teams);
+  - **Administration:** Readonly (for exporting organization users);
+
+- Repository events (required to receive changes via webhook from GitHub and apply the `port-app-config.yml` configuration on them):
+  - Issues;
+  - Pull requests;
+  - Push;
+  - Workflow run;
+  - Team.
+  - Dependabot Alerts;
+  - Deployment;
+  - Branch protection rule;
+  - Code scanning alert;
+  - Member;
+  - Membership;
+  - Organization;
+>>>>>>> 4fa99955 (Add codeQL and branch protection rules support)
 
 :::note
 You will be prompted to confirm these permissions when first installing the App.
