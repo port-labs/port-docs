@@ -11,6 +11,10 @@ import WorkflowBlueprint from './example-workflow-workflowrun/\_git_exporter_exa
 import WorkflowRunBlueprint from './example-workflow-workflowrun/\_git_exporter_example_workflow_run_blueprint.mdx'
 import PortWfWfrAppConfig from './example-workflow-workflowrun/\_github_exporter_example_wf_wfr_port_app_config.mdx'
 
+import BranchBlueprint from './example-branch-protection/\_git_exporter_example_branch_blueprint.mdx'
+import PortBrAppConfig from './example-branch-protection/\_github_exporter_example_branch_port_app_config.mdx'
+
+
 import PortMonoRepoAppConfig from './example-monorepo/\_github_exporter_example_monorepo_port_app_config.mdx'
 
 import IssueBlueprint from './example-issue/\_git_exporter_example_issue_blueprint.mdx'
@@ -24,8 +28,10 @@ import TeamBlueprint from './example-repository-teams/\_github_export_example_te
 import RepositoryTeamBlueprint from './example-repository-teams/\_github_export_example_repository_with_teams_relation_blueprint.mdx'
 import PortRepositoryTeamMappingAppConfig from './example-repository-teams/\_github_exporter_example_repository_with_teams_port_app_config.mdx'
 
-import DependabotAlertBlueprint from './example-repository-dependabot-alerts/\_github_exporter_example_dependabot_alert_blueprint.mdx'
-import PortRepositoryDependabotAlertMappingAppConfig from './example-repository-dependabot-alerts/\_github_exporter_example_repo_dependabot_port_app_config.mdx'
+import DependabotAlertBlueprint from './example-repository-alerts/\_github_exporter_example_dependabot_alert_blueprint.mdx'
+import CodeScanAlertBlueprint from './example-repository-alerts/\_github_exporter_example_codeScan_alert_blueprint.mdx'
+
+import PortRepositoryDependabotAlertMappingAppConfig from './example-repository-alerts/\_github_exporter_example_repo_dependabot_port_app_config.mdx'
 
 import RepoEnvironmentBlueprint from './example-deployments-environments/\_github_exporter_example_environment_blueprint.mdx'
 import DeploymentBlueprint from './example-deployments-environments/\_github_exporter_example_deployment_blueprint.mdx'
@@ -182,15 +188,35 @@ In the following example you will ingest your GitHub repositories, their deploym
 
 <PortRepoDeploymentAndEnvironmentAppConfig/>
 
-## Mapping repositories and Dependabot Alerts
+## Mapping repositories, Dependabot Alerts and Code scan alerts
 
-In the following example you will ingest your GitHub repositories and their Dependabot Alerts to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+In the following example you will ingest your GitHub repositories and their alerts (Dependabot and Code scan alerts) to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
 
 <RepositoryBlueprint/>
 
 <DependabotAlertBlueprint/>
 
+<CodeScanAlertBlueprint/>
+
 <PortRepositoryDependabotAlertMappingAppConfig/>
+
+:::info supported alerts
+For Code scan alerts only open alerts on the default branch are supported
+:::
+
+## Mapping repositories and branch protection rules
+
+In the following example you will ingest your GitHub repositories and their main branch protection rules to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+
+<RepositoryBlueprint/>
+
+<BranchBlueprint/>
+
+<PortBrAppConfig/>
+
+:::info supported branch protection rules
+Currently only default branch protection rules are supported
+:::
 
 ## Mapping supported resources
 
