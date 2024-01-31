@@ -1,5 +1,5 @@
 ---
-sidebar_position: 11
+sidebar_position: 17
 description: Timer is a data type used to define an expiration date/lifespan of a specific entity
 ---
 

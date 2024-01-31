@@ -5,7 +5,7 @@ import HelmParameters from "../templates/\_ocean-advanced-parameters-helm.mdx"
 import ResourceMapping from "../templates/\_resource-mapping.mdx"
 import DockerParameters from "./\_docker-parameters.mdx"
 import SupportedResources from "./\_supported-resources.mdx"
-import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
+import AdvancedConfig from '../../../generalTemplates/\_ocean_advanced_configuration_note.md'
 import SonarcloudAnalysisBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/webhook/examples/resources/sonarqube/\_example_sonarcloud_analysis_blueprint.mdx";
 import SonarcloudAnalysisConfiguration from "/docs/build-your-software-catalog/sync-data-to-catalog/webhook/examples/resources/sonarqube/\_example_sonarcloud_analysis_configuration.mdx";
 
@@ -263,6 +263,62 @@ pipeline {
         }
     }
 }
+```
+
+  </TabItem>
+
+  <TabItem value="azure" label="Azure Devops">
+This pipeline will run the SonarQube integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::tip
+Your Azure Devops agent should be able to run docker commands.
+:::
+:::warning
+If you want the integration to update Port in real time using webhooks you should use
+the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+:::
+
+Make sure to configure the following variables using [Azure Devops variable groups](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops&tabs=yaml). Add them into in a variable group named `port-ocean-credentials`:
+
+<DockerParameters />
+
+<br/>
+
+Here is an example for `sonar-integration.yml` pipeline file:
+
+```yaml showLineNumbers
+trigger:
+- main
+
+pool:
+  vmImage: "ubuntu-latest"
+
+variables:
+  - group: port-ocean-credentials
+
+
+steps:
+- script: |
+    echo Add other tasks to build, test, and deploy your project.
+    # Set Docker image and run the container
+    integration_type="sonarqube"
+    version="latest"
+
+    image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
+
+    docker run -i --rm \
+    -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+    -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+    -e OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN=${OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN} \
+    -e OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID=${OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID} \
+    -e OCEAN__INTEGRATION__CONFIG__SONAR_URL=${OCEAN__INTEGRATION__CONFIG__SONAR_URL} \
+    -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \
+    -e OCEAN__PORT__CLIENT_SECRET=${OCEAN__PORT__CLIENT_SECRET} \
+    $image_name
+
+    exit $?
+  displayName: 'Ingest SonarQube Data into Port'
+
 ```
 
   </TabItem>

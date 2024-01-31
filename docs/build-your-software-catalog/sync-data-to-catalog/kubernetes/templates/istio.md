@@ -1,6 +1,6 @@
 ---
 sidebar_position: 2
-description: Knative quickstart
+description: Istio quickstart
 ---
 
 import TemplateInstallation from "./_template_installation.mdx";

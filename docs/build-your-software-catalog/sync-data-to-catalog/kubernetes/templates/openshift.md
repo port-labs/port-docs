@@ -1,6 +1,6 @@
 ---
 title: "Red Hat Openshift"
-sidebar_position: 5
+sidebar_position: 4
 description: Openshift quickstart
 ---
 

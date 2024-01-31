@@ -84,7 +84,6 @@ resource "port_action" "myAction" {
     identifier  = "myArrayInput"
     title       = "My array input"
     description = "My array input"
-    required    = false
     type        = "array"
   }
   # highlight-end
@@ -143,7 +142,6 @@ resource "port_action" "myAction" {
       "myArrayInput" = {
         title       = "My array input"
         description = "My array input"
-        required    = false
         min_items   = 0
         max_items   = 5
         unique_items = false

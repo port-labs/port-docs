@@ -2,10 +2,11 @@
 
 Port supports various visualizations in the form of widgets, allowing you to display data from your software catalog using graphic elements, making it easier to make sense of large datasets.
 
-Dashboards are available in:
+Dashboards are available in the following locations:
 
 1. The [Home page](https://app.getport.io/organization/home) of your Port app - the home page itself is a dashboard, allowing you to add and customize any of the widgets described on this page.
 2. Every [entity page](/customize-pages-dashboards-and-plugins/page/entity-page#dashboard-widgets) can have a `dashboard` tab with its own widgets.
+3. The [software catalog](https://app.getport.io/services) allows you to create customizable [dashboard pages](/customize-pages-dashboards-and-plugins/page/dashboard-page).
 
 ## Widget types
 
@@ -13,7 +14,7 @@ Dashboards are available in:
 
 You can create a pie chart illustrating data from entities in your software catalog divided by categories and entity properties inside a specific entity page [**specific entity page**](../page/entity-page.md).
 
-![Pie Chart](../../../static/img/software-catalog/widgets/pieChartExample.png)
+![Pie Chart](/img/software-catalog/widgets/pieChartExample.png)
 
 #### Visualization properties
 
@@ -28,7 +29,7 @@ You can create a pie chart illustrating data from entities in your software cata
 
 ### Number chart
 
-You can create a number chart visualization from related entities in the [**specific entity page**](../page/entity-page.md). You can either count the entities or perform an aggregation function on a number property. You can also filter entities so the aggregation number chart will only apply to a limited set of entities with Port's [Search Rules](../../search-and-query/search-and-query.md#rules)
+You can create a number chart visualization from related entities in the [**specific entity page**](../page/entity-page.md). You can either count the entities or perform an aggregation function on a number property. You can also filter entities so the aggregation number chart will only apply to a limited set of entities with Port's [Search Rules](/search-and-query/search-and-query.md#rules)
 
 ![Number Chart](../../../static/img/software-catalog/widgets/numberChartExample.png)
 
@@ -87,10 +88,10 @@ The entity identifier will be concatenated under the `entity` query param and th
 | `Description`       | `String`       | Iframe widget description                                                                                                                              | `null`  | `false`  |
 | `URL`               | `String`       | Iframe widget url                                                                                                                                      | `null`  | `false`  |
 | `URL type`          | `String`       | `public` or `protect`                                                                                                                                  | `null`  | `false`  |
-| `Authorization Url` | `URL String`   | If the `URL type` is `protected` this will be required. Read more about it [here](../tabs/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
-| `clientId`          | `String`       | If the `URL type` is `protected` this will be required. Read more about it [here](../tabs/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
-| `Scopes`            | `String Array` | If the `URL type` is `protected` this will be required. Read more about it [here](../tabs/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
-| `Token URL`         | `URL String`   | If the `URL type` is `protected` this will be required. Read more about it [here](../tabs/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
+| `Authorization Url` | `URL String`   | If the `URL type` is `protected` this will be required. Read more about it [here](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
+| `clientId`          | `String`       | If the `URL type` is `protected` this will be required. Read more about it [here](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
+| `Scopes`            | `String Array` | If the `URL type` is `protected` this will be required. Read more about it [here](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
+| `Token URL`         | `URL String`   | If the `URL type` is `protected` this will be required. Read more about it [here](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
 
 ### Table
 
@@ -98,6 +99,13 @@ This widget allows you to create tables displaying all entities based on a selec
 Tables can be [searched, filtered and customized](/customize-pages-dashboards-and-plugins/page/catalog-page#customization) as you wish, using the corresponding buttons in the widget.
 
 <img src='/img/software-catalog/widgets/tableExample.png' width='400rem' />
+
+#### Customization
+
+Just like catalog pages, tables support the following customization options:
+
+- [Initial filters](/customize-pages-dashboards-and-plugins/page/catalog-page/#initial-filters)
+- [Excluded properties](/customize-pages-dashboards-and-plugins/page/catalog-page/#excluded-properties)
 
 ### Action runs
 
@@ -114,9 +122,9 @@ The table will automatically display data about each run, including status, inpu
 
 <img src='/img/software-catalog/widgets/widgetFilterForm.png' width='400rem' />
 
-#### Filter example: only deployment entities from the last week
+### Filter example: only deployment entities from the last week
 
-Let's assume we have a [blueprint](../../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) that is called `Service` which is related to another blueprint called `Deployment`, and we want to create visualizations on top of the last week's deployments of this service.
+Let's assume we have a [blueprint](/build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) that is called `Service` which is related to another blueprint called `Deployment`, and we want to create visualizations on top of the last week's deployments of this service.
 
 To achieve this desired state, we can go into one of the `Service`'s profile pages and create a new visualization. After selecting the `Deployment` blueprint in the dropdown, we can add the following filter to the `Filters` array:
 
@@ -134,51 +142,4 @@ To achieve this desired state, we can go into one of the `Service`'s profile pag
 
 ### Dynamic filters
 
-You can use properties of the logged-in user when filtering a widget, by using the following functions:
-
-- getUserTeams - a list of the teams the user belongs to.
-- getUserEmail - the user's email.
-- getUserFullName - the user's full name.
-- blueprint - the blueprint identifier of the current page.
-
-#### Usage examples
-
-```json showLineNumbers
-[
-  {
-    "property": "$team",
-    "operator": "containsAny",
-    "value": ["{{getUserTeams()}}"]
-  }
-]
-```
-
-```json showLineNumbers
-[
-  {
-    "property": "emails",
-    "operator": "contains",
-    "value": "{{getUserEmail()}}"
-  }
-]
-```
-
-```json showLineNumbers
-[
-  {
-    "property": "name",
-    "operator": "=",
-    "value": "{{getUserFullName()}}"
-  }
-]
-```
-
-```json showLineNumbers
-[
-  {
-    "property": "$blueprint",
-    "operator": "=",
-    "value": "{{blueprint}}"
-  }
-]
-```
+You can use [dynamic properties](/search-and-query/#dynamic-properties) of the logged-in user when filtering a widget.

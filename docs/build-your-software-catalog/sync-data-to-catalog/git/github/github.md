@@ -10,11 +10,10 @@ Our integration with GitHub allows you to export GitHub objects to Port as entit
 
 Our GitHub integration makes it easy to fill the software catalog with data directly from your GitHub organization, for example:
 
-- Map all the resources in your GitHub organization, including **repositories**, **pull requests**, **workflows**, **workflow runs**, **teams** , **dependabot alerts**, **deployment environments** and other GitHub objects;
-- Watch for GitHub object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port;
-- Manage Port entities using GitOps;
-- Trigger GitHub workflows directly from Port;
-- etc.
+- Map all the resources in your GitHub organization, including **repositories**, **pull requests**, **workflows**, **workflow runs**, **teams** , **dependabot alerts**, **deployment environments** and other GitHub objects.
+- Watch for GitHub object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
+- Manage Port entities using GitOps.
+- Trigger GitHub workflows directly from Port.
 
 ## Installation
 
@@ -129,7 +128,7 @@ query: .name | startswith("service")
 
 <br/>
 
-The `port`, `entity` and the `mappings` keys open the section used to map the GitHub API object fields to Port entities. To create multiple mappings of the same kind, you can add another item to the `resources` array;
+The `port`, `entity` and the `mappings` keys open the section used to map the GitHub API object fields to Port entities. To create multiple mappings of the same kind, you can add another item to the `resources` array:
 
   ```yaml showLineNumbers
   resources:
@@ -157,9 +156,9 @@ The `port`, `entity` and the `mappings` keys open the section used to map the Gi
           mappings: ...
   ```
 
-  :::tip
-  Pay attention to the value of the `blueprint` key, if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-  :::
+:::tip
+Pay attention to the value of the `blueprint` key, if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
+:::
 
 ### Setup
 
@@ -171,11 +170,11 @@ To ingest GitHub objects using the [`port-app-config.yml`](#port-app-configyml-f
 
 To manage your GitHub integration configuration using Port:
 
-1. Go to the DevPortal Builder page;
-2. Select a blueprint you want to ingest using GitHub;
-3. Choose the **Ingest Data** option from the menu;
-4. Select GitHub under the Git providers category;
-5. Add the contents of your `port-app-config.yml` file to the editor;
+1. Go to the DevPortal Builder page.
+2. Select a blueprint you want to ingest using GitHub.
+3. Choose the **Ingest Data** option from the menu.
+4. Select GitHub under the Git providers category.
+5. Add the contents of your `port-app-config.yml` file to the editor.
 6. Click save configuration.
 
 Using this method applies the configuration to all repositories that the GitHub app has permissions to.
@@ -188,9 +187,9 @@ When configuring the integration **using Port**, the configuration specified in 
 
 To manage your GitHub integration configuration using GitHub, you can choose either a global or granular configuration:
 
-- **Global configuration:** create a `.github-private` repository in your organization and add the `port-app-config.yml` file to the repository;
-  - Using this method applies the configuration to all repositories that the GitHub app has permissions to (unless it is overridden by a granular `port-app-config.yml` in a repository);
-- **Granular configuration:** add the `port-app-config.yml` file to the `.github` directory of your desired repository;
+- **Global configuration:** create a `.github-private` repository in your organization and add the `port-app-config.yml` file to the repository.
+  - Using this method applies the configuration to all repositories that the GitHub app has permissions to (unless it is overridden by a granular `port-app-config.yml` in a repository).
+- **Granular configuration:** add the `port-app-config.yml` file to the `.github` directory of your desired repository.
   - Using this method applies the configuration only to the repository where the `port-app-config.yml` file exists.
 
 When using global configuration **using GitHub**, the configuration specified in the `port-app-config.yml` file will only be applied if the file is in the **default branch** of the repository (usually `main`).
@@ -200,9 +199,9 @@ When using global configuration **using GitHub**, the configuration specified in
 </Tabs>
 
 :::info Important
+When **using Port**, the specified configuration will override any other configuration source (both global configuration using GitHub and granular configuration using GitHub).
 
-When using global configuration **using Port**, the configuration specified will override any other configuration source (both global configuration using GitHub and granular configuration using GitHub);
-
+If you want to delete the configuration specified in Port and use Github instead, simply replace the mapping content in Port with `null`, then click `Save & resync`.
 :::
 
 ## Permissions
@@ -211,29 +210,36 @@ Port's GitHub integration requires the following permissions:
 
 - Repository permissions:
 
-  - **Actions:** Read and Write (for executing self-service action using GitHub workflow);
+  - **Actions:** Read and Write (for executing self-service action using GitHub workflow).
   - **Administration:** Readonly (for exporting repository teams)
-  - **Checks:** Read and Write (for validating `port.yml`);
-  - **Contents:** Readonly;
-  - **Metadata:** Readonly;
-  - **Issues:** Readonly;
-  - **Pull requests:** Read and write;
-  - **Dependabot alerts:** Readonly;
-  - **Deployments:** Readonly;
-  - **Environments:** Readonly;
+  - **Checks:** Read and Write (for validating `port.yml`).
+  - **Contents:** Readonly.
+  - **Metadata:** Readonly.
+  - **Issues:** Readonly.
+  - **Pull requests:** Read and write.
+  - **Dependabot alerts:** Readonly.
+  - **Deployments:** Readonly.
+  - **Environments:** Readonly.
+  - **Code scanning alerts:** Readonly.
+  - 
 
 - Organization permissions:
 
-  - **Members:** Readonly (for exporting organization teams);
+  - **Members:** Readonly (for exporting organization teams).
+  - **Administration:** Readonly (for exporting organization users).
 
 - Repository events (required to receive changes via webhook from GitHub and apply the `port-app-config.yml` configuration on them):
-  - Issues;
-  - Pull requests;
-  - Push;
-  - Workflow run;
-  - Team.
-  - Dependabot Alerts;
-  - Deployment;
+  - Issues
+  - Pull requests
+  - Push
+  - Workflow run
+  - Team
+  - Dependabot Alerts
+  - Deployment
+  - Branch protection rule
+  - Code scanning alert
+  - Member
+  - Membership
 
 :::note
 You will be prompted to confirm these permissions when first installing the App.
