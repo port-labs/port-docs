@@ -245,7 +245,6 @@ As Github has strict privacy policies, the GitHub API will only return emails in
 In other cases, the GitHub API will return a `null` value for the user's email.
 :::
 
->>>>>>> f776123d (Add docs for users and admins)
 
 ## Mapping supported resources
 
