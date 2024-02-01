@@ -84,7 +84,7 @@ aws s3api create-bucket --bucket <AWS_BUCKET_NAME> --region <AWS_REGION>
 
 3. Add the [bucket policy](https://docs.aws.amazon.com/AmazonS3/latest/userguide/add-bucket-policy.html) you created in step two to the bucket you created in step one (the following command assumes that the `policy.json` is in your current working directory, and should be updated with the correct file location if saved elsewhere). This policy will allow AWS to write the cost and usage report (CUR) (replace `<AWS_BUCKET_NAME>` with the name of the bucket you created in step one) to your bucket:
 
-```bash showLineNumbers
+```bash
 aws s3api put-bucket-policy --bucket <AWS_BUCKET_NAME> --policy file://policy.json
 ```
 
@@ -114,13 +114,13 @@ aws s3api put-bucket-policy --bucket <AWS_BUCKET_NAME> --policy file://policy.js
 
 5. [Create an AWS Cost and Usage Report](https://docs.aws.amazon.com/cur/latest/userguide/cur-create.html) for generating cost reports on a daily basis, that will be saved in the bucket (the following command assumes that the `report-definition.json` is in your current working directory, and should be updated with the correct file location if saved elsewhere).
 
-```bash showLineNumbers
+```bash
 aws cur put-report-definition --report-definition file://report-definition.json
 ```
 
 6. Wait for up to 24 hours, until the first report will be generated.
 
-```bash showLineNumbers
+```bash
 aws s3 ls s3://port-aws-exporter-config/cost-reports/aws-monthly-cost-report-for-port/
 ```
 
@@ -212,7 +212,7 @@ Environment variables of the exporter for all the setup options:
 
 1. Make sure that you have Python installed (tested on python 3.11)
 
-```bash showLineNumbers
+```bash
 python3 --version
 ```
 
@@ -249,13 +249,13 @@ AWS_SECRET_ACCESS_KEY=<AWS_SECRET_ACCESS_KEY>
 
 2. Run exporter's Docker image with `.env`
 
-```bash showLineNumbers
+```bash
 docker run -d --name getport.io-port-aws-cost-exporter --env-file .env ghcr.io/port-labs/port-aws-cost-exporter:latest
 ```
 
 3. View the logs of the container, to watch the progress:
 
-```bash showLineNumbers
+```bash
 docker logs -f getport.io-port-aws-cost-exporter
 ```
 
