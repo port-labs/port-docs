@@ -245,10 +245,10 @@ resource "port_scorecard" "ownership" {
       query = {
         combinator = "and"
         conditions = [
-          {
+          jsonencode({
             operator = "isNotEmpty"
             property = "slackChannel"
-          }
+          })
         ]
       }
     },
@@ -259,10 +259,10 @@ resource "port_scorecard" "ownership" {
       query = {
         combinator = "and"
         conditions = [
-          {
+          jsonencode({
             operator = "isNotEmpty"
             property = "$team"
-          }
+          })
         ]
       }
     }

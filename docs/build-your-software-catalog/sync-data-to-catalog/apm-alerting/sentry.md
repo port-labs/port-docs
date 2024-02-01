@@ -44,7 +44,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `integration.identifier`                | Change the identifier to describe your integration                                                            | ✅       |
 | `integration.type`                      | The integration type                                                                                          | ✅       |
 | `integration.eventListener.type`        | The event listener type                                                                                       | ✅       |
-| `integration.secrets.sentryToken`       | The Sentry API token token                                                                                    | ✅       |
+| `integration.secrets.sentryToken`       | The Sentry API token                                                                                     | ✅       |
 | `integration.config.sentryHost`         | The Sentry host. For example https://sentry.io                                                                | ✅       |
 | `integration.config.sentryOrganization` | The Sentry organization slug                                                                                  | ✅       |
 | `scheduledResyncInterval`               | The number of minutes between each resync                                                                     | ❌       |
