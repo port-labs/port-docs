@@ -27,47 +27,13 @@ This is an [open-source](https://github.com/port-labs/port-aws-cost-exporter) in
 
 ### AWS
 
-1. [Create an AWS S3 Bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html) for hosting the cost reports (replace `<AWS_BUCKET_NAME>`, `<AWS_REGION>`).
+1. [Create an AWS S3 Bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html) for hosting the cost reports (replace `<AWS_BUCKET_NAME>`, `<AWS_REGION>` with your intended bucket name and AWS region).
 
 ```bash showLineNumbers
 aws s3api create-bucket --bucket <AWS_BUCKET_NAME> --region <AWS_REGION>
 ```
 
-2. [Create an AWS Cost and Usage Report](https://docs.aws.amazon.com/cur/latest/userguide/cur-create.html) for generating cost reports on a daily basis, that will be saved in the bucket.
-
-```bash showLineNumbers
-aws cur put-report-definition --report-definition file://report-definition.json
-```
-
-Tested with this recommended contents of `report-definition.json` (replace `<AWS_BUCKET_NAME>`, `<AWS_REGION>`):
-
-<details>
-  <summary> report-definition.json </summary>
-
-```json showLineNumbers
-{
-  "ReportName": "aws-monthly-cost-report-for-port",
-  "TimeUnit": "MONTHLY",
-  "Format": "textORcsv",
-  "Compression": "GZIP",
-  "AdditionalSchemaElements": ["RESOURCES"],
-  "S3Bucket": "<AWS_BUCKET_NAME>",
-  "S3Prefix": "cost-reports",
-  "S3Region": "<AWS_REGION>",
-  "RefreshClosedReports": true,
-  "ReportVersioning": "OVERWRITE_REPORT"
-}
-```
-
-</details>
-
-3. Add a [bucket policy](https://docs.aws.amazon.com/AmazonS3/latest/userguide/add-bucket-policy.html) to the bucket, to allow AWS to write the report (replace `<AWS_BUCKET_NAME>`):
-
-```bash showLineNumbers
-aws s3api put-bucket-policy --bucket <AWS_BUCKET_NAME> --policy file://policy.json
-```
-
-Where `policy.json` content [should be](https://docs.aws.amazon.com/cur/latest/userguide/cur-s3.html) (replace `<AWS_BUCKET_NAME>`, `<AWS_ACCOUNT_ID>`):
+2. Create a file locally called `policy.json`. Copy and paste the following [content](https://docs.aws.amazon.com/cur/latest/userguide/cur-s3.html) into this file and save it, ensuring that you update `<AWS_BUCKET_NAME>` and `<AWS_ACCOUNT_ID>` with the name of the bucket you created in step one and your AWS Account ID.
 
 <details>
   <summary> policy.json </summary>
@@ -81,10 +47,13 @@ Where `policy.json` content [should be](https://docs.aws.amazon.com/cur/latest/u
         "Service": "billingreports.amazonaws.com"
       },
       "Action": ["s3:GetBucketAcl", "s3:GetBucketPolicy"],
+      # highlight-next-line
       "Resource": "arn:aws:s3:::<AWS_BUCKET_NAME>",
       "Condition": {
         "StringEquals": {
+          # highlight-next-line
           "aws:SourceArn": "arn:aws:cur:us-east-1:<AWS_ACCOUNT_ID>:definition/*",
+          # highlight-next-line
           "aws:SourceAccount": "<AWS_ACCOUNT_ID>"
         }
       }
@@ -96,10 +65,13 @@ Where `policy.json` content [should be](https://docs.aws.amazon.com/cur/latest/u
         "Service": "billingreports.amazonaws.com"
       },
       "Action": "s3:PutObject",
+      # highlight-next-line
       "Resource": "arn:aws:s3:::<AWS_BUCKET_NAME>/*",
       "Condition": {
         "StringEquals": {
+          # highlight-next-line
           "aws:SourceArn": "arn:aws:cur:us-east-1:<AWS_ACCOUNT_ID>:definition/*",
+          # highlight-next-line
           "aws:SourceAccount": "<AWS_ACCOUNT_ID>"
         }
       }
@@ -110,7 +82,43 @@ Where `policy.json` content [should be](https://docs.aws.amazon.com/cur/latest/u
 
 </details>
 
-4. Wait for up to 24 hours, until the first report will be generated.
+3. Add the [bucket policy](https://docs.aws.amazon.com/AmazonS3/latest/userguide/add-bucket-policy.html) you created in step two to the bucket you created in step one (the following command assumes that the `policy.json` is in your current working directory, and should be updated with the correct file location if saved elsewhere). This policy will allow AWS to write the cost and usage report (CUR) (replace `<AWS_BUCKET_NAME>` with the name of the bucket you created in step one) to your bucket:
+
+```bash showLineNumbers
+aws s3api put-bucket-policy --bucket <AWS_BUCKET_NAME> --policy file://policy.json
+```
+
+4. Create a file locally called `report-definition.json`. Copy and paste the following recommended content into this file and save it, ensuring that you update `<AWS_BUCKET_NAME>` and `<AWS_REGION>` with the name of the bucket you created in step one and your intended AWS region.
+
+<details>
+  <summary> report-definition.json </summary>
+
+```json showLineNumbers
+{
+  "ReportName": "aws-monthly-cost-report-for-port",
+  "TimeUnit": "MONTHLY",
+  "Format": "textORcsv",
+  "Compression": "GZIP",
+  "AdditionalSchemaElements": ["RESOURCES"],
+  # highlight-next-line
+  "S3Bucket": "<AWS_BUCKET_NAME>",
+  "S3Prefix": "cost-reports",
+  # highlight-next-line
+  "S3Region": "<AWS_REGION>",
+  "RefreshClosedReports": true,
+  "ReportVersioning": "OVERWRITE_REPORT"
+}
+```
+
+</details>
+
+5. [Create an AWS Cost and Usage Report](https://docs.aws.amazon.com/cur/latest/userguide/cur-create.html) for generating cost reports on a daily basis, that will be saved in the bucket (the following command assumes that the `report-definition.json` is in your current working directory, and should be updated with the correct file location if saved elsewhere).
+
+```bash showLineNumbers
+aws cur put-report-definition --report-definition file://report-definition.json
+```
+
+6. Wait for up to 24 hours, until the first report will be generated.
 
 ```bash showLineNumbers
 aws s3 ls s3://port-aws-exporter-config/cost-reports/aws-monthly-cost-report-for-port/
