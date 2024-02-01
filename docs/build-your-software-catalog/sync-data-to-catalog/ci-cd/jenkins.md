@@ -5,6 +5,8 @@ sidebar_position: 1
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
+import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
+import DockerParameters from "./\_jenkins-docker-parameters.mdx"
 import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
 
 # Jenkins
@@ -87,16 +89,7 @@ If you want the integration to update Port in real time using webhooks you shoul
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
-| Parameter                                     | Description                                                                                                        | Required |
-| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
-| `OCEAN__INTEGRATION__CONFIG__JENKINS_USER`    | The Jenkins Username                                                                                               | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__JENKINS_TOKEN`   | The Jenkins Token                                                                                                  | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__JENKINS_HOST`    | The Jenkins Host                                                                                            | ✅       |
-| `OCEAN__INITIALIZE_PORT_RESOURCES`            | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
-| `OCEAN__INTEGRATION__IDENTIFIER`              | Provide a unique identifier for your integration. If not provided, the default identifier will be used.            | ❌       |
-| `OCEAN__PORT__CLIENT_ID`                      | Your port client id ([Get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))                                                                                               | ✅       |
-| `OCEAN__PORT__CLIENT_SECRET`                  | Your port client secret ([Get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))                                                                                        | ✅       |
-
+<DockerParameters />
 <br/>
 
 Here is an example for `jenkins-integration.yml` workflow file:
@@ -123,14 +116,14 @@ jobs:
           image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
 
           docker run -i --rm --platform=linux/amd64 \
-          -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
-          -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-          -e OCEAN__INTEGRATION__CONFIG__JENKINS_USER=${{ secrets.OCEAN__INTEGRATION__CONFIG__JENKINS_USER }} \
-          -e OCEAN__INTEGRATION__CONFIG__JENKINS_TOKEN=${{ secrets.OCEAN__INTEGRATION__CONFIG__JENKINS_TOKEN }} \
-          -e OCEAN__INTEGRATION__CONFIG__JENKINS_HOST=${{ secrets.OCEAN__INTEGRATION__CONFIG__JENKINS_HOST }} \
-          -e OCEAN__PORT__CLIENT_ID=${{ secrets.OCEAN__PORT__CLIENT_ID }} \
-          -e OCEAN__PORT__CLIENT_SECRET=${{ secrets.OCEAN__PORT__CLIENT_SECRET }} \
-          $image_name
+            -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+            -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+            -e OCEAN__INTEGRATION__CONFIG__JENKINS_USER=${{ secrets.OCEAN__INTEGRATION__CONFIG__JENKINS_USER }} \
+            -e OCEAN__INTEGRATION__CONFIG__JENKINS_TOKEN=${{ secrets.OCEAN__INTEGRATION__CONFIG__JENKINS_TOKEN }} \
+            -e OCEAN__INTEGRATION__CONFIG__JENKINS_HOST=${{ secrets.OCEAN__INTEGRATION__CONFIG__JENKINS_HOST }} \
+            -e OCEAN__PORT__CLIENT_ID=${{ secrets.OCEAN__PORT__CLIENT_ID }} \
+            -e OCEAN__PORT__CLIENT_SECRET=${{ secrets.OCEAN__PORT__CLIENT_SECRET }} \
+            $image_name
 
           exit $?
 ```
@@ -150,17 +143,7 @@ the [Real Time & Always On](?installation-methods=real-time-always-on#installati
 Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
 of `Secret Text` type:
 
-| Parameter                                     | Description                                                                                                                                                      | Required |
-| --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| `OCEAN__INTEGRATION__CONFIG__JENKINS_USER`    | The Jenkins Username                                                                              | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__JENKINS_TOKEN`   | The Jenkins Token                                                                                 | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__JENKINS_HOST`    | The Jenkins Host                                                                                          | ✅       |
-| `OCEAN__INITIALIZE_PORT_RESOURCES`            | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
-| `OCEAN__INTEGRATION__IDENTIFIER`              | Provide a unique identifier for your integration. If not provided, the default identifier will be used.        | ❌       |
-| `OCEAN__PORT__CLIENT_ID`                      | Your port client id ([Get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))     | ✅       |
-| `OCEAN__PORT__CLIENT_SECRET`                  | Your port client secret ([Get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)) | ✅       |
-| `OCEAN__PORT__BASE_URL`                       | Your port base url, relevant only if not using the default port app                                                                                              | ❌       |
-
+<DockerParameters />
 <br/>
 
 Here is an example for `Jenkinsfile` groovy pipeline file:
@@ -206,6 +189,50 @@ pipeline {
 ```
 
   </TabItem>
+<TabItem value="azure" label="Azure Devops">
+<AzurePremise name="Jenkins" />
+
+<DockerParameters />
+<br/>
+
+Here is an example for `jenkins-integration.yml` pipeline file:
+
+```yaml showLineNumbers
+trigger:
+- main
+
+pool:
+  vmImage: "ubuntu-latest"
+
+variables:
+  - group: port-ocean-credentials
+
+
+steps:
+- script: |
+    # Set Docker image and run the container
+    integration_type="jenkins"
+    version="latest"
+
+    image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
+
+    docker run -i --rm \
+        -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+        -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+        -e OCEAN__INTEGRATION__CONFIG__JENKINS_USER=${OCEAN__INTEGRATION__CONFIG__JENKINS_USER} \
+        -e OCEAN__INTEGRATION__CONFIG__JENKINS_TOKEN=${OCEAN__INTEGRATION__CONFIG__JENKINS_TOKEN} \
+        -e OCEAN__INTEGRATION__CONFIG__JENKINS_HOST=${OCEAN__INTEGRATION__CONFIG__JENKINS_HOST} \
+        -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \
+        -e OCEAN__PORT__CLIENT_SECRET=${OCEAN__PORT__CLIENT_SECRET} \
+        $image_name
+
+    exit $?
+  displayName: 'Ingest Data into Port'
+
+```
+
+  </TabItem>
+
   </Tabs>
 </TabItem>
 
