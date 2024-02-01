@@ -303,6 +303,30 @@ The following resources can be used to map data from Dynatrace, it is possible t
   Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
   :::
 
+## Configuring real-time updates
+
+Currently, the Dynatrace API lacks support for programmatic webhook creation. To set up a webhook configuration in Dynatrace for sending alert notifications to the Ocean integration, follow these steps:
+
+### Prerequisite
+
+Prepare a webhook `URL` using this format: `{app_host}/integration/events`. The `app_host` parameter should match the ingress or external load balancer where the integration will be deployed. For example, if your ingress or load balancer exposes the Dynatrace Ocean integration at `https://myservice.domain.com`, your webhook `URL` should be `https://myservice.domain.com/integration/events`.
+
+### Create a webhook in Dynatrace
+
+1. Go to Dynatrace;
+2. Go to **Settings** > **Integration** > **Problem notifications**.;
+3. Select **Add notification**;
+4. Select **Custom integration** from the available notification types;
+5. Configure the notification using the following details;
+   1. `Enabled` - ensure the notification is enabled;
+   2. `Display name` - use a meaningful name such as Port Ocean Webhook;
+   3. `Webhook URL` - enter the value of the `URL` you created above.;
+   4. Enable **Call webhook is new events merge into existing problems**;
+   5. `Custom payload` - You can leave the default as is or customize to your taste, the only important thing is the `ProblemID` key. The webhook integration will not work without it.
+   6. `Alerting profile` - select the corresponding alerting profile
+   7. Leave the rest of the fields as is;
+6. Click **Save changes**
+
 ### Ingest data into Port
 
 To ingest Dynatrace objects using the [integration configuration](#configuration-structure), you can follow the steps below:
