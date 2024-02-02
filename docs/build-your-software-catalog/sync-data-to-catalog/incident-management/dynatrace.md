@@ -25,14 +25,14 @@ Set them as you wish in the script below, then copy it and run it in your termin
 
 | Parameter                             | Description                                                                                                   | Required |
 | ------------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------- |
-| `port.clientId`                       | Your port client id                                                                                           | ✅       |
-| `port.clientSecret`                   | Your port client secret                                                                                       | ✅       |
+| `port.clientId`                       | Your port [client id](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)                                                                                           | ✅       |
+| `port.clientSecret`                   | Your port [client secret](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)                                                                                       | ✅       |
 | `port.baseUrl`                        | Your port base url, relevant only if not using the default port app                                           | ❌       |
 | `integration.identifier`              | Change the identifier to describe your integration                                                            | ✅       |
 | `integration.type`                    | The integration type                                                                                          | ✅       |
 | `integration.eventListener.type`      | The event listener type                                                                                       | ✅       |
-| `integration.secrets.dynatraceApiKey` | API Key for Dynatrace instance token                                                                          | ✅       |
-| `integration.config.dynatraceHostUrl` | The URL to the Dynatrace instace url                                                                          | ✅       |
+| `integration.secrets.dynatraceApiKey` | API Key for Dynatrace instance                                                                          | ✅       |
+| `integration.config.dynatraceHostUrl` | The URL to the Dynatrace instance                                                                          | ✅       |
 | `scheduledResyncInterval`             | The number of minutes between each resync                                                                     | ❌       |
 | `initializePortResources`             | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
 
@@ -309,7 +309,7 @@ Currently, the Dynatrace API lacks support for programmatic webhook creation. To
 
 ### Prerequisite
 
-Prepare a webhook `URL` using this format: `{app_host}/integration/events`. The `app_host` parameter should match the ingress or external load balancer where the integration will be deployed. For example, if your ingress or load balancer exposes the Dynatrace Ocean integration at `https://myservice.domain.com`, your webhook `URL` should be `https://myservice.domain.com/integration/events`.
+Prepare a webhook `URL` using this format: `{app_host}/integration/webhook`. The `app_host` parameter should match the ingress or external load balancer where the integration will be deployed. For example, if your ingress or load balancer exposes the Dynatrace Ocean integration at `https://myservice.domain.com`, your webhook `URL` should be `https://myservice.domain.com/integration/webhook`.
 
 ### Create a webhook in Dynatrace
 
@@ -322,7 +322,15 @@ Prepare a webhook `URL` using this format: `{app_host}/integration/events`. The 
    2. `Display name` - use a meaningful name such as Port Ocean Webhook;
    3. `Webhook URL` - enter the value of the `URL` you created above.;
    4. Enable **Call webhook is new events merge into existing problems**;
-   5. `Custom payload` - You can leave the default as is or customize to your taste, the only important thing is the `ProblemID` key. The webhook integration will not work without it.
+   5. `Custom payload` - paste the following configuration:
+    ```
+    {
+        "State":"{State}",
+        "ProblemID":"{ProblemID}",
+        "ProblemTitle":"{ProblemTitle}"
+    }
+    ```
+    You can customize to your taste, the only important thing is the `ProblemID` key. The webhook integration will not work without it.
    6. `Alerting profile` - select the corresponding alerting profile
    7. Leave the rest of the fields as is;
 6. Click **Save changes**
