@@ -342,7 +342,7 @@ To ingest Dynatrace objects using the [integration configuration](#configuration
 1. Go to the DevPortal Builder page.
 2. Select a blueprint you want to ingest using Dynatrace.
 3. Choose the **Ingest Data** option from the menu.
-4. Select Dynatrace under the Kubernetes Stack providers category.
+4. Select Dynatrace under the Incident Management category.
 5. Modify the [configuration](#configuration-structure) according to your needs.
 6. Click `Resync`.
 
