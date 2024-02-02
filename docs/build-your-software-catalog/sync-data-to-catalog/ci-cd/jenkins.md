@@ -9,11 +9,11 @@ import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configurat
 
 # Jenkins
 
-Our Jenkins integration allows you to import `jobs` and `builds` from your Jenkins environment into Port, according to your mapping and definitions.
+Our Jenkins integration allows you to import `jobs`, `builds`, and `users` from your Jenkins environment into Port, according to your mapping and definitions.
 
 ## Common use cases
 
-- Map `jobs` and `builds` in your Jenkins environment.
+- Map `jobs`, `builds`, and `users` in your Jenkins environment.
 - Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
 ## Prerequisites
@@ -506,3 +506,59 @@ resources:
 </details>
 
 
+### User
+
+<details>
+<summary>User blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "jenkinsUser",
+  "description": "This blueprint represents a jenkins user",
+  "title": "Jenkins User",
+  "icon": "Jenkins",
+  "schema": {
+      "properties": {
+          "url": {
+              "type": "string",
+              "title": "URL",
+              "format": "url"
+          },
+          "lastUpdateTime": {
+              "type": "string",
+              "format": "date-time",
+              "title": "Last Update",
+              "description": "Last updated timestamp of the user"
+          }
+      },
+      "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {}
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: user
+  selector:
+    query: "true"
+  port:
+    entity:
+      mappings:
+        identifier: .user.id
+        title: .user.fullName
+        blueprint: '"jenkinsUser"'
+        properties:
+          url: .user.absoluteUrl
+          lastUpdateTime: if .lastChange then (.lastChange/1000) else now end | strftime("%Y-%m-%dT%H:%M:%SZ")
+
+```
+
+</details>
