@@ -4,6 +4,8 @@ import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
 import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
 import DockerParameters from "./\_wiz-docker-parameters.mdx"
 import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
+import WizBlueprint from "../webhook/examples/resources/wiz/\_example_wiz_issue_blueprint.mdx";
+import WizConfiguration from "../webhook/examples/resources/wiz/\_example_wiz_issue_webhook_configuration.mdx";
 
 # Wiz
 
@@ -688,4 +690,48 @@ resources:
           url: .url
 ```
 
+</details>
+
+## Alternative installation via webhook
+While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from Wiz. If so, use the following instructions:
+
+<details>
+
+<summary><b>Webhook installation (click to expand)</b></summary>
+
+In this example you are going to create a webhook integration between [Wiz](https://wiz.io/) and Port, which will ingest Wiz issue entities into Port.
+
+<h2>Port configuration</h2>
+
+Create the following blueprint definition:
+
+<details>
+<summary>Wiz issue blueprint</summary>
+
+<WizBlueprint/>
+
+</details>
+
+Create the following webhook configuration [using Port's UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
+
+<details>
+<summary>Wiz issue webhook configuration</summary>
+
+1. **Basic details** tab - fill the following details:
+   1. Title : `Wiz Mapper`;
+   2. Identifier : `wiz_mapper`;
+   3. Description : `A webhook configuration to map Wiz issues to Port`;
+   4. Icon : `Box`;
+2. **Integration configuration** tab - fill the following JQ mapping:
+
+   <WizConfiguration/>
+
+</details>
+
+<h2>Create a webhook in Wiz</h2>
+
+1. Send an email to win@wiz.io requesting for access to the developer documentation or reach out to your Wiz account manager.
+2. Follow this [guide](https://integrate.wiz.io/reference/webhook-tutorial#create-a-custom-webhook) in the documentation to create a webhook.
+
+Done! Any issue created in Wiz will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
 </details>
