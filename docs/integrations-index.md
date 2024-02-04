@@ -150,7 +150,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Wiz
 
-- [Wiz integration and webhook](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/wiz.md)
+- [Wiz integration](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/wiz.md)
 
 ## PagerDuty
 
