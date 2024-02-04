@@ -1,6 +1,7 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
+import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
 import DockerParameters from "./\_opencost-docker-parameters.mdx"
 import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
 
@@ -247,6 +248,50 @@ pipeline {
 ```
 
   </TabItem>
+
+  <TabItem value="azure" label="Azure Devops">
+
+<AzurePremise name="Kubecost" />
+
+<DockerParameters />  
+
+<br/>
+
+Here is an example for `opencost-integration.yml` pipeline file:
+
+```yaml showLineNumbers
+trigger:
+- main
+
+pool:
+  vmImage: "ubuntu-latest"
+
+variables:
+  - group: port-ocean-credentials
+
+
+steps:
+- script: |
+    # Set Docker image and run the container
+    integration_type="opencost"
+    version="latest"
+
+    image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
+
+    docker run -i --rm \
+        -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+        -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+        -e OCEAN__INTEGRATION__CONFIG__OPENCOST_HOST=${OCEAN__INTEGRATION__CONFIG__OPENCOST_HOST} \
+        -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \
+        -e OCEAN__PORT__CLIENT_SECRET=${OCEAN__PORT__CLIENT_SECRET} \
+        $image_name
+
+    exit $?
+  displayName: 'Ingest Data into Port'
+
+```
+</TabItem>
+
   </Tabs>
 
 </TabItem>
