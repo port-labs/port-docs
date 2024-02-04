@@ -1,7 +1,11 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
+import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
+import DockerParameters from "./\_wiz-docker-parameters.mdx"
 import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
+import WizBlueprint from "../webhook/examples/resources/wiz/\_example_wiz_issue_blueprint.mdx";
+import WizConfiguration from "../webhook/examples/resources/wiz/\_example_wiz_issue_webhook_configuration.mdx";
 
 # Wiz
 
@@ -79,17 +83,7 @@ If you want the integration to update Port in real time using webhooks you shoul
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
-| Parameter                                     | Description                                                                                                        | Required |
-| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
-| `OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_ID`     | The Wiz Client ID                                                                                                | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_SECRET` | The Wiz Cient Secret                                                                                             | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__WIZ_API_URL`     | The Wiz API URL.                                                                                                   | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__WIZ_TOKEN_URL`     | The Wiz Token URL.                                                                                               | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__WIZ_WEBHOOK_VERIFICATION_TOKEN` | The token used to verify webhook requests into Port.                                                              | ❌       |
-| `OCEAN__INITIALIZE_PORT_RESOURCES`            | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
-| `OCEAN__INTEGRATION__IDENTIFIER`              | Provide a unique identifier for your integration. If not provided, the default identifier will be used.            | ❌       |
-| `OCEAN__PORT__CLIENT_ID`                      | Your port client id ([Get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))                                                                                               | ✅       |
-| `OCEAN__PORT__CLIENT_SECRET`                  | Your port client secret ([Get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))                                                                                        | ✅       |
+<DockerParameters />
 
 <br/>
 
@@ -145,19 +139,7 @@ the [Real Time & Always On](?installation-methods=real-time-always-on#installati
 Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
 of `Secret Text` type:
 
-| Parameter                                     | Description                                                                                                                                                      | Required |
-| --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| `OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_ID`   | The Wiz Client ID token                                                                                        | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_SECRET` | The Wiz Client Secret                                                                                        | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__WIZ_API_URL`       | The Wiz API URL.                                                                                                 | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__WIZ_TOKEN_URL`     | The Wiz Token URL.                                                                                               | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__WIZ_WEBHOOK_VERIFICATION_TOKEN` | The token used to verify webhook requests into Port.                                                   | ❌       |
-| `OCEAN__INITIALIZE_PORT_RESOURCES`            | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
-| `OCEAN__INTEGRATION__IDENTIFIER`              | Provide a unique identifier for your integration. If not provided, the default identifier will be used.        | ❌       |
-| `OCEAN__PORT__CLIENT_ID`                      | Your port client id ([Get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))     | ✅       |
-| `OCEAN__PORT__CLIENT_SECRET`                  | Your port client secret ([Get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)) | ✅       |
-| `OCEAN__PORT__BASE_URL`                       | Your port base url, relevant only if not using the default port app                                                                                              | ❌       |
-
+<DockerParameters />
 <br/>
 
 Here is an example for `Jenkinsfile` groovy pipeline file:
@@ -205,6 +187,53 @@ pipeline {
 ```
 
   </TabItem>
+
+<TabItem value="azure" label="Azure Devops">
+
+<AzurePremise name="Wiz" />
+
+<DockerParameters />
+
+<br/>
+
+Here is an example for `wiz-integration.yml` pipeline file:
+
+```yaml showLineNumbers
+trigger:
+- main
+
+pool:
+  vmImage: "ubuntu-latest"
+
+variables:
+  - group: port-ocean-credentials
+
+
+steps:
+- script: |
+    # Set Docker image and run the container
+    integration_type="wiz"
+    version="latest"
+
+    image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
+
+    docker run -i --rm \
+        -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+        -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+        -e OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_ID=${OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_ID} \
+        -e OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_SECRET=${OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_SECRET} \
+        -e OCEAN__INTEGRATION__CONFIG__WIZ_API_URL=${OCEAN__INTEGRATION__CONFIG__WIZ_API_URL} \
+        -e OCEAN__INTEGRATION__CONFIG__WIZ_TOKEN_URL=${OCEAN__INTEGRATION__CONFIG__WIZ_TOKEN_URL} \
+        -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \
+        -e OCEAN__PORT__CLIENT_SECRET=${OCEAN__PORT__CLIENT_SECRET} \
+        $image_name
+
+    exit $?
+  displayName: 'Ingest Data into Port'
+
+```
+</TabItem>
+
   </Tabs>
 </TabItem>
 
@@ -661,4 +690,48 @@ resources:
           url: .url
 ```
 
+</details>
+
+## Alternative installation via webhook
+While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from Wiz. If so, use the following instructions:
+
+<details>
+
+<summary><b>Webhook installation (click to expand)</b></summary>
+
+In this example you are going to create a webhook integration between [Wiz](https://wiz.io/) and Port, which will ingest Wiz issue entities into Port.
+
+<h2>Port configuration</h2>
+
+Create the following blueprint definition:
+
+<details>
+<summary>Wiz issue blueprint</summary>
+
+<WizBlueprint/>
+
+</details>
+
+Create the following webhook configuration [using Port's UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
+
+<details>
+<summary>Wiz issue webhook configuration</summary>
+
+1. **Basic details** tab - fill the following details:
+   1. Title : `Wiz Mapper`;
+   2. Identifier : `wiz_mapper`;
+   3. Description : `A webhook configuration to map Wiz issues to Port`;
+   4. Icon : `Box`;
+2. **Integration configuration** tab - fill the following JQ mapping:
+
+   <WizConfiguration/>
+
+</details>
+
+<h2>Create a webhook in Wiz</h2>
+
+1. Send an email to win@wiz.io requesting for access to the developer documentation or reach out to your Wiz account manager.
+2. Follow this [guide](https://integrate.wiz.io/reference/webhook-tutorial#create-a-custom-webhook) in the documentation to create a webhook.
+
+Done! Any issue created in Wiz will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
 </details>
