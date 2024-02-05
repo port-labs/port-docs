@@ -1025,7 +1025,7 @@ Create the following webhook configuration [using Port UI](/build-your-software-
 1. **Basic details** tab - fill the following details:
    1. Title : `PagerDuty Mapper`;
    2. Identifier : `pagerduty_mapper`;
-   3. Description : `A webhook configuration to map PagerDuty services and it's related incidents to Port`;
+   3. Description : `A webhook configuration to map PagerDuty services and its related incidents to Port`;
    4. Icon : `Pagerduty`;
 2. **Integration configuration** tab - fill the following JQ mapping:
 

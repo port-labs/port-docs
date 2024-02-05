@@ -60,7 +60,7 @@ The creation was done using the `create_missing_related_entities=true` flag in t
 
 ## Basic get example
 
-The following example gets the `new-cijob-run` entity from the previous example, this can be useful if your CI process creates a build artifact and then references some of it's data (for example, the run link of the latest `ciJob`).
+The following example gets the `new-cijob-run` entity from the previous example, this can be useful if your CI process creates a build artifact and then references some of its data (for example, the run link of the latest `ciJob`).
 
 Add the following code to your Jenkins build:
 
