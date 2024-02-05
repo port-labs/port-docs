@@ -567,7 +567,7 @@ action = Action(
 
 ### Hiding property based on the executing user's roles
 
-In this example, the `visible` checks if the executing user has the `"admin"` role, and if they don't have this role than the advanced option will be hidden for them. The default value will still be filled in and sent to the backend:
+In this example, the `visible` checks if the executing user has the `"admin"` role, and if they don't have this role then the advanced option will be hidden for them. The default value will still be filled in and sent to the backend:
 
 <Tabs
 defaultValue="api"
