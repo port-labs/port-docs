@@ -118,7 +118,7 @@ aws s3api put-bucket-policy --bucket <AWS_BUCKET_NAME> --policy file://policy.js
 aws cur put-report-definition --report-definition file://report-definition.json
 ```
 
-6. Wait for up to 24 hours, until the first report will be generated. Run the following AWS CLI command to check if your bucket has created the CUR, ensuring to update `AWS_BUCKET_NAME` in the command below with the name of the bucket you created in step one:
+6. Wait for up to 24 hours, until the first report will be generated. Run the following AWS CLI command to check if the CUR has been created and added to your bucket, ensuring to update `AWS_BUCKET_NAME` in the command below with the name of the bucket you created in step one:
 
 ```bash
 aws s3 ls s3://AWS_BUCKET_NAME/cost-reports/aws-monthly-cost-report-for-port/
