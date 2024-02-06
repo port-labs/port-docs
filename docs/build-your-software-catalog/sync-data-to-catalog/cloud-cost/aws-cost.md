@@ -118,15 +118,17 @@ aws s3api put-bucket-policy --bucket <AWS_BUCKET_NAME> --policy file://policy.js
 aws cur put-report-definition --report-definition file://report-definition.json
 ```
 
-6. Wait for up to 24 hours, until the first report will be generated.
+6. Wait for up to 24 hours, until the first report will be generated. Run the following AWS CLI command to check if the CUR has been created and added to your bucket, ensuring to update `AWS_BUCKET_NAME` in the command below with the name of the bucket you created in step one:
 
 ```bash
-aws s3 ls s3://port-aws-exporter-config/cost-reports/aws-monthly-cost-report-for-port/
+aws s3 ls s3://AWS_BUCKET_NAME/cost-reports/aws-monthly-cost-report-for-port/
 ```
+
+If the command above returns at least one directory named with the date range of the day following CUR creation, the report is ready and can be ingested into Port.
 
 ### Port
 
-1. Create the `awsCost` blueprint:
+1. Create the `awsCost` blueprint (the blueprint below is an example that can be modified according to your needs):
 
 <details>
   <summary> AWS Cost Blueprint </summary>
@@ -210,13 +212,20 @@ Environment variables of the exporter for all the setup options:
 
 #### Local
 
-1. Make sure that you have Python installed (tested on python 3.11)
+1. Make sure that you have Python installed and ensure the Python version is at least Python 3.11:
 
 ```bash
 python3 --version
 ```
 
-2. Create a new virtual environment and install requirements
+2. Clone the [port-aws-cost-exporter](https://github.com/port-labs/port-aws-cost-exporter) repository according to your preferred cloning method (the example below uses the SSH cloning method), then switch your working directory to this cloned repository.
+
+```bash showLineNumbers
+git clone git@github.com:port-labs/port-aws-cost-exporter.git
+cd port-aws-cost-exporter
+```
+
+3. Create a new virtual environment and install requirements
 
 ```bash showLineNumbers
 python3 -m venv venv
@@ -224,7 +233,7 @@ source venv/bin/activate
 pip3 install -r requirements.txt
 ```
 
-3. Set the required environment variables and run the exporter
+4. Set the required environment variables and run the exporter
 
 ```bash showLineNumbers
 export PORT_CLIENT_ID=<PORT_CLIENT_ID>
@@ -266,7 +275,7 @@ docker logs -f getport.io-port-aws-cost-exporter
 Required:
 
 - `AWS_ACCESS_KEY_ID`
-- `AWS_ACCESS_KEY_ID`
+- `AWS_SECRET_ACCESS_KEY`
 - `PORT_CLIENT_ID`
 - `PORT_CLIENT_SECRET`
 
@@ -280,7 +289,7 @@ Required for scheduling:
   <summary> GitHub Workflow run.yml </summary>
 
 ```yaml showLineNumbers
-name: run
+name: portAwsCostExporter
 
 on:
   schedule:
