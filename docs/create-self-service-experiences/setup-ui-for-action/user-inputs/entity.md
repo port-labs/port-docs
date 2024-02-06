@@ -36,9 +36,8 @@ The entity is represented by the unique `entity` _format_ and the `blueprint` ke
     // highlight-start
     "type": "string",
     "format": "entity",
-    "blueprint": "myBlueprint",
+    "blueprint": "myBlueprint"
     // highlight-end
-    "default": "My default"
   }
 }
 ```
@@ -104,7 +103,6 @@ The entity is represented by the unique `entity` _format_ and the `blueprint` ke
 
 <Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Enum", value: "enum"},
 {label: "Array", value: "array"}
 ]}>
 
@@ -119,34 +117,8 @@ resource "port_action" "myAction" {
       "myEntityInput" = {
         title       = "My entity input"
         description = "My entity input"
-        required    = false
         format      = "entity"
         blueprint   = "myBlueprint"
-      }
-    }
-  }
-  # highlight-end
-}
-```
-
-</TabItem>
-
-<TabItem value="enum">
-
-```hcl showLineNumbers
-
-resource "port_action" "myAction" {
-  # ...action properties
-  # highlight-start
-  user_properties = {
-    string_props = {
-      "myEntityInput" = {
-        title       = "My entity input"
-        description = "My entity input"
-        required    = false
-        format      = "entity"
-        blueprint   = "myBlueprint"
-        enum        = ["My default", "My other default"]
       }
     }
   }

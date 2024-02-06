@@ -5,6 +5,8 @@ sidebar_position: 2
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
+import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
+import DockerParameters from "./\_opsgenie_docker_params.mdx"
 import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
 import OpsGenieAlertBlueprint from "../webhook/examples/resources/opsgenie/\_example_opsgenie_alert_blueprint.mdx";
 import OpsGenieAlertConfiguration from "../webhook/examples/resources/opsgenie/\_example_opsgenie_alert_configuration.mdx";
@@ -162,15 +164,7 @@ If you want the integration to update Port in real time using webhooks you shoul
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
-| Parameter                               | Description                                                                                                        | Required |
-| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
-| `OCEAN__INTEGRATION__CONFIG__API_TOKEN` | The Opsgenie API token                                                                                             | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__API_URL`   | The Opsgenie API URL                                                                                               | ✅       |
-| `OCEAN__INITIALIZE_PORT_RESOURCES`      | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
-| `OCEAN__INTEGRATION__IDENTIFIER`        | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
-| `OCEAN__PORT__CLIENT_ID`                | Your port client id                                                                                                | ✅       |
-| `OCEAN__PORT__CLIENT_SECRET`            | Your port client secret                                                                                            | ✅       |
-| `OCEAN__PORT__BASE_URL`                 | Your port base url, relevant only if not using the default port app                                                | ❌       |
+<DockerParameters />
 
 <br/>
 
@@ -224,15 +218,7 @@ the [Real Time & Always On](?installation-methods=real-time-always-on#installati
 Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
 of `Secret Text` type:
 
-| Parameter                               | Description                                                                                                        | Required |
-| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
-| `OCEAN__INTEGRATION__CONFIG__API_TOKEN` | The Opsgenie API token                                                                                             | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__API_URL`   | The Opsgenie API URL                                                                                               | ✅       |
-| `OCEAN__INITIALIZE_PORT_RESOURCES`      | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
-| `OCEAN__INTEGRATION__IDENTIFIER`        | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
-| `OCEAN__PORT__CLIENT_ID`                | Your port client id                                                                                                | ✅       |
-| `OCEAN__PORT__CLIENT_SECRET`            | Your port client secret                                                                                            | ✅       |
-| `OCEAN__PORT__BASE_URL`                 | Your port base url, relevant only if not using the default port app                                                | ❌       |
+<DockerParameters />
 
 <br/>
 
@@ -277,6 +263,51 @@ pipeline {
 ```
 
   </TabItem>
+
+  <TabItem value="azure" label="Azure Devops">
+<AzurePremise name="Opsgenie" />
+
+<DockerParameters />
+
+<br/>
+
+Here is an example for `opsgenie-integration.yml` pipeline file:
+
+```yaml showLineNumbers
+trigger:
+- main
+
+pool:
+  vmImage: "ubuntu-latest"
+
+variables:
+  - group: port-ocean-credentials
+
+
+steps:
+- script: |
+    # Set Docker image and run the container
+    integration_type="opsgenie"
+    version="latest"
+
+    image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
+
+    docker run -i --rm --platform=linux/amd64 \
+      -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+      -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+      -e OCEAN__INTEGRATION__CONFIG__API_TOKEN=${OCEAN__INTEGRATION__CONFIG__API_TOKEN} \
+      -e OCEAN__INTEGRATION__CONFIG__API_URL=${OCEAN__INTEGRATION__CONFIG__API_URL} \
+      -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \
+      -e OCEAN__PORT__CLIENT_SECRET=${OCEAN__PORT__CLIENT_SECRET} \
+      $image_name
+
+    exit $?
+  displayName: 'Ingest Data into Port'
+
+```
+
+  </TabItem>
+
   </Tabs>
 </TabItem>
 

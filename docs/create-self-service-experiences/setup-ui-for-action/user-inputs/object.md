@@ -115,7 +115,6 @@ resource "port_action" "myAction" {
       "myObjectInput" = {
         title       = "My object input"
         description = "My object input"
-        required    = false
         default     = jsonencode({ "myKey" = "myValue" })
       }
     }
@@ -138,7 +137,6 @@ resource "port_action" "myAction" {
       "myObjectArrayInput" = {
         title       = "My object array input"
         description = "My object array input"
-        required    = false
         object_items = {}
       }
     }

@@ -87,7 +87,6 @@ resource "port_action" "myAction" {
     string_props = {
       myDatetimeProp = {
         title    = "My datetime"
-        required = false
         format   = "date-time"
       }
     }
@@ -108,7 +107,6 @@ resource "port_action" "myAction" {
     array_props = {
       myArrayDatetimeProp = {
         title    = "My array datetime"
-        required = false
         string_items = {
           format = "date-time"
         }

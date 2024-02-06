@@ -1,6 +1,7 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
+import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
 import HelmParameters from "../templates/\_ocean-advanced-parameters-helm.mdx"
 import DockerParameters from "./\_jira_one_time_docker_parameters.mdx"
 import AdvancedConfig from '../../../generalTemplates/\_ocean_advanced_configuration_note.md'
@@ -272,6 +273,52 @@ pipeline {
 ```
 
   </TabItem>
+
+  <TabItem value="azure" label="Azure Devops">
+<AzurePremise name="Jira" />
+
+<DockerParameters />
+
+<br/>
+
+Here is an example for `jira-integration.yml` pipeline file:
+
+```yaml showLineNumbers
+trigger:
+- main
+
+pool:
+  vmImage: "ubuntu-latest"
+
+variables:
+  - group: port-ocean-credentials
+
+
+steps:
+- script: |
+    # Set Docker image and run the container
+    integration_type="jira"
+    version="latest"
+
+    image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
+
+    docker run -i --rm \
+      -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+      -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+      -e OCEAN__INTEGRATION__CONFIG__JIRA_HOST=${OCEAN__INTEGRATION__CONFIG__JIRA_HOST} \
+      -e OCEAN__INTEGRATION__CONFIG__ATLASSIAN_USER_EMAIL=${OCEAN__INTEGRATION__CONFIG__ATLASSIAN_USER_EMAIL} \
+      -e OCEAN__INTEGRATION__CONFIG__ATLASSIAN_USER_TOKEN=${OCEAN__INTEGRATION__CONFIG__ATLASSIAN_USER_TOKEN} \
+      -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \
+      -e OCEAN__PORT__CLIENT_SECRET=${OCEAN__PORT__CLIENT_SECRET} \
+      $image_name
+
+    exit $?
+  displayName: 'Ingest Data into Port'
+
+```
+
+  </TabItem>
+
   </Tabs>
 
 </TabItem>
@@ -304,6 +351,13 @@ resources:
 ```
 
 The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Jira's API events.
+
+:::info Additional parameters
+In the example above, two additional parameters are used:  
+`createMissingRelatedEntities` - used to enable the creation of missing related entities in Port. This is useful when you want to create an entity and its related entities in one call, or if you want to create an entity whose related entity does not exist yet.
+
+`deleteDependentEntities` - used to enable deletion of dependent Port entities. This is useful when you have two blueprints with a required relation, and the target entity in the relation should be deleted. In this scenario, the delete operation will fail if this parameter is set to `false`. If set to `true`, the source entity will be deleted as well.
+:::
 
 ### Configuration structure
 
