@@ -413,7 +413,59 @@ To ingest PagerDuty objects using the [integration configuration](#configuration
 
 ## Examples
 
-Examples of blueprints and the relevant integration configurations:
+### Connect your services to their corresponding Pagerduty services
+
+The following steps demonstrate how to relate each service in your catalog to its relevant PagerDuty service, using your desired convention.
+
+First, we will need to create a [relation](/build-your-software-catalog/define-your-data-model/relate-blueprints/#what-is-a-relation) between our services and the corresponding Pagerduty services:
+
+1. Go to your [Builder](https://app.getport.io/dev-portal/data-model) page, choose the `Service` blueprint, and click on `New relation`:
+
+<img src='/img/guides/serviceCreateRelation.png' width='40%' />
+
+<br/><br/>
+
+2. Fill out the form like this, then click `Create`:
+
+<img src='/img/guides/prodReadinessRelationCreation.png' width='50%' />
+
+<br/><br/>
+
+Now we need to assign the relevant Pagerduty service to each of our services. This can be done by adding some mapping logic. Go to your [data sources page](https://app.getport.io/dev-portal/data-sources), and click on your Pagerduty integration:
+
+<img src='/img/guides/pdDataSources.png' width='60%' />
+
+<br/><br/>
+
+Add the following YAML block to the mapping under the `resources` key, then click `save & resync`:
+
+<details>
+<summary>Relation mapping (click to expand)</summary>
+
+```yaml showLineNumbers
+- kind: services
+  selector:
+    query: "true"
+  port:
+    entity:
+      mappings:
+        identifier: .name | gsub("[^a-zA-Z0-9@_.:/=-]"; "-") | tostring
+        title: .name
+        blueprint: '"service"'
+        properties: {}
+        relations:
+          pagerduty_service: .id
+```
+
+</details>
+
+What we just did was map the `Pagerduty service` to the relation between it and our `services`.  
+The convention we used is:  
+"Pagerduty service name" = "Service identifier".  
+
+Now, if our `service` identifier is equal to the `Pagerduty service's` name, the Pagerduty service will automatically be assigned to that service.
+
+This is just one example of a convention, you can choose other criteria by which to relate your services to their Pagerduty services.
 
 ### Schedule
 
