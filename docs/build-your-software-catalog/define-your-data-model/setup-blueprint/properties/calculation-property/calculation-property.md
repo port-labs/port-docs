@@ -394,10 +394,4 @@ Parameter contains special characters (for example: `-`) or starts with a digit 
 
 ## Examples
 
-Refer to the calculation property [examples](./examples.md) page
-
-## Pitfalls
-
-Calculation properties JQ parsing is based on the [jqts](https://github.com/kentdotn/jqts) Node library and supports the JQ operators provided by jqts, this means some functionality that is provided by the `jq` command is not supported in calculation properties.
-
-For a full list of methods, operators and syntax supported by calculation properties, look [here](https://github.com/kentdotn/jqts#supported-filters).
+Refer to the calculation property [examples](./examples.md) page.

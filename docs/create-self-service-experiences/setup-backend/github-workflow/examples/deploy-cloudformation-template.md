@@ -7,23 +7,11 @@ import TabItem from "@theme/TabItem"
 
 # Deploy AWS resources using AWS CloudFormation
 
-This example demonstrates how to deploy an [AWS CloudFormation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html) template in your AWS account via Port Actions.
+This example demonstrates how to deploy an AWS resource using an [AWS CloudFormation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html) template, via Port Actions.
 
-In this example we are using an AWS managed GitHub Action called [aws-actions/aws-cloudformation-github-deploy](https://github.com/aws-actions/aws-cloudformation-github-deploy).
+We will use an AWS managed GitHub Action called [aws-actions/aws-cloudformation-github-deploy](https://github.com/aws-actions/aws-cloudformation-github-deploy).
 
-<Tabs groupId="AWS Resource">
-  <TabItem value="ec2" label="EC2 Instance">
-  ## Example - deploy ec2 instance
-  </TabItem>
-  <TabItem value="s3" label="S3 Bucket">
-  ## Example - create s3 bucket
-  </TabItem>
-  <TabItem value="rds" label="RDS Instance">
-  ## Example - deploy rds instance
-  </TabItem>
-</Tabs>
-
-Follow these steps to get started with the AWS CloudFormation template:
+## Steps 
 
 1. Create the following GitHub action secrets:
 
@@ -35,12 +23,9 @@ Follow these steps to get started with the AWS CloudFormation template:
 
 2. Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new).
 
-3. Create a Port blueprint with the following JSON definition:
+3. Create a Port blueprint with the following JSON definition (choose your desired resource):
 
-:::note
-Keep in mind this can be any blueprint you would like and this is just an example.
-:::
-<Tabs groupId="AWS Resource">
+<Tabs groupId="awsResource" queryString>
 <TabItem value="ec2" label="EC2 Instance">
 
   <details>
@@ -198,12 +183,12 @@ Keep in mind this can be any blueprint you would like and this is just an exampl
 </Tabs>
 <br/>
 
-4. Create Port Action using the following JSON definition:
+1. Create Port Action using the following JSON definition:
 
 :::note
 Please make sure to modify GITHUB_ORG, GITHUB_REPO and GITHUB_WORKFLOW_FILE placeholders to match your environment.
 :::
-<Tabs groupId="AWS Resource">
+<Tabs groupId="awsResource" queryString>
 <TabItem value="ec2" label="EC2 Instance">
 
   <details>
@@ -428,7 +413,7 @@ Please make sure to modify GITHUB_ORG, GITHUB_REPO and GITHUB_WORKFLOW_FILE plac
 <br/>
 
 5. Create a CloudFormation template file in your GitHub repository:
-<Tabs groupId="AWS Resource">
+<Tabs groupId="awsResource" queryString>
 <TabItem value="ec2" label="EC2 Instance">
   <details>
   <summary>AWS CloudFormation Template</summary>
@@ -629,7 +614,7 @@ Outputs:
 :::note
 Please make sure to modify CF_TEMPLATE_FILE placeholder to match the CloudFormation template file path.
 :::
-<Tabs groupId="AWS Resource">
+<Tabs groupId="awsResource" queryString>
 <TabItem value="ec2" label="EC2 Instance">
   <details>
   <summary>GitHub workflow</summary>
@@ -931,7 +916,7 @@ print(f"::set-output name=decrypted_value::{decrypted_property_value}")
 
 7. Trigger the action from the [Self-service](https://app.getport.io/self-serve) tab of your Port application.
 
-## Next steps
+## What's next?
 
 - [Connect Port's AWS exporter](../../../../build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws.md)
   to make sure all of the properties and entities are automatically ingested from AWS.

@@ -6,7 +6,7 @@ import FindCredentials from "@site/docs/build-your-software-catalog/sync-data-to
 
 # ArgoCD
 
-This page will walk you through the installation of the Port execution agent in your Kubernetes cluster using ArgoCD, utilizing it's [Helm Capabilities](https://argo-cd.readthedocs.io/en/stable/user-guide/helm/).
+This page will walk you through the installation of the Port execution agent in your Kubernetes cluster using ArgoCD, utilizing its [Helm Capabilities](https://argo-cd.readthedocs.io/en/stable/user-guide/helm/).
 
 :::info
 - You can observe the Helm chart and the available parameters [here](https://github.com/port-labs/helm-charts/tree/main/charts/port-agent).
