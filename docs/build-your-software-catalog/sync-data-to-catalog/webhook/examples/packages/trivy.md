@@ -11,6 +11,9 @@ import TrivyWebhookConfig from './resources/trivy/\_example_trivy_webhook_config
 
 In this example, you will create a `trivyVulnerability` blueprint that ingests all vulnerabilities in your Trivy result file using a combination of Port's [API](../../../api/api.md) and [webhook functionality](../../webhook.md).
 
+:::info Recommended installation option
+While the script provided in this example facilitates scheduled ingestion of Trivy scan results to Port, we highly recommend that you [use our Trivy Kubernetes exporter](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/trivy) to continuously scan your kubernetes cluster and ingest vulnerabilities to Port in real time. 
+:::
 
 To ingest the scan results to Port, use a script that sends information about the vulnerabilities according to the webhook configuration.
 
@@ -39,6 +42,3 @@ Here is an example snippet showing how to integrate Port's API and webhook with 
 <PythonScript/>
 
 </details>
-
-## Alternative integration using Kubernetes exporter
-While this script works for scheduled ingestion of Trivy scan results to Port, you may prefer to [use our Trivy Kubernetes exporter](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/trivy) to continuously scan your kubernetes cluster and ingest Trivy vulnerabilitiesin to Port in real time. 
