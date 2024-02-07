@@ -260,7 +260,7 @@ The following resources can be used to map data from Dynatrace, it is possible t
       # highlight-start
       selector:
         query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
-        entity_types: ["HOST", "SERVICE"] # An optional list of entity types to filter by. If not specified, defaults to ["APPLICATION", "SERVICE"].
+        entityTypes: ["APPLICATION", "SERVICE"] # An optional list of entity types to filter by. If not specified, defaults to ["APPLICATION", "SERVICE"].
       # highlight-end
       port:
   ```
@@ -272,7 +272,7 @@ The following resources can be used to map data from Dynatrace, it is possible t
     - kind: entity
       selector:
         query: "true"
-        entity_types: ["HOST", "SERVICE"]
+        entityTypes: ["APPLICATION", "SERVICE"]
       port:
         # highlight-start
         entity:
@@ -293,7 +293,7 @@ The following resources can be used to map data from Dynatrace, it is possible t
     - kind: entity # In this instance entity is mapped again with a different filter
       selector:
         query: '.displayName == "MyEntityName"'
-        entity_types: ["HOST", "SERVICE"]
+        entityTypes: ["APPLICATION", "SERVICE"]
       port:
         entity:
           mappings: ...
@@ -407,7 +407,7 @@ resources:
   - kind: entity
     selector:
       query: "true"
-      entity_types: ["HOST", "SERVICE"] # An optional list of entity types to filter by. If not specified, defaults to ["APPLICATION", "SERVICE"].
+      entityTypes: ["APPLICATION", "SERVICE"] # An optional list of entity types to filter by. If not specified, defaults to ["APPLICATION", "SERVICE"].
     port:
       entity:
         mappings:
