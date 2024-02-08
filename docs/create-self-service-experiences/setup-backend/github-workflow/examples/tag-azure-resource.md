@@ -65,7 +65,7 @@ Follow these steps to get started:
    "type": "GITHUB",
     "org": "<GITHUB-ORG>",
     "repo": "<GITHUB-REPO-NAME>",
-    "workflow": "tag-azure-terraform.yml",
+    "workflow": "tag-azure-resource.yml",
     "omitUserInputs": false,
     "omitPayload": false,
     "reportWorkflowStatus": true
@@ -135,7 +135,7 @@ variable "resource_tags" {
 </details>
 
 <br />
-5. Create a workflow file under `.github/workflows/tag-azure-terraform.yml` with the following content:
+5. Create a workflow file under `.github/workflows/tag-azure-resource.yml` with the following content:
 
 <details>
 
@@ -148,7 +148,7 @@ variable "resource_tags" {
   4. `TF_STATE_KEY`: Indicate the key that uniquely identifies the configuration file.
   :::
 
-```yaml showLineNumbers title="tag-azure-terraform.yml"
+```yaml showLineNumbers title="tag-azure-resource.yml"
 name: "Tag Azure Resource"
 
 on: 
@@ -271,7 +271,7 @@ AZURE_CREDENTIALS = {
 }
 ```
 
-5. Create a workflow file under `.github/workflows/tag-azure-cli.yml` with the following content:
+5. Create a workflow file under `.github/workflows/tag-azure-resource.yml` with the following content:
 
 <details>
 
@@ -280,7 +280,7 @@ AZURE_CREDENTIALS = {
   Replace the `RESOURCE_GROUP_NAME` with a resource group from your Azure account. Check this [guide](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal) to find your resource groups. 
   :::
 
-```yaml showLineNumbers title="terraform-azure.yml"
+```yaml showLineNumbers title="tag-azure-resource.yml"
 name: "Tag Azure Resource CLI"
 
 on: 
