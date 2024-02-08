@@ -19,10 +19,10 @@ In the following guide, you are going to create a self-service action in Port th
 Follow these steps to get started:
 
 1. Create the following GitHub Action secrets:
-    1. Create the following Port credentials:
-        1. `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
-        2. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
-    2. `GH_TOKEN` - a [Classic Personal Access Token](https://github.com/settings/tokens) with the following scopes: `repo` and `delete_repo`
+    - Create the following Port credentials:
+        - `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+        - `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+    - `GH_TOKEN` - a [Classic Personal Access Token](https://github.com/settings/tokens) with the following scopes: `repo` and `delete_repo`
 
 <br />
 2. Create a Port action in the [self-service page](https://app.getport.io/self-serve) or with the following JSON definition:
