@@ -334,6 +334,7 @@ The integration configuration determines which resources will be queried from Pa
 :::tip Supported resources
 The following resources can be used to map data from PagerDuty, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
 
+- [`Schedule`](https://developer.pagerduty.com/api-reference/846ecf84402bb-list-schedules)
 - [`Service`](https://developer.pagerduty.com/api-reference/e960cca205c0f-list-services)
 - [`Incident`](https://developer.pagerduty.com/api-reference/9d0b4b12e36f9-list-incidents)
 
@@ -497,7 +498,21 @@ resources:
     "properties": {
       "status": {
         "title": "Status",
-        "type": "string"
+        "type": "string",
+        "enum": [
+          "active",
+          "warning",
+          "critical",
+          "maintenance",
+          "disabled"
+        ],
+        "enumColors": {
+          "active": "green",
+          "warning": "yellow",
+          "critical": "red",
+          "maintenance": "lightGray",
+          "disabled": "darkGray"
+        }
       },
       "url": {
         "title": "URL",
@@ -509,7 +524,7 @@ resources:
         "type": "array",
         "items": {
           "type": "string",
-          "format": "email"
+          "format": "user"
         }
       }
     },
@@ -646,6 +661,164 @@ resources:
 ```
 
 </details>
+
+## Ingesting incident analytics
+To enrich your PagerDuty incident entities with analytics data, follow the steps below:
+
+1. Update the incident blueprint to include an `analytics` property.
+    <details>
+    <summary>Updated incident blueprint</summary>
+
+    ```json showLineNumbers
+    {
+      "identifier": "pagerdutyIncident",
+      "description": "This blueprint represents a PagerDuty incident in our software catalog",
+      "title": "PagerDuty Incident",
+      "icon": "pagerduty",
+      "schema": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Incident Status",
+            "enum": [
+              "triggered",
+              "annotated",
+              "acknowledged",
+              "reassigned",
+              "escalated",
+              "reopened",
+              "resolved"
+            ]
+          },
+          "url": {
+            "type": "string",
+            "format": "url",
+            "title": "Incident URL"
+          },
+          "urgency": {
+            "type": "string",
+            "title": "Incident Urgency",
+            "enum": ["high", "low"]
+          },
+          "responder": {
+            "type": "string",
+            "title": "Assignee"
+          },
+          "escalation_policy": {
+            "type": "string",
+            "title": "Escalation Policy"
+          },
+          "created_at": {
+            "title": "Create At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string",
+            "format": "date-time"
+          },
+          # highlight-start
+          "analytics": {
+            "title": "Analytics",
+            "type": "object"
+          }
+          # highlight-end
+        },
+        "required": []
+      },
+      "mirrorProperties": {},
+      "calculationProperties": {},
+      "relations": {
+        "pagerdutyService": {
+          "title": "PagerDuty Service",
+          "target": "pagerdutyService",
+          "required": false,
+          "many": true
+        }
+      }
+    }
+    ```
+
+    </details>
+
+2. Add `incidentAnalytics` property to the integration `selector` key. When set to `true`, the integration will fetch data from the [PagerDuty Analytics API](https://developer.pagerduty.com/api-reference/328d94baeaa0e-get-raw-data-single-incident) and ingest it to Port. By default, this property is set to `false`.
+
+    ```yaml showLineNumbers
+    resources:
+      - kind: incidents
+        selector:
+          query: "true"
+          # highlight-next-line
+          incidentAnalytics: "true"
+        port:
+          entity:
+            mappings:
+              identifier: .id | tostring
+              title: .title
+              blueprint: '"pagerdutyIncident"'
+              properties:
+                status: .status
+                url: .self
+    ```
+
+3. Establish a mapping between the `analytics` blueprint property and the analytics data response.
+
+    ```yaml showLineNumbers
+    resources:
+      - kind: incidents
+        selector:
+          query: "true"
+          incidentAnalytics: "true"
+        port:
+          entity:
+            mappings:
+              identifier: .id | tostring
+              title: .title
+              blueprint: '"pagerdutyIncident"'
+              properties:
+                status: .status
+                url: .self
+                urgency: .urgency
+                responder: .assignments[0].assignee.summary
+                escalation_policy: .escalation_policy.summary
+                created_at: .created_at
+                updated_at: .updated_at
+                # highlight-next-line
+                analytics: .__analytics
+              relations:
+                pagerdutyService: .service.id
+    ```
+4. Below is the complete integration configuration for enriching the incident blueprint with analytics data.
+
+    <details>
+    <summary>Incident analytics integration configuration</summary>
+
+    ```yaml showLineNumbers
+    resources:
+    - kind: incidents
+      selector:
+        query: "true"
+        incidentAnalytics: "true"
+      port:
+        entity:
+          mappings:
+            identifier: .id | tostring
+            title: .title
+            blueprint: '"pagerdutyIncident"'
+            properties:
+              status: .status
+              url: .self
+              urgency: .urgency
+              responder: .assignments[0].assignee.summary
+              escalation_policy: .escalation_policy.summary
+              created_at: .created_at
+              updated_at: .updated_at
+              analytics: .__analytics
+            relations:
+              pagerdutyService: .service.id
+    ```
+    </details>
 
 ## Let's Test It
 
