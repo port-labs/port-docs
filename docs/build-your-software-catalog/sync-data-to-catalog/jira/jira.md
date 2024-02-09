@@ -75,6 +75,7 @@ helm upgrade --install my-jira-integration port-labs/port-ocean \
 	--set integration.secrets.atlassianUserEmail="string"  \
 	--set integration.secrets.atlassianUserToken="string"
 ```
+
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
 To install the integration using ArgoCD, follow these steps:
@@ -84,6 +85,7 @@ To install the integration using ArgoCD, follow these steps:
 :::note
 Remember to replace the placeholders for `ATLASSIAN_JIRA_HOST` `ATLASSIAN_USER_EMAIL` and `ATLASSIAN_USER_TOKEN`.
 :::
+
 ```yaml showLineNumbers
 initializePortResources: true
 scheduledResyncInterval: 120
@@ -101,11 +103,12 @@ integration:
     atlassianUserToken: ATLASSIAN_USER_TOKEN
   // highlight-end
 ```
+
 <br/>
 
 2. Install the `my-ocean-jira-integration` ArgoCD Application by creating the following `my-ocean-jira-integration.yaml` manifest:
-:::note
-Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+   :::note
+   Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
 
 Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
 :::
@@ -153,9 +156,11 @@ spec:
 <br/>
 
 3. Apply your application manifest with `kubectl`:
+
 ```bash
 kubectl apply -f my-ocean-jira-integration.yaml
 ```
+
 </TabItem>
 </Tabs>
 
@@ -285,7 +290,7 @@ Here is an example for `jira-integration.yml` pipeline file:
 
 ```yaml showLineNumbers
 trigger:
-- main
+  - main
 
 pool:
   vmImage: "ubuntu-latest"
@@ -293,28 +298,26 @@ pool:
 variables:
   - group: port-ocean-credentials
 
-
 steps:
-- script: |
-    # Set Docker image and run the container
-    integration_type="jira"
-    version="latest"
+  - script: |
+      # Set Docker image and run the container
+      integration_type="jira"
+      version="latest"
 
-    image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
+      image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
 
-    docker run -i --rm \
-      -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
-      -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-      -e OCEAN__INTEGRATION__CONFIG__JIRA_HOST=${OCEAN__INTEGRATION__CONFIG__JIRA_HOST} \
-      -e OCEAN__INTEGRATION__CONFIG__ATLASSIAN_USER_EMAIL=${OCEAN__INTEGRATION__CONFIG__ATLASSIAN_USER_EMAIL} \
-      -e OCEAN__INTEGRATION__CONFIG__ATLASSIAN_USER_TOKEN=${OCEAN__INTEGRATION__CONFIG__ATLASSIAN_USER_TOKEN} \
-      -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \
-      -e OCEAN__PORT__CLIENT_SECRET=${OCEAN__PORT__CLIENT_SECRET} \
-      $image_name
+      docker run -i --rm \
+        -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+        -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+        -e OCEAN__INTEGRATION__CONFIG__JIRA_HOST=${OCEAN__INTEGRATION__CONFIG__JIRA_HOST} \
+        -e OCEAN__INTEGRATION__CONFIG__ATLASSIAN_USER_EMAIL=${OCEAN__INTEGRATION__CONFIG__ATLASSIAN_USER_EMAIL} \
+        -e OCEAN__INTEGRATION__CONFIG__ATLASSIAN_USER_TOKEN=${OCEAN__INTEGRATION__CONFIG__ATLASSIAN_USER_TOKEN} \
+        -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \
+        -e OCEAN__PORT__CLIENT_SECRET=${OCEAN__PORT__CLIENT_SECRET} \
+        $image_name
 
-    exit $?
-  displayName: 'Ingest Data into Port'
-
+      exit $?
+    displayName: "Ingest Data into Port"
 ```
 
   </TabItem>
@@ -370,7 +373,7 @@ The following resources can be used to map data from Jira, it is possible to ref
 - [`Issue`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/#api-rest-api-3-search-get)
 - [`Board`](https://developer.atlassian.com/cloud/jira/software/rest/api-group-board/#api-rest-agile-1-0-board-get)
 - [`Sprint`](https://developer.atlassian.com/cloud/jira/software/rest/api-group-board/#api-rest-agile-1-0-board-boardid-sprint-get)
-:::
+  :::
 
 - The root key of the integration configuration is the `resources` key:
 
@@ -411,14 +414,15 @@ To use JQL filtering, add to the `selector` object a `jql` key with your desired
 
 ```yaml showLineNumbers
 resources:
+  # highlight-next-line
+  - kind: issue # JQL filtering can only be used with the "issue" kind
+    selector:
+      query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
       # highlight-next-line
-    - kind: issue # JQL filtering can only be used with the "issue" kind
-      selector:
-        query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
-      # highlight-next-line
-        jql: "status != Done" # JQL query, will only ingest issues whose status is not "Done"
-      port:
+      jql: "status != Done" # JQL query, will only ingest issues whose status is not "Done"
+    port:
 ```
+
 :::
 
 - The `port`, `entity` and the `mappings` keys are used to map the Jira object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
@@ -652,43 +656,44 @@ resources:
 </details>
 
 ### Board
+
 <details>
 <summary>Board blueprint</summary>
 
 ```json showLineNumbers
 {
-    "identifier": "jiraBoard",
-    "title": "Jira Board",
-    "description": "This blueprint represents a Jira board",
-    "icon": "Jira",
-    "schema": {
-      "properties": {
-        "url": {
-          "title": "Board URL",
-          "type": "string",
-          "format": "url",
-          "description": "URL to the board in Jira"
-        },
-        "type": {
-          "title": "Type",
-          "type": "string",
-          "description": "The type of the board"
-        }
+  "identifier": "jiraBoard",
+  "title": "Jira Board",
+  "description": "This blueprint represents a Jira board",
+  "icon": "Jira",
+  "schema": {
+    "properties": {
+      "url": {
+        "title": "Board URL",
+        "type": "string",
+        "format": "url",
+        "description": "URL to the board in Jira"
       },
-      "required": []
-    },
-    "mirrorProperties": {},
-    "calculationProperties": {},
-    "relations": {
-      "project": {
-        "target": "jiraProject",
-        "title": "Project",
-        "description": "The Jira project that contains this board",
-        "required": false,
-        "many": false
+      "type": {
+        "title": "Type",
+        "type": "string",
+        "description": "The type of the board"
       }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "project": {
+      "target": "jiraProject",
+      "title": "Project",
+      "description": "The Jira project that contains this board",
+      "required": false,
+      "many": false
     }
   }
+}
 ```
 
 </details>
@@ -719,55 +724,56 @@ resources:
 </details>
 
 ### Board
+
 <details>
 <summary>Board blueprint</summary>
 
 ```json showLineNumbers
 {
-    "identifier": "jiraSprint",
-    "title": "Jira Sprint",
-    "description": "This blueprint represents a Jira sprint",
-    "icon": "Jira",
-    "schema": {
-      "properties": {
-        "url": {
-          "title": "Sprint URL",
-          "type": "string",
-          "format": "url",
-          "description": "URL to the sprint in Jira"
-        },
-        "state": {
-          "title": "State",
-          "type": "string",
-          "description": "The state of the sprint"
-        },
-        "startDate": {
-          "title": "Start Date",
-          "type": "string",
-          "description": "The start date of the sprint",
-          "format": "date-time"
-        },
-        "endDate": {
-          "title": "End Date",
-          "type": "string",
-          "description": "The end date of the sprint",
-          "format": "date-time"
-        }
+  "identifier": "jiraSprint",
+  "title": "Jira Sprint",
+  "description": "This blueprint represents a Jira sprint",
+  "icon": "Jira",
+  "schema": {
+    "properties": {
+      "url": {
+        "title": "Sprint URL",
+        "type": "string",
+        "format": "url",
+        "description": "URL to the sprint in Jira"
       },
-      "required": []
-    },
-    "mirrorProperties": {},
-    "calculationProperties": {},
-    "relations": {
-      "board": {
-        "target": "jiraBoard",
-        "title": "Board",
-        "description": "The Jira board that contains this sprint",
-        "required": false,
-        "many": false
+      "state": {
+        "title": "State",
+        "type": "string",
+        "description": "The state of the sprint"
+      },
+      "startDate": {
+        "title": "Start Date",
+        "type": "string",
+        "description": "The start date of the sprint",
+        "format": "date-time"
+      },
+      "endDate": {
+        "title": "End Date",
+        "type": "string",
+        "description": "The end date of the sprint",
+        "format": "date-time"
       }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "board": {
+      "target": "jiraBoard",
+      "title": "Board",
+      "description": "The Jira board that contains this sprint",
+      "required": false,
+      "many": false
     }
   }
+}
 ```
 
 </details>
@@ -1024,11 +1030,11 @@ Here is an example of the payload structure from Jira:
 
 ```json showLineNumbers
 {
-      "id": 84,
-      "self": "https://your-domain.atlassian.net/rest/agile/1.0/board/84",
-      "name": "scrum board",
-      "type": "scrum"
-    }
+  "id": 84,
+  "self": "https://your-domain.atlassian.net/rest/agile/1.0/board/84",
+  "name": "scrum board",
+  "type": "scrum"
+}
 ```
 
 </details>
@@ -1038,16 +1044,16 @@ Here is an example of the payload structure from Jira:
 
 ```json showLineNumbers
 {
-      "id": 37,
-      "self": "https://your-domain.atlassian.net/rest/agile/1.0/sprint/23",
-      "state": "closed",
-      "name": "sprint 1",
-      "startDate": "2015-04-11T15:22:00.000+10:00",
-      "endDate": "2015-04-20T01:22:00.000+10:00",
-      "completeDate": "2015-04-20T11:04:00.000+10:00",
-      "originBoardId": 5,
-      "goal": "sprint 1 goal"
-    }
+  "id": 37,
+  "self": "https://your-domain.atlassian.net/rest/agile/1.0/sprint/23",
+  "state": "closed",
+  "name": "sprint 1",
+  "startDate": "2015-04-11T15:22:00.000+10:00",
+  "endDate": "2015-04-20T01:22:00.000+10:00",
+  "completeDate": "2015-04-20T11:04:00.000+10:00",
+  "originBoardId": 5,
+  "goal": "sprint 1 goal"
+}
 ```
 
 </details>
