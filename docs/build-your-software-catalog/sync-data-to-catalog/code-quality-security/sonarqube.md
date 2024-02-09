@@ -623,10 +623,10 @@ resources:
 
 </details>
 
-### Analysis
+### Saas Analysis
 
 <details>
-<summary>Analysis blueprint</summary>
+<summary>Saas analysis blueprint</summary>
 
 ```json showLineNumbers
 {
@@ -685,7 +685,7 @@ resources:
 createMissingRelatedEntities: true
 deleteDependentEntities: true
 resources:
-  - kind: analysis
+  - kind: saas_analysis
     selector:
       query: "true"
     port:
@@ -701,6 +701,89 @@ resources:
             coverage: .measures.coverage_change
             duplications: .measures.duplicated_lines_density_change
             createdAt: .__analysisDate
+          relations:
+            sonarQubeProject: .__project
+```
+
+</details>
+
+### On-Premise Analysis
+
+<details>
+<summary>On-premise analysis blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "sonarQubeAnalysis",
+  "title": "SonarQube Analysis",
+  "icon": "sonarqube",
+  "schema": {
+    "properties": {
+      "branch": {
+        "type": "string",
+        "title": "Branch",
+        "icon": "GitVersion"
+      },
+      "fixedIssues": {
+        "type": "number",
+        "title": "Fixed Issues"
+      },
+      "newIssues": {
+        "type": "number",
+        "title": "New Issues"
+      },
+      "coverage": {
+        "title": "Coverage",
+        "type": "number"
+      },
+      "duplications": {
+        "type": "number",
+        "title": "Duplications"
+      },
+      "createdAt": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Created At"
+      }
+    }
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "sonarQubeProject": {
+      "target": "sonarQubeProject",
+      "required": false,
+      "title": "SonarQube Project",
+      "many": false
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: onprem_analysis
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          blueprint: '"sonarQubeAnalysis"'
+          identifier: .__project + "-" + .key
+          title: .title
+          properties:
+            branch: .branch
+            newIssues: .__measures[]? | select(.metric == "new_violations") | .period.value
+            coverage: .__measures[]? | select(.metric == "new_coverage") | .period.value
+            duplications: .__measures[]? | select(.metric == "new_duplicated_lines_density") | .period.value
+            createdAt: .analysisDate
           relations:
             sonarQubeProject: .__project
 ```
