@@ -48,7 +48,7 @@ Port scorecards let you define and track standards and KPIs for quality, product
 
 #### Workflow automation
 
-With Port, you can set up automation to automatically respond to events from your software catalog such as TTL=0, service degradation and many more. This allows you to streamline your engineering processes, maintain a high level of performance, security and compliance, and ensure your systems run smoothly.
+With Port, you can set up automations to automatically respond to events from your software catalog such as `TTL=0`, service degradation and many more. This allows you to streamline your engineering processes, maintain a high level of performance, security and compliance, and ensure your systems run smoothly.
 
 [Workflow Automation Live Demo ](https://demo.getport.io/self-serve) 🎬
 
