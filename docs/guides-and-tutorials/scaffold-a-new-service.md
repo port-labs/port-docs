@@ -137,7 +137,7 @@ Now we'll define the backend of the action. Port supports multiple invocation ty
 
 <TabItem value="github">
 
-Fill out the form with your values:
+Fill out the form (as presented in the image below) with your values:
 - Replace the `Organization` and `Repository` values with your values (this is where the workflow will reside and run).
 - Name the workflow `portCreateRepo.yaml`.
 - Set `Omit user inputs` to `Yes`.
@@ -222,7 +222,7 @@ If the Github organization which will house your workflow is not the same as the
 
 1. First, let's create the necessary token and secrets:
 
-- Go to your [Github tokens page](https://github.com/settings/tokens), create a personal access token (classic) with `repo`, `admin:repo_hook` and `admin:org` scope, and copy it (this token is needed to create a repo from our workflow).
+- Go to your [Github tokens page](https://github.com/settings/tokens), create a personal access token (classic) with `repo`, `admin:repo_hook` and `admin:org` scope, and copy it for the next step (this token is needed to create a repo from our workflow).
 
   <img src='/img/guides/personalAccessToken.png' width='80%' />
 
@@ -786,7 +786,7 @@ To trigger the Bitbucket scaffolder, you will need to provide two additional par
   - To find the Bitbucket project key, go to `https://bitbucket.org/YOUR_BITBUCKET_WORKSPACE/workspace/projects/`, find the desired project in the list, and copy the value seen in the `Key` column in the table
 :::
 
-1. This page provides details about the action run. As you can see, the backend returned `Success` and the repo was successfully created:
+1. This page provides details about the action run. As you can see, the backend returned `Success` and the repo was successfully created (it can take a moment to reach `Success`):
 
 <img src='/img/guides/runStatusScaffolding.png' width='90%' />
 
