@@ -369,7 +369,3 @@ resource "port_blueprint" "myBlueprint" {
 Here is how the Swagger tab in the specific entity page appears when an AsyncAPI spec is provided:
 
 ![AsyncAPI Example](/img/software-catalog/widgets/asyncAPI.png)
-
-:::note
-Only AsyncAPI versions 2.0.0 up to 2.4.0 are supported at the moment.
-:::
