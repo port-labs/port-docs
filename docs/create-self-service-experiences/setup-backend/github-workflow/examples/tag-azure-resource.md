@@ -11,7 +11,9 @@ In the following guide, you are going to create a self-service action in Port th
 
 ## Prerequisites
 1. This guide assumes that you already have a blueprint for an Azure Storage account with some resources. If you haven't done so yet, create the blueprint by referring to this [guide](/create-self-service-experiences/setup-backend/github-workflow/examples/create-azure-resource.md) first.
-3. A repository to contain your action resources i.e. the github workflow file.
+2. Prior knowledge of Port Actions is essential for following this guide. Learn more about them [here](/create-self-service-experiences/setup-ui-for-action/).
+3. A GitHub repository to contain your action resources i.e. the github workflow file.
+
 
 ## Example - adding tags to a storage account
 
