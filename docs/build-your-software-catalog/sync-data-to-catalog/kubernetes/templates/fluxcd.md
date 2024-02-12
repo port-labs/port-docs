@@ -1,17 +1,17 @@
 ---
-sidebar_position: 6
-description: Kyverno quickstart
+sidebar_position: 7
+description: FluxCD quickstart
 ---
 
 import TemplateInstallation from "./_template_installation.mdx";
 import TemplatePrerequisites from "./_template_prerequisites.mdx";
 
-# Kyverno
+# FluxCD
 
-[Kyverno](https://kyverno.io/) is a policy engine designed for Kubernetes. Kyverno policies can validate, mutate, generate, and cleanup Kubernetes resources, allowing cluster administrators to enforce configuration best practices for their clusters.
+[FluxCD](https://fluxcd.io/) is a set of continuous and progressive delivery solutions for Kubernetes that are open and extensible.
 
-Using Port's Kubernetes Exporter, you can keep track of all Kyverno resources across your different clusters and export
-all the policies and reports to Port. You will use built in metadata from your kubernetes resources and CRDs to create entities in
+Using Port's Kubernetes Exporter, you can keep track of all Flux resources in your cluster and export
+monitored repositories and applications to Port. You will use built in metadata from your kubernetes resources and CRDs to create entities in
 Port and keep track of their state.
 
 :::tip Our Kubernetes exporter basics
@@ -31,11 +31,11 @@ installation script. You can read more about the installation script [here](#how
 
 The installation script provides a convenient way to create your blueprints. Using the `CUSTOM_BP_PATH` environment
 variable, you can fetch a pre-defined `blueprints.json` to create your blueprints. For this use-case, you will
-use [this file](https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/kyverno-blueprints.json) to
+use [this file](https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/fluxcd-blueprints.json) to
 define your blueprints. Do this by running:
 
 ```bash showLineNumbers
-export CUSTOM_BP_PATH="https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/kyverno-blueprints.json"
+export CUSTOM_BP_PATH="https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/fluxcd-blueprints.json"
 ```
 
 This `blueprints.json` file defines the following blueprints:
@@ -46,8 +46,8 @@ This `blueprints.json` file defines the following blueprints:
 - Pod
 - ReplicaSet
 - Workload
-- Kyverno Policy
-- Kyverno Policy Report
+- Flux Source
+- Flux Application
 
 :::note Blueprint information
 
@@ -60,19 +60,19 @@ This `blueprints.json` file defines the following blueprints:
     - StatefulSet
     - DaemonSet
 
-- `Kyverno Policy` is one of the most important Kyverno resources, giving developers the capability to set and enforce policy rules in their Kubernetes cluster.
+- `Flux Source` is one of the most important Flux resource that defines the origin of a repository containing the desired state of the system and the requirements to obtain it. This blueprint tracks **GitRepository** and **HelmRepository** CRDs in the Flux system.
 
-- `Kyverno Policy Report` is another important Kyverno resource that contains the results of applying the policies to the Kubernetes cluster.
+- `Flux Application` is another important Flux resource that represents a local set of Kubernetes resources that Flux is supposed to reconcile in the cluster. This blueprint tracks **Kustomization** and **HelmRelease** CRDs in the Flux system.
 :::
 
 ### Exporting custom resource mapping
 
 Using the `CONFIG_YAML_URL` parameter, you can define a custom resource mapping to use when installing the exporter.
 
-In this use-case you will be using the **[this configuration file](https://github.com/port-labs/template-assets/blob/main/kubernetes/templates/kyverno-kubernetes_v1_config.yaml)**. To achieve this, run:
+In this use-case you will be using the **[this configuration file](https://github.com/port-labs/template-assets/blob/main/kubernetes/templates/fluxcd-kubernetes_v1_config.yaml)**. To achieve this, run:
 
 ```bash showLineNumbers
-export CONFIG_YAML_URL="https://github.com/port-labs/template-assets/blob/main/kubernetes/templates/kyverno-kubernetes_v1_config.yaml"
+export CONFIG_YAML_URL="https://github.com/port-labs/template-assets/blob/main/kubernetes/templates/fluxcd-kubernetes_v1_config.yaml"
 ```
 
 You can now run the installation script using the following code snippet:
@@ -84,7 +84,7 @@ export PORT_CLIENT_SECRET="my-port-client-secret"
 curl -s https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/install.sh | bash
 ```
 
-You can now browse to your Port environment to see that your blueprints have been created, and your k8s and Kyverno
+You can now browse to your Port environment to see that your blueprints have been created, and your k8s and Flux
 resources are being reported to Port using the freshly installed k8s exporter.
 
 ## How does the installation script work?
