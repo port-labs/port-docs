@@ -137,7 +137,7 @@ Now we'll define the backend of the action. Port supports multiple invocation ty
 
 <TabItem value="github">
 
-Fill out the form (as presented in the image below) with your values:
+Fill out the form with your values:
 - Replace the `Organization` and `Repository` values with your values (this is where the workflow will reside and run).
 - Name the workflow `portCreateRepo.yaml`.
 - Set `Omit user inputs` to `Yes`.
