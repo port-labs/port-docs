@@ -36,9 +36,10 @@ After completing it, you will get a sense of how it can benefit different person
 
 :::tip Onboarding
 
-As part of the onboarding process, you should already have an action named `Scaffold a new service` in your [self-service tab](https://app.getport.io/self-serve). In that case, you can hover over the action > click the three dots on the top right corner > choose "Edit":
+As part of the onboarding process, you should already have an action named `Scaffold a new service` in your [self-service tab](https://app.getport.io/self-serve).  
+In that case, you can hover over the action, click the `...` button in the top right corner, and choose "Edit":
 
-<img src='/img/guides/editActionBackend.png' width='40%' />
+<img src='/img/guides/editActionBackend.png' width='45%' />
 
 Then, skip to the [Define backend type](#define-backend-type) step.
 
@@ -128,6 +129,8 @@ If you **skipped** the onboarding, or you want to create the action from scratch
 :::
 
 </details>
+
+<br/>
 
 #### Define backend type
 
