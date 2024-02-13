@@ -36,7 +36,12 @@ After completing it, you will get a sense of how it can benefit different person
 
 :::tip Onboarding
 
-As part of the onboarding process, you should already have an action named `Scaffold a new service` in your [self-service tab](https://app.getport.io/self-serve). In that case, you can skip to the [Define action type](#define-backend-type) step.  
+As part of the onboarding process, you should already have an action named `Scaffold a new service` in your [self-service tab](https://app.getport.io/self-serve).  
+In that case, you can hover over the action, click the `...` button in the top right corner, and choose "Edit":
+
+<img src='/img/guides/editActionBackend.png' width='45%' />
+
+Then, skip to the [Define backend type](#define-backend-type) step.
 
 If you **skipped** the onboarding, or you want to create the action from scratch, complete the `Create the action's frontend` steps below.
 
@@ -124,6 +129,8 @@ If you **skipped** the onboarding, or you want to create the action from scratch
 :::
 
 </details>
+
+<br/>
 
 #### Define backend type
 
@@ -786,7 +793,7 @@ To trigger the Bitbucket scaffolder, you will need to provide two additional par
   - To find the Bitbucket project key, go to `https://bitbucket.org/YOUR_BITBUCKET_WORKSPACE/workspace/projects/`, find the desired project in the list, and copy the value seen in the `Key` column in the table
 :::
 
-1. This page provides details about the action run. As you can see, the backend returned `Success` and the repo was successfully created:
+1. This page provides details about the action run. As you can see, the backend returned `Success` and the repo was successfully created (this can take a few moments):
 
 <img src='/img/guides/runStatusScaffolding.png' width='90%' />
 
