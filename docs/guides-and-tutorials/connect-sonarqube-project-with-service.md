@@ -135,7 +135,7 @@ Under the `resources` key, modify the mapping for the `projects` kind by using t
 
 :::tip JQ explanation
 
-the JQ below selects all tags that start with the keyword `port`. For each item in the tags array, it then removes "port-" from each tag, leaving only the part that comes after it.
+The JQ below selects all tags that start with the keyword `port`. It then removes "port-" from each tag, leaving only the part that comes after it.
 
 ```yaml
 service: .tags | map(select(startswith("port"))) | map(sub("port-"; ""; "g"))
