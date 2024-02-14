@@ -143,7 +143,7 @@ service: .tags | map(select(startswith("port"))) | map(sub("port-"; ""; "g"))
 :::
 
 What we just did was map the `SonarQube Project` to the relation between it and our `Services`.  
-Now, if our `Service` identifier is equal to the SonarQube projects tag, the `service` will automatically be linked to it &nbsp;🎉
+Now, if our `Service` identifier is equal to the SonarQube project tag, the `service` will automatically be linked to it &nbsp;🎉
 
 ![entitiesAfterServiceMapping](/img/guides/entitiesAfterServiceMapping.png)
 
