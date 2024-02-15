@@ -24,7 +24,7 @@ This guide aims to cover how to connect a SonarQube project with an existing ser
 
 ## Integrate SonarQube into Port
 
-This goal of this section is to bring our SonarQube data into Port. [Port's SonarQube integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube) (powered by [Ocean](https://ocean.getport.io/)) allows you to import `projects`, `issues` and `analyses` from your SonarQube account into Port. The integration automatically creates <PortTooltip id="blueprint">blueprints</PortTooltip> and <PortTooltip id="entity">entities</PortTooltip> for these resources.
+The goal of this section is to bring our SonarQube data into Port. [Port's SonarQube integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube) (powered by [Ocean](https://ocean.getport.io/)) allows you to import `projects`, `issues` and `analyses` from your SonarQube account into Port. The integration automatically creates <PortTooltip id="blueprint">blueprints</PortTooltip> and <PortTooltip id="entity">entities</PortTooltip> for these resources.
 
 :::info Note
 For this installation you will need Helm and a running K8s cluster (see [prerequisites](/guides-and-tutorials/ensure-production-readiness)).
