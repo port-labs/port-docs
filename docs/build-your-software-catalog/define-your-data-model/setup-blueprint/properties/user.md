@@ -21,7 +21,7 @@ The user property type can be used to reference any user that exists in Port, fo
 - The lead maintainer;
 - etc.
 
-In this [live demo](https://demo.getport.io/services) example, we can see the `On Call` user property. 🎬
+In this [live demo](https://demo.getport.io/service_catalog) example, we can see the `On Call` user property. 🎬
 
 :::note
 Even though the input is the same in both `email` and `user` formats, their presentation is different:
