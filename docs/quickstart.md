@@ -63,7 +63,7 @@ As you can see, after connecting your Git provider to Port, a new `Service` blue
 
 ### Entities
 
-An entity is an instance of a blueprint, representing the data defined by that blueprint's properties. Entities are displayed in the [software catalog](https://app.getport.io/Services) page of the portal.  
+An entity is an instance of a blueprint, representing the data defined by that blueprint's properties. Entities are displayed in the [software catalog](https://app.getport.io/services) page of the portal.  
 
 After connecting your Git provider to Port, you will see all of your services (Git repositories) in the `Services` page of the catalog.
 
@@ -106,7 +106,7 @@ Take a look at your `Service` blueprint, it has a `Production Readiness` scoreca
 
 ### Dashboards
 
-In addition to your [homepage](#homepage), you can also create dashboards in your [software catalog](https://app.getport.io/Services). These are used to track and visualize data about your [entities](#entities).
+In addition to your [homepage](#homepage), you can also create dashboards in your [software catalog](https://app.getport.io/services). These are used to track and visualize data about your [entities](#entities).
 
 Your software catalog should already have two dashboard pages:
 
