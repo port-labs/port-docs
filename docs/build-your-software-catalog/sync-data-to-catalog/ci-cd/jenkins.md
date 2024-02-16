@@ -7,7 +7,7 @@ import TabItem from "@theme/TabItem"
 import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
 import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
 import DockerParameters from "./\_jenkins-docker-parameters.mdx"
-import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
+import AdvancedConfig from '../../../generalTemplates/\_ocean_advanced_configuration_note.md'
 
 # Jenkins
 
@@ -23,6 +23,7 @@ Our Jenkins integration allows you to import `jobs`, `builds`, and `users` from 
 <Prerequisites />
 
 To generate a token for authenticating the Jenkins API calls:
+
 1. In the Jenkins banner frame, click your user name to open the user menu.
 2. Navigate to Your **Username** > **Configure** > **API Token**.
 3. Click Add new Token.
@@ -30,7 +31,6 @@ To generate a token for authenticating the Jenkins API calls:
 5. Copy the API token that is generated to use as the `JENKINS_TOKEN`.
 
 <img src='/img/build-your-software-catalog/sync-data-to-catalog/jenkins/configure-api-token.png' width='80%' />
-
 
 ## Installation
 
@@ -45,19 +45,19 @@ Using this installation option means that the integration will be able to update
 This table summarizes the available parameters for the installation.
 Set them as you wish in the script below, then copy it and run it in your terminal:
 
-| Parameter                           | Description                                                                                                        | Required |
-| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
-| `port.clientId`                     | Your port client id ([Get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))                                                                                               | ✅       |
-| `port.clientSecret`                 | Your port client secret ([Get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))                                                                                           | ✅       |
-| `integration.identifier`            | Change the identifier to describe your integration                                                                 | ✅       |
-| `integration.type`                  | The integration type                                                                                               | ✅       |
-| `integration.eventListener.type`    | The event listener type                                                                                            | ✅       |
-| `integration.secrets.jenkinsUser`   | The Jenkins username                                                                                               | ✅       |
-| `integration.secrets.jenkinsToken`  | The Jenkins password or token                                                                                     | ✅       |
-| `integration.config.jenkinsHost`    | The Jenkins host                                                                                                  | ✅       |
-| `integration.config.appHost`        | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Jenkins  | ❌       |
-| `scheduledResyncInterval`           | The number of minutes between each resync                                                                          | ❌       |
-| `initializePortResources`           | Default true, When set to true the integration will create default blueprints and the port App config Mapping      | ❌       |
+| Parameter                          | Description                                                                                                                                               | Required |
+| ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `port.clientId`                    | Your port client id ([Get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))     | ✅       |
+| `port.clientSecret`                | Your port client secret ([Get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)) | ✅       |
+| `integration.identifier`           | Change the identifier to describe your integration                                                                                                        | ✅       |
+| `integration.type`                 | The integration type                                                                                                                                      | ✅       |
+| `integration.eventListener.type`   | The event listener type                                                                                                                                   | ✅       |
+| `integration.secrets.jenkinsUser`  | The Jenkins username                                                                                                                                      | ✅       |
+| `integration.secrets.jenkinsToken` | The Jenkins password or token                                                                                                                             | ✅       |
+| `integration.config.jenkinsHost`   | The Jenkins host                                                                                                                                          | ✅       |
+| `integration.config.appHost`       | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Jenkins                                     | ❌       |
+| `scheduledResyncInterval`          | The number of minutes between each resync                                                                                                                 | ❌       |
+| `initializePortResources`          | Default true, When set to true the integration will create default blueprints and the port App config Mapping                                             | ❌       |
 
 <br/>
 
@@ -73,7 +73,7 @@ helm upgrade --install my-jenkins-integration port-labs/port-ocean \
 	--set integration.eventListener.type="POLLING"  \
 	--set integration.secrets.jenkinsUser="JENKINS_USER"  \
 	--set integration.secrets.jenkinsToken="JENKINS_TOKEN" \
-	--set integration.config.jenkinsHost="JENKINS_HOST"  
+	--set integration.config.jenkinsHost="JENKINS_HOST"
 ```
 
 </TabItem>
@@ -199,7 +199,7 @@ Here is an example for `jenkins-integration.yml` pipeline file:
 
 ```yaml showLineNumbers
 trigger:
-- main
+  - main
 
 pool:
   vmImage: "ubuntu-latest"
@@ -207,28 +207,26 @@ pool:
 variables:
   - group: port-ocean-credentials
 
-
 steps:
-- script: |
-    # Set Docker image and run the container
-    integration_type="jenkins"
-    version="latest"
+  - script: |
+      # Set Docker image and run the container
+      integration_type="jenkins"
+      version="latest"
 
-    image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
+      image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
 
-    docker run -i --rm \
-        -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
-        -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-        -e OCEAN__INTEGRATION__CONFIG__JENKINS_USER=${OCEAN__INTEGRATION__CONFIG__JENKINS_USER} \
-        -e OCEAN__INTEGRATION__CONFIG__JENKINS_TOKEN=${OCEAN__INTEGRATION__CONFIG__JENKINS_TOKEN} \
-        -e OCEAN__INTEGRATION__CONFIG__JENKINS_HOST=${OCEAN__INTEGRATION__CONFIG__JENKINS_HOST} \
-        -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \
-        -e OCEAN__PORT__CLIENT_SECRET=${OCEAN__PORT__CLIENT_SECRET} \
-        $image_name
+      docker run -i --rm \
+          -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+          -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+          -e OCEAN__INTEGRATION__CONFIG__JENKINS_USER=${OCEAN__INTEGRATION__CONFIG__JENKINS_USER} \
+          -e OCEAN__INTEGRATION__CONFIG__JENKINS_TOKEN=${OCEAN__INTEGRATION__CONFIG__JENKINS_TOKEN} \
+          -e OCEAN__INTEGRATION__CONFIG__JENKINS_HOST=${OCEAN__INTEGRATION__CONFIG__JENKINS_HOST} \
+          -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \
+          -e OCEAN__PORT__CLIENT_SECRET=${OCEAN__PORT__CLIENT_SECRET} \
+          $image_name
 
-    exit $?
-  displayName: 'Ingest Data into Port'
-
+      exit $?
+    displayName: "Ingest Data into Port"
 ```
 
   </TabItem>
@@ -271,7 +269,6 @@ The integration makes use of the [JQ JSON processor](https://stedolan.github.io/
 ### Configuration structure
 
 The integration configuration determines which resources will be queried from Jenkins, and which entities and properties will be created in Port.
-
 
 - The root key of the integration configuration is the `resources` key:
 
@@ -364,43 +361,38 @@ Examples of blueprints and the relevant integration configurations:
   "title": "Jenkins Job",
   "icon": "Jenkins",
   "schema": {
-      "properties": {
-          "jobName": {
-              "type": "string",
-              "title": "Job Name"
-          },
-          "jobStatus": {
-              "type": "string",
-              "title": "Job Status",
-              "enum": [
-                  "created",
-                  "unknown",
-                  "passing",
-                  "failing"
-              ],
-              "enumColors": {
-                  "passing": "green",
-                  "created": "darkGray",
-                  "failing": "red",
-                  "unknown": "orange"
-              }
-          },
-          "timestamp": {
-              "type": "string",
-              "format": "date-time",
-              "title": "Timestamp",
-              "description": "Last updated timestamp of the job"
-          },
-          "url": {
-              "type": "string",
-              "title": "Project URL"
-          },
-          "parentJob": {
-              "type": "object",
-              "title": "Parent Job"
-          }
+    "properties": {
+      "jobName": {
+        "type": "string",
+        "title": "Job Name"
       },
-      "required": []
+      "jobStatus": {
+        "type": "string",
+        "title": "Job Status",
+        "enum": ["created", "unknown", "passing", "failing"],
+        "enumColors": {
+          "passing": "green",
+          "created": "darkGray",
+          "failing": "red",
+          "unknown": "orange"
+        }
+      },
+      "timestamp": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Timestamp",
+        "description": "Last updated timestamp of the job"
+      },
+      "url": {
+        "type": "string",
+        "title": "Project URL"
+      },
+      "parentJob": {
+        "type": "object",
+        "title": "Parent Job"
+      }
+    },
+    "required": []
   },
   "mirrorProperties": {},
   "calculationProperties": {},
@@ -445,62 +437,66 @@ resources:
   "description": "This blueprint represents a build event from Jenkins",
   "title": "Jenkins Build",
   "icon": "Jenkins",
-  "schema": {
-      "properties": {
-          "buildStatus": {
+  "schema":
+    {
+      "properties":
+        {
+          "buildStatus":
+            {
               "type": "string",
               "title": "Build Status",
-              "enum": [
-                  "SUCCESS",
-                  "FAILURE",
-                  "UNSTABLE"
-              ],
-              "enumColors": {
-                  "SUCCESS": "green",
-                  "FAILURE": "red",
-                  "UNSTABLE": "yellow"
-              }
-          },
-          "buildUrl": {
+              "enum": ["SUCCESS", "FAILURE", "UNSTABLE"],
+              "enumColors":
+                { "SUCCESS": "green", "FAILURE": "red", "UNSTABLE": "yellow" },
+            },
+          "buildUrl":
+            {
               "type": "string",
               "title": "Build URL",
-              "description": "URL to the build"
-          },
-          "timestamp": {
+              "description": "URL to the build",
+            },
+          "timestamp":
+            {
               "type": "string",
               "format": "date-time",
               "title": "Timestamp",
-              "description": "Last updated timestamp of the build"
-          },
-          "buildDuration": {
+              "description": "Last updated timestamp of the build",
+            },
+          "buildDuration":
+            {
               "type": "number",
               "title": "Build Duration",
-              "description": "Duration of the build"
-          }
-      },
-      "required": []
-  },
-  "mirrorProperties": {
-      "previousBuildStatus": {
+              "description": "Duration of the build",
+            },
+        },
+      "required": [],
+    },
+  "mirrorProperties":
+    {
+      "previousBuildStatus":
+        {
           "title": "Previous Build Status",
-          "path": "previousBuild.buildStatus"
-      }
-  },
+          "path": "previousBuild.buildStatus",
+        },
+    },
   "calculationProperties": {},
-  "relations": {
-      "parentJob": {
+  "relations":
+    {
+      "parentJob":
+        {
           "title": "Jenkins Job",
           "target": "jenkinsJob",
           "required": false,
-          "many": false
-      },
-      "previousBuild": {
+          "many": false,
+        },
+      "previousBuild":
+        {
           "title": "Previous Build",
           "target": "jenkinsBuild",
           "required": false,
-          "many": false
-      }
-  }
+          "many": false,
+        },
+    },
 }
 ```
 
@@ -524,14 +520,13 @@ resources:
             buildStatus: .result
             buildUrl: .url
             buildDuration: .duration
-            timestamp: '.timestamp / 1000 | todate'
+            timestamp: ".timestamp / 1000 | todate"
           relations:
             parentJob: .url | split("://")[1] | sub("^.*?/"; "") | gsub("%20"; "-") | gsub("/"; "-") | .[:-1] | gsub("-[0-9]+$"; "")
             previousBuild: .previousBuild.url | split("://")[1] | sub("^.*?/"; "") | gsub("%20"; "-") | gsub("/"; "-") | .[:-1]
 ```
 
 </details>
-
 
 ### User
 
@@ -545,20 +540,20 @@ resources:
   "title": "Jenkins User",
   "icon": "Jenkins",
   "schema": {
-      "properties": {
-          "url": {
-              "type": "string",
-              "title": "URL",
-              "format": "url"
-          },
-          "lastUpdateTime": {
-              "type": "string",
-              "format": "date-time",
-              "title": "Last Update",
-              "description": "Last updated timestamp of the user"
-          }
+    "properties": {
+      "url": {
+        "type": "string",
+        "title": "URL",
+        "format": "url"
       },
-      "required": []
+      "lastUpdateTime": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Last Update",
+        "description": "Last updated timestamp of the user"
+      }
+    },
+    "required": []
   },
   "mirrorProperties": {},
   "calculationProperties": {},

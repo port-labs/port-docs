@@ -228,7 +228,6 @@ Here is an example of the payload structure from Dynatrace:
 
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
 
-
 <details>
 <summary>Problem entity in Port</summary>
 

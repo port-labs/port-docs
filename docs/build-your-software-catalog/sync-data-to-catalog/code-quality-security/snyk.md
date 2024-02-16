@@ -157,8 +157,8 @@ integration:
 <br/>
 
 2. Install the `my-ocean-snyk-integration` ArgoCD Application by creating the following `my-ocean-snyk-integration.yaml` manifest:
-   :::note Configuration variable replacement
-   Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+:::note Configuration variable replacement
+Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
 
 Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
 :::
@@ -991,9 +991,9 @@ Here is an example of the payload structure from Snyk:
 <details>
 <summary>Target response data</summary>
 
-```json showLineNumbers
+<!-- ```json showLineNumbers
 
-```
+``` -->
 
 </details>
 
