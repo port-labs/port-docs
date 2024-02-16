@@ -143,7 +143,7 @@ For the GitHub app installation you will need to have a registered organization 
 The goal of this section is to bring our SonarQube analysis data into Port. [Port's SonarQube integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube) (powered by [Ocean](https://ocean.getport.io/)) allows you to import `projects`, `issues` and `analyses` from your SonarQube account into Port. The integration automatically creates <PortTooltip id="blueprint">blueprints</PortTooltip> and <PortTooltip id="entity">entities</PortTooltip> for these resources.
 
 :::info Note
-For this installation you will need Helm and a running K8s cluster (see [prerequisites](/guides-and-tutorials/connect-sonarqube-project-with-service)).
+For this installation you will need Helm and a running K8s cluster (see [prerequisites](/guides-and-tutorials/connect-github-pr-with-sonar-analysis)).
 :::
 
 1. Install Port's SonarQube integration using Helm, by running the command below in your terminal.
