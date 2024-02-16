@@ -589,3 +589,164 @@ resources:
 ```
 
 </details>
+
+## Let's Test It
+
+This section includes a sample response data from Jenkins. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+
+### Payload
+
+Here is an example of the payload structure from Jenkins:
+
+<details>
+<summary>Job response data</summary>
+  
+```json showLineNumbers
+{
+  "_class" : "hudson.model.FreeStyleProject",
+  "displayName" : "Hello Job",
+  "fullName" : "Hello Job",
+  "name" : "Hello Job",
+  "url" : "http://localhost:8080/job/Hello%20Job/",
+  "buildable" : true,
+  "builds" : [
+    {
+      "_class" : "hudson.model.FreeStyleBuild",
+      "displayName" : "#2",
+      "duration" : 221,
+      "fullDisplayName" : "Hello Job #2",
+      "id" : "2",
+      "number" : 2,
+      "result" : "SUCCESS",
+      "timestamp" : 1700569094576,
+      "url" : "http://localhost:8080/job/Hello%20Job/2/"
+    },
+    {
+      "_class" : "hudson.model.FreeStyleBuild",
+      "displayName" : "#1",
+      "duration" : 2214,
+      "fullDisplayName" : "Hello Job #1",
+      "id" : "1",
+      "number" : 1,
+      "result" : "SUCCESS",
+      "timestamp" : 1700567994163,
+      "url" : "http://localhost:8080/job/Hello%20Job/1/"
+    }
+  ],
+  "color" : "blue"
+}
+```
+
+</details>
+
+<details>
+<summary>Build response data</summary>
+  
+```json showLineNumbers
+{
+  "_class" : "hudson.model.FreeStyleBuild",
+  "displayName" : "#2",
+  "duration" : 221,
+  "fullDisplayName" : "Hello Job #2",
+  "id" : "2",
+  "number" : 2,
+  "result" : "SUCCESS",
+  "timestamp" : 1700569094576,
+  "url" : "http://localhost:8080/job/Hello%20Job/2/"
+}
+```
+
+</details>
+
+<details>
+<summary>User response data</summary>
+  
+```json showLineNumbers
+{
+  "user" : {
+    "absoluteUrl" : "http://localhost:8080/user/admin",
+    "fullName" : "admin",
+    "description" : "System Administrator",
+    "id" : "admin"
+  },
+  "lastChange" : 1700569094576
+}
+```
+
+</details>
+
+### Mapping Result
+
+The combination of the sample payload and the Ocean configuration generates the following Port entity:
+
+<details>
+<summary>Job entity</summary>
+  
+```json showLineNumbers
+{
+  "identifier": "hello-job",
+  "title": "Hello Job",
+  "blueprint": "jenkinsJob",
+  "properties": {
+    "jobName": "Hello Job",
+    "url": "http://localhost:8080/job/Hello%20Job/",
+    "jobStatus": "passing",
+    "timestamp": "2023-09-08T14:58:14Z"
+  },
+  "relations": {},
+  "createdAt": "2023-12-18T08:37:21.637Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2023-12-18T08:37:21.637Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+<details>
+<summary>Build entity</summary>
+  
+```json showLineNumbers
+{
+  "identifier": "hello-job-2",
+  "title": "Hello Job #2",
+  "blueprint": "jenkinsBuild",
+  "properties": {
+    "buildStatus": "SUCCESS",
+    "buildUrl": "http://localhost:8080/job/Hello%20Job/2/",
+    "buildDuration": 221,
+    "timestamp": "2023-09-08T14:58:14Z"
+  },
+  "relations": {
+    "parentJob": "hello-job"
+  },
+  "createdAt": "2023-12-18T08:37:21.637Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2023-12-18T08:37:21.637Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+<details>
+<summary>User entity</summary>
+  
+```json showLineNumbers
+{
+  "identifier": "admin",
+  "title": "admin",
+  "blueprint": "jenkinsUser",
+  "properties": {
+    "url": "http://localhost:8080/user/admin",
+    "lastUpdateTime": "2023-09-08T14:58:14Z"
+  },
+  "relations": {},
+  "createdAt": "2023-12-18T08:37:21.637Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2023-12-18T08:37:21.637Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>

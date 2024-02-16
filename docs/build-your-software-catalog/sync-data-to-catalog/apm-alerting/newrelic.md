@@ -752,3 +752,55 @@ Examples of blueprints and the relevant integration configurations:
 ```
 
 </details>
+
+## Let's Test It
+
+This section includes a sample response data from New Relic. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+
+### Payload
+
+Here is an example of the payload structure from New Relic:
+
+<details>
+<summary>Service (Entity) response data</summary>
+
+```json showLineNumbers
+{
+  "domain": "APM",
+  "guid": "MjQwNzIwN3xBUE18QVBQTElDQVRJT058MjIwMzEwNzV8MTA0NzYwNzA5",
+  "name": "My Service",
+  "type": "APPLICATION",
+  "tags": [
+    {
+      "key": "coreCount",
+      "values": [
+        "10"
+      ]
+    },
+    {
+      "key": "hostStatus",
+      "values": [
+        "running"
+      ]
+    }
+  ]
+}
+```
+
+</details>
+
+<details>
+<summary>Issue response data</summary>
+
+```json showLineNumbers
+{
+  "issueId": "MjQwNzIwN3xBUE18QVBQTElDQVRJT058MjIwMzEwNzV8MTA0NzYwNzA5",
+  "title": "My Issue",
+  "priority": "CRITICAL",
+  "state": "ACTIVATED",
+  "sources": ["My Source"],
+  "conditionName": ["My Condition"],
+  "policyName": ["My Policy"],
+  "activatedAt": "2022-01-01T00:00:00Z"
+}
+```

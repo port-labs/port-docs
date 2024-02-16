@@ -32,23 +32,22 @@ Using this installation option means that the integration will be able to update
 This table summarizes the available parameters for the installation.
 Set them as you wish in the script below, then copy it and run it in your terminal:
 
-
-| Parameter                           | Description                                                                                                        | Required |
-| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
-| `port.clientId`                     | Your Port client id                                                                                                | ✅       |
-| `port.clientSecret`                 | Your Port client secret                                                                                            | ✅       |
-| `port.baseUrl`                      | Your Port base url, relevant only if not using the default Port app                                                | ❌       |
-| `integration.identifier`            | Change the identifier to describe your integration                                                                 | ✅       |
-| `integration.type`                  | The integration type                                                                                               | ✅       |
-| `integration.eventListener.type`    | The event listener type                                                                                            | ✅       |
-| `integration.secrets.token`         | The Snyk API token                                                                                                 | ✅       |
-| `integration.config.organizationId` | The Snyk organization ID. Fetches data for this organization when provided                                                                     |❌       |
-| `integration.config.groups` | A comma-separated list of Snyk group ids to filter data for. Fetches data for organizations within the specified groups                                                          |❌       |
-| `integration.config.apiUrl`         | The Snyk API URL. If not specified, the default will be https://api.snyk.io                                        | ❌       |
-| `integration.config.appHost`        | The host of the Port Ocean app. Used to set up the integration endpoint as the target for Webhooks created in Snyk | ❌       |
-| `integration.secret.webhookSecret`  | This is a password you create, that Snyk uses to sign webhook events to Port                                       | ❌       |
-| `scheduledResyncInterval`           | The number of minutes between each resync                                                                          | ❌       |
-| `initializePortResources`           | Default true, When set to true the integration will create default blueprints and the port App config Mapping      | ❌       |
+| Parameter                           | Description                                                                                                             | Required |
+| ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | -------- |
+| `port.clientId`                     | Your Port client id                                                                                                     | ✅       |
+| `port.clientSecret`                 | Your Port client secret                                                                                                 | ✅       |
+| `port.baseUrl`                      | Your Port base url, relevant only if not using the default Port app                                                     | ❌       |
+| `integration.identifier`            | Change the identifier to describe your integration                                                                      | ✅       |
+| `integration.type`                  | The integration type                                                                                                    | ✅       |
+| `integration.eventListener.type`    | The event listener type                                                                                                 | ✅       |
+| `integration.secrets.token`         | The Snyk API token                                                                                                      | ✅       |
+| `integration.config.organizationId` | The Snyk organization ID. Fetches data for this organization when provided                                              | ❌       |
+| `integration.config.groups`         | A comma-separated list of Snyk group ids to filter data for. Fetches data for organizations within the specified groups | ❌       |
+| `integration.config.apiUrl`         | The Snyk API URL. If not specified, the default will be https://api.snyk.io                                             | ❌       |
+| `integration.config.appHost`        | The host of the Port Ocean app. Used to set up the integration endpoint as the target for Webhooks created in Snyk      | ❌       |
+| `integration.secret.webhookSecret`  | This is a password you create, that Snyk uses to sign webhook events to Port                                            | ❌       |
+| `scheduledResyncInterval`           | The number of minutes between each resync                                                                               | ❌       |
+| `initializePortResources`           | Default true, When set to true the integration will create default blueprints and the port App config Mapping           | ❌       |
 
 <br/>
 
@@ -81,6 +80,7 @@ helm upgrade --install my-snyk-integration port-labs/port-ocean \
 	--set integration.eventListener.type="POLLING"  \
 	--set integration.secrets.token="SNYK_TOKEN"
 ```
+
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
 To install the integration using ArgoCD, follow these steps:
@@ -105,11 +105,12 @@ integration:
   // highlight-next-line
     token: SNYK_TOKEN
 ```
+
 <br/>
 
- If you wish to customize access, the following configurations are available:
+If you wish to customize access, the following configurations are available:
 
- - The `organizationId` key is used to restrict access to a specific organization. If specified in the `values.yaml` file, the integration will fetch data only for the provided organization.
+- The `organizationId` key is used to restrict access to a specific organization. If specified in the `values.yaml` file, the integration will fetch data only for the provided organization.
 
 :::note Configuration variable replacement
 Remember to replace the placeholders for `SNYK_TOKEN` and `SNYK_ORGANIZATION_ID`.
@@ -129,9 +130,10 @@ integration:
   secrets:
     token: SNYK_TOKEN
 ```
+
 <br/>
 
- - The `groups` key is used to restrict access to all organizations within specific Snyk groups. In the `values.yaml` file, provide a comma-separated list of Snyk group IDs to the `groups` key, and the integration will filter data for all organizations in the group(s).
+- The `groups` key is used to restrict access to all organizations within specific Snyk groups. In the `values.yaml` file, provide a comma-separated list of Snyk group IDs to the `groups` key, and the integration will filter data for all organizations in the group(s).
 
 :::note Configuration variable replacement
 Remember to replace the placeholders for `SNYK_TOKEN` and `SNYK_GROUPS`.
@@ -151,11 +153,12 @@ integration:
   secrets:
     token: SNYK_TOKEN
 ```
+
 <br/>
 
 2. Install the `my-ocean-snyk-integration` ArgoCD Application by creating the following `my-ocean-snyk-integration.yaml` manifest:
-:::note Configuration variable replacement
-Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+   :::note Configuration variable replacement
+   Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
 
 Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
 :::
@@ -203,9 +206,11 @@ spec:
 <br/>
 
 3. Apply your application manifest with `kubectl`:
+
 ```bash
 kubectl apply -f my-ocean-snyk-integration.yaml
 ```
+
 </TabItem>
 </Tabs>
 
@@ -213,15 +218,15 @@ kubectl apply -f my-ocean-snyk-integration.yaml
 
 <TabItem value="one-time" label="Scheduled">
 
-  By default, the integration fetches all organizations associated with the provided Snyk token. If you wish to customize access, the following parameters are available:
+By default, the integration fetches all organizations associated with the provided Snyk token. If you wish to customize access, the following parameters are available:
 
-  `OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID`: Use this parameter to restrict access to a specific organization. If specified, the integration will fetch data only for the provided organization.
+`OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID`: Use this parameter to restrict access to a specific organization. If specified, the integration will fetch data only for the provided organization.
 
-  `OCEAN__INTEGRATION__CONFIG__GROUPS`: When you want to limit access to all organizations within specific Snyk groups, use this parameter. Provide a comma-separated list of Snyk group IDs, and the integration will filter data accordingly.
+`OCEAN__INTEGRATION__CONFIG__GROUPS`: When you want to limit access to all organizations within specific Snyk groups, use this parameter. Provide a comma-separated list of Snyk group IDs, and the integration will filter data accordingly.
 
-  :::note Default behaviour
-  If neither parameter is provided, the integration will operate with the default behavior of fetching all organizations associated with the supplied Snyk token.
-  :::
+:::note Default behaviour
+If neither parameter is provided, the integration will operate with the default behavior of fetching all organizations associated with the supplied Snyk token.
+:::
 
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
@@ -233,17 +238,17 @@ If you want the integration to update Port in real time using webhooks you shoul
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
-| Parameter                                     | Description                                                                                                        | Required |
-| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
-| `OCEAN__INTEGRATION__CONFIG__TOKEN`           | The Snyk API token                                                                                                 | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID` | The Snyk organization ID. Provide this parameter to limit access to a specific organization.                                                                                       | ❌      |
-| `OCEAN__INTEGRATION__CONFIG__GROUPS` | A comma-separated list of Snyk group ids to filter data for. Provide this parameter to limit access to all organizations within specific group(s)                                                   | ❌      |
-| `OCEAN__INTEGRATION__CONFIG__API_URL`         | The Snyk API URL. If not specified, the default will be https://api.snyk.io                                        | ❌       |
-| `OCEAN__INITIALIZE_PORT_RESOURCES`            | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
-| `OCEAN__INTEGRATION__IDENTIFIER`              | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
-| `OCEAN__PORT__CLIENT_ID`                      | Your port client id                                                                                                | ✅       |
-| `OCEAN__PORT__CLIENT_SECRET`                  | Your port client secret                                                                                            | ✅       |
-| `OCEAN__PORT__BASE_URL`                       | Your port base url, relevant only if not using the default port app                                                | ❌       |
+| Parameter                                     | Description                                                                                                                                       | Required |
+| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `OCEAN__INTEGRATION__CONFIG__TOKEN`           | The Snyk API token                                                                                                                                | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID` | The Snyk organization ID. Provide this parameter to limit access to a specific organization.                                                      | ❌       |
+| `OCEAN__INTEGRATION__CONFIG__GROUPS`          | A comma-separated list of Snyk group ids to filter data for. Provide this parameter to limit access to all organizations within specific group(s) | ❌       |
+| `OCEAN__INTEGRATION__CONFIG__API_URL`         | The Snyk API URL. If not specified, the default will be https://api.snyk.io                                                                       | ❌       |
+| `OCEAN__INITIALIZE_PORT_RESOURCES`            | Default true, When set to false the integration will not create default blueprints and the port App config Mapping                                | ❌       |
+| `OCEAN__INTEGRATION__IDENTIFIER`              | Change the identifier to describe your integration, if not set will use the default one                                                           | ❌       |
+| `OCEAN__PORT__CLIENT_ID`                      | Your port client id                                                                                                                               | ✅       |
+| `OCEAN__PORT__CLIENT_SECRET`                  | Your port client secret                                                                                                                           | ✅       |
+| `OCEAN__PORT__BASE_URL`                       | Your port base url, relevant only if not using the default port app                                                                               | ❌       |
 
 <br/>
 
@@ -299,8 +304,8 @@ of `Secret Text` type:
 | Parameter                                     | Description                                                                                                                                                      | Required |
 | --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
 | `OCEAN__INTEGRATION__CONFIG__TOKEN`           | The Snyk API token                                                                                                                                               | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID` | The Snyk organization ID. Provide this parameter to limit access to a specific organization | ❌  |
-| `OCEAN__INTEGRATION__CONFIG__GROUPS` | A comma-separated list of Snyk group ids to filter data for. Provide this parameter to limit access to all organizations within specific group(s)                                       | ❌      |
+| `OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID` | The Snyk organization ID. Provide this parameter to limit access to a specific organization                                                                      | ❌       |
+| `OCEAN__INTEGRATION__CONFIG__GROUPS`          | A comma-separated list of Snyk group ids to filter data for. Provide this parameter to limit access to all organizations within specific group(s)                | ❌       |
 | `OCEAN__INTEGRATION__CONFIG__API_URL`         | The Snyk API URL. If not specified, the default will be https://api.snyk.io                                                                                      | ❌       |
 | `OCEAN__INITIALIZE_PORT_RESOURCES`            | Default true, When set to false the integration will not create default blueprints and the port App config Mapping                                               | ❌       |
 | `OCEAN__INTEGRATION__IDENTIFIER`              | Change the identifier to describe your integration, if not set will use the default one                                                                          | ❌       |
@@ -366,8 +371,8 @@ Make sure to configure the following variables using [Azure Devops variable grou
 | Parameter                                     | Description                                                                                                                                                      | Required |
 | --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
 | `OCEAN__INTEGRATION__CONFIG__TOKEN`           | The Snyk API token                                                                                                                                               | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID` | The Snyk organization ID. Provide this parameter to limit access to a specific organization | ❌  |
-| `OCEAN__INTEGRATION__CONFIG__GROUPS` | A comma-separated list of Snyk group ids to filter data for. Provide this parameter to limit access to all organizations within specific group(s)                                       | ❌      |
+| `OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID` | The Snyk organization ID. Provide this parameter to limit access to a specific organization                                                                      | ❌       |
+| `OCEAN__INTEGRATION__CONFIG__GROUPS`          | A comma-separated list of Snyk group ids to filter data for. Provide this parameter to limit access to all organizations within specific group(s)                | ❌       |
 | `OCEAN__INTEGRATION__CONFIG__API_URL`         | The Snyk API URL. If not specified, the default will be https://api.snyk.io                                                                                      | ❌       |
 | `OCEAN__INITIALIZE_PORT_RESOURCES`            | Default true, When set to false the integration will not create default blueprints and the port App config Mapping                                               | ❌       |
 | `OCEAN__INTEGRATION__IDENTIFIER`              | Change the identifier to describe your integration, if not set will use the default one                                                                          | ❌       |
@@ -381,7 +386,7 @@ Here is an example for `snyk-integration.yml` pipeline file:
 
 ```yaml showLineNumbers
 trigger:
-- main
+  - main
 
 pool:
   vmImage: "ubuntu-latest"
@@ -389,27 +394,25 @@ pool:
 variables:
   - group: port-ocean-credentials # OCEAN__PORT__CLIENT_ID, OCEAN__PORT__CLIENT_SECRET, OCEAN__INTEGRATION__CONFIG__TOKEN
 
-
 steps:
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    # Set Docker image and run the container
-    integration_type="snyk"
-    version="latest"
+  - script: |
+      echo Add other tasks to build, test, and deploy your project.
+      # Set Docker image and run the container
+      integration_type="snyk"
+      version="latest"
 
-    image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
+      image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
 
-    docker run -i --rm \
-    -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
-    -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-    -e OCEAN__INTEGRATION__CONFIG__TOKEN=${OCEAN__INTEGRATION__CONFIG__TOKEN} \
-    -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \
-    -e OCEAN__PORT__CLIENT_SECRET=${OCEAN__PORT__CLIENT_SECRET} \
-    $image_name
+      docker run -i --rm \
+      -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+      -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+      -e OCEAN__INTEGRATION__CONFIG__TOKEN=${OCEAN__INTEGRATION__CONFIG__TOKEN} \
+      -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \
+      -e OCEAN__PORT__CLIENT_SECRET=${OCEAN__PORT__CLIENT_SECRET} \
+      $image_name
 
-    exit $?
-  displayName: 'Ingest Synk Data into Port'
-
+      exit $?
+    displayName: "Ingest Synk Data into Port"
 ```
 
   </TabItem>
@@ -595,7 +598,7 @@ Examples of blueprints and the relevant integration configurations:
 ```yaml showLineNumbers
 - kind: organization
   selector:
-    query: 'true'
+    query: "true"
   port:
     entity:
       mappings:
@@ -606,8 +609,8 @@ Examples of blueprints and the relevant integration configurations:
           slug: .slug
           url: ("https://app.snyk.io/org/" + .slug | tostring)
 ```
-</details>
 
+</details>
 
 ### Target
 
@@ -737,12 +740,7 @@ Examples of blueprints and the relevant integration configurations:
         "type": "array",
         "items": {
           "type": "string",
-          "enum": [
-            "critical",
-            "high",
-            "medium",
-            "low"
-          ]
+          "enum": ["critical", "high", "medium", "low"]
         },
         "icon": "DefaultProperty"
       },
@@ -770,11 +768,7 @@ Examples of blueprints and the relevant integration configurations:
         "type": "array",
         "items": {
           "type": "string",
-          "enum": [
-            "development",
-            "sandbox",
-            "production"
-          ]
+          "enum": ["development", "sandbox", "production"]
         },
         "icon": "DefaultProperty"
       },
@@ -834,7 +828,7 @@ Examples of blueprints and the relevant integration configurations:
 ```yaml showLineNumbers
 - kind: project
   selector:
-    query: 'true'
+    query: "true"
   port:
     entity:
       mappings:
@@ -870,78 +864,72 @@ Examples of blueprints and the relevant integration configurations:
   "identifier": "snykVulnerability",
   "title": "Snyk Vulnerability",
   "icon": "Snyk",
-  "schema": {
-    "properties": {
-      "score": {
-        "icon": "Star",
-        "type": "number",
-        "title": "Score"
-      },
-      "packageName": {
-        "type": "string",
-        "title": "Package Name",
-        "icon": "DefaultProperty"
-      },
-      "packageVersions": {
-        "icon": "Package",
-        "title": "Package Versions",
-        "type": "array"
-      },
-      "type": {
-        "type": "string",
-        "title": "Type",
-        "enum": [
-          "vuln",
-          "license",
-          "configuration"
-        ],
-        "icon": "DefaultProperty"
-      },
-      "severity": {
-        "icon": "Alert",
-        "title": "Issue Severity",
-        "type": "string",
-        "enum": [
-          "low",
-          "medium",
-          "high",
-          "critical"
-        ],
-        "enumColors": {
-          "low": "green",
-          "medium": "yellow",
-          "high": "red",
-          "critical": "red"
-        }
-      },
-      "url": {
-        "icon": "Link",
-        "type": "string",
-        "title": "Issue URL",
-        "format": "url"
-      },
-      "language": {
-        "type": "string",
-        "title": "Language",
-        "icon": "DefaultProperty"
-      },
-      "publicationTime": {
-        "type": "string",
-        "format": "date-time",
-        "title": "Publication Time",
-        "icon": "DefaultProperty"
-      },
-      "isPatched": {
-        "type": "boolean",
-        "title": "Is Patched",
-        "icon": "DefaultProperty"
-      }
+  "schema":
+    {
+      "properties":
+        {
+          "score": { "icon": "Star", "type": "number", "title": "Score" },
+          "packageName":
+            {
+              "type": "string",
+              "title": "Package Name",
+              "icon": "DefaultProperty",
+            },
+          "packageVersions":
+            { "icon": "Package", "title": "Package Versions", "type": "array" },
+          "type":
+            {
+              "type": "string",
+              "title": "Type",
+              "enum": ["vuln", "license", "configuration"],
+              "icon": "DefaultProperty",
+            },
+          "severity":
+            {
+              "icon": "Alert",
+              "title": "Issue Severity",
+              "type": "string",
+              "enum": ["low", "medium", "high", "critical"],
+              "enumColors":
+                {
+                  "low": "green",
+                  "medium": "yellow",
+                  "high": "red",
+                  "critical": "red",
+                },
+            },
+          "url":
+            {
+              "icon": "Link",
+              "type": "string",
+              "title": "Issue URL",
+              "format": "url",
+            },
+          "language":
+            {
+              "type": "string",
+              "title": "Language",
+              "icon": "DefaultProperty",
+            },
+          "publicationTime":
+            {
+              "type": "string",
+              "format": "date-time",
+              "title": "Publication Time",
+              "icon": "DefaultProperty",
+            },
+          "isPatched":
+            {
+              "type": "boolean",
+              "title": "Is Patched",
+              "icon": "DefaultProperty",
+            },
+        },
+      "required": [],
     },
-    "required": []
-  },
   "mirrorProperties": {},
   "calculationProperties": {},
-  "relations": {}
+  "relations": {},
 }
 ```
 
@@ -974,7 +962,185 @@ Examples of blueprints and the relevant integration configurations:
 
 </details>
 
+## Let's Test It
+
+This section includes a sample response data from Snyk. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+
+### Payload
+
+Here is an example of the payload structure from Snyk:
+
+<details>
+<summary>Organization response data</summary>
+
+```json showLineNumbers
+{
+  "name": "My Other Org",
+  "id": "a04d9cbd-ae6e-44af-b573-0556b0ad4bd2",
+  "slug": "my-other-org",
+  "url": "https://api.snyk.io/org/my-other-org",
+  "group": {
+    "name": "ACME Inc.",
+    "id": "a060a49f-636e-480f-9e14-38e773b2a97f"
+  }
+}
+```
+
+</details>
+
+<details>
+<summary>Target response data</summary>
+
+```json showLineNumbers
+
+```
+
+</details>
+
+<details>
+<summary>Project response data</summary>
+
+```json showLineNumbers
+{
+  "name": "snyk/goof",
+  "id": "af137b96-6966-46c1-826b-2e79ac49bbd9",
+  "created": "2018-10-29T09:50:54.014Z",
+  "origin": "github",
+  "type": "maven",
+  "readOnly": false,
+  "testFrequency": "daily",
+  "totalDependencies": 42,
+  "issueCountsBySeverity": {
+    "low": 13,
+    "medium": 8,
+    "high": 1,
+    "critical": 3
+  },
+  "imageId": "sha256:caf27325b298a6730837023a8a342699c8b7b388b8d878966b064a1320043019",
+  "imageTag": "latest",
+  "imageBaseImage": "alpine:3",
+  "imagePlatform": "linux/arm64",
+  "imageCluster": "Production",
+  "hostname": null,
+  "remoteRepoUrl": "https://github.com/snyk/goof.git",
+  "lastTestedDate": "2019-02-05T08:54:07.704Z",
+  "browseUrl": "https://app.snyk.io/org/4a18d42f-0706-4ad0-b127-24078731fbed/project/af137b96-6966-46c1-826b-2e79ac49bbd9",
+  "importingUser": {
+    "id": "e713cf94-bb02-4ea0-89d9-613cce0caed2",
+    "name": "example-user@snyk.io",
+    "username": "exampleUser",
+    "email": "example-user@snyk.io"
+  },
+  "isMonitored": false,
+  "branch": null,
+  "targetReference": null,
+  "tags": [
+    {
+      "key": "example-tag-key",
+      "value": "example-tag-value"
+    }
+  ],
+  "attributes": {
+    "criticality": ["high"],
+    "environment": ["backend"],
+    "lifecycle": ["development"]
+  },
+  "remediation": {
+    "upgrade": {},
+    "patch": {},
+    "pin": {}
+  }
+}
+```
+
+</details>
+
+<details>
+<summary>Vulnerability response data</summary>
+
+```json showLineNumbers
+{
+  "id": "npm:ms:20170412",
+  "issueType": "vuln",
+  "pkgName": "ms",
+  "pkgVersions": ["1.0.0"],
+  "issueData": {
+    "id": "npm:ms:20170412",
+    "title": "Regular Expression Denial of Service (ReDoS)",
+    "severity": "low",
+    "originalSeverity": "high",
+    "url": "https://snyk.io/vuln/npm:ms:20170412",
+    "description": "`## Overview\\r\\n[`ms`](https://www.npmjs.com/package/ms) is a tiny millisecond conversion utility.\\r\\n\\r\\nAffected versions of this package are vulnerable to Regular Expression Denial of Service (ReDoS) due to an incomplete fix for previously reported vulnerability [npm:ms:20151024](https://snyk.io/vuln/npm:ms:20151024). The fix limited the length of accepted input string to 10,000 characters, and turned to be insufficient making it possible to block the event loop for 0.3 seconds (on a typical laptop) with a specially crafted string passed to `ms",
+    "identifiers": {
+      "CVE": [],
+      "CWE": ["CWE-400"],
+      "OSVDB": []
+    },
+    "credit": ["Snyk Security Research Team"],
+    "exploitMaturity": "no-known-exploit",
+    "semver": {
+      "vulnerable": [">=0.7.1 <2.0.0"],
+      "unaffected": ""
+    },
+    "publicationTime": "2017-05-15T06:02:45Z",
+    "disclosureTime": "2017-04-11T21:00:00Z",
+    "CVSSv3": "CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L",
+    "cvssScore": 3.7,
+    "language": "js",
+    "patches": [
+      {
+        "id": "patch:npm:ms:20170412:0",
+        "urls": [
+          "https://snyk-patches.s3.amazonaws.com/npm/ms/20170412/ms_100.patch"
+        ],
+        "version": "=1.0.0",
+        "comments": [],
+        "modificationTime": "2019-12-03T11:40:45.863964Z"
+      }
+    ],
+    "nearestFixedInVersion": "2.0.0",
+    "path": "[DocId: 1].input.spec.template.spec.containers[snyk2].securityContext.privileged",
+    "violatedPolicyPublicId": "SNYK-CC-K8S-1",
+    "isMaliciousPackage": true
+  },
+  "introducedThrough": [
+    {
+      "kind": "imageLayer",
+      "data": {}
+    }
+  ],
+  "isPatched": false,
+  "isIgnored": false,
+  "ignoreReasons": [
+    {
+      "reason": "",
+      "expires": "",
+      "source": "cli"
+    }
+  ],
+  "fixInfo": {
+    "isUpgradable": false,
+    "isPinnable": false,
+    "isPatchable": false,
+    "isFixable": false,
+    "isPartiallyFixable": false,
+    "nearestFixedInVersion": "2.0.0",
+    "fixedIn": ["2.0.0"]
+  },
+  "priority": {
+    "score": 399,
+    "factors": [{}, "name: `isFixable`", "description: `Has a fix available`"]
+  },
+  "links": {
+    "paths": ""
+  }
+}
+```
+
+</details>
+
 ## Alternative installation via webhook
+
 While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from Snyk. If so, use the following instructions:
 
 <details>
@@ -1051,4 +1217,5 @@ curl -X POST \
 :::
 
 Done! Any vulnerability detected on your source code will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+
 </details>

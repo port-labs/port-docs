@@ -112,3 +112,153 @@ Done! any problem detected on your Dynatrace entity will trigger a webhook event
 In this example you will create a `dynatrace_entity` blueprint that ingests monitored entities from your Dynatrace account. You will then add some python script to make API calls to Dynatrace REST API and fetch data for your account.
 
 - [Code Repository Example](https://github.com/port-labs/example-dynatrace-entities)
+
+## Let's Test It
+
+This section includes a sample response data from Dynatrace. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+
+### Payload
+
+Here is an example of the payload structure from Dynatrace:
+
+<details>
+<summary>Problem response data</summary>
+
+```json showLineNumbers
+{
+  "affectedEntities": [
+    {
+      "entityId": {
+        "id": "string",
+        "type": "string"
+      },
+      "name": "string"
+    }
+  ],
+  "displayId": "string",
+  "endTime": 1574697669865,
+  "entityTags": [
+    {
+      "context": "CONTEXTLESS",
+      "key": "architecture",
+      "stringRepresentation": "architecture:x86",
+      "value": "x86"
+    },
+    {
+      "context": "ENVIRONMENT",
+      "key": "Infrastructure",
+      "stringRepresentation": "[ENVIRONMENT]Infrastructure:Linux",
+      "value": "Linux"
+    }
+  ],
+  "evidenceDetails": {
+    "details": [
+      {
+        "displayName": "Availability evidence",
+        "entity": {},
+        "evidenceType": "AVAILABILITY_EVIDENCE",
+        "groupingEntity": {},
+        "rootCauseRelevant": true,
+        "startTime": 1
+      },
+      {
+        "displayName": "User action evidence",
+        "entity": {},
+        "evidenceType": "USER_ACTION_EVIDENCE",
+        "groupingEntity": {},
+        "rootCauseRelevant": true,
+        "startTime": 1
+      }
+    ],
+    "totalCount": 1
+  },
+  "impactAnalysis": {
+    "impacts": [
+      {
+        "estimatedAffectedUsers": 1,
+        "impactType": "APPLICATION",
+        "impactedEntity": {}
+      }
+    ]
+  },
+  "impactLevel": "APPLICATION",
+  "impactedEntities": [{}],
+  "linkedProblemInfo": {
+    "displayId": "string",
+    "problemId": "string"
+  },
+  "managementZones": [
+    {
+      "id": "string",
+      "name": "HOST"
+    }
+  ],
+  "problemFilters": [
+    {
+      "id": "E2A930951",
+      "name": "BASELINE"
+    }
+  ],
+  "problemId": "06F288EE2A930951",
+  "recentComments": {
+    "comments": [
+      {
+        "authorName": "string",
+        "content": "string",
+        "context": "string",
+        "createdAtTimestamp": 1,
+        "id": "string"
+      }
+    ],
+    "nextPageKey": "AQAAABQBAAAABQ==",
+    "pageSize": 1,
+    "totalCount": 1
+  },
+  "rootCauseEntity": {},
+  "severityLevel": "AVAILABILITY",
+  "startTime": 1574697667547,
+  "status": "CLOSED",
+  "title": "title"
+}
+```
+
+</details>
+
+### Mapping Result
+
+The combination of the sample payload and the Ocean configuration generates the following Port entity:
+
+
+<details>
+<summary>Problem entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "06F288EE2A930951",
+  "title": "title",
+  "blueprint": "dynatraceProblem",
+  "team": [],
+  "icon": "Dynatrace",
+  "properties": {
+    "entityTags": ["architecture:x86", "[ENVIRONMENT]Infrastructure:Linux"],
+    "evidenceDetails": ["Availability evidence", "User action evidence"],
+    "managementZones": ["HOST"],
+    "problemFilters": ["BASELINE"],
+    "severityLevel": "AVAILABILITY",
+    "status": "CLOSED",
+    "startTime": "2019-11-25T14:14:27Z",
+    "endTime": "2020-04-30T14:52:41Z"
+  },
+  "relations": {
+    "impactedEntities": ["HOST-06F288EE2A930951"],
+    "linkedProblemInfo": "06F288EE2A930951",
+    "rootCauseEntity": "HOST-06F288EE2A930951"
+  },
+  "createdAt": "2024-2-6T09:30:57.924Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2024-2-6T11:49:20.881Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
