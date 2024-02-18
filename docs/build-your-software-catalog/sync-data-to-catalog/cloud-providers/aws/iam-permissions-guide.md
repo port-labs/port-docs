@@ -2,7 +2,7 @@
 sidebar_position: 5
 ---
 
-# AWS IAM permission management
+# AWS IAM Permission Management
 
 Developers need access to different cloud resources on a daily basis. With all of your most important AWS resources being exported to Port, you can create an experience for requesting IAM permissions for your developers.
 
@@ -11,9 +11,8 @@ It is important to be able to keep track of the permissions being allocated to y
 In this step-by-step guide, you wou will create Port blueprints and actions, which will allow you to request and revoke IAM permissions for different AWS resources using Port. You will also be able to keep track of which permissions were requested, and who requested them.
 
 ## Prerequisites
-- In your Github organization, create a new repository called `port-iam-permissions`. This repository will be used to hold our Github workflows.
-- Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new). Make sure to give the Port Github app permissions for the `port-iam-permissions` repository.
-- In your AWS console, [create an IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html) called `port-iam-management-user` with the following IAM permission policy:
+- Prepare your Port organization's Client ID and Secret. To find you Port credentials, click [here](/docs/build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials)!
+- In your AWS console, [create an IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html) called `port-iam-management-user` with the following IAM permissions policy:
     <details>
 
         <summary>IAM policy json </summary>
@@ -37,7 +36,18 @@ In this step-by-step guide, you wou will create Port blueprints and actions, whi
         }
         ```
     </details>
-- [Create access credentials](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html) for the IAM user `port-iam-management-user` (`AWS_ACCEESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`).
+- [Create access credentials](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html) for the IAM user `port-iam-management-user` (`AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`).
+
+- In your Github organization, create a new repository called `port-iam-permissions`. You will use this repository to maintain your Github workflows, and other dependency files.
+
+- Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new). Make sure to give the Port Github app permissions for the `port-iam-permissions` repository.
+
+- Create the following secrets as [Github Actions secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions) in the `port-iam-permissions` repository:
+    - `PORT_CLIENT_ID` - Your Port Client ID.
+    - `PORT_CLIENT_SECRET` - Your Port Client Secret.
+    - `AWS_ACCESS_KEY_ID` - The `AWS_ACCESS_KEY_ID` generated for the `port-iam-management-user` IAM user.
+    - `AWS_SECRET_ACCESS_KEY` - The `AWS_SECRET_ACCESS_KEY` generated for the `port-iam-management-user` IAM user.
+    - `AWS_REGION` - Your primary AWS region (you can set this to `us-east-1` if you are unsure).
 
 ## Data Model
 For this guide, we will be creating [blueprints](/docs/build-your-software-catalog/define-your-data-model/define-your-data-model.md) responsible for managing and keeping track of your different AWS resources, and your developers' IAM permission requests. 
@@ -205,14 +215,221 @@ We want to be able to provision and revoke permissions for AWS resources from Po
 
 To do so, we will define Port actions using the Port UI. These actions will trigger Github workflows which will be used as our actions' backends.
 
-### Creating the Github Workflows
+### Actions backend - Github Workflows
+As mentioned in the [prerequisites](#prerequisites), in this guide we will be using [Github actions](https://docs.github.com/en/actions) as a backend for our Port actions. To do this, we will create 2 Github workflow files, and 2 JSON files which will be used as templates for developer IAM permissions. 
+
+The files mentioned above should be created in the `port-iam-permissions` repository you set up in the prerequisites section.
+
+In the workflow files, we will be using the [AWS CLI](https://aws.amazon.com/cli/) to interact with AWS, and to create and delete the relevant resources when managing the IAM permissions using Port.
+
+Create the following files your `port-iam-permissions` repository, in the correct folder as appears in the filename:
+
+<details>
+    <summary>`Create permissions for AWS resource` Github workflow</summary>
+
+    This workflow is responsible for creating new IAM permissions for an AWS resource.
+
+    ```yaml showLineNumber title=".github/workflows/create-iam-permissions.yaml"
+    name: Create permissions for AWS resource
+    on:
+        workflow_dispatch:
+            inputs:
+                port_payload:
+                    type: string
+                    required: true
+                    description: The Port Payload for triggering this action                
+
+    jobs:
+        create-iam-permissions:
+            name: Create IAM permissions
+            runs-on: ubuntu-latest
+            env:
+            POLICY_NAME: Permission-${{github.run_id}}
+            steps:
+                - uses: actions/checkout@v3
+                with:
+                    persist-credentials: true
+                - name: Configure AWS Credentials
+                uses: aws-actions/configure-aws-credentials@v4
+                with:
+                    aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                    aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                    aws-region: ${{ secrets.AWS_REGION }}
+                - name: Create JSON for permissions
+                id: create-jsons
+                run: |
+                    permissions=$(echo '${{ inputs.port_payload }}' | jq -c '.payload.properties.permissions')
+                    echo "PERMISSIONS_ARRAY=${permissions}" >> $GITHUB_OUTPUT
+                    jq -r --argjson permissions "${permissions}" --arg resource "${{fromJson(inputs.port_payload).context.entity}}/*" '.Statement[0].Action=$permissions | .Statement[0].Resource=$resource' .github/templates/iamPolicyDocument.json > temp_policy_document.json
+                    jq -r --arg aws_acc_id "${{ secrets.AWS_ACCOUNT_ID }}" '.Statement[0].Principal.AWS="arn:aws:iam::"+$aws_acc_id+":root"' .github/templates/iamTrustPolicy.json > temp_trust_policy.json
+                - name: Apply policies and attachments
+                id: apply-policies
+                run: |
+                    # Create the policy
+                    policy_arn=$(aws iam create-policy --policy-name $POLICY_NAME --policy-document file://temp_policy_document.json --no-cli-pager | jq '.Policy.Arn')
+                    echo ${policy_arn}
+                    echo "POLICY_ARN=${policy_arn}" >> $GITHUB_OUTPUT
+                    # Create the role with assume-role policy
+                    echo "ROLE_ARN=$(aws iam create-role --role-name $POLICY_NAME --assume-role-policy-document file://temp_trust_policy.json --no-cli-pager | jq '.Role.Arn')" >> $GITHUB_OUTPUT
+                    # Attach policy to the role
+                    aws iam attach-role-policy --role-name $POLICY_NAME --policy-arn arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:policy/$POLICY_NAME
+                - name: Create varialbes
+                id: create-variables
+                run: |
+                    echo "POLICY=$(cat temp_policy_document.json | jq -c '.')" >> $GITHUB_OUTPUT
+                    echo "SIGN_IN_URL=https://signin.aws.amazon.com/switchrole?account=${{ secrets.AWS_ACCOUNT_ID }}&roleName=${{ env.POLICY_NAME }}&displayName=${{ env.POLICY_NAME }}" >> $GITHUB_OUTPUT
+                - name: "Report permission to Port 🚢"
+                uses: port-labs/port-github-action@v1
+                with:
+                    clientId: ${{ secrets.PORT_CLIENT_ID }}
+                    clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+                    identifier: ${{ env.POLICY_NAME }}
+                    title: ${{ env.POLICY_NAME }}
+                    blueprint: provisioned_permissions
+                    properties: |
+                    {
+                        "iam_policy": ${{ steps.create-variables.outputs.POLICY }},
+                        "requester": "${{ fromJson(inputs.port_payload).trigger.by.user.email }}",
+                        "sign_in_url": "${{ steps.create-variables.outputs.SIGN_IN_URL }}",
+                        "role_arn": ${{ steps.apply-policies.outputs.ROLE_ARN }},
+                        "policy_arn": ${{ steps.apply-policies.outputs.POLICY_ARN }}
+                    }
+                    relations: |
+                    {
+                        "aws_resource": "${{ fromJson(inputs.port_payload).context.entity }}",
+                        "permissions": ${{ steps.create-jsons.outputs.PERMISSIONS_ARRAY }}
+                    }
+                - uses: port-labs/port-github-action@v1
+                with:
+                    clientId: ${{ secrets.PORT_CLIENT_ID }}
+                    clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+                    operation: PATCH_RUN
+                    runId: ${{ fromJson(inputs.port_payload).context.runId}}
+                    logMessage: |
+                    Created permission for the AWS resource "${{ fromJson(inputs.port_payload).context.entity }}"🚀
+                    Requester for this permission is: ${{ fromJson(inputs.port_payload).trigger.by.user.email }}
+                    The sign-in URL: ${{ steps.create-variables.outputs.SIGN_IN_URL }}
+    ```
+</details>
+
+<details>
+    <summary>`Create permissions for AWS resource` Github workflow</summary>
+
+    This workflow is responsible for deleting IAM permissions for an AWS resource.
+
+    ```yaml showLineNumber title=".github/workflows/delete-iam-permissions.yaml"
+   name: Delete IAM permissions for AWS resource
+    on:
+        workflow_dispatch:
+            inputs:
+                port_payload:
+                    type: string
+                    required: true
+                    description: The Port Payload for triggering this action                
+
+    jobs:
+        delete-permissions:
+            name: Delete IAM permissions
+            runs-on: ubuntu-latest
+            env:
+            POLICY_ARN: ${{ fromJson(inputs.port_payload).payload.entity.properties.policy_arn }}
+            steps:
+                - uses: actions/checkout@v3
+                with:
+                    persist-credentials: true
+                - name: Configure AWS Credentials
+                uses: aws-actions/configure-aws-credentials@v4
+                with:
+                    aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                    aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                    aws-region: ${{ secrets.AWS_REGION }}
+                - name: Delete policies
+                id: delete-policies
+                run: |
+                    # Detach the policy from the role
+                    aws iam detach-role-policy --role-name ${{ fromJson(inputs.port_payload).context.entity }} --policy-arn ${{ env.POLICY_ARN }}
+                    # Delete the policy
+                    aws iam delete-policy --policy-arn "${{ env.POLICY_ARN }}" --no-cli-pager
+                    # Delete the role
+                    aws iam delete-role --role-name ${{ fromJson(inputs.port_payload).context.entity }} --no-cli-pager
+                - name: "Delete permission from Port 🚢"
+                uses: port-labs/port-github-action@v1
+                with:
+                    clientId: ${{ secrets.PORT_CLIENT_ID }}
+                    clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+                    identifier: ${{ fromJson(inputs.port_payload).context.entity }}
+                    operation: DELETE
+                    blueprint: provisioned_permissions
+                - uses: port-labs/port-github-action@v1
+                with:
+                    clientId: ${{ secrets.PORT_CLIENT_ID }}
+                    clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+                    operation: PATCH_RUN
+                    runId: ${{ fromJson(inputs.port_payload).context.runId}}
+                    logMessage: |
+                    Permission "${{ fromJson(inputs.port_payload).context.entity}}" has been deleted.
+                    To get more information regarding this deletion, contact "${{ fromJson(inputs.port_payload).trigger.by.user.email }}".
+    ```
+
+</details> 
+
+<details>
+    <summary>IAM policy JSON template file</summary>
+
+    This file will act as a template for the generated IAM policies.
+
+    ```json showLineNumber title=".github/templates/iamPolicyDocument.yaml"
+   {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Effect": "Allow",
+                "Action": [],
+                "Resource": ""
+            }
+        ]
+    }
+    ```
+
+</details> 
+<details>
+    <summary>IAM trust policy JSON template file</summary>
+
+    This file will act as a template for the generated IAM trust policies.
+    
+    ***Replace the `<YOUR_AWS_ACCOUNT_ID>` with the AWS account ID you want to allocate permissions for.***
+
+    ```json showLineNumber title=".github/templates/iamTrustPolicy.yaml"
+    {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Effect": "Allow",
+                "Principal": {"AWS": "arn:aws:iam::<YOUR_AWS_ACCOUNT_ID>:root"}, 
+                "Action": "sts:AssumeRole"
+            }
+        ]
+    }
+
+    ```
+
+</details> 
 
 ### Creating the Port actions
-We will be creating two action, one to trigger the , and revoking them:
-<details>
-    <summary>`Request permissions` action</summary>
+After creating our backend in Github, we need to create the Port actions to trigger these workflows.
 
-    This is a `DAY-2` actions on the `AWS Resource` blueprint, for requesting and provisioning new IAM permissions.
+:::tip
+Don't know how to create Port actions using JSONs in the Port UI?
+Click [here](https://docs.getport.io/create-self-service-experiences/setup-ui-for-action/?configure=ui#configuring-actions-in-port)!
+:::
+
+Let's create the Port actions to tirgger the workflows we just created:
+<details>
+    <summary>`Request permissions` Port action</summary>
+
+    This is a `DAY-2` action on the `AWS Resource` blueprint, for requesting and provisioning new IAM permissions.
+
+    ***Replace the `<YOUR_GITHUB_ORG>` with your Github organization.***
 
     ```json showLineNumber
     {
@@ -235,7 +452,7 @@ We will be creating two action, one to trigger the , and revoking them:
                                     "property": "resource_type",
                                     "operator": "=",
                                     "value": {
-                                        "jqQuery": ".entity.properties.resource_type"
+                                    "jqQuery": ".entity.properties.resource_type"
                                     }
                                 }
                             ]
@@ -244,16 +461,16 @@ We will be creating two action, one to trigger the , and revoking them:
                 }
             },
             "required": [
-                "permissions"
+            "permissions"
             ],
             "order": [
-                "permissions"
+            "permissions"
             ]
         },
         "invocationMethod": {
             "type": "GITHUB",
-            "org": "<YOUR_GITHUB_ORG",
-            "repo": "iam-permissions-handler",
+            "org": "<YOUR_GITHUB_ORG>",
+            "repo": "port-iam-permissions",
             "workflow": "create-iam-permissions.yaml",
             "omitUserInputs": true,
             "omitPayload": false,
@@ -266,7 +483,37 @@ We will be creating two action, one to trigger the , and revoking them:
     ```
 </details>
 
-- `Request Permissions` - A `DAY-2` action for the `AWS Resource` blueprint.
-- `Revoke Permissions` - A `DELETE` action for the `Provisioned Permission` blueprint.
+<details>
+    <summary>`Revoke permissions` Port action</summary>
 
+    This is a `DELETE` action on the `Provisioned Permissions` blueprint, for revoking IAM permissions.
 
+    ***Replace the `<YOUR_GITHUB_ORG>` with your Github organization.***
+
+    ```json showLineNumber
+    {
+        "identifier": "revoke_permissions",
+        "title": "Revoke permissions",
+        "icon": "Alert",
+        "userInputs": {
+            "properties": {},
+            "required": []
+        },
+        "invocationMethod": {
+            "type": "GITHUB",
+            "org": "<YOUR_GITHUB_ORG>",
+            "repo": "port-iam-permissions",
+            "workflow": "delete-iam-permissions.yaml",
+            "omitUserInputs": true,
+            "omitPayload": false,
+            "reportWorkflowStatus": true
+        },
+        "trigger": "DELETE",
+        "description": "Revokes IAM permissions",
+        "requiredApproval": false
+    }
+    ```
+</details>
+
+## Next Steps
+- Install Port's AWS exporter
