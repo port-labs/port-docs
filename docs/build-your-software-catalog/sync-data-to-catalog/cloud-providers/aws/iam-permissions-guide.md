@@ -2,7 +2,7 @@
 sidebar_position: 5
 ---
 
-# AWS IAM permission requests
+# AWS IAM permission management
 
 Developers need access to different cloud resources on a daily basis. With all of your most important AWS resources being exported to Port, you can create an experience for requesting IAM permissions for your developers.
 
