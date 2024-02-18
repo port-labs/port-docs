@@ -1,8 +1,13 @@
 ---
 sidebar_position: 5
+tags:
+  - AWS
+  - IAM Permissions
+  - Guide
 ---
 
 # AWS IAM Permission Management
+
 
 Developers need access to different cloud resources on a daily basis. With all of your most important AWS resources being exported to Port, you can create an experience for requesting IAM permissions for your developers directly from Port.
 
@@ -461,10 +466,10 @@ Let's create the Port actions to tirgger the workflows we just created:
                 }
             },
             "required": [
-            "permissions"
+                "permissions"
             ],
             "order": [
-            "permissions"
+                "permissions"
             ]
         },
         "invocationMethod": {
