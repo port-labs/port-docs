@@ -416,7 +416,7 @@ Create the following files your `port-iam-permissions` repository, in the correc
 </details> 
 
 ### Creating the Port actions
-After creating our backend in Github, we need to create the Port actions to trigger these workflows.
+After creating our backend in Github, we need to create the Port actions to trigger the workflows we created.
 
 :::tip
 Don't know how to create Port actions using JSONs in the Port UI?
