@@ -1,10 +1,5 @@
----
-sidebar_position: 1
-title: Build your Software Catalog
-sidebar_label: 🏗️ Build your Software Catalog
----
 
-# 🏗️ Build your Software Catalog
+# 🏗️ Build a Software Catalog
 
 <center>
 

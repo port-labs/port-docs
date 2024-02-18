@@ -29,18 +29,17 @@ Blueprints are completely customizable, and they support any number of propertie
 
 Blueprints can be used to represent any asset in your software catalog, for example:
 
-- Microservices;
-- Packages;
-- Package versions;
-- CI jobs;
-- K8s Clusters;
-- Cloud accounts;
-- Cloud environments;
-- Developer environments;
-- Service deployment;
-- Pods;
-- VMs;
-- etc.
+- Microservices
+- Packages
+- Package versions
+- CI jobs
+- K8s Clusters
+- Cloud accounts
+- Cloud environments
+- Developer environments
+- Service deployment
+- Pods
+- VMs
 
 In this [live demo](https://demo.getport.io/dev-portal) example, we can see the DevPortal Builder page with all of the blueprints. 🎬
 
