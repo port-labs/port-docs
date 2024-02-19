@@ -17,12 +17,13 @@ Setting up the mapping depends on how you install the agent.
 
 <Tabs groupId="installationMethod" queryString defaultValue="helm" values={[
   {label: "Helm", value: "helm"},
-  {label: "Argo", value:"argo"}
+  {label: "Argo", value:"argo"},
+  {label: "Docker", value:"docker"},
 ]}>
 
 <TabItem value="helm">
 
-In order to provide the mapping configuration to the agent, run the installation command again, and add the following parameter:
+To provide the mapping configuration to the agent, run the installation command again, and add the following parameter:
 
 ```bash showLineNumbers
         --set-file controlThePayloadConfig=/PATH/TO/LOCAL/FILE.yml
@@ -32,7 +33,7 @@ In order to provide the mapping configuration to the agent, run the installation
 
 <TabItem value="argo">
 
-In order to provide the mapping to the agent, add the mapping to the `values.yaml` file created in the installation [here](https://docs.getport.io/create-self-service-experiences/setup-backend/webhook/port-execution-agent/installation-methods/argocd#installation). The needs to be added as a top level field.
+To provide the mapping to the agent, add the mapping to the `values.yaml` file created in the installation [here](https://docs.getport.io/create-self-service-experiences/setup-backend/webhook/port-execution-agent/installation-methods/argocd#installation). The needs to be added as a top level field.
 
 Below you can find the default mapping to use as a starting point:
 
@@ -47,6 +48,15 @@ controlThePayloadConfig: |
   ]
 ```
 </TabItem>
+
+<TabItem value="docker">
+To provide the mapping to the agent, mount the mapping file to the container by adding the following parameter to the `docker run` command:
+
+```bash showLineNumbers
+-v /PATH/TO/LOCAL/FILE.json:/app/control_the_payload_config.json
+```
+</TabItem>
+
 </Tabs>
 
 ### Control the payload mapping
