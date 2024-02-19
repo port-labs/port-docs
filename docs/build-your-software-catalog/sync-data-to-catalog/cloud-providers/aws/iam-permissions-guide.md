@@ -549,6 +549,10 @@ Let's create 2 `AWS Resource` entities:
     * Identifier: `arn:aws:ec2:us-east-1:12345678:instance/i-abc123456789`
     * Resource Type: `EC2`
  
+:::note
+Feel free to add more AWS resources of your own. Make sure that the identifier of the entity matches the AWS ARN of the resource you want to add.
+:::
+
 <p align="center">
 <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/iam-permissions-create-aws-resource-entity.png' width='50%' border='1px' />
 </p>
@@ -569,11 +573,68 @@ Let's create 2 `IAM Permissions` entities:
     * Title: `Stop EC2 Instance`
     * Identifier: `ec2:StopInstances`
     * Resource Type: `EC2`
+
+:::note
+Feel free to add more IAM permissions of your own. Make sure that the identifier of the entity matches the IAM permission you want to add.
+:::
  
 <p align="center">
 <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/iam-permissions-create-iam-permissions-entity.png' width='50%' border='1px' />
 </p>
 
+We are all set!
+
+### Managing permissions
+Now that we finished setting up our Port environment, and our action backends, we are ready to manage IAM permissions for our AWS resources!
+
+#### Provision permissions
+Let's start by creating new temporary permissions for our S3 bucket `my-s3-bucket`, using Port. Navigate to the bucket's [entity page](https://app.getport.io/aws_resourceEntity?identifier=arn%3Aaws%3As3%3A%3A%3Amy-s3-bucket).
+
+Click on the `...` at the top right of the entity screen -> click `Request permissions` -> choose the `s3:PutObject` -> click `Execute`.
+
+This will trigger a new action run which will appear in the right action runs bar. Click on the action run to navigate to the run page.
+
+When the Port action run will end, you will get actions logs showing you info regarding:
+- Which AWS resource were the IAM permissions provisioned for.
+- Who requested the IAM permissions.
+- The sign-in URL for the provisioned role.
+
+The actoin will also create a new `Provisioned Permissions` entity which you can see in the [Provisioned Permissions](https://app.getport.io/provisioned_permissions) catalog page.
+
+Copy the sign-in URL and paste it tou your browser URL bar. Click the `Switch Role` button. 
+
+You are now signed in to your new role, which has permissions as defined the the Port action! 🥳
+
+<p align="center">
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/iam-permissions-provision-permissions-action.png' width='75%' border='1px' />
+</p>
+#### Revoke permissions
+Now, we want to revoke the permissions we provisioned for our S3 bucket `my-s3-bucket`. Let's navigate to our new `Provisioned Permission` entity.
+
+Navigate to the [Provisioned Permissions](https://app.getport.io/provisioned_permissions) catalog page -> Click on the new `Permission-XXXXXXXX` entity.
+
+Click on the `...` at the top right of the entity screen -> click `Revoke permissions` -> click `Delete`.
+
+This will trigger a new action run which will appear in the right action runs bar. Click on the action run to navigate to the run page.
+
+When the Port action run will end, you will get actions logs showing you info regarding:
+- Which IAM Permission was deleted.
+- Who is responsible for deleting the IAM permission.
+
+The acion will also delete the `Provisioned Permissions` entity which was created when the permissions were provisionsed.
+
+We can retry the previous sign-in URL, and see that it no longer works ❌
+
+<p align="center">
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/iam-permissions-revoke-permissions-action.png' width='75%' border='1px' />
+</p>
+
+## Summary 
+That's it! You are all set up to manage IAM permissions for your different AWS resources using Port!🚀
+
+Feel free to further experiment with the use-case by adding more `IAM Permissions` and `AWS Resources` entities. You can also add more resource types by modifying the `resource_type` property in the `IAM Permissions` and `AWS Resources` blueprints.
+
+See the [Next Steps](#next-steps) section to understand how to take this guide one step further with your Port environment.
 
 ## Next Steps
 - Install Port's AWS exporter
