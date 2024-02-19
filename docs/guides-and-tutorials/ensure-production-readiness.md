@@ -104,7 +104,7 @@ Great! Now that the integration is installed, we should see some new components 
 #### Add an on-call property to the service blueprint
 
 Now that Port is synced with our Pagerduty resources, let's reflect the Pagerduty service's on-call in our services.  
-First, we will need to create a [relation](/build-your-software-catalog/define-your-data-model/relate-blueprints/#what-is-a-relation) between our services and the corresponding Pagerduty services.
+First, we will need to create a [relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/#what-is-a-relation) between our services and the corresponding Pagerduty services.
 
 1. Head back to the [Builder](https://app.getport.io/dev-portal/data-model), choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New relation`:
 
@@ -118,7 +118,7 @@ First, we will need to create a [relation](/build-your-software-catalog/define-y
 
 <br/><br/>
 
-Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, let's create a [mirror property](https://docs.getport.io/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/mirror-property/) in our service to display its on-call.
+Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, let's create a [mirror property](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/) in our service to display its on-call.
 
 1. Choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip> again, and under the `PagerDuty Service` relation, click on `New mirror property`.  
    Fill the form out like this, then click `Create`:

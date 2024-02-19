@@ -4,7 +4,7 @@ title: Promote scorecards
 sidebar_label: 📊 Promote scorecards
 ---
 
-import CombinatorIntro from "../search-and-query/\_combinator_intro.md"
+import CombinatorIntro from "/docs/search-and-query/\_combinator_intro.md"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
@@ -16,7 +16,7 @@ import TabItem from "@theme/TabItem"
 **Scorecards** enable us to define and track metrics/standards for our Port entities, based on their properties.
 Each scorecard is comprised of a set of rules, where each rule defines one or more conditions that need to be met. Each rule has a `level` property whose value can be one of the following: `Gold`, `Silver` or `Bronze`. 
 
-**For example**, to keep track of your organization's `Services` maturity, we can create a set of scorecards on top of a `Service` [blueprint](../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) that will keep track of their progress.
+**For example**, to keep track of your organization's `Services` maturity, we can create a set of scorecards on top of a `Service` [blueprint](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/setup-blueprint.md) that will keep track of their progress.
 
 ## 💡 Scorecard use cases
 
@@ -118,7 +118,7 @@ Conditions are small boolean checks that help when determining the final status 
 | Field      | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `operator` | Search operator to use when evaluating this rule, for example `=`, `!=`, `contains`, `doesNotContains`, `isEmpty`, `isNotEmpty` below                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| `property` | Property to filter by according to its value. It can be a [meta-property](../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/meta-properties.md) such as `$identifier`, or any other standard entity property such as `slack_channel` including [Mirror Properties](../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/mirror-property/mirror-property.md) and [Calculation Properties](../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/calculation-property/calculation-property.md) |
+| `property` | Property to filter by according to its value. It can be a [meta-property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/meta-properties.md) such as `$identifier`, or any other standard entity property such as `slack_channel` including [Mirror Properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/mirror-property.md) and [Calculation Properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/calculation-property.md) |
 | `value`    | Value to compare to (not required in isEmpty and isNotEmpty operators)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 
 #### Available operators

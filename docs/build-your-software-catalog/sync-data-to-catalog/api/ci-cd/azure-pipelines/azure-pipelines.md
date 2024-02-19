@@ -37,7 +37,7 @@ Then, pass the defined variables to your pipeline script, for example, `Python`:
     scriptPath: "main.py"
 ```
 
-Make sure you have an existing [Blueprint](/build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) in your Port installation to create/update entities.
+Make sure you have an existing [Blueprint](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/setup-blueprint.md) in your Port installation to create/update entities.
 
 ## Working with Port's API
 

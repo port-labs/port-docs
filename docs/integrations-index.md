@@ -78,7 +78,7 @@ This page contains a list of Port's available integrations, organized by the pla
 ### Terraform
 
 - [Terraform provider](/build-your-software-catalog/sync-data-to-catalog/iac/terraform/terraform.md)
-- [Terraform managed blueprint](/build-your-software-catalog/define-your-data-model/Iac/terraform-managed-blueprint.md)
+- [Terraform managed blueprint](/build-your-software-catalog/customize-integrations/configure-data-model/Iac/terraform-managed-blueprint.md)
 - [Create cloud resources using IaC](/guides-and-tutorials/create-cloud-resource-using-iac.md)
 - [Terraform manage S3 buckets lifecycle](/build-your-software-catalog/sync-data-to-catalog/iac/terraform/examples/s3-bucket.md)
 - [Terraform manage developer environment](/build-your-software-catalog/sync-data-to-catalog/iac/terraform/examples/create-dev-env.md)
@@ -93,7 +93,7 @@ This page contains a list of Port's available integrations, organized by the pla
 ### Pulumi
 
 - [Pulumi provider](/build-your-software-catalog/sync-data-to-catalog/iac/pulumi/pulumi.md)
-- [Pulumi managed blueprint](/build-your-software-catalog/define-your-data-model/Iac/pulumi-managed-blueprint.md)
+- [Pulumi managed blueprint](/build-your-software-catalog/customize-integrations/configure-data-model/Iac/pulumi-managed-blueprint.md)
 
 ## Cloud providers
 
@@ -173,7 +173,7 @@ This page contains a list of Port's available integrations, organized by the pla
 ## New Relic
 
 - [New Relic integration](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/newrelic.md)
-- [Embed dashboards from New Relic](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/embedded-url/#new-relic-chart)
+- [Embed dashboards from New Relic](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/#new-relic-chart)
 
 ## OpsGenie
 
@@ -198,7 +198,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Datadog
 
-- [Embed dashboards from Datadog](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/embedded-url/#datadog-dashboard)
+- [Embed dashboards from Datadog](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/#datadog-dashboard)
 - [Datadog webhook](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/datadog.md)
 - [Datadog service catalog](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/datadog.md#ingest-service-catalog)
 
@@ -217,7 +217,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Grafana
 
-- [Embed dashboards from Grafana](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/embedded-url/authentication.md#examples)
+- [Embed dashboards from Grafana](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication.md#examples)
 - [Grafana webhook](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/grafana.md)
 
 ## StackHawk

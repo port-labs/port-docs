@@ -1,27 +1,43 @@
 ---
-sidebar_position: 16
-description: Team is a data type used to reference teams that exist in Port
+sidebar_position: 19
+description: User is a data type used to reference users that exist in Port
 ---
 
-import ApiRef from "../../../../api-reference/\_learn_more_reference.mdx"
+import ApiRef from "/docs/api-reference/\_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Team
+# User
 
-Team is a data type used to reference teams that exist in Port.
+User is a data type used to reference users that exist in Port.
 
-## 💡 Common team usage
+## 💡 Common user usage
 
-The team property type can be used to reference any team that exists in Port, for example:
+The user property type can be used to reference any user that exists in Port, for example:
 
-- The service owning team;
+- The code owners;
 - The current on-call;
-- The lead maintainers;
+- The lead maintainer;
 - etc.
 
-In this [live demo](https://demo.getport.io/services) example, we can see the `Team` team property. 🎬
+In this [live demo](https://demo.getport.io/services) example, we can see the `On Call` user property. 🎬
+
+:::note
+Even though the input is the same in both `email` and `user` formats, their presentation is different:
+
+- `email` format displays the raw email string;
+- `user` format displays the user's name and avatar from Port's list of known users.
+
+In addition, `user` format distinguishes between users by their status:
+
+| User Status  | Example                                                                                 |
+| ------------ | --------------------------------------------------------------------------------------- |
+| Active       | ![Active user](/img/software-catalog/blueprint/activeUser.png)     |
+| Invited      | ![Invited user](/img/software-catalog/blueprint/invitedUser.png)   |
+| Unregistered | ![External user](/img/software-catalog/blueprint/externalUser.png) |
+
+:::
 
 ## API definition
 
@@ -34,15 +50,15 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `T
 
 ```json showLineNumbers
 {
-  "myTeamProp": {
-    "title": "My team",
+  "myUserProp": {
+    "title": "My user",
     "icon": "My icon",
-    "description": "My team property",
+    "description": "My user property",
     // highlight-start
     "type": "string",
-    "format": "team",
+    "format": "user",
     // highlight-end
-    "default": "my-team"
+    "default": "me@example.com"
   }
 }
 ```
@@ -52,15 +68,15 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `T
 
 ```json showLineNumbers
 {
-  "myTeamArray": {
-    "title": "My team array",
+  "myUserArray": {
+    "title": "My user array",
     "icon": "My icon",
-    "description": "My team array",
+    "description": "My user array",
     // highlight-start
     "type": "array",
     "items": {
       "type": "string",
-      "format": "team"
+      "format": "user"
     }
     // highlight-end
   }
@@ -87,10 +103,32 @@ resource "port_blueprint" "myBlueprint" {
   # highlight-start
   properties = {
     string_props = {
-      myTeamProp = {
-        title    = "My team"
-        required = false
-        format   = "team"
+      myUserProp = {
+        title      = "My user"
+        required   = false
+        format     = "user"
+      }
+    }
+  }
+  # highlight-end
+}
+```
+
+</TabItem>
+<TabItem value="array">
+
+```hcl showLineNumbers
+resource "port_blueprint" "myBlueprint" {
+  # ...blueprint properties
+  # highlight-start
+  properties = {
+    array_props = {
+      "myUserArray" = {
+        title      = "My user array"
+        required   = false
+        string_items = {
+          format = "user"
+        }
       }
     }
   }
@@ -100,35 +138,18 @@ resource "port_blueprint" "myBlueprint" {
 
 </TabItem>
 
-<TabItem value="array">
-
-```hcl showLineNumbers
-resource "port_blueprint" "myBlueprint" {
-  # ...blueprint properties
-  # highlight-start
-  properties = {
-    array_props = {
-      myTeamArray = {
-        title    = "My team array"
-        required = false
-        type     = "array"
-        string_items = {
-          format = "user"
-        }
-      }
-    }
-    # highlight-end
-  }
-}
-```
-
-</TabItem>
-
 </Tabs>
 
 ## Pulumi definition
 
-<Tabs groupId="pulumi-definition-team-basic" queryString defaultValue="python" values={[
+<Tabs groupId="pulumi-definition" queryString defaultValue="basic" values={[
+{label: "Basic", value: "basic"},
+{label: "Enum - coming soon", value: "enum"}
+]}>
+
+<TabItem value="basic">
+
+<Tabs groupId="pulumi-definition-user-basic" queryString defaultValue="python" values={[
 {label: "Python", value: "python"},
 {label: "TypeScript", value: "typescript"},
 {label: "JavaScript", value: "javascript"},
@@ -141,7 +162,7 @@ resource "port_blueprint" "myBlueprint" {
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Blueprint,BlueprintPropertiesArgs,BlueprintPropertiesStringPropsArgs
+from port_pulumi import Blueprint,BlueprintPropertyArgs,BlueprintPropertiesArgs
 
 blueprint = Blueprint(
     "myBlueprint",
@@ -150,10 +171,10 @@ blueprint = Blueprint(
     # highlight-start
     properties=BlueprintPropertiesArgs(
         string_props={
-            "myTeamProp": BlueprintPropertiesStringPropsArgs(
-                title="My team",
+            "myUserProp": BlueprintPropertyArgs(
+                title="My user",
                 required=False,
-                format="team",
+                format="user",
             )
         }
     ),
@@ -176,10 +197,10 @@ export const blueprint = new port.Blueprint("myBlueprint", {
   // highlight-start
   properties: {
     stringProps: {
-      myTeamProp: {
-        title: "My team",
+      myUserProp: {
+        title: "My user",
         required: false,
-        format: "team",
+        format: "user",
       },
     },
   },
@@ -202,15 +223,15 @@ const entity = new port.Blueprint("myBlueprint", {
   // highlight-start
   properties: {
     stringProps: {
-      myTeamProp: {
-        title: "My team",
+      myUserProp: {
+        title: "My user",
         required: false,
-        format: "team",
+        format: "user",
       },
     },
   },
   // highlight-end
-  relations: {},
+  relations: [],
 });
 
 exports.title = entity.title;
@@ -234,11 +255,11 @@ func main() {
 			Title:      pulumi.String("My Blueprint"),
       // highlight-start
 			Properties: port.BlueprintPropertiesArgs{
-				StringProps: port.BlueprintPropertiesStringPropsMap{
-					"myTeamProp": &port.BlueprintPropertyArgs{
-                        Title:      pulumi.String("My team"),
-                        Required:   pulumi.Bool(false),
-                        Format:     pulumi.String("team"),
+				StringProps: port.BlueprintPropertiesStringPropsArgs{
+                    "myUserProp": port.BlueprintPropertiesStringPropsArgs{
+                        Title:    pulumi.String("My user"),
+                        Required: pulumi.Bool(false),
+                        Format:   pulumi.String("user"),
                     },
                 },
 			},
@@ -255,4 +276,7 @@ func main() {
 
 </TabItem>
 
+</Tabs>
+
+</TabItem>
 </Tabs>

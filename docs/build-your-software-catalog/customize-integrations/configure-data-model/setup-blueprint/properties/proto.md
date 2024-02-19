@@ -1,29 +1,23 @@
 ---
-sidebar_position: 20
-description: Yaml is a data type used to save object definitions in YAML
+sidebar_position: 13
+description: Proto is a data type used to save proto definitions in Port
 ---
 
-import ApiRef from "../../../../api-reference/\_learn_more_reference.mdx"
+import ApiRef from "/docs/api-reference/\_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Yaml
+# Proto
 
-Yaml is a data type used to save object definitions in YAML.
+Proto is a data type used to save .proto definitions in Port
 
-## 💡 Common yaml usage
+## 💡 Common proto usage
 
-The yaml property type can be used to store any key/value based data, for example:
+The proto property type can be used to store types defined in .proto files, for example:
 
-- Configurations;
-- Helm charts;
-- Dictionaries/Hash maps;
-- Manifests;
-- `values.yml`;
-- etc.
-
-In this [live demo](https://demo.getport.io/services) example, we can see the `Helm Chart` yaml property. 🎬
+- Messages between microservices;
+- Microservices APIs;
 
 ## API definition
 
@@ -36,13 +30,13 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `H
 
 ```json showLineNumbers
 {
-  "myYAMLProp": {
-    "title": "My yaml",
+  "myProtoProp": {
+    "title": "My Proto",
     "icon": "My icon",
-    "description": "My yaml property",
+    "description": "My proto property",
     // highlight-start
     "type": "string",
-    "format": "yaml"
+    "format": "proto"
     // highlight-end
   }
 }
@@ -53,15 +47,15 @@ In this [live demo](https://demo.getport.io/services) example, we can see the `H
 
 ```json showLineNumbers
 {
-  "myYamlArray": {
-    "title": "My yaml array",
+  "myProtoArray": {
+    "title": "My proto array",
     "icon": "My icon",
-    "description": "My yaml array",
+    "description": "My proto array",
     // highlight-start
     "type": "array",
     "items": {
       "type": "string",
-      "format": "yaml"
+      "format": "proto"
     }
     // highlight-end
   }
@@ -88,10 +82,10 @@ resource "port_blueprint" "myBlueprint" {
   # highlight-start
   properties = {
     string_props = {
-      "myYamlProp" = {
-        title      = "My yaml"
+      "myProtoProp" = {
+        title      = "My proto"
         required   = false
-        format     = "yaml"
+        format     = "proto"
       }
     }
   }
@@ -108,12 +102,12 @@ resource "port_blueprint" "myBlueprint" {
   # highlight-start
   properties = {
     array_props = {
-      "myYamlArray" = {
-        identifier = "myYamlArray"
-        title      = "My yaml array"
+      "myProtoArray" = {
+        identifier = "myProtoArray"
+        title      = "My proto array"
         required   = false
         string_items = {
-          format = "yaml"
+          format = "proto"
         }
       }
     }
@@ -134,7 +128,7 @@ resource "port_blueprint" "myBlueprint" {
 
 <TabItem value="basic">
 
-<Tabs groupId="pulumi-definition-yaml-basic" queryString defaultValue="python" values={[
+<Tabs groupId="pulumi-definition-proto-basic" queryString defaultValue="python" values={[
 {label: "Python", value: "python"},
 {label: "TypeScript", value: "typescript"},
 {label: "JavaScript", value: "javascript"},
@@ -156,10 +150,10 @@ blueprint = Blueprint(
     # highlight-start
     properties=BlueprintPropertiesArgs(
         string_props={
-            "myYamlProp": BlueprintPropertyArgs(
-                title="My yaml",
+            "myProtoProp": BlueprintPropertyArgs(
+                title="My proto",
                 required=False,
-                format="yaml",
+                format="proto",
             )
         }
     ),
@@ -182,10 +176,10 @@ export const blueprint = new port.Blueprint("myBlueprint", {
   // highlight-start
   properties: {
     stringProps: {
-      myYamlProp: {
-        title: "My yaml",
+      myProtoProp: {
+        title: "My proto",
         required: false,
-        format: "yaml",
+        format: "proto",
       },
     },
   },
@@ -208,10 +202,10 @@ const entity = new port.Blueprint("myBlueprint", {
   // highlight-start
   properties: {
     stringProps: {
-      myYamlProp: {
-        title: "My yaml",
+      myProtoProp: {
+        title: "My proto",
         required: false,
-        format: "yaml",
+        format: "proto",
       },
     },
   },
@@ -240,10 +234,10 @@ func main() {
 			Title:      pulumi.String("My Blueprint"),
       // highlight-start
 			Properties: port.BlueprintPropertiesArgs{
-				"myYAMLProp": port.BlueprintPropertiesStringPropsArgs{
-					Title:    pulumi.String("My yaml"),
+				"myProtoProp": port.BlueprintPropertiesStringPropsArgs{
+					Title:    pulumi.String("My proto"),
 					Required: pulumi.Bool(false),
-					Format:   pulumi.String("yaml"),
+					Format:   pulumi.String("proto"),
 				},
 			},
       // highlight-end

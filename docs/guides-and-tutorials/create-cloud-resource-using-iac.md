@@ -210,7 +210,9 @@ jobs:
   createResource:
     runs-on: ubuntu-latest
     steps:
+      # Checkout the workflow's repository
       - uses: actions/checkout@v3
+      # Checkout the service's repository
       - uses: actions/checkout@v3
         with:
           repository: "${{ github.repository_owner }}/${{fromJson(inputs.port_payload).context.entity}}"

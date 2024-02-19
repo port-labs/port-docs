@@ -4,7 +4,7 @@ title: Relate Blueprints
 sidebar_label: Relate Blueprints
 ---
 
-import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"
+import ApiRef from "/docs/api-reference/\_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
@@ -239,7 +239,7 @@ Relations are part of the structure of a [blueprint](../setup-blueprint/setup-bl
 1. Go to the [DevPortal Builder page](https://app.getport.io/dev-portal);
 2. Click the pencil icon on the blueprint that will be the `source` blueprint of the relation:
 
-![Blueprints page with Create Relation Marked](../../../../static/img/build-your-software-catalog/define-your-data-model/relate-blueprints/editBlueprintMarked.png)
+![Blueprints page with Create Relation Marked](/img/build-your-software-catalog/define-your-data-model/relate-blueprints/editBlueprintMarked.png)
 
 </TabItem>
 

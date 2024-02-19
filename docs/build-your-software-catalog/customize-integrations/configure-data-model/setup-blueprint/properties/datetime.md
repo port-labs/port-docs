@@ -1,32 +1,32 @@
 ---
-sidebar_position: 18
-description: URL is a data type used to save links to websites
+sidebar_position: 5
+description: Datetime is a data type used to reference a date and time
 ---
 
-import ApiRef from "../../../../api-reference/\_learn_more_reference.mdx"
+import ApiRef from "/docs/api-reference/\_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# URL
+# Datetime
 
-URL is a data type used to save links to websites.
+Datetime is a data type used to reference a date and time.
 
-## 💡 Common url usage
+## 💡 Common datetime usage
 
-The URL property type can be used to store a link to any web resource, for example:
+The datetime property type can be used to store any date and time, for example:
 
-- Link to Datadog dashboard
-- Link to Sentry tracing
-- Link to pull request
+- Deployment time
+- Release time
+- Last incident date
+- Creation timestamp
 
-In this [live demo](https://demo.getport.io/domains) example, we can see the `Domain Docs` URL property. 🎬
+In this [live demo](https://demo.getport.io/services) example, we can see the `Last Update` datetime property. 🎬
 
 ## API definition
 
 <Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Enum", value: "enum"},
 {label: "Array", value: "array"}
 ]}>
 
@@ -34,54 +34,34 @@ In this [live demo](https://demo.getport.io/domains) example, we can see the `Do
 
 ```json showLineNumbers
 {
-  "myUrlProp": {
-    "title": "My url",
+  "myDatetimeProp": {
+    "title": "My datetime",
     "icon": "My icon",
-    "description": "My url property",
+    "description": "My datetime property",
     // highlight-start
     "type": "string",
-    "format": "url",
+    "format": "date-time",
     // highlight-end
-    "default": "https://example.com"
+    "default": "2022-04-18T11:44:15.345Z"
   }
 }
 ```
 
 </TabItem>
-<TabItem value="enum">
 
-```json showLineNumbers
-{
-  "myUrlEnum": {
-    "title": "My url enum",
-    "icon": "My icon",
-    "description": "My url enum",
-    "type": "string",
-    "format": "url",
-    // highlight-next-line
-    "enum": ["https://example.com", "https://getport.io"],
-    "enumColors": {
-      "https://example.com": "red",
-      "https://getport.io": "green"
-    }
-  }
-}
-```
-
-</TabItem>
 <TabItem value="array">
 
 ```json showLineNumbers
 {
-  "myUrlArray": {
-    "title": "My url array",
+  "myDatetimeArray": {
+    "title": "My datetime array",
     "icon": "My icon",
-    "description": "My url array",
+    "description": "My datetime array",
     // highlight-start
     "type": "array",
     "items": {
       "type": "string",
-      "format": "url"
+      "format": "date-time"
     }
     // highlight-end
   }
@@ -97,7 +77,6 @@ In this [live demo](https://demo.getport.io/domains) example, we can see the `Do
 
 <Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Enum", value: "enum"},
 {label: "Array", value: "array"}
 ]}>
 
@@ -109,36 +88,12 @@ resource "port_blueprint" "myBlueprint" {
   # highlight-start
   properties = {
     string_props = {
-      "myUrlProp" = {
-        title    = "My url"
-        required = false
-        format   = "url"
-      }
-    }
-  }
-  # highlight-end
-}
-```
-
-</TabItem>
-
-<TabItem value="enum">
-
-```hcl showLineNumbers
-resource "port_blueprint" "myBlueprint" {
-  # ...blueprint properties
-  # highlight-start
-  properties = {
-    string_props = {
-      "myUrlEnum" = {
-        title    = "My url enum"
-        required = false
-        format   = "url"
-        enum     = ["https://example.com", "https://getport.io"]
-        enum_colors = {
-          "https://example.com" = "red",
-          "https://getport.io"  = "green"
-        }
+      "myDatetimeProp" = {
+        title       = "My datetime"
+        icon        = "My icon"
+        description = "My datetime property"
+        format      = "date-time"
+        default     = "2022-04-18T11:44:15.345Z"
       }
     }
   }
@@ -155,12 +110,14 @@ resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties = {
-    string_props = {
-      "myUrlArray" = {
-        title    = "My url array"
+    array_props = {
+      "myDatetimeArray" = {
+        title    = "My datetime array"
+        icon     = "My icon"
         required = false
+        type     = "array"
         string_items = {
-          format = "url"
+          format = "date-time"
         }
       }
     }
@@ -182,7 +139,7 @@ resource "port_blueprint" "myBlueprint" {
 
 <TabItem value="basic">
 
-<Tabs groupId="pulumi-definition-url-basic" queryString defaultValue="python" values={[
+<Tabs groupId="pulumi-definition-date-time-basic" defaultValue="python" values={[
 {label: "Python", value: "python"},
 {label: "TypeScript", value: "typescript"},
 {label: "JavaScript", value: "javascript"},
@@ -204,13 +161,15 @@ blueprint = Blueprint(
     # highlight-start
     properties=BlueprintPropertiesArgs(
         string_props={
-            "myUrlProp": BlueprintPropertiesStringPropsArgs(
-                title="My url", required=False, format="url"
-            ),
+            "myDatetimeProp": BlueprintPropertiesStringPropsArgs(
+                title="My email",
+                format="date-time",
+                Required=True,
+            )
         }
     ),
     # highlight-end
-    relations={}
+    relations={},
 )
 ```
 
@@ -227,11 +186,11 @@ export const blueprint = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   // highlight-start
   properties: {
-    stringProps: {
-      myUrlProp: {
-        title: "My url",
+    string_props: {
+      myDatetimeProp: {
+        title: "My datetime",
+        format: "date-time",
         required: true,
-        format: "url",
       },
     },
   },
@@ -253,11 +212,11 @@ const entity = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   // highlight-start
   properties: {
-    stringProps: {
-      myUrlProp: {
-        title: "My url",
+    string_props: {
+      myDatetimeProp: {
+        title: "My datetime",
+        format: "date-time",
         required: true,
-        format: "url",
       },
     },
   },
@@ -287,12 +246,12 @@ func main() {
       // highlight-start
 			Properties: port.BlueprintPropertiesArgs{
 				StringProps: port.BlueprintPropertiesStringPropsMap{
-                    "myUrlProp": &port.BlueprintPropertyArgs{
-                        Title:      pulumi.String("My url"),
-                        Required:   pulumi.Bool(true),
-                        Format:     pulumi.String("url"),
-                    },
-                },
+					"myDatetimeProp": &port.BlueprintPropertiesStringPropsArgs{
+						Title:  pulumi.String("My datetime"),
+						Format: pulumi.String("date-time"),
+						Required: pulumi.Bool(false),
+					},
+				},
 			},
       // highlight-end
 		})
@@ -313,7 +272,7 @@ func main() {
 
 <TabItem value="enum">
 
-<Tabs groupId="pulumi-definition-url-enum" queryString defaultValue="python" values={[
+<Tabs groupId="pulumi-definition-date-time-enum" queryString defaultValue="python" values={[
 {label: "Python", value: "python"},
 {label: "TypeScript", value: "typescript"},
 {label: "JavaScript", value: "javascript"},
@@ -326,7 +285,7 @@ func main() {
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Blueprint
+from port_pulumi import Blueprint,BlueprintPropertiesStringPropsArgs,BlueprintPropertiesArgs
 
 blueprint = Blueprint(
     "myBlueprint",
@@ -335,20 +294,20 @@ blueprint = Blueprint(
     # highlight-start
     properties=BlueprintPropertiesArgs(
         string_props={
-            "myUrlProp":BlueprintPropertiesStringPropsArgs(
-                title="My url",
+            "myDatetimeProp": BlueprintPropertiesStringPropsArgs(
+                title="My datetime",
                 required=True,
-                format="url",
-                enum=["https://example.com", "https://getport.io"],
+                format="date-time",
+                enums=["2022-04-18T11:44:15.345Z", "2022-05-18T11:44:15.345Z"],
                 enum_colors={
-                    "https://example.com": "red",
-                    "https://getport.io": "green"
-                }
+                    "2022-04-18T11:44:15.345Z": "red",
+                    "2022-05-18T11:44:15.345Z": "green"
+                },
             )
-        },
-    )
+        }
+    ),
     # highlight-end
-    relations=[]
+    relations={}
 )
 ```
 
@@ -364,20 +323,19 @@ export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
   // highlight-start
-  properties: {
-    stringProps: {
-      myUrlProp: {
-        title: "My url",
-        required: true,
-        format: "url",
-        enums: ["https://example.com", "https://getport.io"],
-        enumColors: {
-          "https://example.com": "red",
-          "https://getport.io": "green",
+    properties: {
+        stringProps: {
+            myDatetimeProp: {
+                title: "My datetime",
+                format: "date-time",
+                required: true,
+                enums: ["2022-04-18T11:44:15.345Z", "2022-05-18T11:44:15.345Z"],
+                enumColors: {
+                    "2022-04-18T11:44:15.345Z": "red",
+                    "2022-05-18T11:44:15.345Z": "green",
+                },
+            },
         },
-      },
-    },
-  },
   // highlight-end
 });
 ```
@@ -395,20 +353,19 @@ const entity = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   identifier: "myBlueprint",
   // highlight-start
-  properties: {
-    stringProps: {
-      myUrlProp: {
-        title: "My url",
-        required: true,
-        format: "url",
-        enums: ["https://example.com", "https://getport.io"],
-        enumColors: {
-          "https://example.com": "red",
-          "https://getport.io": "green",
+    properties: {
+        stringProps: {
+            myDatetimeProp: {
+                title: "My datetime",
+                format: "date-time",
+                required: true,
+                enums: ["2022-04-18T11:44:15.345Z", "2022-05-18T11:44:15.345Z"],
+                enumColors: {
+                    "2022-04-18T11:44:15.345Z": "red",
+                    "2022-05-18T11:44:15.345Z": "green",
+                },
+            },
         },
-      },
-    },
-  },
   // highlight-end
   relations: {},
 });
@@ -435,21 +392,21 @@ func main() {
       // highlight-start
 			Properties: port.BlueprintPropertiesArgs{
 				StringProps: port.BlueprintPropertiesStringPropsMap{
-					"myUrlProp": port.BlueprintPropertiesStringPropsArgs{
-						Title:      pulumi.String("My url"),
-						Required:   pulumi.Bool(false),
-						Format:     pulumi.String("url"),
-						Enums: pulumi.StringArray{
-							pulumi.String("https://example.com"),
-							pulumi.String("https://getport.io"),
-						},
-						EnumColors: pulumi.StringMap{
-							"https://example.com": pulumi.String("red"),
-							"https://getport.io":  pulumi.String("green"),
-						},
-					},
-				},
-			},
+					"myDatetimeProp": &port.BlueprintPropertiesStringPropsArgs{
+                        Title:  pulumi.String("My datetime"),
+                        Format: pulumi.String("date-time"),
+                        Required: pulumi.Bool(false),
+                        Enums: pulumi.StringArray{
+                            pulumi.String("2022-04-18T11:44:15.345Z"),
+                            pulumi.String("2022-05-18T11:44:15.345Z"),
+                        },
+                        EnumColors: pulumi.StringMap{
+                            "2022-04-18T11:44:15.345Z": pulumi.String("red"),
+                            "2022-05-18T11:44:15.345Z": pulumi.String("green"),
+                        },
+                    },
+                },
+            },
       // highlight-end
 		})
 		ctx.Export("blueprint", blueprint.Title)

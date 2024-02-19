@@ -43,7 +43,7 @@ method groovy.json.JsonSlurperClassic parseText java.lang.String
 
 3. Add your `PORT_CLIENT_ID` and `PORT_CLIENT_SECRET` as [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) to use them in your CI pipelines.
 
-4. Make sure you have an existing [Blueprint](/build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) in your Port installation to create/update entities.
+4. Make sure you have an existing [Blueprint](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/setup-blueprint.md) in your Port installation to create/update entities.
 
 ## Set up
 

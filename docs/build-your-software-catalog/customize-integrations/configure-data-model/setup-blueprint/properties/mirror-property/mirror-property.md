@@ -3,7 +3,7 @@ sidebar_position: 15
 description: Mirror Property allows you to map data from related entities to your entity
 ---
 
-import ApiRef from "../../../../../api-reference/\_learn_more_reference.mdx"
+import ApiRef from "/docs/api-reference/\_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"

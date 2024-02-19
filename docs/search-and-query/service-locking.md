@@ -14,7 +14,7 @@ All relevant files and resources for this guide are available [**HERE**](https:/
 
 In this guide you will implement a service locking mechanism using Port's [GitHub Action](/build-your-software-catalog/sync-data-to-catalog/api/ci-cd/github-workflow/github-workflow.md).
 
-The environment we're going to use includes 2 [Blueprints](/build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) with a [Relation](/build-your-software-catalog/define-your-data-model/relate-blueprints/relate-blueprints.md) between them:
+The environment we're going to use includes 2 [Blueprints](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/setup-blueprint.md) with a [Relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/relate-blueprints.md) between them:
 
 ![Service locking layout](/img/complete-use-cases/service-locking/service-locking-layout.png)
 

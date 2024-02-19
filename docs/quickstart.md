@@ -52,12 +52,12 @@ Initially, your homepage contains two widgets:
 A blueprint is Port's basic building block, used to model any data source you would like to add to your software catalog.  
 Head over to your [builder](https://app.getport.io/dev-portal/data-model) - this is where you create, edit and relate blueprints.  
 
-As you can see, after connecting your Git provider to Port, a new `Service` blueprint is automatically created. This blueprint represents a service in your organization, implemented in a Git repository. It comes with some predefined [properties](https://docs.getport.io/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/).
+As you can see, after connecting your Git provider to Port, a new `Service` blueprint is automatically created. This blueprint represents a service in your organization, implemented in a Git repository. It comes with some predefined [properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/).
 
 **Learn more:**
 
-- [Setup blueprints](https://docs.getport.io/build-your-software-catalog/define-your-data-model/setup-blueprint/)
-- [Relate Blueprints](https://docs.getport.io/build-your-software-catalog/define-your-data-model/relate-blueprints/)
+- [Setup blueprints](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/)
+- [Relate Blueprints](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/)
 
 ---
 

@@ -3,7 +3,7 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import Image from "@theme/IdealImage";
-import WebhookArchitecture from '../../../../static/img/build-your-software-catalog/sync-data-to-catalog/webhook/webhook-architecture.png';
+import WebhookArchitecture from '/static/img/build-your-software-catalog/sync-data-to-catalog/webhook/webhook-architecture.png';
 import ExampleGithubPRWebhook from './examples/resources/github/\_example_github_pr_configuration.mdx';
 
 By using Port's generic webhook integration you can ingest data into the software catalog from any source or service that provides outgoing webhooks, even if Port doesn't provide a native integration for that source.
@@ -114,7 +114,7 @@ Here is an example metadata configuration:
 | `identifier`  | Unique identifier     | The identifier is used for API calls, programmatic access and distinguishing between different webhooks  |
 | `title`       | Name                  | **Required**. Human-readable name for the webhook                                                        |
 | `description` | Description           |                                                                                                          |
-| `icon`        | Icon for the webhook  | See the [full icon list](../../define-your-data-model/setup-blueprint/setup-blueprint.md#full-icon-list) |
+| `icon`        | Icon for the webhook  | See the [full icon list](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/setup-blueprint.md#full-icon-list) |
 | `enabled`     | Is the webhook active | If the integration id disabled (`"enabled": false`) then any incoming event will be dropped              |
 
 ### Mapping configuration

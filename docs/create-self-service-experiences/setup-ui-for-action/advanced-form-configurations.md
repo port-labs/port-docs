@@ -1534,4 +1534,4 @@ exports.title = entity.title;
 ![Cluster And Namespace Action](../../../static/img/software-catalog/blueprint/clusterNamespaceAction.png)
 
 :point_up: The user will be required to choose a cluster, and then the namespace input list will be populated with namespace entities related to the chosen cluster. The user will only be able to deploy services associated with his team.  
-Note the `$` before `team`, this indicates that this is a [metadata property](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/meta-properties).
+Note the `$` before `team`, this indicates that this is a [metadata property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/meta-properties).

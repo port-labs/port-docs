@@ -4,7 +4,7 @@ title: Setup Blueprints
 sidebar_label: Setup Blueprints
 ---
 
-import ApiRef from "../../../api-reference/\_learn_more_reference.mdx";
+import ApiRef from "/docs/api-reference/\_learn_more_reference.mdx";
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
@@ -316,7 +316,7 @@ For a full example, check the [Pulumi-Managed Blueprint Example](../Iac/pulumi-m
 2. Click on **Add blueprint** at the top right hand corner;
 3. Configure your blueprint using the from:
 
-![Create New Blueprint](../../../../static/img/quickstart/newBlueprintButton.png)
+![Create New Blueprint](/img/quickstart/newBlueprintButton.png)
 
 </TabItem>
 </Tabs>

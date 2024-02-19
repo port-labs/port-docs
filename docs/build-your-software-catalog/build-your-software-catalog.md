@@ -20,7 +20,7 @@ By defining the structure of your data model in this way, you can ensure that th
 
 ![Basic blueprints relation](../../static/img/software-catalog/blueprint/exampleBlueprintsAndRelationsLayout.png)
 
-See how to --> [Define your data model](./define-your-data-model/define-your-data-model.md)
+See how to --> [Define your data model](/build-your-software-catalog/customize-integrations/configure-data-model/configure-data-model.md)
 
 ## 🔄 Step 2 - Ingest data to catalog
 

@@ -3,7 +3,7 @@ sidebar_position: 17
 description: Timer is a data type used to define an expiration date/lifespan of a specific entity
 ---
 
-import ApiRef from "../../../../api-reference/\_learn_more_reference.mdx"
+import ApiRef from "/docs/api-reference/\_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
@@ -242,15 +242,15 @@ In the example entity, an expiration datetime is specified:
 
 Looking at Port's UI, we can see that the timer we created expires in 2 hours:
 
-![Timer entity](../../../../../static/img/software-catalog/entity/TTLCreateEntity.png)
+![Timer entity](/img/software-catalog/entity/TTLCreateEntity.png)
 
 After 2 hours pass, the property status will change to `Expired`, and an event of `Timer Expired` will be sent to the ChangeLog:
 
-![Timer entity expired](../../../../../static/img/software-catalog/entity/TTLExpiredEntity.png)
+![Timer entity expired](/img/software-catalog/entity/TTLExpiredEntity.png)
 
 The timer expiration event will also appear in Port's audit log:
 
-![Timer Audit log](../../../../../static/img/software-catalog/entity/AuditLogTTL.png)
+![Timer Audit log](/img/software-catalog/entity/AuditLogTTL.png)
 
 <!-- TODO: add a link to the docs about changelog destination and event listener -->
 

@@ -1,42 +1,50 @@
 ---
-sidebar_position: 6
-description: Email is a data type used to save Email addresses
+sidebar_position: 14
+description: String is a primitive data type used to save text data
 ---
 
-import ApiRef from "../../../../api-reference/\_learn_more_reference.mdx"
+import ApiRef from "/docs/api-reference/\_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Email
+# String
 
-Email is a data type used to save Email addresses.
+String is a primitive data type used to save text data.
 
-## 💡 Common email usage
+## 💡 Common string usage
 
-The Email property type can be used to store any legal email address.
+The string property type can be used to store any text based data, for example:
+
+- Image tags;
+- Variable keys;
+- Commit SHA;
+- File names;
+- etc.
+
+In this [live demo](https://demo.getport.io/services) example, we can see the `Language` string property. 🎬
 
 ## API definition
 
 <Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Enum", value: "enum"},
-{label: "Array", value: "array"}
+{label: "Array", value: "array"},
+{label: "Enum Array", value: "enumArray"}
 ]}>
 
 <TabItem value="basic">
 
 ```json showLineNumbers
 {
-  "myEmailProp": {
-    "title": "My email",
+  "myStringProp": {
+    "title": "My string",
     "icon": "My icon",
-    "description": "My email property",
+    "description": "My string property",
     // highlight-start
     "type": "string",
-    "format": "email",
     // highlight-end
-    "default": "me@example.com"
+    "default": "My default"
   }
 }
 ```
@@ -46,17 +54,16 @@ The Email property type can be used to store any legal email address.
 
 ```json showLineNumbers
 {
-  "myEmailEnum": {
-    "title": "My email enum",
+  "myStringEnum": {
+    "title": "My string enum",
     "icon": "My icon",
-    "description": "My email enum",
+    "description": "My string enum",
     "type": "string",
-    "format": "email",
     // highlight-next-line
-    "enum": ["me@example.com", "example@example.com"],
+    "enum": ["my-option-1", "my-option-2"],
     "enumColors": {
-      "me@example.com": "red",
-      "example@example.com": "green"
+      "my-option-1": "red",
+      "my-option-2": "green"
     }
   }
 }
@@ -67,15 +74,38 @@ The Email property type can be used to store any legal email address.
 
 ```json showLineNumbers
 {
-  "myEmailArray": {
-    "title": "My email array",
+  "myStringArray": {
+    "title": "My string array",
     "icon": "My icon",
-    "description": "My email array",
+    "description": "My string array",
+    // highlight-start
+    "type": "array",
+    "items": {
+      "type": "string"
+    }
+    // highlight-end
+  }
+}
+```
+
+</TabItem>
+<TabItem value="enumArray">
+
+```json showLineNumbers
+{
+  "myStringArray": {
+    "title": "My string enum array",
+    "icon": "My icon",
+    "description": "My string enum array",
     // highlight-start
     "type": "array",
     "items": {
       "type": "string",
-      "format": "email"
+      "enum": ["my-option-1", "my-option-2"],
+      "enumColors": {
+        "my-option-1": "red",
+        "my-option-2": "green"
+      }
     }
     // highlight-end
   }
@@ -103,11 +133,9 @@ resource "port_blueprint" "myBlueprint" {
   # highlight-start
   properties = {
     string_props = {
-      "myEmailProp" = {
-        title       = "My email"
-        icon        = "My icon"
-        description = "My email property"
-        format      = "email"
+      "myStringProp" = {
+        title      = "My string"
+        required   = false
       }
     }
   }
@@ -124,19 +152,21 @@ resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
   properties = {
-    identifier = "myEmailProp"
-    title      = "My email"
-    required   = false
-    type       = "string"
-    format     = "email"
-    enum       = ["me@example.com", "example@example.com"]
-    enum_colors = {
-      "me@example.com" = "red",
-      "example@example.com" = "green"
+    string_props = {
+      "myStringProp" = {
+        title      = "My string"
+        required   = false
+        enum       = ["my-option-1", "my-option-2"]
+        enum_colors = {
+          "my-option-1" = "red"
+          "my-option-2" = "green"
+        }
+      }
     }
   }
   # highlight-end
 }
+
 ```
 
 </TabItem>
@@ -149,22 +179,24 @@ resource "port_blueprint" "myBlueprint" {
   # highlight-start
   properties = {
     array_props = {
-      myEmailArray = {
-        title      = "My email array"
-        identifier = "myEmailArray"
-        type       = "array"
+      "myStringArray" = {
+        title        = "My string array"
+        string_items = {} # Pass an empty object only sets the type to string
+      }
+      "myStringArrayWithDefault" = {
+        title = "My string array with default"
         string_items = {
-          format = "email"
+          default = ["my-default-1", "my-default-2"]
         }
       }
     }
+    # highlight-end
   }
-  # highlight-end
 }
+
 ```
 
 </TabItem>
-
 </Tabs>
 
 ## Pulumi definition
@@ -177,7 +209,7 @@ resource "port_blueprint" "myBlueprint" {
 
 <TabItem value="basic">
 
-<Tabs groupId="pulumi-definition-email-basic" queryString defaultValue="python" values={[
+<Tabs groupId="pulumi-definition-string-basic" queryString defaultValue="python" values={[
 {label: "Python", value: "python"},
 {label: "TypeScript", value: "typescript"},
 {label: "JavaScript", value: "javascript"},
@@ -199,14 +231,12 @@ blueprint = Blueprint(
     # highlight-start
     properties=BlueprintPropertiesArgs(
         string_props={
-            "myEmailProp": BlueprintPropertiesStringPropsArgs(
-                title="My email",
-                format="email",
+            "myStringProp": BlueprintPropertiesStringPropsArgs(
+                title="My string", required=False
             )
-        }
     ),
     # highlight-end
-    relations={},
+    relations={}
 )
 ```
 
@@ -223,10 +253,9 @@ export const blueprint = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   // highlight-start
   properties: {
-    string_props: {
-      myEmailProp: {
-        title: "My email",
-        format: "email",
+    stringProps: {
+      myStringProp: {
+        title: "My string",
         required: true,
       },
     },
@@ -249,10 +278,9 @@ const entity = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   // highlight-start
   properties: {
-    string_props: {
-      myEmailProp: {
-        title: "My email",
-        format: "email",
+    stringProps: {
+      myStringProp: {
+        title: "My string",
         required: true,
       },
     },
@@ -283,10 +311,9 @@ func main() {
       // highlight-start
 			Properties: port.BlueprintPropertiesArgs{
 				StringProps: port.BlueprintPropertiesStringPropsMap{
-					"myEmailProp": &port.BlueprintPropertiesStringPropsArgs{
-                        Title:  pulumi.String("My email"),
-                        Format: pulumi.String("email"),
-                        Required: pulumi.Bool(true),
+					"myStringProp": &port.BlueprintPropertiesStringPropsArgs{
+                        Title:      pulumi.String("My String"),
+                        Required:   pulumi.Bool(true),
                     },
                 },
 			},
@@ -309,7 +336,7 @@ func main() {
 
 <TabItem value="enum">
 
-<Tabs groupId="pulumi-definition-email-enum" queryString defaultValue="python" values={[
+<Tabs groupId="pulumi-definition-string-enum" queryString defaultValue="python" values={[
 {label: "Python", value: "python"},
 {label: "TypeScript", value: "typescript"},
 {label: "JavaScript", value: "javascript"},
@@ -322,7 +349,7 @@ func main() {
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Blueprint,BlueprintPropertiesArgs,BlueprintPropertiesStringPropsArgs
+from port_pulumi import Blueprint,BlueprintPropertiesArgs
 
 blueprint = Blueprint(
     "myBlueprint",
@@ -331,16 +358,15 @@ blueprint = Blueprint(
     # highlight-start
     properties=BlueprintPropertiesArgs(
         string_props={
-            "myEmailProp": BlueprintPropertiesStringPropsArgs(
-                title="My email",
-                required=True,
-                format="email",
-                enums=["me@example.com", "other@example.com"],
-                enum_colors={
-                    "me@example.com": "red",
-                    "other@example.com": "green",
-                },
-            )
+            "myStringProp": {
+                "title": "My String",
+                "required": True,
+                "enum": ["my-option-1", "my-option-2"],
+                "enum_colors": {
+                    "my-option-1": "red",
+                    "my-option-2": "green"
+                }
+            }
         }
     ),
     # highlight-end
@@ -360,19 +386,19 @@ export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
   // highlight-start
-    properties: {
-        stringProps: {
-            myEmailProp: {
-                title: "My email",
-                required: true,
-                format: "email",
-                enums: ["me@example.com", "other@example.com"],
-                enumColors: {
-                    "me@example.com": "red",
-                    "other@example.com": "green",
-                },
-            }
+  properties: {
+    stringProps: {
+      myStringProp: {
+        title: "My String",
+        required: true,
+        enums: ["my-option-1", "my-option-2"],
+        enumColors: {
+          "my-option-1": "red",
+          "my-option-2": "green",
         },
+      },
+    },
+  },
   // highlight-end
 });
 ```
@@ -391,17 +417,17 @@ const entity = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   // highlight-start
   properties: {
-      stringProps: {
-        myEmailProp: {
-          title: "My email",
-          required: true,
-          format: "email",
-          enums: ["me@example.com", "other@example.com"],
-          enumColors: {
-            "me@example.com": "red",
-            "other@example.com": "green",
-          },
-      }
+    stringProps: {
+      myStringProp: {
+        title: "My String",
+        required: true,
+        enums: ["my-option-1", "my-option-2"],
+        enumColors: {
+          "my-option-1": "red",
+          "my-option-2": "green",
+        },
+      },
+    },
   },
   // highlight-end
   relations: {},
@@ -429,21 +455,20 @@ func main() {
       // highlight-start
 			Properties: port.BlueprintPropertiesArgs{
 				StringProps: port.BlueprintPropertiesStringPropsMap{
-					"myEmailProp": &port.BlueprintPropertiesStringPropsArgs{
-						Title:    pulumi.String("My email"),
-						Required: pulumi.Bool(false),
-						Format:   pulumi.String("email"),
-						Enums: pulumi.StringArray{
-							pulumi.String("me@example.com"),
-							pulumi.String("other@example.com"),
-						},
-						EnumColors: pulumi.StringMap{
-							"me@example.com":    pulumi.String("red"),
-							"other@example.com": pulumi.String("green"),
-						},
-						Format: pulumi.String("email"),
-					},
-				},
+					"myStringProp": port.BlueprintPropertiesStringPropsArgs{
+                        Title:      pulumi.String("My String"),
+                        Required:   pulumi.Bool(false),
+                        Type:       pulumi.String("string"),
+                        Enums: pulumi.StringArray{
+                            pulumi.String("my-option-1"),
+                            pulumi.String("my-option-2"),
+                        },
+                        EnumColors: pulumi.StringMap{
+                            "my-option-1": pulumi.String("red"),
+                            "my-option-2": pulumi.String("green"),
+                        },
+                    },
+                },
 			},
       // highlight-end
 		})
@@ -462,4 +487,91 @@ func main() {
 </Tabs>
 
 </TabItem>
+</Tabs>
+
+## Validate string
+
+String validations support the following operators:
+
+- `minLength` - enforce minimal string length;
+- `maxLength` - enforce maximal string length;
+- `pattern` - enforce Regex patterns.
+
+<Tabs groupId="validation-definition" queryString defaultValue="basic" values={[
+{label: "Basic", value: "basic"},
+{label: "Array", value: "array"},
+{label: "Terraform", value: "tf"},
+{label: "Pulumi - coming soon", value: "pulumi"}
+]}>
+
+<TabItem value="basic">
+
+```json showLineNumbers
+{
+  "myStringProp": {
+    "title": "My string",
+    "icon": "My icon",
+    "description": "My string property",
+    "type": "string",
+    // highlight-start
+    "minLength": 1,
+    "maxLength": 32,
+    "pattern": "^[a-zA-Z0-9-]*-service$"
+    // highlight-end
+  }
+}
+```
+
+</TabItem>
+
+<TabItem value="array">
+
+```json showLineNumbers
+{
+  "myStringArray": {
+    "title": "My string array",
+    "icon": "My icon",
+    "description": "My string array",
+    // highlight-start
+    "type": "array",
+    "items": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 32,
+      "pattern": "^[a-zA-Z0-9-]*-service$"
+    }
+    // highlight-end
+  }
+}
+```
+
+</TabItem>
+
+<TabItem value="tf">
+
+```hcl showLineNumbers
+
+resource "port_blueprint" "myBlueprint" {
+  # ...blueprint properties
+  # highlight-start
+  properties = {
+    string_props = {
+      "myStringProp" = {
+        title      = "My string"
+        required   = false
+        // highlight-start
+        min_length = 1
+        max_length = 32
+        pattern    = "^[a-zA-Z0-9-]*-service$"
+        // highlight-end
+      }
+    }
+  }
+  # highlight-end
+}
+
+```
+
+</TabItem>
+
 </Tabs>

@@ -1,43 +1,29 @@
 ---
-sidebar_position: 19
-description: User is a data type used to reference users that exist in Port
+sidebar_position: 20
+description: Yaml is a data type used to save object definitions in YAML
 ---
 
-import ApiRef from "../../../../api-reference/\_learn_more_reference.mdx"
+import ApiRef from "/docs/api-reference/\_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# User
+# Yaml
 
-User is a data type used to reference users that exist in Port.
+Yaml is a data type used to save object definitions in YAML.
 
-## 💡 Common user usage
+## 💡 Common yaml usage
 
-The user property type can be used to reference any user that exists in Port, for example:
+The yaml property type can be used to store any key/value based data, for example:
 
-- The code owners;
-- The current on-call;
-- The lead maintainer;
+- Configurations;
+- Helm charts;
+- Dictionaries/Hash maps;
+- Manifests;
+- `values.yml`;
 - etc.
 
-In this [live demo](https://demo.getport.io/services) example, we can see the `On Call` user property. 🎬
-
-:::note
-Even though the input is the same in both `email` and `user` formats, their presentation is different:
-
-- `email` format displays the raw email string;
-- `user` format displays the user's name and avatar from Port's list of known users.
-
-In addition, `user` format distinguishes between users by their status:
-
-| User Status  | Example                                                                                 |
-| ------------ | --------------------------------------------------------------------------------------- |
-| Active       | ![Active user](../../../../../static/img/software-catalog/blueprint/activeUser.png)     |
-| Invited      | ![Invited user](../../../../../static/img/software-catalog/blueprint/invitedUser.png)   |
-| Unregistered | ![External user](../../../../../static/img/software-catalog/blueprint/externalUser.png) |
-
-:::
+In this [live demo](https://demo.getport.io/services) example, we can see the `Helm Chart` yaml property. 🎬
 
 ## API definition
 
@@ -50,15 +36,14 @@ In addition, `user` format distinguishes between users by their status:
 
 ```json showLineNumbers
 {
-  "myUserProp": {
-    "title": "My user",
+  "myYAMLProp": {
+    "title": "My yaml",
     "icon": "My icon",
-    "description": "My user property",
+    "description": "My yaml property",
     // highlight-start
     "type": "string",
-    "format": "user",
+    "format": "yaml"
     // highlight-end
-    "default": "me@example.com"
   }
 }
 ```
@@ -68,15 +53,15 @@ In addition, `user` format distinguishes between users by their status:
 
 ```json showLineNumbers
 {
-  "myUserArray": {
-    "title": "My user array",
+  "myYamlArray": {
+    "title": "My yaml array",
     "icon": "My icon",
-    "description": "My user array",
+    "description": "My yaml array",
     // highlight-start
     "type": "array",
     "items": {
       "type": "string",
-      "format": "user"
+      "format": "yaml"
     }
     // highlight-end
   }
@@ -103,10 +88,10 @@ resource "port_blueprint" "myBlueprint" {
   # highlight-start
   properties = {
     string_props = {
-      myUserProp = {
-        title      = "My user"
+      "myYamlProp" = {
+        title      = "My yaml"
         required   = false
-        format     = "user"
+        format     = "yaml"
       }
     }
   }
@@ -123,11 +108,12 @@ resource "port_blueprint" "myBlueprint" {
   # highlight-start
   properties = {
     array_props = {
-      "myUserArray" = {
-        title      = "My user array"
+      "myYamlArray" = {
+        identifier = "myYamlArray"
+        title      = "My yaml array"
         required   = false
         string_items = {
-          format = "user"
+          format = "yaml"
         }
       }
     }
@@ -137,7 +123,6 @@ resource "port_blueprint" "myBlueprint" {
 ```
 
 </TabItem>
-
 </Tabs>
 
 ## Pulumi definition
@@ -149,7 +134,7 @@ resource "port_blueprint" "myBlueprint" {
 
 <TabItem value="basic">
 
-<Tabs groupId="pulumi-definition-user-basic" queryString defaultValue="python" values={[
+<Tabs groupId="pulumi-definition-yaml-basic" queryString defaultValue="python" values={[
 {label: "Python", value: "python"},
 {label: "TypeScript", value: "typescript"},
 {label: "JavaScript", value: "javascript"},
@@ -162,7 +147,7 @@ resource "port_blueprint" "myBlueprint" {
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Blueprint,BlueprintPropertyArgs,BlueprintPropertiesArgs
+from port_pulumi import Blueprint,BlueprintPropertiesArgs,BlueprintPropertyArgs
 
 blueprint = Blueprint(
     "myBlueprint",
@@ -171,10 +156,10 @@ blueprint = Blueprint(
     # highlight-start
     properties=BlueprintPropertiesArgs(
         string_props={
-            "myUserProp": BlueprintPropertyArgs(
-                title="My user",
+            "myYamlProp": BlueprintPropertyArgs(
+                title="My yaml",
                 required=False,
-                format="user",
+                format="yaml",
             )
         }
     ),
@@ -197,10 +182,10 @@ export const blueprint = new port.Blueprint("myBlueprint", {
   // highlight-start
   properties: {
     stringProps: {
-      myUserProp: {
-        title: "My user",
+      myYamlProp: {
+        title: "My yaml",
         required: false,
-        format: "user",
+        format: "yaml",
       },
     },
   },
@@ -223,10 +208,10 @@ const entity = new port.Blueprint("myBlueprint", {
   // highlight-start
   properties: {
     stringProps: {
-      myUserProp: {
-        title: "My user",
+      myYamlProp: {
+        title: "My yaml",
         required: false,
-        format: "user",
+        format: "yaml",
       },
     },
   },
@@ -255,13 +240,11 @@ func main() {
 			Title:      pulumi.String("My Blueprint"),
       // highlight-start
 			Properties: port.BlueprintPropertiesArgs{
-				StringProps: port.BlueprintPropertiesStringPropsArgs{
-                    "myUserProp": port.BlueprintPropertiesStringPropsArgs{
-                        Title:    pulumi.String("My user"),
-                        Required: pulumi.Bool(false),
-                        Format:   pulumi.String("user"),
-                    },
-                },
+				"myYAMLProp": port.BlueprintPropertiesStringPropsArgs{
+					Title:    pulumi.String("My yaml"),
+					Required: pulumi.Bool(false),
+					Format:   pulumi.String("yaml"),
+				},
 			},
       // highlight-end
 		})

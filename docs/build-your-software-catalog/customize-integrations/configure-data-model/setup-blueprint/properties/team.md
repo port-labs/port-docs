@@ -1,23 +1,27 @@
 ---
-sidebar_position: 13
-description: Proto is a data type used to save proto definitions in Port
+sidebar_position: 16
+description: Team is a data type used to reference teams that exist in Port
 ---
 
-import ApiRef from "../../../../api-reference/\_learn_more_reference.mdx"
+import ApiRef from "/docs/api-reference/\_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Proto
+# Team
 
-Proto is a data type used to save .proto definitions in Port
+Team is a data type used to reference teams that exist in Port.
 
-## 💡 Common proto usage
+## 💡 Common team usage
 
-The proto property type can be used to store types defined in .proto files, for example:
+The team property type can be used to reference any team that exists in Port, for example:
 
-- Messages between microservices;
-- Microservices APIs;
+- The service owning team;
+- The current on-call;
+- The lead maintainers;
+- etc.
+
+In this [live demo](https://demo.getport.io/services) example, we can see the `Team` team property. 🎬
 
 ## API definition
 
@@ -30,14 +34,15 @@ The proto property type can be used to store types defined in .proto files, for 
 
 ```json showLineNumbers
 {
-  "myProtoProp": {
-    "title": "My Proto",
+  "myTeamProp": {
+    "title": "My team",
     "icon": "My icon",
-    "description": "My proto property",
+    "description": "My team property",
     // highlight-start
     "type": "string",
-    "format": "proto"
+    "format": "team",
     // highlight-end
+    "default": "my-team"
   }
 }
 ```
@@ -47,15 +52,15 @@ The proto property type can be used to store types defined in .proto files, for 
 
 ```json showLineNumbers
 {
-  "myProtoArray": {
-    "title": "My proto array",
+  "myTeamArray": {
+    "title": "My team array",
     "icon": "My icon",
-    "description": "My proto array",
+    "description": "My team array",
     // highlight-start
     "type": "array",
     "items": {
       "type": "string",
-      "format": "proto"
+      "format": "team"
     }
     // highlight-end
   }
@@ -82,10 +87,10 @@ resource "port_blueprint" "myBlueprint" {
   # highlight-start
   properties = {
     string_props = {
-      "myProtoProp" = {
-        title      = "My proto"
-        required   = false
-        format     = "proto"
+      myTeamProp = {
+        title    = "My team"
+        required = false
+        format   = "team"
       }
     }
   }
@@ -94,6 +99,7 @@ resource "port_blueprint" "myBlueprint" {
 ```
 
 </TabItem>
+
 <TabItem value="array">
 
 ```hcl showLineNumbers
@@ -102,33 +108,27 @@ resource "port_blueprint" "myBlueprint" {
   # highlight-start
   properties = {
     array_props = {
-      "myProtoArray" = {
-        identifier = "myProtoArray"
-        title      = "My proto array"
-        required   = false
+      myTeamArray = {
+        title    = "My team array"
+        required = false
+        type     = "array"
         string_items = {
-          format = "proto"
+          format = "user"
         }
       }
     }
+    # highlight-end
   }
-  # highlight-end
 }
 ```
 
 </TabItem>
+
 </Tabs>
 
 ## Pulumi definition
 
-<Tabs groupId="pulumi-definition" queryString defaultValue="basic" values={[
-{label: "Basic", value: "basic"},
-{label: "Enum - coming soon", value: "enum"}
-]}>
-
-<TabItem value="basic">
-
-<Tabs groupId="pulumi-definition-proto-basic" queryString defaultValue="python" values={[
+<Tabs groupId="pulumi-definition-team-basic" queryString defaultValue="python" values={[
 {label: "Python", value: "python"},
 {label: "TypeScript", value: "typescript"},
 {label: "JavaScript", value: "javascript"},
@@ -141,7 +141,7 @@ resource "port_blueprint" "myBlueprint" {
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Blueprint,BlueprintPropertiesArgs,BlueprintPropertyArgs
+from port_pulumi import Blueprint,BlueprintPropertiesArgs,BlueprintPropertiesStringPropsArgs
 
 blueprint = Blueprint(
     "myBlueprint",
@@ -150,10 +150,10 @@ blueprint = Blueprint(
     # highlight-start
     properties=BlueprintPropertiesArgs(
         string_props={
-            "myProtoProp": BlueprintPropertyArgs(
-                title="My proto",
+            "myTeamProp": BlueprintPropertiesStringPropsArgs(
+                title="My team",
                 required=False,
-                format="proto",
+                format="team",
             )
         }
     ),
@@ -176,10 +176,10 @@ export const blueprint = new port.Blueprint("myBlueprint", {
   // highlight-start
   properties: {
     stringProps: {
-      myProtoProp: {
-        title: "My proto",
+      myTeamProp: {
+        title: "My team",
         required: false,
-        format: "proto",
+        format: "team",
       },
     },
   },
@@ -202,15 +202,15 @@ const entity = new port.Blueprint("myBlueprint", {
   // highlight-start
   properties: {
     stringProps: {
-      myProtoProp: {
-        title: "My proto",
+      myTeamProp: {
+        title: "My team",
         required: false,
-        format: "proto",
+        format: "team",
       },
     },
   },
   // highlight-end
-  relations: [],
+  relations: {},
 });
 
 exports.title = entity.title;
@@ -234,11 +234,13 @@ func main() {
 			Title:      pulumi.String("My Blueprint"),
       // highlight-start
 			Properties: port.BlueprintPropertiesArgs{
-				"myProtoProp": port.BlueprintPropertiesStringPropsArgs{
-					Title:    pulumi.String("My proto"),
-					Required: pulumi.Bool(false),
-					Format:   pulumi.String("proto"),
-				},
+				StringProps: port.BlueprintPropertiesStringPropsMap{
+					"myTeamProp": &port.BlueprintPropertyArgs{
+                        Title:      pulumi.String("My team"),
+                        Required:   pulumi.Bool(false),
+                        Format:     pulumi.String("team"),
+                    },
+                },
 			},
       // highlight-end
 		})
@@ -253,7 +255,4 @@ func main() {
 
 </TabItem>
 
-</Tabs>
-
-</TabItem>
 </Tabs>

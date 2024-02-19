@@ -3,7 +3,7 @@ sidebar_position: 3
 description: Boolean is a primitive data type that has one of two possible values - true and false
 ---
 
-import ApiRef from "../../../../api-reference/\_learn_more_reference.mdx"
+import ApiRef from "/docs/api-reference/\_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"

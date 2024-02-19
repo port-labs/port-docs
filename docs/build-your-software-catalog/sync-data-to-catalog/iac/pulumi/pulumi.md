@@ -1682,7 +1682,7 @@ func main() {
 
 The following parameters are **required**:
 
-- `name` - the name of the property in the [blueprint definition](../../../define-your-data-model/setup-blueprint/properties/properties.md#structure);
+- `name` - the name of the property in the [blueprint definition](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/properties.md#structure);
 - `value` - the value of the property (for non-array properties);
 - `items` - an array of values (for array properties).
 
@@ -1831,7 +1831,7 @@ func main() {
 
 The following parameters are **required**:
 
-- `name` - the name of the [relation](../../../define-your-data-model/relate-blueprints/relate-blueprints.md#structure-table) in the blueprint definition;
+- `name` - the name of the [relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/relate-blueprints.md#structure-table) in the blueprint definition;
 - `identifier` - the identifier of the target entity.
 
 :::note
