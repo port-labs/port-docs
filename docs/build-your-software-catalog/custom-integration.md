@@ -26,8 +26,8 @@ Generally, integrating a platform/tool with Port consists of 3 steps:
 ### 2. Ingest data to catalog
 
 - Use one of the supported methods to ingest data from your tool into Port:
-  - [Webhooks](/build-your-software-catalog/sync-data-to-catalog/webhooks/)
-  - [Port API](/build-your-software-catalog/sync-data-to-catalog/port-api/)
+  - [Webhooks](/)
+  - [Port API](/)
 
 ### 3. Configure the integration and its mapping
 
