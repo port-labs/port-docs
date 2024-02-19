@@ -613,6 +613,12 @@ Now, we want to revoke the permissions we provisioned for our S3 bucket `my-s3-b
 
 Navigate to the [Provisioned Permissions](https://app.getport.io/provisioned_permissions) catalog page -> Click on the new `Permission-XXXXXXXX` entity.
 
+:::note
+In the `Provisioned Permissions` entity page, you can learn important infromation regarding the provisioned permissions. For example, you can see the generated IAM policy and the permissions requester.
+
+In the `Related entities` section, you can see which permissions were provisioned, and to which resource.
+:::
+
 Click on the `...` at the top right of the entity screen -> click `Revoke permissions` -> click `Delete`.
 
 This will trigger a new action run which will appear in the right action runs bar. Click on the action run to navigate to the run page.
