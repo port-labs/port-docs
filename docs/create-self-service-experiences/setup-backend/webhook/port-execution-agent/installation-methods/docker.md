@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Docker
 
-This page we will walk through the installation of the Port execution agent using docker.
+This page we will walk you through the installation of the Port execution agent using docker.
 
 ## Installation
 
