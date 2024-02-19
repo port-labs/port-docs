@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 3
 ---
 
 # Docker
@@ -25,8 +25,6 @@ docker run \
   -e KAFKA_CONSUMER_AUTO_OFFSET_RESET=largest \
   ghcr.io/port-labs/port-agent:latest
 ```
-
-## C
 
 ## Next Steps
 
