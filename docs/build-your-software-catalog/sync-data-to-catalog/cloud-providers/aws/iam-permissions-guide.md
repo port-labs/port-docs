@@ -4,6 +4,7 @@ tags:
   - AWS
   - IAM Permissions
   - Guide
+  - Github Actions
 ---
 
 # AWS IAM Permission Management
@@ -17,13 +18,13 @@ It is important to be able to keep track of the permissions being allocated to y
 In this step-by-step guide, you wou will create Port blueprints and actions, which will allow you to request and revoke IAM permissions for different AWS resources using Port. You will also be able to keep track of which permissions were requested, and who requested them.
 
 ## Prerequisites
-- Prepare your Port organization's Client ID and Secret. To find you Port credentials, click [here](/docs/build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials)!
+- Prepare your Port organization's `Client ID` and `Client Secret`. To find you Port credentials, click [here](/docs/build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials)!
 - In your AWS console, [create an IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html) called `port-iam-management-user` with the following IAM permissions policy:
     <details>
 
         <summary>IAM policy json </summary>
 
-        ```json showLineNumber
+        ```json showLineNumbers
         {
             "Version": "2012-10-17",
             "Statement": [
@@ -57,6 +58,7 @@ In this step-by-step guide, you wou will create Port blueprints and actions, whi
 
 ## Data Model
 For this guide, we will be creating [blueprints](/docs/build-your-software-catalog/define-your-data-model/define-your-data-model.md) responsible for managing and keeping track of your different AWS resources, and your developers' IAM permission requests. 
+
 Let's create the following blueprints in your Port organization:
 
 <details>
@@ -64,7 +66,7 @@ Let's create the following blueprints in your Port organization:
 
     The entities of this blueprint will represent different AWS resources we want to manage IAM permissions for.
     
-    ```json showLineNumber
+    ```json showLineNumbers
     {
         "identifier": "aws_resource",
         "title": "AWS Resource",
@@ -93,7 +95,7 @@ Let's create the following blueprints in your Port organization:
                     }
                 }
             },
-            "required": []
+            "required": ["resource_type"]
         },
         "mirrorProperties": {},
         "calculationProperties": {},
@@ -106,11 +108,11 @@ Let's create the following blueprints in your Port organization:
 <details>
     <summary>`IAM Permissions` blueprint</summary>
 
-    The entities of this blueprint will represent different AWS IAM permissions that can be associated to an IAM Policy (`s3:DeleteBucket`, `s3:PutObject`, `ec2:StopInstances`, `ec2:TerminateInstances`).
+    The entities of this blueprint will represent different AWS IAM permissions that can be associated to an IAM Policy (`s3:DeleteBucket`, `s3:PutObject`, `ec2:StopInstances`, `ec2:TerminateInstances`...    ).
 
-    ```json showLineNumber
+    ```json showLineNumbers
     {
-        "identifier": "iamPermissions",
+        "identifier": "iam_permissions",
         "title": "IAM Permissions",
         "icon": "Lock",
         "schema": {
@@ -129,7 +131,7 @@ Let's create the following blueprints in your Port organization:
                     }
                 }
             },
-            "required": []
+            "required": ["resource_type"]
         },
         "mirrorProperties": {},
         "calculationProperties": {},
@@ -145,7 +147,7 @@ Let's create the following blueprints in your Port organization:
 
     The entities of this blueprint will represent the permissions which were created and managed using Port.
 
-    ```json showLineNumber
+    ```json showLineNumbers
     {
         "identifier": "provisioned_permissions",
         "description": "This blueprint represents a set of provisioned permissions for some AWS resource",
@@ -191,7 +193,7 @@ Let's create the following blueprints in your Port organization:
         "relations": {
             "permissions": {
                 "title": "Permissions",
-                "target": "iamPermissions",
+                "target": "iam_permissions",
                 "required": false,
                 "many": true
             },
@@ -219,7 +221,7 @@ The blueprints can be modified to support for any type of AWS resource by adding
 ## Actions
 We want to be able to provision and revoke permissions for AWS resources from Port. To do so, we will need to create some [Port actions](/docs/create-self-service-experiences/create-self-service-experiences.md) in our Port organization. 
 
-To do so, we will define Port actions using the Port UI. These actions will trigger Github workflows which will be used as our actions' backends.
+We will define Port the actions using the Port UI.
 
 ### Actions backend - Github Workflows
 As mentioned in the [prerequisites](#prerequisites), in this guide we will be using [Github actions](https://docs.github.com/en/actions) as a backend for our Port actions. To do this, we will create 2 Github workflow files, and 2 JSON files which will be used as templates for developer IAM permissions. 
@@ -235,7 +237,7 @@ Create the following files your `port-iam-permissions` repository, in the correc
 
     This workflow is responsible for creating new IAM permissions for an AWS resource.
 
-    ```yaml showLineNumber title=".github/workflows/create-iam-permissions.yaml"
+    ```yaml showLineNumbers title=".github/workflows/create-iam-permissions.yaml"
     name: Create permissions for AWS resource
     on:
         workflow_dispatch:
@@ -323,7 +325,7 @@ Create the following files your `port-iam-permissions` repository, in the correc
 
     This workflow is responsible for deleting IAM permissions for an AWS resource.
 
-    ```yaml showLineNumber title=".github/workflows/delete-iam-permissions.yaml"
+    ```yaml showLineNumbers title=".github/workflows/delete-iam-permissions.yaml"
    name: Delete IAM permissions for AWS resource
     on:
         workflow_dispatch:
@@ -380,11 +382,11 @@ Create the following files your `port-iam-permissions` repository, in the correc
 </details> 
 
 <details>
-    <summary>IAM policy JSON template file</summary>
+    <summary>`IAM policy JSON` template file</summary>
 
     This file will act as a template for the generated IAM policies.
 
-    ```json showLineNumber title=".github/templates/iamPolicyDocument.yaml"
+    ```json showLineNumbers title=".github/templates/iamPolicyDocument.yaml"
    {
         "Version": "2012-10-17",
         "Statement": [
@@ -399,13 +401,13 @@ Create the following files your `port-iam-permissions` repository, in the correc
 
 </details> 
 <details>
-    <summary>IAM trust policy JSON template file</summary>
+    <summary>`IAM trust policy JSON` template file</summary>
 
     This file will act as a template for the generated IAM trust policies.
     
     ***Replace the `<YOUR_AWS_ACCOUNT_ID>` with the AWS account ID you want to allocate permissions for.***
 
-    ```json showLineNumber title=".github/templates/iamTrustPolicy.yaml"
+    ```json showLineNumbers title=".github/templates/iamTrustPolicy.yaml"
     {
         "Version": "2012-10-17",
         "Statement": [
@@ -437,7 +439,7 @@ Let's create the Port actions to tirgger the workflows we just created:
 
     ***Replace the `<YOUR_GITHUB_ORG>` with your Github organization.***
 
-    ```json showLineNumber
+    ```json showLineNumbers
     {
         "identifier": "request_permissions",
         "title": "Request permissions",
@@ -450,7 +452,7 @@ Let's create the Port actions to tirgger the workflows we just created:
                     "items": {
                         "type": "string",
                         "format": "entity",
-                        "blueprint": "iamPermissions",
+                        "blueprint": "iam_permissions",
                         "dataset": {
                             "combinator": "and",
                             "rules": [
@@ -496,7 +498,7 @@ Let's create the Port actions to tirgger the workflows we just created:
 
     ***Replace the `<YOUR_GITHUB_ORG>` with your Github organization.***
 
-    ```json showLineNumber
+    ```json showLineNumbers
     {
         "identifier": "revoke_permissions",
         "title": "Revoke permissions",
@@ -521,5 +523,58 @@ Let's create the Port actions to tirgger the workflows we just created:
     ```
 </details>
 
+## Manage permissions using Port
+Before we get to provisioning and revoking permissions, we have 2 things to complete:
+1. Define which AWS resources we want provision permissions for.
+2. Define which permissions we want to allow our developers to request and provision.
+
+### Defining AWS resources
+Managing the AWS resources we want to provision permissions for will be done via Port entities. Navigate to the [AWS Resources](https://app.getport.io/aws_resources) catalog page to create some example entities.
+
+:::note
+For this guide's simplicity, we will be creating AWS resource entities manually. This can also be done using Port's [AWS Exporter](/docs/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws.md). Go to the [Next Steps](#next-steps) section to read more.
+:::
+
+In the `AWS Resources` catalog page, click the `Manually add AWS Resource` to create an entity (or click the `+ AWS Resource` button).
+The identifier of the entity is the `AWS ARN` of the AWS resource, make sure to toggle the `Autogenerate` for the identifier.
+Let's create 2 `AWS Resource` entities:
+
+1. We will create one entity of type `S3`:
+    * Title: `My awesome S3 bucket`
+    * Identifier: `arn:aws:s3:::my-s3-bucket`
+    * Resource Type: `S3`
+
+2. We will create another entity of resource type `EC2`:
+    * Title: `My awesome EC2 machine`
+    * Identifier: `arn:aws:ec2:us-east-1:12345678:instance/i-abc123456789`
+    * Resource Type: `EC2`
+ 
+<p align="center">
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/iam-permissions-create-aws-resource-entity.png' width='50%' border='1px' />
+</p>
+
+### Defining allowed IAM permissions
+Managing the IAM permissions we want to allow our developer to provision will be done via Port entities. Navigate to the [AWS Resources](https://app.getport.io/iam_permissions) catalog page to create some example entities.
+
+In the `IAM Permissions` catalog page, click the `Manually add IAM Permission` to create an entity (or click the `+ IAM Permissions` button).
+The identifier of the entity is the IAM Permission you want to allow to run (for example `s3:PutObject), make sure to toggle the `Autogenerate` for the identifier.
+Let's create 2 `AWS Resource` entities:
+
+1. We will create one entity with the resource type `S3`:
+    <!-- * Title: `My awesome S3 bucket`
+    * Identifier: `arn:aws:s3:::my-s3-bucket`
+    * Resource Type: `S3` -->
+
+2. We will create another entity with the resource type `EC2`:
+    <!-- * Title: `My awesome EC2 machine`
+    * Identifier: `arn:aws:ec2:us-east-1:12345678:instance/i-abc123456789`
+    * Resource Type: `EC2` -->
+ 
+<p align="center">
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/iam-permissions-create-aws-resource-entity.png' width='50%' border='1px' />
+</p>
+
+
 ## Next Steps
 - Install Port's AWS exporter
+- Define property for enabling creations only on specific AWS resources
