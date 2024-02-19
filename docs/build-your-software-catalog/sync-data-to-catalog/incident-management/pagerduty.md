@@ -694,7 +694,7 @@ To enrich your PagerDuty service entities with analytics data, follow the steps 
                   "format":"user"
                 }
             },
-            #highlight-start
+            # highlight-start
             "meanSecondsToResolve":{
                 "title":"Mean Seconds to Resolve",
                 "type":"number"
@@ -723,7 +723,7 @@ To enrich your PagerDuty service entities with analytics data, follow the steps 
                 "title":"Total Incident Manual Escalated",
                 "type":"number"
             }
-            #highlight-end
+            # highlight-end
           },
           "required":[]
       },
