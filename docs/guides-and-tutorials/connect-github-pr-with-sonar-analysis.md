@@ -231,6 +231,42 @@ Please note that the `__component.name` property refers to the name of the repos
 
 ![entitiesAfterServiceMapping](/img/guides/githubPREntityAfterAnalysisMapping.png)
 
+## Configure mirror properties on pull request
+
+When looking at a `Pull Request`, some of its `sonarAnalysis` properties may be especially important to us, and we would like to see them directly in the `Pull Request's` context. This can be achieved using [mirror properties](https://docs.getport.io/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/mirror-property/), so let's create some:
+
+1. The first one will be the number of new issues added to the analysis. Under the relation we just created, click on `New mirror property`:
+
+<img src='/img/guides/githubPRCreateMirrorProp.png' width='50%' />
+
+<br/><br/>
+
+2. Fill the form out like this, then click `Create`:
+
+<img src='/img/guides/githubPrCreateMirrorPropNewIssue.png' width='50%' />
+
+<br/><br/>
+
+3. The second one will be the analysis code duplication. Create another mirror property, fill the form out like this, then click `Create`:
+
+<img src='/img/guides/githubPrCreateMirrorPropDuplication.png' width='50%' />
+
+<br/><br/>
+
+4. The third one will be the analysis coverage. Create another mirror property, fill the form out like this, then click `Create`:
+
+<img src='/img/guides/githubPrCreateMirrorPropCoverage.png' width='50%' />
+
+<br/><br/>
+
+5. The third one will be the quality gate status of the analysis. Create another mirror property, fill the form out like this, then click `Create`:
+
+<img src='/img/guides/githubPrCreateMirrorPropQGStatus.png' width='50%' />
+
+<br/><br/>
+
+You should now be able to see these additional properties added to pull request entity in your software catalog.
+
 ## Conclusion
 
 By following these steps, you can seamlessly connect a GitHub pull request with a SonarQube analysis.
