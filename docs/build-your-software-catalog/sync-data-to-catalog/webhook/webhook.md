@@ -197,6 +197,23 @@ Here is an example mapping configuration:
 
 </Tabs>
 
+
+#### Available keys
+
+When configuring the mapping, the following keys are available for use in the JQ expressions:
+
+| Key            | Description                                                                                                                   |
+|----------------|-------------------------------------------------------------------------------------------------------------------------------|
+| `.body`        | The entire payload body sent by the 3rd party service                                                                         |
+| `.headers`     | The headers sent by the 3rd party service                                                                                     |
+| `.queryParams` | The query parameters sent by the 3rd party service                                                                            |
+| `.item`        | A reference to items in the array specified in `itemsToParse`. Will be available in the JQ context if `itemsToParse` is used. |
+
+:::warning Known issues
+As the webhook custom integration is receiving the requests from AWS API Gateway, there are some issues that might affect the value of the fields in one of the context keys. For example, the `headers` key might not have the expected casing.
+Please refer to the [AWS API Gateway known issues](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-known-issues.html#api-gateway-known-issues-rest-apis) for more information.
+:::
+
 #### Structure
 
 - The root key of the mapping configuration is the `mappings` key:
