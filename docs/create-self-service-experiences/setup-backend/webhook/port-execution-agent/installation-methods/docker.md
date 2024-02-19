@@ -28,5 +28,5 @@ docker run \
 
 ## Next Steps
 
-- Refer to the [usage guide](/create-self-service-experiences/setup-backend/webhook/port-execution-agent/usage.md) to set up a webhook.
+- Refer to the [usage guide](/create-self-service-experiences/setup-backend/webhook/port-execution-agent/usage.md) to set up a self-service action that sends a webhook.
 - Customize the [payload mapping](/create-self-service-experiences/setup-backend/webhook/port-execution-agent/control-the-payload.md?installationMethod=docker) to control the payload sent to the target.
