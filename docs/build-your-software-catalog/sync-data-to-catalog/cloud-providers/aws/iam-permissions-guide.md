@@ -536,7 +536,7 @@ For this guide's simplicity, we will be creating AWS resource entities manually.
 :::
 
 In the `AWS Resources` catalog page, click the `Manually add AWS Resource` to create an entity (or click the `+ AWS Resource` button).
-The identifier of the entity is the `AWS ARN` of the AWS resource, make sure to toggle the `Autogenerate` for the identifier.
+The identifier of the entity is the `AWS ARN` of the AWS resource, make sure to toggle off the `Autogenerate` for the identifier.
 Let's create 2 `AWS Resource` entities:
 
 1. We will create one entity of type `S3`:
@@ -554,24 +554,24 @@ Let's create 2 `AWS Resource` entities:
 </p>
 
 ### Defining allowed IAM permissions
-Managing the IAM permissions we want to allow our developer to provision will be done via Port entities. Navigate to the [AWS Resources](https://app.getport.io/iam_permissions) catalog page to create some example entities.
+Managing the IAM permissions we want to allow our developer to provision will be done via Port entities. Navigate to the [IAM Permissions](https://app.getport.io/iam_permissions) catalog page to create some example entities.
 
 In the `IAM Permissions` catalog page, click the `Manually add IAM Permission` to create an entity (or click the `+ IAM Permissions` button).
-The identifier of the entity is the IAM Permission you want to allow to run (for example `s3:PutObject), make sure to toggle the `Autogenerate` for the identifier.
-Let's create 2 `AWS Resource` entities:
+The identifier of the entity is the IAM Permission you want to allow to run (for example `s3:PutObject`), make sure to toggle off the `Autogenerate` for the identifier.
+Let's create 2 `IAM Permissions` entities:
 
 1. We will create one entity with the resource type `S3`:
-    <!-- * Title: `My awesome S3 bucket`
-    * Identifier: `arn:aws:s3:::my-s3-bucket`
-    * Resource Type: `S3` -->
+    * Title: `Put S3 objects`
+    * Identifier: `s3:PutObject`
+    * Resource Type: `S3`
 
 2. We will create another entity with the resource type `EC2`:
-    <!-- * Title: `My awesome EC2 machine`
-    * Identifier: `arn:aws:ec2:us-east-1:12345678:instance/i-abc123456789`
-    * Resource Type: `EC2` -->
+    * Title: `Stop EC2 Instance`
+    * Identifier: `ec2:StopInstances`
+    * Resource Type: `EC2`
  
 <p align="center">
-<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/iam-permissions-create-aws-resource-entity.png' width='50%' border='1px' />
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/iam-permissions-create-iam-permissions-entity.png' width='50%' border='1px' />
 </p>
 
 
