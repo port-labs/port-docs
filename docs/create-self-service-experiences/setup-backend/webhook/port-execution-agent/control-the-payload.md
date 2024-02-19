@@ -23,7 +23,7 @@ Setting up the mapping depends on how you install the agent.
 
 <TabItem value="helm">
 
-To provide the mapping configuration to the agent, run the installation command again, and add the following parameter:
+To provide the mapping configuration to the agent, run the [installation command](https://docs.getport.io/create-self-service-experiences/setup-backend/webhook/port-execution-agent/installation-methods/helm#installation) again, and add the following parameter:
 
 ```bash showLineNumbers
         --set-file controlThePayloadConfig=/PATH/TO/LOCAL/FILE.yml
@@ -50,7 +50,7 @@ controlThePayloadConfig: |
 </TabItem>
 
 <TabItem value="docker">
-To provide the mapping to the agent, mount the mapping file to the container by adding the following parameter to the `docker run` command:
+To provide the mapping to the agent, mount the mapping file to the container by adding the following parameter to the [installation command](https://docs.getport.io/create-self-service-experiences/setup-backend/webhook/port-execution-agent/installation-methods/docker#installation):
 
 ```bash showLineNumbers
 -v /PATH/TO/LOCAL/FILE.json:/app/control_the_payload_config.json
