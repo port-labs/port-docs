@@ -94,7 +94,7 @@ In our workflow, the payload is used as the input. We omit the user inputs in or
 
 :::
 
-<img src='/img/guides/createBucketGHBackend.png' width='75%' />
+<img src='/img/guides/createBucketGHBackend.png' width='75%' border='1px' />
 
 </TabItem>
 
