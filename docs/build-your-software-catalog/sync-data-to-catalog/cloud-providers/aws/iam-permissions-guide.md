@@ -319,9 +319,9 @@ Create the following files your `port-iam-permissions` repository, in the correc
 </details>
 
 <details>
-    <summary>`Create permissions for AWS resource` Github workflow</summary>
+    <summary>`Revoke permissions for AWS resource` Github workflow</summary>
 
-    This workflow is responsible for deleting IAM permissions for an AWS resource.
+    This workflow is responsible for revoking IAM permissions for an AWS resource.
 
     ```yaml showLineNumbers title=".github/workflows/delete-iam-permissions.yaml"
    name: Delete IAM permissions for AWS resource
