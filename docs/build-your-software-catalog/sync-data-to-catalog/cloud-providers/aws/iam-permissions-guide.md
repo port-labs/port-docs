@@ -15,7 +15,7 @@ Developers need access to different cloud resources on a daily basis. With all o
 
 It is important to be able to keep track of the permissions being allocated to your developers, whether it is who requested the permissions, or what permissions they requested.
 
-In this step-by-step guide, you wou will create Port blueprints and actions, which will allow you to request and revoke IAM permissions for different AWS resources using Port. You will also be able to keep track of which permissions were requested, and who requested them.
+In this step-by-step guide, you will create Port blueprints and actions, which will allow you to request and revoke IAM permissions for different AWS resources using Port. You will also be able to keep track of which permissions were requested, and who requested them.
 
 ## Prerequisites
 - Prepare your Port organization's `Client ID` and `Client Secret`. To find you Port credentials, click [here](/docs/build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials)!
@@ -103,12 +103,12 @@ Let's create the following blueprints in your Port organization:
         "relations": {}
     }
     ```
-    </details>
+</details>
 
 <details>
     <summary>`IAM Permissions` blueprint</summary>
 
-    The entities of this blueprint will represent different AWS IAM permissions that can be associated to an IAM Policy (`s3:DeleteBucket`, `s3:PutObject`, `ec2:StopInstances`, `ec2:TerminateInstances`...    ).
+    The entities of this blueprint will represent different AWS IAM permissions that can be associated to an IAM Policy (`s3:DeleteBucket`, `s3:PutObject`, `ec2:StopInstances`, `ec2:TerminateInstances`...).
 
     ```json showLineNumbers
     {
@@ -139,7 +139,7 @@ Let's create the following blueprints in your Port organization:
         "relations": {}
     }
     ```
-    </details>
+</details>
 
 
 <details>
@@ -643,5 +643,6 @@ Feel free to further experiment with the use-case by adding more `IAM Permission
 See the [Next Steps](#next-steps) section to understand how to take this guide one step further with your Port environment.
 
 ## Next Steps
-- Install Port's AWS exporter
-- Define property for enabling creations only on specific AWS resources
+- **Install Port's [AWS exporter](/docs/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws.md)** - You can use Port's AWS exporter to automatically populates your software catalog from your AWS environement. You can use the AWS exporter to populate your `AWS Resources` blueprints with different AWS resources.
+- **Enforce [manual approval](/docs/create-self-service-experiences/set-self-service-actions-rbac/set-self-service-actions-rbac.md#configure-manual-approval-for-actions--give-approval-permissions) for your Port actions** - To have control over who is provisioning and revoking permissions, you can set up manual approval for your actions. This will enable you to provide a request-approve flow for provisioning and revoking permissions using Port.
+- ***Coming soon*⏱️: Temporary permissions using [Automations](https://roadmap.getport.io/ideas/p/automation) and the `Timer` property** - With the new automations feature, you will be able to automatically trigger actions using events from the catalog. You can use the `Timer Expired` event to trigger the `Revoke permissions` action and create a temporary permissions experience.
