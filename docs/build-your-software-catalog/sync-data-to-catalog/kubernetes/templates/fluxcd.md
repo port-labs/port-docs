@@ -18,6 +18,8 @@ Port and keep track of their state.
 Get to know the basics of our Kubernetes exporter [here!](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md)
 :::
 
+<img src="/img/build-your-software-catalog/sync-data-to-catalog/kubernetes/k8sFluxView.png" border="1px"/>
+
 ## Prerequisites
 
 <TemplatePrerequisites />
@@ -42,9 +44,6 @@ This `blueprints.json` file defines the following blueprints:
 
 - Cluster
 - Namespace
-- Node
-- Pod
-- ReplicaSet
 - Workload
 - Flux Source
 - Flux Application
@@ -65,6 +64,167 @@ This `blueprints.json` file defines the following blueprints:
 - `Flux Application` is another important Flux resource that represents a local set of Kubernetes resources that Flux is supposed to reconcile in the cluster. This blueprint tracks **Kustomization** and **HelmRelease** CRDs in the Flux system.
 :::
 
+Below are the Flux blueprint schema used in the exporter:
+
+<details>
+<summary> <b>Flux source blueprint (click to expand)</b> </summary>
+
+```json showLineNumbers
+{
+   "identifier":"fluxSource",
+   "description":"Flux Source",
+   "title":"Flux Source",
+   "icon":"Fluxcd",
+   "schema":{
+      "properties":{
+         "repoURL":{
+            "type":"string",
+            "icon":"Git",
+            "title":"Repository URL",
+            "description":"The URL of the repository containing the application source code"
+         },
+         "sourceType":{
+            "icon":"DefaultProperty",
+            "title":"Source Type",
+            "description":"The flux source type",
+            "type":"string",
+            "enum":[
+               "HelmRepository",
+               "GitRepository"
+            ],
+            "enumColors":{
+               "HelmRepository":"turquoise",
+               "GitRepository":"green"
+            }
+         },
+         "interval":{
+            "icon":"Clock",
+            "type":"string",
+            "title":"Interval",
+            "description":"Interval at which the GitRepository URL is checked for updates"
+         },
+         "createdAt":{
+            "title":"Created At",
+            "type":"string",
+            "format":"date-time",
+            "icon":"DefaultProperty"
+         },
+         "branch":{
+            "title":"Branch",
+            "type":"string",
+            "icon":"DefaultProperty"
+         }
+      },
+      "required":[]
+   },
+   "mirrorProperties":{},
+   "calculationProperties":{},
+   "aggregationProperties":{},
+   "relations":{
+      "namespace":{
+         "title":"Namespace",
+         "target":"namespace",
+         "required":false,
+         "many":false
+      }
+   }
+}
+```
+
+</details>
+
+<details>
+<summary> <b>Flux application blueprint (click to expand)</b> </summary>
+
+```json showLineNumbers
+{
+   "identifier":"fluxApplication",
+   "description":"This blueprint represents Flux Application which can be HelmRelease or Kustomization",
+   "title":"Flux Application",
+   "icon":"Fluxcd",
+   "schema":{
+      "properties":{
+         "targetNamespace":{
+            "icon":"DefaultProperty",
+            "type":"string",
+            "title":"Target Namespace"
+         },
+         "namespace":{
+            "type":"string",
+            "title":"Namespace",
+            "icon":"DefaultProperty"
+         },
+         "ready":{
+            "icon":"DefaultProperty",
+            "title":"Health Status",
+            "description":"The health status of the application",
+            "type":"string",
+            "enum":[
+               "True",
+               "False",
+               "Unknown"
+            ],
+            "enumColors":{
+               "True":"green",
+               "False":"red",
+               "Unknown":"yellow"
+            }
+         },
+         "createdAt":{
+            "title":"Created At",
+            "type":"string",
+            "format":"date-time",
+            "icon":"DefaultProperty"
+         },
+         "applicationType":{
+            "icon":"DefaultProperty",
+            "title":"Application Type",
+            "description":"Kustomization or HelmRelease",
+            "type":"string",
+            "enum":[
+               "HelmRelease",
+               "Kustomization"
+            ],
+            "enumColors":{
+               "HelmRelease":"lightGray",
+               "Kustomization":"lightGray"
+            }
+         },
+         "interval":{
+            "icon":"Clock",
+            "type":"string",
+            "title":"Interval",
+            "description":"The interval at which the application will be reconciled"
+         },
+         "path":{
+            "title":"Path",
+            "type":"string",
+            "icon":"DefaultProperty"
+         },
+         "prune":{
+            "title":"Prune",
+            "type":"boolean",
+            "icon":"DefaultProperty"
+         }
+      },
+      "required":[]
+   },
+   "mirrorProperties":{},
+   "calculationProperties":{},
+   "aggregationProperties":{},
+   "relations":{
+      "source":{
+         "title":"Source",
+         "target":"fluxSource",
+         "required":false,
+         "many":false
+      }
+   }
+}
+```
+
+</details>
+
 ### Exporting custom resource mapping
 
 Using the `CONFIG_YAML_URL` parameter, you can define a custom resource mapping to use when installing the exporter.
@@ -75,18 +235,94 @@ In this use-case you will be using the **[this configuration file](https://githu
 export CONFIG_YAML_URL="https://github.com/port-labs/template-assets/blob/main/kubernetes/templates/fluxcd-kubernetes_v1_config.yaml"
 ```
 
-You can now run the installation script using the following code snippet:
+Below are the mapping for the Flux resources:
 
-```bash showLineNumbers
-export CLUSTER_NAME="my-cluster"
-export PORT_CLIENT_ID="my-port-client-id"
-export PORT_CLIENT_SECRET="my-port-client-secret"
-curl -s https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/install.sh | bash
+<details>
+<summary> <b>Flux source mapping (click to expand)</b> </summary>
+
+```yaml showLineNumbers
+- kind: source.toolkit.fluxcd.io/v1/gitrepositories
+  port:
+    entity:
+      mappings:
+        - identifier: .metadata.name + "-" + .metadata.namespace + "-" + env.CLUSTER_NAME
+          title: .metadata.name
+          icon: '"Fluxcd"'
+          blueprint: '"fluxSource"'
+          properties:
+            repoURL: .spec.url
+            sourceType: .kind
+            branch: .spec.ref.branch
+            interval: .spec.interval
+            createdAt: .metadata.creationTimestamp
+          relations:
+            namespace: .metadata.namespace + "-" + env.CLUSTER_NAME
+
+- kind: source.toolkit.fluxcd.io/v1beta2/helmrepositories
+  port:
+    entity:
+      mappings:
+        - identifier: .metadata.name + "-" + .metadata.namespace + "-" + env.CLUSTER_NAME
+          title: .metadata.name
+          icon: '"Fluxcd"'
+          blueprint: '"fluxSource"'
+          properties:
+            repoURL: .spec.url
+            sourceType: .kind
+            branch: .spec.ref.branch
+            interval: .spec.interval
+            createdAt: .metadata.creationTimestamp
+          relations:
+            namespace: .metadata.namespace + "-" + env.CLUSTER_NAME
 ```
+</details>
+
+<details>
+<summary> <b>Flux application mapping (click to expand)</b> </summary>
+
+```yaml showLineNumbers
+- kind: kustomize.toolkit.fluxcd.io/v1/kustomizations
+  port:
+    entity:
+      mappings:
+        - identifier: .metadata.name + "-" + .metadata.namespace + "-" + env.CLUSTER_NAME
+          title: .metadata.name
+          icon: '"Fluxcd"'
+          blueprint: '"fluxApplication"'
+          properties:
+            targetNamespace: .spec.targetNamespace
+            namespace: .metadata.namespace
+            ready: .status.conditions[] | select(.type == "Ready") | .status
+            path: .spec.path
+            prune: .spec.prune
+            applicationType: .kind
+            interval: .spec.interval
+            createdAt: .metadata.creationTimestamp
+          relations:
+            source: .spec.sourceRef.name + "-" + .metadata.namespace + "-" + env.CLUSTER_NAME
+
+- kind: helm.toolkit.fluxcd.io/v2beta2/helmreleases
+  port:
+    entity:
+      mappings:
+        - identifier: .metadata.name + "-" + .metadata.namespace + "-" + env.CLUSTER_NAME
+          title: .metadata.name
+          icon: '"Fluxcd"'
+          blueprint: '"fluxApplication"'
+          properties:
+            targetNamespace: .spec.targetNamespace
+            namespace: .metadata.namespace
+            ready: .status.conditions[] | select(.type == "Ready") | .status
+            path: .spec.path
+            prune: .spec.prune
+            applicationType: .kind
+            interval: .spec.chart.spec.interval
+            createdAt: .metadata.creationTimestamp
+          relations:
+            source: .spec.chart.spec.sourceRef.name + "-" + .metadata.namespace + "-" + env.CLUSTER_NAME
+```
+
+</details>
 
 You can now browse to your Port environment to see that your blueprints have been created, and your k8s and Flux
 resources are being reported to Port using the freshly installed k8s exporter.
-
-## How does the installation script work?
-
-<TemplateInstallation />
