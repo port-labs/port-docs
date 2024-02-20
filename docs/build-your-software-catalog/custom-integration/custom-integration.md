@@ -20,8 +20,8 @@ Generally, integrating a platform/tool with Port consists of 3 steps:
 
 ### 1. Define your data model
 
-- Define how your data will be represented in Port, by creating one or more [blueprints](/) and their properties.
-- Determine the relationships between your new blueprints and other data models in your catalog, using [relations](/).
+- Define how your data will be represented in Port, by creating one or more [blueprints](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/) and their properties.
+- Determine the relationships between your new blueprints and other data models in your catalog, using [relations](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/).
 
 ### 2. Ingest data to catalog
 

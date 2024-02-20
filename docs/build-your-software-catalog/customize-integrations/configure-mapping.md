@@ -22,7 +22,7 @@ To understand how mapping works, let's take a look at an example. After you comp
 <br/><br/>
 
 Clicking on this entry will open the mapping configuration.  
-Note that Port provides default mapping with some common properties:
+Note that Port provides default mapping, providing values to the properties defined in the relevant blueprint:
 
 <img src='/img/software-catalog/customize-integrations/mappingExampleGithub.png' width='80%' />
 
