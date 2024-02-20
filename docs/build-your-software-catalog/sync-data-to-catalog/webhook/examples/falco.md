@@ -72,3 +72,87 @@ Create the following webhook configuration [using Port's UI](/build-your-softwar
    ```
 
 Done! Any change that happens to your alerts in your server will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+
+## Let's Test It
+
+This section includes a sample response data from Falco Sidekick. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+
+### Payload
+
+Here is an example of the payload structure from Falco Sidekick:
+
+<details>
+<summary><b>Webhook response data (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "hostname": "falco-xczjd",
+  "output": "13:44:05.478445995: Critical A shell was spawned in a container with an attached terminal (user=root user_loginuid=-1 k8s.ns=default k8s.pod=kubecon container=ee97d9c4186f shell=sh parent=runc cmdline=sh -c clear; (bash || ash || sh) terminal=34816 container_id=ee97d9c4186f image=docker.io/library/alpine)",
+  "priority": "Critical",
+  "rule": "Terminal shell in container",
+  "source": "syscall",
+  "tags": ["container", "mitre_execution", "shell"],
+  "time": "2023-05-25T13:44:05.478445995+00:00",
+  "output_fields": {
+    "container.id": "ee97d9c4186f",
+    "container.image.repository": "docker.io/library/alpine",
+    "evt.time": 1685022245478445995,
+    "k8s.ns.name": "default",
+    "k8s.pod.name": "kubecon",
+    "proc.cmdline": "sh -c clear; (bash || ash || sh)",
+    "proc.name": "sh",
+    "proc.pname": "runc",
+    "proc.tty": 34816,
+    "user.loginuid": -1,
+    "user.name": "root"
+  }
+}
+```
+
+</details>
+
+### Mapping Result
+
+The combination of the sample payload and the Ocean configuration generates the following Port entity:
+
+<details>
+<summary><b>Alert entity in Port (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "",
+  "title": "falco-xczjd - 2023-05-25T13:44:05.478445995+00:00",
+  "blueprint": "falco_alert",
+  "team": [],
+  "icon": "Falcosidekick",
+  "properties": {
+    "priority": "Critical",
+    "rule": "Terminal shell in container",
+    "time": "2023-05-25T13:44:05.478445995+00:00",
+    "source": "syscall",
+    "tags": ["container", "mitre_execution", "shell"],
+    "hostname": "falco-xczjd",
+    "output_field": {
+      "container.id": "ee97d9c4186f",
+      "container.image.repository": "docker.io/library/alpine",
+      "evt.time": 1685022245478445995,
+      "k8s.ns.name": "default",
+      "k8s.pod.name": "kubecon",
+      "proc.cmdline": "sh -c clear; (bash || ash || sh)",
+      "proc.name": "sh",
+      "proc.pname": "runc",
+      "proc.tty": 34816,
+      "user.loginuid": -1,
+      "user.name": "root"
+    },
+    "output": "13:44:05.478445995: Critical A shell was spawned in a container with an attached terminal (user=root user_loginuid=-1 k8s.ns=default k8s.pod=kubecon container=ee97d9c4186f shell=sh parent=runc cmdline=sh -c clear; (bash || ash || sh) terminal=34816 container_id=ee97d9c4186f image=docker.io/library/alpine)"
+  },
+  "relations": {},
+  "createdAt": "2024-2-6T09:30:57.924Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2024-2-6T11:49:20.881Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>

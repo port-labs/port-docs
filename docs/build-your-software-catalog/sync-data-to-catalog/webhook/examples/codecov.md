@@ -44,27 +44,29 @@ Create the following webhook configuration [using Port's UI](/build-your-softwar
 </details>
 
 ## Create a webhook in Codecov
+
 1. From your Codecov account, open **Settings**;
 2. Click on the **Global YAML** tab at the left sidebar menu;
 3. In the YAML editor, add the following Codecov configuration to notify Port anytime an event occurs in your code repositories:
 
-    ```yaml
-    coverage:
-    notify:
-        webhook:
-        default:
-            only_pulls: false
-            url: YOUR_PORT_WEBHOOK
-    ```
-    :::note Webhook URL replacement
-    Remember to replace `YOUR_PORT_WEBOOK` with the value of the `URL` you received after creating the webhook configuration in Port.
-    :::
+   ```yaml
+   coverage:
+   notify:
+     webhook:
+     default:
+       only_pulls: false
+       url: YOUR_PORT_WEBHOOK
+   ```
 
-    :::tip notification service customization
-    For more information on customizing the notification service, follow this [guide](https://docs.codecov.com/docs/notifications#standard-notification-fields)
-    :::
+   :::note Webhook URL replacement
+   Remember to replace `YOUR_PORT_WEBOOK` with the value of the `URL` you received after creating the webhook configuration in Port.
+   :::
 
-3. Click **Save changes** to save the webhook configuration.
+   :::tip notification service customization
+   For more information on customizing the notification service, follow this [guide](https://docs.codecov.com/docs/notifications#standard-notification-fields)
+   :::
+
+4. Click **Save changes** to save the webhook configuration.
 
 For more information on customizing the notification service, follow [this documentation](https://docs.codecov.com/docs/notifications#standard-notification-fields)
 
@@ -126,3 +128,158 @@ Find more information about the python script [here](https://github.com/port-lab
 :::
 
 Done! you are now able to import historical coverage from Codecov into Port. Port will parse the objects according to the mapping and update the catalog entities accordingly.
+
+## Let's Test It
+
+This section includes a sample response data from Codecov. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+
+### Payload
+
+Here is an example of the payload structure from Codecov:
+
+<details>
+<summary><b>Coverage response data (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "body": {
+    "repo": {
+      "url": "https://app.codecov.io/gh/PeyGis/codecov-example",
+      "service_id": "742056150",
+      "name": "codecov-example",
+      "private": false
+    },
+    "head": {
+      "author": {
+        "username": "PeyGis",
+        "service_id": "15999660",
+        "email": "isaac.p.coffie@gmail.com",
+        "service": "github",
+        "name": "PagesCoffy"
+      },
+      "url": "https://app.codecov.io/gh/PeyGis/codecov-example/commit/a7794fc92007d3a1b99066c8f6ec66a393bf3520",
+      "timestamp": "2024-02-02T14:21:35",
+      "totals": {
+        "files": 3,
+        "lines": 36,
+        "hits": 35,
+        "misses": 1,
+        "partials": 0,
+        "coverage": "97.22222",
+        "branches": 0,
+        "methods": 0,
+        "messages": 0,
+        "sessions": 2,
+        "complexity": 0,
+        "complexity_total": 0,
+        "diff": [0, 0, 0, 0, 0, null, 0, 0, 0, 0, null, null, 0]
+      },
+      "commitid": "a7794fc92007d3a1b99066c8f6ec66a393bf3520",
+      "service_url": "https://github.com/PeyGis/codecov-example/commit/a7794fc92007d3a1b99066c8f6ec66a393bf3520",
+      "branch": "PeyGis-patch-11",
+      "message": "Update sonarqube.yml"
+    },
+    "base": {
+      "author": {
+        "username": "PeyGis",
+        "service_id": "15999660",
+        "email": "isaac.p.coffie@gmail.com",
+        "service": "github",
+        "name": "PagesCoffy"
+      },
+      "url": "https://app.codecov.io/gh/PeyGis/codecov-example/commit/ce38c96963e6c7100f668503da2ce4e7500de739",
+      "timestamp": "2024-02-02T14:17:51",
+      "totals": {
+        "files": 3,
+        "lines": 36,
+        "hits": 35,
+        "misses": 1,
+        "partials": 0,
+        "coverage": "97.22222",
+        "branches": 0,
+        "methods": 0,
+        "messages": 0,
+        "sessions": 2,
+        "complexity": 0,
+        "complexity_total": 0,
+        "diff": [0, 0, 0, 0, 0, null, 0, 0, 0, 0, null, null, 0]
+      },
+      "commitid": "ce38c96963e6c7100f668503da2ce4e7500de739",
+      "service_url": "https://github.com/PeyGis/codecov-example/commit/ce38c96963e6c7100f668503da2ce4e7500de739",
+      "branch": "PeyGis-patch-10",
+      "message": "Update sonarqube.yml"
+    },
+    "compare": {
+      "url": "https://app.codecov.io/gh/PeyGis/codecov-example/pull/11",
+      "message": "no change",
+      "coverage": "0.00",
+      "notation": ""
+    },
+    "owner": {
+      "username": "PeyGis",
+      "service_id": "15999660",
+      "service": "github"
+    },
+    "pull": {
+      "head": {
+        "commit": "a7794fc92007d3a1b99066c8f6ec66a393bf3520",
+        "branch": "master"
+      },
+      "number": "11",
+      "base": {
+        "commit": "ce38c96963e6c7100f668503da2ce4e7500de739",
+        "branch": "master"
+      },
+      "open": true,
+      "id": 11,
+      "merged": false
+    }
+  }
+}
+```
+
+</details>
+
+### Mapping Result
+
+The combination of the sample payload and the Ocean configuration generates the following Port entity:
+
+<details>
+<summary><b>Coverage entity in Port (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "codecov-example",
+  "title": "codecov-example",
+  "blueprint": "codecov_coverage",
+  "properties": {
+    "repository": "https://app.codecov.io/gh/PeyGis/codecov-example",
+    "coverage": "97.22222",
+    "service": "github",
+    "author": "PagesCoffy",
+    "createdAt": "2024-02-02T14:21:35Z",
+    "files": 3,
+    "lines": 36,
+    "branch": "PeyGis-patch-11",
+    "report": {
+      "files": 3,
+      "lines": 36,
+      "hits": 35,
+      "misses": 1,
+      "partials": 0,
+      "coverage": "97.22222",
+      "branches": 0,
+      "methods": 0,
+      "messages": 0,
+      "sessions": 2,
+      "complexity": 0,
+      "complexity_total": 0,
+      "diff": [0, 0, 0, 0, 0, null, 0, 0, 0, 0, null, null, 0]
+    }
+  },
+  "relations": {},
+  "filter": true
+}
+```
+
+</details>

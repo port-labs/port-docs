@@ -806,3 +806,43 @@ Here is an example of the payload structure from New Relic:
 }
 ```
 </details>
+
+### Mapping Result
+
+The combination of the sample payload and the Ocean configuration generates the following Port entity:
+
+<details>
+<summary><b>Service (Entity) entity in Port (Click to expand)</b></summary>
+
+
+</details>
+
+<details>
+<summary><b>Issue entity in Port(Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "My Issue",
+  "title": "My Issue",
+  "blueprint": "newRelicAlert",
+  "team": [],
+  "icon": "NewRelic",
+  "properties": {
+    "priority": "CRITICAL",
+    "state": "ACTIVATED",
+    "sources": ["My Source"],
+    "conditionName": ["My Condition"],
+    "alertPolicyNames": ["My Policy"],
+    "activatedAt": "2022-01-01T00:00:00Z"
+  },
+  "relations": {
+    "newRelicService": "My Service"
+  },
+  "createdAt": "2024-2-6T09:30:57.924Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2024-2-6T11:49:20.881Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
