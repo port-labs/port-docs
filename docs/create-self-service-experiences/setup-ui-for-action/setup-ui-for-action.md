@@ -216,7 +216,7 @@ resource "port_action" "myAction" {
 2. Expand the blueprint you want to add an action to.
 3. Select the `Edit Json` button from the 3 dots menu.
 4. Navigate to the `Actions` tab.
-5. Enter the JSON specification of your desired action.
+5. Paste the JSON specification in to the actions array.
 
 </TabItem>
 

@@ -60,11 +60,7 @@ In this step-by-step guide, we will create Port blueprints and actions, which wi
     - `AWS_REGION` - Your primary AWS region (you can set this to `us-east-1` if you are unsure).
 
 ## Data Model
-For this guide, we will be creating blueprints responsible for managing and keeping track of your different AWS resources, and your developers' IAM permission requests.
-
-:::tip
-To read more about what blueprints are, and how to define your data model click [here](/docs/build-your-software-catalog/define-your-data-model/define-your-data-model.md).
-:::
+For this guide, we will be creating <PortTooltip id="blueprint">blueprints</PortTooltip> responsible for managing and keeping track of your different AWS resources, and your developers' IAM permission requests.
 
 Let's create the following blueprints in your Port organization:
 
@@ -537,7 +533,7 @@ Before we get to provisioning and revoking permissions, we have 2 things to comp
 ### Defining AWS resources
 Managing the AWS resources we want to provision permissions for will be done using Port entities. Navigate to the [AWS Resources](https://app.getport.io/aws_resources) catalog page to create some example entities.
 
-:::note
+:::info Simple permissions to get started
 For this guide's simplicity, we will be creating AWS resource entities manually. This can also be done using Port's [AWS Exporter](/docs/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws.md). Go to the [Next Steps](#next-steps) section to read more.
 :::
 
