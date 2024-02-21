@@ -222,7 +222,7 @@ The blueprints can be modified to support for any type of AWS resource by adding
 </p>
 
 ## Actions
-We want to be able to provision and revoke permissions for AWS resources from Port. To do so, we will need to create some [actions](/docs/create-self-service-experiences/create-self-service-experiences.md) in our Port organization, and set up some action backends.
+We want to be able to provision and revoke permissions for AWS resources from Port. To do so, we will need to create some <PortTooltip id="action">actions</PortTooltip> in our Port organization, and set up some action backends.
 
 ### Actions backend - GitHub Workflows
 As mentioned in the [prerequisites](#prerequisites), in this guide we will be using [GitHub actions](https://docs.github.com/en/actions) as a backend for our Port actions. To do this, we will create 2 GitHub workflow files, and 2 JSON files which will be used as templates for developer IAM permissions. 
