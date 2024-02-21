@@ -107,8 +107,9 @@ integration:
 <br/>
 
 2. Install the `my-ocean-jira-integration` ArgoCD Application by creating the following `my-ocean-jira-integration.yaml` manifest:
-   :::note
-   Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+
+:::note
+Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
 
 Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
 :::
@@ -225,6 +226,7 @@ This pipeline will run the Jira integration once and then exit, this is useful f
 :::tip
 Your Jenkins agent should be able to run docker commands.
 :::
+
 :::warning
 If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
 :::
@@ -373,7 +375,7 @@ The following resources can be used to map data from Jira, it is possible to ref
 - [`Issue`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/#api-rest-api-3-search-get)
 - [`Board`](https://developer.atlassian.com/cloud/jira/software/rest/api-group-board/#api-rest-agile-1-0-board-get)
 - [`Sprint`](https://developer.atlassian.com/cloud/jira/software/rest/api-group-board/#api-rest-agile-1-0-board-boardid-sprint-get)
-  :::
+:::
 
 - The root key of the integration configuration is the `resources` key:
 
