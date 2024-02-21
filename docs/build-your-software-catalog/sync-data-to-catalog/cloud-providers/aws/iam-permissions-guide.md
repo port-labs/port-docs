@@ -337,47 +337,47 @@ on:
         description: The Port Payload for triggering this action                
 
 jobs:
-    delete-permissions:
-        name: Delete IAM permissions
-        runs-on: ubuntu-latest
-        env:
-          POLICY_ARN: ${{ fromJson(inputs.port_payload).payload.entity.properties.policy_arn }}
-        steps:
-            - uses: actions/checkout@v3
-              with:
-                persist-credentials: true
-            - name: Configure AWS Credentials
-              uses: aws-actions/configure-aws-credentials@v4
-              with:
-                aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-                aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-                aws-region: ${{ secrets.AWS_REGION }}
-            - name: Delete policies
-              id: delete-policies
-              run: |
-                # Detach the policy from the role
-                aws iam detach-role-policy --role-name ${{ fromJson(inputs.port_payload).context.entity }} --policy-arn ${{ env.POLICY_ARN }}
-                # Delete the policy
-                aws iam delete-policy --policy-arn "${{ env.POLICY_ARN }}" --no-cli-pager
-                # Delete the role
-                aws iam delete-role --role-name ${{ fromJson(inputs.port_payload).context.entity }} --no-cli-pager
-            - name: "Delete permission from Port 🚢"
-              uses: port-labs/port-github-action@v1
-              with:
-                clientId: ${{ secrets.PORT_CLIENT_ID }}
-                clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-                identifier: ${{ fromJson(inputs.port_payload).context.entity }}
-                operation: DELETE
-                blueprint: provisioned_permissions
-            - uses: port-labs/port-github-action@v1
-              with:
-                clientId: ${{ secrets.PORT_CLIENT_ID }}
-                clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-                operation: PATCH_RUN
-                runId: ${{ fromJson(inputs.port_payload).context.runId}}
-                logMessage: |
-                  Permission "${{ fromJson(inputs.port_payload).context.entity}}" has been deleted.
-                  To get more information regarding this deletion, contact "${{ fromJson(inputs.port_payload).trigger.by.user.email }}".
+  delete-permissions:
+    name: Delete IAM permissions
+    runs-on: ubuntu-latest
+    env:
+      POLICY_ARN: ${{ fromJson(inputs.port_payload).payload.entity.properties.policy_arn }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: true
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Delete policies
+        id: delete-policies
+        run: |
+          # Detach the policy from the role
+          aws iam detach-role-policy --role-name ${{ fromJson(inputs.port_payload).context.entity }} --policy-arn ${{ env.POLICY_ARN }}
+          # Delete the policy
+          aws iam delete-policy --policy-arn "${{ env.POLICY_ARN }}" --no-cli-pager
+          # Delete the role
+          aws iam delete-role --role-name ${{ fromJson(inputs.port_payload).context.entity }} --no-cli-pager
+      - name: "Delete permission from Port 🚢"
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          identifier: ${{ fromJson(inputs.port_payload).context.entity }}
+          operation: DELETE
+          blueprint: provisioned_permissions
+      - uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          operation: PATCH_RUN
+          runId: ${{ fromJson(inputs.port_payload).context.runId}}
+          logMessage: |
+            Permission "${{ fromJson(inputs.port_payload).context.entity}}" has been deleted.
+            To get more information regarding this deletion, contact "${{ fromJson(inputs.port_payload).trigger.by.user.email }}".
     ```
 
 </details> 
@@ -576,7 +576,7 @@ Let's create 2 `IAM Permissions` entities:
     * Identifier: `ec2:StopInstances`
     * Resource Type: `EC2`
 
-:::note
+:::note Extending the use 
 Feel free to add more IAM permissions of your own. Make sure that the identifier of the entity matches the IAM permission you want to add.
 :::
  
