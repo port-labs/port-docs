@@ -430,7 +430,7 @@ We will create the Port actions using the Port UI.
 
 :::tip Creating actions with JSON
 Don't know how to create Port actions using JSONs in the Port UI?
-Click [here](https://docs.getport.io/create-self-service-experiences/setup-ui-for-action/?configure=ui#configuring-actions-in-port)!
+Click [here](/docs/create-self-service-experiences/setup-ui-for-action/?configure=ui#configuring-actions-in-port)!
 :::
 
 Let's create the Port actions to tirgger the workflows we just created:
