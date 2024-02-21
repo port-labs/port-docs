@@ -34,6 +34,8 @@ In this example you will map your Openshift clusters, their workloads and the Op
 Get to know the basics of our Kubernetes exporter [here!](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md)
 :::
 
+<img src="/img/build-your-software-catalog/sync-data-to-catalog/kubernetes/k8sOpenshiftView.png" border="1px"/>
+
 ## Prerequisites
 
 <TemplatePrerequisites />
@@ -53,27 +55,123 @@ export CUSTOM_BP_PATH="https://github.com/port-labs/template-assets/blob/main/ku
 
 This `blueprints.json` file defines the following blueprints:
 
-- Cluster;
-- Namespace;
-- Node;
-- Pod;
-- ReplicaSet;
-- Workload \*;
-- Service;
-- Openshift Route \*.
+- Cluster
+- Namespace
+- Workload
+- Service
+- Openshift Route
 
 :::note
 
 - `Workload` is an abstraction of Kubernetes objects which create and manage pods. By creating this blueprint, you can avoid creating a dedicated blueprint per Workload type, all of which will likely look pretty similar.
   Here is the list of kubernetes objects `Workload` will represent:
 
-  - Deployment;
-  - StatefulSet;
-  - DaemonSet.
+  - Deployment
+  - StatefulSet
+  - DaemonSet
 
 - `Openshift Route` is one of the most important Openshift resources, giving developers the capability to connect to their services, while the entire network layer is managed by the Openshift API, and providing a simple DNS record for accessability.
 
 :::
+
+Below are the Openshift blueprint schema used in the exporter:
+
+<details>
+<summary> <b>Service blueprint (click to expand)</b> </summary>
+
+```json showLineNumbers
+{
+  "identifier": "k8sService",
+  "title": "K8s Serivce",
+  "description": "This blueprint represents a k8s Service",
+  "icon": "Microservice",
+  "schema": {
+    "properties": {
+      "creationTimestamp": {
+        "type": "string",
+        "title": "Created",
+        "format": "date-time",
+        "description": "When the Namespace was created",
+        "icon": "DefaultProperty"
+      },
+      "labels": {
+        "type": "object",
+        "title": "Labels",
+        "description": "Labels of the Pod",
+        "icon": "DefaultProperty"
+      },
+      "type": {
+        "type": "string",
+        "title": "Service Type",
+        "description": "Service Type",
+        "icon": "DefaultProperty"
+      },
+      "selectors": {
+        "icon": "DefaultProperty",
+        "type": "object",
+        "title": "Service Selectors",
+        "description": "Pod selectors for the service"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "pods": {
+      "title": "Pods",
+      "target": "pod",
+      "required": false,
+      "many": true
+    },
+    "namespace": {
+      "title": "Namespace",
+      "target": "namespace",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+</details>
+
+<details>
+<summary> <b>Openshift route blueprint (click to expand)</b> </summary>
+
+```json showLineNumbers
+{
+  "identifier": "openshiftRoute",
+  "title": "Openshift Route",
+  "description": "This blueprint represents an Openshift route",
+  "icon": "EC2",
+  "schema": {
+    "properties": {
+      "hostName": {
+        "icon": "DefaultProperty",
+        "title": "Hostname",
+        "type": "string",
+        "format": "url"
+      },
+      "spec": {
+        "title": "Spec",
+        "type": "object"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "service": {
+      "title": "Service",
+      "target": "k8sService",
+      "required": false,
+      "many": true
+    }
+  }
+}
+```
+</details>
 
 ### Exporting custom resource mapping
 
@@ -85,17 +183,60 @@ In this use-case you will be using **[this configuration file](https://github.co
 export CONFIG_YAML_URL="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/full-configs/openshift_usecase.yaml"
 ```
 
-You can now run the installation script using the following code snippet:
+Below are the mapping for the Openshift resources:
 
-```bash showLineNumbers
-export CLUSTER_NAME="my-cluster"
-export PORT_CLIENT_ID="my-port-client-id"
-export PORT_CLIENT_SECRET="my-port-client-secret"
-curl -s https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/install.sh | bash
+<details>
+<summary> <b>Service mapping (click to expand)</b> </summary>
+
+```yaml showLineNumbers
+- kind: v1/services
+  selector:
+    query: .metadata.namespace | startswith("kube") or startswith("openshift") | not 
+  port:
+    entity:
+      mappings:
+        - identifier: .metadata.name + "-" + .metadata.namespace + "-" + env.CLUSTER_NAME
+          title: .metadata.name
+          icon: '"Service"'
+          blueprint: '"k8sService"'
+          properties:
+            creationTimestamp: .metadata.creationTimestamp
+            labels: .metadata.labels
+            type: .spec.type
+            selectors: .spec.selector // null
+
+- kind: discovery.k8s.io/v1/endpointslices
+  selector: 
+    query: (.metadata.namespace | startswith("kube") or startswith("openshift") | not) and (([.endpoints[].targetRef.name]) as $ref | if $ref != [null] then true else false end)
+  port:
+    entity:
+      mappings:
+        - identifier: .metadata.labels."kubernetes.io/service-name" + "-" + .metadata.namespace + "-" + env.CLUSTER_NAME
+          blueprint: '"k8sService"'
+          relations:
+            pods: .metadata.namespace as $namespace | ([.endpoints[].targetRef.name + "-" + .metadata.namespace + "-" + env.CLUSTER_NAME])
 ```
+</details>
+
+<details>
+<summary> <b>Openshift route mapping (click to expand)</b> </summary>
+
+```yaml showLineNumbers
+- kind: route.openshift.io/v1/routes
+  selector:
+    query: .metadata.namespace | startswith("kube") or startswith("openshift") | not 
+  port:
+    entity:
+      mappings:
+        - identifier: .metadata.name + "-" + .metadata.namespace + "-" + env.CLUSTER_NAME
+          title: .metadata.name + "-" + .metadata.namespace + "-" + env.CLUSTER_NAME
+          blueprint: '"openshiftRoute"'
+          properties:
+            hostname: .spec.host
+            spec: .spec
+          relations:
+            service: .metadata.namespace as $namespace | [(.spec.alternateBackends[]?.name )]  as $alt_backends | ($alt_backends + [.spec.to.name]) | map(. + "-" + $namespace + "-" + env.CLUSTER_NAME)
+```
+</details>
 
 You can now browse to your Port environment to see that your blueprints have been created, and your Kubernetes resources, including Openshift routes are being reported to Port using the freshly installed k8s exporter.
-
-## How does the installation script work?
-
-<TemplateInstallation />
