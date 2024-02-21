@@ -94,7 +94,7 @@ In our workflow, the payload is used as the input. We omit the user inputs in or
 
 :::
 
-<img src='/img/guides/createBucketGHBackend.png' width='75%' />
+<img src='/img/guides/createBucketGHBackend.png' width='75%' border='1px' />
 
 </TabItem>
 
@@ -211,7 +211,9 @@ jobs:
   createResource:
     runs-on: ubuntu-latest
     steps:
+      # Checkout the workflow's repository
       - uses: actions/checkout@v3
+      # Checkout the service's repository
       - uses: actions/checkout@v3
         with:
           repository: "${{ github.repository_owner }}/${{fromJson(inputs.port_payload).context.entity}}"
