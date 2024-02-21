@@ -211,7 +211,7 @@ Let's create the following blueprints in your Port organization:
     ```
     </details>
 
-:::tip
+:::tip AWS resource types
 For this guide's simplicity, the blueprints above have pre-defined options for resource types, which are `EC2` and `S3`. 
 
 The blueprints can be modified to support for any type of AWS resource by adding extra options to the `resource_type` properties, both in the `AWS Resource` and the `IAM Permissions` blueprints.
@@ -236,9 +236,9 @@ Create the following files your `port-iam-permissions` repository, in the correc
 <details>
     <summary>`Create permissions for AWS resource` GitHub workflow</summary>
 
-    This workflow is responsible for creating new IAM permissions for an AWS resource.
+This workflow is responsible for creating new IAM permissions for an AWS resource.
 
-    ```yaml showLineNumbers title=".github/workflows/create-iam-permissions.yaml"
+```yaml showLineNumbers title=".github/workflows/create-iam-permissions.yaml"
 name: Create permissions for AWS resource
 on:
   workflow_dispatch:
@@ -318,7 +318,7 @@ jobs:
             Created permission for the AWS resource "${{ fromJson(inputs.port_payload).context.entity }}"🚀
             Requester for this permission is: ${{ fromJson(inputs.port_payload).trigger.by.user.email }}
             The sign-in URL: ${{ steps.create-variables.outputs.SIGN_IN_URL }}
-    ```
+```
 </details>
 
 <details>
@@ -326,7 +326,7 @@ jobs:
 
     This workflow is responsible for revoking IAM permissions for an AWS resource.
 
-    ```yaml showLineNumbers title=".github/workflows/delete-iam-permissions.yaml"
+```yaml showLineNumbers title=".github/workflows/delete-iam-permissions.yaml"
 name: Delete IAM permissions for AWS resource
 on:
   workflow_dispatch:
@@ -378,7 +378,7 @@ jobs:
           logMessage: |
             Permission "${{ fromJson(inputs.port_payload).context.entity}}" has been deleted.
             To get more information regarding this deletion, contact "${{ fromJson(inputs.port_payload).trigger.by.user.email }}".
-    ```
+```
 
 </details> 
 
@@ -576,7 +576,7 @@ Let's create 2 `IAM Permissions` entities:
     * Identifier: `ec2:StopInstances`
     * Resource Type: `EC2`
 
-:::note Extending the use 
+:::note Add more IAM permissions
 Feel free to add more IAM permissions of your own. Make sure that the identifier of the entity matches the IAM permission you want to add.
 :::
  
