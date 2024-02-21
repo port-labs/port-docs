@@ -142,8 +142,8 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## SonarQube / SonarCloud
 
-- [SonarQube integration and webhook](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube.md)
-- [SonarCloud integration and webhook](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube.md)
+- [SonarQube/SonarCloud integration](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube.md)
+- [SonarCloud webhook](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube#alternative-installation-via-webhook)
 
 ## Snyk
 
