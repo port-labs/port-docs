@@ -576,7 +576,7 @@ Let's create 2 `IAM Permissions` entities:
     * Identifier: `ec2:StopInstances`
     * Resource Type: `EC2`
 
-:::note Add more IAM permissions
+:::tip Add more IAM permissions
 Feel free to add more IAM permissions of your own. Make sure that the identifier of the entity matches the IAM permission you want to add.
 :::
  
