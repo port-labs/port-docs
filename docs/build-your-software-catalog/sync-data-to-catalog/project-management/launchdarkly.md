@@ -1126,7 +1126,7 @@ Here is an example of the payload structure from Launchdarkly:
   },
   "key":"test",
   "name":"Test",
-  "apiKey":"sdk-d2e62422-4348-4302-8160-0b68b262609c",
+  "apiKey":"sdk-d2e62422-4348-4302-8160-************",
   "mobileKey":"mob-69006494-96b9-486b-a5cb-1d9dbbd6ae9d",
   "color":"EBFF38",
   "defaultTtl":0,
@@ -1368,7 +1368,7 @@ The combination of the sample payload and the Ocean configuration generates the 
   "team": [],
   "properties": {
     "environmentId": "65ac52faf4f907102dbb3772",
-    "apiKey": "sdk-0c4694a2-308a-454a-baea-31d573112f7c",
+    "apiKey": "sdk-0c4694a2-308a-454a-baea-************",
     "mobileKey": "mob-672674e8-a5e5-46bc-96d5-5b33f9acfb73",
     "color": "F5A623",
     "defaultTtl": 0,
