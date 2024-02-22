@@ -1,5 +1,6 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
 import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
 import HelmParameters from "../templates/\_ocean-advanced-parameters-helm.mdx"
@@ -75,6 +76,7 @@ helm upgrade --install my-jira-integration port-labs/port-ocean \
 	--set integration.secrets.atlassianUserEmail="string"  \
 	--set integration.secrets.atlassianUserToken="string"
 ```
+
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
 To install the integration using ArgoCD, follow these steps:
@@ -84,6 +86,7 @@ To install the integration using ArgoCD, follow these steps:
 :::note
 Remember to replace the placeholders for `ATLASSIAN_JIRA_HOST` `ATLASSIAN_USER_EMAIL` and `ATLASSIAN_USER_TOKEN`.
 :::
+
 ```yaml showLineNumbers
 initializePortResources: true
 scheduledResyncInterval: 120
@@ -101,9 +104,11 @@ integration:
     atlassianUserToken: ATLASSIAN_USER_TOKEN
   // highlight-end
 ```
+
 <br/>
 
 2. Install the `my-ocean-jira-integration` ArgoCD Application by creating the following `my-ocean-jira-integration.yaml` manifest:
+
 :::note
 Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
 
@@ -153,9 +158,11 @@ spec:
 <br/>
 
 3. Apply your application manifest with `kubectl`:
+
 ```bash
 kubectl apply -f my-ocean-jira-integration.yaml
 ```
+
 </TabItem>
 </Tabs>
 
@@ -285,7 +292,7 @@ Here is an example for `jira-integration.yml` pipeline file:
 
 ```yaml showLineNumbers
 trigger:
-- main
+  - main
 
 pool:
   vmImage: "ubuntu-latest"
@@ -293,28 +300,26 @@ pool:
 variables:
   - group: port-ocean-credentials
 
-
 steps:
-- script: |
-    # Set Docker image and run the container
-    integration_type="jira"
-    version="latest"
+  - script: |
+      # Set Docker image and run the container
+      integration_type="jira"
+      version="latest"
 
-    image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
+      image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
 
-    docker run -i --rm \
-      -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
-      -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-      -e OCEAN__INTEGRATION__CONFIG__JIRA_HOST=${OCEAN__INTEGRATION__CONFIG__JIRA_HOST} \
-      -e OCEAN__INTEGRATION__CONFIG__ATLASSIAN_USER_EMAIL=${OCEAN__INTEGRATION__CONFIG__ATLASSIAN_USER_EMAIL} \
-      -e OCEAN__INTEGRATION__CONFIG__ATLASSIAN_USER_TOKEN=${OCEAN__INTEGRATION__CONFIG__ATLASSIAN_USER_TOKEN} \
-      -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \
-      -e OCEAN__PORT__CLIENT_SECRET=${OCEAN__PORT__CLIENT_SECRET} \
-      $image_name
+      docker run -i --rm \
+        -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+        -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+        -e OCEAN__INTEGRATION__CONFIG__JIRA_HOST=${OCEAN__INTEGRATION__CONFIG__JIRA_HOST} \
+        -e OCEAN__INTEGRATION__CONFIG__ATLASSIAN_USER_EMAIL=${OCEAN__INTEGRATION__CONFIG__ATLASSIAN_USER_EMAIL} \
+        -e OCEAN__INTEGRATION__CONFIG__ATLASSIAN_USER_TOKEN=${OCEAN__INTEGRATION__CONFIG__ATLASSIAN_USER_TOKEN} \
+        -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \
+        -e OCEAN__PORT__CLIENT_SECRET=${OCEAN__PORT__CLIENT_SECRET} \
+        $image_name
 
-    exit $?
-  displayName: 'Ingest Data into Port'
-
+      exit $?
+    displayName: "Ingest Data into Port"
 ```
 
   </TabItem>
@@ -410,14 +415,15 @@ To use JQL filtering, add to the `selector` object a `jql` key with your desired
 
 ```yaml showLineNumbers
 resources:
+  # highlight-next-line
+  - kind: issue # JQL filtering can only be used with the "issue" kind
+    selector:
+      query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
       # highlight-next-line
-    - kind: issue # JQL filtering can only be used with the "issue" kind
-      selector:
-        query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
-      # highlight-next-line
-        jql: "status != Done" # JQL query, will only ingest issues whose status is not "Done"
-      port:
+      jql: "status != Done" # JQL query, will only ingest issues whose status is not "Done"
+    port:
 ```
+
 :::
 
 - The `port`, `entity` and the `mappings` keys are used to map the Jira object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
@@ -1226,3 +1232,116 @@ The script requires the following environment variables:
 Done! you can now import historical issues from Jira into Port. Port will parse the issues according to the mapping and update the catalog entities accordingly.
 
 </details>
+
+## Connect Jira issue to a service
+
+This guide aims to cover how to connect a Jira `issue` to an existing service in Port.
+
+:::tip Prerequisites
+
+- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
+- Ensure you have [Jira installed and configured](#installation) in your environment.
+
+:::
+
+<br/>
+
+### Add labels to issues in Jira
+
+Labelling issues in Jira allows you to categorize and filter them. You can use labels to group issues that are related to a specific service in Port. In this guide, we will add a label to tell us what service the issue is related to:
+
+1. **Log in to Jira** as a user with the `Administer Jira` global permission;
+2. **Navigate to the issue** you want to label;
+3. **Click on the issue** to open it;
+4. **Click on the `Labels` field** on the right hand side to add a label;
+5. **Add a label** that represents the service the issue is related to, `port-auth-service`. For this guide, let's assume there is a service entity identified by `auth-service` in your `Service` blueprint in Port.
+
+<img src='/img/guides/jiraAddLabelToIssue.png' width='60%' border='1px' />
+
+:::note Control the tag name
+Since our Jira `issue` may already have several tags, we will need a mechanism to control how these tags will be related to our `Service` blueprint. A way to achieve this relation is to prefix the tag name with the keyword `port-`. We will then use JQ to select the tags that starts with this keyword. So, our example tag will be named `port-auth-service`, which will correspond to a Service entity identified by `auth-service` in Port.
+:::
+
+### Create the service relation
+
+Now that Port is synced with our Jira resources, let's reflect the Jira issue in our services to display the issue associated with a service.
+First, we will need to create a [relation](/build-your-software-catalog/define-your-data-model/relate-blueprints/#what-is-a-relation) between our services and the corresponding Jira issue.
+
+1. Head back to the [Builder](https://app.getport.io/dev-portal/data-model), choose the `Jira issue` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New relation`:
+
+<img src='/img/guides/jiraAddRelationToIssue.png' width='60%' border='1px' />
+
+<br/><br/>
+
+2. Fill out the form like this, then click `Create`:
+
+<img src='/img/guides/jiraCreateRelationOnIssue.png' width='60%' border='1px' />
+
+<br/><br/>
+
+Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, we need to assign the relevant Jira issues to each of our services. This can be done by adding some mapping logic. Go to your [data sources page](https://app.getport.io/dev-portal/data-sources), and click on your Jira integration:
+
+<img src='/img/guides/jiraIntegrationDataSources.png' border='1px' />
+<br/><br/>
+
+Under the `resources` key, modify the mapping for the `issue` kind by using the following YAML block. Then click `Save & Resync`:
+
+<details>
+<summary><b>Relation mapping (Click to expand)</b></summary>
+
+```yaml
+- kind: issue
+    selector:
+      query: 'true'
+      jql: status != Done
+    port:
+      entity:
+        mappings:
+          identifier: .key
+          title: .fields.summary
+          blueprint: '"jiraIssue"'
+          properties:
+            url: (.self | split("/") | .[:3] | join("/")) + "/browse/" + .key
+            status: .fields.status.name
+            issueType: .fields.issuetype.name
+            components: .fields.components
+            assignee: .fields.assignee.displayName
+            reporter: .fields.reporter.displayName
+            creator: .fields.creator.displayName
+            priority: .fields.priority.id
+            created: .fields.created
+            updated: .fields.updated
+          relations:
+            board: .boardId | tostring
+            sprint: .sprint.id | tostring
+            project: .fields.project.key
+            parentIssue: .fields.parent.key
+            subtasks: .fields.subtasks | map(.key)
+            service: .fields.labels | map(select(startswith("port"))) | map(sub("port-"; ""; "g")) | .[0]
+```
+
+</details>
+
+:::tip JQ explanation
+
+The JQ below selects all labels that start with the keyword `port`. It then removes "port-" from each tag, leaving only the part that comes after it. It then selects the first match, which is equivalent to the service in Port.
+
+```yaml
+service: .fields.labels | map(select(startswith("port"))) | map(sub("port-"; ""; "g")) | .[0]
+```
+
+:::
+
+What we just did was map the `Jira Issue` to the relation between it and our `Services`.  
+Now, if our `Service` identifier is equal to the Jira issue label, the `service` will automatically be linked to it &nbsp;🎉
+
+<img src='/img/guides/jiraIssueAfterServiceMapping.png' width='60%' border='1px' />
+
+## Conclusion
+
+By following these steps, you can seamlessly connect a Jira issue with an existing service blueprint in Port using issue labels.
+
+More relevant guides and examples:
+
+- [Port's Jira integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/jira/)
+- [Integrate scorecards with Slack](https://docs.getport.io/promote-scorecards/manage-using-3rd-party-apps/slack)
