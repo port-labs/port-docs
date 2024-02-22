@@ -6,7 +6,7 @@ import FindCredentials from "@site/docs/build-your-software-catalog/sync-data-to
 
 # ArgoCD
 
-This page will walk you through the installation of the Port execution agent in your Kubernetes cluster using ArgoCD, utilizing it's [Helm Capabilities](https://argo-cd.readthedocs.io/en/stable/user-guide/helm/).
+This page will walk you through the installation of the Port execution agent in your Kubernetes cluster using ArgoCD, utilizing its [Helm Capabilities](https://argo-cd.readthedocs.io/en/stable/user-guide/helm/).
 
 :::info
 - You can observe the Helm chart and the available parameters [here](https://github.com/port-labs/helm-charts/tree/main/charts/port-agent).
@@ -100,4 +100,5 @@ Done! The exporter will begin creating and updating objects from your Kubernetes
 
 ## Next Steps
 
-- Refer to the [usage guide](/create-self-service-experiences/setup-backend/webhook/port-execution-agent/usage.md) to set up a webhook.
+- Refer to the [usage guide](/create-self-service-experiences/setup-backend/webhook/port-execution-agent/usage.md) to set up a self-service action that sends a webhook.
+- Customize the [payload mapping](/create-self-service-experiences/setup-backend/webhook/port-execution-agent/control-the-payload.md?installationMethod=argo) to control the payload sent to the target.

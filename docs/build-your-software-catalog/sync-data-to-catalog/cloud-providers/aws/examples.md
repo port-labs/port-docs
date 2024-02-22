@@ -4067,6 +4067,9 @@ In this step-by-step example, you will export your `ECR repositories` to Port.
 
 Done! soon, you will be able to see any `ECR repositories`
 
+### Using Python script
+Alternatively you can use a Python script to export your ECR repositories and images to Port. The script is available in the [example-ecr-images](https://github.com/port-labs/example-ecr-images) repository.
+
 ## Elasticache serverless cache
 
 In this step-by-step example, you will export your `Serverless cache` to Port.
@@ -4581,3 +4584,229 @@ In this step-by-step example, you will export your `Cache clusters` to Port.
     </details>
 
 Done! soon, you will be able to see any `Cache clusters`
+
+## Auto scaling group
+
+In this step-by-step example, you will export your EC2 `Auto scaling groups` to Port.
+
+1. Create the following Port blueprint:
+
+   **Auto scaling group** - will represent EC2 auto scaling group from the AWS account.
+
+   You may use the following definitions:
+
+     <details>
+     <summary>Auto scaling group blueprint </summary>
+
+   ```json showLineNumbers
+    {
+      "identifier": "awsAutoScalingGroup",
+      "title": "Auto Scaling Group",
+      "icon": "AWS",
+      "schema": {
+        "properties": {
+          "availabilityZones": {
+            "type": "array",
+            "title": "Availability Zones"
+          },
+          "desiredCapacity": {
+            "type": "number",
+            "title": "Desired Capacity"
+          },
+          "healthCheckType": {
+            "type": "string",
+            "title": "Health Check Type"
+          },
+          "loadBalancerNames": {
+            "type": "array",
+            "title": "Load Balancer Names"
+          },
+          "maximumCapacity": {
+            "type": "number",
+            "title": "Maximum Capacity"
+          },
+          "minimumCapacity": {
+            "type": "number",
+            "title": "Minimum Capacity"
+          },
+          "serviceRoleArn": {
+            "type": "string",
+            "title": "Service Role ARN"
+          },
+          "tags": {
+            "type": "array",
+            "title": "Tags"
+          }
+        },
+        "required": []
+      },
+      "mirrorProperties": {},
+      "calculationProperties": {},
+      "aggregationProperties": {},
+      "relations": {
+        "region": {
+          "title": "Region",
+          "target": "region",
+          "required": false,
+          "many": false
+        }
+      }
+    }
+   ```
+
+     </details>
+
+2. Upload the `config.json` file to the exporter's S3 bucket:
+
+   <details>
+   <summary> Port AWS exporter config.json </summary>
+
+   ```json showLineNumbers
+   {
+     "resources": [
+      {
+        "kind": "AWS::AutoScaling::AutoScalingGroup",
+        "port": {
+          "entity": {
+            "mappings": [
+              {
+                "identifier": ".AutoScalingGroupName",
+                "title": ".AutoScalingGroupName",
+                "blueprint": "awsAutoScalingGroup",
+                "properties": {
+                  "tags": ".Tags",
+                  "desiredCapacity": ".DesiredCapacity",
+                  "minimumCapacity": ".MinSize",
+                  "maximumCapacity": ".MaxSize",
+                  "availabilityZones": ".AvailabilityZones",
+                  "loadBalancerNames": ".LoadBalancerNames",
+                  "serviceRoleArn": ".ServiceLinkedRoleARN",
+                  "healthCheckType": ".HealthCheckType"
+                },
+                "relations": {}
+              }
+            ]
+          }
+        }
+      }
+     ]
+   }
+   ```
+
+   </details>
+
+3. Update the exporter's `IAM policy`:
+
+   <details>
+   <summary> IAM policy </summary>
+
+   ```json showLineNumbers
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Sid": "VisualEditor0",
+         "Effect": "Allow",
+         "Action": [
+           "autoscaling:Describe*"
+         ],
+         "Resource": "*"
+       }
+     ]
+   }
+   ```
+
+   </details>
+
+4. Optional: create an event rule to trigger automatic syncing of changes in Auto scaling groups.
+
+   You may use the following CloudFormation template:
+
+    <details>
+    <summary> Event rule CloudFormation template </summary>
+
+   ```yaml showLineNumbers
+   AWSTemplateFormatVersion: "2010-09-09"
+   Description: The template used to create event rules for the Port AWS exporter.
+   Parameters:
+     PortAWSExporterStackName:
+       Description: Name of the Port AWS exporter stack name
+       Type: String
+       MinLength: 1
+       MaxLength: 255
+       AllowedPattern: ^[a-zA-Z][-a-zA-Z0-9]*$
+       Default: serverlessrepo-port-aws-exporter
+   Resources:
+    AutoScalingGroupEventRule:
+      Type: AWS::Events::Rule
+      Properties:
+        EventBusName: default
+        EventPattern:
+          detail-type:
+            - AWS API Call via CloudTrail
+          source:
+            - aws.autoscaling
+          detail:
+            eventSource:
+              - autoscaling.amazonaws.com
+            eventName:
+              - prefix: CreateAutoScalingGroup
+              - prefix: DeleteAutoScalingGroup
+              - prefix: UpdateAutoScalingGroup
+        Name: port-aws-exporter-sync-auto-scaling-group-trails
+        State: ENABLED
+        Targets:
+          - Id: PortAWSExporterEventsQueue
+            Arn:
+              Fn::ImportValue:
+                Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+            InputTransformer:
+              InputPathsMap:
+                awsRegion: $.detail.awsRegion
+                eventName: $.detail.eventName
+                autoScalingGroupName: $.detail.requestParameters.autoScalingGroupName
+              InputTemplate: >-
+                {
+                  "resource_type": "AWS::AutoScaling::AutoScalingGroup",
+                  "region": "\"<awsRegion>\"",
+                  "identifier": "\"<autoScalingGroupName>\"",
+                  "action": "if \"<eventName>\" | startswith(\"DeleteAutoScalingGroup\") then \"delete\" else \"upsert\" end"
+                }
+    AutoScalingGroupTagRule:
+      Type: AWS::Events::Rule
+      Properties:
+        EventBusName: default
+        EventPattern:
+          source:
+            - aws.autoscaling
+          detail-type:
+            - AWS API Call via CloudTrail
+          detail:
+            eventSource:
+              - autoscaling.amazonaws.com
+            eventName:
+              - prefix: CreateOrUpdateTags
+              - prefix: DeleteTags
+        Name: port-aws-exporter-sync-auto-scaling-group-tags-trails
+        State: ENABLED
+        Targets:
+          - Id: PortAWSExporterEventsQueue
+            Arn:
+              Fn::ImportValue:
+                Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+            InputTransformer:
+              InputPathsMap:
+                awsRegion: $.detail.awsRegion
+                eventName: $.detail.eventName
+                resourceId: $.detail.requestParameters.tags[0].resourceId
+              InputTemplate: |-
+                {
+                  "resource_type": "AWS::AutoScaling::AutoScalingGroup",
+                  "region": "\"<awsRegion>\"",
+                  "identifier": "\"<resourceId>\"",
+                  "action": "\"upsert\""
+                }
+   ```
+    </details>
+
+Done! soon, you will be able to see any `Auto scaling groups`

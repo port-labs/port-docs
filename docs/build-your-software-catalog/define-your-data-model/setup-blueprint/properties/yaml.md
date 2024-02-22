@@ -1,5 +1,5 @@
 ---
-sidebar_position: 12
+sidebar_position: 20
 description: Yaml is a data type used to save object definitions in YAML
 ---
 
@@ -23,7 +23,7 @@ The yaml property type can be used to store any key/value based data, for exampl
 - `values.yml`;
 - etc.
 
-In this [live demo](https://demo.getport.io/services) example, we can see the `Helm Chart` yaml property. 🎬
+In this [live demo](https://demo.getport.io/service_catalog) example, we can see the `Helm Chart` yaml property. 🎬
 
 ## API definition
 

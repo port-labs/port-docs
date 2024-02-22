@@ -186,7 +186,7 @@ For supported services in CloudTrail, click [here](https://docs.aws.amazon.com/a
 :::
 
 - The `Targets` property defines the targets of the produced events.
-  For the AWS exporter, we want to configure it's own event queue as the target:
+  For the AWS exporter, we want to configure its own event queue as the target:
 
 ```yaml showLineNumbers
 Properties:

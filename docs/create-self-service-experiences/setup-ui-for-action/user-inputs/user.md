@@ -90,7 +90,6 @@ resource "port_action" "myAction" {
       "myUserInput" = {
         title       = "My user input"
         description = "My user input"
-        required    = false
         format      = "user"
         default     = "me@example.com"
       }
@@ -114,7 +113,6 @@ resource "port_action" "myAction" {
       "myUserArrayInput" = {
         title       = "My user array input"
         description = "My user array input"
-        required    = false
         format      = "user"
       }
     }

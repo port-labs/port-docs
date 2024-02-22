@@ -5,13 +5,17 @@ import TabItem from '@theme/TabItem';
 
 Advanced input settings allow you to create more customizable experiences for users who perform self-service actions. This is done by creating adaptive inputs that change according to data about the entity, the user, and other inputs.
 
-### Common use-cases
+## Common use-cases
 
 - Filter the available options in a dropdown input.
 - Create a dependency between inputs to allow the user to select a value based on the value of another input.
 - Define dynamic default values based on the logged-in user properties(such as teams, email, role) or the entity that the action is being executed on (for day-2 or delete actions only).
 
-### Usage
+:::info Pulumi Examples' Language
+Unless otherwise specified, all **Pulumi** configuration examples are provided in Python. For usage in other languages, please see the Pulumi provider documentation [here](https://www.pulumi.com/registry/packages/port/api-docs/action/).
+:::
+
+## Usage
 
 Defining advanced inputs is currently supported in JSON-mode only.
 
@@ -19,105 +23,11 @@ When creating an action, the second step is defining its inputs. After defining 
 
 <img src='/img/self-service-actions/advancedInputsFormExample.png' width='60%' />
 
-#### Writing your configuration schema
+### Writing your configuration schema
 
-Port provides 4 keys that you can leverage to create complex inputs:
+Port provides a `jqQuery` property that can be used to extract data from the entity, the logged-in user, or the current action's form inputs. It can also be used to perform data manipulations.  
 
-<Tabs
-defaultValue="visible"
-values={[
-{ label: 'visible', value: 'visible', },
-{ label: 'dependsOn', value: 'DependsOn', },
-{ label: 'dataset', value: 'Dataset', },
-{ label: 'jqQuery', value: 'jqQuery', },
-]}>
-
-<TabItem value="visible">
-
-The `visible` property is used to dynamically hide/show inputs in the form.
-The `visible` value could be set to either a boolean (`true` value is always shown, `false` value is always hidden), or to a `jqQuery` which evaluates to a boolean.
-
-In this example, the `runArguments` properties are configured with `visible` so that they only show up in the form when the matching value is selected in the `language` input:
-
-```json showLineNumbers
-{
-  "properties": {
-    "language": {
-      "type": "string",
-      "enum": ["javascript", "python"]
-    },
-    "pythonRunArguments": {
-      "type": "string",
-      "visible": {
-        "jqQuery": ".form.language == \"python\""
-      }
-    },
-    "nodeRunArguments": {
-      "type": "string",
-      "visible": {
-        "jqQuery": ".form.language == \"javascript\""
-      }
-    }
-  }
-}
-```
-
-</TabItem>
-
-<TabItem value="DependsOn">
-
-The `dependsOn` property is used to create a dependency between inputs. If input X depends on input Y, input X will be disabled until input Y is filled.  
-In the example below, the `SDK` input depends on the `Language` input:
-
-```json showLineNumbers
-{
-  "properties": {
-    "language": {
-      "type": "string",
-      "enum": ["javascript", "python"]
-    },
-    "SDK": {
-      "type": "string",
-      "dependsOn": ["language"]
-    }
-  }
-}
-```
-
-</TabItem>
-<TabItem value="Dataset">
-
-The `dataset` property is used to filter the displayed options in an [entity](/create-self-service-experiences/setup-ui-for-action/user-inputs/entity) input. It is comprised of two properties:
-
-- `Combinator` - the logical operation to apply between the rules of the dataset. [Read more](/search-and-query/#combinator).
-- `Rules` - an array of [rules](/search-and-query/#rules), only entities that pass them will be displayed in the form.
-  Note that the `value` key in the dataset can be a constant (string, number, etc) or a "jqQuery" object.
-
-```json showLineNumbers
-{
-  "namespace": {
-    "type": "string",
-    "format": "entity",
-    "blueprint": "namespace",
-    "dataset": {
-      "combinator": "and",
-      "rules": [
-        {
-          "property": "$team",
-          "operator": "containsAny",
-          "value": "value here. this can also be a 'jqQuery' object"
-        }
-      ]
-    }
-  }
-}
-```
-
-</TabItem>
-<TabItem value="jqQuery">
-
-The `jqQuery` property is used to extract data from the entity, the logged-in user, or the current action's form inputs. It can also be used to perform data manipulations.  
-In this example, the `jqQuery` checks the value of another property (`language`) and determines the possible values of the `SDK` property accordingly:
+For example, the following `jqQuery` checks the value of another property (`language`) and determines the possible values of the `SDK` property accordingly:
 
 ```json showLineNumbers
 {
@@ -136,9 +46,11 @@ In this example, the `jqQuery` checks the value of another property (`language`)
 }
 ```
 
-### The properties you can access using the "jqQuery" object
+#### The properties you can access using the "jqQuery" object
 
 <Tabs
+groupId="jqquery-properties"
+queryString
 defaultValue="form"
 values={[
 {label: 'form', value: 'form'},
@@ -291,6 +203,280 @@ Keys that are supported with jqQuery expressions:
 | value    | the value inside a "dataset" rule                 |
 | visible  | the condition to display any property in the form |
 
+---
+
+#### Additional available properties
+
+You can use these additional properties to create more complex inputs:
+
+<Tabs
+defaultValue="visible"
+groupId="additional-inputs"
+queryString
+values={[
+{ label: 'visible', value: 'visible', },
+{ label: 'dependsOn', value: 'dependsOn', },
+{ label: 'dataset', value: 'dataset', },
+]}>
+
+<TabItem value="visible">
+
+The `visible` property is used to dynamically hide/show inputs in the form.
+The `visible` value could be set to either a boolean (`true` value is always shown, `false` value is always hidden), or to a `jqQuery` which evaluates to a boolean.
+
+In this example, the `runArguments` properties are configured with `visible` so that they only show up in the form when the matching value is selected in the `language` input:
+
+<Tabs
+defaultValue="api"
+values={[
+{label: 'API', value: 'api'},
+{label: 'Terraform', value: 'terraform'},
+{label: 'Pulumi', value: 'pulumi'}
+]}>
+
+<TabItem value="api">
+
+```json showLineNumbers
+{
+  "properties": {
+    "language": {
+      "type": "string",
+      "enum": ["javascript", "python"]
+    },
+    "pythonRunArguments": {
+      "type": "string",
+      "visible": {
+        "jqQuery": ".form.language == \"python\""
+      }
+    },
+    "nodeRunArguments": {
+      "type": "string",
+      "visible": {
+        "jqQuery": ".form.language == \"javascript\""
+      }
+    }
+  }
+}
+```
+
+</TabItem>
+<TabItem value="terraform">
+
+```hcl showLineNumbers
+resource "port_action" myAction {
+  # ...action configuration
+  {
+    user_properties = {
+      string_props = {
+        language = {
+          enum = ["javascript", "python"]
+        }
+        pythonRunArguments = {
+          visible_jq_query = ".form.language == \"python\""
+        }
+        nodeRunArguments = {
+          visible_jq_query = ".form.language == \"javascript\""
+        }
+      }
+    }
+  }
+}
+```
+
+</TabItem>
+<TabItem value="pulumi">
+
+```python showLineNumbers title="pulumi.py"
+action = Action(
+  # ...action properties
+  user_properties={
+    "string_props": {
+      "language": {
+        "enums": ["python", "javascript"],
+      },
+      "pythonRunArguments": {"visible_jq_query": '.form.language == "python"'},
+      "nodeRunArguments": {"visible_jq_query": '.form.language == "javascript"'},
+    },
+  }
+)
+
+```
+
+</TabItem>
+
+</Tabs>
+
+</TabItem>
+
+<TabItem value="dependsOn">
+
+The `dependsOn` property is used to create a dependency between inputs. If input X depends on input Y, input X will be **disabled** until input Y is filled.  
+In the example below, the `SDK` input depends on the `Language` input:
+
+<Tabs
+defaultValue="api"
+values={[
+{label: 'API', value: 'api'},
+{label: 'Terraform', value: 'terraform'},
+{label: 'Pulumi', value: 'pulumi'}
+]}>
+
+<TabItem value="api">
+
+```json showLineNumbers
+{
+  "properties": {
+    "language": {
+      "type": "string",
+      "enum": ["javascript", "python"]
+    },
+    "SDK": {
+      "type": "string",
+      "dependsOn": ["language"]
+    }
+  }
+}
+```
+
+</TabItem>
+<TabItem value="terraform">
+
+```hcl showLineNumbers
+resource "port_action" myAction {
+  # ...action configuration
+  {
+    user_properties = {
+      string_props = {
+        language = {
+          enum = ["javascript", "python"]
+        }
+        SDK = {
+          depends_on: ["language"]
+        }
+      }
+    }
+  }
+}
+```
+</TabItem>
+<TabItem value="pulumi">
+
+```python showLineNumbers title="pulumi.py"
+action = Action(
+  # ...action properties
+  user_properties={
+    "string_props": {
+      "language": {
+        "enums": ["python", "javascript"],
+      },
+      "SDK": {
+        "depends_ons": ["language"]
+      },
+    },
+  }
+)
+
+```
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem value="dataset">
+
+The `dataset` property is used to filter the displayed options in an [entity](/create-self-service-experiences/setup-ui-for-action/user-inputs/entity) input. It is comprised of two properties:
+
+- `Combinator` - the logical operation to apply between the rules of the dataset. [Read more](/search-and-query/#combinator).
+- `Rules` - an array of [rules](/search-and-query/#rules), only entities that pass them will be displayed in the form.
+  Note that the `value` key in the dataset can be a constant (string, number, etc) or a "jqQuery" object.
+
+<Tabs
+defaultValue="api"
+values={[
+{label: 'API', value: 'api'},
+{label: 'Terraform', value: 'terraform'},
+{label: 'Pulumi', value: 'pulumi'}
+
+]}>
+
+<TabItem value="api">
+
+```json showLineNumbers
+{
+  "namespace": {
+    "type": "string",
+    "format": "entity",
+    "blueprint": "namespace",
+    "dataset": {
+      "combinator": "and",
+      "rules": [
+        {
+          "property": "$team",
+          "operator": "containsAny",
+          "value": "value here. this can also be a 'jqQuery' object"
+        }
+      ]
+    }
+  }
+}
+```
+
+</TabItem>
+<TabItem value="terraform">
+
+```hcl showLineNumbers
+resource "port_action" "myAction" {
+  # ...action properties
+  user_properties = {
+    string_props = {
+      "namespace" = {
+        format      = "entity"
+        blueprint   = "namespace"
+        dataset = {
+          combinator = "and"
+          rules = [
+            {
+              property = "$team"
+              operator = "containsAny"
+              value = "value here. this can also be a 'jqQuery' object"
+            }
+          ]
+        }
+      }
+    }
+  }
+}
+```
+</TabItem>
+<TabItem value="pulumi">
+
+```python showLineNumbers title="pulumi.py"
+action = Action(
+  # ...action properties
+  user_properties={
+    "string_props": {
+      "namespace": {
+        "format": "entity",
+        "blueprint": "namespace",
+        "dataset": {
+          "combinator": "and",
+          "rules": [
+            {
+              "property": "$team",
+              "operator": "containsAny",
+              "value": "value here. this can also be a 'jqQuery' object"
+            }
+          ]
+        }
+      }
+    }
+  }
+)
+
+```
+</TabItem>
+
+</Tabs>
+
 </TabItem>
 
 </Tabs>
@@ -308,6 +494,7 @@ defaultValue="api"
 values={[
 {label: 'API', value: 'api'},
 {label: 'Terraform', value: 'terraform'},
+{label: 'Pulumi', value: 'pulumi'},
 ]}>
 
 <TabItem value="api">
@@ -354,19 +541,40 @@ resource "port_action" myAction {
 ```
 
 </TabItem>
+<TabItem value="pulumi">
+
+```python showLineNumbers title="pulumi.py"
+action = Action(
+  # ...action properties
+  user_properties={
+    "string_props": {
+      "language": {
+        "enums": ["python", "javascript"],
+      },
+      "SDK": {
+        "enum_jq_query": "if .form.language == \"javascript\" then [\"Node 16\", \"Node 18\"] else [\"Python 3.8\"] end"
+        "depends_ons": ["language"]
+      },
+    },
+  }
+)
+
+```
+</TabItem>
 </Tabs>
 
 ![Cluster And Namespace Action](../../../static/img/software-catalog/blueprint/javascriptSDK.png)
 
 ### Hiding property based on the executing user's roles
 
-In this example, the `visible` checks if the executing user has the `"admin"` role, and if they don't have this role than the advanced option will be hidden for them. The default value will still be filled in and sent to the backend:
+In this example, the `visible` checks if the executing user has the `"admin"` role, and if they don't have this role then the advanced option will be hidden for them. The default value will still be filled in and sent to the backend:
 
 <Tabs
 defaultValue="api"
 values={[
 {label: 'API', value: 'api'},
 {label: 'Terraform', value: 'terraform'},
+{label: 'Pulumi', value: 'pulumi'},
 ]}>
 
 <TabItem value="api">
@@ -412,6 +620,29 @@ resource "port_action" myAction {
 ```
 
 </TabItem>
+
+<TabItem value="pulumi">
+
+```python showLineNumbers title="pulumi.py"
+action = Action(
+  "pulumi-resource-name",
+  identifier="action-identifier",
+  title="Action Title",
+  blueprint="myBlueprint",
+  user_properties={
+    "string_props": {
+      "simpleOption": {
+          "enums": ["option1", "option2"]
+      },
+      "advancedOption": {"visible_jq_query": ".user.roles | any(.name == \"Admin\")"}
+    },
+  },
+  trigger="DAY-2",
+  webhook_method={"url": "https://myserver.com"},
+)
+```
+
+</TabItem>
 </Tabs>
 
 This is how the run form would show up for non-admin users:
@@ -429,6 +660,7 @@ defaultValue="api"
 values={[
 {label: 'API', value: 'api'},
 {label: 'Terraform', value: 'terraform'},
+{label: 'Pulumi', value: 'pulumi'},
 ]}>
 
 <TabItem value="api">
@@ -484,6 +716,33 @@ resource "port_action" myAction {
   }
 }
 ```
+</TabItem>
+
+<TabItem value="pulumi">
+
+```python showLineNumbers title="pulumi.py"
+action = Action(
+  # ...action properties
+  user_properties={
+    "string_props": {
+      "env": {
+        "format": "entity",
+        "blueprint": "environment",
+        "dataset": {
+          "combinator": "and",
+          "rules": [
+            {
+              "property": "type",
+              "operator": "!=",
+              "value": "production"
+            }
+          ]
+        }
+      }
+    }
+  }
+)
+```
 
 </TabItem>
 </Tabs>
@@ -501,6 +760,7 @@ defaultValue="api"
 values={[
 {label: 'API', value: 'api'},
 {label: 'Terraform', value: 'terraform'},
+{label: 'Pulumi', value: 'pulumi'},
 ]}>
 
 <TabItem value="api">
@@ -579,6 +839,43 @@ resource "port_action" myAction {
 ```
 
 </TabItem>
+
+<TabItem value="pulumi">
+
+```python showLineNumbers title="pulumi.py"
+action = Action(
+  # ...action properties
+  user_properties={
+    "string_props": {
+      "Cluster": {
+        "format": "entity",
+        "blueprint": "Cluster",
+        "title": "Cluster",
+        "description": "The cluster to create the namespace in"
+      },
+      "namespace": {
+        "format": "entity",
+        "blueprint": "namespace",
+        "dataset": {
+          "combinator": "and",
+          "rules": [
+            {
+              "blueprint": "Cluster",
+              "operator": "relatedTo",
+              "value": {
+                "jq_query": ".form.Cluster.identifier"
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+)
+```
+
+</TabItem>
+
 </Tabs>
 
 ![Cluster And Namespace Action](../../../static/img/software-catalog/blueprint/clusterNamespaceActionSmallerExample.png)
@@ -594,6 +891,7 @@ defaultValue="api"
 values={[
 {label: 'API', value: 'api'},
 {label: 'Terraform', value: 'terraform'},
+{label: 'Pulumi', value: 'pulumi'},
 ]}>
 
 <TabItem value="api">
@@ -651,6 +949,35 @@ resource "port_action" myAction {
   }
 }
 ```
+</TabItem>
+
+<TabItem value="pulumi">
+
+```python showLineNumbers title="pulumi.py"
+action = Action(
+  # ...action properties
+  user_properties={
+    "string_props": {
+      "namespace": {
+        "format": "entity",
+        "blueprint": "namespace",
+        "dataset": {
+          "combinator": "and",
+          "rules": [
+            {
+              "property": "$team",
+              "operator": "containsAny",
+              "value": {
+                "jq_query": "[.user.teams[].name]"
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+)
+```
 
 </TabItem>
 </Tabs>
@@ -668,6 +995,7 @@ defaultValue="api"
 values={[
 {label: 'API', value: 'api'},
 {label: 'Terraform', value: 'terraform'},
+{label: 'Pulumi', value: 'pulumi'},
 ]}>
 
 <TabItem value="api">
@@ -727,6 +1055,36 @@ resource "port_action" myAction {
 ```
 
 </TabItem>
+
+<TabItem value="pulumi">
+
+```python showLineNumbers title="pulumi.py"
+action = Action(
+  # ...action properties
+  user_properties = {
+    "string_props": {
+      "namespace": {
+        "format": "entity",
+        "blueprint": "namespace",
+        "dataset": {
+          "combinator": "and",
+          "rules": [
+            {
+              "property": "tags",
+              "operator": "containsAny",
+              "value": {
+                "jq_query": "[.entity.properties.tags[]]"
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+)
+```
+
+</TabItem>
 </Tabs>
 
 ### Setting a default value with the jqQuery
@@ -738,6 +1096,7 @@ defaultValue="api"
 values={[
 {label: 'API', value: 'api'},
 {label: 'Terraform', value: 'terraform'},
+{label: 'Pulumi', value: 'pulumi'},
 ]}>
 
 <TabItem value="api">
@@ -773,6 +1132,23 @@ resource "port_action" myAction {
 ```
 
 </TabItem>
+<TabItem value="pulumi">
+
+```python showLineNumbers title="pulumi.py"
+action = Action(
+  # ...action properties
+  user_properties={
+    "array_props": {
+      "some_input": {
+        "default_jq_query": ".entity.properties.tags"
+      }
+    },
+  },
+  trigger="DAY-2", # CREATE, DAY-2, DELETE
+)
+```
+
+</TabItem>
 </Tabs>
 
 ![entity tags action](../../../static/img/software-catalog/blueprint/defaultEntityTags.png)
@@ -787,6 +1163,8 @@ This example contains two user inputs: one will always be required, and the othe
 defaultValue="api"
 values={[
 {label: 'API', value: 'api'},
+{label: 'Terraform', value: 'terraform'},
+{label: 'Pulumi', value: 'pulumi'}
 ]}>
 
 <TabItem value="api">
@@ -808,6 +1186,46 @@ values={[
 ```
 
 </TabItem>
+<TabItem value="terraform">
+
+```hcl showLineNumbers
+resource "port_action" myAction {
+  # ...action configuration
+  {
+    user_properties = {
+      string_props = {
+        alwaysRequiredInput = {}
+        inputRequiredBasedOnData = {}
+      }
+    }
+    required_jq_query = "if .entity.properties.conditionBooleanProperty then [\"alwaysRequiredInput\", \"inputRequiredBasedOnData\"] else [\"alwaysRequiredInput\"] end"
+  }
+}
+```
+
+</TabItem>
+<TabItem value="pulumi">
+
+```python showLineNumbers title="pulumi.py"
+action = Action(
+  "budding-action",
+  identifier="budding-action",
+  title="A Budding Act",
+  # ...more action properties
+  user_properties={
+    "string_props": {
+      "alwaysRequiredInput": {},
+      "inputRequiredBasedOnData": {}
+    },
+  },
+  required_jq_query='if .entity.properties.conditionBooleanProperty then ["alwaysRequiredInput", "inputRequiredBasedOnData"] else ["alwaysRequiredInput"] end',
+  trigger="DAY-2", # CREATE, DAY-2, DELETE
+)
+
+pulumi.export("name", action.title)
+```
+
+</TabItem>
 </Tabs>
 
 ## Complete Example
@@ -825,6 +1243,7 @@ defaultValue="api"
 values={[
 {label: 'API', value: 'api'},
 {label: 'Terraform', value: 'terraform'},
+{label: 'Pulumi', value: 'pulumi'},
 ]}>
 
 <TabItem value="api">
@@ -957,6 +1376,155 @@ resource "port_action" "createRunningService" {
   }
 }
 ```
+
+</TabItem>
+<TabItem value="pulumi">
+
+<Tabs
+defaultValue="python"
+values={[
+{label: 'Python', value: 'python'},
+{label: 'Javascript', value: 'javascript'}
+]}>
+
+<TabItem value="python">
+
+```python showLineNumbers
+action = Action(
+  "create-running-service",
+  identifier="createRunningService",
+  title="Deploy running service to a cluster",
+  icon="Cluster",
+  user_properties={
+    "string_props": {
+      "Cluster": {
+        "format": "entity",
+        "blueprint": "Cluster",
+        "required": True,
+        "title": "Cluster",
+        "description": "The cluster to create the namespace in"
+      },
+      "namespace": {
+        "format": "entity",
+        "blueprint": "namespace",
+        "required": True,
+        "depends_ons": ["Cluster"],
+        "dataset": {
+            "combinator": "and",
+            "rules": [
+              {
+                "blueprint": "Cluster",
+                "operator": "relatedTo",
+                "value": {
+                  "jq_query": ".form.Cluster.identifier"
+                }
+              }
+            ],
+        },
+        "title": "namespace",
+        "description": "The namespace to create the cluster in"
+      },
+      "service": {
+        "format": "entity",
+        "blueprint": "Service",
+        "required": True,
+        "dataset": {
+          "combinator": "and",
+          "rules": [
+            {
+              "blueprint": "$team",
+              "operator": "containsAny",
+              "value": {
+                "jq_query": "[.user.teams[].name]"
+              }
+            }
+          ]
+        },
+        "title": "Service"
+      }
+    },
+  },
+  trigger="CREATE",
+  description="This will deploy a running service to a cluster"
+  webhook_method={"url": "https://example.com"},
+)
+
+pulumi.export("name", action.title)
+```
+
+</TabItem>
+
+<TabItem value="javascript">
+
+```javascript showLineNumbers
+"use strict";
+const pulumi = require("@pulumi/pulumi");
+const port = require("@port-labs/port");
+
+const entity = new Action("create-running-service", {
+  identifier: "createRunningService",
+  title: "Deploy running service to a cluster",
+  icon: "Cluster",
+  userProperties: {
+    stringProps: {
+      "Cluster": {
+        "format": "entity",
+        "blueprint": "Cluster",
+        "required": true,
+        "title": "Cluster",
+        "description": "The cluster to create the namespace in"
+      },
+      "namespace": {
+        "format": "entity",
+        "blueprint": "namespace",
+        "required": true,
+        "dependsOns": ["Cluster"],
+        "dataset": {
+          "combinator": "and",
+          "rules": [
+            {
+              "blueprint": "Cluster",
+              "operator": "relatedTo",
+              "value": {
+                "jqQuery": ".form.Cluster.identifier"
+              }
+            }
+          ],
+        },
+      },
+      "service": {
+        "format": "entity",
+        "blueprint": "Service",
+        "required": true,
+        "dataset": {
+          "combinator": "and",
+          "rules": [
+            {
+              "blueprint": "$team",
+              "operator": "containsAny",
+              "value": {
+                "jqQuery": "[.user.teams[].name]"
+              }
+            }
+          ]
+        },
+        "title": "Service"
+      }
+    }
+  },
+  trigger: "CREATE",
+  description: "This will deploy a running service to a cluster"
+  webhookMethod: {
+    "url": "https://example.com"
+  },
+});
+
+exports.title = entity.title;
+```
+
+</TabItem>
+
+</Tabs>
 
 </TabItem>
 </Tabs>

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 6
+sidebar_position: 18
 description: URL is a data type used to save links to websites
 ---
 
@@ -16,12 +16,9 @@ URL is a data type used to save links to websites.
 
 The URL property type can be used to store a link to any web resource, for example:
 
-- Link to Datadog dashboard;
-- Link to Sentry tracing;
-- Link to pull request;
-- etc.
-
-In this [live demo](https://demo.getport.io/domains) example, we can see the `Domain Docs` URL property. 🎬
+- Link to Datadog dashboard
+- Link to Sentry tracing
+- Link to pull request
 
 ## API definition
 

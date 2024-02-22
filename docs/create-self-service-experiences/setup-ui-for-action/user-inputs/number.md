@@ -132,7 +132,6 @@ resource "port_action" "myAction" {
       "myNumberInput" = {
         title       = "My number input"
         description = "My number input"
-        required    = false
         default     = 7
       }
     }
@@ -155,7 +154,6 @@ resource "port_action" "myAction" {
       "myNumberInput" = {
         title       = "My number input"
         description = "My number input"
-        required    = false
         enum        = [1, 2, 3, 4]
       }
     }
@@ -179,7 +177,6 @@ resource "port_action" "myAction" {
       "myNumberArrayInput" = {
         title       = "My number array input"
         description = "My number array input"
-        required    = false
         number_items = {}
       }
     }
@@ -267,7 +264,6 @@ resource "port_action" "myAction" {
       "myNumberInput" = {
         title       = "My number input"
         description = "My number input"
-        required    = false
         minimum     = 0
         maximum     = 50
       }

@@ -78,8 +78,8 @@ helm upgrade --install terraform port-labs/port-ocean \
 	--set integration.identifier="my-terraform-cloud-integration"  \
 	--set integration.type="terraform-cloud"  \
 	--set integration.eventListener.type="POLLING"  \
-  --set integration.secrets.terraformCloudHost="string" \
-	--set integration.secrets.terraformCloudToken="string" \
+        --set integration.secrets.terraformCloudHost="string" \
+	--set integration.secrets.terraformCloudToken="string" 
 ```
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>

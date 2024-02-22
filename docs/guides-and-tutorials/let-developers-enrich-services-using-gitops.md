@@ -19,6 +19,8 @@ This guide takes 10 minutes to complete, and aims to demonstrate Port's flexibil
 
 :::
 
+<br/>
+
 ### The goal of this guide
 
 In this guide we will enrich a service in Port using Gitops. In reality, this can be used by developers to independently add additional valuable data about their services to Port.
@@ -28,6 +30,8 @@ After completing it, you will get a sense of how it can benefit different person
 - Developers will be able to enrich their services without needing to nag devops engineers.
 - Platform engineers will be able to create RBAC-controlled actions for developers, empowering their independence.
 - R&D managers will be able to track additional, valuable data about services in the organization.
+
+<br/>
 
 ### Add new properties to your `Service` blueprint
 
@@ -46,6 +50,8 @@ Let's start by adding two new properties to the `Service` <PortTooltip id="bluep
 _Note the colors of the inputs, this will make it easier to see a service's lifecycle in your catalog_ 😎
 
 <img src='/img/guides/gitopsServicePropLifecycle.png' width='50%' />
+
+<br/><br/>
 
 ### Model domains for your services
 
@@ -86,6 +92,8 @@ Services that share a business purpose (e.g. payments, shipping) are often group
 
 </details>
 
+<br/>
+
 ### Connect your services to their domains
 
 Now that we have a <PortTooltip id="blueprint">blueprint</PortTooltip> to represent a domain, let's connect it to our services. We will do this by adding a relation to the `Service` blueprint:
@@ -99,6 +107,8 @@ Now that we have a <PortTooltip id="blueprint">blueprint</PortTooltip> to repres
 2. Fill out the form like this, then click `Create`:
 
 <img src='/img/guides/gitopsDomainRelationForm.png' width='50%' />
+
+<br/><br/>
 
 ### Create domains via Gitops
 
@@ -124,11 +134,15 @@ Now that we have a `Domain` <PortTooltip id="blueprint">blueprint</PortTooltip>,
 
 </details>
 
+<br/>
+
 2. Head back to your [software catalog](https://app.getport.io/domains), you will see that Port has created two new `domain` <PortTooltip id="entity">entities</PortTooltip>:
 
 <img src='/img/guides/gitopsDomainEntities.png' width='50%' />
 
 The `architecture` property is a URL to a Lucidchart diagram. This is a handy way to track a domain's architecture in your software catalog.
+
+<br/>
 
 ### Create an action to enrich services
 
@@ -157,7 +171,7 @@ If you **skipped** the onboarding, or you want to create the action from scratch
 
 <br/><br/>
 
-4. We want our developers to be able to choose the domain to which the service will be assigned. Click on `Add input`, fill out the form like this, then click `Next`:
+4. We want our developers to be able to choose the domain to which the service will be assigned. Click on `New input`, fill out the form like this, then click `Next`:
 
 <img src='/img/guides/gitopsActionInputDomain.png' width='50%' />
 
@@ -381,7 +395,9 @@ jobs:
   enrichService:
     runs-on: ubuntu-latest
     steps:
+      # Checkout the workflow's repository
       - uses: actions/checkout@v3
+      # Checkout the service's repository
       - uses: actions/checkout@v3
         with:
           repository: "${{ github.repository_owner }}/${{fromJson(inputs.port_payload).context.entity}}"

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 11
 description: Number is a primitive data type used to save numeric data
 ---
 
@@ -22,7 +22,7 @@ The number property type can be used to store any numeric data, for example:
 - Number of open issues;
 - etc.
 
-In this [live demo](https://demo.getport.io/services) example, we can see the `JIRA Issues` number property. 🎬
+In this [live demo](https://demo.getport.io/service_catalog) example, we can see the `JIRA Issues` number property. 🎬
 
 ## API definition
 
