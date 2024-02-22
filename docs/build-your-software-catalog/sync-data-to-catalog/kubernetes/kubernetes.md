@@ -203,8 +203,10 @@ Choose one of the following installation methods:
 
 1. Install the `my-port-k8s-exporter` ArgoCD Application by creating the following `my-port-k8s-exporter.yaml` manifest:
     :::note
-    Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+    Remember to replace the placeholders for `LATEST_HELM_RELEASE` `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
     
+    You can find the latest version `port-k8s-exporter` chart in our [Releases](https://github.com/port-labs/helm-charts/releases?q=port-k8s-exporter&expanded=true) page.
+
     Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
     :::
 
@@ -219,22 +221,33 @@ Choose one of the following installation methods:
       namespace: argocd
     spec:
       destination:
-        namespace: port-k8s-exporter
+        namespace: my-port-k8s-exporter
         server: https://kubernetes.default.svc
       project: default
       sources:
       - repoURL: 'https://port-labs.github.io/helm-charts/'
         chart: port-k8s-exporter
+        // highlight-next-line
+        targetRevision: LATEST_HELM_RELEASE
         helm:
+          valueFiles:
+            - $values/argocd/my-port-k8s-exporter/values.yaml
           parameters:
             - name: secret.secrets.portClientId
+              // highlight-next-line
               value: YOUR_PORT_CLIENT_ID
             - name: secret.secrets.portClientSecret
+              // highlight-next-line
               value: YOUR_PORT_CLIENT_SECRET
             - name: stateKey
+              // highlight-next-line
               value: YOUR_CLUSTER_NAME
-           - name: extraEnv
-             value: '[{"name":"CLUSTER_NAME","value":"YOUR_CLUSTER_NAME"}]' 
+            - name: extraEnv[0].name
+              value: CLUSTER_NAME
+            - name: extraEnv[0].value
+              // highlight-next-line
+              value: YOUR_CLUSTER_NAME
+      // highlight-next-line
       - repoURL: YOUR_GIT_REPO_URL
         targetRevision: main
         ref: values

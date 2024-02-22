@@ -87,3 +87,6 @@ resources are being reported to Port using the freshly installed k8s exporter.
 ## How does the installation script work?
 
 <TemplateInstallation />
+
+## Alternative integration using script
+While the Trivy Kubernetes exporter described above is the recommended installation method, you may prefer to use a webhook and a script to [ingest your Trivy scan results to Port](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/packages/trivy). 
