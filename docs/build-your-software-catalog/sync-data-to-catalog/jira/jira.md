@@ -1339,7 +1339,7 @@ Now, if our `Service` identifier is equal to the Jira issue label, the `service`
 
 <img src='/img/guides/jiraIssueAfterServiceMapping.png' width='60%' border='1px' />
 
-## Conclusion
+### Conclusion
 
 By following these steps, you can seamlessly connect a Jira issue with an existing service blueprint in Port using issue labels.
 
