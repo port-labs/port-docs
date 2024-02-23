@@ -1204,10 +1204,10 @@ In addition, it requires a Jira API token that is provided as a parameter to the
 
 <h4> Create the Jira API token </h4>
 
-1. Log in to your [Jira account](https://id.atlassian.com/manage-profile/security/api-tokens);
-2. Click Create API token;
-3. From the dialog that appears, enter a memorable and concise Label for your token and click **Create**;
-4. Click **Copy** to copy the token to your clipboard, you will not have another opportunity to view the token value after you leave this page;
+1. Log in to your [Jira account](https://id.atlassian.com/manage-profile/security/api-tokens).
+2. Click Create API token.
+3. From the dialog that appears, enter a memorable and concise Label for your token and click **Create**.
+4. Click **Copy** to copy the token to your clipboard, you will not have another opportunity to view the token value after you leave this page.
 
 Use the following Python script to ingest historical Jira issues into port:
 
@@ -1250,24 +1250,24 @@ This guide aims to cover how to connect a Jira `issue` to an existing service in
 
 Labelling issues in Jira allows you to categorize and filter them. You can use labels to group issues that are related to a specific service in Port. In this guide, we will add a label to tell us what service the issue is related to:
 
-1. **Log in to Jira** as a user with the `Administer Jira` global permission;
-2. **Navigate to the issue** you want to label;
-3. **Click on the issue** to open it;
-4. **Click on the `Labels` field** on the right hand side to add a label;
+1. **Log in to Jira** as a user with the `Administer Jira` global permission.
+2. **Navigate to the issue** you want to label.
+3. **Click on the issue** to open it.
+4. **Click on the `Labels` field** on the right hand side to add a label.
 5. **Add a label** that represents the service the issue is related to, `port-auth-service`. For this guide, let's assume there is a service entity identified by `auth-service` in your `Service` blueprint in Port.
 
 <img src='/img/guides/jiraAddLabelToIssue.png' width='60%' border='1px' />
 
-:::note Control the tag name
-Since our Jira `issue` may already have several tags, we will need a mechanism to control how these tags will be related to our `Service` blueprint. A way to achieve this relation is to prefix the tag name with the keyword `port-`. We will then use JQ to select the tags that starts with this keyword. So, our example tag will be named `port-auth-service`, which will correspond to a Service entity identified by `auth-service` in Port.
+:::note Control the label name
+Since our Jira `issue` may already have several labels, we will need a mechanism to control how these labels will be related to our `Service` blueprint. A way to achieve this relation is to prefix the label name with the keyword `port-`. We will then use JQ to select the labels that starts with this keyword. So, our example label will be named `port-auth-service`, which will correspond to a Service entity identified by `auth-service` in Port.
 :::
 
 ### Create the service relation
 
-Now that Port is synced with our Jira resources, let's reflect the Jira issue in our services to display the issue associated with a service.
-First, we will need to create a [relation](/build-your-software-catalog/define-your-data-model/relate-blueprints/#what-is-a-relation) between our services and the corresponding Jira issue.
+Now that Port is synced with our Jira resources, let's reflect the Jira Issue in our services to display the issue associated with a service.
+First, we will need to create a [relation](/build-your-software-catalog/define-your-data-model/relate-blueprints/#what-is-a-relation) between our services and the corresponding Jira Issue.
 
-1. Head back to the [Builder](https://app.getport.io/dev-portal/data-model), choose the `Jira issue` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New relation`:
+1. Head back to the [Builder](https://app.getport.io/dev-portal/data-model), choose the `Jira Issue` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New relation`:
 
 <img src='/img/guides/jiraAddRelationToIssue.png' width='60%' border='1px' />
 
@@ -1279,7 +1279,7 @@ First, we will need to create a [relation](/build-your-software-catalog/define-y
 
 <br/><br/>
 
-Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, we need to assign the relevant Jira issues to each of our services. This can be done by adding some mapping logic. Go to your [data sources page](https://app.getport.io/dev-portal/data-sources), and click on your Jira integration:
+Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, we need to assign the relevant Jira Issues to each of our services. This can be done by adding some mapping logic. Go to your [data sources page](https://app.getport.io/dev-portal/data-sources), and click on your Jira integration:
 
 <img src='/img/guides/jiraIntegrationDataSources.png' border='1px' />
 <br/><br/>
@@ -1317,14 +1317,16 @@ Under the `resources` key, modify the mapping for the `issue` kind by using the 
             project: .fields.project.key
             parentIssue: .fields.parent.key
             subtasks: .fields.subtasks | map(.key)
+            // highlight-start
             service: .fields.labels | map(select(startswith("port"))) | map(sub("port-"; ""; "g")) | .[0]
+            // highlight-end
 ```
 
 </details>
 
 :::tip JQ explanation
 
-The JQ below selects all labels that start with the keyword `port`. It then removes "port-" from each tag, leaving only the part that comes after it. It then selects the first match, which is equivalent to the service in Port.
+The JQ below selects all labels that start with the keyword `port`. It then removes "port-" from each label, leaving only the part that comes after it. It then selects the first match, which is equivalent to the service in Port.
 
 ```yaml
 service: .fields.labels | map(select(startswith("port"))) | map(sub("port-"; ""; "g")) | .[0]
