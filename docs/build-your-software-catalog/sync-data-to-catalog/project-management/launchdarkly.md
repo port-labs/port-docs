@@ -12,26 +12,21 @@ import DockerParameters from "./\_launchdarkly_one_time_docker_parameters.mdx"
 
 Our Launchdarkly integration allows you to import `projects`, `flags`, `auditlogs`, and `environments` from your Launchdarkly account into Port, according to your mapping and definition.
 
-A `Project` in LaunchDarkly is analogous to a workspace in Terraform Cloud but tailored for feature flag management. Each project in LaunchDarkly is a collection of feature flags, targeting rules, and environments that correspond to a specific application or service. Projects help segregate and manage feature flags across different applications or services within an organization, ensuring clear boundaries and organization.
+A `Project` in LaunchDarkly is a collection of feature flags, targeting rules, and environments that correspond to a specific application or service.
 
-A `Flag` in LaunchDarkly represents a feature flag or toggle, which is a central concept in LaunchDarkly. Flags are used to control the visibility and operational state of features in your software without deploying new code. Each flag can have different rules and targeting options set per environment within a project, allowing for granular control over feature releases, experiments, and rollbacks.
+A `Flag` in LaunchDarkly represents a feature flag or toggle, which is a central concept in LaunchDarkly. Flags are used to control the visibility and operational state of features in your software without deploying new code.
 
-An `Audit Log` in LaunchDarkly records changes and events that occur within the platform, providing a comprehensive history of activities for compliance, troubleshooting, and analysis. The audit log captures details about who made changes, what changes were made, and when these changes occurred, similar to the state version concept in Terraform but focused on user actions and configurations within LaunchDarkly.
+An `Audit Log` in LaunchDarkly records changes and events that occur within the platform, providing a comprehensive history of activities for compliance, troubleshooting, and analysis.
 
-An `Environment` within a LaunchDarkly project is a logical separation of feature flag states and configurations, typically corresponding to stages in your development lifecycle (e.g., development, testing, staging, production). Environments allow teams to manage and test feature flags in isolation before rolling them out to production, ensuring safe and controlled feature releases.
+An `Environment` within a LaunchDarkly project is a logical separation of feature flag states and configurations, typically corresponding to stages in your development lifecycle.
 
 
 ### Common use cases
 
-- Feature Rollout and Targeting: Use LaunchDarkly flags to safely roll out new features to users. Gradually increase the visibility of a feature to specific user segments or environments, minimizing risk and allowing for A/B testing and canary releases. 
+- Entity Tracking - See all projects and their associated environments and feature flags.
 
-- User Experience Customization: Customize and experiment with different user experiences by toggling features on and off or by providing dynamic content variations.
+- Real time Synchronization of Infrastructure: Automatically synchronize projects, feature flags, auditlogs and environments data from Launchdarkly into Port for centralized tracking and management.
 
-- Real-time Feature Control: Instantly turn features on or off without redeploying code, allowing for quick responses to issues or changing business requirements.
-
-- Cross-platform Feature Consistency: Maintain feature flag consistency across multiple platforms and services within a project.
-
-- Performance and Impact Analysis: Monitor and analyze the impact of feature releases on application performance and user behavior. 
 
 ## Prerequisites
 
@@ -60,8 +55,8 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `integration.identifier`                 | Change the identifier to describe your integration                                                            | ✅       |
 | `integration.type`                       | The integration type                                                                                          | ✅       |
 | `integration.eventListener.type`         | The event listener type                                                                                       | ✅       |
-| `integration.config.launchdarklyHost` | Your Launchdarkly host. For example https://app.terraform.io  token                                                                           | ✅       |
-| `integration.config.launchdarklyToken` | The Launchdarkly cloud API token                                                                           | ✅       |
+| `integration.config.launchdarklyHost` | Your Launchdarkly host. For example https://launchdarkly.com                                                                        | ✅       |
+| `integration.config.launchdarklyToken` | The Launchdarkly API token                                                                           | ✅       |
 | `integration.config.appHost`             | Your application's host url                                                                                   | ❌       |
 | `scheduledResyncInterval`                | The number of minutes between each resync                                                                     | ❌       |
 | `initializePortResources`                | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
@@ -74,7 +69,7 @@ To install the integration using Helm, run the following command:
 
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install terraform port-labs/port-ocean \
+helm upgrade --install launchdarkly port-labs/port-ocean \
 	--set port.clientId="PORT_CLIENT_ID"  \
 	--set port.clientSecret="PORT_CLIENT_SECRET"  \
 	--set port.baseUrl="https://api.getport.io"  \
@@ -187,7 +182,7 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 Here is an example for `launchdarkly-integration.yml` workflow file:
 
 ```yaml showLineNumbers
-name: Terraform Exporter Workflow
+name: Launchdarkly Exporter Workflow
 
 on:
   workflow_dispatch:
@@ -228,7 +223,7 @@ Your Jenkins agent should be able to run docker commands.
 If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
 :::
 
-Make sure to configure the following [Terraform Cloud Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) of `Secret Text` type:
+Make sure to configure the following [Launchdarkly Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) of `Secret Text` type:
 
 <DockerParameters/>
 
@@ -309,14 +304,14 @@ resources:
             link: ("https://app.launchdarkly.com" + ._links.self.href | tostring)
 ```
 
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Terraform's API events.
+The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Launchdarkly's API events.
 
 ### Configuration structure
 
-The integration configuration determines which resources will be queried from Terraform Cloud, and which entities and properties will be created in Port.
+The integration configuration determines which resources will be queried from Launchdarkly, and which entities and properties will be created in Port.
 
 :::tip Supported resources
-The following resources can be used to map data from Terraform Cloud, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
+The following resources can be used to map data from Launchdarkly, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
 
 - [`Project`](https://apidocs.launchdarkly.com/tag/Projects)
 - [`Flag`](https://apidocs.launchdarkly.com/tag/Feature-flags)
