@@ -108,7 +108,7 @@ integration:
 
 2. Install the `my-ocean-jira-integration` ArgoCD Application by creating the following `my-ocean-jira-integration.yaml` manifest:
 
-:::note
+:::note Replace placeholders
 Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
 
 Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
@@ -173,7 +173,7 @@ kubectl apply -f my-ocean-jira-integration.yaml
   <TabItem value="github" label="GitHub">
 This workflow will run the Jira integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::warning
+:::warning Realtime updates in Port
 If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
 :::
 
@@ -223,11 +223,11 @@ jobs:
   <TabItem value="jenkins" label="Jenkins">
 This pipeline will run the Jira integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::tip
+:::tip Tip for Jenkins agent
 Your Jenkins agent should be able to run docker commands.
 :::
 
-:::warning
+:::warning Realtime updates in Port
 If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
 :::
 
@@ -353,6 +353,7 @@ resources:
           blueprint: '"jiraProject"'
           properties:
             url: (.self | split("/") | .[:3] | join("/")) + "/projects/" + .key
+            totalIssues: .insight.totalIssueCount
 ```
 
 The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Jira's API events.
@@ -551,12 +552,7 @@ resources:
       "type": {
         "title": "Type",
         "type": "string",
-        "description": "The type of the board",
-        "enum": ["scrum", "kanban"],
-        "enumColors": {
-          "scrum": "blue",
-          "kanban": "green"
-        }
+        "description": "The type of the board"
       }
     },
     "required": []
@@ -762,13 +758,6 @@ resources:
   },
   "calculationProperties": {},
   "relations": {
-    "board": {
-      "target": "jiraBoard",
-      "title": "Board",
-      "description": "The Jira board that contains this issue",
-      "required": false,
-      "many": false
-    },
     "sprint": {
       "target": "jiraSprint",
       "title": "Sprint",
@@ -830,7 +819,6 @@ resources:
             created: .fields.created
             updated: .fields.updated
           relations:
-            board: .boardId | tostring
             sprint: .sprint.id | tostring
             project: .fields.project.key
             parentIssue: .fields.parent.key
@@ -1277,7 +1265,7 @@ Create the following webhook configuration [using Port's UI](/build-your-softwar
    6. Under `Issue` - mark created, updated and delete;
 7. Click **Create** at the bottom of the page.
 
-:::tip
+:::tip Jira events and payload
 In order to view the different payloads and events available in Jira webhooks, [look here](https://developer.atlassian.com/server/jira/platform/webhooks/)
 :::
 
@@ -1499,7 +1487,7 @@ Use the following Python script to ingest historical Jira issues into port:
 
 <JiraIssueConfigurationPython/>
 
-:::note
+:::note Environment variables requirement
 
 The script requires the following environment variables:
 
