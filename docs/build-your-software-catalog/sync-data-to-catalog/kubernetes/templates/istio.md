@@ -63,7 +63,7 @@ This `blueprints.json` file defines the following blueprints:
 
 :::
 
-Below are the Istio blueprint schema used in the exporter:
+Below are the Istio blueprint schemas used in the exporter:
 
 <details>
 <summary> <b>Istio gateway blueprint (click to expand)</b> </summary>
