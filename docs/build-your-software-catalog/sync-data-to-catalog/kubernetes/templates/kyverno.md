@@ -64,7 +64,7 @@ This `blueprints.json` file defines the following blueprints:
 - `Kyverno Policy Report` is another important Kyverno resource that contains the results of applying the policies to the Kubernetes cluster.
 :::
 
-Below are the Kyverno blueprint schema used in the exporter:
+Below are the Kyverno blueprint schemas used in the exporter:
 
 <details>
 <summary> <b>Kyverno policy blueprint (click to expand)</b> </summary>
