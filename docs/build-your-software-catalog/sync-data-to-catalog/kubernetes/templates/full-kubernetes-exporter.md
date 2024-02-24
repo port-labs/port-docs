@@ -1,12 +1,12 @@
 ---
-sidebar_position: 1
-description: Extended Kubernetes installation
+sidebar_position: 8
+description: Advanced Kubernetes installation
 ---
 
 import TemplateInstallation from "./_template_installation.mdx";
 import TemplatePrerequisites from "./_template_prerequisites.mdx";
 
-# Kubernetes (extended)
+# Kubernetes (advanced)
 
 :::info
 This use-case is an extension of the [basic Kubernetes use-case](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md). If you haven't already, we recommend you to read it first.
@@ -19,6 +19,8 @@ Using Port's Kubernetes Exporter, you can keep track of your K8s resources and e
 :::tip
 Get to know the basics of our Kubernetes exporter [here!](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md)
 :::
+
+<img src="/img/build-your-software-catalog/sync-data-to-catalog/kubernetes/k8sAdvancedView.png" border="1px" />
 
 ## Prerequisites
 
