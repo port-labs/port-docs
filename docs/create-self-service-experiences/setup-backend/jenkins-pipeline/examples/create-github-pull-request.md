@@ -3,7 +3,7 @@ sidebar_position: 3
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
-import FindCredentials from "/docs/build-your-software-catalog/sync-data-to-catalog/api/_template_docs/_find_credentials.mdx";
+import FindCredentials from "/docs/build-your-software-catalog/custom-integration/api/_template_docs/_find_credentials.mdx";
 
 
 # Create Github pull request

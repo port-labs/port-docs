@@ -26,9 +26,10 @@ Generally, integrating a platform/tool with Port consists of 3 steps:
 ### 2. Ingest data to catalog
 
 - Use one of the supported methods to ingest data from your tool into Port:
-  - [Webhooks](/)
-  - [Port API](/)
+  - [Webhooks](/build-your-software-catalog/custom-integration/webhook/)
+  - [Port API](/build-your-software-catalog/custom-integration/api/)
 
-### 3. Configure the integration and its mapping
+### 3. Configure the integration
 
-  - Tell your new integration where to find the data in your tool, and how to map it to your Port blueprints and properties.
+  - When using a webhook, the last step is to [configure the integration's mapping](/build-your-software-catalog/customize-integrations/configure-mapping), in order to tell your integration where to find the data in your tool, and how to map it to your blueprint/s.
+  - When using Port's API, there is no need to configure mapping. Since you are directly interacting with the software catalog, the mapping is done as part of the ingestion process.

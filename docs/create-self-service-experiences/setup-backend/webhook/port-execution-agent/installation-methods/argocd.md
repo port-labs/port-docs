@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-import FindCredentials from "@site/docs/build-your-software-catalog/sync-data-to-catalog/api/_template_docs/_find_credentials_collapsed.mdx"
+import FindCredentials from "@site/docs/build-your-software-catalog/custom-integration/api/_template_docs/_find_credentials_collapsed.mdx"
 
 # ArgoCD
 
@@ -18,7 +18,7 @@ This page will walk you through the installation of the Port execution agent in 
 - [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl) must be installed to apply your installation manifest.
 - [Helm](https://helm.sh) must be installed to use the chart. Please refer to the Helm [documentation](https://helm.sh/docs/intro/install/) for further details about the installation.
 - [ArgoCD](https://argoproj.github.io/cd/) must be installed in your Kubernetes cluster. Please refer to ArgoCD's [documentation](https://argo-cd.readthedocs.io/en/stable/getting_started/#1-install-argo-cd) for further details about the installation.
-- You will need your [Port credentials](/build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials).
+- You will need your [Port credentials](/build-your-software-catalog/custom-integration/api/api.md#find-your-port-credentials).
 - The connection credentials to Kafka are provided to you by Port.
 - If you want to trigger a GitLab Pipeline, you need to have a [GitLab trigger token](https://docs.gitlab.com/ee/ci/triggers/)
 

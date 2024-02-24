@@ -47,9 +47,9 @@ Check out our [**live demo**](https://demo.getport.io/dev-portal) to see an exam
 
 Port offers a variety of ways to create and edit blueprints:
 
-<Tabs groupId="definition" queryString defaultValue="api" values={[
-{label: "API", value: "api"},
+<Tabs groupId="definition" queryString defaultValue="ui" values={[
 {label: "UI", value: "ui"},
+{label: "API", value: "api"},
 {label: "Terraform", value: "tf"},
 {label: "Pulumi", value: "pulumi"}
 ]}>
@@ -93,7 +93,7 @@ Port offers a variety of ways to create and edit blueprints:
 <br/><br/>
 
 3. Choose a name, icon, and description for your blueprint, then click `Create`.
-4. Your blueprint has been created, the next step would be to [ingest data into it](/build-your-software-catalog/sync-data-to-catalog/).
+4. Your blueprint has been created, the next step is to [ingest data into it](/build-your-software-catalog/sync-data-to-catalog/).
 
 </TabItem>
 

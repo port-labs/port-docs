@@ -147,7 +147,7 @@ const config = {
             items: [
               {
                 label: "API",
-                to: "/build-your-software-catalog/sync-data-to-catalog/api",
+                to: "/build-your-software-catalog/custom-integration/api",
               },
               {
                 label: "CI/CD",

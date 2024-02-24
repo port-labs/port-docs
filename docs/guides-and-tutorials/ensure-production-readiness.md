@@ -68,7 +68,7 @@ For this installation you will need Helm and a running K8s cluster (see [prerequ
 
 1. Install Port's Pagerduty integration using Helm, by running the command below in your terminal.
 
-- Replace `CLIENT_ID` and `CLIENT_SECRET` with your credentials (get them [here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)).
+- Replace `CLIENT_ID` and `CLIENT_SECRET` with your credentials (get them [here](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)).
 
 - Replace `token` with your Pagerduty token. To obtain it:
   - Hover over your avatar in the top right corner of your Pagerduty app, then click `My profile`.

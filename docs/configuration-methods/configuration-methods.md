@@ -3,7 +3,7 @@ sidebar_position: 4
 sidebar_label: 🛠️ Usage methods
 ---
 
-import CredentialsGuide from "../build-your-software-catalog/sync-data-to-catalog/api/\_template_docs/\_find_credentials.mdx";
+import CredentialsGuide from "../build-your-software-catalog/custom-integration/api/\_template_docs/\_find_credentials.mdx";
 import ApiRef from "../api-reference/\_learn_more_reference.mdx"
 import InstallTerraform from "../build-your-software-catalog/sync-data-to-catalog/iac/terraform/\_terraform_provider_base.mdx"
 

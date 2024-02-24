@@ -5,7 +5,7 @@ title: Get started with AWS
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import FindCredentials from "/docs/build-your-software-catalog/sync-data-to-catalog/api/\_template_docs/\_find_credentials.mdx";
+import FindCredentials from "/docs/build-your-software-catalog/custom-integration/api/\_template_docs/\_find_credentials.mdx";
 
 # Get started with AWS
 

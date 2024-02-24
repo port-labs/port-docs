@@ -54,7 +54,7 @@ The `specPath` parameter specifies a list of [globPatterns](https://www.malikbro
 
 <TabItem label="Enable merge entity" value="enableMergeEntity">
 
-The `enableMergeEntity` parameter specifies whether to use the [create/update](../../api/api.md?operation=create-update#usage) or [create/override](../../api/api.md?operation=create-override#usage) strategy when creating entities listed in a `port.yml` file.
+The `enableMergeEntity` parameter specifies whether to use the [create/update](/build-your-software-catalog/custom-integration/api?operation=create-update#usage) or [create/override](/build-your-software-catalog/custom-integration/api?operation=create-override#usage) strategy when creating entities listed in a `port.yml` file.
 
 - Default value: `true` (use create/update)
 - Use case: use `false` if you want GitHub to be the source-of-truth for catalog entities. Use `true` if you want to use GitHub as the source for some properties of entities in the catalog, and use other sources to for properties which are subject to change automatically.
