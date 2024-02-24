@@ -149,7 +149,7 @@ In this use-case you will be using the **[this configuration file](https://githu
 export CONFIG_YAML_URL="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/templates/istio-kubernetes_v1_config.yaml"
 ```
 
-Below are the mapping for the Istio resources:
+Below is the mapping for the Istio resources:
 
 <details>
 <summary> <b>Istio gateway mapping (click to expand)</b> </summary>
