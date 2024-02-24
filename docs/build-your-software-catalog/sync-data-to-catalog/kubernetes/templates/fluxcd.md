@@ -64,7 +64,7 @@ This `blueprints.json` file defines the following blueprints:
 - `Flux Application` is another important Flux resource that represents a local set of Kubernetes resources that Flux is supposed to reconcile in the cluster. This blueprint tracks **Kustomization** and **HelmRelease** CRDs in the Flux system.
 :::
 
-Below are the Flux blueprint schema used in the exporter:
+Below are the Flux blueprint schemas used in the exporter:
 
 <details>
 <summary> <b>Flux source blueprint (click to expand)</b> </summary>
