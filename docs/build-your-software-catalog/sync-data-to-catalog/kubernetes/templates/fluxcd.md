@@ -235,7 +235,7 @@ In this use-case you will be using the **[this configuration file](https://githu
 export CONFIG_YAML_URL="https://github.com/port-labs/template-assets/blob/main/kubernetes/templates/fluxcd-kubernetes_v1_config.yaml"
 ```
 
-Below are the mapping for the Flux resources:
+Below is the mapping for the Flux resources:
 
 <details>
 <summary> <b>Flux source mapping (click to expand)</b> </summary>
