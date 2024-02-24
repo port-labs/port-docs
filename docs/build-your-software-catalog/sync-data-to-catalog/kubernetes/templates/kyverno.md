@@ -184,7 +184,7 @@ In this use-case you will be using the **[this configuration file](https://githu
 export CONFIG_YAML_URL="https://github.com/port-labs/template-assets/blob/main/kubernetes/templates/kyverno-kubernetes_v1_config.yaml"
 ```
 
-Below are the mapping for the Kyverno resources:
+Below is the mapping for the Kyverno resources:
 
 <details>
 <summary> <b>Kyverno policy mapping (click to expand)</b> </summary>
