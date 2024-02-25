@@ -183,7 +183,7 @@ In this use-case you will be using **[this configuration file](https://github.co
 export CONFIG_YAML_URL="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/full-configs/openshift_usecase.yaml"
 ```
 
-Below are the mapping for the Openshift resources:
+Below is the mapping for the Openshift resources:
 
 <details>
 <summary> <b>Service mapping (click to expand)</b> </summary>
