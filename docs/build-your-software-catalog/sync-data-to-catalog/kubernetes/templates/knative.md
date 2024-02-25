@@ -56,7 +56,7 @@ This `blueprints.json` file defines the following blueprints:
 
 :::
 
-Below are the Knative blueprint schema used in the exporter:
+Below are the Knative blueprint schemas used in the exporter:
 
 <details>
 <summary> <b>Knative service blueprint (click to expand)</b> </summary>
