@@ -32,7 +32,7 @@ These integrations come with pre-defined blueprints and mappings, so you can sta
 
 #### Create a custom integration
 
-Can't find your desired tool in our integrations library? No problem! Port provides you with necessary tools to create your own integrations and ingest data from anywhere.  
+Can't find your desired tool in our integrations library? No problem! Port provides you with the necessary tools to create your own integrations and ingest data from anywhere.  
 See the [custom integration page](/build-your-software-catalog/custom-integration/) for more information.
 
 

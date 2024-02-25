@@ -532,61 +532,37 @@ To delete an existing webhook, make an HTTP DELETE request to `https://api.getpo
 <Tabs>
 <TabItem label="Create webhook" value="create-ui">
 
-Here's the breakdown of the steps to create a new webhook using the Port UI:
+Follow these steps to create a webhook using Port's UI:
 
-1. Login to your [Port account](https://app.getport.io)
-2. From the top menu, select **Builder**
-3. Choose your existing [blueprint](/docs/quickstart.md#define-a-blueprint)
-4. Click on the blueprint **expand** button
-5. Click on the `...` icon and select **Ingest data**.
-6. Scroll down to the "Custom Integrations" section.
-7. Select **Custom Integration**;
-   - Provide a **Title** for your webhook;
-   - Choose whether to use the **Identifier Autogenerate** option or specify your own identifier;
-   - Provide a description for your webhook;
-   - Select an icon from the dropdown menu to represent your webhook;
-   - Click **Next**
-8. Scroll down to the **JQ Mapping** section;
-   - This section displays the properties created when the blueprint was set up;
-   - Review the mapping and modify it if necessary;
-9. Finally, click **Create** to create the new webhook.
-
-Please note that this breakdown captures the steps involved in creating a webhook using the Port UI based on the provided narrative.
+1. Go the [`Data sources`](https://app.getport.io/dev-portal/data-sources) page of your portal.
+2. Click on the `+ Data source` button in the top right corner.
+3. Select the `Webhook` tab.
+4. Click on `Custom integration`.
+5. Give your webhook a title and a description, and select an icon to represent it, then click `Next`.
+6. In the mapping tab, you can see your new Webhook URL.
+7. Scroll down to box number 3. Here you can use JQ to map the data received from your system to the blueprints in your data model.
+8. You can use the `Test mapping` button in box number 4 (in the bottom of the window) to test your mapping's validity.
+9. When finished, click `Save`.
 
 </TabItem>
 <TabItem label="Update webhook" value="update-ui">
 
-Here's the breakdown of the steps to update a webhook using the Port UI:
+Follow these steps to update a webhook using Port's UI:
 
-1. Login to your [Port account](https://app.getport.io)
-2. From the top menu, select **Builder**
-3. Choose your existing [blueprint](/docs/quickstart.md#define-a-blueprint)
-4. Click on the blueprint **expand** button
-5. Click on the `...` icon and select **Ingest data**
-6. Scroll down to the **Custom Integration** section
-7. Select the desired webhook that you want to modify
-8. Make the necessary changes to the webhook configuration
-9. Click **Save** to save your changes
-
-By following these steps, you'll be able to update a webhook using the Port UI based on the provided narrative.
+1. Go the [`Data sources`](https://app.getport.io/dev-portal/data-sources) page of your portal.
+2. Scroll down to the `Webhooks` section.
+3. Click on the webhook that you want to modify.
+4. Make your changes, then click `Save`.
 
 </TabItem>
 
 <TabItem label="Delete webhook" value="delete-ui">
 
-Here's the breakdown of the steps to delete a webhook using the Port UI:
+Follow these steps to delete a webhook using Port's UI:
 
-1. Login to your [Port account](https://app.getport.io)
-2. From the top menu, select **Builder**
-3. Choose your existing [blueprint](/docs/quickstart.md#define-a-blueprint)
-4. Click on the blueprint **expand** button
-5. Click on the `...` icon and select **Ingest data**
-6. Scroll down to the **Custom Integration** section
-7. Hover over the desired webhook that you want to delete
-8. A **Delete** icon will appear
-9. Click on the **Delete** icon to remove the webhook
-
-By following these steps, you'll be able to delete a webhook using the Port UI based on the provided narrative.
+1. Go the [`Data sources`](https://app.getport.io/dev-portal/data-sources) page of your portal.
+2. Scroll down to the `Webhooks` section.
+3. Hover over the webhook that you want to delete, click on the `...` button in the top right corner, then click `Delete`.
 
 </TabItem>
 </Tabs>

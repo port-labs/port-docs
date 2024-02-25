@@ -14,6 +14,7 @@ import TabItem from "@theme/TabItem";
 <iframe width="60%" height="400" src="https://www.youtube.com/embed/7ACHX2V82M8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
 
 </center>
+<br/>
 
 Port's [API](../../../api-reference/api-reference.mdx) is a generic interface to model your software catalog, ingest data, invoke actions, query scorecards and more.
 
@@ -21,11 +22,11 @@ Port's [API](../../../api-reference/api-reference.mdx) is a generic interface to
 
 Since Port API is a generic interface, anything that can be done with Port is possible through the API, for example:
 
-- Update the software catalog using a script;
-- Import your existing asset inventory from a CSV file;
-- Integrate Port with your custom CI/CD;
-- Report the status of a running **CI job**;
-- Update the software catalog about a new **build version** for a **microservice**;
+- Update the software catalog using a script.
+- Import your existing asset inventory from a CSV file.
+- Integrate Port with your custom CI/CD.
+- Report the status of a running **CI job**.
+- Update the software catalog about a new **build version** for a **microservice**.
 - Get existing data from your software catalog.
 
 ## Get API Token
@@ -34,7 +35,7 @@ In order to interact with the API you will need an API token.
 
 Getting an API token involves 2 steps:
 
-1. Finding your Port API credentials;
+1. Finding your Port API credentials.
 2. Making an API request to generate a valid token.
 
 ### Find your Port credentials
@@ -134,8 +135,8 @@ Since Port is API-first it is possible to create and update entities using simpl
 
 To use Port's REST API you need to perform the following steps:
 
-1. Find your [Port credentials](/build-your-software-catalog/custom-integration/api#find-your-port-credentials);
-2. Save them as secrets or in some other same manner such that you can reference them in your code or CI/CD flow;
+1. Find your [Port credentials](/build-your-software-catalog/custom-integration/api#find-your-port-credentials).
+2. Save them as secrets or in some other same manner such that you can reference them in your code or CI/CD flow.
 3. Make sure you have an HTTP-capable client.
    1. For example: cURL, python with the requests package, nodejs with fetch/axios, etc.
 
@@ -145,8 +146,8 @@ Since you are using Port's REST API directly, any method that the API provides i
 
 We will focus on three specific use cases:
 
-- **Get** catalog entities - available by making HTTP GET requests to `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`, receives the identifier of an existing entity and retrieves it for use in your CI;
-- **Create/Update** catalog entities - available by making HTTP POST requests to `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/`, receives the identifier and other properties of a new entity or an entity that needs to be updated;
+- **Get** catalog entities - available by making HTTP GET requests to `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`, receives the identifier of an existing entity and retrieves it for use in your CI.
+- **Create/Update** catalog entities - available by making HTTP POST requests to `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/`, receives the identifier and other properties of a new entity or an entity that needs to be updated.
 - **Delete** catalog entities - available by making HTTP DELETE requests to `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`, receives the identifier of an existing entity and deletes it.
 
 <Tabs groupId="usage" queryString="operation" defaultValue="get" values={[
@@ -1062,8 +1063,8 @@ curl --location --request DELETE "https://api.getport.io/v1/blueprints/${bluepri
 :::tip
 It is also possible to delete all entities using Port's web UI:
 
-1. Go to the [DevPortal Builder page](https://app.getport.io/dev-portal);
-2. Click on the "Delete All `BLUEPRINT_NAME`" button on the desired blueprint;
+1. Go to the [DevPortal Builder page](https://app.getport.io/dev-portal).
+2. Click on the "Delete All `BLUEPRINT_NAME`" button on the desired blueprint.
 3. Follow the instructions.
 
 **Note:** only users with the [admin](../../../sso-rbac/rbac/rbac.md#roles) role can use Port's UI to perform the delete all operation.

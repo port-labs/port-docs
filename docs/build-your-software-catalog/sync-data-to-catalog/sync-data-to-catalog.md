@@ -14,11 +14,11 @@ Port comes with a wide variety of available integrations for popular tools and p
 Once installed, you can customize and extend these integrations to fit your exact needs.
 
 :::info custom integrations
-Don't see the tool you wish to integrate with Port in the available integrations?  
+Don't see the tool you wish to integrate with Port in the available integrations below?  
 We provide you with the required tools to model your data and ingest it with ease, see [`Create a custom integration`](/build-your-software-catalog/custom-integration).
 :::
 
-## Available plug & play integrations
+## Integration process
 
 Generally, integrating a platform/tool with Port consists of 3 steps:
 
@@ -26,7 +26,9 @@ Generally, integrating a platform/tool with Port consists of 3 steps:
 
 <br/><br/>
 
-**The available integrations take care of all of these steps for you, and can customized after installation:**
+**The available integrations below take care of all of these steps for you, and can be customized after installation.**
+
+## Available plug & play integrations
 
 <DocCardList />
 
