@@ -74,7 +74,7 @@ This `blueprints.json` file defines the following blueprints:
 
 :::
 
-Below are the Openshift blueprint schema used in the exporter:
+Below are the Openshift blueprint schemas used in the exporter:
 
 <details>
 <summary> <b>Service blueprint (click to expand)</b> </summary>
