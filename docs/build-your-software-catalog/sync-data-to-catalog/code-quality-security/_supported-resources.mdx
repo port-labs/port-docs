@@ -5,12 +5,7 @@ the API responses linked below for the mapping configuration.
 - `Project` - represents a SonarQube project. Retrieves data
   from [`components`](https://next.sonarqube.com/sonarqube/web_api/api/components), [`measures`](https://next.sonarqube.com/sonarqube/web_api/api/measures),
   and [`branches`](https://next.sonarqube.com/sonarqube/web_api/api/project_branches).
-- [`Issue`](https://next.sonarqube.com/sonarqube/web_api/api/issues)
-- `Analysis` - represents a SonarQube analysis and latest activity.
-
-:::
-
-:::note
-The current version of the Sonarqube integration does not support the `analysis` kind for clients using on-premise
-Sonarqube installation.
+- [`Issue`](https://next.sonarqube.com/sonarqube/web_api/api/issues) -  represents a SonarQube issue
+- `Saas Analysis` - represents analysis and latest activity in your SonarCloud environment. 
+- `On-premise Analysis` - since SonarQube doesn't offer a straightforward API for fetching analysis and latest activity in on-premise installations, our integration provides an alternative solution for on-premise installation. By utilizing the [pull requests](https://next.sonarqube.com/sonarqube/web_api/api/project_pull_requests) and [measures](https://next.sonarqube.com/sonarqube/web_api/api/measures) APIs, users can now visualize the results of scan analyses for each pull request.
 :::
