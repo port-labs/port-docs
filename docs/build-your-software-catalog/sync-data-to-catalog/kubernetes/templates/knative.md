@@ -345,7 +345,7 @@ In this use-case you will be using **[this configuration file](https://github.co
 export CONFIG_YAML_URL="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/full-configs/kubernetes_kantive_usecase.yaml"
 ```
 
-Below are the mapping for the Knative resources:
+Below is the mapping for the Knative resources:
 
 <details>
 <summary> <b>Knative service mapping (click to expand)</b> </summary>
