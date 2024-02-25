@@ -17,20 +17,18 @@ import TabItem from "@theme/TabItem"
 
 </center>
 
-Relations define connections between blueprints results into dependency reflection of assets in your software catalog.
+<br/>
 
-## What is a relation?
+Relations define connections between [blueprints](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/), consequently connecting the [entities](/build-your-software-catalog/sync-data-to-catalog/#entities) based on these blueprints.  
+This provides logical context to the software catalog.
 
-Relations enable us to make connections between blueprints, consequently connecting the entities based on these blueprints. That provides logical context to the software catalog.
-
-## 💡 Common relations
+## Common relations
 
 Relations can be used to represent the logical connections between assets in your software catalog, for example:
 
-- The **packages** that a **microservice** uses;
-- The **run** history of a **CI job**;
-- The **Kubernetes clusters** that exist in a **cloud account**;
-- etc.
+- The **packages** that a **microservice** uses.
+- The **run** history of a **CI job**.
+- The **Kubernetes clusters** that exist in a **cloud account**.
 
 In this [live demo](https://demo.getport.io/dev-portal) example, we can see the DevPortal Builder page with all of the blueprints and their relations. 🎬
 
@@ -236,10 +234,12 @@ Relations are part of the structure of a [blueprint](../setup-blueprint/setup-bl
 
 <TabItem value="ui">
 
-1. Go to the [DevPortal Builder page](https://app.getport.io/dev-portal);
-2. Click the pencil icon on the blueprint that will be the `source` blueprint of the relation:
-
-![Blueprints page with Create Relation Marked](/img/build-your-software-catalog/define-your-data-model/relate-blueprints/editBlueprintMarked.png)
+1. Go to the [Builder page](https://app.getport.io/dev-portal) of your portal.
+2. Expand the blueprint from which you would like to create a relation.
+3. Click on the `+ New relation` button:
+   
+    <img src='/img/software-catalog/customize-integrations/createRelation.png' width='30%' border='1px' />
+4. Fill in the form with your desired values, then click `Create`.
 
 </TabItem>
 
@@ -264,5 +264,3 @@ resource "port_blueprint" "myBlueprint" {
 
 </TabItem>
 </Tabs>
-
-Once added to the blueprint definition, you can [apply the blueprint](../setup-blueprint/setup-blueprint.md#apply-blueprints-to-port) to Port
