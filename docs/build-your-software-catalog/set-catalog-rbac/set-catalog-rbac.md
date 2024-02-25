@@ -6,7 +6,6 @@ sidebar_label: Set catalog RBAC
 import OwnershipTemplate from "./\_ownership_explanation_template.mdx";
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
-import styles from "./styles.module.css";
 
 # Set catalog RBAC
 
@@ -15,28 +14,28 @@ import styles from "./styles.module.css";
 <iframe width="60%" height="400" src="https://www.youtube.com/embed/p-pNcvVfdUE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
 
 </center>
+<br/>
 
-Port provides granular control to make sure every user sees only the parts of the catalog that are relevant for them.
+Port provides granular control to ensure that every user only sees the parts of the catalog that are relevant for them.
 
-Port's catalog RBAC capabilities are enabled by Port's [permissions controls](../../sso-rbac/rbac/rbac.md).
+Port's catalog RBAC capabilities are enabled by utilizing [permissions controls](../../sso-rbac/rbac/rbac.md).
 
-:::tip
+:::tip Page permissions
 
-In order to manage who can view which pages in Port, check out [page permissions](../../customize-pages-dashboards-and-plugins/page/page-permissions.md).
+In order to manage who can view certain **pages** in Port, check out [page permissions](/customize-pages-dashboards-and-plugins/page/page-permissions.md).
 :::
 
-## 💡 Common Catalog RBAC usage
+## Common Catalog RBAC usage
 
-Catalog RBAC allows admins to finely control which users have access to which information from the catalog, for example:
+Catalog RBAC allows admins to finely control which users have access to specific information in the software catalog, for example:
 
-- Show developers only the services that they owns;
-- Allow a user to edit just a specific property on an entity;
-- Create a fully read-only view for a developer;
-- etc.
+- Show developers only the services that they own.
+- Allow a user to edit a single specific property on an entity.
+- Create a fully read-only view for a developer.
 
-## Set global access controls to catalog data
+## Set *global* access controls to catalog data
 
-The default permissions assigned to every blueprint upon creation specify that users with the admin role, and users with the specific blueprint moderator role, can perform any action over a blueprint.
+The default permissions assigned to every blueprint upon creation specify that users with the `admin` role, and users with the specific blueprint `moderator` role, can perform any action on a blueprint.
 
 It is also possible to assign global permissions controls on **entities**:
 
@@ -142,13 +141,13 @@ In the context of the `create` permission, owned by team means that a user can o
 
 </TabItem>
 
-<TabItem value="update" label="Update" attributes={{ className: styles.admonition_tip }}>
+<TabItem value="update" label="Update">
 
 To assign permissions to update an entity, give the desired persona permissions under the `update` object as shown below:
 
 <Tabs groupId="target" defaultValue="role">
 
-<TabItem value="role" label="Role" attributes={{ className: styles.admonition_tip }}>
+<TabItem value="role" label="Role">
 
 To give `update` permissions to another role, add it to the `roles` array:
 
@@ -169,7 +168,7 @@ To give `update` permissions to another role, add it to the `roles` array:
 
 </TabItem>
 
-<TabItem value="user" label="User" attributes={{ className: styles.admonition_tip }}>
+<TabItem value="user" label="User">
 
 To give `update` permissions to another user, add it to the `users` array:
 
@@ -190,7 +189,7 @@ To give `update` permissions to another user, add it to the `users` array:
 
 </TabItem>
 
-<TabItem value="team" label="Team" attributes={{ className: styles.admonition_tip }}>
+<TabItem value="team" label="Team">
 
 To give `update` permissions to another team, add it to the `teams` array:
 
@@ -211,7 +210,7 @@ To give `update` permissions to another team, add it to the `teams` array:
 
 </TabItem>
 
-<TabItem value="ownership" label="Ownership" attributes={{ className: styles.admonition_tip }}>
+<TabItem value="ownership" label="Ownership">
 
 <OwnershipTemplate />
 
@@ -238,13 +237,13 @@ To give `update` permissions to members of the owning team of an entity, change 
 
 </TabItem>
 
-<TabItem value="delete" label="Delete (unregister)" attributes={{ className: styles.admonition_caution }}>
+<TabItem value="delete" label="Delete (unregister)">
 
 To assign permissions to delete an entity, give the desired persona permissions under the `delete` object as shown below:
 
 <Tabs groupId="target" default ="role">
 
-<TabItem value="role" label="Role" attributes={{ className: styles.admonition_caution }}>
+<TabItem value="role" label="Role">
 
 To give `delete` permissions to another role, add it to the `roles` array:
 
@@ -265,7 +264,7 @@ To give `delete` permissions to another role, add it to the `roles` array:
 
 </TabItem>
 
-<TabItem value="user" label="User" attributes={{ className: styles.admonition_caution }}>
+<TabItem value="user" label="User">
 
 To give `delete` permissions to another user, add it to the `users` array:
 
@@ -286,7 +285,7 @@ To give `delete` permissions to another user, add it to the `users` array:
 
 </TabItem>
 
-<TabItem value="team" label="Team" attributes={{ className: styles.admonition_caution }}>
+<TabItem value="team" label="Team">
 
 To give `delete` permissions to another team, add it to the `teams` array:
 
@@ -307,7 +306,7 @@ To give `delete` permissions to another team, add it to the `teams` array:
 
 </TabItem>
 
-<TabItem value="ownership" label="Ownership" attributes={{ className: styles.admonition_caution }}>
+<TabItem value="ownership" label="Ownership">
 
 <OwnershipTemplate />
 
@@ -336,7 +335,7 @@ To give `delete` permissions to members of the owning team of an entity, change 
 
 </Tabs>
 
-## Set granular access controls to catalog data
+## Set *granular* access controls to catalog data
 
 It is also possible to assign more granular permissions controls on **entities**:
 
@@ -446,13 +445,13 @@ To give property `update` permissions to members of the owning team of an entity
 
 </TabItem>
 
-<TabItem value="updateRel" label="Update specific relation" attributes={{ className: styles.admonition_tip }}>
+<TabItem value="updateRel" label="Update specific relation">
 
 To assign permissions to update a specific entity relation, give the desired persona permissions under the `updateRelations -> relationName` object as shown below:
 
 <Tabs groupId="target" defaultValue="role">
 
-<TabItem value="role" label="Role" attributes={{ className: styles.admonition_tip }}>
+<TabItem value="role" label="Role">
 
 To give relation `update` permissions to another role, add it to the `roles` array:
 
@@ -475,7 +474,7 @@ To give relation `update` permissions to another role, add it to the `roles` arr
 
 </TabItem>
 
-<TabItem value="user" label="User" attributes={{ className: styles.admonition_tip }}>
+<TabItem value="user" label="User">
 
 To give relation `update` permissions to another user, add it to the `users` array:
 
@@ -498,7 +497,7 @@ To give relation `update` permissions to another user, add it to the `users` arr
 
 </TabItem>
 
-<TabItem value="team" label="Team" attributes={{ className: styles.admonition_tip }}>
+<TabItem value="team" label="Team">
 
 To give relation `update` permissions to another team, add it to the `teams` array:
 
@@ -521,7 +520,7 @@ To give relation `update` permissions to another team, add it to the `teams` arr
 
 </TabItem>
 
-<TabItem value="ownership" label="Ownership" attributes={{ className: styles.admonition_tip }}>
+<TabItem value="ownership" label="Ownership">
 
 <OwnershipTemplate />
 
@@ -558,11 +557,11 @@ Refer to the [examples](./examples.md) page for practical examples of Port's RBA
 
 ## FAQ
 
-Since the catalog RBAC can be very granular, in some instances it might not be perfectly clear what the resulting assigned permissions would do, this part aims to provide some real-world examples and the behavior of Port's RBAC in those instances:
+Since the catalog RBAC can be very granular, in some instances it might not be perfectly clear what the resulting assigned permissions would do, this part aims to provide some real-world examples and the behavior of Port's RBAC in those instances.
 
 ### What happens if a user lacks the permissions to edit a required property of the blueprint?
 
-In this case the user will not be able to register or update entities as a whole because they can't provide a value for the required property;
+In this case the user will not be able to register or update entities as a whole because they can't provide a value for the required property.
 
 ### What happens if the `ownedByTeam` setting is enabled for entity registration, but the user can't edit the `team` property?
 
