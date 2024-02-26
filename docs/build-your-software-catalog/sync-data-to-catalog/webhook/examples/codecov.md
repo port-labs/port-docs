@@ -144,20 +144,20 @@ Here is an example of the payload structure from Codecov:
 {
   "body": {
     "repo": {
-      "url": "https://app.codecov.io/gh/PeyGis/codecov-example",
+      "url": "https://app.codecov.io/gh/slanks/codecov-example",
       "service_id": "742056150",
       "name": "codecov-example",
       "private": false
     },
     "head": {
       "author": {
-        "username": "PeyGis",
+        "username": "slanks",
         "service_id": "15999660",
-        "email": "isaac.p.coffie@gmail.com",
+        "email": "slanks@email.com",
         "service": "github",
         "name": "PagesCoffy"
       },
-      "url": "https://app.codecov.io/gh/PeyGis/codecov-example/commit/a7794fc92007d3a1b99066c8f6ec66a393bf3520",
+      "url": "https://app.codecov.io/gh/slanks/codecov-example/commit/a7794fc92007d3a1b99066c8f6ec66a393bf3520",
       "timestamp": "2024-02-02T14:21:35",
       "totals": {
         "files": 3,
@@ -175,19 +175,19 @@ Here is an example of the payload structure from Codecov:
         "diff": [0, 0, 0, 0, 0, null, 0, 0, 0, 0, null, null, 0]
       },
       "commitid": "a7794fc92007d3a1b99066c8f6ec66a393bf3520",
-      "service_url": "https://github.com/PeyGis/codecov-example/commit/a7794fc92007d3a1b99066c8f6ec66a393bf3520",
-      "branch": "PeyGis-patch-11",
+      "service_url": "https://github.com/slanks/codecov-example/commit/a7794fc92007d3a1b99066c8f6ec66a393bf3520",
+      "branch": "slanks-patch-11",
       "message": "Update sonarqube.yml"
     },
     "base": {
       "author": {
-        "username": "PeyGis",
+        "username": "slanks",
         "service_id": "15999660",
-        "email": "isaac.p.coffie@gmail.com",
+        "email": "slanks@email.com",
         "service": "github",
         "name": "PagesCoffy"
       },
-      "url": "https://app.codecov.io/gh/PeyGis/codecov-example/commit/ce38c96963e6c7100f668503da2ce4e7500de739",
+      "url": "https://app.codecov.io/gh/slanks/codecov-example/commit/ce38c96963e6c7100f668503da2ce4e7500de739",
       "timestamp": "2024-02-02T14:17:51",
       "totals": {
         "files": 3,
@@ -205,18 +205,18 @@ Here is an example of the payload structure from Codecov:
         "diff": [0, 0, 0, 0, 0, null, 0, 0, 0, 0, null, null, 0]
       },
       "commitid": "ce38c96963e6c7100f668503da2ce4e7500de739",
-      "service_url": "https://github.com/PeyGis/codecov-example/commit/ce38c96963e6c7100f668503da2ce4e7500de739",
-      "branch": "PeyGis-patch-10",
+      "service_url": "https://github.com/slanks/codecov-example/commit/ce38c96963e6c7100f668503da2ce4e7500de739",
+      "branch": "slanks-patch-10",
       "message": "Update sonarqube.yml"
     },
     "compare": {
-      "url": "https://app.codecov.io/gh/PeyGis/codecov-example/pull/11",
+      "url": "https://app.codecov.io/gh/slanks/codecov-example/pull/11",
       "message": "no change",
       "coverage": "0.00",
       "notation": ""
     },
     "owner": {
-      "username": "PeyGis",
+      "username": "slanks",
       "service_id": "15999660",
       "service": "github"
     },
@@ -253,14 +253,14 @@ The combination of the sample payload and the Ocean configuration generates the 
   "title": "codecov-example",
   "blueprint": "codecov_coverage",
   "properties": {
-    "repository": "https://app.codecov.io/gh/PeyGis/codecov-example",
+    "repository": "https://app.codecov.io/gh/slanks/codecov-example",
     "coverage": "97.22222",
     "service": "github",
     "author": "PagesCoffy",
     "createdAt": "2024-02-02T14:21:35Z",
     "files": 3,
     "lines": 36,
-    "branch": "PeyGis-patch-11",
+    "branch": "slanks-patch-11",
     "report": {
       "files": 3,
       "lines": 36,
