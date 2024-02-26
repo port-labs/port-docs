@@ -156,7 +156,7 @@ Now that you have your blueprint created, let's manually create a `Notification 
 
 ## Reading the lock status during deployment
 
-In order to use the `locked_in_prod` field on your CI/CD pipeline, you will use Port's [GitHub Action](/build-your-software-catalog/sync-data-to-catalog/api/ci-cd/github-workflow/github-workflow.md).
+In order to use the `locked_in_prod` field in your CI/CD pipeline, you will use Port's [GitHub Action](/build-your-software-catalog/sync-data-to-catalog/api/ci-cd/github-workflow/github-workflow.md).
 
 
 Let's go ahead and create a GitHub workflow file in a GitHub repository meant for the `Notification Service`:
