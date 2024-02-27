@@ -2,6 +2,9 @@
 sidebar_position: 1
 ---
 
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+
 # Catalog page
 
 A catalog page displays a table of all existing [entities](/build-your-software-catalog/sync-data-to-catalog/#creating-entities) created from a [blueprint](/build-your-software-catalog/define-your-data-model/setup-blueprint/#what-is-a-blueprint).  
@@ -13,6 +16,14 @@ In this example we can see all of the cluster entities we created from the `K8s 
 
 When a blueprint is created, a catalog page is automatically generated in the Software Catalog.  
 You can also manually create additional catalog pages for any existing blueprint, and customize them as you wish. Read on to see the available customization options.
+
+<Tabs groupId="create-page" queryString values={[
+{label: "From the UI", value: "ui"},
+{label: "From the API", value: "api"},
+{label: "From Pulumi", value: "pulumi"}
+]}>
+
+<TabItem value="ui">
 
 To create a new catalog page, go to your [Software Catalog](https://app.getport.io/services), click the `+ New` button in the top left corner, and select `New catalog page`.
 
@@ -47,6 +58,133 @@ Another way to reduce loading times is to exclude undesired properties from an e
 To do this, use the `Excluded properties` field when creating a page:
 
 <img src='/img/software-catalog/pages/excludePropertiesForm.png' width='50%' />
+
+</TabItem>
+
+<TabItem value="api">
+
+:::tip API options
+See all the available API fields [here](https://api.getport.io/static/index.html#/Pages/post_v1_pages).
+:::
+
+```json showLineNumbers
+{
+   "identifier":"my_catalog_page",
+   "title":"Our Services",
+   "blueprint":"service",
+   "icon":"Microservice",
+   "widgets":[
+      {
+         "id":"46bf2483-97b7-4c6f-88fb-8987c9875d98",
+         "type":"table-entities-explorer",
+         "excludedFields":[
+            "properties.readme",
+            "properties.slack"
+         ],
+         "dataset":{
+            "combinator":"and",
+            "rules":[
+               {
+                  "operator":"=",
+                  "property":"$blueprint",
+                  "value":"{{blueprint}}"
+               }
+            ]
+         }
+      }
+   ],
+   "type":"blueprint-entities",
+   "showInSidebar":true,
+   "after":"githubRepositories"
+}
+```
+</TabItem>
+
+<TabItem value="pulumi">
+
+:::info Port Pulumi
+See all the supported variables in the Port Pulumi [documentation](https://www.pulumi.com/registry/packages/port/api-docs/page/#create)
+:::
+
+<Tabs groupId="pulumi-create-pages" queryString values={[
+{label: "Python", value: "python"},
+{label: "Typescript", value: "typescript"}
+]}>
+
+<TabItem value="python">
+
+```python showLineNumbers
+import json
+from port_pulumi import Page
+
+catalog_page = Page(
+    "my-catalog-page-resource",
+    identifier="my_catalog_page",
+    title="Our Services",
+    blueprint="service",
+    icon="Microservice",
+    type="blueprint-entities",
+    widgets=[
+        json.dumps(
+            {
+                "displayMode": "widget",
+                "title": "Services",
+                "type": "table-entities-explorer",
+                "dataset": {
+                    "combinator": "and",
+                    "rules": [
+                        {"operator": "=", "value": "service", "property": "$blueprint"}
+                    ],
+                },
+                "id": "servicesTable-en",
+                "excludedFields": ["properties.readme", "properties.slack"],
+            }
+        )
+    ],
+)
+```
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import * as pulumi from "@pulumi/pulumi";
+import * as port from "@port-labs/port";
+
+const catalogPage = new port.Page(
+    "my-catalog-page-resource",
+    {
+        identifier: "my_catalog_page",
+        title: "Our Services",
+        blueprint: "service",
+        icon: "Microservice",
+        type: "blueprint-entities",
+        widgets: [ 
+          JSON.stringify({
+              displayMode: "widget",
+              title: "Services",
+              type: "table-entities-explorer",
+              dataset: {
+                  combinator: "and",
+                  rules: [
+                      { operator: "=", value: "service", property: "$blueprint" }
+                  ],
+              },
+              id: "servicesTable-en",
+              excludedFields: ["properties.readme", "properties.slack"],
+          })
+        ]
+    }
+);
+```
+
+</TabItem>
+
+</Tabs>
+
+</TabItem>
+
+</Tabs>
 
 ## Customization
 

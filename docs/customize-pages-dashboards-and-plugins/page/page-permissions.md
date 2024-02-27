@@ -72,6 +72,7 @@ See all the supported variables in the Port Pulumi [documentation](https://www.p
 ]}>
 
 <TabItem value="python">
+
 ```python showLineNumbers
 from port_pulumi import Page, PagePermissions
 
@@ -87,9 +88,11 @@ existing_permissions = PagePermissions.get(
 print(existing_permissions.read)
 
 ````
+
 </TabItem>
 
 <TabItem value="typescript">
+
 ```typescript showLineNumbers
 import * as port from "@port-labs/port";
 
