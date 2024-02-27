@@ -18,7 +18,8 @@ Any user can get the permissions of a specific page:
 
 <Tabs groupId="view-permissions" queryString values={[
 {label: "From the UI", value: "ui"},
-{label: "From the API", value: "api"}
+{label: "From the API", value: "api"},
+{label: "Using Pulumi", value: "pulumi"}
 ]}>
 
 <TabItem value="ui">
@@ -55,6 +56,80 @@ The response will contain the roles and users that are allowed to read (view) th
 
 This response body indicates that those roles, users and teams have permissions to read the page.
 In addition, every role, user and team which does not appear in this request body does not have permission to view the page.
+
+</TabItem>
+
+<TabItem value="pulumi">
+
+:::info Port Pulumi
+See all the supported variables in the Port Pulumi [documentation](https://www.pulumi.com/registry/packages/port/api-docs/pagepermissions/#look-up) 
+:::
+
+<Tabs groupId="pulumi-view-permissions" queryString values={[
+{label: "Python", value: "python"},
+{label: "Typescript", value: "typescript"},
+{label: "Golang", value: "go"}
+]}>
+
+<TabItem value="python">
+```python showLineNumbers
+from port_pulumi import Page, PagePermissions
+
+# get an existing object
+existing_permissions = PagePermissions.get(
+  "microservices_permissions", // The unique name of the resulting resource.
+  "microservice_blueprint_page" // The unique provider ID of the resource to lookup.
+)
+# Access properties of the retrieved resource
+print(existing_permissions.read) 
+```
+</TabItem>
+
+<TabItem value="typescript">
+```typescript showLineNumbers
+import * as port from "@port-labs/port";
+
+// ... other code
+const portPermissionsId = "microservice_blueprint_page"
+
+const existingPermissions = port.PagePermissions.get("my-permissions", portPermissionsId);
+
+// Access properties of the retrieved resource
+console.log(existingPermissions.read); 
+```
+</TabItem>
+
+<TabItem value="go">
+```go
+package main
+
+import (
+	"fmt"
+
+	"github.com/port-labs/pulumi-port/sdk/go/port"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	// ... other code
+
+	// Retrieve existing permissions
+	existingPermissions, err := port.PagePermissions.Get(
+		"my-permissions",  // The unique name of the resulting resource.
+		"microservice_blueprint_page" // The unique provider ID of the resource to lookup.
+	)
+	if err != nil {
+		// Handle error
+	}
+
+	// Access properties of the retrieved resource
+	fmt.Println(existingPermissions.Read)
+}
+
+```
+</TabItem>
+
+</Tabs>
 
 </TabItem>
 
