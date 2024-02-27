@@ -17,3 +17,4 @@ All guides take less than 10 minutes to complete ✅
 - [Visualize your services' k8s runtime](/guides-and-tutorials/visualize-service-k8s-runtime)
 - [Let developers enrich services using Gitops](/guides-and-tutorials/let-developers-enrich-services-using-gitops)
 - [Get started with AWS](/guides-and-tutorials/get-started-with-aws)
+- [Connect Github pull request with Jira Issue](/guides-and-tutorials/connect-github-pr-with-jira-issue.md)
