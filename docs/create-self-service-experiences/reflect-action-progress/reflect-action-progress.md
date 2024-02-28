@@ -485,8 +485,6 @@ Note how our action run has updated:
 
 <TabItem value="logs" label="Run logs">
 
-By sending a `PATCH` request to the `https://api.getport.io/v1/actions/runs/{run_id}` endpoint, you can do the following:
-
 By sending a `POST` request to the `https://api.getport.io/v1/actions/runs/{run_id}/logs` endpoint, you can do the following:
 
 - Set the action run status via the `terminationStatus` key - `SUCCESS`, `FAILURE`.
