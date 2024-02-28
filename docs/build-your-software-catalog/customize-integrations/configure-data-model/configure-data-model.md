@@ -32,7 +32,7 @@ Port's [plug & play integrations](/build-your-software-catalog/sync-data-to-cata
 
 ### Configure properties
 
-You can [create, delete, or edit](/) any property in any blueprint in your builder.
+You can [create, delete, or edit](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/) any property in any blueprint in your builder.
 
 After changing one or more properties, you may need to adjust the [mapping](/build-your-software-catalog/customize-integrations/configure-mapping) of your integration to match the changes made to the data model.
 

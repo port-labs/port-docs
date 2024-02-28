@@ -11,11 +11,9 @@
 
 Port's software catalog is a central metadata store for software, environments, resources and any other asset you would like to manage using Port.  
 
-Its building blocks are [blueprints](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/), [relations](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/) and [entities](/), you can use them to build a catalog that reflects your exact data model. 
+Its building blocks are [blueprints](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/), [relations](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/) and [entities](/build-your-software-catalog/sync-data-to-catalog/#entities), you can use them to build a catalog that reflects your exact data model. 
 
 Your catalog is located in the [Catalog page](https://app.getport.io/organization/catalog) of your portal.
-
-<img src='/img/sync-data-to-catalog/catalog-arch.jpg' width='100%' border='1px' />
 
 ## Getting started
 
@@ -35,4 +33,4 @@ These integrations come with pre-defined blueprints and mappings, so you can sta
 Can't find your desired tool in our integrations library? No problem! Port provides you with the necessary tools to create your own integrations and ingest data from anywhere.  
 See the [custom integration page](/build-your-software-catalog/custom-integration/) for more information.
 
-
+<img src='/img/sync-data-to-catalog/catalog-arch.jpg' width='100%' border='1px' />

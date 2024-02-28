@@ -9,8 +9,9 @@ Port allows you to create custom integrations to ingest data from any tool or pl
 
 ## Why create a custom integration?
 
-* The tool you want to integrate with is not yet available in our [integrations library](#available-plug--play-integrations).
-* You wish to create your own data model and/or ingest data using a different method than the one provided in our integrations.
+- The tool you want to integrate with is not yet available in our [integrations library](/build-your-software-catalog/sync-data-to-catalog/#available-plug--play-integrations).
+- You wish to create your own data model and/or ingest data using a different method than the one provided in our integrations.
+- You wish to integrate Port with an internal tool in your organization.
 
 ## How to create a custom integration
 

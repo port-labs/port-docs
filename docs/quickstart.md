@@ -61,6 +61,19 @@ As you can see, after connecting your Git provider to Port, a new `Service` blue
 
 ---
 
+### Data sources
+
+Data sources are the different integrations and/or methods that Port uses to ingest data from your tools and platforms.  
+They are created and configured in the [data sources](https://app.getport.io/dev-portal/data-sources) page of your portal.
+
+After connecting your Git provider to Port, a data source will be automatically created for you, with default configuration that tells Port where to get the data and where to map it to in Port.
+
+**Learn more:**
+
+- [Configure mapping](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping)
+
+---
+
 ### Entities
 
 An entity is an instance of a blueprint, representing the data defined by that blueprint's properties. Entities are displayed in the [software catalog](https://app.getport.io/Services) page of the portal.  

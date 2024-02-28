@@ -69,10 +69,9 @@ A single type relation is used to map a single target entity to the source.
 
 #### 💡 Common Single Relations
 
-- Map a **Deployment** to the **Running Service** that it deployed;
-- Map a **package version** to the **package**;
-- Map a **K8s cluster** to the **cloud account** it is provisioned in;
-- etc.
+- Map a **Deployment** to the **Running Service** that it deployed.
+- Map a **package version** to the **package**.
+- Map a **K8s cluster** to the **cloud account** it is provisioned in.
 
 In this [live demo](https://demo.getport.io/packageVersionEntity?identifier=AnalyticsTracker_1_2_9) example, we can see a specific package version and its related core packages. 🎬
 
@@ -128,11 +127,10 @@ A many type relation is used to map multiple target entities to the source.
 
 #### 💡 Common Many Relations
 
-- Map dependencies between services;
-- Map the **packages** used by a **service**;
-- Map the **cloud resources** used by a **service**;
-- Map the **services deployed** in a **developer environment**;
-- etc.
+- Map dependencies between services.
+- Map the **packages** used by a **service**.
+- Map the **cloud resources** used by a **service**.
+- Map the **services deployed** in a **developer environment**.
 
 In this [live demo](https://demo.getport.io/developerEnvEntity?identifier=test-shizuko) example, we can see a specific developer environment and the running services it uses. 🎬
 

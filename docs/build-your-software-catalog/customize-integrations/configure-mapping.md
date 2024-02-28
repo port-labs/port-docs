@@ -140,7 +140,15 @@ After ingesting all of our services and Pagerduty services, we want to connect e
 
 1. **Option 1** - manually assign a Pagerduty service to each service using the UI:
 
-2. **Option 2** - use the integration's mapping YAML. In our example, we can add an entry to the mapping of the Pagerduty integration:
+    - Go to the [Services page](https://app.getport.io/services) of your software catalog.
+    - Choose a service you want to assign a Pagerduty service to. Hover over it, click on the `...` button on the right, and select `Edit`.
+    - In the `Pagerduty service` field, select the relevant Pagerduty service from the dropdown list, then click `Update`:
+
+      <img src='/img/software-catalog/customize-integrations/relationManualAssign.png' width='40%' border='1px' />
+
+  
+
+1. **Option 2** - use the integration's mapping YAML. In our example, we can add an entry to the mapping of the Pagerduty integration:
 
    - Go to your [data sources page](https://app.getport.io/dev-portal/data-sources) and click on the Pagerduty exporter:
 

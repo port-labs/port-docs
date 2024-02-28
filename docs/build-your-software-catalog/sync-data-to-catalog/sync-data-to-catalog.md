@@ -44,11 +44,13 @@ Now that you've installed an itegration, let's see how you can customize it:
 
 An entity is an instance of a [blueprint](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/), it represents the data defined by a blueprint's properties.
 
-After installing an intergation, a page will be created in your catalog, populated with entities representing the ingested data.
+After installing an integration, a page will be created in your catalog, populated with entities representing the ingested data.
 
-For example, once you complete Port's [onboarding process](/quickstart) and connect your Git provider to Port, your [software catalog](https://app.getport.io/services) will be populated with entities representing your services (Git repositories):
+For example, once you complete Port's [onboarding process](/quickstart) and connect your Git provider to Port, a new [Services page](https://app.getport.io/services) will be created in your software catalog, populated with entities representing your services (Git repositories):
 
-ADD IMAGE OF SERVICES
+<img src='/img/software-catalog/entitiesExample.png' width='75%' border='1px' />
+
+<br/><br/>
 
 Clicking on an entity in the table will take to its [entity page](/customize-pages-dashboards-and-plugins/page/entity-page), where you can view its properties, relations and more.
 

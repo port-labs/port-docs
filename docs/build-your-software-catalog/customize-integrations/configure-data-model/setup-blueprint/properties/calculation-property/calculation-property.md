@@ -28,7 +28,7 @@ Calculation properties make it easier to define properties that are based on val
 - Calculate the number of code owners;
 - etc.
 
-In this [live demo](https://demo.getport.io/services) example, we can see the `Slack Notifications` calculation property. 🎬
+In this [live demo](https://demo.getport.io/service_catalog) example, we can see the `Slack Notifications` calculation property. 🎬
 
 ## Definition
 

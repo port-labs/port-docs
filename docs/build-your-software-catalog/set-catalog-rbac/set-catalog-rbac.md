@@ -18,7 +18,7 @@ import TabItem from "@theme/TabItem";
 
 Port provides granular control to ensure that every user only sees the parts of the catalog that are relevant for them.
 
-Port's catalog RBAC capabilities are enabled by utilizing [permissions controls](../../sso-rbac/rbac/rbac.md).
+Port's catalog RBAC capabilities are enabled by utilizing [permissions controls](/sso-rbac/rbac/rbac.md).
 
 :::tip Page permissions
 
@@ -29,15 +29,15 @@ In order to manage who can view certain **pages** in Port, check out [page permi
 
 Catalog RBAC allows admins to finely control which users have access to specific information in the software catalog, for example:
 
-- Show developers only the services that they own.
 - Allow a user to edit a single specific property on an entity.
 - Create a fully read-only view for a developer.
 
 ## Set *global* access controls to catalog data
 
-The default permissions assigned to every blueprint upon creation specify that users with the `admin` role, and users with the specific blueprint `moderator` role, can perform any action on a blueprint.
+The default permissions assigned to every blueprint upon creation specify that users with the `admin` role, and users with the specific blueprint `moderator` role, can perform any action on a blueprint.  
+See [RBAC permissions](/sso-rbac/rbac/) for more information about the different roles.
 
-It is also possible to assign global permissions controls on **entities**:
+It is possible to assign global permissions controls on **entities**:
 
 <Tabs groupId="permission" defaultValue="create">
 
@@ -337,7 +337,7 @@ To give `delete` permissions to members of the owning team of an entity, change 
 
 ## Set *granular* access controls to catalog data
 
-It is also possible to assign more granular permissions controls on **entities**:
+It is possible to assign more granular permissions controls on **entities**:
 
 <Tabs groupId="permission" defaultValue="updateProp">
 

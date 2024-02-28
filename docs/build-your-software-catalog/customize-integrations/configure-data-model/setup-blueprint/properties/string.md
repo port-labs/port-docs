@@ -16,13 +16,12 @@ String is a primitive data type used to save text data.
 
 The string property type can be used to store any text based data, for example:
 
-- Image tags;
-- Variable keys;
-- Commit SHA;
-- File names;
-- etc.
+- Image tags
+- Variable keys
+- Commit SHA
+- File names
 
-In this [live demo](https://demo.getport.io/services) example, we can see the `Language` string property. 🎬
+In this [live demo](https://demo.getport.io/service_catalog) example, we can see the `Language` string property. 🎬
 
 ## API definition
 
@@ -575,3 +574,21 @@ resource "port_blueprint" "myBlueprint" {
 </TabItem>
 
 </Tabs>
+
+## Available enum colors
+
+Properties defined using [enum](#api-definition) can also include specific colors for the different values available in the property definition, the available enum colors are:
+
+```showLineNumbers text
+blue
+turquoise
+orange
+purple
+pink
+yellow
+green
+red
+darkGray
+lightGray
+bronze
+```
