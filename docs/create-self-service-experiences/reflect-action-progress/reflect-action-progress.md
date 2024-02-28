@@ -415,8 +415,9 @@ By sending a `PATCH` request to the `https://api.getport.io/v1/actions/runs/{run
 - Update the run's description, by using the `description` key with a custom message.
 - Add links to external logs of the job runners, via the `link` key - AWS Cloudwatch logs, Github Workflow job, Jenkins job, etc.
 
-:::tip
-You don't have to provide all of the different updates in one request, you can make a `PATCH` request to the endpoint as many times as you need until the action run has finished.
+:::tip Multiple and partial updates
+You don't have to provide all of the different updates in one request, you can make a `PATCH` request to the endpoint as many times as you need until the action run has finished.  
+You can also send partial updates, for example, you can update only the `description` key to change the description of the action while keeping its status as `In progress`.
 
 Note that every patch request will override the previous information that was available for a given key. For example, when updating the `link` key multiple times, only the value provided in the latest update will be the one displayed on the action run object.
 :::
