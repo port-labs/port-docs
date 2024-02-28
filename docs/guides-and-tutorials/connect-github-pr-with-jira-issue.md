@@ -141,7 +141,7 @@ For the GitHub app installation you will need to have a registered organization 
 
 ## Integrate Jira into Port
 
-The goal of this section is to bring our Jira issues into Port. [Port's Jira integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/jira/) (powered by [Ocean](https://ocean.getport.io/)) allows you to import `projects`, `boards`, `sprints` and `issues` from your Jira account into Port. The integration automatically creates <PortTooltip id="blueprint">blueprints</PortTooltip> and <PortTooltip id="entity">entities</PortTooltip> for these resources.
+The goal of this section is to bring our Jira issues into Port. [Port's Jira integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/jira/) (powered by [Ocean](https://ocean.getport.io/)) allows you to import `projects` and `issues` from your Jira account into Port. The integration automatically creates <PortTooltip id="blueprint">blueprints</PortTooltip> and <PortTooltip id="entity">entities</PortTooltip> for these resources.
 
 :::info Note
 For this installation you will need Helm and a running K8s cluster (see [prerequisites](#connect-github-pull-request-with-jira-issue)).
@@ -177,7 +177,7 @@ helm upgrade --install my-jira-integration port-labs/port-ocean \
 
 2. Great! Now that the integration is installed, we should see some new components in Port:
 
-- Go to your [Builder](https://app.getport.io/dev-portal/data-model), you should now see four new <PortTooltip id="blueprint">blueprints</PortTooltip> created by the integration - `Jira Project`, `Jira Board`, `Jira Sprint` and `Jira Issue`.
+- Go to your [Builder](https://app.getport.io/dev-portal/data-model), you should now see four new <PortTooltip id="blueprint">blueprints</PortTooltip> created by the integration - `Jira Project` and `Jira Issue`.
 - Go to your [Software catalog](https://app.getport.io/services), click on `Jira Issue` in the sidebar, you should now see new <PortTooltip id="entity">entities</PortTooltip> created for all your Jira issues
 
 
@@ -231,7 +231,7 @@ Under the `resources` key, locate the Pull Request block and replace it with the
             link: .html_url
           relations:
             repository: .head.repo.name
-            jiraIssue: jiraIssue: .title | match("^[A-Za-z]+-[0-9]+") .string
+            jiraIssue: .title | match("^[A-Za-z]+-[0-9]+") .string
 ```
 
 </details>
