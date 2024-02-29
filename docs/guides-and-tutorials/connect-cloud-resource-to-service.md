@@ -12,7 +12,7 @@ This guide demonstrates how to connect a Cloud Resource to a service or list of 
 
 :::tip Prerequisites
 - This guide assumes that you have a Port account, with a user role of `Admin`, and that you have finished the [onboarding process](/quickstart).
-- You will need your [Port credentials](/build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials) to install the AWS exporter.
+- You will need your [Port credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials) to install the AWS exporter.
 - Terraform for ingesting the AWS resources.
 :::
 
