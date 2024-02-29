@@ -9,7 +9,7 @@ import FindCredentials from "/docs/build-your-software-catalog/sync-data-to-cata
 
 # Get started with AWS
 
-This guide takes 4 minutes to complete, and aims to quickly integrate your AWS environment into Port.
+This guide takes 5 minutes to complete, and aims to quickly integrate your AWS environment into Port.
 
 :::tip Prerequisites
 
