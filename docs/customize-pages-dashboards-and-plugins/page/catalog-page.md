@@ -27,6 +27,19 @@ You can also manually create additional catalog pages for any existing blueprint
 
 To create a new catalog page, go to your [Software Catalog](https://app.getport.io/services), click the `+ New` button in the top left corner, and select `New catalog page`.
 
+### Description
+
+You can provide additional context to your developers by using the `Description` field when creating a catalog page.  
+This field supports adding links in markdown format: `[link text](https://www.address.com)`.
+
+<img src='/img/software-catalog/pages/catalogPageDescriptionForm.png' width='40%' border='1px' />
+
+<br/><br/>
+
+The description will be displayed at the top of the page, under the page title:
+
+<img src='/img/software-catalog/pages/catalogPageDescription.png' width='80%' border='1px' />
+
 ### Initial filters
 
 In some cases, an entities table may be very large, resulting in long loading times. To prevent this, you can define filters that resolve when Port queries the data (rather than after querying).  
