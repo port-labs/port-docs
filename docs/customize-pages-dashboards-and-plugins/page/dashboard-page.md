@@ -21,7 +21,6 @@ You can create as many dashboards as you'd like.
 
 <Tabs groupId="create-dashboard-page" queryString values={[
 {label: "From the UI", value: "ui"},
-{label: "From the API", value: "api"},
 {label: "From Pulumi", value: "pulumi"}
 ]}>
 
