@@ -13,6 +13,8 @@ const glossary = {
     "💡 <b>Port Concepts</b><br/><b>Software Catalog</b> - A central metadata store for your assets. Reflects your data model and is used to track and manage your assets.",
   action:
     "💡 <b>Port Concepts</b><br/><b>Action</b> - A mechanism to trigger reusable logic that interacts with your environment.",
+  dataset:
+    "💡 <b>Port Concepts</b><br/><b>Dataset</b> - A filtering mechanism for entity inputs comprising two properties: a combinator, and rules.",
 };
 
 const PortTooltip = ({ id, children }) => {
