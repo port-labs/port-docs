@@ -229,7 +229,7 @@ Follow these steps to get started:
     - `MY_GITHUB_TOKEN` - a [Classic Personal Access Token](https://github.com/settings/tokens) with the `repo` scope and the following permissions: `pull_requests:write` (to create PR) and `contents:write` (to merge PR)
 
 <br />
-2. Create a Port action in the [self-service page](https://app.getport.io/self-serve) or with the following JSON definition:
+2. Create a Port action in the [self-service page](https://app.getport.io/self-serve) on the `Service` blueprint with the following JSON definition:
 
 <details>
 
@@ -254,8 +254,8 @@ Follow these steps to get started:
         "blueprint": "image",
         "format": "entity"
       },
-      "should_merge": {
-        "title": "Should Merge",
+      "auto_merge": {
+        "title": "Auto Merge",
         "type": "boolean",
         "default": false,
         "description": "Whether the created PR should be merged or not"
@@ -264,7 +264,7 @@ Follow these steps to get started:
     "required": [],
     "order": [
       "image",
-      "should_merge"
+      "auto_merge"
     ]
   },
   "invocationMethod": {
@@ -305,7 +305,7 @@ on:
         description: The new image to use for the rollback
         required: true
         type: string
-      should_merge:
+      auto_merge:
         description: Whether the created PR should be merged automatically
         required: true
         type: boolean
@@ -341,7 +341,7 @@ jobs:
           targetBranch: main
           masterBranchName: main
           createPR: true
-          branch: deployment/${{ github.event.inputs.image }}
+          branch: deployment/${{ fromJson(github.event.inputs.port_payload).context.runId }}
           message: 'Update deployment image to ${{ github.event.inputs.image }}'
           
       - name: Inform Port about pull request creation status - Success
@@ -370,7 +370,7 @@ jobs:
             The creation of PR was not successful.
   
       - name: Merge Pull Request
-        if: ${{ github.event.inputs.should_merge == 'true' && steps.create-pr.outcome == 'success' }}
+        if: ${{ github.event.inputs.auto_merge == 'true' && steps.create-pr.outcome == 'success' }}
         env:
           GH_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
           PR_URL: ${{ fromJson(steps.create-pr.outputs.pull_request).url }}
@@ -392,7 +392,7 @@ jobs:
           fi
 
       - name: Inform completion of Argocd rollback into Port
-        if: ${{ github.event.inputs.should_merge == 'true' }}
+        if: ${{ github.event.inputs.auto_merge == 'true' }}
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
