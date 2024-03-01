@@ -579,7 +579,7 @@ resource "port_blueprint" "myBlueprint" {
 
 Properties defined using [enum](#api-definition) can also include specific colors for the different values available in the property definition, the available enum colors are:
 
-```showLineNumbers text
+```text showLineNumbers
 blue
 turquoise
 orange

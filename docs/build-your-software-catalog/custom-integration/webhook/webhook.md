@@ -5,6 +5,7 @@ import TabItem from "@theme/TabItem"
 import Image from "@theme/IdealImage";
 import WebhookArchitecture from '/static/img/build-your-software-catalog/sync-data-to-catalog/webhook/webhook-architecture.png';
 import ExampleGithubPRWebhook from './examples/resources/github/\_example_github_pr_configuration.mdx';
+import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 By using Port's generic webhook integration you can ingest data into the software catalog from any source or service that provides outgoing webhooks, even if Port doesn't provide a native integration for that source.
 
@@ -540,7 +541,7 @@ Follow these steps to create a webhook using Port's UI:
 4. Click on `Custom integration`.
 5. Give your webhook a title and a description, and select an icon to represent it, then click `Next`.
 6. In the mapping tab, you can see your new Webhook URL.
-7. Scroll down to box number 3. Here you can use JQ to map the data received from your system to the blueprints in your data model.
+7. Scroll down to box number 3. Here you can use <PortTooltip id="jq">JQ</PortTooltip> to map the data received from your system to the blueprints in your data model.
 8. You can use the `Test mapping` button in box number 4 (in the bottom of the window) to test your mapping's validity.
 9. When finished, click `Save`.
 

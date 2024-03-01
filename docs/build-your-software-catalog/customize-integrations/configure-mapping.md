@@ -130,27 +130,27 @@ Some of the keys use [JQ queries](https://jqlang.github.io/jq/manual/) to filter
 
 You can use the mapping YAML file to set the value of a relation between entities. This is very useful when you want to automatically assign an entity to the relation of another entity using a convention of your choice.
 
-For example, say we have a `service` blueprint and a `Pagerduty Service` blueprint with a relation between them:
+For example, say we have a `service` blueprint and a `PagerDuty Service` blueprint with a relation between them:
 
 <img src='/img/software-catalog/customize-integrations/relationExample.png' width='70%' border='1px' />
 
 <br/><br/>
 
-After ingesting all of our services and Pagerduty services, we want to connect each `service` to its corresponding `Pagerduty service`. To achieve this, we have two options:
+After ingesting all of our services and PagerDuty services, we want to connect each `service` to its corresponding `PagerDuty service`. To achieve this, we have two options:
 
-1. **Option 1** - manually assign a Pagerduty service to each service using the UI:
+1. **Option 1** - manually assign a PagerDuty service to each service using the UI:
 
     - Go to the [Services page](https://app.getport.io/services) of your software catalog.
-    - Choose a service you want to assign a Pagerduty service to. Hover over it, click on the `...` button on the right, and select `Edit`.
-    - In the `Pagerduty service` field, select the relevant Pagerduty service from the dropdown list, then click `Update`:
+    - Choose a service you want to assign a PagerDuty service to. Hover over it, click on the `...` button on the right, and select `Edit`.
+    - In the `PagerDuty service` field, select the relevant PagerDuty service from the dropdown list, then click `Update`:
 
       <img src='/img/software-catalog/customize-integrations/relationManualAssign.png' width='40%' border='1px' />
 
   
 
-1. **Option 2** - use the integration's mapping YAML. In our example, we can add an entry to the mapping of the Pagerduty integration:
+1. **Option 2** - use the integration's mapping YAML. In our example, we can add an entry to the mapping of the PagerDuty integration:
 
-   - Go to your [data sources page](https://app.getport.io/dev-portal/data-sources) and click on the Pagerduty exporter:
+   - Go to your [data sources page](https://app.getport.io/dev-portal/data-sources) and click on the PagerDuty exporter:
 
       <img src='/img/software-catalog/customize-integrations/dataSourcesPdIntegration.png' width='100%' border='1px' />
 
@@ -169,7 +169,7 @@ After ingesting all of our services and Pagerduty services, we want to connect e
                 relations:
                   pagerduty_service: .id
       ```
-      Now, if a `service's` **identifier** is equal to a `Pagerduty service's` **name**, that service will automatically have its on-call property filled with the relevant Pagerduty service.  
+      Now, if a `service's` **identifier** is equal to a `PagerDuty service's` **name**, that service will automatically have its on-call property filled with the relevant PagerDuty service.  
       This is just the convention we chose for this example, but you can use a different one if you'd like.  
       
 ## Examples

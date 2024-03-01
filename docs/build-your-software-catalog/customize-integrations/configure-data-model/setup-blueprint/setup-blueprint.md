@@ -80,8 +80,10 @@ Port offers a variety of ways to create and edit blueprints:
 <h4>To edit an existing blueprint:</h4>
 
 1. Go to your [Builder page](https://app.getport.io/dev-portal).
-2. Hover over your desired blueprint, click on the `...` icon in the top right corner, and choose `Edit blueprint`.
+2. Expand your desired blueprint by double-clicking on it.
 3. Here you can add, remove, or edit this blueprint's [properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/) and [relations](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/).
+4. To edit the blueprint's metadata (title, icon, etc.), click on the `...` icon in the top right corner of the blueprint card, and choose `Edit blueprint`.
+
 
 <h4>To create a new blueprint:</h4>
 
@@ -120,8 +122,8 @@ resource "port_blueprint" "myBlueprint" {
 }
 ```
 
-:::tip TIP
-For full example, check the [Terraform-Managed Blueprint Example](../Iac/terraform-managed-blueprint.md) page.
+:::tip Full example
+For a full example, check the [Terraform-Managed Blueprint Example](../Iac/terraform-managed-blueprint.md) page.
 :::
 
 </TabItem>
@@ -270,7 +272,7 @@ func main() {
 
 </Tabs>
 
-:::tip TIP
+:::tip Full example
 For a full example, check the [Pulumi-Managed Blueprint Example](../Iac/pulumi-managed-blueprint.md) page.
 :::
 
@@ -335,3 +337,12 @@ All available properties are listed in the [properties](./properties/properties.
 | ------------ | ------------------------------------------------------------------------------------------------------------------------------------- |
 | `properties` | See the [`properties`](./properties/properties.md) section for more details.                                                          |
 | `required`   | A list of the **required** properties, out of the `properties` object list. <br /> These are mandatory fields to fill in the UI form. |
+
+### Full icon list
+
+<details>
+<summary><b>Full icon list (click to expand)</b></summary>
+
+`API, Airflow, AmazonEKS, Ansible, ApiDoc, Aqua, Argo, ArgoRollouts, Aws, Azure, BitBucket, Bucket, Buddy, CPU, CPlusPlus, CSharp, Clickup, Cloud, Cluster, Codefresh, Confluence, Coralogix, Crossplane, Datadog, Day2Operation, DeployedAt, Deployment, DevopsTool, EC2, EU, Environment, Falcosidekick, Fluxcd, GKE, GPU, Git, GitLab, GitVersion, Github, GithubActions, Go, Google, GoogleCloud, GoogleCloudPlatform, GoogleComputeEngine, Grafana, Graphql, HashiCorp, Infinity, Istio, Jenkins, Jira, Kafka, Kiali, Kotlin, Lambda, Launchdarkly, Link, Lock, LucidCharts, Matlab, Microservice, MongoDb, Moon, NewRelic, Node, NodeJS, Notion, Okta, Package, Pearl, PostgreSQL, Prometheus, Pulumi, Python, R, React, RestApi, Ruby, S3, SDK, SQL, Scala, Sentry, Server, Service, Slack, Swagger, Swift, TS, Terraform, TwoUsers, Youtrack, Zipkin, checkmarx, css3, html5, java, js, kibana, logz, pagerduty, php, port, sonarqube, spinnaker`
+
+</details>

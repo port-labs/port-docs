@@ -211,9 +211,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Checkout the workflow's repository
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       # Checkout the service's repository
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           repository: "${{ github.repository_owner }}/${{fromJson(inputs.port_payload).context.entity}}"
           path: ./targetRepo

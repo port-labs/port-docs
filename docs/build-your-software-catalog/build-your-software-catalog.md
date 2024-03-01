@@ -21,12 +21,12 @@ Your catalog is built by integrating Port with tools and platforms, creating a c
 
 **First**, think about the data you would like your developers to see in the portal. Which tools are used in your organization, and what data from within those tools would be useful to display/manage in Port?
 
-Then, choose one of the following options:
+**Then**, choose one of the following options:
 
 #### Install a plug-and-play integration
 
 Port offers a [variety of plug-and-play integrations](/build-your-software-catalog/sync-data-to-catalog/), covering many popular tools and platforms.  
-These integrations come with pre-defined blueprints and mappings, so you can start ingesting data into your catalog right away. You can still customize them after installation to fit your exact needs.
+These integrations come with pre-defined blueprints and mappings, so you can start ingesting data into your catalog right away. You can always customize them after installation to fit your exact needs.
 
 #### Create a custom integration
 
