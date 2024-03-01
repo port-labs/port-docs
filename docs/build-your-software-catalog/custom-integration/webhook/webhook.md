@@ -535,7 +535,7 @@ To delete an existing webhook, make an HTTP DELETE request to `https://api.getpo
 
 Follow these steps to create a webhook using Port's UI:
 
-1. Go the [`Data sources`](https://app.getport.io/dev-portal/data-sources) page of your portal.
+1. Go to the [`Data sources`](https://app.getport.io/dev-portal/data-sources) page of your portal.
 2. Click on the `+ Data source` button in the top right corner.
 3. Select the `Webhook` tab.
 4. Click on `Custom integration`.
