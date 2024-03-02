@@ -12,7 +12,7 @@ The GitLab pipeline in this example, will run a new deployment and report back t
 
 First, we need to set up a GitLab pipeline for our CI/CD flow.
 
-You can use this example of using [Port's API](../../../../build-your-software-catalog/sync-data-to-catalog/api/api.md) from GitLab CI/CD:
+You can use this example of using [Port's API](../../../../build-your-software-catalog/custom-integration/api/api.md) from GitLab CI/CD:
 
 <details>
 <summary>Click here to see the code</summary>

@@ -20,7 +20,7 @@ It is important to be able to keep track of the permissions being allocated to y
 In this step-by-step guide, we will create Port blueprints and actions, which will allow you to request and revoke IAM permissions for different AWS resources using Port. You will also be able to keep track of which permissions were requested, and who requested them.
 
 ## Prerequisites
-- Prepare your Port organization's `Client ID` and `Client Secret`. To find you Port credentials, click [here](/docs/build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials).
+- Prepare your Port organization's `Client ID` and `Client Secret`. To find you Port credentials, click [here](/docs/build-your-software-catalog/custom-integration/api/api.md#find-your-port-credentials).
 - In your AWS console, [create an IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html) called `port-iam-management-user` with the following IAM permissions policy:
     <details>
 
