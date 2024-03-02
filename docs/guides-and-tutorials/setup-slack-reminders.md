@@ -19,6 +19,7 @@ This guide takes 7 minutes to complete, and aims to demonstrate:
 - You will need a Git repository in which you can place a workflow/pipeline that we will use in this guide. If you don't have one, we recommend creating a new repository named `Port-actions`.
 :::
 
+<br/>
 
 ### The goal of this guide
 
@@ -28,6 +29,8 @@ After completing it, you will get a sense of how it can benefit different person
 
 - Developers will be notified about policies set by the platform engineer that need to be fixed.
 - R&D managers & Platform engineers will be able to remind developers about unmet requirements in the services.
+
+<br/>
 
 ### Setup the action's frontend
 
@@ -126,6 +129,8 @@ The last step is customizing the action's permissions. For simplicity's sake, we
 </Tabs>
 
 The action's frontend is now ready 🥳
+
+<br/>
 
 ### Setup the action's backend
 
@@ -320,6 +325,8 @@ variables:
 
 All done! The action is ready to be used 🚀
 
+<br/>
+
 ### Execute the action
 
 After creating an action, it will appear under the `Self-service` tab of your Port application:
@@ -332,6 +339,8 @@ After creating an action, it will appear under the `Self-service` tab of your Po
 
 <img src='/img/guides/executionDetails.png' width='45%' />
 
+<br/><br/>
+
 3. This page provides details about the action run. As you can see, the backend returned `Success` and the repo was successfully created:
 
 <img src='/img/guides/runStatusReminder.png' width='90%' />
@@ -339,6 +348,8 @@ After creating an action, it will appear under the `Self-service` tab of your Po
 :::tip Logging action progress
 💡 Note the `Log stream` at the bottom, this can be used to report progress, results and errors. Click [here](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/) to learn more.
 :::
+
+<br/>
 
 4. You can now enter your Slack channel and view the scorecard reminder:
 <img src='/img/guides/slackReminderExample.png' width='50%' />

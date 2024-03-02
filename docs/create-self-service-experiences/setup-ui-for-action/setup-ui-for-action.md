@@ -161,7 +161,7 @@ To learn more about the different available invocation methods and backends, ref
 
 Port actions support a manual approval process. Manual approvals let you control who can approve an action invocation request, and also handle notifying the relevant personas when an action request is awaiting their review.
 
-refer to the [self-service actions RBAC](../set-self-service-actions-rbac/set-self-service-actions-rbac.md) page to learn more.
+Refer to the [self-service actions RBAC](../set-self-service-actions-rbac/set-self-service-actions-rbac.md) page to learn more.
 
 ## Configuring actions in Port
 
@@ -212,10 +212,11 @@ resource "port_action" "myAction" {
 
 <TabItem value="ui" label="UI">
 
-1. Go to the [DevPortal Builder page](https://app.getport.io/dev-portal);
-2. Expand the blueprint you want to add an action to;
-3. Select the actions button from the 3 dots menu;
-4. Enter the JSON specification of your desired action.
+1. Go to the [DevPortal Builder page](https://app.getport.io/dev-portal).
+2. Expand the blueprint you want to add an action to.
+3. Select the `Edit Json` button from the 3 dots menu.
+4. Navigate to the `Actions` tab.
+5. Paste the JSON specification in to the actions array.
 
 </TabItem>
 

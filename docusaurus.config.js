@@ -315,6 +315,7 @@ const config = {
         disableInDev: false,
       },
     ],
+    "./src/plugins/intercom.js",
   ],
 };
 

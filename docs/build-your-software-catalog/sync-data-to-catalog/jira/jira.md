@@ -534,6 +534,9 @@ Examples of blueprints and the relevant integration configurations:
       }
     }
   },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
   "relations": {
     "project": {
       "target": "jiraProject",
@@ -615,7 +618,11 @@ resources:
         "description": "URL to the project in Jira"
       }
     }
-  }
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
 }
 ```
 

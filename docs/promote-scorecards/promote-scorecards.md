@@ -38,7 +38,7 @@ A single scorecard defines a category to group different checks, validations and
 | `title`                      | `String` | Scorecard name that will be shown in the UI                                                                                                         |
 | `identifier`                 | `String` | The unique identifier of the `Scorecard`. The identifier is used for API calls, programmatic access and distinguishing between different scorecards |
 | [`filter`](#filter-elements) | `Object` | Optional set of [conditions](#conditions) to filter entities that will be evaluated by the scorecard                                                |
-| [`rules`](#rule-elements)    | `Object` | The rules that we create for each scorecard to determine it's level                                                                                 |
+| [`rules`](#rule-elements)    | `Object` | The rules that we create for each scorecard to determine its level                                                                                 |
 
 A scorecard contains and groups multiple rules that are relevant to its specific category, for example a scorecard for _service maturity_ can contain 3 rules, while the _production readiness_ scorecard can contain 2 completely different rules.
 

@@ -70,4 +70,16 @@ The `createMissingRelatedEntities` parameter is used to enable the creation of m
 
 </TabItem>
 
+<TabItem value="filterOwnedProjects" label="Filter owned projects">
+By default the gitlab integration will sync only projects that are owned by the token provided in the integration configuration.
+The `filterOwnedProjects` parameter is used to filter out projects that are not owned by the token.
+This parameter is useful when you want to sync projects that the token has access to but is not set as the owner of it.
+The equivalent of this parameter in the gitlab API is the `owned` parameter for the [list projects](https://docs.gitlab.com/ee/api/projects.html#list-user-projects) endpoint.
+</TabItem>
+
+<TabItem value="projectVisibilityFilter" label="Filter projects">
+By default this parameter is not set and the integration will sync all projects that the token has access to.
+The `projectVisibilityFilter` parameter is used to filter out projects based on their visibility level in GitLab (public, internal, private).
+The equivalent of this parameter in the gitlab API is the `visibility` parameter for the [list projects](https://docs.gitlab.com/ee/api/projects.html#list-user-projects) endpoint.
+</TabItem>
 </Tabs>

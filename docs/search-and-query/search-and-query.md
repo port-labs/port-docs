@@ -154,6 +154,7 @@ Port has 2 types of search rule operators:
 {label: "isNotEmpty", value: "isNotEmpty"},
 {label: "Property schema", value: "property-schema"},
 {label: "Between", value: "between"},
+{label: "notBetween", value: "notBetween"},
 {label: "Contains", value: "contains"},
 {label: "ContainsAny", value: "containsAny"},
 {label: "In", value: "in"}
@@ -363,6 +364,22 @@ The `between` operator also supports standard date ranges:
       }
     }
   ]
+}
+```
+
+</TabItem>
+
+<TabItem value="notBetween">
+
+The `notBetween` operator checks datetime values and returns entities whose relevant datetime property does not match the given range:
+
+```json showLineNumbers
+{
+  "operator": "notBetween",
+  "property": "$createdAt",
+  "value": {
+    "preset": "lastWeek"
+  }
 }
 ```
 

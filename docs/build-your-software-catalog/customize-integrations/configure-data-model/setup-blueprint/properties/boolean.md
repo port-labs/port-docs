@@ -21,8 +21,6 @@ The boolean property type can be used to store any true/false gate, for example:
 - Does service handle PII
 - Is environment public
 
-In this [live demo](https://demo.getport.io/packages) example, we can see the `In-House?` boolean property. 🎬
-
 ## API definition
 
 ```json showLineNumbers

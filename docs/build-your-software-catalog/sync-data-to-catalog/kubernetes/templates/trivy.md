@@ -18,6 +18,8 @@ Port and keep track of their state.
 Get to know the basics of our Kubernetes exporter [here!](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md)
 :::
 
+<img src="/img/build-your-software-catalog/sync-data-to-catalog/kubernetes/k8sTrivyOperatorView.png" border="1px"/>
+
 ## Prerequisites
 
 <TemplatePrerequisites />
@@ -40,13 +42,10 @@ export CUSTOM_BP_PATH="https://raw.githubusercontent.com/port-labs/template-asse
 
 This `blueprints.json` file defines the following blueprints:
 
-- Cluster;
-- Namespace;
-- Node;
-- Pod;
-- ReplicaSet;
-- Workload \*;
-- Trivy Vulnerabilities.
+- Cluster
+- Namespace
+- Workload
+- Trivy Vulnerabilities
 
 :::note
 
@@ -55,12 +54,97 @@ This `blueprints.json` file defines the following blueprints:
   look pretty similar.
   Here is the list of kubernetes objects `Workload` will represent:
 
-    - Deployment;
-    - StatefulSet;
-    - DaemonSet.
+    - Deployment
+    - StatefulSet
+    - DaemonSet
 
 - `Trivy Vulnerabilities` is one of the most important Trivy resources, giving developers the capability to find and view the risks that relate to different resources in their Kubernetes cluster.
 :::
+
+Below is the Trivy blueprint schema used in the exporter:
+
+<details>
+<summary> <b>Trivy vulnerability blueprint (click to expand)</b> </summary>
+
+```json showLineNumbers
+{
+   "identifier":"trivyVulnerabilities",
+   "title":"Trivy Vulnerabilities",
+   "icon":"Trivy",
+   "schema":{
+      "properties":{
+         "scanner":{
+            "title":"Scanner",
+            "type":"string"
+         },
+         "criticalCount":{
+            "title":"Critical Count",
+            "type":"number"
+         },
+         "highCount":{
+            "title":"High Count",
+            "type":"number"
+         },
+         "lowCount":{
+            "title":"Low Count",
+            "type":"number"
+         },
+         "mediumCount":{
+            "title":"Medium Count",
+            "type":"number"
+         },
+         "category":{
+            "title":"Category",
+            "type":"string"
+         },
+         "message":{
+            "title":"Message",
+            "type":"array"
+         },
+         "severity":{
+            "title":"Severity",
+            "type":"string",
+            "enum":[
+               "LOW",
+               "MEDIUM",
+               "HIGH",
+               "CRITICAL",
+               "UNKNOWN"
+            ],
+            "enumColors":{
+               "LOW":"green",
+               "MEDIUM":"yellow",
+               "HIGH":"red",
+               "CRITICAL":"red",
+               "UNKNOWN":"lightGray"
+            }
+         },
+         "scannerVersion":{
+            "title":"Scanner Version",
+            "type":"string"
+         },
+         "createdAt":{
+            "title":"Created At",
+            "type":"string",
+            "format":"date-time"
+         }
+      },
+      "required":[]
+   },
+   "mirrorProperties":{},
+   "calculationProperties":{},
+   "aggregationProperties":{},
+   "relations":{
+      "namespace":{
+         "title":"Namespace",
+         "target":"namespace",
+         "required":false,
+         "many":false
+      }
+   }
+}
+```
+</details>
 
 ### Exporting custom resource mapping
 
@@ -71,19 +155,34 @@ In this use-case you will be using the **[this configuration file](https://githu
 ```bash showLineNumbers
 export CONFIG_YAML_URL="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/templates/trivy-kubernetes_v1_config.yaml"
 ```
+Below is the mapping for the Trivy resource:
+<details>
+<summary> <b>Trivy vulnerability mapping (click to expand)</b> </summary>
 
-You can now run the installation script using the following code snippet:
-
-```bash showLineNumbers
-export CLUSTER_NAME="my-cluster"
-export PORT_CLIENT_ID="my-port-client-id"
-export PORT_CLIENT_SECRET="my-port-client-secret"
-curl -s https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/install.sh | bash
+```yaml showLineNumbers
+- kind: aquasecurity.github.io/v1alpha1/configauditreports
+  port:
+    entity:
+      mappings:
+        - identifier: .metadata.name + "-" + .metadata.namespace + "-" + env.CLUSTER_NAME
+          title: .metadata.name
+          icon: '"Trivy"'
+          blueprint: '"trivyVulnerabilities"'
+          properties:
+            scanner: .report.scanner.name
+            criticalCount: .report.summary.criticalCount
+            highCount: .report.summary.highCount
+            lowCount: .report.summary.lowCount
+            mediumCount: .report.summary.mediumCount
+            category: .report.checks[0].category
+            message: .report.checks[0].messages
+            severity: .report.checks[0].severity
+            scannerVersion: .report.scanner.version
+            createdAt: .metadata.creationTimestamp
+          relations:
+            namespace: .metadata.namespace + "-" + env.CLUSTER_NAME
 ```
+</details>
 
-You can now browse to your Port environment to see that your blueprints have been created, and your k8s and Trivy
-resources are being reported to Port using the freshly installed k8s exporter.
-
-## How does the installation script work?
-
-<TemplateInstallation />
+## Alternative integration using script
+While the Trivy Kubernetes exporter described above is the recommended installation method, you may prefer to use a webhook and a script to [ingest your Trivy scan results to Port](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/packages/trivy). 

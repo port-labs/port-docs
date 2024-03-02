@@ -94,6 +94,13 @@ Example:
 {"glpat-QXbeg-Ev9xtu5_5FsaAQ": ["**/DevopsTeam/*Service", "**/RnDTeam/*Service"]}
 ```
 
+:::info Helm installation parameter
+When using the `tokenMapping` parameter in the integration's [Helm installation](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/installation?deploy=helm&installation-methods=real-time-always-on#deploying-the-gitlab-integration), make sure to escape the necessary characters, for example:
+```text
+--set integration.secrets.tokenMapping=“\{\“glpat-oh1YXc54pR4eofx6hYy5\“: [\“**\“]\}”
+```
+:::
+
 Multiple GitLab group access tokens example:
 
 ```text showLineNumbers
@@ -357,7 +364,7 @@ deploy_gitlab:
 :::note
 When saving the `OCEAN__INTEGRATION__CONFIG__TOKEN_MAPPING` variable, be sure to save it **as-is**, for example given the following token mapping:
 
-```text showLineNumbers
+```text
 {"glpat-QXbeg-Ev9xtu5_5FsaAQ": ["**/DevopsTeam/*Service", "**/RnDTeam/*Service"]}
 ```
 

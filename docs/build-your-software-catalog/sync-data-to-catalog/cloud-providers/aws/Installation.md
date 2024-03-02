@@ -46,7 +46,7 @@ terraform apply -var 'resources=["ecs_service", "lambda", "sns", "sqs", "s3_buck
 The above script performs the following actions:
 
 1. Creates the resource blueprints in your Port environment.
-2. Deploys the AWS exporter in your AWS environment with the following resources - [S3 bucket](https://aws.amazon.com/s3/), [mapping configuration file](./aws.md#exporter-configjson-file), [AWS secret](./aws.md#port-credentials-secret), [AWS IAM policy](./aws.md#iam-policy);
+2. Deploys the AWS exporter in your AWS environment with the following resources - [S3 bucket](https://aws.amazon.com/s3/), [mapping configuration file](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws#exporter-configjson-file), [AWS secret](./aws.md#port-credentials-secret), [AWS IAM policy](./aws.md#iam-policy);
 3. Setting up [Event Bridge Rules](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-rules.html) that trigger the exporter to update resources;
 4. Invokes the AWS exporter Lambda function for the first time to get the current resources state.
 
@@ -73,7 +73,7 @@ In order to deploy the application, you will need to fill in the following param
 - **Bucket related parameters:**
   - `CreateBucket` - `true` if you want the application to create and manage your bucket, or `false` if you want to create the bucket on your own.
   - `BucketName` - The name of your bucket, or a globally unique name for a new bucket.
-  - `ConfigJsonFileKey` - The file key (path) to the [`config.json`](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/#exporter-configjson-file) in the bucket.
+  - `ConfigJsonFileKey` - The file key (path) to the [`config.json`](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws#exporter-configjson-file) in the bucket.
 - **IAM Policy related parameters:**
   - `CustomIAMPolicyARN` - The ARN of the [IAM policy](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/#iam-policy).
 - **Secret related parameters:**
@@ -89,7 +89,7 @@ In order to deploy the application, you will need to fill in the following param
   - `ScheduleExpression` - The [schedule expression](https://docs.aws.amazon.com/lambda/latest/dg/services-cloudwatchevents-expressions.html) to define an event schedule for the exporter.
   - `ScheduleState` - The schedule initial state - `ENABLED` or `DISABLED`. We recommend to enable it only after one successful run.
 
-1. Prepare a [`config.json`](#exporter-configjson-file) file that will define which AWS resources to ingest to Port;
+1. Prepare a [`config.json`](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws#exporter-configjson-file) file that will define which AWS resources to ingest to Port;
 
 2. Create the [`IAM policy`](#iam-policy) that provides permissions to `list` and `read` the AWS resources in the `config.json`;
 
