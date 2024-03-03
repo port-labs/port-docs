@@ -1538,7 +1538,7 @@ Since our Jira `issue` may already have several labels, we will need a mechanism
 ### Create the service relation
 
 Now that Port is synced with our Jira resources, let's reflect the Jira Issue in our services to display the issue associated with a service.
-First, we will need to create a [relation](/build-your-software-catalog/define-your-data-model/relate-blueprints/#what-is-a-relation) between our services and the corresponding Jira Issue.
+First, we will need to create a [relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/) between our services and the corresponding Jira Issue.
 
 1. Head back to the [Builder](https://app.getport.io/dev-portal/data-model), choose the `Jira Issue` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New relation`:
 
