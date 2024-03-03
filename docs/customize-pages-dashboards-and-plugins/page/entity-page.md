@@ -78,13 +78,13 @@ Each additional visualization will be added as a widget to the `dashboard` tab.
 
 ## Additional tabs
 
-Some of the [available property types](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/#supported-properties) are visual by nature. When defining one of these properties in a blueprint, an additional tab will be automatically created in each entity page related to this blueprint, displaying the property's content in the relevant visual format.
+Some of the [available property types](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#supported-properties) are visual by nature. When defining one of these properties in a blueprint, an additional tab will be automatically created in each entity page related to this blueprint, displaying the property's content in the relevant visual format.
 
 The following property types are supported:
 
-- [Markdown](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/markdown)
-- [Embedded URL](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/embedded-url)
-- [Swagger UI](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/swagger)
+- [Markdown](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/markdown)
+- [Embedded URL](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url)
+- [Swagger UI](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/swagger)
 
 ## Entity page operations
 

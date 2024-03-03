@@ -6,8 +6,8 @@ import ResourceMapping from "../templates/\_resource-mapping.mdx"
 import DockerParameters from "./\_docker-parameters.mdx"
 import SupportedResources from "./\_supported-resources.mdx"
 import AdvancedConfig from '../../../generalTemplates/\_ocean_advanced_configuration_note.md'
-import SonarcloudAnalysisBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/webhook/examples/resources/sonarqube/\_example_sonarcloud_analysis_blueprint.mdx";
-import SonarcloudAnalysisConfiguration from "/docs/build-your-software-catalog/sync-data-to-catalog/webhook/examples/resources/sonarqube/\_example_sonarcloud_analysis_configuration.mdx";
+import SonarcloudAnalysisBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/sonarqube/\_example_sonarcloud_analysis_blueprint.mdx";
+import SonarcloudAnalysisConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/sonarqube/\_example_sonarcloud_analysis_configuration.mdx";
 
 # SonarQube
 
@@ -40,12 +40,13 @@ Set them as you wish in the script below, then copy it and run it in your termin
 
 | Parameter                                | Description                                                                                                                                                                                  | Example                             | Required |
 | ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------- | -------- |
-| `port.clientId`                          | Your port client id ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))                                 |                                     | ✅       |
-| `port.clientSecret`                      | Your port client secret ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))                             |                                     | ✅       |
+| `port.clientId`                          | Your port client id ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                 |                                     | ✅       |
+| `port.clientSecret`                      | Your port client secret ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                             |                                     | ✅       |
 | `integration.secrets.sonarApiToken`      | The [SonarQube API token](https://docs.sonarsource.com/sonarqube/9.8/user-guide/user-account/generating-and-using-tokens/#generating-a-token)                                                |                                     | ✅       |
 | `integration.config.sonarOrganizationId` | The SonarQube [organization Key](https://docs.sonarsource.com/sonarcloud/appendices/project-information/#project-and-organization-keys) (Not required when using on-prem sonarqube instance) | myOrganization                      | ✅       |
+| `integration.config.sonarIsOnPremise` | A boolean value indicating whether the SonarQube instance is on-premise. The default value is `false` | false                      | ✅       |
 | `integration.config.appHost`             | A URL bounded to the integration container that can be accessed by sonarqube. When used the integration will create webhooks on top of sonarqube to listen to any live changes in the data   | https://my-ocean-integration.com    | ❌       |
-| `integration.config.sonarUrl`            | Required if using **On-Prem**, Your SonarQube instance URL                                                                                                                                   | https://my-sonar-cloud-instance.com | ❌       |
+| `integration.config.sonarUrl`            | Required if using **On-Prem**, Your SonarQube instance URL                                                                                                                                   | https://my-sonar-instance.com | ❌       |
 
 <HelmParameters />
 
@@ -58,15 +59,16 @@ To install the integration using Helm, run the following command:
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-sonarqube-integration port-labs/port-ocean \
-	--set port.clientId="PORT_CLIENT_ID"  \
-	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set initializePortResources=true  \
-	--set scheduledResyncInterval=120  \
-	--set integration.identifier="my-sonarqube-integration"  \
-	--set integration.type="sonarqube"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.secrets.sonarApiToken="MY_API_TOKEN"  \
-	--set integration.config.sonarOrganizationId="MY_ORG_KEY"
+  --set port.clientId="PORT_CLIENT_ID"  \
+  --set port.clientSecret="PORT_CLIENT_SECRET"  \
+  --set initializePortResources=true  \
+  --set scheduledResyncInterval=120  \
+  --set integration.identifier="my-sonarqube-integration"  \
+  --set integration.type="sonarqube"  \
+  --set integration.eventListener.type="POLLING"  \
+  --set integration.config.sonarIsOnPremise="<ENTER BOOLEAN VALUE>"  \
+  --set integration.secrets.sonarApiToken="<ENTER API TOKEN>"  \
+  --set integration.config.sonarOrganizationId="<ENTER ORGANIZATION ID>"
 ```
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
@@ -75,7 +77,7 @@ To install the integration using ArgoCD, follow these steps:
 1. Create a `values.yaml` file in `argocd/my-ocean-sonarqube-integration` in your git repository with the content:
 
 :::note
-Remember to replace the placeholders for `MY_ORG_KEY` and `MY_API_TOKEN`.
+Remember to replace the placeholders for `MY_ORG_KEY`, `IS_ON_PREMISE`, and `MY_API_TOKEN`.
 :::
 ```yaml showLineNumbers
 initializePortResources: true
@@ -86,8 +88,10 @@ integration:
   eventListener:
     type: POLLING
   config:
-  // highlight-next-line
+  // highlight-start
     sonarOrganizationId: MY_ORG_KEY
+    sonarIsOnPremise: IS_ON_PREMISE
+  // highlight-end
   secrets:
   // highlight-next-line
     sonarApiToken: MY_API_TOKEN
@@ -198,6 +202,7 @@ jobs:
           -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
           -e OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN=${{ secrets.OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN }} \
           -e OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID=${{ secrets.OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID }} \
+          -e OCEAN__INTEGRATION__CONFIG__SONAR_IS_ON_PREMISE=${{ secrets.OCEAN__INTEGRATION__CONFIG__SONAR_IS_ON_PREMISE }} \
           -e OCEAN__INTEGRATION__CONFIG__SONAR_URL=${{ secrets.OCEAN__INTEGRATION__CONFIG__SONAR_URL }} \
           -e OCEAN__PORT__CLIENT_ID=${{ secrets.OCEAN__PORT__CLIENT_ID }} \
           -e OCEAN__PORT__CLIENT_SECRET=${{ secrets.OCEAN__PORT__CLIENT_SECRET }} \
@@ -238,6 +243,7 @@ pipeline {
                     withCredentials([
                         string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN', variable: 'OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN'),
                         string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID', variable: 'OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID'),
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__SONAR_IS_ON_PREMISE', variable: 'OCEAN__INTEGRATION__CONFIG__SONAR_IS_ON_PREMISE'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_SECRET', variable: 'OCEAN__PORT__CLIENT_SECRET'),
                     ]) {
@@ -251,6 +257,7 @@ pipeline {
                                 -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
                                 -e OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN=$OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN \
                                 -e OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID=$OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID \
+                                -e OCEAN__INTEGRATION__CONFIG__SONAR_IS_ON_PREMISE=$OCEAN__INTEGRATION__CONFIG__SONAR_IS_ON_PREMISE \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
                                 $image_name
@@ -311,6 +318,7 @@ steps:
     -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
     -e OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN=${OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN} \
     -e OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID=${OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID} \
+    -e OCEAN__INTEGRATION__CONFIG__SONAR_IS_ON_PREMISE=${OCEAN__INTEGRATION__CONFIG__SONAR_IS_ON_PREMISE} \
     -e OCEAN__INTEGRATION__CONFIG__SONAR_URL=${OCEAN__INTEGRATION__CONFIG__SONAR_URL} \
     -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \
     -e OCEAN__PORT__CLIENT_SECRET=${OCEAN__PORT__CLIENT_SECRET} \
@@ -615,10 +623,10 @@ resources:
 
 </details>
 
-### Analysis
+### Saas Analysis
 
 <details>
-<summary>Analysis blueprint</summary>
+<summary>Saas analysis blueprint</summary>
 
 ```json showLineNumbers
 {
@@ -677,7 +685,7 @@ resources:
 createMissingRelatedEntities: true
 deleteDependentEntities: true
 resources:
-  - kind: analysis
+  - kind: saas_analysis
     selector:
       query: "true"
     port:
@@ -693,6 +701,89 @@ resources:
             coverage: .measures.coverage_change
             duplications: .measures.duplicated_lines_density_change
             createdAt: .__analysisDate
+          relations:
+            sonarQubeProject: .__project
+```
+
+</details>
+
+### On-Premise Analysis
+
+<details>
+<summary>On-premise analysis blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "sonarQubeAnalysis",
+  "title": "SonarQube Analysis",
+  "icon": "sonarqube",
+  "schema": {
+    "properties": {
+      "branch": {
+        "type": "string",
+        "title": "Branch",
+        "icon": "GitVersion"
+      },
+      "fixedIssues": {
+        "type": "number",
+        "title": "Fixed Issues"
+      },
+      "newIssues": {
+        "type": "number",
+        "title": "New Issues"
+      },
+      "coverage": {
+        "title": "Coverage",
+        "type": "number"
+      },
+      "duplications": {
+        "type": "number",
+        "title": "Duplications"
+      },
+      "createdAt": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Created At"
+      }
+    }
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "sonarQubeProject": {
+      "target": "sonarQubeProject",
+      "required": false,
+      "title": "SonarQube Project",
+      "many": false
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: onprem_analysis
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          blueprint: '"sonarQubeAnalysis"'
+          identifier: .__project + "-" + .key
+          title: .title
+          properties:
+            branch: .branch
+            newIssues: .__measures[]? | select(.metric == "new_violations") | .period.value
+            coverage: .__measures[]? | select(.metric == "new_coverage") | .period.value
+            duplications: .__measures[]? | select(.metric == "new_duplicated_lines_density") | .period.value
+            createdAt: .analysisDate
           relations:
             sonarQubeProject: .__project
 ```
@@ -980,7 +1071,7 @@ Create the following blueprint definition:
 
 </details>
 
-Create the following webhook configuration [using Port's UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints):
+Create the following webhook configuration [using Port's UI](/build-your-software-catalog/custom-integration/webhook/?operation=ui#configuring-webhook-endpoints):
 
 <details>
 <summary>SonarQube analysis webhook configuration</summary>

@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Catalog page
 
-A catalog page displays a table of all existing [entities](/build-your-software-catalog/sync-data-to-catalog/#creating-entities) created from a [blueprint](/build-your-software-catalog/define-your-data-model/setup-blueprint/#what-is-a-blueprint).  
+A catalog page displays a table of all existing [entities](/build-your-software-catalog/sync-data-to-catalog/#creating-entities) created from a [blueprint](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/#what-is-a-blueprint).  
 In this example we can see all of the cluster entities we created from the `K8s Cluster` blueprint:
 
 ![Microservice blueprint page](/img/software-catalog/pages/catalogPage.png)
@@ -15,6 +15,19 @@ When a blueprint is created, a catalog page is automatically generated in the So
 You can also manually create additional catalog pages for any existing blueprint, and customize them as you wish. Read on to see the available customization options.
 
 To create a new catalog page, go to your [Software Catalog](https://app.getport.io/services), click the `+ New` button in the top left corner, and select `New catalog page`.
+
+### Description
+
+You can provide additional context to your developers by using the `Description` field when creating a catalog page.  
+This field supports adding links in markdown format: `[link text](https://www.address.com)`.
+
+<img src='/img/software-catalog/pages/catalogPageDescriptionForm.png' width='40%' border='1px' />
+
+<br/><br/>
+
+The description will be displayed at the top of the page, under the page title:
+
+<img src='/img/software-catalog/pages/catalogPageDescription.png' width='80%' border='1px' />
 
 ### Initial filters
 
@@ -79,7 +92,7 @@ By using the `My Teams` filter you will only see entities that belong to one of 
 This filter works on:
 
 - `string` properties with the format `team`.
-- The [meta property](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/meta-properties) `Team`.
+- The [meta property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/meta-properties) `Team`.
 
 ![My Teams Filter](/img/software-catalog/pages/MyTeamsFilter.png)
 
@@ -87,7 +100,7 @@ This filter works on:
 
 By using the `Me` filter you will only see entities that belong to the logged-in user.
 
-This filter works on [`User`](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/user) properties.
+This filter works on [`User`](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/user) properties.
 
 ![Me Filter](../../../static/img/software-catalog/pages/meFilter.png)
 
