@@ -3,7 +3,7 @@ sidebar_position: 4
 sidebar_label: 🛠️ Usage methods
 ---
 
-import CredentialsGuide from "../build-your-software-catalog/sync-data-to-catalog/api/\_template_docs/\_find_credentials.mdx";
+import CredentialsGuide from "../build-your-software-catalog/custom-integration/api/\_template_docs/\_find_credentials.mdx";
 import ApiRef from "../api-reference/\_learn_more_reference.mdx"
 import InstallTerraform from "../build-your-software-catalog/sync-data-to-catalog/iac/terraform/\_terraform_provider_base.mdx"
 
@@ -49,7 +49,7 @@ All API endpoints follow a resource based access schema, for example:
 - Scorecards based routes start with:`https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards`;
 - etc.
 
-To learn more about the JSON structure of different API objects, refer to their respective category and structure reference, for example - [blueprint structure](../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md#blueprint-structure).
+To learn more about the JSON structure of different API objects, refer to their respective category and structure reference, for example - [blueprint structure](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/setup-blueprint.md#blueprint-structure).
 
 <ApiRef />
 
@@ -74,7 +74,7 @@ resource "port_blueprint" "myBlueprint" {
 
 Then run `terraform plan` to view the new blueprint that will be created, and `terraform apply` to create the blueprint you defined, inside Port's software catalog.
 
-To learn more about the Terraform resource definition of different API objects, refer to their respective category and structure reference, for example - [configure blueprints in Port](../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md?definition=tf#configure-blueprints-in-port) and [Terraform provider](../build-your-software-catalog/sync-data-to-catalog/iac/terraform/terraform.md).
+To learn more about the Terraform resource definition of different API objects, refer to their respective category and structure reference, for example - [configure blueprints in Port](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/setup-blueprint.md?definition=tf#configure-blueprints-in-port) and [Terraform provider](../build-your-software-catalog/sync-data-to-catalog/iac/terraform/terraform.md).
 
 </TabItem>
 
