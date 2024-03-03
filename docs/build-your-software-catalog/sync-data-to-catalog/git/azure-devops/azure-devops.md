@@ -1,6 +1,6 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import GitlabResources from './\_gitlab_exporter_supported_resources.mdx'
+import AzureDevopsResources from './\_azuredevops_exporter_supported_resources.mdx'
 
 # Azure DevOps
 
@@ -20,17 +20,17 @@ To install Port's Azure DevOps integration, follow the [installation](./installa
 
 ## Ingesting Git objects
 
-This integration allows you to ingest a variety of objects resources provided by the Azure DevOps API, including groups, projects, merge requests, pipelines and more. It allows you to perform extract, transform, load (ETL) on data from the GitLab API into the desired software catalog data model.
+This integration allows you to ingest a variety of objects resources provided by the Azure DevOps API. It allows you to perform ETL operations on data from the Azure DevOps API into the desired data model.
 
-The GitLab integration uses a YAML configuration to describe the ETL process to load data into the developer portal. The approach reflects a golden middle between an overly opinionated Git visualization that might not work for everyone and a too-broad approach that could introduce unneeded complexity into the developer portal.
+This integration uses a YAML configuration to describe the ETL process to load data into the developer portal. The approach reflects a golden middle between an overly opinionated Git visualization that might not work for everyone and a too-broad approach that could introduce unneeded complexity into the developer portal.
 
-Here is an example snippet from the config which demonstrates the ETL process for getting `merge-request` data from GitLab and into the software catalog:
+Here is an example snippet from the config which demonstrates the ETL process for getting `pull-request` data from Azure DevOps into the software catalog:
 
 ```yaml showLineNumbers
 resources:
   # Extract
   # highlight-start
-  - kind: merge-request
+  - kind: pull-request
     selector:
       query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
     # highlight-end
@@ -51,11 +51,11 @@ resources:
         # highlight-end
 ```
 
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from GitLab's API events.
+The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the different Azure DevOps API routes.
 
-### The integration configuration
+### Integration configuration
 
-The integration configuration is how you specify the exact resources you want to query from your GitLab, and also how you specify which entities and which properties you want to fill with data from GitLab.
+The integration's configuration is how you specify the exact resources you want to query from your organization, and which entities and properties you want to fill with the received data.
 
 Here is an example for the integration configuration block:
 
@@ -78,7 +78,7 @@ resources:
           defaultBranch: .default_branch
 ```
 
-### Integration configuration structure
+### Configuration structure
 
 - The root key of the integration configuration is the `resources` key:
 
@@ -90,7 +90,7 @@ resources:
       ...
   ```
 
-- The `kind` key is a specifier for an object from the GitLab API:
+- The `kind` key is a specifier for an object from the Azure DevOps API:
 
   ```yaml showLineNumbers
     resources:
@@ -100,11 +100,11 @@ resources:
         ...
   ```
 
-  <GitlabResources/>
+  <AzureDevopsResources/>
 
 #### Filtering unwanted objects
 
-The `selector` and the `query` keys let you filter exactly which objects from the specified `kind` will be ingested to the software catalog
+The `selector` and the `query` keys let you filter exactly which objects from the specified `kind` will be ingested to the software catalog:
 
   ```yaml showLineNumbers
   resources:
@@ -124,7 +124,7 @@ query: .name | startswith("service")
 
 <br/>
 
-The `port`, `entity` and the `mappings` keys open the section used to map the GitLab API object fields to Port entities. To create multiple mappings of the same kind, you can add another item to the `resources` array;
+The `port`, `entity` and the `mappings` keys open the section used to map the Azure DevOps API object fields to Port entities. To create multiple mappings of the same kind, you can add another item to the `resources` array;
 
   ```yaml showLineNumbers
   resources:
@@ -134,7 +134,7 @@ The `port`, `entity` and the `mappings` keys open the section used to map the Gi
       port:
         # highlight-start
         entity:
-          mappings: # Mappings between one GitLab API object to a Port entity. Each value is a JQ query.
+          mappings: # Mappings between one Azure DevOps API object to a Port entity. Each value is a JQ query.
             identifier: .namespace.full_path | gsub("/";"-")
             title: .name
             blueprint: '"gitlabRepository"'
@@ -159,7 +159,7 @@ The `port`, `entity` and the `mappings` keys open the section used to map the Gi
 
 ## Permissions
 
-Port's GitLab integration requires a group access token with the `api` scope.
+Port's Azure DevOps integration requires a group access token with the `api` scope.
 
 To create a group access token, follow the instructions in the [installation](./installation.md#creating-a-gitlab-group-access-token) guide
 
@@ -169,7 +169,7 @@ Refer to the [examples](./examples.md) page for practical configurations and the
 
 ## GitOps
 
-Port's GitLab integration also provides GitOps capabilities, refer to the [GitOps](./gitops/gitops.md) page to learn more.
+Port's Azure DevOps integration also provides GitOps capabilities, refer to the [GitOps](./gitops/gitops.md) page to learn more.
 
 ## Advanced
 

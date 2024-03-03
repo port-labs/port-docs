@@ -5,7 +5,7 @@ sidebar_position: 2
 import RepositoryBlueprint from './\_gitlab_exporter_example_repository_blueprint.mdx'
 import PRBlueprint from './\_gitlab_exporter_example_merge_request_blueprint.mdx'
 import PortAppConfig from './\_gitlab_exporter_example_port_app_config.mdx'
-import GitlabResources from './\_gitlab_exporter_supported_resources.mdx'
+import GitlabResources from './\_azuredevops_exporter_supported_resources.mdx'
 
 import PipelineBlueprint from './example-pipeline-job/\_git_exporter_example_pipeline_blueprint.mdx'
 import JobBlueprint from './example-pipeline-job/\_git_exporter_example_job_blueprint.mdx'
