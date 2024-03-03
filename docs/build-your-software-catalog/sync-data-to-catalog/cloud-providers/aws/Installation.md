@@ -18,7 +18,7 @@ import TabItem from "@theme/TabItem"
 
 For the [step-by-step installation](#step-by-step-installation) (not using Terraform), also install:
 
-- [AWS SAM CLI](https://docs.aws.amazon.com/serverless-app:lication-model/latest/developerguide/install-sam-cli.html)
+- [AWS SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html)
 - [JQ](https://stedolan.github.io/jq/download/)
 
 ## Terraform Installation (recommended)
@@ -263,4 +263,4 @@ To configure the AWS exporter to use events as triggers, follow these steps:
 
 - Refer to the [examples](./examples.md) page for practical configurations and their corresponding blueprint definitions;
 - Learn about more ways of [working with Cloudformation stacks](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacks.html);
-- Deep-dive into the [Event-based Updates](./event-based-updates.md) machanism.
+- Deep-dive into the [Event-based Updates](./event-based-updates.md) mechanism.
