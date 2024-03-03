@@ -1,0 +1,77 @@
+<details>
+<summary>Job blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "gitlabJob",
+  "title": "Job",
+  "icon": "GitLab",
+  "schema": {
+    "properties": {
+      "createdAt": {
+        "title": "Created At",
+        "type": "string",
+        "format": "date-time"
+      },
+      "startedAt": {
+        "title": "Started At",
+        "type": "string",
+        "format": "date-time"
+      },
+      "finishedAt": {
+        "title": "Finished At",
+        "type": "string",
+        "format": "date-time"
+      },
+      "creator": {
+        "title": "Creator",
+        "type": "string"
+      },
+      "stage": {
+        "title": "Stage",
+        "type": "string"
+      },
+      "status": {
+        "title": "Status",
+        "type": "string",
+        "enum": [
+          "failed",
+          "warning",
+          "pending",
+          "running",
+          "manual",
+          "scheduled",
+          "canceled",
+          "success",
+          "skipped",
+          "created"
+        ],
+        "enumColors": {
+          "failed": "red",
+          "warning": "red",
+          "pending": "yellow",
+          "running": "yellow",
+          "manual": "blue",
+          "scheduled": "blue",
+          "canceled": "red",
+          "success": "green",
+          "skipped": "red",
+          "created": "yellow"
+        }
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "pipeline": {
+      "target": "gitlabPipeline",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

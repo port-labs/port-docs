@@ -1,0 +1,37 @@
+<details>
+<summary>Folder blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "gitlabFolder",
+  "title": "Folder",
+  "icon": "Gitlab",
+  "schema": {
+    "properties": {
+      "readme": {
+        "title": "README",
+        "type": "string",
+        "format": "markdown"
+      },
+      "url": {
+        "title": "Folder URL",
+        "type": "string",
+        "format": "url"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "repository": {
+      "title": "Repository",
+      "target": "gitlabRepository",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

@@ -1,0 +1,83 @@
+<details>
+<summary>Pipeline blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "gitlabPipeline",
+  "title": "Pipeline",
+  "icon": "GitLab",
+  "schema": {
+    "properties": {
+      "createdAt": {
+        "title": "Created At",
+        "type": "string",
+        "format": "date-time"
+      },
+      "updatedAt": {
+        "title": "Updated At",
+        "type": "string",
+        "format": "date-time"
+      },
+      "creator": {
+        "title": "Creator",
+        "type": "string"
+      },
+      "status": {
+        "title": "Status",
+        "type": "string",
+        "enum": [
+          "created",
+          "waiting_for_resource",
+          "preparing",
+          "pending",
+          "running",
+          "success",
+          "failed",
+          "canceled",
+          "skipped",
+          "manual",
+          "scheduled"
+        ],
+        "enumColors": {
+          "created": "yellow",
+          "waiting_for_resource": "yellow",
+          "preparing": "yellow",
+          "pending": "yellow",
+          "running": "yellow",
+          "success": "green",
+          "failed": "red",
+          "canceled": "red",
+          "skipped": "red",
+          "manual": "blue",
+          "scheduled": "blue"
+        }
+      },
+      "stages": {
+        "title": "Stages",
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "link": {
+        "title": "Link",
+        "type": "string",
+        "format": "url"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "repository": {
+      "title": "Repository",
+      "target": "gitlabRepository",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
