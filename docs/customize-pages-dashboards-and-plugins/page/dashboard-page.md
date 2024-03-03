@@ -15,7 +15,20 @@ Dashboards are a great way to display aggregated data and track the information 
 
 You can create as many dashboards as you'd like. To create a dashboard, click on `New` and select `New dashboard`:
 
-![newDashboard](../../../static/img/software-catalog/pages/newDashboard.png)
+![newDashboard](/img/software-catalog/pages/newDashboard.png)
+
+### Description
+
+You can provide additional context to your developers by using the `Description` field when creating a dashboard page.  
+This field supports adding links in markdown format: `[link text](https://www.address.com)`.
+
+<img src='/img/software-catalog/pages/dashboardPageDescriptionForm.png' width='40%' border='1px' />
+
+<br/><br/>
+
+The description will be displayed at the top of the page, under the page title:
+
+<img src='/img/software-catalog/pages/dashboardPageDescription.png' width='80%' border='1px' />
 
 ## Adding new widgets
 

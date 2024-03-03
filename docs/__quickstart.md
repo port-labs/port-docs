@@ -1280,5 +1280,5 @@ If you want to learn more about Port's capabilities in a specific area, you can 
 
 If you want to continue utilizing Port's REST API, take a look at these resources:
 
-- [API guide](./build-your-software-catalog/sync-data-to-catalog/api/api.md)
+- [API guide](./build-your-software-catalog/custom-integration/api/api.md)
 - [API Reference](./api-reference/api-reference.mdx)
