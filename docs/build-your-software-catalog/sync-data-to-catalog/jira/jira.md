@@ -1,5 +1,6 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
 import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
 import HelmParameters from "../templates/\_ocean-advanced-parameters-helm.mdx"
@@ -14,7 +15,7 @@ import JiraServerConfigurationPython from "/docs/build-your-software-catalog/cus
 
 # Jira
 
-Our Jira integration allows you to import `issues` and `projects` from your Jira cloud account into Port, according to your mapping and definition.
+Our Jira integration allows you to import `issues`, `boards`, `sprints` and `projects` from your Jira cloud account into Port, according to your mapping and definition.
 
 :::info Jira cloud only
 This integration supports `Jira Cloud` at the moment. To integrate Port with `Jira Server`, use [Port's webhook integration](/build-your-software-catalog/custom-integration/webhook/examples/jira-server).
@@ -22,7 +23,7 @@ This integration supports `Jira Cloud` at the moment. To integrate Port with `Ji
 
 ## Common use cases
 
-- Map issues and projects in your Jira organization environment.
+- Map issues, sprints, boards and projects in your Jira organization environment.
 - Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 - Create/delete Jira objects using self-service actions.
 
@@ -75,6 +76,7 @@ helm upgrade --install my-jira-integration port-labs/port-ocean \
 	--set integration.secrets.atlassianUserEmail="string"  \
 	--set integration.secrets.atlassianUserToken="string"
 ```
+
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
 To install the integration using ArgoCD, follow these steps:
@@ -84,6 +86,7 @@ To install the integration using ArgoCD, follow these steps:
 :::note
 Remember to replace the placeholders for `ATLASSIAN_JIRA_HOST` `ATLASSIAN_USER_EMAIL` and `ATLASSIAN_USER_TOKEN`.
 :::
+
 ```yaml showLineNumbers
 initializePortResources: true
 scheduledResyncInterval: 120
@@ -101,13 +104,16 @@ integration:
     atlassianUserToken: ATLASSIAN_USER_TOKEN
   // highlight-end
 ```
+
 <br/>
 
 2. Install the `my-ocean-jira-integration` ArgoCD Application by creating the following `my-ocean-jira-integration.yaml` manifest:
-:::note
-Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
 
+:::note Replace placeholders
+
+Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.  
 Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
+
 :::
 
 <details>
@@ -153,9 +159,11 @@ spec:
 <br/>
 
 3. Apply your application manifest with `kubectl`:
+
 ```bash
 kubectl apply -f my-ocean-jira-integration.yaml
 ```
+
 </TabItem>
 </Tabs>
 
@@ -167,7 +175,7 @@ kubectl apply -f my-ocean-jira-integration.yaml
   <TabItem value="github" label="GitHub">
 This workflow will run the Jira integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::warning
+:::warning Realtime updates in Port
 If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
 :::
 
@@ -217,10 +225,11 @@ jobs:
   <TabItem value="jenkins" label="Jenkins">
 This pipeline will run the Jira integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::tip
+:::tip Tip for Jenkins agent
 Your Jenkins agent should be able to run docker commands.
 :::
-:::warning
+
+:::warning Realtime updates in Port
 If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
 :::
 
@@ -285,7 +294,7 @@ Here is an example for `jira-integration.yml` pipeline file:
 
 ```yaml showLineNumbers
 trigger:
-- main
+  - main
 
 pool:
   vmImage: "ubuntu-latest"
@@ -293,28 +302,26 @@ pool:
 variables:
   - group: port-ocean-credentials
 
-
 steps:
-- script: |
-    # Set Docker image and run the container
-    integration_type="jira"
-    version="latest"
+  - script: |
+      # Set Docker image and run the container
+      integration_type="jira"
+      version="latest"
 
-    image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
+      image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
 
-    docker run -i --rm \
-      -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
-      -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-      -e OCEAN__INTEGRATION__CONFIG__JIRA_HOST=${OCEAN__INTEGRATION__CONFIG__JIRA_HOST} \
-      -e OCEAN__INTEGRATION__CONFIG__ATLASSIAN_USER_EMAIL=${OCEAN__INTEGRATION__CONFIG__ATLASSIAN_USER_EMAIL} \
-      -e OCEAN__INTEGRATION__CONFIG__ATLASSIAN_USER_TOKEN=${OCEAN__INTEGRATION__CONFIG__ATLASSIAN_USER_TOKEN} \
-      -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \
-      -e OCEAN__PORT__CLIENT_SECRET=${OCEAN__PORT__CLIENT_SECRET} \
-      $image_name
+      docker run -i --rm \
+        -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+        -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+        -e OCEAN__INTEGRATION__CONFIG__JIRA_HOST=${OCEAN__INTEGRATION__CONFIG__JIRA_HOST} \
+        -e OCEAN__INTEGRATION__CONFIG__ATLASSIAN_USER_EMAIL=${OCEAN__INTEGRATION__CONFIG__ATLASSIAN_USER_EMAIL} \
+        -e OCEAN__INTEGRATION__CONFIG__ATLASSIAN_USER_TOKEN=${OCEAN__INTEGRATION__CONFIG__ATLASSIAN_USER_TOKEN} \
+        -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \
+        -e OCEAN__PORT__CLIENT_SECRET=${OCEAN__PORT__CLIENT_SECRET} \
+        $image_name
 
-    exit $?
-  displayName: 'Ingest Data into Port'
-
+      exit $?
+    displayName: "Ingest Data into Port"
 ```
 
   </TabItem>
@@ -348,6 +355,7 @@ resources:
           blueprint: '"jiraProject"'
           properties:
             url: (.self | split("/") | .[:3] | join("/")) + "/projects/" + .key
+            totalIssues: .insight.totalIssueCount
 ```
 
 The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Jira's API events.
@@ -368,8 +376,9 @@ The following resources can be used to map data from Jira, it is possible to ref
 
 - [`Project`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-projects/#api-rest-api-3-project-search-get)
 - [`Issue`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/#api-rest-api-3-search-get)
-
-:::
+- [`Board`](https://developer.atlassian.com/cloud/jira/software/rest/api-group-board/#api-rest-agile-1-0-board-get)
+- [`Sprint`](https://developer.atlassian.com/cloud/jira/software/rest/api-group-board/#api-rest-agile-1-0-board-boardid-sprint-get)
+  :::
 
 - The root key of the integration configuration is the `resources` key:
 
@@ -410,14 +419,15 @@ To use JQL filtering, add to the `selector` object a `jql` key with your desired
 
 ```yaml showLineNumbers
 resources:
+  # highlight-next-line
+  - kind: issue # JQL filtering can only be used with the "issue" kind
+    selector:
+      query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
       # highlight-next-line
-    - kind: issue # JQL filtering can only be used with the "issue" kind
-      selector:
-        query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
-      # highlight-next-line
-        jql: "status != Done" # JQL query, will only ingest issues whose status is not "Done"
-      port:
+      jql: "status != Done" # JQL query, will only ingest issues whose status is not "Done"
+    port:
 ```
+
 :::
 
 - The `port`, `entity` and the `mappings` keys are used to map the Jira object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
@@ -436,6 +446,7 @@ resources:
             blueprint: '"jiraProject"'
             properties:
               url: (.self | split("/") | .[:3] | join("/")) + "/projects/" + .key
+              totalIssues: .insight.totalIssueCount
         # highlight-end
     - kind: project # In this instance project is mapped again with a different filter
       selector:
@@ -463,6 +474,219 @@ To ingest Jira objects using the [integration configuration](#configuration-stru
 ## Examples
 
 Examples of blueprints and the relevant integration configurations:
+
+### Project
+
+<details>
+<summary>Project blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "jiraProject",
+  "title": "Jira Project",
+  "icon": "Jira",
+  "description": "A Jira project",
+  "schema": {
+    "properties": {
+      "url": {
+        "title": "Project URL",
+        "type": "string",
+        "format": "url",
+        "description": "URL to the project in Jira"
+      },
+      "totalIssues": {
+        "title": "Total Issues",
+        "type": "number",
+        "description": "The total number of issues in the project"
+      }
+    }
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {}
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: project
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .key
+          title: .name
+          blueprint: '"jiraProject"'
+          properties:
+            url: (.self | split("/") | .[:3] | join("/")) + "/projects/" + .key
+            totalIssues: .insight.totalIssueCount
+```
+
+</details>
+
+### Board
+
+<details>
+<summary>Board blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "jiraBoard",
+  "title": "Jira Board",
+  "description": "This blueprint represents a Jira board",
+  "icon": "Jira",
+  "schema": {
+    "properties": {
+      "url": {
+        "title": "Board URL",
+        "type": "string",
+        "format": "url",
+        "description": "URL to the board in Jira"
+      },
+      "type": {
+        "title": "Type",
+        "type": "string",
+        "description": "The type of the board"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "project": {
+      "target": "jiraProject",
+      "title": "Project",
+      "description": "The Jira project that contains this board",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: board
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .id | tostring
+          title: .name
+          blueprint: '"jiraBoard"'
+          properties:
+            url: .self
+            type: .type
+          relations:
+            project: .location.projectId | tostring
+```
+
+</details>
+
+### Sprint
+
+<details>
+<summary>Sprint blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "jiraSprint",
+  "title": "Jira Sprint",
+  "description": "This blueprint represents a Jira sprint",
+  "icon": "Jira",
+  "schema": {
+    "properties": {
+      "url": {
+        "title": "Sprint URL",
+        "type": "string",
+        "format": "url",
+        "description": "URL to the sprint in Jira"
+      },
+      "state": {
+        "title": "State",
+        "type": "string",
+        "description": "The state of the sprint",
+        "enum": ["active", "closed", "future"],
+        "enumColors": {
+          "active": "green",
+          "closed": "red",
+          "future": "blue"
+        }
+      },
+      "startDate": {
+        "title": "Start Date",
+        "type": "string",
+        "description": "The start date of the sprint",
+        "format": "date-time"
+      },
+      "endDate": {
+        "title": "End Date",
+        "type": "string",
+        "description": "The end date of the sprint",
+        "format": "date-time"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "board": {
+      "target": "jiraBoard",
+      "title": "Board",
+      "description": "The Jira board associated with this sprint",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: sprint
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .id | tostring
+          title: .name
+          blueprint: '"jiraSprint"'
+          properties:
+            url: .self
+            state: .state
+            startDate: .startDate
+            endDate: .endDate
+          relations:
+            board: .originBoardId | tostring
+```
+
+</details>
 
 ### Issue
 
@@ -534,10 +758,15 @@ Examples of blueprints and the relevant integration configurations:
       }
     }
   },
-  "mirrorProperties": {},
   "calculationProperties": {},
-  "aggregationProperties": {},
   "relations": {
+    "sprint": {
+      "target": "jiraSprint",
+      "title": "Sprint",
+      "description": "The Jira sprint that contains this issue",
+      "required": false,
+      "many": false
+    },
     "project": {
       "target": "jiraProject",
       "title": "Project",
@@ -573,6 +802,7 @@ resources:
   - kind: issue
     selector:
       query: "true"
+      jql: "status != Done"
     port:
       entity:
         mappings:
@@ -591,61 +821,10 @@ resources:
             created: .fields.created
             updated: .fields.updated
           relations:
+            sprint: .sprint.id | tostring
             project: .fields.project.key
             parentIssue: .fields.parent.key
             subtasks: .fields.subtasks | map(.key)
-```
-
-</details>
-
-### Project
-
-<details>
-<summary>Project blueprint</summary>
-
-```json showLineNumbers
-{
-  "identifier": "jiraProject",
-  "title": "Jira Project",
-  "icon": "Jira",
-  "description": "A Jira project",
-  "schema": {
-    "properties": {
-      "url": {
-        "title": "Project URL",
-        "type": "string",
-        "format": "url",
-        "description": "URL to the project in Jira"
-      }
-    }
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "aggregationProperties": {},
-  "relations": {}
-}
-```
-
-</details>
-
-<details>
-<summary>Integration configuration</summary>
-
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: project
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: .key
-          title: .name
-          blueprint: '"jiraProject"'
-          properties:
-            url: (.self | split("/") | .[:3] | join("/")) + "/projects/" + .key
 ```
 
 </details>
@@ -685,6 +864,49 @@ Here is an example of the payload structure from Jira:
 ```
 
 </details>
+
+<details>
+<summary>Board response data</summary>
+
+```json showLineNumbers
+{
+  "id": 1,
+  "self": "https://getport.atlassian.net/rest/agile/1.0/board/1",
+  "name": "PORT board",
+  "type": "scrum",
+  "location": {
+    "projectId": 10000,
+    "displayName": "Port (PORT)",
+    "projectName": "Port",
+    "projectKey": "PORT",
+    "projectTypeKey": "software",
+    "avatarURI": "https://getport.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10555?size=small",
+    "name": "Port (PORT)"
+  }
+}
+```
+
+</details>
+
+<details>
+<summary>Sprint response data</summary>
+
+```json showLineNumbers
+{
+  "id": 37,
+  "self": "https://your-domain.atlassian.net/rest/agile/1.0/sprint/23",
+  "state": "closed",
+  "name": "sprint 1",
+  "startDate": "2015-04-11T15:22:00.000+10:00",
+  "endDate": "2015-04-20T01:22:00.000+10:00",
+  "completeDate": "2015-04-20T11:04:00.000+10:00",
+  "originBoardId": 5,
+  "goal": "sprint 1 goal"
+}
+```
+
+</details>
+
 
 <details>
 <summary> Issue response data</summary>
@@ -885,9 +1107,64 @@ The combination of the sample payload and the Ocean configuration generates the 
   "blueprint": "jiraProject",
   "team": [],
   "properties": {
-    "url": "https://myaccount.atlassian.net/projects/PA"
+    "url": "https://myaccount.atlassian.net/projects/PA",
+    "totalIssues": 100
   },
   "relations": {},
+  "createdAt": "2023-11-06T11:22:05.433Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2023-11-06T11:22:05.433Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+<details>
+<summary>Board entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "84",
+  "title": "scrum board",
+  "icon": "Jira",
+  "blueprint": "jiraBoard",
+  "team": [],
+  "properties": {
+    "url": "https://your-domain.atlassian.net/rest/agile/1.0/board/84",
+    "type": "scrum"
+  },
+  "relations": {
+    "project": "10000"
+  },
+  "createdAt": "2023-11-06T11:22:05.433Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2023-11-06T11:22:05.433Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+<details>
+<summary>Sprint entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "37",
+  "title": "sprint 1",
+  "icon": "Jira",
+  "blueprint": "jiraSprint",
+  "team": [],
+  "properties": {
+    "url": "https://your-domain.atlassian.net/rest/agile/1.0/sprint/23",
+    "state": "closed",
+    "startDate": "2015-04-11T15:22:00.000+10:00",
+    "endDate": "2015-04-20T01:22:00.000+10:00"
+  },
+  "relations": {
+    "board": "84"
+  },
   "createdAt": "2023-11-06T11:22:05.433Z",
   "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
   "updatedAt": "2023-11-06T11:22:05.433Z",
@@ -920,6 +1197,8 @@ The combination of the sample payload and the Ocean configuration generates the 
     "updated": "2023-11-06T11:03:18.244+0000"
   },
   "relations": {
+    "board": "84",
+    "sprint": "37",
     "parentIssue": null,
     "project": "PA",
     "subtasks": []
@@ -988,7 +1267,7 @@ Create the following webhook configuration [using Port's UI](/build-your-softwar
    6. Under `Issue` - mark created, updated and delete;
 7. Click **Create** at the bottom of the page.
 
-:::tip
+:::tip Jira events and payload
 In order to view the different payloads and events available in Jira webhooks, [look here](https://developer.atlassian.com/server/jira/platform/webhooks/)
 :::
 
@@ -1198,10 +1477,10 @@ In addition, it requires a Jira API token that is provided as a parameter to the
 
 <h4> Create the Jira API token </h4>
 
-1. Log in to your [Jira account](https://id.atlassian.com/manage-profile/security/api-tokens);
-2. Click Create API token;
-3. From the dialog that appears, enter a memorable and concise Label for your token and click **Create**;
-4. Click **Copy** to copy the token to your clipboard, you will not have another opportunity to view the token value after you leave this page;
+1. Log in to your [Jira account](https://id.atlassian.com/manage-profile/security/api-tokens).
+2. Click Create API token.
+3. From the dialog that appears, enter a memorable and concise Label for your token and click **Create**.
+4. Click **Copy** to copy the token to your clipboard, you will not have another opportunity to view the token value after you leave this page.
 
 Use the following Python script to ingest historical Jira issues into port:
 
@@ -1210,7 +1489,7 @@ Use the following Python script to ingest historical Jira issues into port:
 
 <JiraIssueConfigurationPython/>
 
-:::note
+:::note Environment variables requirement
 
 The script requires the following environment variables:
 
@@ -1226,3 +1505,118 @@ The script requires the following environment variables:
 Done! you can now import historical issues from Jira into Port. Port will parse the issues according to the mapping and update the catalog entities accordingly.
 
 </details>
+
+## Connect Jira issue to a service
+
+This guide aims to cover how to connect a Jira `issue` to an existing service in Port.
+
+:::tip Prerequisites
+
+- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
+- Ensure you have [Jira installed and configured](#installation) in your environment.
+
+:::
+
+<br/>
+
+### Add labels to issues in Jira
+
+Labelling issues in Jira allows you to categorize and filter them. You can use labels to group issues that are related to a specific service in Port. In this guide, we will add a label to tell us what service the issue is related to:
+
+1. **Log in to Jira** as a user with the `Administer Jira` global permission.
+2. **Navigate to the issue** you want to label.
+3. **Click on the issue** to open it.
+4. **Click on the `Labels` field** on the right hand side to add a label.
+5. **Add a label** that represents the service the issue is related to, `port-auth-service`. For this guide, let's assume there is a service entity identified by `auth-service` in your `Service` blueprint in Port.
+
+<img src='/img/guides/jiraAddLabelToIssue.png' width='60%' border='1px' />
+
+:::note Control the label name
+Since our Jira `issue` may already have several labels, we will need a mechanism to control how these labels will be related to our `Service` blueprint. A way to achieve this relation is to prefix the label name with the keyword `port-`. We will then use JQ to select the labels that starts with this keyword. So, our example label will be named `port-auth-service`, which will correspond to a Service entity identified by `auth-service` in Port.
+:::
+
+### Create the service relation
+
+Now that Port is synced with our Jira resources, let's reflect the Jira Issue in our services to display the issue associated with a service.
+First, we will need to create a [relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/) between our services and the corresponding Jira Issue.
+
+1. Head back to the [Builder](https://app.getport.io/dev-portal/data-model), choose the `Jira Issue` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New relation`:
+
+<img src='/img/guides/jiraAddRelationToIssue.png' width='60%' border='1px' />
+
+<br/><br/>
+
+2. Fill out the form like this, then click `Create`:
+
+<img src='/img/guides/jiraCreateRelationOnIssue.png' width='60%' border='1px' />
+
+<br/><br/>
+
+Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, we need to assign the relevant Jira Issues to each of our services. This can be done by adding some mapping logic. Go to your [data sources page](https://app.getport.io/dev-portal/data-sources), and click on your Jira integration:
+
+<img src='/img/guides/jiraIntegrationDataSources.png' border='1px' />
+<br/><br/>
+
+Under the `resources` key, modify the mapping for the `issue` kind by using the following YAML block. Then click `Save & Resync`:
+
+<details>
+<summary><b>Relation mapping (Click to expand)</b></summary>
+
+```yaml
+- kind: issue
+    selector:
+      query: 'true'
+      jql: status != Done
+    port:
+      entity:
+        mappings:
+          identifier: .key
+          title: .fields.summary
+          blueprint: '"jiraIssue"'
+          properties:
+            url: (.self | split("/") | .[:3] | join("/")) + "/browse/" + .key
+            status: .fields.status.name
+            issueType: .fields.issuetype.name
+            components: .fields.components
+            assignee: .fields.assignee.displayName
+            reporter: .fields.reporter.displayName
+            creator: .fields.creator.displayName
+            priority: .fields.priority.id
+            created: .fields.created
+            updated: .fields.updated
+          relations:
+            board: .boardId | tostring
+            sprint: .sprint.id | tostring
+            project: .fields.project.key
+            parentIssue: .fields.parent.key
+            subtasks: .fields.subtasks | map(.key)
+            // highlight-start
+            service: .fields.labels | map(select(startswith("port"))) | map(sub("port-"; ""; "g")) | .[0]
+            // highlight-end
+```
+
+</details>
+
+:::tip JQ explanation
+
+The JQ below selects all labels that start with the keyword `port`. It then removes "port-" from each label, leaving only the part that comes after it. It then selects the first match, which is equivalent to the service in Port.
+
+```yaml
+service: .fields.labels | map(select(startswith("port"))) | map(sub("port-"; ""; "g")) | .[0]
+```
+
+:::
+
+What we just did was map the `Jira Issue` to the relation between it and our `Services`.  
+Now, if our `Service` identifier is equal to the Jira issue label, the `service` will automatically be linked to it &nbsp;🎉
+
+<img src='/img/guides/jiraIssueAfterServiceMapping.png' width='60%' border='1px' />
+
+### Conclusion
+
+By following these steps, you can seamlessly connect a Jira issue with an existing service blueprint in Port using issue labels.
+
+More relevant guides and examples:
+
+- [Port's Jira integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/jira/)
+- [Integrate scorecards with Slack](https://docs.getport.io/promote-scorecards/manage-using-3rd-party-apps/slack)
