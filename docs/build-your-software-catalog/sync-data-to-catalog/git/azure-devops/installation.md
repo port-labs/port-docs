@@ -42,7 +42,7 @@ If it is not provided, the integration will continue to function correctly. In s
 :::
 
 In order for the Azure Devops integration to update the data in Port on every change in the Azure Devops repository, you need to specify the `appHost` parameter.
-The `appHost` parameter should be set to the `url` of your Azure Devops integration instance. In addition, your Azure Devops instance (whether it is Azure Devops SaaS or a self-hosted version of GitLab) needs to have the option to send webhook requests to the Azure Devops integration instance, so please configure your network accordingly.
+The `appHost` parameter should be set to the `url` of your Azure Devops integration instance. In addition, your Azure Devops instance (whether it is Azure Devops SaaS or a self-hosted version of Azure Devops) needs to have the option to send webhook requests to the Azure Devops integration instance, so please configure your network accordingly.
 
 ## Deploy the integration
 
