@@ -5,75 +5,33 @@ sidebar_position: 1
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import HelmParameters from "../../templates/\_ocean-advanced-parameters-helm.mdx"
-import DockerParameters from "./\_gitlab_one_time_docker_parameters.mdx"
+import DockerParameters from "./\_azuredevops_one_time_docker_parameters.mdx"
 import AdvancedConfig from '../../../../generalTemplates/_ocean_advanced_configuration_note.md'
 
 # Installation
 
 This page details how to install Port's Azure DevOps integration (powered by the Ocean framework). It outlines the following steps:
 
-- How to [create](#creating-a-gitlab-group-access-token) a GitLab group access token to give the integration permissions to query your GitLab account.
-- How to [configure](#configuring-the-gitlab-integration) and customize the integration before deploying it.
-- How to [deploy](#deploying-the-gitlab-integration) the integration in the configuration that fits your use case.
+- How to [create](#create-a-personal-access-token) a personal access token to give the integration permissions to query your Azure DevOps account.
+- How to [configure](#configure-the-integration) and customize the integration before deploying it.
+- How to [deploy](#deploy-the-integration) the integration in the configuration that fits your use case.
 
 :::note Prerequisites
 
 - An Azure DevOps account with admin privileges.
-- A gitlab group account with the `api` scope.
 - If you choose the real time & always on installation method, you will need a kubernetes cluster on which to install the integration.
 - Your Port user role is set to `Admin`.
 
 :::
 
-## Creating a GitLab group access token
+## Create a personal access token
 
-A group access token can be used for the group it was generated at, as well as for all sub-groups underneath it.
+The integration requires a personal access token to authenticate with your Azure DevOps account.  
+You can create one by following [these steps](https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=Windows#create-a-pat).  
 
-The GitLab integration is able to query multiple GitLab root groups. To do so, it will require multiple group access tokens, each at the correct root group.
+The token should either have `admin` permissions, or `read` permissions for each of the supported resources you want to ingest into Port.
 
-<details>
-<summary>GitLab group access tokens example</summary>
-
-For example, let's assume the following GitLab account structure:
-
-```
-GitLab account
-.
-├── microservices-group
-│   ├──microservice1-group
-│   └──microservice2-group
-├── apis-group
-│   ├── rest-api-group
-│   └── graphql-api-group
-```
-
-In this example:
-
-- To map **only** the `microservices-group`, we require one group access token - one for the `microservices-group`.
-- To map the `microservices-group` **and** all of its subgroups, we require only one group access token - one for the `microservices-group`.
-- To map the `microservices-group`, **the** `apis-group` **and** all of their subgroups, we require only two group access tokens - one for the `microservices-group` and one for the `apis-group`.
-- To map the `microservice1-group`, we have 2 options:
-  - Create a group access token for the `microservices-group` and use the [token mapping](#tokenmapping) to select just the `microservice1-group`.
-  - Create a group access token for the `microservice1-group` directly.
-
-</details>
-
-See the [token mapping](#tokenmapping) section for more information.
-
-The following steps will guide you how to create a GitLab group access token.
-
-1. Sign in to GitLab and go to your desired group's settings page:
-
-   ![GitLab group settings](/img/integrations/gitlab/GitLabGroupSettings.png)
-
-2. In the "Access Tokens" section, you need to provide the token details, including the name and an optional expiration date. Additionally, select the api scope, and then proceed to click on the "Create access token" button.
-
-   ![GitLab group access tokens](/img/integrations/gitlab/GitLabGroupAccessTokens.png)
-
-3. Click "Create group access token".
-4. Copy the generated token and use it when deploying the integration in the following steps.
-
-## Configuring the GitLab integration
+## Configure the integration
 
 ### tokenMapping
 
@@ -167,7 +125,7 @@ In both options you'll need to provide the `useSystemHook` parameter with the va
 
 ![GitLab System Hook](/img/integrations/gitlab/GitLabSystemHook.png)
 
-## Deploying the GitLab integration
+## Deploy the integration
 
 Choose one of the following installation methods:
 
@@ -198,58 +156,42 @@ To install the integration using Helm, run the following command:
 
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install my-gitlab-integration port-labs/port-ocean \
+helm upgrade --install my-azure-devops-integration port-labs/port-ocean \
 	--set port.clientId="PORT_CLIENT_ID"  \
 	--set port.clientSecret="PORT_CLIENT_SECRET"  \
 	--set port.baseUrl="https://api.getport.io"  \
 	--set initializePortResources=true  \
 	--set scheduledResyncInterval=120 \
-	--set integration.identifier="my-gitlab-integration"  \
-	--set integration.type="gitlab"  \
+	--set integration.identifier="my-azure-devops-integration"  \
+	--set integration.type="azure"  \
 	--set integration.eventListener.type="POLLING"  \
 	--set integration.secrets.tokenMapping="\{\"TOKEN\": [\"GROUP_NAME/**\"]\}"
 ```
-
-It is also possible to get Port's UI to generate your installation command for you, Port will inject values such as your Port client ID and client secret directly into the command, making it easier to get started.
-
-Follow these steps to setup the integration through Port's UI:
-
-1. Click the ingest button in Port Builder Page for the blueprint you want to ingest using GitLab:
-
-   ![DevPortal Builder ingest button](/img/integrations/gitlab/DevPortalBuilderIngestButton.png)
-
-2. Select GitLab under the Git providers category:
-
-   ![DevPortal Builder GitLab option](/img/integrations/gitlab/DevPortalBuilderGitLabOption.png)
-
-3. Copy the helm installation command and set the [required configuration](#configuring-the-gitlab-integration);
-
-4. Run the helm command with the updated parameters to install the integration in your Kubernetes cluster.
 
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
 To install the integration using ArgoCD, follow these steps:
 
-1. Create a `values.yaml` file in `argocd/my-ocean-gitlab-integration` in your git repository with the content:
+1. Create a `values.yaml` file in `argocd/my-ocean-azure-devops-integration` in your git repository with the content:
 
 :::note
-Remember to replace the placeholders for `GITLAB_TOKEN_MAPPING`.
+Remember to replace the placeholders for `AZURE_TOKEN_MAPPING`.
 :::
 ```yaml showLineNumbers
 initializePortResources: true
 scheduledResyncInterval: 120
 integration:
-  identifier: my-ocean-gitlab-integration
-  type: gitlab
+  identifier: my-ocean-azure-devops-integration
+  type: azure
   eventListener:
     type: POLLING
   secrets:
   // highlight-next-line
-    tokenMapping: GITLAB_TOKEN_MAPPING
+    tokenMapping: AZURE_TOKEN_MAPPING
 ```
 <br/>
 
-2. Install the `my-ocean-gitlab-integration` ArgoCD Application by creating the following `my-ocean-gitlab-integration.yaml` manifest:
+2. Install the `my-ocean-azure-devops-integration` ArgoCD Application by creating the following `my-ocean-azure-devops-integration.yaml` manifest:
 :::note
 Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
 
@@ -263,11 +205,11 @@ Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readth
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: my-ocean-gitlab-integration
+  name: my-ocean-azure-devops-integration
   namespace: argocd
 spec:
   destination:
-    namespace: my-ocean-gitlab-integration
+    namespace: my-ocean-azure-devops-integration
     server: https://kubernetes.default.svc
   project: default
   sources:
@@ -276,7 +218,7 @@ spec:
     targetRevision: 0.1.14
     helm:
       valueFiles:
-      - $values/argocd/my-ocean-gitlab-integration/values.yaml
+      - $values/argocd/my-ocean-azure-devops-integration/values.yaml
       // highlight-start
       parameters:
         - name: port.clientId
@@ -300,7 +242,7 @@ spec:
 
 3. Apply your application manifest with `kubectl`:
 ```bash
-kubectl apply -f my-ocean-gitlab-integration.yaml
+kubectl apply -f my-ocean-azure-devops-integration.yaml
 ```
 </TabItem>
 </Tabs>
@@ -376,7 +318,7 @@ Also make sure to keep the double-quotes (`"`) when passing the `OCEAN__INTEGRAT
 </TabItem>
 <TabItem value="jenkins" label="Jenkins">
   
-This pipeline will run the GitLab integration once and then exit, this is useful for **scheduled** ingestion of data.
+This pipeline will run the Azure DevOps integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::tip
 Your Jenkins agent should be able to run docker commands.
@@ -398,7 +340,7 @@ pipeline {
     agent any
 
     stages {
-        stage('Run GitLab Integration') {
+        stage('Run Azure DevOps Integration') {
             steps {
                 script {
                     withCredentials([
@@ -408,7 +350,7 @@ pipeline {
                     ]) {
                         sh('''
                             #Set Docker image and run the container
-                            integration_type="gitlab"
+                            integration_type="azure"
                             version="latest"
                             image_name="ghcr.io/port-labs/port-ocean-${integration_type}:${version}"
                             docker run -i --rm --platform=linux/amd64 \
