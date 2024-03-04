@@ -1290,7 +1290,7 @@ Since our `SonarQube project` may already have several tags, we will need a mech
 ### Create the service relation
 
 Now that Port is synced with our SonarQube resources, let's reflect the SonarQube project in our services to display the projects used in a service.
-First, we will need to create a [relation](/build-your-software-catalog/define-your-data-model/relate-blueprints/#what-is-a-relation) between our services and the corresponding Sonarqube project.
+First, we will need to create a [relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/) between our services and the corresponding Sonarqube project.
 
 1. Head back to the [Builder](https://app.getport.io/dev-portal/data-model), choose the `SonarQube Project` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New relation`:
 
