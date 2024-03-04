@@ -30,40 +30,6 @@ To create a dashboard, click on `New` and select `New dashboard`:
 
 ![newDashboard](/img/software-catalog/pages/newDashboard.png)
 
-### Description
-
-You can provide additional context to your developers by using the `Description` field when creating a dashboard page.  
-This field supports adding links in markdown format: `[link text](https://www.address.com)`.
-
-<img src='/img/software-catalog/pages/dashboardPageDescriptionForm.png' width='40%' border='1px' />
-
-<br/><br/>
-
-The description will be displayed at the top of the page, under the page title:
-
-<img src='/img/software-catalog/pages/dashboardPageDescription.png' width='80%' border='1px' />
-
-## Adding new widgets
-
-A dashboard can include any of the [supported widgets](/customize-pages-dashboards-and-plugins/dashboards/#visualization-types).
-
-To add a new widget, click `Add` and choose your desired visualization type:
-
-![dashboardPageAddVisualization](../../../static/img/software-catalog/pages/dashboardPageAddVisualization.png)
-
-## Reordering and resizing widgets
-
-Widgets can be expanded and/or moved within a dashboard page.
-
-To move a widget, drag it from the top-left corner to your desired position:
-
-<img src='/img/software-catalog/pages/widgetReorderExample.png' width='70%' />
-
-<br/><br/>
-
-To resize a widget, hover over one of its sides until the blue bar appears, then drag it to expand/shrink:
-
-<img src='/img/software-catalog/pages/widgetResizeExample.png' width='70%' />
 
 </TabItem>
 
@@ -361,7 +327,7 @@ def create_entities_number_chart_widget(
 </details>
 <br />
 
-5. Let us now create out dataset dependent widgets
+5. Let us now create dataset dependent widgets.
 
 <details>
 
@@ -694,3 +660,39 @@ export const microserviceDashboardPage = new port.Page(
 </TabItem>
 
 </Tabs>
+
+
+### Description
+
+You can provide additional context to your developers by using the `Description` field when creating a dashboard page.  
+This field supports adding links in markdown format: `[link text](https://www.address.com)`.
+
+<img src='/img/software-catalog/pages/dashboardPageDescriptionForm.png' width='40%' border='1px' />
+
+<br/><br/>
+
+The description will be displayed at the top of the page, under the page title:
+
+<img src='/img/software-catalog/pages/dashboardPageDescription.png' width='80%' border='1px' />
+
+## Adding new widgets
+
+A dashboard can include any of the [supported widgets](/customize-pages-dashboards-and-plugins/dashboards/#visualization-types).
+
+To add a new widget, click `Add` and choose your desired visualization type:
+
+![dashboardPageAddVisualization](../../../static/img/software-catalog/pages/dashboardPageAddVisualization.png)
+
+## Reordering and resizing widgets
+
+Widgets can be expanded and/or moved within a dashboard page.
+
+To move a widget, drag it from the top-left corner to your desired position:
+
+<img src='/img/software-catalog/pages/widgetReorderExample.png' width='70%' />
+
+<br/><br/>
+
+To resize a widget, hover over one of its sides until the blue bar appears, then drag it to expand/shrink:
+
+<img src='/img/software-catalog/pages/widgetResizeExample.png' width='70%' />
