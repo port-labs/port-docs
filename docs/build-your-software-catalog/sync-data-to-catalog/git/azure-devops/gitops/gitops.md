@@ -11,13 +11,13 @@ import GitOpsPushEvent from '../../\_git_gitops_push_events_explanation.mdx'
 
 # GitOps
 
-Port's GitLab integration makes it possible to manage Port entities with a GitOps approach, making your code projects into the source of truth for the various infrastructure assets you want to manage.
+Port's Azure DevOps integration makes it possible to manage Port entities with a GitOps approach, making your code projects into the source of truth for the various infrastructure assets you want to manage.
 
-## 💡 GitLab GitOps common use cases
+## Common use cases
 
-- Use GitLab as the source-of-truth for your **microservices**, **projects**, **packages**, **libraries** and other software catalog assets;
-- Allow developers to keep the catalog up-to-date, by making updates to files in their Git projects;
-- Create a standardized way to document software catalog assets in your organization;
+- Use Azure DevOps as the source-of-truth for your **microservices**, **projects**, **packages**, **libraries** and other software catalog assets.
+- Allow developers to keep the catalog up-to-date, by making updates to files in their Git projects.
+- Create a standardized way to document software catalog assets in your organization.
 
 ## Managing entities using GitOps
 
@@ -25,7 +25,7 @@ To manage entities using GitOps, you will need to add a `port.yml` file to the *
 
 The `port.yml` file can specify one or more Port entities that will be ingested to Port, and any change made to the `port.yml` file will also be reflected inside Port.
 
-This configuration turns your GitLab projects to the source-of-truth for the software catalog.
+This configuration turns your projects to the source-of-truth for the software catalog.
 
 ### GitOps `port.yml` file
 

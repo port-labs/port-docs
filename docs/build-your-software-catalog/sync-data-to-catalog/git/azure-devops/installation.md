@@ -10,9 +10,7 @@ import AdvancedConfig from '../../../../generalTemplates/_ocean_advanced_configu
 
 # Installation
 
-This page will help you install Port's GitLab integration (powered by the Ocean framework).
-
-This page outlines the following steps:
+This page details how to install Port's Azure DevOps integration (powered by the Ocean framework). It outlines the following steps:
 
 - How to [create](#creating-a-gitlab-group-access-token) a GitLab group access token to give the integration permissions to query your GitLab account.
 - How to [configure](#configuring-the-gitlab-integration) and customize the integration before deploying it.
@@ -20,9 +18,9 @@ This page outlines the following steps:
 
 :::note Prerequisites
 
-- A gitlab account with admin privileges.
+- An Azure DevOps account with admin privileges.
 - A gitlab group account with the `api` scope.
-- If you choose the real time & always on installation method - a kubernetes cluster to install the integration on.
+- If you choose the real time & always on installation method, you will need a kubernetes cluster on which to install the integration.
 - Your Port user role is set to `Admin`.
 
 :::
