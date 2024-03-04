@@ -429,7 +429,7 @@ By sending a `PATCH` request to the `https://api.getport.io/v1/actions/runs/{run
 3. Add links to external logs of the job runners, by using the `link` key - AWS Cloudwatch logs, Github Workflow job, Jenkins job, etc.
 
 :::tip Multiple and partial updates
-You can make a `PATCH` request to the endpoint as many times as you need until the action run has finished (as long as you don't terminate the run by sending changing the `status`).  
+You can make a `PATCH` request to the endpoint as many times as you need until the action run has finished (as long as you don't terminate the run by changing the `status`).  
 
 Note that every patch request will override the previous information that was available for a given key. For example, when updating the `link` key multiple times, only the last provided value will be displayed in the action run.
 :::
