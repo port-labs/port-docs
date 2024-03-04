@@ -2,7 +2,7 @@
 sidebar_position: 5
 ---
 
-import RepositoryBlueprint from './\_gitlab_exporter_example_repository_blueprint.mdx'
+import RepositoryBlueprint from './\_azuredevops_exporter_example_repository_blueprint.mdx'
 
 # Mapping Extensions
 

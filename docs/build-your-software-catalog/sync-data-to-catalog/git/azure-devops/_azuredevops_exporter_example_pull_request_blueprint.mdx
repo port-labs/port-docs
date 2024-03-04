@@ -3,9 +3,9 @@
 
 ```json showLineNumbers
 {
-  "identifier": "gitlabMergeRequest",
-  "title": "Merge Request",
-  "icon": "GitVersion",
+  "identifier": "azureDevopsPullRequest",
+  "title": "Pull Request",
+  "icon": "AzureDevops",
   "schema": {
     "properties": {
       "creator": {
@@ -15,21 +15,27 @@
       "status": {
         "title": "Status",
         "type": "string",
-        "enum": ["opened", "closed", "merged", "locked"],
+        "enum": [
+          "completed",
+          "abandoned",
+          "active"
+        ],
         "enumColors": {
-          "opened": "yellow",
-          "closed": "red",
-          "merged": "green",
-          "locked": "blue"
+          "completed": "yellow",
+          "abandoned": "red",
+          "active": "green"
+        }
+      },
+      "reviewers": {
+        "type": "array",
+        "title": "Reviewers",
+        "items": {
+          "type": "string",
+          "format": "user"
         }
       },
       "createdAt": {
         "title": "Create At",
-        "type": "string",
-        "format": "date-time"
-      },
-      "updatedAt": {
-        "title": "Updated At",
         "type": "string",
         "format": "date-time"
       },
@@ -38,17 +44,20 @@
         "format": "url",
         "type": "string"
       }
-    }
-  },
-  "relations": {
-    "repository": {
-      "target": "gitlabRepository",
-      "required": false,
-      "many": false
-    }
+    },
+    "required": []
   },
   "mirrorProperties": {},
   "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "repository": {
+      "title": "repository",
+      "target": "azureDevopsRepository",
+      "required": false,
+      "many": false
+    }
+  }
 }
 ```
 
