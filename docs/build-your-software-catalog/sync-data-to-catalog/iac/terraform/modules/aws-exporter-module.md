@@ -20,7 +20,7 @@ Before using this module, make sure you have completed the following prerequisit
 
    Refer to the [AWS CLI Documentation](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html) for instructions.
 
-2. Export your [Port credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials):
+2. Export your [Port credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials):
 
    ```bash
    export PORT_CLIENT_ID="YOUR_PORT_CLIENT_ID"

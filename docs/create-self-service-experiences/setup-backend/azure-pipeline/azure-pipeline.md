@@ -7,7 +7,7 @@ Port can trigger [Azure pipelines](https://azure.microsoft.com/en-us/products/de
 The steps shown in the image above are as follows:
 
 1. An action is invoked in Port;
-2. Port signs the action payload using SHA-1 with the [`clientSecret`](../../../build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials) value and puts it in the `X-Port-Signature` request header.
+2. Port signs the action payload using SHA-1 with the [`clientSecret`](../../../build-your-software-catalog/custom-integration/api/api.md#find-your-port-credentials) value and puts it in the `X-Port-Signature` request header.
 
    :::info
    Verifying the webhook request using the request headers provides the following benefits:

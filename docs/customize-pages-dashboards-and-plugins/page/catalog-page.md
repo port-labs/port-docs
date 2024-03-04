@@ -7,7 +7,7 @@ import TabItem from "@theme/TabItem"
 
 # Catalog page
 
-A catalog page displays a table of all existing [entities](/build-your-software-catalog/sync-data-to-catalog/#creating-entities) created from a [blueprint](/build-your-software-catalog/define-your-data-model/setup-blueprint/#what-is-a-blueprint).  
+A catalog page displays a table of all existing [entities](/build-your-software-catalog/sync-data-to-catalog/#creating-entities) created from a [blueprint](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/#what-is-a-blueprint).  
 In this example we can see all of the cluster entities we created from the `K8s Cluster` blueprint:
 
 ![Microservice blueprint page](/img/software-catalog/pages/catalogPage.png)
@@ -232,7 +232,7 @@ By using the `My Teams` filter you will only see entities that belong to one of 
 This filter works on:
 
 - `string` properties with the format `team`.
-- The [meta property](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/meta-properties) `Team`.
+- The [meta property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/meta-properties) `Team`.
 
 ![My Teams Filter](/img/software-catalog/pages/MyTeamsFilter.png)
 
@@ -240,7 +240,7 @@ This filter works on:
 
 By using the `Me` filter you will only see entities that belong to the logged-in user.
 
-This filter works on [`User`](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/user) properties.
+This filter works on [`User`](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/user) properties.
 
 ![Me Filter](../../../static/img/software-catalog/pages/meFilter.png)
 

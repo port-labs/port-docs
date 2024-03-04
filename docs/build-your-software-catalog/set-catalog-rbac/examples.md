@@ -159,13 +159,13 @@ Team inheritance allows you to utilize relations to automatically assign and man
 
 By using team inheritance, you can configure entities to automatically inherit their `team` from entities they are related to.
 
-Team inheritance can be configured by adding the `teamInheritance` key to the [blueprint structure](../define-your-data-model/relate-blueprints/relate-blueprints.md#structure-table). The `teamInheritance` object has a `path` key that represents the relation path to the blueprint whose entity's teams we want to inherit.
+Team inheritance can be configured by adding the `teamInheritance` key to the [blueprint structure](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/relate-blueprints.md#structure-table). The `teamInheritance` object has a `path` key that represents the relation path to the blueprint whose entity's teams we want to inherit.
 
 :::info Path
 
-- The `path` key works similarly to the `path` key in [mirror properties](../define-your-data-model/setup-blueprint/properties/mirror-property/mirror-property.md#api-definition);
+- The `path` key works similarly to the `path` key in [mirror properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/mirror-property.md#api-definition);
 - The `path` does not need to end with the `$team` meta-property since it is inferred;
-- Team inheritance can only be configured using a path of [`single`](../define-your-data-model/relate-blueprints/relate-blueprints.md#single-relation-structure) type relations.
+- Team inheritance can only be configured using a path of [`single`](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/relate-blueprints.md#single-relation-structure) type relations.
 
 :::
 
