@@ -440,7 +440,7 @@ By sending a `POST` request to the `https://api.getport.io/v1/actions/runs/{run_
 
 1. Add log entries to the run's log, by using the `message` key.
 2. Update the run's status via the `terminationStatus` key with one of these values: `SUCCESS`, `FAILURE`.
-3. Update the run's description, by using the `statusLabel` key.
+3. Update the run's status label, by using the `statusLabel` key.
 
 For example, let's update our action run log with the following `POST` request body:
 
