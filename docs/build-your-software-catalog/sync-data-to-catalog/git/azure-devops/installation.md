@@ -41,59 +41,8 @@ The `appHost` parameter is used specifically to enable the real-time functionali
 If it is not provided, the integration will continue to function correctly. In such a configuration, to retrieve the latest information from the target system, the [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) parameter has to be set, or a manual resync will need to be triggered through Port's UI.
 :::
 
-In order for the GitLab integration to update the data in Port on every change in the GitLab repository, you need to specify the `appHost` parameter.
-The `appHost` parameter should be set to the `url` of your GitLab integration instance. In addition, your GitLab instance (whether it is GitLab SaaS or a self-hosted version of GitLab) needs to have the option to send webhook requests to the GitLab integration instance, so please configure your network accordingly.
-
-#### Hooks
-
-The GitLab integration supports listening to GitLab webhooks and updating the relevant entities in Port accordingly.
-
-Supported webhooks are [Group webhooks](https://docs.gitlab.com/ee/user/project/integrations/webhooks.html#group-webhooks) and [System hooks](https://docs.gitlab.com/ee/administration/system_hooks.html).
-
-As part of the installation process, the integration will create a webhook in your GitLab instance, and will use it to listen to the relevant events.
-
-**_There are a few points to consider before deciding on which webhook to choose_**:
-
-- If you choose group webhooks, the integration will create a webhook for each group in your GitLab instance. If you choose system hooks, the integration will create a single webhook for the entire GitLab instance.
-- The system hooks has much less event types than the group webhooks.
-
-  - Group Webhooks supported event types:
-
-    - `push`
-    - `issues`
-    - `jobs`
-    - `merge_requests`
-    - `pipeline`
-
-  - System Hooks supported event types:
-
-    - `push`
-    - `merge_request`
-
-    This means that if you choose system hooks, the integration will not be able to update the relevant entities in Port on events such as `issues` or `pipeline`.
-
-- Creating a system hook requires admin privileges in GitLab. Due to this, the integration supports that the system hook will be created manually, and the integration will use it to listen to the relevant events.
-
-##### Configuring the integration to use hooks
-
-By default, if `appHost` is provided, the integration will create group webhooks for each group in your GitLab instance.
-
-To create a system hook there are two options:
-
-:::note
-In both options you'll need to provide the `useSystemHook` parameter with the value `true`.
-:::
-
-1. Provide a token with admin privileges in GitLab using the `tokenMapping` parameter.
-   - When choosing this option, the integration will create the system hook in your GitLab account automatically.
-2. Create the system hook manually
-   - Follow the instructions for creating a system hook in GitLab [here](https://docs.gitlab.com/ee/administration/system_hooks.html#create-a-system-hook).
-   - In the `URL` field, provide the `appHost` parameter value with the path `/integration/system/hook`. e.g. `https://my-gitlab-integration.com/integration/system/hook`.
-   - From the `Triggers` section, the GitLab integration currently supports the following events:
-      - `push`
-      - `merge_request`
-
-![GitLab System Hook](/img/integrations/gitlab/GitLabSystemHook.png)
+In order for the Azure Devops integration to update the data in Port on every change in the Azure Devops repository, you need to specify the `appHost` parameter.
+The `appHost` parameter should be set to the `url` of your Azure Devops integration instance. In addition, your Azure Devops instance (whether it is Azure Devops SaaS or a self-hosted version of GitLab) needs to have the option to send webhook requests to the Azure Devops integration instance, so please configure your network accordingly.
 
 ## Deploy the integration
 
@@ -135,8 +84,8 @@ helm upgrade --install my-azure-devops-integration port-labs/port-ocean \
 	--set integration.identifier="my-azure-devops-integration"  \
 	--set integration.type="azure-devops"  \
 	--set integration.eventListener.type="POLLING"  \
-	--set integration.secrets.organizationUrl="https://example.com"  \
-	--set integration.secrets.personalAccessToken="Enter value here" 
+	--set integration.secrets.organizationUrl="https://dev.azure.com/<organizationName>"  \
+	--set integration.secrets.personalAccessToken="Enter value here"
 ```
 
 </TabItem>
@@ -146,7 +95,7 @@ To install the integration using ArgoCD, follow these steps:
 1. Create a `values.yaml` file in `argocd/my-ocean-azure-devops-integration` in your git repository with the content:
 
 :::note
-Remember to replace the placeholders for `AZURE_PAT`.
+Remember to replace the placeholders for `AZURE_PAT`, and `organizationName`.
 :::
 ```yaml showLineNumbers
 initializePortResources: true
@@ -159,6 +108,8 @@ integration:
   secrets:
   // highlight-next-line
     personalAccessToken: AZURE_PAT
+  config:
+    organizationUrl: https://dev.azure.com/<organizationName>
 ```
 <br/>
 
@@ -251,8 +202,8 @@ pipeline {
             steps {
                 script {
                     withCredentials([
-                        string(credentialsId: 'OCEAN__INTEGRATION__PERSONAL_ACCESS_TOKEN', variable: 'OCEAN__INTEGRATION__CONFIG__TOKEN_MAPPING'),
-                        string(credentialsId: 'OCEAN__INTEGRATION__ORGANIZATION_URL', variable: 'OCEAN__INTEGRATION__ORGANIZATION_URL'),
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__PERSONAL_ACCESS_TOKEN', variable: 'OCEAN__INTEGRATION__CONFIG__PERSONAL_ACCESS_TOKEN'),
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG____ORGANIZATION_URL', variable: 'OCEAN__INTEGRATION__CONFIG__ORGANIZATION_URL'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_SECRET', variable: 'OCEAN__PORT__CLIENT_SECRET'),
                     ]) {
@@ -264,8 +215,8 @@ pipeline {
                             docker run -i --rm --platform=linux/amd64 \
                                 -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
                                 -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-                                -e OCEAN__INTEGRATION__PERSONAL_ACCESS_TOKEN="$OCEAN__INTEGRATION__PERSONAL_ACCESS_TOKEN" \
-                                -e OCEAN__INTEGRATION__ORGANIZATION_URL="$OCEAN__INTEGRATION__ORGANIZATION_URL" \
+                                -e OCEAN__INTEGRATION__CONFIG__PERSONAL_ACCESS_TOKEN="$OCEAN__INTEGRATION__CONFIG__PERSONAL_ACCESS_TOKEN" \
+                                -e OCEAN__INTEGRATION__CONFIG__ORGANIZATION_URL="$OCEAN__INTEGRATION__CONFIG__ORGANIZATION_URL" \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
                                 $image_name
