@@ -9,13 +9,13 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 # Lock service deployment
 
-In this guide you will implement a service locking mechanism using [Port's Github Action](http://localhost:4000/build-your-software-catalog/sync-data-to-catalog/api/ci-cd/github-workflow/)
+In this guide we will implement a service locking mechanism using [Port's Github Action](http://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/ci-cd/github-workflow/)
 
 The CI/CD deployment check described in this guide will follow these steps:
 
 1. New code is pushed to the `main` branch of a Git repository
 2. A [GitHub workflow](https://docs.github.com/en/actions/using-workflows) is triggered by the push event
-3. The Github workflow query Port's Entity API and returns a response for the service
+3. The Github workflow queries Port's Entity API and returns a response for the service
 4. If the value of the `locked_in_prod` field is `true`, the deployment check will fail
 5. If the value of the `locked_in_prod` field is `false`, the deployment check will succeed
 
@@ -226,7 +226,3 @@ When you will look at the step that failed, you will see that the failure is due
 If you set the value of the `locked_in_prod` field to `false`, the workflow will perform the deployment without any issue:
 
 <img src="/img/guides/serviceInProdNotLocked.png" border="1px" />
-
-## Conclusion
-
-In this example, we have shown how to use Port's GitHub Action to allow/prevent deployment in our CI/CD pipeline based on the `locked_in_prod` property.
