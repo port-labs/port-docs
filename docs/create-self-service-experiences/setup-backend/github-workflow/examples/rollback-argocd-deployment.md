@@ -6,7 +6,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 # Rollback ArgoCD Deployment
 
-In the following guide, you are going to create a self-service action in Port that executes a GitHub workflow to rollback an ArgoCD deployment. The rollback involves updating the deployment manifest with a new container image and creating a Github pull request (PR) for it. The workflow can optionally merge the PR when enabled.
+In this guide, we will create a self-service action in Port that executes a GitHub workflow to rollback an ArgoCD deployment. The rollback involves updating the deployment manifest with a new container image and creating a Github pull request (PR) for it. The workflow can optionally merge the PR when enabled.
 
 ## Prerequisites
 1. Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new)
