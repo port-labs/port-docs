@@ -47,8 +47,8 @@ Set them as you wish in the script below, then copy it and run it in your termin
 
 | Parameter                           | Description                                                                                                        | Required |
 | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
-| `port.clientId`                     | Your port client id ([Get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))                                                                                               | ✅       |
-| `port.clientSecret`                 | Your port client secret ([Get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))                                                                                           | ✅       |
+| `port.clientId`                     | Your port client id ([Get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                               | ✅       |
+| `port.clientSecret`                 | Your port client secret ([Get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                           | ✅       |
 | `integration.identifier`            | Change the identifier to describe your integration                                                                 | ✅       |
 | `integration.type`                  | The integration type                                                                                               | ✅       |
 | `integration.eventListener.type`    | The event listener type                                                                                            | ✅       |
