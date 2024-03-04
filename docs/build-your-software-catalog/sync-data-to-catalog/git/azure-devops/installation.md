@@ -62,7 +62,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `port.clientId`                    | Your port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)     |                                  | ✅       |
 | `port.clientSecret`                | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials) |                                  | ✅       |
 | `integration.secrets.personalAccessToken` | The [personal access token](#tokenmapping) used to query authenticate with your Azure Devops account                                                               |                                  | ✅       |
-| `integration.secrets.organizationUrl` | The URL of your Azure DevOps organization                                                                                           | https://dev.azure.com/orgName     | ✅       |
+| `integration.secrets.organizationUrl` | The URL of your Azure DevOps organization                                                                                           | https://dev.azure.com/organizationName     | ✅       |
 | `integration.config.appHost`       | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Azure DevOps                | https://my-ocean-integration.com | ❌       |
 
 <HelmParameters/>
@@ -84,7 +84,7 @@ helm upgrade --install my-azure-devops-integration port-labs/port-ocean \
 	--set integration.identifier="my-azure-devops-integration"  \
 	--set integration.type="azure-devops"  \
 	--set integration.eventListener.type="POLLING"  \
-	--set integration.secrets.organizationUrl="https://dev.azure.com/<organizationName>"  \
+	--set integration.secrets.organizationUrl="https://dev.azure.com/organizationName"  \
 	--set integration.secrets.personalAccessToken="Enter value here"
 ```
 
@@ -109,7 +109,7 @@ integration:
   // highlight-next-line
     personalAccessToken: AZURE_PAT
   config:
-    organizationUrl: https://dev.azure.com/<organizationName>
+    organizationUrl: https://dev.azure.com/organizationName
 ```
 <br/>
 

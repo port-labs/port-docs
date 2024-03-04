@@ -127,7 +127,7 @@ The `port`, `entity` and the `mappings` keys open the section used to map the Az
 
   ```yaml showLineNumbers
   resources:
-    - kind: project
+    - kind: repository
       selector:
         query: "true"
       port:
@@ -155,9 +155,7 @@ The `port`, `entity` and the `mappings` keys open the section used to map the Az
 
 ## Permissions
 
-Port's Azure DevOps integration requires a group access token with the `api` scope.
-
-To create a personal access token, follow the instructions in the [installation](./installation.md#create-a-personal-access-token) guide
+Port's Azure DevOps integration requires a personal access token, follow the instructions in the [installation](./installation.md#create-a-personal-access-token) guide.
 
 ## Examples
 

@@ -8,11 +8,6 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 # Working with monorepos
 
-:::info Azure DevOps support
-Currently monorepo support is available for the Git providers listed below.  
-Support for Azure DevOps is coming soon. Stay tuned!
-:::
-
 <br/>
 After [connecting your Git provider](/build-your-software-catalog/sync-data-to-catalog/git/) to Port, Port will automatically create an <PortTooltip id="entity">entity</PortTooltip> for each repository in the organization in which you installed the integration.  
 
@@ -36,7 +31,7 @@ In the snippet below, change the `path` and `repos` fields to your desired value
   { value: 'github', label: 'GitHub' },
   { value: 'gitlab', label: 'GitLab' },
   { value: 'bitbucket', label: 'BitBucket' },
-  { value: 'azuredevops', label: 'Azure DevOps (coming soon)' },]}>
+  { value: 'azure-devops', label: 'Azure DevOps (coming soon)' },]}>
 
 <TabItem value="github">
 
@@ -118,6 +113,14 @@ resources:
             url: .repo.links.html.href + "/src/" + .repo.mainbranch.name + "/" + .folder.path
             readme: file://README.md
 ```
+
+</TabItem>
+<TabItem value="azure-devops">
+
+:::info Azure DevOps support
+Currently monorepo support is available for the Git providers listed below.  
+Support for Azure DevOps is coming soon. Stay tuned!
+:::
 
 </TabItem>
 
