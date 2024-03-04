@@ -22,6 +22,8 @@ This guide takes 10 minutes to complete, and aims to cover:
 
 :::
 
+<br/>
+
 ### The goal of this guide
 
 In this guide we will set various standards for the production readiness of our services, and see how to use them as part of our CI.
@@ -31,6 +33,8 @@ After completing it, you will get a sense of how it can benefit different person
 - Platform engineers will be able to define policies for any service, and automatically pass/fail releases accordingly.
 - Developers will be able to easily see which policies set by the platform engineer are not met, and what they need to fix.
 - R&D managers will get a bird's-eye-view of the state of all services in the organization.
+
+<br/>
 
 ## Expand your service blueprint
 
@@ -68,7 +72,7 @@ For this installation you will need Helm and a running K8s cluster (see [prerequ
 
 1. Install Port's Pagerduty integration using Helm, by running the command below in your terminal.
 
-- Replace `CLIENT_ID` and `CLIENT_SECRET` with your credentials (get them [here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)).
+- Replace `CLIENT_ID` and `CLIENT_SECRET` with your credentials (get them [here](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)).
 
 - Replace `token` with your Pagerduty token. To obtain it:
   - Hover over your avatar in the top right corner of your Pagerduty app, then click `My profile`.
@@ -104,7 +108,7 @@ Great! Now that the integration is installed, we should see some new components 
 #### Add an on-call property to the service blueprint
 
 Now that Port is synced with our Pagerduty resources, let's reflect the Pagerduty service's on-call in our services.  
-First, we will need to create a [relation](/build-your-software-catalog/define-your-data-model/relate-blueprints/#what-is-a-relation) between our services and the corresponding Pagerduty services.
+First, we will need to create a [relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/#what-is-a-relation) between our services and the corresponding Pagerduty services.
 
 1. Head back to the [Builder](https://app.getport.io/dev-portal/data-model), choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New relation`:
 
@@ -118,16 +122,20 @@ First, we will need to create a [relation](/build-your-software-catalog/define-y
 
 <br/><br/>
 
-Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, let's create a [mirror property](https://docs.getport.io/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/mirror-property/) in our service to display its on-call.
+Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, let's create a [mirror property](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/) in our service to display its on-call.
 
 1. Choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip> again, and under the `PagerDuty Service` relation, click on `New mirror property`.  
    Fill the form out like this, then click `Create`:
 
 <img src='/img/guides/mirrorPropertyCreation.png' width='40%' />
 
+<br/><br/>
+
 2. Now that our mirror property is set, we need to assign the relevant Pagerduty service to each of our services. This can be done by adding some mapping logic. Go to your [data sources page](https://app.getport.io/dev-portal/data-sources), and click on your Pagerduty integration:
 
 <img src='/img/guides/pdDataSources.png' width='60%' />
+
+<br/><br/>
 
 Add the following YAML block to the mapping under the `resources` key, then click `save & resync`:
 
@@ -165,6 +173,8 @@ Now, if our `service` identifier is equal to the Pagerduty service's name, the `
 2. In the form you will now see a property named `PagerDuty Service`, choose the `DemoPdService` we created from the dropdown, then click `Update`:
 
 <img src='/img/guides/editServiceChoosePdService.png' width='40%' />
+
+<br/><br/>
 
 ### Display each service's code owners
 
@@ -222,6 +232,8 @@ Going back to our Catalog, we can now see that our <PortTooltip id="entity">enti
 
 ![entityAfterCodeowners](/img/guides/entityAfterCodeowners.png)
 
+<br/>
+
 ### Update your service's scorecard
 
 Now let's use the properties we created to set standards for our services.  
@@ -239,6 +251,8 @@ Now let's implement it:
 1. Go to your [Builder](https://app.getport.io/dev-portal/data-model), choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>, click on `Scorecards`, then click our existing `Production readiness` scorecard:
 
 <img src='/img/guides/editReadinessScorecard.png' width='30%' />
+
+<br/><br/>
 
 2. Replace the content with this, then click `Save`:
 

@@ -5,11 +5,11 @@ title: Get started with AWS
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import FindCredentials from "/docs/build-your-software-catalog/sync-data-to-catalog/api/\_template_docs/\_find_credentials.mdx";
+import FindCredentials from "/docs/build-your-software-catalog/custom-integration/api/\_template_docs/\_find_credentials.mdx";
 
 # Get started with AWS
 
-This guide takes 4 minutes to complete, and aims to quickly integrate your AWS environment into Port.
+This guide takes 5 minutes to complete, and aims to quickly integrate your AWS environment into Port.
 
 :::tip Prerequisites
 
@@ -20,6 +20,8 @@ This guide takes 4 minutes to complete, and aims to quickly integrate your AWS e
 
 :::
 
+<br/>
+
 ### The goal of this guide
 
 In this guide we will install Port's AWS exporter, ingest AWS resources into Port, and create a visualization from their data.
@@ -28,6 +30,8 @@ After completing it, you will get a sense of how it can benefit different person
 
 - Developers and devops will be track AWS resources and their health & status.
 - Platform engineers will be able to create and monitor dashboards & visualizations displaying valuable data from their AWS environments.
+
+<br/>
 
 ### Install Port's AWS exporter
 
@@ -82,6 +86,8 @@ To make changes to your configuration after installation, use the command descri
 
 💁🏽 _You don't need to change anything in the configuration for this guide, this is just an FYI_
 :::
+
+<br/>
 
 ### Visualize data from your AWS resources
 

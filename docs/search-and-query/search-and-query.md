@@ -138,7 +138,7 @@ Port has 2 types of search rule operators:
 | Field      | Description                                                                                                                                                                                                                                                                                                                                                    |
 | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `operator` | Search operator to use when evaluating this rule, see a list of available operators below                                                                                                                                                                                                                                                                      |
-| `property` | Property to filter by according to its value. It can be a [meta-property](../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/meta-properties.md) such as `$identifier`, or one of the [standard properties](../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/properties.md#available-properties) |
+| `property` | Property to filter by according to its value. It can be a [meta-property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/meta-properties.md) such as `$identifier`, or one of the [standard properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/properties.md#available-properties) |
 | `value`    | The value to filter by                                                                                                                                                                                                                                                                                                                                         |
 
 #### Operators
@@ -154,6 +154,7 @@ Port has 2 types of search rule operators:
 {label: "isNotEmpty", value: "isNotEmpty"},
 {label: "Property schema", value: "property-schema"},
 {label: "Between", value: "between"},
+{label: "notBetween", value: "notBetween"},
 {label: "Contains", value: "contains"},
 {label: "ContainsAny", value: "containsAny"},
 {label: "In", value: "in"}
@@ -315,7 +316,7 @@ The `propertySchema` filter can be used with any standard operator. It allows yo
 
 :::tip
 
-- The `propertySchema` can be used with any Port [property](../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/properties.md#supported-properties);
+- The `propertySchema` can be used with any Port [property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/properties.md#supported-properties);
 - The `propertySchema` replaces the `property` filter when performing property schema search.
 
 :::
@@ -363,6 +364,22 @@ The `between` operator also supports standard date ranges:
       }
     }
   ]
+}
+```
+
+</TabItem>
+
+<TabItem value="notBetween">
+
+The `notBetween` operator checks datetime values and returns entities whose relevant datetime property does not match the given range:
+
+```json showLineNumbers
+{
+  "operator": "notBetween",
+  "property": "$createdAt",
+  "value": {
+    "preset": "lastWeek"
+  }
 }
 ```
 
@@ -438,7 +455,7 @@ The `in` operator checks if a `string` property is equal to one or more specifie
 - Choose field of type `string` format `team` or the metadata `Team` field;
 - Choose `has any of` operator:
 
-![My Teams Filter](../../static/img/software-catalog/pages/MyTeamsFilter.png)
+![My Teams Filter](/img/software-catalog/pages/MyTeamsFilter.png)
 
 </TabItem>
 
@@ -546,7 +563,7 @@ Cart-Service-Production -> Production
 
 By looking at the resulting graph layout, we can also map the directions:
 
-![Dependency graph upstream downstream diagram](../../static/img/software-catalog/search-in-port/search-direction-diagram.png)
+![Dependency graph upstream downstream diagram](/img/software-catalog/search-in-port/search-direction-diagram.png)
 
 - To search for entities which the source depends on - use `"direction": "upstream"`;
 - To search for entities which depend on the source - use `"direction": "downstream"`.

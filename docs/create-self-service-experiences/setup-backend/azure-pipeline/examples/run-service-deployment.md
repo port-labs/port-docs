@@ -4,7 +4,7 @@ In the following guide, you are going to build a self-service action in Port tha
 
 ### Prerequisites
 
-- You will need your [Port credentials](../../../../build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials) to create the action.
+- You will need your [Port credentials](../../../../build-your-software-catalog/custom-integration/api/api.md#find-your-port-credentials) to create the action.
 - You will need your Azure DevOps organization.
 - You will need the name of the webhook that you configured in your Azure pipelines yaml.
 
@@ -107,7 +107,7 @@ Here is the JSON of the action:
 Don't forget to replace the placeholders for `AZURE-DEVOPS-ORG` and `AZURE-DEVOPS-WEBHOOK-NAME`.
 :::
 
-To learn how to generate an API token to interact with Port, look [here](../../../../build-your-software-catalog/sync-data-to-catalog/api/#generate-an-api-token).
+To learn how to generate an API token to interact with Port, look [here](../../../../build-your-software-catalog/custom-integration/api/#generate-an-api-token).
 
 To update the status of the action in Port, use the following API call in your Azure pipeline:
 

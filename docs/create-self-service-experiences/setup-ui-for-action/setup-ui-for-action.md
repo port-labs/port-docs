@@ -23,7 +23,7 @@ Port supports various input types, including constructing wizards with condition
 
 Setting up an action includes the following steps:
 
-1. **Define [action information](#structure-table)** - the title, icon, description and associated [blueprint](../../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md);
+1. **Define [action information](#structure-table)** - the title, icon, description and associated [blueprint](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/setup-blueprint.md);
 2. **Select the [user inputs](#userinputs---form--wizard-ui)** - create a wizard-like experience by specifying the input types users need to fill in, while also including input validations;
 3. **Configure the [action type](#trigger--action-type)** - Create/Day-2/Delete;
 4. **Connect the action to a [backend](#invocationmethod---connect-to-a-backend)** - for every action you define in Port, you tell Port what component is responsible to handle the action's invocation. This is called the **invocation method**, Port supports various invocation methods for different use cases and environments;
@@ -111,7 +111,7 @@ An action consist of several properties:
 | `identifier`       | Unique identifier                                                                                                                 | **Required**. The identifier is used for API calls, programmatic access and distinguishing between different actions                                                                                                                   |
 | `title`            | Name                                                                                                                              | Human-readable name for the action                                                                                                                                                                                                     |
 | `description`      | Description                                                                                                                       | The value is visible on the action card in the Self-Service Hub and also as a tooltip to users when hovering over the action in the UI                                                                                                 |
-| `icon`             | Action icon                                                                                                                       | See the full icon list [here](../../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md#full-icon-list)                                                                                              |
+| `icon`             | Action icon                                                                                                                       | See the full icon list [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/setup-blueprint.md#full-icon-list)                                                                                              |
 | `trigger`          | The type of the action: `CREATE`, `DAY-2` or `DELETE`                                                                             | The action type is sent by Port to the action backend as part of the action metadata. In addition, Port automatically places actions in specific places in the developer portal UI to make them accessible and intuitive for the user. |
 | `userInputs`       | An object containing `properties` ,`required` and `order` as seen in [Action user inputs](./user-inputs/user-inputs.md#structure) |
 | `requiredApproval` | Whether the action requires approval or not                                                                                       |
@@ -151,7 +151,7 @@ The different backends are denoted and configured via the `invocationMethod` key
 
 - **Webhook** - setup a webhook URL to receive and handle forms and wizards submissions;
 - **Kafka** - subscribe to Kafka topic to listen to messages with forms and wizards submissions;
-- **CI Native (Github Workflow)** - setup Port's [GitHub app](../../build-your-software-catalog/sync-data-to-catalog/git/github/github.md) to handle forms & wizards submission via Github Workflows;
+- **CI Native (Github Workflow)** - setup Port's [GitHub app](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md) to handle forms & wizards submission via Github Workflows;
 - **CI Native (Azure Pipeline)**- setup a webhook type service connection to trigger Azure pipelines and handle forms & wizards submission via Github Workflows;
 - **Port agent** - setup Port's agent tp receive forms & wizards submissions and forward them to your backend on your internal network.
 
@@ -161,7 +161,7 @@ To learn more about the different available invocation methods and backends, ref
 
 Port actions support a manual approval process. Manual approvals let you control who can approve an action invocation request, and also handle notifying the relevant personas when an action request is awaiting their review.
 
-refer to the [self-service actions RBAC](../set-self-service-actions-rbac/set-self-service-actions-rbac.md) page to learn more.
+Refer to the [self-service actions RBAC](../set-self-service-actions-rbac/set-self-service-actions-rbac.md) page to learn more.
 
 ## Configuring actions in Port
 
@@ -212,10 +212,11 @@ resource "port_action" "myAction" {
 
 <TabItem value="ui" label="UI">
 
-1. Go to the [DevPortal Builder page](https://app.getport.io/dev-portal);
-2. Expand the blueprint you want to add an action to;
-3. Select the actions button from the 3 dots menu;
-4. Enter the JSON specification of your desired action.
+1. Go to the [DevPortal Builder page](https://app.getport.io/dev-portal).
+2. Expand the blueprint you want to add an action to.
+3. Select the `Edit Json` button from the 3 dots menu.
+4. Navigate to the `Actions` tab.
+5. Paste the JSON specification in to the actions array.
 
 </TabItem>
 

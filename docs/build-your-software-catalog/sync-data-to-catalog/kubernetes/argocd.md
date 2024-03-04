@@ -1,12 +1,12 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import ProjecttBlueprint from '../webhook/examples/resources/argocd/\_example_project_blueprint.mdx'
-import ApplicationBlueprint from '../webhook/examples/resources/argocd/\_example_application_blueprint.mdx'
-import EventBlueprint from '../webhook/examples/resources/argocd/\_example_event_blueprint.mdx'
+import ProjecttBlueprint from '/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/argocd/\_example_project_blueprint.mdx'
+import ApplicationBlueprint from '/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/argocd/\_example_application_blueprint.mdx'
+import EventBlueprint from '/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/argocd/\_example_event_blueprint.mdx'
 
-import ArgoCDWebhookConfig from '../webhook/examples/resources/argocd/\_example_webhook_configuration.mdx'
-import ArgoCDEventWebhookConfig from '../webhook/examples/resources/argocd/\_example_events_webhook_config.mdx'
-import ArgoCDEventManifest from '../webhook/examples/resources/argocd/\_example_events_manifest.mdx'
+import ArgoCDWebhookConfig from '/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/argocd/\_example_webhook_configuration.mdx'
+import ArgoCDEventWebhookConfig from '/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/argocd/\_example_events_webhook_config.mdx'
+import ArgoCDEventManifest from '/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/argocd/\_example_events_manifest.mdx'
 
 # ArgoCD
 
@@ -836,7 +836,7 @@ Create the following blueprint definition:
 
 </details>
 
-Create the following webhook configuration [using Port UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
+Create the following webhook configuration [using Port UI](/build-your-software-catalog/custom-integration/webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
 
@@ -982,7 +982,7 @@ Create the following blueprint definition:
 
 </details>
 
-Create the following webhook configuration [using Port UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
+Create the following webhook configuration [using Port UI](/build-your-software-catalog/custom-integration/webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
 

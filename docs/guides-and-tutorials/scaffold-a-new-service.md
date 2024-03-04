@@ -18,6 +18,8 @@ This guide takes 7 minutes to complete, and aims to demonstrate the power of sel
 
 :::
 
+<br/>
+
 ### The goal of this guide
 
 In this guide we will create an action that initializes a new Git repository. In reality, such an action can be used by developers to scaffold new services.
@@ -28,11 +30,18 @@ After completing it, you will get a sense of how it can benefit different person
 - R&D managers will be able to get an overview of new services - how many were created and by who.
 - Platform engineers will be able to control permissions to ensure only the relevant people can create new services.
 
+<br/>
+
 ### Setup the action's frontend
 
 :::tip Onboarding
 
-As part of the onboarding process, you should already have an action named `Scaffold a new service` in your [self-service tab](https://app.getport.io/self-serve). In that case, you can skip to the [Define action type](#define-backend-type) step.  
+As part of the onboarding process, you should already have an action named `Scaffold a new service` in your [self-service tab](https://app.getport.io/self-serve).  
+In that case, you can hover over the action, click the `...` button in the top right corner, and choose "Edit":
+
+<img src='/img/guides/editActionBackend.png' width='45%' />
+
+Then, skip to the [Define backend type](#define-backend-type) step.
 
 If you **skipped** the onboarding, or you want to create the action from scratch, complete the `Create the action's frontend` steps below.
 
@@ -121,6 +130,8 @@ If you **skipped** the onboarding, or you want to create the action from scratch
 
 </details>
 
+<br/>
+
 #### Define backend type
 
 Now we'll define the backend of the action. Port supports multiple invocation types, one of them should be selected for you depending on the Git provider you selected in the beginning of the onboarding process.
@@ -160,7 +171,7 @@ Fill out the form with your values:
   ```text showLineNumbers
   https://gitlab.com/api/v4/projects/{GITLAB_PROJECT_ID}/ref/main/trigger/pipeline?token={GITLAB_TRIGGER_TOKEN}
   ```
-    - The value for `{GITLAB_PROJECT_ID}` is the ID of the GitLab group that you create in the [setup the action's backend](#setup-the-actions-backend) section which stores the `.gitlab-cy.yml` pipeline file.
+    - The value for `{GITLAB_PROJECT_ID}` is the ID of the GitLab group that you create in the [setup the action's backend](#setup-the-actions-backend) section which stores the `.gitlab-ci.yml` pipeline file.
       - To find the project ID, browse to the GitLab page of the group you created, at the top right corner of the page, click on the vertical 3 dots button (next to `Fork`) and select `Copy project ID`
     - The value for `{GITLAB_TRIGGER_TOKEN}` is the trigger token you create in the [setup the action's backend](#setup-the-actions-backend) section.
 - Set `HTTP method` to `POST`.
@@ -197,6 +208,8 @@ Fill out the form with your values:
 The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Create`.
 
 The action's frontend is now ready 🥳
+
+<br/>
 
 ### Setup the action's backend
 
@@ -284,7 +297,6 @@ jobs:
 This workflow uses Port's [cookiecutter Github action](https://github.com/port-labs/cookiecutter-gha) to scaffold the new repository.
 :::
 
-<br/>
 </TabItem> 
 
 <TabItem value="gitlab">
@@ -757,6 +769,8 @@ default_context:
 
 All done! The action is ready to be used 🚀
 
+<br/>
+
 ### Execute the action
 
 After creating an action, it will appear under the `Self-service` tab of your Port application:
@@ -769,6 +783,8 @@ After creating an action, it will appear under the `Self-service` tab of your Po
 
 <img src='/img/guides/executionDetails.png' width='45%' />
 
+<br/><br/>
+
 :::tip Trigger bitbucket scaffolder
 
 To trigger the Bitbucket scaffolder, you will need to provide two additional parameters:
@@ -777,9 +793,11 @@ To trigger the Bitbucket scaffolder, you will need to provide two additional par
   - To find the Bitbucket project key, go to `https://bitbucket.org/YOUR_BITBUCKET_WORKSPACE/workspace/projects/`, find the desired project in the list, and copy the value seen in the `Key` column in the table
 :::
 
-1. This page provides details about the action run. As you can see, the backend returned `Success` and the repo was successfully created:
+1. This page provides details about the action run. As you can see, the backend returned `Success` and the repo was successfully created (this can take a few moments):
 
 <img src='/img/guides/runStatusScaffolding.png' width='90%' />
+
+<br/><br/>
 
 :::tip Logging action progress
 💡 Note the `Log stream` at the bottom, this can be used to report progress, results and errors. Click [here](/create-self-service-experiences/reflect-action-progress/reflect-action-progress.md) to learn more.

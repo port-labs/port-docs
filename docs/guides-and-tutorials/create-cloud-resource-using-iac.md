@@ -13,14 +13,14 @@ This guide takes 8 minutes to complete, and aims to demonstrate:
 - A complete flow to create a resource using IaC.
 - The simplicity of communicating with Port from a self-service action backend.
 
-<br/>
-
 :::tip Prerequisites
 
 - This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
 - You will need a Git repository (Github, GitLab, or Bitbucket) in which you can place a workflow/pipeline that we will use in this guide. If you don't have one, we recommend creating a new repository named `Port-actions`.
 
 :::
+
+<br/>
 
 ### The goal of this guide
 
@@ -94,7 +94,7 @@ In our workflow, the payload is used as the input. We omit the user inputs in or
 
 :::
 
-<img src='/img/guides/createBucketGHBackend.png' width='75%' />
+<img src='/img/guides/createBucketGHBackend.png' width='75%' border='1px' />
 
 </TabItem>
 
@@ -147,7 +147,8 @@ Fill out the form with your values:
 </TabItem>
 
 </Tabs>
-<br/><br/>
+
+<br/>
 
 7. The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Create`.
 
@@ -210,8 +211,10 @@ jobs:
   createResource:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/checkout@v3
+      # Checkout the workflow's repository
+      - uses: actions/checkout@v4
+      # Checkout the service's repository
+      - uses: actions/checkout@v4
         with:
           repository: "${{ github.repository_owner }}/${{fromJson(inputs.port_payload).context.entity}}"
           path: ./targetRepo
@@ -694,6 +697,8 @@ acl = "{{ bucket_acl }}"
 
 All done! The action is ready to be executed 🚀
 
+<br/>
+
 ### Execute the action
 
 After creating an action, it will appear under the `Self-service` tab of your Port application:
@@ -705,6 +710,8 @@ After creating an action, it will appear under the `Self-service` tab of your Po
 2. Enter a name for your s3 bucket and choose a visibility, select any service from the list and click `Execute`. A small popup will appear, click on `View details`:
 
 <img src='/img/guides/iacActionExecutePopup.png' width='40%' />
+
+<br/><br/>
 
 3. This page provides details about the action run. We can see that the backend returned `Success` and the pull-request was created successfully:
 
@@ -718,6 +725,8 @@ You may have noticed that even though we updated the service's `Resource definit
 2. Go to the <PortTooltip id="entity">entity</PortTooltip> page of the service that you executed the action for:
 
 <img src='/img/guides/iacEntityAfterAction.png' width='50%' />
+
+<br/><br/>
 
 3. Click on the `Resource definitions` link to access the service's resources.
 
