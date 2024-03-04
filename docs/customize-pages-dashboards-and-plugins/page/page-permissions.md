@@ -33,7 +33,7 @@ In your software catalog, choose the page for which you would like to view permi
 
 :::info
 
-- Remember that an access token is needed to make API requests, refer back to [Getting an API token](/build-your-software-catalog/sync-data-to-catalog/api/api.md#get-api-token) if you need to generate a new one.
+- Remember that an access token is needed to make API requests, refer back to [Getting an API token](/build-your-software-catalog/custom-integration/api/api.md#get-api-token) if you need to generate a new one.
 - Currently in order to see the page identifiers you can request all pages by making a  
   GET request to `https://api.getport.io/v1/pages`
 
