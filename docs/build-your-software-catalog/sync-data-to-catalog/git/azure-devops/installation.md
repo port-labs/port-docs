@@ -33,36 +33,6 @@ The token should either have `admin` permissions, or `read` permissions for each
 
 ## Configure the integration
 
-### tokenMapping
-
-The GitLab integration support fetching data related to specific paths in your GitLab groups. The integration is also able to fetch data from different GitLab parent groups by providing additional group tokens. In order to do so, you need to map the desired paths to the relevant access tokens.
-The `tokenMapping` parameter supports specifying the paths that the integration will search for files and information in, using [globPatterns](https://www.malikbrowne.com/blog/a-beginners-guide-glob-patterns).
-
-Mapping format:
-
-```text showLineNumbers
-{"MY_FIRST_GITLAB_PROJECT_GROUP_TOKEN": ["**/MyFirstGitLabProject/**","**/MySecondGitLabProject/*"]}
-```
-
-Example:
-
-```text showLineNumbers
-{"glpat-QXbeg-Ev9xtu5_5FsaAQ": ["**/DevopsTeam/*Service", "**/RnDTeam/*Service"]}
-```
-
-:::info Helm installation parameter
-When using the `tokenMapping` parameter in the integration's [Helm installation](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/installation?deploy=helm&installation-methods=real-time-always-on#deploying-the-gitlab-integration), make sure to escape the necessary characters, for example:
-```text
---set integration.secrets.tokenMapping=“\{\“glpat-oh1YXc54pR4eofx6hYy5\“: [\“**\“]\}”
-```
-:::
-
-Multiple GitLab group access tokens example:
-
-```text showLineNumbers
-{"glpat-QXbeg-Ev9xtu5_5FsaAQ": ["**/DevopsTeam/*Service", "**/RnDTeam/*Service"],"glpat-xF7Ae-vXu5ts5_QbEgAQ9": ["**/MarketingTeam/*Service"]}
-```
-
 ### `appHost` & listening to hooks
 
 :::tip
@@ -142,9 +112,9 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- | -------- |
 | `port.clientId`                    | Your port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)     |                                  | ✅       |
 | `port.clientSecret`                | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials) |                                  | ✅       |
-| `integration.secrets.tokenMapping` | The [token mapping](#tokenmapping) configuration used to query GitLab                                                               |                                  | ✅       |
-| `integration.config.appHost`       | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in GitLab                | https://my-ocean-integration.com | ❌       |
-| `integration.config.gitlabHost`    | (for self-hosted GitLab) the URL of your GitLab instance                                                                            | https://my-gitlab.com            | ❌       |
+| `integration.secrets.personalAccessToken` | The [personal access token](#tokenmapping) used to query authenticate with your Azure Devops account                                                               |                                  | ✅       |
+| `integration.secrets.organizationUrl` | The URL of your Azure DevOps organization                                                                                           | https://dev.azure.com/orgName     | ✅       |
+| `integration.config.appHost`       | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Azure DevOps                | https://my-ocean-integration.com | ❌       |
 
 <HelmParameters/>
 
@@ -163,9 +133,10 @@ helm upgrade --install my-azure-devops-integration port-labs/port-ocean \
 	--set initializePortResources=true  \
 	--set scheduledResyncInterval=120 \
 	--set integration.identifier="my-azure-devops-integration"  \
-	--set integration.type="azure"  \
+	--set integration.type="azure-devops"  \
 	--set integration.eventListener.type="POLLING"  \
-	--set integration.secrets.tokenMapping="\{\"TOKEN\": [\"GROUP_NAME/**\"]\}"
+	--set integration.secrets.organizationUrl="https://example.com"  \
+	--set integration.secrets.personalAccessToken="Enter value here" 
 ```
 
 </TabItem>
@@ -175,19 +146,19 @@ To install the integration using ArgoCD, follow these steps:
 1. Create a `values.yaml` file in `argocd/my-ocean-azure-devops-integration` in your git repository with the content:
 
 :::note
-Remember to replace the placeholders for `AZURE_TOKEN_MAPPING`.
+Remember to replace the placeholders for `AZURE_PAT`.
 :::
 ```yaml showLineNumbers
 initializePortResources: true
 scheduledResyncInterval: 120
 integration:
   identifier: my-ocean-azure-devops-integration
-  type: azure
+  type: azure-devops
   eventListener:
     type: POLLING
   secrets:
   // highlight-next-line
-    tokenMapping: AZURE_TOKEN_MAPPING
+    personalAccessToken: AZURE_PAT
 ```
 <br/>
 
@@ -252,70 +223,6 @@ kubectl apply -f my-ocean-azure-devops-integration.yaml
 <TabItem value="one-time" label="Scheduled">
 
 <Tabs groupId="cicd-method" queryString="cicd-method">
-<TabItem value="gitlab" label="GitLab">
-
-This workflow will run the GitLab integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
-
-Make sure to configure the following [GitLab Variables](https://docs.gitlab.com/ee/ci/variables/):
-
-<DockerParameters/>
-
-<br/>
-
-Here is an example for `.gitlab-ci.yml` workflow file:
-
-```yaml showLineNumbers
-stages:
-  - deploy_gitlab
-
-variables:
-  # Define non-secret variables
-  INTEGRATION_TYPE: "gitlab"
-  VERSION: "latest"
-  # These variables should be set in GitLab's CI/CD variables for security
-  # OCEAN__PORT__CLIENT_ID: $OCEAN__PORT__CLIENT_ID
-  # OCEAN__PORT__CLIENT_SECRET: $OCEAN__PORT__CLIENT_SECRET
-  # OCEAN__INTEGRATION__CONFIG__TOKEN_MAPPING: $OCEAN__INTEGRATION__CONFIG__TOKEN_MAPPING
-
-deploy_gitlab:
-  image: docker:24.0.7
-  stage: deploy_gitlab
-  services:
-    - docker:24.0.7-dind
-  script:
-    - image_name="ghcr.io/port-labs/port-ocean-$INTEGRATION_TYPE:$VERSION"
-    - |
-      docker run -i --rm --platform=linux/amd64 \
-      -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
-      -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-      # highlight-next-line
-      -e OCEAN__INTEGRATION__CONFIG__TOKEN_MAPPING="$OCEAN__INTEGRATION__CONFIG__TOKEN_MAPPING" \
-      -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
-      -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
-      $image_name
-  only:
-    - main
-```
-
-:::note
-When saving the `OCEAN__INTEGRATION__CONFIG__TOKEN_MAPPING` variable, be sure to save it **as-is**, for example given the following token mapping:
-
-```text
-{"glpat-QXbeg-Ev9xtu5_5FsaAQ": ["**/DevopsTeam/*Service", "**/RnDTeam/*Service"]}
-```
-
-(Note that this is a one-liner)
-
-Save it as a GitLab variable without any changes (there is no need to wrap it in single-quotes (`'`) or double-quotes (`"`).
-
-Also make sure to keep the double-quotes (`"`) when passing the `OCEAN__INTEGRATION__CONFIG__TOKEN_MAPPING` parameter to the Docker CLI (see the pipeline example above).
-:::
-
-</TabItem>
 <TabItem value="jenkins" label="Jenkins">
   
 This pipeline will run the Azure DevOps integration once and then exit, this is useful for **scheduled** ingestion of data.
@@ -344,7 +251,8 @@ pipeline {
             steps {
                 script {
                     withCredentials([
-                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__TOKEN_MAPPING', variable: 'OCEAN__INTEGRATION__CONFIG__TOKEN_MAPPING'),
+                        string(credentialsId: 'OCEAN__INTEGRATION__PERSONAL_ACCESS_TOKEN', variable: 'OCEAN__INTEGRATION__CONFIG__TOKEN_MAPPING'),
+                        string(credentialsId: 'OCEAN__INTEGRATION__ORGANIZATION_URL', variable: 'OCEAN__INTEGRATION__ORGANIZATION_URL'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_SECRET', variable: 'OCEAN__PORT__CLIENT_SECRET'),
                     ]) {
@@ -356,7 +264,8 @@ pipeline {
                             docker run -i --rm --platform=linux/amd64 \
                                 -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
                                 -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-                                -e OCEAN__INTEGRATION__CONFIG__TOKEN_MAPPING="$OCEAN__INTEGRATION__CONFIG__TOKEN_MAPPING" \
+                                -e OCEAN__INTEGRATION__PERSONAL_ACCESS_TOKEN="$OCEAN__INTEGRATION__PERSONAL_ACCESS_TOKEN" \
+                                -e OCEAN__INTEGRATION__ORGANIZATION_URL="$OCEAN__INTEGRATION__ORGANIZATION_URL" \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
                                 $image_name
