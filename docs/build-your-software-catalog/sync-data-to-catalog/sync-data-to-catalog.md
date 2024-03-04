@@ -34,7 +34,7 @@ Generally, integrating a platform/tool with Port consists of 3 steps:
 
 ## Customize your integrations
 
-Now that you've installed an itegration, let's see how you can customize it:
+Now that you've installed an integration, let's see how you can customize it:
 
 1. [**Configure your data model**](/build-your-software-catalog/customize-integrations/configure-data-model) - Update the integration's data model in Port to ingest additional data that is not included by default.
 
