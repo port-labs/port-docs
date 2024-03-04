@@ -8,8 +8,8 @@ import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
 import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
 import DockerParameters from "./\_opsgenie_docker_params.mdx"
 import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
-import OpsGenieAlertBlueprint from "../webhook/examples/resources/opsgenie/\_example_opsgenie_alert_blueprint.mdx";
-import OpsGenieAlertConfiguration from "../webhook/examples/resources/opsgenie/\_example_opsgenie_alert_configuration.mdx";
+import OpsGenieAlertBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/opsgenie/\_example_opsgenie_alert_blueprint.mdx";
+import OpsGenieAlertConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/opsgenie/\_example_opsgenie_alert_configuration.mdx";
 
 # Opsgenie
 
