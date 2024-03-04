@@ -27,51 +27,6 @@ You can also manually create additional catalog pages for any existing blueprint
 
 To create a new catalog page, go to your [Software Catalog](https://app.getport.io/services), click the `+ New` button in the top left corner, and select `New catalog page`.
 
-### Description
-
-You can provide additional context to your developers by using the `Description` field when creating a catalog page.  
-This field supports adding links in markdown format: `[link text](https://www.address.com)`.
-
-<img src='/img/software-catalog/pages/catalogPageDescriptionForm.png' width='40%' border='1px' />
-
-<br/><br/>
-
-The description will be displayed at the top of the page, under the page title:
-
-<img src='/img/software-catalog/pages/catalogPageDescription.png' width='80%' border='1px' />
-
-### Initial filters
-
-In some cases, an entities table may be very large, resulting in long loading times. To prevent this, you can define filters that resolve when Port queries the data (rather than after querying).  
-To define such a filter, use the `Initial filters` field when creating a page:
-
-<img src='/img/software-catalog/pages/initialFiltersForm.png' width='50%' />
-
-<br/><br/>
-
-You can define any [supported rule](/search-and-query/#rules) in JSON format. Here is an example that will only display `Deployments` that were updated in the past month:
-
-```json showLineNumbers
-[
-  {
-    "property": "$updatedAt",
-    "operator": "between",
-    "value": { "preset": "lastMonth" }
-  }
-]
-```
-
-#### Dynamic filters
-
-You can use [dynamic properties](/search-and-query/#dynamic-properties) of the logged-in user when creating a catalog page.
-
-### Excluded properties
-
-Another way to reduce loading times is to exclude undesired properties from an entities table when querying the data. When using this option, the new table will not contain columns for the excluded properties.  
-To do this, use the `Excluded properties` field when creating a page:
-
-<img src='/img/software-catalog/pages/excludePropertiesForm.png' width='50%' />
-
 </TabItem>
 
 <TabItem value="api">
@@ -198,6 +153,53 @@ const catalogPage = new port.Page(
 </TabItem>
 
 </Tabs>
+
+### Description
+
+You can provide additional context to your developers by using the `Description` field when creating a catalog page.  
+This field supports adding links in markdown format: `[link text](https://www.address.com)`.
+
+<img src='/img/software-catalog/pages/catalogPageDescriptionForm.png' width='40%' border='1px' />
+
+<br/><br/>
+
+The description will be displayed at the top of the page, under the page title:
+
+<img src='/img/software-catalog/pages/catalogPageDescription.png' width='80%' border='1px' />
+
+### Initial filters
+
+In some cases, an entities table may be very large, resulting in long loading times. To prevent this, you can define filters that resolve when Port queries the data (rather than after querying).  
+To define such a filter, use the `Initial filters` field when creating a page:
+
+<img src='/img/software-catalog/pages/initialFiltersForm.png' width='50%' />
+
+<br/><br/>
+
+You can define any [supported rule](/search-and-query/#rules) in JSON format. Here is an example that will only display `Deployments` that were updated in the past month:
+
+```json showLineNumbers
+[
+  {
+    "property": "$updatedAt",
+    "operator": "between",
+    "value": { "preset": "lastMonth" }
+  }
+]
+```
+
+#### Dynamic filters
+
+You can use [dynamic properties](/search-and-query/#dynamic-properties) of the logged-in user when creating a catalog page.
+
+### Excluded properties
+
+Another way to reduce loading times is to exclude undesired properties from an entities table when querying the data. When using this option, the new table will not contain columns for the excluded properties.  
+To do this, use the `Excluded properties` field when creating a page:
+
+<img src='/img/software-catalog/pages/excludePropertiesForm.png' width='50%' />
+
+
 
 ## Customization
 
