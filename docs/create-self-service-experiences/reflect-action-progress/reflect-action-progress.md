@@ -397,6 +397,8 @@ By making a `GET` request to `https://api.getport.io/v1/actions/runs/{run_id}/lo
 
 ## Updating an action run
 
+You can use Port's API to update an action run's `status`, `description`, and/or `logs`. 
+
 :::info Github backend
 When using a `Github workflow` as the action backend, a `Report workflow status` option will be available and set to `Yes` by default. When using this option, Port will automatically update the status of the action run to `SUCCESS` or `FAILURE` according to the result of the Github workflow, so no manual update is required.
 :::
@@ -407,15 +409,15 @@ Now let's take an action run and update it. The following updates can be perform
 
 <TabItem value="info" label="Run info">
 
-By sending a `PATCH` request to the `https://api.getport.io/v1/actions/runs/{run_id}` endpoint, you can update the status, or list of links of a run.
+By sending a `PATCH` request to the `https://api.getport.io/v1/actions/runs/{run_id}` endpoint, you can do the following:
 
-The different update options are:
+- Update the run's status, by using the `status` key with one of these values: `SUCCESS`, `FAILURE`.
+- Update the run's description, by using the `description` key with a custom message.
+- Add links to external logs of the job runners, via the `link` key - AWS Cloudwatch logs, Github Workflow job, Jenkins job, etc.
 
-- Set the action run status via the `status` key - `SUCCESS`, `FAILURE`;
-- Add links to an external log of the job runners via the `link` key - AWS Cloudwatch logs, Github Workflow job, Jenkins job, etc.
-
-:::tip
-You don't have to provide all of the different updates in one request, you can make a `PATCH` request to the endpoint as many times as you need until the action run has finished.
+:::tip Multiple and partial updates
+You don't have to provide all of the different updates in one request, you can make a `PATCH` request to the endpoint as many times as you need until the action run has finished.  
+You can also send partial updates, for example, you can update only the `description` key to change the description of the action while keeping its status as `In progress`.
 
 Note that every patch request will override the previous information that was available for a given key. For example, when updating the `link` key multiple times, only the value provided in the latest update will be the one displayed on the action run object.
 :::
@@ -425,13 +427,11 @@ Let's update our action run with the following `PATCH` request body:
 ```json showLineNumbers
 {
   "status": "SUCCESS",
+  "description": "Run completed successfully!",
   "link": [
     "https://github.com/actions/toolkit/actions/runs/3617893813",
     "https://github.com/actions/toolkit/actions/runs/4165617487"
   ],
-  "message": {
-    "run_status": "Run completed successfully!"
-  }
 }
 ```
 
@@ -456,9 +456,7 @@ The API returns the following response:
       "https://github.com/actions/toolkit/actions/runs/3617893813",
       "https://github.com/actions/toolkit/actions/runs/4165617487"
     ],
-    "message": {
-      "run_status": "Run completed successfully!"
-    },
+    "description": "Run completed successfully!",
     // highlight-end
     "relatedEntityExists": false,
     "relatedBlueprintExists": true,
@@ -474,13 +472,13 @@ The API returns the following response:
 }
 ```
 
-:::info
+:::info Patch results
 Note how our action run has updated:
 
-- `status` - has been updated to `SUCCESS`;
-- `endedAt` - now correctly shows the time that the action run was updated;
-- `link` - now includes the links we provided, and those links will also appear in the page matching the action run in Port;
-- `message` - now includes the additional info we provided and it will also appear in the page matching the action run in Port.
+- `status` - has been updated to `SUCCESS`.
+- `endedAt` - now correctly shows the time that the action run was updated.
+- `link` - now includes the links we provided, and those links will also appear in the page matching the action run in Port.
+- `description` - now includes the additional text we provided, which will also appear in the action run page in Port.
 
 :::
 
@@ -488,18 +486,18 @@ Note how our action run has updated:
 
 <TabItem value="logs" label="Run logs">
 
-By sending a `POST` request to the `https://api.getport.io/v1/actions/runs/{run_id}/logs` endpoint, you can add a new log message to the run log.
+By sending a `POST` request to the `https://api.getport.io/v1/actions/runs/{run_id}/logs` endpoint, you can do the following:
 
-The different update options are:
-
-- Set the action run status via the `terminationStatus` key - `SUCCESS`, `FAILURE`;
-- Add an additional log entry to the run's log.
+- Set the action run status via the `terminationStatus` key - `SUCCESS`, `FAILURE`.
+- Update the run's description, by using the `statusDescription` key.
+- Add an additional log entry to the run's log, by using the `message` key.
 
 Let's update our action run log with the following `POST` request body:
 
 ```json showLineNumbers
 {
-  "message": "my new log message"
+  "message": "my new log message",
+  "statusDescription": "Run completed successfully!",
 }
 ```
 
@@ -512,6 +510,7 @@ The API returns the following response:
     "id": "log_Wo7cIcCftqhj4lNy",
     "runId": "r_z0nJYJv0wCm2ASTR",
     "message": "my new log message",
+    "statusDescription": "Doing something...",
     "createdAt": "2023-03-12T15:27:25.394Z",
     "createdBy": "KZ5zDPudPshQMShUb4cLopBEE1fNSJGE"
   }
@@ -528,6 +527,7 @@ And if we send a `GET` request to `https://api.getport.io/v1/actions/runs/{run_i
       "id": "log_Wo7cIcCftqhj4lNy",
       "runId": "r_z0nJYJv0wCm2ASTR",
       "message": "my new log message",
+      "statusDescription": "Doing something...",
       "createdAt": "2023-03-12T15:27:25.394Z",
       "createdBy": "KZ5zDPudPshQMShUb4cLopBEE1fNSJGE"
     }
@@ -540,7 +540,8 @@ If we want to add a final log entry and also mark the action run as successful, 
 ```json showLineNumbers
 {
   "message": "my new log message with final status",
-  "terminationStatus": "SUCCESS"
+  "terminationStatus": "SUCCESS",
+  "statusDescription": "Completed successfully!"
 }
 ```
 

@@ -185,4 +185,4 @@ Below is the mapping for the Trivy resource:
 </details>
 
 ## Alternative integration using script
-While the Trivy Kubernetes exporter described above is the recommended installation method, you may prefer to use a webhook and a script to [ingest your Trivy scan results to Port](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/packages/trivy). 
+While the Trivy Kubernetes exporter described above is the recommended installation method, you may prefer to use a webhook and a script to [ingest your Trivy scan results to Port](/build-your-software-catalog/custom-integration/webhook/examples/packages/trivy). 

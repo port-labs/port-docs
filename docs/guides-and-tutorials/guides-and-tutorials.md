@@ -1,5 +1,6 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import DocCardList from '@theme/DocCardList';
 
 # Guides & tutorials
 
@@ -19,3 +20,4 @@ All guides take less than 10 minutes to complete ✅
 - [Get started with AWS](/guides-and-tutorials/get-started-with-aws)
 - [Control deployment with service lock](/guides-and-tutorials/service-lock-github-workflow)
 
+<DocCardList />
