@@ -397,143 +397,64 @@ By making a `GET` request to `https://api.getport.io/v1/actions/runs/{run_id}/lo
 
 ## Updating an action run
 
-You can use Port's API to update an action run's `status`, `description`, and/or `logs`. 
+You can use Port's API to update an the following properties of an action run:
+- `status` - The status of the action run. Initial value is `IN_PROGRESS`, can be set to `SUCCESS` or `FAILURE`.
+- `statusLabel` - A custom message used to add information to the status of the action run.
+- `logs` - Log entries that will be displayed in the action run's page in Port.
 
 :::info Github backend
 When using a `Github workflow` as the action backend, a `Report workflow status` option will be available and set to `Yes` by default. When using this option, Port will automatically update the status of the action run to `SUCCESS` or `FAILURE` according to the result of the Github workflow, so no manual update is required.
 :::
 
-Now let's take an action run and update it. The following updates can be performed:
-
-<Tabs groupId="interact" queryString="interact">
-
-<TabItem value="info" label="Run info">
+### Run details
 
 By sending a `PATCH` request to the `https://api.getport.io/v1/actions/runs/{run_id}` endpoint, you can do the following:
 
-- Update the run's status, by using the `status` key with one of these values: `SUCCESS`, `FAILURE`.
-- Update the run's description, by using the `description` key with a custom message.
-- Add links to external logs of the job runners, via the `link` key - AWS Cloudwatch logs, Github Workflow job, Jenkins job, etc.
+1. Update the run's status, by using the `status` key with one of these values: `SUCCESS`, `FAILURE`.  
+   This will mark the run as completed and show a visual indicator, for example:
+    <img src='/img/self-service-actions/reflect-action-progress/actionStatusSuccess.png' width='35%' border='1px' />
+   
+2. Update the run's status label, by using the `statusLabel` key with a custom message.  
+   If a label and a status are both provided, the custom message will be displayed with the status' color. For example, the following request body:
+   ```json showLineNumbers
+   {
+     "status": "FAILURE",
+     "statusLabel": "Wrong personal token provided"
+   }
+   ```
+   will display the following status label: 
+    <img src='/img/self-service-actions/reflect-action-progress/actionStatusFailureLabel.png' width='45%' border='1px' />
+   When providing a label only, the status will remain as `IN_PROGRESS` and the label will be displayed with its neutral color.
+
+3. Add links to external logs of the job runners, by using the `link` key - AWS Cloudwatch logs, Github Workflow job, Jenkins job, etc.
 
 :::tip Multiple and partial updates
-You don't have to provide all of the different updates in one request, you can make a `PATCH` request to the endpoint as many times as you need until the action run has finished.  
-You can also send partial updates, for example, you can update only the `description` key to change the description of the action while keeping its status as `In progress`.
+You can make a `PATCH` request to the endpoint as many times as you need until the action run has finished (as long as you don't terminate the run by changing the `status`).  
 
-Note that every patch request will override the previous information that was available for a given key. For example, when updating the `link` key multiple times, only the value provided in the latest update will be the one displayed on the action run object.
+Note that every patch request will override the previous information that was available for a given key. For example, when updating the `link` key multiple times, only the last provided value will be displayed in the action run.
 :::
 
-Let's update our action run with the following `PATCH` request body:
-
-```json showLineNumbers
-{
-  "status": "SUCCESS",
-  "description": "Run completed successfully!",
-  "link": [
-    "https://github.com/actions/toolkit/actions/runs/3617893813",
-    "https://github.com/actions/toolkit/actions/runs/4165617487"
-  ],
-}
-```
-
-The API returns the following response:
-
-```json showLineNumbers
-{
-  "ok": true,
-  "run": {
-    "id": "r_QOz6WoOB1Q2lmhZZ",
-    "status": "SUCCESS",
-    "blueprint": {
-      "identifier": "microservice",
-      "title": "Service"
-    },
-    "action": "create_microservice",
-    // highlight-next-line
-    "endedAt": "2022-12-07T14:51:52.796Z",
-    "source": "UI",
-    // highlight-start
-    "link": [
-      "https://github.com/actions/toolkit/actions/runs/3617893813",
-      "https://github.com/actions/toolkit/actions/runs/4165617487"
-    ],
-    "description": "Run completed successfully!",
-    // highlight-end
-    "relatedEntityExists": false,
-    "relatedBlueprintExists": true,
-    "properties": {
-      "name": "my-microservice",
-      "region": "eu-west-1"
-    },
-    "createdAt": "2022-12-07T12:53:52.916Z",
-    "updatedAt": "2022-12-07T14:51:52.796Z",
-    "createdBy": "auth0|638879fa62c686d381b36ecb",
-    "updatedBy": "KZ5zDPudPshQMShUb4cLopBEE1fNSJGE"
-  }
-}
-```
-
-:::info Patch results
-Note how our action run has updated:
-
-- `status` - has been updated to `SUCCESS`.
-- `endedAt` - now correctly shows the time that the action run was updated.
-- `link` - now includes the links we provided, and those links will also appear in the page matching the action run in Port.
-- `description` - now includes the additional text we provided, which will also appear in the action run page in Port.
-
-:::
-
-</TabItem>
-
-<TabItem value="logs" label="Run logs">
+### Run logs
 
 By sending a `POST` request to the `https://api.getport.io/v1/actions/runs/{run_id}/logs` endpoint, you can do the following:
 
-- Set the action run status via the `terminationStatus` key - `SUCCESS`, `FAILURE`.
-- Update the run's description, by using the `statusDescription` key.
-- Add an additional log entry to the run's log, by using the `message` key.
+1. Add log entries to the run's log, by using the `message` key.
+2. Update the run's status via the `terminationStatus` key with one of these values: `SUCCESS`, `FAILURE`.
+3. Update the run's status label, by using the `statusLabel` key.
 
-Let's update our action run log with the following `POST` request body:
-
-```json showLineNumbers
-{
-  "message": "my new log message",
-  "statusDescription": "Run completed successfully!",
-}
-```
-
-The API returns the following response:
+For example, let's update our action run log with the following `POST` request body:
 
 ```json showLineNumbers
 {
-  "ok": true,
-  "runLog": {
-    "id": "log_Wo7cIcCftqhj4lNy",
-    "runId": "r_z0nJYJv0wCm2ASTR",
-    "message": "my new log message",
-    "statusDescription": "Doing something...",
-    "createdAt": "2023-03-12T15:27:25.394Z",
-    "createdBy": "KZ5zDPudPshQMShUb4cLopBEE1fNSJGE"
-  }
+  "message": "my new log message"
 }
 ```
 
-And if we send a `GET` request to `https://api.getport.io/v1/actions/runs/{run_id}/logs` endpoint, the entire action run log will be returned:
+Back in Port, the new log message will be displayed in the action run's page:
 
-```json showLineNumbers
-{
-  "ok": true,
-  "runLogs": [
-    {
-      "id": "log_Wo7cIcCftqhj4lNy",
-      "runId": "r_z0nJYJv0wCm2ASTR",
-      "message": "my new log message",
-      "statusDescription": "Doing something...",
-      "createdAt": "2023-03-12T15:27:25.394Z",
-      "createdBy": "KZ5zDPudPshQMShUb4cLopBEE1fNSJGE"
-    }
-  ]
-}
-```
+<img src='/img/self-service-actions/reflect-action-progress/actionLogExample.png' width='85%' border='1px' />
+
+<br/><br/>
 
 If we want to add a final log entry and also mark the action run as successful, we can use the following request body:
 
@@ -541,15 +462,11 @@ If we want to add a final log entry and also mark the action run as successful, 
 {
   "message": "my new log message with final status",
   "terminationStatus": "SUCCESS",
-  "statusDescription": "Completed successfully!"
+  "statusLabel": "Completed successfully!"
 }
 ```
 
-A log message with the `terminationStatus` key can only be sent once for an action run. After the `terminationStatus` is sent, the run status is marked accordingly and the run can no longer be modified.
-
-</TabItem>
-
-</Tabs>
+A log message with the `terminationStatus` key can only be sent once for an action run. After it is sent, the run status is marked accordingly and the run can no longer be modified.
 
 ## Tying Entities to an action run
 
