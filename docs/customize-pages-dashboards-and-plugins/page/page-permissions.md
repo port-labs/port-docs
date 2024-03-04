@@ -14,12 +14,12 @@ Currently only `read` permission can be modified.
 
 ## Get page permissions
 
-Any user can get the permissions of a specific page:
+Any user can get the permissions of a specific page, using any of the following methods:
 
 <Tabs groupId="view-permissions" queryString values={[
-{label: "From the UI", value: "ui"},
-{label: "From the API", value: "api"},
-{label: "From Pulumi", value: "pulumi"}
+{label: "UI", value: "ui"},
+{label: "API", value: "api"},
+{label: "Pulumi", value: "pulumi"}
 ]}>
 
 <TabItem value="ui">
@@ -143,12 +143,13 @@ Only page permissions of software catalog pages can be requested. For example, t
 
 ## Update page permissions
 
-Only users with the `admin` role can update the permissions of a catalog page:
+Only users with the `admin` role can update the permissions of a catalog page, using any of the following methods:
 
 <Tabs groupId="edit-permissions" queryString values={[
-{label: "From the UI", value: "ui"},
-{label: "From the API", value: "api"},
-{label: "From Pulumi", value: "pulumi"}
+{label: "UI", value: "ui"},
+{label: "API", value: "api"},
+{label: "Terraform", value: "terraform"},
+{label: "Pulumi", value: "pulumi"}
 ]}>
 
 <TabItem value="ui">
@@ -185,6 +186,12 @@ If you do not specify a specific key (for example `users` in the request, user p
 When making changes to permissions, any role, user or team that does not appear in the corresponding key in the request body will lose permissions to the page (this is how you remove permissions to a page).
 
 :::
+
+</TabItem>
+
+<TabItem value="terraform">
+
+See the [Terraform provider documentation](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/port_page_permissions#example-usage) for examples.
 
 </TabItem>
 
