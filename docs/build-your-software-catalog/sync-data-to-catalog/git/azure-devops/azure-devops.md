@@ -10,7 +10,7 @@ Our integration with Azure DevOps allows you to export objects to Port as entiti
 
 Our Azure DevOps integration makes it easy to fill the software catalog with data directly from your organization, for example:
 
-- Map all of the resources in the organization, including **groups**, **projects**, **monorepos**, **merge requests**, **issues**, and **pipelines**.
+- Map most of the resources in the organization, including **projects**, **repositories**, **pipelines**, **pull requests**, **teams** and **members**.
 - Watch for Azure DevOps object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 - Manage Port entities using GitOps.
 
@@ -39,15 +39,17 @@ resources:
         mappings:
           # Transform & Load
           # highlight-start
-          identifier: .id | tostring
-          title: .title
-          blueprint: '"gitlabMergeRequest"'
+          identifier: >-
+            .repository.project.name + "/" + .repository.name + (.pullRequestId
+            | tostring)
+          blueprint: '"azureDevopsPullRequest"'
           properties:
-            creator: .author.name
-            status: .state
-            createdAt: .created_at
-            updatedAt: .updated_at
-            link: .web_url
+            creator: .createdBy.uniqueName
+            status: .status
+            reviewers: '[.reviewers[].uniqueName]'
+            createdAt: .creationDate
+          relations:
+            repository: .repository.project.name + "/" + .repository.name
         # highlight-end
 ```
 
@@ -61,21 +63,18 @@ Here is an example for the integration configuration block:
 
 ```yaml showLineNumbers
 resources:
-  - kind: project
+  - kind: repository
     selector:
-      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
+      query: 'true' # JQ boolean query. If evaluated to false - skip syncing the object.
     port:
-    entity:
-      mappings:
-        identifier: .namespace.full_path | gsub("/";"-") # The Entity identifier will be the repository name.
-        title: .name
-        blueprint: '"gitlabRepository"'
-        properties:
-          url: .web_link
-          description: .description
-          namespace: .namespace.name
-          fullPath: .namespace.full_path | split("/") | .[:-1] | join("/")
-          defaultBranch: .default_branch
+      entity:
+        mappings:
+          identifier: .project.name + "/" + .name # The Entity identifier will be the repository name.
+          title: .name
+          blueprint: '"azureDevopsRepository"'
+          properties:
+            url: .url
+            readme: file://README.md
 ```
 
 ### Configuration structure
@@ -85,7 +84,7 @@ resources:
   ```yaml showLineNumbers
   # highlight-next-line
   resources:
-    - kind: project
+    - kind: repository
       selector:
       ...
   ```
@@ -95,7 +94,7 @@ resources:
   ```yaml showLineNumbers
     resources:
       # highlight-next-line
-      - kind: project
+      - kind: repository
         selector:
         ...
   ```
@@ -108,7 +107,7 @@ The `selector` and the `query` keys let you filter exactly which objects from th
 
   ```yaml showLineNumbers
   resources:
-    - kind: project
+    - kind: repository
       # highlight-start
       selector:
         query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
@@ -135,17 +134,14 @@ The `port`, `entity` and the `mappings` keys open the section used to map the Az
         # highlight-start
         entity:
           mappings: # Mappings between one Azure DevOps API object to a Port entity. Each value is a JQ query.
-            identifier: .namespace.full_path | gsub("/";"-")
+            identifier: .project.name + "/" + .name
             title: .name
-            blueprint: '"gitlabRepository"'
+            blueprint: '"azureDevopsRepository"'
             properties:
-              url: .web_link
-              description: .description
-              namespace: .namespace.name
-              fullPath: .namespace.full_path | split("/") | .[:-1] | join("/")
-              defaultBranch: .default_branch
+              url: .url
+              readme: file://README.md
         # highlight-end
-    - kind: project # In this instance project is mapped again with a different filter
+    - kind: repository # In this instance project is mapped again with a different filter
       selector:
         query: '.name == "MyRepositoryName"'
       port:
@@ -161,7 +157,7 @@ The `port`, `entity` and the `mappings` keys open the section used to map the Az
 
 Port's Azure DevOps integration requires a group access token with the `api` scope.
 
-To create a group access token, follow the instructions in the [installation](./installation.md#creating-a-gitlab-group-access-token) guide
+To create a personal access token, follow the instructions in the [installation](./installation.md#create-a-personal-access-token) guide
 
 ## Examples
 
