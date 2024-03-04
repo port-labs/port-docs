@@ -265,7 +265,7 @@ The following resources can be used to map data from Dynatrace, it is possible t
       port:
   ```
 
-- The `port`, `entity` and the `mappings` keys are used to map the Dynatrace object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
+- The `port`, `entity` and the `mappings` keys are used to map the Dynatrace object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array:
 
   ```yaml showLineNumbers
   resources:
@@ -313,15 +313,15 @@ Prepare a webhook `URL` using this format: `{app_host}/integration/webhook/probl
 
 ### Create a webhook in Dynatrace
 
-1. Go to Dynatrace;
-2. Go to **Settings** > **Integration** > **Problem notifications**.;
-3. Select **Add notification**;
-4. Select **Custom integration** from the available notification types;
-5. Configure the notification using the following details;
-   1. `Enabled` - ensure the notification is enabled;
-   2. `Display name` - use a meaningful name such as Port Ocean Webhook;
-   3. `Webhook URL` - enter the value of the `URL` you created above.;
-   4. Enable **Call webhook is new events merge into existing problems**;
+1. Go to Dynatrace.
+2. Go to **Settings** > **Integration** > **Problem notifications**.
+3. Select **Add notification**.
+4. Select **Custom integration** from the available notification types.
+5. Configure the notification using the following details.
+   1. `Enabled` - ensure the notification is enabled.
+   2. `Display name` - use a meaningful name such as Port Ocean Webhook.
+   3. `Webhook URL` - enter the value of the `URL` you created above.
+   4. Enable **Call webhook is new events merge into existing problems**.
    5. `Custom payload` - paste the following configuration:
    ```
    {
@@ -330,8 +330,10 @@ Prepare a webhook `URL` using this format: `{app_host}/integration/webhook/probl
        "ProblemTitle":"{ProblemTitle}"
    }
    ```
-   You can customize to your taste, the only important thing is the `ProblemID` key. The webhook integration will not work without it. 6. `Alerting profile` - select the corresponding alerting profile 7. Leave the rest of the fields as is;
-6. Click **Save changes**
+   You can customize to your taste, the only important thing is the `ProblemID` key. The webhook integration will not work without it.
+   6. `Alerting profile` - select the corresponding alerting profile.
+   7. Leave the rest of the fields as is.
+6. Click **Save changes**.
 
 ### Ingest data into Port
 
