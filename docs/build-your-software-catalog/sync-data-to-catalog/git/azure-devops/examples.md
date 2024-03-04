@@ -34,11 +34,9 @@ In the following example you will ingest your Azure Devops repositories, their R
 
 After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your projects alongside their `README.md` file contents and merge requests.
 
-## Mapping repositories and pipelines
+## Mapping pipelines
 
-In the following example you will ingest your Azure Devops repositories and pipelines to Port, you may use the following Port blueprint definitions and integration configuration:
-
-<RepositoryBlueprint/>
+In the following example you will ingest your Azure Devops pipelines to Port, you may use the following Port blueprint definitions and integration configuration:
 
 <PipelineBlueprint/>
 
@@ -48,12 +46,11 @@ In the following example you will ingest your Azure Devops repositories and pipe
 
 - Refer to the [setup](azure-devops.md#setup) section to learn more about the integration configuration setup process.
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform Azure Devops objects to Port entities.
-- Click [Here](https://learn.microsoft.com/en-us/rest/api/azure/devops/git/repositories/list?view=azure-devops-rest-7.2&tabs=HTTP#gitrepository) for the Azure Devops repository object structure.
 - Click [Here](https://learn.microsoft.com/en-us/rest/api/azure/devops/pipelines/pipelines/list?view=azure-devops-rest-7.2#pipeline) for the Azure Devops pipeline object structure.
 
 :::
 
-After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your projects alongside their pipelines and jobs.
+After creating the blueprints and saving the integration configuration, you will see new entities in Port.
 
 ## Mapping supported resources
 
