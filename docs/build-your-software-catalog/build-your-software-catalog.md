@@ -1,10 +1,5 @@
----
-sidebar_position: 1
-title: Build your Software Catalog
-sidebar_label: 🏗️ Build your Software Catalog
----
 
-# 🏗️ Build your Software Catalog
+# 🏗️ Build a Software Catalog
 
 <center>
 
@@ -12,29 +7,30 @@ sidebar_label: 🏗️ Build your Software Catalog
 
 </center>
 
-Port's software catalog is a central metadata store for software, environments, resources and more. Its building blocks are blueprints and relations, and you can use them to build a catalog that reflects your exact data model. You can also build the catalog with one of Port's common data models.
+<br/>
 
-## 📋 Step 1 - Define your data model
+Port's software catalog is a central metadata store for software, environments, resources and any other asset you would like to manage using Port.  
 
-This step begins with determining the information you would like to include for your main entity (most people begin with service), and defining the associated blueprint (in this case, a service blueprint).
+Its building blocks are [blueprints](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/), [relations](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/) and [entities](/build-your-software-catalog/sync-data-to-catalog/#entities), you can use them to build a catalog that reflects your exact data model. 
 
-The next steps would be defining additional blueprints, such as cloud resource or cluster, the data it should include and its relation to other entities.
-For instance, if you want to manage packages in your software catalog, you'll define a package blueprint.
+Your catalog is located in the [Catalog page](https://app.getport.io/organization/catalog) of your portal.
 
-By defining the structure of your data model in this way, you can ensure that the software catalog accurately reflects your engineering organization and as a result will provide you with the centralized and opinionated software catalog you need.
+## Getting started
 
-![Basic blueprints relation](../../static/img/software-catalog/blueprint/exampleBlueprintsAndRelationsLayout.png)
+Your catalog is built by integrating Port with tools and platforms, creating a central location for you to view and manage them.
 
-See how to --> [Define your data model](./define-your-data-model/define-your-data-model.md)
+**First**, think about the data you would like your developers to see in the portal. Which tools are used in your organization, and what data from within those tools would be useful to display/manage in Port?
 
-## 🔄 Step 2 - Ingest data to catalog
+**Then**, choose one of the following options:
 
-The next step in setting Port's Software Catalog is to ingest data into the catalog. This involves using Port's integrations and APIs to import data into the catalog, so that blueprints will be populated with the relevant data.
+#### Install a plug-and-play integration
 
-Port's Software Catalog provides integrations to surface data that exists in various tools and repositories, creating a central metadata store across your devOps architecture, making it easy to centralize all relevant information in one place.
+Port offers a [variety of plug-and-play integrations](/build-your-software-catalog/sync-data-to-catalog/), covering many popular tools and platforms.  
+These integrations come with pre-defined blueprints and mappings, so you can start ingesting data into your catalog right away. You can always customize them after installation to fit your exact needs.
 
-By ingesting data into the software catalog, you can ensure that you have a comprehensive and up-to-date view of your software, infrastructure, cloud resources, CI/CD and more.
+#### Create a custom integration
 
-See how to --> [Ingest data to the software catalog](./sync-data-to-catalog/sync-data-to-catalog.md)
+Can't find your desired tool in our integrations library? No problem! Port provides you with the necessary tools to create your own integrations and ingest data from anywhere.  
+See the [custom integration page](/build-your-software-catalog/custom-integration/) for more information.
 
-![Port integrations](../../static/img/software-catalog/integrations.png)
+<img src='/img/sync-data-to-catalog/catalog-arch.jpg' width='100%' border='1px' />
