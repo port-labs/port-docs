@@ -4,25 +4,33 @@ sidebar_position: 3
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
-# Creating and managing Kubernetes clusters
+# Create and manage Kubernetes clusters
 
-This guide provides a step-by-step walkthrough on creating Kubernetes clusters with the use of Crossplane and ArgoCD.
+This guide provides a step-by-step walkthrough for creating Kubernetes clusters with the use of Crossplane and ArgoCD.
 
 ## Prerequisites
 
-1. A Control plane that will be used to create clusters and other infrastructure. We will use [crossplane](https://docs.crossplane.io/latest/software/install/).
-2. A GitOps operator for automatically running operations on our cluster based on changes in our manifests repository. We will be using [ArgoCD](https://argo-cd.readthedocs.io/en/stable/).
-3. [Install Helm](https://helm.sh/docs/intro/install/)
-4. A GitHub repository to contain your resources i.e. the github workflow file, port resources, and infrastructure manifests.
-5. Prior knowledge of Port Actions is essential for following this guide. Learn more about them [here](/create-self-service-experiences/setup-ui-for-action/).
+1. Prior knowledge of Port Actions is essential for following this guide. Learn more about them [here](/create-self-service-experiences/setup-ui-for-action/).
+2. A Control plane that will be used to create clusters and other infrastructure. We will use [crossplane](https://docs.crossplane.io/latest/software/install/).
+3. A GitOps operator for automatically running operations on our cluster based on changes in our manifests repository. We will be using [ArgoCD](https://argo-cd.readthedocs.io/en/stable/).
+4. [Install Helm](https://helm.sh/docs/intro/install/).
+5. A GitHub repository to contain your resources i.e. the github workflow file, port resources, and infrastructure manifests. 
 
-:::tip
-Copy the `crossplane` folder from our examples repository [here](https://github.com/port-labs/self-service-actions-examples) to follow along through the guide.
+
+:::tip Starter Repository
+Copy the `crossplane` folder from our examples repository [here](https://github.com/port-labs/self-service-actions-examples) to follow along through the guide. The repository contains the following folders:
+- `.github`: contains the github workflows.
+- `argocd`: contains the ArgoCD application manifests. This is where we define the application that automates our process through GitOps.
+- `compositions`: contains the crossplane compositions that define what a cluster is.
+- `crossplane-config`: manifests for installing crossplane into your management cluster.
+- `infra`: will contain the cluster manifests created by the automation.
+- `port`: contains the Port blueprints and action definitions.
+- `scripts`: contains the script that the GitHub workflow uses to create cluster manifests.
 :::
 
 ## 1. Control Plane Setup
 
-:::tip TIP
+:::tip Creating a Kubernetes cluster
 If you don’t have a Kubernetes cluster create one locally with [kind](https://kind.sigs.k8s.io/docs/user/quick-start/).
 :::
 
@@ -48,7 +56,7 @@ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/st
 kubectl get pods -n argocd
 ```
 
-ArgoCD comes with a deafult user: `admin`
+ArgoCD comes with a default user: `admin`
 
 To get the password, type the command below:
 
@@ -67,7 +75,7 @@ The API server can then be accessed using https://localhost:8080
 
 - Create the following Crossplane compositions, in the `crossplane-config` folder, to define the set of resources required to create a new cluster.
 
-:::info
+:::info What are Crossplane Compositions?
 Compositions are templates for creating multiple managed resources as a single object. Learn more about them [here](https://docs.crossplane.io/latest/concepts/compositions/).
 :::
 
@@ -388,7 +396,7 @@ jobs:
 </details>
 
 <br /> 
-- In the [self-service](https://app.getport.io/self-serve) screen, create Port actions to trigger GitHub actions for creating and deleting clusters.
+- On the [self-service](https://app.getport.io/self-serve) page, create Port actions to trigger GitHub actions for creating and deleting clusters.
 
 <details>
 
@@ -519,10 +527,10 @@ spec:
 
 ## 5. Let's test it.
 
-- On the [self-service](https://app.getport.io/self-serve) screen, go to the create cluster action and fill in the cluster properties.
+- On the [self-service](https://app.getport.io/self-serve) page, go to the create cluster action and fill in the cluster properties.
 - Click the execute button to trigger the creation process.
 - GitHub actions will generate a manifest and copy it to the `infra` folder of your repository.
-- ArgoCD will synchronize the manifest with the control plane cluster.
+- ArgoCD will synchronize the manifest within the control plane cluster.
 - Crossplane will create the cluster resources in the specified provider.
 
 Done! 🎉 You can now create and delete clusters from Port.
