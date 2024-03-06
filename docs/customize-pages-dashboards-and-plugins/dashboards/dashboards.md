@@ -113,13 +113,17 @@ This widget allows you to execute [self-service actions](/create-self-service-ex
 
 An single action card can contain one or multiple actions:
 
-**Single action**
+**Single action**  
+To execute the action, click on the button in the bottom left corner of the widget:
+
 <img src='/img/software-catalog/widgets/actionCardSingle.png' width='50%' />
 <br/><br/>
 
-**Multiple actions**
+**Multiple actions**  
+When choosing multiple actions, you can choose your own title for the widget.  
+To execute an action, click on the ⚡ button next to it:
 
-<img src='/img/software-catalog/widgets/actionCardMultiple.png' width='50%' />
+<img src='/img/software-catalog/widgets/actionCardMultiple.png' width='45%' />
 
 
 ### Action runs
