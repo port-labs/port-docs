@@ -11,7 +11,7 @@ Examples of useful applications of dynamic permissions:
 
 - Ensure that action executions requested by a team member can only be approved by his/her direct manager.
 - Perform validations/manipulations on inputs that depend on data from related entities.
-- Ensure that only those who are on-call can perform rollbacks of a service with issues
+- Ensure that only those who are on-call can perform rollbacks of a service with issues.
 
 ## Configuring permissions
 
