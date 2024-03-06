@@ -45,19 +45,19 @@ Using this installation option means that the integration will be able to update
 This table summarizes the available parameters for the installation.
 Set them as you wish in the script below, then copy it and run it in your terminal:
 
-| Parameter                          | Description                                                                                                                                               | Required |
-| ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| `port.clientId`                    | Your port client id ([Get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))     | ✅       |
-| `port.clientSecret`                | Your port client secret ([Get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)) | ✅       |
-| `integration.identifier`           | Change the identifier to describe your integration                                                                                                        | ✅       |
-| `integration.type`                 | The integration type                                                                                                                                      | ✅       |
-| `integration.eventListener.type`   | The event listener type                                                                                                                                   | ✅       |
-| `integration.secrets.jenkinsUser`  | The Jenkins username                                                                                                                                      | ✅       |
-| `integration.secrets.jenkinsToken` | The Jenkins password or token                                                                                                                             | ✅       |
-| `integration.config.jenkinsHost`   | The Jenkins host                                                                                                                                          | ✅       |
-| `integration.config.appHost`       | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Jenkins                                     | ❌       |
-| `scheduledResyncInterval`          | The number of minutes between each resync                                                                                                                 | ❌       |
-| `initializePortResources`          | Default true, When set to true the integration will create default blueprints and the port App config Mapping                                             | ❌       |
+| Parameter                           | Description                                                                                                        | Required |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
+| `port.clientId`                     | Your port client id ([Get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                               | ✅       |
+| `port.clientSecret`                 | Your port client secret ([Get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                           | ✅       |
+| `integration.identifier`            | Change the identifier to describe your integration                                                                 | ✅       |
+| `integration.type`                  | The integration type                                                                                               | ✅       |
+| `integration.eventListener.type`    | The event listener type                                                                                            | ✅       |
+| `integration.secrets.jenkinsUser`   | The Jenkins username                                                                                               | ✅       |
+| `integration.secrets.jenkinsToken`  | The Jenkins password or token                                                                                     | ✅       |
+| `integration.config.jenkinsHost`    | The Jenkins host                                                                                                  | ✅       |
+| `integration.config.appHost`        | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Jenkins  | ❌       |
+| `scheduledResyncInterval`           | The number of minutes between each resync                                                                          | ❌       |
+| `initializePortResources`           | Default true, When set to true the integration will create default blueprints and the port App config Mapping      | ❌       |
 
 <br/>
 
