@@ -1,0 +1,35 @@
+<details>
+
+<summary> Ocean integration configuration </summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: team
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .id
+          title: .name
+          blueprint: '"azureDevopsTeam"'
+          properties:
+            url: .url
+            description: .description
+  - kind: member
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .identity.uniqueName + "-" + .__teamId
+          title: .identity.displayName
+          blueprint: '"azureDevopsMember"'
+          properties:
+            url: .identity.url
+            email: .identity.uniqueName
+          relations:
+            team: .__teamId
+```
+
+</details>
