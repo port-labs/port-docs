@@ -111,7 +111,7 @@ Just like catalog pages, tables support the following customization options:
 
 This widget allows you to execute [self-service actions](/create-self-service-experiences) directly from any dashboard (including your homepage).
 
-An single action card can contain one or multiple actions:
+A single action card can contain one or multiple actions:
 
 **Single action**  
 To execute the action, click on the button in the bottom left corner of the widget:
