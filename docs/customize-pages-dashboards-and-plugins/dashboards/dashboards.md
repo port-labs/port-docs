@@ -107,14 +107,27 @@ Just like catalog pages, tables support the following customization options:
 - [Initial filters](/customize-pages-dashboards-and-plugins/page/catalog-page/#initial-filters)
 - [Excluded properties](/customize-pages-dashboards-and-plugins/page/catalog-page/#excluded-properties)
 
+### Action card
+
+This widget allows you to execute [self-service actions](/create-self-service-experiences) directly from any dashboard (including your homepage).
+
+An single action card can contain one or multiple actions:
+
+**Single action**
+<img src='/img/software-catalog/widgets/actionCardSingle.png' width='50%' />
+<br/><br/>
+
+**Multiple actions**
+
+<img src='/img/software-catalog/widgets/actionCardMultiple.png' width='50%' />
+
+
 ### Action runs
 
 This widget allows you to create a table displaying all past runs of a [self-service action](/create-self-service-experiences) in your portal.  
 The table will automatically display data about each run, including status, input parameters, the executing user, and more. 
 
 <img src='/img/software-catalog/widgets/actionRunsTableExample.png' width='100%' />
-
-
 
 ## Chart filters
 
