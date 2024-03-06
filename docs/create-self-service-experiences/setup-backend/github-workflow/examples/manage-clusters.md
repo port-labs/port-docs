@@ -248,7 +248,7 @@ on:
         default: "small"
       min-node-count:
         required: true
-        description: "The minnimun number of nodes (autoscaler might increase this number)"
+        description: "The minimum number of nodes (autoscaler might increase this number)"
         default: "1"
 jobs:
   deploy-app:
