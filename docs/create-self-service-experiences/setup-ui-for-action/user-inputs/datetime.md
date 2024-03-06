@@ -1,5 +1,5 @@
 ---
-sidebar_position: 10
+sidebar_position: 2
 description: Datetime is an input used to reference a date and time
 ---
 
@@ -16,10 +16,9 @@ Datetime is an input used to reference a date and time.
 
 The datetime input type can be used to store any date and time, for example:
 
-- Deployment time;
-- Release time;
-- Creation timestamp;
-- etc.
+- Deployment time
+- Release time
+- Creation timestamp
 
 ## API definition
 
