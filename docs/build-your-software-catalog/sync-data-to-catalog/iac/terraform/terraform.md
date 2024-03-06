@@ -470,7 +470,7 @@ terraform import port_entity.myEntity "{blueprintIdentifier}:{entityIdentifier}"
 ```
 
 :::danger
-Before importing the data into your Terraform state, make sure your resources matches the scheme at Port (properties), otherwise your state will be deleted in the next apply. This is because Terraform will try to apply the empty resources and override the imported state, while also updating Port in the process.
+Before using `terraform import` to bring data from your Port account into your Terraform state file, make sure your resource definitions match the schema of your resources in Port. If they don't, your state will be deleted in the next `terraform apply`, since Terraform will try to apply the empty resources and override the imported state, while also updating Port in the process.                                                                                                                                                                                                                             
 :::
 
 </TabItem>
