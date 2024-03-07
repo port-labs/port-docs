@@ -1,5 +1,5 @@
 ---
-sidebar_position: 7
+sidebar_position: 3
 description: Email is an input used to save Email addresses
 ---
 

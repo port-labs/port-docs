@@ -4,7 +4,7 @@
 
 ```yaml showLineNumbers
 resources:
-  - kind: repository
+  - kind: service
     selector:
       query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
     port:
@@ -12,7 +12,7 @@ resources:
         mappings:
           identifier: ".name" # The Entity identifier will be the repository name.
           title: ".name"
-          blueprint: '"githubRepository"'
+          blueprint: '"githubService"'
           properties:
             readme: file://README.md # fetching the README.md file that is within the root folder of the repository and ingesting its contents as a markdown property
             url: .html_url
@@ -37,7 +37,7 @@ resources:
             prNumber: ".id"
             link: ".html_url"
           relations:
-            repository: .head.repo.name
+            service: .head.repo.name
 ```
 
 </details>
