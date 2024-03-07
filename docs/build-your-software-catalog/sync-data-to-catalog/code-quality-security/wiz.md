@@ -3,7 +3,7 @@ import TabItem from "@theme/TabItem"
 import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
 import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
 import DockerParameters from "./\_wiz-docker-parameters.mdx"
-import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
+import AdvancedConfig from '../../../generalTemplates/\_ocean_advanced_configuration_note.md'
 import WizBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/wiz/\_example_wiz_issue_blueprint.mdx";
 import WizConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/wiz/\_example_wiz_issue_webhook_configuration.mdx";
 
@@ -22,7 +22,6 @@ Our Wiz integration allows you to import `projects`, `issues`, `controls`, and `
 
 Your Wiz credentials should have the `read:projects` and `read:issues` permission scopes. Visit the Wiz [documentation](https://integrate.wiz.io/reference/prerequisites) for a guide on how to get your credentials as well as set permissions.
 
-
 ## Installation
 
 Choose one of the following installation methods:
@@ -36,21 +35,21 @@ Using this installation option means that the integration will be able to update
 This table summarizes the available parameters for the installation.
 Set them as you wish in the script below, then copy it and run it in your terminal:
 
-| Parameter                           | Description                                                                                                        | Required |
-| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
-| `port.clientId`                     | Your port client id ([Get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                               | ✅       |
-| `port.clientSecret`                 | Your port client secret ([Get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                           | ✅       |
-| `integration.identifier`            | Change the identifier to describe your integration                                                                 | ✅       |
-| `integration.type`                  | The integration type                                                                                               | ✅       |
-| `integration.eventListener.type`    | The event listener type                                                                                            | ✅       |
-| `integration.secrets.wizClientId`   | The Wiz Client ID                                                                                                  | ✅       |
-| `integration.secrets.wizClientSecret`| The Wiz Client Secret                                                                                             | ✅       |
-| `integration.config.wizApiUrl`      | The Wiz API URL.                                                                                                   | ✅       |
-| `integration.config.wizTokenUrl`    | The Wiz Token Authentication URL                                                                                   | ✅       |
-| `integration.config.appHost`        | The host of the Port Ocean app. Used to set up the integration endpoint as the target for Webhooks created in Wiz  | ❌       |
-| `integration.secret.wizWebhookVerificationToken`  | This is a password you create, that is used to verify webhook events to Port                                       | ❌       |
-| `scheduledResyncInterval`           | The number of minutes between each resync                                                                          | ❌       |
-| `initializePortResources`           | Default true, When set to true the integration will create default blueprints and the port App config Mapping      | ❌       |
+| Parameter                                        | Description                                                                                                                                             | Required |
+| ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `port.clientId`                                  | Your port client id ([Get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))     | ✅       |
+| `port.clientSecret`                              | Your port client secret ([Get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) | ✅       |
+| `integration.identifier`                         | Change the identifier to describe your integration                                                                                                      | ✅       |
+| `integration.type`                               | The integration type                                                                                                                                    | ✅       |
+| `integration.eventListener.type`                 | The event listener type                                                                                                                                 | ✅       |
+| `integration.secrets.wizClientId`                | The Wiz Client ID                                                                                                                                       | ✅       |
+| `integration.secrets.wizClientSecret`            | The Wiz Client Secret                                                                                                                                   | ✅       |
+| `integration.config.wizApiUrl`                   | The Wiz API URL.                                                                                                                                        | ✅       |
+| `integration.config.wizTokenUrl`                 | The Wiz Token Authentication URL                                                                                                                        | ✅       |
+| `integration.config.appHost`                     | The host of the Port Ocean app. Used to set up the integration endpoint as the target for Webhooks created in Wiz                                       | ❌       |
+| `integration.secret.wizWebhookVerificationToken` | This is a password you create, that is used to verify webhook events to Port                                                                            | ❌       |
+| `scheduledResyncInterval`                        | The number of minutes between each resync                                                                                                               | ❌       |
+| `initializePortResources`                        | Default true, When set to true the integration will create default blueprints and the port App config Mapping                                           | ❌       |
 
 <br/>
 
@@ -67,7 +66,7 @@ helm upgrade --install my-wiz-integration port-labs/port-ocean \
 	--set integration.secrets.wizClientId="WIZ_CLIENT_ID"  \
 	--set integration.secrets.wizClientSecret="WIZ_CLIENT_SECRET" \
         --set integration.secrets.wizApiUrl="WIZ_API_URL"  \
-	--set integration.config.wizTokenUrl="WIZ_TOKEN_URL"  
+	--set integration.config.wizTokenUrl="WIZ_TOKEN_URL"
 ```
 
 </TabItem>
@@ -200,7 +199,7 @@ Here is an example for `wiz-integration.yml` pipeline file:
 
 ```yaml showLineNumbers
 trigger:
-- main
+  - main
 
 pool:
   vmImage: "ubuntu-latest"
@@ -208,30 +207,29 @@ pool:
 variables:
   - group: port-ocean-credentials
 
-
 steps:
-- script: |
-    # Set Docker image and run the container
-    integration_type="wiz"
-    version="latest"
+  - script: |
+      # Set Docker image and run the container
+      integration_type="wiz"
+      version="latest"
 
-    image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
+      image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
 
-    docker run -i --rm \
-        -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
-        -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-        -e OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_ID=${OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_ID} \
-        -e OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_SECRET=${OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_SECRET} \
-        -e OCEAN__INTEGRATION__CONFIG__WIZ_API_URL=${OCEAN__INTEGRATION__CONFIG__WIZ_API_URL} \
-        -e OCEAN__INTEGRATION__CONFIG__WIZ_TOKEN_URL=${OCEAN__INTEGRATION__CONFIG__WIZ_TOKEN_URL} \
-        -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \
-        -e OCEAN__PORT__CLIENT_SECRET=${OCEAN__PORT__CLIENT_SECRET} \
-        $image_name
+      docker run -i --rm \
+          -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+          -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+          -e OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_ID=${OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_ID} \
+          -e OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_SECRET=${OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_SECRET} \
+          -e OCEAN__INTEGRATION__CONFIG__WIZ_API_URL=${OCEAN__INTEGRATION__CONFIG__WIZ_API_URL} \
+          -e OCEAN__INTEGRATION__CONFIG__WIZ_TOKEN_URL=${OCEAN__INTEGRATION__CONFIG__WIZ_TOKEN_URL} \
+          -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \
+          -e OCEAN__PORT__CLIENT_SECRET=${OCEAN__PORT__CLIENT_SECRET} \
+          $image_name
 
-    exit $?
-  displayName: 'Ingest Data into Port'
-
+      exit $?
+    displayName: "Ingest Data into Port"
 ```
+
 </TabItem>
 
   </Tabs>
@@ -253,7 +251,7 @@ deleteDependentEntities: true
 resources:
   - kind: project
     selector:
-      query: 'true'
+      query: "true"
     port:
       entity:
         mappings:
@@ -415,7 +413,7 @@ Examples of blueprints and the relevant integration configurations:
 resources:
   - kind: project
     selector:
-      query: 'true'
+      query: "true"
     port:
       entity:
         mappings:
@@ -471,7 +469,7 @@ resources:
 resources:
   - kind: control
     selector:
-      query: 'true'
+      query: "true"
     port:
       entity:
         mappings:
@@ -496,114 +494,98 @@ resources:
   "description": "This blueprint represents a wiz issue",
   "title": "Wiz Issue",
   "icon": "Alert",
-  "schema": {
-    "properties": {
-      "url": {
-        "type": "string",
-        "title": "Issue URL",
-        "format": "url",
-        "description": "the link to the issue"
-      },
-      "status": {
-        "title": "Status",
-        "type": "string",
-        "enum": [
-          "OPEN",
-          "IN_PROGRESS",
-          "RESOLVED",
-          "REJECTED"
-        ],
-        "enumColors": {
-          "OPEN": "blue",
-          "IN_PROGRESS": "orange",
-          "RESOLVED": "green",
-          "REJECTED": "darkGray"
-        }
-      },
-      "severity": {
-        "title": "Severity",
-        "type": "string",
-        "enum": [
-          "INFORMATIONAL",
-          "LOW",
-          "MEDIUM",
-          "HIGH",
-          "CRITICAL"
-        ],
-        "enumColors": {
-          "INFORMATIONAL": "blue",
-          "LOW": "yellow",
-          "MEDIUM": "orange",
-          "HIGH": "red",
-          "CRITICAL": "red"
-        }
-      },
-      "type": {
-        "title": "Type",
-        "type": "string"
-      },
-      "vulnerability": {
-        "title": "Vulnerability",
-        "type": "object",
-        "description": "The identified security risk"
-      },
-      "notes": {
-        "title": "Notes",
-        "type": "array"
-      },
-      "createdAt": {
-        "title": "Created At",
-        "type": "string",
-        "format": "date-time"
-      },
-      "updatedAt": {
-        "title": "Updated At",
-        "type": "string",
-        "format": "date-time"
-      },
-      "dueAt": {
-        "title": "Due At",
-        "type": "string",
-        "format": "date-time"
-      },
-      "resolvedAt": {
-        "title": "Resolved At",
-        "type": "string",
-        "format": "date-time"
-      },
-      "statusChangedAt": {
-        "title": "Status ChangedAt",
-        "type": "string",
-        "format": "date-time"
-      }
+  "schema":
+    {
+      "properties":
+        {
+          "url":
+            {
+              "type": "string",
+              "title": "Issue URL",
+              "format": "url",
+              "description": "the link to the issue",
+            },
+          "status":
+            {
+              "title": "Status",
+              "type": "string",
+              "enum": ["OPEN", "IN_PROGRESS", "RESOLVED", "REJECTED"],
+              "enumColors":
+                {
+                  "OPEN": "blue",
+                  "IN_PROGRESS": "orange",
+                  "RESOLVED": "green",
+                  "REJECTED": "darkGray",
+                },
+            },
+          "severity":
+            {
+              "title": "Severity",
+              "type": "string",
+              "enum": ["INFORMATIONAL", "LOW", "MEDIUM", "HIGH", "CRITICAL"],
+              "enumColors":
+                {
+                  "INFORMATIONAL": "blue",
+                  "LOW": "yellow",
+                  "MEDIUM": "orange",
+                  "HIGH": "red",
+                  "CRITICAL": "red",
+                },
+            },
+          "type": { "title": "Type", "type": "string" },
+          "vulnerability":
+            {
+              "title": "Vulnerability",
+              "type": "object",
+              "description": "The identified security risk",
+            },
+          "notes": { "title": "Notes", "type": "array" },
+          "createdAt":
+            { "title": "Created At", "type": "string", "format": "date-time" },
+          "updatedAt":
+            { "title": "Updated At", "type": "string", "format": "date-time" },
+          "dueAt":
+            { "title": "Due At", "type": "string", "format": "date-time" },
+          "resolvedAt":
+            { "title": "Resolved At", "type": "string", "format": "date-time" },
+          "statusChangedAt":
+            {
+              "title": "Status ChangedAt",
+              "type": "string",
+              "format": "date-time",
+            },
+        },
+      "required": [],
     },
-    "required": []
-  },
   "mirrorProperties": {},
   "calculationProperties": {},
-  "relations": {
-    "projects": {
-      "target": "wizProject",
-      "title": "Affected Projects",
-      "description": "The projects affected by this issue",
-      "required": false,
-      "many": true
+  "relations":
+    {
+      "projects":
+        {
+          "target": "wizProject",
+          "title": "Affected Projects",
+          "description": "The projects affected by this issue",
+          "required": false,
+          "many": true,
+        },
+      "serviceTickets":
+        {
+          "target": "wizServiceTicket",
+          "title": "Service Tickets",
+          "description": "The service tickets belonging to this issue",
+          "required": false,
+          "many": true,
+        },
+      "control":
+        {
+          "target": "wizControl",
+          "title": "Control",
+          "description": "The control that flagged this issue",
+          "required": false,
+          "many": false,
+        },
     },
-    "serviceTickets": {
-      "target": "wizServiceTicket",
-      "title": "Service Tickets",
-      "description": "The service tickets belonging to this issue",
-      "required": false,
-      "many": true
-    },
-    "control": {
-      "target": "wizControl",
-      "title": "Control",
-      "description": "The control that flagged this issue",
-      "required": false,
-      "many": false
-    }
-  }
 }
 ```
 
@@ -616,7 +598,7 @@ resources:
 resources:
   - kind: issue
     selector:
-      query: 'true'
+      query: "true"
     port:
       entity:
         mappings:
@@ -642,7 +624,6 @@ resources:
 
 </details>
 
-
 ### Service Ticket
 
 <details>
@@ -654,22 +635,26 @@ resources:
   "description": "This blueprint represents a wiz service ticket",
   "title": "Wiz Service Ticket",
   "icon": "Book",
-  "schema": {
-    "properties": {
-      "url": {
-        "type": "string",
-        "title": "Ticket URL",
-        "format": "url",
-        "description": "the service ticket URL"
-      }
+  "schema":
+    {
+      "properties":
+        {
+          "url":
+            {
+              "type": "string",
+              "title": "Ticket URL",
+              "format": "url",
+              "description": "the service ticket URL",
+            },
+        },
+      "required": [],
     },
-    "required": []
-  },
   "mirrorProperties": {},
   "calculationProperties": {},
-  "relations": {}
+  "relations": {},
 }
 ```
+
 </details>
 
 <details>
@@ -693,6 +678,7 @@ resources:
 </details>
 
 ## Alternative installation via webhook
+
 While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from Wiz. If so, use the following instructions:
 
 <details>
@@ -734,4 +720,258 @@ Create the following webhook configuration [using Port's UI](/build-your-softwar
 2. Follow this [guide](https://integrate.wiz.io/reference/webhook-tutorial#create-a-custom-webhook) in the documentation to create a webhook.
 
 Done! Any issue created in Wiz will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+
+</details>
+
+## Let's Test It
+
+This section includes a sample response data from Wiz. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+
+### Payload
+
+Here is an example of the payload structure from Wiz:
+
+<details>
+<summary>Project response data</summary>
+
+```json showLineNumbers
+{
+  "id": "d6ac50bb-aec0-52fc-80ab-bacd7b02f178",
+  "name": "Project1",
+  "isFolder": false,
+  "archived": false,
+  "businessUnit": "Dev",
+  "description": "Test project"
+}
+```
+
+</details>
+
+<details>
+<summary>Control response data</summary>
+
+```json showLineNumbers
+{
+  "__typename": "Control",
+  "id": "9d7ef6e4-baed-47ba-99ec-a78a801f1e19",
+  "name": "Publicly Exposed Assets with DataFindings ",
+  "controlDescription": "",
+  "resolutionRecommendation": "",
+  "securitySubCategories": [
+    {
+      "title": "Data Security",
+      "category": {
+        "name": "8 Data Security",
+        "framework": {
+          "name": "Wiz"
+        }
+      }
+    }
+  ]
+}
+```
+
+</details>
+
+<details>
+<summary>Issue response data</summary>
+
+```json showLineNumbers
+{
+  "id": "fffedba9-587f-4251-8c96-d966c183f10c",
+  "sourceRule": {
+    "__typename": "Control",
+    "id": "9d7ef6e4-baed-47ba-99ec-a78a801f1e19",
+    "name": "Publicly Exposed Assets with DataFindings ",
+    "controlDescription": "",
+    "resolutionRecommendation": "",
+    "securitySubCategories": [
+      {
+        "title": "Data Security",
+        "category": {
+          "name": "8 Data Security",
+          "framework": {
+            "name": "Wiz"
+          }
+        }
+      }
+    ]
+  },
+  "createdAt": "2023-08-23T07:56:09.903743Z",
+  "updatedAt": "2023-09-12T08:33:16.327851Z",
+  "dueAt": null,
+  "type": "TOXIC_COMBINATION",
+  "resolvedAt": "2023-08-30T08:17:54.613564Z",
+  "statusChangedAt": "2023-08-30T08:17:54.613564Z",
+  "projects": [
+    {
+      "id": "d6ac50bb-aec0-52fc-80ab-bacd7b02f178",
+      "name": "Project1",
+      "slug": "project1",
+      "businessUnit": "Dev",
+      "riskProfile": {
+        "businessImpact": "MBI"
+      }
+    }
+  ],
+  "status": "RESOLVED",
+  "severity": "HIGH",
+  "entitySnapshot": {
+    "id": "3d7dafdc-0087-55e0-81fd-a9e2b152fb47",
+    "type": "DATA_FINDING",
+    "nativeType": "",
+    "name": "GDPR 2415",
+    "status": null,
+    "cloudPlatform": null,
+    "cloudProviderURL": "",
+    "providerId": "data##wizt-recEIECHXqlRPMZRw##wfke-jpb8-twwk-l7mm",
+    "region": "",
+    "resourceGroupExternalId": "",
+    "subscriptionExternalId": "",
+    "subscriptionName": "",
+    "subscriptionTags": null,
+    "tags": {},
+    "externalId": "data##wizt-recEIECHXqlRPMZRw##wfke-jpb8-twwk-l7mm"
+  },
+  "serviceTickets": [],
+  "notes": [
+    {
+      "createdAt": "2023-09-12T08:33:16.29091Z",
+      "updatedAt": "2023-09-12T08:33:16.366971Z",
+      "text": "test",
+      "user": null,
+      "serviceAccount": {
+        "name": "bot-ise"
+      }
+    },
+    {
+      "createdAt": "2023-09-12T08:22:20.13926Z",
+      "updatedAt": "2023-09-12T08:33:16.369728Z",
+      "text": "test",
+      "user": null,
+      "serviceAccount": {
+        "name": "bot-ise"
+      }
+    },
+    {
+      "createdAt": "2023-09-12T08:21:49.663314Z",
+      "updatedAt": "2023-09-12T08:33:16.371541Z",
+      "text": "test",
+      "user": null,
+      "serviceAccount": {
+        "name": "bot-ise"
+      }
+    }
+  ]
+}
+```
+
+</details>
+
+<details>
+<summary>Service Ticket response data</summary>
+
+```json showLineNumbers
+
+```
+
+### Mapping Result
+
+The combination of the sample payload and the Ocean configuration generates the following Port entity:
+
+<details>
+<summary><b>Project entity in Port(Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "d6ac50bb-aec0-52fc-80ab-bacd7b02f178",
+  "title": "Project1",
+  "blueprint": "wizProject",
+  "team": [],
+  "icon": "NewRelic",
+  "properties": {
+    "archived": false,
+    "businessUnit": "Dev",
+    "description": "Test project"
+  },
+  "createdAt": "2024-2-6T09:30:57.924Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2024-2-6T11:49:20.881Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+<details>
+<summary><b>Control entity in Port(Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "9d7ef6e4-baed-47ba-99ec-a78a801f1e19",
+  "title": "Publicly Exposed Assets with DataFindings",
+  "blueprint": "wizControl",
+  "icon": "Flag",
+  "properties": {
+    "controlDescription": "",
+    "resolutionRecommendation": ""
+  },
+  "createdAt": "2024-2-6T09:30:57.924Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2024-2-6T11:49:20.881Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+<details>
+<summary><b>Issue entity in Port(Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "fffedba9-587f-4251-8c96-d966c183f10c",
+"title": "GDPR 2415 | DATA_FINDING",
+"blueprint": "wizIssue",
+"icon": "Alert",
+"properties": {
+  "url": "https://app.wiz.io/issues#~(issue~'fffedba9-587f-4251-8c96-d966c183f10c)",
+  "status": "RESOLVED",
+  "severity": "HIGH",
+  "type": "TOXIC_COMBINATION",
+  "notes": [],
+  "vulnerability": {
+    "id": "3d7dafdc-0087-55e0-81fd-a9e2b152fb47",
+    "type": "DATA_FINDING",
+    "nativeType": "",
+    "name": "GDPR 2415",
+    "status": null,
+    "cloudPlatform": null,
+    "cloudProviderURL": "",
+    "providerId": "data##wizt-recEIECHXqlRPMZRw##wfke-jpb8-twwk-l7mm",
+    "region": "",
+    "resourceGroupExternalId": "",
+    "subscriptionExternalId": "",
+    "subscriptionName": "",
+    "subscriptionTags": null,
+    "tags": {},
+    "externalId": "data##wizt-recEIECHXqlRPMZRw##wfke-jpb8-twwk-l7mm"
+  },
+  "createdAt": "2023-08-23T07:56:09.903743Z",
+  "updatedAt": "2023-09-12T08:33:16.327851Z",
+  "resolvedAt": "2023-08-30T08:17:54.613564Z",
+  "statusChangedAt": "2023-08-30T08:17:54.613564Z",
+},
+"relations": {
+  "projects": ["d6ac50bb-aec0-52fc-80ab-bacd7b02f178"],
+  "serviceTickets": [],
+  "control": "9d7ef6e4-baed-47ba-99ec-a78a801f1e19"
+},
+"createdAt": "2023-08-23T07:56:09.903743Z",
+"createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+"updatedAt": "2023-09-12T08:33:16.327851Z",
+"updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
 </details>
