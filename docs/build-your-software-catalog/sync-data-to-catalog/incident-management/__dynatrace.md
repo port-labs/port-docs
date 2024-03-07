@@ -323,16 +323,14 @@ Prepare a webhook `URL` using this format: `{app_host}/integration/webhook`. The
    3. `Webhook URL` - enter the value of the `URL` you created above.;
    4. Enable **Call webhook is new events merge into existing problems**;
    5. `Custom payload` - paste the following configuration:
-    ```
-    {
-        "State":"{State}",
-        "ProblemID":"{ProblemID}",
-        "ProblemTitle":"{ProblemTitle}"
-    }
-    ```
-    You can customize to your taste, the only important thing is the `ProblemID` key. The webhook integration will not work without it.
-   6. `Alerting profile` - select the corresponding alerting profile
-   7. Leave the rest of the fields as is;
+   ```
+   {
+       "State":"{State}",
+       "ProblemID":"{ProblemID}",
+       "ProblemTitle":"{ProblemTitle}"
+   }
+   ```
+   You can customize to your taste, the only important thing is the `ProblemID` key. The webhook integration will not work without it. 6. `Alerting profile` - select the corresponding alerting profile 7. Leave the rest of the fields as is;
 6. Click **Save changes**
 
 ### Ingest data into Port

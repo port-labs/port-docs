@@ -7,7 +7,7 @@ import TabItem from "@theme/TabItem"
 import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
 import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
 import DockerParameters from "./\_jenkins-docker-parameters.mdx"
-import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
+import AdvancedConfig from '../../../generalTemplates/\_ocean_advanced_configuration_note.md'
 
 # Jenkins
 
@@ -23,6 +23,7 @@ Our Jenkins integration allows you to import `jobs`, `builds`, and `users` from 
 <Prerequisites />
 
 To generate a token for authenticating the Jenkins API calls:
+
 1. In the Jenkins banner frame, click your user name to open the user menu.
 2. Navigate to Your **Username** > **Configure** > **API Token**.
 3. Click Add new Token.
@@ -30,7 +31,6 @@ To generate a token for authenticating the Jenkins API calls:
 5. Copy the API token that is generated to use as the `JENKINS_TOKEN`.
 
 <img src='/img/build-your-software-catalog/sync-data-to-catalog/jenkins/configure-api-token.png' width='80%' />
-
 
 ## Installation
 
@@ -73,7 +73,7 @@ helm upgrade --install my-jenkins-integration port-labs/port-ocean \
 	--set integration.eventListener.type="POLLING"  \
 	--set integration.secrets.jenkinsUser="JENKINS_USER"  \
 	--set integration.secrets.jenkinsToken="JENKINS_TOKEN" \
-	--set integration.config.jenkinsHost="JENKINS_HOST"  
+	--set integration.config.jenkinsHost="JENKINS_HOST"
 ```
 
 </TabItem>
@@ -199,7 +199,7 @@ Here is an example for `jenkins-integration.yml` pipeline file:
 
 ```yaml showLineNumbers
 trigger:
-- main
+  - main
 
 pool:
   vmImage: "ubuntu-latest"
@@ -207,28 +207,26 @@ pool:
 variables:
   - group: port-ocean-credentials
 
-
 steps:
-- script: |
-    # Set Docker image and run the container
-    integration_type="jenkins"
-    version="latest"
+  - script: |
+      # Set Docker image and run the container
+      integration_type="jenkins"
+      version="latest"
 
-    image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
+      image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
 
-    docker run -i --rm \
-        -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
-        -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-        -e OCEAN__INTEGRATION__CONFIG__JENKINS_USER=${OCEAN__INTEGRATION__CONFIG__JENKINS_USER} \
-        -e OCEAN__INTEGRATION__CONFIG__JENKINS_TOKEN=${OCEAN__INTEGRATION__CONFIG__JENKINS_TOKEN} \
-        -e OCEAN__INTEGRATION__CONFIG__JENKINS_HOST=${OCEAN__INTEGRATION__CONFIG__JENKINS_HOST} \
-        -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \
-        -e OCEAN__PORT__CLIENT_SECRET=${OCEAN__PORT__CLIENT_SECRET} \
-        $image_name
+      docker run -i --rm \
+          -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+          -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+          -e OCEAN__INTEGRATION__CONFIG__JENKINS_USER=${OCEAN__INTEGRATION__CONFIG__JENKINS_USER} \
+          -e OCEAN__INTEGRATION__CONFIG__JENKINS_TOKEN=${OCEAN__INTEGRATION__CONFIG__JENKINS_TOKEN} \
+          -e OCEAN__INTEGRATION__CONFIG__JENKINS_HOST=${OCEAN__INTEGRATION__CONFIG__JENKINS_HOST} \
+          -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \
+          -e OCEAN__PORT__CLIENT_SECRET=${OCEAN__PORT__CLIENT_SECRET} \
+          $image_name
 
-    exit $?
-  displayName: 'Ingest Data into Port'
-
+      exit $?
+    displayName: "Ingest Data into Port"
 ```
 
   </TabItem>
@@ -271,7 +269,6 @@ The integration makes use of the [JQ JSON processor](https://stedolan.github.io/
 ### Configuration structure
 
 The integration configuration determines which resources will be queried from Jenkins, and which entities and properties will be created in Port.
-
 
 - The root key of the integration configuration is the `resources` key:
 
@@ -364,43 +361,38 @@ Examples of blueprints and the relevant integration configurations:
   "title": "Jenkins Job",
   "icon": "Jenkins",
   "schema": {
-      "properties": {
-          "jobName": {
-              "type": "string",
-              "title": "Job Name"
-          },
-          "jobStatus": {
-              "type": "string",
-              "title": "Job Status",
-              "enum": [
-                  "created",
-                  "unknown",
-                  "passing",
-                  "failing"
-              ],
-              "enumColors": {
-                  "passing": "green",
-                  "created": "darkGray",
-                  "failing": "red",
-                  "unknown": "orange"
-              }
-          },
-          "timestamp": {
-              "type": "string",
-              "format": "date-time",
-              "title": "Timestamp",
-              "description": "Last updated timestamp of the job"
-          },
-          "url": {
-              "type": "string",
-              "title": "Project URL"
-          },
-          "parentJob": {
-              "type": "object",
-              "title": "Parent Job"
-          }
+    "properties": {
+      "jobName": {
+        "type": "string",
+        "title": "Job Name"
       },
-      "required": []
+      "jobStatus": {
+        "type": "string",
+        "title": "Job Status",
+        "enum": ["created", "unknown", "passing", "failing"],
+        "enumColors": {
+          "passing": "green",
+          "created": "darkGray",
+          "failing": "red",
+          "unknown": "orange"
+        }
+      },
+      "timestamp": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Timestamp",
+        "description": "Last updated timestamp of the job"
+      },
+      "url": {
+        "type": "string",
+        "title": "Project URL"
+      },
+      "parentJob": {
+        "type": "object",
+        "title": "Parent Job"
+      }
+    },
+    "required": []
   },
   "mirrorProperties": {},
   "calculationProperties": {},
@@ -445,62 +437,66 @@ resources:
   "description": "This blueprint represents a build event from Jenkins",
   "title": "Jenkins Build",
   "icon": "Jenkins",
-  "schema": {
-      "properties": {
-          "buildStatus": {
+  "schema":
+    {
+      "properties":
+        {
+          "buildStatus":
+            {
               "type": "string",
               "title": "Build Status",
-              "enum": [
-                  "SUCCESS",
-                  "FAILURE",
-                  "UNSTABLE"
-              ],
-              "enumColors": {
-                  "SUCCESS": "green",
-                  "FAILURE": "red",
-                  "UNSTABLE": "yellow"
-              }
-          },
-          "buildUrl": {
+              "enum": ["SUCCESS", "FAILURE", "UNSTABLE"],
+              "enumColors":
+                { "SUCCESS": "green", "FAILURE": "red", "UNSTABLE": "yellow" },
+            },
+          "buildUrl":
+            {
               "type": "string",
               "title": "Build URL",
-              "description": "URL to the build"
-          },
-          "timestamp": {
+              "description": "URL to the build",
+            },
+          "timestamp":
+            {
               "type": "string",
               "format": "date-time",
               "title": "Timestamp",
-              "description": "Last updated timestamp of the build"
-          },
-          "buildDuration": {
+              "description": "Last updated timestamp of the build",
+            },
+          "buildDuration":
+            {
               "type": "number",
               "title": "Build Duration",
-              "description": "Duration of the build"
-          }
-      },
-      "required": []
-  },
-  "mirrorProperties": {
-      "previousBuildStatus": {
+              "description": "Duration of the build",
+            },
+        },
+      "required": [],
+    },
+  "mirrorProperties":
+    {
+      "previousBuildStatus":
+        {
           "title": "Previous Build Status",
-          "path": "previousBuild.buildStatus"
-      }
-  },
+          "path": "previousBuild.buildStatus",
+        },
+    },
   "calculationProperties": {},
-  "relations": {
-      "parentJob": {
+  "relations":
+    {
+      "parentJob":
+        {
           "title": "Jenkins Job",
           "target": "jenkinsJob",
           "required": false,
-          "many": false
-      },
-      "previousBuild": {
+          "many": false,
+        },
+      "previousBuild":
+        {
           "title": "Previous Build",
           "target": "jenkinsBuild",
           "required": false,
-          "many": false
-      }
-  }
+          "many": false,
+        },
+    },
 }
 ```
 
@@ -524,14 +520,13 @@ resources:
             buildStatus: .result
             buildUrl: .url
             buildDuration: .duration
-            timestamp: '.timestamp / 1000 | todate'
+            timestamp: ".timestamp / 1000 | todate"
           relations:
             parentJob: .url | split("://")[1] | sub("^.*?/"; "") | gsub("%20"; "-") | gsub("/"; "-") | .[:-1] | gsub("-[0-9]+$"; "")
             previousBuild: .previousBuild.url | split("://")[1] | sub("^.*?/"; "") | gsub("%20"; "-") | gsub("/"; "-") | .[:-1]
 ```
 
 </details>
-
 
 ### User
 
@@ -545,20 +540,20 @@ resources:
   "title": "Jenkins User",
   "icon": "Jenkins",
   "schema": {
-      "properties": {
-          "url": {
-              "type": "string",
-              "title": "URL",
-              "format": "url"
-          },
-          "lastUpdateTime": {
-              "type": "string",
-              "format": "date-time",
-              "title": "Last Update",
-              "description": "Last updated timestamp of the user"
-          }
+    "properties": {
+      "url": {
+        "type": "string",
+        "title": "URL",
+        "format": "url"
       },
-      "required": []
+      "lastUpdateTime": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Last Update",
+        "description": "Last updated timestamp of the user"
+      }
+    },
+    "required": []
   },
   "mirrorProperties": {},
   "calculationProperties": {},
@@ -586,6 +581,167 @@ resources:
           url: .user.absoluteUrl
           lastUpdateTime: if .lastChange then (.lastChange/1000) else now end | strftime("%Y-%m-%dT%H:%M:%SZ")
 
+```
+
+</details>
+
+## Let's Test It
+
+This section includes a sample response data from Jenkins. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+
+### Payload
+
+Here is an example of the payload structure from Jenkins:
+
+<details>
+<summary>Job response data</summary>
+  
+```json showLineNumbers
+{
+  "_class" : "hudson.model.FreeStyleProject",
+  "displayName" : "Hello Job",
+  "fullName" : "Hello Job",
+  "name" : "Hello Job",
+  "url" : "http://localhost:8080/job/Hello%20Job/",
+  "buildable" : true,
+  "builds" : [
+    {
+      "_class" : "hudson.model.FreeStyleBuild",
+      "displayName" : "#2",
+      "duration" : 221,
+      "fullDisplayName" : "Hello Job #2",
+      "id" : "2",
+      "number" : 2,
+      "result" : "SUCCESS",
+      "timestamp" : 1700569094576,
+      "url" : "http://localhost:8080/job/Hello%20Job/2/"
+    },
+    {
+      "_class" : "hudson.model.FreeStyleBuild",
+      "displayName" : "#1",
+      "duration" : 2214,
+      "fullDisplayName" : "Hello Job #1",
+      "id" : "1",
+      "number" : 1,
+      "result" : "SUCCESS",
+      "timestamp" : 1700567994163,
+      "url" : "http://localhost:8080/job/Hello%20Job/1/"
+    }
+  ],
+  "color" : "blue"
+}
+```
+
+</details>
+
+<details>
+<summary>Build response data</summary>
+  
+```json showLineNumbers
+{
+  "_class" : "hudson.model.FreeStyleBuild",
+  "displayName" : "#2",
+  "duration" : 221,
+  "fullDisplayName" : "Hello Job #2",
+  "id" : "2",
+  "number" : 2,
+  "result" : "SUCCESS",
+  "timestamp" : 1700569094576,
+  "url" : "http://localhost:8080/job/Hello%20Job/2/"
+}
+```
+
+</details>
+
+<details>
+<summary>User response data</summary>
+  
+```json showLineNumbers
+{
+  "user" : {
+    "absoluteUrl" : "http://localhost:8080/user/admin",
+    "fullName" : "admin",
+    "description" : "System Administrator",
+    "id" : "admin"
+  },
+  "lastChange" : 1700569094576
+}
+```
+
+</details>
+
+### Mapping Result
+
+The combination of the sample payload and the Ocean configuration generates the following Port entity:
+
+<details>
+<summary>Job entity</summary>
+  
+```json showLineNumbers
+{
+  "identifier": "hello-job",
+  "title": "Hello Job",
+  "blueprint": "jenkinsJob",
+  "properties": {
+    "jobName": "Hello Job",
+    "url": "http://localhost:8080/job/Hello%20Job/",
+    "jobStatus": "passing",
+    "timestamp": "2023-09-08T14:58:14Z"
+  },
+  "relations": {},
+  "createdAt": "2023-12-18T08:37:21.637Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2023-12-18T08:37:21.637Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+<details>
+<summary>Build entity</summary>
+  
+```json showLineNumbers
+{
+  "identifier": "hello-job-2",
+  "title": "Hello Job #2",
+  "blueprint": "jenkinsBuild",
+  "properties": {
+    "buildStatus": "SUCCESS",
+    "buildUrl": "http://localhost:8080/job/Hello%20Job/2/",
+    "buildDuration": 221,
+    "timestamp": "2023-09-08T14:58:14Z"
+  },
+  "relations": {
+    "parentJob": "hello-job"
+  },
+  "createdAt": "2023-12-18T08:37:21.637Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2023-12-18T08:37:21.637Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+<details>
+<summary>User entity</summary>
+  
+```json showLineNumbers
+{
+  "identifier": "admin",
+  "title": "admin",
+  "blueprint": "jenkinsUser",
+  "properties": {
+    "url": "http://localhost:8080/user/admin",
+    "lastUpdateTime": "2023-09-08T14:58:14Z"
+  },
+  "relations": {},
+  "createdAt": "2023-12-18T08:37:21.637Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2023-12-18T08:37:21.637Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
 ```
 
 </details>

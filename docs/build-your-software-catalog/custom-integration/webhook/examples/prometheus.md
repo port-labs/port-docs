@@ -74,3 +74,72 @@ Create the following webhook configuration [using Port's UI](/build-your-softwar
 3. Save the `alertmanager.yaml` file and restart the alertmanager to apply the changes.
 
 Done! Any change that happens to your alerts in your server will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+
+## Let's Test It
+
+This section includes a sample response data from Prometheus. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+
+### Payload
+
+Here is an example of the payload structure from Prometheus:
+
+<details>
+<summary><b>Webhook response data (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+      "status": "firing",
+      "labels": {
+        "severity": "critical",
+        "instance": "server-01",
+        "alertname": "High CPU Usage",
+      },
+      "annotations": {
+        "summary": "High CPU Usage Alert"
+      },
+      "startsAt": "2024-02-12T08:00:00Z",
+      "endsAt": "",
+      "generatorURL": "https://monitoring.example.com",
+      "fingerprint": "123abc456def"
+    }
+```
+
+</details>
+
+### Mapping Result
+
+The combination of the sample payload and the Ocean configuration generates the following Port entity:
+
+<details>
+<summary><b>Alert entity in Port (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "High CPU Usage - 123abc456def",
+  "title": "High CPU Usage",
+  "blueprint": "prometheusAlerts",
+  "team": [],
+  "icon": "Prometheus",
+  "properties": {
+      "status": "firing",
+      "severity": "critical",
+      "labels": {
+         "severity": "critical",
+         "instance": "server-01",
+         "alertname": "High CPU Usage",
+      },
+      "summary": "High CPU Usage Alert",
+      "createdAt": "2024-02-12T08:00:00+00:00",
+      "resolvedAt": "",
+      "generatorURL": "https://monitoring.example.com",
+      "fingerprint": "123abc456"
+  },
+  "relations": {},
+  "createdAt": "2024-2-6T09:30:57.924Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2024-2-6T11:49:20.881Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>

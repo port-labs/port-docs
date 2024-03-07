@@ -3,7 +3,7 @@ import TabItem from "@theme/TabItem"
 import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
 import DockerParameters from "./\_newrelic-docker-parameters.mdx"
 import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
-import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
+import AdvancedConfig from '../../../generalTemplates/\_ocean_advanced_configuration_note.md'
 
 # New Relic
 
@@ -78,6 +78,7 @@ helm upgrade --install my-newrelic-integration port-labs/port-ocean \
 	--set integration.secrets.newRelicAPIKey="<NR_API_KEY>"  \
 	--set integration.secrets.newRelicAccountID="<NR_ACCOUNT_ID>"
 ```
+
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
 To install the integration using ArgoCD, follow these steps:
@@ -87,6 +88,7 @@ To install the integration using ArgoCD, follow these steps:
 :::note
 Remember to replace the placeholders for `NEW_RELIC_API_KEY` and `NEW_RELIC_ACCOUNT_ID`.
 :::
+
 ```yaml showLineNumbers
 initializePortResources: true
 scheduledResyncInterval: 120
@@ -101,6 +103,7 @@ integration:
     newRelicAccountID: NEW_RELIC_ACCOUNT_ID
   // highlight-end
 ```
+
 <br/>
 
 :::note
@@ -122,6 +125,7 @@ integration:
     newRelicAPIKey: NEW_RELIC_API_KEY
     newRelicAccountID: NEW_RELIC_ACCOUNT_ID
 ```
+
 :::
 
 2. Install the `my-ocean-newrelic-integration` ArgoCD Application by creating the following `my-ocean-newrelic-integration.yaml` manifest:
@@ -174,9 +178,11 @@ spec:
 <br/>
 
 3. Apply your application manifest with `kubectl`:
+
 ```bash
 kubectl apply -f my-ocean-newrelic-integration.yaml
 ```
+
 </TabItem>
 </Tabs>
 
@@ -312,7 +318,7 @@ Here is an example for `newrelic-integration.yml` pipeline file:
 
 ```yaml showLineNumbers
 trigger:
-- main
+  - main
 
 pool:
   vmImage: "ubuntu-latest"
@@ -320,27 +326,25 @@ pool:
 variables:
   - group: port-ocean-credentials
 
-
 steps:
-- script: |
-    # Set Docker image and run the container
-    integration_type="newrelic"
-    version="latest"
+  - script: |
+      # Set Docker image and run the container
+      integration_type="newrelic"
+      version="latest"
 
-    image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
+      image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
 
-    docker run -i --rm \
-        -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
-        -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-        -e OCEAN__INTEGRATION__CONFIG__NEW_RELIC_API_KEY=${OCEAN__INTEGRATION__CONFIG__NEW_RELIC_API_KEY} \
-        -e OCEAN__INTEGRATION__CONFIG__NEW_RELIC_ACCOUNT_ID=${OCEAN__INTEGRATION__CONFIG__NEW_RELIC_ACCOUNT_ID} \
-        -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \
-        -e OCEAN__PORT__CLIENT_SECRET=${OCEAN__PORT__CLIENT_SECRET} \
-        $image_name
+      docker run -i --rm \
+          -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+          -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+          -e OCEAN__INTEGRATION__CONFIG__NEW_RELIC_API_KEY=${OCEAN__INTEGRATION__CONFIG__NEW_RELIC_API_KEY} \
+          -e OCEAN__INTEGRATION__CONFIG__NEW_RELIC_ACCOUNT_ID=${OCEAN__INTEGRATION__CONFIG__NEW_RELIC_ACCOUNT_ID} \
+          -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \
+          -e OCEAN__PORT__CLIENT_SECRET=${OCEAN__PORT__CLIENT_SECRET} \
+          $image_name
 
-    exit $?
-  displayName: 'Ingest Data into Port'
-
+      exit $?
+    displayName: "Ingest Data into Port"
 ```
 
   </TabItem>
@@ -749,6 +753,96 @@ Examples of blueprints and the relevant integration configurations:
           activatedAt: .activatedAt
         relations:
           newRelicService: .__APPLICATION.entity_guids + .__SERVICE.entity_guids
+```
+
+</details>
+
+
+## Let's Test It
+
+This section includes a sample response data from New Relic. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+
+### Payload
+
+Here is an example of the payload structure from New Relic:
+
+<details>
+<summary>Service (Entity) response data</summary>
+
+```json showLineNumbers
+{
+  "domain": "APM",
+  "guid": "MjQwNzIwN3xBUE18QVBQTElDQVRJT058MjIwMzEwNzV8MTA0NzYwNzA5",
+  "name": "My Service",
+  "type": "APPLICATION",
+  "tags": [
+    {
+      "key": "coreCount",
+      "values": ["10"]
+    },
+    {
+      "key": "hostStatus",
+      "values": ["running"]
+    }
+  ]
+}
+```
+
+</details>
+
+<details>
+<summary>Issue response data</summary>
+
+```json showLineNumbers
+{
+  "issueId": "MjQwNzIwN3xBUE18QVBQTElDQVRJT058MjIwMzEwNzV8MTA0NzYwNzA5",
+  "title": "My Issue",
+  "priority": "CRITICAL",
+  "state": "ACTIVATED",
+  "sources": ["My Source"],
+  "conditionName": ["My Condition"],
+  "policyName": ["My Policy"],
+  "activatedAt": "2022-01-01T00:00:00Z"
+}
+```
+</details>
+
+### Mapping Result
+
+The combination of the sample payload and the Ocean configuration generates the following Port entity:
+
+<details>
+<summary><b>Service (Entity) entity in Port (Click to expand)</b></summary>
+
+
+</details>
+
+<details>
+<summary><b>Issue entity in Port(Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "My Issue",
+  "title": "My Issue",
+  "blueprint": "newRelicAlert",
+  "team": [],
+  "icon": "NewRelic",
+  "properties": {
+    "priority": "CRITICAL",
+    "state": "ACTIVATED",
+    "sources": ["My Source"],
+    "conditionName": ["My Condition"],
+    "alertPolicyNames": ["My Policy"],
+    "activatedAt": "2022-01-01T00:00:00Z"
+  },
+  "relations": {
+    "newRelicService": "My Service"
+  },
+  "createdAt": "2024-2-6T09:30:57.924Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2024-2-6T11:49:20.881Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
 ```
 
 </details>
