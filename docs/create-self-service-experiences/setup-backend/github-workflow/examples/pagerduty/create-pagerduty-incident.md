@@ -27,7 +27,7 @@ Follow these steps to get started with the Golang template
 * `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token) 
 
 2. Install the Ports GitHub app from [here](https://github.com/apps/getport-io/installations/new).
-3. Install Port's pager duty integration [learn more][https://github.com/port-labs/Port-Ocean/tree/main/integrations/pagerduty] 
+3. Install Port's pager duty integration [learn more](https://github.com/port-labs/Port-Ocean/tree/main/integrations/pagerduty)
 
 :::note Blueprint
 

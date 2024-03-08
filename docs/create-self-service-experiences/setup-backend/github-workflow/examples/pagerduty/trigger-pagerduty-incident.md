@@ -20,12 +20,20 @@ Follow these steps to get started with the Golang template
 * `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token) 
 
 2. Install the Ports GitHub app from [here](https://github.com/apps/getport-io/installations/new).
-3. Install Port's pager duty integration [learn more][https://github.com/port-labs/Port-Ocean/tree/main/integrations/pagerduty]
+3. Install Port's pager duty integration [learn more](https://github.com/port-labs/Port-Ocean/tree/main/integrations/pagerduty)
+
+:::note Blueprint
+
 >**Note** This step is not required for this example, but it will create all the blueprint boilerplate for you, and also update the catalog in real time with the new incident created.
+
+:::
+
 4. After you installed the integration, the blueprints `pagerdutyService` and `pagerdutyIncident` will appear, create the following action with the following JSON file on the `pagerdutyService` blueprint:
 
-```json
+<details>
+<summary><b>Trigger Pagerduty Incident Blueprint (Click to expand)</b></summary>
 
+```json showLineNumbers
 [
   {
     "identifier": "trigger_an_incident",
@@ -76,11 +84,20 @@ Follow these steps to get started with the Golang template
 ]
 
 ```
->**Note** Replace the invocation method with your own repository details.
+</details>
 
-5. Create a workflow file under .github/workflows/create-an-incident.yaml with the following content:
+:::note Customisation
 
-```yml
+Replace the invocation method with your own repository details.
+
+:::
+
+5. Create a workflow file under `.github/workflows/create-an-incident.yaml` with the following content:
+
+<details>
+<summary><b>Trigger Pagerduty Incident Workflow (Click to expand)</b></summary>
+
+```yaml showLineNumbers
 name: Trigger an Incident In PagerDuty
 on:
   workflow_dispatch:
@@ -136,6 +153,8 @@ jobs:
              PagerDuty incident triggered! ✅
              "The incident id is: ${{ steps.trigger.outputs}}"
 ```
+
+</details>
 
 6. Trigger the action from Port's [Self Serve](https://app.getport.io/self-serve)
 

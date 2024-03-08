@@ -16,7 +16,95 @@ This GitHub action allows you to quickly trigger incidents in Datadog via Port A
 * `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
 
 2. Install the Ports GitHub app from [here](https://github.com/apps/getport-io/installations/new).
-3. Create a Datadog incident blueprint in Port using the provided [datadogIncident.json](./datadogIncident.json) file
+3. Create a Datadog incident blueprint in Port using the blueprint below:
+
+<details>
+<summary><b>Datadog Incident Blueprint</b></summary>
+
+```json showLineNumbers
+{
+    "identifier": "datadogIncident",
+    "description": "This blueprint represents a Datadog incident in our software catalog",
+    "title": "datadogIncident",
+    "icon": "Datadog",
+    "schema": {
+      "properties": {
+        "customerImpactScope": {
+          "title": "Customer Impact Scope",
+          "description": "A summary of the impact customers experienced during the incident.",
+          "type": "string"
+        },
+        "customerImpacted": {
+          "title": "Customer Impacted",
+          "description": "A flag indicating whether the incident caused customer impact.",
+          "type": "boolean",
+          "default": false
+        },
+        "customerImpactStart": {
+          "title": "Customer Impact Start",
+          "type": "string",
+          "description": "Start time of incident affecting customer",
+          "format": "date-time"
+        },
+        "customerImpactEnd": {
+          "title": "Customer Impact End",
+          "description": "End timestamp of incident affecting customers",
+          "type": "string",
+          "format": "date-time"
+        },
+        "created": {
+          "title": "Created At",
+          "description": "Timestamp of incident creation",
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "title": "Updated At",
+          "description": "Last time incident was updated",
+          "type": "string",
+          "format": "date-time"
+        },
+        "customerImpactDuration": {
+          "title": "Customer Impact Duration",
+          "description": "Duration of customer impact",
+          "type": "number"
+        },
+        "timeToDetect": {
+          "title": "Time To Detect",
+          "description": "Number of seconds it took to detect incident",
+          "type": "number"
+        },
+        "timeToRepair": {
+          "title": "Time To Repair",
+          "description": "Number of seconds it took to fix incident",
+          "type": "number"
+        },
+        "severity": {
+          "title": "Severity",
+          "description": "Severity of incident",
+          "type": "string"
+        },
+        "state": {
+          "title": "State",
+          "description": "State of the incident",
+          "type": "string"
+        },
+        "createdBy": {
+          "title": "Created By",
+          "description": "Name of user that created this incident",
+          "type": "string"
+        }
+      },
+      "required": []
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "aggregationProperties": {},
+    "relations": {}
+}
+```
+
+</details>
 
 :::note Blueprint
 
