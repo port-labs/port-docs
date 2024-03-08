@@ -43,7 +43,7 @@ resources:
         mappings:
           identifier: .repo + '-' + (.id|tostring)
           title: .task + '-' + .environment
-          blueprint: '"githubDeployment"'
+          blueprint: '"deployment"'
           properties:
             description: .description
             ref: .ref
