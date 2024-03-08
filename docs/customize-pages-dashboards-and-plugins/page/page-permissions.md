@@ -14,11 +14,12 @@ Currently only `read` permission can be modified.
 
 ## Get page permissions
 
-Any user can get the permissions of a specific page:
+Any user can get the permissions of a specific page, using any of the following methods:
 
 <Tabs groupId="view-permissions" queryString values={[
-{label: "From the UI", value: "ui"},
-{label: "From the API", value: "api"}
+{label: "UI", value: "ui"},
+{label: "API", value: "api"},
+{label: "Pulumi", value: "pulumi"}
 ]}>
 
 <TabItem value="ui">
@@ -33,7 +34,7 @@ In your software catalog, choose the page for which you would like to view permi
 
 :::info
 
-- Remember that an access token is needed to make API requests, refer back to [Getting an API token](/build-your-software-catalog/sync-data-to-catalog/api/api.md#get-api-token) if you need to generate a new one.
+- Remember that an access token is needed to make API requests, refer back to [Getting an API token](/build-your-software-catalog/custom-integration/api/api.md#get-api-token) if you need to generate a new one.
 - Currently in order to see the page identifiers you can request all pages by making a  
   GET request to `https://api.getport.io/v1/pages`
 
@@ -58,6 +59,82 @@ In addition, every role, user and team which does not appear in this request bod
 
 </TabItem>
 
+<TabItem value="pulumi">
+
+:::info Port Pulumi
+See all the supported variables in the Port Pulumi [documentation](https://www.pulumi.com/registry/packages/port/api-docs/pagepermissions/#look-up)
+:::
+
+<Tabs groupId="pulumi-view-permissions" queryString values={[
+{label: "Python", value: "python"},
+{label: "Typescript", value: "typescript"},
+{label: "Golang", value: "go"}
+]}>
+
+<TabItem value="python">
+
+```python showLineNumbers
+from port_pulumi import Page, PagePermissions
+
+# get an existing object
+
+existing_permissions = PagePermissions.get(
+"microservices_permissions", // The unique name of the resulting resource.
+"microservice_blueprint_page" // The unique provider ID of the resource to lookup.
+)
+
+# Access properties of the retrieved resource
+
+print(existing_permissions.read)
+
+````
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript showLineNumbers
+import * as port from "@port-labs/port";
+
+// ... other code
+const portPermissionsId = "microservice_blueprint_page"
+
+const existingPermissions = port.PagePermissions.get("my-permissions", portPermissionsId);
+
+// Access properties of the retrieved resource
+console.log(existingPermissions.read);
+````
+
+</TabItem>
+
+<TabItem value="go">
+```go showLineNumbers
+import (
+"fmt"
+"github.com/port-labs/pulumi-port/sdk/go/port"
+)
+
+// ... other code
+
+// Retrieve existing permissions
+existingPermissions, err := port.PagePermissions.Get(
+"my-permissions", // The unique name of the resulting resource.
+"microservice_blueprint_page" // The unique provider ID of the resource to lookup.
+)
+if err != nil {
+// Handle error
+}
+
+// Access properties of the retrieved resource
+fmt.Println(existingPermissions.Read)
+
+````
+</TabItem>
+
+</Tabs>
+
+</TabItem>
+
 </Tabs>
 
 :::note
@@ -66,17 +143,19 @@ Only page permissions of software catalog pages can be requested. For example, t
 
 ## Update page permissions
 
-Only users with the `admin` role can update the permissions of a catalog page:
+Only users with the `admin` role can update the permissions of a catalog page, using any of the following methods:
 
 <Tabs groupId="edit-permissions" queryString values={[
-{label: "From the UI", value: "ui"},
-{label: "From the API", value: "api"}
+{label: "UI", value: "ui"},
+{label: "API", value: "api"},
+{label: "Terraform", value: "terraform"},
+{label: "Pulumi", value: "pulumi"}
 ]}>
 
 <TabItem value="ui">
 
-In your software catalog, choose the page for which you would like to edit permissions, then click on `Permissions`.  
-Choose the user/s or team/s that you would like to give permissions to, then click on `Done`. 
+In your software catalog, choose the page for which you would like to edit permissions, then click on `Permissions`.
+Choose the user/s or team/s that you would like to give permissions to, then click on `Done`.
 
 <img src='/img/software-catalog/pages/editPagePermissions.gif' width='70%' />
 
@@ -96,7 +175,7 @@ Here is an example request body:
     "roles": ["Admin", "Member"]
   }
 }
-```
+````
 
 :::tip
 
@@ -107,6 +186,100 @@ If you do not specify a specific key (for example `users` in the request, user p
 When making changes to permissions, any role, user or team that does not appear in the corresponding key in the request body will lose permissions to the page (this is how you remove permissions to a page).
 
 :::
+
+</TabItem>
+
+<TabItem value="terraform">
+
+See the [Terraform provider documentation](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/port_page_permissions#example-usage) for examples.
+
+</TabItem>
+
+<TabItem value="pulumi">
+
+:::info Port Pulumi
+See all the supported variables in the Port Pulumi [documentation](https://www.pulumi.com/registry/packages/port/api-docs/pagepermissions/#create)
+:::
+
+<Tabs groupId="pulumi-update-permissions" queryString values={[
+{label: "Python", value: "python"},
+{label: "Typescript", value: "typescript"},
+{label: "Golang", value: "go"}
+]}>
+
+<TabItem value="python">
+```python showLineNumbers
+from port_pulumi import Page, PagePermissions
+
+# Allow read access to all admins and a specific user and team:
+microservices_permissions = PagePermissions(
+    "microservices_permissions",
+    page_identifier="microservice_blueprint_page",
+    read={
+        "roles": [
+            "Admin",
+        ],
+        users: ["normaluser@gmail.com"],
+        teams: ["Super Team"],
+    },
+)
+```
+</TabItem>
+
+<TabItem value="typescript">
+```typescript showLineNumbers
+import * as port from "@port/pulumi";
+
+// Allow read access to all admins and a specific user and team:
+const microservicesPermissions = new port.PagePermissions("microservices_permissions", {
+    pageIdentifier: "microservice_blueprint_page",
+    read: {
+        roles: ["Admin"],
+        users: ["normaluser@gmail.com"],
+        teams: ["Super Team"],
+    },
+});
+````
+</TabItem>
+
+<TabItem value="go">
+```go showLineNumbers
+package main
+
+import (
+	"github.com/port-labs/pulumi-port/sdk/go/port"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	ctx := pulumi.NewContext()
+	
+	// Allow read access to all admins and a specific user and team:
+	microservicesPermissions, err := port.NewPagePermissions(ctx, "microservices_permissions", &port.PagePermissionsArgs{
+		PageIdentifier: pulumi.String("microservice_blueprint_page"),
+		Read: &port.PagePermissionsReadArgs{
+			Roles: pulumi.StringArray{
+				pulumi.String("Admin"),
+			},
+			Users: pulumi.StringArray{
+				pulumi.String("normaluser@gmail.com"),
+			},
+			Teams: pulumi.StringArray{
+				pulumi.String("Super Team"),
+			},
+		},
+	})
+	if err != nil {
+		// Handle error
+	}
+	// You can use the microservicesPermissions variable as needed in your code.
+}
+
+````
+
+</TabItem>
+
+</Tabs>
 
 </TabItem>
 

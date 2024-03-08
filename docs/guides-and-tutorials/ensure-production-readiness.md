@@ -66,13 +66,17 @@ If you already have a Pagerduty account that you can play around with, feel free
 
 Now let's bring our Pagerduty data into Port. Port's Pagerduty integration automatically fetches `Services` and `Incidents`, and creates <PortTooltip id="blueprint">blueprints</PortTooltip> and <PortTooltip id="entity">entities</PortTooltip> for them.
 
-:::info Note
+:::info K8s cluster required
 For this installation you will need Helm and a running K8s cluster (see [prerequisites](/guides-and-tutorials/ensure-production-readiness)).
 :::
 
 1. Install Port's Pagerduty integration using Helm, by running the command below in your terminal.
 
-- Replace `CLIENT_ID` and `CLIENT_SECRET` with your credentials (get them [here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)).
+:::tip Alternative installation
+The command below will install the integration in `Realtime & always on` mode. If you prefer to use a one-time (scheduled) installation instead, see the [Pagerduty installation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty/?installation-methods=one-time#installation) section.
+:::
+
+- Replace `CLIENT_ID` and `CLIENT_SECRET` with your credentials (get them [here](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)).
 
 - Replace `token` with your Pagerduty token. To obtain it:
   - Hover over your avatar in the top right corner of your Pagerduty app, then click `My profile`.
@@ -83,18 +87,18 @@ For this installation you will need Helm and a running K8s cluster (see [prerequ
 ![pagerdutyUserSettings](/img/guides/pagerdutyUserSettings.png)
 
 <details>
-<summary>Installation command (click to expand)</summary>
+<summary><b>Installation command (click to expand)</b></summary>
 
 ```bash showLineNumbers
 helm repo add port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-pagerduty-integration port-labs/port-ocean \
-    --set port.clientId="CLIENT_ID" \     # REPLACE VALUE
-    --set port.clientSecret="CLIENT_SECRET"  \     # REPLACE VALUE
+    --set port.clientId="CLIENT_ID" \   # REPLACE VALUE
+    --set port.clientSecret="CLIENT_SECRET"  \   # REPLACE VALUE
     --set initializePortResources=true  \
     --set integration.identifier="my-pagerduty-integration"  \
     --set integration.type="pagerduty"  \
     --set integration.eventListener.type="POLLING"  \
-    --set integration.secrets.token="token"  \     # REPLACE VALUE
+    --set integration.secrets.token="token"  \   # REPLACE VALUE
     --set integration.config.apiUrl="https://api.pagerduty.com"
 ```
 
@@ -108,7 +112,7 @@ Great! Now that the integration is installed, we should see some new components 
 #### Add an on-call property to the service blueprint
 
 Now that Port is synced with our Pagerduty resources, let's reflect the Pagerduty service's on-call in our services.  
-First, we will need to create a [relation](/build-your-software-catalog/define-your-data-model/relate-blueprints/#what-is-a-relation) between our services and the corresponding Pagerduty services.
+First, we will need to create a [relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/#what-is-a-relation) between our services and the corresponding Pagerduty services.
 
 1. Head back to the [Builder](https://app.getport.io/dev-portal/data-model), choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New relation`:
 
@@ -122,7 +126,7 @@ First, we will need to create a [relation](/build-your-software-catalog/define-y
 
 <br/><br/>
 
-Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, let's create a [mirror property](https://docs.getport.io/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/mirror-property/) in our service to display its on-call.
+Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, let's create a [mirror property](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/) in our service to display its on-call.
 
 1. Choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip> again, and under the `PagerDuty Service` relation, click on `New mirror property`.  
    Fill the form out like this, then click `Create`:

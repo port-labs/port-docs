@@ -227,7 +227,7 @@ Here is an example snippet of the `config.json` file which demonstrates the ETL 
 
   For example, if you have a relation from SNS Topic to lambda function, put the Lambda function configuration first.
 
-- By its nature, the AWS exporter will keep the values of unmapped properties untouched. Go [here](/build-your-software-catalog/sync-data-to-catalog/api/api.md?operation=create-update#usage) for further explanation about different entity creation strategies.
+- By its nature, the AWS exporter will keep the values of unmapped properties untouched. Go [here](/build-your-software-catalog/custom-integration/api/api.md?operation=create-update#usage) for further explanation about different entity creation strategies.
 
 :::
 

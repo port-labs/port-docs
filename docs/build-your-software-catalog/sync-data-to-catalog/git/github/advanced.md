@@ -54,7 +54,7 @@ The `specPath` parameter specifies a list of [globPatterns](https://www.malikbro
 
 <TabItem label="Enable merge entity" value="enableMergeEntity">
 
-The `enableMergeEntity` parameter specifies whether to use the [create/update](../../api/api.md?operation=create-update#usage) or [create/override](../../api/api.md?operation=create-override#usage) strategy when creating entities listed in a `port.yml` file.
+The `enableMergeEntity` parameter specifies whether to use the [create/update](/build-your-software-catalog/custom-integration/api?operation=create-update#usage) or [create/override](/build-your-software-catalog/custom-integration/api?operation=create-override#usage) strategy when creating entities listed in a `port.yml` file.
 
 - Default value: `true` (use create/update)
 - Use case: use `false` if you want GitHub to be the source-of-truth for catalog entities. Use `true` if you want to use GitHub as the source for some properties of entities in the catalog, and use other sources to for properties which are subject to change automatically.
@@ -76,7 +76,7 @@ The `enrichEntitiesWithGitopsMetadata` parameter is used to enable the enrichmen
 
 When the parameter is active, ingesting entities listed in a `port.yml` file to Port will include additional information such as the spec file path (for example: `port.yml`, `/path/to/port.yml`, etc.), the latest commit information and more.
 
-The additional information is reported as a JSON object property in your GitOps managed entities. In order to view the information, your respective [blueprint](../../../define-your-data-model/setup-blueprint/setup-blueprint.md) needs to include an [object property](../../../define-your-data-model/setup-blueprint/properties/object.md) to store the metadata. The default identifier this parameter sends data to is `gitopsMetadata`.
+The additional information is reported as a JSON object property in your GitOps managed entities. In order to view the information, your respective [blueprint](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/setup-blueprint.md) needs to include an [object property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/object.md) to store the metadata. The default identifier this parameter sends data to is `gitopsMetadata`.
 
 - Default value: `true` (enrich entities with GitOps metadata)
 - Use case: use `true` if you want the GitHub app to enrich the Port entities managed by GitOps with additional JSON metadata.

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 8
+sidebar_position: 14
 description: User is an input used to reference users that exist in Port
 ---
 
@@ -16,10 +16,9 @@ User is an input used to reference users that exist in Port.
 
 The user input type can be used to reference any user that exists in Port, for example:
 
-- The code owners;
-- The current on-call;
-- The lead maintainer;
-- etc.
+- The code owners
+- The current on-call
+- The lead maintainer
 
 In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we can see the **change on-call** action whose `On-Call` input is a user input. 🎬
 
