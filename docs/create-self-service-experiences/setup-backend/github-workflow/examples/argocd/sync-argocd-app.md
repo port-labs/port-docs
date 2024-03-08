@@ -28,8 +28,10 @@ Follow these steps to get started:
 
 3. Create Port action using the following JSON definition:
 
+<details>
+<summary>Port Action: Sync ArgoCD Application </summary>
 :::note
-Make sure to replace the placeholders for GITHUB_ORG_NAME and GITHUB_REPO_NAME in your Port Action to match your GitHub environment.
+Replace the placeholders for GITHUB_ORG_NAME and GITHUB_REPO_NAME in your Port Action to match your GitHub environment.
 :::
 
 ```json showLineNumbers
@@ -80,8 +82,12 @@ Make sure to replace the placeholders for GITHUB_ORG_NAME and GITHUB_REPO_NAME i
 }  
 ]
 ```
+</details>
 
 4. Create a workflow file under `.github/workflows/sync-argocd-app.yaml` with the following content:
+
+<details>
+ <summary>GitHub Workflow </summary>
 
 ```yml showLineNumbers
 name: Sync ArgoCD Application
@@ -205,5 +211,6 @@ jobs:
           runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
           logMessage: "Entity upserting was successful ✅"
 ```
+</details>
 
 5. Trigger the action from the [Self-service](https://app.getport.io/self-serve) tab of your Port application.
