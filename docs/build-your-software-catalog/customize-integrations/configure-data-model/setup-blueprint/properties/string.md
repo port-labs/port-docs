@@ -1,6 +1,7 @@
 ---
 sidebar_position: 14
 description: String is a primitive data type used to save text data
+sidebar_class_name: "custom-sidebar-item sidebar-property-string"
 ---
 
 import ApiRef from "/docs/api-reference/\_learn_more_reference.mdx"

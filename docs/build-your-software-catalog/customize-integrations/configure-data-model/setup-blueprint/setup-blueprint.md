@@ -317,7 +317,7 @@ Each blueprint is represented by a [Json schema](https://json-schema.org/), as s
 | `description`           | Description                                                                                                               | The value is visible as a tooltip to users when hovering over the info icon in the UI                                   |
 | `icon`                  | Icon for the blueprint and entities of the blueprint.                                                                     | See the full icon list [below](#full-icon-list)                                                                         |
 | `calculationProperties` | Contains the properties defined using [calculation properties](./properties/calculation-property/calculation-property.md) | **Required**                                                                                                            |
-| `mirrorProperties`      | Contains the properties defined using [mirror properties](./properties/mirror-property/mirror-property.md)                |                                                                                                                         |
+| `mirrorProperties`      | Contains the properties defined using [mirror properties](./properties/mirror-property)                |                                                                                                                         |
 | `schema`                | An object containing two nested fields: `properties` and `required`.                                                      | **Required**. See the schema structure [here](#schema-object)                                                           |
 
 :::tip Available properties
