@@ -4,7 +4,7 @@ title: Meta
 sidebar_class_name: "custom-sidebar-item sidebar-property-meta"
 ---
 
-# 💲 Meta-Properties
+# Meta-Properties
 
 A meta-property is a property that exists on every entity in Port by default.
 
