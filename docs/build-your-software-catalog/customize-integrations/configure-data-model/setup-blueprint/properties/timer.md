@@ -1,6 +1,7 @@
 ---
 sidebar_position: 17
 description: Timer is a data type used to define an expiration date/lifespan of a specific entity
+sidebar_class_name: "custom-sidebar-item sidebar-property-timer"
 ---
 
 import ApiRef from "/docs/api-reference/\_learn_more_reference.mdx"

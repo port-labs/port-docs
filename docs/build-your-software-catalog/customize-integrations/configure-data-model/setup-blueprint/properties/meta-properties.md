@@ -1,6 +1,7 @@
 ---
 sidebar_position: 9
-title: Meta 💲
+title: Meta
+sidebar_class_name: "custom-sidebar-item sidebar-property-meta"
 ---
 
 # 💲 Meta-Properties
