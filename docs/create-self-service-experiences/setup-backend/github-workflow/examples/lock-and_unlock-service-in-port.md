@@ -6,7 +6,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 # Lock and Unlock Service
 
-In this guide, we will create a self-service action in Port that executes a GitHub workflow to lock and unlock a service. The locking and unlocking mechanism involves updating the `locked` entity property in Port on a `production` or `development` environment. The action finally sends a Slack notification to a channel.
+In this guide, we will create a self-service action in Port that executes a GitHub workflow to lock and unlock a service. The locking and unlocking mechanism involves updating the `locked` property in Port on a `production` or `development` environment. Additionally, the action will send a Slack notification to a designated channel.
 
 ## Prerequisites
 1. Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new)
