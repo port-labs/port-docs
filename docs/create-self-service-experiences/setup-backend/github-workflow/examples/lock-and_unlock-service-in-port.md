@@ -11,7 +11,7 @@ In this guide, we will create a self-service action in Port that executes a GitH
 ## Prerequisites
 1. Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new).
 2. Configure a [Slack app](https://api.slack.com/apps) that can post a message to a Slack channel. The app should have a `chat:write` bot scope under **OAuth & Permissions**.
-3. GitHub repository in which you can trigger a workflow that we will use in this guide
+3. A GitHub repository in which you can trigger a workflow that we will use in this guide.
 
 Below you can find the JSON for the `Service` blueprint required for the guide:
 
