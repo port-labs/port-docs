@@ -505,7 +505,7 @@ jobs:
 
 5. Trigger the actions from the [self-service](https://app.getport.io/self-serve) page of your Port application.
 
-Below is the result of a succesful service lock and unlock alert sent to a Slack channel
+Below is the result of a successful service lock and unlock alert sent to a Slack channel:
 
 <img src="/img/self-service-actions/lockServiceSlackAlert.png" border="1px" />
 <img src="/img/self-service-actions/unlockServiceSlackAlert.png" border="1px" />
