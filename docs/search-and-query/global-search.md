@@ -12,7 +12,7 @@ In the top right corner of your [portal](https://app.getport.io/), you can find 
 
 <br/><br/>
 
-The search bar uses the [Opensearch](https://opensearch.org/) suite, and allows you to search for <PortTooltip id="entity">entities</PortTooltip> in your software catalog.  
+The search bar uses an [Opensearch query](https://opensearch.org/docs/latest/query-dsl/full-text/match-bool-prefix/), and allows you to search for <PortTooltip id="entity">entities</PortTooltip> in your software catalog.  
 You can search for entities by their title, description, or any other [property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/).
 
 
