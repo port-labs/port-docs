@@ -163,7 +163,7 @@ Team inheritance can be configured by adding the `teamInheritance` key to the [b
 
 :::info Path
 
-- The `path` key works similarly to the `path` key in [mirror properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/mirror-property.md#api-definition);
+- The `path` key works similarly to the `path` key in [mirror properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/#api-definition);
 - The `path` does not need to end with the `$team` meta-property since it is inferred;
 - Team inheritance can only be configured using a path of [`single`](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/relate-blueprints.md#single-relation-structure) type relations.
 

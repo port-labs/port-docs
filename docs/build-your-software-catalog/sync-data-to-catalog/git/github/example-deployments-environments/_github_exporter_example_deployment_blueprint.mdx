@@ -3,7 +3,7 @@
 
 ```json showLineNumbers
 {
-  "identifier": "githubDeployment",
+  "identifier": "deployment",
   "title": "Deployment",
   "icon": "Deployment",
   "schema": {
@@ -21,11 +21,11 @@
         "type": "string"
       },
       "transientEnvironment": {
-        "title": "Transient Environment",
+        "title": "Transient Running Service",
         "type": "boolean"
       },
       "productionEnvironment": {
-        "title": "Production Environment",
+        "title": "Production Running Service",
         "type": "boolean"
       },
       "createdAt": {
@@ -45,8 +45,8 @@
   "mirrorProperties": {},
   "calculationProperties": {},
   "relations": {
-    "environment": {
-      "title": "Environment",
+    "runningService": {
+      "title": "Running Service",
       "target": "githubRepoEnvironment",
       "required": false,
       "many": false

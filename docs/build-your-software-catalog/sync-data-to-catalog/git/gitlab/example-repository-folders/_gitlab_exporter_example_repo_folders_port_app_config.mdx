@@ -4,7 +4,7 @@
 
 ```yaml showLineNumbers
 resources:
-  - kind: repository
+  - kind: service
     selector:
       query: "true"
     port:
@@ -12,7 +12,7 @@ resources:
         mappings:
           identifier: .name
           title: .name
-          blueprint: '"gitlabRepository"'
+          blueprint: '"gitlabService"'
           properties:
             readme: file://README.md
             url: .web_url
@@ -37,7 +37,7 @@ resources:
               .folder.path
             readme: file://README.md
           relations:
-            repository: .repo.name
+            service: .repo.name
 ```
 
 </details>
