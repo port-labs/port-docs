@@ -279,7 +279,7 @@ Follow these steps to get started:
 <br />
 
 
-3. Create a workflow file under `.github/workflows/lock_service.yml` with the following content:
+3. In your Github repository, create a workflow file under `.github/workflows/lock_service.yml` with the following content:
 
 <details>
 
