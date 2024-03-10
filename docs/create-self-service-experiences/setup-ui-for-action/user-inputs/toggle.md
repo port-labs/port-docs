@@ -1,6 +1,6 @@
 ---
-sidebar_position: 3
-description: Boolean is a basic input that has one of two possible values - true and false
+sidebar_position: 11
+description: Toggle is a basic input that has one of two possible values - true and false
 ---
 
 import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"
@@ -8,21 +8,21 @@ import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Boolean
+# Toggle (Boolean)
 
-Boolean is a basic input that has one of two possible values - `true` and `false`.
+Toggle is a basic boolean input that has one of two possible values - `true` and `false`.  
+In Port, this input type is represented by a switch that can be toggled on or off.
 
-## 💡 Common boolean usage
+## 💡 Common toggle usage
 
-The boolean input type can be used to store any true/false gate, for example:
+This input type can be used to store any true/false gate, for example:
 
-- Is environment locked for deployments;
-- Should environment perform nightly shutdown;
-- Does service handle PII;
-- Is environment public;
-- etc.
+- Is environment locked for deployments
+- Should environment perform nightly shutdown
+- Does service handle PII
+- Is environment public
 
-In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we can see the **Delete Repo** action whose `Confirm` input is a boolean input. 🎬
+In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we can see the **Delete Repo** action whose `Confirm` input is a toggle input. 🎬
 
 ## API definition
 

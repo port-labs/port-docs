@@ -1,6 +1,7 @@
 ---
 sidebar_position: 16
 description: Team is a data type used to reference teams that exist in Port
+sidebar_class_name: "custom-sidebar-item sidebar-property-team"
 ---
 
 import ApiRef from "/docs/api-reference/\_learn_more_reference.mdx"
