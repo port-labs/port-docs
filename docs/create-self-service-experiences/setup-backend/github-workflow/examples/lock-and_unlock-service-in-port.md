@@ -131,7 +131,7 @@ Below you can find the JSON for the `Service` blueprint required for the guide:
 </details>
 
 :::note Lock property
-Our Service blueprint has a boolean property called `locked_in_prod`. When the action is triggered, we will update the value of this field to `true` if locking and `false` if unlocking. The `locked_reason_prod` property will equally be updated to reflect the reason for the lock or unlock. The same logic applies to the development environment (`locked_in_test`)
+Our Service blueprint has a boolean property called `locked_in_prod`. When the action is triggered, we will update the value of this field to `true` if locking and `false` if unlocking. The `locked_reason_prod` property will be updated to reflect the reason for the lock or unlock. The same logic applies to the development environment (`locked_in_test`).
 :::
 
 ## Create Github workflow
