@@ -1290,7 +1290,7 @@ values={[
           "combinator": "and",
           "rules": [
             {
-              "blueprint": "$team",
+              "property": "$team",
               "operator": "containsAny",
               "value": {
                 "jqQuery": "[.user.teams[].name]"
