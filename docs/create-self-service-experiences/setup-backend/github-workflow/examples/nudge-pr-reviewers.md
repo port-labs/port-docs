@@ -10,7 +10,7 @@ In the following guide, you are going to create a self-service action in Port th
 
 ## Prerequisites
 1. Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new).
-2. This guide assumes the presence of a blueprint representing your repositories. If you haven't done so yet, initiate the setup of your GitHub data model by referring to this [guide](/build-your-software-catalog/sync-data-to-catalog/git/github/examples#mapping-repositories-file-contents-and-pull-requests) first.
+2. This guide assumes the presence of a blueprint representing your repositories. If you haven't done so yet, initiate the setup of your GitHub data model by referring to this [guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/examples/#mapping-repositories-file-contents-and-pull-requests)) first.
 3. A repository to contain your action resources i.e. the github workflow file.
 
 
@@ -20,18 +20,19 @@ Follow these steps to get started:
 
 1. Head to your [Slack apps](https://api.slack.com/apps) page and create a new app (or select one of your existing apps). Then, go to the Incoming Webhooks page and create a new webhook, specifying the target channel on your server where messages that are sent to the slack webhook will be transferred.
 
-1. Create the following GitHub Action secrets:
+2. Create the following GitHub Action secrets:
     - Create the following Port credentials:
-        - `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token).
-        - `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token).
+        - `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#get-api-token).
+        - `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#get-api-token).
     - `SLACK_WEBHOOK_URL` - the webhook URL you obtained from slack.
 
 <br />
-2. Create a Port action in the [self-service page](https://app.getport.io/self-serve) or with the following JSON definition:
+
+3. Create a Port action in the [self-service page](https://app.getport.io/self-serve) or with the following JSON definition:
 
 <details>
 
-  <summary>Port Action: Delete GitHub Repository</summary>
+  <summary>Port Action: Nudge Pull Request Reviewers</summary>
    :::tip
 - `<GITHUB-ORG>` - your GitHub organization or user name.
 - `<GITHUB-REPO-NAME>` - your GitHub repository name.
@@ -70,7 +71,7 @@ Follow these steps to get started:
 <br />
 <br />
 
-3. Create a workflow file under `.github/workflows/nudge-pr-reviewers.yml` with the following content:
+4. Create a workflow file under `.github/workflows/nudge-pr-reviewers.yml` with the following content:
 
 <details>
 
@@ -136,6 +137,7 @@ jobs:
 
 </details>
 <br />
-4. Trigger the action from the [self-service](https://app.getport.io/self-serve) page of your Port application.
+
+5. Trigger the action from the [self-service](https://app.getport.io/self-serve) page of your Port application.
 
 
