@@ -1,5 +1,5 @@
 ---
-sidebar_position: 4
+sidebar_position: 6
 description: Object is a basic input for JSON data
 ---
 
@@ -16,11 +16,10 @@ Object is a basic input for JSON data.
 
 The object input type can be used to store any key/value based data, for example:
 
-- Configurations;
-- Tags;
-- HTTP responses;
-- Dictionaries/Hash maps;
-- etc.
+- Configurations
+- Tags
+- HTTP responses
+- Dictionaries/Hash maps
 
 In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we can see the **Open terraform PR to add S3 bucket** action whose `policy` input is an object input. 🎬
 

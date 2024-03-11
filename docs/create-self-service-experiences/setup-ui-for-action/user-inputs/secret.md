@@ -1,5 +1,5 @@
 ---
-sidebar_position: 14
+sidebar_position: 7
 description: Secret is an input whose value is encrypted with your client secret when sent to your backend and is never saved or logged in its transit.
 ---
 
@@ -16,11 +16,10 @@ Secret input is an input type used to pass secrets and sensitive information to 
 
 The secret input type can be used for sensitive information, such as:
 
-- Cloud secrets;
-- Passwords;
-- API keys;
+- Cloud secrets
+- Passwords
+- API keys
 - Secret tokens
-- etc.
 
 ## Secret Input Structure
 

@@ -1,6 +1,7 @@
 ---
 sidebar_position: 2
 description: Array is a data type used to save lists of data
+sidebar_class_name: "custom-sidebar-item sidebar-property-array"
 ---
 
 import ApiRef from "/docs/api-reference/\_learn_more_reference.mdx"

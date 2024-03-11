@@ -1,6 +1,7 @@
 ---
 sidebar_position: 3
 description: Boolean is a primitive data type that has one of two possible values - true and false
+sidebar_class_name: "custom-sidebar-item sidebar-property-boolean"
 ---
 
 import ApiRef from "/docs/api-reference/\_learn_more_reference.mdx"
