@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 5
 description: Number is a basic input for numeric data
 ---
 
@@ -16,10 +16,9 @@ Number is a basic input for numeric data.
 
 The number input type can be used to store any numeric data, for example:
 
-- Memory/storage allocations;
-- Replica counts;
-- Number of days to retain data;
-- etc.
+- Memory/storage allocations
+- Replica counts
+- Number of days to retain data
 
 In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we can see the **scaffold new service** action whose `K8s Replica Count` input is a number input. 🎬
 

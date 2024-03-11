@@ -5,7 +5,7 @@
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
 resources:
-  - kind: repository
+  - kind: service
     selector:
       query: 'true'
       collaborators: true
@@ -14,7 +14,7 @@ resources:
         mappings:
           identifier: .name
           title: .name
-          blueprint: '"githubRepository"'
+          blueprint: '"githubService"'
           properties:
             readme: file://README.md
             url: .html_url

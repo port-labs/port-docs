@@ -1,5 +1,6 @@
 ---
 sidebar_position: 15
+sidebar_class_name: "custom-sidebar-item sidebar-property-swagger"
 ---
 
 import Tabs from "@theme/Tabs"
