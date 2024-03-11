@@ -641,16 +641,6 @@ resources:
         "type": "string",
         "title": "Filter",
         "description": "The filter for the SLO evaluation."
-      },
-      "relatedOpenProblems": {
-        "type": "number",
-        "title": "Related Open Problems",
-        "description": "Number of open problems related to the SLO. Has the value of -1 if there's an error with fetching SLO related problems."
-      },
-      "timeframe": {
-        "type": "string",
-        "title": "Timeframe",
-        "description": "The timeframe for the SLO evaluation."
       }
     },
     "required": []
@@ -689,8 +679,6 @@ resources:
             evaluatedPercentage: .evaluatedPercentage
             evaluationType: .evaluationType
             filter: .filter
-            relatedOpenProblems: .relatedOpenProblems
-            timeframe: .timeframe
 ```
 
 </details>
@@ -998,9 +986,7 @@ The combination of the sample payload and the Ocean configuration generates the 
     "errorBudget": 1.25,
     "evaluatedPercentage": 96.25,
     "evaluationType": "AGGREGATE",
-    "filter": "type(\"SERVICE\")",
-    "relatedOpenProblems": 1,
-    "timeframe": "-1d"
+    "filter": "type(\"SERVICE\")"
   },
 }
 ```
