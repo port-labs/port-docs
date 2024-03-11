@@ -17,6 +17,8 @@ const glossary = {
     "💡 <b>Port Concepts</b><br/><b>Action</b> - A mechanism to trigger reusable logic that interacts with your environment.",
   dataset:
     "💡 <b>Port Concepts</b><br/><b>Dataset</b> - A filtering mechanism for entity inputs comprising two properties: a combinator, and rules.",
+  relation:
+    '💡 <b>Port Concepts</b><br/><b>Relation</b> - A mechanism to define the connections between <a href="https://docs.getport.io/build-your-software-catalog/define-your-data-model/setup-blueprint/#what-is-a-blueprint" style="color:#30BFBF"><b>blueprints</b></a>, consequently connecting the entities based on these blueprints.',
 };
 
 const PortTooltip = ({ id, children }) => {
