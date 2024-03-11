@@ -14,7 +14,7 @@ This example includes a complete [blueprint](/build-your-software-catalog/custom
 - [Blueprint](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/setup-blueprint.md?definition=pulumi#configure-blueprints-in-port) definition examples;
 - All [property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/properties.md) type definitions;
 - [Relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/relate-blueprints.md?definition=pulumi#configure-relations-in-port) definition example;
-- [Mirror property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/mirror-property.md) definition example;
+- [Mirror property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property) definition example;
 - [Calculation property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/calculation-property.md) definition example.
 
 Here is the example definition in all the supported languages:
