@@ -11,17 +11,17 @@ In the following guide, you are going to create a self-service action in Port th
 ## Prerequisites
 
 1. Create the following GitHub Action secrets:
-    1. Create the following Port credentials:
-        1. `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
-        2. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
-        3. Install the Ports GitHub app from [here](https://github.com/apps/getport-io/installations/new).
+    * Create the following Port credentials:
+        * `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
+        * `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
+        * Install the Ports GitHub app from [here](https://github.com/apps/getport-io/installations/new).
     
-    2. Create the following AWS Cloud credentials:   
+    * Create the following AWS Cloud credentials:   
         :::tip Follow this [guide](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/create-key-pairs.html#having-ec2-create-your-key-pair) to create an SSH key pair to connect with the provisioned instance.
         :::
-        1. `TF_USER_AWS_KEY` - an aws access key with the right iam permission to create an ec2 instance [learn more](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html)
-        2. `TF_USER_AWS_SECRET` - an aws access key secret with permission to create an ec2 instance [learn more](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html)
-        3. `TF_USER_AWS_REGION` - the aws region where you would like to provision your ec2 instance.
+        * `TF_USER_AWS_KEY` - an aws access key with the right iam permission to create an ec2 instance [learn more](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html)
+        * `TF_USER_AWS_SECRET` - an aws access key secret with permission to create an ec2 instance [learn more](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html)
+        * `TF_USER_AWS_REGION` - the aws region where you would like to provision your ec2 instance.
 
 ## Steps
 
@@ -100,7 +100,7 @@ In the following guide, you are going to create a self-service action in Port th
 ```
 </details>
 
-2. Create a Port action in the [self-service page](https://app.getport.io/self-serve) or with the following JSON definition for the `EC2 Instance` blueprint:
+3. Create a Port action in the [self-service page](https://app.getport.io/self-serve) or with the following JSON definition for the `EC2 Instance` blueprint:
 
 <details>
   <summary>Port Action: Create EC2 Instance</summary>
@@ -171,7 +171,7 @@ In the following guide, you are going to create a self-service action in Port th
 ```
 </details>
 
-3. Create a workflow file under .github/workflows/create-an-ec2-instance.yaml with the following content:
+4. Create a workflow file under .github/workflows/create-an-ec2-instance.yaml with the following content:
 
 <details>
 <summary>GitHub workflow script</summary>
@@ -257,7 +257,7 @@ jobs:
 ```
 </details>
 
-4. Create the following terraform templates ( main.tf and variables.tf ) in `terraform` folder at the root of your GitHub repository:
+5. Create the following terraform templates ( main.tf and variables.tf ) in `terraform` folder at the root of your GitHub repository:
 
 <details>
   <summary><b>main.tf</b></summary>
@@ -318,6 +318,6 @@ variable "ec2_instance_type" {
 ```
 </details>
 
-5. Trigger the action from Port's [Self Serve](https://app.getport.io/self-serve)
+6. Trigger the action from Port's [Self Serve](https://app.getport.io/self-serve)
 
 Congrats 🎉 You've created your instance in EC2 from Port!
