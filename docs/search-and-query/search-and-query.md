@@ -3,6 +3,8 @@ title: Search & query
 sidebar_label: 🔍 Search & query
 ---
 
+import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+
 # 🔍 Search & query
 
 import CombinatorIntro from "./\_combinator_intro.md"
@@ -16,16 +18,15 @@ Port's API provides tools to easily query, search and filter software catalog da
 
 High quality search is essential to effectively track assets in your software catalog, using Port's search you can:
 
-- Find all running services that are not healthy;
-- List all libraries that have known vulnerabilities;
-- Get all services running in a specific cluster;
-- etc.
+- Find all running services that are not healthy.
+- List all libraries that have known vulnerabilities.
+- Get all services running in a specific cluster.
 
 ## Search request
 
 The base search route is `https://api.getport.io/v1/entities/search`, it receives HTTP POST requests.
 
-A search request defines the logical Relation between different search rules, and contains filters and rules to find suitable Entities.
+A search request defines the logical relation between different search rules, and contains filters and rules to find matching <PortTooltip id="entity">entities</PortTooltip>.
 Each search request is represented by a JSON object, as shown in the following example:
 
 ```json showLineNumbers
@@ -46,7 +47,7 @@ Each search request is represented by a JSON object, as shown in the following e
 }
 ```
 
-The above query searches for all entities from the `myBlueprint` blueprint that their `identifier` contains the string `myIdentifierPart`
+The above query searches for all entities based on the `myBlueprint` blueprint whose `identifier` contains the string `myIdentifierPart`.
 
 ## Search request elements
 

@@ -1,6 +1,7 @@
 ---
-sidebar_position: 15
+sidebar_position: 10
 description: Mirror Property allows you to map data from related entities to your entity
+sidebar_class_name: "custom-sidebar-item sidebar-property-mirror"
 ---
 
 import ApiRef from "/docs/api-reference/\_learn_more_reference.mdx"
@@ -8,10 +9,10 @@ import ApiRef from "/docs/api-reference/\_learn_more_reference.mdx"
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# 🪞 Mirror Property
+# Mirror Property
 
 Mirror property allows you to map data from related entities to your entity.
-Mirror property can be used for blueprints that have [relations defined](../../../relate-blueprints/relate-blueprints.md).
+Mirror property can be used for blueprints that have [relations defined](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/relate-blueprints.md).
 
 When two blueprints are connected via a relation, a new set of properties becomes available to entities in the `source` blueprint.
 
@@ -21,7 +22,7 @@ Mirror properties will appear on the `source` blueprint as an additional key cal
 
 Mirror properties allow you to map property values from related entities, to `keys` in the `source` blueprint, thus giving you more context and data when viewing an Entity, while not cluttering the output with unnecessary fields.
 
-Mirror properties support both [user-defined](../properties.md#available-properties) properties, and [meta-properties](../meta-properties.md) by using similar syntax.
+Mirror properties support both [user-defined](./properties.md#available-properties) properties, and [meta-properties](./meta-properties.md) by using similar syntax.
 
 ## 💡 Common mirror usage
 
@@ -218,7 +219,7 @@ func main() {
 
 ## `Meta-property` as a mirror property
 
-This is a mirror property created from one of Port's [meta-properties](../meta-properties.md) on the `target` blueprint.
+This is a mirror property created from one of Port's [meta-properties](./meta-properties.md) on the `target` blueprint.
 
 In the following example, we create a mirror property called `microserviceName` which is mapped to the `title` meta-property in the `target` blueprint (in this example the name of the relation is `deployment-to-microservice`). Note how the `title` field is referenced using `$title` because it is a meta-property:
 
@@ -237,7 +238,7 @@ For example, let's assume we have the following Relation chain: `Microservice ->
 
 We want to map the members of the domain that owns the microservice directly to the `Microservice` entities.
 
-The members of the domain are listed in an [array property](../array.md) under the user-defined property `domain_members`.
+The members of the domain are listed in an [array property](./array.md) under the user-defined property `domain_members`.
 
 The names of the relations are:
 

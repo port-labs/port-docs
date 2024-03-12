@@ -1,6 +1,7 @@
 ---
 sidebar_position: 11
 description: Number is a primitive data type used to save numeric data
+sidebar_class_name: "custom-sidebar-item sidebar-property-number"
 ---
 
 import ApiRef from "/docs/api-reference/\_learn_more_reference.mdx"
