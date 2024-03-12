@@ -23,18 +23,18 @@ Using this installation option means that the integration will be able to update
 This table summarizes the available parameters for the installation.
 Set them as you wish in the script below, then copy it and run it in your terminal:
 
-| Parameter                             | Description                                                                                                   | Required |
-| ------------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------- |
-| `port.clientId`                       | Your port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                           | ✅       |
-| `port.clientSecret`                   | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                       | ✅       |
-| `port.baseUrl`                        | Your port base url, relevant only if not using the default port app                                           | ❌       |
-| `integration.identifier`              | Change the identifier to describe your integration                                                            | ✅       |
-| `integration.type`                    | The integration type                                                                                          | ✅       |
-| `integration.eventListener.type`      | The event listener type                                                                                       | ✅       |
-| `integration.secrets.dynatraceApiKey` | API Key for Dynatrace instance                                                                          | ✅       |
-| `integration.config.dynatraceHostUrl` | The URL to the Dynatrace instance                                                                          | ✅       |
-| `scheduledResyncInterval`             | The number of minutes between each resync                                                                     | ❌       |
-| `initializePortResources`             | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
+| Parameter                             | Description                                                                                                                         | Required |
+| ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `port.clientId`                       | Your port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)     | ✅       |
+| `port.clientSecret`                   | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials) | ✅       |
+| `port.baseUrl`                        | Your port base url, relevant only if not using the default port app                                                                 | ❌       |
+| `integration.identifier`              | Change the identifier to describe your integration                                                                                  | ✅       |
+| `integration.type`                    | The integration type                                                                                                                | ✅       |
+| `integration.eventListener.type`      | The event listener type                                                                                                             | ✅       |
+| `integration.secrets.dynatraceApiKey` | API Key for Dynatrace instance                                                                                                      | ✅       |
+| `integration.config.dynatraceHostUrl` | The URL to the Dynatrace instance                                                                                                   | ✅       |
+| `scheduledResyncInterval`             | The number of minutes between each resync                                                                                           | ❌       |
+| `initializePortResources`             | Default true, When set to true the integration will create default blueprints and the port App config Mapping                       | ❌       |
 
 <br/>
 
@@ -214,10 +214,6 @@ resources:
             lastSeen: ".lastSeenTms / 1000 | todate"
             type: .type
             tags: .tags[].stringRepresentation
-            managementZones: .managementZones[].name
-            properties: .properties
-            fromRelationships: .fromRelationships
-            toRelationships: .toRelationships
 ```
 
 The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Dynatrace's API events.
@@ -232,6 +228,7 @@ The following resources can be used to map data from Dynatrace, it is possible t
 - [`problem`](https://docs.dynatrace.com/docs/dynatrace-api/environment-api/problems-v2/problems/get-problems-list#definition--Problem)
 - [`entity`](https://docs.dynatrace.com/docs/dynatrace-api/environment-api/entity-v2/get-entities-list#definition--Entity)
 - [`slo`](https://docs.dynatrace.com/docs/dynatrace-api/environment-api/service-level-objectives/get-all#definition--SLO)
+- [`entity types`](https://docs.dynatrace.com/docs/dynatrace-api/environment-api/entity-v2/get-entity-type#definition--EntityType) for selectors in the `entity` resource.
 
 :::
 
@@ -263,17 +260,19 @@ The following resources can be used to map data from Dynatrace, it is possible t
       # highlight-start
       selector:
         query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
+        entityTypes: ["APPLICATION", "SERVICE"] # An optional list of entity types to filter by. If not specified, defaults to ["APPLICATION", "SERVICE"].
       # highlight-end
       port:
   ```
 
-- The `port`, `entity` and the `mappings` keys are used to map the Dynatrace object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
+- The `port`, `entity` and the `mappings` keys are used to map the Dynatrace object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array:
 
   ```yaml showLineNumbers
   resources:
     - kind: entity
       selector:
         query: "true"
+        entityTypes: ["APPLICATION", "SERVICE"]
       port:
         # highlight-start
         entity:
@@ -294,6 +293,7 @@ The following resources can be used to map data from Dynatrace, it is possible t
     - kind: entity # In this instance entity is mapped again with a different filter
       selector:
         query: '.displayName == "MyEntityName"'
+        entityTypes: ["APPLICATION", "SERVICE"]
       port:
         entity:
           mappings: ...
@@ -309,31 +309,31 @@ Currently, the Dynatrace API lacks support for programmatic webhook creation. To
 
 ### Prerequisite
 
-Prepare a webhook `URL` using this format: `{app_host}/integration/webhook`. The `app_host` parameter should match the ingress or external load balancer where the integration will be deployed. For example, if your ingress or load balancer exposes the Dynatrace Ocean integration at `https://myservice.domain.com`, your webhook `URL` should be `https://myservice.domain.com/integration/webhook`.
+Prepare a webhook `URL` using this format: `{app_host}/integration/webhook/problem`. The `app_host` parameter should match the ingress or external load balancer where the integration will be deployed. For example, if your ingress or load balancer exposes the Dynatrace Ocean integration at `https://myservice.domain.com`, your webhook `URL` should be `https://myservice.domain.com/integration/webhook/problem`.
 
 ### Create a webhook in Dynatrace
 
-1. Go to Dynatrace;
-2. Go to **Settings** > **Integration** > **Problem notifications**.;
-3. Select **Add notification**;
-4. Select **Custom integration** from the available notification types;
-5. Configure the notification using the following details;
-   1. `Enabled` - ensure the notification is enabled;
-   2. `Display name` - use a meaningful name such as Port Ocean Webhook;
-   3. `Webhook URL` - enter the value of the `URL` you created above.;
-   4. Enable **Call webhook is new events merge into existing problems**;
+1. Go to Dynatrace.
+2. Go to **Settings** > **Integration** > **Problem notifications**.
+3. Select **Add notification**.
+4. Select **Custom integration** from the available notification types.
+5. Configure the notification using the following details.
+   1. `Enabled` - ensure the notification is enabled.
+   2. `Display name` - use a meaningful name such as Port Ocean Webhook.
+   3. `Webhook URL` - enter the value of the `URL` you created above.
+   4. Enable **Call webhook is new events merge into existing problems**.
    5. `Custom payload` - paste the following configuration:
-    ```
-    {
-        "State":"{State}",
-        "ProblemID":"{ProblemID}",
-        "ProblemTitle":"{ProblemTitle}"
-    }
-    ```
-    You can customize to your taste, the only important thing is the `ProblemID` key. The webhook integration will not work without it.
-   6. `Alerting profile` - select the corresponding alerting profile
-   7. Leave the rest of the fields as is;
-6. Click **Save changes**
+   ```
+   {
+       "State":"{State}",
+       "ProblemID":"{ProblemID}",
+       "ProblemTitle":"{ProblemTitle}"
+   }
+   ```
+   You can customize to your taste, the only important thing is the `ProblemID` key. The webhook integration will not work without it.
+   6. `Alerting profile` - select the corresponding alerting profile.
+   7. Leave the rest of the fields as is.
+6. Click **Save changes**.
 
 ### Ingest data into Port
 
@@ -383,29 +383,13 @@ Examples of blueprints and the relevant integration configurations:
       "tags": {
         "type": "array",
         "title": "Tags",
-        "description": "A list of tags of the entity."
-      },
-      "managementZones": {
-        "type": "array",
-        "title": "Management Zones",
-        "description": "A list of all management zones that the entity belongs to."
-      },
-      "properties": {
-        "type": "properties",
-        "title": "Properties",
-        "description": "A list of additional properties of the entity."
-      },
-      "fromRelationships": {
-        "type": "object",
-        "title": "From Relationships",
-        "description": "A list of all relationships where the entity is the source."
-      },
-      "toRelationships": {
-        "type": "object",
-        "title": "To Relationships",
-        "description": "A list of all relationships where the entity is the target."
+        "description": "A list of tags of the entity.",
+        "items": {
+          "type": "string"
+        }
       }
-    }
+    },
+    "required": []
   },
   "mirrorProperties": {},
   "calculationProperties": {},
@@ -425,6 +409,7 @@ resources:
   - kind: entity
     selector:
       query: "true"
+      entityTypes: ["APPLICATION", "SERVICE"] # An optional list of entity types to filter by. If not specified, defaults to ["APPLICATION", "SERVICE"].
     port:
       entity:
         mappings:
@@ -436,10 +421,6 @@ resources:
             lastSeen: ".lastSeenTms / 1000 | todate"
             type: .type
             tags: .tags[].stringRepresentation
-            managementZones: .managementZones[].name
-            properties: .properties
-            fromRelationships: .fromRelationships
-            toRelationships: .toRelationships
 ```
 
 </details>
@@ -460,22 +441,34 @@ resources:
       "entityTags": {
         "type": "array",
         "title": "Entity Tags",
-        "description": "A list of all entity tags of the problem."
+        "description": "A list of all entity tags of the problem.",
+        "items": {
+          "type": "string"
+        }
       },
       "evidenceDetails": {
         "type": "array",
         "title": "Evidence Details",
-        "description": "A list of all evidence details of the problem."
+        "description": "A list of all evidence details of the problem.",
+        "items": {
+          "type": "string"
+        }
       },
       "managementZones": {
         "type": "array",
         "title": "Management Zones",
-        "description": "A list of all management zones that the problem belongs to."
+        "description": "A list of all management zones that the problem belongs to.",
+        "items": {
+          "type": "string"
+        }
       },
       "problemFilters": {
         "type": "array",
         "title": "Problem Filters",
-        "description": "A list of alerting profiles that match the problem."
+        "description": "A list of alerting profiles that match the problem.",
+        "items": {
+          "type": "string"
+        }
       },
       "severityLevel": {
         "type": "string",
@@ -495,7 +488,7 @@ resources:
           "CUSTOM_ALERT": "turquoise",
           "ERROR": "red",
           "INFO": "green",
-          "MONITORING_UNAVAILABLE": "gray",
+          "MONITORING_UNAVAILABLE": "darkGray",
           "PERFORMANCE": "orange",
           "RESOURCE_CONTENTION": "yellow"
         }
@@ -525,6 +518,8 @@ resources:
     },
     "required": []
   },
+  "mirrorProperties": {},
+  "calculationProperties": {},
   "relations": {
     "impactedEntities": {
       "title": "Impacted Entities",
@@ -544,9 +539,7 @@ resources:
       "required": false,
       "many": false
     }
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {}
+  }
 }
 ```
 
@@ -580,7 +573,7 @@ resources:
           relations:
             impactedEntities: .impactedEntities[].entityId.id
             linkedProblemInfo: .linkedProblemInfo.problemId
-            rootCauseEntity: .rootCauseEntity.name
+            rootCauseEntity: .rootCauseEntity.entityId.id
 ```
 
 </details>
@@ -619,18 +612,13 @@ resources:
         "title": "Enabled",
         "description": "Whether the SLO is enabled."
       },
-      "burnRateMetricKey": {
-        "type": "string",
-        "title": "Burn Rate Metric Key",
-        "description": "The key for the SLO's error budget burn rate func metric."
-      },
       "warning": {
         "type": "number",
         "title": "Warning",
         "description": "The warning value of the SLO. At warning state the SLO is still fulfilled but is getting close to failure."
       },
       "error": {
-        "type": "number",
+        "type": "string",
         "title": "Error",
         "description": "The error of the SLO calculation. If the value differs from NONE, there is something wrong with the SLO calculation."
       },
@@ -638,16 +626,6 @@ resources:
         "type": "number",
         "title": "Error Budget",
         "description": "The error budget of the calculated SLO."
-      },
-      "errorBudgetBurnRate": {
-        "type": "number",
-        "title": "Error Budget Burn Rate",
-        "description": "The error budget burn rate of the SLO."
-      },
-      "errorBudgetMetricKey": {
-        "type": "string",
-        "title": "Error Budget Metric Key",
-        "description": "The key for the SLO's error budget func metric."
       },
       "evaluatedPercentage": {
         "type": "number",
@@ -663,38 +641,9 @@ resources:
         "type": "string",
         "title": "Filter",
         "description": "The filter for the SLO evaluation."
-      },
-      "metricExpression": {
-        "type": "string",
-        "title": "Metric Expression",
-        "description": "The percentage-based metric expression for the calculation of the SLO."
-      },
-      "metricKey": {
-        "type": "string",
-        "title": "Metric Key",
-        "description": "The key for the SLO's status func metric."
-      },
-      "normalizedErrorBudgetMetricKey": {
-        "type": "string",
-        "title": "Normalized Error Budget Metric Key",
-        "description": "The key for the SLO's normalized error budget func metric."
-      },
-      "relatedOpenProblems": {
-        "type": "integer",
-        "title": "Related Open Problems",
-        "description": "Number of open problems related to the SLO. Has the value of -1 if there's an error with fetching SLO related problems."
-      },
-      "relatedTotalProblems": {
-        "type": "integer",
-        "title": "Related Total Problems",
-        "description": "Number of total problems related to the SLO. Has the value of -1 if there's an error with fetching SLO related problems."
-      },
-      "timeframe": {
-        "type": "string",
-        "title": "Timeframe",
-        "description": "The timeframe for the SLO evaluation."
       }
-    }
+    },
+    "required": []
   },
   "mirrorProperties": {},
   "calculationProperties": {},
@@ -724,21 +673,321 @@ resources:
             status: .status
             target: .target
             enabled: .enabled
-            burnRateMetricKey: .burnRateMetricKey
             warning: .warning
             error: .error
             errorBudget: .errorBudget
-            errorBudgetBurnRate: .errorBudgetBurnRate.burnRateValue
-            errorBudgetMetricKey: .errorBudgetMetricKey
             evaluatedPercentage: .evaluatedPercentage
             evaluationType: .evaluationType
             filter: .filter
-            metricExpression: .metricExpression
-            metricKey: .metricKey
-            normalizedErrorBudgetMetricKey: .normalizedErrorBudgetMetricKey
-            relatedOpenProblems: .relatedOpenProblems
-            relatedTotalProblems: .relatedTotalProblems
-            timeframe: .timeframe
 ```
 
+</details>
+
+## Let's Test It
+
+This section includes a sample response data from Dynatrace. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+
+### Payload
+
+Here is an example of the payload structure from Dynatrace:
+
+<details>
+<summary>Entity response data</summary>
+
+```json showLineNumbers
+{
+  "displayName": "my host",
+  "entityId": "HOST-06F288EE2A930951",
+  "firstSeenTms": 1574697667547,
+  "fromRelationships": {
+    "isInstanceOf": [
+      {
+        "id": "HOST_GROUP-0E489369D663A4BF",
+        "type": "HOST_GROUP"
+      }
+    ]
+  },
+  "icon": {
+    "customIconPath": "host",
+    "primaryIconType": "linux",
+    "secondaryIconType": "microsoft-azure-signet"
+  },
+  "lastSeenTms": 1588242361417,
+  "managementZones": [
+    {
+      "id": "6239538939987181652",
+      "name": "main app"
+    }
+  ],
+  "properties": {
+    "bitness": 64,
+    "cpuCores": 8,
+    "monitoringMode": "FULL_STACK",
+    "networkZoneId": "aws.us.east01",
+    "osArchitecture": "X86",
+    "osType": "LINUX"
+  },
+  "tags": [
+    {
+      "context": "CONTEXTLESS",
+      "key": "architecture",
+      "stringRepresentation": "architecture:x86",
+      "value": "x86"
+    },
+    {
+      "context": "ENVIRONMENT",
+      "key": "Infrastructure",
+      "stringRepresentation": "[ENVIRONMENT]Infrastructure:Linux",
+      "value": "Linux"
+    }
+  ],
+  "toRelationships": {
+    "isDiskOf": [
+      {
+        "id": "DISK-0393340DCA3853B0",
+        "type": "DISK"
+      }
+    ]
+  },
+  "type": "HOST"
+}
+```
+
+</details>
+
+<details>
+<summary>Problem response data</summary>
+
+```json showLineNumbers
+{
+  "affectedEntities": [
+    {
+      "entityId": {
+        "id": "string",
+        "type": "string"
+      },
+      "name": "string"
+    }
+  ],
+  "displayId": "string",
+  "endTime": 1574697669865,
+  "entityTags": [
+    {
+      "context": "CONTEXTLESS",
+      "key": "architecture",
+      "stringRepresentation": "architecture:x86",
+      "value": "x86"
+    },
+    {
+      "context": "ENVIRONMENT",
+      "key": "Infrastructure",
+      "stringRepresentation": "[ENVIRONMENT]Infrastructure:Linux",
+      "value": "Linux"
+    }
+  ],
+  "evidenceDetails": {
+    "details": [
+      {
+        "displayName": "Availability evidence",
+        "entity": {},
+        "evidenceType": "AVAILABILITY_EVIDENCE",
+        "groupingEntity": {},
+        "rootCauseRelevant": true,
+        "startTime": 1
+      },
+      {
+        "displayName": "User action evidence",
+        "entity": {},
+        "evidenceType": "USER_ACTION_EVIDENCE",
+        "groupingEntity": {},
+        "rootCauseRelevant": true,
+        "startTime": 1
+      }
+    ],
+    "totalCount": 1
+  },
+  "impactAnalysis": {
+    "impacts": [
+      {
+        "estimatedAffectedUsers": 1,
+        "impactType": "APPLICATION",
+        "impactedEntity": {}
+      }
+    ]
+  },
+  "impactLevel": "APPLICATION",
+  "impactedEntities": [{}],
+  "linkedProblemInfo": {
+    "displayId": "string",
+    "problemId": "string"
+  },
+  "managementZones": [
+    {
+      "id": "string",
+      "name": "HOST"
+    }
+  ],
+  "problemFilters": [
+    {
+      "id": "E2A930951",
+      "name": "BASELINE"
+    }
+  ],
+  "problemId": "06F288EE2A930951",
+  "recentComments": {
+    "comments": [
+      {
+        "authorName": "string",
+        "content": "string",
+        "context": "string",
+        "createdAtTimestamp": 1,
+        "id": "string"
+      }
+    ],
+    "nextPageKey": "AQAAABQBAAAABQ==",
+    "pageSize": 1,
+    "totalCount": 1
+  },
+  "rootCauseEntity": {},
+  "severityLevel": "AVAILABILITY",
+  "startTime": 1574697667547,
+  "status": "CLOSED",
+  "title": "title"
+}
+```
+
+</details>
+
+<details>
+<summary>SLO response data</summary>
+
+```json showLineNumbers
+{
+  "burnRateMetricKey": "func:slo.errorBudgetBurnRate.payment_service_availability",
+  "denominatorValue": 90,
+  "description": "Rate of successful payments per week",
+  "enabled": true,
+  "error": "NONE",
+  "errorBudget": 1.25,
+  "errorBudgetBurnRate": {
+    "burnRateType": "SLOW",
+    "burnRateValue": 1.25,
+    "burnRateVisualizationEnabled": true,
+    "estimatedTimeToConsumeErrorBudget": 24,
+    "fastBurnThreshold": 1.5,
+    "sloValue": 95
+  },
+  "errorBudgetMetricKey": "func:slo.errorBudget.payment_service_availability",
+  "evaluatedPercentage": 96.25,
+  "evaluationType": "AGGREGATE",
+  "filter": "type(\"SERVICE\")",
+  "id": "123e4567-e89b-42d3-a456-556642440000",
+  "metricDenominator": "builtin:service.requestCount.server",
+  "metricExpression": "(100)*(builtin:service.errors.server.successCount:splitBy())/(builtin:service.requestCount.server:splitBy())",
+  "metricKey": "func:slo.payment_service_availability",
+  "metricNumerator": "builtin:service.errors.server.successCount",
+  "metricRate": "builtin:service.successes.server.rate",
+  "name": "Payment service availability",
+  "normalizedErrorBudgetMetricKey": "func:slo.normalizedErrorBudget.payment_service_availability",
+  "numeratorValue": 80,
+  "problemFilters": "[type(\"SERVICE\")]",
+  "relatedOpenProblems": 1,
+  "relatedTotalProblems": 1,
+  "status": "WARNING",
+  "target": 95,
+  "timeframe": "-1d",
+  "useRateMetric": true,
+  "warning": 97.5
+}
+```
+
+</details>
+
+### Mapping Result
+
+The combination of the sample payload and the Ocean configuration generates the following Port entity:
+
+<details>
+<summary>Entity entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "HOST-06F288EE2A930951",
+  "title": "my host",
+  "blueprint": "dynatraceEntity",
+  "team": [],
+  "icon": "Dynatrace",
+  "properties": {
+    "firstSeen": "2019-11-25T14:14:27Z",
+    "lastSeen": "2020-04-30T14:52:41Z",
+    "type": "HOST",
+    "tags": ["architecture:x86", "[ENVIRONMENT]Infrastructure:Linux"]
+  },
+  "relations": {},
+  "createdAt": "2024-2-6T09:30:57.924Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2024-2-6T11:49:20.881Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+<details>
+<summary>Problem entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "06F288EE2A930951",
+  "title": "title",
+  "blueprint": "dynatraceProblem",
+  "team": [],
+  "icon": "Dynatrace",
+  "properties": {
+    "entityTags": ["architecture:x86", "[ENVIRONMENT]Infrastructure:Linux"],
+    "evidenceDetails": ["Availability evidence", "User action evidence"],
+    "managementZones": ["HOST"],
+    "problemFilters": ["BASELINE"],
+    "severityLevel": "AVAILABILITY",
+    "status": "CLOSED",
+    "startTime": "2019-11-25T14:14:27Z",
+    "endTime": "2020-04-30T14:52:41Z"
+  },
+  "relations": {
+    "impactedEntities": ["HOST-06F288EE2A930951"],
+    "linkedProblemInfo": "06F288EE2A930951",
+    "rootCauseEntity": "HOST-06F288EE2A930951"
+  },
+  "createdAt": "2024-2-6T09:30:57.924Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2024-2-6T11:49:20.881Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+<details>
+<summary>SLO entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "123e4567-e89b-42d3-a456-556642440000",
+  "title": "Payment service availability",
+  "blueprint": "dynatraceSlo",
+  "team": [],
+  "icon": "Dynatrace",
+  "properties": {
+    "status": "WARNING",
+    "target": 95,
+    "enabled": true,
+    "warning": 97.5,
+    "error": "NONE",
+    "errorBudget": 1.25,
+    "evaluatedPercentage": 96.25,
+    "evaluationType": "AGGREGATE",
+    "filter": "type(\"SERVICE\")"
+  },
+}
+```
 </details>

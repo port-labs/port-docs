@@ -1,6 +1,7 @@
 ---
 sidebar_position: 6
 description: Email is a data type used to save Email addresses
+sidebar_class_name: "custom-sidebar-item sidebar-property-string"
 ---
 
 import ApiRef from "/docs/api-reference/\_learn_more_reference.mdx"

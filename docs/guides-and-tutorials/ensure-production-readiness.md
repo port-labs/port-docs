@@ -66,11 +66,15 @@ If you already have a Pagerduty account that you can play around with, feel free
 
 Now let's bring our Pagerduty data into Port. Port's Pagerduty integration automatically fetches `Services` and `Incidents`, and creates <PortTooltip id="blueprint">blueprints</PortTooltip> and <PortTooltip id="entity">entities</PortTooltip> for them.
 
-:::info Note
+:::info K8s cluster required
 For this installation you will need Helm and a running K8s cluster (see [prerequisites](/guides-and-tutorials/ensure-production-readiness)).
 :::
 
 1. Install Port's Pagerduty integration using Helm, by running the command below in your terminal.
+
+:::tip Alternative installation
+The command below will install the integration in `Realtime & always on` mode. If you prefer to use a one-time (scheduled) installation instead, see the [Pagerduty installation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty/?installation-methods=one-time#installation) section.
+:::
 
 - Replace `CLIENT_ID` and `CLIENT_SECRET` with your credentials (get them [here](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)).
 
@@ -83,18 +87,18 @@ For this installation you will need Helm and a running K8s cluster (see [prerequ
 ![pagerdutyUserSettings](/img/guides/pagerdutyUserSettings.png)
 
 <details>
-<summary>Installation command (click to expand)</summary>
+<summary><b>Installation command (click to expand)</b></summary>
 
 ```bash showLineNumbers
 helm repo add port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-pagerduty-integration port-labs/port-ocean \
-    --set port.clientId="CLIENT_ID" \     # REPLACE VALUE
-    --set port.clientSecret="CLIENT_SECRET"  \     # REPLACE VALUE
+    --set port.clientId="CLIENT_ID" \   # REPLACE VALUE
+    --set port.clientSecret="CLIENT_SECRET"  \   # REPLACE VALUE
     --set initializePortResources=true  \
     --set integration.identifier="my-pagerduty-integration"  \
     --set integration.type="pagerduty"  \
     --set integration.eventListener.type="POLLING"  \
-    --set integration.secrets.token="token"  \     # REPLACE VALUE
+    --set integration.secrets.token="token"  \   # REPLACE VALUE
     --set integration.config.apiUrl="https://api.pagerduty.com"
 ```
 
