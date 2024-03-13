@@ -310,6 +310,7 @@ const config = {
         config: {
           port: { // the <id> referenced when running CLI commands
             specPath: './static/spec.yaml', // path to OpenAPI spec, URLs supported
+            proxy: "https://cors.pan.dev",
             outputDir: "docs/apisa", // output directory for generated files
             sidebarOptions: {
               groupPathsBy: "tag",
