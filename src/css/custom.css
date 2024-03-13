@@ -222,6 +222,7 @@ html[data-theme="dark"] details details  {
   background-color: var(--ifm-color-secondary-contrast-background);
   color: var(--ifm-color-secondary-contrast-foreground);
   border-color: var(--ifm-color-secondary-dark);
+}
 
 /* sidebar icons */
 
