@@ -17,7 +17,7 @@ A `Project` is essentially a container for all the data and information related 
 
 An `Issue` is a group of incidents that describe the underlying problem of your symptoms.
 
-A `Tag` is a key/value string pair that provides additional metadata and filtering to objects.
+A `Tag` is a key/value pair used to attach additional metadata to objects. This metadata can include information such as the environment, runtime, log level, and more.
 
 ## Common use cases
 
