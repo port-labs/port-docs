@@ -193,8 +193,8 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Dynatrace
 
+- [Dynatrace integration](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/dynatrace)
 - [Dynatrace webhook](/build-your-software-catalog/custom-integration/webhook/examples/dynatrace.md)
-- [Dynatrace entities](/build-your-software-catalog/custom-integration/webhook/examples/dynatrace.md#ingest-dynatrace-entities)
 
 ## Datadog
 
