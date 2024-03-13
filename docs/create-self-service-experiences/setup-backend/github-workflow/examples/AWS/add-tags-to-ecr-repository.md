@@ -23,7 +23,7 @@ This GitHub action allows you to add tags to an ECR repository via Port Actions 
 3. Create an AWS ECR repository blueprint in Port using the blueprint below:
 
 <details>
-<summary><b>Datadog Incident Blueprint</b></summary>
+<summary><b>ECR Repository Blueprint</b></summary>
 
 ```json showLineNumbers
 {
