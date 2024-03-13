@@ -18,6 +18,8 @@ Port and keep track of their state.
 Get to know the basics of our Kubernetes exporter [here!](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md)
 :::
 
+<img src="/img/build-your-software-catalog/sync-data-to-catalog/kubernetes/k8sKyvernoView.png" border="1px"/>
+
 ## Prerequisites
 
 <TemplatePrerequisites />
@@ -42,9 +44,6 @@ This `blueprints.json` file defines the following blueprints:
 
 - Cluster
 - Namespace
-- Node
-- Pod
-- ReplicaSet
 - Workload
 - Kyverno Policy
 - Kyverno Policy Report
@@ -65,6 +64,116 @@ This `blueprints.json` file defines the following blueprints:
 - `Kyverno Policy Report` is another important Kyverno resource that contains the results of applying the policies to the Kubernetes cluster.
 :::
 
+Below are the Kyverno blueprint schemas used in the exporter:
+
+<details>
+<summary> <b>Kyverno policy blueprint (click to expand)</b> </summary>
+```json showLineNumbers
+  {
+    "identifier":"kyvernoPolicy",
+    "title":"Kyverno Policy",
+    "icon":"Cluster",
+    "schema":{
+        "properties":{
+          "admission":{
+              "title":"Admission",
+              "type":"boolean",
+              "icon":"DefaultProperty"
+          },
+          "background":{
+              "title":"Background",
+              "type":"boolean",
+              "icon":"DefaultProperty"
+          },
+          "createdAt":{
+              "title":"Created At",
+              "type":"string",
+              "format":"date-time",
+              "icon":"DefaultProperty"
+          },
+          "validationFailureAction":{
+              "icon":"DefaultProperty",
+              "title":"Validation Failure Action",
+              "type":"string",
+              "enum":[
+                "Audit",
+                "Enforce"
+              ],
+              "enumColors":{
+                "Audit":"lightGray",
+                "Enforce":"lightGray"
+              }
+          }
+        },
+        "required":[]
+    },
+    "mirrorProperties":{},
+    "calculationProperties":{},
+    "aggregationProperties":{},
+    "relations":{
+        "namespace":{
+          "title":"Namespace",
+          "target":"namespace",
+          "required":false,
+          "many":false
+        }
+    }
+  }
+```
+</details>
+
+<details>
+<summary> <b>Kyverno policy report blueprint (click to expand)</b> </summary>
+```json showLineNumbers
+  {
+    "identifier":"kyvernoPolicyReport",
+    "title":"Kyverno Policy Report",
+    "icon":"Cluster",
+    "schema":{
+        "properties":{
+          "createdAt":{
+              "title":"Created At",
+              "type":"string",
+              "format":"date-time"
+          },
+          "pass":{
+              "title":"Pass",
+              "type":"number"
+          },
+          "fail":{
+              "title":"Fail",
+              "type":"number"
+          },
+          "warn":{
+              "title":"Warn",
+              "type":"number"
+          },
+          "error":{
+              "title":"Error",
+              "type":"number"
+          },
+          "skip":{
+              "title":"Skip",
+              "type":"number"
+          }
+        },
+        "required":[]
+    },
+    "mirrorProperties":{},
+    "calculationProperties":{},
+    "aggregationProperties":{},
+    "relations":{
+        "namespace":{
+          "title":"Namespace",
+          "target":"namespace",
+          "required":false,
+          "many":false
+        }
+    }
+  }
+```
+</details>
+
 ### Exporting custom resource mapping
 
 Using the `CONFIG_YAML_URL` parameter, you can define a custom resource mapping to use when installing the exporter.
@@ -75,18 +184,81 @@ In this use-case you will be using the **[this configuration file](https://githu
 export CONFIG_YAML_URL="https://github.com/port-labs/template-assets/blob/main/kubernetes/templates/kyverno-kubernetes_v1_config.yaml"
 ```
 
-You can now run the installation script using the following code snippet:
+Below is the mapping for the Kyverno resources:
 
-```bash showLineNumbers
-export CLUSTER_NAME="my-cluster"
-export PORT_CLIENT_ID="my-port-client-id"
-export PORT_CLIENT_SECRET="my-port-client-secret"
-curl -s https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/install.sh | bash
+<details>
+<summary> <b>Kyverno policy mapping (click to expand)</b> </summary>
+```yaml showLineNumbers
+- kind: kyverno.io/v1/policies
+  port:
+    entity:
+      mappings:
+        - identifier: .metadata.name + "-" + .metadata.namespace + "-" + env.CLUSTER_NAME
+          title: .metadata.name
+          icon: '"Cluster"'
+          blueprint: '"kyvernoPolicy"'
+          properties:
+            admission: .spec.admission
+            background: .spec.background
+            validationFailureAction: .spec.validationFailureAction
+            createdAt: .metadata.creationTimestamp
+          relations:
+            namespace: .metadata.namespace + "-" + env.CLUSTER_NAME
+
+- kind: kyverno.io/v1/clusterpolicies
+  port:
+    entity:
+      mappings:
+        - identifier: .metadata.name + "-" + env.CLUSTER_NAME
+          title: .metadata.name
+          icon: '"Cluster"'
+          blueprint: '"kyvernoPolicy"'
+          properties:
+            admission: .spec.admission
+            background: .spec.background
+            validationFailureAction: .spec.validationFailureAction
+            createdAt: .metadata.creationTimestamp
 ```
+</details>
 
-You can now browse to your Port environment to see that your blueprints have been created, and your k8s and Trivy
+<details>
+<summary> <b>Kyverno policy report mapping (click to expand)</b> </summary>
+```yaml showLineNumbers
+  - kind: wgpolicyk8s.io/v1alpha2/policyreports
+    port:
+      entity:
+        mappings:
+          - identifier: .metadata.name + "-" + .metadata.namespace + "-" + env.CLUSTER_NAME
+            title: .scope.name
+            icon: '"Cluster"'
+            blueprint: '"kyvernoPolicyReport"'
+            properties:
+              pass: .summary.pass
+              fail: .summary.fail
+              warn: .summary.warn
+              error: .summary.error
+              skip: .summary.skip
+              createdAt: .metadata.creationTimestamp
+            relations:
+              namespace: .metadata.namespace + "-" + env.CLUSTER_NAME
+
+  - kind: wgpolicyk8s.io/v1alpha2/clusterpolicyreports
+    port:
+      entity:
+        mappings:
+          - identifier: .metadata.name + "-" + env.CLUSTER_NAME
+            title: .scope.name
+            icon: '"Cluster"'
+            blueprint: '"kyvernoPolicyReport"'
+            properties:
+              pass: .summary.pass
+              fail: .summary.fail
+              warn: .summary.warn
+              error: .summary.error
+              skip: .summary.skip
+              createdAt: .metadata.creationTimestamp
+```
+</details>
+
+You can now browse to your Port environment to see that your blueprints have been created, and your k8s and Kyverno
 resources are being reported to Port using the freshly installed k8s exporter.
-
-## How does the installation script work?
-
-<TemplateInstallation />

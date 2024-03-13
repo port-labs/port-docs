@@ -19,7 +19,7 @@ All relevant files and resources for this guide are available [**Here for GitHub
 
 ## Example - create a new service repository
 
-The following example utilizes Port [webhook-actions](../webhook.md) to create a new service repository from a software template.
+The following example utilizes Port [webhook-actions](/build-your-software-catalog/custom-integration/webhook) to create a new service repository from a software template.
 
 First, you need to create a simple `Service` blueprint.
 

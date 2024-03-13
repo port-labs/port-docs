@@ -19,6 +19,8 @@ This guide takes 10 minutes to complete, and aims to demonstrate the value of Po
 
 :::
 
+<br/>
+
 ### The goal of this guide
 
 In this guide we will model and visualize out services' Kubernetes resources.
@@ -29,6 +31,8 @@ After completing it, you will get a sense of how it can benefit different person
 - Platform engineers will be able to create custom views and visualizations for different stakeholders in the organization.
 - Platform engineers will be able to set, maintain and track standards for K8s resources.
 - R&D managers will be able to track any data about services' K8s resources, using tailor-made views and dashboards.
+
+<br/>
 
 ### Install Port's Kubernetes exporter
 
@@ -60,6 +64,8 @@ After installation, the exporter will:
 
 <img src='/img/guides/k8sBlueprintsCreated.png' width='95%' />
 
+<br/><br/>
+
 :::info Note
 
 `Workload` is an abstraction of Kubernetes objects which create and manage pods (e.g. `Deployment`, `StatefulSet`, `DaemonSet`).
@@ -72,13 +78,15 @@ After installation, the exporter will:
 
 <img src='/img/guides/k8sEntitiesCreated.png' width='100%' />
 
-<br/>
+<br/><br/>
 
 3. Create <PortTooltip id="scorecard">scorecards</PortTooltip> for the blueprints that represent your K8s resources (as defined [here](https://github.com/port-labs/port-k8s-exporter/blob/main/assets/defaults/scorecards.json)). These scorecards define rules and checks over the data ingested from your K8s cluster, making it easy to check that your K8s resources meet your standards.
 
 4. Create dashboards that provide you with a visual view of the data ingested from your K8s cluster.
 
 5. Listen to changes in your Kubernetes cluster and update your <PortTooltip id="entity">entities</PortTooltip> accordingly.
+
+<br/>
 
 ### Define the connection between services and workloads
 
@@ -94,7 +102,7 @@ In this guide we will create one relation named `Prod_runtime` which will repres
 
 <br/><br/>
 
-When looking at a `Service`, some of its `Workload` properties may be especially important to us, and we would like to see them directly in the `Service's` context. This can be achieved using [mirror properties](https://docs.getport.io/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/mirror-property/), so let's create some:
+When looking at a `Service`, some of its `Workload` properties may be especially important to us, and we would like to see them directly in the `Service's` context. This can be achieved using [mirror properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/), so let's create some:
 
 3. The first one will be the workload's health. Under the relation we just created, click on `New mirror property`:
 
@@ -111,6 +119,8 @@ When looking at a `Service`, some of its `Workload` properties may be especially
 5. The second one will be the workload's image tag/s. Create another mirror property, fill the form out like this, then click `Create`:
 
 <img src='/img/guides/k8sCreateMirrorPropImages.png' width='50%' />
+
+<br/><br/>
 
 ### Map your workloads to their services
 
@@ -191,6 +201,8 @@ resources:
 3. Go to your [Software catalog](https://app.getport.io/services), and click on `Services`. Click on the `Service` for which you created the deployment, and you should see the `Prod_runtime` property filled, along with the `Health` and `Images` properties that we mirrored:
 
 <img src='/img/guides/k8sEntityAfterIngestion.png' width='80%' />
+
+<br/><br/>
 
 ### Visualize data from your Kubernetes environment
 

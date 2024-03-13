@@ -1,13 +1,14 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import HelmPrerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
 import HelmParameters from "../templates/\_ocean-advanced-parameters-helm.mdx"
 import ResourceMapping from "../templates/\_resource-mapping.mdx"
 import DockerParameters from "./\_docker-parameters.mdx"
 import SupportedResources from "./\_supported-resources.mdx"
 import AdvancedConfig from '../../../generalTemplates/\_ocean_advanced_configuration_note.md'
-import SonarcloudAnalysisBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/webhook/examples/resources/sonarqube/\_example_sonarcloud_analysis_blueprint.mdx";
-import SonarcloudAnalysisConfiguration from "/docs/build-your-software-catalog/sync-data-to-catalog/webhook/examples/resources/sonarqube/\_example_sonarcloud_analysis_configuration.mdx";
+import SonarcloudAnalysisBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/sonarqube/\_example_sonarcloud_analysis_blueprint.mdx";
+import SonarcloudAnalysisConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/sonarqube/\_example_sonarcloud_analysis_configuration.mdx";
 
 # SonarQube
 
@@ -40,12 +41,13 @@ Set them as you wish in the script below, then copy it and run it in your termin
 
 | Parameter                                | Description                                                                                                                                                                                  | Example                             | Required |
 | ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------- | -------- |
-| `port.clientId`                          | Your port client id ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))                                 |                                     | ✅       |
-| `port.clientSecret`                      | Your port client secret ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))                             |                                     | ✅       |
+| `port.clientId`                          | Your port client id ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                 |                                     | ✅       |
+| `port.clientSecret`                      | Your port client secret ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                             |                                     | ✅       |
 | `integration.secrets.sonarApiToken`      | The [SonarQube API token](https://docs.sonarsource.com/sonarqube/9.8/user-guide/user-account/generating-and-using-tokens/#generating-a-token)                                                |                                     | ✅       |
 | `integration.config.sonarOrganizationId` | The SonarQube [organization Key](https://docs.sonarsource.com/sonarcloud/appendices/project-information/#project-and-organization-keys) (Not required when using on-prem sonarqube instance) | myOrganization                      | ✅       |
+| `integration.config.sonarIsOnPremise` | A boolean value indicating whether the SonarQube instance is on-premise. The default value is `false` | false                      | ✅       |
 | `integration.config.appHost`             | A URL bounded to the integration container that can be accessed by sonarqube. When used the integration will create webhooks on top of sonarqube to listen to any live changes in the data   | https://my-ocean-integration.com    | ❌       |
-| `integration.config.sonarUrl`            | Required if using **On-Prem**, Your SonarQube instance URL                                                                                                                                   | https://my-sonar-cloud-instance.com | ❌       |
+| `integration.config.sonarUrl`            | Required if using **On-Prem**, Your SonarQube instance URL                                                                                                                                   | https://my-sonar-instance.com | ❌       |
 
 <HelmParameters />
 
@@ -58,15 +60,16 @@ To install the integration using Helm, run the following command:
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-sonarqube-integration port-labs/port-ocean \
-	--set port.clientId="PORT_CLIENT_ID"  \
-	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set initializePortResources=true  \
-	--set scheduledResyncInterval=120  \
-	--set integration.identifier="my-sonarqube-integration"  \
-	--set integration.type="sonarqube"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.secrets.sonarApiToken="MY_API_TOKEN"  \
-	--set integration.config.sonarOrganizationId="MY_ORG_KEY"
+  --set port.clientId="PORT_CLIENT_ID"  \
+  --set port.clientSecret="PORT_CLIENT_SECRET"  \
+  --set initializePortResources=true  \
+  --set scheduledResyncInterval=120  \
+  --set integration.identifier="my-sonarqube-integration"  \
+  --set integration.type="sonarqube"  \
+  --set integration.eventListener.type="POLLING"  \
+  --set integration.config.sonarIsOnPremise="<ENTER BOOLEAN VALUE>"  \
+  --set integration.secrets.sonarApiToken="<ENTER API TOKEN>"  \
+  --set integration.config.sonarOrganizationId="<ENTER ORGANIZATION ID>"
 ```
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
@@ -75,7 +78,7 @@ To install the integration using ArgoCD, follow these steps:
 1. Create a `values.yaml` file in `argocd/my-ocean-sonarqube-integration` in your git repository with the content:
 
 :::note
-Remember to replace the placeholders for `MY_ORG_KEY` and `MY_API_TOKEN`.
+Remember to replace the placeholders for `MY_ORG_KEY`, `IS_ON_PREMISE`, and `MY_API_TOKEN`.
 :::
 ```yaml showLineNumbers
 initializePortResources: true
@@ -86,8 +89,10 @@ integration:
   eventListener:
     type: POLLING
   config:
-  // highlight-next-line
+  // highlight-start
     sonarOrganizationId: MY_ORG_KEY
+    sonarIsOnPremise: IS_ON_PREMISE
+  // highlight-end
   secrets:
   // highlight-next-line
     sonarApiToken: MY_API_TOKEN
@@ -198,6 +203,7 @@ jobs:
           -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
           -e OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN=${{ secrets.OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN }} \
           -e OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID=${{ secrets.OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID }} \
+          -e OCEAN__INTEGRATION__CONFIG__SONAR_IS_ON_PREMISE=${{ secrets.OCEAN__INTEGRATION__CONFIG__SONAR_IS_ON_PREMISE }} \
           -e OCEAN__INTEGRATION__CONFIG__SONAR_URL=${{ secrets.OCEAN__INTEGRATION__CONFIG__SONAR_URL }} \
           -e OCEAN__PORT__CLIENT_ID=${{ secrets.OCEAN__PORT__CLIENT_ID }} \
           -e OCEAN__PORT__CLIENT_SECRET=${{ secrets.OCEAN__PORT__CLIENT_SECRET }} \
@@ -238,6 +244,7 @@ pipeline {
                     withCredentials([
                         string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN', variable: 'OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN'),
                         string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID', variable: 'OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID'),
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__SONAR_IS_ON_PREMISE', variable: 'OCEAN__INTEGRATION__CONFIG__SONAR_IS_ON_PREMISE'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_SECRET', variable: 'OCEAN__PORT__CLIENT_SECRET'),
                     ]) {
@@ -251,6 +258,7 @@ pipeline {
                                 -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
                                 -e OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN=$OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN \
                                 -e OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID=$OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID \
+                                -e OCEAN__INTEGRATION__CONFIG__SONAR_IS_ON_PREMISE=$OCEAN__INTEGRATION__CONFIG__SONAR_IS_ON_PREMISE \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
                                 $image_name
@@ -311,6 +319,7 @@ steps:
     -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
     -e OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN=${OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN} \
     -e OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID=${OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID} \
+    -e OCEAN__INTEGRATION__CONFIG__SONAR_IS_ON_PREMISE=${OCEAN__INTEGRATION__CONFIG__SONAR_IS_ON_PREMISE} \
     -e OCEAN__INTEGRATION__CONFIG__SONAR_URL=${OCEAN__INTEGRATION__CONFIG__SONAR_URL} \
     -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \
     -e OCEAN__PORT__CLIENT_SECRET=${OCEAN__PORT__CLIENT_SECRET} \
@@ -615,10 +624,10 @@ resources:
 
 </details>
 
-### Analysis
+### Saas Analysis
 
 <details>
-<summary>Analysis blueprint</summary>
+<summary>Saas analysis blueprint</summary>
 
 ```json showLineNumbers
 {
@@ -677,7 +686,7 @@ resources:
 createMissingRelatedEntities: true
 deleteDependentEntities: true
 resources:
-  - kind: analysis
+  - kind: saas_analysis
     selector:
       query: "true"
     port:
@@ -693,6 +702,89 @@ resources:
             coverage: .measures.coverage_change
             duplications: .measures.duplicated_lines_density_change
             createdAt: .__analysisDate
+          relations:
+            sonarQubeProject: .__project
+```
+
+</details>
+
+### On-Premise Analysis
+
+<details>
+<summary>On-premise analysis blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "sonarQubeAnalysis",
+  "title": "SonarQube Analysis",
+  "icon": "sonarqube",
+  "schema": {
+    "properties": {
+      "branch": {
+        "type": "string",
+        "title": "Branch",
+        "icon": "GitVersion"
+      },
+      "fixedIssues": {
+        "type": "number",
+        "title": "Fixed Issues"
+      },
+      "newIssues": {
+        "type": "number",
+        "title": "New Issues"
+      },
+      "coverage": {
+        "title": "Coverage",
+        "type": "number"
+      },
+      "duplications": {
+        "type": "number",
+        "title": "Duplications"
+      },
+      "createdAt": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Created At"
+      }
+    }
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "sonarQubeProject": {
+      "target": "sonarQubeProject",
+      "required": false,
+      "title": "SonarQube Project",
+      "many": false
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: onprem_analysis
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          blueprint: '"sonarQubeAnalysis"'
+          identifier: .__project + "-" + .key
+          title: .title
+          properties:
+            branch: .branch
+            newIssues: .__measures[]? | select(.metric == "new_violations") | .period.value
+            coverage: .__measures[]? | select(.metric == "new_coverage") | .period.value
+            duplications: .__measures[]? | select(.metric == "new_duplicated_lines_density") | .period.value
+            createdAt: .analysisDate
           relations:
             sonarQubeProject: .__project
 ```
@@ -980,7 +1072,7 @@ Create the following blueprint definition:
 
 </details>
 
-Create the following webhook configuration [using Port's UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints):
+Create the following webhook configuration [using Port's UI](/build-your-software-catalog/custom-integration/webhook/?operation=ui#configuring-webhook-endpoints):
 
 <details>
 <summary>SonarQube analysis webhook configuration</summary>
@@ -1160,3 +1252,116 @@ The combination of the sample payload and the webhook configuration generates th
 }
 ```
 </details>
+
+
+
+## Connect SonarQube project to service
+
+This guide aims to demonstrate how to connect a SonarQube project to an existing service in Port.
+
+:::tip Prerequisites
+
+- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
+- Ensure you have SonarQube installed and configured in your environment.
+- You will need an accessible k8s cluster. If you don't have one, here is how to quickly set-up a [minikube cluster](https://minikube.sigs.k8s.io/docs/start/).
+- [Helm](https://helm.sh/docs/intro/install/) - required to install a relevant integration.
+
+:::
+
+<br/>
+
+### Add tags to projects in SonarQube
+
+Tagging projects in SonarQube allows you to categorize and label your projects based on various attributes such as technology stack, business domain, team ownership etc. In this guide, we will add a tag attribute to tell us the name of the service that implements the project:
+
+1. Login to your [SonarQube account](https://www.sonarsource.com/)
+2. Once logged in, navigate to the projects panel and choose the project you want to tag
+3. Within the project dashboard, locate the **Project Information** tab specific to the selected project
+4. Look for a section labeled **Tags** or similar. This is where you can manage tags associated with the project
+5. To add a new tag, click on the **plus** icon and type the tag name (`port-auth-service`) into the input field provided. For this guide, let's assume there is a service entity identified by `auth-service` in your `Service` blueprint in Port. 
+
+<img src='/img/guides/sonarProjectAddTags.png' width='60%' />
+
+:::note Control the tag name
+Since our `SonarQube project` may already have several tags, we will need a mechanism to control how these tags will be related to our `Service` blueprint. A way to achieve this relation is to prefix the tag name with the keyword `port-`. We will then use JQ to select the tags that starts with this keyword. So, our example tag will be named `port-auth-service`, which will correspond to a Service entity identified by `auth-service` in Port.
+:::
+
+
+### Create the service relation
+
+Now that Port is synced with our SonarQube resources, let's reflect the SonarQube project in our services to display the projects used in a service.
+First, we will need to create a [relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/) between our services and the corresponding Sonarqube project.
+
+1. Head back to the [Builder](https://app.getport.io/dev-portal/data-model), choose the `SonarQube Project` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New relation`:
+
+<img src='/img/guides/sonarProjectCreateRelation.png' width='60%' />
+
+<br/><br/>
+
+2. Fill out the form like this, then click `Create`:
+
+<img src='/img/guides/sonarProjectEditRelation.png' width='60%' />
+
+<br/><br/>
+
+Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, we need to assign the relevant SonarQube project to each of our services. This can be done by adding some mapping logic. Go to your [data sources page](https://app.getport.io/dev-portal/data-sources), and click on your SonarQube integration:
+
+<img src='/img/guides/sonarQubeIntegrationDataSources.png' />
+
+<br/><br/>
+
+Under the `resources` key, modify the mapping for the `projects` kind by using the following YAML block. Then click `Save & Resync`:
+
+<details>
+<summary>Relation mapping (click to expand)</summary>
+
+```yaml showLineNumbers
+  - kind: projects
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .key
+          title: .name
+          blueprint: '"sonarQubeProject"'
+          properties:
+            organization: .organization
+            link: .__link
+            lastAnalysisStatus: .__branch.status.qualityGateStatus
+            lastAnalysisDate: .__branch.analysisDate
+            numberOfBugs: .__measures[]? | select(.metric == "bugs") | .value
+            numberOfCodeSmells: .__measures[]? | select(.metric == "code_smells") | .value
+            numberOfVulnerabilities: .__measures[]? | select(.metric == "vulnerabilities") | .value
+            numberOfHotSpots: .__measures[]? | select(.metric == "security_hotspots") | .value
+            numberOfDuplications: .__measures[]? | select(.metric == "duplicated_files") | .value
+            coverage: .__measures[]? | select(.metric == "coverage") | .value
+            mainBranch: .__branch.name
+          relations:
+            service: .tags | map(select(startswith("port"))) | map(sub("port-"; ""; "g")) | .[0]
+```
+
+</details>
+
+:::tip JQ explanation
+
+The JQ below selects all tags that start with the keyword `port`. It then removes "port-" from each tag, leaving only the part that comes after it. It then selects the first match, which is equivalent to the service in Port.
+
+```yaml
+service: .tags | map(select(startswith("port"))) | map(sub("port-"; ""; "g")) | .[0]
+```
+:::
+
+What we just did was map the `SonarQube Project` to the relation between it and our `Services`.  
+Now, if our `Service` identifier is equal to the SonarQube project tag, the `service` will automatically be linked to it &nbsp;🎉
+
+![entitiesAfterServiceMapping](/img/guides/entitiesAfterServiceMapping.png)
+
+### Conclusion
+
+By following these steps, you can seamlessly connect a SonarQube project with an existing service blueprint in Port using project tags.
+
+More relevant guides and examples:
+
+- [Port's SonarQube integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube)
+- [Integrate scorecards with Slack](https://docs.getport.io/promote-scorecards/manage-using-3rd-party-apps/slack)

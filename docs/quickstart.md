@@ -52,18 +52,31 @@ Initially, your homepage contains two widgets:
 A blueprint is Port's basic building block, used to model any data source you would like to add to your software catalog.  
 Head over to your [builder](https://app.getport.io/dev-portal/data-model) - this is where you create, edit and relate blueprints.  
 
-As you can see, after connecting your Git provider to Port, a new `Service` blueprint is automatically created. This blueprint represents a service in your organization, implemented in a Git repository. It comes with some predefined [properties](https://docs.getport.io/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/).
+As you can see, after connecting your Git provider to Port, a new `Service` blueprint is automatically created. This blueprint represents a service in your organization, implemented in a Git repository. It comes with some predefined [properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/).
 
 **Learn more:**
 
-- [Setup blueprints](https://docs.getport.io/build-your-software-catalog/define-your-data-model/setup-blueprint/)
-- [Relate Blueprints](https://docs.getport.io/build-your-software-catalog/define-your-data-model/relate-blueprints/)
+- [Setup blueprints](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/)
+- [Relate Blueprints](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/)
+
+---
+
+### Data sources
+
+Data sources are the different integrations and/or methods that Port uses to ingest data from your tools and platforms.  
+They are created and configured in the [data sources](https://app.getport.io/dev-portal/data-sources) page of your portal.
+
+After connecting your Git provider to Port, a data source will be automatically created for you, with default configuration that tells Port where to get the data and where to map it to in Port.
+
+**Learn more:**
+
+- [Configure mapping](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping)
 
 ---
 
 ### Entities
 
-An entity is an instance of a blueprint, representing the data defined by that blueprint's properties. Entities are displayed in the [software catalog](https://app.getport.io/Services) page of the portal.  
+An entity is an instance of a blueprint, representing the data defined by that blueprint's properties. Entities are displayed in the [software catalog](https://app.getport.io/services) page of the portal.  
 
 After connecting your Git provider to Port, you will see all of your services (Git repositories) in the `Services` page of the catalog.
 
@@ -106,7 +119,7 @@ Take a look at your `Service` blueprint, it has a `Production Readiness` scoreca
 
 ### Dashboards
 
-In addition to your [homepage](#homepage), you can also create dashboards in your [software catalog](https://app.getport.io/Services). These are used to track and visualize data about your [entities](#entities).
+In addition to your [homepage](#homepage), you can also create dashboards in your [software catalog](https://app.getport.io/services). These are used to track and visualize data about your [entities](#entities).
 
 Your software catalog should already have two dashboard pages:
 
