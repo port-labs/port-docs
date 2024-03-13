@@ -11,15 +11,15 @@ This GitHub action allows you to quickly create a service in PagerDuty via Port 
 
 
 
-## Quickstart - Create a `PagerDuty service` from the service catalog
+## Steps
 
-1. Create the following GitHub action secrets
-* `PAGERDUTY_API_KEY` - PagerDuty API Key [learn more](https://support.pagerduty.com/docs/api-access-keys#section-generate-a-user-token-rest-api-key:~:text=the%20browser%20alert.-,Generate%20a%20User%20Token%20REST%20API%20Key,-%F0%9F%9A%A7)
-* `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
-* `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token) 
+1. Create the following GitHub action secrets:
+* `PAGERDUTY_API_KEY` - PagerDuty API Key [learn more](https://support.pagerduty.com/docs/api-access-keys#section-generate-a-user-token-rest-api-key:~:text=the%20browser%20alert.-,Generate%20a%20User%20Token%20REST%20API%20Key,-%F0%9F%9A%A7).
+* `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+* `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
 
 2. Install the Ports GitHub app from [here](https://github.com/apps/getport-io/installations/new).
-3. Install Port's pager duty integration [learn more](https://github.com/port-labs/Port-Ocean/tree/main/integrations/pagerduty)
+3. Install Port's pager duty integration [learn more](https://github.com/port-labs/Port-Ocean/tree/main/integrations/pagerduty).
 
 :::note Blueprint
 
@@ -204,6 +204,6 @@ jobs:
 
 </details>
 
-6. Trigger the action from Port's [Self Serve](https://app.getport.io/self-serve)
+6. Trigger the action from Port's [Self Serve](https://app.getport.io/self-serve).
 
 Congrats 🎉 You've created your first `service` in PagerDuty from Port!

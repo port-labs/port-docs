@@ -17,17 +17,17 @@ This GitHub action allows you to quickly create incidents in PagerDuty via Port 
 | portRunId            | Port run ID to came from triggering the action                                                    | true     | -                  |
 
 
-## Quickstart - Create a pager duty incident from the service catalog
+## Steps
 
-Follow these steps to get started with the Golang template
+Follow these steps to get started with the Golang template:
 
-1. Create the following GitHub action secrets
-* `PAGER_TOKEN` - a token with permission to create incidents [learn more](https://support.pagerduty.com/docs/generating-api-keys#section-generating-a-personal-rest-api-key)
-* `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
-* `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token) 
+1. Create the following GitHub action secrets:
+* `PAGER_TOKEN` - a token with permission to create incidents [learn more](https://support.pagerduty.com/docs/generating-api-keys#section-generating-a-personal-rest-api-key).
+* `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+* `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
 
 2. Install the Ports GitHub app from [here](https://github.com/apps/getport-io/installations/new).
-3. Install Port's pager duty integration [learn more](https://github.com/port-labs/Port-Ocean/tree/main/integrations/pagerduty)
+3. Install Port's pager duty integration [learn more](https://github.com/port-labs/Port-Ocean/tree/main/integrations/pagerduty).
 
 :::note Blueprint
 
@@ -157,10 +157,10 @@ jobs:
 </details>
 
 6. Trigger the action from Port's [Self Serve](https://app.getport.io/self-serve)
-![image](https://github.com/port-labs/pagerduty-incident-gha/assets/51213812/2cda51d4-4594-4f47-9ef4-3b2419b0351a)
+![image](https://github.com/port-labs/pagerduty-incident-gha/assets/51213812/2cda51d4-4594-4f47-9ef4-3b2419b0351a).
 
 7. Done! wait for the incident to be created in Pager Duty
-![image](https://github.com/port-labs/pagerduty-incident-gha/assets/51213812/74cb8aad-e426-4ab1-b388-74b80a5d2eb1)
+![image](https://github.com/port-labs/pagerduty-incident-gha/assets/51213812/74cb8aad-e426-4ab1-b388-74b80a5d2eb1).
 
 Congrats 🎉 You've created your first incident in PagerDuty from Port!
 

@@ -11,16 +11,16 @@ This GitHub action allows you to quickly trigger incidents in PagerDuty via Port
 | dedup_key              | Identifies the alert to trigger, acknowledge, or resolve                                                             | true unless the event_type is trigger    | -               | 
 
 
-## Quickstart - Trigger a PagerDuty incident from the service catalog
+## Steps
 
-Follow these steps to get started with the Golang template
+Follow these steps to get started:
 
-1. Create the following GitHub action secrets
-* `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
-* `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token) 
+1. Create the following GitHub action secrets:
+* `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+* `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
 
 2. Install the Ports GitHub app from [here](https://github.com/apps/getport-io/installations/new).
-3. Install Port's pager duty integration [learn more](https://github.com/port-labs/Port-Ocean/tree/main/integrations/pagerduty)
+3. Install Port's pager duty integration [learn more](https://github.com/port-labs/Port-Ocean/tree/main/integrations/pagerduty).
 
 :::note Blueprint
 
@@ -156,6 +156,6 @@ jobs:
 
 </details>
 
-6. Trigger the action from Port's [Self Serve](https://app.getport.io/self-serve)
+6. Trigger the action from Port's [Self Serve](https://app.getport.io/self-serve).
 
 Congrats 🎉 You've created your first incident in PagerDuty from Port!

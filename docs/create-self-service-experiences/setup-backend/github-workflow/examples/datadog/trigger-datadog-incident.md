@@ -2,21 +2,20 @@
 This GitHub action allows you to quickly trigger incidents in Datadog via Port Actions with ease.
 
 ## Prerequisites
-* Datadog API Key. Head over to [your account's API and application keys](https://app.datadoghq.com/account/settings?_gl=1*47zn4y*_gcl_au*MTg2NDEzODgwMC4xNzA1NjQyMDUz*_ga*MTk2MjcxMTc2OC4xNzA1NjQyMDU0*_ga_KN80RDFSQK*MTcwNjAwNzI0MS40LjEuMTcwNjAwNzI0Mi4wLjAuMA..*_fplc*dHFWa3VWZ1YwQVM3QWIlMkZrbmFSWE5OdVFnMWJVRzFFeVhkRnJCVTN6JTJGNEx3Nkc5bmsyVW1VY2locW96ZzB4ekVlcWIyJTJGZnlxc3lpYWlLSzJjYzdpODdTTVZBRzkyUnh2c1NKUVhWR3VoZERnN1R5dVJabjRmSDVMeWIzeklnJTNEJTNE#api) page to create a new API key. The API key should have the `incident_write` permission scope.
+* Datadog API Key. Head over to your account's [API and application keys page](https://app.datadoghq.com/account/settings?_gl=1*47zn4y*_gcl_au*MTg2NDEzODgwMC4xNzA1NjQyMDUz*_ga*MTk2MjcxMTc2OC4xNzA1NjQyMDU0*_ga_KN80RDFSQK*MTcwNjAwNzI0MS40LjEuMTcwNjAwNzI0Mi4wLjAuMA..*_fplc*dHFWa3VWZ1YwQVM3QWIlMkZrbmFSWE5OdVFnMWJVRzFFeVhkRnJCVTN6JTJGNEx3Nkc5bmsyVW1VY2locW96ZzB4ekVlcWIyJTJGZnlxc3lpYWlLSzJjYzdpODdTTVZBRzkyUnh2c1NKUVhWR3VoZERnN1R5dVJabjRmSDVMeWIzeklnJTNEJTNE#api) to create a new API key. The API key should have the `incident_write` permission scope.
 * Datadog Application Key. It is available on the same page as the Datadog API key.
-* [Port's GitHub app](https://github.com/apps/getport-io) installed
+* [Port's GitHub app](https://github.com/apps/getport-io) needs to be installed.
 
-## Quickstart - Trigger Datadog incident from the service catalog
+## Steps
 
 1. Create the following GitHub action secrets
 * `DD_API_URL` - Datadog API URL by default should be [https://api.datadoghq.com](https://api.datadoghq.com). However, if you are on the Datadog EU site, set the secret to `https://api.datadoghq.eu`. If you have your region information you use `https://api.<region>.datadoghq.com` or `https://api.<region>.datadoghq.eu`.
-* `DD_API_KEY` - Datadog API Key
-* `DD_APPLICATION_KEY` - Datadog Application Key
+* `DD_API_KEY` - Datadog API Key.
+* `DD_APPLICATION_KEY` - Datadog Application Key.
 * `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
 * `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
 
-2. Install the Ports GitHub app from [here](https://github.com/apps/getport-io/installations/new).
-3. Create a Datadog incident blueprint in Port using the blueprint below:
+2. Create a Datadog incident blueprint in Port using the blueprint below:
 
 <details>
 <summary><b>Datadog Incident Blueprint</b></summary>
@@ -112,7 +111,7 @@ This step will ensure the `datadogIncident` blueprint is available, and also upd
 
 :::
 
-4. After creating the blueprint, create the following action with the following JSON file on the `datadogIncident` blueprint:
+3. After creating the blueprint, create the following action with the following JSON file on the `datadogIncident` blueprint:
 
 <details>
 <summary><b>Trigger Datadog Incident Blueprint (Click to expand)</b></summary>
@@ -187,7 +186,7 @@ Replace the invocation method with your own repository details.
 
 :::
 
-5. Create a workflow file under `.github/workflows/trigger-datadog-incident.yml` with the content below:
+4. Create a workflow file under `.github/workflows/trigger-datadog-incident.yml` with the content below:
 
 <details>
 <summary><b>Trigger Datadog Incident Workflow (Click to expand)</b></summary>
@@ -331,8 +330,8 @@ jobs:
 
 </details>
 
-6. Trigger the action from Port's [Self Serve](https://app.getport.io/self-serve)
+5. Trigger the action from Port's [Self Serve](https://app.getport.io/self-serve)
 
-7. Done! wait for the incident to be trigger in Datadog
+6. Done! wait for the incident to be trigger in Datadog
 
 Congrats 🎉 You've triggered your first incident in Datadog from Port!

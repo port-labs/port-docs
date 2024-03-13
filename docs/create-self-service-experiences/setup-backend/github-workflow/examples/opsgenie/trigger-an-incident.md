@@ -3,20 +3,19 @@ This GitHub action allows you to quickly trigger incidents in Opsgenie via Port 
 
 ## Prerequisites
 * Opsgenie API Key. Head over to [API Key Management tab](https://getport-test.app.opsgenie.com/settings/api-key-management) on your Opsgenie account to create a new API key. The API key should have the `Create and Update` permission.
-* [Port's GitHub app](https://github.com/apps/getport-io) installed
+* [Port's GitHub app](https://github.com/apps/getport-io) installed.
 
-## Quickstart - Trigger Opsgenie incident from the service catalog
+## Steps
 
 Follow these steps to get started with the Golang template
 
-1. Create the following GitHub action secrets
-* `OPSGENIE_API_URL` - Opsgenie API URL (https://api.opsgenie.com or https://api.eu.opsgenie.com for EU accounts)
-* `OPSGENIE_API_KEY` - Opsgenie API Key
-* `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
-* `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
+1. Create the following GitHub action secrets:
+* `OPSGENIE_API_URL` - Opsgenie API URL (https://api.opsgenie.com or https://api.eu.opsgenie.com for EU accounts).
+* `OPSGENIE_API_KEY` - Opsgenie API Key.
+* `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+* `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
 
-2. Install the Ports GitHub app from [here](https://github.com/apps/getport-io/installations/new).
-3. Optional - Install Port's Opsgenie integration [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/opsgenie)
+2. Optional - Install Port's Opsgenie integration [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/opsgenie).
 
 :::note Blueprint
 
@@ -24,7 +23,7 @@ This step is not required for this example, but it will create all the blueprint
 
 :::
 
-4. After you installed the integration, the blueprints `opsGenieService`, `opsGenieIncident` and `opsGenieAlert` will appear, create the following action with the following JSON file on the `opsGenieIncident` blueprint:
+3. After you installed the integration, the blueprints `opsGenieService`, `opsGenieIncident` and `opsGenieAlert` will appear, create the following action with the following JSON file on the `opsGenieIncident` blueprint:
 
 <details>
 <summary><b>Trigger Opsgenie Incident Blueprint (Click to expand)</b></summary>
@@ -154,7 +153,7 @@ Replace the invocation method with your own repository details.
 
 :::
 
-5. Create a workflow file under .github/workflows/trigger-opsgenie-incident.yml with the content below:
+4. Create a workflow file under .github/workflows/trigger-opsgenie-incident.yml with the content below:
 
 <details>
 <summary><b>Trigger Opsgenie Incident Workflow (Click to expand)</b></summary>
@@ -246,8 +245,8 @@ jobs:
 
 </details>
 
-6. Trigger the action from Port's [Self Serve](https://app.getport.io/self-serve)
+5. Trigger the action from Port's [Self Serve](https://app.getport.io/self-serve)
 
-7. Done! wait for the incident to be trigger in Opsgenie
+6. Done! wait for the incident to be trigger in Opsgenie
 
 Congrats 🎉 You've triggered your first incident in Opsgenie from Port!
