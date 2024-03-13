@@ -1,0 +1,173 @@
+---
+id: approve-an-actions-run
+title: "Approve an action's run"
+description: "Approve an action's run"
+sidebar_label: "Approve an action's run"
+hide_title: true
+hide_table_of_contents: true
+api: eJx1VO9v0zAQ/VcifwGksmz7GCGkslViAkFVBl+gQtfEa72ltvGPsBLlf+fOdtJ0bRUpcex353fvnt0yB2vLip9sWjqhZLbw0rLlhBn+x3PrPqhqx4qWlUo6Lh0NQetalEDo/NEqSXO23PAt0MjtNGcFU6tHXjo2YdoozY0T3AacA+ftCGedEXKNOC79NtCYzxdff8xw5nZ28/nuy4wtuwmruC2N0LTncXCHAKgqQatQz0cbPkBteaxFGF5R/sRg2VHUfsEZz3FCg4Etd9yQJCfKOqLbXOFPcx1ICuTGUDWzwzmJefC3wVREerxXYNVNzqfvc2lwm30q4+VvUbEj1tgsy0tvhNsF0isOhhscLrvQR6uVtFH+68tL+hyoyW75A/jaZYuEDHoeQqYa29jwDGQGwSavbIZ0kAuKtVFV5FoS2cC5YHlzlUeozRFp8zbS73IIuaBmRNs0vdTe1Bi2cU7bIkeQuFhzp5VxF0KxcY3fSLRYTl/poB+GfeIj9ace2RnxL5iVJVU3HCqMoirJvou90WfPsNU1Hxt15MdDScatelCBg3AUy+ZIOpvO78gYqfsFu7q4JKxW1m0heLineFba0553/NnlugYsBfMF1dokenJjkp2M4sOnGJwzaI96bpAKxbTtCiz/buquo+noX+pIJSys6sGwE/aE0o4djYk8UQrtacAIgp8OfVHLcJuw14tk5jcZZjxZY99buRvv2dNJtXV0AFNniUFcvIn7vL2nFPvgoxuMChicPJ/e33xE9CpdfVtVheMHf0lSfBfsFz74o3RUGkFhvmU1yLWHNeFj4nA3eerO2KRPwaRpQHRP1vjSvbEmetPlcTLkHfouwyPwfoDHlbMBSbIeTYrT1fgfCW8OLQ==
+sidebar_class_name: "patch api-method"
+info_path: apisa/port-api
+custom_edit_url: null
+proxy: https://cors.pan.dev
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<h1
+  className={"openapi__heading"}
+>
+  Approve an action's run
+</h1>
+
+<MethodEndpoint
+  method={"patch"}
+  path={"/v1/actions/runs/{run_id}/approval"}
+>
+  
+</MethodEndpoint>
+
+
+
+Approve an action's run
+
+## Request
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"run_id","required":true}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Query Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string","enum":["v1","v2"]},"in":"query","name":"version","required":false}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><MimeTabs
+  className={"openapi-tabs__mime"}
+>
+  <TabItem
+    label={"application/json"}
+    value={"application/json-schema"}
+  >
+    <details
+      style={{}}
+      className={"openapi-markdown__details mime"}
+      data-collapsed={false}
+      open={true}
+    >
+      <summary
+        style={{}}
+        className={"openapi-markdown__details-summary-mime"}
+      >
+        <h3
+          className={"openapi-markdown__details-summary-header-body"}
+        >
+          Body
+        </h3><strong
+          className={"openapi-schema__required"}
+        >
+          required
+        </strong>
+      </summary><div
+        style={{"textAlign":"left","marginLeft":"1rem"}}
+      >
+        
+      </div><ul
+        style={{"marginLeft":"1rem"}}
+      >
+        <SchemaItem
+          collapsible={false}
+          name={"status"}
+          required={true}
+          schemaName={"string"}
+          qualifierMessage={"**Possible values:** [`APPROVE`, `DECLINE`]"}
+          schema={{"type":"string","enum":["APPROVE","DECLINE"]}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"description"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string"}}
+        >
+          
+        </SchemaItem>
+      </ul>
+    </details>
+  </TabItem>
+</MimeTabs><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

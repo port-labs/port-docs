@@ -1,0 +1,136 @@
+---
+id: cancel-a-migration
+title: "Cancel a migration"
+description: "Cancel a migration"
+sidebar_label: "Cancel a migration"
+hide_title: true
+hide_table_of_contents: true
+api: eJx1U12P0zAQ/CvVPoEUmpbHCCEdBw8IIare8XRUaJtsE98lsbGdciXKf2fX+ejH9VQptZPZ9czsuAWPuYPkAb6r3KJXunawicDSn4ac/6SzAyQtpLr2VHtZojGlSgMyfnS6lncuLahCWfmDIUhAbx8p9RCBsdqQ9YqcfLWEQ8WAc96qOoeuiwCzTElTLFcnNTssHXWdAAxarMiTFbpXzhx7RaD4CIb7ggnUXMO7alT3W2XQy1OWMki8bahjwY7Sxip/CL23hJYsLzdd8MIZtqWX8H6xkL+MXGqVkY7c/TPtsCn9bD0gg6BzyC3WKZUznE1MmAbLKXQmZLULbgnnBOL9Mp5gLm5PyXdxGjqBULb70Y3GllxYeG9cEsdo1Dwnb7T1c6XhVN+d2NZLGVVODnLZNzocTbtpmJ5V/0a6wdeCMOMqUSjjXx+D8uUZK1PS6aDPhrLT4SzlBQMrJje7WX3lvqKid2k5XwhW7KgwBGWgctW+M4cnFZ6efWxKZLbcKhjTDs4+wH4pth+jHkFyEY3BXraskKFwTdtu0dFPW3advGa9VmLCyz1ahVuRwyPIlJN1NoT2Bb3pDsGb9RC/tzM+8CrtcSK1jGOPZSM7Xj7xfC7S3G0YP0xFePSQ2/60d/fS6Njixe2VbEwxXP24u2fwdrj1lc6kxuJfuTL8TOAX/3ijTW+fjFret1BinTeYC77vG+50I66f5usp5GtYCNurQi+D10uSZxe9UvKBozTj9H6c4P2XVwsGx0a02L5h0v8Bq0u5zw==
+sidebar_class_name: "post api-method"
+info_path: apisa/port-api
+custom_edit_url: null
+proxy: https://cors.pan.dev
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<h1
+  className={"openapi__heading"}
+>
+  Cancel a migration
+</h1>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/v1/migrations/{migration_id}/cancel"}
+>
+  
+</MethodEndpoint>
+
+
+
+Cancel a migration
+
+## Request
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"migration_id","required":true}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><MimeTabs
+  className={"openapi-tabs__mime"}
+>
+  <TabItem
+    label={"application/json"}
+    value={"application/json-schema"}
+  >
+    <details
+      style={{}}
+      className={"openapi-markdown__details mime"}
+      data-collapsed={false}
+      open={true}
+    >
+      <summary
+        style={{}}
+        className={"openapi-markdown__details-summary-mime"}
+      >
+        <h3
+          className={"openapi-markdown__details-summary-header-body"}
+        >
+          Body
+        </h3>
+      </summary><div
+        style={{"textAlign":"left","marginLeft":"1rem"}}
+      >
+        
+      </div><ul
+        style={{"marginLeft":"1rem"}}
+      >
+        <SchemaItem
+          collapsible={false}
+          name={"reason"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string"}}
+        >
+          
+        </SchemaItem>
+      </ul>
+    </details>
+  </TabItem>
+</MimeTabs><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

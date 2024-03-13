@@ -1,0 +1,266 @@
+---
+id: patch-an-action-run
+title: "Patch an action run"
+description: "Patch an action run"
+sidebar_label: "Patch an action run"
+hide_title: true
+hide_table_of_contents: true
+api: eJx1VO9v2jAQ/VfQfdokVtp+jKZJjHVatUpDtP20oelIDnCb2J7tsDKU/313doCkUCEF/3g+v3v3zjsIuPKQ/YRxHpTRg1mtPcyH4OhPTT58NsUWsh3kRgfSQYZobalyFPToyRstaz5fU4UyCltLkIFZPFEeYAjWGUsuKPIRFzDUvoPzwSm9YhzpuhIa94+Tyc39Pa98Hd/ePc5uYN4M23N3uKDy9DDvl0o/y4bR9GPJYU7jL42rkPlD7Uo+cQCgc7iFRi6pyHtc0bksCrKOOGcqIAuuJqFUVxW67Vk69BLIaSxZzNviDIIhWBRKJMRy2lFoiaWnphGARYcVcRwf8zlR+ES5zRVPNtdRL8VVAS4g8xuC5jg83XAovhBSbZWTXNJ9w7fD72NZDOtjKFfr36roRYqqsG885bVTYRtJLwgdOR7Om2gpb432yQnXl5fyV5DPnbKiBMf9QkusyzCYtcioVB8yxZCvB6gHmPzKVEBKF9amSDxzIRr5ZjDaXI0S0I8Y6Ue7RL0BYeo2e3XFFBmsQ7A+G43QqosVBWtcuFAGumndi04pg31yRytZ9Z06go9rJuXUv9gq0Aq5Jiz4lCQmzTM7ttnNC1a2pG6bdLqh1wHH4ifjH+cHV3b80Tdjr7JLE/mrIPfClBMejKe34qPWLBlcXVwK1hofKozN3qZ3vhK9ah2kCUxiZEtkCThWVHvX1qg1blsl8VQd/7LWZCz+mu8W4G63QE+PrmwaWU7+lvIVyuOiPBh6CM+07Tl+g2UtPGItN+iUwM8ffZXA4eGDd7PW7O8HHPFsYnsj6G33zj2dNqH41rQ2EAZpc5Lu+fAgIY6HTx5bSeDg9un4YfKN0Yv2la5MEdsT/4qO/M3gF/94YmySl0FxfQcl6lUdnztIgeOrVEtJuo5+jo5uB52HtZ/ja6unnOTbfWp7Rz6y0QbcL58O8LTz5oFWsj1aFJ8z6f+zYkeH
+sidebar_class_name: "patch api-method"
+info_path: apisa/port-api
+custom_edit_url: null
+proxy: https://cors.pan.dev
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<h1
+  className={"openapi__heading"}
+>
+  Patch an action run
+</h1>
+
+<MethodEndpoint
+  method={"patch"}
+  path={"/v1/actions/runs/{run_id}"}
+>
+  
+</MethodEndpoint>
+
+
+
+Patch an action run
+
+## Request
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"run_id","required":true}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Query Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string","enum":["v1","v2"]},"in":"query","name":"version","required":false}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><MimeTabs
+  className={"openapi-tabs__mime"}
+>
+  <TabItem
+    label={"application/json"}
+    value={"application/json-schema"}
+  >
+    <details
+      style={{}}
+      className={"openapi-markdown__details mime"}
+      data-collapsed={false}
+      open={true}
+    >
+      <summary
+        style={{}}
+        className={"openapi-markdown__details-summary-mime"}
+      >
+        <h3
+          className={"openapi-markdown__details-summary-header-body"}
+        >
+          Body
+        </h3>
+      </summary><div
+        style={{"textAlign":"left","marginLeft":"1rem"}}
+      >
+        
+      </div><ul
+        style={{"marginLeft":"1rem"}}
+      >
+        <SchemaItem
+          collapsible={false}
+          name={"status"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={"**Possible values:** [`SUCCESS`, `FAILURE`]"}
+          schema={{"type":"string","enum":["SUCCESS","FAILURE"]}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"statusLabel"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={true}
+          className={"schemaItem"}
+        >
+          <details
+            style={{}}
+            className={"openapi-markdown__details"}
+          >
+            <summary
+              style={{}}
+            >
+              <strong>
+                link
+              </strong><span
+                style={{"opacity":"0.6"}}
+              >
+                 object
+              </span>
+            </summary><div
+              style={{"marginLeft":"1rem"}}
+            >
+              
+            </div><div>
+              <span
+                className={"badge badge--info"}
+              >
+                oneOf
+              </span><SchemaTabs>
+                <TabItem
+                  label={"MOD1"}
+                  value={"0-item-properties"}
+                >
+                  <div
+                    style={{"marginTop":".5rem","marginBottom":".5rem","marginLeft":"1rem"}}
+                  >
+                    
+                    
+                    string
+                    
+                    
+                  </div>
+                </TabItem><TabItem
+                  label={"MOD2"}
+                  value={"1-item-properties"}
+                >
+                  <li>
+                    <div
+                      style={{"fontSize":"var(--ifm-code-font-size)","opacity":"0.6","marginLeft":"-.5rem","paddingBottom":".5rem"}}
+                    >
+                      Array [
+                    </div>
+                  </li><div
+                    style={{"marginTop":".5rem","marginBottom":".5rem","marginLeft":"1rem"}}
+                  >
+                    
+                    
+                    string
+                    
+                    
+                  </div><li>
+                    <div
+                      style={{"fontSize":"var(--ifm-code-font-size)","opacity":"0.6","marginLeft":"-.5rem"}}
+                    >
+                      ]
+                    </div>
+                  </li>
+                </TabItem>
+              </SchemaTabs>
+            </div>
+          </details>
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"message"}
+          required={false}
+          schemaName={"object"}
+          qualifierMessage={undefined}
+          schema={{"type":"object","deprecated":true}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"summary"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"externalRunId"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string"}}
+        >
+          
+        </SchemaItem>
+      </ul>
+    </details>
+  </TabItem>
+</MimeTabs><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

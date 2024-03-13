@@ -1,0 +1,316 @@
+---
+id: change-an-entities
+title: "Change an entities"
+description: "Change an entities"
+sidebar_label: "Change an entities"
+hide_title: true
+hide_table_of_contents: true
+api: eJy1Vm1v0zAQ/iuVxQcQa9PxjQgQYwwJ+EA1ti90pXKTa+MtL8Z2yroo/50756VukqIxiVZqY/v8+O557s4pmOEbzfw5u0iNMAI0W5wwBb9y0OZDFu6YX7AgSw2khh65lLEIuBFZ6t3qLKU5HUSQcHoyOwnMZ9nqFgLDTphUmQRlUXFVhAgi1gKUY6uNEumGbLkxoBCQ/ZyfjX/w8cN0/Pr9cuLf4Md7O168fMbKE4ZOxtDfjysiqNzpLRjgCS1kKXxbY6h9k3aGK8V3rFyUXd+7kYWw5nlMlJQl8RVbSgZNeRgKWuTx7ACSp7tBdx5LRcdpJMBAop9MrQOY5nFMJFBow94blQMuwj1PZCWHKy5bC6XN0ojgDoiBWjP2iaavmtlKL/ZFKM4akeaLLvFt7rFkN2oGHcrL0roqueIJYKTastpLy1WWxcBTV701jzUFIsgTzHlFPKaIgsNAATewTITWSOPSHgjhEpo6qcpEKAhbnIFDnfwcOEPl6VKET4NCVaM9knVrt3RkcEErvf4VcxXnIHHd/BUWJdMQ5AqPt7yvgCvKgvmitK1ES1SpEvPVdEp/IehACUny4SkfKzFGl7UlpWLH5Dzi6QZGPB057KPUURaS07mpkjzCgbc99Vq/tVcMxVB6DYxX9HgrGcWjtk0a5SpG2MgYqX3P41JMNmBkpsxEZMwN/jtxW8XZULAvUSm+gqP7WY6+K/FgU5jV5EfAQ9xF4VNrvdw34YsjddZWeFNh7URdXHsDW15OS3CLrFdO5NA6s/7XwDMMeHQ2+4xbiZlKltPJlDJHZtok3PbeOrxBvQ4kbZkxcG88GXNkAKEs2UWt5ZxtT3HfXk0c+Edy0jnH75cCqhShkwRZFCuu4VrFZUnTVT2SzqHQfBW3FXjC7lCwx3SBLUeX0NK25CMobZ3vjRc0UIKsh8/v8LVvhM8v6wJ8MSJlh3hs0i7duWc23vQJGnT9/zkwKKK9desaIEIq0/Pq1PEVAe6heu8hxGfbEWbXV5Q49etLkoW21/Lf1Lzw12c3+MVBJttb284XLMbEzfmG7CtYewfmlI5uMd/ZYq4fnCv8MN5ulVcR0a97ex9seYM1NsJW8a41r1aObqgJa6yJfbq4/wCXSF6T
+sidebar_class_name: "put api-method"
+info_path: apisa/port-api
+custom_edit_url: null
+proxy: https://cors.pan.dev
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<h1
+  className={"openapi__heading"}
+>
+  Change an entities
+</h1>
+
+<MethodEndpoint
+  method={"put"}
+  path={"/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}"}
+>
+  
+</MethodEndpoint>
+
+
+
+Change an entities
+
+## Request
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"entity_identifier","required":true}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"blueprint_identifier","required":true}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Query Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"boolean","default":false},"in":"query","name":"create_missing_related_entities","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"query","name":"run_id","required":false}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><MimeTabs
+  className={"openapi-tabs__mime"}
+>
+  <TabItem
+    label={"application/json"}
+    value={"application/json-schema"}
+  >
+    <details
+      style={{}}
+      className={"openapi-markdown__details mime"}
+      data-collapsed={false}
+      open={true}
+    >
+      <summary
+        style={{}}
+        className={"openapi-markdown__details-summary-mime"}
+      >
+        <h3
+          className={"openapi-markdown__details-summary-header-body"}
+        >
+          Body
+        </h3>
+      </summary><div
+        style={{"textAlign":"left","marginLeft":"1rem"}}
+      >
+        
+      </div><ul
+        style={{"marginLeft":"1rem"}}
+      >
+        <SchemaItem
+          collapsible={false}
+          name={"identifier"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={"**Possible values:** Value must match regular expression `^[A-Za-z0-9@_.:\\\\/=-]+$`"}
+          schema={{"type":"string","pattern":"^[A-Za-z0-9@_.:\\\\/=-]+$"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"title"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"icon"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={true}
+          className={"schemaItem"}
+        >
+          <details
+            style={{}}
+            className={"openapi-markdown__details"}
+          >
+            <summary
+              style={{}}
+            >
+              <strong>
+                team
+              </strong><span
+                style={{"opacity":"0.6"}}
+              >
+                 object
+              </span>
+            </summary><div
+              style={{"marginLeft":"1rem"}}
+            >
+              
+            </div><div>
+              <span
+                className={"badge badge--info"}
+              >
+                oneOf
+              </span><SchemaTabs>
+                <TabItem
+                  label={"MOD1"}
+                  value={"0-item-properties"}
+                >
+                  <div
+                    style={{"marginTop":".5rem","marginBottom":".5rem","marginLeft":"1rem"}}
+                  >
+                    
+                    
+                    string
+                    
+                    
+                  </div>
+                </TabItem><TabItem
+                  label={"MOD2"}
+                  value={"1-item-properties"}
+                >
+                  <li>
+                    <div
+                      style={{"fontSize":"var(--ifm-code-font-size)","opacity":"0.6","marginLeft":"-.5rem","paddingBottom":".5rem"}}
+                    >
+                      Array [
+                    </div>
+                  </li><div
+                    style={{"marginTop":".5rem","marginBottom":".5rem","marginLeft":"1rem"}}
+                  >
+                    
+                    
+                    string
+                    
+                    
+                  </div><li>
+                    <div
+                      style={{"fontSize":"var(--ifm-code-font-size)","opacity":"0.6","marginLeft":"-.5rem"}}
+                    >
+                      ]
+                    </div>
+                  </li>
+                </TabItem>
+              </SchemaTabs>
+            </div>
+          </details>
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"properties"}
+          required={false}
+          schemaName={"object"}
+          qualifierMessage={undefined}
+          schema={{"type":"object","default":{}}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={true}
+          className={"schemaItem"}
+        >
+          <details
+            style={{}}
+            className={"openapi-markdown__details"}
+          >
+            <summary
+              style={{}}
+            >
+              <span
+                className={"openapi-schema__container"}
+              >
+                <strong
+                  className={"openapi-schema__property"}
+                >
+                  relations
+                </strong><span
+                  className={"openapi-schema__name"}
+                >
+                   object
+                </span>
+              </span>
+            </summary><div
+              style={{"marginLeft":"1rem"}}
+            >
+              <SchemaItem
+                collapsible={false}
+                name={"anyOf"}
+                required={false}
+                schemaName={""}
+                qualifierMessage={undefined}
+                schema={[{"type":"string","pattern":"^[A-Za-z0-9@_.:\\\\/=-]+$"},{"type":"array","items":{"type":"string","pattern":"^[A-Za-z0-9@_.:\\\\/=-]+$"}},{"type":"null"}]}
+              >
+                
+              </SchemaItem>
+            </div>
+          </details>
+        </SchemaItem><SchemaItem
+          name={"property name*"}
+          required={false}
+          schemaName={"any"}
+          qualifierMessage={undefined}
+          schema={{"type":"object","properties":{"identifier":{"type":"string","pattern":"^[A-Za-z0-9@_.:\\\\/=-]+$"},"title":{"type":"string"},"icon":{"type":"string"},"team":{"oneOf":[{"type":"string"},{"type":"array"}]},"properties":{"type":"object","default":{}},"relations":{"type":"object","additionalProperties":{"anyOf":[{"type":"string","pattern":"^[A-Za-z0-9@_.:\\\\/=-]+$"},{"type":"array","items":{"type":"string","pattern":"^[A-Za-z0-9@_.:\\\\/=-]+$"}},{"type":"null"}]}}},"additionalProperties":true}}
+          collapsible={false}
+          discriminator={false}
+        >
+          
+        </SchemaItem>
+      </ul>
+    </details>
+  </TabItem>
+</MimeTabs><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

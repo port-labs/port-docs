@@ -1,0 +1,1914 @@
+openapi: 3.0.1
+info:
+  title: Connxio API
+  description: "## Introduction\n    This API is documented in the **OpenAPI format** and provides users with programmatic access to the Connxio platform, allowing them to interact with and control various aspects of their integrations and workflows. With the Connxio API, users can automate integration processes, manage configurations, and programmatically interact with the messaging capabilities, providing flexibility and customization options for seamless integration with their existing systems.\n\n    ## Cross-Origin Resource Sharing\n    This API features Cross-Origin Resource Sharing(CORS) implemented in compliance with the [W3C spec](https://www.w3.org/TR/cors/) which allows for cross-domain communication from the browser.\n    All responses have a wildcard same-origin policy.\n\n    ## Authentication\n    The Connxio API offers two forms of authentication:\n      - [API Key (required)](/connxio-portal/apikeys)\n      - [OAuth2](https://oauth.net/2/)\n      \n    The API Key is required for all requests to the API. The OAuth2 authentication is implemented using the [Client Credentials Flow](https://datatracker.ietf.org/doc/html/rfc6749#section-4.4) and is strongly recommended for all requests to the API."
+  contact:
+    name: Evidi
+    url: https://www.evidi.com
+    email: support@connxio.no
+  version: '2.0'
+  x-logo:
+    url: /img/connxio-logo.svg
+    altText: Connxio Logo
+servers:
+  - url: https://api.connxio.com
+paths:
+  /api/v2/codecomponents:
+    get:
+      tags:
+        - Code components
+      summary: List all code components
+      operationId: GET_api/v2/codecomponents
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain; x-api-version=2.0:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CodeMappingMetaDataViewModel'
+            application/json; x-api-version=2.0:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CodeMappingMetaDataViewModel'
+            text/json; x-api-version=2.0:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CodeMappingMetaDataViewModel'
+    put:
+      tags:
+        - Code components
+      summary: Upsert a code component
+      operationId: PUT_api/v2/codecomponents
+      requestBody:
+        description: The request to insert
+        content:
+          application/json-patch+json; x-api-version=2.0:
+            schema:
+              $ref: '#/components/schemas/CodeMappingMetaDataRequest'
+          application/json; x-api-version=2.0:
+            schema:
+              $ref: '#/components/schemas/CodeMappingMetaDataRequest'
+          text/json; x-api-version=2.0:
+            schema:
+              $ref: '#/components/schemas/CodeMappingMetaDataRequest'
+          application/*+json; x-api-version=2.0:
+            schema:
+              $ref: '#/components/schemas/CodeMappingMetaDataRequest'
+      responses:
+        '200':
+          description: The code component corresponding to the ID
+          content:
+            text/plain; x-api-version=2.0:
+              schema:
+                $ref: '#/components/schemas/CodeMappingMetaDataViewModel'
+            application/json; x-api-version=2.0:
+              schema:
+                $ref: '#/components/schemas/CodeMappingMetaDataViewModel'
+            text/json; x-api-version=2.0:
+              schema:
+                $ref: '#/components/schemas/CodeMappingMetaDataViewModel'
+        '400':
+          description: Code component did not validate
+        '502':
+          description: Could not contact internal services. Please try again later or contact our support department
+  '/api/v2/codecomponents/{id}':
+    get:
+      tags:
+        - Code components
+      summary: Find the newest code component by id
+      operationId: 'GET_api/v2/codecomponents/{id}'
+      parameters:
+        - name: id
+          in: path
+          description: Code component Id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The code component corresponding to the ID
+          content:
+            text/plain; x-api-version=2.0:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CodeMappingMetaDataViewModel'
+            application/json; x-api-version=2.0:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CodeMappingMetaDataViewModel'
+            text/json; x-api-version=2.0:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CodeMappingMetaDataViewModel'
+        '400':
+          description: A code component corresponding to the ID could not be found
+        '502':
+          description: Could not contact internal services. Please try again later or contact our support department
+    delete:
+      tags:
+        - Code components
+      summary: Delete code component by id
+      operationId: 'DELETE_api/v2/codecomponents/{id}'
+      parameters:
+        - name: id
+          in: path
+          description: The id of the code component to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+        '204':
+          description: The code component corresponding to the ID was deleted
+        '400':
+          description: Request did not validate or code component is used in one or more integrations
+        '502':
+          description: Could not contact internal services. Please try again later or contact our support department
+  '/api/v2/codecomponents/{id}/versions':
+    get:
+      tags:
+        - Code components
+      summary: List all code components versions by id
+      operationId: 'GET_api/v2/codecomponents/{id}/versions'
+      parameters:
+        - name: id
+          in: path
+          description: Code component Id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The code component corresponding to the ID
+          content:
+            text/plain; x-api-version=2.0:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CodeMappingMetaDataViewModel'
+            application/json; x-api-version=2.0:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CodeMappingMetaDataViewModel'
+            text/json; x-api-version=2.0:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CodeMappingMetaDataViewModel'
+        '400':
+          description: A code component corresponding to the ID could not be found
+        '502':
+          description: Could not contact internal services. Please try again later or contact our support department
+  '/api/v2/codecomponents/{id}/deprecate':
+    put:
+      tags:
+        - Code components
+      summary: Deprecate a code component by id
+      operationId: 'PUT_api/v2/codecomponents/{id}/deprecate'
+      parameters:
+        - name: id
+          in: path
+          description: The id of the component
+          required: true
+          schema:
+            type: string
+        - name: version
+          in: query
+          description: The version to deprecate
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The code component corresponding to the ID was deprecated
+        '400':
+          description: Request did not validate
+  '/api/v2/codecomponents/{id}/updatename':
+    put:
+      tags:
+        - Code components
+      summary: Update code component name by id
+      operationId: 'PUT_api/v2/codecomponents/{id}/updatename'
+      parameters:
+        - name: id
+          in: path
+          description: The id of the component
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: The new name
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The code component corresponding to the ID was changed
+        '400':
+          description: Request did not validate
+  /api/v2/environmentvariables:
+    get:
+      tags:
+        - Environment variables
+      summary: List all environment variables
+      operationId: GET_api/v2/environmentvariables
+      responses:
+        '200':
+          description: The EnvironmentVariables for the company
+          content:
+            text/plain; x-api-version=2.0:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EnvironmentVariable'
+            application/json; x-api-version=2.0:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EnvironmentVariable'
+            text/json; x-api-version=2.0:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EnvironmentVariable'
+        '502':
+          description: Could not contact internal services. Please try again later or contact our support department
+    put:
+      tags:
+        - Environment variables
+      summary: Upsert an environment variable
+      operationId: PUT_api/v2/environmentvariables
+      requestBody:
+        description: The variable to update or create
+        content:
+          application/json-patch+json; x-api-version=2.0:
+            schema:
+              $ref: '#/components/schemas/EnvironmentVariableRequest'
+          application/json; x-api-version=2.0:
+            schema:
+              $ref: '#/components/schemas/EnvironmentVariableRequest'
+          text/json; x-api-version=2.0:
+            schema:
+              $ref: '#/components/schemas/EnvironmentVariableRequest'
+          application/*+json; x-api-version=2.0:
+            schema:
+              $ref: '#/components/schemas/EnvironmentVariableRequest'
+      responses:
+        '200':
+          description: The environment variable was updated or created
+          content:
+            text/plain; x-api-version=2.0:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariable'
+            application/json; x-api-version=2.0:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariable'
+            text/json; x-api-version=2.0:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariable'
+        '400':
+          description: Request did not validate
+        '502':
+          description: Could not contact internal services. Please try again later or contact our support department
+  '/api/v2/environmentvariables/{id}':
+    get:
+      tags:
+        - Environment variables
+      summary: Find environment variable by id
+      operationId: 'GET_api/v2/environmentvariables/{id}'
+      parameters:
+        - name: id
+          in: path
+          description: The environment variable ID
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The environment variable corresponding to the ID
+          content:
+            text/plain; x-api-version=2.0:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariable'
+            application/json; x-api-version=2.0:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariable'
+            text/json; x-api-version=2.0:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariable'
+        '400':
+          description: A environment variable corresponding to the ID could not be found
+        '502':
+          description: Could not contact internal services. Please try again later or contact our support department
+    delete:
+      tags:
+        - Environment variables
+      summary: Deletes environment variable by id
+      operationId: 'DELETE_api/v2/environmentvariables/{id}'
+      parameters:
+        - name: id
+          in: path
+          description: The id of the environment variable to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+        '204':
+          description: The environment variable corresponding to the ID was deleted
+        '400':
+          description: Request did not validate
+        '502':
+          description: Could not contact internal services. Please try again later or contact our support department
+  /api/v2/integrations:
+    get:
+      tags:
+        - Integrations
+      summary: List all integrations
+      operationId: GET_api/v2/integrations
+      responses:
+        '200':
+          description: The list of integrations for the subscription
+          content:
+            text/plain; x-api-version=2.0:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/IntegrationConfig'
+            application/json; x-api-version=2.0:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/IntegrationConfig'
+            text/json; x-api-version=2.0:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/IntegrationConfig'
+        '502':
+          description: Could not contact internal services. Please try again later or contact our support department
+    post:
+      tags:
+        - Integrations
+      summary: Upsert an integration
+      operationId: POST_api/v2/integrations
+      requestBody:
+        description: ''
+        content:
+          application/json-patch+json; x-api-version=2.0:
+            schema:
+              $ref: '#/components/schemas/IntegrationPostRequest'
+          application/json; x-api-version=2.0:
+            schema:
+              $ref: '#/components/schemas/IntegrationPostRequest'
+          text/json; x-api-version=2.0:
+            schema:
+              $ref: '#/components/schemas/IntegrationPostRequest'
+          application/*+json; x-api-version=2.0:
+            schema:
+              $ref: '#/components/schemas/IntegrationPostRequest'
+      responses:
+        '200':
+          description: The updated integration configuration
+          content:
+            text/plain; x-api-version=2.0:
+              schema:
+                $ref: '#/components/schemas/IntegrationConfig'
+            application/json; x-api-version=2.0:
+              schema:
+                $ref: '#/components/schemas/IntegrationConfig'
+            text/json; x-api-version=2.0:
+              schema:
+                $ref: '#/components/schemas/IntegrationConfig'
+        '201':
+          description: The created integration configuration
+        '400':
+          description: Request did not pass validation. Check your request and error message.
+        '502':
+          description: Could not contact internal services. Please try again later or contact our support department
+  '/api/v2/integrations/{id}':
+    get:
+      tags:
+        - Integrations
+      summary: Find integration by id
+      operationId: 'GET_api/v2/integrations/{id}'
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The integration corresponding to the ID
+          content:
+            text/plain; x-api-version=2.0:
+              schema:
+                $ref: '#/components/schemas/IntegrationConfig'
+            application/json; x-api-version=2.0:
+              schema:
+                $ref: '#/components/schemas/IntegrationConfig'
+            text/json; x-api-version=2.0:
+              schema:
+                $ref: '#/components/schemas/IntegrationConfig'
+        '404':
+          description: A integration corresponding to the ID could not be found
+        '502':
+          description: Could not contact internal services. Please try again later or contact our support department
+    put:
+      tags:
+        - Integrations
+      summary: Update integration by id
+      operationId: 'PUT_api/v2/integrations/{id}'
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: ''
+        content:
+          application/json-patch+json; x-api-version=2.0:
+            schema:
+              $ref: '#/components/schemas/IntegrationPostRequest'
+          application/json; x-api-version=2.0:
+            schema:
+              $ref: '#/components/schemas/IntegrationPostRequest'
+          text/json; x-api-version=2.0:
+            schema:
+              $ref: '#/components/schemas/IntegrationPostRequest'
+          application/*+json; x-api-version=2.0:
+            schema:
+              $ref: '#/components/schemas/IntegrationPostRequest'
+      responses:
+        '200':
+          description: The updated integration configuration
+          content:
+            text/plain; x-api-version=2.0:
+              schema:
+                $ref: '#/components/schemas/IntegrationConfig'
+            application/json; x-api-version=2.0:
+              schema:
+                $ref: '#/components/schemas/IntegrationConfig'
+            text/json; x-api-version=2.0:
+              schema:
+                $ref: '#/components/schemas/IntegrationConfig'
+        '400':
+          description: Request did not pass validation. Check your request and error message
+        '404':
+          description: The integration was not found
+        '502':
+          description: Could not contact internal services. Please try again later or contact our support department
+    delete:
+      tags:
+        - Integrations
+      summary: Delete integration by id
+      operationId: 'DELETE_api/v2/integrations/{id}'
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain; x-api-version=2.0:
+              schema:
+                $ref: '#/components/schemas/IntegrationConfig'
+            application/json; x-api-version=2.0:
+              schema:
+                $ref: '#/components/schemas/IntegrationConfig'
+            text/json; x-api-version=2.0:
+              schema:
+                $ref: '#/components/schemas/IntegrationConfig'
+        '204':
+          description: Integration configuration deleted
+        '400':
+          description: Request did not pass validation. Check your request and error message.
+        '502':
+          description: Could not contact internal services. Please try again later or contact our support department
+  '/api/v2/messages/{integrationId}':
+    post:
+      tags:
+        - Messages
+      summary: Sends a single message to Connxio
+      operationId: 'POST_api/v2/messages/{integrationId}'
+      parameters:
+        - name: MessageEncoding
+          in: query
+          schema:
+            type: string
+        - name: InterchangeId
+          in: query
+          schema:
+            type: string
+        - name: FileName
+          in: query
+          schema:
+            type: string
+        - name: integrationId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageBodyRequest'
+            examples:
+              Example request:
+                value: '{"foo":"bar"}'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/MessageBodyRequest'
+            examples:
+              Example request:
+                value: "<root>\n  <Foo>bar</Foo>\n</root>"
+        required: true
+      responses:
+        '200':
+          description: The message was validated and sent to the Connxio engine
+        '400':
+          description: The supplied message or metadata did not pass validation
+        '502':
+          description: Could not contact internal services. Please try again later or contact our support department
+  '/api/v2/messages/{integrationId}/batch':
+    post:
+      tags:
+        - Messages
+      summary: Sends a batch of messages to Connxio
+      operationId: 'POST_api/v2/messages/{integrationId}/batch'
+      parameters:
+        - name: integrationId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/MessageBodyRequest'
+            examples:
+              Array of MessageBodyRequest:
+                value: '[{"messageEncoding":"string","interchangeId":"string","messageBody":"string","fileName":"string"}]'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/ArrayOfMessageBodyRequest'
+            examples:
+              Array of MessageBodyRequest:
+                value: "<ArrayOfMessageBodyRequest>\n  <MessageBodyRequest>\n    <MessageEncoding>string</MessageEncoding>\n    <InterchangeId>string</InterchangeId>\n    <MessageBody>string</MessageBody>\n    <FileName>string</FileName>\n  </MessageBodyRequest>\n</ArrayOfMessageBodyRequest>"
+        required: true
+      responses:
+        '200':
+          description: The message was validated and sent to the Connxio engine
+        '400':
+          description: The supplied message or metadata did not pass validation
+        '502':
+          description: Could not contact internal services. Please try again later or contact our support department
+  '/api/v2/messages/{integrationId}/eventgrid':
+    post:
+      tags:
+        - Messages
+      summary: Sends an Event Grid message to Connxio.
+      operationId: 'POST_api/v2/messages/{integrationId}/eventgrid'
+      parameters:
+        - name: MessageEncoding
+          in: query
+          schema:
+            type: string
+        - name: InterchangeId
+          in: query
+          schema:
+            type: string
+        - name: FileName
+          in: query
+          schema:
+            type: string
+        - name: integrationId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/EventGridMessage'
+            examples:
+              Array of EventGridMessage:
+                value: '[{"topic":"string","subject":"string","eventType":"string","eventTime":"2023-03-31T19:29:12.612Z","id":"string","data":"string","dataVersion":"string","metadataVersion":"string"}]'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/ArrayOfEventGridMessage'
+            examples:
+              Array of EventGridMessage:
+                value: "<ArrayOfEventGridMessage>\n  <EventGridMessage>\n    <Topic>string</Topic>\n    <Subject>string</Subject>\n    <EventType>string</EventType>\n    <EventTime>2023-03-31T19:27:48.597Z</EventTime>\n    <Id>string</Id>\n    <Data>string</Data>\n    <DataVersion>string</DataVersion>\n    <MetadataVersion>string</MetadataVersion>\n  </EventGridMessage>\n</ArrayOfEventGridMessage>"
+        required: true
+      responses:
+        '200':
+          description: The message was validated and sent to the Connxio engine
+        '400':
+          description: The supplied message or metadata did not pass validation
+        '502':
+          description: Could not contact internal services. Please try again later or contact our support department
+  /api/v2/securityconfigs:
+    get:
+      tags:
+        - Security configurations
+      summary: List all security configurations
+      operationId: GET_api/v2/securityconfigs
+      responses:
+        '200':
+          description: The list of security configurations for the company
+          content:
+            text/plain; x-api-version=2.0:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SecurityConfiguration'
+            application/json; x-api-version=2.0:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SecurityConfiguration'
+            text/json; x-api-version=2.0:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SecurityConfiguration'
+        '502':
+          description: Could not contact internal services. Please try again later or contact our support department
+    put:
+      tags:
+        - Security configurations
+      summary: Upsert a security configuration
+      operationId: PUT_api/v2/securityconfigs
+      requestBody:
+        description: ''
+        content:
+          application/json-patch+json; x-api-version=2.0:
+            schema:
+              $ref: '#/components/schemas/SecurityConfigPostRequest'
+          application/json; x-api-version=2.0:
+            schema:
+              $ref: '#/components/schemas/SecurityConfigPostRequest'
+          text/json; x-api-version=2.0:
+            schema:
+              $ref: '#/components/schemas/SecurityConfigPostRequest'
+          application/*+json; x-api-version=2.0:
+            schema:
+              $ref: '#/components/schemas/SecurityConfigPostRequest'
+      responses:
+        '200':
+          description: The updated security configuration
+          content:
+            text/plain; x-api-version=2.0:
+              schema:
+                $ref: '#/components/schemas/SecurityConfiguration'
+            application/json; x-api-version=2.0:
+              schema:
+                $ref: '#/components/schemas/SecurityConfiguration'
+            text/json; x-api-version=2.0:
+              schema:
+                $ref: '#/components/schemas/SecurityConfiguration'
+        '400':
+          description: Request did not pass validation. Check your request and error message
+        '404':
+          description: The integration was not found
+        '502':
+          description: Could not contact internal services. Please try again later or contact our support department
+  '/api/v2/securityconfigs/{id}':
+    get:
+      tags:
+        - Security configurations
+      summary: Find security configuration by id
+      operationId: 'GET_api/v2/securityconfigs/{id}'
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The security configuration corresponding to the ID
+          content:
+            text/plain; x-api-version=2.0:
+              schema:
+                $ref: '#/components/schemas/SecurityConfiguration'
+            application/json; x-api-version=2.0:
+              schema:
+                $ref: '#/components/schemas/SecurityConfiguration'
+            text/json; x-api-version=2.0:
+              schema:
+                $ref: '#/components/schemas/SecurityConfiguration'
+        '400':
+          description: A security configuration corresponding to the ID could not be found
+        '502':
+          description: Could not contact internal services. Please try again later or contact our support department
+    delete:
+      tags:
+        - Security configurations
+      summary: Deletes security configuration by id
+      operationId: 'DELETE_api/v2/securityconfigs/{id}'
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain; x-api-version=2.0:
+              schema:
+                $ref: '#/components/schemas/SecurityConfiguration'
+            application/json; x-api-version=2.0:
+              schema:
+                $ref: '#/components/schemas/SecurityConfiguration'
+            text/json; x-api-version=2.0:
+              schema:
+                $ref: '#/components/schemas/SecurityConfiguration'
+        '204':
+          description: security configuration deleted
+        '400':
+          description: Request did not pass validation. Check your request and error message.
+        '502':
+          description: Could not contact internal services. Please try again later or contact our support department
+  /api/v2/subscriptions:
+    get:
+      tags:
+        - Subscriptions
+      summary: List all subscriptions
+      operationId: GET_api/v2/subscriptions
+      responses:
+        '200':
+          description: The a of subscriptions
+          content:
+            text/plain; x-api-version=2.0:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ConnXioSubscription'
+            application/json; x-api-version=2.0:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ConnXioSubscription'
+            text/json; x-api-version=2.0:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ConnXioSubscription'
+        '502':
+          description: Could not contact internal services. Please try again later or contact our support department
+components:
+  schemas:
+    AckOptions:
+      type: object
+      properties:
+        sendAck:
+          type: boolean
+        adapterType:
+          type: string
+          nullable: true
+        connectionProperties:
+          type: string
+          nullable: true
+        transformationSasUri:
+          type: string
+          nullable: true
+        transformationId:
+          type: string
+          nullable: true
+        transformationVersion:
+          type: string
+          nullable: true
+        ackOutboundFormat:
+          type: string
+          nullable: true
+        sendNegativeAck:
+          type: boolean
+      additionalProperties: false
+    AckOptionsViewModel:
+      type: object
+      properties:
+        sendAck:
+          type: boolean
+        adapterType:
+          type: string
+          nullable: true
+        connectionProperties:
+          type: string
+          nullable: true
+        transformationSasUri:
+          type: string
+          nullable: true
+        transformationId:
+          type: string
+          nullable: true
+        transformationVersion:
+          type: string
+          nullable: true
+        ackOutboundFormat:
+          type: string
+          nullable: true
+        sendNegativeAck:
+          type: boolean
+      additionalProperties: false
+    AdapterConnectionProperties:
+      type: object
+      properties:
+        adapterType:
+          type: string
+          nullable: true
+        useProcessLock:
+          type: boolean
+        wrapperType:
+          $ref: '#/components/schemas/WrapperType'
+        mightBeWrapped:
+          type: boolean
+        adapterId:
+          type: string
+          nullable: true
+        adapterName:
+          type: string
+          nullable: true
+        connectionProperties:
+          type: string
+          nullable: true
+        ackOptions:
+          $ref: '#/components/schemas/AckOptions'
+      additionalProperties: false
+    AdapterConnectionPropertiesViewModel:
+      required:
+        - adapterType
+        - connectionProperties
+      type: object
+      properties:
+        adapterType:
+          minLength: 1
+          type: string
+        adapterId:
+          type: string
+          nullable: true
+        adapterName:
+          type: string
+          nullable: true
+        connectionProperties:
+          minLength: 1
+          type: string
+        ackOptions:
+          $ref: '#/components/schemas/AckOptionsViewModel'
+      additionalProperties: false
+    AdapterType:
+      enum:
+        - 0
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        - 8
+        - 9
+        - 10
+      type: integer
+      format: int32
+    ArrayOfEventGridMessage:
+      type: object
+      properties:
+        eventGridMessages:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventGridMessage'
+          nullable: true
+      additionalProperties: false
+    ArrayOfMessageBodyRequest:
+      type: object
+      properties:
+        messageBodyRequests:
+          type: array
+          items:
+            $ref: '#/components/schemas/MessageBodyRequest'
+          nullable: true
+      additionalProperties: false
+    CodeMappingMetaDataRequest:
+      required:
+        - id
+        - mappingDll
+        - name
+        - type
+        - version
+      type: object
+      properties:
+        id:
+          minLength: 1
+          type: string
+        name:
+          minLength: 1
+          pattern: '[A-Za-z0-9\ \-]+'
+          type: string
+        description:
+          type: string
+          nullable: true
+        version:
+          minLength: 1
+          type: string
+        sasUri:
+          type: string
+          nullable: true
+        deprecated:
+          type: boolean
+        type:
+          minLength: 1
+          type: string
+        componentOriginalFilename:
+          type: string
+          nullable: true
+        uploadedBy:
+          type: string
+          nullable: true
+        mappingDll:
+          type: string
+          format: byte
+      additionalProperties: false
+    CodeMappingMetaDataViewModel:
+      required:
+        - id
+        - name
+        - type
+        - version
+      type: object
+      properties:
+        id:
+          minLength: 1
+          type: string
+        uniqueId:
+          type: string
+          nullable: true
+          readOnly: true
+        companyId:
+          type: string
+          nullable: true
+        name:
+          minLength: 1
+          pattern: '[A-Za-z0-9\ \-]+'
+          type: string
+        description:
+          type: string
+          nullable: true
+        version:
+          minLength: 1
+          type: string
+        sasUri:
+          type: string
+          nullable: true
+        deprecated:
+          type: boolean
+        type:
+          minLength: 1
+          type: string
+        componentOriginalFilename:
+          type: string
+          nullable: true
+        uploadedBy:
+          type: string
+          nullable: true
+        lastUpdated:
+          type: string
+          format: date-time
+          nullable: true
+        versionConverted:
+          type: integer
+          format: int32
+          readOnly: true
+      additionalProperties: false
+    ConnXioSubscription:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        active:
+          type: boolean
+        companyId:
+          type: string
+          nullable: true
+        companyName:
+          type: string
+          nullable: true
+      additionalProperties: false
+    Contract:
+      enum:
+        - 0
+        - 1
+      type: integer
+      format: int32
+    Environment:
+      enum:
+        - 0
+        - 1
+      type: integer
+      format: int32
+    EnvironmentVariable:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        companyId:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        defaultValue:
+          type: string
+          nullable: true
+        subscriptionValues:
+          type: object
+          additionalProperties:
+            type: string
+          nullable: true
+      additionalProperties: false
+    EnvironmentVariableRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        defaultValue:
+          type: string
+          nullable: true
+        subscriptionValues:
+          type: object
+          additionalProperties:
+            type: string
+          nullable: true
+      additionalProperties: false
+    EventGridMessage:
+      type: object
+      properties:
+        topic:
+          type: string
+          nullable: true
+        subject:
+          type: string
+          nullable: true
+        eventType:
+          type: string
+          nullable: true
+        eventTime:
+          type: string
+          format: date-time
+        id:
+          type: string
+          nullable: true
+        data:
+          nullable: true
+        dataVersion:
+          type: string
+          nullable: true
+        metadataVersion:
+          type: string
+          nullable: true
+      additionalProperties: false
+    InboundRetryOptions:
+      type: object
+      properties:
+        failureRetryIntervalSeconds:
+          type: integer
+          format: int32
+          nullable: true
+        turnOffFailureRetry:
+          type: boolean
+        retryOnNonTransientFailures:
+          type: boolean
+      additionalProperties: false
+    IntegrationConfig:
+      type: object
+      properties:
+        configCorrelationId:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        inboundConnection:
+          $ref: '#/components/schemas/AdapterConnectionProperties'
+        subIntegrations:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubIntegration'
+          nullable: true
+        companyName:
+          type: string
+          nullable: true
+        companyId:
+          type: string
+          nullable: true
+        subscriptionName:
+          type: string
+          nullable: true
+        subscriptionId:
+          type: string
+          nullable: true
+        transactionType:
+          type: string
+          nullable: true
+        loggingWebhooks:
+          type: array
+          items:
+            $ref: '#/components/schemas/LoggingWebhookConfig'
+          nullable: true
+        resendWebhooks:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResendWebhookConfig'
+          nullable: true
+        internalLoggingOptions:
+          $ref: '#/components/schemas/InternalLoggingOptions'
+        retryOptions:
+          $ref: '#/components/schemas/RetryOptions'
+        sender:
+          type: string
+          nullable: true
+        receiver:
+          type: string
+          nullable: true
+        messageInboundFormat:
+          type: string
+          nullable: true
+        messageInboundEncoding:
+          type: string
+          nullable: true
+        removeBom:
+          type: boolean
+        handleAsBinaryFile:
+          type: boolean
+        internalProperties:
+          $ref: '#/components/schemas/InternalProperties'
+        stopOnEncodingError:
+          type: boolean
+        pollingIntervalInSeconds:
+          type: integer
+          format: int32
+        intervalExpression:
+          type: string
+          nullable: true
+        enabled:
+          type: boolean
+        environment:
+          $ref: '#/components/schemas/Environment'
+        useApiKey:
+          type: boolean
+        archived:
+          type: boolean
+        id:
+          type: string
+          nullable: true
+        _etag:
+          type: string
+          nullable: true
+        cosmosEntityName:
+          type: string
+          nullable: true
+          readOnly: true
+        createdBy:
+          type: string
+          nullable: true
+        updatedBy:
+          type: string
+          nullable: true
+        createdAtUtc:
+          type: string
+          format: date-time
+          nullable: true
+        updatedAtUtc:
+          type: string
+          format: date-time
+          nullable: true
+      additionalProperties: false
+    IntegrationPostRequest:
+      required:
+        - companyId
+        - configCorrelationId
+        - inboundConnection
+        - messageInboundEncoding
+        - messageInboundFormat
+        - receiver
+        - sender
+        - subIntegrations
+        - subscriptionId
+        - transactionType
+      type: object
+      properties:
+        pollingIntervalInSeconds:
+          type: integer
+          format: int32
+        stopOnEncodingError:
+          type: boolean
+        removeBom:
+          type: boolean
+        messageInboundEncoding:
+          minLength: 1
+          type: string
+        messageInboundFormat:
+          minLength: 1
+          type: string
+        receiver:
+          minLength: 1
+          type: string
+        sender:
+          minLength: 1
+          type: string
+        retryOptions:
+          $ref: '#/components/schemas/RetryOptions'
+        loggingWebhooks:
+          type: array
+          items:
+            $ref: '#/components/schemas/LoggingWebhookConfig'
+          nullable: true
+        transactionType:
+          minLength: 1
+          type: string
+        subscriptionId:
+          type: string
+          format: uuid
+        companyId:
+          minLength: 1
+          type: string
+        subIntegrations:
+          minItems: 1
+          type: array
+          items:
+            $ref: '#/components/schemas/SubIntegrationViewModel'
+        inboundConnection:
+          $ref: '#/components/schemas/AdapterConnectionPropertiesViewModel'
+        description:
+          type: string
+          nullable: true
+        configCorrelationId:
+          type: string
+          format: uuid
+        resendWebhooks:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResendWebhookConfig'
+          nullable: true
+        enabled:
+          type: boolean
+      additionalProperties: false
+    InternalLoggingOptions:
+      type: object
+      properties:
+        logLevel:
+          $ref: '#/components/schemas/LogLevel'
+        logMessageContent:
+          type: boolean
+          nullable: true
+        logMetaData:
+          type: boolean
+          nullable: true
+      additionalProperties: false
+    InternalProperties:
+      type: object
+      properties:
+        redirectInboundToRetry:
+          type: boolean
+        redirectBatchingToRetry:
+          type: boolean
+        redirectSplittingToRetry:
+          type: boolean
+      additionalProperties: false
+    LogLevel:
+      enum:
+        - 0
+        - 1
+        - 2
+        - 3
+      type: integer
+      format: int32
+    LoggingWebhookConfig:
+      type: object
+      properties:
+        contract:
+          $ref: '#/components/schemas/Contract'
+        endpointURL:
+          type: string
+          nullable: true
+        httpVerb:
+          type: string
+          nullable: true
+        webhookConnectionId:
+          type: string
+          nullable: true
+        adapterType:
+          $ref: '#/components/schemas/AdapterType'
+        queryString:
+          type: string
+          nullable: true
+        maxRetries:
+          type: integer
+          format: int32
+        timeout:
+          type: integer
+          format: int32
+        authorizationHeaderKey:
+          $ref: '#/components/schemas/Secret'
+        type:
+          $ref: '#/components/schemas/WebhookType'
+        enabled:
+          type: boolean
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+          nullable: true
+        logLevel:
+          $ref: '#/components/schemas/LogLevel'
+        inboundMesssageType:
+          type: string
+          nullable: true
+        outboundMessageType:
+          type: string
+          nullable: true
+        logMessageContent:
+          type: boolean
+          nullable: true
+        transactionTag:
+          type: string
+          nullable: true
+        customInboundDescription:
+          type: string
+          nullable: true
+        customOutboundDescription:
+          type: string
+          nullable: true
+        logMetaData:
+          type: boolean
+          nullable: true
+        useExternalContentService:
+          type: boolean
+          nullable: true
+        sendContentOnExternalServiceFailure:
+          type: boolean
+          nullable: true
+        externalContentServiceWebhook:
+          $ref: '#/components/schemas/RestConnectionProperties'
+      additionalProperties: false
+    MessageBodyRequest:
+      required:
+        - messageBody
+      type: object
+      properties:
+        messageEncoding:
+          type: string
+          nullable: true
+        interchangeId:
+          type: string
+          nullable: true
+        messageBody:
+          type: string
+          format: byte
+        fileName:
+          type: string
+          nullable: true
+      additionalProperties: false
+    NextLinkType:
+      enum:
+        - 0
+        - 1
+      type: integer
+      format: int32
+    PagingType:
+      enum:
+        - 0
+        - 1
+      type: integer
+      format: int32
+    ResendWebhookConfig:
+      type: object
+      properties:
+        contract:
+          $ref: '#/components/schemas/Contract'
+        endpointURL:
+          type: string
+          nullable: true
+        httpVerb:
+          type: string
+          nullable: true
+        webhookConnectionId:
+          type: string
+          nullable: true
+        adapterType:
+          $ref: '#/components/schemas/AdapterType'
+        queryString:
+          type: string
+          nullable: true
+        maxRetries:
+          type: integer
+          format: int32
+        timeout:
+          type: integer
+          format: int32
+        authorizationHeaderKey:
+          $ref: '#/components/schemas/Secret'
+        type:
+          $ref: '#/components/schemas/WebhookType'
+        enabled:
+          type: boolean
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+          nullable: true
+        usePureMessageSending:
+          type: boolean
+      additionalProperties: false
+    RestConnectionProperties:
+      type: object
+      properties:
+        endpointURL:
+          type: string
+          nullable: true
+        httpVerb:
+          type: string
+          nullable: true
+        webhookConnectionId:
+          type: string
+          nullable: true
+        authorizationHeaderType:
+          type: string
+          nullable: true
+        apimSubscriptionKey:
+          $ref: '#/components/schemas/Secret'
+        oAuthUrl:
+          type: string
+          nullable: true
+        oAuthBody:
+          type: string
+          nullable: true
+        oAuthClientId:
+          type: string
+          nullable: true
+        oAuthClientSecret:
+          $ref: '#/components/schemas/Secret'
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+          nullable: true
+        body:
+          type: string
+          nullable: true
+        usePaging:
+          type: boolean
+        useDateDelta:
+          type: boolean
+        pagingType:
+          $ref: '#/components/schemas/PagingType'
+        nextLinkType:
+          $ref: '#/components/schemas/NextLinkType'
+        pathName:
+          type: string
+          nullable: true
+        oAuthGrantType:
+          type: string
+          nullable: true
+        oAuthUserName:
+          type: string
+          nullable: true
+        oAuthPwd:
+          $ref: '#/components/schemas/Secret'
+        oAuthResource:
+          type: string
+          nullable: true
+        oAuthScope:
+          type: string
+          nullable: true
+        customAuthenticationProperties:
+          type: object
+          additionalProperties:
+            type: string
+          nullable: true
+        basicAuthenticationUserName:
+          type: string
+          nullable: true
+        basicAuthenticationPassword:
+          $ref: '#/components/schemas/Secret'
+        newInternalMessageCorrelationId:
+          type: string
+          nullable: true
+        newInternalMessagePreserveInterchangeId:
+          type: boolean
+        useFallBackOnRequestFailed:
+          type: boolean
+        fallBackOnThreeHoundred:
+          type: boolean
+        fallBackOnFourHoundred:
+          type: boolean
+        fallBackOnFiveHoundred:
+          type: boolean
+        restConnectionPropertiesSecondary:
+          $ref: '#/components/schemas/RestConnectionProperties'
+        useStaticIp:
+          type: boolean
+        terminateOnDuplicateDetection:
+          type: boolean
+        duplicateTerminationStatus:
+          type: string
+          nullable: true
+        restResponseErrorHandlingRules:
+          type: array
+          items:
+            $ref: '#/components/schemas/RestResponseErrorHandlingRule'
+          nullable: true
+      additionalProperties: false
+    RestResponseErrorHandlingActionType:
+      enum:
+        - 0
+        - 1
+        - 2
+      type: integer
+      format: int32
+    RestResponseErrorHandlingRule:
+      type: object
+      properties:
+        statusCodes:
+          type: string
+          nullable: true
+        action:
+          $ref: '#/components/schemas/RestResponseErrorHandlingActionType'
+        retry:
+          type: boolean
+        customStatus:
+          type: string
+          nullable: true
+      additionalProperties: false
+    RetryOptions:
+      type: object
+      properties:
+        failureCountIntervalMinutes:
+          type: integer
+          format: int32
+          nullable: true
+        reQueueMaxDelaySeconds:
+          type: integer
+          format: int32
+          nullable: true
+        reQueueMinDelaySeconds:
+          type: integer
+          format: int32
+          nullable: true
+        maxErrorsPerInterval:
+          type: integer
+          format: int32
+          nullable: true
+        numberOfRetries:
+          type: integer
+          format: int32
+          nullable: true
+        enabled:
+          type: boolean
+        turnOffErrorPersistance:
+          type: boolean
+        maxDelayActions:
+          type: integer
+          format: int32
+          nullable: true
+        inboundRetryOptions:
+          $ref: '#/components/schemas/InboundRetryOptions'
+      additionalProperties: false
+    Secret:
+      type: object
+      properties:
+        decryptedValue:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        version:
+          type: string
+          nullable: true
+      additionalProperties: false
+    SecurityConfigPostRequest:
+      required:
+        - id
+        - isGlobal
+        - name
+        - securityType
+      type: object
+      properties:
+        id:
+          minLength: 1
+          type: string
+        name:
+          minLength: 1
+          type: string
+        isGlobal:
+          type: boolean
+        securityType:
+          $ref: '#/components/schemas/SecurityType'
+        globalSecurityProperties:
+          $ref: '#/components/schemas/SecurityProperties'
+        securityProperties:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/SecurityProperties'
+          nullable: true
+      additionalProperties: false
+    SecurityConfiguration:
+      type: object
+      properties:
+        createdBy:
+          type: string
+          nullable: true
+        updatedBy:
+          type: string
+          nullable: true
+        createdAtUtc:
+          type: string
+          format: date-time
+          nullable: true
+        updatedAtUtc:
+          type: string
+          format: date-time
+          nullable: true
+        deletedAtUtc:
+          type: string
+          format: date-time
+          nullable: true
+        deletedBy:
+          type: string
+          nullable: true
+        id:
+          type: string
+          nullable: true
+        correlationId:
+          type: string
+          nullable: true
+        apimSubscription:
+          type: string
+          nullable: true
+        eTag:
+          type: string
+          nullable: true
+        eTagSetter:
+          type: string
+          nullable: true
+          writeOnly: true
+        cosmosEntityName:
+          type: string
+          nullable: true
+          readOnly: true
+        name:
+          type: string
+          nullable: true
+        companyId:
+          type: string
+          nullable: true
+        auditCorrelationId:
+          type: string
+          nullable: true
+        isGlobal:
+          type: boolean
+        securityType:
+          $ref: '#/components/schemas/SecurityType'
+        globalSecurityProperties:
+          $ref: '#/components/schemas/SecurityProperties'
+        securityProperties:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/SecurityProperties'
+          nullable: true
+      additionalProperties: false
+    SecurityProperties:
+      type: object
+      additionalProperties: false
+    SecurityType:
+      enum:
+        - 0
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+      type: integer
+      format: int32
+    SubIntegration:
+      type: object
+      properties:
+        subIntegrationId:
+          type: string
+          nullable: true
+        subintegrationName:
+          type: string
+          nullable: true
+        sender:
+          type: string
+          nullable: true
+        receiver:
+          type: string
+          nullable: true
+        loggingWebhookOverrides:
+          $ref: '#/components/schemas/SubintegrationLoggingConfigOverride'
+        transformations:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransformationAction'
+          nullable: true
+        passThrough:
+          type: boolean
+        outboundConnections:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdapterConnectionProperties'
+          nullable: true
+        messageOutboundFormat:
+          type: string
+          nullable: true
+        messageOutboundEncoding:
+          type: string
+          nullable: true
+        internalProperties:
+          $ref: '#/components/schemas/InternalProperties'
+        enabled:
+          type: boolean
+        preDefinedUserProperties:
+          type: object
+          additionalProperties:
+            type: string
+          nullable: true
+      additionalProperties: false
+    SubIntegrationViewModel:
+      required:
+        - messageOutboundFormat
+        - outboundConnections
+        - subIntegrationId
+      type: object
+      properties:
+        subIntegrationId:
+          type: string
+          format: uuid
+        subintegrationName:
+          type: string
+          nullable: true
+        receiver:
+          type: string
+          nullable: true
+        loggingWebhookOverrides:
+          $ref: '#/components/schemas/SubintegrationLoggingConfigOverride'
+        transformations:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransformationActionViewModel'
+          nullable: true
+        passThrough:
+          type: boolean
+        outboundConnections:
+          minItems: 1
+          type: array
+          items:
+            $ref: '#/components/schemas/AdapterConnectionPropertiesViewModel'
+        messageOutboundFormat:
+          minLength: 1
+          type: string
+        messageOutboundEncoding:
+          type: string
+          nullable: true
+        preDefinedUserProperties:
+          type: object
+          additionalProperties:
+            type: string
+          nullable: true
+        enabled:
+          type: boolean
+      additionalProperties: false
+    SubintegrationLoggingConfigOverride:
+      type: object
+      properties:
+        logLevel:
+          $ref: '#/components/schemas/LogLevel'
+        inboundMesssageType:
+          type: string
+          nullable: true
+        outboundMessageType:
+          type: string
+          nullable: true
+        logMessageContent:
+          type: boolean
+          nullable: true
+        transactionTag:
+          type: string
+          nullable: true
+        customInboundDescription:
+          type: string
+          nullable: true
+        customOutboundDescription:
+          type: string
+          nullable: true
+        logMetaData:
+          type: boolean
+          nullable: true
+        enabled:
+          type: boolean
+      additionalProperties: false
+    TransformationAction:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        transformationType:
+          type: string
+          nullable: true
+        transformationName:
+          type: string
+          nullable: true
+        properties:
+          type: string
+          nullable: true
+      additionalProperties: false
+    TransformationActionViewModel:
+      required:
+        - properties
+        - transformationType
+      type: object
+      properties:
+        transformationType:
+          minLength: 1
+          type: string
+        transformationName:
+          type: string
+          nullable: true
+        properties:
+          minLength: 1
+          type: string
+      additionalProperties: false
+    WebhookType:
+      enum:
+        - 0
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+      type: integer
+      format: int32
+    WrapperType:
+      enum:
+        - 0
+        - 1
+        - 2
+      type: integer
+      format: int32
+  securitySchemes:
+    Connxio-API-Key:
+      type: apiKey
+      description: API Key for Connxio API
+      name: Connxio-Api-Key
+      in: header
+    Bearer:
+      type: http
+      description: JWT Authorization header using the Bearer scheme.
+      scheme: bearer
+security:
+  - Connxio-API-Key: [ ]
+    Bearer: [ ]

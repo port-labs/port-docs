@@ -30,6 +30,8 @@ const config = {
             return `https://github.com/port-labs/port-docs/edit/main/docs/${docPath}`;
           },
           showLastUpdateTime: true,
+          docRootComponent: "@theme/DocRoot",
+          docItemComponent: "@theme/ApiItem",
         },
         blog: false,
         theme: {
@@ -276,15 +278,7 @@ const config = {
       },
     }),
   themes: [
-    // [
-    //   require.resolve("@easyops-cn/docusaurus-search-local"),
-    //   {
-    //     hashed: true,
-    //     indexDocs: true,
-    //     indexBlog: false,
-    //     docsRouteBasePath: "/",
-    //   },
-    // ],
+    "docusaurus-theme-openapi-docs",
   ],
 
   plugins: [
@@ -303,6 +297,26 @@ const config = {
           }
           return undefined;
         },
+      },
+    ],
+    [
+      "docusaurus-plugin-openapi-docs",
+      {
+        id: "api", // plugin id
+        docsPluginId: "classic", // id of plugin-content-docs or preset for rendering docs
+        config: {
+          port: { // the <id> referenced when running CLI commands
+            specPath: './static/spec.yaml', // path to OpenAPI spec, URLs supported
+            proxy: "https://cors.pan.dev",
+            outputDir: "docs/apisa", // output directory for generated files
+            sidebarOptions: {
+              groupPathsBy: "tag",
+              categoryLinkSource: "tag",
+            },
+            baseUrl: "/apisa/port-api",
+
+          },
+        }
       },
     ],
     [

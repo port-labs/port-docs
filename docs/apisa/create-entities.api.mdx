@@ -1,0 +1,326 @@
+---
+id: create-entities
+title: "Create entities"
+description: "Create entities"
+sidebar_label: "Create entities"
+hide_title: true
+hide_table_of_contents: true
+api: eJy1Vk1vEzEQ/SuRxQFEk025EQGilCIBB6K2XEjDytmdJG69a2N7S9No/zsz3o842VRELbRSEtvj8cybN89eM8cXlo0m7Cx3wgmwbHrEDPwqwLoPKl2x0ZolKneQO/rJtZYi4U6oPLq2Kqc5mywh4/TLrTSwEVOza0gcO2LaKA3Ge8VVkaITMRdgAlvrjMgXZMudA4MO2c/JSf8H798P+6/fx4PRFf5Fb/vTl89YecQwSAnd/bgikiqczoIDntGCyuHbHFPtmrQz3Bi+YuW03I19N7MU5ryQBElZEl7SQ7LXlKepoEUux1sueb7aG86hUOwEjQA4yOyjoQ0c5oWUBAKltj96ZwrARbjjma7KERaXzYWxLnYiuQFCoK4Z+0TTl81sVS/2RRjOmiJNprvAt9xj2arXDHYgL0sfquaGZ4CZWo9qh5YzpSTwPKzenEtLiQiKBDlvCMccveCw0BbDYFU3CANpk/bTXd9yKVIffqxyudo6o9739EMSA9xBnAlrkQaxBwzSGJo+/y+HZmAWcKDroHX3eDJFHov0ca6Q8MuNp5ksQOO6iwOSdsqKzLOQFEa4lafPDLghMk+mpVdEq5FsFSdfDYf0lYJNjNBURjzlYwVP77y2pI7aMTn1FekFFUC6LlVKESvrqk5d4ii6PY7aqG203pdBGQV+kKm3De8LI9HF0jltR1HEtRgswGll3EAoFqZ5QShWGTXJbjRFi68QVOOkwECNuPekZTXMS+Ap7qJE6S4439waZw8IQytJjSS0E7UabAy8HgQaFqpCp/8poLny8deOx5hw72T8GbcSMlUBjgdD4giBnXF/WdTpdSuzVbkWFgd3LtKSY/roxyO9ros2YbfHuG9TNhyMHqAeBHftkiqPu9frGbfw3ciypOmqG6ieqbB8Jlv+d0LbKOTz85rSL3qE4L6Qb7CogbShEBVk5K+TzkGVcVesDtn1d/U5xEsjJ4fYtoKxMZ7SwAiy/vdQNp2Sb0HSRLO38v5hUXcNxVOZnlan9i/J4cZV56lF6bSCMf52cUl0q59omUq9aPLfpGz4OWJX+I8DpduXiZ9fM8nzRcEXZF/59fd8QSQO+//G93/9I3imbCe8KwxVSvQZvlC2trzBtuyhurxjAcVw5cENNWKNNcFPj5M/586pUA==
+sidebar_class_name: "post api-method"
+info_path: apisa/port-api
+custom_edit_url: null
+proxy: https://cors.pan.dev
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<h1
+  className={"openapi__heading"}
+>
+  Create entities
+</h1>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/v1/blueprints/{blueprint_identifier}/entities"}
+>
+  
+</MethodEndpoint>
+
+
+
+Create entities
+
+## Request
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"blueprint_identifier","required":true}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Query Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"boolean","default":false},"in":"query","name":"upsert","required":true}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"boolean","default":false},"in":"query","name":"validation_only","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"boolean","default":false},"in":"query","name":"create_missing_related_entities","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"boolean","default":false},"in":"query","name":"merge","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"query","name":"run_id","required":false}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><MimeTabs
+  className={"openapi-tabs__mime"}
+>
+  <TabItem
+    label={"application/json"}
+    value={"application/json-schema"}
+  >
+    <details
+      style={{}}
+      className={"openapi-markdown__details mime"}
+      data-collapsed={false}
+      open={true}
+    >
+      <summary
+        style={{}}
+        className={"openapi-markdown__details-summary-mime"}
+      >
+        <h3
+          className={"openapi-markdown__details-summary-header-body"}
+        >
+          Body
+        </h3>
+      </summary><div
+        style={{"textAlign":"left","marginLeft":"1rem"}}
+      >
+        
+      </div><ul
+        style={{"marginLeft":"1rem"}}
+      >
+        <SchemaItem
+          collapsible={false}
+          name={"identifier"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={"**Possible values:** Value must match regular expression `^[A-Za-z0-9@_.:\\\\/=-]+$`"}
+          schema={{"type":"string","pattern":"^[A-Za-z0-9@_.:\\\\/=-]+$"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"title"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"icon"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={true}
+          className={"schemaItem"}
+        >
+          <details
+            style={{}}
+            className={"openapi-markdown__details"}
+          >
+            <summary
+              style={{}}
+            >
+              <strong>
+                team
+              </strong><span
+                style={{"opacity":"0.6"}}
+              >
+                 object
+              </span>
+            </summary><div
+              style={{"marginLeft":"1rem"}}
+            >
+              
+            </div><div>
+              <span
+                className={"badge badge--info"}
+              >
+                oneOf
+              </span><SchemaTabs>
+                <TabItem
+                  label={"MOD1"}
+                  value={"0-item-properties"}
+                >
+                  <div
+                    style={{"marginTop":".5rem","marginBottom":".5rem","marginLeft":"1rem"}}
+                  >
+                    
+                    
+                    string
+                    
+                    
+                  </div>
+                </TabItem><TabItem
+                  label={"MOD2"}
+                  value={"1-item-properties"}
+                >
+                  <li>
+                    <div
+                      style={{"fontSize":"var(--ifm-code-font-size)","opacity":"0.6","marginLeft":"-.5rem","paddingBottom":".5rem"}}
+                    >
+                      Array [
+                    </div>
+                  </li><div
+                    style={{"marginTop":".5rem","marginBottom":".5rem","marginLeft":"1rem"}}
+                  >
+                    
+                    
+                    string
+                    
+                    
+                  </div><li>
+                    <div
+                      style={{"fontSize":"var(--ifm-code-font-size)","opacity":"0.6","marginLeft":"-.5rem"}}
+                    >
+                      ]
+                    </div>
+                  </li>
+                </TabItem>
+              </SchemaTabs>
+            </div>
+          </details>
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"properties"}
+          required={false}
+          schemaName={"object"}
+          qualifierMessage={undefined}
+          schema={{"type":"object","default":{}}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={true}
+          className={"schemaItem"}
+        >
+          <details
+            style={{}}
+            className={"openapi-markdown__details"}
+          >
+            <summary
+              style={{}}
+            >
+              <span
+                className={"openapi-schema__container"}
+              >
+                <strong
+                  className={"openapi-schema__property"}
+                >
+                  relations
+                </strong><span
+                  className={"openapi-schema__name"}
+                >
+                   object
+                </span>
+              </span>
+            </summary><div
+              style={{"marginLeft":"1rem"}}
+            >
+              <SchemaItem
+                collapsible={false}
+                name={"anyOf"}
+                required={false}
+                schemaName={""}
+                qualifierMessage={undefined}
+                schema={[{"type":"string","pattern":"^[A-Za-z0-9@_.:\\\\/=-]+$"},{"type":"array","items":{"type":"string","pattern":"^[A-Za-z0-9@_.:\\\\/=-]+$"}},{"type":"null"}]}
+              >
+                
+              </SchemaItem>
+            </div>
+          </details>
+        </SchemaItem><SchemaItem
+          name={"property name*"}
+          required={false}
+          schemaName={"any"}
+          qualifierMessage={undefined}
+          schema={{"type":"object","properties":{"identifier":{"type":"string","pattern":"^[A-Za-z0-9@_.:\\\\/=-]+$"},"title":{"type":"string"},"icon":{"type":"string"},"team":{"oneOf":[{"type":"string"},{"type":"array"}]},"properties":{"type":"object","default":{}},"relations":{"type":"object","additionalProperties":{"anyOf":[{"type":"string","pattern":"^[A-Za-z0-9@_.:\\\\/=-]+$"},{"type":"array","items":{"type":"string","pattern":"^[A-Za-z0-9@_.:\\\\/=-]+$"}},{"type":"null"}]}}},"additionalProperties":true}}
+          collapsible={false}
+          discriminator={false}
+        >
+          
+        </SchemaItem>
+      </ul>
+    </details>
+  </TabItem>
+</MimeTabs><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

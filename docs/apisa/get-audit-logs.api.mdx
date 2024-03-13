@@ -1,0 +1,133 @@
+---
+id: get-audit-logs
+title: "Get audit logs"
+description: "Get audit logs"
+sidebar_label: "Get audit logs"
+hide_title: true
+hide_table_of_contents: true
+api: eJytU8GK2zAQ/RUzpxbMOmlvphQWWpall2XbnpawKPEkFmvLWmkUNjX6987YjuOkCaS0l0Sy3sy8efOmBVIbD/kT3BvCjVOkG+NhkYJVTtVI6OS1Bb8qsVaQt0A7i5CDCfUSHaRQ4FqFiiCfp1Bro+tQd2cTqkotK8auVeUxpqANx70GdDsOM5ydr1ZtkG8OX4N2WIzg6yrOZpOaclZv/fmjvFzJAN3zX7Dw5LTZwIVknpSj50LR/0mHpviHZFZRecilCzSk17qT8JCNXMDI8/a4Ck7Trpv2EpVjHNvCoSpyfeQNQTv0li/opfqH2Uz+CvQrp62guNyXfkjJ44CEGNMTyB1SokKhKakaNiGPD6lsmBNskCDt+eeQbefZhEHWHjqJ2RDp0W33Vg2u4qiSyPo8y5TVN5zONo5udAPTVr+Lfn0L+4ZHKTnsG04mcRuYmtO/OgowCFyyOBwVO8HXTReuSQwHD1wvuX24Z6gQ6xue38xkOLbxVCsj8CH7H0ocCTWSInyjzFaKi3Oars92UOkJtvOO1qgT3/KjmXepuf2Sy0tA2y6Vx5+uilE+99YTAQvtZW32VkvhhZUYV3WrqiBkQCx4CXrYqWvgR1tzTcBkLw7whVyc7jf+XBsnoq4aFsuwFPDucViH9wlnPCv23hZmN6255zPROS7ixMh3X38wSAUZ0dRbL523hoOQPZv/1HR9MfkVbc6GfGLPJezczyO8f7kYMHh47MRIBzH+BgeHC2g=
+sidebar_class_name: "get api-method"
+info_path: apisa/port-api
+custom_edit_url: null
+proxy: https://cors.pan.dev
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<h1
+  className={"openapi__heading"}
+>
+  Get audit logs
+</h1>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/integration/{identifier}/logs"}
+>
+  
+</MethodEndpoint>
+
+
+
+Get audit logs
+
+## Request
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"identifier","required":true}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Query Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"number","default":1,"minimum":1,"nullable":false},"in":"query","name":"page","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"number","default":100,"minimum":0,"maximum":300,"nullable":false},"in":"query","name":"per_page","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"query","name":"start_date","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"query","name":"end_date","required":false}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

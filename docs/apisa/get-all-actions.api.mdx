@@ -1,0 +1,124 @@
+---
+id: get-all-actions
+title: "Get all actions"
+description: "Get all actions"
+sidebar_label: "Get all actions"
+hide_title: true
+hide_table_of_contents: true
+api: eJytVG2L2kAQ/iuyn3N6+jGUQqjBSlsbrAc9ishGR7PcJtnb3YRayX/vTF403hlIi180M/PM7MwzLydm+cEw9xfztlakiWFrhymueQwWNBlOzGwjiDlzT8weFTCXca35kTlMWIhNS2+sFsmBFQWaEpRfM9CESzAauZUvbMQOEiv2AjSaNLxmQsOOuXsuDRTO/Z4LZQYKEfbuLzoMkiwm0j4tfW/lo2Lqf/WrD+/5YcLWXUmlCjQnGnpmEqapBJ6wjnAqC6UwEcboF+5dAQbk/sGAzsUWUM0zm8ZVfuuOJzHC4QB6U0a8M53+YjVfPW8qVqdoqBVPwfRaUdFNitX8m7/cBMvvgb9Eg/8zmC9Lg7dAqY732VvM/O6mNCVBjnPyv0zmYxTySSdvOa7T7b7jxhnYZlrYY7lvIXCNo4oxNfCdy5vFJKAGo1CAksbJ4yP97cBstVBl11w2hT3PpB0sa2S5H9eQGdgBl3LQRHYYbnuUYkLsAESA4jZCYZSPRxcMTUlzEjIt0R5Zq4w7GnElhuioUm2HImXtgn4Qb1W2TVmXsVDiC7QY8jJMQos/zX6ULEZIAXpVrdunpbuwkvABvjfwgjnxXpPrsvHwkZZFpcbGuDcIr6O/L/qKlHNWFn7bkZJclEtXFnqqCambzC+XMsJnSH86hdzAk5ZFQeqq9UTUThgeynOvHfaCFd8+hTnHg4U2RvPW4ddx0/q4ti9PH3z7tPTBv7kL/+LS7F0fn8saXdBrErQgOJJOC3ie55m/qs5adD14L+Xg1R/UqMaUHFuh305klQL9UoY3XT7gQA5wrD+e4ZWl06Ee8AZNY4eHqvgLb4CHtA==
+sidebar_class_name: "get api-method"
+info_path: apisa/port-api
+custom_edit_url: null
+proxy: https://cors.pan.dev
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<h1
+  className={"openapi__heading"}
+>
+  Get all actions
+</h1>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/actions"}
+>
+  
+</MethodEndpoint>
+
+
+
+Get all actions
+
+## Request
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Query Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"array","items":{"type":"string"}},"in":"query","name":"action_identifier","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"array","items":{"type":"string"}},"in":"query","name":"blueprint_identifier","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"array","items":{"type":"string","enum":["CREATE","DELETE","DAY-2"]}},"in":"query","name":"operation","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"boolean"},"in":"query","name":"published","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string","enum":["self-service","automation"]},"in":"query","name":"trigger_type","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"array","items":{"type":"string","enum":["ENTITY_CREATED","ENTITY_UPDATED","ENTITY_DELETED","TIMER_PROPERTY_EXPIRED","ANY_ENTITY_CHANGE"]}},"in":"query","name":"trigger_event","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string","enum":["v1","v2"]},"in":"query","name":"version","required":false}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

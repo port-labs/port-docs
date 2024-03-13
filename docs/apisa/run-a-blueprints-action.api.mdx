@@ -1,0 +1,169 @@
+---
+id: run-a-blueprints-action
+title: "Run a blueprint's action"
+description: "Run a blueprint's action"
+sidebar_label: "Run a blueprint's action"
+hide_title: true
+hide_table_of_contents: true
+api: eJy9VU1v2zAM/SsGL9uArG53NIYB2cdh2GFB2p26YGBsJlHrWJokZ80M//eRkuM4jdthlyFAYkuPT+R7pNKAx7WD7BamuVe6SuZ15WAxAUs/a3L+vS72kDWQ68pT5eURjSlVjoJO75yuZM3lG9qiPPm9IchAL+8o9zABY7Uh6xU52T19O8W27QSwKJQQYzkbIFdYOoopKUuFZDsgWrQSedz0tiZeMGhxS56sVDeSofNWVWtgpOISgKu1e8634iB+tXX1QxUw5A1ZtJO/Uxn0myMTBl2ZjOVTK0UWzpP9V85lWZPhff8sLbvoKK+t8vsgwZLQMi67XbTBYGd05aITby4v5acgl1tlJGE+5SOtsC59Mu+QwaFTCHdLgkmfzguXxHI5GdZ+owtJXbvQCFJBBunuKu3xLm3GSmnTyMLbZ+q1qZUOldLs7mBubUum3nhvXJamaNTFmrzR1l8oDUMdrkXmWPJBjV5xDvtCgxaY1lyAVb+xKyj4sCEsOEqUkN6fH6fk0wNuTUlnXd4GC1c6nKS8IGDGqSXT2WdmlRqillcXl2K3yLXFMFVdIs+IfOJGX4mnB5+aEjljJgziNJ3+t7C74rijA/ySPdFOnQmCGG3i7qbYiL9M3DRLdPTNlm0ry3GgxJ1COVyW/QhN4J5lHozYDvl8XghO7dAqQY9HPqq3v5Xg5bzr/VcJM47qcLC52g/PPGRzXqGM5X9MYNSEdsFxXc+JIBH6IZ76+kYIj1RnF7Po2Y/h7Ov1jTjfXehbXYR7Dn+JlfydwXf+8Is20XYGhfUGSqzWNa4FH3nDVV1LPw2n5z5MT/cg2Y4W/HisYknyLYKPhrzlUUl4Nt/18LjzZECn2AEt8su/xB/5B2Hi
+sidebar_class_name: "post api-method"
+info_path: apisa/port-api
+custom_edit_url: null
+proxy: https://cors.pan.dev
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<h1
+  className={"openapi__heading"}
+>
+  Run a blueprint's action
+</h1>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/v1/blueprints/{blueprint_identifier}/actions/{action_identifier}/runs"}
+>
+  
+</MethodEndpoint>
+
+
+
+Run a blueprint's action
+
+## Request
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"action_identifier","required":true}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"blueprint_identifier","required":true}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Query Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"query","name":"run_id","required":false}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><MimeTabs
+  className={"openapi-tabs__mime"}
+>
+  <TabItem
+    label={"application/json"}
+    value={"application/json-schema"}
+  >
+    <details
+      style={{}}
+      className={"openapi-markdown__details mime"}
+      data-collapsed={false}
+      open={true}
+    >
+      <summary
+        style={{}}
+        className={"openapi-markdown__details-summary-mime"}
+      >
+        <h3
+          className={"openapi-markdown__details-summary-header-body"}
+        >
+          Body
+        </h3><strong
+          className={"openapi-schema__required"}
+        >
+          required
+        </strong>
+      </summary><div
+        style={{"textAlign":"left","marginLeft":"1rem"}}
+      >
+        
+      </div><ul
+        style={{"marginLeft":"1rem"}}
+      >
+        <SchemaItem
+          collapsible={false}
+          name={"properties"}
+          required={true}
+          schemaName={"object"}
+          qualifierMessage={undefined}
+          schema={{"type":"object"}}
+        >
+          
+        </SchemaItem>
+      </ul>
+    </details>
+  </TabItem>
+</MimeTabs><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      
