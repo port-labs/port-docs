@@ -68,17 +68,17 @@ resources:
     selector:
       query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
     port:
-    entity:
-      mappings:
-        identifier: .namespace.full_path | gsub("/";"-") # The Entity identifier will be the repository name.
-        title: .name
-        blueprint: '"gitlabRepository"'
-        properties:
-          url: .web_link
-          description: .description
-          namespace: .namespace.name
-          fullPath: .namespace.full_path | split("/") | .[:-1] | join("/")
-          defaultBranch: .default_branch
+      entity:
+        mappings:
+          identifier: .namespace.full_path | gsub("/";"-") # The Entity identifier will be the repository name.
+          title: .name
+          blueprint: '"gitlabRepository"'
+          properties:
+            url: .web_link
+            description: .description
+            namespace: .namespace.name
+            fullPath: .namespace.full_path | split("/") | .[:-1] | join("/")
+            defaultBranch: .default_branch
 ```
 
 ### Integration configuration structure

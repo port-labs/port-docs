@@ -1,6 +1,7 @@
 ---
 sidebar_position: 5
 description: Datetime is a data type used to reference a date and time
+sidebar_class_name: "custom-sidebar-item sidebar-property-datetime"
 ---
 
 import ApiRef from "/docs/api-reference/\_learn_more_reference.mdx"
