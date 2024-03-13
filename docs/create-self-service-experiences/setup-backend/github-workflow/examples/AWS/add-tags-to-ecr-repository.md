@@ -11,12 +11,12 @@ This GitHub action allows you to add tags to an ECR repository via Port Actions 
 
 ## Steps
 
-1. Create the following GitHub action secrets.
+1. Create the following GitHub action secrets:
 
 - `AWS_REGION` - The region where ECR repositories are located. Available regions can be found on the [Regions, Availability Zones, and Local Zones page](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html#Concepts.RegionsAndAvailabilityZones.Regions) in AWS documentation.
-- `AWS_ACCOUNT_ID` - AWS account ID from the [prerequisites step](#prerequisites).
-- `AWS_ACCESS_KEY_ID` - AWS Access Key.
-- `AWS_SECRET_ACCESS_KEY` - AWS Secret Key, also gotten from the access key creation.
+- `AWS_ACCOUNT_ID` - AWS account ID from the [prerequisites step](#prerequisites)
+- `AWS_ACCESS_KEY_ID` - AWS Access Key
+- `AWS_SECRET_ACCESS_KEY` - AWS Secret Key, also gotten from the access key creation
 - `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
 - `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
 
@@ -110,50 +110,48 @@ This option is way easier but if you do not want this, you can simply type in re
 <summary><b>Add Tags to ECR Repository Blueprint (Click to expand)</b></summary>
 
 ```json showLineNumbers
-[
-  {
-    "identifier": "add_tags_to_ecr_repository",
-    "title": "Add Tags to ECR Repository",
-    "icon": "AWS",
-    "userInputs": {
-      "properties": {
-        "repository": {
-          "icon": "DefaultProperty",
-          "title": "Repository",
-          "type": "string",
-          "blueprint": "ecrRepository",
-          "description": "Use if respository has been ingested into Port. If both Repository and Repository Name are specified, Repository takes precedence.",
-          "format": "entity"
-        },
-        "repository_name": {
-          "title": "Repository Name",
-          "type": "string",
-          "description": "Use if Respository field is blank. If both is filled, Repository takes precedence."
-        },
-        "tags": {
-          "icon": "DefaultProperty",
-          "title": "Tags",
-          "type": "object",
-          "description": "Tags should be in key-value pairs like so: {\"key\": \"value\"}"
-        }
+{
+  "identifier": "add_tags_to_ecr_repository",
+  "title": "Add Tags to ECR Repository",
+  "icon": "AWS",
+  "userInputs": {
+    "properties": {
+      "repository": {
+        "icon": "DefaultProperty",
+        "title": "Repository",
+        "type": "string",
+        "blueprint": "ecrRepository",
+        "description": "Use if respository has been ingested into Port. If both Repository and Repository Name are specified, Repository takes precedence.",
+        "format": "entity"
       },
-      "required": ["tags"],
-      "order": ["tags", "repository", "repository_name"]
+      "repository_name": {
+        "title": "Repository Name",
+        "type": "string",
+        "description": "Use if Respository field is blank. If both is filled, Repository takes precedence."
+      },
+      "tags": {
+        "icon": "DefaultProperty",
+        "title": "Tags",
+        "type": "object",
+        "description": "Tags should be in key-value pairs like so: {\"key\": \"value\"}"
+      }
     },
-    "invocationMethod": {
-      "type": "GITHUB",
-      "org": "<Enter GitHub organization>",
-      "repo": "<Enter GitHub repository>",
-      "workflow": "add-tags-to-ecr-repository.yml",
-      "omitUserInputs": false,
-      "omitPayload": false,
-      "reportWorkflowStatus": true
-    },
-    "trigger": "CREATE",
-    "description": "Add tags to a repository on AWS ECR",
-    "requiredApproval": false
-  }
-]
+    "required": ["tags"],
+    "order": ["tags", "repository", "repository_name"]
+  },
+  "invocationMethod": {
+    "type": "GITHUB",
+    "org": "<Enter GitHub organization>",
+    "repo": "<Enter GitHub repository>",
+    "workflow": "add-tags-to-ecr-repository.yml",
+    "omitUserInputs": false,
+    "omitPayload": false,
+    "reportWorkflowStatus": true
+  },
+  "trigger": "CREATE",
+  "description": "Add tags to a repository on AWS ECR",
+  "requiredApproval": false
+}
 ```
 
 </details>
@@ -181,10 +179,11 @@ on:
       tags:
         type: string
         required: true
-        description: "Tags should be in key-value pairs like so: {\"key\": \"value\"}"
+        description: 'Tags should be in key-value pairs like so: {"key": "value"}'
       port_payload:
         required: true
-        description: Port's payload, including details for who triggered the action and
+        description:
+          Port's payload, including details for who triggered the action and
           general context (blueprint, run id, etc...)
         type: string
     secrets:
@@ -213,7 +212,7 @@ jobs:
           operation: PATCH_RUN
           runId: ${{fromJson(inputs.port_payload).context.runId}}
           logMessage: Starting request to add tags to ECR repository
-      
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         if: always()
@@ -224,7 +223,7 @@ jobs:
 
       - name: Install jq
         run: sudo apt-get install jq
-      
+
       - name: Add Tags to ECR repository
         env:
           TAGS_JSON: ${{ inputs.tags }}
@@ -240,7 +239,7 @@ jobs:
           aws ecr tag-resource \
           --resource-arn arn:aws:ecr:${{ secrets.AWS_REGION }}:${{ secrets.AWS_ACCOUNT_ID }}:repository/${{ inputs.repository && inputs.repository || inputs.repository_name }} \
           --tags ${TAGS}
-      
+
       - name: Create a log message
         uses: port-labs/port-github-action@v1
         with:
@@ -250,7 +249,6 @@ jobs:
           operation: PATCH_RUN
           runId: ${{ fromJson(inputs.port_payload).context.runId }}
           logMessage: Finished adding tags to ECR repository
-
 ```
 
 </details>
