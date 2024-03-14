@@ -1,5 +1,5 @@
 ---
-sidebar_position: 6
+sidebar_position: 12
 description: URL is an input used to save links to websites
 ---
 
@@ -16,10 +16,9 @@ URL is an input used to save links to websites.
 
 The URL input type can be used to store a link to any web resource, for example:
 
-- Link to Datadog dashboard;
-- Link to configuration file;
-- Link to pull request;
-- etc.
+- Link to Datadog dashboard
+- Link to configuration file
+- Link to pull request
 
 ## API definition
 

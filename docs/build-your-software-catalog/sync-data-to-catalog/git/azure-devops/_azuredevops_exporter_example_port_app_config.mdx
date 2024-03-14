@@ -1,0 +1,58 @@
+<details>
+
+<summary> Ocean integration configuration </summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: repository
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .project.name + "/" + .name
+          title: .name
+          blueprint: '"azureDevopsRepository"'
+          properties:
+            url: .url
+            readme: file://README.md
+  - kind: repository-policy
+    selector:
+      query: .type.displayName=="Minimum number of reviewers"
+    port:
+      entity:
+        mappings:
+          identifier: .__repository.project.name + "/" + .__repository.name
+          blueprint: '"azureDevopsRepository"'
+          properties:
+            minimumApproverCount: .settings.minimumApproverCount
+  - kind: repository-policy
+    selector:
+      query: .type.displayName=="Work item linking"
+    port:
+      entity:
+        mappings:
+          identifier: .__repository.project.name + "/" + .__repository.name
+          blueprint: '"azureDevopsRepository"'
+          properties:
+            workItemLinking: .isEnabled and .isBlocking
+  - kind: pull-request
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: >-
+            .repository.project.name + "/" + .repository.name + (.pullRequestId
+            | tostring)
+          blueprint: '"azureDevopsPullRequest"'
+          properties:
+            creator: .createdBy.uniqueName
+            status: .status
+            reviewers: '[.reviewers[].uniqueName]'
+            createdAt: .creationDate
+          relations:
+            repository: .repository.project.name + "/" + .repository.name
+```
+
+</details>

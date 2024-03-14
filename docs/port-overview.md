@@ -56,4 +56,4 @@ With Port, you can set up automations to automatically respond to events from yo
 
 R&D Insights & Reports is a pillar of port that provides data-driven insights and analytical reports on the development process. It allows teams, developers, and management to make informed decisions based on metrics, trends, and usage patterns to improve the development process, optimize performance, and reduce cost.
 
-[Insights & Reports live demo](https://demo.getport.io/dashboard_svp_engineering) 🎬
+[Insights & Reports live demo](https://demo.getport.io/svp_engineering) 🎬

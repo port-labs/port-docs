@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 1
 description: Array is an input for lists of data
 ---
 
@@ -16,9 +16,8 @@ Array is an input for lists of data.
 
 The array input type can be used to store any list of data, for example:
 
-- Configuration parameters;
-- Ordered values;
-- etc.
+- Configuration parameters
+- Ordered values
 
 ## API definition
 

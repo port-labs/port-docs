@@ -1,0 +1,40 @@
+<details>
+<summary>Member blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "azureDevopsMember",
+  "title": "Azure Devops Member",
+  "icon": "AzureDevops",
+  "schema": {
+    "properties": {
+      "email": {
+        "title": "Email",
+        "type": "string",
+        "format": "user",
+        "icon": "DefaultProperty"
+      },
+      "url": {
+        "icon": "Link",
+        "title": "URL",
+        "type": "string",
+        "format": "url"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "team": {
+      "title": "team",
+      "target": "azureDevopsTeam",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

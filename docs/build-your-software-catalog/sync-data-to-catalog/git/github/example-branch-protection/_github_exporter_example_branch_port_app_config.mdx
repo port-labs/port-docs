@@ -3,7 +3,7 @@
 
 ```yaml showLineNumbers
 resources:
-  - kind: repository
+  - kind: service
     selector:
       query: 'true'
     port:
@@ -11,7 +11,7 @@ resources:
         mappings:
           identifier: .name
           title: .name
-          blueprint: '"githubRepository"'
+          blueprint: '"githubService"'
           properties:
             readme: file://README.md
             url: .html_url

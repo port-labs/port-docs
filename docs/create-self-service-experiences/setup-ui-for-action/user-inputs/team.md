@@ -1,5 +1,5 @@
 ---
-sidebar_position: 9
+sidebar_position: 8
 description: Team is an input used to reference teams that exist in Port
 ---
 
@@ -16,10 +16,9 @@ Team is an input used to reference teams that exist in Port.
 
 The team input type can be used to reference any team that exists in Port, for example:
 
-- The service owning team;
-- The current on-call;
-- The lead maintainers;
-- etc.
+- The service owning team
+- The current on-call
+- The lead maintainers
 
 In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we can see the **scaffold new service** action whose `Owning Team` input is a user input. 🎬
 

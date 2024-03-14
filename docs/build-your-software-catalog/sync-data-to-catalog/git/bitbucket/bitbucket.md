@@ -67,15 +67,15 @@ Here is an example `port-app-config.yml` block:
 
 ```yaml showLineNumbers
 resources:
-  - kind: repository
+  - kind: service
     selector:
       query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
     port:
       entity:
         mappings:
-          identifier: ".name" # The Entity identifier will be the repository name.
+          identifier: ".name" # The Entity identifier will be the service (repository) name.
           title: ".name"
-          blueprint: '"bitbucketRepository"'
+          blueprint: '"bitbucketService"'
           properties:
             project: ".project.name"
             url: ".links.html.href"
@@ -89,7 +89,7 @@ resources:
   ```yaml showLineNumbers
   # highlight-next-line
   resources:
-    - kind: repository
+    - kind: service
       selector:
       ...
   ```
@@ -99,7 +99,7 @@ resources:
   ```yaml showLineNumbers
     resources:
       # highlight-next-line
-      - kind: repository
+      - kind: service
         selector:
         ...
   ```
@@ -112,7 +112,7 @@ The `selector` and the `query` keys let you filter exactly which objects from th
 
   ```yaml showLineNumbers
   resources:
-    - kind: repository
+    - kind: service
       # highlight-start
       selector:
         query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
@@ -132,7 +132,7 @@ The `port`, `entity` and the `mappings` keys open the section used to map the Bi
 
   ```yaml showLineNumbers
   resources:
-    - kind: repository
+    - kind: service
       selector:
         query: "true"
       # highlight-start
@@ -141,7 +141,7 @@ The `port`, `entity` and the `mappings` keys open the section used to map the Bi
           mappings: # Mappings between one Bitbucket API object to a Port entity. Each value is a JQ query.
             identifier: ".name"
             title: ".name"
-            blueprint: '"bitbucketRepository"'
+            blueprint: '"bitbucketService"'
             properties:
               project: ".project.name"
               url: ".links.html.href"

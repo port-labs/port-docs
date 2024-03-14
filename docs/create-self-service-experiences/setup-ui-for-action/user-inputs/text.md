@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 10
 description: Text is a basic input for textual information
 ---
 
@@ -16,11 +16,10 @@ Text is a basic input for textual information.
 
 The text input type can be used to store any text based data, for example:
 
-- Image tags;
-- Variable keys;
-- Commit SHA;
-- File names;
-- etc.
+- Image tags
+- Variable keys
+- Commit SHA
+- File names
 
 In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we can see the **scaffold new service** action whose `Service Name` input is a text input. 🎬
 

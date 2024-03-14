@@ -1,0 +1,23 @@
+<details>
+
+<summary> Ocean integration configuration </summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: pipeline
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .id | tostring
+          title: .name
+          blueprint: '"azureDevopsPipeline"'
+          properties:
+            url: .url
+            revision: .revision
+            folder: .folder
+
+```
+
+</details>
