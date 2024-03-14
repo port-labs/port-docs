@@ -4819,7 +4819,7 @@ This guide demonstrates how to connect a Cloud Resource to a service or list of 
 
 ### Ingest Services from GitHub.
 
-Follow this [guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/installation) to ingest your GitHub repositories into Port. Port will create for you a `service` blueprint that will be using subsequently.
+Follow this [guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/installation) to ingest your GitHub repositories into Port. Port will create a `service` blueprint that you will be using subsequently.
 
 
 <details>
