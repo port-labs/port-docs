@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 1
 ---
 
 import Tabs from "@theme/Tabs"
@@ -15,8 +15,8 @@ We will use an AWS managed GitHub Action called [aws-actions/aws-cloudformation-
 
 1. Create the following GitHub action secrets:
 
-   1. `PORT_CLIENT_ID` - Port Client ID [learn more](../../../../build-your-software-catalog/custom-integration/api/#get-api-token).
-   2. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](../../../../build-your-software-catalog/custom-integration/api/#get-api-token).
+   1. `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+   2. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
    3. `AWS_ACCESS_KEY_ID` - AWS credentials.
    4. `AWS_SECRET_ACCESS_KEY` - AWS credentials.
    5. `AWS_REGION` - AWS region name to deploy your resources to.
@@ -918,7 +918,7 @@ print(f"::set-output name=decrypted_value::{decrypted_property_value}")
 
 ## What's next?
 
-- [Connect Port's AWS exporter](../../../../build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws.md)
+- [Connect Port's AWS exporter](https://app.getport.io/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws)
   to make sure all of the properties and entities are automatically ingested from AWS.
-  - You can learn how to setup Port's AWS exporter [here](../../../../build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/Installation.md).
-  - You can see example configurations and use cases [here](../../../../build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples.md).
+  - You can learn how to setup Port's AWS exporter [here](https://app.getport.io/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/Installation).
+  - You can see example configurations and use cases [here](https://app.getport.io/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples).

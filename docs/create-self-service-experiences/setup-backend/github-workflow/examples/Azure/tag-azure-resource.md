@@ -7,11 +7,11 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 # Add Tags to Azure Resource
 
-In the following guide, you are going to create a self-service action in Port that executes a [GitHub workflow](/create-self-service-experiences/setup-backend/github-workflow/github-workflow.md) to add tags to a [storage account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-overview).
+In the following guide, you are going to create a self-service action in Port that executes a [GitHub workflow](https://docs.getport.io//create-self-service-experiences/setup-backend/github-workflow) to add tags to a [storage account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-overview).
 
 ## Prerequisites
-1. This guide assumes that you already have a blueprint for an Azure Storage account with some resources. If you haven't done so yet, create the blueprint by referring to this [guide](/create-self-service-experiences/setup-backend/github-workflow/examples/create-azure-resource.md) first.
-2. Prior knowledge of Port Actions is essential for following this guide. Learn more about them [here](/create-self-service-experiences/setup-ui-for-action/).
+1. This guide assumes that you already have a blueprint for an Azure Storage account with some resources. If you haven't done so yet, create the blueprint by referring to this [guide](https://docs.getport.io/create-self-service-experiences/setup-backend/github-workflow/examples/azure/create-azure-resource) first.
+2. Prior knowledge of Port Actions is essential for following this guide. Learn more about them [here](https://docs.getport.io/create-self-service-experiences/setup-ui-for-action/).
 3. A GitHub repository to contain your action resources i.e. the github workflow file.
 
 
@@ -21,8 +21,8 @@ Follow these steps to get started:
 
 1. Create the following GitHub Action secrets:
     1. Create the following Port credentials:
-        1. `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token).
-        2. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token).
+        1. `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#get-api-token).
+        2. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#get-api-token).
     2. Create the following Azure Cloud credentials:
         :::tip
         Follow this [guide](https://learn.microsoft.com/en-us/azure/developer/terraform/get-started-cloud-shell-bash?tabs=bash#create-a-service-principal) to create a service principal in order to get the Azure credentials.
