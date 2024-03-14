@@ -51,7 +51,6 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Sync Azure pipelines](/build-your-software-catalog/custom-integration/api/ci-cd/azure-pipelines/azure-pipelines.md)
 - [Azure pipelines self-service actions](/create-self-service-experiences/setup-backend/azure-pipeline/azure-pipeline.md)
 - [Cookiecutter Azure DevOps scaffolder using Azure DevOps pipelines](/create-self-service-experiences/setup-backend/azure-pipeline/examples/scaffold-repositories-using-cookiecutter.md)
-- [Azure DevOps Webhook](/build-your-software-catalog/custom-integration/webhook/examples/azuredevops.md)
 
 ### GitOps using Port CRDs
 
@@ -194,8 +193,8 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Dynatrace
 
+- [Dynatrace integration](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/dynatrace)
 - [Dynatrace webhook](/build-your-software-catalog/custom-integration/webhook/examples/dynatrace.md)
-- [Dynatrace entities](/build-your-software-catalog/custom-integration/webhook/examples/dynatrace.md#ingest-dynatrace-entities)
 
 ## Datadog
 

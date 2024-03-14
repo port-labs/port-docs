@@ -161,3 +161,94 @@ html[data-theme="light"] details details  {
 html[data-theme="dark"] details details  {
   background-color: rgb(71, 36, 25, 0.6) !important;
 }
+
+/* sidebar icons */
+
+/* sidebar icons - category items */
+
+.custom-sidebar-item > div > a::before {
+  margin-top: 4px;
+  margin-right: 6px;
+  zoom: 80%;
+}
+
+.sidebar-property-embedded-url > div > a::before {
+  content: url('/static/img/sidebar-icons/EmbeddedUrl.svg');
+}
+
+.sidebar-property-calculation > div > a::before {
+  content: url('/static/img/sidebar-icons/Calculation.svg');
+}
+
+/* sidebar icons - regular items */
+
+.custom-sidebar-item > a::before {
+  margin-top: 4px;
+  margin-right: 6px;
+  zoom: 80%;
+}
+
+.sidebar-property-markdown > a::before {
+  content: url('/static/img/sidebar-icons/Markdown.svg');
+}
+
+.sidebar-property-boolean > a::before {
+  content: url('/static/img/sidebar-icons/Boolean.svg');
+}
+
+.sidebar-property-array > a::before {
+  content: url('/static/img/sidebar-icons/Array.svg');
+}
+
+.sidebar-property-aggregation > a::before {
+  content: url('/static/img/sidebar-icons/Aggregation.svg');
+  zoom: 100%;
+}
+
+.sidebar-property-datetime > a::before {
+  content: url('/static/img/sidebar-icons/Date.svg');
+}
+
+.sidebar-property-string > a::before {
+  content: url('/static/img/sidebar-icons/Text.svg');
+}
+
+.sidebar-property-number > a::before {
+  content: url('/static/img/sidebar-icons/Number.svg');
+}
+
+.sidebar-property-object > a::before {
+  content: url('/static/img/sidebar-icons/Object.svg');
+}
+
+.sidebar-property-swagger > a::before {
+  content: url('/static/img/sidebar-icons/Swagger.svg');
+}
+
+.sidebar-property-timer > a::before {
+  content: url('/static/img/sidebar-icons/Timer.svg');
+}
+
+.sidebar-property-team > a::before {
+  content: url('/static/img/sidebar-icons/Team.svg');
+}
+
+.sidebar-property-url > a::before {
+  content: url('/static/img/sidebar-icons/Url.svg');
+}
+
+.sidebar-property-user > a::before {
+  content: url('/static/img/sidebar-icons/User.svg');
+}
+
+.sidebar-property-meta > a::before {
+  content: "💲";
+  margin-top: 1px;
+  zoom: 100%;
+}
+
+.sidebar-property-mirror > a::before {
+  content: "🪞";
+  margin-top: 1px;
+  zoom: 100%;
+}
