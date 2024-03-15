@@ -182,23 +182,23 @@ Add the following block to the mapping configuration and click `Resync`:
 resources:
   # ... Other resource mappings installed by the K8s exporter
   - kind: apps/v1/deployments
-      port:
-        entity:
-          mappings:
-          - blueprint: '"service"'
-            icon: '"Deployment"'
-            identifier: .metadata.labels.portService
-            properties: {}
-            relations:
-              prod_runtime: .metadata.name + "-Deployment-" + .metadata.namespace + "-" + "my-cluster"
-            title: .metadata.name
-      selector:
-        query: .metadata.namespace | startswith("kube") | not
+    selector:
+      query: .metadata.namespace | startswith("kube") | not
+    port:
+      entity:
+        mappings:
+        - blueprint: '"service"'
+          icon: '"Deployment"'
+          identifier: .metadata.labels.portService
+          properties: {}
+          relations:
+            prod_runtime: .metadata.name + "-Deployment-" + .metadata.namespace + "-" + "my-cluster"
+          title: .metadata.name
 ```
 
 <br/>
 
-3. Go to your [Software catalog](https://app.getport.io/services), and click on `Services`. Click on the `Service` for which you created the deployment, and you should see the `Prod_runtime` property filled, along with the `Health` and `Images` properties that we mirrored:
+1. Go to your [Software catalog](https://app.getport.io/services), and click on `Services`. Click on the `Service` for which you created the deployment, and you should see the `Prod_runtime` property filled, along with the `Health` and `Images` properties that we mirrored:
 
 <img src='/img/guides/k8sEntityAfterIngestion.png' width='80%' />
 
