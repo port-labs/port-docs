@@ -7,7 +7,7 @@ import ApiRef from "../../api-reference/\_learn_more_reference.mdx";
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Setup UI
+# Setup frontend
 
 <center>
 
@@ -16,9 +16,9 @@ import TabItem from "@theme/TabItem"
 </center>
 <br/>
 
-After selecting the blueprint you want to add an action to, the next step is to define the action's structure and interface.
+After selecting the blueprint you want to add an action to, we need to define the action's frontend - its structure and interface.
 
-Setting up an action's UI includes the following steps:
+## Steps 
 
 1. **Define [action information](#structure-table)** - the action's title, icon, and description.
 2. **Select the [user inputs](#userinputs---form--wizard-ui)** - create a wizard-like experience for your developers by specifying the input types they will need to fill, while also including input validations.
@@ -134,61 +134,3 @@ Port actions support a manual approval process. Manual approvals let you control
 
 Refer to the [self-service actions RBAC](../set-self-service-actions-rbac/set-self-service-actions-rbac.md) page to learn more.
 
-## Configuring actions in Port
-
-<Tabs groupId="configure" queryString>
-
-<TabItem value="api" label="API">
-
-```json showLineNumbers
-{
-  "identifier": "myIdentifier",
-  "title": "My title",
-  "description": "My description",
-  "icon": "My icon",
-  "userInputs": {
-    "properties": {},
-    "required": []
-  },
-  "invocationMethod": {
-    "type": "myInvocationType"
-  },
-  "trigger": "myActionTrigger",
-  "requiredApproval": false
-}
-```
-
-:::note
-The JSON shown above is for a single blueprint action, the actions of a blueprint are stored in an array (`[]`)
-:::
-
-<ApiRef />
-
-</TabItem>
-
-<TabItem value="terraform" label="Terraform">
-
-```hcl showLineNumbers
-resource "port_action" "myAction" {
-  blueprint = "myBlueprint"
-  identifier           = "myAction"
-  description          = "My self-service action"
-  user_properties = {}
-  trigger = "myActionTrigger"
-  myInvocationType_method = {}
-}
-```
-
-</TabItem>
-
-<TabItem value="ui" label="UI">
-
-1. Go to the [DevPortal Builder page](https://app.getport.io/dev-portal).
-2. Expand the blueprint you want to add an action to.
-3. Select the `Edit Json` button from the 3 dots menu.
-4. Navigate to the `Actions` tab.
-5. Paste the JSON specification in to the actions array.
-
-</TabItem>
-
-</Tabs>

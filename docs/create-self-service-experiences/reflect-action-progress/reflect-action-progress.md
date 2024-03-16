@@ -283,8 +283,74 @@ if __name__ == '__main__':
 
 Now when you look at the run log of the action run, you will see the information of the newly created Entity:
 
-![Developer portal action run log](../../../static/img/self-service-actions/action_run_log.png)
+![Developer portal action run log](/img/self-service-actions/action_run_log.png)
 
 :::tip
 In the example above we created just one Entity, but it is possible to create, update or delete multiple Entities as part of the steps taken by a single action run, and all of these changes will be reflected in the action run log.
 :::
+
+## Action run JSON structure
+
+The action run object created after executing an action resides under the `port_payload` key, and has the following structure:
+
+| Field          | Description                                                                                  | Example               |
+| -------------- | -------------------------------------------------------------------------------------------- | --------------------- |
+| `action`       | The action's unique identifier.                                                                            | `create_microservice` |
+| `resourceType` | The resource type that triggered the action. In the case of action runs, it always defaults to `run`. | `run`                 |
+| `status`       | The action's status. In the case of action runs, it always defaults to `TRIGGERED`.                 | `TRIGGERED`           |
+| `trigger`      | Audit data for the action run.                                                                | Example below         |
+| `context`      | Contains the context of the action, and has keys for `blueprint`, `entity` and `runId`.       | Example below         |
+| `payload`      | Explanation below.                                                                            | Example below         |
+
+### Example Trigger
+
+The trigger includes audit data such as who triggered the action, and when and how it was triggered (`UI` or `API`):
+
+```json showLineNumbers
+"trigger": {
+    "by": {
+        "userId": "auth0|<USER>",
+        "orgId": "<ORG>",
+        "user": {
+          "email": "<USER_EMAIL>",
+          "firstName": "<USER_FIRST_NAME>",
+          "lastName": "<USER_LASTT_NAME",
+          "id": "<USER_ID>"
+        }
+    },
+    "at": "2022-07-27T17:50:58.776Z",
+    "origin": "UI"
+}
+```
+
+### Example context
+
+```json showLineNumbers
+"context": {
+    "entity": null,
+    "blueprint": "k8sCluster",
+    "runId": "r_AtbOjbe45GNDElcQ"
+}
+```
+
+### Self-Service Action run payload
+
+The `payload` object contains the data of the action invocation, it includes the following keys:
+
+- `entity` - The entity this run is executed on (in the case of `CREATE` actions, this will be null).
+- `action` - The triggered action's configuration, including `userInputs`, `description`, etc.
+- `properties` - This key includes the values provided by the user when executing the action. The keys in this object match the keys defined under the `userInputs` key in the action definition.
+
+Here is an example `payload` object for a `CREATE` action:
+
+```json showLineNumbers
+"payload": {
+    "entity": null,
+    "properties": {
+        "region": "prod-2-use1",
+        "title": "dev-env",
+        "version": "1.2",
+        "type": "EKS"
+    }
+}
+```

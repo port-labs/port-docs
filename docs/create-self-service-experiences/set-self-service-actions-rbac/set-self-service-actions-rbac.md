@@ -20,9 +20,8 @@ In order to manage who can view which pages in Port, check out [page permissions
 
 Self-service actions RBAC allows admins to finely control which users can execute which self-service actions, for example:
 
-- Let a developer provision a database only to his microservice or developer environment;
-- Specify that a new cluster provision request requires manual approval by the DevOps team;
-- etc.
+- Let a developer provision a database only to his microservice or developer environment.
+- Specify that a new cluster provision request requires manual approval by the DevOps team.
 
 ## Configure permissions for actions
 
@@ -83,7 +82,7 @@ To configure which users can approve the action, see [Managing permissions](/doc
 
 ## Configuring approval notifications
 
-by default manual approval notifications are sent via email to users who have approval permissions.
+By default manual approval notifications are sent via email to users who have approval permissions.
 
 It is also possible to configure a webhook URL which the approval notification will be sent to.
 
@@ -108,6 +107,6 @@ To send an approval notification to a URL, add the `approvalNotification` field 
 
 Click [here](/docs/create-self-service-experiences/set-self-service-actions-rbac/examples.md#setting-up-a-slack-notification) to learn how to send manual approval requests to Slack.
 
-## Self-service actions RBAC examples
+## Examples
 
 Refer to the [examples](./examples.md) page for practical examples of Port's RBAC.

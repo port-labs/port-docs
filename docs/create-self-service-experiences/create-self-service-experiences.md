@@ -45,13 +45,18 @@ In our [live demo](https://demo.getport.io/self-serve), you can see examples for
 
 <img src='/img/self-service-actions/selfserviceHLarch.png' width='100%' border='1px' />
 
-## Steps to enable an action from Port
+## Create a self-service action
 
 Creating a self-service experience in port is very similar to a traditional frontend-backend model.
 Port gives you no-code components to create the experience you want for your users and integrates with existing workflows and automations provided by you.
 
 Self-service actions are created and managed in the [Self-service](https://app.getport.io/self-serve) page of your portal.  
+
 To begin, click on the `+ New Action` button in the top right corner. Choose the blueprint for which you would like to create the action, then follow the steps below.
+
+:::tip Other supported methods
+Besides Port's UI, you can also create and manage self-service actions using [Port's API](/api-reference/), or [Terraform](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/port_action).
+:::
 
 ### Step 1 - setup the action's frontend
 
@@ -84,7 +89,7 @@ See [Setup backend](/create-self-service-experiences/setup-backend/) for instruc
 
 ### Step 3 - reflect action progress
 
-Port allows you update your users on the current state of the action's progress, using a `success/in-progress/failure` status, live logs, ChatOps notifications, friendly and indicative error messages, and more.
+After executing an action, Port allows you update its state and progress, using a `success/in-progress/failure` status, live logs, ChatOps notifications, friendly and indicative error messages, and more.
 
 See [Reflect action progress](/create-self-service-experiences/reflect-action-progress/) for instructions and examples.
 
@@ -93,3 +98,45 @@ See [Reflect action progress](/create-self-service-experiences/reflect-action-pr
 Port supports a variety of ways to add manual approvals, policies, and TTL to actions, to ensure that organizational standards are met.
 
 See [Set actions RBAC](/create-self-service-experiences/set-self-service-actions-rbac/) for instructions and examples.
+
+## Action JSON structure
+
+The basic structure of a self-service action looks like this (see key descriptions below):
+
+```json showLineNumbers
+{
+  "identifier": "unique_id",
+  "title": "Title",
+  "userInputs": {
+    "properties": {
+      "property1": {
+        "type": "string",
+        "title": "Property title",
+        "default": "default value"
+      },
+      "property2": {
+        "type": "number",
+        "title": "property title",
+        "default": 5
+      }
+    }
+  },
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "https://example.com"
+  },
+  "trigger": "CREATE",
+  "description": "Action description"
+}
+```
+
+| Field              | Description                                                                                                                                                                                                 |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `identifier`       | The action's unique identifier.                                                                                                                                                                                          |
+| `title`            | The action's title.                                                                                                                                                                                                |
+| `icon`             | The action's icon.                                                                                                                                                                                                 |
+| `userInputs`       | An object containing the action's inputs and their metadata. See [User inputs](/create-self-service-experiences/setup-ui-for-action/user-inputs/) for more information. |
+| `invocationMethod` | Defines the type of backend the action will use. See [invocation method](#invocation-method) for more information.                                                             |
+| `trigger`          | The [type](/create-self-service-experiences/setup-ui-for-action/#trigger---action-type) of the action: `CREATE`, `DAY-2` or `DELETE`.                                                                                                                                                       |
+| `requiredApproval` | A boolean value that determines whether the action requires approval or not.                                                                                                                                                                 |
+| `description`      | A description that can be used to explain the action to users.                                                                                                                                                                                         |
