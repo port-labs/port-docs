@@ -13,61 +13,43 @@ import SchemaTabs from "@theme/SchemaTabs";
 import TabItem from "@theme/TabItem";
 import Export from "@theme/ApiExplorer/Export";
 
-<span
-  className={"theme-doc-version-badge badge badge--secondary"}
+<Export
+  url={"https://api.connxio.com/definition/v2/openapi.yaml?omit-api-prefix=true"}
+  proxy={undefined}
 >
-  Version: 1.0
-</span>
+  
+</Export>
 
 <h1
   className={"openapi__heading"}
 >
   Port API
 </h1>
+<br/>
 
-
-
-
-
-<div
-  style={{"marginBottom":"2rem"}}
+<ApiLogo
+  logo={{"url":"/img/logos/logo-light.svg","altText":"Connxio Logo"}}
+  darkLogo={undefined}
 >
-  <h2
-    id={"authentication"}
-    style={{"marginBottom":"1rem"}}
-  >
-    Authentication
-  </h2><SchemaTabs
-    className={"openapi-tabs__security-schemes"}
-  >
-    <TabItem
-      label={"API Key: bearer"}
-      value={"bearer"}
-    >
-      
-      
-      
-      
-      <div>
-        <table>
-          <tbody>
-            <tr>
-              <th>
-                Security Scheme Type:
-              </th><td>
-                apiKey
-              </td>
-            </tr><tr>
-              <th>
-                Header parameter name:
-              </th><td>
-                Authorization
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </TabItem>
-  </SchemaTabs>
-</div>
-      
+  
+</ApiLogo>
+<br/><br/>
+
+## Introduction
+    This API is documented in the **OpenAPI format** and provides programmatic access to Port and its components.  
+    
+    The API describes the various routes available for use, and can be used directly from the browser by using the `Send API Request` button on the right side of each route's page.
+
+    Port is API-first, meaning that this API allows you to achieve any and all of its functionalities.  
+    You can *read from* and *write to* your software catalog, execute & interact with your self-service actions, fetch & update your scorecards, and much more.
+
+    ## Authentication
+    
+    To use the API, you need to obtain a Bearer API key from your Port application:
+
+    1. Go to your [Port application](https://app.getport.io), click on the `...` button in the top right corner, and select `Credentials`.
+    2. Click on the `Generate API token` button, and copy the generated token.
+        
+        <img src="/img/openapi/getBearerToken.png" width="70%" border="1px" />
+
+    3. Paste the token into the `bearer` field in the request block of your desired route.

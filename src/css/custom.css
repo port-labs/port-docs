@@ -184,9 +184,9 @@ html[data-theme="dark"] details details  {
 
 .get > .menu__link::before {
   content: "get";
-  background-color: var(--ifm-color-info-contrast-background);
-  color: var(--ifm-color-info-contrast-foreground);
-  border-color: var(--ifm-color-info-dark);
+  background-color: var(--ifm-color-primary-contrast-background);
+  color: var(--ifm-color-success-contrast-foreground);
+  border-color: var(--ifm-color-primary-darkest);
 }
 
 .post > .menu__link::before {
@@ -205,16 +205,16 @@ html[data-theme="dark"] details details  {
 
 .put > .menu__link::before {
   content: "put";
-  background-color: var(--ifm-color-warning-contrast-background);
-  color: var(--ifm-color-warning-contrast-foreground);
-  border-color: var(--ifm-color-warning-dark);
+  background-color: var(--ifm-color-info-contrast-background);
+  color: var(--ifm-color-info-contrast-foreground);
+  border-color: var(--ifm-color-info-dark);
 }
 
 .patch > .menu__link::before {
   content: "patch";
-  background-color: var(--ifm-color-success-contrast-background);
-  color: var(--ifm-color-success-contrast-foreground);
-  border-color: var(--ifm-color-success-dark);
+  background-color: var(--ifm-color-warning-contrast-background);
+  color: var(--ifm-color-warning-contrast-foreground);
+  border-color: var(--ifm-color-warning-dark);
 }
 
 .head > .menu__link::before {
