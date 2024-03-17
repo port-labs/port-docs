@@ -16,7 +16,8 @@ In the following guide, we are going to create a self-service action in Port tha
 3. A GitHub repository to contain your action resources i.e. the github workflow file.
 
 
-## Example - synchronizing argocd application
+## Steps
+
 
 Follow these steps to get started:
 
