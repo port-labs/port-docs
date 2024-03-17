@@ -174,7 +174,7 @@ Teams are GitHub organization level resources, therefore you will need to specif
 To retrieve the teams of your repositories, you will need to add the `teams` property to the `selector` in the repository resource kind in your `port-app-config.yml`:
 
 ```yaml
-- kind: repository
+- kind: service
 	selector:
 		query: 'true'  # JQ boolean query. If evaluated to false - skip syncing the object.
 	  // highlight-next-line

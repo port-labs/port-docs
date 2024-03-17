@@ -73,9 +73,9 @@ Keep the `Forwarding URL` for later use.
 
 ### Setup Port resources
 
-First, set up a [blueprint](../../../../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) for an S3 bucket in Port.
+First, set up a [blueprint](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/setup-blueprint.md) for an S3 bucket in Port.
 
-You can create as many [properties](../../../../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/properties.md) as you want for the bucket, but this example keeps it lean with 4 properties - `URL`, `Bucket Name`, `Bucket ACL` and `Tags`.
+You can create as many [properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/properties.md) as you want for the bucket, but this example keeps it lean with 4 properties - `URL`, `Bucket Name`, `Bucket ACL` and `Tags`.
 
 <details>
 <summary> AWS bucket blueprint </summary>

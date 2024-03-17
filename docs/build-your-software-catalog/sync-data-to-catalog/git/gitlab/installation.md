@@ -94,6 +94,13 @@ Example:
 {"glpat-QXbeg-Ev9xtu5_5FsaAQ": ["**/DevopsTeam/*Service", "**/RnDTeam/*Service"]}
 ```
 
+:::info Helm installation parameter
+When using the `tokenMapping` parameter in the integration's [Helm installation](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/installation?deploy=helm&installation-methods=real-time-always-on#deploying-the-gitlab-integration), make sure to escape the necessary characters, for example:
+```text
+--set integration.secrets.tokenMapping=“\{\“glpat-oh1YXc54pR4eofx6hYy5\“: [\“**\“]\}”
+```
+:::
+
 Multiple GitLab group access tokens example:
 
 ```text showLineNumbers
@@ -177,8 +184,8 @@ Set them as you wish in the script below, then copy it and run it in your termin
 
 | Parameter                          | Description                                                                                                                         | Example                          | Required |
 | ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- | -------- |
-| `port.clientId`                    | Your port [client id](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)     |                                  | ✅       |
-| `port.clientSecret`                | Your port [client secret](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials) |                                  | ✅       |
+| `port.clientId`                    | Your port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)     |                                  | ✅       |
+| `port.clientSecret`                | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials) |                                  | ✅       |
 | `integration.secrets.tokenMapping` | The [token mapping](#tokenmapping) configuration used to query GitLab                                                               |                                  | ✅       |
 | `integration.config.appHost`       | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in GitLab                | https://my-ocean-integration.com | ❌       |
 | `integration.config.gitlabHost`    | (for self-hosted GitLab) the URL of your GitLab instance                                                                            | https://my-gitlab.com            | ❌       |
@@ -357,7 +364,7 @@ deploy_gitlab:
 :::note
 When saving the `OCEAN__INTEGRATION__CONFIG__TOKEN_MAPPING` variable, be sure to save it **as-is**, for example given the following token mapping:
 
-```text showLineNumbers
+```text
 {"glpat-QXbeg-Ev9xtu5_5FsaAQ": ["**/DevopsTeam/*Service", "**/RnDTeam/*Service"]}
 ```
 

@@ -5,11 +5,11 @@ title: Get started with AWS
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import FindCredentials from "/docs/build-your-software-catalog/sync-data-to-catalog/api/\_template_docs/\_find_credentials.mdx";
+import FindCredentials from "/docs/build-your-software-catalog/custom-integration/api/\_template_docs/\_find_credentials.mdx";
 
 # Get started with AWS
 
-This guide takes 4 minutes to complete, and aims to quickly integrate your AWS environment into Port.
+This guide takes 5 minutes to complete, and aims to quickly integrate your AWS environment into Port.
 
 :::tip Prerequisites
 

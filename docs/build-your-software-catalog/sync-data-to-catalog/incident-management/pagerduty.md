@@ -8,19 +8,19 @@ import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
 import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
 import DockerParameters from "./\_pagerduty_docker_params.mdx"
 import AdvancedConfig from '../../../generalTemplates/\_ocean_advanced_configuration_note.md'
-import PagerDutyServiceBlueprint from "../webhook/examples/resources/pagerduty/\_example_pagerduty_service.mdx"
-import PagerDutyIncidentBlueprint from "../webhook/examples/resources/pagerduty/\_example_pagerduty_incident.mdx"
-import PagerDutyWebhookConfig from "../webhook/examples/resources/pagerduty/\_example_pagerduty_webhook_config.mdx"
-import PagerDutyWebhookHistory from "../webhook/examples/resources/pagerduty/\_example_pagerduty_webhook_history_config.mdx"
-import PagerDutyScript from "../webhook/examples/resources/pagerduty/\_example_pagerduty_shell_history_config.mdx"
+import PagerDutyServiceBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/pagerduty/\_example_pagerduty_service.mdx"
+import PagerDutyIncidentBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/pagerduty/\_example_pagerduty_incident.mdx"
+import PagerDutyWebhookConfig from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/pagerduty/\_example_pagerduty_webhook_config.mdx"
+import PagerDutyWebhookHistory from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/pagerduty/\_example_pagerduty_webhook_history_config.mdx"
+import PagerDutyScript from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/pagerduty/\_example_pagerduty_shell_history_config.mdx"
 
 # PagerDuty
 
-Our PagerDuty integration allows you to import `schedules`, `services` and `incidents` from your PagerDuty account into Port, according to your mapping and definitions.
+Our PagerDuty integration allows you to import `schedules`, `oncalls`, `services` and `incidents` from your PagerDuty account into Port, according to your mapping and definitions.
 
 ## Common use cases
 
-- Map `schedules`, `services` and `incidents` in your PagerDuty organization environment.
+- Map `schedules`, `oncalls`, `services` and `incidents` in your PagerDuty organization environment.
 - Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
 ## Prerequisites
@@ -335,6 +335,7 @@ The integration configuration determines which resources will be queried from Pa
 The following resources can be used to map data from PagerDuty, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
 
 - [`Schedule`](https://developer.pagerduty.com/api-reference/846ecf84402bb-list-schedules)
+- [`Oncall`](https://developer.pagerduty.com/api-reference/3a6b910f11050-list-all-of-the-on-calls)
 - [`Service`](https://developer.pagerduty.com/api-reference/e960cca205c0f-list-services)
 - [`Incident`](https://developer.pagerduty.com/api-reference/9d0b4b12e36f9-list-incidents)
 
@@ -481,6 +482,86 @@ resources:
             users: "[.users[].summary]"
 ```
 
+</details>
+
+### Oncall
+
+<details>
+<summary>Oncall blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "pagerdutyOncall",
+  "description": "This blueprint represents a PagerDuty oncall schedule in our software catalog",
+  "title": "PagerDuty Oncall Schedule",
+  "icon": "pagerduty",
+  "schema": {
+    "properties": {
+      "url": {
+        "title": "Oncall Schedule URL",
+        "type": "string",
+        "format": "url"
+      },
+      "user": {
+        "title": "User",
+        "type": "string",
+        "format": "user"
+      },
+      "startDate": {
+        "title": "Start Date",
+        "type": "string",
+        "format": "date-time"
+      },
+      "endDate": {
+        "title": "End Date",
+        "type": "string",
+        "format": "date-time"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "pagerdutySchedule": {
+      "title": "PagerDuty Schedule",
+      "target": "pagerdutySchedule",
+      "required": false,
+      "many": true
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: oncalls
+    selector:
+      query: 'true'
+      apiQueryParams:
+        include: ['users']
+    port:
+      entity:
+        mappings:
+          identifier: .user.id + "-" + .schedule.id + "-" + .start
+          title: .user.name
+          blueprint: '"pagerdutyOncall"'
+          properties:
+            user: .user.email
+            startDate: .start
+            endDate: .end
+            url: .schedule.html_url
+          relations:
+            pagerdutySchedule: .schedule.id
+```
 </details>
 
 ### Service
@@ -661,6 +742,159 @@ resources:
 ```
 
 </details>
+
+## Ingesting service analytics
+To enrich your PagerDuty service entities with analytics data, follow the steps below:
+
+1. Update the service blueprint to include analytics properties. You can add any property that is returned from the [PagerDuty aggregated service analytics API](https://developer.pagerduty.com/api-reference/694e92fe4f943-get-aggregated-service-data)
+    <details>
+    <summary>Updated service blueprint</summary>
+
+    ```json showLineNumbers
+    {
+      "identifier":"pagerdutyService",
+      "description":"This blueprint represents a PagerDuty service in our software catalog",
+      "title":"PagerDuty Service",
+      "icon":"pagerduty",
+      "schema":{
+          "properties":{
+            "status":{
+                "title":"Status",
+                "type":"string"
+            },
+            "url":{
+                "title":"URL",
+                "type":"string",
+                "format":"url"
+            },
+            "oncall":{
+                "title":"On Call",
+                "type":"array",
+                "items":{
+                  "type":"string",
+                  "format":"user"
+                }
+            },
+            # highlight-start
+            "meanSecondsToResolve":{
+                "title":"Mean Seconds to Resolve",
+                "type":"number"
+            },
+            "meanSecondsToFirstAck":{
+                "title":"Mean Seconds to First Acknowledge",
+                "type":"number"
+            },
+            "meanSecondsToEngage":{
+                "title":"Mean Seconds to Engage",
+                "type":"number"
+            },
+            "totalIncidentCount":{
+                "title":"Total Incident Count",
+                "type":"number"
+            },
+            "totalIncidentsAcknowledged":{
+                "title":"Total Incidents Acknowledged",
+                "type":"number"
+            },
+            "totalIncidentsAutoResolved":{
+                "title":"Total Incidents Auto Resolved",
+                "type":"number"
+            },
+            "totalIncidentsManualEscalated":{
+                "title":"Total Incident Manual Escalated",
+                "type":"number"
+            }
+            # highlight-end
+          },
+          "required":[]
+      },
+      "mirrorProperties":{},
+      "calculationProperties":{},
+      "relations":{}
+    }
+    ```
+
+    </details>
+
+2. Add `serviceAnalytics` property to the integration `selector` key. When set to `true`, the integration will fetch data from the [PagerDuty aggregated service analytics API](https://developer.pagerduty.com/api-reference/694e92fe4f943-get-aggregated-service-data) and ingest it to Port. By default, this property is set to `true`.
+
+    Also, by default, the integration aggregates the analytics over a period of 3 months. Use the `analyticsMonthsPeriod` filter to override this date range. The accepted values are positive number between 1 to 12. In the provided example below, we aggregate the analytics over the past 6 months.
+
+    ```yaml showLineNumbers
+    resources:
+      - kind: services
+        selector:
+          query: "true"
+          # highlight-start
+          serviceAnalytics: "true"
+          analyticsMonthsPeriod: 6
+          # highlight-end
+        port:
+          entity:
+            mappings:
+              identifier: .id
+              title: .name
+              blueprint: '"pagerdutyService"'
+              properties:
+                status: .status
+                url: .html_url
+                oncall: "[.__oncall_user[].user.email]"
+    ```
+
+3. Establish a mapping between the analytics properties and the service analytics data response. Following a convention, the aggregated result of the PagerDuty service analytics API is saved to the `__analytics` key and merged with the response of the service API. Consequently, users can access specific metrics such as the mean seconds to resolve by referencing `__analytics.mean_seconds_to_resolve`.
+
+    ```yaml showLineNumbers
+    resources:
+      - kind: services
+        selector:
+          query: "true"
+          serviceAnalytics: "true"
+          analyticsMonthsPeriod: 6
+        port:
+          entity:
+            mappings:
+              identifier: .id
+              title: .name
+              blueprint: '"pagerdutyService"'
+              properties:
+                status: .status
+                url: .html_url
+                oncall: "[.__oncall_user[].user.email]"
+                # highlight-next-line
+                meanSecondsToResolve: .__analytics.mean_seconds_to_resolve
+    ```
+4. Below is the complete integration configuration for enriching the service blueprint with analytics data.
+
+    <details>
+    <summary>Service analytics integration configuration</summary>
+
+    ```yaml showLineNumbers
+    resources:
+      - kind: services
+        selector:
+          query: "true"
+          serviceAnalytics: "true"
+          analyticsMonthsPeriod: 6
+        port:
+          entity:
+            mappings:
+              identifier: .id
+              title: .name
+              blueprint: '"pagerdutyService"'
+              properties:
+                status: .status
+                url: .html_url
+                oncall: "[.__oncall_user[].user.email]"
+                meanSecondsToResolve: .__analytics.mean_seconds_to_resolve
+                meanSecondsToFirstAck: .__analytics.mean_seconds_to_first_ack
+                meanSecondsToEngage: .__analytics.mean_seconds_to_engage
+                totalIncidentCount: .__analytics.total_incident_count
+                totalIncidentsAcknowledged: .__analytics.total_incidents_acknowledged
+                totalIncidentsAutoResolved: .__analytics.total_incidents_auto_resolved
+                totalIncidentsManualEscalated: .__analytics.total_incidents_manual_escalated
+    ```
+    </details>
+
 
 ## Ingesting incident analytics
 To enrich your PagerDuty incident entities with analytics data, follow the steps below:
@@ -857,11 +1091,11 @@ Here is an example of the payload structure from Pagerduty:
       "html_url": "https://getport-io.pagerduty.com/users/P4K4DLP"
     },
     {
-      "id": "PFZ63E2",
+      "id": "HDW63E2",
       "type": "user_reference",
       "summary": "Doe",
-      "self": "https://api.pagerduty.com/users/PFZ63E2",
-      "html_url": "https://getport-io.pagerduty.com/users/PFZ63E2"
+      "self": "https://api.pagerduty.com/users/HDW63E2",
+      "html_url": "https://getport-io.pagerduty.com/users/HDW63E2"
     },
     {
       "id": "PRGAUI4",
@@ -889,6 +1123,92 @@ Here is an example of the payload structure from Pagerduty:
     }
   ],
   "teams": []
+}
+```
+
+</details>
+
+<details>
+<summary> Oncall response data</summary>
+
+```json showLineNumbers
+{
+   "escalation_policy":{
+      "id":"P7LVMYP",
+      "type":"escalation_policy_reference",
+      "summary":"Test Escalation Policy",
+      "self":"https://api.pagerduty.com/escalation_policies/P7LVMYP",
+      "html_url":"https://getport-io.pagerduty.com/escalation_policies/P7LVMYP"
+   },
+   "escalation_level":1,
+   "schedule":{
+      "id":"PWAXLIH",
+      "type":"schedule_reference",
+      "summary":"Port Test Service - Weekly Rotation",
+      "self":"https://api.pagerduty.com/schedules/PWAXLIH",
+      "html_url":"https://getport-io.pagerduty.com/schedules/PWAXLIH"
+   },
+   "user":{
+      "name":"John Doe",
+      "email":"johndoe@domain.io",
+      "time_zone":"Asia/Jerusalem",
+      "color":"red",
+      "avatar_url":"https://secure.gravatar.com/avatar/149cf38119ee25af9b8b3a68d06f39e3.png?d=mm&r=PG",
+      "billed":true,
+      "role":"user",
+      "description":null,
+      "invitation_sent":false,
+      "job_title":null,
+      "teams":[
+         
+      ],
+      "contact_methods":[
+         {
+            "id":"PK3SHEX",
+            "type":"email_contact_method_reference",
+            "summary":"Default",
+            "self":"https://api.pagerduty.com/users/HDW63E2/contact_methods/PK3SHEX",
+            "html_url":null
+         },
+         {
+            "id":"PO3TNV8",
+            "type":"phone_contact_method_reference",
+            "summary":"Other",
+            "self":"https://api.pagerduty.com/users/HDW63E2/contact_methods/PO3TNV8",
+            "html_url":null
+         },
+         {
+            "id":"P7U59FI",
+            "type":"sms_contact_method_reference",
+            "summary":"Other",
+            "self":"https://api.pagerduty.com/users/HDW63E2/contact_methods/P7U59FI",
+            "html_url":null
+         }
+      ],
+      "notification_rules":[
+         {
+            "id":"PMTOCX1",
+            "type":"assignment_notification_rule_reference",
+            "summary":"0 minutes: channel PK3SHEX",
+            "self":"https://api.pagerduty.com/users/HDW63E2/notification_rules/PMTOCX1",
+            "html_url":null
+         },
+         {
+            "id":"P3HAND3",
+            "type":"assignment_notification_rule_reference",
+            "summary":"0 minutes: channel P7U59FI",
+            "self":"https://api.pagerduty.com/users/HDW63E2/notification_rules/P3HAND3",
+            "html_url":null
+         }
+      ],
+      "id":"HDW63E2",
+      "type":"user",
+      "summary":"John Doe",
+      "self":"https://api.pagerduty.com/users/HDW63E2",
+      "html_url":"https://getport-io.pagerduty.com/users/HDW63E2"
+   },
+   "start":"2024-02-25T00:00:00Z",
+   "end":"2024-04-14T11:10:48Z"
 }
 ```
 
@@ -1106,6 +1426,35 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
+<summary> Oncall entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "HDW63E2-PWAXLIH-2024-06-03T13:00:00Z",
+  "title": "John Doe",
+  "blueprint": "pagerdutyOncall",
+  "team": [],
+  "properties": {
+    "url": "https://getport-io.pagerduty.com/schedules/PWAXLIH",
+    "timezone": null,
+    "description": "Port Test Service - Weekly Rotation",
+    "user": "johndoe@domain.io",
+    "startDate": "2024-06-03T13:00:00Z",
+    "endDate": "2024-06-17T13:00:00Z"
+  },
+  "relations": {
+    "pagerdutySchedule": "PWAXLIH"
+  },
+  "createdAt": "2024-03-08T15:52:35.807Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2024-03-08T15:52:35.807Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+<details>
 <summary> Service entity in Port</summary>
 
 ```json showLineNumbers
@@ -1190,7 +1539,7 @@ Create the following blueprint definitions:
 
 </details>
 
-Create the following webhook configuration [using Port UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
+Create the following webhook configuration [using Port UI](/build-your-software-catalog/custom-integration/webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
 <summary>PagerDuty webhook configuration</summary>
@@ -1221,7 +1570,7 @@ Create the following webhook configuration [using Port UI](/build-your-software-
 1. Go to [PagerDuty](https://www.pagerduty.com/) and select the account you want to configure the webhook for.
 2. Navigate to **Integrations** in the navigation bar and click on **Generic Webhooks (v3)**.
 3. Click **New Webhook** and provide the following information:
-   1. `Webhook URL` - enter the value of the `url` key you received after [creating the webhook configuration](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints).
+   1. `Webhook URL` - enter the value of the `url` key you received after [creating the webhook configuration](/build-your-software-catalog/custom-integration/webhook/?operation=ui#configuring-webhook-endpoints).
    2. `Scope Type` - select whether you want to receive webhook events for a specific service (select `Service` if applicable) or for all services in your account (select `Account` if applicable).
    3. `Description` - provide an optional description for your webhook.
    4. `Event Subscription` - choose the event types you would like to subscribe to.
@@ -1386,7 +1735,7 @@ The script extracts services and incidents from PagerDuty, and sends them to Por
 
 This example utilizes the same [blueprint](#prerequisites) definition from the previous section, along with a new webhook configuration:
 
-Create the following webhook configuration [using Port UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
+Create the following webhook configuration [using Port UI](/build-your-software-catalog/custom-integration/webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
 <summary>PagerDuty webhook configuration for historical data</summary>

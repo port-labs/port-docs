@@ -7,7 +7,7 @@ import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem"
 import KubernetesIllustration from "/static/img/build-your-software-catalog/sync-data-to-catalog/kubernetes/k8s-exporter-illustration.png";
 import KubernetesEtl from "/static/img/build-your-software-catalog/sync-data-to-catalog/kubernetes/k8s-etl.png";
-import FindCredentials from "/docs/build-your-software-catalog/sync-data-to-catalog/api/\_template_docs/\_find_credentials_collapsed.mdx";
+import FindCredentials from "/docs/build-your-software-catalog/custom-integration/api/\_template_docs/\_find_credentials_collapsed.mdx";
 
 # Kubernetes
 
@@ -158,7 +158,7 @@ resources: # List of K8s resources to list, watch, and export to Port.
 
 - Port's Kubernetes exporter is installed using [Helm](https://helm.sh), so Helm must be installed to use the exporter's chart. Please refer to
   Helm's [documentation](https://helm.sh/docs) for installation instructions;
-- You will need your [Port credentials](/build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials) to install the Kubernetes exporter.
+- You will need your [Port credentials](/build-your-software-catalog/custom-integration/api/api.md#find-your-port-credentials) to install the Kubernetes exporter.
 
 :::tip
 <FindCredentials />

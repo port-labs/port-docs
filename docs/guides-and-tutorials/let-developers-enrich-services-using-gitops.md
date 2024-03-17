@@ -6,7 +6,7 @@ title: Let developers enrich services using Gitops
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
-import FindCredentials from "/docs/build-your-software-catalog/sync-data-to-catalog/api/\_template_docs/\_find_credentials_collapsed.mdx";
+import FindCredentials from "/docs/build-your-software-catalog/custom-integration/api/\_template_docs/\_find_credentials_collapsed.mdx";
 
 # Let developers enrich services using Gitops
 
@@ -395,7 +395,9 @@ jobs:
   enrichService:
     runs-on: ubuntu-latest
     steps:
+      # Checkout the workflow's repository
       - uses: actions/checkout@v3
+      # Checkout the service's repository
       - uses: actions/checkout@v3
         with:
           repository: "${{ github.repository_owner }}/${{fromJson(inputs.port_payload).context.entity}}"

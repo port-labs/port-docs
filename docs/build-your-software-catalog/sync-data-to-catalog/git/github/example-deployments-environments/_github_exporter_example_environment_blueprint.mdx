@@ -1,10 +1,10 @@
 <details>
-<summary>Environment blueprint</summary>
+<summary>Running Service blueprint</summary>
 
 ```json showLineNumbers
 {
   "identifier": "githubRepoEnvironment",
-  "title": "Repository Environment",
+  "title": "Running Service",
   "icon": "Environment",
   "schema": {
     "properties": {
@@ -39,8 +39,8 @@
   "mirrorProperties": {},
   "calculationProperties": {},
   "relations": {
-    "repository": {
-      "target": "githubRepository",
+    "service": {
+      "target": "githubService",
       "required": true,
       "many": false
     }

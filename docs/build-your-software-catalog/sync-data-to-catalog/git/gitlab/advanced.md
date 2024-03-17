@@ -54,7 +54,7 @@ The `specPath` parameter specifies a list of [globPatterns](https://www.malikbro
 
 <TabItem label="Enable merge entity" value="enableMergeEntity">
 
-The `enableMergeEntity` parameter specifies whether to use the [create/update](../../api/api.md?operation=create-update#usage) or [create/override](../../api/api.md?operation=create-override#usage) strategy when creating entities listed in a `port.yml` file.
+The `enableMergeEntity` parameter specifies whether to use the [create/update](/build-your-software-catalog/custom-integration/api?operation=create-update#usage) or [create/override](/build-your-software-catalog/custom-integration/api?operation=create-override#usage) strategy when creating entities listed in a `port.yml` file.
 
 - Default value: `false` (use create/override)
 - Use case: use `false` if you want GitLab to be the source-of-truth for catalog entities. Use `true` if you want to use GitLab as the source for some properties of entities in the catalog, and use other sources to for properties which are subject to change automatically.
@@ -70,4 +70,16 @@ The `createMissingRelatedEntities` parameter is used to enable the creation of m
 
 </TabItem>
 
+<TabItem value="filterOwnedProjects" label="Filter owned projects">
+By default the gitlab integration will sync only projects that are owned by the token provided in the integration configuration.
+The `filterOwnedProjects` parameter is used to filter out projects that are not owned by the token.
+This parameter is useful when you want to sync projects that the token has access to but is not set as the owner of it.
+The equivalent of this parameter in the gitlab API is the `owned` parameter for the [list projects](https://docs.gitlab.com/ee/api/projects.html#list-user-projects) endpoint.
+</TabItem>
+
+<TabItem value="projectVisibilityFilter" label="Filter projects">
+By default this parameter is not set and the integration will sync all projects that the token has access to.
+The `projectVisibilityFilter` parameter is used to filter out projects based on their visibility level in GitLab (public, internal, private).
+The equivalent of this parameter in the gitlab API is the `visibility` parameter for the [list projects](https://docs.gitlab.com/ee/api/projects.html#list-user-projects) endpoint.
+</TabItem>
 </Tabs>

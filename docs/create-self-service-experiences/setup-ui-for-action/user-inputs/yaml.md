@@ -1,5 +1,5 @@
 ---
-sidebar_position: 12
+sidebar_position: 15
 description: Yaml is an input used to save object definitions in YAML
 ---
 
@@ -16,12 +16,11 @@ Yaml is an input used to save object definitions in YAML.
 
 The yaml input type can be used to store any key/value based data, for example:
 
-- Configurations;
-- Helm charts;
-- Dictionaries/Hash maps;
-- Manifests;
-- `values.yml`;
-- etc.
+- Configurations
+- Helm charts
+- Dictionaries/Hash maps
+- Manifests
+- `values.yml`
 
 ## API definition
 

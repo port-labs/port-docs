@@ -11,7 +11,7 @@ In the following guide, you are going to build a self-service action in Port tha
 
 ## Prerequisites
 
-- You will need your [Port credentials](/build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials) to create the action.
+- You will need your [Port credentials](/build-your-software-catalog/custom-integration/api/api.md#find-your-port-credentials) to create the action.
 - You will need your Azure DevOps organization.
 - You will need the name of the [webhook](/create-self-service-experiences/setup-backend/azure-pipeline/#define-incoming-webhook-in-azure) that you configured in your Azure pipelines yaml.
 
@@ -21,8 +21,8 @@ Follow these steps to get started:
 
 1. Create the following as variables in your Azure Devops project:
     1. Create the Port credentials with the group id `port-credentials`.
-        1. `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
-        2. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+        1. `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token).
+        2. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token).
     2. Create the Azure Cloud credentials with id `azure-service-principal`.
         :::tip
         Follow this [guide](https://learn.microsoft.com/en-us/azure/developer/terraform/get-started-cloud-shell-bash?tabs=bash#create-a-service-principal) to create a service principal in order to get the Azure credentials.

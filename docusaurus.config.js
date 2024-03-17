@@ -39,6 +39,9 @@ const config = {
           trackingID: "G-3YL3X47R7L",
           anonymizeIP: false,
         },
+        googleTagManager: {
+          containerId: 'GTM-MNB6TPLF',
+        },
         sitemap: {
           changefreq: "weekly",
           priority: 0.5,
@@ -147,7 +150,7 @@ const config = {
             items: [
               {
                 label: "API",
-                to: "/build-your-software-catalog/sync-data-to-catalog/api",
+                to: "/build-your-software-catalog/custom-integration/api",
               },
               {
                 label: "CI/CD",
@@ -315,6 +318,7 @@ const config = {
         disableInDev: false,
       },
     ],
+    "./src/plugins/intercom.js",
   ],
 };
 

@@ -41,8 +41,8 @@ Set them as you wish in the script below, then copy it and run it in your termin
 
 | Parameter                                | Description                                                                                                                                                      | Required |
 | ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| `port.clientId`                          | Your Port client id ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))     | ✅       |
-| `port.clientSecret`                      | Your Port client secret ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)) | ✅       |
+| `port.clientId`                          | Your Port client id ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))     | ✅       |
+| `port.clientSecret`                      | Your Port client secret ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) | ✅       |
 | `integration.identifier`                 | Change the identifier to describe your integration                                                                                                               | ✅       |
 | `integration.config.servicenowUsername`  | The ServiceNow account username                                                                                                                                  | ✅       |
 | `integration.secrets.servicenowPassword` | The ServiceNow account password                                                                                                                                  | ✅       |

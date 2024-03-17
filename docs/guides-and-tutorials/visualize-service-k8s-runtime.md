@@ -102,7 +102,7 @@ In this guide we will create one relation named `Prod_runtime` which will repres
 
 <br/><br/>
 
-When looking at a `Service`, some of its `Workload` properties may be especially important to us, and we would like to see them directly in the `Service's` context. This can be achieved using [mirror properties](https://docs.getport.io/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/mirror-property/), so let's create some:
+When looking at a `Service`, some of its `Workload` properties may be especially important to us, and we would like to see them directly in the `Service's` context. This can be achieved using [mirror properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/), so let's create some:
 
 3. The first one will be the workload's health. Under the relation we just created, click on `New mirror property`:
 
@@ -182,18 +182,18 @@ Add the following block to the mapping configuration and click `Resync`:
 resources:
   # ... Other resource mappings installed by the K8s exporter
   - kind: apps/v1/deployments
-      port:
-        entity:
-          mappings:
-          - blueprint: '"service"'
-            icon: '"Deployment"'
-            identifier: .metadata.labels.portService
-            properties: {}
-            relations:
-              prod_runtime: .metadata.name + "-Deployment-" + .metadata.namespace + "-" + "my-cluster"
-            title: .metadata.name
-      selector:
-        query: .metadata.namespace | startswith("kube") | not
+    selector:
+      query: .metadata.namespace | startswith("kube") | not
+    port:
+      entity:
+        mappings:
+        - blueprint: '"service"'
+          icon: '"Deployment"'
+          identifier: .metadata.labels.portService
+          properties: {}
+          relations:
+            prod_runtime: .metadata.name + "-Deployment-" + .metadata.namespace + "-" + "my-cluster"
+          title: .metadata.name
 ```
 
 <br/>
