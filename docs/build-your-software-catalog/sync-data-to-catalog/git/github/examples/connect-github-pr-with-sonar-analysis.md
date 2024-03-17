@@ -103,7 +103,7 @@ For the GitHub app installation you will need to have a registered organization 
 
 4. Now that the integration is installed successfully, we need to ingest `githubPullRequest` data from the GitHub organization into the software catalog. This can be done by adding some mapping logic. Go to your [data sources page](https://app.getport.io/dev-portal/data-sources), and click on your GitHub integration:
 
-    <img src='/img/guides/githubAppIntegration.png' />
+    <img src='/img/guides/githubAppIntegration.png' border='1px' />
 
 
     Add the following YAML block into the editor to ingest pull request data. Then click `Save & Resync`:
@@ -184,19 +184,19 @@ First, we will need to create a [relation](/build-your-software-catalog/customiz
 
 1. Head back to the [Builder](https://app.getport.io/dev-portal/data-model), choose the `Pull Request` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New relation`:
 
-<img src='/img/guides/githubPRSonarRelation.png' width='60%' />
+<img src='/img/guides/githubPRSonarRelation.png' width='60%' border='1px' />
 
 <br/><br/>
 
 2. Fill out the form like this, then click `Create`:
 
-<img src='/img/guides/githubPREditSonarRelation.png' width='60%' />
+<img src='/img/guides/githubPREditSonarRelation.png' width='60%' border='1px' />
 
 <br/><br/>
 
 Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, we need to assign the relevant SonarQube analysis to each of our pull requests. This can be done by adding some mapping logic. Go to your [data sources page](https://app.getport.io/dev-portal/data-sources), and click on your SonarQube integration:
 
-<img src='/img/guides/sonarQubeIntegrationDataSource.png' />
+<img src='/img/guides/sonarQubeIntegrationDataSource.png' border='1px' />
 
 <br/><br/>
 
@@ -229,7 +229,7 @@ The configuration mapping above uses the `query` key to filter all SonarQube ana
 Please note that the `__component.name` property refers to the name of the repository, while the `pullRequest.key` property indicates the pull request number. In our GitHub integration mapping, we have defined these two pieces of information as the identifiers for the `githubPullRequest` entities.
 :::
 
-![entitiesAfterServiceMapping](/img/guides/githubPREntityAfterAnalysisMapping.png)
+<img src='/img/guides/githubPREntityAfterAnalysisMapping.png' width="70%" border='1px' />
 
 ## Configure mirror properties on pull request
 
@@ -237,31 +237,31 @@ When looking at a `Pull Request`, some of its `sonarAnalysis` properties may be 
 
 1. The first one will be the number of new issues added to the analysis. Under the relation we just created, click on `New mirror property`:
 
-<img src='/img/guides/githubPRCreateMirrorProp.png' width='50%' />
+<img src='/img/guides/githubPRCreateMirrorProp.png' width='50%' border='1px' />
 
 <br/><br/>
 
 2. Fill the form out like this, then click `Create`:
 
-<img src='/img/guides/githubPrCreateMirrorPropNewIssue.png' width='50%' />
+<img src='/img/guides/githubPrCreateMirrorPropNewIssue.png' width='50%' border='1px' />
 
 <br/><br/>
 
 3. The second one will be the analysis code duplication. Create another mirror property, fill the form out like this, then click `Create`:
 
-<img src='/img/guides/githubPrCreateMirrorPropDuplication.png' width='50%' />
+<img src='/img/guides/githubPrCreateMirrorPropDuplication.png' width='50%' border='1px' />
 
 <br/><br/>
 
 4. The third one will be the analysis coverage. Create another mirror property, fill the form out like this, then click `Create`:
 
-<img src='/img/guides/githubPrCreateMirrorPropCoverage.png' width='50%' />
+<img src='/img/guides/githubPrCreateMirrorPropCoverage.png' width='50%' border='1px' />
 
 <br/><br/>
 
 5. The third one will be the quality gate status of the analysis. Create another mirror property, fill the form out like this, then click `Create`:
 
-<img src='/img/guides/githubPrCreateMirrorPropQGStatus.png' width='50%' />
+<img src='/img/guides/githubPrCreateMirrorPropQGStatus.png' width='50%' border='1px' />
 
 <br/><br/>
 
