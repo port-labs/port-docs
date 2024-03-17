@@ -1,6 +1,7 @@
 ---
 sidebar_position: 12
 description: Object is a data type used to save object definitions in JSON
+sidebar_class_name: "custom-sidebar-item sidebar-property-object"
 ---
 
 import ApiRef from "/docs/api-reference/\_learn_more_reference.mdx"
