@@ -1,6 +1,7 @@
 ---
 sidebar_position: 13
 description: Proto is a data type used to save proto definitions in Port
+sidebar_class_name: "custom-sidebar-item sidebar-property-string"
 ---
 
 import ApiRef from "/docs/api-reference/\_learn_more_reference.mdx"

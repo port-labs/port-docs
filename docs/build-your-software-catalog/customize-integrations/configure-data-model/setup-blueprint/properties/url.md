@@ -1,6 +1,7 @@
 ---
 sidebar_position: 18
 description: URL is a data type used to save links to websites
+sidebar_class_name: "custom-sidebar-item sidebar-property-url"
 ---
 
 import ApiRef from "/docs/api-reference/\_learn_more_reference.mdx"
