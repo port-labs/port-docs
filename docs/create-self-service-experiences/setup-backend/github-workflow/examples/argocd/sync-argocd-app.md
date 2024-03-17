@@ -7,7 +7,8 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 # Synchronize ArgoCD Application
 
-In the following guide, you are going to create a self-service action in Port that executes a [GitHub workflow](/create-self-service-experiences/setup-backend/github-workflow/github-workflow.md) to sync an argocd application.
+In the following guide, we are going to create a self-service action in Port that executes a [GitHub workflow](/create-self-service-experiences/setup-backend/github-workflow/github-workflow.md) to sync an argocd application.
+
 
 ## Prerequisites
 1. This guide assumes that you already have a blueprint for an ArgoCD Application with some resources. If you haven't done so yet, create the blueprint by referring to this [guide](/build-your-software-catalog/sync-data-to-catalog/kubernetes/argocd#application) first.
