@@ -43,7 +43,7 @@ This above step is not required for this example, but it will create all the blu
         "title": "Escalation Policy ID",
         "description": "PagerDuty Escalation Policy ID to apply",
         "icon": "pagerduty",
-        "type": "string",
+        "type": "string"
       },
       "urgency": {
         "icon": "pagerduty",
@@ -64,7 +64,7 @@ This above step is not required for this example, but it will create all the blu
         "title": "From",
         "description": "The email address of a valid user associated with the account making the request.",
         "icon": "pagerduty",
-        "type": "string",
+        "type": "string"
       }
     },
     "required": [
