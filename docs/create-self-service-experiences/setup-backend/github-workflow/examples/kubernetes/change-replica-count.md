@@ -1,19 +1,19 @@
 ---
-sidebar_position: 5
+sidebar_position: 2
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
-# Rollback ArgoCD Deployment
+# Change Deployment Replica Count
 
-In this guide, we will create a self-service action in Port that executes a GitHub workflow to rollback an ArgoCD deployment. The rollback involves updating the deployment manifest with a new container image and creating a Github pull request (PR) for it. The workflow can optionally merge the PR when enabled.
+In this guide, we will create a self-service action in Port that executes a GitHub workflow to change the number of replica counts in a kubernetes deployment. The workflow involves updating the deployment manifest with the new replica count(s) and creating a Github pull request (PR) for it. The workflow can optionally merge the PR when enabled.
 
 ## Prerequisites
 1. Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new)
-2. This guide assumes the presence of a `Service` and `Image` blueprint representing your repository where ArgoCD lives and your container image
-3. A repository to contain your ArgoCD deployment manifest and action resources i.e. the github workflow file
+2. This guide assumes the presence of a `Service` blueprint representing the repository where ArgoCD or Kubernetes workload lives
+3. A repository to contain your deployment manifest and action resources i.e. the github workflow file
 
-Below you can find the JSON for the `Service` and `Image` blueprints required for the guide:
+Below you can find the JSON for the `Service` blueprint required for the guide:
 
 <details>
 <summary><b>Service blueprint (click to expand)</b></summary>
@@ -119,106 +119,6 @@ Below you can find the JSON for the `Service` and `Image` blueprints required fo
 ```
 </details>
 
-
-<details>
-<summary><b>Image blueprint (click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "identifier": "image",
-  "description": "This blueprint represents an image",
-  "title": "Image",
-  "icon": "AWS",
-  "schema": {
-    "properties": {
-      "registryId": {
-        "type": "string",
-        "title": "Registry ID",
-        "description": "The ID of the registry",
-        "icon": "DefaultProperty"
-      },
-      "digest": {
-        "type": "string",
-        "title": "Image Digest",
-        "description": "SHA256 digest of image manifest",
-        "icon": "DefaultProperty"
-      },
-      "tags": {
-        "type": "array",
-        "title": "Image Tags",
-        "description": "List of tags for the image",
-        "icon": "DefaultProperty"
-      },
-      "pushedAt": {
-        "type": "string",
-        "title": "Pushed At",
-        "description": "Date and time the image was pushed to the repository",
-        "format": "date-time",
-        "icon": "DefaultProperty"
-      },
-      "lastRecordedPullTime": {
-        "type": "string",
-        "title": "Last Recorded Pull Time",
-        "description": "Date and time the image was last pulled",
-        "format": "date-time",
-        "icon": "DefaultProperty"
-      },
-      "triggeredBy": {
-        "type": "string",
-        "icon": "TwoUsers",
-        "title": "Triggered By",
-        "description": "The user who triggered the run"
-      },
-      "commitHash": {
-        "type": "string",
-        "title": "Commit Hash",
-        "icon": "DefaultProperty"
-      },
-      "pullRequestId": {
-        "type": "string",
-        "icon": "Git",
-        "title": "Pull Request ID"
-      },
-      "workflowId": {
-        "type": "string",
-        "title": "Workflow ID",
-        "icon": "DefaultProperty"
-      },
-      "image_branch": {
-        "title": "Image branch",
-        "type": "string",
-        "description": "The git branch associated with the repository used to build the Image"
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {
-    "link_to_the_commit": {
-      "title": "Link to the commit",
-      "calculation": ".commit",
-      "type": "string"
-    },
-    "link_to_the_pr": {
-      "title": "Link to the PR",
-      "calculation": ".pull",
-      "type": "string"
-    },
-    "link_to_the_ci": {
-      "title": "Link to the CI",
-      "icon": "DefaultProperty",
-      "description": "a link to the build in github workflow where the Image was built",
-      "calculation": ".workflowId",
-      "type": "string"
-    }
-  },
-  "aggregationProperties": {},
-  "relations": {
-  }
-}
-```
-</details>
-
 ## Create Github workflow
 
 Follow these steps to get started:
@@ -233,7 +133,7 @@ Follow these steps to get started:
 
 <details>
 
-  <summary>Port Action: Rollback Deployment</summary>
+  <summary>Port Action: Change Replica Count</summary>
    :::tip
 - `<GITHUB-ORG>` - your GitHub organization or user name.
 - `<GITHUB-REPO-NAME>` - your GitHub repository name.
@@ -242,17 +142,15 @@ Follow these steps to get started:
 
 ```json showLineNumbers
 {
-  "identifier": "rollback_deployment",
-  "title": "Rollback Deployment",
+  "identifier": "change_replica_count",
+  "title": "Change Replica Count",
   "icon": "GithubActions",
   "userInputs": {
     "properties": {
-      "image": {
+      "replica_count": {
         "icon": "DefaultProperty",
-        "title": "Image",
-        "type": "string",
-        "blueprint": "image",
-        "format": "entity"
+        "title": "Number of Replicas",
+        "type": "number"
       },
       "auto_merge": {
         "title": "Auto Merge",
@@ -261,9 +159,9 @@ Follow these steps to get started:
         "description": "Whether the created PR should be merged or not"
       }
     },
-    "required": [],
+    "required": ["replica_count"],
     "order": [
-      "image",
+      "replica_count",
       "auto_merge"
     ]
   },
@@ -271,7 +169,7 @@ Follow these steps to get started:
     "type": "GITHUB",
     "org": "<GITHUB-ORG>",
     "repo": "<GITHUB-REPO-NAME>",
-    "workflow": "rollback.yaml",
+    "workflow": "change-replica-count.yaml",
     "omitUserInputs": false,
     "omitPayload": false,
     "reportWorkflowStatus": true
@@ -284,25 +182,25 @@ Follow these steps to get started:
 </details>
 <br />
 
-3. Create a workflow file under `.github/workflows/rollback.yml` with the following content:
+3. Create a workflow file under `.github/workflows/change-replica-count.yml` with the following content:
 
 <details>
 
 <summary>GitHub workflow script</summary>
 
 :::note Variable replacement
-- `<DEPLOYMENT-MANIFEST-PATH>` - Path to the ArgoCD deployment manifest such as `app/deployment.yaml`.
-- `<IMAGE-PROPERTY-PATH>` - Path to where the deployment image is specified in the deployment manifest such as `spec.template.spec.containers[0].image`.
+- `<DEPLOYMENT-MANIFEST-PATH>` - Path to the ArgoCD or K8s deployment manifest such as `app/deployment.yaml`.
+- `<REPLICA-PROPERTY-PATH>` - Path to where the deployment replica count is specified in the deployment manifest such as `spec.replicas`.
 :::
 
-```yaml showLineNumbers title="rollback.yml"
-name: Rollback ArgoCD Deployment Image
+```yaml showLineNumbers title="change-replica-count.yml"
+name: Change Replica Count
 
 on:
   workflow_dispatch:
     inputs:
-      image:
-        description: The new image to use for the rollback
+      replica_count:
+        description: The new replica count for the deployment
         required: true
         type: string
       auto_merge:
@@ -315,10 +213,10 @@ on:
           Port's payload, including details for who triggered the action and
           general context (blueprint, run id, etc...)
 jobs:
-  rollback-deployment:
+  change-replica-count:
     runs-on: ubuntu-latest
     steps:
-      - name: Inform execution of request to rollback deployment image
+      - name: Inform execution of request to change replica count
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
@@ -326,7 +224,7 @@ jobs:
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
           runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
-          logMessage: "About to rollback deployment image in argocd..."
+          logMessage: "About to change replica count in deployment manifest..."
 
       - uses: actions/checkout@v3
       - name: Create PR
@@ -334,15 +232,15 @@ jobs:
         uses: fjogeleit/yaml-update-action@main
         with:
           valueFile: '<DEPLOYMENT-MANIFEST-PATH>'  ## replace value
-          propertyPath: '<IMAGE-PROPERTY-PATH>' ## replace value
-          value: '${{ github.event.inputs.image }}'
+          propertyPath: '<REPLICA-PROPERTY-PATH>' ## replace value
+          value: "!!int '${{ fromJson(github.event.inputs.replica_count) }}'"  ## using the yaml tag (!!int 'X') to convert the string to int
           commitChange: true
           token: ${{ secrets.MY_GITHUB_TOKEN }}
           targetBranch: main
           masterBranchName: main
           createPR: true
           branch: deployment/${{ fromJson(github.event.inputs.port_payload).context.runId }}
-          message: 'Update deployment image to ${{ github.event.inputs.image }}'
+          message: 'Update deployment replica to ${{ github.event.inputs.replica_count }}'
           
       - name: Inform Port about pull request creation status - Success
         if: steps.create-pr.outcome == 'success'
@@ -391,7 +289,7 @@ jobs:
             echo "merge_status=unsuccessful" >> $GITHUB_ENV
           fi
 
-      - name: Inform completion of Argocd rollback into Port
+      - name: Inform completion of replica update operation to Port
         if: ${{ github.event.inputs.auto_merge == 'true' }}
         uses: port-labs/port-github-action@v1
         with:
@@ -408,6 +306,6 @@ jobs:
 <br />
 4. Trigger the action from the [self-service](https://app.getport.io/self-serve) page of your Port application.
 
-You should now be able to see a Github pull request created and merged for the argocd deployment.
+You should now be able to see a Github pull request created and merged for the deployment:
 
-<img src="/img/sync-data-to-catalog/deploymenetRollbackMerged.png" border="1px" width="60%" />
+<img src="/img/sync-data-to-catalog/deploymentReplicasMerged.png" border="1px" width="60%" />
