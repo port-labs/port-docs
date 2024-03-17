@@ -180,7 +180,7 @@ helm upgrade --install my-sonarqube-integration port-labs/port-ocean \
 ## Create the Sonar analysis relation
 
 Now that Port is synced with our SonarQube resources, let's map the SonarQube analysis to the pull requests to display the result of the sonar scan.
-First, we will need to create a [relation](/build-your-software-catalog/define-your-data-model/relate-blueprints/#what-is-a-relation) between our `githubPullRequest` and the corresponding `sonarQubeAnalysis`.
+First, we will need to create a [relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/) between our `githubPullRequest` and the corresponding `sonarQubeAnalysis`.
 
 1. Head back to the [Builder](https://app.getport.io/dev-portal/data-model), choose the `Pull Request` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New relation`:
 
