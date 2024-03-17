@@ -1,0 +1,142 @@
+---
+id: get-an-entity
+title: "Get an entity"
+description: "Get an entity"
+sidebar_label: "Get an entity"
+hide_title: true
+hide_table_of_contents: true
+api: eJy1VE1r20AQ/StmTy24lt2jKIVAQii9hLQ9BSPW0thaIms3syMTV+i/d3b1aVtO1UIutqSdeTPz5r0tBcmdFeGTuMtJkQIr1nNhJMo9EKA7KYWNU9hLEZaCjgZEKDZaZyBzMRcJbGWRkQi3MrNQzYXK+fylADzyac4o/AqvcVYkEMUyi4tMEiSRQW0Afb25QHgpFELSoYyUlIjSQSqCvR18t4Qq34nqSmmV+9LvW6SZb2KRlrwrYLHeGxnTP4JN3IQkknEa8aYziEhHCLwOpfOJ1VoeGnAjKR2w4AR0jFTiHrYK8ASUsPgPzE1WgOFzehOWFWshLpDLe71uQCLHsagRZBJCp2wXiWCNzi34/X5eLt1fAjZGZTwTobitmZw9NpF+76ch90Azmc/qkbkhNkuquR2xA7c5P0QogsMq6CawQTk2TRW07QXlBYOVcJPhoTVigRnDpkTGhkEgjVpY2n1arhZc1mikhdJiyMYPR3Y9actJr3WjvsNAGjcFj4Dqd6sHv42U+eOsWvhb7dOddvjogevNbh6+cajrr+ZltVi6TRptac+q5PAG/ZywEzq7ngheKTCZVN4dftqyIfNJHFac19PJL+EVeXQL55BLVTI/KffnIMtyIy38wqyq3OfaLI7oRFm5yTozzMUzU/X3i+wguSGOE07pVzD6G2lKdH+1TInu744p0W9cBn362r2gcvnjzJxtMtY5MdWc++GxcenHGSOObriVYn4c1uxmv1jd6DDv18CovKp1NfD7/d1PDpeFk+jQWs/eWs2D42200rnn6rLu1006mvKFLTdj437twuuTqwmNhXv5uQmq6g9jd7qL
+sidebar_class_name: "get api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<h1
+  className={"openapi__heading"}
+>
+  Get an entity
+</h1>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}"}
+>
+  
+</MethodEndpoint>
+
+
+
+Get an entity
+
+## Request
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"entity_identifier","required":true}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"blueprint_identifier","required":true}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Query Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"boolean","default":false},"in":"query","name":"exclude_calculated_properties","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"array","items":{"type":"string"}},"in":"query","name":"include","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"array","items":{"type":"string"}},"in":"query","name":"exclude","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"boolean"},"in":"query","name":"compact","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"boolean","default":false},"in":"query","name":"attach_title_to_relation","required":false}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

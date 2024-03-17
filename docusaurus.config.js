@@ -89,9 +89,14 @@ const config = {
         },
         items: [
           {
-            to: "/apisa/port-api",
+            to: "/",
+            label: "Home",
+            className: "header-home-link",
+          },
+          {
+            to: "/api-reference/port-api",
             label: "REST API",
-            activeBasePath: "apisa",
+            className: "header-api-link",
           },
           {
             to: "https://demo.getport.io",
@@ -315,12 +320,12 @@ const config = {
         config: {
           port: { // the <id> referenced when running CLI commands
             specPath: './static/spec.yaml', // path to OpenAPI spec, URLs supported
-            outputDir: "docs/apisa", // output directory for generated files
+            outputDir: "docs/api-reference", // output directory for generated files
             sidebarOptions: {
               groupPathsBy: "tag",
               categoryLinkSource: "tag",
             },
-            baseUrl: "/apisa/"
+            baseUrl: "/api-reference/"
           },
         }
       },

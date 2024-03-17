@@ -11,7 +11,7 @@
 
 // @ts-check
 
-import apiSidebar from './docs/apisa/sidebar.ts';
+import apiSidebar from './docs/api-reference/sidebar.ts';
 
 /** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
 const sidebars = {

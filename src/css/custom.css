@@ -75,6 +75,10 @@ h6::first-letter {
 
 @import url("https://fonts.googleapis.com/css2?family=Lexend&family=Inter");
 
+.hidden {
+  display: none !important;
+}
+
 .operators-tabs {
   font-size: 0.8rem;
   text-align: center;
@@ -313,4 +317,13 @@ html[data-theme="dark"] details details  {
   content: "🪞";
   margin-top: 1px;
   zoom: 100%;
+}
+
+.navbar__link--active:hover {
+  border-radius: var(--ifm-global-radius);
+  background: var(--ifm-menu-color-background-active);
+}
+
+.navbar__link:hover:not(.navbar__link--active) {
+  opacity: 0.8;
 }

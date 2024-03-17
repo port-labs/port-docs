@@ -1,0 +1,103 @@
+---
+id: get-all-migrations
+title: "Get all migrations"
+description: "Get all migrations"
+sidebar_label: "Get all migrations"
+hide_title: true
+hide_table_of_contents: true
+api: eJytVE2P2kAM/StozpSPHqOqUsSmKCqbRRQuXaGVAUNGm49ZzwSVRvnvtZMAoQKph15gxvNsP79nKJWDg1Xeq3rWBwKn88yqdV8ZIEjRIclbqew2xhSUVyp3Mqg8BURwUn2lHaa2E7eOdHbgB8yKVMpOXp7ns2AZPHFssYqiMJryaR5ET80pjMJl6M/Cn831mx/OVouATxM/mgSzWZ3Ywt/amL8MXyK1rirun3HTjwJJyGRMueYArrB8J/woNOFOeXtILFb9O4O0hB+Ugq3L6b9U2iQFGga4O9VYb4vbgrQ71WpvEAhJ1COEnXdJZWcES2gN24S17p9HI/naod2SNuIfN3vCPRSJ6y1apBKpbiFTdD1Ikl56tb2v2PE4Z1rqgMLTgIv5MjyOhzcwi3Q8b0ZBCUNi54z1hkMwemDd4dNoPOASJic30LnqDvhDZGuon8e8LpXR37GjmV8wHdK/68aq1TVmSTirMX+f1+naJYKfc7+ePw8ZKvyaQceDkXhicutSyATeVr+rwI1IF2IOf7mhSYAJcKl65LJV51Udx6Lcza8n5mbyVJYbsLiipKok3KyEqLbTFjbJZQP66p3n7mzuEdhzDijZtAfg827+C7a7fVf8Wi6kJYFZravOAkyDJUOhkBG7/rzX/rQHmeT8lJ06pf82riEhn8LxbsoX9q3H7n+9wJuXhwntHpzRYg3/I1R/AAGilpE=
+sidebar_class_name: "get api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<h1
+  className={"openapi__heading"}
+>
+  Get all migrations
+</h1>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/migrations"}
+>
+  
+</MethodEndpoint>
+
+
+
+Get all migrations
+
+## Request
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Query Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"array","items":{"type":"string","enum":["COMPLETED","RUNNING","PENDING","INITIALIZING","FAILURE","CANCELLED","PENDING_CANCELLATION"]}},"in":"query","name":"status","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"query","name":"actor","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"query","name":"blueprint","required":false}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

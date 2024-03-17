@@ -1,0 +1,166 @@
+---
+id: create-a-folder
+title: "Create a folder"
+description: "Create a folder"
+sidebar_label: "Create a folder"
+hide_title: true
+hide_table_of_contents: true
+api: eJx1VN1v0zAQ/1cqiwcQbdPyRgSIMXhAIFHt44WtTG5zTbw5drCdsi7K/86d7aRZ27VS6zh35/t9nBvmeG5ZesMuRQYrbixbjpmBvzVY90VnO5Y2bK2VA+VoyatKijV3Qqvk3mpFe3ZdQMlp5XYVsJTp1T2sHRuzyugKjBNg6S0eoJzYCDCDWOuMUDnFcufAYEH25+Zs8ptPnmaT95/vPt7iZ7J8+wpDSqF+gspdwdJ5O2ZOOAnHpVqqZWK/h6eoWkq+ojRnasBQvnGn+zmIpNAsEwScy8UA14ZLC4EyYSAjKgdAuy6XLVXYB8XTsVFeAnZAEpxgsu8GVF1SaaSeS51jvTETRBbSVlC3WIbig4h3zzo4OBX1tbCujXA7f+gKkC3jixvgDtKK5whs2Xoj2EorG/R7N5vRXwZ2bURFTOCJX2HDa+lGFzGSEc7nIee+7IiPNlpmviOEXOiMutfWBe1RU5Zs50lEYJPmGEubhAqWEQSz7WirjcTswrnKpknCKzG1Lp/M5tMcXKWNmwrNhrAvieaAqQPfM47ZP2C3Z/SsxlaNePKWZ5H0AjgBIag0BBf7cfn2yMsquHJo972Q0bRD3wev7neiJQd+FmqjfY8xeYGgRmeL7xhMJASa59OZ9z5SWnI/mBHCMf/P9OmhO3h0SSU5QsQ6ntQmSnPDtnMivbsjxiw9abVOHyS7IGkxsWlW3MK1kW1L28iUId/hcsuNCBOGGmbC0jrrB+qgx/4OYq8vop/fjIjPU713WioScstlTU+4fEBlTw5JS/MUVaVuQuB5OHNyReX2hY7uQPJWb+nFr8srDF7Fu7PUGeUY/o8mEX9TdotffNAem3eh32+Y5CqvcfgwJtT1t05NAgz9+eD9GRfU7Um4h8YNkOi3Hb+Q8gEtNUL3f+rDw5sXEyJjXTSRTxfdf7C+J5w=
+sidebar_class_name: "post api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<h1
+  className={"openapi__heading"}
+>
+  Create a folder
+</h1>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/v1/sidebars/{sidebar_identifier}/folders"}
+>
+  
+</MethodEndpoint>
+
+
+
+Create a folder
+
+## Request
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string","enum":["catalog"]},"in":"path","name":"sidebar_identifier","required":true}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><MimeTabs
+  className={"openapi-tabs__mime"}
+>
+  <TabItem
+    label={"application/json"}
+    value={"application/json-schema"}
+  >
+    <details
+      style={{}}
+      className={"openapi-markdown__details mime"}
+      data-collapsed={false}
+      open={true}
+    >
+      <summary
+        style={{}}
+        className={"openapi-markdown__details-summary-mime"}
+      >
+        <h3
+          className={"openapi-markdown__details-summary-header-body"}
+        >
+          Body
+        </h3><strong
+          className={"openapi-schema__required"}
+        >
+          required
+        </strong>
+      </summary><div
+        style={{"textAlign":"left","marginLeft":"1rem"}}
+      >
+        
+      </div><ul
+        style={{"marginLeft":"1rem"}}
+      >
+        <SchemaItem
+          collapsible={false}
+          name={"identifier"}
+          required={true}
+          schemaName={"string"}
+          qualifierMessage={"**Possible values:** `non-empty`, Value must match regular expression `^[A-Za-z0-9@_=\\\\-]+$`"}
+          schema={{"type":"string","pattern":"^[A-Za-z0-9@_=\\\\-]+$","minLength":1}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"title"}
+          required={true}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"parent"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string","nullable":true}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"after"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string","nullable":true}}
+        >
+          
+        </SchemaItem>
+      </ul>
+    </details>
+  </TabItem>
+</MimeTabs><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

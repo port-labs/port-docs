@@ -212,4 +212,4 @@ For example, these services have some rules defined in their scorecards, and we 
 
 [Explore How to Create, Edit, and Delete Scorecards with basic examples](/promote-scorecards/usage)
 
-[Dive into advanced operations on Scorecards with our API ➡️ ](/api-reference/api-reference.mdx)
+[Dive into advanced operations on Scorecards with our API ➡️ ](/api-reference/port-api.info.mdx)

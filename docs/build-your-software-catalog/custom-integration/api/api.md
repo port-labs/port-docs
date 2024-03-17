@@ -16,7 +16,7 @@ import TabItem from "@theme/TabItem";
 </center>
 <br/>
 
-Port's [API](../../../api-reference/api-reference.mdx) is a generic interface to model your software catalog, ingest data, invoke actions, query scorecards and more.
+Port's [API](../../../api-reference/port-api.info.mdx) is a generic interface to model your software catalog, ingest data, invoke actions, query scorecards and more.
 
 ## 💡 Common Port API usage
 

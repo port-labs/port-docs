@@ -1,0 +1,122 @@
+---
+id: get-an-actions-run-logs
+title: "Get an action's run logs"
+description: "Get an action's run logs"
+sidebar_label: "Get an action's run logs"
+hide_title: true
+hide_table_of_contents: true
+api: eJyNUsGK2zAQ/RUzl7bgxnGhF1MKgZal9LKk7SmEoiSTWKwte6VR2NTo3zsjO46zJKWXWIrevHnz5nVA6uCgWMFiS7oxydIbB+sUWmVVjYRWHjtw2xJrBUUHdGoRCjC+3qCFFGptdO1rKHI+q5f+/HEeUtCGcc8e7Ylhhtn4WulaE18tPnttcQfFXlUOQ3q/xR2mZr93+L9Ujqw2h5GqVVRemKw3v/Xuiomsx8AuONx6q+kUPdigsqynWK3lyaJrG+PQSZsP87l8dui2VrdiJPN+wb3yFSXLAQmB+19DHpASZRIVvX/jEpaSVA0vhL1EKhuWAoc4ZZRcQHbMsx7tMga7rOvVh2woc2iP56V5W3FJSdS6IstUq2eODu/n+Ywp28bSTDcwnfKH2NYPdJ51dJCrv+PE/oVneVb/UXGSwdcS1U42Fn3eN7FcUyX4R+6XLB6/MVT09ePns7nspG0c1coIfGD/hy9XBo7yCF8oayvFMpgwDt4Nnq3gmHPd4Jqs2cdPMe49MrMPJesQfNdtlMNftgpB/u6DJ4butFObaoxaCk9sySXUR1V5EQOSwTvYMbYX8FouVgv6dpdXI28bQ2hYKbxdDol9lzDjTSvO6zOnac+zmsGCsA6TwD18/Sl+eTFvuv+nuP/hIEJvcr8ORt9IfsWVmyWfOBcJp+vzCO9f7hYMOTujZdJ1COEvSrqZdA==
+sidebar_class_name: "get api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<h1
+  className={"openapi__heading"}
+>
+  Get an action's run logs
+</h1>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/actions/runs/{run_id}/logs"}
+>
+  
+</MethodEndpoint>
+
+
+
+Get an action's run logs
+
+## Request
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"run_id","required":true}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Query Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"number","minimum":1,"maximum":50},"in":"query","name":"limit","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"number"},"in":"query","name":"offset","required":false}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      
