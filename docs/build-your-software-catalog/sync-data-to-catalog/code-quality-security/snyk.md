@@ -1276,5 +1276,5 @@ The JQ filters all projects that are scanned from AWS ECR. In addition, it extra
 ```
 </details>
 
-3. Resync the integration and you shall see your catalog ECR images connected to Snyk projects:
+3. Resync the integration and you will see your catalog ECR images connected to Snyk projects:
   <img src="/img/build-your-software-catalog/sync-data-to-catalog/ECRSnykVulnerability.png" width="80%" border="1px" />
