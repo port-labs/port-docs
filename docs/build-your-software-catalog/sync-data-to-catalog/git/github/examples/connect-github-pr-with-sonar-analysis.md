@@ -1,5 +1,5 @@
 ---
-sidebar_position: 9
+sidebar_position: 2
 title: Connect GitHub pull request with SonarQube analysis
 ---
 
@@ -28,7 +28,7 @@ This guide aims to cover how to connect a GitHub pull request with a SonarQube a
 The goal of this section is to fill the software catalog with data directly from your GitHub organization. [Port's GitHub app](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/) allows you to import `repositories`, `pull requests`, `workflows`, `teams` and other GitHub objects. For the purpose of this guide, we shall focus on pull requests (PR) object only. Follow the steps below to ingest your PR data to Port.
 
 :::info Note
-For the GitHub app installation you will need to have a registered organization in Port and your Port user role must be set to `Admin` (see [prerequisites](/guides-and-tutorials/connect-github-pr-with-sonar-analysis)).
+For the GitHub app installation you will need to have a registered organization in Port and your Port user role must be set to `Admin` (see [prerequisites](#)).
 :::
 
 1. Go to your [Builder](https://app.getport.io/dev-portal/data-model)
@@ -143,7 +143,7 @@ For the GitHub app installation you will need to have a registered organization 
 The goal of this section is to bring our SonarQube analysis data into Port. [Port's SonarQube integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube) (powered by [Ocean](https://ocean.getport.io/)) allows you to import `projects`, `issues` and `analyses` from your SonarQube account into Port. The integration automatically creates <PortTooltip id="blueprint">blueprints</PortTooltip> and <PortTooltip id="entity">entities</PortTooltip> for these resources.
 
 :::info Note
-For this installation you will need Helm and a running K8s cluster (see [prerequisites](/guides-and-tutorials/connect-github-pr-with-sonar-analysis)).
+For this installation you will need Helm and a running K8s cluster (see [prerequisites](#)).
 :::
 
 1. Install Port's SonarQube integration using Helm, by running the command below in your terminal.

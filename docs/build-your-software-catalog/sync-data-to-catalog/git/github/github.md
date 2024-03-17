@@ -250,7 +250,7 @@ Permissions can be given to select repositories in your organization, or to all 
 
 ## Examples
 
-Refer to the [examples](./examples.md) page for practical configurations and their corresponding blueprint definitions.
+Refer to the [examples](./examples/examples.md) page for practical configurations and their corresponding blueprint definitions.
 
 ## GitOps
 
