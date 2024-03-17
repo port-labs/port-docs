@@ -95,7 +95,10 @@ This above step is not required for this example, but it will create all the blu
 
 5. Create a workflow file under .github/workflows/escalate-an-incident.yaml with the following content:
 
-```yml
+<details>
+  <summary>GitHub Workflow Script</summary>
+
+```yaml showLineNumbers title="escalate-an-incident.yaml"
 name: Escalate PagerDuty Incident
 
 on:
@@ -216,5 +219,6 @@ jobs:
           runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
           logMessage: "Incident escalation process was successful ✅"
 ```
+</details>
 
 Congrats 🎉 You've successfully escalated an incident in PagerDuty from Port!
