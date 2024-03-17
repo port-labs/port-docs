@@ -10,7 +10,7 @@ Our integration with GitHub allows you to export GitHub objects to Port as entit
 
 Our GitHub integration makes it easy to fill the software catalog with data directly from your GitHub organization, for example:
 
-- Map all the resources in your GitHub organization, including **repositories**, **pull requests**, **workflows**, **workflow runs**, **teams** , **dependabot alerts**, **deployment environments** and other GitHub objects.
+- Map all the resources in your GitHub organization, including **services**, **pull requests**, **workflows**, **workflow runs**, **teams** , **dependabot alerts**, **deployment environments** and other GitHub objects.
 - Watch for GitHub object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 - Manage Port entities using GitOps.
 - Trigger GitHub workflows directly from Port.
@@ -68,7 +68,7 @@ Here is an example `port-app-config.yml` block:
 
 ```yaml showLineNumbers
 resources:
-  - kind: repository
+  - kind: service
     selector:
       query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
     port:
@@ -76,7 +76,7 @@ resources:
         mappings:
           identifier: ".name" # The Entity identifier will be the repository name.
           title: ".name"
-          blueprint: '"githubRepository"'
+          blueprint: '"githubService"'
           properties:
             url: ".html_url"
             description: ".description"
@@ -89,7 +89,7 @@ resources:
   ```yaml showLineNumbers
   # highlight-next-line
   resources:
-    - kind: repository
+    - kind: service
       selector:
       ...
   ```
@@ -99,7 +99,7 @@ resources:
   ```yaml showLineNumbers
     resources:
       # highlight-next-line
-      - kind: repository
+      - kind: service
         selector:
         ...
   ```
@@ -112,7 +112,7 @@ The `selector` and the `query` keys let you filter exactly which objects from th
 
   ```yaml showLineNumbers
   resources:
-    - kind: repository
+    - kind: service
       # highlight-start
       selector:
         query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
@@ -132,7 +132,7 @@ The `port`, `entity` and the `mappings` keys open the section used to map the Gi
 
   ```yaml showLineNumbers
   resources:
-    - kind: repository
+    - kind: service
       selector:
         query: "true"
       # highlight-start
@@ -142,13 +142,13 @@ The `port`, `entity` and the `mappings` keys open the section used to map the Gi
             currentIdentifier: ".name" # OPTIONAL - keep it only in case you want to change the identifier of an existing entity from "currentIdentifier" to "identifier".
             identifier: ".name"
             title: ".name"
-            blueprint: '"githubRepository"'
+            blueprint: '"githubService"'
             properties:
               description: ".description"
               url: ".html_url"
               defaultBranch: ".default_branch"
       # highlight-end
-    - kind: repository # In this instance repository is mapped again with a different filter
+    - kind: service # In this instance repository is mapped again with a different filter
       selector:
         query: '.name == "MyRepositoryName"'
       port:

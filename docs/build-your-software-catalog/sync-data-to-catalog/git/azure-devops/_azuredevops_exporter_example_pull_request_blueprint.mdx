@@ -1,0 +1,64 @@
+<details>
+<summary>Pull request blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "azureDevopsPullRequest",
+  "title": "Pull Request",
+  "icon": "AzureDevops",
+  "schema": {
+    "properties": {
+      "creator": {
+        "title": "Creator",
+        "type": "string"
+      },
+      "status": {
+        "title": "Status",
+        "type": "string",
+        "enum": [
+          "completed",
+          "abandoned",
+          "active"
+        ],
+        "enumColors": {
+          "completed": "yellow",
+          "abandoned": "red",
+          "active": "green"
+        }
+      },
+      "reviewers": {
+        "type": "array",
+        "title": "Reviewers",
+        "items": {
+          "type": "string",
+          "format": "user"
+        }
+      },
+      "createdAt": {
+        "title": "Create At",
+        "type": "string",
+        "format": "date-time"
+      },
+      "link": {
+        "title": "Link",
+        "format": "url",
+        "type": "string"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "repository": {
+      "title": "repository",
+      "target": "azureDevopsRepository",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

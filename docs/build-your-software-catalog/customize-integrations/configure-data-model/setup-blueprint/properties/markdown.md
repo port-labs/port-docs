@@ -1,5 +1,6 @@
 ---
 sidebar_position: 8
+sidebar_class_name: "custom-sidebar-item sidebar-property-markdown"
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"

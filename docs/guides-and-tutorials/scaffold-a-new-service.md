@@ -337,6 +337,7 @@ Now that you have both the new GitLab project and its respective trigger token, 
 image: python:3.10.0-alpine
 
 variables:
+  # This is an example, you can replace it with any other cookiecutter template
   COOKIECUTTER_TEMPLATE_URL: "https://gitlab.com/AdriaanRol/cookiecutter-pypackage-gitlab"
 
 stages: # List of stages for jobs, and their order of execution
@@ -766,6 +767,10 @@ default_context:
 </TabItem>
 
 </Tabs>
+
+:::info Cookiecutter template
+The cookiecutter templates provided in the workflows are just examples, you can replace them with any other cookiecutter template you want to use, by changing the value of the relevant template variable in the workflow.
+:::
 
 All done! The action is ready to be used 🚀
 

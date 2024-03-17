@@ -1,26 +1,19 @@
 ---
-sidebar_position: 17
-description: Aggregation Property allows you to calculate metrics based on the relations in your catalog
+sidebar_position: 1
+sidebar_class_name: "custom-sidebar-item sidebar-property-aggregation"
 ---
 
 import ApiRef from "/docs/api-reference/\_learn_more_reference.mdx"
-
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# 🧬 Aggregation Property
+# Aggregation Property
 
 Aggregation properties allow you to calculate metrics based on the [relations](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/#what-is-a-relation) in your catalog.
 
 Using the aggregation property enables you to see relevant metrics on related entities, without having to manually calculate them.
 
 Aggregations can be performed on any blueprint that is related in any way to the current blueprint (directly, indirectly, upstream or downstream).
-
-## When to use Aggregation Properties?
-
-Aggregation property ideally will be defined on blueprints which are in the **higher abstraction level** in your catalog.
-
-Those blueprints are usually the ones that are **related to many other blueprints** in your catalog, and therefore, they are the ones that can benefit the most from aggregation properties.
 
 ## 💡 Common aggregation usage
 
@@ -36,6 +29,12 @@ The aggregation property enables you to specify scorecards and initiative rules 
 :::tip
 For example - If you have a microservice blueprint, with related Alert blueprint, you can define a rule that will check if the number of open CRITICAL and HIGH alerts that are related to each microservice is greater than 0.
 :::
+
+## When to use Aggregation Properties
+
+Aggregation property ideally will be defined on blueprints which are in the **higher abstraction level** in your catalog.
+
+Those blueprints are usually the ones that are **related to many other blueprints** in your catalog, and therefore, they are the ones that can benefit the most from aggregation properties.
 
 ## Specification
 
@@ -149,7 +148,7 @@ The `aggregationProperties` contains a key called `averageDeploymentFrequency` w
   - `"calculationBy": "entities"` - The calculation will be performed on the entities that match the query (e.g. count the number of entities that match the query).
   - `"func": "average"` - is the function we want to use for the calculation.
   - `"averageOf": "week"` - The time period we want to calculate the average for. In this example, we want to calculate the average deployment frequency for each week. Supported Options are: `hour, day ,week and month`
-  - `"measureTimeBy": "$createdAt"` - The time property we want to measure the average by. You can use any date property in the target blueprint by default, we add $createdAt and $updatedAt as [meta-properties](../meta-properties.md) to each entity.
+  - `"measureTimeBy": "$createdAt"` - The time property we want to measure the average by. You can use any date property in the target blueprint by default, we add $createdAt and $updatedAt as [meta-properties](./meta-properties.md) to each entity.
 
 </TabItem>
 
@@ -255,7 +254,7 @@ The `aggregationProperties` contains a key called `averageCpuUsage` which is the
   - `"func": "average"` - is the function we want to use for the calculation.
   - `"property": "cpuUsage"` - The property we want to calculate the average of. The property type must be a number.
   - `"averageOf": "week"` - The time period we want to calculate the average for. In this example, we want to calculate the average deployment frequency for each week. Supported Options are: `hour, day ,week, month and total
-  - `"measureTimeBy": "$createdAt"` - The time property we want to measure the average by. You can use any date property in the target blueprint by default, we add $createdAt and $updatedAt as [meta-properties](../meta-properties.md) to each entity.
+  - `"measureTimeBy": "$createdAt"` - The time property we want to measure the average by. You can use any date property in the target blueprint by default, we add $createdAt and $updatedAt as [meta-properties](./meta-properties.md) to each entity.
 
 </TabItem>
 
