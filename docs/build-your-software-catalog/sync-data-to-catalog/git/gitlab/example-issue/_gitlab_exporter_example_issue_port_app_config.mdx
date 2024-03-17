@@ -12,7 +12,7 @@ resources:
         mappings:
           identifier: .path_with_namespace | gsub(" "; "")
           title: .name
-          blueprint: '"gitlabRepository"'
+          blueprint: '"gitlabService"'
           properties:
             url: .web_url
             description: .description
@@ -39,7 +39,7 @@ resources:
             link: .web_url
             labels: "[.labels[]]"
           relations:
-            repository: .references.full | gsub("#.+"; "")
+            service: .references.full | gsub("#.+"; "")
 ```
 
 </details>

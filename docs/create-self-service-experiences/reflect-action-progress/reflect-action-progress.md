@@ -3,197 +3,68 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-Invoking a Port Self-Service Action creates an `actionRun` object inside Port.
+Once you execute a self-service action, an `actionRun` object will be created in Port.
 
-:::tip
-To learn more about configuring Self-Service Actions, refer to the [setup UI for actions](../setup-ui-for-action/setup-ui-for-action.md) page. After configuring a Self-Service Action, invoking it will generate an `actionRun` which you can learn more about in this tutorial.
-:::
+This page will teach you how to use Port's API to obtain existing action runs and update them with additional metadata and information about the run. You can use this interaction to mark actions as completed or failed, and keep a consistent history of executed actions and their status.
 
-You can find all existing action runs in one of the following methods:
+## Where to find your action runs
 
-1. Select the Runs tab on the Audit Log page;
-2. Select the Runs tab of a specific Entity on its [specific entity page](../../customize-pages-dashboards-and-plugins/page/entity-page.md);
-3. When you invoke a Self-Service Action from the UI, a toast will appear on the page, with the link to the action run that corresponds to the run of the Self-Service Action.
+You can find your existing action runs using one of the following methods:
 
-This tutorial will teach you how to use Port's API to obtain existing action runs, update them with additional metadata and information about the results of the invoked Self-Service Action, and mark them as completed or failed to keep a consistent history of invoked Self-Service Actions and their status.
+- Go to the [audit logs](https://app.getport.io/organization/AuditLog) page of your portal, then select the `Runs` tab.  
+   This page will display all action runs that have been executed in your organization.
 
-## Setup
+- Go the [entity page](/customize-pages-dashboards-and-plugins/page/entity-page.md) of your desired Entity, then select the `Runs` tab.  
+   This page will display all action runs that have been executed for the selected Entity.
 
-During this tutorial, you will interact with action runs that were created from a basic `create microservice` Self-Service Action that was added to a `microservice` Blueprint.
+- After executing an action [from the UI](https://app.getport.io/self-serve), a toast will appear in the top of the page, with a link to the newly created action run.
 
-The Blueprint definition and Self-Service Action we will use in this tutorial are detailed below:
+## Interacting with action runs
 
-:::note
-The Blueprint and Self-Service Action are intentionally minimalistic since they are not the focus of this tutorial. If needed, they can easily be extended to include extra properties you require.
-:::
+Once an `actionRun` is created, it will have a unique `runId`. Using this id, you can interact with the action run using Port's API.
 
-<details>
-<summary>Microservice Blueprint</summary>
+### Obtain a run's id
 
-```json showLineNumbers
-{
-  "identifier": "microservice",
-  "description": "This blueprint represents service in our software catalog",
-  "title": "Service",
-  "icon": "Microservice",
-  "schema": {
-    "properties": {
-      "region": {
-        "type": "string",
-        "title": "Region"
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "relations": {}
-}
-```
+How to obtain the `runId` of an action by method:
 
-</details>
+<Tabs groupId="execution-method" defaultValue="ui" values={[
+{label: "UI", value: "ui"},
+{label: "API", value: "api"}
+]}>
 
-<details>
-<summary>Create microservice Self-Service Action</summary>
+<TabItem value="ui">
 
-```json showLineNumbers
-[
-  {
-    "identifier": "create_microservice",
-    "title": "Create Microservice",
-    "userInputs": {
-      "properties": {
-        "name": {
-          "title": "Service name",
-          "type": "string"
-        },
-        "region": {
-          "title": "Cloud Region",
-          "type": "string"
-        }
-      }
-    },
-    "invocationMethod": {
-      "url": "https://getport.io",
-      "agent": false,
-      "type": "WEBHOOK"
-    },
-    "trigger": "CREATE",
-    "description": "Create new microservice"
-  }
-]
-```
+The `runId` will be shown in top-left corner of the action run page:
 
-</details>
+<img src='/img/self-service-actions/reflect-action-progress/runIdUi.png' width='40%' border='1px' />
 
-<details>
-<summary>2nd day operation microservice Self-Service Action</summary>
+</TabItem>
 
-```json showLineNumbers
-[
-  {
-    "identifier": "deploy_microservice",
-    "title": "Deploy Microservice",
-    "userInputs": {
-      "properties": {
-        "environment": {
-          "title": "Environment",
-          "type": "string"
-        }
-      }
-    },
-    "invocationMethod": {
-      "url": "https://getport.io",
-      "agent": false,
-      "type": "WEBHOOK"
-    },
-    "trigger": "DAY-2",
-    "description": "Deploy the microservice in a specified environment"
-  }
-]
-```
+<TabItem value="api">
 
-</details>
-
-## Action run structure
-
-### `CREATE` action trigger
-
-Let's invoke a `CREATE` Self-Service Action with the following parameters:
+The `runId` will be returned in the response body of the action run request, under the `context.runId` key:
 
 ```json showLineNumbers
 {
-  "name": "my-microservice",
-  "region": "eu-west-1"
-}
-```
-
-By invoking the Self-Service Action, the following action invocation body is sent:
-
-```json showLineNumbers
-{
-  "action": "create_microservice",
-  "resourceType": "run",
-  "status": "TRIGGERED",
-  "trigger": {
-    "by": {
-      "orgId": "org_7SDeR821bunhS8es",
-      "userId": "auth0|638879fa62c686d381b36ecb",
-      "user": {
-        "email": "test@test.com",
-        "firstName": "test",
-        "lastName": "test",
-        "id": "auth0|638879fa62c686d381b36ecb"
-      }
-    },
-    "origin": "UI",
-    "at": "2022-12-07T12:53:52.916Z"
-  },
+  ...
   "context": {
     "entity": null,
     "blueprint": "microservice",
-    // highlight-next-line
     "runId": "r_QOz6WoOB1Q2lmhZZ"
   },
-  "payload": {
-    "entity": null,
-    "action": {
-      "id": "action_ed2B0O9CbEYkuqvN",
-      "identifier": "create_microservice",
-      "title": "Create Microservice",
-      "userInputs": {
-        "properties": {
-          "name": { "title": "Service name", "type": "string" },
-          "region": { "title": "Cloud Region", "type": "string" }
-        }
-      },
-      "invocationMethod": {
-        "url": "https://getport.io",
-        "agent": false,
-        "type": "WEBHOOK"
-      },
-      "trigger": "CREATE",
-      "description": "Create new microservice",
-      "blueprint": "microservice",
-      "createdAt": "2022-12-07T09:48:28.659Z",
-      "createdBy": "auth0|638879fa62c686d381b36ecb",
-      "updatedAt": "2022-12-07T09:48:28.659Z",
-      "updatedBy": "auth0|638879fa62c686d381b36ecb"
-    },
-    "properties": { "name": "my-microservice", "region": "eu-west-1" }
-  }
+  ...
 }
 ```
 
-Note that the `runId` of the invoked Self-Service Action is: `r_QOz6WoOB1Q2lmhZZ`.
+</TabItem>
 
-#### Interacting with runs
+</Tabs>
 
-<Tabs groupId="interact" queryString="interact">
+### Get a run's details
 
-<TabItem value="info" label="Run info">
+You can obtain the details of an action run by making a `GET` request to the `https://api.getport.io/v1/actions/runs/{run_id}` endpoint, where `{run_id}` is the id of the action run.
 
-By making a GET request to `https://api.getport.io/v1/actions/runs/{run_id}` where `run_id=r_QOz6WoOB1Q2lmhZZ`, you get the following response:
+You will receive a response that looks like this:
 
 ```json showLineNumbers
 {
@@ -214,188 +85,20 @@ By making a GET request to `https://api.getport.io/v1/actions/runs/{run_id}` whe
       "name": "my-microservice",
       "region": "eu-west-1"
     },
-    "createdAt": "2022-12-07T12:53:52.916Z",
-    "updatedAt": "2022-12-07T12:53:52.916Z",
+    "createdAt": "2023-12-07T12:53:52.916Z",
+    "updatedAt": "2023-12-07T12:53:52.916Z",
     "createdBy": "auth0|638879fa62c686d381b36ecb",
     "updatedBy": "auth0|638879fa62c686d381b36ecb"
   }
 }
 ```
 
-:::info
-In the action run object, pay attention to the following:
-
-- `status` - current status of the action. When a Self-Service Action is invoked, the value is automatically set to `IN_PROGRESS`, but you can alter it to `SUCCESS` or `FAILURE` according to the run's progress;
-- `endedAt` - shows `null` because the action run status is `IN_PROGRESS`, but it will automatically update when the status of the action run is changed to either `SUCCESS` or `FAILURE`.
-
+:::info Create vs Day-2 actions
+An action run of a `day-2` action is very similar to that of a `create` action, with one main difference:  
+Since `day-2` actions are always tied to an `entity`, the entity itself is also provided in the action run object, under the `payload.entity` key.
 :::
 
-</TabItem>
-
-<TabItem value="logs" label="Run logs">
-
-By making a GET request to `https://api.getport.io/v1/actions/runs/{run_id}/logs` where `run_id=r_QOz6WoOB1Q2lmhZZ`, you get the following response:
-
-```json showLineNumbers
-{
-  "ok": true,
-  "runLogs": []
-}
-```
-
-</TabItem>
-
-</Tabs>
-
-### `DAY-2` action trigger
-
-An action run of a `DAY-2` Self-Service Action is very similar to an action run of a `CREATE` Self-Service Action, the main difference being that the Entity the action was invoked for is also provided in the action run object.
-
-For example, after performing a simple invocation of the `DAY-2` Self-Service Action with the following parameters:
-
-```json showLineNumbers
-{
-  "environment": "production"
-}
-```
-
-The following action invocation body is sent (existing Entity is highlighted):
-
-```json showLineNumbers
-{
-  "payload": {
-    "action": "deploy_microservice",
-    "resourceType": "run",
-    "status": "TRIGGERED",
-    "trigger": {
-      "by": {
-        "orgId": "org_7SDeR821bunhS8es",
-        "userId": "auth0|638879fa62c686d381b36ecb",
-        "user": {
-          "email": "test@test.com",
-          "firstName": "test",
-          "lastName": "test",
-          "id": "auth0|638879fa62c686d381b36ecb"
-        }
-      },
-      "origin": "UI",
-      "at": "2022-12-08T10:07:09.886Z"
-    },
-    "context": {
-      "entity": "my-microservice",
-      "blueprint": "microservice",
-      // highlight-next-line
-      "runId": "r_z0nJYJv0wCm2ASTR"
-    },
-    "payload": {
-      // highlight-start
-      "entity": {
-        "identifier": "my-microservice",
-        "title": "my-microservice",
-        "icon": null,
-        "blueprint": "microservice",
-        "properties": {
-          "region": "eu-west-1"
-        },
-
-        "relations": {},
-        "createdAt": "2022-12-07T15:25:28.677Z",
-        "createdBy": "KZ5zDPudPshQMShUb4cLopBEE1fNSJGE",
-        "updatedAt": "2022-12-07T15:30:24.660Z",
-        "updatedBy": "KZ5zDPudPshQMShUb4cLopBEE1fNSJGE"
-      },
-      // highlight-end
-      "action": {
-        "id": "action_AOLZfMmE3YUeBlMt",
-        "identifier": "deploy_microservice",
-        "title": "Deploy Microservice",
-        "userInputs": {
-          "properties": {
-            "environment": {
-              "title": "Environment",
-              "type": "string"
-            }
-          }
-        },
-        "invocationMethod": {
-          "url": "https://getport.io",
-          "agent": false,
-          "type": "WEBHOOK"
-        },
-        "trigger": "DAY-2",
-        "description": "Deploy the microservice in a specified environment",
-        "blueprint": "microservice",
-        "createdAt": "2022-12-08T10:05:54.935Z",
-        "createdBy": "auth0|638879fa62c686d381b36ecb",
-        "updatedAt": "2022-12-08T10:05:54.935Z",
-        "updatedBy": "auth0|638879fa62c686d381b36ecb"
-      },
-      "properties": {
-        "environment": "production"
-      }
-    }
-  }
-}
-```
-
-Note that the `runId` of the invoked Self-Service Action is: `r_z0nJYJv0wCm2ASTR`.
-
-#### Interacting with runs
-
-<Tabs groupId="interact" queryString="interact">
-
-<TabItem value="info" label="Run info">
-
-By making a `GET` request to `https://api.getport.io/v1/actions/runs/{run_id}` where `run_id=r_z0nJYJv0wCm2ASTR`, you receive the following response:
-
-```json showLineNumbers
-{
-  "ok": true,
-  "run": {
-    "id": "r_z0nJYJv0wCm2ASTR",
-    "status": "IN_PROGRESS",
-    "blueprint": {
-      "identifier": "microservice",
-      "title": "Service"
-    },
-    "entity": {
-      "identifier": "my-microservice",
-      "title": "my-microservice"
-    },
-    "action": "deploy_microservice",
-    "endedAt": null,
-    "source": "UI",
-    "relatedEntityExists": true,
-    "relatedBlueprintExists": true,
-    "properties": {
-      "environment": "production"
-    },
-    "createdAt": "2022-12-08T10:07:09.860Z",
-    "updatedAt": "2022-12-08T10:07:09.860Z",
-    "createdBy": "auth0|638879fa62c686d381b36ecb",
-    "updatedBy": "auth0|638879fa62c686d381b36ecb"
-  }
-}
-```
-
-</TabItem>
-
-<TabItem value="logs" label="Run Logs">
-
-By making a `GET` request to `https://api.getport.io/v1/actions/runs/{run_id}/logs` where `run_id=r_z0nJYJv0wCm2ASTR`, you receive the following response:
-
-```json showLineNumbers
-{
-  "ok": true,
-  "runLogs": []
-}
-```
-
-</TabItem>
-
-</Tabs>
-
-## Updating an action run
+### Update a run
 
 You can use Port's API to update an the following properties of an action run:
 - `status` - The status of the action run. Initial value is `IN_PROGRESS`, can be set to `SUCCESS` or `FAILURE`.
@@ -406,7 +109,7 @@ You can use Port's API to update an the following properties of an action run:
 When using a `Github workflow` as the action backend, a `Report workflow status` option will be available and set to `Yes` by default. When using this option, Port will automatically update the status of the action run to `SUCCESS` or `FAILURE` according to the result of the Github workflow, so no manual update is required.
 :::
 
-### Run details
+#### Run details
 
 By sending a `PATCH` request to the `https://api.getport.io/v1/actions/runs/{run_id}` endpoint, you can do the following:
 
@@ -434,7 +137,7 @@ You can make a `PATCH` request to the endpoint as many times as you need until t
 Note that every patch request will override the previous information that was available for a given key. For example, when updating the `link` key multiple times, only the last provided value will be displayed in the action run.
 :::
 
-### Run logs
+#### Run logs
 
 By sending a `POST` request to the `https://api.getport.io/v1/actions/runs/{run_id}/logs` endpoint, you can do the following:
 
