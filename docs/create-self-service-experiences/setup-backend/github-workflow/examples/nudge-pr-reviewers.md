@@ -6,7 +6,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 # Nudge Pull Request Reviewers
 
-In the following guide, you are going to create a self-service action in Port that executes a GitHub workflow to nudge PR reviewers with a kind message.
+In the following guide, we are going to create a self-service action in Port that executes a GitHub workflow to nudge PR reviewers with a kind message.
 
 ## Prerequisites
 1. Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new).
