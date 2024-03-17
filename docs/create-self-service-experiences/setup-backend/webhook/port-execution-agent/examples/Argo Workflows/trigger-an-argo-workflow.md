@@ -4,7 +4,8 @@ sidebar_position: 1
 
 # Trigger an Argo Workflow
 
-This example helps internal developer teams to trigger an [Argo Workflow](https://argoproj.github.io/workflows/) using Port's self service actions. In particular, you will create a blueprint for `argoWorkflow` that will be connected to a backend action. You will then add some configuration files (`invocations.json`) to control the payload and trigger your Argo Workflows directly from Port using the sync execution method.
+This example helps internal developer teams to trigger an [Argo Workflow](https://argoproj.github.io/workflows/) using Port's self service actions. We will create a blueprint for `argoWorkflow` that will be connected to a backend action. We will then add some configuration files (`invocations.json`) to control the payload and trigger your Argo Workflows directly from Port using the sync execution method.
+
 
 
 Create the following blueprint, action and mapping to trigger a workflow.
