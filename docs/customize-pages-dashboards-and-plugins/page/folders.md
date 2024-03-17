@@ -30,3 +30,12 @@ To move a page into/out of a folder, hover over it, hold the `⠿` icon and drag
 
 <img src='/img/software-catalog/pages/movePagesBetweenFolders.gif' width='90%' />
 
+## Folder identifiers
+
+Each folder has a unique identifier that can be used to reference it when working with the [Port API](/api-reference).  
+
+When creating a folder, you will be asked to provide it with a title. The identifier is automatically generated from the titie using [snake_case](https://en.wikipedia.org/wiki/Snake_case), which means that spaces and slashes are replaced with underscores and all letters are lowercase.
+
+For example:
+- A folder with the title `My Folder` will have the identifier `my_folder`.
+- A folder with the title `CI/CD` will have the identifier `ci_cd`.

@@ -4,7 +4,7 @@ Port's RBAC mechanism makes it possible to assign permissions to specific users 
 
 ## Assigning permissions
 
-In Port, you can assign permissions by using [roles](#roles), [team ownership](../../build-your-software-catalog/set-catalog-rbac/examples.md#team-ownership-examples) and [users](../../build-your-software-catalog/set-catalog-rbac/examples.md#user-examples).
+In Port, you can assign permissions by using [roles](#roles), [team ownership](/build-your-software-catalog/set-catalog-rbac/examples.md#team-ownership-examples) and [users](/build-your-software-catalog/set-catalog-rbac/examples.md#user-examples).
 
 ### Roles
 
@@ -31,7 +31,7 @@ For example, if **Members** are allowed to edit `Cluster` entities, then `Micros
 
 You can view (and edit) each user’s role in the users table:
 
-![Users page](../../../static/img/software-catalog/role-based-access-control/permissions/usersPageRolesHightlight.png)
+![Users page](/img/software-catalog/role-based-access-control/permissions/usersPageRolesHightlight.png)
 
 Refer to the [Users and Teams](#users-and-teams-management) section for more information about the users page
 
@@ -54,7 +54,7 @@ It will also benefit developers, who could:
 Each user is defined by the following properties:
 
 1. Basic information - image, name, and email.
-2. Role - the user’s permissions level (see the [set catalog RBAC](../../build-your-software-catalog/set-catalog-rbac/set-catalog-rbac.md) section);
+2. Role - the user’s permissions level (see the [set catalog RBAC](/build-your-software-catalog/set-catalog-rbac/set-catalog-rbac.md) section);
 3. Teams - a `team` is a group of users that owns Entities (see the [team](#team-meta-property) section).
 
 Users and teams can be managed via:
@@ -65,7 +65,7 @@ Users and teams can be managed via:
 
 ### Users & Teams Page
 
-![Teams and Users page](../../../static/img/software-catalog/role-based-access-control/users-and-teams/usersAndTeams.png)
+![Teams and Users page](/img/software-catalog/role-based-access-control/users-and-teams/usersAndTeams.png)
 
 #### Users tab
 
@@ -100,7 +100,7 @@ Since those teams are synced from your IdP the following actions cannot be perfo
 
 If you try to perform one of the disabled actions, the interface will display an explanation:
 
-![Managed by SSO notice](../../../static/img/software-catalog/role-based-access-control/users-and-teams/createTeamNoticeWithSSO.png)
+![Managed by SSO notice](/img/software-catalog/role-based-access-control/users-and-teams/createTeamNoticeWithSSO.png)
 :::
 
 ### Terraform provider
@@ -128,7 +128,7 @@ The API allows you to manage [teams](https://api.getport.io/static/index.html#/T
 
 ### `Team` meta property
 
-Each entity has a [meta-property](../../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/meta-properties.md) called `team`, that allows you to set which team owns the entity. As an admin, you can also set blueprint permissions according to this field.
+Each entity has a [meta-property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/meta-properties.md) called `team`, that allows you to set which team owns the entity. As an admin, you can also set blueprint permissions according to this field.
 
 Entity JSON example with `team` field:
 
@@ -147,7 +147,7 @@ Entity JSON example with `team` field:
 
 Team dropdown selector in the entity create/edit page:
 
-![Team property](../../../static/img/software-catalog/role-based-access-control/users-and-teams/teamPropertyMarkedInUIForm.png)
+![Team property](/img/software-catalog/role-based-access-control/users-and-teams/teamPropertyMarkedInUIForm.png)
 
 | Field | Type | Description                                            | Default      |
 | ----- | ---- | ------------------------------------------------------ | ------------ |
@@ -155,7 +155,7 @@ Team dropdown selector in the entity create/edit page:
 
 - We support the manual creation of teams on Port, as well as integrating with identity providers, such as [Okta](../sso-providers/okta.md) and [AzureAD](../sso-providers/azure-ad.md), to import existing teams.
 - When users log in to Port, their groups will be pulled automatically from their identity provider, and the allowed team values will be updated accordingly.
-- It is also possible to configure [team inheritance](../../build-your-software-catalog/set-catalog-rbac/examples.md#team-inheritance) and utilize relations to auto-populate the `team` key of entities.
+- It is also possible to configure [team inheritance](/build-your-software-catalog/set-catalog-rbac/examples.md#team-inheritance) and utilize relations to auto-populate the `team` key of entities.
 
 :::info
 Okta and AzureAD integrations are only available after configuring SSO from the relevant identity provider, refer to the [Single Sign-On (SSO)](../sso-providers/) section for more details

@@ -10,7 +10,7 @@ In this guide, you will learn how to trigger your [Cloud Build](https://cloud.go
 The steps shown in the image above are as follows:
 
 1. An action is invoked in Port;
-2. Port signs the action payload using SHA-1 with the [`clientSecret`](../../../build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials) value and puts it in the `X-Port-Signature` request header.
+2. Port signs the action payload using SHA-1 with the [`clientSecret`](../../../build-your-software-catalog/custom-integration/api/api.md#find-your-port-credentials) value and puts it in the `X-Port-Signature` request header.
 
    :::info WEBHOOK SECURITY
    Verifying the webhook request using the request headers provides the following benefits:

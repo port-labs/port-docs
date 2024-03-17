@@ -70,7 +70,7 @@ An editor window will open with the current JSON array of the defined Scorecards
 ### From the API
 
 :::note
-Remember that an access token is necessary in order to make API requests. If you need to generate a new token, refer to [Getting an API token](../build-your-software-catalog/sync-data-to-catalog/api/api.md#get-api-token).
+Remember that an access token is necessary in order to make API requests. If you need to generate a new token, refer to [Getting an API token](../build-your-software-catalog/custom-integration/api/api.md#get-api-token).
 :::
 
 In order to create a scorecard from the API, you will make a PUT request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards`.
