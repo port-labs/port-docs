@@ -233,7 +233,7 @@ jobs:
         with:
           valueFile: '<DEPLOYMENT-MANIFEST-PATH>'  ## replace value
           propertyPath: '<REPLICA-PROPERTY-PATH>' ## replace value
-          value: '${{ github.event.inputs.replica_count }}'
+          value: "!!int '${{ fromJson(github.event.inputs.replica_count) }}'"  ## using the yaml tag (!!int 'X') to convert the string to int
           commitChange: true
           token: ${{ secrets.MY_GITHUB_TOKEN }}
           targetBranch: main
@@ -306,4 +306,6 @@ jobs:
 <br />
 4. Trigger the action from the [self-service](https://app.getport.io/self-serve) page of your Port application.
 
-You should now be able to see a Github pull request created and merged for the deployment.
+You should now be able to see a Github pull request created and merged for the deployment:
+
+<img src="/img/sync-data-to-catalog/deploymentReplicasMerged.png" border="1px" width="60%" />
