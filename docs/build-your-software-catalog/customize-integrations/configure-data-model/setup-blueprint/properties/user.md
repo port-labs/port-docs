@@ -1,6 +1,7 @@
 ---
 sidebar_position: 19
 description: User is a data type used to reference users that exist in Port
+sidebar_class_name: "custom-sidebar-item sidebar-property-user"
 ---
 
 import ApiRef from "/docs/api-reference/\_learn_more_reference.mdx"

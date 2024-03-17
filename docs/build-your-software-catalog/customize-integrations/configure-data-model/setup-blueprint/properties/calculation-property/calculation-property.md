@@ -321,7 +321,7 @@ The value of the property `monitorUrl` will be `https://datadog.com/notification
 
 ## Using `mirror properties` in calculation properties
 
-It is possible to use [mirror properties](../mirror-property/mirror-property.md) as template values for calculation properties.
+It is possible to use [mirror properties](../mirror-property) as template values for calculation properties.
 
 For example, if an entity has a mirror property called `owningSquad`:
 
