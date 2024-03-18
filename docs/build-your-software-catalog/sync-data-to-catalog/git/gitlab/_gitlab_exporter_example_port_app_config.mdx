@@ -36,6 +36,7 @@ resources:
             createdAt: .created_at
             updatedAt: .updated_at
             link: .web_url
+            reviewers: .reviewers | map(.name)
           relations:
             repository: .references.full | gsub("!.+"; "")
 ```
