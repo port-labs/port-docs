@@ -1,4 +1,5 @@
-# Escalate Incident In PagerDuty
+# Escalate incident in PagerDuty
+
 
 This GitHub action allows you to quickly escalate incident in PagerDuty via Port Actions with ease.
 
