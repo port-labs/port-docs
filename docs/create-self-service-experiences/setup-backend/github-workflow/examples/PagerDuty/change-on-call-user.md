@@ -1,4 +1,5 @@
-# Change Who Is On-Call In PagerDuty
+# Change the on-call In PagerDuty
+
 
 This GitHub action allows you to quickly change who is on-call in PagerDuty via Port Actions with ease.
 
