@@ -2,16 +2,16 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 # Generate ECR image with tags
 
-In the following guide, you are going to create a [self-service action](https://docs.getport.io/create-self-service-experiences/) in Port that executes a [GitHub workflow](https://docs.getport.io/create-self-service-experiences/setup-backend/github-workflow) to:
+In the following guide, you are going to create a [self-service action](/create-self-service-experiences/) in Port that executes a [GitHub workflow](/create-self-service-experiences/setup-backend/github-workflow) to:
 
-- Generate a Docker image with tags and,
-- Push it to an [AWS Elastic Container Registry (ECR)](https://aws.amazon.com/ecr/).
+- Generate a Docker image with tags.
+- Push the image to an [AWS Elastic Container Registry (ECR)](https://aws.amazon.com/ecr/).
 
 The image will include tags indicating information like the trigger source, commit ID, PR ID, and workflow ID.
 
 ## Prerequisites
 1. Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new).
-2. This guide assumes the presence of a blueprint representing your repositories. If you haven't done so yet, initiate the setup of your GitHub data model by referring to this [guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/examples#mapping-repositories-file-contents-and-pull-requests) first.
+2. This guide assumes the presence of a blueprint representing your repositories. If you haven't done so yet, initiate the setup of your GitHub data model by referring to this [guide](/build-your-software-catalog/sync-data-to-catalog/git/github/examples#mapping-repositories-file-contents-and-pull-requests) first.
 3. A repository to contain your action resources i.e. the github workflow file.
 4. In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
    - `AWS_ACCESS_KEY_ID`: Your AWS access key.
@@ -63,7 +63,7 @@ jobs:
       shell: bash
   
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         repository: ${{ env.REPO_OWNER }}/${{ env.REPO_NAME }}
 
