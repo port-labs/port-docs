@@ -1,4 +1,5 @@
-# Resolve Incident In PagerDuty
+# Resolve incident in PagerDuty
+
 
 This GitHub action allows you to quickly resolve incident in PagerDuty via Port Actions with ease.
 
