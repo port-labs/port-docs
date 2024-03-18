@@ -505,6 +505,12 @@ jobs:
 
 5. Trigger the actions from the [self-service](https://app.getport.io/self-serve) page of your Port application.
 
+:::tip Practical usage
+
+Service lock and unlocking can be used to control deployment via Github actions. This means when a service is locked, deployment checks on that service will fail. Follow [Port's self-service mini guide to control deployment using service lock](/guides-and-tutorials/service-lock-github-workflow.md) to add this functionality to your workflow.
+
+:::
+
 Below is the result of a successful service lock and unlock alert sent to a Slack channel:
 
 <img src="/img/self-service-actions/lockServiceSlackAlert.png" border="1px" />
