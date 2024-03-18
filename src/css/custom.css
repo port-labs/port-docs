@@ -319,11 +319,20 @@ html[data-theme="dark"] details details  {
   zoom: 100%;
 }
 
-.navbar__link--active:hover {
+.header-api-link:hover {
   border-radius: var(--ifm-global-radius);
   background: var(--ifm-menu-color-background-active);
 }
 
-.navbar__link:hover:not(.navbar__link--active) {
+.header-api-link:hover:not(.header-api-link--active) {
+  opacity: 0.8;
+}
+
+.header-home-link:hover {
+  border-radius: var(--ifm-global-radius);
+  background: var(--ifm-menu-color-background-active);
+}
+
+.header-home-link:hover:not(.header-home-link--active) {
   opacity: 0.8;
 }

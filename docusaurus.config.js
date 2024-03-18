@@ -92,11 +92,13 @@ const config = {
             to: "/",
             label: "Home",
             className: "header-home-link",
+            activeBaseRegex: "^((?!api-reference).)*$",
           },
           {
             to: "/api-reference/port-api",
-            label: "REST API",
+            label: "API Reference",
             className: "header-api-link",
+            activeBasePath: "api-reference",
           },
           {
             to: "https://demo.getport.io",
