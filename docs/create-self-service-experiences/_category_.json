@@ -1,4 +1,5 @@
 {
-  "label": "⚡️ Create self-service actions",
-  "position": 6
+  "label": "Create self-service actions",
+  "position": 6,
+  "className": "custom-sidebar-item sidebar-menu-create-self-service-actions"
 }

@@ -1,5 +1,5 @@
 
-# 🏗️ Build a Software Catalog
+# Build a Software Catalog
 
 <center>
 
