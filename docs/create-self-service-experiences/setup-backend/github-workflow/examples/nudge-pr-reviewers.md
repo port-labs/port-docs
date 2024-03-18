@@ -77,6 +77,10 @@ Follow these steps to get started:
 
 <summary>GitHub workflow script</summary>
 
+:::tip Using Block Kit to design the message layout.
+Whereas you can simply send a message with the *text* field, the [block kit framework](https://api.slack.com/block-kit) provides a rich pool of components and layouts to design your message and allows you to add interactivity. Try it out [here](https://app.slack.com/block-kit-builder/) to compose your own blocks. You can then replace the `blocks` field in the request below.
+:::
+
 ```yaml showLineNumbers title="nudge-pr-reviewers.yml"
 name: Nudge Pull Request Reviewers
 
@@ -112,17 +116,63 @@ jobs:
           PULL_REQUEST_ID: ${{ env.PR_NUMBER }}
 
       - name: Send Slack Notification
+        env:
+          PR_TITLE: ${{ fromJson(inputs.port_payload).payload.entity.title }}
         run: |
-            reviews_json="${{ steps.get_reviewers.outputs.reviews_file_path }}"
-            reviewers=$(jq -r '.[].user.login' $reviews_json | sort -u)
+          reviews_json="${{ steps.get_reviewers.outputs.reviews_file_path }}"
+          reviewers=$(jq -r '.[].user.login' $reviews_json | sort -u)
 
-            echo "Reviewers: $reviewers"
-
-            pr_link="https://github.com/${{ env.REPO_INFO }}/pull/${{ env.PR_NUMBER }}"
-            message="Hello everyone! Just a gentle reminder to check out pull request #${{ env.PR_NUMBER }}: $pr_link. Reviewers: $reviewers" 
-
-            curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"$message\"}" ${{ secrets.SLACK_WEBHOOK_URL }}
-
+          pr_title="${{ fromJson(inputs.port_payload).payload.entity.title }}"
+          
+          echo "Reviewers: $reviewers"
+          
+          pr_link="https://github.com/${{ env.REPO_INFO }}/pull/${{ env.PR_NUMBER }}"
+          
+          # Construct Block Kit message
+          message_payload=$(cat <<EOF
+          {
+            "blocks": [
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "*Reminder: Pending Pull Request Review*\nThis PR needs your attention!"
+                }
+              },
+              {
+                "type": "section",
+                "fields": [
+                  {
+                    "type": "mrkdwn",
+                    "text": "*PR:* <$pr_link|$pr_title>" 
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Reviewers:*\n$reviewers" 
+                  }
+                ]
+              },
+              {
+                "type": "actions",
+                "elements": [
+                  {
+                    "type": "button",
+                    "text": {
+                      "type": "plain_text",
+                      "text": "Review PR",
+                      "emoji": true
+                    },
+                    "url": "$pr_link" 
+                  }
+                ]
+              }
+            ]
+          }
+          EOF
+          )
+          
+          curl -X POST -H 'Content-type: application/json' --data "$message_payload" ${{ secrets.SLACK_WEBHOOK_URL }}
+          
       - name: Notify Port
         uses: port-labs/port-github-action@v1
         with:
@@ -140,4 +190,6 @@ jobs:
 
 5. Trigger the action from the [self-service](https://app.getport.io/self-serve) page of your Port application.
 
+
+<img src='/img/self-service-actions/setup-backend/github-workflow/nudgeSlack.png' width='85%' />
 
