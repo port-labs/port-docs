@@ -185,7 +185,7 @@ helm upgrade --install my-jira-integration port-labs/port-ocean \
 ## Create the Jira Issue relation
 
 Now that Port is synced with our Jira resources, let's map the Jira issues to the Github pull requests.
-First, we will need to create a [relation](/build-your-software-catalog/define-your-data-model/relate-blueprints/#what-is-a-relation) between our `githubPullRequest` and the corresponding `jiraIssue`.
+First, we will need to create a [relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/relate-blueprints.md) between our `githubPullRequest` and the corresponding `jiraIssue`.
 
 1. Head back to the [Builder](https://app.getport.io/dev-portal/data-model), choose the `Pull Request` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New relation`:
 
