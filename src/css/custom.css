@@ -4,6 +4,8 @@
  * work well for content-centric websites.
  */
 
+ @import url("https://fonts.googleapis.com/css2?family=Lexend&family=Inter&family=DM+Sans&family=Space+Grotesk");
+
 /* You can override the default Infima variables here. */
 :root {
   --ifm-color-primary: #178087;
@@ -18,7 +20,7 @@
 }
 
 :root {
-  --ifm-font-family-base: "Inter";
+  --ifm-font-family-base: "DM Sans";
   --doc-sidebar-width: 308px !important;
 }
 
@@ -31,7 +33,7 @@
 }
 
 .menu__link {
-  font-family: "Lexend";
+  font-family: "Space Grotesk";
 }
 
 h1,
@@ -40,7 +42,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Lexend";
+  font-family: "DM Sans";
 }
 
 h2::first-letter,
@@ -72,8 +74,6 @@ h6::first-letter {
   /* Color which works with dark mode syntax highlighting theme */
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
-
-@import url("https://fonts.googleapis.com/css2?family=Lexend&family=Inter");
 
 .operators-tabs {
   font-size: 0.8rem;
