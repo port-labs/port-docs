@@ -15,8 +15,8 @@ Follow these steps to get started with the Golang template:
 1. Create the following GitHub action secrets:
 
    1. `ORG_TOKEN` - a [fine-grained PAT](https://github.com/settings/tokens?type=beta) with permissions to create repositories.
-   2. `PORT_CLIENT_ID` - Port Client ID [learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
-   3. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+   2. `PORT_CLIENT_ID` - Port Client ID [learn more](../../../../build-your-software-catalog/custom-integration/api/#get-api-token).
+   3. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](../../../../build-your-software-catalog/custom-integration/api/#get-api-token).
 
 2. Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new).
 
@@ -138,4 +138,4 @@ jobs:
 - [Connect Port's GitHub exporter](../../../../build-your-software-catalog/sync-data-to-catalog/git/github/github.md)
   to make sure all of the properties (like URL, readme etc..) are automatically ingested from GitHub.
   - You can learn how to setup Port's GitHub exporter [here](../../../../build-your-software-catalog/sync-data-to-catalog/git/github/github.md#ingesting-git-objects).
-  - You can see example configurations and use cases [here](../../../../build-your-software-catalog/sync-data-to-catalog/git/github/examples.md).
+  - You can see example configurations and use cases [here](../../../../build-your-software-catalog/sync-data-to-catalog/git/github/examples/examples.md).

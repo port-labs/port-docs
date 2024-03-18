@@ -7,12 +7,12 @@ const darkCodeTheme = require("prism-react-renderer").themes.dracula;
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Port",
-  tagline: "Documentation site",
+  tagline: "Port documentation",
   url: "https://docs.getport.io",
   baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "throw",
-  favicon: "img/favicon.svg",
+  favicon: "img/logos/port-favicon.png",
   organizationName: "port-labs", // Usually your GitHub org/user name.
   projectName: "port", // Usually your repo name.
   staticDirectories: ["static"],
@@ -38,6 +38,9 @@ const config = {
         gtag: {
           trackingID: "G-3YL3X47R7L",
           anonymizeIP: false,
+        },
+        googleTagManager: {
+          containerId: 'GTM-MNB6TPLF',
         },
         sitemap: {
           changefreq: "weekly",
@@ -80,7 +83,8 @@ const config = {
         title: "Port Documentation",
         logo: {
           alt: "Port Logo",
-          src: "img/logo.svg",
+          src: "img/logos/port-logo.svg",
+          srcDark: "img/logos/port-logo-dark.svg",
         },
         items: [
           {
@@ -147,7 +151,7 @@ const config = {
             items: [
               {
                 label: "API",
-                to: "/build-your-software-catalog/sync-data-to-catalog/api",
+                to: "/build-your-software-catalog/custom-integration/api",
               },
               {
                 label: "CI/CD",

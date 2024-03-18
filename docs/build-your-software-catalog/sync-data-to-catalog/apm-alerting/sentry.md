@@ -4,18 +4,20 @@ import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
 import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
 import DockerParameters from "./\_sentry-docker-parameters.mdx"
 import AdvancedConfig from '../../../generalTemplates/\_ocean_advanced_configuration_note.md'
-import SentryCommentsBlueprint from "../webhook/examples/resources/sentry/\_example_sentry_comments_blueprint.mdx";
-import SentryCommentsConfiguration from "../webhook/examples/resources/sentry/\_example_sentry_comment_webhook_configuration.mdx"
-import SentryIssuesBluePrint from "../webhook/examples/resources/sentry/\_example_sentry_issue_event_blueprint.mdx"
-import SentryIssuesConfiguration from "../webhook/examples/resources/sentry/\_example_sentry_issue_event_webhook_configuration.mdx"
+import SentryCommentsBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/sentry/\_example_sentry_comments_blueprint.mdx";
+import SentryCommentsConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/sentry/\_example_sentry_comment_webhook_configuration.mdx"
+import SentryIssuesBluePrint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/sentry/\_example_sentry_issue_event_blueprint.mdx"
+import SentryIssuesConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/sentry/\_example_sentry_issue_event_webhook_configuration.mdx"
 
 # Sentry
 
-Our Sentry integration allows you to import `projects` and `issues` from your Sentry cloud account into Port, according to your mapping and definition.
+Our Sentry integration allows you to import `projects`, `issues`, `project-tag` and `issue-tag` from your Sentry cloud account into Port, according to your mapping and definition.
 
 A `Project` is essentially a container for all the data and information related to a specific application or service that you want to monitor.
 
 An `Issue` is a group of incidents that describe the underlying problem of your symptoms.
+
+A `Tag` is a key/value pair used to attach additional metadata to objects. This metadata can include information such as the environment, runtime, log level, and more.
 
 ## Common use cases
 
@@ -364,6 +366,9 @@ The following resources can be used to map data from Sentry, it is possible to r
 
 - [`Project`](https://docs.sentry.io/api/projects/list-your-projects/)
 - [`Issue`](https://docs.sentry.io/api/events/list-a-projects-issues/)
+- [`Project Tag`](https://docs.sentry.io/api/projects/list-a-tags-values/)
+- [`Issue Tag`](https://docs.sentry.io/api/events/list-a-tags-values-related-to-an-issue/)
+
 
 :::
 
@@ -436,21 +441,21 @@ Examples of blueprints and the relevant integration configurations:
 ```json showLineNumbers
 {
   "identifier": "sentryProject",
-  "title": "project",
+  "title": "Sentry Project",
   "icon": "Sentry",
   "schema": {
     "properties": {
       "dateCreated": {
-        "title": "dateCreated",
+        "title": "Date Created",
         "type": "string",
         "format": "date-time"
       },
       "platform": {
         "type": "string",
-        "title": "platform"
+        "title": "Platform"
       },
       "status": {
-        "title": "status",
+        "title": "Status",
         "type": "string",
         "enum": [
           "active",
@@ -460,7 +465,7 @@ Examples of blueprints and the relevant integration configurations:
         ]
       },
       "link": {
-        "title": "link",
+        "title": "Link",
         "type": "string",
         "format": "url"
       }
@@ -506,21 +511,32 @@ resources:
 ```json showLineNumbers
 {
   "identifier": "sentryIssue",
-  "title": "issue",
+  "title": "Sentry Issue",
   "icon": "Sentry",
   "schema": {
     "properties": {
       "link": {
-        "title": "link",
+        "title": "Link",
         "type": "string",
         "format": "url"
       },
       "status": {
-        "title": "status",
-        "type": "string"
+        "title": "Status",
+        "type": "string",
+        "enum": [
+          "resolved",
+          "unresolved",
+          "ignored",
+          "reprocessing"
+        ],
+        "enumColors": {
+          "resolved": "green",
+          "unresolved": "red",
+          "ignored": "lightGray",
+          "reprocessing": "yellow"
+        }
       },
       "isUnhandled": {
-        "icon": "DefaultProperty",
         "title": "isUnhandled",
         "type": "boolean"
       }
@@ -530,11 +546,11 @@ resources:
   "mirrorProperties": {},
   "calculationProperties": {},
   "relations": {
-    "project": {
-      "title": "project",
+    "projectEnvironment": {
+      "title": "Sentry Project",
       "target": "sentryProject",
       "required": false,
-      "many": false
+      "many": true
     }
   }
 }
@@ -561,6 +577,97 @@ resources:
             isUnhandled: ".isUnhandled"
           relations:
             project: ".project.slug"
+```
+
+</details>
+
+### Project Environment
+
+<details>
+<summary>Project environment blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "sentryProject",
+  "title": "Sentry Project Environment",
+  "icon": "Sentry",
+  "schema": {
+    "properties": {
+      "dateCreated": {
+        "title": "Date Created",
+        "type": "string",
+        "format": "date-time"
+      },
+      "platform": {
+        "type": "string",
+        "title": "Platform"
+      },
+      "status": {
+        "title": "Status",
+        "type": "string",
+        "enum": [
+          "active",
+          "disabled",
+          "pending_deletion",
+          "deletion_in_progress"
+        ]
+      },
+      "link": {
+        "title": "Link",
+        "type": "string",
+        "format": "url"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {}
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+:::tip Environment tags
+The`selector.tag` key in the `project-tag` kind defines which Sentry tag data is synced to Port. In the configuration provided below, you will ingest all `environment` tag from your Sentry account to Port. For instance, if a Sentry project has 3 environments namely development, staging and production, this configuration will create 3 entities in the `Sentry Project Environment` catalog. You will then use the `issue-tag` kind to connect each issue to its environment.
+:::
+
+```yaml showLineNumbers
+- kind: project-tag
+  selector:
+    query: "true"
+    tag: "environment"
+  port:
+    entity:
+      mappings:
+        identifier: .slug + "-" + .__tags.name
+        title: .name + "-" + .__tags.name
+        blueprint: '"sentryProject"'
+        properties:
+          dateCreated: .dateCreated
+          platform: .platform
+          status: .status
+          link: .organization.links.organizationUrl + "/projects/" + .name
+
+  - kind: issue-tag
+    selector:
+      query: "true"
+      tag: "environment"
+    port:
+      entity:
+        mappings:
+          identifier: .id
+          title: .title
+          blueprint: '"sentryIssue"'
+          properties:
+            link: .permalink
+            status: .status
+            isUnhandled: .isUnhandled
+          relations:
+            projectEnvironment: '[(.project.slug as $slug | .__tags[] | "\($slug)-\(.name)")]'
 ```
 
 </details>
@@ -712,6 +819,85 @@ Here is an example of the payload structure from Sentry:
 
 </details>
 
+<details>
+<summary> Project environment response data</summary>
+
+```json showLineNumbers
+{
+   "id":"4504931759095808",
+   "slug":"python-fastapi",
+   "name":"python-fastapi",
+   "platform":"python-fastapi",
+   "dateCreated":"2023-03-31T06:18:37.290732Z",
+   "isBookmarked":false,
+   "isMember":false,
+   "features":[
+      "alert-filters",
+      "minidump",
+      "race-free-group-creation",
+      "similarity-indexing",
+      "similarity-view",
+      "span-metrics-extraction",
+      "span-metrics-extraction-resource",
+      "releases"
+   ],
+   "firstEvent":"2023-03-31T06:25:54.666640Z",
+   "firstTransactionEvent":false,
+   "access":[
+      
+   ],
+   "hasAccess":true,
+   "hasMinifiedStackTrace":false,
+   "hasMonitors":false,
+   "hasProfiles":false,
+   "hasReplays":false,
+   "hasFeedbacks":false,
+   "hasSessions":false,
+   "isInternal":false,
+   "isPublic":false,
+   "avatar":{
+      "avatarType":"letter_avatar",
+      "avatarUuid":null
+   },
+   "color":"#913fbf",
+   "status":"active",
+   "organization":{
+      "id":"4504931754901504",
+      "slug":"pages-org",
+      "status":{
+         "id":"active",
+         "name":"active"
+      },
+      "name":"Pages Org",
+      "dateCreated":"2023-03-31T06:17:33.619189Z",
+      "isEarlyAdopter":false,
+      "require2FA":false,
+      "requireEmailVerification":false,
+      "avatar":{
+         "avatarType":"letter_avatar",
+         "avatarUuid":null,
+         "avatarUrl":null
+      },
+      "links":{
+         "organizationUrl":"https://pages-org.sentry.io",
+         "regionUrl":"https://us.sentry.io"
+      },
+      "hasAuthProvider":false
+   },
+   "__tags":{
+      "key":"environment",
+      "name":"production",
+      "value":"production",
+      "count":10,
+      "lastSeen":"2024-03-04T17:17:33Z",
+      "firstSeen":"2024-03-04T17:14:22Z"
+   }
+}
+```
+
+</details>
+
+
 ### Mapping Result
 
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
@@ -769,6 +955,32 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 </details>
 
+<details>
+<summary> Project environment entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "python-fastapi-production",
+  "title": "python-fastapi-production",
+  "icon": null,
+  "blueprint": "sentryProject",
+  "team": [],
+  "properties": {
+    "dateCreated": "2023-03-31T06:18:37.290732Z",
+    "platform": "python-fastapi",
+    "status": "active",
+    "link": "https://test-org.sentry.io/projects/python-fastapi"
+  },
+  "relations": {},
+  "createdAt": "2024-03-07T12:18:17.111Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2024-03-07T12:31:52.041Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
 ## Alternative installation via webhook
 
 While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from Sentry. If so, use the following instructions:
@@ -790,7 +1002,7 @@ Create the following blueprint definition:
 
 </details>
 
-Create the following webhook configuration [using Port UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints):
+Create the following webhook configuration [using Port UI](/build-your-software-catalog/custom-integration/webhook/?operation=ui#configuring-webhook-endpoints):
 
 <details>
 
@@ -815,7 +1027,7 @@ Create the following webhook configuration [using Port UI](/build-your-software-
 :::tip
 We have left out the `secret` field from the security object in the webhook configuration because the secret value is generated by Sentry when creating the webhook.
 So when following this example, please first create the webhook configuration in Port. Use the webhook URL from the response and create the webhook in Sentry.
-After getting the secret from Sentry, you can go back to Port and update the [webhook configuration](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints) with the secret.
+After getting the secret from Sentry, you can go back to Port and update the [webhook configuration](/build-your-software-catalog/custom-integration/webhook/?operation=ui#configuring-webhook-endpoints) with the secret.
 :::
 
 <h2>Create a webhook in Sentry</h2>
@@ -848,7 +1060,7 @@ The following example adds a `sentryComment` blueprint, in addition to the `sent
 
 </details>
 
-Create the following webhook configuration [using Port UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints):
+Create the following webhook configuration [using Port UI](/build-your-software-catalog/custom-integration/webhook/?operation=ui#configuring-webhook-endpoints):
 
 <details>
 

@@ -36,8 +36,8 @@ Set them as you wish in the script below, then copy it and run it in your termin
 
 | Parameter                                | Description                                                                                                                                | Example                          | Required |
 | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------- | -------- |
-| `port.clientId`                          | Your port [client id](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)            |                                  | ✅       |
-| `port.clientSecret`                      | Your port [client secret](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)        |                                  | ✅       |
+| `port.clientId`                          | Your port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)            |                                  | ✅       |
+| `port.clientSecret`                      | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)        |                                  | ✅       |
 | `integration.secrets.clusterConfMapping` | The Mapping of Kafka cluster names to Kafka client config  |  | ✅       |
 
 

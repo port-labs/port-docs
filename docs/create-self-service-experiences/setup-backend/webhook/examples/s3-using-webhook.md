@@ -7,7 +7,7 @@ sidebar_position: 1
 In this guide, we are going to present different methods to create an S3 bucket (e.g.), using Port Self-Service Actions.
 
 :::note
-Throughout this tutorial, we will use [webhook-actions](../webhook.md), and a simple backend that listens to the webhook events.
+Throughout this tutorial, we will use [webhook-actions](/build-your-software-catalog/custom-integration/webhook), and a simple backend that listens to the webhook events.
 
 You can choose to use [kafka-actions](/create-self-service-experiences/setup-backend/webhook/kafka/kafka.md) as well.
 

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 13
+sidebar_position: 4
 description: Entity is an input used to reference existing entities from the software catalog when triggering actions
 ---
 
@@ -16,10 +16,9 @@ Entity is an input type used to reference existing [entities](../../../build-you
 
 The entity input type can be used to reference any existing entity from the software catalog, for example:
 
-- Cloud regions;
-- Clusters;
-- Configurations;
-- etc.
+- Cloud regions
+- Clusters
+- Configurations
 
 In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we can see the **scaffold new service** action whose `Domain` input is an entity input. 🎬
 

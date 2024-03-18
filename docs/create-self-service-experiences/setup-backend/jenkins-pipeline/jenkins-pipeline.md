@@ -10,7 +10,7 @@ In this guide, you will learn how to trigger your [Jenkins](https://www.jenkins.
 The steps shown in the image above are as follows:
 
 1. An action is invoked in Port;
-2. Port signs the action payload using SHA-1 with the [`clientSecret`](../../../build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials) value and puts it in the `X-Port-Signature` request header.
+2. Port signs the action payload using SHA-1 with the [`clientSecret`](../../../build-your-software-catalog/custom-integration/api/api.md#find-your-port-credentials) value and puts it in the `X-Port-Signature` request header.
 
    :::info
    Verifying the webhook request using the request headers provides the following benefits:
@@ -173,7 +173,7 @@ Here is an example of the required configuration:
   - For more information about Port's outbound calls, check out Port's [actions security](../../security/security.md) page.
 - In the **HMAC Secret** field, choose a secret containing your `port-client-secret`.
 
-If this secret doesn't already exist, create a `secret text` type secret using [this guide](https://www.jenkins.io/doc/book/using/using-credentials/). The value of the secret should be your `Port Client Secret` which can be found by following the guide [here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
+If this secret doesn't already exist, create a `secret text` type secret using [this guide](https://www.jenkins.io/doc/book/using/using-credentials/). The value of the secret should be your `Port Client Secret` which can be found by following the guide [here](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
 :::
 
 ### Report Jenkins action run status to Port
