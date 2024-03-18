@@ -252,3 +252,7 @@ html[data-theme="dark"] details details  {
   margin-top: 1px;
   zoom: 100%;
 }
+
+.table-of-contents {
+  font-size: 90%;
+}
