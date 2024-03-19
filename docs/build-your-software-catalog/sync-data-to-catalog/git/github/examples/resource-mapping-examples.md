@@ -1,11 +1,11 @@
 ---
-sidebar_position: 2
+sidebar_position: 1
 ---
 
 import RepositoryBlueprint from './\_github_exporter_example_repository_blueprint.mdx'
 import PRBlueprint from './\_github_exporter_example_pull_request_blueprint.mdx'
 import PortAppConfig from './\_github_exporter_example_port_app_config.mdx'
-import GitHubResources from './\_github_exporter_supported_resources.mdx'
+import GitHubResources from '../\_github_exporter_supported_resources.mdx'
 
 import WorkflowBlueprint from './example-workflow-workflowrun/\_git_exporter_example_workflow_blueprint.mdx'
 import WorkflowRunBlueprint from './example-workflow-workflowrun/\_git_exporter_example_workflow_run_blueprint.mdx'
@@ -44,7 +44,7 @@ import RepositoryAdminAppConfig from './example-repository-admins/\_github_expor
 
 
 
-# Examples
+# Resource mapping examples
 
 ## Mapping repositories, file contents and pull requests
 
@@ -58,7 +58,7 @@ In the following example you will ingest your GitHub repositories, their README.
 
 :::tip
 
-- Refer to the [setup](github.md#setup) section to learn more about the `port-app-config.yml` setup process;
+- Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#setup) section to learn more about the `port-app-config.yml` setup process;
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitHub objects to Port Entities;
 - Click [Here](https://docs.github.com/en/rest/repos/repos#get-a-repository) for the GitHub repository object structure.
 - Click [Here](https://docs.github.com/en/rest/pulls/pulls#get-a-pull-request) for the GitHub pull request object structure.
@@ -81,7 +81,7 @@ In the following example you will ingest your GitHub repositories, their workflo
 
 :::tip
 
-- Refer to the [setup](github.md#setup) section to learn more about the `port-app-config.yml` setup process;
+- Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#setup) section to learn more about the `port-app-config.yml` setup process;
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitHub objects to Port Entities;
 - Click [Here](https://docs.github.com/en/rest/repos/repos#get-a-repository) for the GitHub repository object structure.
 - Click [Here](https://docs.github.com/en/rest/actions/workflows#get-a-workflow) for the GitHub workflow object structure.
@@ -103,7 +103,7 @@ In the following example you will ingest your GitHub repositories and their issu
 
 :::tip
 
-- Refer to the [setup](github.md#setup) section to learn more about the `port-app-config.yml` setup process;
+- Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#setup) section to learn more about the `port-app-config.yml` setup process;
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitHub objects to Port Entities;
 - Click [Here](https://docs.github.com/en/rest/repos/repos#get-a-repository) for the GitHub repository object structure.
 - Click [Here](https://docs.github.com/en/rest/issues/issues#get-an-issue) for the GitHub issue object structure.
@@ -137,7 +137,7 @@ To retrieve the root folders of your monorepo, you can use this following syntax
 :::
 :::tip
 
-- Refer to the [setup](github.md#setup) section to learn more about the `port-app-config.yml` setup process;
+- Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#setup) section to learn more about the `port-app-config.yml` setup process;
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitHub objects to Port Entities;
 - Click [Here](https://docs.github.com/en/rest/repos/repos#get-a-repository) for the GitHub repository object structure.
 - Click [Here](https://docs.github.com/en/rest/git/trees#get-a-tree) for the GitHub folder object structure.
@@ -161,7 +161,7 @@ In the following example you will ingest your GitHub repositories, the repositor
 In the following example you will ingest your GitHub repositories and their teams to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
 
 :::note
-Teams are GitHub organization level resources, therefore you will need to specify the mapping of the teams in a [global integration configuration](github.md#setup) (Through Port's UI or through the `port-app-config.yml` file in the `.github-private` repository).
+Teams are GitHub organization level resources, therefore you will need to specify the mapping of the teams in a [global integration configuration](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#setup) (Through Port's UI or through the `port-app-config.yml` file in the `.github-private` repository).
 :::
 
 <TeamBlueprint/>
