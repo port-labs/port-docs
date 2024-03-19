@@ -39,7 +39,7 @@ resources:
             link: .web_url
             labels: "[.labels[]]"
           relations:
-            service: .references.full | gsub("#.+"; "")
+            repository: .references.full | gsub("#.+"; "")
 ```
 
 </details>

@@ -4,7 +4,7 @@
 
 ```yaml showLineNumbers
 resources:
-  - kind: service
+  - kind: repository
     selector:
       query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
     port:
@@ -33,7 +33,7 @@ resources:
             updatedAt: ".updated_at"
             link: ".html_url"
           relations:
-            service: ".repo"
+            repository: ".repo"
   - kind: workflow-run
     selector:
       query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.

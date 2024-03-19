@@ -37,7 +37,7 @@ resources:
             description: .description
             link: .web_url
           relations:
-            service: .__project.path_with_namespace | gsub(" "; "")
+            repository: .__project.path_with_namespace | gsub(" "; "")
   - kind: job
     selector:
       query: "true"

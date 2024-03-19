@@ -4,7 +4,7 @@
 
 ```yaml showLineNumbers
 resources:
-  - kind: service
+  - kind: repository
     selector:
       query: "true"
     port:
@@ -38,7 +38,7 @@ resources:
             url: .html_url
             references: "[.security_advisory.references[].url]"
           relations:
-            service: .repo.name
+            repository: .repo.name
   - kind: code-scanning-alerts
     selector:
       query: 'true'
@@ -55,7 +55,7 @@ resources:
             description: .rule.description
             url: .html_url
           relations:
-            service: .repo
+            repository: .repo
 ```
 
 </details>
