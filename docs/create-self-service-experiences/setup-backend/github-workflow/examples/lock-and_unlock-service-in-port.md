@@ -8,6 +8,13 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 In this guide, we will create a self-service action in Port that executes a GitHub workflow to lock and unlock a service. The locking and unlocking mechanism involves updating the `locked` property in Port on a `production` or `development` environment. Additionally, the action will send a Slack notification to a designated channel.
 
+## Use cases
+1. **Maintenance & Critical Events**: Lock deployment during maintenance, peak traffic, or critical events to maintain stability.
+
+2. **Emergency Situations**: Lock deployment in emergencies such as security breaches or vulnerabilities to mitigate risks and prevent further issues.
+
+3. **Post-Incident Fixes**: Unlock deployment to allow teams to implement necessary fixes or updates swiftly and restore system functionality.
+
 ## Prerequisites
 1. Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new).
 2. Configure a [Slack app](https://api.slack.com/apps) that can post a message to a Slack channel. The app should have a `chat:write` bot scope under **OAuth & Permissions**.
