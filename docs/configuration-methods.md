@@ -1,16 +1,16 @@
 ---
-sidebar_position: 4
-sidebar_label: 🛠️ Usage methods
+sidebar_position: 11
+sidebar_class_name: custom-sidebar-item sidebar-menu-usage-methods
 ---
 
-import CredentialsGuide from "../build-your-software-catalog/custom-integration/api/\_template_docs/\_find_credentials.mdx";
-import ApiRef from "../api-reference/\_learn_more_reference.mdx"
-import InstallTerraform from "../build-your-software-catalog/sync-data-to-catalog/iac/terraform/\_terraform_provider_base.mdx"
+import CredentialsGuide from "/docs/build-your-software-catalog/custom-integration/api/\_template_docs/\_find_credentials.mdx";
+import ApiRef from "/docs/api-reference/\_learn_more_reference.mdx"
+import InstallTerraform from "/docs/build-your-software-catalog/sync-data-to-catalog/iac/terraform/\_terraform_provider_base.mdx"
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-# 🛠️ Usage methods
+# Usage methods
 
 Port supports a variety integrations, apps and tools that allow you to model your software catalog, ingest data and invoke actions, some of the core setup methods are:
 
@@ -35,7 +35,7 @@ To use Port's API and Terraform provider, you will need API credentials.
 
 <TabItem value="api">
 
-Port's [API](../api-reference/api-reference.mdx) provides a convenient REST interface to perform CRUD operations in your software catalog.
+Port's [API](/api-reference/api-reference.mdx) provides a convenient REST interface to perform CRUD operations in your software catalog.
 
 Port's API base URL is: `https://api.getport.io/v1`
 
@@ -74,7 +74,7 @@ resource "port_blueprint" "myBlueprint" {
 
 Then run `terraform plan` to view the new blueprint that will be created, and `terraform apply` to create the blueprint you defined, inside Port's software catalog.
 
-To learn more about the Terraform resource definition of different API objects, refer to their respective category and structure reference, for example - [configure blueprints in Port](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/setup-blueprint.md?definition=tf#configure-blueprints-in-port) and [Terraform provider](../build-your-software-catalog/sync-data-to-catalog/iac/terraform/terraform.md).
+To learn more about the Terraform resource definition of different API objects, refer to their respective category and structure reference, for example - [configure blueprints in Port](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/setup-blueprint.md?definition=tf#configure-blueprints-in-port) and [Terraform provider](/build-your-software-catalog/sync-data-to-catalog/iac/terraform/terraform.md).
 
 </TabItem>
 
