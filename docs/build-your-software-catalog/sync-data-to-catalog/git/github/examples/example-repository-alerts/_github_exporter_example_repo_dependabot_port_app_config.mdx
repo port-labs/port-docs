@@ -38,7 +38,7 @@ resources:
             url: .html_url
             references: "[.security_advisory.references[].url]"
           relations:
-            repository: .repo.name
+            service: .repo.name
   - kind: code-scanning-alerts
     selector:
       query: 'true'
@@ -55,7 +55,7 @@ resources:
             description: .rule.description
             url: .html_url
           relations:
-            repository: .repo
+            service: .repo
 ```
 
 </details>

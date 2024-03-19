@@ -33,7 +33,7 @@ resources:
             updatedAt: ".updated_at"
             link: ".html_url"
           relations:
-            repository: ".repo"
+            service: ".repo"
   - kind: workflow-run
     selector:
       query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
