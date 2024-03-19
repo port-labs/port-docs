@@ -1,9 +1,9 @@
 ---
 title: Create self-service actions
-sidebar_label: ⚡️ Create self-service actions
+sidebar_label: Create self-service actions
 ---
 
-# ⚡️ Create self-service actions
+# Create self-service actions
 
 <center>
 

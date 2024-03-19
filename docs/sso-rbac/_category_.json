@@ -1,4 +1,5 @@
 {
-  "label": "🔒 SSO & RBAC",
-  "position": 10
+  "label": "SSO & RBAC",
+  "position": 10,
+  "className": "custom-sidebar-item sidebar-menu-sso-and-rbac"
 }
