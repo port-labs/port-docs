@@ -1066,7 +1066,7 @@ Done! any change that happens to your applications in ArgoCD will trigger a webh
 
 ## Connect ArgoCD deployment to image
 
-This guide aims to demonstrate how to connect an ArgoCD deployment to an image blueprint in Port. By linking your ArgoCD deployment to a specific container image, you gain visibility into the images utilized by each ArgoCD application, facilitating effective tracking and cluster management.
+This guide aims to demonstrate how to connect an ArgoCD deployment to an image blueprint in Port. By linking your ArgoCD deployment to a specific container image, you gain visibility into the images used by each ArgoCD application, facilitating effective tracking.
 
 :::tip Prerequisites
 - Ensure you have ingested container images into your software catalog using our [ECR Images script](https://github.com/port-labs/example-ecr-images) or [GCR Images script](https://github.com/port-labs/example-gcr-images)
