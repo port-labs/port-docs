@@ -10,9 +10,7 @@ In this guide, we will create a self-service action in Port that executes a GitH
 
 ## Use cases
 1. **Maintenance & Critical Events**: Lock deployment during maintenance, peak traffic, or critical events to maintain stability.
-
 2. **Emergency Situations**: Lock deployment in emergencies such as security breaches or vulnerabilities to mitigate risks and prevent further issues.
-
 3. **Post-Incident Fixes**: Unlock deployment to allow teams to implement necessary fixes or updates swiftly and restore system functionality.
 
 ## Prerequisites
