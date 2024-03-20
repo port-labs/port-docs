@@ -17,6 +17,8 @@ You can find your existing action runs using one of the following methods:
 - Go the [entity page](/customize-pages-dashboards-and-plugins/page/entity-page.md) of your desired Entity, then select the `Runs` tab.  
    This page will display all action runs that have been executed for the selected Entity.
 
+- Once you have at least one `in-progress` action run, a panel will be displayed on the right side of the page, showing the  runs that are currently in progress.
+
 - After executing an action [from the UI](https://app.getport.io/self-serve), a toast will appear in the top of the page, with a link to the newly created action run.
 
 ## Interacting with action runs
@@ -42,7 +44,7 @@ The `runId` will be shown in top-left corner of the action run page:
 
 <TabItem value="api">
 
-The `runId` will be returned in the response body of the action run request, under the `context.runId` key:
+The `runId` will be returned in the response body of the [action run request](/create-self-service-experiences/reflect-action-progress/#action-run-json-structure), under the `context.runId` key:
 
 ```json showLineNumbers
 {
@@ -104,9 +106,12 @@ You can use Port's API to update an the following properties of an action run:
 - `status` - The status of the action run. Initial value is `IN_PROGRESS`, can be set to `SUCCESS` or `FAILURE`.
 - `statusLabel` - A custom message used to add information to the status of the action run.
 - `logs` - Log entries that will be displayed in the action run's page in Port.
+- `summary` - A summary of the action run, which will be displayed in the run's page in Port.
 
-:::info Github backend
-When using a `Github workflow` as the action backend, a `Report workflow status` option will be available and set to `Yes` by default. When using this option, Port will automatically update the status of the action run to `SUCCESS` or `FAILURE` according to the result of the Github workflow, so no manual update is required.
+:::info Auto-update status
+When using a `Github workflow` as the action backend, a `Report workflow status` option will be available and set to `Yes` by default. When using this option, Port will automatically update the `status` of the action run to `SUCCESS` or `FAILURE` according to the result of the Github workflow, so no manual update is required.
+
+When using a `Webhook` as the action backend, a [`Request type` option](/create-self-service-experiences/setup-backend/webhook/#sync-vs-async-execution) will be available. When set to `sync`, Port will automatically update the status of the action run according to the HTTP response code.
 :::
 
 #### Run details
