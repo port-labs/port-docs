@@ -111,7 +111,7 @@ def process_project_entities(projects_data: list[dict[str, Any]]):
         add_entity_to_port(blueprint_id=blueprint_id, entity_object=entity)
 
 def process_repository_entities(repository_data: list[dict[str, Any]]):
-    blueprint_id = "bitbucketService"
+    blueprint_id = "service"
 
     for repo in repository_data:
 
