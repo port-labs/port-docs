@@ -67,7 +67,7 @@ Here is an example `port-app-config.yml` block:
 
 ```yaml showLineNumbers
 resources:
-  - kind: service
+  - kind: repository
     selector:
       query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
     port:
@@ -89,7 +89,7 @@ resources:
   ```yaml showLineNumbers
   # highlight-next-line
   resources:
-    - kind: service
+    - kind: repository
       selector:
       ...
   ```
@@ -99,7 +99,7 @@ resources:
   ```yaml showLineNumbers
     resources:
       # highlight-next-line
-      - kind: service
+      - kind: repository
         selector:
         ...
   ```
@@ -112,7 +112,7 @@ The `selector` and the `query` keys let you filter exactly which objects from th
 
   ```yaml showLineNumbers
   resources:
-    - kind: service
+    - kind: repository
       # highlight-start
       selector:
         query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
@@ -132,7 +132,7 @@ The `port`, `entity` and the `mappings` keys open the section used to map the Bi
 
   ```yaml showLineNumbers
   resources:
-    - kind: service
+    - kind: repository
       selector:
         query: "true"
       # highlight-start
