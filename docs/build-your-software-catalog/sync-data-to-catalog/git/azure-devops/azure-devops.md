@@ -49,7 +49,7 @@ resources:
             reviewers: '[.reviewers[].uniqueName]'
             createdAt: .creationDate
           relations:
-            repository: .repository.project.name + "/" + .repository.name
+            service: .repository.project.name + "/" + .repository.name
         # highlight-end
 ```
 

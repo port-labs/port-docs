@@ -3,7 +3,7 @@
 
 ```yaml showLineNumbers
 resources:
-  - kind: service
+  - kind: repository
     selector:
       query: 'true'
     port:
@@ -35,6 +35,6 @@ resources:
             allow_force_pushes: .branch.protectionRules.allow_force_pushes.enabled
             allow_deletions: .branch.protectionRules.allow_deletions.enabled
           relations:
-            repository: .repository.name
+            service: .repository.name
 ```
 </details>
