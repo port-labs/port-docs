@@ -250,7 +250,7 @@ Permissions can be given to select repositories in your organization, or to all 
 
 ## Examples
 
-Refer to the [examples](./examples.md) page for practical configurations and their corresponding blueprint definitions.
+Refer to the [examples](./examples/examples.md) page for practical configurations and their corresponding blueprint definitions.
 
 ## GitOps
 
@@ -263,3 +263,7 @@ Refer to the [advanced](./advanced.md) page for advanced use cases and examples.
 ## Self-hosted installation
 
 Port's GitHub app also supports a self-hosted installation, refer to the [self-hosted installation](./self-hosted-installation.md) page to learn more.
+
+## Additional resources
+
+- [Connect GitHub PR with Jira issue](/build-your-software-catalog/sync-data-to-catalog/git/examples/connect-github-pr-with-jira-issue.md)
