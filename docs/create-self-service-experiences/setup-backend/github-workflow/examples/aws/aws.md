@@ -1,10 +1,10 @@
 ---
-title: AWS Examples
+title: AWS
 sidebar_label: AWS
 ---
 
 import DocCardList from '@theme/DocCardList';
 
-# AWS Examples
+# Github AWS workflow examples
 
 <DocCardList />
