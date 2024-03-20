@@ -105,7 +105,7 @@ For the GitHub app installation you will need to have a registered organization 
 
 4. Now that the integration is installed successfully, we need to ingest `githubPullRequest` data from the GitHub organization into the software catalog. This can be done by adding some mapping logic. Go to your [data sources page](https://app.getport.io/dev-portal/data-sources), and click on your GitHub integration:
 
-<img src='/img/guides/githubIntegration.png' />
+<img src='/img/guides/githubIntegration.png' border='1px' />
 
 Add the following YAML block into the editor to ingest pull request data. Then click `Save & Resync`:
 
@@ -189,19 +189,19 @@ First, we will need to create a [relation](/build-your-software-catalog/customiz
 
 1. Head back to the [Builder](https://app.getport.io/dev-portal/data-model), choose the `Pull Request` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New relation`:
 
-<img src='/img/guides/githubPRNewJiraIssueRelation.png' width='60%' />
+<img src='/img/guides/githubPRNewJiraIssueRelation.png' width='60%' border='1px' />
 
 <br/><br/>
 
 2. Fill out the form like this, then click `Create`:
 
-<img src='/img/guides/githubPRCreateNewRelation.png' width='60%' />
+<img src='/img/guides/githubPRCreateNewRelation.png' width='60%' border='1px' />
 
 <br/><br/>
 
 Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, we need to assign the relevant Jira Issue to each of our pull requests. This can be done by adding some mapping logic. Go to your [data sources page](https://app.getport.io/dev-portal/data-sources), and click on your Github integration:
 
-<img src='/img/guides/githubIntegrationWithBlueprints.png' />
+<img src='/img/guides/githubIntegrationWithBlueprints.png' border='1px' />
 
 <br/><br/>
 
@@ -252,7 +252,7 @@ For the `jiraIssue` relation, we extract the Jira Issue key from the title of th
 
 :::
 
-<img src='/img/guides/githubPREntityAfterJiraIssueMapping.png' />
+<img src='/img/guides/githubPREntityAfterJiraIssueMapping.png' border='1px' />
 
 ## Conclusion
 
