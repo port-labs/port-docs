@@ -1,7 +1,4 @@
-<h1 align="center">
-  <p align="center">Port Documentation</p>
-  <a href="https://docs.getport.io"><img src="https://port-graphical-assets.s3.eu-west-1.amazonaws.com/Port+Logo.svg" alt="Port"></a>
-</h1>
+
 
 <p align="center">
   <a href="https://github.com/port-labs/port-docs/actions/workflows/verify-docs-build.yml"><img src="https://github.com/port-labs/port-docs/actions/workflows/verify-docs-build.yml/badge.svg" alt="GitHub Actions status"></a>
