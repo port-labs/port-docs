@@ -96,13 +96,13 @@ This GitHub action allows you to add tags to an ECR repository via Port Actions 
 
 </details>
 
-:::note Making use of an easy dropdown selection
+<!-- :::note Making use of an easy dropdown selection
 
 While this step will ensure the `ecrRepository` blueprint is available, the self-service action supports selecting from the list of ingested repositories instead of having to input the repository name. To allow for this option, follow [Port's guide to ingest images and repositories into Port](https://github.com/port-labs/example-ecr-images).
 
 This option is way easier but if you do not want this, you can simply type in repository names to tag them.
 
-:::
+::: -->
 
 4. After creating the blueprint, create the following action with the following JSON file on the `ecrRepository` blueprint:
 
@@ -124,11 +124,6 @@ This option is way easier but if you do not want this, you can simply type in re
         "description": "Use if respository has been ingested into Port. If both Repository and Repository Name are specified, Repository takes precedence.",
         "format": "entity"
       },
-      "repository_name": {
-        "title": "Repository Name",
-        "type": "string",
-        "description": "Use if Respository field is blank. If both is filled, Repository takes precedence."
-      },
       "tags": {
         "icon": "DefaultProperty",
         "title": "Tags",
@@ -136,8 +131,14 @@ This option is way easier but if you do not want this, you can simply type in re
         "description": "Tags should be in key-value pairs like so: {\"key\": \"value\"}"
       }
     },
-    "required": ["tags"],
-    "order": ["tags", "repository", "repository_name"]
+    "required": [
+      "tags",
+      "repository"
+    ],
+    "order": [
+      "tags",
+      "repository"
+    ]
   },
   "invocationMethod": {
     "type": "GITHUB",
@@ -174,8 +175,7 @@ on:
     inputs:
       repository:
         type: string
-      repository_name:
-        type: string
+        required: true
       tags:
         type: string
         required: true
@@ -237,7 +237,7 @@ jobs:
           TAGS=$(echo "${TAGS_JSON}" | jq -r '. | to_entries[] | "Key=\(.key),Value=\(.value)"' | tr '\n' ' ')
 
           aws ecr tag-resource \
-          --resource-arn arn:aws:ecr:${{ secrets.AWS_REGION }}:${{ secrets.AWS_ACCOUNT_ID }}:repository/${{ inputs.repository && inputs.repository || inputs.repository_name }} \
+          --resource-arn arn:aws:ecr:${{ secrets.AWS_REGION }}:${{ secrets.AWS_ACCOUNT_ID }}:repository/${{ inputs.repository }} \
           --tags ${TAGS}
 
       - name: Create a log message
