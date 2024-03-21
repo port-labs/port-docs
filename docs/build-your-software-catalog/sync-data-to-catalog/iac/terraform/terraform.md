@@ -469,13 +469,13 @@ Then run the following command to import the entity to the Terraform state:
 terraform import port_entity.myEntity "{blueprintIdentifier}:{entityIdentifier}"
 ```
 
-:::danger
-Before using `terraform import` to bring data from your Port account into your Terraform state file, make sure your resource definitions match the schema of your resources in Port. If they don't, your state will be deleted in the next `terraform apply`, since Terraform will try to apply the empty resources and override the imported state, while also updating Port in the process.                                                                                                                                                                                                                             
-:::
-
 </TabItem>
 
 </Tabs>
+
+:::danger Applying after import
+Before using `terraform import` to bring data from your Port account into your Terraform state file, make sure your resource definitions match the schema of your resources in Port. If they don't, your state will be deleted in the next `terraform apply`, since Terraform will try to apply the empty resources and override the imported state, while also updating Port in the process.                                                                                                                                          
+:::
 
 ## Examples
 
