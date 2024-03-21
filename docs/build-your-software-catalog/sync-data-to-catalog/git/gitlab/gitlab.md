@@ -72,7 +72,7 @@ resources:
         mappings:
           identifier: .namespace.full_path | gsub("/";"-") # The Entity identifier will be the repository name.
           title: .name
-          blueprint: '"gitlabService"'
+          blueprint: '"service"'
           properties:
             url: .web_link
             description: .description
@@ -140,7 +140,7 @@ resources:
         mappings: # Mappings between one GitLab API object to a Port entity. Each value is a JQ query.
           identifier: .namespace.full_path | gsub("/";"-")
           title: .name
-          blueprint: '"gitlabService"'
+          blueprint: '"service"'
           properties:
             url: .web_link
             description: .description
