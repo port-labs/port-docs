@@ -77,7 +77,7 @@ Follow these steps to get started:
 
 <summary>GitHub workflow script</summary>
 
-:::tip Using Block Kit to design the message layout.
+:::tip Using Block Kit to design the message layout
 Whereas you can simply send a message with the *text* field, the [block kit framework](https://api.slack.com/block-kit) provides a rich pool of components and layouts to design your message and allows you to add interactivity. Try it out [here](https://app.slack.com/block-kit-builder/) to compose your own blocks. You can then replace the `blocks` field in the request below.
 :::
 
