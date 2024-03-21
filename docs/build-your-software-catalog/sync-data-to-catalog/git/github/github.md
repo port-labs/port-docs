@@ -68,7 +68,7 @@ Here is an example `port-app-config.yml` block:
 
 ```yaml showLineNumbers
 resources:
-  - kind: service
+  - kind: repository
     selector:
       query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
     port:
@@ -76,7 +76,7 @@ resources:
         mappings:
           identifier: ".name" # The Entity identifier will be the repository name.
           title: ".name"
-          blueprint: '"githubService"'
+          blueprint: '"service"'
           properties:
             url: ".html_url"
             description: ".description"
@@ -89,7 +89,7 @@ resources:
   ```yaml showLineNumbers
   # highlight-next-line
   resources:
-    - kind: service
+    - kind: repository
       selector:
       ...
   ```
@@ -99,7 +99,7 @@ resources:
   ```yaml showLineNumbers
     resources:
       # highlight-next-line
-      - kind: service
+      - kind: repository
         selector:
         ...
   ```
@@ -110,15 +110,15 @@ resources:
 
 The `selector` and the `query` keys let you filter exactly which objects from the specified `kind` will be ingested into the software catalog:
 
-  ```yaml showLineNumbers
-  resources:
-    - kind: service
-      # highlight-start
-      selector:
-        query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
-      # highlight-end
-      port:
-  ```
+```yaml showLineNumbers
+resources:
+  - kind: repository
+    # highlight-start
+    selector:
+      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
+    # highlight-end
+    port:
+```
 
 For example, to ingest only repositories that have a name starting with `"service"`, use the `query` key like this:
 
@@ -130,31 +130,31 @@ query: .name | startswith("service")
 
 The `port`, `entity` and the `mappings` keys open the section used to map the GitHub API object fields to Port entities. To create multiple mappings of the same kind, you can add another item to the `resources` array:
 
-  ```yaml showLineNumbers
-  resources:
-    - kind: service
-      selector:
-        query: "true"
-      # highlight-start
-      port:
-        entity:
-          mappings: # Mappings between one GitHub API object to a Port entity. Each value is a JQ query.
-            currentIdentifier: ".name" # OPTIONAL - keep it only in case you want to change the identifier of an existing entity from "currentIdentifier" to "identifier".
-            identifier: ".name"
-            title: ".name"
-            blueprint: '"githubService"'
-            properties:
-              description: ".description"
-              url: ".html_url"
-              defaultBranch: ".default_branch"
-      # highlight-end
-    - kind: service # In this instance repository is mapped again with a different filter
-      selector:
-        query: '.name == "MyRepositoryName"'
-      port:
-        entity:
-          mappings: ...
-  ```
+```yaml showLineNumbers
+resources:
+  - kind: repository
+    selector:
+      query: "true"
+    # highlight-start
+    port:
+      entity:
+        mappings: # Mappings between one GitHub API object to a Port entity. Each value is a JQ query.
+          currentIdentifier: ".name" # OPTIONAL - keep it only in case you want to change the identifier of an existing entity from "currentIdentifier" to "identifier".
+          identifier: ".name"
+          title: ".name"
+          blueprint: '"service"'
+          properties:
+            description: ".description"
+            url: ".html_url"
+            defaultBranch: ".default_branch"
+    # highlight-end
+  - kind: repository # In this instance repository is mapped again with a different filter
+    selector:
+      query: '.name == "MyRepositoryName"'
+    port:
+      entity:
+        mappings: ...
+```
 
 :::tip
 Pay attention to the value of the `blueprint` key, if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
@@ -221,7 +221,7 @@ Port's GitHub integration requires the following permissions:
   - **Deployments:** Readonly.
   - **Environments:** Readonly.
   - **Code scanning alerts:** Readonly.
-  - 
+  -
 
 - Organization permissions:
 
@@ -250,7 +250,7 @@ Permissions can be given to select repositories in your organization, or to all 
 
 ## Examples
 
-Refer to the [examples](./examples.md) page for practical configurations and their corresponding blueprint definitions.
+Refer to the [examples](./examples/examples.md) page for practical configurations and their corresponding blueprint definitions.
 
 ## GitOps
 
@@ -263,3 +263,7 @@ Refer to the [advanced](./advanced.md) page for advanced use cases and examples.
 ## Self-hosted installation
 
 Port's GitHub app also supports a self-hosted installation, refer to the [self-hosted installation](./self-hosted-installation.md) page to learn more.
+
+## Additional resources
+
+- [Connect GitHub PR with Jira issue](/build-your-software-catalog/sync-data-to-catalog/git/examples/connect-github-pr-with-jira-issue.md)
