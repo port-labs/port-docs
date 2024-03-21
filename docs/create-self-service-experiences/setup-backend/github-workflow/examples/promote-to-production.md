@@ -436,24 +436,24 @@ jobs:
           runId: ${{ fromJson(github.event.inputs.port_payload).context.runId }}
           logMessage: "Getting the current staging image..."
 
-      - uses: actions/checkout@v3
-      - name: Create PR
-        id: create-pr
-        uses: fjogeleit/yaml-update-action@main
+      - name: Set the production image
+        id: set-production
+        uses: port-labs/port-github-action@v1
         with:
-          valueFile: "<DEPLOYMENT-MANIFEST-PATH>" ## replace value
-          propertyPath: "<IMAGE-PROPERTY-PATH>" ## replace value
-          value: "${{ fromJson(steps.get-staging.outputs.entity).relations.image }}"
-          commitChange: true
-          token: ${{ secrets.MY_GITHUB_TOKEN }}
-          targetBranch: main
-          masterBranchName: main
-          createPR: true
-          branch: deployment/${{ fromJson(github.event.inputs.port_payload).context.runId }}
-          message: "Update deployment image to ${{ github.event.inputs.image }}"
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          operation: UPSERT
+          identifier: ${{fromJson(github.event.inputs.port_payload).payload.entity.relations.prod_runtime }}
+          blueprint: running_service
+          runId: ${{ fromJson(github.event.inputs.port_payload).context.runId }}
+          logMessage: "Updating the production image..."
+          relations: |
+            {
+              "image": "${{ fromJson(steps.get-staging.outputs.entity).relations.image }}"
+            }
 
       - name: Inform Port about pull request creation status - Success
-        if: steps.create-pr.outcome == 'success'
+        if: steps.set-production.outcome == 'success'
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
@@ -462,11 +462,10 @@ jobs:
           operation: PATCH_RUN
           runId: ${{ fromJson(github.event.inputs.port_payload).context.runId }}
           logMessage: |
-            'The creation of PR was successful: ${{fromJson(steps.create-pr.outputs.pull_request).html_url}}'
-          link: '["${{fromJson(steps.create-pr.outputs.pull_request).html_url}}"]'
+            The production image has been updated successfully
 
       - name: Inform Port about pull request creation status - Failure
-        if: steps.create-pr.outcome != 'success'
+        if: steps.set-production.outcome != 'success'
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
@@ -475,40 +474,7 @@ jobs:
           operation: PATCH_RUN
           runId: ${{ fromJson(github.event.inputs.port_payload).context.runId }}
           logMessage: |
-            The creation of PR was not successful.
-
-      - name: Merge Pull Request
-        if: ${{ github.event.inputs.auto_merge == 'true' && steps.create-pr.outcome == 'success' }}
-        env:
-          GH_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
-          PR_URL: ${{ fromJson(steps.create-pr.outputs.pull_request).url }}
-        run: |
-          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
-            -X PUT \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            "$PR_URL/merge")
-
-          echo "HTTP Status: $HTTP_STATUS"
-
-          if [ $HTTP_STATUS -eq 200 ]; then
-            echo "Pull request merged successfully."
-            echo "merge_status=successful" >> $GITHUB_ENV
-          else
-            echo "Failed to merge PR. HTTP Status: $HTTP_STATUS"
-            echo "merge_status=unsuccessful" >> $GITHUB_ENV
-          fi
-
-      - name: Inform completion of workflow into Port
-        if: ${{ github.event.inputs.auto_merge == 'true' }}
-        uses: port-labs/port-github-action@v1
-        with:
-          clientId: ${{ secrets.PORT_CLIENT_ID }}
-          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          baseUrl: https://api.getport.io
-          operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
-          logMessage: "Pull request merge was ${{ env.merge_status }}"
+            The promotion of the image to production failed.
 ```
 
 </details>
