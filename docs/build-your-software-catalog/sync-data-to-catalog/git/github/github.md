@@ -68,7 +68,7 @@ Here is an example `port-app-config.yml` block:
 
 ```yaml showLineNumbers
 resources:
-  - kind: service
+  - kind: repository
     selector:
       query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
     port:
@@ -89,7 +89,7 @@ resources:
   ```yaml showLineNumbers
   # highlight-next-line
   resources:
-    - kind: service
+    - kind: repository
       selector:
       ...
   ```
@@ -99,7 +99,7 @@ resources:
   ```yaml showLineNumbers
     resources:
       # highlight-next-line
-      - kind: service
+      - kind: repository
         selector:
         ...
   ```
@@ -112,7 +112,7 @@ The `selector` and the `query` keys let you filter exactly which objects from th
 
   ```yaml showLineNumbers
   resources:
-    - kind: service
+    - kind: repository
       # highlight-start
       selector:
         query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
@@ -132,7 +132,7 @@ The `port`, `entity` and the `mappings` keys open the section used to map the Gi
 
   ```yaml showLineNumbers
   resources:
-    - kind: service
+    - kind: repository
       selector:
         query: "true"
       # highlight-start
@@ -148,7 +148,7 @@ The `port`, `entity` and the `mappings` keys open the section used to map the Gi
               url: ".html_url"
               defaultBranch: ".default_branch"
       # highlight-end
-    - kind: service # In this instance repository is mapped again with a different filter
+    - kind: repository # In this instance repository is mapped again with a different filter
       selector:
         query: '.name == "MyRepositoryName"'
       port:
@@ -250,7 +250,7 @@ Permissions can be given to select repositories in your organization, or to all 
 
 ## Examples
 
-Refer to the [examples](./examples.md) page for practical configurations and their corresponding blueprint definitions.
+Refer to the [examples](./examples/examples.md) page for practical configurations and their corresponding blueprint definitions.
 
 ## GitOps
 
@@ -263,3 +263,7 @@ Refer to the [advanced](./advanced.md) page for advanced use cases and examples.
 ## Self-hosted installation
 
 Port's GitHub app also supports a self-hosted installation, refer to the [self-hosted installation](./self-hosted-installation.md) page to learn more.
+
+## Additional resources
+
+- [Connect GitHub PR with Jira issue](/build-your-software-catalog/sync-data-to-catalog/git/examples/connect-github-pr-with-jira-issue.md)

@@ -13,7 +13,12 @@ import GitOpsPushEvent from '../../\_git_gitops_push_events_explanation.mdx'
 
 Port's GitLab integration makes it possible to manage Port entities with a GitOps approach, making your code projects into the source of truth for the various infrastructure assets you want to manage.
 
-## 💡 GitLab GitOps common use cases
+:::info Apphost prerequisite
+When [installing the Gitlab integration](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/installation#deploying-the-gitlab-integration), the `appHost` parameter must be provided in order to use GitOps.  
+Without it, the integration will not be able to receive webhook events about pushes to the `port.yml` file.
+:::
+
+## Common use cases
 
 - Use GitLab as the source-of-truth for your **microservices**, **projects**, **packages**, **libraries** and other software catalog assets;
 - Allow developers to keep the catalog up-to-date, by making updates to files in their Git projects;
