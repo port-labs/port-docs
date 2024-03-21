@@ -91,7 +91,7 @@ Some of the keys use [JQ queries](https://jqlang.github.io/jq/manual/) to filter
           mappings: # Mappings between one GitHub API object to a Port entity. Each value is a JQ query.
             identifier: ".name"
             title: ".name"
-            blueprint: '"githubService"'
+            blueprint: '"service"'
             properties:
               description: ".description"
               url: ".html_url"
@@ -112,7 +112,7 @@ Some of the keys use [JQ queries](https://jqlang.github.io/jq/manual/) to filter
           mappings: # Mappings between one GitHub API object to a Port entity. Each value is a JQ query.
             identifier: ".name"
             title: ".name"
-            blueprint: '"githubService"'
+            blueprint: '"service"'
             properties:
               description: ".description"
               url: ".html_url"
@@ -169,5 +169,4 @@ After ingesting all of our services and PagerDuty services, we want to connect e
      ```
 
      Now, if a `service's` **identifier** is equal to a `PagerDuty service's` **name**, that service will automatically have its on-call property filled with the relevant PagerDuty service.  
-      This is just the convention we chose for this example, but you can use a different one if you'd like.  
-
+      This is just the convention we chose for this example, but you can use a different one if you'd like.

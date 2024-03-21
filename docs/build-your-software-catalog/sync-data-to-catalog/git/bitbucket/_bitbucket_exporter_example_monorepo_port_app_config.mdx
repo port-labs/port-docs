@@ -16,7 +16,7 @@ resources:
       entity:
         mappings:
           identifier: .folder.name
-          blueprint: '"bitbucketService"'
+          blueprint: '"service"'
           properties:
             url: .repo.links.html.href + "/src/" + .repo.mainbranch.name + "/" + .folder.path
             readme: file://README.md
