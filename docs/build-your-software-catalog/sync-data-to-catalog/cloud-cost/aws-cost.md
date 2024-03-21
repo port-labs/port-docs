@@ -195,6 +195,165 @@ If the command above returns at least one directory named with the date range of
 
 </details>
 
+2. Create a `cloudAccount` blueprint.
+
+<details>
+<summary>Cloud Account</summary>
+
+```json
+{
+  "identifier": "cloudAccount",
+  "description": "",
+  "title": "Cloud Account",
+  "icon": "Environment",
+  "schema": {
+    "properties": {
+      "provider": {
+        "description": "The name of the cloud provider",
+        "type": "string",
+        "enum": ["AWS", "GCP", "Azure"],
+        "enumColors": {
+          "AWS": "orange",
+          "GCP": "green",
+          "Azure": "blue"
+        },
+        "icon": "DefaultProperty"
+      },
+      "type": {
+        "icon": "DefaultProperty",
+        "title": "Type",
+        "type": "array",
+        "items": {
+          "enum": ["Prod", "Test", "Dev"],
+          "enumColors": {
+            "Prod": "red",
+            "Test": "turquoise",
+            "Dev": "green"
+          },
+          "type": "string"
+        }
+      },
+      "region": {
+        "type": "string",
+        "title": "Region",
+        "icon": "DefaultProperty"
+      },
+      "costManagement": {
+        "title": "Cost Management",
+        "type": "string",
+        "format": "url",
+        "icon": "DefaultProperty"
+      },
+      "healthDashboard": {
+        "title": "Health Dashboard",
+        "type": "string",
+        "format": "url",
+        "icon": "DefaultProperty"
+      },
+      "securityDashboard": {
+        "title": "Security Dashboard",
+        "type": "string",
+        "format": "url",
+        "icon": "DefaultProperty"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
+}
+```
+
+</details>
+
+3. Create the `cloudResource` blueprint. This will allow us to map a cost to a cloud service.
+
+<details>
+<summary>Cloud Resource</summary>
+
+:::tip Modify Blueprint
+You may modify the blueprint to suit your context.
+:::
+
+```json showLineNumbers
+{
+  "identifier": "cloudResource",
+  "title": "Cloud Resource",
+  "icon": "Cloud",
+  "schema": {
+    "properties": {
+      "service": {
+        "type": "string",
+        "icon": "Cloud",
+        "title": "Service" // AWSLambda, AmazonS3, AmazonEC2, ...
+      },
+      "region": {
+        "type": "string",
+        "icon": "Cloud",
+        "title": "Region" // us-east-1, eu-west-1, ...
+      },
+      "url": {
+        "type": "string",
+        "title": "Additional Info",
+        "format": "url",
+        "description": "the link to the cloud resource"
+      },
+      "tags": {
+        "type": "object",
+        "title": "Tags"
+      },
+      "storesPII": {
+        "icon": "Unlock",
+        "type": "boolean",
+        "title": "PII Data Source"
+      },
+      "IaCCode": {
+        "icon": "DefaultProperty",
+        "type": "string",
+        "title": "IaC Code",
+        "format": "markdown"
+      },
+      "IaC": {
+        "type": "string",
+        "title": "IaC",
+        "enum": ["Pulumi", "Crossplane", "Terraform"]
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {
+    "iacPath": {
+      "title": "IaC File Path",
+      "icon": "Github",
+      "calculation": "\"https://github.com/iac/\" + .identifier",
+      "type": "string",
+      "format": "url"
+    },
+    "datadogDashboard": {
+      "title": "Datadog Dashboard",
+      "icon": "Datadog",
+      "calculation": "\"https://p.datadoghq.com/sb/ee7c4d5a-919e-11ed-a723-da7ad0900002-610882095192d0e2e44c2ab031f39c21/\" + .identifier",
+      "type": "string",
+      "format": "url"
+    }
+  },
+  "aggregationProperties": {},
+  "relations": {
+    "cloud-account": {
+      "title": "Hosting Cloud",
+      "target": "cloudAccount",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
+
 ### Exporter
 
 Environment variables of the exporter for all the setup options:
@@ -204,7 +363,8 @@ Environment variables of the exporter for all the setup options:
 | PORT_CLIENT_ID                 | Your Port client id                                                          | **true** |                                                 |
 | PORT_CLIENT_SECRET             | Your Port client secret                                                      | **true** |                                                 |
 | PORT_BASE_URL                  | Port API base url                                                            | false    | `https://api.getport.io/v1`                     |
-| PORT_BLUEPRINT                 | Port blueprint identifier to use                                             | false    | `awsCost`                                       |
+| PORT_CLOUD_COST_BLUEPRINT      | Port blueprint identifier to use for AWS Cost                                | false    | `awsCost`                                       |
+| PORT_CLOUD_RESOURCE_BLUEPRINT  | Port blueprint identifier to use for the Cloud Resources                     | false    | `cloudResource`                                 |
 | PORT_MAX_WORKERS               | Max concurrent threads that interacts with Port API (upsert/delete entities) | false    | `5`                                             |
 | PORT_MONTHS_TO_KEEP            | Amount of months to keep the cost reports in Port                            | false    | `3`                                             |
 | AWS_BUCKET_NAME                | Your AWS bucket name to store cost reports                                   | **true** |                                                 |
@@ -319,10 +479,10 @@ jobs:
 
 #### GitLab Pipeline
 
-1. Create the following GitLab CI/CD variables: 
-:::tip
-Refer to this guide on how to [setup a GitLab CI variable](https://docs.gitlab.com/ee/ci/variables/index.html#define-a-cicd-variable-in-the-ui)
-:::
+1. Create the following GitLab CI/CD variables:
+   :::tip
+   Refer to this guide on how to [setup a GitLab CI variable](https://docs.gitlab.com/ee/ci/variables/index.html#define-a-cicd-variable-in-the-ui)
+   :::
 
 Required:
 
@@ -371,6 +531,6 @@ run_job:
    3. Fill the form with the schedule details: description, interval pattern, timezone, target branch.
    4. Ensure the **Activated** checkbox is selected.
    5. Click on **Create pipeline schedule** to create the schedule.
-   :::tip
-   It is recommended to schedule the pipeline to run at most once a day, as AWS refreshes the data once a day.
-   :::
+      :::tip
+      It is recommended to schedule the pipeline to run at most once a day, as AWS refreshes the data once a day.
+      :::
