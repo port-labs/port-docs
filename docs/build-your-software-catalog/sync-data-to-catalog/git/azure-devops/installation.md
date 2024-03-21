@@ -203,7 +203,7 @@ pipeline {
                 script {
                     withCredentials([
                         string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__PERSONAL_ACCESS_TOKEN', variable: 'OCEAN__INTEGRATION__CONFIG__PERSONAL_ACCESS_TOKEN'),
-                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG____ORGANIZATION_URL', variable: 'OCEAN__INTEGRATION__CONFIG__ORGANIZATION_URL'),
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__ORGANIZATION_URL', variable: 'OCEAN__INTEGRATION__CONFIG__ORGANIZATION_URL'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_SECRET', variable: 'OCEAN__PORT__CLIENT_SECRET'),
                     ]) {
@@ -232,6 +232,56 @@ pipeline {
 ```
 
   </TabItem>
+
+  <TabItem value="azure-pipeline" label="Azure Pipeline">
+
+:::tip Azure pipeline agent check
+Your Azure pipeline agent should be able to run docker commands.
+:::
+
+Make sure to configure the following variables using [Azure DevOps variable groups](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops&tabs=yaml). Add them into in a variable group named `port-ocean-credentials`:
+
+  <DockerParameters />
+
+  <br/>
+
+Here is an example for `azure-devops-integration.yml` pipeline file:
+
+```yaml showLineNumbers
+trigger:
+- main
+
+pool:
+  vmImage: "ubuntu-latest"
+
+variables:
+  - group: port-ocean-credentials
+
+
+steps:
+- script: |
+    # Set Docker image and run the container
+    integration_type="azure-devops"
+    version="latest"
+
+    image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
+    
+    docker run -i --rm --platform=linux/amd64 \
+        -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+        -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+        -e OCEAN__INTEGRATION__CONFIG__PERSONAL_ACCESS_TOKEN=${OCEAN__INTEGRATION__CONFIG__PERSONAL_ACCESS_TOKEN} \
+        -e OCEAN__INTEGRATION__CONFIG__ORGANIZATION_URL=${OCEAN__INTEGRATION__CONFIG__ORGANIZATION_URL} \
+        -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \
+        -e OCEAN__PORT__CLIENT_SECRET=${OCEAN__PORT__CLIENT_SECRET} \
+        $image_name
+
+    exit $?
+  displayName: 'Ingest Azure DevOps Data into Port'
+
+```
+
+  </TabItem>
+
   </Tabs>
 
 </TabItem>
