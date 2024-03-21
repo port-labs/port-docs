@@ -193,7 +193,7 @@ jobs:
 <br />
 <br />
 
-Let's assume your AWS ECR repository is named `your-ecr-repository-name`. Here's how the Docker image names will be tagged based on the [provided workflow](/create-self-service-experiences/setup-backend/github-workflow/examples/aws/push-image-to-ecr#github-workflow):
+Let's assume your AWS ECR repository is named `your-ecr-repository-name`. Here's how the Docker image names will be tagged based on the [provided workflow](/create-self-service-experiences/setup-backend/github-workflow/examples/AWS/push-image-to-ecr#github-workflow):
 
 1. **Primary Tag: Short Commit ID**
    - Tag: `your-ecr-repository-name:abc123` (assuming `abc123` is the short commit ID)
