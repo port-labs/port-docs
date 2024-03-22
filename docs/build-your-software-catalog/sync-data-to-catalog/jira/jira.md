@@ -1605,7 +1605,7 @@ Under the `resources` key, modify the mapping for the `issue` kind by using the 
 
 :::tip JQ explanation
 
-The JQ below selects all labels that start with the keyword `port`. It then removes "port-" from each label, leaving only the part that comes after it. It then selects the first match, which is equivalent to the service in Port.
+The JQ below selects all labels that start with the keyword `port-`. It then removes "port-" from each label, leaving only the part that comes after it. It then selects the first match, which is equivalent to the service in Port.
 
 ```yaml
 service: .fields.labels | map(select(startswith("port"))) | map(sub("port-"; ""; "g")) | .[0]
