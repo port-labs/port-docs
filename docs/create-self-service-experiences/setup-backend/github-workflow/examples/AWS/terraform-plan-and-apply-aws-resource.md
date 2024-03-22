@@ -6,7 +6,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 # Provision Cloud Resource using Terraform Plan and Apply
 
-In this guide, we will create two self-service actions in Port that executes a GitHub workflow to plan and apply a cloud resource such as s3 bucket using Terraform. The first action generates the Terraform plan for the S3 bucket configuration, while the second action reviews, approves, and applies the configuration to provision the bucket.
+In this guide, we will create two self-service actions in Port that execute a GitHub workflow to plan and apply a cloud resource such as s3 bucket using Terraform. The first action generates the Terraform plan for the S3 bucket configuration, while the second action reviews, approves, and applies the configuration to provision the bucket.
 
 ## Use cases
 
