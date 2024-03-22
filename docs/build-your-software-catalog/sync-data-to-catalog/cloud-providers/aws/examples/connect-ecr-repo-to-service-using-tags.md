@@ -1,3 +1,5 @@
+import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+
 # Connect ECR repository to a service
 
 This guide aims to cover how to connect an ECR `repository` to an existing service in Port.
