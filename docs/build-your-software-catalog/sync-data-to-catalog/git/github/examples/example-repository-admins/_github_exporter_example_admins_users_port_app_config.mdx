@@ -5,25 +5,25 @@
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
 resources:
-  - kind: service
+  - kind: repository
     selector:
-      query: 'true'
+      query: "true"
       collaborators: true
     port:
       entity:
         mappings:
           identifier: .name
           title: .name
-          blueprint: '"githubService"'
+          blueprint: '"service"'
           properties:
             readme: file://README.md
             url: .html_url
             defaultBranch: .default_branch
           relations:
-            admins: '[.collaborators[] | select(.is_admin == true) | .login]'
+            admins: "[.collaborators[] | select(.is_admin == true) | .login]"
   - kind: user
     selector:
-      query: 'true'
+      query: "true"
     port:
       entity:
         mappings:
@@ -34,7 +34,7 @@ resources:
             user: .email
   - kind: user
     selector:
-      query: 'true'
+      query: "true"
     port:
       entity:
         mappings:
@@ -43,7 +43,6 @@ resources:
           blueprint: '"user"'
           relations:
             user: .email
-
 ```
 
 </details>

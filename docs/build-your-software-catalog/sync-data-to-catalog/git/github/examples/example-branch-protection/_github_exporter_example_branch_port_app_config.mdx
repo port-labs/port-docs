@@ -3,22 +3,22 @@
 
 ```yaml showLineNumbers
 resources:
-  - kind: service
+  - kind: repository
     selector:
-      query: 'true'
+      query: "true"
     port:
       entity:
         mappings:
           identifier: .name
           title: .name
-          blueprint: '"githubService"'
+          blueprint: '"service"'
           properties:
             readme: file://README.md
             url: .html_url
             defaultBranch: .default_branch
   - kind: branch
     selector:
-      query: 'true'
+      query: "true"
     port:
       entity:
         mappings:
@@ -35,6 +35,7 @@ resources:
             allow_force_pushes: .branch.protectionRules.allow_force_pushes.enabled
             allow_deletions: .branch.protectionRules.allow_deletions.enabled
           relations:
-            repository: .repository.name
+            service: .repository.name
 ```
+
 </details>

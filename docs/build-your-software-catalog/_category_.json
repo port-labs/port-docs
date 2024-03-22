@@ -1,4 +1,5 @@
 {
-  "label": "🏗️ Build a software catalog",
-  "position": 5
+  "label": "Build a software catalog",
+  "position": 5,
+  "className": "custom-sidebar-item sidebar-menu-build-software-catalog"
 }

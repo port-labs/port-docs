@@ -1,4 +1,5 @@
 {
-  "label": "✏️ Pages & dashboards",
-  "position": 8
+  "label": "Pages & dashboards",
+  "position": 8,
+  "className": "custom-sidebar-item sidebar-menu-pages-and-dashboards"
 }

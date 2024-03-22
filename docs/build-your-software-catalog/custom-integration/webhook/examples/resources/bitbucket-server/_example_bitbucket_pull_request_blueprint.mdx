@@ -27,12 +27,7 @@
         "icon": "DefaultProperty",
         "title": "State",
         "type": "string",
-        "enum": [
-          "OPEN",
-          "MERGED",
-          "DECLINED",
-          "SUPERSEDED"
-        ],
+        "enum": ["OPEN", "MERGED", "DECLINED", "SUPERSEDED"],
         "enumColors": {
           "OPEN": "yellow",
           "MERGED": "green",
@@ -89,7 +84,7 @@
   "relations": {
     "repository": {
       "title": "Repository",
-      "target": "bitbucketRepository",
+      "target": "service",
       "required": false,
       "many": false
     }

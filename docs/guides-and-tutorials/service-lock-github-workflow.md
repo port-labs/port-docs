@@ -9,7 +9,8 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 # Lock service deployment
 
-In this guide we will implement a service locking mechanism using [Port's Github Action](http://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/ci-cd/github-workflow/)
+During peak periods such as campaigns, holidays, or system outages, it becomes crucial to maintain stability and avoid unexpected changes or disruptions to services. Implementing a service locking mechanism using [Port's Github Action](http://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/ci-cd/github-workflow/) helps to enforce this stability by temporarily preventing deployments during these critical times.
+
 
 The CI/CD deployment check described in this guide will follow these steps:
 
@@ -132,7 +133,7 @@ Below you can find the JSON for the `Service` blueprint required for the guide:
 </details>
 
 :::note Lock property
-Our Service blueprint has a property called `locked_in_prod` with a boolean value. We will use the value of that field to determine whether new deployments of the service are allowed.
+Our Service blueprint has a property called `locked_in_prod` with a boolean value. We will use the value of this field to determine whether new deployments of the service are allowed.
 :::
 
 Now that you have your blueprint created, let's manually create a `Notification Service` entity in our software catalog:
