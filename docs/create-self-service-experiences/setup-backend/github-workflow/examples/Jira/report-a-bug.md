@@ -28,7 +28,8 @@ This step is not required for this example, but it will create all the blueprint
 :::
 
 3. Creating the action in Port
-   :::tip Action usage
+
+:::tip Action usage
 
 You can add this action to the `Service` or `Jira Issue` blueprints
 
