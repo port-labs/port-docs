@@ -60,47 +60,46 @@ First, we will need to create a [relation](/build-your-software-catalog/customiz
 
 <br/><br/>
 
-Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, we need to assign the relevant ECR Repository to each of our services. This can be done by adding some mapping logic. Go to your [data sources page](https://app.getport.io/dev-portal/data-sources), and click on your ECR integration:
-
-<img src='/img/guides/jiraIntegrationDataSources.png' border='1px' />
-<br/><br/>
-
-Under the `resources` key, modify the mapping for the `repository` kind by using the following YAML block. Then click `Save & Resync`:
+Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, we need to assign the relevant ECR Repository to each of our services. This can be done by adding some mapping logic. Update the `config.json` file from the AWS exporter to:
 
 <details>
-<summary><b>Relation mapping (Click to expand)</b></summary>
+<summary><b>`config.json` (Click to expand)</b></summary>
 
-```yaml
-- kind: issue
-    selector:
-      query: 'true'
-      jql: status != Done
-    port:
-      entity:
-        mappings:
-          identifier: .key
-          title: .fields.summary
-          blueprint: '"jiraIssue"'
-          properties:
-            url: (.self | split("/") | .[:3] | join("/")) + "/browse/" + .key
-            status: .fields.status.name
-            issueType: .fields.issuetype.name
-            components: .fields.components
-            assignee: .fields.assignee.displayName
-            reporter: .fields.reporter.displayName
-            creator: .fields.creator.displayName
-            priority: .fields.priority.id
-            created: .fields.created
-            updated: .fields.updated
-          relations:
-            board: .boardId | tostring
-            sprint: .sprint.id | tostring
-            project: .fields.project.key
-            parentIssue: .fields.parent.key
-            subtasks: .fields.subtasks | map(.key)
-            // highlight-start
-            service: .fields.labels | map(select(startswith("port"))) | map(sub("port-"; ""; "g")) | .[0]
-            // highlight-end
+```json showLineNumbers
+
+{
+  "resources": [
+    {
+      "kind": "AWS::ECR::Repository",
+      "port": {
+        "entity": {
+          "mappings": [
+            {
+              "identifier": ".RepositoryName",
+              "title": ".RepositoryName",
+              "blueprint": "ecr_repository",
+              "properties": {
+                "imageTagMutability": ".ImageTagMutability",
+                "scanningConfiguration": ".ImageScanningConfiguration",
+                "repositoryArn": ".Arn",
+                "link": "\"https://console.aws.amazon.com/go/view?arn=\" + .Arn",
+                "repositoryUri": ".RepositoryUri",
+                "encryptionConfiguration": ".EncryptionConfiguration",
+                "lifecyclePolicy": ".LifecyclePolicy",
+                "tags": ".Tags"
+              },
+              "relations": {
+                "region": ".Arn | split(\":\") | .[3]",
+                "service": ".Tags | keys[] | select(startswith(\"port-\")) | .[6:]"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
+
 ```
 
 </details>
@@ -109,7 +108,7 @@ Under the `resources` key, modify the mapping for the `repository` kind by using
 
 The JQ below selects all keys that start with the keyword `port-`. It then removes "port-" from each key, leaving only the part that comes after it. It then selects all keys that fits this criteria as a array
 
-```yaml
+```
 service: .Tags | keys[] | select(startswith("port-")) | .[6:]
 ```
 
@@ -118,7 +117,7 @@ service: .Tags | keys[] | select(startswith("port-")) | .[6:]
 What we just did was map the `ECR Repository` to the relation between it and our `Services`.  
 Now, if our `Service` identifier is equal to the ECR Repository tag key, the `service` will automatically be linked to it &nbsp;🎉
 
-<img src='/img/guides/jiraIssueAfterServiceMapping.png' width='60%' border='1px' />
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/ecr-service-mapping.png' width='60%' border='1px' />
 
 ## Conclusion
 
