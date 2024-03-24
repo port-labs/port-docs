@@ -168,7 +168,3 @@ curl --location --request POST 'https://api.getport.io/v1/entities/search?attach
 </TabItem>
 
 </Tabs>
-
-## Using catalog search in your workflows
-
-The information stored in Port can be used as part of your workflows, automation and CI/CD processes. Take a look at our [service locking](./service-locking.md) guide for a practical example about integrating Port's search with your CI/CD.

@@ -174,64 +174,56 @@ kubectl apply -f my-ocean-azure-devops-integration.yaml
 <TabItem value="one-time" label="Scheduled">
 
 <Tabs groupId="cicd-method" queryString="cicd-method">
-<TabItem value="jenkins" label="Jenkins">
-  
-This pipeline will run the Azure DevOps integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::tip
-Your Jenkins agent should be able to run docker commands.
-:::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+  <TabItem value="azure-pipeline" label="Azure Pipeline">
+
+:::tip Azure pipeline agent check
+Your Azure pipeline agent should be able to run docker commands.
 :::
 
-Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) of `Secret Text` type:
+Make sure to configure the following variables using [Azure DevOps variable groups](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops&tabs=yaml). Add them into in a variable group named `port-ocean-credentials`:
 
-<DockerParameters/>
+  <DockerParameters />
 
-<br/>
+  <br/>
 
-Here is an example for `Jenkinsfile` groovy pipeline file:
+Here is an example for `azure-devops-integration.yml` pipeline file:
 
-```yml showLineNumbers
-pipeline {
-    agent any
+```yaml showLineNumbers
+trigger:
+- main
 
-    stages {
-        stage('Run Azure DevOps Integration') {
-            steps {
-                script {
-                    withCredentials([
-                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__PERSONAL_ACCESS_TOKEN', variable: 'OCEAN__INTEGRATION__CONFIG__PERSONAL_ACCESS_TOKEN'),
-                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG____ORGANIZATION_URL', variable: 'OCEAN__INTEGRATION__CONFIG__ORGANIZATION_URL'),
-                        string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
-                        string(credentialsId: 'OCEAN__PORT__CLIENT_SECRET', variable: 'OCEAN__PORT__CLIENT_SECRET'),
-                    ]) {
-                        sh('''
-                            #Set Docker image and run the container
-                            integration_type="azure-devops"
-                            version="latest"
-                            image_name="ghcr.io/port-labs/port-ocean-${integration_type}:${version}"
-                            docker run -i --rm --platform=linux/amd64 \
-                                -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
-                                -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-                                -e OCEAN__INTEGRATION__CONFIG__PERSONAL_ACCESS_TOKEN="$OCEAN__INTEGRATION__CONFIG__PERSONAL_ACCESS_TOKEN" \
-                                -e OCEAN__INTEGRATION__CONFIG__ORGANIZATION_URL="$OCEAN__INTEGRATION__CONFIG__ORGANIZATION_URL" \
-                                -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
-                                -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
-                                $image_name
+pool:
+  vmImage: "ubuntu-latest"
 
-                            exit $?
-                        ''')
-                    }
-                }
-            }
-        }
-    }
-}
+variables:
+  - group: port-ocean-credentials
+
+
+steps:
+- script: |
+    # Set Docker image and run the container
+    integration_type="azure-devops"
+    version="latest"
+
+    image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
+    
+    docker run -i --rm --platform=linux/amd64 \
+        -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+        -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+        -e OCEAN__INTEGRATION__CONFIG__PERSONAL_ACCESS_TOKEN=${OCEAN__INTEGRATION__CONFIG__PERSONAL_ACCESS_TOKEN} \
+        -e OCEAN__INTEGRATION__CONFIG__ORGANIZATION_URL=${OCEAN__INTEGRATION__CONFIG__ORGANIZATION_URL} \
+        -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \
+        -e OCEAN__PORT__CLIENT_SECRET=${OCEAN__PORT__CLIENT_SECRET} \
+        $image_name
+
+    exit $?
+  displayName: 'Ingest Azure DevOps Data into Port'
+
 ```
 
   </TabItem>
+
   </Tabs>
 
 </TabItem>

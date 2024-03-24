@@ -72,7 +72,7 @@ resources:
         mappings:
           identifier: .namespace.full_path | gsub("/";"-") # The Entity identifier will be the repository name.
           title: .name
-          blueprint: '"gitlabRepository"'
+          blueprint: '"service"'
           properties:
             url: .web_link
             description: .description
@@ -109,15 +109,15 @@ resources:
 
 The `selector` and the `query` keys let you filter exactly which objects from the specified `kind` will be ingested to the software catalog
 
-  ```yaml showLineNumbers
-  resources:
-    - kind: project
-      # highlight-start
-      selector:
-        query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
-      # highlight-end
-      port:
-  ```
+```yaml showLineNumbers
+resources:
+  - kind: project
+    # highlight-start
+    selector:
+      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
+    # highlight-end
+    port:
+```
 
 For example, to ingest only repositories that have a name starting with `"service"`, use the `query` key like this:
 
@@ -129,36 +129,36 @@ query: .name | startswith("service")
 
 The `port`, `entity` and the `mappings` keys open the section used to map the GitLab API object fields to Port entities. To create multiple mappings of the same kind, you can add another item to the `resources` array;
 
-  ```yaml showLineNumbers
-  resources:
-    - kind: project
-      selector:
-        query: "true"
-      port:
-        # highlight-start
-        entity:
-          mappings: # Mappings between one GitLab API object to a Port entity. Each value is a JQ query.
-            identifier: .namespace.full_path | gsub("/";"-")
-            title: .name
-            blueprint: '"gitlabRepository"'
-            properties:
-              url: .web_link
-              description: .description
-              namespace: .namespace.name
-              fullPath: .namespace.full_path | split("/") | .[:-1] | join("/")
-              defaultBranch: .default_branch
-        # highlight-end
-    - kind: project # In this instance project is mapped again with a different filter
-      selector:
-        query: '.name == "MyRepositoryName"'
-      port:
-        entity:
-          mappings: ...
-  ```
+```yaml showLineNumbers
+resources:
+  - kind: project
+    selector:
+      query: "true"
+    port:
+      # highlight-start
+      entity:
+        mappings: # Mappings between one GitLab API object to a Port entity. Each value is a JQ query.
+          identifier: .namespace.full_path | gsub("/";"-")
+          title: .name
+          blueprint: '"service"'
+          properties:
+            url: .web_link
+            description: .description
+            namespace: .namespace.name
+            fullPath: .namespace.full_path | split("/") | .[:-1] | join("/")
+            defaultBranch: .default_branch
+      # highlight-end
+  - kind: project # In this instance project is mapped again with a different filter
+    selector:
+      query: '.name == "MyRepositoryName"'
+    port:
+      entity:
+        mappings: ...
+```
 
-  :::tip
-  Pay attention to the value of the `blueprint` key, if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-  :::
+:::tip
+Pay attention to the value of the `blueprint` key, if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
+:::
 
 ## Permissions
 
