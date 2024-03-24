@@ -17,6 +17,8 @@ You can find your existing action runs using one of the following methods:
 - Go the [entity page](/customize-pages-dashboards-and-plugins/page/entity-page.md) of your desired Entity, then select the `Runs` tab.  
    This page will display all action runs that have been executed for the selected Entity.
 
+- Once you have at least one `in-progress` action run, a panel will be displayed on the right side of the page, showing the  runs that are currently in progress.
+
 - After executing an action [from the UI](https://app.getport.io/self-serve), a toast will appear in the top of the page, with a link to the newly created action run.
 
 ## Interacting with action runs
@@ -42,7 +44,7 @@ The `runId` will be shown in top-left corner of the action run page:
 
 <TabItem value="api">
 
-The `runId` will be returned in the response body of the action run request, under the `context.runId` key:
+The `runId` will be returned in the response body of the [action run request](/create-self-service-experiences/reflect-action-progress/#action-run-json-structure), under the `context.runId` key:
 
 ```json showLineNumbers
 {
@@ -93,20 +95,18 @@ You will receive a response that looks like this:
 }
 ```
 
-:::info Create vs Day-2 actions
-An action run of a `day-2` action is very similar to that of a `create` action, with one main difference:  
-Since `day-2` actions are always tied to an `entity`, the entity itself is also provided in the action run object, under the `payload.entity` key.
-:::
-
 ### Update a run
 
 You can use Port's API to update an the following properties of an action run:
 - `status` - The status of the action run. Initial value is `IN_PROGRESS`, can be set to `SUCCESS` or `FAILURE`.
 - `statusLabel` - A custom message used to add information to the status of the action run.
 - `logs` - Log entries that will be displayed in the action run's page in Port.
+- `summary` - A summary of the action run, which will be displayed in the run's page in Port.
 
-:::info Github backend
-When using a `Github workflow` as the action backend, a `Report workflow status` option will be available and set to `Yes` by default. When using this option, Port will automatically update the status of the action run to `SUCCESS` or `FAILURE` according to the result of the Github workflow, so no manual update is required.
+:::info Auto-update status
+When using a `Github workflow` as the action backend, a `Report workflow status` option will be available and set to `Yes` by default. When using this option, Port will automatically update the `status` of the action run to `SUCCESS` or `FAILURE` according to the result of the Github workflow, so no manual update is required.
+
+When using a `Webhook` as the action backend, a [`Request type` option](/create-self-service-experiences/setup-backend/webhook/#sync-vs-async-execution) will be available. When set to `sync`, Port will automatically update the status of the action run according to the HTTP response code.
 :::
 
 #### Run details
@@ -173,118 +173,117 @@ A log message with the `terminationStatus` key can only be sent once for an acti
 
 ## Tying Entities to an action run
 
-You can also add additional context and metadata to an action run by attaching a `run_id` query parameter to every API route that creates or changes an Entity (i.e. `POST`, `PUT`, `PATCH` and `DELETE` requests to the `https://api.getport.io/v1/blueprints/{blueprint_id}/entities/{entity_id}` route). By adding the `run_id` parameter, you reflect the change made to the Entity as part of the set of steps the action run performed during its runtime.
+You can also add additional context and metadata to an action run by attaching a `run_id` query parameter to every API route that creates or changes an Entity (i.e. `POST`, `PUT`, `PATCH` and `DELETE` requests to the `https://api.getport.io/v1/blueprints/{blueprint_id}/entities/{entity_id}` route).  
+
+By adding the `run_id` parameter, you reflect the change made to the Entity as part of the set of steps the action run performed during its runtime.
 
 :::tip
 Tying Entities to an action run is only possible when an action run is in the `IN_PROGRESS` status.
 :::
 
-For example, let's invoke another action run and use the following python snippet to create a new microservice Entity which matches our triggered Self-Service Action, and add the `run_id` query parameter to mark that the Self-Service Action was responsible for the creation of the new microservice:
+For example, say you send a `POST` request to create a new entity, and add your `run_id` as a query parameter. An example python function that achieves this may look like this:
 
 <details>
-<summary>Click here to see the Python code</summary>
+<summary><b>Python create entity example (click to expand)</b></summary>
 
 ```python showLineNumbers
-# Dependencies to install:
-# $ python -m pip install requests
-from pprint import pprint
-import requests
-
-CLIENT_ID = 'YOUR_CLIENT_ID'
-CLIENT_SECRET = 'YOUR_CLIENT_SECRET'
-
-API_URL = 'https://api.getport.io/v1'
-
-RUN_ID = 'YOUR_RUN_ID'
-
-TARGET_BLUEPRINT_ID = 'microservice'
-
-
-def get_auth_token():
-    credentials = {'clientId': CLIENT_ID, 'clientSecret': CLIENT_SECRET}
-    token_response = requests.post(f'{API_URL}/auth/access_token', json=credentials)
-    return token_response.json()['accessToken']
-
-
-def get_run_id(access_token, run_id):
+def create_entity():
     headers = {
-        'Authorization': f'Bearer {access_token}'
-    }
-
-    run_id_resp = requests.get(f'{API_URL}/actions/runs/{run_id}', headers=headers)
-    return run_id_resp.json()['run']
-
-
-def create_entity(access_token, run_id, properties):
-    headers = {
-        'Authorization': f'Bearer {access_token}'
+        'Authorization': 'Bearer [YOUR_ACCESS_TOKEN]'
     }
 
     query = {
-        "run_id": run_id,
+        "run_id": "[RUN_ID]",
         "upsert": "true"
     }
 
     body = {
-        "identifier": f"{properties['name'].replace(' ','_')}",
-        "title": f"{properties['name']}",
-        "properties": {
-            "region": f"{properties['region']}"
-        }
+        "identifier": "[ENTITY_IDENTIFIER]",
+        "title": "[ENTITY_TITLE]",
     }
 
-    entity_resp = requests.post(f"{API_URL}/blueprints/{TARGET_BLUEPRINT_ID}/entities", headers=headers, params=query, json=body)
+    entity_resp = requests.post("https://api.getport.io/v1/blueprints/[TARGET_BLUEPRINT_ID]/entities", headers=headers, params=query, json=body)
     pprint(entity_resp.json()['entity'])
     return entity_resp.json()['entity']['identifier']
-
-def add_action_run_log_entry(access_token, run_id, message):
-    headers = {
-        'Authorization': f'Bearer {access_token}'
-    }
-
-    body = {
-        "message": message
-    }
-
-    action_update_resp = requests.post(f'{API_URL}/actions/runs/{run_id}/logs', headers=headers, json=body)
-
-
-def mark_action_run_as_successful(access_token, run_id):
-    headers = {
-        'Authorization': f'Bearer {access_token}'
-    }
-
-    body = {
-        "status": "SUCCESS",
-        "link": ["https://github.com/actions/toolkit/actions/runs/3617893813"]
-    }
-
-    action_update_resp = requests.patch(f'{API_URL}/actions/runs/{run_id}', headers=headers, json=body)
-    pprint(action_update_resp.json()['run'])
-
-
-def main():
-    access_token = get_auth_token()
-
-    run = get_run_id(access_token, RUN_ID)
-    props = run['properties']
-    entity_id = create_entity(access_token, RUN_ID, props)
-    add_action_run_log_entry(access_token, RUN_ID, f'new entity: {entity_id}')
-    add_action_run_log_entry(access_token, RUN_ID, f'New entity created!')
-    mark_action_run_as_successful(access_token, RUN_ID)
-
-
-if __name__ == '__main__':
-    main()
-
 ```
 
 </details>
 
-Now when you look at the run log of the action run, you will see the information of the newly created Entity:
+Now when you look at the action run page in Port, you will see the new Entity listed under the `Affected Entities` tab:
 
-![Developer portal action run log](../../../static/img/self-service-actions/action_run_log.png)
+<img src='/img/self-service-actions/reflect-action-progress/affectedEntitiesExample.png' width='100%' border='1px' />
 
-:::tip
-In the example above we created just one Entity, but it is possible to create, update or delete multiple Entities as part of the steps taken by a single action run, and all of these changes will be reflected in the action run log.
+:::tip Multiple entities
+It is possible to create, update or delete multiple entities as part of the steps taken by a single action run, and all of these changes will be reflected in the action run page.
+:::
+
+## Action run JSON structure
+
+The action run object created after executing an action resides under the `port_payload` key, and has the following structure:
+
+| Field          | Description                                                                                  | Example               |
+| -------------- | -------------------------------------------------------------------------------------------- | --------------------- |
+| `action`       | The action's unique identifier.                                                                            | `create_microservice` |
+| `resourceType` | The resource type that triggered the action. In the case of action runs, it always defaults to `run`. | `run`                 |
+| `status`       | The action's status. In the case of action runs, it always defaults to `TRIGGERED`.                 | `TRIGGERED`           |
+| `trigger`      | Audit data for the action run.                                                                | Example below         |
+| `context`      | Contains the context of the action, and has keys for `blueprint`, `entity` and `runId`.       | Example below         |
+| `payload`      | Explanation below.                                                                            | Example below         |
+
+### Example Trigger
+
+The trigger includes audit data such as who triggered the action, and when and how it was triggered (`UI` or `API`):
+
+```json showLineNumbers
+"trigger": {
+    "by": {
+        "userId": "auth0|<USER>",
+        "orgId": "<ORG>",
+        "user": {
+          "email": "<USER_EMAIL>",
+          "firstName": "<USER_FIRST_NAME>",
+          "lastName": "<USER_LASTT_NAME",
+          "id": "<USER_ID>"
+        }
+    },
+    "at": "2022-07-27T17:50:58.776Z",
+    "origin": "UI"
+}
+```
+
+### Example context
+
+```json showLineNumbers
+"context": {
+    "entity": null,
+    "blueprint": "k8sCluster",
+    "runId": "r_AtbOjbe45GNDElcQ"
+}
+```
+
+### Self-Service Action run payload
+
+The `payload` object contains the data of the action invocation, it includes the following keys:
+
+- `entity` - The entity this run is executed on (in the case of `CREATE` actions, this will be null).
+- `action` - The triggered action's configuration, including `userInputs`, `description`, etc.
+- `properties` - This key includes the values provided by the user when executing the action. The keys in this object match the keys defined under the `userInputs` key in the action definition.
+
+Here is an example `payload` object for a `CREATE` action:
+
+```json showLineNumbers
+"payload": {
+    "entity": null,
+    "properties": {
+        "region": "prod-2-use1",
+        "title": "dev-env",
+        "version": "1.2",
+        "type": "EKS"
+    }
+}
+```
+
+:::info Create vs Day-2 actions
+An action run of a `day-2` action is very similar to that of a `create` action, with one main difference:  
+Since `day-2` actions are always tied to an `entity`, the entity itself is also provided in the action run object, under the `payload.entity` key.
 :::
