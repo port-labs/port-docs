@@ -47,33 +47,3 @@ You can even define more advanced forms with dynamic fields that change accordin
 ## Next step
 
 Once the frontend is set up, we will move on to the action's [backend configuration](/create-self-service-experiences/setup-backend/).
-
-## Steps 
-
-1. **Define [action information](#structure-table)** - the action's title, icon, and description.
-2. **Select the [user inputs](#userinputs---form--wizard-ui)** - create a wizard-like experience for your developers by specifying the input types they will need to fill, while also including input validations.
-3. **Choose the [action's type](#trigger--action-type)** - Create/Day-2/Delete.
-4. **Connect the action to a [backend](#invocationmethod---connect-to-a-backend)** - for every action you create in Port, you define the backend responsible for handling its logic. This is called the **invocation method**, Port supports various invocation methods for different use cases and environments.
-5. **Configure [RBAC and guardrails](/create-self-service-experiences/set-self-service-actions-rbac/) (optional)** - this step allows you to choose who can trigger an action, does the action require manual approval from an admin, and who has the permissions to approve or dismiss execution requests.
-
-
-### `invocationMethod` - Connect to a backend
-
-Port actions support a variety of target backends that can be triggered when an action is invoked.
-
-The different backends are denoted and configured via the `invocationMethod` key, the available methods are:
-
-- **Webhook** - setup a webhook URL to receive and handle forms and wizards submissions.
-- **Kafka** - subscribe to Kafka topic to listen to messages with forms and wizards submissions.
-- **CI Native (Github Workflow)** - setup Port's [GitHub app](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md) to handle forms & wizards submission via Github Workflows.
-- **CI Native (Azure Pipeline)**- setup a webhook type service connection to trigger Azure pipelines and handle forms & wizards submission via Github Workflows.
-- **Port agent** - setup Port's agent tp receive forms & wizards submissions and forward them to your backend on your internal network.
-
-To learn more about the different available invocation methods and backends, refer to the [setup backend](../setup-backend/setup-backend.md) page.
-
-### `requireApproval` - Require manual approval (optional)
-
-Port actions support a manual approval process. Manual approvals let you control who can approve an action invocation request, and also handle notifying the relevant personas when an action request is awaiting their review.
-
-Refer to the [self-service actions RBAC](../set-self-service-actions-rbac/set-self-service-actions-rbac.md) page to learn more.
-
