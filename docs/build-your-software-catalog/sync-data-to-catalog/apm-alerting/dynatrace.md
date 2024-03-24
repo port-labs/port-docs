@@ -32,7 +32,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `integration.type`                    | The integration type                                                                                                                | ✅       |
 | `integration.eventListener.type`      | The event listener type                                                                                                             | ✅       |
 | `integration.secrets.dynatraceApiKey` | API Key for Dynatrace instance                                                                                                      | ✅       |
-| `integration.config.dynatraceHostUrl` | The URL to the Dynatrace instance                                                                                                   | ✅       |
+| `integration.config.dynatraceHostUrl` | The API URL of the Dynatrace instance                                                                                                   | ✅       |
 | `scheduledResyncInterval`             | The number of minutes between each resync                                                                                           | ❌       |
 | `initializePortResources`             | Default true, When set to true the integration will create default blueprints and the port App config Mapping                       | ❌       |
 
@@ -68,7 +68,7 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 | Parameter                                        | Description                                                                                                        | Required |
 | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | -------- |
 | `OCEAN__INTEGRATION__CONFIG__DYNATRACE_API_KEY`  | The Dynatrace API key                                                                                              | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__DYNATRACE_HOST_URL` | The Dynatrace host URL                                                                                             | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__DYNATRACE_HOST_URL` | The Dynatrace API host URL                                                                                             | ✅       |
 | `OCEAN__INITIALIZE_PORT_RESOURCES`               | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
 | `OCEAN__INTEGRATION__IDENTIFIER`                 | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
 | `OCEAN__PORT__CLIENT_ID`                         | Your port client id                                                                                                | ✅       |
@@ -188,7 +188,11 @@ pipeline {
 ### Generating Dynatrace API key
 
 1. Navigate to `<instanceURL>/ui/apps/dynatrace.classic.tokens/ui/access-tokens`. For example, if you access your Dynatrace instance at `https://npm82883.apps.dynatrace.com`, you should navigate to `https://npm82883.apps.dynatrace.com/ui/apps/dynatrace.classic.tokens/ui/access-tokens`.
-2. Click **Generate new token** to create a new token. Ensure the permissions: `Read entities`, `Read problems` and `Read SLO` are assigned to the token.
+2. Click **Generate new token** to create a new token. Ensure the permissions: `DataExport`, `Read entities`, `Read problems` and `Read SLO` are assigned to the token. The `DataExport` permission allows Dynatrace to perform healthchecks before ingestion starts.
+
+### Constructing Dynatrace Host URL
+Your Dynatrace host URL should be `https://<environment-id>.live.dynatrace.com`. Note that there is a difference between the instance URL and the API host URL. The former contains `apps` while the latter (as shown prior) uses `live`. This means if your environment ID is `npm82883`, your API host URL should be `https://npm82883.live.dynatrace.com`.
+
 
 ## Ingesting Dynatrace objects
 
