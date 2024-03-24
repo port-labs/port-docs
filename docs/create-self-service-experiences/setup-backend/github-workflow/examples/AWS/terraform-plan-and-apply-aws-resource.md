@@ -131,9 +131,10 @@ Below you can find the JSON for the `Service` blueprint required for the guide:
 1. Create the following GitHub Action secrets:
     - `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token)
     - `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token)
-    - `TF_USER_AWS_KEY` - An AWS access key with the right iam permission to create an s3 bucket [learn more](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html)
-    - `TF_USER_AWS_SECRET` - An AWS access key secret with permission to create an s3 bucket [learn more](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html)
-    - `TF_USER_AWS_REGION` - The AWS region where you would like to provision your s3 bucket
+    - `AWS_ACCESS_KEY_ID` - An AWS access key ID with the right iam permission to create an s3 bucket [learn more](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html)
+    - `AWS_SECRET_ACCESS_KEY` - An AWS secret access key with permission to create an s3 bucket [learn more](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html)
+    - `AWS_SESSION_TOKEN` - An AWS session token [learn more](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html)
+    - `AWS_REGION` - The AWS region where you would like to provision your s3 bucket
     - `MY_GITHUB_TOKEN` - A [Classic Personal Access Token](https://github.com/settings/tokens) with the `repo` scope. This token will be used to download the terraform configurations saved to GitHub Artifact.
 
 2. Create the following Terraform templates (`main.tf` and `variables.tf`) in a `terraform` folder at the root of your GitHub repository:
