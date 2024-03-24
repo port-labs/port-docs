@@ -76,9 +76,9 @@ jobs:
 
 :::note
 Pay attention to the additional parameter in the workflow called `port_payload`.
-This parameter is completed by default with [Port's action message](../../../self-service-actions-deep-dive/self-service-actions-deep-dive.md#action-message-structure).
+This parameter is completed by default with [Port's action message](/create-self-service-experiences/reflect-action-progress/#action-run-json-structure).
 You can disable it by specifying `"omitPayload": true` in Port's action definition.
-For more details click [here](../../../self-service-actions-deep-dive/self-service-actions-deep-dive.md#invocation-method-structure-fields)
+For more details click [here](/create-self-service-experiences/setup-backend/#invocation-method-structure-fields)
 :::
 
 ## Create a deployment Blueprint
