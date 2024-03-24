@@ -95,11 +95,6 @@ You will receive a response that looks like this:
 }
 ```
 
-:::info Create vs Day-2 actions
-An action run of a `day-2` action is very similar to that of a `create` action, with one main difference:  
-Since `day-2` actions are always tied to an `entity`, the entity itself is also provided in the action run object, under the `payload.entity` key.
-:::
-
 ### Update a run
 
 You can use Port's API to update an the following properties of an action run:
@@ -178,120 +173,48 @@ A log message with the `terminationStatus` key can only be sent once for an acti
 
 ## Tying Entities to an action run
 
-You can also add additional context and metadata to an action run by attaching a `run_id` query parameter to every API route that creates or changes an Entity (i.e. `POST`, `PUT`, `PATCH` and `DELETE` requests to the `https://api.getport.io/v1/blueprints/{blueprint_id}/entities/{entity_id}` route). By adding the `run_id` parameter, you reflect the change made to the Entity as part of the set of steps the action run performed during its runtime.
+You can also add additional context and metadata to an action run by attaching a `run_id` query parameter to every API route that creates or changes an Entity (i.e. `POST`, `PUT`, `PATCH` and `DELETE` requests to the `https://api.getport.io/v1/blueprints/{blueprint_id}/entities/{entity_id}` route).  
+
+By adding the `run_id` parameter, you reflect the change made to the Entity as part of the set of steps the action run performed during its runtime.
 
 :::tip
 Tying Entities to an action run is only possible when an action run is in the `IN_PROGRESS` status.
 :::
 
-For example, let's invoke another action run and use the following python snippet to create a new microservice Entity which matches our triggered Self-Service Action, and add the `run_id` query parameter to mark that the Self-Service Action was responsible for the creation of the new microservice:
+For example, say you send a `POST` request to create a new entity, and add your `run_id` as a query parameter. An example python function that achieves this may look like this:
 
 <details>
-<summary>Click here to see the Python code</summary>
+<summary><b>Python create entity example (click to expand)</b></summary>
 
 ```python showLineNumbers
-# Dependencies to install:
-# $ python -m pip install requests
-from pprint import pprint
-import requests
-
-CLIENT_ID = 'YOUR_CLIENT_ID'
-CLIENT_SECRET = 'YOUR_CLIENT_SECRET'
-
-API_URL = 'https://api.getport.io/v1'
-
-RUN_ID = 'YOUR_RUN_ID'
-
-TARGET_BLUEPRINT_ID = 'microservice'
-
-
-def get_auth_token():
-    credentials = {'clientId': CLIENT_ID, 'clientSecret': CLIENT_SECRET}
-    token_response = requests.post(f'{API_URL}/auth/access_token', json=credentials)
-    return token_response.json()['accessToken']
-
-
-def get_run_id(access_token, run_id):
+def create_entity():
     headers = {
-        'Authorization': f'Bearer {access_token}'
-    }
-
-    run_id_resp = requests.get(f'{API_URL}/actions/runs/{run_id}', headers=headers)
-    return run_id_resp.json()['run']
-
-
-def create_entity(access_token, run_id, properties):
-    headers = {
-        'Authorization': f'Bearer {access_token}'
+        'Authorization': 'Bearer [YOUR_ACCESS_TOKEN]'
     }
 
     query = {
-        "run_id": run_id,
+        "run_id": "[RUN_ID]",
         "upsert": "true"
     }
 
     body = {
-        "identifier": f"{properties['name'].replace(' ','_')}",
-        "title": f"{properties['name']}",
-        "properties": {
-            "region": f"{properties['region']}"
-        }
+        "identifier": "[ENTITY_IDENTIFIER]",
+        "title": "[ENTITY_TITLE]",
     }
 
-    entity_resp = requests.post(f"{API_URL}/blueprints/{TARGET_BLUEPRINT_ID}/entities", headers=headers, params=query, json=body)
+    entity_resp = requests.post("https://api.getport.io/v1/blueprints/[TARGET_BLUEPRINT_ID]/entities", headers=headers, params=query, json=body)
     pprint(entity_resp.json()['entity'])
     return entity_resp.json()['entity']['identifier']
-
-def add_action_run_log_entry(access_token, run_id, message):
-    headers = {
-        'Authorization': f'Bearer {access_token}'
-    }
-
-    body = {
-        "message": message
-    }
-
-    action_update_resp = requests.post(f'{API_URL}/actions/runs/{run_id}/logs', headers=headers, json=body)
-
-
-def mark_action_run_as_successful(access_token, run_id):
-    headers = {
-        'Authorization': f'Bearer {access_token}'
-    }
-
-    body = {
-        "status": "SUCCESS",
-        "link": ["https://github.com/actions/toolkit/actions/runs/3617893813"]
-    }
-
-    action_update_resp = requests.patch(f'{API_URL}/actions/runs/{run_id}', headers=headers, json=body)
-    pprint(action_update_resp.json()['run'])
-
-
-def main():
-    access_token = get_auth_token()
-
-    run = get_run_id(access_token, RUN_ID)
-    props = run['properties']
-    entity_id = create_entity(access_token, RUN_ID, props)
-    add_action_run_log_entry(access_token, RUN_ID, f'new entity: {entity_id}')
-    add_action_run_log_entry(access_token, RUN_ID, f'New entity created!')
-    mark_action_run_as_successful(access_token, RUN_ID)
-
-
-if __name__ == '__main__':
-    main()
-
 ```
 
 </details>
 
-Now when you look at the run log of the action run, you will see the information of the newly created Entity:
+Now when you look at the action run page in Port, you will see the new Entity listed under the `Affected Entities` tab:
 
-![Developer portal action run log](/img/self-service-actions/action_run_log.png)
+<img src='/img/self-service-actions/reflect-action-progress/affectedEntitiesExample.png' width='100%' border='1px' />
 
-:::tip
-In the example above we created just one Entity, but it is possible to create, update or delete multiple Entities as part of the steps taken by a single action run, and all of these changes will be reflected in the action run log.
+:::tip Multiple entities
+It is possible to create, update or delete multiple entities as part of the steps taken by a single action run, and all of these changes will be reflected in the action run page.
 :::
 
 ## Action run JSON structure
@@ -359,3 +282,8 @@ Here is an example `payload` object for a `CREATE` action:
     }
 }
 ```
+
+:::info Create vs Day-2 actions
+An action run of a `day-2` action is very similar to that of a `create` action, with one main difference:  
+Since `day-2` actions are always tied to an `entity`, the entity itself is also provided in the action run object, under the `payload.entity` key.
+:::

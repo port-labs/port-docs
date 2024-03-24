@@ -17,15 +17,27 @@ Port's self-service actions support a variety of backends that can be triggered 
 
 Here is the basic backend model:
 
-![self-service action backend diagram](/img/self-service-actions/setup-backend/backend-flow-diagram.png)
+<img src='/img/self-service-actions/setup-backend/backend-flow-diagram.png' width='100%' border='1px' />
+<br/><br/>
 
-The Port-backend integration includes the following steps:
+Executing a self-service action involves the following steps:
 
 1. **The action is triggered in Port** - the trigger can either be a user executing an action via the UI, or an automation triggering an action via Port's API.
 2. **Port generates the event payload** - the payload includes metadata about the invoked action and its inputs.
 3. **The payload is sent to your backend** - the backend can be a URL, a dedicated Kafka topic or one of your CI/CD workflows/pipelines.
-4. **Your backend receives the payload and handles the request** - depending on the action, your backend might open a PR, create a new cloud resource, provision a new environment, and much more.
-5. **Your backend updates Port on the status of the execution** - You can enrich the action run object in Port by adding logs, attaching links to other workflows or pipelines that help fullfil the request and add a final success/fail status once the action is complete.
+4. **Your backend receives the payload and handles the request** - depending on the action, your backend might open a PR, create a cloud resource, provision a new environment, or perform any other logic you would like.
+5. **Your backend updates Port on the status of the execution** - You can [enrich the action run object](/create-self-service-experiences/reflect-action-progress/) in Port by adding logs, attaching links to other workflows or pipelines that help fullfil the request and add a final success/fail status once the action is complete.
+
+
+## Define the backend
+
+The action's backend is defined under the `Backend` tab of the action creation form in Port's UI:
+
+<img src='/img/self-service-actions/setup-backend/action-form-setup-backend.png' width='50%' border='1px' />
+<br/><br/>
+
+Depending on the backend you choose, you will need to provide different configuration parameters.  
+See the list of supported backends below for more information.
 
 ## Supported backends
 
@@ -75,3 +87,8 @@ The action's backend is defined under the `invocationMethod` object:
 | `defaultRef`           | `string`  | The default ref (branch/tag name) we want the action to use. <br></br> `defaultRef` can be overriden dynamically, by adding `ref` as user input. <br></br> Can only be used if `type` is set to `GITLAB`.                                                                                            |
 | `projectName`          | `string`  | The GitLab *project* name.<br></br>Can only be used if `type` is set to `GITLAB`.                                                                                                                                                                                                                          | `port`                                          |
 | `groupName`            | `string`  | The GitLab *group* name.<br></br>Can only be used if `type` is set to `GITLAB`.                                                                                                                                                                                                                          | `port-labs`                                     |
+
+## Next step
+
+Once the backend is set up, the action is ready to be used.  
+Optionally, you can [configure permissions and/or manual approval](/create-self-service-experiences/set-self-service-actions-rbac/) for your actions to control who is allowed to execute them.

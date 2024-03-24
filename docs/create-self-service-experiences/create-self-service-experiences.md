@@ -87,17 +87,17 @@ See [Setup backend](/create-self-service-experiences/setup-backend/) for instruc
 
 </center>
 
-### Step 3 - reflect action progress
-
-After executing an action, Port allows you update its state and progress, using a `success/in-progress/failure` status, live logs, ChatOps notifications, friendly and indicative error messages, and more.
-
-See [Reflect action progress](/create-self-service-experiences/reflect-action-progress/) for instructions and examples.
-
 ### Optional Step - ✋🏼 set guardrails
 
 Port supports a variety of ways to add manual approvals, policies, and TTL to actions, to ensure that organizational standards are met.
 
 See [Set actions RBAC](/create-self-service-experiences/set-self-service-actions-rbac/) for instructions and examples.
+
+### Reflect action progress
+
+After executing an action, Port allows you update its state and progress, using a `success/in-progress/failure` status, live logs, ChatOps notifications, friendly and indicative error messages, and more.
+
+See [Reflect action progress](/create-self-service-experiences/reflect-action-progress/) for instructions and examples.
 
 ## Action JSON structure
 
@@ -107,6 +107,7 @@ The basic structure of a self-service action looks like this (see key descriptio
 {
   "identifier": "unique_id",
   "title": "Title",
+  "icon": "iconIdentifier",
   "userInputs": {
     "properties": {
       "property1": {
@@ -137,6 +138,6 @@ The basic structure of a self-service action looks like this (see key descriptio
 | `icon`             | The action's icon.                                                                                                                                                                                                 |
 | `userInputs`       | An object containing the action's inputs and their metadata. See [User inputs](/create-self-service-experiences/setup-ui-for-action/user-inputs/) for more information. |
 | `invocationMethod` | Defines the type of backend the action will use. See [invocation method](/create-self-service-experiences/setup-backend/#invocation-method-structure-fields) for more information.                                                             |
-| `trigger`          | The [type](/create-self-service-experiences/setup-ui-for-action/#trigger---action-type) of the action: `CREATE`, `DAY-2` or `DELETE`.                                                                                                                                                       |
+| `trigger`          | The [type](/create-self-service-experiences/setup-ui-for-action/#basic-details) of the action: `CREATE`, `DAY-2` or `DELETE`.                                                                                                                                                       |
 | `requiredApproval` | A boolean value that determines whether the action requires approval or not.                                                                                                                                                                 |
 | `description`      | A description that can be used to explain the action to users.                                                                                                                                                                                         |
