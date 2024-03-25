@@ -507,7 +507,7 @@ jobs:
 
 :::tip Practical usage
 
-Service lock and unlocking can be used to control deployment via Github actions. This means when a service is locked, deployment checks on that service will fail. Follow [Port's self-service mini guide to control deployment using service lock](/guides-and-tutorials/service-lock-github-workflow.md) to add this functionality to your workflow.
+Service locking and unlocking can be used to control deployment via Github actions. This means when a service is locked, deployment checks on that service will fail. Follow [Port's self-service mini guide to control deployment using service lock](/guides-and-tutorials/service-lock-github-workflow.md) to add this functionality to your workflow.
 
 :::
 
