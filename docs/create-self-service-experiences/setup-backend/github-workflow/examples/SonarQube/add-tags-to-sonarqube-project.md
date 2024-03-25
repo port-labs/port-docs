@@ -73,6 +73,63 @@ In the `invocationMethod` section, replace the `org` and `repo` values with your
 
 4. Create a workflow file under `.github/workflows/add-tags-to-sonarqube-project.yml` using the workflow:
 
+<details>
+<summary><b>Add tags to SonarQube project workflow (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+name: Add tags to SonarQube project
+on:
+  workflow_dispatch:
+    inputs:
+      tags:
+        type: string
+        required: true
+      port_payload:
+        required: true
+        description: Port's payload, including details for who triggered the action and
+          general context (blueprint, run id, etc...)
+        type: string
+    secrets:
+      SONARQUBE_HOST_URL:
+        required: true
+      SONARQUBE_API_TOKEN:
+        required: true
+
+jobs:
+  create-entity-in-port-and-update-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create a log message
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: PATCH_RUN
+          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          logMessage: Starting request to add tags to SonarQube project
+
+      - name: Add tags to SonarQube project
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: "${{ secrets.SONARQUBE_HOST_URL }}/api/project_tags/set?project=${{ fromJson(inputs.port_payload).context.entity }}&tags=${{ inputs.tags }}"
+          method: "POST"
+          bearerToken: ${{ secrets.SONARQUBE_API_TOKEN }}
+          customHeaders: '{"Content-Type": "application/json"}'
+
+      - name: Create a log message
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: PATCH_RUN
+          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          logMessage: Finished request to create ServiceNow incident
+```
+
+</details>
+
 5. Trigger the action from Port's [Self Serve](https://app.getport.io/self-serve)
 
 6. Done! wait for the project tags to be updated in SonarQube

@@ -104,7 +104,7 @@ This action is on the `Service` blueprint.
 4. Create a workflow file under `.github/workflows/open-jira-issue-with-automatic-label.yml` using the workflow:
 
 <details>
-<summary><b>Open Jira Issue with automatic label (Click to expand)</b></summary>
+<summary><b>Open Jira Issue with automatic label workflow (Click to expand)</b></summary>
 
 ```yaml showLineNumbers
 name: Open Jira Issue with automatic label
