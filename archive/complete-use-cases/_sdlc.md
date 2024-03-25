@@ -15,7 +15,7 @@ You can read more about software catalogs on our [blog](https://www.getport.io/b
 In this guide, you will setup an initial software catalog. You will learn how to use:
 
 - Port's [Terraform provider](../build-your-software-catalog/sync-data-to-catalog/iac/terraform/terraform.md) - to create your cloud resources;
-- Port's [REST API](../api-reference/port-api.info.mdx) - to create your deployment configs;
+- Port's [REST API](../api-reference/port-api) - to create your deployment configs;
 - Port's [GitHub Action](../build-your-software-catalog/sync-data-to-catalog/ci-cd/github-workflow/github-workflow.md) - to create your service deployments.
 - Port's [GitHub App](../build-your-software-catalog/sync-data-to-catalog/gitops/github-app-gitops/github-app-gitops.md) - to create your services;
 - Port's [Kubernetes Exporter](../build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md) - to create your deployment service pods;

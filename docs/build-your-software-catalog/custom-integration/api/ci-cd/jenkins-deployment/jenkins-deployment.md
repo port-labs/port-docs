@@ -48,7 +48,7 @@ method groovy.json.JsonSlurperClassic parseText java.lang.String
 ## Set up
 
 :::tip
-All Port API routes used in this guide can be found in Port's [API documentation](/api-reference/port-api.info.mdx).
+All Port API routes used in this guide can be found in Port's [API documentation](/api-reference/port-api).
 :::
 
 To interact with Port inside your Jenkins builds, follow these steps:

@@ -156,7 +156,7 @@ const config = {
               },
               {
                 label: "API reference",
-                to: "/api-reference",
+                to: "/api-reference/port-api",
               },
             ],
           },

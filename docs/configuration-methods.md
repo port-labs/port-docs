@@ -35,7 +35,7 @@ To use Port's API and Terraform provider, you will need API credentials.
 
 <TabItem value="api">
 
-Port's [API](/api-reference/port-api.info) provides a convenient REST interface to perform CRUD operations in your software catalog.
+Port's [API](/api-reference/port-api) provides a convenient REST interface to perform CRUD operations in your software catalog.
 
 Port's API base URL is: `https://api.getport.io/v1`
 
