@@ -204,7 +204,7 @@ Follow these steps to get started:
     "type": "GITHUB",
     "org": "<GITHUB-ORG>",
     "repo": "<GITHUB-REPO-NAME>",
-    "workflow": "lock_service.yaml",
+    "workflow": "lock-service.yml",
     "omitUserInputs": false,
     "omitPayload": false,
     "reportWorkflowStatus": true
@@ -268,7 +268,7 @@ Follow these steps to get started:
     "type": "GITHUB",
     "org": "<GITHUB-ORG>",
     "repo": "<GITHUB-REPO-NAME>",
-    "workflow": "unlock_service.yaml",
+    "workflow": "unlock-service.yml",
     "omitUserInputs": false,
     "omitPayload": false,
     "reportWorkflowStatus": true
@@ -284,13 +284,13 @@ Follow these steps to get started:
 <br />
 
 
-3. In your Github repository, create a workflow file under `.github/workflows/lock_service.yml` with the following content:
+3. In your Github repository, create a workflow file under `.github/workflows/lock-service.yml` with the following content:
 
 <details>
 
 <summary><b>GitHub workflow script to lock a service (click to expand)</b></summary>
 
-```yaml showLineNumbers title="lock_service.yml"
+```yaml showLineNumbers title="lock-service.yml"
 name: Lock Service in Port
 on:
   workflow_dispatch:
@@ -396,13 +396,13 @@ jobs:
 </details>
 <br />
 
-4. Create another workflow file under `.github/workflows/unlock_service.yml` with the following content:
+4. Create another workflow file under `.github/workflows/unlock-service.yml` with the following content:
 
 <details>
 
 <summary><b>GitHub workflow script to unlock a service (click to expand)</b></summary>
 
-```yaml showLineNumbers title="unlock_service.yml"
+```yaml showLineNumbers title="unlock-service.yml"
 name: Unlock Service in Port
 on:
   workflow_dispatch:

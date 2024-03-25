@@ -146,7 +146,7 @@ Now we'll define the backend of the action. Port supports multiple invocation ty
 
 Fill out the form with your values:
 - Replace the `Organization` and `Repository` values with your values (this is where the workflow will reside and run).
-- Name the workflow `portCreateRepo.yaml`.
+- Name the workflow `port-create-repo.yml`.
 - Set `Omit user inputs` to `Yes`.
 - Fill out the rest of the form like this, then click `Next`:
 
@@ -249,12 +249,12 @@ If your organization uses SAML SSO, you will need to authorize your token. Follo
 
 <br/><br/>
 
-3. Now let's create the workflow file that contains our logic. Under `.github/workflows`, create a new file named `portCreateRepo.yaml` and use the following snippet as its content (remember to change `<YOUR-ORG-NAME>` on line 19 to your GitHub organization name):
+3. Now let's create the workflow file that contains our logic. Under `.github/workflows`, create a new file named `port-create-repo.yml` and use the following snippet as its content (remember to change `<YOUR-ORG-NAME>` on line 19 to your GitHub organization name):
 
 <details>
 <summary><b>Github workflow (click to expand)</b></summary>
 
-```yaml showLineNumbers title="portCreateRepo.yaml"
+```yaml showLineNumbers title="port-create-repo.yml"
 name: Scaffold a new service
 on:
   workflow_dispatch:
