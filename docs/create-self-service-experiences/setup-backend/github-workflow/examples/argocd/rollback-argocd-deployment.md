@@ -289,7 +289,7 @@ Follow these steps to get started:
 </details>
 <br />
 
-3. Create a workflow file under `.github/workflows/rollback.yml` with the following content:
+3. Create a workflow file under `.github/workflows/rollback.yaml` with the following content:
 
 <details>
 
@@ -300,7 +300,7 @@ Follow these steps to get started:
 - `<IMAGE-PROPERTY-PATH>` - Path to where the deployment image is specified in the deployment manifest such as `spec.template.spec.containers[0].image`.
 :::
 
-```yaml showLineNumbers title="rollback.yml"
+```yaml showLineNumbers title="rollback.yaml"
 name: Rollback ArgoCD Deployment Image
 
 on:
