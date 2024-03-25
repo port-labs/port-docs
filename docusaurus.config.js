@@ -258,6 +258,7 @@ const config = {
           "javascript",
           "go",
           "typescript",
+          "jq"
         ],
       },
       liveCodeBlock: {

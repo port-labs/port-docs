@@ -71,8 +71,8 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## ArgoCD
 
-- [ArgoCD exporter and webhook integration](/build-your-software-catalog/sync-data-to-catalog/kubernetes/argocd.md)
-- [ArgoCD events](/build-your-software-catalog/sync-data-to-catalog/kubernetes/argocd.md#argocd-events)
+- [ArgoCD exporter and webhook integration](/build-your-software-catalog/sync-data-to-catalog/kubernetes/argocd/)
+- [ArgoCD events](/build-your-software-catalog/sync-data-to-catalog/kubernetes/argocd/argocd.md#argocd-events)
 
 ## Infrastructure as Code (IaC)
 
@@ -137,7 +137,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Slack
 
-- [Manual approval for self-service actions](/create-self-service-experiences/set-self-service-actions-rbac/examples.md#setting-up-a-slack-notification)
+- [Manual approval for self-service actions](/create-self-service-experiences/set-self-service-actions-rbac/#slack)
 - [Scorecard notifications](/promote-scorecards/manage-using-3rd-party-apps/slack)
 - [Setup a changelog listener notification](/create-self-service-experiences/setup-backend/webhook/examples/changelog-listener.md)
 

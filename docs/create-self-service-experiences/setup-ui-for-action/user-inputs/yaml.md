@@ -1,6 +1,7 @@
 ---
 sidebar_position: 15
 description: Yaml is an input used to save object definitions in YAML
+sidebar_class_name: "custom-sidebar-item sidebar-property-string"
 ---
 
 import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"

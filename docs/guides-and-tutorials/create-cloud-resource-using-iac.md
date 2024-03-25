@@ -84,7 +84,7 @@ This property is empty for now in all services, we will fill it as part of the a
 
 Fill out the form with your values:
 - Replace the `Organization` and `Repository` values with your values (this is where the workflow will reside and run).
-- Name the workflow `portCreateBucket.yaml`.
+- Name the workflow `port-create-bucket.yml`.
 - Set `Omit user inputs` to `Yes`.
 - Fill out the rest of the form like this, then click `Next`:
 
@@ -189,7 +189,7 @@ Now we want to write the logic that our action will trigger.
 - Creating a pull request in the selected service's repository to add the new resource.
 - Reporting & logging the action result back to Port, and updating the relevant service's `Resource definitions` property with the URL of the service's resources directory.
 
-Under `.github/workflows/`, create a new file named `portCreateBucket.yaml` and use the following snippet as its content:
+Under `.github/workflows/`, create a new file named `port-create-bucket.yml` and use the following snippet as its content:
 
 <details>
 <summary><b>Github workflow (click to expand)</b></summary>

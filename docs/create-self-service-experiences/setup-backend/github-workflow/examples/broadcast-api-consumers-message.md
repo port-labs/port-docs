@@ -241,6 +241,10 @@ Follow these steps to get started:
 
 <summary><b>Python script to broadcast message (click to expand)</b></summary>
 
+:::tip Using Block Kit to design the message layout
+Whereas you can simply send a message with the *text* field, the [block kit framework](https://api.slack.com/block-kit) provides a rich pool of components and layouts to design your message and allows you to add interactivity. Try it out [here](https://app.slack.com/block-kit-builder/) to compose your own blocks. You can then replace the `blocks` field in the request below.
+:::
+
 ```python showLineNumbers title="broadcast_messages.py"
 import logging
 import os
@@ -284,7 +288,23 @@ def send_notification(entity, message, api):
 
     if slack_webhook:
         payload = {
-            "text": f"Hello {title}! {message}. {api} team.",
+            "blocks": [
+                {
+                    "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": f"Hi _*{title.lower()}*_ team! :wave: We've made an update to the *{api}*:",
+                    },
+                },
+                {"type": "divider"},
+                {
+                    "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": f":white_large_square: *Details* \n{message}.",
+                    },
+                },
+            ],
         }
         requests.post(slack_webhook, json=payload)
     else:
@@ -325,7 +345,7 @@ if __name__ == "__main__":
 </details>
 <br />
 
-4. Then, create a workflow file under `.github/workflows/lock_service.yml` with the following content:
+4. Then, create a workflow file under `.github/workflows/lock-service.yml` with the following content:
 
 <details>
 
@@ -367,5 +387,8 @@ jobs:
 
 
 5. Trigger the actions from the [self-service](https://app.getport.io/self-serve) page of your Port application.
+
+<img src='/img/self-service-actions/setup-backend/github-workflow/apiBroadcast.png' width='85%' />
+
 
 Done! You can now broadcast a message to all consumers of an API.

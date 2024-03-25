@@ -5,20 +5,20 @@
 resources:
   - kind: repository
     selector:
-      query: 'true'
+      query: "true"
     port:
       entity:
         mappings:
           identifier: .name
           title: .name
-          blueprint: '"githubService"'
+          blueprint: '"service"'
           properties:
             readme: file://README.md
             url: .html_url
             defaultBranch: .default_branch
   - kind: branch
     selector:
-      query: 'true'
+      query: "true"
     port:
       entity:
         mappings:
@@ -37,4 +37,5 @@ resources:
           relations:
             service: .repository.name
 ```
+
 </details>
