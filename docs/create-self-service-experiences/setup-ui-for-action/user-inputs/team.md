@@ -1,6 +1,7 @@
 ---
 sidebar_position: 8
 description: Team is an input used to reference teams that exist in Port
+sidebar_class_name: "custom-sidebar-item sidebar-property-team"
 ---
 
 import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"

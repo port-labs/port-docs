@@ -67,7 +67,7 @@ Here is an example `port-app-config.yml` block:
 
 ```yaml showLineNumbers
 resources:
-  - kind: service
+  - kind: repository
     selector:
       query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
     port:
@@ -75,7 +75,7 @@ resources:
         mappings:
           identifier: ".name" # The Entity identifier will be the service (repository) name.
           title: ".name"
-          blueprint: '"bitbucketService"'
+          blueprint: '"service"'
           properties:
             project: ".project.name"
             url: ".links.html.href"
@@ -89,7 +89,7 @@ resources:
   ```yaml showLineNumbers
   # highlight-next-line
   resources:
-    - kind: service
+    - kind: repository
       selector:
       ...
   ```
@@ -99,7 +99,7 @@ resources:
   ```yaml showLineNumbers
     resources:
       # highlight-next-line
-      - kind: service
+      - kind: repository
         selector:
         ...
   ```
@@ -110,15 +110,15 @@ resources:
 
 The `selector` and the `query` keys let you filter exactly which objects from the specified `kind` will be ingested to the software catalog
 
-  ```yaml showLineNumbers
-  resources:
-    - kind: service
-      # highlight-start
-      selector:
-        query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
-      # highlight-end
-      port:
-  ```
+```yaml showLineNumbers
+resources:
+  - kind: repository
+    # highlight-start
+    selector:
+      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
+    # highlight-end
+    port:
+```
 
 For example, to ingest only repositories that have a name starting with `"service"`, use the `query` key like this:
 
@@ -130,28 +130,28 @@ query: .name | startswith("service")
 
 The `port`, `entity` and the `mappings` keys open the section used to map the Bitbucket API object fields to Port entities. The `mappings` key can either be an object or an array of objects that matches the structure of an [entity](../../../sync-data-to-catalog/sync-data-to-catalog.md#entity-json-structure)
 
-  ```yaml showLineNumbers
-  resources:
-    - kind: service
-      selector:
-        query: "true"
-      # highlight-start
-      port:
-        entity:
-          mappings: # Mappings between one Bitbucket API object to a Port entity. Each value is a JQ query.
-            identifier: ".name"
-            title: ".name"
-            blueprint: '"bitbucketService"'
-            properties:
-              project: ".project.name"
-              url: ".links.html.href"
-              defaultBranch: ".main_branch"
-      # highlight-end
-  ```
+```yaml showLineNumbers
+resources:
+  - kind: repository
+    selector:
+      query: "true"
+    # highlight-start
+    port:
+      entity:
+        mappings: # Mappings between one Bitbucket API object to a Port entity. Each value is a JQ query.
+          identifier: ".name"
+          title: ".name"
+          blueprint: '"service"'
+          properties:
+            project: ".project.name"
+            url: ".links.html.href"
+            defaultBranch: ".main_branch"
+    # highlight-end
+```
 
-  :::tip
-  Pay attention to the value of the `blueprint` key, if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-  :::
+:::tip
+Pay attention to the value of the `blueprint` key, if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
+:::
 
 ### Setup
 

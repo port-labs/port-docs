@@ -39,7 +39,7 @@ To do so, we will use the `file://` prefix with the path of the file to tell the
         mappings:
           identifier: .path_with_namespace | gsub(" "; "")
           title: .name
-          blueprint: '"gitlabRepository"'
+          blueprint: '"service"'
           properties:
             url: .web_url
             // highlight-next-line
@@ -90,7 +90,7 @@ This means that any search query supported by the GitLab Search API can be used 
         mappings:
           identifier: .path_with_namespace | gsub(" "; "")
           title: .name
-          blueprint: '"gitlabRepository"'
+          blueprint: '"service"'
           properties:
             url: .web_link
             description: .description
