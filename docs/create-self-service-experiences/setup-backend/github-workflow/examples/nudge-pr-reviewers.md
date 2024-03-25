@@ -10,7 +10,7 @@ In the following guide, we are going to create a self-service action in Port tha
 
 ## Prerequisites
 1. Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new).
-2. This guide assumes the presence of a blueprint representing your repositories. If you haven't done so yet, initiate the setup of your GitHub data model by referring to this [guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/examples/#mapping-repositories-file-contents-and-pull-requests)) first.
+2. This guide assumes the presence of a blueprint representing your repositories and pull requests. If you haven't done so yet, initiate the setup of your GitHub data model by referring to this [guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/examples/#mapping-repositories-file-contents-and-pull-requests)) first.
 3. A repository to contain your action resources i.e. the github workflow file.
 
 
@@ -18,7 +18,7 @@ In the following guide, we are going to create a self-service action in Port tha
 
 Follow these steps to get started:
 
-1. Head to your [Slack apps](https://api.slack.com/apps) page and create a new app (or select one of your existing apps). Then, go to the Incoming Webhooks page and create a new webhook, specifying the target channel on your server where messages that are sent to the slack webhook will be transferred.
+1. Head to your [Slack apps](https://api.slack.com/apps) page and create a new app (or select one of your existing apps). Next, navigate to the Incoming Webhooks page and create a new webhook. This webhook will determine which channel on your server receives messages sent through the Slack webhook. Copy the webhook URL for later use.
 
 2. Create the following GitHub Action secrets:
     - Create the following Port credentials:
