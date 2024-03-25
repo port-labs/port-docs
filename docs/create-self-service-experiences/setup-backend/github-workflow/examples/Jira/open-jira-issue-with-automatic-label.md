@@ -117,6 +117,9 @@ on:
       type:
         required: true
         type: string
+      project:
+        required: true
+        type: string
       port_payload:
         required: true
         description:
@@ -148,9 +151,9 @@ jobs:
         id: create
         uses: atlassian/gajira-create@v3
         with:
-          project: <PROJECT-KEY> # change the name to your project key
-          issuetype: ${{github.event.inputs.type}}
-          summary: ${{github.event.inputs.title}}
+          project: ${{ github.event.inputs.project }}
+          issuetype: ${{ github.event.inputs.type }}
+          summary: ${{ github.event.inputs.title }}
           fields: '{"labels": ["port-${{ fromJson(inputs.port_payload).context.entity }}"]}'
 
       - name: Inform creation of Jira issue
@@ -164,6 +167,7 @@ jobs:
           logMessage: |
             Jira issue created! ✅
             The issue id is: ${{ steps.create.outputs.issue }}
+
 
 ```
 </details>

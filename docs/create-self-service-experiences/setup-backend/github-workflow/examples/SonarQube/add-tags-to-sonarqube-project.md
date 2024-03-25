@@ -99,7 +99,7 @@ jobs:
   create-entity-in-port-and-update-run:
     runs-on: ubuntu-latest
     steps:
-      - name: Create a log message
+      - name: Inform Port of start of request to SonarQube
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
@@ -108,7 +108,7 @@ jobs:
           operation: PATCH_RUN
           runId: ${{fromJson(inputs.port_payload).context.runId}}
           logMessage: Starting request to add tags to SonarQube project
-
+      
       - name: Add tags to SonarQube project
         uses: fjogeleit/http-request-action@v1
         with:
@@ -117,7 +117,7 @@ jobs:
           bearerToken: ${{ secrets.SONARQUBE_API_TOKEN }}
           customHeaders: '{"Content-Type": "application/json"}'
 
-      - name: Create a log message
+      - name: Inform Port of completion of request to SonarQube
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
@@ -125,7 +125,8 @@ jobs:
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
           runId: ${{fromJson(inputs.port_payload).context.runId}}
-          logMessage: Finished request to create ServiceNow incident
+          logMessage: Finished request to create SonarQube project
+
 ```
 
 </details>
