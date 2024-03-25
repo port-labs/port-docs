@@ -1,6 +1,7 @@
 ---
 sidebar_position: 10
 description: Text is a basic input for textual information
+sidebar_class_name: "custom-sidebar-item sidebar-property-string"
 ---
 
 import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"

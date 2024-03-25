@@ -1,6 +1,7 @@
 ---
 sidebar_position: 2
 description: Datetime is an input used to reference a date and time
+sidebar_class_name: "custom-sidebar-item sidebar-property-datetime"
 ---
 
 import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"

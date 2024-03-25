@@ -16,13 +16,12 @@ This section covers the self-service actions section of Port's RBAC functionalit
 In order to manage who can view which pages in Port, check out [page permissions](../../customize-pages-dashboards-and-plugins/page/page-permissions.md).
 :::
 
-## 💡 Common Self-service actions RBAC usage
+## Common Self-service actions RBAC usage
 
 Self-service actions RBAC allows admins to finely control which users can execute which self-service actions, for example:
 
-- Let a developer provision a database only to his microservice or developer environment;
-- Specify that a new cluster provision request requires manual approval by the DevOps team;
-- etc.
+- Let a developer provision a database only to his microservice or developer environment.
+- Specify that a new cluster provision request requires manual approval by the DevOps team.
 
 ## Configure permissions for actions
 
@@ -35,10 +34,15 @@ When creating/editing self-service actions, you can set permissions using one of
 
 <TabItem value="ui">
 
-The last step of creating an action is configuring permissions.  
-By default, the `Give access to everyone in the organization` toggle is enabled. To limit execution access to selected users/teams, switch off the toggle and use the dropdowns to select them.
+The last step of creating an action is configuring permissions:  
 
 <img src='/img/self-service-actions/rbac/actionFormPermissions.png' width='70%' />
+<br/><br/>
+
+By default, the `Give access to everyone in the organization` toggle is enabled. To limit execution access to selected users/teams, switch off the toggle.
+
+- To give access to specific users or teams, use the dropdown menus to select them. 
+- You can also give access to the *owners* of the entity the action is associated with, by enabling the `owners` toggle. This means that the `Team` property of the entity will be used to determine who can execute the action.
 
 </TabItem>
 
@@ -51,7 +55,7 @@ Click [here](https://registry.terraform.io/providers/port-labs/port-labs/latest/
 
 </Tabs>
 
-## Configure manual approval for actions & give approval permissions
+## Configure manual approval for actions
 
 You have the ability to set up manual approval steps for your actions.
 
@@ -61,7 +65,24 @@ When a user clicks on the `execute` button of an action that requires approval, 
 
 When a new request requires approval, Port will send a notification via email to users that have the permissions to approve it, or it will send a notification to a configured url via a web request.
 
-To configure a manual approval step, add the `requiredApproval` field to your action:
+To configure a manual approval step:
+
+<Tabs groupId="config-method" queryString values={[
+{label: "UI", value: "ui"},
+{label: "API", value: "api"},
+]}>
+
+<TabItem value="ui">
+
+Scroll down the `Permissions` tab and set `Enforce manual approval` to `Yes`. This will introduce some new options:
+
+<img src='/img/self-service-actions/rbac/manualApproval.png' width='70%' border='1px' />
+
+</TabItem>
+
+<TabItem value="api">
+
+Add the `requiredApproval` field to your action:
 
 ```json showLineNumbers
 [
@@ -79,17 +100,18 @@ To configure a manual approval step, add the `requiredApproval` field to your ac
 ]
 ```
 
-To configure which users can approve the action, see [Managing permissions](/docs/create-self-service-experiences/set-self-service-actions-rbac/examples.md#setting-action-permissions).
+</TabItem>
+</Tabs>
 
-## Configuring approval notifications
+### Define approval notifications
 
-by default manual approval notifications are sent via email to users who have approval permissions.
+By default manual approval notifications are sent via **Email** to users who have [approval permissions](#define-approvers).
 
-It is also possible to configure a webhook URL which the approval notification will be sent to.
+Port offers two alternatives:
 
-This allows you to receive notifications in a format of your choice, either as a plain JSON object or as a Slack message.
+#### Webhook
 
-To send an approval notification to a URL, add the `approvalNotification` field to your action configuration:
+You can configure a webhook URL which the approval notification will be sent to, using the following configuration:
 
 ```json showLineNumbers
 {
@@ -98,7 +120,26 @@ To send an approval notification to a URL, add the `approvalNotification` field 
     // highlight-start
     "approvalNotification": {
       "type": "webhook",
-      "format": "json / slack",
+      "format": "json",
+      "url": "https://my-webhook-url.com"
+    },
+    // highlight-end
+    ...
+}
+```
+
+#### Slack
+
+You can have your approval notifications sent to a Slack channel of your choice. The configuration in Port is as follows:
+
+```json showLineNumbers
+{
+    ...
+    "requiredApproval": true,
+    // highlight-start
+    "approvalNotification": {
+      "type": "webhook",
+      "format": "slack",
       "url": "https://my-slack-webhook.com"
     },
     // highlight-end
@@ -106,8 +147,33 @@ To send an approval notification to a URL, add the `approvalNotification` field 
 }
 ```
 
-Click [here](/docs/create-self-service-experiences/set-self-service-actions-rbac/examples.md#setting-up-a-slack-notification) to learn how to send manual approval requests to Slack.
+To generate the needed URL, you need to create a Slack app and install it in your workspace by following steps 1-3 outlined in the [Slack API Documentation](https://api.slack.com/messaging/webhooks).
 
-## Self-service actions RBAC examples
+Once you have completed the installation process, you will obtain a webhook URL that looks like this:
 
-Refer to the [examples](./examples.md) page for practical examples of Port's RBAC.
+```text
+https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX
+```
+
+Use this URL in the `url` field of the `approvalNotification` object.
+
+### Define approvers
+
+You can define approvers for an action by `role`, `user`, or `team`.  
+
+
+In this example, only users with the Admin role can approve the `clone_env` action:
+
+```json showLineNumbers
+{
+  "actions": {
+    "clone_env": {
+      "approve": {
+        "roles": ["Admin"],
+        "users": [],
+        "teams": []
+      }
+    }
+  }
+}
+```

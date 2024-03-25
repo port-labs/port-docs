@@ -3,7 +3,7 @@
 Port's Circle CI Action can trigger
 a [new pipeline](https://circleci.com/docs/api/v2/index.html?utm_source=google&utm_medium=sem&utm_campaign=sem-google-dg--emea-en-dsa-tCPA-auth-nb&utm_term=g_-_c__dsa_&utm_content=&gclid=Cj0KCQiAmNeqBhD4ARIsADsYfTeWb6EyzetX9OD0cFdfR--Tt8oOEf8CXnhyoRT46HMCGgbbVytPWG0aAloJEALw_wcB#operation/triggerPipeline)
 using a customer provided input
-and [`port_payload`](../../self-service-actions-deep-dive/self-service-actions-deep-dive.md#action-message-structure).
+and [`port_payload`](/create-self-service-experiences/reflect-action-progress/#action-run-json-structure).
 
 ![Port Kafka Architecture](../../../../static/img/self-service-actions/setup-backend/circleci/circle-ci-agent-architecture.png)
 
