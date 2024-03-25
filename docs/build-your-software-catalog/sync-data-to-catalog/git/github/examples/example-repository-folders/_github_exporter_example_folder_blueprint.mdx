@@ -1,0 +1,37 @@
+<details>
+<summary>Folder blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "githubFolder",
+  "title": "Folder",
+  "icon": "Github",
+  "schema": {
+    "properties": {
+      "readme": {
+        "title": "README",
+        "type": "string",
+        "format": "markdown"
+      },
+      "url": {
+        "title": "Folder URL",
+        "type": "string",
+        "format": "url"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "service": {
+      "title": "Service",
+      "target": "service",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

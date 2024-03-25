@@ -1,0 +1,48 @@
+<details>
+<summary>Code scan Alert blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "code_scan_alerts",
+  "title": "Code scan alerts",
+  "icon": "Microservice",
+  "schema": {
+    "properties": {
+      "description": {
+        "title": "Alert description",
+        "type": "string"
+      },
+      "severity": {
+        "title": "Alert severity",
+        "type": "string"
+      },
+      "tags": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Alert tags",
+        "type": "array"
+      },
+      "url": {
+        "title": "alert URL",
+        "type": "string",
+        "format": "url"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "service": {
+      "title": "Service",
+      "target": "service",
+      "required": false,
+      "many": true
+    }
+  }
+}
+```
+
+</details>

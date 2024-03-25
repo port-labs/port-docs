@@ -1,4 +1,5 @@
 {
-  "label": "🔍 Search & query",
-  "position": 9
+  "label": "Search & query",
+  "position": 9,
+  "className": "custom-sidebar-item sidebar-menu-search-and-query"
 }

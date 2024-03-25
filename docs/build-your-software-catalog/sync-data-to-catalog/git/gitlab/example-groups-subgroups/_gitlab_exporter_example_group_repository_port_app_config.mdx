@@ -9,7 +9,7 @@ enableMergeEntity: true
 resources:
   - kind: group
     selector:
-      query: 'true'
+      query: "true"
     port:
       entity:
         mappings:
@@ -22,13 +22,13 @@ resources:
             description: .description
   - kind: project
     selector:
-      query: 'true'
+      query: "true"
     port:
       entity:
         mappings:
           identifier: .path_with_namespace | gsub(" "; "")
           title: .name
-          blueprint: '"gitlabService"'
+          blueprint: '"service"'
           properties:
             url: .web_url
             readme: file://README.md
