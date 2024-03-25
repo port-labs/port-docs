@@ -4,9 +4,14 @@ sidebar_position: 1
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
-# Rollback ArgoCD Deployment
+# Deployment/Rollback
 
-In this guide, we will create a self-service action in Port that executes a GitHub workflow to rollback an ArgoCD deployment. The rollback involves updating the deployment manifest with a new container image and creating a Github pull request (PR) for it. The workflow can optionally merge the PR when enabled.
+In this guide, we will create a self-service action in Port that executes a GitHub workflow to perform either a deployment or rollback operation using ArgoCD. 
+:::info Updating Enviroments
+It's important to note that **Deployment** and **Rollback** operations essentially perform the same operation, with the difference being that Rollback occurs in the production environment and requires manual approval.
+:::
+
+Both operations involve updating the deployment manifest with a new container image and creating a GitHub pull request (PR) for it. The workflow can optionally merge the PR when enabled.
 
 ## Prerequisites
 1. Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new)
@@ -284,7 +289,7 @@ Follow these steps to get started:
 </details>
 <br />
 
-3. Create a workflow file under `.github/workflows/rollback.yml` with the following content:
+3. Create a workflow file under `.github/workflows/rollback.yaml` with the following content:
 
 <details>
 
@@ -295,7 +300,7 @@ Follow these steps to get started:
 - `<IMAGE-PROPERTY-PATH>` - Path to where the deployment image is specified in the deployment manifest such as `spec.template.spec.containers[0].image`.
 :::
 
-```yaml showLineNumbers title="rollback.yml"
+```yaml showLineNumbers title="rollback.yaml"
 name: Rollback ArgoCD Deployment Image
 
 on:
