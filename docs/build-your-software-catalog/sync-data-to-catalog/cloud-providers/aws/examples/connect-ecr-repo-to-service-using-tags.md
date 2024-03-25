@@ -7,7 +7,7 @@ This guide aims to cover how to connect an ECR `repository` to an existing servi
 :::tip Prerequisites
 
 - This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
-- Ensure you have [Jira installed and configured](#installation) in your environment.
+- Ensure you have [AWS exporter installed and configured](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws.md) in your environment.
 
 :::
 
@@ -31,6 +31,7 @@ To tag an ECR repository, you can use either the AWS CLI or the ECR console. Her
 
 ### Using the AWS CLI
 Run the command:
+
 ```bash
 aws ecr tag-resource \
   --resource-arn arn:aws:ecr:region:account-id:repository/repository-name \
