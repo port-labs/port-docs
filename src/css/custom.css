@@ -269,6 +269,10 @@ html[data-theme="dark"] details details  {
   content: url('/static/img/sidebar-icons/Date.svg');
 }
 
+.sidebar-property-entity > a::before {
+  content: url('/static/img/sidebar-icons/Entity.svg');
+}
+
 .sidebar-property-string > a::before {
   content: url('/static/img/sidebar-icons/Text.svg');
 }
@@ -279,6 +283,10 @@ html[data-theme="dark"] details details  {
 
 .sidebar-property-object > a::before {
   content: url('/static/img/sidebar-icons/Object.svg');
+}
+
+.sidebar-property-secret > a::before {
+  content: url('/static/img/sidebar-icons/Secret.svg');
 }
 
 .sidebar-property-swagger > a::before {

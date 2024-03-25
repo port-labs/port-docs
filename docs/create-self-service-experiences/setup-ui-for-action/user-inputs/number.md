@@ -1,6 +1,7 @@
 ---
 sidebar_position: 5
 description: Number is a basic input for numeric data
+sidebar_class_name: "custom-sidebar-item sidebar-property-number"
 ---
 
 import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"

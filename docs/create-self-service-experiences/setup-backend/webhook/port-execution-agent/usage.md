@@ -14,8 +14,8 @@ When using the execution agent, in the `url` field you need to provide a URL to 
 
 <!-- TODO: add back the URLs here for changelog destination -->
 
-- [Self-Service Action invocation method](/create-self-service-experiences/self-service-actions-deep-dive/self-service-actions-deep-dive.md#invocation-method-structure-fields) / Change Log destination `type` field value should be equal to `WEBHOOK`.
-- [Self-Service Action invocation method](/create-self-service-experiences/self-service-actions-deep-dive/self-service-actions-deep-dive.md#invocation-method-structure-fields) / Change Log `agent` field value should be equal to `true`.
+- [Self-Service Action invocation method](/create-self-service-experiences/setup-backend/#invocation-method-structure-fields) / Change Log destination `type` field value should be equal to `WEBHOOK`.
+- [Self-Service Action invocation method](/create-self-service-experiences/setup-backend/#invocation-method-structure-fields) / Change Log `agent` field value should be equal to `true`.
 
 For example:
 
@@ -99,6 +99,5 @@ This configuration directs the `requests` library to use the specified CA bundle
 
 Follow one of the guides below:
 
-- [Self-Service Actions Deep Dive](/create-self-service-experiences/self-service-actions-deep-dive/self-service-actions-deep-dive.md) - Set up a blueprint and self-service actions.
 - [Changelog Listener](/create-self-service-experiences/setup-backend/webhook/examples/changelog-listener.md) - Create a blueprint with `changelogDestination` to listen and act on changes in the software catalog.
 - [GitLab Pipeline Trigger](/create-self-service-experiences/setup-backend/gitlab-pipeline/gitlab-pipeline.md) - Create an action that triggers GitLab Pipeline execution.
