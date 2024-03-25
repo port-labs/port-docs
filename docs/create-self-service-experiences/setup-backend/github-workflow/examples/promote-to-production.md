@@ -387,7 +387,7 @@ Follow these steps to get started:
 </details>
 <br />
 
-3. Create a workflow file under `.github/workflows/promote-production.yml` with the following content:
+3. Create a workflow file under `.github/workflows/promote-production.yaml` with the following content:
 
 <details>
 
@@ -398,7 +398,7 @@ Follow these steps to get started:
 - `<IMAGE-PROPERTY-PATH>` - Path to where the deployment image is specified in the deployment manifest such as `spec.template.spec.containers[0].image`.
 :::
 
-```yaml showLineNumbers title="promote-production.yml"
+```yaml showLineNumbers title="promote-production.yaml"
 name: Promote Production
 
 on:
