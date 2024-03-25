@@ -284,7 +284,7 @@ Follow these steps to get started:
 </details>
 <br />
 
-3. Create a workflow file under `.github/workflows/rollback.yml` with the following content:
+3. Create a workflow file under `.github/workflows/rollback.yaml` with the following content:
 
 <details>
 
