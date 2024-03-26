@@ -1,34 +1,34 @@
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
-# Open Slack Channel
+# Open Slack Channel for Incident Management
 
 ## Overview
 
-In this guide, we will demonstrate how to create a self-service action in Port that not only automates the creation of a new Slack channel for a service but also includes the option to add members during the channel's setup.
+In this guide, we will to create a self-service action in Port that not only automates the creation of a new Slack channel for a service but also includes the option to add members during the channel's setup.
 
 ## Prerequisites
 
 1. [Create a slack app](https://api.slack.com/start/quickstart#creating) and install it on a workspace.
 2. Generate a [Slack Bot User Oauth Token](https://api.slack.com/apps/A06PVJZQBHB/oauth?success=1) with permissions to create a new channel and invite users of the slack workspace to the slack channel.
-   _ [Bot User Scopes](https://api.slack.com/start/quickstart#scopes):
-   _ [Create channel](https://api.slack.com/methods/conversations.invite) (**Required**) :
-   `channels:manage`
-   `groups:write`
-   `im:write`
-   `mpim:write`
-   _ [Find a user with an email address](https://api.slack.com/methods/users.lookupByEmail) (**Optional**) :
-   `users:read.email`
-   _ [Invite users to channel](https://api.slack.com/methods/conversations.invite) (**Optional**) :
-   `channels:write.invites`
-   `groups:write.invites`
-   `mpim:write.invites`
-   `channels:manage`
-   `groups:write`
-   `im:write`
-   `mpim:write`  
-   :::note
-   Without scopes for `Find a user with an email address` and `Invite users to channel`, the channel will be created but users will not be added to it.
-   :::
+    * [Bot User Scopes](https://api.slack.com/start/quickstart#scopes):
+        * [Create channel](https://api.slack.com/methods/conversations.create) (**Required**) :
+          `channels:manage`
+          `groups:write`
+          `im:write`
+          `mpim:write`
+        * [Find a user with an email address](https://api.slack.com/methods/users.lookupByEmail) (**Optional**) :
+          `users:read.email`
+        * [Invite users to channel](https://api.slack.com/methods/conversations.invite) (**Optional**) :
+          `channels:write.invites`
+          `groups:write.invites`
+          `mpim:write.invites`
+          `channels:manage`
+          `groups:write`
+          `im:write`
+          `mpim:write`  
+    :::note
+    Without scopes for `Find a user with an email address` and `Invite users to channel`, the channel will be created but users will not be added to it.
+    :::
 3. [Port's GitHub app](https://github.com/apps/getport-io) needs to be installed.
 
 ## Steps
@@ -39,12 +39,12 @@ In this guide, we will demonstrate how to create a self-service action in Port t
 - `PORT_CLIENT_ID` - Your port [client id](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
 - `PORT_CLIENT_SECRET` - Your port [client secret](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
 
-2. Create a <PortTooltip id="blueprint">blueprint</PortTooltip> for the service with the following JSON definition:
+2. Create a service <PortTooltip id="blueprint">blueprint</PortTooltip> with the following JSON definition:
 
 <details>
-   <summary><b>Service Blueprint (Click to expand)</b></summary>
+   <summary><b>Port Blueprint: Service (Click to expand)</b></summary>
 
-```json showLineNumbers
+```json showLineNumbers title='service blueprint'
 {
   "identifier": "service",
   "title": "Service",
@@ -370,7 +370,7 @@ In this guide, we will demonstrate how to create a self-service action in Port t
    :::
 
 <details>
-<summary><b>Open Slack Channel Action (Click to expand)</b></summary>
+<summary><b>Port Action: Open Slack Channel (Click to expand)</b></summary>
 :::tip
 - `<GITHUB-ORG>` - your GitHub organization or user name.
 - `<GITHUB-REPO-NAME>` - your GitHub repository name.
@@ -439,9 +439,9 @@ In this guide, we will demonstrate how to create a self-service action in Port t
 4. Create a workflow file under `.github/workflows/open-slack-channel.yaml` using the workflow:
 
 <details>
-<summary><b>Open Slack Channel (Click to expand)</b></summary>
+<summary><b>Github Workflow: Open Slack Channel (Click to expand)</b></summary>
 
-```yaml showLineNumbers
+```yaml showLineNumbers  title='.github/workflows/open-slack-channel.yaml'
 name: Open Slack Channel
 on:
   workflow_dispatch:
@@ -558,7 +558,90 @@ jobs:
 
 </details>
 
-5. Create the following bash script (`add-members-to-channel.sh`) in `slack` folder at the root of your GitHub repository:
+5. Create a bash script (`add-members-to-channel.sh`) in a folder named `slack` at the root of your GitHub repository with this content:
+
+<details>
+<summary><b>Bash Script: Add Members to Channel (Click to expand)</b></summary>
+
+```bash showLineNumbers title="slack/add-members-to-channel.sh"
+#!/bin/bash
+
+# Assign arguments to variables
+SLACK_TOKEN=$1
+CHANNEL_ID=$2
+clientId=$3
+clientSecret=$4
+run_id=$5
+MEMBER_EMAILS_JSON=$6
+
+# Get the Port access token
+PORT_TOKEN_RESPONSE=$(curl -s -X 'POST' \
+  'https://api.getport.io/v1/auth/access_token' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d "{
+        \"clientId\": \"$clientId\",
+        \"clientSecret\": \"$clientSecret\"
+      }"
+    )
+
+echo $PORT_TOKEN_RESPONSE
+PORT_ACCESS_TOKEN=$(echo $PORT_TOKEN_RESPONSE | jq -r '.accessToken')
+
+# Ensure the access token was obtained successfully
+if [ -z "$PORT_ACCESS_TOKEN" ] || [ "$PORT_ACCESS_TOKEN" == "null" ]; then
+  error_message="Failed to obtain Port access token ❌"
+  echo $error_message
+  report_error "$error_message"
+  exit 1
+fi
+
+# Function to report error
+report_error() {
+  local message=$1
+  echo $message
+  echo "ADD_MEMBER_TO_CHANNEL_ERROR=$message" >> $GITHUB_ENV
+  curl -s -X POST "https://api.getport.io/v1/actions/runs/$run_id/logs" \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer $PORT_ACCESS_TOKEN" \
+    -d "{\"message\": \"$message\"}"
+}
+
+user_ids=""
+
+# Convert MEMBER_EMAILS_JSON to an array
+readarray -t MEMBER_EMAILS < <(echo $MEMBER_EMAILS_JSON | jq -r 'fromjson | .[]')
+
+for email in "${MEMBER_EMAILS[@]}"; do
+  user_response=$(curl -s -X GET "https://slack.com/api/users.lookupByEmail?email=$email" \
+    -H "Authorization: Bearer $SLACK_TOKEN")
+
+  if [[ "$(echo $user_response | jq -r '.ok')" == "true" ]]; then
+    user_id=$(echo $user_response | jq -r '.user.id')
+    user_ids+="${user_id},"
+  else
+    error_message="Failed to retrieve user id for $email: $(echo $user_response | jq -r '.error' | tr '_' ' ') ⚠️"
+    report_error "$error_message"
+  fi
+done
+
+user_ids=${user_ids%,}
+
+if [[ -n "$user_ids" ]]; then
+  invite_response=$(curl -s -X POST "https://slack.com/api/conversations.invite" \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer $SLACK_TOKEN" \
+    --data "{\"channel\":\"$CHANNEL_ID\",\"users\":\"$user_ids\"}")
+
+  if [[ "$(echo $invite_response | jq -r '.ok')" == "false" ]]; then
+    error_message="Failed to invite users to channel: $(echo $invite_response | jq -r '.error' | tr '_' ' ') ⚠️"
+    report_error "$error_message"
+  fi
+else
+  report_error "No user IDs found to invite."
+fi
+```
+</details>
 
 6. Trigger the action from Port's [Self Service hub](https://app.getport.io/self-serve)
 
