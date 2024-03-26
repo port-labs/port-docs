@@ -1,12 +1,12 @@
 ---
-sidebar_position: 2
+sidebar_position: 4
 ---
 
 # Debugging Webhooks locally
 
 In this guide, we will show you how to debug Webhook Self-Service Actions that are sent from Port locally.
 
-This example contains the initial steps to set up a standard Self-Service Action use case, following it shows how to locally debug the payload sent by Port through the webhook [invocation method](../../self-service-actions-deep-dive/self-service-actions-deep-dive.md#invocation-method).
+This example contains the initial steps to set up a standard Self-Service Action use case, following it shows how to locally debug the payload sent by Port through the webhook [invocation method](/create-self-service-experiences/setup-backend/#json-structure).
 
 ## Prerequisites
 

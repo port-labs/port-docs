@@ -1,0 +1,69 @@
+<details>
+
+<summary>Storage Container Blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "azureStorageContainer",
+  "description": "This blueprint represents an Azure Storage Container in our software catalog",
+  "title": "Storage Container",
+  "icon": "Azure",
+  "schema": {
+    "properties": {
+      "publicAccess": {
+        "title": "Public Access",
+        "type": "string"
+      },
+      "hasImmutabilityPolicy": {
+        "title": "Has Immutability Policy",
+        "type": "boolean"
+      },
+      "hasLegalHold": {
+        "title": "Has Legal Hold",
+        "type": "boolean"
+      },
+      "deleted": {
+        "title": "Deleted",
+        "type": "boolean"
+      },
+      "deletedTime": {
+        "title": "Deleted Time",
+        "type": "string"
+      },
+      "remainingRetentionDays": {
+        "title": "Remaining Retention Days",
+        "type": "number"
+      },
+      "leaseStatus": {
+        "title": "Lease Status",
+        "type": "string"
+      },
+      "leaseState": {
+        "title": "Lease State",
+        "type": "string"
+      },
+      "defaultEncryptionScope": {
+        "title": "Default Encryption Scope",
+        "type": "string"
+      },
+      "version": {
+        "title": "Version",
+        "type": "string"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "storageAccount": {
+      "target": "azureStorageAccount",
+      "title": "Storage Account",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

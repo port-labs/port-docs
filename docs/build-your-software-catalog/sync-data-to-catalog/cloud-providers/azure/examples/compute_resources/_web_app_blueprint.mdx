@@ -1,0 +1,48 @@
+<details>
+<summary> Web App blueprint </summary>
+
+```json showLineNumbers
+{
+  "identifier": "azureWebApp",
+  "description": "This blueprint represents an Azure Web App in our software catalog",
+  "title": "Web App",
+  "icon": "Azure",
+  "schema": {
+    "properties": {
+      "location": {
+        "title": "Location",
+        "type": "string"
+      },
+      "state": {
+        "title": "State",
+        "type": "string"
+      },
+      "enabled": {
+        "title": "Enabled",
+        "type": "boolean"
+      },
+      "defaultHostName": {
+        "title": "Default Host Name",
+        "type": "string"
+      },
+      "appServicePlanId": {
+        "title": "App Service Plan ID",
+        "type": "string"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "resourceGroup": {
+      "target": "azureResourceGroup",
+      "title": "Resource Group",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

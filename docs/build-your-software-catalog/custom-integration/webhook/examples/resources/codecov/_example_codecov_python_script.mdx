@@ -1,0 +1,110 @@
+```python showLineNumbers
+## Import the needed libraries
+import requests
+from decouple import config
+from loguru import logger
+from typing import Any
+
+# Get environment variables using the config object or os.environ["KEY"]
+# These are the credentials passed by the variables of your pipeline to your tasks and in to your env
+
+PORT_CLIENT_ID = config("PORT_CLIENT_ID")
+PORT_CLIENT_SECRET = config("PORT_CLIENT_SECRET")
+CODECOV_TOKEN = config("CODECOV_TOKEN")
+CODECOV_SERVICE_PROVIDER = config("CODECOV_SERVICE_PROVIDER")
+CODECOV_SERVICE_PROVIDER_ACCOUNT_NAME = config("CODECOV_SERVICE_PROVIDER_ACCOUNT_NAME")
+CODECOV_API_URL = "https://api.codecov.io/api/v2"
+PORT_API_URL = "https://api.getport.io/v1"
+
+ALLOWED_SERVICE_PROVIDERS = {
+    "github",
+    "github_enterprise",
+    "bitbucket",
+    "bitbucket_server",
+    "gitlab",
+    "gitlab_enterprise",
+}
+
+if CODECOV_SERVICE_PROVIDER not in ALLOWED_SERVICE_PROVIDERS:
+    raise ValueError(
+        f"Invalid CODECOV_SERVICE_PROVIDER: {CODECOV_SERVICE_PROVIDER}. Allowed values are {', '.join(ALLOWED_SERVICE_PROVIDERS)}"
+    )
+
+## Get Port Access Token
+credentials = {"clientId": PORT_CLIENT_ID, "clientSecret": PORT_CLIENT_SECRET}
+token_response = requests.post(f"{PORT_API_URL}/auth/access_token", json=credentials)
+access_token = token_response.json()["accessToken"]
+
+# You can now use the value in access_token when making further requests
+port_headers = {"Authorization": f"Bearer {access_token}"}
+
+
+def add_entity_to_port(blueprint_id: str, entity_object: dict[str, Any]):
+    response = requests.post(
+        f"{PORT_API_URL}/blueprints/{blueprint_id}/entities?upsert=true&merge=true",
+        json=entity_object,
+        headers=port_headers,
+    )
+    logger.info(response.json())
+
+
+def get_paginated_resource(path: str, query_params: dict[str, Any] = {}):
+    logger.info(
+        f"Requesting paginated data for path: {path} and params: {query_params}"
+    )
+
+    url = f"{CODECOV_API_URL}/{path}"
+
+    while url:
+        try:
+            response = requests.get(url=url, params=query_params)
+            response.raise_for_status()
+            page_json = response.json()
+            batch_data = page_json["results"]
+            yield batch_data
+
+            url = page_json.get("next")
+
+        except requests.exceptions.HTTPError as e:
+            logger.error(f"HTTP error with info: {e}")
+            raise
+
+    logger.info(f"Successfully fetched paginated data for {path}")
+
+
+def process_repository_entities(repository_data: list[dict[str, Any]]):
+    blueprint_id = "codecov_coverage"
+    for repo in repository_data:
+        report: dict[str, Any] = repo.get("totals", {})
+        entity = {
+            "identifier": repo["name"],
+            "title": repo["name"],
+            "properties": {
+                "repository": f"https://app.codecov.io/{repo['author']['service']}/{repo['author']['username']}/{repo['name']}",
+                "coverage": report.get("coverage") if report else None,
+                "service": repo["author"]["service"],
+                "author": repo["author"]["name"],
+                "createdAt": repo["updatestamp"],
+                "files": report.get("files") if report else None,
+                "lines": report.get("lines") if report else None,
+                "report": report,
+                "branch": repo["branch"],
+            },
+            "relations": {},
+        }
+        add_entity_to_port(blueprint_id=blueprint_id, entity_object=entity)
+
+
+if __name__ == "__main__":
+    logger.debug("Starting Codecov app")
+    repository_path = (
+        f"{CODECOV_SERVICE_PROVIDER}/{CODECOV_SERVICE_PROVIDER_ACCOUNT_NAME}/repos"
+    )
+    for repositories_batch in get_paginated_resource(path=repository_path):
+        logger.debug(
+            f"Received Codecov repositories batch with size {len(repositories_batch)}"
+        )
+        process_repository_entities(repository_data=repositories_batch)
+
+    logger.debug("Finished Codecov app")
+```

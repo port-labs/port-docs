@@ -1,6 +1,7 @@
 ---
-sidebar_position: 14
+sidebar_position: 7
 description: Secret is an input whose value is encrypted with your client secret when sent to your backend and is never saved or logged in its transit.
+sidebar_class_name: "custom-sidebar-item sidebar-property-secret"
 ---
 
 import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"
@@ -16,11 +17,10 @@ Secret input is an input type used to pass secrets and sensitive information to 
 
 The secret input type can be used for sensitive information, such as:
 
-- Cloud secrets;
-- Passwords;
-- API keys;
+- Cloud secrets
+- Passwords
+- API keys
 - Secret tokens
-- etc.
 
 ## Secret Input Structure
 
@@ -40,7 +40,7 @@ A secret input is defined as a regular input, but with the additional `encryptio
 }
 ```
 
-- [aes256-gcm](https://www.nist.gov/publications/advanced-encryption-standard-aes) - This will encrypt the property data using 256 bits AES in [GCM mode](https://csrc.nist.gov/glossary/term/aes_gcm). The encrypted value will be prefixed by the 16 bits IV and suffixed by the 16 bits MAC, encoded to base-64. The encryption key will be the first 32 bytes of your organization's [Client Secret](../../../build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
+- [aes256-gcm](https://www.nist.gov/publications/advanced-encryption-standard-aes) - This will encrypt the property data using 256 bits AES in [GCM mode](https://csrc.nist.gov/glossary/term/aes_gcm). The encrypted value will be prefixed by the 16 bits IV and suffixed by the 16 bits MAC, encoded to base-64. The encryption key will be the first 32 bytes of your organization's [Client Secret](../../../build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
 
 ### Supported Types
 

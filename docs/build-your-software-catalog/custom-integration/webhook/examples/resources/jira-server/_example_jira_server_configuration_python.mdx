@@ -1,0 +1,194 @@
+```python showLineNumbers
+# Dependencies to Install
+# pip install loguru
+# pip install requests
+# pip install decouple
+# pip install httpx
+
+import asyncio
+from typing import Any, AsyncGenerator
+import httpx
+import requests
+from requests.auth import HTTPBasicAuth
+from loguru import logger
+from decouple import config
+
+PAGE_SIZE = 50
+
+# Get environment variables using the config object or os.environ["KEY"]
+# These are the credentials passed by the variables of your pipeline to your tasks and in to your env
+PORT_API_URL = "https://api.getport.io/v1"
+PORT_CLIENT_ID = config("PORT_CLIENT_ID")
+PORT_CLIENT_SECRET = config("PORT_CLIENT_SECRET")
+
+JIRA_USERNAME = config("JIRA_USERNAME")
+JIRA_PASSWORD = config("JIRA_PASSWORD")
+JIRA_API_URL = config("JIRA_API_URL")
+
+
+api_url = f"{JIRA_API_URL}/rest/api/2"
+
+## Get Port Access Token
+credentials = {"clientId": PORT_CLIENT_ID, "clientSecret": PORT_CLIENT_SECRET}
+token_response = requests.post(f"{PORT_API_URL}/auth/access_token", json=credentials)
+access_token = token_response.json()["accessToken"]
+
+# You can now use the value in access_token when making further requests
+port_headers = {"Authorization": f"Bearer {access_token}"}
+
+# https://developer.atlassian.com/cloud/jira/platform/basic-auth-for-rest-apis/
+jira_auth = HTTPBasicAuth(username=JIRA_USERNAME, password=JIRA_PASSWORD)
+
+
+# Add a resource to Port
+async def add_resource_to_port(blueprint: str, resource: dict[str, Any]) -> None:
+    logger.info(f"Adding {blueprint} resource to Port: {resource}")
+
+    if blueprint == "jiraProject":
+        entity = {
+            "identifier": resource["key"],
+            "title": resource["name"],
+            "properties": {
+                "url": jq_filter(resource),
+                "projectType": resource["projectTypeKey"],
+            },
+            "relations": {},
+        }
+    elif blueprint == "jiraIssue":
+        entity = {
+            "identifier": resource["key"],
+            "title": resource["fields"]["summary"],
+            "properties": {
+                "url": resource["self"],
+                "status": resource["fields"]["status"]["name"],
+                "issueType": resource["fields"]["issuetype"]["name"],
+                "assignee": get_field_value(resource, "assignee", "name"),
+                "reporter": resource["fields"].get("reporter", {}).get("name"),
+                "priority": resource["fields"].get("priority", {}).get("name"),
+                "creator": resource["fields"].get("creator", {}).get("name"),
+            },
+            "relations": {
+                "project": resource["fields"]["project"]["key"],
+                "parentIssue": get_field_value(resource, "parent", "key"),
+                "subtasks": [
+                    issue.get("key")
+                    for issue in resource["fields"]["subtasks"]
+                    if issue
+                ],
+            },
+        }
+    else:
+        raise ValueError(f"Blueprint {blueprint} is not supported")
+
+    response = requests.post(
+        f"{PORT_API_URL}/blueprints/{blueprint}/entities?upsert=true&merge=true",
+        json=entity,
+        headers=port_headers,
+    )
+    logger.info(response.json())
+
+
+def get_field_value(resource, field_name, subfield_name=None):
+    """
+    Get the value of a field from a resource dictionary.
+
+    Parameters:
+    - resource (dict): The dictionary representing the resource.
+    - field_name (str): The name of the field to retrieve.
+    - subfield_name (str): Optional. If the field has a subfield, provide its name.
+
+    Returns:
+    - The value of the specified field or subfield, or None if not found.
+    """
+    field = resource["fields"].get(field_name)
+
+    if subfield_name:
+        return field.get(subfield_name) if field else None
+    else:
+        return field
+
+
+def jq_filter(data):
+    if isinstance(data, dict):
+        # Split the data string by '/'
+        split_data = data["self"].split("/")
+
+        # Extract the first three elements of the split data list
+        filtered_data = split_data[:3]
+
+        # Join the filtered data list back into a string using '/' delimiter
+        joined_data = "/".join(filtered_data)
+
+        # Add the '/projects/' prefix and the data's key as suffix to the joined data
+        output = joined_data + "/projects/" + data["key"]
+    else:
+        # Return an empty string if the data is not a dictionary
+        output = ""
+
+    return output
+
+
+class JiraClient:
+    def __init__(self, jira_auth: HTTPBasicAuth) -> None:
+        self.client = httpx.AsyncClient()
+        self.client.auth = jira_auth
+
+    async def _get_paginated_projects(self, params: dict[str, Any]) -> dict[str, Any]:
+        # https://community.atlassian.com/t5/Jira-Core-Server-questions/Jira-API-Get-projects-paginated/qaq-p/925683
+        # this GET /rest/api/2/project/search api is available for the jira cloud, not the server.
+        project_response = await self.client.get(f"{api_url}/project", params=params)
+        project_response.raise_for_status()
+        return project_response.json()
+
+    async def _get_paginated_issues(self, params: dict[str, Any]) -> dict[str, Any]:
+        issue_response = await self.client.get(f"{api_url}/search", params=params)
+        issue_response.raise_for_status()
+        return issue_response.json()
+
+    async def get_projects(
+        self,
+    ) -> AsyncGenerator[list[dict[str, Any]], None]:
+        logger.info("Getting projects from Jira")
+
+        project_response = await self.client.get(f"{api_url}/project")
+        project_response.raise_for_status()
+        yield project_response.json()
+
+    async def get_paginated_issues(self) -> AsyncGenerator[list[dict[str, Any]], None]:
+        logger.info("Getting issues from Jira")
+
+        params: dict[str, Any] = {
+            "maxResults": 0,
+            "startAt": 0,
+        }
+
+        params["jql"] = "status != Done"
+
+        total_issues = (await self._get_paginated_issues(params))["total"]
+
+        params["maxResults"] = PAGE_SIZE
+        while params["startAt"] <= total_issues:
+            logger.info(f"Current query position: {params['startAt']}/{total_issues}")
+            issue_response_list = (await self._get_paginated_issues(params))["issues"]
+            yield issue_response_list
+            params["startAt"] += PAGE_SIZE
+
+
+if __name__ == "__main__":
+    logger.debug("Starting the app")
+
+    jira_client = JiraClient(jira_auth)
+
+    async def main():
+        async for projects in jira_client.get_projects():
+            for project in projects:
+                await add_resource_to_port("jiraProject", project)
+
+        async for issues in jira_client.get_paginated_issues():
+            for issue in issues:
+                await add_resource_to_port("jiraIssue", issue)
+
+    asyncio.run(main())
+
+    logger.debug("Finished the app")
+```

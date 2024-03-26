@@ -45,7 +45,7 @@ resources:
           # highlight-start
           identifier: ".destination.repository.name + (.id|tostring)" # The Entity identifier will be the repository name + the pull request ID. After the Entity is created, the exporter will send `PATCH` requests to update this pull request within Port.
           title: ".title"
-          blueprint: '"pullRequest"'
+          blueprint: '"bitbucketPullRequest"'
           properties:
             creator: ".author.display_name"
             assignees: "[.participants[].user.display_name]"
@@ -73,9 +73,9 @@ resources:
     port:
       entity:
         mappings:
-          identifier: ".name" # The Entity identifier will be the repository name.
+          identifier: ".name" # The Entity identifier will be the service (repository) name.
           title: ".name"
-          blueprint: '"microservice"'
+          blueprint: '"service"'
           properties:
             project: ".project.name"
             url: ".links.html.href"
@@ -106,53 +106,52 @@ resources:
 
   <BitbucketResources/>
 
-- The `selector` and the `query` keys let you filter exactly which objects from the specified `kind` will be ingested to the software catalog
+#### Filtering unwanted objects
 
-  ```yaml showLineNumbers
-  resources:
-    - kind: repository
-      # highlight-start
-      selector:
-        query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
-      # highlight-end
-      port:
-  ```
+The `selector` and the `query` keys let you filter exactly which objects from the specified `kind` will be ingested to the software catalog
 
-  Some example use cases:
+```yaml showLineNumbers
+resources:
+  - kind: repository
+    # highlight-start
+    selector:
+      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
+    # highlight-end
+    port:
+```
 
-  - To sync all objects from the specified `kind`: do not specify a `selector` and `query` key;
-  - To sync all objects from the specified `kind` that start with `service`, use:
+For example, to ingest only repositories that have a name starting with `"service"`, use the `query` key like this:
 
-    ```yaml showLineNumbers
-    query: .name | startswith("service")
-    ```
+```yaml showLineNumbers
+query: .name | startswith("service")
+```
 
-  - etc.
+<br/>
 
-- The `port`, `entity` and the `mappings` keys open the section used to map the Bitbucket API object fields to Port entities. The `mappings` key can either be an object or an array of objects that matches the structure of an [entity](../../../sync-data-to-catalog/sync-data-to-catalog.md#entity-json-structure)
+The `port`, `entity` and the `mappings` keys open the section used to map the Bitbucket API object fields to Port entities. The `mappings` key can either be an object or an array of objects that matches the structure of an [entity](../../../sync-data-to-catalog/sync-data-to-catalog.md#entity-json-structure)
 
-  ```yaml showLineNumbers
-  resources:
-    - kind: repository
-      selector:
-        query: "true"
-      # highlight-start
-      port:
-        entity:
-          mappings: # Mappings between one Bitbucket API object to a Port entity. Each value is a JQ query.
-            identifier: ".name"
-            title: ".name"
-            blueprint: '"microservice"'
-            properties:
-              project: ".project.name"
-              url: ".links.html.href"
-              defaultBranch: ".main_branch"
-      # highlight-end
-  ```
+```yaml showLineNumbers
+resources:
+  - kind: repository
+    selector:
+      query: "true"
+    # highlight-start
+    port:
+      entity:
+        mappings: # Mappings between one Bitbucket API object to a Port entity. Each value is a JQ query.
+          identifier: ".name"
+          title: ".name"
+          blueprint: '"service"'
+          properties:
+            project: ".project.name"
+            url: ".links.html.href"
+            defaultBranch: ".main_branch"
+    # highlight-end
+```
 
-  :::tip
-  Pay attention to the value of the `blueprint` key, if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-  :::
+:::tip
+Pay attention to the value of the `blueprint` key, if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
+:::
 
 ### Setup
 

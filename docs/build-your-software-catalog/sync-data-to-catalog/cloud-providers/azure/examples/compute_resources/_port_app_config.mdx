@@ -1,0 +1,133 @@
+<details>
+
+<summary>
+  Mapping Configuration for AKS, ContainerApp, LoadBalancer, VirtualMachine and
+  WebApp
+</summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: Microsoft.App/containerApps
+    selector:
+      query: "true"
+      # azure resource api version to query
+      apiVersion: "2023-05-01"
+    port:
+      entity:
+        mappings:
+          identifier: '.id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase | join("/")'
+          title: .name
+          blueprint: '"azureContainerApp"'
+          properties:
+            location: .location
+            provisioningState: .properties.provisioningState
+            outboundIpAddresses: .properties.outboundIpAddresses
+            externalIngress: .properties.configuration.ingress.external
+            hostName: .properties.configuration.ingress.fqdn
+            minReplicas: .properties.template.scale.minReplicas
+            maxReplicas: .properties.template.scale.maxReplicas
+          relations:
+            resourceGroup: '.id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase | .[:5] |join("/")'
+  - kind: Microsoft.ContainerService/managedClusters
+    selector:
+      query: "true"
+      # azure resource api version to query
+      apiVersion: "2023-05-01"
+    port:
+      entity:
+        mappings:
+          identifier: '.id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase | join("/")'
+          title: .name
+          blueprint: '"azureAks"'
+          properties:
+            location: .location
+            provisioningState: .properties.provisioningState
+            powerState: .properties.powerState.code
+            kubernetesVersion: .properties.kubernetesVersion
+            currentKubernetesVersion: .properties.currentKubernetesVersion
+            dnsPrefix: .properties.dnsPrefix
+            fqdn: .properties.fqdn
+            nodeResourceGroup: .properties.nodeResourceGroup
+            enableRBAC: .properties.enableRBAC
+            supportPlan: .properties.supportPlan
+            networkPlugin: .properties.networkProfile.networkPlugin
+            podCIDR: .properties.networkProfile.podCidr
+            serviceCIDR: .properties.networkProfile.serviceCidr
+            dnsServiceIp: .properties.networkProfile.dnsServiceIP
+            outboundType: .properties.networkProfile.outboundType
+            loadBalancerSKU: .properties.networkProfile.loadBalancerSku
+            maxAgentPools: .properties.maxAgentPools
+            skuTier: .properties.sku.tier
+          relations:
+            resourceGroup: '.id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase | .[:5] |join("/")'
+  - kind: Microsoft.Network/loadBalancers
+    selector:
+      query: "true"
+      # azure resource api version to query
+      apiVersion: "2023-05-01"
+    port:
+      entity:
+        mappings:
+          identifier: '.id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase | join("/")'
+          title: .name
+          blueprint: '"azureLoadBalancer"'
+          properties:
+            location: .location
+            provisioningState: .properties.provisioningState
+            tags: .tags
+            frontendIpResourceIds: .properties.frontendIPConfigurations[].id
+            backendAddressPoolResourceIds: .properties.backendAddressPools[].id
+            loadBalancingRulesResourceIds: .properties.loadBalancingRules[].id
+            probesResourceIds: .properties.probes[].id
+            inboundNatRulesResourceIds: .properties.inboundNatRules[].id
+            inboundNatPoolsResourceIds: .properties.inboundNatPools[].id
+          relations:
+            resourceGroup: '.id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase | .[:5] |join("/")'
+  - kind: Microsoft.Compute/virtualMachines
+    selector:
+      query: "true"
+      apiVersion: "2023-03-01"
+    port:
+      entity:
+        mappings:
+          identifier: '.id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase | join("/")'
+          title: .name
+          blueprint: '"azureVirtualMachine"'
+          properties:
+            location: .location
+            provisioningState: .properties.provisioningState
+            vmSize: .properties.hardwareProfile.vmSize
+            osDiskName: .properties.storageProfile.osDisk.name
+            osType: .properties.storageProfile.osDisk.osType
+            osDiskCaching: .properties.storageProfile.osDisk.caching
+            osDiskSizeGB: .properties.storageProfile.osDisk.diskSizeGB
+            osDiskCreateOption: .properties.storageProfile.osDisk.createOption
+            networkInterfaceIds: .properties.networkProfile.networkInterfaces[].id
+            licenseType: .properties.licenseType
+            vmOsProfile: .properties.osProfile
+            vmHardwareProfile: .properties.hardwareProfile
+            vmStorageProfile: .properties.storageProfile
+            tags: .tags
+          relations:
+            resourceGroup: '.id | split("/") | .[3] |= ascii_downcase | .[4] |= ascii_downcase | .[:5] |join("/")'
+  - kind: Microsoft.Web/sites
+    selector:
+      query: "true"
+      apiVersion: "2022-03-01"
+    port:
+      entity:
+        mappings:
+          identifier: '.id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase | join("/")'
+          title: .name
+          blueprint: '"azureWebApp"'
+          properties:
+            location: .location
+            state: .properties.state
+            enabled: .properties.enabled
+            defaultHostName: .properties.defaultHostName
+            appServicePlanId: .properties.serverFarmId
+          relations:
+            resourceGroup: '.id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase | .[:5] |join("/")'
+```
+
+</details>

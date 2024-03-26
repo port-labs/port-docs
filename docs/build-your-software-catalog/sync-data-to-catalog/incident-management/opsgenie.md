@@ -5,6 +5,11 @@ sidebar_position: 2
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
+import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
+import DockerParameters from "./\_opsgenie_docker_params.mdx"
+import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
+import OpsGenieAlertBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/opsgenie/\_example_opsgenie_alert_blueprint.mdx";
+import OpsGenieAlertConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/opsgenie/\_example_opsgenie_alert_configuration.mdx";
 
 # Opsgenie
 
@@ -46,19 +51,105 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `initializePortResources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
 
 <br/>
+<Tabs groupId="deploy" queryString="deploy">
+
+<TabItem value="helm" label="Helm" default>
+To install the integration using Helm, run the following command:
 
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install opsgenie port-labs/port-ocean \
+helm upgrade --install my-opsgenie-integration port-labs/port-ocean \
   --set port.clientId="CLIENT_ID"  \
   --set port.clientSecret="CLIENT_SECRET"  \
   --set initializePortResources=true  \
-  --set integration.identifier="opsgenie"  \
+  --set integration.identifier="my-opsgenie-integration"  \
   --set integration.type="opsgenie"  \
   --set integration.eventListener.type="POLLING"  \
   --set integration.secrets.apiToken="API_TOKEN"  \
   --set integration.config.apiUrl="https://api.opsgenie.com"
 ```
+</TabItem>
+
+<TabItem value="argocd" label="ArgoCD" default>
+To install the integration using ArgoCD, follow these steps:
+
+1. Create a `values.yaml` file in `argocd/my-ocean-opsgenie-integration` in your git repository with the content:
+
+:::note
+Remember to replace the placeholders for `OPSGENIE_API_URL` and `OPSGENIE_API_TOKEN`.
+:::
+```yaml showLineNumbers
+initializePortResources: true
+scheduledResyncInterval: 120
+integration:
+  identifier: my-ocean-opsgenie-integration
+  type: opsgenie
+  eventListener:
+    type: POLLING
+  config:
+  // highlight-next-line
+    apiUrl: OPSGENIE_API_URL
+  secrets:
+  // highlight-next-line
+    apiToken: OPSGENIE_API_TOKEN
+```
+<br/>
+
+2. Install the `my-ocean-opsgenie-integration` ArgoCD Application by creating the following `my-ocean-opsgenie-integration.yaml` manifest:
+:::note
+Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+
+Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
+:::
+
+<details>
+  <summary>ArgoCD Application</summary>
+
+```yaml showLineNumbers
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: my-ocean-opsgenie-integration
+  namespace: argocd
+spec:
+  destination:
+    namespace: my-ocean-opsgenie-integration
+    server: https://kubernetes.default.svc
+  project: default
+  sources:
+  - repoURL: 'https://port-labs.github.io/helm-charts/'
+    chart: port-ocean
+    targetRevision: 0.1.14
+    helm:
+      valueFiles:
+      - $values/argocd/my-ocean-opsgenie-integration/values.yaml
+      // highlight-start
+      parameters:
+        - name: port.clientId
+          value: YOUR_PORT_CLIENT_ID
+        - name: port.clientSecret
+          value: YOUR_PORT_CLIENT_SECRET
+  - repoURL: YOUR_GIT_REPO_URL
+  // highlight-end
+    targetRevision: main
+    ref: values
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+```
+
+</details>
+<br/>
+
+3. Apply your application manifest with `kubectl`:
+```bash
+kubectl apply -f my-ocean-opsgenie-integration.yaml
+```
+</TabItem>
+</Tabs>
 
 </TabItem>
 
@@ -73,15 +164,7 @@ If you want the integration to update Port in real time using webhooks you shoul
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
-| Parameter                               | Description                                                                                                        | Required |
-| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
-| `OCEAN__INTEGRATION__CONFIG__API_TOKEN` | The Opsgenie API token                                                                                             | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__API_URL`   | The Opsgenie API URL                                                                                               | ✅       |
-| `OCEAN__INITIALIZE_PORT_RESOURCES`      | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
-| `OCEAN__INTEGRATION__IDENTIFIER`        | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
-| `OCEAN__PORT__CLIENT_ID`                | Your port client id                                                                                                | ✅       |
-| `OCEAN__PORT__CLIENT_SECRET`            | Your port client secret                                                                                            | ✅       |
-| `OCEAN__PORT__BASE_URL`                 | Your port base url, relevant only if not using the default port app                                                | ❌       |
+<DockerParameters />
 
 <br/>
 
@@ -135,15 +218,7 @@ the [Real Time & Always On](?installation-methods=real-time-always-on#installati
 Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
 of `Secret Text` type:
 
-| Parameter                               | Description                                                                                                        | Required |
-| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
-| `OCEAN__INTEGRATION__CONFIG__API_TOKEN` | The Opsgenie API token                                                                                             | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__API_URL`   | The Opsgenie API URL                                                                                               | ✅       |
-| `OCEAN__INITIALIZE_PORT_RESOURCES`      | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
-| `OCEAN__INTEGRATION__IDENTIFIER`        | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
-| `OCEAN__PORT__CLIENT_ID`                | Your port client id                                                                                                | ✅       |
-| `OCEAN__PORT__CLIENT_SECRET`            | Your port client secret                                                                                            | ✅       |
-| `OCEAN__PORT__BASE_URL`                 | Your port base url, relevant only if not using the default port app                                                | ❌       |
+<DockerParameters />
 
 <br/>
 
@@ -188,10 +263,57 @@ pipeline {
 ```
 
   </TabItem>
+
+  <TabItem value="azure" label="Azure Devops">
+<AzurePremise name="Opsgenie" />
+
+<DockerParameters />
+
+<br/>
+
+Here is an example for `opsgenie-integration.yml` pipeline file:
+
+```yaml showLineNumbers
+trigger:
+- main
+
+pool:
+  vmImage: "ubuntu-latest"
+
+variables:
+  - group: port-ocean-credentials
+
+
+steps:
+- script: |
+    # Set Docker image and run the container
+    integration_type="opsgenie"
+    version="latest"
+
+    image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
+
+    docker run -i --rm --platform=linux/amd64 \
+      -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+      -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+      -e OCEAN__INTEGRATION__CONFIG__API_TOKEN=${OCEAN__INTEGRATION__CONFIG__API_TOKEN} \
+      -e OCEAN__INTEGRATION__CONFIG__API_URL=${OCEAN__INTEGRATION__CONFIG__API_URL} \
+      -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \
+      -e OCEAN__PORT__CLIENT_SECRET=${OCEAN__PORT__CLIENT_SECRET} \
+      $image_name
+
+    exit $?
+  displayName: 'Ingest Data into Port'
+
+```
+
+  </TabItem>
+
   </Tabs>
 </TabItem>
 
 </Tabs>
+
+<AdvancedConfig/>
 
 ## Ingesting Opsgenie objects
 
@@ -1038,4 +1160,145 @@ The combination of the sample payload and the Ocean configuration generates the 
 }
 ```
 
+</details>
+
+## Alternative installation via webhook
+While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from Opsgenie. If so, use the following instructions:
+
+<details>
+
+<summary><b>Webhook installation (click to expand)</b></summary>
+
+In this example you are going to create a webhook integration between [OpsGenie](https://www.atlassian.com/software/opsgenie) and Port, which will ingest alert entities.
+
+### Port configuration
+
+Create the following blueprint definition:
+
+<details>
+<summary>OpsGenie alert blueprint</summary>
+
+<OpsGenieAlertBlueprint/>
+
+</details>
+
+Create the following webhook configuration [using Port UI](../../?operation=ui#configuring-webhook-endpoints):
+
+<details>
+<summary>OpsGenie alert webhook configuration</summary>
+
+1. **Basic details** tab - fill the following details:
+   1. Title : `OpsGenie mapper`;
+   2. Identifier : `opsgenie_mapper`;
+   3. Description : `A webhook configuration to map OpsGenie alerts to Port`;
+   4. Icon : `OpsGenie`;
+2. **Integration configuration** tab - fill the following JQ mapping:
+   <OpsGenieAlertConfiguration/>
+
+3. Click **Save** at the bottom of the page.
+
+</details>
+
+<h2>Create a webhook in OpsGenie</h2>
+
+1. Go to OpsGenie;
+2. Select **Settings**;
+3. Click on **Integrations** under the **Integrations** section of the sidebar;
+4. Click on **Add integration**;
+5. In the search box, type _Webhook_ and select the webhook option;
+6. Input the following details:
+   1. `Name` - use a meaningful name such as Port Webhook;
+   2. Be sure to keep the "Enabled" checkbox checked;
+   3. Check the "Add Alert Description to Payload" checkbox;
+   4. Check the "Add Alert Details to Payload" checkbox;
+   5. Add the following action triggers to the webhook by clicking on **Add new action**:
+      1. If _alert is snoozed_ in Opsgenie, _post to url_ in Webhook;
+      2. If _alert's description is updated_ in Opsgenie, _post to url_ in Webhook;
+      3. If _alert's message is updated_ in Opsgenie, _post to url_ in Webhook;
+      4. If _alert's priority is updated_ in Opsgenie, _post to url_ in Webhook;
+      5. If _a responder is added to the alert_ in Opsgenie, _post to url_ in Webhook;
+      6. if _a user executes "Assign Ownership_ in Opsgenie, _post to url_ in Webhook;
+      7. if _a tag is added to the alert_ in Opsgenie, _post to url_ in Webhook;
+      8. .if _a tag is removed from the alert_ in Opsgenie, _post to url_ in Webhook;
+   6. `Webhook URL` - enter the value of the `url` key you received after creating the webhook configuration;
+7. Click **Save integration**
+
+:::tip
+In order to view the different payloads and events available in Opsgenie webhooks, [look here](https://support.atlassian.com/opsgenie/docs/opsgenie-edge-connector-alert-action-data/)
+:::
+
+Done! any change that happens to an OpsGenie alert (created, acknowledged, etc.) will trigger a webhook event that OpsGenie will send to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+
+<h2>Let's Test It</h2>
+
+This section includes a sample webhook event sent from OpsGenie when an alert is created. In addition, it includes the entity created from the event based on the webhook configuration provided in the previous section.
+
+<h3>Payload</h3>
+
+Here is an example of the payload structure sent to the webhook URL when an OpsGenie alert is created:
+
+<details>
+<summary> Webhook event payload</summary>
+
+```json showLineNumbers
+{
+  "source": {
+    "name": "web",
+    "type": "API"
+  },
+  "alert": {
+    "tags": ["tag1", "tag2"],
+    "teams": ["team1", "team2"],
+    "responders": ["recipient1", "recipient2"],
+    "message": "test alert",
+    "username": "username",
+    "alertId": "052652ac-5d1c-464a-812a-7dd18bbfba8c",
+    "source": "user@domain.com",
+    "alias": "aliastest",
+    "tinyId": "10",
+    "entity": "An example entity",
+    "createdAt": 1686916265415,
+    "updatedAt": 1686916266116,
+    "userId": "daed1180-0ce8-438b-8f8e-57e1a5920a2d",
+    "description": "Testing opsgenie alerts",
+    "priority": "P1"
+  },
+  "action": "Create",
+  "integrationId": "37c8f316-17c6-49d7-899b-9c7e540c048d",
+  "integrationName": "Port-Integration"
+}
+```
+
+</details>
+
+<h3>Mapping Result</h3>
+
+The combination of the sample payload and the webhook configuration generates the following Port entity:
+
+```json showLineNumbers
+{
+  "identifier": "052652ac-5d1c-464a-812a-7dd18bbfba8c",
+  "title": "10 - test alert",
+  "blueprint": "opsGenieAlert",
+  "properties": {
+    "description": "Testing opsgenie alerts",
+    "lastChangeType": "Create",
+    "priority": "P1",
+    "sourceName": "web",
+    "sourceType": "API",
+    "tags": ["tag1", "tag2"],
+    "responders": ["recipient1", "recipient2"],
+    "teams": ["team1", "team2"]
+  },
+  "relations": {}
+}
+```
+
+<h2>Ingest who is on-call</h2>
+
+In this example we will create a blueprint for `service` entities with an `on-call` property that will be ingested directly from OpsGenie.
+The examples below pull data from the OpsGenie REST Api, in a defined scheduled period using GitLab Pipelines or GitHub Workflows, and report the data to Port as a property to the `service` blueprint.
+
+- [Github Workflow](https://github.com/port-labs/opsgenie-oncall-example)
+- [GitLab CI Pipeline](https://gitlab.com/getport-labs/opsgenie-oncall-example)
 </details>

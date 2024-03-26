@@ -1,0 +1,57 @@
+<details>
+<summary> Container App blueprint </summary>
+
+```json showLineNumbers
+{
+  "identifier": "azureContainerApp",
+  "description": "This blueprint represents an Azure Container App in our software catalog",
+  "title": "Container App",
+  "icon": "Azure",
+  "schema": {
+    "properties": {
+      "location": {
+        "title": "Location",
+        "type": "string"
+      },
+      "provisioningState": {
+        "title": "Provisioning State",
+        "type": "string",
+        "enum": ["Canceled", "InProgress", "Succeeded", "Deleting", "Failed"]
+      },
+      "outboundIpAddresses": {
+        "title": "Outbound IP Addresses",
+        "type": "array"
+      },
+      "externalIngress": {
+        "title": "External Ingress",
+        "type": "boolean"
+      },
+      "hostName": {
+        "title": "Host Name",
+        "type": "string"
+      },
+      "minReplicas": {
+        "title": "Min Replicas",
+        "type": "number"
+      },
+      "maxReplicas": {
+        "title": "Max Replicas",
+        "type": "number"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "resourceGroup": {
+      "target": "azureResourceGroup",
+      "title": "Resource Group",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Installation
 
-GitLab pipelines can be triggered using [Port's execution agent](../port-execution-agent/port-execution-agent.md).
+GitLab pipelines can be triggered using [Port's execution agent](/create-self-service-experiences/setup-backend/webhook/port-execution-agent/port-execution-agent.md).
 
 Let's install the agent and configure it to trigger GitLab pipelines.
 
@@ -89,4 +89,4 @@ By default, the Port agent use the this default mapping to trigger gitlab pipeli
 
 </details>
 
-You can read more about the payload mapping in the [Control the payload mapping](../port-execution-agent/control-the-payload.md) page.
+You can read more about the payload mapping in the [Control the payload mapping](/create-self-service-experiences/setup-backend/webhook/port-execution-agent/control-the-payload.md) page.

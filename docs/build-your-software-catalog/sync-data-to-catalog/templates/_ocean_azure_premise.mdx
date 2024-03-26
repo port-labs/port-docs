@@ -1,0 +1,11 @@
+This pipeline will run the {props.name} integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::tip
+Your Azure Devops agent should be able to run docker commands. Learn more about agents [here](https://learn.microsoft.com/en-us/azure/devops/pipelines/agents/agents?view=azure-devops&tabs=yaml%2Cbrowser).
+:::
+:::warning
+If you want the integration to update Port in real time using webhooks you should use
+the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+:::
+
+Make sure to configure the following variables using [Azure Devops variable groups](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops&tabs=yaml). Add them into in a variable group named `port-ocean-credentials`:

@@ -1,6 +1,7 @@
 ---
-sidebar_position: 5
+sidebar_position: 1
 description: Array is an input for lists of data
+sidebar_class_name: "custom-sidebar-item sidebar-property-array"
 ---
 
 import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"
@@ -16,9 +17,8 @@ Array is an input for lists of data.
 
 The array input type can be used to store any list of data, for example:
 
-- Configuration parameters;
-- Ordered values;
-- etc.
+- Configuration parameters
+- Ordered values
 
 ## API definition
 
@@ -84,7 +84,6 @@ resource "port_action" "myAction" {
     identifier  = "myArrayInput"
     title       = "My array input"
     description = "My array input"
-    required    = false
     type        = "array"
   }
   # highlight-end
@@ -143,7 +142,6 @@ resource "port_action" "myAction" {
       "myArrayInput" = {
         title       = "My array input"
         description = "My array input"
-        required    = false
         min_items   = 0
         max_items   = 5
         unique_items = false

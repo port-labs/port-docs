@@ -1,0 +1,58 @@
+<details>
+<summary>Branch blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "branch_protection",
+  "title": "Branch",
+  "icon": "Microservice",
+  "schema": {
+    "properties": {
+      "require_approval_count": {
+        "title": "Require approvals",
+        "type": "number",
+        "icon": "DefaultProperty"
+      },
+      "is_protected": {
+        "title": "Is branch protected",
+        "type": "boolean",
+        "icon": "DefaultProperty"
+      },
+      "require_code_owner_review": {
+        "title": "Require code owner review",
+        "type": "boolean",
+        "icon": "DefaultProperty"
+      },
+      "allow_deletions": {
+        "icon": "DefaultProperty",
+        "title": "Allow Deletions",
+        "type": "boolean"
+      },
+      "allow_force_pushes": {
+        "title": "Allow force pushes",
+        "type": "boolean",
+        "icon": "DefaultProperty"
+      },
+      "url": {
+        "title": "Branch URL",
+        "type": "string",
+        "format": "url"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "service": {
+      "title": "Service",
+      "target": "service",
+      "required": false,
+      "many": true
+    }
+  }
+}
+```
+
+</details>

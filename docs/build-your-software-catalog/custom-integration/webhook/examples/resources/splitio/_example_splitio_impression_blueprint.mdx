@@ -1,0 +1,55 @@
+```json showLineNumbers
+{
+  "identifier": "splitImpression",
+  "description": "Blueprint for Split Impressions",
+  "title": "Split Impression",
+  "icon": "Webhook",
+  "schema": {
+    "properties": {
+      "key": {
+        "icon": "DefaultProperty",
+        "title": "Key",
+        "description": "Key of the Impression",
+        "type": "string"
+      },
+      "split": {
+        "title": "Split name",
+        "description": "Feature flag name",
+        "type": "string",
+        "icon": "DefaultProperty"
+      },
+      "environment_id": {
+        "icon": "DefaultProperty",
+        "title": "Environment Id",
+        "type": "string",
+        "description": "Environment Id where feature flag was evaluated"
+      },
+      "environment_name": {
+        "icon": "DefaultProperty",
+        "title": "Environment Name",
+        "type": "string",
+        "description": "Environment name"
+      },
+      "label": {
+        "title": "Label",
+        "description": "The rule that was applied to return a treatment",
+        "type": "string"
+      },
+      "sdk": {
+        "title": "sdk",
+        "description": "SDK language that evaluated",
+        "type": "string"
+      },
+      "sdk_version": {
+        "title": "SDK Version",
+        "type": "string",
+        "description": "the SDK version"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {}
+}
+```

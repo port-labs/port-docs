@@ -405,7 +405,7 @@ the entity `aEntity` has a target entity `bEntity` mapped to it using the above 
 
 In this scenario, `bEntity` can only be deleted in one of two cases:
 
-1. `aEntity` is updated such that it's relation points to a different entity from blueprint `B`;
+1. `aEntity` is updated such that its relation points to a different entity from blueprint `B`;
 2. `aEntity` is deleted alongside `bEntity`;
 
 :::

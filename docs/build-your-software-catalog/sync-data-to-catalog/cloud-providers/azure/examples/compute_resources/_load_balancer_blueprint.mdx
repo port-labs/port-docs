@@ -1,0 +1,71 @@
+<details>
+<summary> Load Balancer blueprint </summary>
+
+```json showLineNumbers
+  {
+    "identifier": "azureLoadBalancer",
+    "description": "This blueprint represents an Azure Load Balancer in our software catalog",
+    "title": "Load Balancer",
+    "icon": "Azure",
+    "schema": {
+      "properties": {
+        "location": {
+          "title": "Location",
+          "type": "string"
+        },
+        "tags": {
+          "title": "Tags",
+          "type": "object"
+        },
+        "provisioningState": {
+          "title": "Provisioning State",
+          "type": "string",
+          "enum": [
+              "Succeeded",
+              "Updating",
+              "Deleting",
+              "Failed"
+          ]
+        },
+        "frontendIpResourceIds": {
+            "title": "Frontend IP Resource IDs",
+            "type": "array"
+        },
+        "backendAddressPoolsResourceIds": {
+            "title": "Backend Address Pools Resource IDs",
+            "type": "array"
+        },
+        "loadBalancingRulesResourceIds": {
+            "title": "Load Balancing Rules Resource IDs",
+            "type": "array"
+        },
+        "probesResourceIds": {
+            "title": "Probes Resource IDs",
+            "type": "array"
+        },
+        "inboundNatRulesResourceIds": {
+            "title": "Inbound NAT Rules Resource IDs",
+            "type": "array"
+        },
+        "inboundNatPoolsResourceIds": {
+            "title": "Inbound NAT Pools Resource IDs",
+            "type": "array"
+        }
+      },
+      "required": []
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "relations": {
+      "resourceGroup": {
+        "target": "azureResourceGroup",
+        "title": "Resource Group",
+        "required": false,
+        "many": false
+      }
+    }
+  },
+
+```
+
+</details>

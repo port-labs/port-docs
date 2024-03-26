@@ -1,6 +1,7 @@
 ---
-sidebar_position: 2
+sidebar_position: 5
 description: Number is a basic input for numeric data
+sidebar_class_name: "custom-sidebar-item sidebar-property-number"
 ---
 
 import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"
@@ -16,10 +17,9 @@ Number is a basic input for numeric data.
 
 The number input type can be used to store any numeric data, for example:
 
-- Memory/storage allocations;
-- Replica counts;
-- Number of days to retain data;
-- etc.
+- Memory/storage allocations
+- Replica counts
+- Number of days to retain data
 
 In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we can see the **scaffold new service** action whose `K8s Replica Count` input is a number input. 🎬
 
@@ -132,7 +132,6 @@ resource "port_action" "myAction" {
       "myNumberInput" = {
         title       = "My number input"
         description = "My number input"
-        required    = false
         default     = 7
       }
     }
@@ -155,7 +154,6 @@ resource "port_action" "myAction" {
       "myNumberInput" = {
         title       = "My number input"
         description = "My number input"
-        required    = false
         enum        = [1, 2, 3, 4]
       }
     }
@@ -179,7 +177,6 @@ resource "port_action" "myAction" {
       "myNumberArrayInput" = {
         title       = "My number array input"
         description = "My number array input"
-        required    = false
         number_items = {}
       }
     }
@@ -267,7 +264,6 @@ resource "port_action" "myAction" {
       "myNumberInput" = {
         title       = "My number input"
         description = "My number input"
-        required    = false
         minimum     = 0
         maximum     = 50
       }

@@ -1,9 +1,11 @@
 ---
-title: Search & Query
-sidebar_label: 🔍 Search & Query
+title: Search & query
+sidebar_label: Search & query
 ---
 
-# 🔍 Search & Query
+import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+
+# Search & query
 
 import CombinatorIntro from "./\_combinator_intro.md"
 
@@ -12,20 +14,19 @@ import TabItem from "@theme/TabItem"
 
 Port's API provides tools to easily query, search and filter software catalog data.
 
-## 💡 Common queries usage
+## Common queries usage
 
 High quality search is essential to effectively track assets in your software catalog, using Port's search you can:
 
-- Find all running services that are not healthy;
-- List all libraries that have known vulnerabilities;
-- Get all services running in a specific cluster;
-- etc.
+- Find all running services that are not healthy.
+- List all libraries that have known vulnerabilities.
+- Get all services running in a specific cluster.
 
 ## Search request
 
 The base search route is `https://api.getport.io/v1/entities/search`, it receives HTTP POST requests.
 
-A search request defines the logical Relation between different search rules, and contains filters and rules to find suitable Entities.
+A search request defines the logical relation between different search rules, and contains filters and rules to find matching <PortTooltip id="entity">entities</PortTooltip>.
 Each search request is represented by a JSON object, as shown in the following example:
 
 ```json showLineNumbers
@@ -46,7 +47,7 @@ Each search request is represented by a JSON object, as shown in the following e
 }
 ```
 
-The above query searches for all entities from the `myBlueprint` blueprint that their `identifier` contains the string `myIdentifierPart`
+The above query searches for all entities based on the `myBlueprint` blueprint whose `identifier` contains the string `myIdentifierPart`.
 
 ## Search request elements
 
@@ -138,7 +139,7 @@ Port has 2 types of search rule operators:
 | Field      | Description                                                                                                                                                                                                                                                                                                                                                    |
 | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `operator` | Search operator to use when evaluating this rule, see a list of available operators below                                                                                                                                                                                                                                                                      |
-| `property` | Property to filter by according to its value. It can be a [meta-property](../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/meta-properties.md) such as `$identifier`, or one of the [standard properties](../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/properties.md#available-properties) |
+| `property` | Property to filter by according to its value. It can be a [meta-property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/meta-properties.md) such as `$identifier`, or one of the [standard properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/properties.md#available-properties) |
 | `value`    | The value to filter by                                                                                                                                                                                                                                                                                                                                         |
 
 #### Operators
@@ -154,6 +155,7 @@ Port has 2 types of search rule operators:
 {label: "isNotEmpty", value: "isNotEmpty"},
 {label: "Property schema", value: "property-schema"},
 {label: "Between", value: "between"},
+{label: "notBetween", value: "notBetween"},
 {label: "Contains", value: "contains"},
 {label: "ContainsAny", value: "containsAny"},
 {label: "In", value: "in"}
@@ -315,7 +317,7 @@ The `propertySchema` filter can be used with any standard operator. It allows yo
 
 :::tip
 
-- The `propertySchema` can be used with any Port [property](../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/properties.md#supported-properties);
+- The `propertySchema` can be used with any Port [property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/properties.md#supported-properties);
 - The `propertySchema` replaces the `property` filter when performing property schema search.
 
 :::
@@ -342,7 +344,11 @@ The `between` operator checks datetime values and returns entities whose relevan
 - today
 - yesterday
 - lastWeek
+- last2Weeks
 - lastMonth
+- last3Months
+- last6Months
+- last12Months
 
 The `between` operator also supports standard date ranges:
 
@@ -359,6 +365,22 @@ The `between` operator also supports standard date ranges:
       }
     }
   ]
+}
+```
+
+</TabItem>
+
+<TabItem value="notBetween">
+
+The `notBetween` operator checks datetime values and returns entities whose relevant datetime property does not match the given range:
+
+```json showLineNumbers
+{
+  "operator": "notBetween",
+  "property": "$createdAt",
+  "value": {
+    "preset": "lastWeek"
+  }
 }
 ```
 
@@ -434,7 +456,7 @@ The `in` operator checks if a `string` property is equal to one or more specifie
 - Choose field of type `string` format `team` or the metadata `Team` field;
 - Choose `has any of` operator:
 
-![My Teams Filter](../../static/img/software-catalog/pages/MyTeamsFilter.png)
+![My Teams Filter](/img/software-catalog/pages/MyTeamsFilter.png)
 
 </TabItem>
 
@@ -542,7 +564,7 @@ Cart-Service-Production -> Production
 
 By looking at the resulting graph layout, we can also map the directions:
 
-![Dependency graph upstream downstream diagram](../../static/img/software-catalog/search-in-port/search-direction-diagram.png)
+![Dependency graph upstream downstream diagram](/img/software-catalog/search-in-port/search-direction-diagram.png)
 
 - To search for entities which the source depends on - use `"direction": "upstream"`;
 - To search for entities which depend on the source - use `"direction": "downstream"`.
@@ -685,6 +707,62 @@ And the result shall be:
 </TabItem>
 
 </Tabs>
+
+### Dynamic properties
+
+When using Port's UI, you can use properties of the logged-in user when writing rules by using the following functions:
+
+- `getUserTeams` - a list of the teams the user belongs to.
+- `getUserEmail` - the user's email.
+- `getUserFullName` - the user's full name.
+- `blueprint` - the blueprint identifier of the current page.
+
+:::info UI only
+Since we don't have context of the logged-in user when using the API, these functions are only available when using the UI. This is useful when creating [chart/table widgets](/customize-pages-dashboards-and-plugins/dashboards/#chart-filters) and [catalog pages](/customize-pages-dashboards-and-plugins/page/catalog-page#page-creation).
+:::
+
+#### Usage examples
+
+```json showLineNumbers
+[
+  {
+    "property": "$team",
+    "operator": "containsAny",
+    "value": ["{{getUserTeams()}}"]
+  }
+]
+```
+
+```json showLineNumbers
+[
+  {
+    "property": "emails",
+    "operator": "contains",
+    "value": "{{getUserEmail()}}"
+  }
+]
+```
+
+```json showLineNumbers
+[
+  {
+    "property": "name",
+    "operator": "=",
+    "value": "{{getUserFullName()}}"
+  }
+]
+```
+
+```json showLineNumbers
+[
+  {
+    "property": "$blueprint",
+    "operator": "=",
+    "value": "{{blueprint}}"
+  }
+]
+```
+
 
 ## Examples
 

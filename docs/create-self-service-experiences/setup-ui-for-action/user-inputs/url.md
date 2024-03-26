@@ -1,6 +1,7 @@
 ---
-sidebar_position: 6
+sidebar_position: 12
 description: URL is an input used to save links to websites
+sidebar_class_name: "custom-sidebar-item sidebar-property-url"
 ---
 
 import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"
@@ -16,10 +17,9 @@ URL is an input used to save links to websites.
 
 The URL input type can be used to store a link to any web resource, for example:
 
-- Link to Datadog dashboard;
-- Link to configuration file;
-- Link to pull request;
-- etc.
+- Link to Datadog dashboard
+- Link to configuration file
+- Link to pull request
 
 ## API definition
 

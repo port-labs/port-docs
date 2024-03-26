@@ -1,6 +1,7 @@
 ---
-sidebar_position: 8
+sidebar_position: 14
 description: User is an input used to reference users that exist in Port
+sidebar_class_name: "custom-sidebar-item sidebar-property-user"
 ---
 
 import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"
@@ -16,10 +17,9 @@ User is an input used to reference users that exist in Port.
 
 The user input type can be used to reference any user that exists in Port, for example:
 
-- The code owners;
-- The current on-call;
-- The lead maintainer;
-- etc.
+- The code owners
+- The current on-call
+- The lead maintainer
 
 In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we can see the **change on-call** action whose `On-Call` input is a user input. 🎬
 
@@ -90,7 +90,6 @@ resource "port_action" "myAction" {
       "myUserInput" = {
         title       = "My user input"
         description = "My user input"
-        required    = false
         format      = "user"
         default     = "me@example.com"
       }
@@ -114,7 +113,6 @@ resource "port_action" "myAction" {
       "myUserArrayInput" = {
         title       = "My user array input"
         description = "My user array input"
-        required    = false
         format      = "user"
       }
     }

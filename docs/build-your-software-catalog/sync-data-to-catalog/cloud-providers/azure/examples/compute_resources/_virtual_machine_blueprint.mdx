@@ -1,0 +1,84 @@
+<details>
+<summary> Virtual Machine blueprint </summary>
+
+```json showLineNumbers
+{
+  "identifier": "azureVirtualMachine",
+  "description": "This blueprint represents an Azure Virtual Machine in our software catalog",
+  "title": "Virtual Machine",
+  "icon": "Azure",
+  "schema": {
+    "properties": {
+      "location": {
+        "title": "Location",
+        "type": "string"
+      },
+      "provisioningState": {
+        "title": "Provisioning State",
+        "type": "string"
+      },
+      "vmSize": {
+        "title": "VM Size",
+        "type": "string"
+      },
+      "osDiskName": {
+        "title": "OS Disk Name",
+        "type": "string"
+      },
+      "osDiskType": {
+        "title": "OS Disk Type",
+        "type": "string"
+      },
+      "osDiskCaching": {
+        "title": "OS Disk Caching",
+        "type": "string"
+      },
+      "osDiskSizeGB": {
+        "title": "OS Disk Size GB",
+        "type": "number"
+      },
+      "osDiskCreateOption": {
+        "title": "OS Disk Create Option",
+        "type": "string"
+      },
+      "networkInterfaceIds": {
+        "title": "Network Interface IDs",
+        "type": "array"
+      },
+      "licenseType": {
+        "title": "License Type",
+        "type": "string"
+      },
+      "vmOsProfile": {
+        "title": "VM OS Profile",
+        "type": "object"
+      },
+      "vmHardwareProfile": {
+        "title": "VM Hardware Profile",
+        "type": "object"
+      },
+      "vmStorageProfile": {
+        "title": "VM Storage Profile",
+        "type": "object"
+      },
+      "tags": {
+        "title": "Tags",
+        "type": "object"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "resourceGroup": {
+      "target": "azureResourceGroup",
+      "title": "Resource Group",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

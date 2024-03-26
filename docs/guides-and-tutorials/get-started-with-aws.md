@@ -5,20 +5,22 @@ title: Get started with AWS
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import FindCredentials from "/docs/build-your-software-catalog/sync-data-to-catalog/api/\_template_docs/\_find_credentials.mdx";
+import FindCredentials from "/docs/build-your-software-catalog/custom-integration/api/\_template_docs/\_find_credentials.mdx";
 
 # Get started with AWS
 
-This guide takes 4 minutes to complete, and aims to quickly integrate your AWS environment into Port.
+This guide takes 5 minutes to complete, and aims to quickly integrate your AWS environment into Port.
 
 :::tip Prerequisites
 
-- While it is not mandatory for this guide, we recommend that you complete the [quickstart](/quickstart) before proceeding.
+- While it is not mandatory for this guide, we recommend that you complete the [onboarding process](/quickstart) before proceeding.
 - You will need an active [Port account](https://app.getport.io/).
 - The [Terraform CLI](https://learn.hashicorp.com/tutorials/terraform/install-cli) is required to install the AWS exporter.
 - The [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) is used for authentication. Make sure your AWS `Access key id` and `Secret access key` are set. If not, run `aws configure` in your terminal to configure them.
 
 :::
+
+<br/>
 
 ### The goal of this guide
 
@@ -29,9 +31,11 @@ After completing it, you will get a sense of how it can benefit different person
 - Developers and devops will be track AWS resources and their health & status.
 - Platform engineers will be able to create and monitor dashboards & visualizations displaying valuable data from their AWS environments.
 
+<br/>
+
 ### Install Port's AWS exporter
 
-1. Go to your [Port application](https://app.getport.io/), hover over the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
+1. Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
 
 2. Replace `YOUR-PORT-CLIENT-ID` and `YOUR-PORT-CLIENT-SECRET` in the following command, then copy it and run it in your terminal:
 
@@ -78,10 +82,12 @@ The exporter installation did three things:
 
 :::info TIP - Updating your configuration
 
-To make changes to your configuration after installation, use the command described in the [AWS exporter page](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/aws/#changing-the-configuration).
+To make changes to your configuration after installation, use the command described in the [AWS exporter page](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/#changing-the-configuration).
 
 💁🏽 _You don't need to change anything in the configuration for this guide, this is just an FYI_
 :::
+
+<br/>
 
 ### Visualize data from your AWS resources
 
@@ -105,6 +111,6 @@ You should now see the pie chart in your homepage:
 AWS environments are complex and data-rich. Port's AWS exporter allows you to easily ingest resources from your AWS environment into Port, but this is just the starting point.  
 Once your data has been ingested, you can use Port to visualize relevant data, automate routine tasks using self-service actions, track metrics for your resources, and much more.
 
-For a deeper dive into Port's integration with AWS (including examples), see the [AWS integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/aws/) section.
+For a deeper dive into Port's integration with AWS (including examples), see the [AWS integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/) section.
 
 More guides & tutorials will be available soon, in the meantime feel free to reach out with any questions via our [community slack](https://www.getport.io/community) or [Github project](https://github.com/port-labs?view_as=public).

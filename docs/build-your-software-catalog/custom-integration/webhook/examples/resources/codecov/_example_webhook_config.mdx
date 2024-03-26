@@ -1,0 +1,23 @@
+```json showLineNumbers
+[
+    {
+      "blueprint": "codecov_coverage",
+      "filter": "true",
+      "entity": {
+        "identifier": ".body.repo.name | tostring",
+        "title": ".body.repo.name | tostring",
+        "properties": {
+          "repository": ".body.repo.url",
+          "coverage": ".body.head.totals.coverage",
+          "service": ".body.owner.service",
+          "author": ".body.head.author.name",
+          "createdAt": ".body.head.timestamp | (strptime(\"%Y-%m-%dT%H:%M:%S\") | strftime(\"%Y-%m-%dT%H:%M:%SZ\"))",
+          "files": ".body.head.totals.files",
+          "lines": ".body.head.totals.lines",
+          "branch": ".body.head.branch",
+          "report": ".body.head.totals"
+        }
+      }
+    }
+]
+```

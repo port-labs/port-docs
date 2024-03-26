@@ -1,6 +1,7 @@
 ---
-sidebar_position: 13
+sidebar_position: 4
 description: Entity is an input used to reference existing entities from the software catalog when triggering actions
+sidebar_class_name: "custom-sidebar-item sidebar-property-entity"
 ---
 
 import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"
@@ -16,10 +17,9 @@ Entity is an input type used to reference existing [entities](../../../build-you
 
 The entity input type can be used to reference any existing entity from the software catalog, for example:
 
-- Cloud regions;
-- Clusters;
-- Configurations;
-- etc.
+- Cloud regions
+- Clusters
+- Configurations
 
 In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we can see the **scaffold new service** action whose `Domain` input is an entity input. 🎬
 
@@ -36,9 +36,8 @@ The entity is represented by the unique `entity` _format_ and the `blueprint` ke
     // highlight-start
     "type": "string",
     "format": "entity",
-    "blueprint": "myBlueprint",
+    "blueprint": "myBlueprint"
     // highlight-end
-    "default": "My default"
   }
 }
 ```
@@ -104,7 +103,6 @@ The entity is represented by the unique `entity` _format_ and the `blueprint` ke
 
 <Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Enum", value: "enum"},
 {label: "Array", value: "array"}
 ]}>
 
@@ -119,34 +117,8 @@ resource "port_action" "myAction" {
       "myEntityInput" = {
         title       = "My entity input"
         description = "My entity input"
-        required    = false
         format      = "entity"
         blueprint   = "myBlueprint"
-      }
-    }
-  }
-  # highlight-end
-}
-```
-
-</TabItem>
-
-<TabItem value="enum">
-
-```hcl showLineNumbers
-
-resource "port_action" "myAction" {
-  # ...action properties
-  # highlight-start
-  user_properties = {
-    string_props = {
-      "myEntityInput" = {
-        title       = "My entity input"
-        description = "My entity input"
-        required    = false
-        format      = "entity"
-        blueprint   = "myBlueprint"
-        enum        = ["My default", "My other default"]
       }
     }
   }

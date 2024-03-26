@@ -11,6 +11,7 @@ Examples of useful applications of dynamic permissions:
 
 - Ensure that action executions requested by a team member can only be approved by his/her direct manager.
 - Perform validations/manipulations on inputs that depend on data from related entities.
+- Ensure that only those who are on-call can perform rollbacks of a service with issues.
 
 ## Configuring permissions
 
@@ -23,10 +24,6 @@ To use dynamic permissions:
 ![blueprintEditPermissions](../../../static/img/self-service-actions/rbac/blueprintEditPermissions.png)
 
 The blueprint's permission configuration in JSON format will open in a new window. Here you can define permissions for entities and actions belonging to the blueprint.
-
-:::info Note
-Currently, dynamic permissions are supported only for actions. Support for entities will be available soon 😎
-:::
 
 Look for the `"actions"` key, and under it find the name of the action you want to set permissions for.  
 Each action has the following two keys under it:
@@ -46,6 +43,7 @@ Under each of these two keys, you can add a `policy` key, which allows you to us
 "actions": {
   "action_name": {
     "execute": {
+      #highlight-start
       "policy": {
         "queries": {
           "query_name": {
@@ -59,6 +57,7 @@ Under each of these two keys, you can add a `policy` key, which allows you to us
           # A jq query resulting in a boolean value
         ]
       }
+      #highlight-end
     },
     "approve": {
       "roles": [
@@ -66,6 +65,7 @@ Under each of these two keys, you can add a `policy` key, which allows you to us
       ],
       "users": [],
       "teams": [],
+      #highlight-start
       "policy": {
         "queries": {
           "query_name": {
@@ -79,6 +79,7 @@ Under each of these two keys, you can add a `policy` key, which allows you to us
           # A jq query resulting in an array of strings
         ]
       }
+      #highlight-end
     }
   }
 }

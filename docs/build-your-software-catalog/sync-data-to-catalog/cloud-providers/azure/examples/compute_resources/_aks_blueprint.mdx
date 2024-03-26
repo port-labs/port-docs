@@ -1,0 +1,101 @@
+<details>
+<summary> AKS blueprint </summary>
+
+```json showLineNumbers
+{
+  "identifier": "azureAks",
+  "description": "This blueprint represents an Azure Kubernetes Service in our software catalog",
+  "title": "AKS",
+  "icon": "Azure",
+  "schema": {
+    "properties": {
+      "location": {
+        "title": "Location",
+        "type": "string"
+      },
+      "provisioningState": {
+        "title": "Provisioning State",
+        "type": "string"
+      },
+      "powerState": {
+        "title": "Power State",
+        "type": "string"
+      },
+      "kubernetesVersion": {
+        "title": "Kubernetes Version",
+        "type": "string"
+      },
+      "currentKubernetesVersion": {
+        "title": "Current Kubernetes Version",
+        "type": "string"
+      },
+      "dnsPrefix": {
+        "title": "DNS Prefix",
+        "type": "string"
+      },
+      "fqdn": {
+        "title": "FQDN",
+        "type": "string"
+      },
+      "nodeResourceGroup": {
+        "title": "Node Resource Group",
+        "type": "string"
+      },
+      "enableRBAC": {
+        "title": "Enable RBAC",
+        "type": "boolean"
+      },
+      "supportPlan": {
+        "title": "Support Plan",
+        "type": "string"
+      },
+      "networkPlugin": {
+        "title": "Network Plugin",
+        "type": "string"
+      },
+      "podCIDR": {
+        "title": "Pod CIDR",
+        "type": "string"
+      },
+      "serviceCIDR": {
+        "title": "Service CIDR",
+        "type": "string"
+      },
+      "dnsServiceIp": {
+        "title": "DNS Service IP",
+        "type": "string"
+      },
+      "outboundType": {
+        "title": "Outbound Type",
+        "type": "string"
+      },
+      "loadBalancerSKU": {
+        "title": "Load Balancer SKU",
+        "type": "string"
+      },
+      "maxAgentPools": {
+        "title": "Max Agent Pools",
+        "type": "number"
+      },
+      "skuTier": {
+        "title": "Tier",
+        "type": "string",
+        "enum": ["Free", "Paid", "Standard"]
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "resourceGroup": {
+      "target": "azureResourceGroup",
+      "title": "Resource Group",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

@@ -1,6 +1,7 @@
 ---
-sidebar_position: 1
+sidebar_position: 10
 description: Text is a basic input for textual information
+sidebar_class_name: "custom-sidebar-item sidebar-property-string"
 ---
 
 import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"
@@ -16,11 +17,10 @@ Text is a basic input for textual information.
 
 The text input type can be used to store any text based data, for example:
 
-- Image tags;
-- Variable keys;
-- Commit SHA;
-- File names;
-- etc.
+- Image tags
+- Variable keys
+- Commit SHA
+- File names
 
 In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we can see the **scaffold new service** action whose `Service Name` input is a text input. 🎬
 
@@ -132,7 +132,6 @@ resource "port_action" "myAction" {
       myTextInput = {
         title       = "My text input"
         description = "My text input"
-        required    = false
         default     = "My default"
       }
     }
@@ -154,7 +153,6 @@ resource "port_action" "myAction" {
       myTextSelectInput = {
         title       = "My text select input"
         description = "My text select input"
-        required    = false
         enum        = ["my-option-1", "my-option-2"]
       }
     }
@@ -178,7 +176,6 @@ resource "port_action" "myAction" {
       myTextArrayInput = {
         title       = "My text array input"
         description = "My text array input"
-        required    = false
         string_items = {}
       }
     }
@@ -259,7 +256,6 @@ resource "port_action" "myAction" {
       myTextInput = {
         title       = "My text input"
         description = "My text input"
-        required    = false
         default     = "My default"
         minLength   = 1
         maxLength   = 32

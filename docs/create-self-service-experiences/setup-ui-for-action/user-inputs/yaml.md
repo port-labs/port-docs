@@ -1,6 +1,7 @@
 ---
-sidebar_position: 12
+sidebar_position: 15
 description: Yaml is an input used to save object definitions in YAML
+sidebar_class_name: "custom-sidebar-item sidebar-property-string"
 ---
 
 import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"
@@ -16,12 +17,11 @@ Yaml is an input used to save object definitions in YAML.
 
 The yaml input type can be used to store any key/value based data, for example:
 
-- Configurations;
-- Helm charts;
-- Dictionaries/Hash maps;
-- Manifests;
-- `values.yml`;
-- etc.
+- Configurations
+- Helm charts
+- Dictionaries/Hash maps
+- Manifests
+- `values.yml`
 
 ## API definition
 

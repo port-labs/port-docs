@@ -1,6 +1,6 @@
 # GitHub Workflow Self-Service Actions
 
-[Port's GitHub application](../../../build-your-software-catalog/sync-data-to-catalog/git/github/installation.md) can trigger a [GitHub workflow](https://docs.github.com/en/actions/using-workflows) using a customer provided input and [`port_payload`](../../self-service-actions-deep-dive/self-service-actions-deep-dive.md#action-message-structure).
+[Port's GitHub application](../../../build-your-software-catalog/sync-data-to-catalog/git/github/installation.md) can trigger a [GitHub workflow](https://docs.github.com/en/actions/using-workflows) using a customer provided input and [`port_payload`](/create-self-service-experiences/reflect-action-progress/#action-run-json-structure).
 
 :::tip
 Self-service actions using GitHub workflows are available both with the standard Port [GitHub app](../../../build-your-software-catalog/sync-data-to-catalog/git/github/github.md), and with the [self-hosted version](../../../build-your-software-catalog/sync-data-to-catalog/git/github/self-hosted-installation.md)
@@ -33,8 +33,8 @@ A workflow triggered using the `workflow_dispatch` trigger is self-contained. Th
 
 :::
 
-## Next step
+## Examples
 
-To get started with GitHub self-service actions, please check the sources below:
+See the [examples](/create-self-service-experiences/setup-backend/github-workflow/examples/) page for implementations of various use-cases using a Github workflow backend.  
 
-- [Run a deployment for a service](./examples/run-service-deployment.md)
+Additional examples can be found in our [action examples Github repository](https://github.com/port-labs/self-service-actions-examples).

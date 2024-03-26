@@ -1,0 +1,41 @@
+<details>
+<summary>Port port-app-config.yml</summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: repository
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .name
+          title: .name
+          blueprint: '"service"'
+          properties:
+            readme: file://README.md
+            url: .html_url
+            defaultBranch: .default_branch
+  - kind: branch
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .repository.name + "_" + .branch.name
+          title: .repository.name + " " + .branch.name
+          blueprint: '"branch_protection"'
+          properties:
+            is_protected: .branch.protected
+            url: .branch._links.html
+            require_approval_count: >-
+              .branch.protectionRules.required_pull_request_reviews.required_approving_review_count
+            require_code_owner_review: >-
+              .branch.protectionRules.required_pull_request_reviews.require_code_owner_reviews
+            allow_force_pushes: .branch.protectionRules.allow_force_pushes.enabled
+            allow_deletions: .branch.protectionRules.allow_deletions.enabled
+          relations:
+            service: .repository.name
+```
+
+</details>

@@ -1,0 +1,68 @@
+<details>
+<summary> Postgres Flexible Server blueprint </summary>
+
+```json showLineNumbers
+{
+  "identifier": "azurePostgresFlexibleServer",
+  "description": "This blueprint represents an Azure Postgres Flexible Server in our software catalog",
+  "title": "Postgres Flexible Server",
+  "icon": "Azure",
+  "schema": {
+    "properties": {
+      "location": {
+        "title": "Location",
+        "type": "string"
+      },
+      "version": {
+        "title": "Version",
+        "type": "string"
+      },
+      "state": {
+        "title": "State",
+        "type": "string"
+      },
+      "storageSizeGB": {
+        "title": "Storage Size (GB)",
+        "type": "number"
+      },
+      "activeDirectoryAuth": {
+        "title": "Active Directory Authentication",
+        "type": "string",
+        "enum": ["Enabled", "Disabled"]
+      },
+      "passwordAuth": {
+        "title": "Password Authentication",
+        "type": "string",
+        "enum": ["Enabled", "Disabled"]
+      },
+      "publicNetworkAccess": {
+        "title": "Public Network Access",
+        "type": "string",
+        "enum": ["Enabled", "Disabled"]
+      },
+      "geoRedundantBackup": {
+        "title": "Geo-Redundant Backup",
+        "type": "string",
+        "enum": ["Enabled", "Disabled"]
+      },
+      "earliestRestoreDate": {
+        "title": "Earliest Restore Date",
+        "type": "string"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "resourceGroup": {
+      "target": "azureResourceGroup",
+      "title": "Resource Group",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

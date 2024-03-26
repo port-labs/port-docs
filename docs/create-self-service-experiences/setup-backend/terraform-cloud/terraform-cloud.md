@@ -3,7 +3,7 @@
 Port's Terraform Cloud Action can trigger
 a [Terraform Cloud run](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/run#create-a-run) using a customer
 provided input
-and [`port_payload`](../../self-service-actions-deep-dive/self-service-actions-deep-dive.md#action-message-structure).
+and [`port_payload`](/create-self-service-experiences/reflect-action-progress/#action-run-json-structure).
 
 ![Port Kafka Architecture](../../../../static/img/self-service-actions/setup-backend/terraform-cloud/terraform-cloud-agent-architecture.png)
 
@@ -96,7 +96,7 @@ Create the following blueprint, action and mapping to trigger a Terraform Cloud 
 
 :::info
 To read more about the `controlThePayload` configuration, please refer to
-the [Control the payload](../port-execution-agent/control-the-payload.md) documentation.
+the [Control the payload](/create-self-service-experiences/setup-backend/webhook/port-execution-agent/control-the-payload.md) documentation.
 :::
 
 ```json

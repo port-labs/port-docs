@@ -7,12 +7,12 @@ const darkCodeTheme = require("prism-react-renderer").themes.dracula;
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Port",
-  tagline: "Documentation site",
+  tagline: "Port documentation",
   url: "https://docs.getport.io",
   baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "throw",
-  favicon: "img/favicon.svg",
+  favicon: "img/logos/port-favicon.png",
   organizationName: "port-labs", // Usually your GitHub org/user name.
   projectName: "port", // Usually your repo name.
   staticDirectories: ["static"],
@@ -29,6 +29,7 @@ const config = {
           editUrl: ({ locale, docPath }) => {
             return `https://github.com/port-labs/port-docs/edit/main/docs/${docPath}`;
           },
+          showLastUpdateTime: true,
         },
         blog: false,
         theme: {
@@ -37,6 +38,9 @@ const config = {
         gtag: {
           trackingID: "G-3YL3X47R7L",
           anonymizeIP: false,
+        },
+        googleTagManager: {
+          containerId: 'GTM-MNB6TPLF',
         },
         sitemap: {
           changefreq: "weekly",
@@ -79,13 +83,15 @@ const config = {
         title: "Port Documentation",
         logo: {
           alt: "Port Logo",
-          src: "img/logo.svg",
+          src: "img/logos/port-logo.svg",
+          srcDark: "img/logos/port-logo-dark.svg",
         },
         items: [
           {
-            href: "https://demo.getport.io",
-            label: "Demo",
+            to: "https://demo.getport.io",
             position: "right",
+            target: "_blank",
+            className: "header-demo-link",
           },
           {
             to: "https://github.com/port-labs/port-docs",
@@ -111,7 +117,7 @@ const config = {
             title: "Documentation",
             items: [
               {
-                label: "Port Overview",
+                label: "Port overview",
                 to: "/",
               },
               {
@@ -119,33 +125,33 @@ const config = {
                 to: "/quickstart",
               },
               {
-                label: "Build Software Catalog",
+                label: "Build a software catalog",
                 to: "/build-your-software-catalog",
               },
               {
-                label: "Create Self-Service Experiences",
+                label: "Create self-service actions",
                 to: "/create-self-service-experiences",
               },
               {
-                label: "Promote Scorecards",
+                label: "Promote scorecards",
                 to: "/promote-scorecards",
               },
               {
-                label: "Search & Query",
+                label: "Search & query",
                 to: "/search-and-query",
               },
               {
-                label: "API Reference",
+                label: "API reference",
                 to: "/api-reference",
               },
             ],
           },
           {
-            title: "Ingest Data to Catalog",
+            title: "Ingest data to catalog",
             items: [
               {
                 label: "API",
-                to: "/build-your-software-catalog/sync-data-to-catalog/api",
+                to: "/build-your-software-catalog/custom-integration/api",
               },
               {
                 label: "CI/CD",
@@ -161,7 +167,7 @@ const config = {
               },
               {
                 label: "AWS",
-                to: "/build-your-software-catalog/sync-data-to-catalog/aws",
+                to: "/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws",
               },
               {
                 label: "Terraform",
@@ -252,6 +258,7 @@ const config = {
           "javascript",
           "go",
           "typescript",
+          "jq"
         ],
       },
       liveCodeBlock: {
@@ -313,6 +320,7 @@ const config = {
         disableInDev: false,
       },
     ],
+    "./src/plugins/intercom.js",
   ],
 };
 

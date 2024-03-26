@@ -1,0 +1,90 @@
+<details>
+
+<summary>Storage Account Blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "azureStorageAccount",
+  "description": "This blueprint represents an Azure Storage Account in our software catalog",
+  "title": "Storage Account",
+  "icon": "Azure",
+  "schema": {
+    "properties": {
+      "location": {
+        "title": "Location",
+        "type": "string"
+      },
+      "provisioningState": {
+        "title": "Provisioning State",
+        "type": "string",
+        "enum": ["Creating", "ResolvingDNS", "Succeeded"]
+      },
+      "creationTime": {
+        "title": "Creation Time",
+        "type": "string",
+        "format": "date-time"
+      },
+      "isHnsEnabled": {
+        "title": "Is HNS Enabled",
+        "type": "boolean",
+        "default": false
+      },
+      "fileEncryptionEnabled": {
+        "title": "File Encryption Enabled",
+        "type": "boolean"
+      },
+      "blobEncryptionEnabled": {
+        "title": "Blob Encryption Enabled",
+        "type": "boolean"
+      },
+      "primaryLocation": {
+        "title": "Primary Location",
+        "type": "string"
+      },
+      "secondaryLocation": {
+        "title": "Secondary Location",
+        "type": "string"
+      },
+      "statusOfPrimary": {
+        "title": "Status of Primary",
+        "type": "string",
+        "enum": ["available", "unavailable"],
+        "enumColors": {
+          "unavailable": "red",
+          "available": "green"
+        }
+      },
+      "statusOfSecondary": {
+        "title": "Status of Secondary",
+        "type": "string",
+        "enum": ["available", "unavailable"],
+        "enumColors": {
+          "unavailable": "red",
+          "available": "green"
+        }
+      },
+      "tags": {
+        "title": "Tags",
+        "type": "object"
+      },
+      "allowBlobPublicAccess": {
+        "title": "Allow Blob Public Access",
+        "type": "boolean"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "resourceGroup": {
+      "target": "azureResourceGroup",
+      "title": "Resource Group",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

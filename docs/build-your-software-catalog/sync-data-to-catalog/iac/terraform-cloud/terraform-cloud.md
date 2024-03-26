@@ -10,9 +10,11 @@ import DockerParameters from "./\_terraform_one_time_docker_parameters.mdx"
 
 # Terraform Cloud
 
-Our Terraform Cloud integration allows you to import `workspaces`, `runs` and `state versions` from your Terraform Cloud account into Port, according to your mapping and definition.
+The Terraform Cloud Integration for Port enables seamless import and synchronization of `organizations`, `projects`, `workspaces`, `runs`, and `state versions` from your Terraform infrastructure management into Port. This integration allows you to effectively monitor and manage your Terraform Cloud workspaces and runs within the Port platform.
 
-The Terraform Cloud Integration for Port enables seamless import and synchronization of `workspaces`, `runs`, and `state versions` from your Terraform infrastructure management into Port. This integration allows you to effectively monitor and manage your Terraform Cloud workspaces and runs within the Port platform.
+An `Organization` is a shared space for one or more teams to collaborate on workspaces.
+
+A `Project` in Terraform Cloud is a collection of infrastructure configurations, often corresponding to a code repository. It serves as the primary organizational unit, grouping related `workspaces`, `runs`, and `state versions` to manage and structure Terraform code for efficient deployment and collaboration.
 
 A `Workspace` represents a workspace in Terraform cloud. A workspace is a logical environment where Terraform manages infrastructure, such as a set of cloud resources.
 
@@ -20,10 +22,12 @@ A `Run` represents an instance of Terraform operations (plan, apply, or destroy)
 
 A `State Version` represents a versioned state file in Terraform. Each state version is immutable and represents the state of your managed infrastructure at a particular point in time. State versions are used to track the changes in your infrastructure and help with auditing, rollbacks, and historical analysis.
 
+
 ## Common use cases
 
 - Synchronization of Infrastructure Management: Automatically synchronize workspace, run and state version data from Terraform Cloud into Port for centralized tracking and management.
 - Monitoring Run Statuses: Keep track of run outcomes (success, failure, etc.) and durations, providing insights into the health and performance of your infrastructure management processes.
+- Identify drifts between your Terraform configuration and what's effectively deployed in your Cloud.
 
 ## Prerequisites
 
@@ -46,19 +50,23 @@ Set them as you wish in the script below, then copy it and run it in your termin
 
 | Parameter                                | Description                                                                                                   | Required |
 | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------- |
-| `port.clientId`                          | Your port client id                                                                                           | ✅       |
-| `port.clientSecret`                      | Your port client secret                                                                                       | ✅       |
-| `port.baseUrl`                           | Your port base url, relevant only if not using the default port app                                           | ❌       |
+| `port.clientId`                          | Your Port client id                                                                                           | ✅       |
+| `port.clientSecret`                      | Your Port client secret                                                                                       | ✅       |
+| `port.baseUrl`                           | Your Port base url, relevant only if not using the default Port app                                           | ❌       |
 | `integration.identifier`                 | Change the identifier to describe your integration                                                            | ✅       |
 | `integration.type`                       | The integration type                                                                                          | ✅       |
 | `integration.eventListener.type`         | The event listener type                                                                                       | ✅       |
-| `integration.config.terraformCloudToken` | The Terraform cloud API token token                                                                           | ✅       |
-| `integration.config.terraformCloudHost`  | The Terraform cloud host, e.g., https://app.terraform.io                                                      | ✅       |
+| `integration.config.terraformCloudHost` | Your Terraform host. For example https://app.terraform.io  token                                                                           | ✅       |
+| `integration.config.terraformCloudToken` | The Terraform cloud API token                                                                           | ✅       |
 | `integration.config.appHost`             | Your application's host url                                                                                   | ❌       |
 | `scheduledResyncInterval`                | The number of minutes between each resync                                                                     | ❌       |
 | `initializePortResources`                | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
 
 <br/>
+<Tabs groupId="deploy" queryString="deploy">
+
+<TabItem value="helm" label="Helm">
+To install the integration using Helm, run the following command:
 
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
@@ -70,10 +78,89 @@ helm upgrade --install terraform port-labs/port-ocean \
 	--set integration.identifier="my-terraform-cloud-integration"  \
 	--set integration.type="terraform-cloud"  \
 	--set integration.eventListener.type="POLLING"  \
-	--set integration.config.terraformCloudHost="https://app.terraform.io"  \
-  --set integration.config.appHost= "url"\
-	--set integration.secrets.terraformCloudToken="string" \
+        --set integration.secrets.terraformCloudHost="string" \
+	--set integration.secrets.terraformCloudToken="string" 
 ```
+</TabItem>
+<TabItem value="argocd" label="ArgoCD" default>
+To install the integration using ArgoCD, follow these steps:
+
+1. Create a `values.yaml` file in `argocd/my-ocean-terraform-cloud-integration` in your git repository with the content:
+
+:::note
+Remember to replace the placeholders for  `TERRAFORM_CLOUD_HOST` and `TERRAFORM_CLOUD_TOKEN`.
+:::
+```yaml showLineNumbers
+initializePortResources: true
+scheduledResyncInterval: 120
+integration:
+  identifier: my-ocean-terraform-cloud-integration
+  type: terraform-cloud
+  eventListener:
+    type: POLLING
+  secrets:
+  // highlight-start
+    terraformCloudHost: TERRAFORM_CLOUD_HOST
+    terraformCloudToken: TERRAFORM_CLOUD_TOKEN
+  // highlight-end
+```
+<br/>
+
+2. Install the `my-ocean-terraform-cloud-integration` ArgoCD Application by creating the following `my-ocean-terraform-cloud-integration.yaml` manifest:
+:::note
+Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+
+Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
+:::
+
+<details>
+  <summary>ArgoCD Application</summary>
+
+```yaml showLineNumbers
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: my-ocean-terraform-cloud-integration
+  namespace: argocd
+spec:
+  destination:
+    namespace: my-ocean-terraform-cloud-integration
+    server: https://kubernetes.default.svc
+  project: default
+  sources:
+  - repoURL: 'https://port-labs.github.io/helm-charts/'
+    chart: port-ocean
+    targetRevision: 0.1.14
+    helm:
+      valueFiles:
+      - $values/argocd/my-ocean-terraform-cloud-integration/values.yaml
+      // highlight-start
+      parameters:
+        - name: port.clientId
+          value: YOUR_PORT_CLIENT_ID
+        - name: port.clientSecret
+          value: YOUR_PORT_CLIENT_SECRET
+  - repoURL: YOUR_GIT_REPO_URL
+  // highlight-end
+    targetRevision: main
+    ref: values
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+```
+
+</details>
+<br/>
+
+3. Apply your application manifest with `kubectl`:
+```bash
+kubectl apply -f my-ocean-terraform-cloud-integration.yaml
+```
+</TabItem>
+</Tabs>
 
 </TabItem>
 
@@ -117,9 +204,8 @@ jobs:
           docker run -i --rm --platform=linux/amd64 \
           -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
           -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-          -e OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_TOKEN=${{ secrets.OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_TOKEN }} \
           -e OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_HOST=${{ secrets.OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_HOST }} \
-          -e OCEAN__INTEGRATION__CONFIG__APP_HOST=${{ secrets.OCEAN__INTEGRATION__CONFIG__APP_HOST }}\
+          -e OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_TOKEN=${{ secrets.OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_TOKEN }} \
           -e OCEAN__PORT__CLIENT_ID=${{ secrets.OCEAN__PORT__CLIENT_ID }} \
           -e OCEAN__PORT__CLIENT_SECRET=${{ secrets.OCEAN__PORT__CLIENT_SECRET }} \
           $image_name
@@ -155,9 +241,8 @@ pipeline {
             steps {
                 script {
                     withCredentials([
-                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_TOKEN', variable: 'OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_TOKEN'),
                         string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_HOST', variable: 'OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_HOST'),
-                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__APP_HOST', variable: 'OCEAN__INTEGRATION__CONFIG__APP_HOST'),
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_TOKEN', variable: 'OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_TOKEN'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_SECRET', variable: 'OCEAN__PORT__CLIENT_SECRET')
                     ]) {
@@ -169,9 +254,8 @@ pipeline {
                             docker run -i --rm --platform=linux/amd64 \
                                 -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
                                 -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+                                -e OCEAN__INTEGRATION__CONFIG__TERRAFORM_COUD_HOST=$OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_HOST \
                                 -e OCEAN__INTEGRATION__CONFIG__TERRAFORM_COUD_TOKEN=$OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_TOKEN \
-                                -e OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_HOST=$OCEAN__INTEGRATION__CONFIG__TERRAFORM_CLOUD_HOST \
-                                -e OCEAN__INTEGRATION__CONFIG__APP_HOST=$OCEAN__INTEGRATION__CONFIG__APP_HOST \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
                                 $image_name
@@ -233,6 +317,8 @@ The integration configuration determines which resources will be queried from Te
 :::tip Supported resources
 The following resources can be used to map data from Terraform Cloud, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
 
+- [`Organization`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/organizations)
+- [`Project`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/projects)
 - [`Workspace`](https://www.terraform.io/docs/cloud/api/workspaces.html)
 - [`Run`](https://www.terraform.io/docs/cloud/api/runs.html)
 - [`State Version`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/state-versions)
@@ -304,76 +390,239 @@ To ingest Terraform Cloud objects using the [integration configuration](#configu
 
 Examples of blueprints and the relevant integration configurations:
 
+### Organization
+
+<details>
+<summary>Organization blueprint</summary>
+
+```json showLineNumbers
+  {
+    "identifier": "terraformCloudOrganization",
+    "description": "This blueprint represents an organization in Terraform Cloud",
+    "title": "Terraform Cloud Organization",
+    "icon": "Terraform",
+    "schema": {
+      "properties": {
+        "externalId": {
+          "type": "string",
+          "title": "External ID",
+          "description": "The external ID of the organization"
+        },
+        "ownerEmail": {
+          "type": "string",
+          "title": "Owner Email",
+          "description": "The email associated with the organization"
+        },
+        "collaboratorAuthPolicy": {
+          "type": "string",
+          "title": "Collaborator Authentication Policy",
+          "description": "Policy for collaborator authentication"
+        },
+        "planExpired": {
+          "type": "string",
+          "title": "Plan Expired",
+          "description": "Indicates if plan is expired"
+        },
+        "planExpiresAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Plan Expiry Date",
+          "description": "The data and time which the plan expires"
+        },
+        "permissions": {
+          "type": "object",
+          "title": "Permissions",
+          "description": "Permissions associated with the organization"
+        },
+        "samlEnabled": {
+          "type": "boolean",
+          "title": "SAML Enabled",
+          "description": "Indicates if SAML is enabled for the organization"
+        },
+        "defaultExecutionMode": {
+          "type": "string",
+          "title": "Default Execution Mode",
+          "description": "The default execution mode for the organization"
+        }
+      }
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "aggregationProperties": {},
+    "relations": {}
+  }
+```
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+- kind: organization
+  selector:
+    query: "true"
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .attributes.name
+        blueprint: '"terraformCloudOrganization"'
+        properties:
+          externalId: .attributes."external-id"
+          ownerEmail: .attributes.email
+          collaboratorAuthPolicy: .attributes."collaborator-auth-policy"
+          planExpired: .attributes."plan-expired"
+          planExpiresAt: .attributes."plan-expires-at"
+          permissions: .attributes.permissions
+          samlEnabled: .attributes."saml-enabled"
+          defaultExecutionMode: .attributes."default-execution-mode"
+```
+</details>
+
+### Project
+<details>
+<summary>Project blueprint</summary>
+
+```json showLineNumbers
+  {
+    "identifier": "terraformCloudProject",
+    "description": "This blueprint represents a project in Terraform Cloud",
+    "title": "Terraform Cloud Project",
+    "icon": "Terraform",
+    "schema": {
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Project Name",
+          "description": "The name of the Terraform Cloud project"
+        },
+        "permissions": {
+          "type": "object",
+          "title": "Permissions",
+          "description": "The permisssions on the project"
+        }
+      }
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "aggregationProperties": {},
+    "relations": {
+      "organization": {
+        "title": "Terraform Cloud Organization",
+        "target": "terraformCloudOrganization",
+        "required": true,
+        "many": false
+      }
+    }
+  }
+```
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+- kind: project
+  selector:
+    query: "true"
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .attributes.name
+        blueprint: '"terraformCloudProject"'
+        properties:
+          name: .attributes.name
+          permissions: .attributes.permissions
+        relations:
+          organization: .relationships.organization.data.id
+```
+</details>
+
 ### Workspace
 
 <details>
 <summary>Workspace blueprint</summary>
 
 ```json showLineNumbers
-{
-  "identifier": "terraformCloudWorkspace",
-  "description": "This blueprint represents a workspace in Terraform Cloud",
-  "title": "Terraform Cloud Workspace",
-  "icon": "Terraform",
-  "schema": {
-    "properties": {
-      "organization": {
-        "type": "string",
-        "title": "Organization",
-        "description": "The organization within which the workspace belongs to"
+  {
+    "identifier": "terraformCloudWorkspace",
+    "description": "This blueprint represents a workspace in Terraform Cloud",
+    "title": "Terraform Cloud Workspace",
+    "icon": "Terraform",
+    "schema": {
+      "properties": {
+        "organization": {
+          "type": "string",
+          "title": "Organization",
+          "description": "The organization within which the workspace belongs to"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Creation Time",
+          "description": "The creation timestamp of the workspace"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Last Updated",
+          "description": "The last update timestamp of the workspace"
+        },
+        "terraformVersion": {
+          "type": "string",
+          "title": "Terraform Cloud Version",
+          "description": "Version of Terraform cloud used by the workspace"
+        },
+        "locked": {
+          "type": "boolean",
+          "title": "Locked Status",
+          "description": "Indicates whether the workspace is locked"
+        },
+        "executionMode": {
+          "type": "string",
+          "title": "Execution Mode",
+          "description": "The execution mode of the workspace"
+        },
+        "resourceCount": {
+          "type": "number",
+          "title": "Resource Count",
+          "description": "Number of resources managed by the workspace"
+        },
+        "latestChangeAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Latest Change",
+          "description": "Timestamp of the latest change in the workspace"
+        },
+        "tags": {
+          "type": "array",
+          "title": "Workspace Tags",
+          "description": "Terraform workspace tags"
+        }
+      }
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "aggregationProperties": {},
+    "relations": {
+      "currentStateVersion": {
+        "title": "Current State Version",
+        "target": "terraformCloudStateVersion",
+        "required": false,
+        "many": false
       },
-      "createdAt": {
-        "type": "string",
-        "format": "date-time",
-        "title": "Creation Time",
-        "description": "The creation timestamp of the workspace"
-      },
-      "updatedAt": {
-        "type": "string",
-        "format": "date-time",
-        "title": "Last Updated",
-        "description": "The last update timestamp of the workspace"
-      },
-      "terraformVersion": {
-        "type": "string",
-        "title": "Terraform Cloud Version",
-        "description": "Version of Terraform cloud used by the workspace"
-      },
-      "locked": {
-        "type": "boolean",
-        "title": "Locked Status",
-        "description": "Indicates whether the workspace is locked"
-      },
-      "executionMode": {
-        "type": "string",
-        "title": "Execution Mode",
-        "description": "The execution mode of the workspace"
-      },
-      "resourceCount": {
-        "type": "number",
-        "title": "Resource Count",
-        "description": "Number of resources managed by the workspace"
-      },
-      "latestChangeAt": {
-        "type": "string",
-        "format": "date-time",
-        "title": "Latest Change",
-        "description": "Timestamp of the latest change in the workspace"
+      "project": {
+        "title": "Terraform Cloud Project",
+        "target": "terraformCloudProject",
+        "required": false,
+        "many": false
       }
     }
-  },
-  "relations": {
-    "currentStateVersion": {
-      "title": "Current State Version",
-      "target": "terraformCloudStateVersion",
-      "required": false,
-      "many": false
-    }
   }
-}
 ```
-
 </details>
+
 
 <details>
 <summary>Integration configuration</summary>
@@ -397,8 +646,10 @@ Examples of blueprints and the relevant integration configurations:
           executionMode: .attributes."execution-mode"
           resourceCount: .attributes."resource-count"
           latestChangeAt: .attributes."latest-change-at"
+          tags: .__tags
         relations:
           currentStateVersion: .relationships."current-state-version".data.id
+          project: .relationships.project.data.id
 ```
 
 </details>
@@ -617,163 +868,303 @@ This section includes a sample response data from Terrform Cloud. In addition, i
 Here is an example of the payload structure from Terraform:
 
 <details>
+<summary> Organization response data</summary>
+
+```json showLineNumbers
+{
+  "id":"example-org-484f07",
+  "type":"organizations",
+  "attributes":{
+      "external-id":"org-S8Wo1fyUtpSFHbGQ",
+      "created-at":"2023-12-19T14:16:20.491Z",
+      "email":"example@getport.io",
+      "session-timeout":"None",
+      "session-remember":"None",
+      "collaborator-auth-policy":"password",
+      "plan-expired":false,
+      "plan-expires-at":"2024-01-18T14:16:20.637Z",
+      "plan-is-trial":true,
+      "plan-is-enterprise":false,
+      "plan-identifier":"free_standard",
+      "cost-estimation-enabled":false,
+      "managed-resource-count":5,
+      "send-passing-statuses-for-untriggered-speculative-plans":false,
+      "allow-force-delete-workspaces":false,
+      "assessments-enforced":false,
+      "is-in-degraded-mode":false,
+      "default-execution-mode":"remote",
+      "remaining-testable-count":5,
+      "aggregated-commit-status-enabled":false,
+      "name":"example-org-484f07",
+      "permissions":{
+        "can-update":true,
+        "can-update-authentication":true,
+        "can-destroy":true,
+        "can-access-via-teams":true,
+        "can-create-module":true,
+        "can-create-team":false,
+        "can-create-workspace":true,
+        "can-manage-users":true,
+        "can-manage-subscription":true,
+        "can-manage-sso":true,
+        "can-update-oauth":true,
+        "can-update-sentinel":true,
+        "can-update-ssh-keys":true,
+        "can-update-api-token":true,
+        "can-traverse":true,
+        "can-view-usage":true,
+        "can-start-trial":false,
+        "can-update-agent-pools":true,
+        "can-manage-tags":true,
+        "can-manage-varsets":true,
+        "can-read-varsets":true,
+        "can-manage-public-providers":true,
+        "can-create-provider":true,
+        "can-manage-public-modules":true,
+        "can-manage-custom-providers":true,
+        "can-manage-run-tasks":true,
+        "can-read-run-tasks":true,
+        "can-create-project":true,
+        "can-manage-assessments":true,
+        "can-read-assessments":true,
+        "can-view-explorer":true,
+        "can-deploy-no-code-modules":false,
+        "can-manage-no-code-modules":false,
+        "can-use-new-pnp-activation-ui":true
+      },
+      "saml-enabled":false,
+      "fair-run-queuing-enabled":false,
+      "owners-team-saml-role-id":"None",
+      "two-factor-conformant":true
+  },
+  "relationships":{
+      "default-agent-pool":{
+        "data":"None"
+      },
+      "meta":{
+        "links":{
+            "related":"/api/v2/organizations/example-org-484f07/meta"
+        }
+      },
+      "oauth-tokens":{
+        "links":{
+            "related":"/api/v2/organizations/example-org-484f07/oauth-tokens"
+        }
+      },
+      "authentication-token":{
+        "links":{
+            "related":"/api/v2/organizations/example-org-484f07/authentication-token"
+        }
+      },
+      "entitlement-set":{
+        "data":{
+            "id":"org-S8Wo1fyUtpSFHbGQ",
+            "type":"entitlement-sets"
+        },
+        "links":{
+            "related":"/api/v2/organizations/example-org-484f07/entitlement-set"
+        }
+      },
+      "subscription":{
+        "data":{
+            "id":"sub-THrhah4DkbD4etzy",
+            "type":"subscriptions"
+        },
+        "links":{
+            "related":"/api/v2/organizations/example-org-484f07/subscription"
+        }
+      },
+      "default-project":{
+        "data":{
+            "id":"prj-d1JbKcLJBhwN66Vs",
+            "type":"projects"
+        },
+        "links":{
+            "related":"/api/v2/projects/prj-d1JbKcLJBhwN66Vs"
+        }
+      }
+  },
+  "links":{
+      "self":"/api/v2/organizations/example-org-484f07"
+  }
+}
+```
+</details>
+
+
+<details>
 <summary> Workspace response data</summary>
 
 ```json showLineNumbers
 {
-  "id": "ws-WWhD18B59v5ndTTP",
-  "type": "workspaces",
-  "attributes": {
-    "allow-destroy-plan": true,
-    "auto-apply": false,
-    "auto-apply-run-trigger": false,
-    "auto-destroy-activity-duration": "None",
-    "auto-destroy-at": "None",
-    "auto-destroy-status": "None",
-    "created-at": "2023-12-11T20:20:07.614Z",
-    "environment": "default",
-    "locked": false,
-    "name": "getting-started",
-    "queue-all-runs": false,
-    "speculative-enabled": true,
-    "structured-run-output-enabled": true,
-    "terraform-version": "1.6.5",
-    "working-directory": "None",
-    "global-remote-state": false,
-    "updated-at": "2023-12-12T10:06:46.205Z",
-    "resource-count": 5,
-    "apply-duration-average": 4000,
-    "plan-duration-average": 5000,
-    "policy-check-failures": 0,
-    "run-failures": 0,
-    "workspace-kpis-runs-count": 1,
-    "latest-change-at": "2023-12-12T10:06:45.192Z",
-    "operations": true,
-    "execution-mode": "remote",
-    "vcs-repo": "None",
-    "vcs-repo-identifier": "None",
-    "permissions": {
-      "can-update": true,
-      "can-destroy": true,
-      "can-queue-run": true,
-      "can-read-variable": true,
-      "can-update-variable": true,
-      "can-read-state-versions": true,
-      "can-read-state-outputs": true,
-      "can-create-state-versions": true,
-      "can-queue-apply": true,
-      "can-lock": true,
-      "can-unlock": true,
-      "can-force-unlock": true,
-      "can-read-settings": true,
-      "can-manage-tags": true,
-      "can-manage-run-tasks": true,
-      "can-force-delete": true,
-      "can-manage-assessments": true,
-      "can-manage-ephemeral-workspaces": false,
-      "can-read-assessment-results": true,
-      "can-queue-destroy": true
-    },
-    "actions": {
-      "is-destroyable": true
-    },
-    "description": "None",
-    "file-triggers-enabled": true,
-    "trigger-prefixes": [],
-    "trigger-patterns": [],
-    "assessments-enabled": false,
-    "last-assessment-result-at": "None",
-    "source": "None",
-    "source-name": "None",
-    "source-url": "None",
-    "tag-names": [],
-    "setting-overwrites": {
-      "execution-mode": true,
-      "agent-pool": true
-    }
+  "id":"ws-DBJebej1fNCZomkr",
+  "type":"workspaces",
+  "attributes":{
+      "allow-destroy-plan":true,
+      "auto-apply":false,
+      "auto-apply-run-trigger":false,
+      "auto-destroy-activity-duration":"None",
+      "auto-destroy-at":"None",
+      "auto-destroy-status":"None",
+      "created-at":"2023-12-12T12:43:36.192Z",
+      "environment":"default",
+      "locked":false,
+      "name":"example-workspace-2",
+      "queue-all-runs":false,
+      "speculative-enabled":true,
+      "structured-run-output-enabled":true,
+      "terraform-version":"1.6.5",
+      "working-directory":"",
+      "global-remote-state":false,
+      "updated-at":"2023-12-12T12:43:36.192Z",
+      "resource-count":0,
+      "apply-duration-average":"None",
+      "plan-duration-average":"None",
+      "policy-check-failures":"None",
+      "run-failures":"None",
+      "workspace-kpis-runs-count":"None",
+      "latest-change-at":"2023-12-12T12:43:36.192Z",
+      "operations":true,
+      "execution-mode":"remote",
+      "vcs-repo":"None",
+      "vcs-repo-identifier":"None",
+      "permissions":{
+        "can-update":true,
+        "can-destroy":true,
+        "can-queue-run":true,
+        "can-read-variable":true,
+        "can-update-variable":true,
+        "can-read-state-versions":true,
+        "can-read-state-outputs":true,
+        "can-create-state-versions":true,
+        "can-queue-apply":true,
+        "can-lock":true,
+        "can-unlock":true,
+        "can-force-unlock":true,
+        "can-read-settings":true,
+        "can-manage-tags":true,
+        "can-manage-run-tasks":true,
+        "can-force-delete":true,
+        "can-manage-assessments":true,
+        "can-manage-ephemeral-workspaces":false,
+        "can-read-assessment-results":true,
+        "can-queue-destroy":true
+      },
+      "actions":{
+        "is-destroyable":true
+      },
+      "description":"None",
+      "file-triggers-enabled":false,
+      "trigger-prefixes":[
+        
+      ],
+      "trigger-patterns":[
+        
+      ],
+      "assessments-enabled":false,
+      "last-assessment-result-at":"None",
+      "source":"tfe-ui",
+      "source-name":"None",
+      "source-url":"None",
+      "tag-names":[
+        "foo",
+        "bar"
+      ],
+      "setting-overwrites":{
+        "execution-mode":false,
+        "agent-pool":false
+      }
   },
-  "relationships": {
-    "organization": {
-      "data": {
-        "id": "example-org-162af6",
-        "type": "organizations"
-      }
-    },
-    "current-run": {
-      "data": {
-        "id": "run-28xMcbm8uCzsFoZE",
-        "type": "runs"
-      },
-      "links": {
-        "related": "/api/v2/runs/run-28xMcbm8uCzsFoZE"
-      }
-    },
-    "latest-run": {
-      "data": {
-        "id": "run-28xMcbm8uCzsFoZE",
-        "type": "runs"
-      },
-      "links": {
-        "related": "/api/v2/runs/run-28xMcbm8uCzsFoZE"
-      }
-    },
-    "outputs": {
-      "data": [],
-      "links": {
-        "related": "/api/v2/workspaces/ws-WWhD18B59v5ndTTP/current-state-version-outputs"
-      }
-    },
-    "remote-state-consumers": {
-      "links": {
-        "related": "/api/v2/workspaces/ws-WWhD18B59v5ndTTP/relationships/remote-state-consumers"
-      }
-    },
-    "current-state-version": {
-      "data": {
-        "id": "sv-U6L87Bf6JcZqcXoi",
-        "type": "state-versions"
-      },
-      "links": {
-        "related": "/api/v2/workspaces/ws-WWhD18B59v5ndTTP/current-state-version"
-      }
-    },
-    "current-configuration-version": {
-      "data": {
-        "id": "cv-ompZmuF15X68njap",
-        "type": "configuration-versions"
-      },
-      "links": {
-        "related": "/api/v2/configuration-versions/cv-ompZmuF15X68njap"
-      }
-    },
-    "agent-pool": {
-      "data": "None"
-    },
-    "readme": {
-      "data": "None"
-    },
-    "project": {
-      "data": {
-        "id": "prj-wnLLjhXa3XArrRFR",
-        "type": "projects"
-      }
-    },
-    "current-assessment-result": {
-      "data": "None"
-    },
-    "vars": {
-      "data": [
-        {
-          "id": "var-hWAFtXNz8kLmsLWV",
-          "type": "vars"
+  "relationships":{
+      "organization":{
+        "data":{
+            "id":"example-org-162af6",
+            "type":"organizations"
         }
-      ]
-    }
+      },
+      "current-run":{
+        "data":"None"
+      },
+      "latest-run":{
+        "data":"None"
+      },
+      "outputs":{
+        "data":[
+            
+        ]
+      },
+      "remote-state-consumers":{
+        "links":{
+            "related":"/api/v2/workspaces/ws-DBJebej1fNCZomkr/relationships/remote-state-consumers"
+        }
+      },
+      "current-state-version":{
+        "data":"None"
+      },
+      "current-configuration-version":{
+        "data":"None"
+      },
+      "agent-pool":{
+        "data":"None"
+      },
+      "readme":{
+        "data":"None"
+      },
+      "project":{
+        "data":{
+            "id":"prj-wnLLjhXa3XArrRFR",
+            "type":"projects"
+        }
+      },
+      "current-assessment-result":{
+        "data":"None"
+      },
+      "vars":{
+        "data":[
+            
+        ]
+      }
   },
-  "links": {
-    "self": "/api/v2/organizations/example-org-162af6/workspaces/getting-started",
-    "self-html": "/app/example-org-162af6/workspaces/getting-started"
-  }
+  "links":{
+      "self":"/api/v2/organizations/example-org-162af6/workspaces/example-workspace-2",
+      "self-html":"/app/example-org-162af6/workspaces/example-workspace-2"
+  },
+  "__tags":[
+      {
+        "id":"tag-moR1pPNpT2vowy55",
+        "type":"tags",
+        "attributes":{
+            "name":"foo",
+            "created-at":"2024-01-09T19:41:45.183Z",
+            "instance-count":1
+        },
+        "relationships":{
+            "organization":{
+              "data":{
+                  "id":"example-org-162af6",
+                  "type":"organizations"
+              }
+            }
+        }
+      },
+      {
+        "id":"tag-PNyYYGibnxZcnVho",
+        "type":"tags",
+        "attributes":{
+            "name":"bar",
+            "created-at":"2024-01-09T19:41:45.197Z",
+            "instance-count":1
+        },
+        "relationships":{
+            "organization":{
+              "data":{
+                  "id":"example-org-162af6",
+                  "type":"organizations"
+              }
+            }
+        }
+      }
+  ]
 }
 ```
 
@@ -1344,24 +1735,149 @@ Here is an example of the payload structure from Terraform:
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
 
 <details>
+<summary> organization entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "example-org-484f07",
+  "title": "example-org-484f07",
+  "team": [],
+  "properties": {
+    "externalId": "org-S8Wo1fyUtpSFHbGQ",
+    "collaboratorAuthPolicy": "password",
+    "permissions": {
+      "can-update": true,
+      "can-update-authentication": true,
+      "can-destroy": true,
+      "can-access-via-teams": true,
+      "can-create-module": true,
+      "can-create-team": false,
+      "can-create-workspace": true,
+      "can-manage-users": true,
+      "can-manage-subscription": true,
+      "can-manage-sso": true,
+      "can-update-oauth": true,
+      "can-update-sentinel": true,
+      "can-update-ssh-keys": true,
+      "can-update-api-token": true,
+      "can-traverse": true,
+      "can-view-usage": true,
+      "can-start-trial": false,
+      "can-update-agent-pools": true,
+      "can-manage-tags": true,
+      "can-manage-varsets": true,
+      "can-read-varsets": true,
+      "can-manage-public-providers": true,
+      "can-create-provider": true,
+      "can-manage-public-modules": true,
+      "can-manage-custom-providers": true,
+      "can-manage-run-tasks": true,
+      "can-read-run-tasks": true,
+      "can-create-project": true,
+      "can-manage-assessments": true,
+      "can-read-assessments": true,
+      "can-view-explorer": true,
+      "can-deploy-no-code-modules": false,
+      "can-manage-no-code-modules": false,
+      "can-use-new-pnp-activation-ui": true
+    },
+    "samlEnabled": false,
+    "defaultExecutionMode": "remote",
+    "ownerEmail": "example@getport.io",
+    "planExpired": "false",
+    "planExpiresAt": "2024-01-18T14:16:20.637Z"
+  },
+  "relations": {},
+  "icon": "Terraform"
+}
+```
+</details>
+
+<details>
+<summary> project entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "prj-wnLLjhXa3XArrRFR",
+  "title": "Default Project",
+  "team": [],
+  "properties": {
+    "name": "Default Project",
+    "permissions": {
+      "can-read": true,
+      "can-update": true,
+      "can-destroy": true,
+      "can-create-workspace": true,
+      "can-move-workspace": true,
+      "can-deploy-no-code-modules": true,
+      "can-read-teams": true,
+      "can-manage-teams": true
+    },
+    "organizationId": "example-org-162af6"
+  },
+  "relations": {},
+  "icon": "Terraform"
+}
+```
+</details>
+
+<details>
 <summary> workspace entity in Port</summary>
 
 ```json showLineNumbers
 {
-  "identifier": "ws-WWhD18B59v5ndTTP",
-  "title": "getting-started",
+  "identifier": "ws-DBJebej1fNCZomkr",
+  "title": "example-workspace-2",
   "team": [],
   "properties": {
-    "workspaceName": "getting-started",
-    "createdAt": "2023-12-11T20:20:07.614Z",
-    "updatedAt": "2023-12-14T17:49:21.650Z",
+    "createdAt": "2023-12-12T12:43:36.192Z",
+    "updatedAt": "2023-12-12T12:43:36.192Z",
     "terraformVersion": "1.6.5",
     "locked": false,
     "executionMode": "remote",
-    "resourceCount": 5,
-    "latestChangeAt": "2023-12-12T10:06:45.192Z"
+    "resourceCount": 0,
+    "latestChangeAt": "2023-12-12T12:43:36.192Z",
+    "organization": "example-org-162af6",
+    "tags": [
+      {
+        "id": "tag-moR1pPNpT2vowy55",
+        "type": "tags",
+        "attributes": {
+          "name": "foo",
+          "created-at": "2024-01-09T19:41:45.183Z",
+          "instance-count": 1
+        },
+        "relationships": {
+          "organization": {
+            "data": {
+              "id": "example-org-162af6",
+              "type": "organizations"
+            }
+          }
+        }
+      },
+      {
+        "id": "tag-PNyYYGibnxZcnVho",
+        "type": "tags",
+        "attributes": {
+          "name": "bar",
+          "created-at": "2024-01-09T19:41:45.197Z",
+          "instance-count": 1
+        },
+        "relationships": {
+          "organization": {
+            "data": {
+              "id": "example-org-162af6",
+              "type": "organizations"
+            }
+          }
+        }
+      }
+    ]
   },
-  "relations": {},
+  "relations": {
+    "project": "prj-wnLLjhXa3XArrRFR"
+  },
   "icon": "Terraform"
 }
 ```

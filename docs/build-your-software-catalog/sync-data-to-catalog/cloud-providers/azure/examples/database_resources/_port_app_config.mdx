@@ -1,0 +1,30 @@
+<details>
+<summary>Mapping Configuration for Postgres Flexible Server</summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: Microsoft.DBforPostgreSQL/flexibleServers
+    selector:
+      query: "true"
+      apiVersion: "2022-12-01"
+    port:
+      entity:
+        mappings:
+          identifier: '.id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase | join("/")'
+          title: .name
+          blueprint: '"azurePostgresFlexibleServer"'
+          properties:
+            location: .location
+            version: .properties.version
+            state: .properties.state
+            storageSizeGB: .properties.storage.storageSizeGB
+            activeDirectoryAuth: .properties.authConfig.activeDirectoryAuth
+            passwordAuth: .properties.authConfig.passwordAuth
+            publicNetworkAccess: .properties.network.publicNetworkAccess
+            geoRedundantBackup: .properties.backup.geoRedundantBackup
+            earliestRestoreDate: .properties.backup.earliestRestoreDate
+          relations:
+            resourceGroup: '.id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase | .[:5] |join("/")'
+```
+
+</details>

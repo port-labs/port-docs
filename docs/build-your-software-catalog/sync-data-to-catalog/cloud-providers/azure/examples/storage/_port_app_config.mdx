@@ -1,0 +1,65 @@
+<details>
+
+<summary>
+  Mapping configuration for Storage Account and Storage Container
+</summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: Microsoft.Storage/storageAccounts
+    selector:
+      query: "true"
+      # azure resource api version to query
+      apiVersion: "2023-01-01"
+    port:
+      entity:
+        mappings:
+          # lowercase only the resourceGroups namespace and name to align how azure API returns the resource group reference
+          identifier: '.id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase | join("/")'
+          title: .name
+          blueprint: '"azureStorageAccount"'
+          properties:
+            location: .location
+            provisioningState: .properties.provisioningState
+            creationTime: .properties.creationTime
+            isHnsEnabled: .properties.isHnsEnabled
+            fileEncryptionEnabled: .properties.encryption.services.file.enabled
+            blobEncryptionEnabled: .properties.encryption.services.blob.enabled
+            primaryLocation: .properties.primaryLocation
+            secondaryLocation: .properties.secondaryLocation
+            statusOfPrimary: .properties.statusOfPrimary
+            statusOfSecondary: .properties.statusOfSecondary
+            allowBlobPublicAccess: .properties.allowBlobPublicAccess
+            tags: .tags
+          relations:
+            # resolve resource group id from storage account id
+            resourceGroup: '.id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase | .[:5] |join("/")'
+
+  - kind: Microsoft.Storage/storageAccounts/blobServices/containers
+    selector:
+      query: "true"
+      # azure resource api version to query
+      apiVersion: "2023-01-01"
+    port:
+      entity:
+        mappings:
+          identifier: '.id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase | join("/")'
+          title: .name
+          blueprint: '"azureStorageContainer"'
+          properties:
+            publicAccess: .properties.publicAccess
+            hasImmutabilityPolicy: .properties.hasImmutabilityPolicy
+            hasLegalHold: .properties.hasLegalHold
+            deleted: .properties.deleted
+            deletedTime: .properties.deletedTime
+            remainingRetentionDays: .properties.remainingRetentionDays
+            leaseStatus: .properties.leaseStatus
+            leaseState: .properties.leaseState
+            defaultEncryptionScope: .properties.defaultEncryptionScope
+            version: .properties.version
+          relations:
+            # resolve storage account id from container id
+            storageAccount: '.id | split("/") | .[3] |= ascii_downcase | .[4] |= ascii_downcase | .[:-4] | join("/")'
+```
+
+</details>

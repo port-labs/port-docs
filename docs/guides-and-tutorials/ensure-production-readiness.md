@@ -16,11 +16,13 @@ This guide takes 10 minutes to complete, and aims to cover:
 
 :::tip Prerequisites
 
-- This guide assumes you have a Port account and a basic knowledge of working with Port. If you haven't done so, go ahead and complete the [quickstart](/quickstart).
+- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
 - You will need an accessible k8s cluster. If you don't have one, here is how to quickly set-up a [minikube cluster](https://minikube.sigs.k8s.io/docs/start/).
 - [Helm](https://helm.sh/docs/intro/install/) - required to install a relevant integration.
 
 :::
+
+<br/>
 
 ### The goal of this guide
 
@@ -32,13 +34,14 @@ After completing it, you will get a sense of how it can benefit different person
 - Developers will be able to easily see which policies set by the platform engineer are not met, and what they need to fix.
 - R&D managers will get a bird's-eye-view of the state of all services in the organization.
 
+<br/>
+
 ## Expand your service blueprint
 
-In this guide we will add 3 new properties to our `service` <PortTooltip id="blueprint">blueprint</PortTooltip>, which we will then use to set production readiness standards:
+In this guide we will add two new properties to our `service` <PortTooltip id="blueprint">blueprint</PortTooltip>, which we will then use to set production readiness standards:
 
 1. The service's `on-call`, fetched from Pagerduty.
 2. The service's `Code owners`, fetched from Github.
-3. A url to the relevant `Slack channel`, calculated using the service's data.
 
 ### Add an on-call to your services
 
@@ -63,13 +66,17 @@ If you already have a Pagerduty account that you can play around with, feel free
 
 Now let's bring our Pagerduty data into Port. Port's Pagerduty integration automatically fetches `Services` and `Incidents`, and creates <PortTooltip id="blueprint">blueprints</PortTooltip> and <PortTooltip id="entity">entities</PortTooltip> for them.
 
-:::info Note
+:::info K8s cluster required
 For this installation you will need Helm and a running K8s cluster (see [prerequisites](/guides-and-tutorials/ensure-production-readiness)).
 :::
 
 1. Install Port's Pagerduty integration using Helm, by running the command below in your terminal.
 
-- Replace `CLIENT_ID` and `CLIENT_SECRET` with your credentials (get them [here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)).
+:::tip Alternative installation
+The command below will install the integration in `Realtime & always on` mode. If you prefer to use a one-time (scheduled) installation instead, see the [Pagerduty installation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty/?installation-methods=one-time#installation) section.
+:::
+
+- Replace `CLIENT_ID` and `CLIENT_SECRET` with your credentials (get them [here](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)).
 
 - Replace `token` with your Pagerduty token. To obtain it:
   - Hover over your avatar in the top right corner of your Pagerduty app, then click `My profile`.
@@ -80,19 +87,18 @@ For this installation you will need Helm and a running K8s cluster (see [prerequ
 ![pagerdutyUserSettings](/img/guides/pagerdutyUserSettings.png)
 
 <details>
-<summary>Installation command (click to expand)</summary>
+<summary><b>Installation command (click to expand)</b></summary>
 
 ```bash showLineNumbers
 helm repo add port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-pagerduty-integration port-labs/port-ocean \
-    --set port.clientId="CLIENT_ID" \     # REPLACE VALUE
-    --set port.clientSecret="CLIENT_SECRET"  \     # REPLACE VALUE
+    --set port.clientId="CLIENT_ID" \   # REPLACE VALUE
+    --set port.clientSecret="CLIENT_SECRET"  \   # REPLACE VALUE
     --set initializePortResources=true  \
     --set integration.identifier="my-pagerduty-integration"  \
     --set integration.type="pagerduty"  \
     --set integration.eventListener.type="POLLING"  \
-    --set integration.secrets.token="token"  \     # REPLACE VALUE
-    --set integration.config.appHost="https://example.com"  \     # NO NEED TO REPLACE FOR THIS GUIDE
+    --set integration.secrets.token="token"  \   # REPLACE VALUE
     --set integration.config.apiUrl="https://api.pagerduty.com"
 ```
 
@@ -106,28 +112,36 @@ Great! Now that the integration is installed, we should see some new components 
 #### Add an on-call property to the service blueprint
 
 Now that Port is synced with our Pagerduty resources, let's reflect the Pagerduty service's on-call in our services.  
-First, we will need to create a [relation](/build-your-software-catalog/define-your-data-model/relate-blueprints/#what-is-a-relation) between our services and the corresponding Pagerduty services.
+First, we will need to create a [relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/#what-is-a-relation) between our services and the corresponding Pagerduty services.
 
 1. Head back to the [Builder](https://app.getport.io/dev-portal/data-model), choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New relation`:
 
-<img src='/img/guides/serviceCreateRelation.png' width='30%' />
+<img src='/img/guides/serviceCreateRelation.png' width='40%' />
+
+<br/><br/>
 
 2. Fill out the form like this, then click `Create`:
 
-<img src='/img/guides/relationCreation.png' width='40%' />
+<img src='/img/guides/prodReadinessRelationCreation.png' width='50%' />
 
-Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, let's create a [mirror property](https://docs.getport.io/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/mirror-property/) in our service to display its on-call.
+<br/><br/>
 
-1. Choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip> again, and under the `PagerDutyService` relation, click on `New mirror property`.  
+Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, let's create a [mirror property](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/) in our service to display its on-call.
+
+1. Choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip> again, and under the `PagerDuty Service` relation, click on `New mirror property`.  
    Fill the form out like this, then click `Create`:
 
 <img src='/img/guides/mirrorPropertyCreation.png' width='40%' />
+
+<br/><br/>
 
 2. Now that our mirror property is set, we need to assign the relevant Pagerduty service to each of our services. This can be done by adding some mapping logic. Go to your [data sources page](https://app.getport.io/dev-portal/data-sources), and click on your Pagerduty integration:
 
 <img src='/img/guides/pdDataSources.png' width='60%' />
 
-Add the following YAML block to the mapping under the `resources` key, then click `resync`:
+<br/><br/>
+
+Add the following YAML block to the mapping under the `resources` key, then click `save & resync`:
 
 <details>
 <summary>Relation mapping (click to expand)</summary>
@@ -144,7 +158,7 @@ Add the following YAML block to the mapping under the `resources` key, then clic
         blueprint: '"service"'
         properties: {}
         relations:
-          pagerdutyservice: .id
+          pagerduty_service: .id
 ```
 
 </details>
@@ -160,13 +174,44 @@ Now, if our `service` identifier is equal to the Pagerduty service's name, the `
 
 ![editServiceEntity](/img/guides/editServiceEntity.png)
 
-2. In the form you will now see a property named `PagerDutyService`, choose the `DemoPdService` we created from the dropdown, then click `Update`:
+2. In the form you will now see a property named `PagerDuty Service`, choose the `DemoPdService` we created from the dropdown, then click `Update`:
 
 <img src='/img/guides/editServiceChoosePdService.png' width='40%' />
 
+<br/><br/>
+
 ### Display each service's code owners
 
-Github allows adding a `CODEOWNERS` file to a repository. Let's see how we can easily ingest this into our existing services:
+Git providers allow you to add a `CODEOWNERS` file to a repository specifiying its owner/s. See the relevant documentation for details and examples:
+
+<Tabs groupId="git-provider" queryString defaultValue="github" values={[
+{label: "GitHub", value: "github"},
+{label: "GitLab", value: "gitlab"},
+{label: "Bitbucket", value: "bitbucket"}
+]}>
+
+<TabItem value="github" label="Github">
+
+[Github codeowners documentation](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners)
+
+</TabItem>
+
+<TabItem value="gitlab" label="GitLab">
+
+[GitLab codeowners documentation](https://docs.gitlab.com/ee/user/project/codeowners/)
+
+</TabItem>
+
+<TabItem value="bitbucket" label="BitBucket">
+
+[BitBucket codeowners documentation](https://confluence.atlassian.com/bitbucketserver/code-owners-1296171116.html)
+
+</TabItem>
+
+</Tabs>
+
+<br/>
+Let's see how we can easily ingest a CODEOWNERS file into our existing services:
 
 #### Add a codeowners property to the service blueprint
 
@@ -191,44 +236,27 @@ Going back to our Catalog, we can now see that our <PortTooltip id="entity">enti
 
 ![entityAfterCodeowners](/img/guides/entityAfterCodeowners.png)
 
-### Display each service's relevant Slack channel
+<br/>
 
-We will now use a [calculation property](https://docs.getport.io/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/calculation-property/) to build a URL to the relevant Slack channel.
-
-1. Go to your [Builder](https://app.getport.io/dev-portal/data-model) yet again, choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click `New property`.
-
-2. Fill out the form like this, then click `Create`:  
-   The `JQ calculation` field for copy-paste convenience: `"https://slack.com/" + .identifier`
-
-<img src='/img/guides/createSlackClaculationProp.png' width='50%' />
-
-Now each service has a Slack link that is composed of a base and the service's identifier:
-
-![serviceAfterSlackProp](/img/guides/serviceAfterSlackProp.png)
-
-This is an example of what can be achieved with calculation properties, you can use jq to craft and combine expressions/urls/numbers while also using the service's properties 🛠️
-
-### Update our service's scorecards
+### Update your service's scorecard
 
 Now let's use the properties we created to set standards for our services.  
-We already have a `bronze` level scorecard from the quickstart guide, so we'll add ones for other levels.
 
-#### Add `silver` and `gold` metrics to your scorecard
+#### Add rules to existing scorecard
 
-Say we want to ensure each service meets several requirements, with different levels of importance.  
-We can model it like this, for example:
+Say we want to ensure each service meets our new requirements, with different levels of importance. Our `Service` blueprint already has a scorecard called `Production readiness`, with three rules.  
+Let's add our metrics to it: 
 
 - `Bronze` - each service must have a `Readme` (we have already defined this in the quickstart guide).
-- `Silver`:
-  - Each service must have a `CODEOWNERS` file.
-  - Each service must have a link to a Slack channel.
-- `Gold` - each service must have an on-call defined.
+- `Silver` - each service must have an on-call defined.
 
 Now let's implement it:
 
 1. Go to your [Builder](https://app.getport.io/dev-portal/data-model), choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>, click on `Scorecards`, then click our existing `Production readiness` scorecard:
 
 <img src='/img/guides/editReadinessScorecard.png' width='30%' />
+
+<br/><br/>
 
 2. Replace the content with this, then click `Save`:
 
@@ -242,7 +270,7 @@ Now let's implement it:
   "rules": [
     {
       "identifier": "hasReadme",
-      "title": "Has readme",
+      "title": "Has a readme",
       "level": "Bronze",
       "query": {
         "combinator": "and",
@@ -255,15 +283,15 @@ Now let's implement it:
       }
     },
     {
-      "identifier": "hasCodeowners",
-      "title": "Has Codeowners",
+      "identifier": "hasTeam",
+      "title": "Has Team",
       "level": "Silver",
       "query": {
         "combinator": "and",
         "conditions": [
           {
             "operator": "isNotEmpty",
-            "property": "code_owners"
+            "property": "$team"
           }
         ]
       }
@@ -271,13 +299,28 @@ Now let's implement it:
     {
       "identifier": "hasSlackChannel",
       "title": "Has a Slack channel",
+      "level": "Gold",
+      "query": {
+        "combinator": "and",
+        "conditions": [
+          {
+            "operator": "isNotEmpty",
+            "property": "slack"
+          }
+        ]
+      }
+    },
+    {
+      "identifier": "hasCodeowners",
+      "title": "Has Codeowners",
+      "description": "Checks if a service has a codeowners file",
       "level": "Silver",
       "query": {
         "combinator": "and",
         "conditions": [
           {
             "operator": "isNotEmpty",
-            "property": "slack_channel"
+            "property": "code_owners"
           }
         ]
       }
@@ -317,4 +360,7 @@ Now go to your Catalog and click on any of your services. Click on the `Scorecar
 Production readiness is something that needs to be monitored and handled constantly. In a microservice-heavy environment, things like codeowners and on-call management are critical.  
 With Port, standards are easy to set-up, prioritize and track. Using Port's API, you can also create/get/modify your scorecards from anywhere, allowing seamless integration with other platforms and services in your environment.
 
-More guides & tutorials will be available soon, in the meantime feel free to reach out with any questions via our [community slack](https://www.getport.io/community) or [Github project](https://github.com/port-labs?view_as=public).
+More relevant guides and examples:
+
+- [Port's OpsGenie integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/opsgenie/)
+- [Integrate scorecards with Slack](https://docs.getport.io/promote-scorecards/manage-using-3rd-party-apps/slack)

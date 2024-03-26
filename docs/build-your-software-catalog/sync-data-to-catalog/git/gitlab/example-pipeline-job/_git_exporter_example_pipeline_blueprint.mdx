@@ -3,7 +3,7 @@
 
 ```json showLineNumbers
 {
-  "identifier": "pipeline",
+  "identifier": "gitlabPipeline",
   "title": "Pipeline",
   "icon": "GitLab",
   "schema": {
@@ -70,9 +70,9 @@
   "mirrorProperties": {},
   "calculationProperties": {},
   "relations": {
-    "repository": {
-      "target": "repository",
-      "type": "Repository",
+    "service": {
+      "title": "Service",
+      "target": "service",
       "required": true,
       "many": false
     }

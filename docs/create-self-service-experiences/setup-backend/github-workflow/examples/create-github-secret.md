@@ -18,8 +18,8 @@ Follow these steps to get started:
 
       ![Token Scopes](../../../../../static/img/self-service-actions/setup-backend/github-workflow/pat-scopes.png)
 
-   2. `PORT_CLIENT_ID` - Port Client ID [learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
-   3. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+   2. `PORT_CLIENT_ID` - Port Client ID [learn more](../../../../build-your-software-catalog/custom-integration/api/#get-api-token).
+   3. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](../../../../build-your-software-catalog/custom-integration/api/#get-api-token).
 
 2. Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new).
 
@@ -57,7 +57,7 @@ Keep in mind this can be any blueprint you would like and this is just an exampl
 }
 ```
 
-4. Create Port action using the following JSON definition:
+4. Create a Port action using the following JSON definition:
 
 :::note
 Make sure to replace the placeholders for GITHUB_ORG_NAME and GITHUB_REPO_NAME in your Port Action to match your GitHub environment.
