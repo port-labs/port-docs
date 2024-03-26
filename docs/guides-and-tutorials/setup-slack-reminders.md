@@ -74,7 +74,7 @@ Now we'll define the backend of the action:
   
   - Choose `Github workflow` as the invocation type.
   - Replace the `Organization` and `Repository` values with your values (this is where the workflow will reside and run).
-  - Name the workflow `portSlackReminder.yaml`.
+  - Name the workflow `port-slack-reminder.yml`.
   - Fill out the rest of the form like this, then click `Next`:
 
 <img src='/img/guides/slackReminderBackend.png' width='70%' />
@@ -159,13 +159,13 @@ Now we want to write the logic that our action will trigger:
 
 <br/><br/>
 
-3. Now let's create the workflow file that contains our logic. Under `.github/workflows`, create a new file named `portSlackReminder.yaml` and use the following snippet as its content:
+3. Now let's create the workflow file that contains our logic. Under `.github/workflows`, create a new file named `port-slack-reminder.yml` and use the following snippet as its content:
 
 <details>
 <summary><b>Github workflow (click to expand)</b></summary>
 
 ```yaml showLineNumbers
-# portSlackReminder.yaml
+# port-slack-reminder.yml
 
 name: Generate Scorecards Reminders
 on:
