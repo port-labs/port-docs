@@ -8,6 +8,12 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 This guide provides a step-by-step walkthrough for creating Kubernetes clusters with the use of Crossplane and ArgoCD.
 
+<center>
+
+<iframe width="65%" height="400" src="https://www.youtube.com/embed/UnNQYghc8uU?si=nv2jbn2Y_VPIpFhh" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+</center>
+
 ## Prerequisites
 
 1. Prior knowledge of Port Actions is essential for following this guide. Learn more about them [here](/create-self-service-experiences/setup-ui-for-action/).
@@ -27,6 +33,7 @@ Copy the `crossplane` folder from our examples repository [here](https://github.
 - `port`: contains the Port blueprints and action definitions.
 - `scripts`: contains the script that the GitHub workflow uses to create cluster manifests.
 :::
+
 
 ## 1. Control Plane Setup
 

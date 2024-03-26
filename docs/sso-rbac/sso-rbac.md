@@ -1,10 +1,10 @@
 ---
 sidebar_position: 1
 title: SSO & RBAC
-sidebar_label: 🔒 SSO & RBAC
+sidebar_label: SSO & RBAC
 ---
 
-# 🔒 SSO & RBAC
+# SSO & RBAC
 
 The following section discusses the roles, teams and ownership functionality, as well as guides to configure the integration between Port and your SSO.
 

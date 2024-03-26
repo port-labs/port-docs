@@ -1,7 +1,8 @@
 ---
 sidebar_position: 14
 title: Troubleshooting
-sidebar_label: ❓ Troubleshooting
+sidebar_label: Troubleshooting
+sidebar_class_name: custom-sidebar-item sidebar-menu-troubleshooting
 ---
 
 # Troubleshooting

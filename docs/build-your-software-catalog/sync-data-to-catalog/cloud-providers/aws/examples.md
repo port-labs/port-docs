@@ -4810,3 +4810,214 @@ In this step-by-step example, you will export your EC2 `Auto scaling groups` to 
     </details>
 
 Done! soon, you will be able to see any `Auto scaling groups`
+
+
+## Connect Cloud Resources to Services.
+
+
+This guide demonstrates how to connect a Cloud Resource to a service or list of services by relying on the tags property and using JQ mapping. We will be using an S3 bucket as the Cloud Resource.
+
+:::tip Prerequisite
+This guide assumes that you have ingested S3 buckets into Port using the `terraform` option of the [AWS exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/Installation#terraform-installation-recommended).
+:::
+
+### Ingest Services from GitHub.
+
+Follow this [guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/installation) to ingest your GitHub repositories into Port. Port will create a `service` blueprint that you will be using subsequently.
+
+
+<details>
+<summary>Service Blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "service",
+  "title": "Service",
+  "icon": "Github",
+  "schema": {
+    "properties": {
+      "readme": {
+        "title": "README",
+        "type": "string",
+        "format": "markdown",
+        "icon": "Book"
+      },
+      "url": {
+        "title": "URL",
+        "format": "url",
+        "type": "string",
+        "icon": "Link"
+      },
+      "language": {
+        "type": "string",
+        "title": "Language",
+        "icon": "Git"
+      },
+      "slack": {
+        "icon": "Slack",
+        "type": "string",
+        "title": "Slack",
+        "format": "url"
+      },
+      "tier": {
+        "title": "Tier",
+        "type": "string",
+        "description": "How mission-critical the service is",
+        "enum": [
+          "Mission Critical",
+          "Customer Facing",
+          "Internal Service",
+          "Other"
+        ],
+        "enumColors": {
+          "Mission Critical": "turquoise",
+          "Customer Facing": "green",
+          "Internal Service": "darkGray",
+          "Other": "yellow"
+        },
+        "icon": "DefaultProperty"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
+}
+```
+</details>
+
+Your [data model](https://app.getport.io/dev-portal/data-model) should now contain the `Service` blueprint:
+
+<img src='/img/guides/connectCloudServiceBlueprints.png' width="45%" />
+
+
+### Create the relation
+
+Now that Port is synced with your `s3_bucket` and `service` blueprints, let's map the two together.
+
+1. Add a tag to the bucket with the key `service` and a value representing the identifier of the service. For instance, if your service has an indentifier of `webapp`, create a tag on the bucket with `{ "service": "webapp" }`. 
+
+Refer to this [AWS guide](https://docs.aws.amazon.com/AmazonS3/latest/userguide/tagging-managing.html) for more details on tagging resources in S3.
+
+
+<img src='/img/guides/connectCloudServiceTagging.png' width="75%" />
+
+<br />
+<br />
+
+2. In the [Port AWS exporter repository](https://github.com/port-labs/template-assets) you cloned during the [ingestion step](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/Installation/#terraform-installation-recommended), go to the `template-assets/aws/s3_bucket` folder. We are going to add a relation from our S3 bucket configuration to the `Service` blueprint by editing two files:
+   - `blueprint.tf`: We will define the relation to `service` in the S3 bucket blueprint.
+   - `config.json`: We then write the mapping logic to define how a service is linked to a bucket based on tags.
+
+<br />
+
+<details>
+
+<summary>S3 Bucket Blueprint</summary>
+
+```hcl showLineNumbers title="blueprint.tf"
+terraform {
+  required_providers {
+    port-labs = {
+      source  = "port-labs/port-labs"
+      version = "0.10.4"
+    }
+  }
+}
+
+resource "port-labs_blueprint" "s3_bucket" {
+  title      = "S3 Bucket"
+  icon       = "Bucket"
+  identifier = "s3_bucket"
+
+  // ... other properties
+
+  properties {
+    identifier = "tags"
+    type       = "array"
+    title      = "Tags"
+  }
+
+// highlight-start
+  relations {
+    target     = "service"
+    title      = "Consuming Service"
+    identifier = "consumingService"
+    many       = false
+    required   = false
+  }
+// highlight-end
+}
+```
+
+</details>
+
+<details>
+
+<summary>Mapping Logic</summary>
+
+```json showLineNumbers title="config.json"
+{
+  "kind": "AWS::S3::Bucket",
+  "port": {
+    "entity": {
+      "mappings": [
+        {
+          "identifier": ".BucketName",
+          "title": ".BucketName",
+          "blueprint": "s3_bucket",
+          "properties": {
+            "link": "\"https://console.aws.amazon.com/go/view?arn=\" + .Arn",
+            "regionalDomainName": ".RegionalDomainName",
+            "versioningStatus": ".VersioningConfiguration.Status",
+            "encryption": ".BucketEncryption.ServerSideEncryptionConfiguration",
+            "lifecycleRules": ".LifecycleConfiguration.Rules",
+            "publicAccess": ".PublicAccessBlockConfiguration",
+            "tags": ".Tags",
+            "arn": ".Arn"
+          },
+          // highlight-start
+          "relations": {
+            "consumingService": ".Tags[] | select(.Key == \"service\") | .Value"
+          }
+          // highlight-end
+        }
+      ]
+    }
+  }
+}
+```
+
+</details>
+
+<br />
+
+3. Run terraform again to apply the changes
+
+
+```hcl
+# Run the aws exporter again.
+
+terraform apply -var 'resources=["s3_bucket"]' 
+```
+
+
+### View the relation
+
+You can view the relation in your [data model](https://app.getport.io/dev-portal/data-model)
+
+<img src='/img/guides/connectCloudServiceRelation.png' width="75%" />
+
+<br /> 
+<br />
+
+Now go to your [catalog](https://app.getport.io/s3_buckets), and click on the S3 bucket you used in this guide. You will see it connected to the service.
+
+<img src='/img/guides/connectCloudServiceFinal.png' width="100%" />
+
+<br /> 
+<br />
+
+Done! 🎉 You can replicate this for all your other resources.

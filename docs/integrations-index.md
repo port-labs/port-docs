@@ -1,11 +1,12 @@
 ---
 title: Integrations index
-sidebar_label: ⚙️ Integrations index
+sidebar_label: Integrations index
 sidebar_position: 11
 slug: /integrations-index/
+sidebar_class_name: custom-sidebar-item sidebar-menu-integrations-index
 ---
 
-# ⚙️ Integrations index
+# Integrations index
 
 This page contains a list of Port's available integrations, organized by the platform/product.
 
@@ -18,13 +19,13 @@ This page contains a list of Port's available integrations, organized by the pla
 - [GitHub GitOps](/build-your-software-catalog/sync-data-to-catalog/git/github/gitops/gitops.md)
 - [GitHub action for GitHub workflow](/build-your-software-catalog/custom-integration/api/ci-cd/github-workflow/github-workflow.md)
 - [GitHub workflow self-service actions](/create-self-service-experiences/setup-backend/github-workflow/github-workflow.md)
-- [Sync repositories, file contents, pull-requests, workflows, teams and more](/build-your-software-catalog/sync-data-to-catalog/git/github/examples.md)
-- [Sync Dependabot](/build-your-software-catalog/sync-data-to-catalog/git/github/examples.md#mapping-repositories-and-dependabot-alerts)
+- [Sync repositories, file contents, pull-requests, workflows, teams and more](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples.md)
+- [Sync Dependabot](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples.md#mapping-repositories-and-dependabot-alerts)
 - [GitHub scaffolder using GitHub workflows](/create-self-service-experiences/setup-backend/github-workflow/examples/scaffold-repositories-using-cookiecutter.md)
 - [GitHub scaffolder using Jenkins pipelines](/create-self-service-experiences/setup-backend/jenkins-pipeline/examples/scaffold-github-using-cookiecutter.md)
 - [GitHub scaffolder using FastAPI backend](/create-self-service-experiences/setup-backend/webhook/examples/software-templates.md)
-- [Deploy AWS resources using AWS CloudFormation](/create-self-service-experiences/setup-backend/github-workflow/examples/deploy-cloudformation-template.md)
-- [Deploy Azure resources using Terraform](/create-self-service-experiences/setup-backend/github-workflow/examples/create-azure-resource.md)
+- [Deploy AWS resources using AWS CloudFormation](/create-self-service-experiences/setup-backend/github-workflow/examples/AWS/deploy-cloudformation-template.md)
+- [Deploy Azure resources using Terraform](/create-self-service-experiences/setup-backend/github-workflow/examples/Azure/create-azure-resource.md)
 - [Create GitHub secret using GitHub workflows](/create-self-service-experiences/setup-backend/github-workflow/examples/create-github-secret.md)
 - [Script to ingest GitHub packages](https://github.com/port-labs/example-github-packages)
 
@@ -70,8 +71,8 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## ArgoCD
 
-- [ArgoCD exporter and webhook integration](/build-your-software-catalog/sync-data-to-catalog/kubernetes/argocd.md)
-- [ArgoCD events](/build-your-software-catalog/sync-data-to-catalog/kubernetes/argocd.md#argocd-events)
+- [ArgoCD exporter and webhook integration](/build-your-software-catalog/sync-data-to-catalog/kubernetes/argocd/)
+- [ArgoCD events](/build-your-software-catalog/sync-data-to-catalog/kubernetes/argocd/argocd.md#argocd-events)
 
 ## Infrastructure as Code (IaC)
 
@@ -102,7 +103,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [AWS exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws.md)
 - [Map ECS, EC2, RDS, API GW, Cloudfront and more](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples.md)
 - [AWS Cost](/build-your-software-catalog/sync-data-to-catalog/cloud-cost/aws-cost.md)
-- [Deploy AWS resources using AWS CloudFormation](/create-self-service-experiences/setup-backend/github-workflow/examples/deploy-cloudformation-template.md)
+- [Deploy AWS resources using AWS CloudFormation](/create-self-service-experiences/setup-backend/github-workflow/examples/AWS/deploy-cloudformation-template.md)
 - [AWS exporter Terraform module](/build-your-software-catalog/sync-data-to-catalog/iac/terraform/modules/aws-exporter-module.md)
 - [Terraform manage S3 buckets lifecycle](/build-your-software-catalog/sync-data-to-catalog/iac/terraform/examples/s3-bucket.md)
 - [Terraform manage developer environment](/build-your-software-catalog/sync-data-to-catalog/iac/terraform/examples/create-dev-env.md)
@@ -135,7 +136,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Slack
 
-- [Manual approval for self-service actions](/create-self-service-experiences/set-self-service-actions-rbac/examples.md#setting-up-a-slack-notification)
+- [Manual approval for self-service actions](/create-self-service-experiences/set-self-service-actions-rbac/#slack)
 - [Scorecard notifications](/promote-scorecards/manage-using-3rd-party-apps/slack)
 - [Setup a changelog listener notification](/create-self-service-experiences/setup-backend/webhook/examples/changelog-listener.md)
 

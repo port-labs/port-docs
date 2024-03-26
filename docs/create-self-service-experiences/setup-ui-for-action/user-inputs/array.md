@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 description: Array is an input for lists of data
+sidebar_class_name: "custom-sidebar-item sidebar-property-array"
 ---
 
 import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"
