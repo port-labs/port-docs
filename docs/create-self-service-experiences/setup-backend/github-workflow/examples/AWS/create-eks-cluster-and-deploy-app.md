@@ -276,9 +276,6 @@ jobs:
 </details>
 
 4. Create the following Terraform configuration in a `terraform` folder at the root of your GitHub repository:
-    :::tip
-    Fork our [example repository](https://github.com/port-labs/pipelines-terraform-azure) to get started.
-    :::
 
     1. `main.tf` - This file will contain the resource blocks which define the EKS Cluster to be created in AWS and the entity to be created in Port.
     2. `variables.tf` – This file will contain the variable declarations that will be used in the resource blocks e.g. the Port credentials and Port run id.
