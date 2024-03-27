@@ -127,7 +127,6 @@ Follow these steps to get started:
 
 
 ```json showLineNumbers
-[
 {
   "identifier": "dora_metrics",
   "title": "Dora Metrics",
@@ -180,7 +179,6 @@ Follow these steps to get started:
   "description": "Estimate dora metrics for a service",
   "requiredApproval": false
 }
-]
 ```
 
 </details>
@@ -201,15 +199,15 @@ on:
         description: 'Comma-separated list of repositories to analyze (eg. https://github.com/port-labs/self-service-actions)'
         required: true
       timeframe:
-        description: 'Last X weeks'
+        description: 'Time frame within which metrics should be computed. e.g. 4 for Last 4 weeks'
         required: true
       workflow:
-        description: The name of the workflows to process. Multiple workflows can be separated by a comma (,).
+        description: 'The name of the workflows to process. Multiple workflows can be separated by a comma (,).'
         required: true
       port_payload:
         required: true
-        description: Port's payload, including details for who triggered the action and
-          general context (blueprint, run id, etc...)
+        description: 'Port's payload, including details for who triggered the action and
+          general context (blueprint, run id, etc...)'
         type: string
       
 jobs:
