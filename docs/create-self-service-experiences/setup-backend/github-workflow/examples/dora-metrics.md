@@ -894,4 +894,4 @@ if __name__ == "__main__":
 ```
 </details>
 
-6. Trigger the actions from the [self-service](https://app.getport.io/self-serve) page of your Port application.
+6. Trigger the action from the [self-service](https://app.getport.io/self-serve) page of your Port application.
