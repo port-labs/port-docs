@@ -237,7 +237,7 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Report Failure In Settting Up Dependencies
+      - name: Notify intent to install dependencies
         if: failure()
         uses: port-labs/port-github-action@v1
         with:
@@ -253,7 +253,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r dora/requirements.txt
 
-      - name: Report Failure In Computing PR Metrics
+      - name: Report Failure In Settting Up Dependencies
         if: failure()
         uses: port-labs/port-github-action@v1
         with:
@@ -480,7 +480,7 @@ class RepositoryMetrics:
         self.start_date = datetime.utcnow().replace(tzinfo=timezone.utc) - timedelta(
             days=self.time_frame
         )
-        self.repo = self.github_client.get_repo(f"{self.repo_name}")
+        self.repo = self.github_client.get_repo(self.repo_name)
 
     def calculate_pr_metrics(self):
         prs = self.repo.get_pulls(state="all", sort="created", direction="desc")
@@ -632,7 +632,7 @@ if __name__ == "__main__":
 ```python showLineNumbers title="deploymentfrequency.py"
 from github import Github
 import datetime
-import pytz  # Make sure to install pytz if you haven't: pip install pytz
+import pytz
 import os
 import json
 
