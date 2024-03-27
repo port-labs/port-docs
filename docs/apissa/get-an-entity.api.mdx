@@ -1,13 +1,13 @@
 ---
-id: create-entities
-title: "Create entities"
-description: "Create entities"
-sidebar_label: "Create entities"
+id: get-an-entity
+title: "Get an entity"
+description: "Get an entity"
+sidebar_label: "Get an entity"
 hide_title: true
 hide_table_of_contents: true
-api: eJy1Vt9zEjEQ/leYjA86Fg58k1HHWuuM+iDT1hcpMuFugbS5S0xyWMrc/+5u7geBoyPTajsDJNlsdr/99ks2zPGFZcMxO8+ccAIsm5wwA79ysO6DStZsuGGxyhxkjn5yraWIuRMqi26symjOxktIOf1yaw1syNTsBmLHTpg2SoPxXnFVJOhEzAWYwNY6I7IF2XLnwKBD9nN82v3Bu/f97uv3097wGv+it93Jy2esOGEYpIT2flwRcRlOa8EBT2lBZfBtjqm2TZoZbgxfs2JS7Me+n1kCc55LgqQoCC/pITloypNE0CKXox2XPFsfDOdYKPaCRgAcpPbR0AYOs1xKAoFSOxy9MzngItzxVJflCIvL5sJYN3UivgVCoKoZ+0TTV/VsWS/2RRjO6iKNJ/vAN9xj6bpTD/YgLwofquaGp4CZWo9qi5YzpSTwLKzenEtLiQiKBDlvCMcMveAw1xbDYGU3CANJnfbTXa+4FIkPf6oyud45o9r39ENiA9zBNBXWIg2mHjBIplD3+X85NAWzgCNdB617wJPJs6lIHucKCb/ceprJHDSuu2lA0lZZkXkW4twIt/b0mQE3RObxpPCKaDWSreTkq36fvhKwsRGayoinfCzh6VxUltRReyZnviKdoAJI16VKKGJlXdmpSxxFq0HURG2jzaEMiijwg0xd1bzPjUQXS+e0HUYR16Jn3aLbH/QW4LQyricUC7O9JDDLxOqct9KixVcIinKaY7xG3HvusgrtJfAEd1G+dCVcbC+P8wf0oVGmWhmaiUoUtgZeFgIpC8WhJQMU0Fz5+CvHI0y4czr6jFsJoLIOg16fqEKYp9zfGVV67QLtFLCBxcGdi7TkmD768YBvqtqN2WqA+7bVw8HwAQZCcOUuiQC4e7OZcQvfjSwKmi6bgsqaCMtnsmmDVmhboXx+UTH7RYcQPBTyLRY1UDjUo5yM/K3SOqg0bmvWMbv+LkLHeKlV5RjbRje2xhMaGEHW/x7KulOyHUjqaA5W3r8vqq6heErTs/LU7hU53LpqvbgonUY3Rt8ur4hu1UstVYnXTv6bBA4/h+wa/3GgdPNA8fMbJnm2yPmC7Eu//rrPicRh/9/6/q9+BK+V3YT3haFMiT7Dh8rOljfYlh1Ul3csoBiuPLihQqy2JvjpjfIHAperWg==
-sidebar_class_name: "post api-method"
-info_path: api-reference/port-api
+api: eJy1VE1r20AQ/StiTy2YyO5RlEKgIZReQtqeghFraWwtWWs3syMTV+i/d1bftuVULeRiS9qZNzNv3ttSkNw5ET2Ju5wUKXBivRBWotwDAfqTUrgkg70UUSnoaEFEYmOMBpmLhUhhKwtNItpK7aBaCJXz+UsBeOTTnFH4FV4TXaQQJ1InhZYEaWzRWMC63kIgvBQKIe1RJkpKROkhFcHejb47QpXvRHWltMrr0u9bpJ1vZpGOvCtgidlbmdA/gs3chCSSSRbzpjXEZGIEXocy+cxqHQ8tuJWUjVjwAjrGKvUPWwV4AkpY/AfmRhdg+ZzehGXFOkgK5PK1XjcgkeNY1AgyjaBXto9EcNbkDur9flou/V8KLkFlayYi8bVhMnhsI+u9n4bcAwUyD5qRuSE2S2a4HbEDv7l6iEiEh1XYT+DCcmqaKuzaC8sLBivhJ8NDZ8QCNcNmRNZFYSituuF61iDdKCPGNPzwLDcjdmQMIrfqO4w0cVtw76h+d0Ko15AxcZzVKH5r6nQvGj564HrB7cM3DvWNNYSsbpZ+hdY42rMcObxFP2fqhMe+J4JXCq2WqrZFPWbZsvgkDivOG3jkl+iKLvpNc8ilHJmfjPvzkGW5kQ5+oa4q/7lxiWc4VU5udO+ChXhmqv5+gx0kN8Rxwkv8CsZwFc2JHu6UOdHDpTEn+o1bYEhf+xdUPn+ambNNJiYnpppzPzy29vwYMOLkhjsp5sdxzX72i9VNDvN+DUzKq1pXI6Pf3/3kcFl4iY6t9Vxbq33wvE1WOvdcU9b/+kknUz6z5QI27pc+vDm5mtBaeJCfn6Cq/gCnTriB
+sidebar_class_name: "get api-method"
+info_path: apissa/port-api
 custom_edit_url: null
 ---
 
@@ -27,19 +27,19 @@ import TabItem from "@theme/TabItem";
 <h1
   className={"openapi__heading"}
 >
-  Create entities
+  Get an entity
 </h1>
 
 <MethodEndpoint
-  method={"post"}
-  path={"/v1/blueprints/{blueprint_identifier}/entities"}
+  method={"get"}
+  path={"/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}"}
 >
   
 </MethodEndpoint>
 
 
 
-Create entities
+Get an entity
 
 ## Request
 
@@ -60,6 +60,11 @@ Create entities
   </summary><div>
     <ul>
       <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"entity_identifier","required":true}}
+      >
+        
+      </ParamsItem><ParamsItem
         className={"paramsItem"}
         param={{"schema":{"type":"string"},"in":"path","name":"blueprint_identifier","required":true}}
       >
@@ -85,27 +90,27 @@ Create entities
     <ul>
       <ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"boolean","default":false},"in":"query","name":"upsert","required":true}}
+        param={{"schema":{"type":"boolean","default":false},"in":"query","name":"exclude_calculated_properties","required":false}}
       >
         
       </ParamsItem><ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"boolean","default":false},"in":"query","name":"validation_only","required":false}}
+        param={{"schema":{"type":"array","items":{"type":"string"}},"in":"query","name":"include","required":false}}
       >
         
       </ParamsItem><ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"boolean","default":false},"in":"query","name":"create_missing_related_entities","required":false}}
+        param={{"schema":{"type":"array","items":{"type":"string"}},"in":"query","name":"exclude","required":false}}
       >
         
       </ParamsItem><ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"boolean","default":false},"in":"query","name":"merge","required":false}}
+        param={{"schema":{"type":"boolean"},"in":"query","name":"compact","required":false}}
       >
         
       </ParamsItem><ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"string"},"in":"query","name":"run_id","required":false}}
+        param={{"schema":{"type":"boolean","default":false},"in":"query","name":"attach_title_to_relation","required":false}}
       >
         
       </ParamsItem>

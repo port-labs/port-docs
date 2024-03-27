@@ -1,0 +1,415 @@
+---
+id: create-entity
+title: "Create entity"
+description: "This route allows you to create an entity in your software catalog based on an existing blueprint in your data model. It can also be used to overwrite or update an existing entity.<br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities)."
+sidebar_label: "Create entity"
+hide_title: true
+hide_table_of_contents: true
+api: eJztWG1v2zYQ/isEuw8NFlnpsC81umJZ0Q/F0DVosg+b6zm0dLbZUKJGUnFUw/99d6Te/Jq0TYFhWAIkFnU8Pffc8e6xVjwFmxhZOKlzPuRXC2mZ0aUDJpTSS8sqXTKnWWJA0GLOIHfSVUzmdMswq2duKQywRDih9JxNhYWU6dzb3knrZI6LqoTCyNy1+1I0Z5lOQQ3YG4e7cYOymk2BleQAn6lvwSyNxMdqw8oibQA0TgOSwYupiV9eaaZAmBxdIhYxxRDCfQn2lCULSG4YrbkFsFGqkzLDu4KiHj9dOFfYYRzjsh3MwRXauIHU8bSUKo0IbdREGdVRxrbKk4hiiJxuF580TzwZ8FPuxNzy4Yi/rhf5+JQb+LsE637RacWHK57o3OEe+iiKQsnEI4o/WkrGilvEnQn65KoCMD16+hESh74Lowsw3ivelSk9eCbB9GytQ77nZCucA0PZ/Wt0Hv0pok9n0fOfJ4PhB/yJf4rG33+HVtt1AKzzyvTME5fDcoN0vsYopVOw77G7Dr3pMV8yCXHf74osj6ICkZEnncO7GSbhXp9oz3KRAW5ubYUxouLr8T4AF1gjjJ5ChbpcyGSxhYUtpVJYzUrn8w7XZt62s5rCTJSKymG975nd5mOhG1C+ivY+QaSppJtCXWwgEXl1gKeHVM8OZ5hKB5n90mpc9xzmpVKYg72E+FCxVwQK4qPErA8F70wJeBPuRFaESu4fJ46eokwmRlswtzIB3pY8f1v9Bsu3m/dCCfOt1VCOo/F2AbTnn2cVay62crimH+LNYHkiddanaac1TLXGBpj3q2iGDZVCk4QI+46hxPgiH/KyQHRUEdSRpIE0ELHN8psZu6b161OkFUdDglMhVDY1Z4NMebqJLwPtaJgx6bCb48hIq9CubVufXw89AzOHDeTe+iB0nBkpu/a7rhnG4MfMgajqKdPE9O2DuRVKpj7XE52r6jPC2s0I7me1v40QKH4DrsTpSKvdIxmmUJvHDCfIhEkmrcXjPqkP6KSZi18TXq1AatebZx9dHwuibj4HMJsyn8j0fmh/oBIimYJH+JYKX7DrsPWaZoCwVieyYT6ATbtZ4BZobwtIsK8kbCQSzz/uPyw/go/IgppFdSuJ4A67h4Q8ARsbmCns6lHwFSGsuQFr4yeuwmijhhgSKCJvrPCJJ59BFXbrRcdUq+ImvRZ5XwvZLyU6QUgCcynwwz6VOTM6a+Bi97SQlCgIK98Cp6j3qEWPxmuvrGyBDTP01R/OzujfJpDLMkHaqAbvkV3/9lHw477oXtNR9mMOp8RCp5Q8bV2YuAu8im+fxS3rNl7tS+Y67p1UwtyMm9IodNFUqihkr1A3MnNJBRUiavLTaYNC/gq9g3deIlAjP/n4eF1xC+yzEAKhfLzvBPPrA2lppUWTjHahzkBn4LnvaZF+Bna4JkAz7fHXjr3oO794g1uJmUD8s8GZV3ZIdiZ8/dThvQrFHCp5W3H2E/7/l65H/NIVSs3BnYsLJbCkMDe+elf1QRjx22do2B0FvBge6GzQ++q2oNOEu1crIvt3o9ZrWg7DhM5IKq2YqkPjo5/wp+/rjnnCHltgHWDgBs9dT/ShBCjJyM+Ah+P+9pLqKPxG+H0t+kdXTkdR7yq8R8f/MGl0FOX9wu0LUf/XVNNRFlsp2ZE1pgsjia0v7xKPpaEOgG/mc75RnU1Qe3uj/0Zez2oKK5i+CuCjK3LYudoRWVRCYcc5arLCHbUd9yTNxbvLK2re9fszGmVEu1iSDMW/Q/4Bf/FCF+07EL++4krk81LMyT749a8EShoJfYVy4xVK/aH3QmSTnG3pEoKhv/13IRtbXqBwYKh/XvJeZyjh8Iaa3caaUjVG0P8AB2aYAQ==
+sidebar_class_name: "post api-method"
+info_path: apissa/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<h1
+  className={"openapi__heading"}
+>
+  Create entity
+</h1>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/v1/blueprints/{blueprint_identifier}/entities"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to create an entity in your software catalog based on an existing blueprint in your data model. It can also be used to overwrite or update an existing entity.<br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).
+
+## Request
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"blueprint_identifier","required":true,"description":"The identifier of the blueprint you want to create an entity from.<br/>"}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Query Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"boolean","default":false},"in":"query","name":"upsert","required":true,"description":"If `true`, this call will override the entire entity if it already exists.<br/>"}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"boolean","default":false},"in":"query","name":"merge","required":false,"description":"If `true` and `merge` is also `true`, this call will update the entity if it already exists.<br/>"}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"boolean","default":false},"in":"query","name":"validation_only","required":false,"description":"If `true`, this call will only validate the entity and return the validation errors.<br/>"}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"boolean","default":false},"in":"query","name":"create_missing_related_entities","required":false,"description":"If `true`, this call will create missing related entities.<br/>"}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"query","name":"run_id","required":false,"description":"You can provide a `run_id` to associate the created entity with a specific [action run](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/#tying-entities-to-an-action-run).<br/>"}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><MimeTabs
+  className={"openapi-tabs__mime"}
+>
+  <TabItem
+    label={"application/json"}
+    value={"application/json-schema"}
+  >
+    <details
+      style={{}}
+      className={"openapi-markdown__details mime"}
+      data-collapsed={false}
+      open={true}
+    >
+      <summary
+        style={{}}
+        className={"openapi-markdown__details-summary-mime"}
+      >
+        <h3
+          className={"openapi-markdown__details-summary-header-body"}
+        >
+          Body
+        </h3>
+      </summary><div
+        style={{"textAlign":"left","marginLeft":"1rem"}}
+      >
+        
+      </div><ul
+        style={{"marginLeft":"1rem"}}
+      >
+        <SchemaItem
+          collapsible={false}
+          name={"identifier"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={"**Possible values:** Value must match regular expression `^[A-Za-z0-9@_.:\\\\/=-]+$`"}
+          schema={{"type":"string","pattern":"^[A-Za-z0-9@_.:\\\\/=-]+$","description":"The identifier of the new entity.<br/>"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"title"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string","description":"The title of the new entity.<br/>"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"icon"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string","description":"The icon of the new entity.<br/>"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={true}
+          className={"schemaItem"}
+        >
+          <details
+            style={{}}
+            className={"openapi-markdown__details"}
+          >
+            <summary
+              style={{}}
+            >
+              <strong>
+                team
+              </strong><span
+                style={{"opacity":"0.6"}}
+              >
+                 object
+              </span>
+            </summary><div
+              style={{"marginLeft":"1rem"}}
+            >
+              <div
+                style={{"marginTop":".5rem","marginBottom":".5rem"}}
+              >
+                
+                
+                The Port team to which the new entity will belong.<br/>
+                
+                
+              </div>
+            </div><div>
+              <span
+                className={"badge badge--info"}
+              >
+                oneOf
+              </span><SchemaTabs>
+                <TabItem
+                  label={"MOD1"}
+                  value={"0-item-properties"}
+                >
+                  <div
+                    style={{"marginTop":".5rem","marginBottom":".5rem","marginLeft":"1rem"}}
+                  >
+                    
+                    
+                    string
+                    
+                    
+                  </div>
+                </TabItem><TabItem
+                  label={"MOD2"}
+                  value={"1-item-properties"}
+                >
+                  <li>
+                    <div
+                      style={{"fontSize":"var(--ifm-code-font-size)","opacity":"0.6","marginLeft":"-.5rem","paddingBottom":".5rem"}}
+                    >
+                      Array [
+                    </div>
+                  </li><div
+                    style={{"marginTop":".5rem","marginBottom":".5rem","marginLeft":"1rem"}}
+                  >
+                    
+                    
+                    string
+                    
+                    
+                  </div><li>
+                    <div
+                      style={{"fontSize":"var(--ifm-code-font-size)","opacity":"0.6","marginLeft":"-.5rem"}}
+                    >
+                      ]
+                    </div>
+                  </li>
+                </TabItem>
+              </SchemaTabs>
+            </div>
+          </details>
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"properties"}
+          required={false}
+          schemaName={"object"}
+          qualifierMessage={undefined}
+          schema={{"type":"object","default":{},"description":"The properties of the new entity.<br/>"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={true}
+          className={"schemaItem"}
+        >
+          <details
+            style={{}}
+            className={"openapi-markdown__details"}
+          >
+            <summary
+              style={{}}
+            >
+              <span
+                className={"openapi-schema__container"}
+              >
+                <strong
+                  className={"openapi-schema__property"}
+                >
+                  relations
+                </strong><span
+                  className={"openapi-schema__name"}
+                >
+                   object
+                </span>
+              </span>
+            </summary><div
+              style={{"marginLeft":"1rem"}}
+            >
+              <div
+                style={{"marginTop":".5rem","marginBottom":".5rem"}}
+              >
+                
+                
+                The related entity/ies of the new entity.<br/>
+                
+                
+              </div><SchemaItem
+                collapsible={false}
+                name={"anyOf"}
+                required={false}
+                schemaName={""}
+                qualifierMessage={undefined}
+                schema={[{"type":"string","pattern":"^[A-Za-z0-9@_.:\\\\/=-]+$"},{"type":"array","items":{"type":"string","pattern":"^[A-Za-z0-9@_.:\\\\/=-]+$"}},{"type":"null"}]}
+              >
+                
+              </SchemaItem>
+            </div>
+          </details>
+        </SchemaItem><SchemaItem
+          name={"property name*"}
+          required={false}
+          schemaName={"any"}
+          qualifierMessage={undefined}
+          schema={{"type":"object","properties":{"identifier":{"type":"string","pattern":"^[A-Za-z0-9@_.:\\\\/=-]+$","description":"The identifier of the new entity.<br/>"},"title":{"type":"string","description":"The title of the new entity.<br/>"},"icon":{"type":"string","description":"The icon of the new entity.<br/>"},"team":{"oneOf":[{"type":"string","description":"Team name"},{"type":"array"}],"description":"The Port team to which the new entity will belong.<br/>"},"properties":{"type":"object","default":{},"description":"The properties of the new entity.<br/>"},"relations":{"type":"object","additionalProperties":{"anyOf":[{"type":"string","pattern":"^[A-Za-z0-9@_.:\\\\/=-]+$"},{"type":"array","items":{"type":"string","pattern":"^[A-Za-z0-9@_.:\\\\/=-]+$"}},{"type":"null"}]},"description":"The related entity/ies of the new entity.<br/>"}},"additionalProperties":true}}
+          collapsible={false}
+          discriminator={false}
+        >
+          
+        </SchemaItem>
+      </ul>
+    </details>
+  </TabItem>
+</MimeTabs><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Success
+          
+          
+        </div><div>
+          <MimeTabs
+            className={"openapi-tabs__mime"}
+            schemaType={"response"}
+          >
+            <TabItem
+              label={"application/json"}
+              value={"application/json"}
+            >
+              <SchemaTabs
+                className={"openapi-tabs__schema"}
+              >
+                <TabItem
+                  label={"Schema"}
+                  value={"Schema"}
+                >
+                  <details
+                    style={{}}
+                    className={"openapi-markdown__details response"}
+                    data-collapsed={false}
+                    open={true}
+                  >
+                    <summary
+                      style={{}}
+                      className={"openapi-markdown__details-summary-response"}
+                    >
+                      <strong>
+                        Schema
+                      </strong>
+                    </summary><div
+                      style={{"textAlign":"left","marginLeft":"1rem"}}
+                    >
+                      
+                    </div><ul
+                      style={{"marginLeft":"1rem"}}
+                    >
+                      any
+                    </ul>
+                  </details>
+                </TabItem><TabItem
+                  label={"Example (from schema)"}
+                  value={"Example (from schema)"}
+                >
+                  <ResponseSamples
+                    responseExample={"{\n  \"identifier\": \"new-microservice\",\n  \"title\": \"MyNewMicroservice\",\n  \"icon\": \"Microservice\",\n  \"team\": [],\n  \"properties\": {\n    \"content\": \"my content\"\n  },\n  \"relations\": {}\n}"}
+                    language={"json"}
+                  >
+                    
+                  </ResponseSamples>
+                </TabItem><TabItem
+                  label={"Example"}
+                  value={"Example"}
+                >
+                  <ResponseSamples
+                    responseExample={"{\n  \"identifier\": \"new-microservice\",\n  \"title\": \"MyNewMicroservice\",\n  \"icon\": \"Microservice\",\n  \"team\": [],\n  \"properties\": {\n    \"content\": \"my content\"\n  },\n  \"relations\": {}\n}"}
+                    language={"json"}
+                  >
+                    
+                  </ResponseSamples>
+                </TabItem>
+              </SchemaTabs>
+            </TabItem>
+          </MimeTabs>
+        </div>
+      </TabItem><TabItem
+        label={"400"}
+        value={"400"}
+      >
+        <div>
+          
+          
+          Error
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

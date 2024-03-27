@@ -323,8 +323,8 @@ const config = {
         docsPluginId: "classic", // id of plugin-content-docs or preset for rendering docs
         config: {
           port: { // the <id> referenced when running CLI commands
-            specPath: './static/spec.yaml', // path to OpenAPI spec, URLs supported
-            outputDir: "docs/api-reference", // output directory for generated files
+            specPath: './static/spectmp.yaml', // path to OpenAPI spec, URLs supported
+            outputDir: "docs/apissa", // output directory for generated files
             sidebarOptions: {
               groupPathsBy: "tag",
               categoryLinkSource: "tag",

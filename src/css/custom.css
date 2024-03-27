@@ -45,13 +45,13 @@ h6 {
   font-family: "DM Sans";
 }
 
-h2::first-letter,
+/* h2::first-letter,
 h3::first-letter,
 h4::first-letter,
 h5::first-letter,
 h6::first-letter {
   text-transform: uppercase;
-}
+} */
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme="dark"] {
@@ -403,4 +403,46 @@ html[data-theme="dark"] details details  {
 
 .header-home-link:hover:not(.header-home-link--active) {
   opacity: 0.8;
+}
+
+.openapi-params__list-item {
+  background-color: rgba(247,249,250,1);
+  padding: 1rem;
+  @layer {
+  margin: 0 0 1rem 0 !important;
+  border-radius: 8px;
+  }/* border: thin solid var(--openapi-tree-line-color) !important; */
+}
+
+.openapi-params__list-item::before {
+  display: none !important;
+}
+
+.openapi-schema__list-item {
+  background-color: rgba(247,249,250,1);
+  padding: 1rem !important;
+  @layer {
+  margin: 0 0 1rem 0 !important;
+  border-radius: 8px;
+  }
+}
+
+.openapi-schema__list-item::before {
+  display: none !important;
+}
+
+.openapi-schema__property {
+  font-family: "DM Sans" !important;
+}
+
+.openapi-schema__required {
+  margin-right: 2%;
+}
+
+.openapi-schema__divider {
+  display: none;
+}
+
+.openapi-markdown__details ul {
+  margin-left: 0 !important;
 }

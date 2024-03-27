@@ -14,10 +14,9 @@ import TabItem from "@theme/TabItem";
 import Export from "@theme/ApiExplorer/Export";
 
 <Export
-  url={"https://api.connxio.com/definition/v2/openapi.yaml?omit-api-prefix=true"}
+  url={"https://api.getport.io/json"}
   proxy={undefined}
 >
-  
 </Export>
 
 <h1
@@ -52,4 +51,14 @@ import Export from "@theme/ApiExplorer/Export";
         
         <img src="/img/openapi/getBearerToken.png" width="70%" border="1px" />
 
-    3. Paste the token into the `bearer` field in the request block of your desired route.
+    ## Using the API from the browser
+
+    Each route in the API documentation has a `Request` panel on the right side. 
+
+    1. In the `bearer` field, paste the API token you obtained from your Port application.
+    2. Under `Parameters`, fill in your desired values.
+    3. Under `Body`, you can edit the request body freely and change the parameter values as you wish.
+
+    Once you're ready, click the `Send API Request` button to execute the request, the response will be displayed below.  
+    
+    Alternatively, you can use the panel in the top right to copy a snippet in your desired language to use in your application. Note that these snippets will be updated with the values you filled in the `Request` panel.
