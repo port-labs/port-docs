@@ -1,6 +1,6 @@
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
-# Open Slack Channel for Incident Management
+# Create Slack channel for Incident Management
 
 ## Overview
 
