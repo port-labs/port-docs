@@ -169,8 +169,8 @@ Follow these steps to get started:
   },
   "invocationMethod": {
     "type": "GITHUB",
-    "org": "mk-armah",
-    "repo": "jira-actions",
+    "org": "<GITHUB-ORG>",
+    "repo": "<GITHUB-REPO-NAME>",
     "workflow": "dora-metrics.yaml",
     "omitUserInputs": false,
     "omitPayload": false,
