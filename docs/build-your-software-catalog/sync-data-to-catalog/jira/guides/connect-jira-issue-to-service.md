@@ -7,7 +7,7 @@ This guide aims to cover how to connect a Jira `issue` to an existing service in
 :::tip Prerequisites
 
 - This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
-- Ensure you have [Jira installed and configured](../jira.md#installation) in your environment.
+- Ensure you have [Jira installed and configured](/build-your-software-catalog/sync-data-to-catalog/jira/jira.md#installation) in your environment.
 
 :::
 
