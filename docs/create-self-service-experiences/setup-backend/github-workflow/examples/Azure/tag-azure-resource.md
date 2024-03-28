@@ -177,12 +177,19 @@ jobs:
     defaults:
       run:
         shell: bash
-        # We keep Terraform files in the terraform directory.
         working-directory: ./terraform
-        # working-directory: ./
-
 
     steps:
+      - name: Inform starting of action
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          operation: PATCH_RUN
+          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          logMessage: |
+            Starting a GitHub workflow to tag the Azure resource: ${{fromJson(inputs.port_payload).context.entity}} ... ⛴️
+
       - name: Checkout the repository to the runner
         uses: actions/checkout@v2
 
@@ -193,7 +200,6 @@ jobs:
       
       - name: Terraform init
         id: init
-        # run: terraform init 
         env:
           ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
@@ -240,9 +246,17 @@ jobs:
 
           terraform apply -auto-approve -input=false tfazure-${GITHUB_RUN_NUMBER}.tfplan
 
-      - name: Terraform Azure Status
+      - name: Create a failure log message
         if: steps.plan-azure.outcome == 'failure'
-        run: exit 1
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: PATCH_RUN
+          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          logMessage: Failed to tag azure resource ${{fromJson(inputs.port_payload).context.entity}}
+
 
       - name: Create a log message
         uses: port-labs/port-github-action@v1
@@ -253,8 +267,6 @@ jobs:
           operation: PATCH_RUN
           runId: ${{fromJson(inputs.port_payload).context.runId}}
           logMessage: Added tags to ${{fromJson(inputs.port_payload).context.entity}}
-
-
 ```
 
 </details>
@@ -304,8 +316,16 @@ jobs:
       runs-on: ubuntu-latest
       steps:
   
-      - name: Install jq
-        run: sudo apt-get install jq -y
+      - name: Inform starting of action
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          operation: PATCH_RUN
+          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          logMessage: |
+            Starting a GitHub worklfow to tag the Azure resource: ${{fromJson(inputs.port_payload).context.entity}} ... ⛴️
+
   
       - uses: azure/login@v1
         with:
@@ -326,6 +346,16 @@ jobs:
             resource=$(az resource show -g ${RESOURCE_GROUP} -n ${STORAGE_NAME} --resource-type Microsoft.Storage/storageAccounts --query "id" --output tsv)
             tags=$(echo ${TAGS} | jq -r 'to_entries|map("\(.key)=\(.value|tojson)")|join(" ")')
             az tag create --resource-id $resource --tags $tags
+
+      - name: Create a log message
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: PATCH_RUN
+          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          logMessage: Added tags to ${{fromJson(inputs.port_payload).context.entity}}
 
 ```
 </details>
