@@ -30,6 +30,8 @@ const config = {
             return `https://github.com/port-labs/port-docs/edit/main/docs/${docPath}`;
           },
           showLastUpdateTime: true,
+          docRootComponent: "@theme/DocRoot",
+          docItemComponent: "@theme/ApiItem",
         },
         blog: false,
         theme: {
@@ -88,6 +90,18 @@ const config = {
         },
         items: [
           {
+            to: "/",
+            label: "Home",
+            className: "header-home-link",
+            activeBaseRegex: "^((?!api-reference).)*$",
+          },
+          {
+            to: "/api-reference/port-api",
+            label: "API Reference",
+            className: "header-api-link",
+            activeBasePath: "api-reference",
+          },
+          {
             to: "https://demo.getport.io",
             position: "right",
             target: "_blank",
@@ -142,7 +156,7 @@ const config = {
               },
               {
                 label: "API reference",
-                to: "/api-reference",
+                to: "/api-reference/port-api",
               },
             ],
           },
@@ -281,15 +295,7 @@ const config = {
       },
     }),
   themes: [
-    // [
-    //   require.resolve("@easyops-cn/docusaurus-search-local"),
-    //   {
-    //     hashed: true,
-    //     indexDocs: true,
-    //     indexBlog: false,
-    //     docsRouteBasePath: "/",
-    //   },
-    // ],
+    "docusaurus-theme-openapi-docs",
   ],
 
   plugins: [
@@ -308,6 +314,24 @@ const config = {
           }
           return undefined;
         },
+      },
+    ],
+    [
+      "docusaurus-plugin-openapi-docs",
+      {
+        id: "api", // plugin id
+        docsPluginId: "classic", // id of plugin-content-docs or preset for rendering docs
+        config: {
+          port: { // the <id> referenced when running CLI commands
+            specPath: './static/spectmp.yaml', // path to OpenAPI spec, URLs supported
+            outputDir: "docs/apissa", // output directory for generated files
+            sidebarOptions: {
+              groupPathsBy: "tag",
+              categoryLinkSource: "tag",
+            },
+            baseUrl: "/api-reference/"
+          },
+        }
       },
     ],
     [

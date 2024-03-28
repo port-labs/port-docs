@@ -1,0 +1,153 @@
+---
+id: patch-a-team
+title: "Patch a team"
+description: "Patch a team"
+sidebar_label: "Patch a team"
+hide_title: true
+hide_table_of_contents: true
+api: eJx1VE1v00AQ/SvRnEAKccLRQkilIIG4RKWcQg8Texpva3uX3XFosPzfmdl14tCmiWSvvfPx3pu37oFxFyDfwC1hE+BuDp5+dxT4ky0PkPdQ2JapZV2ic7UpkI1ts4dgW30Xiooa1BUfHEEOdvtABcMcnLeOPBsKuttiQ2dRgb1pdzDMoQvkw9kOeo8HSTdMTbiQISklhcIbpzimgM0xYg5tV9dwN8Sf4EAvvTl22VwAPEExUk7CudIaEW+6JU2MpxJy9h0NolKgovOGD7HmltCTVwydK5Ep5yTmEOUMzrYhqfB+udTbfwTgM91jV/PsZox8yRHWyEU1w5nWFThCp7JlAlso2gg6h2y/ymLrrFfgAyhOvz9S73wtQRWzC3mWoTOLwLt3y9ViR+ys54WxcM7th0qVgB8ZTmNy5jsdJqGuOoHkzd/oDhi1rAhLyVI+6pebyVlfnrBxNU3OmKY3GuI0z7s4mXsbmxvWJFgL2tnV+puEK7sk0mqx1Ck6G7jB9qz0M/Uu2geYnjhzNQpwdaVK1Y+6bmC/krw01DnksazoVEkn3e37LQb66eth0NdC0qsvZLlHb3CrkEX+0gRdy9zusQ70AsjppMGbm9Fvb2fa9xLA4xhancEe606fZPkoQxltO6hy4wi0f9q6Tl3e3WqBKfXF2VYjnHy2vrq9/irR2/Gj0NhSkzz+0cMh1xx+yV8ebKQTPRPf91Bju+twp/GpsNoBOxX23E2P0U3jQuFeZPjcZomTXof5KykfxCcz8erHU3jaeTVhlOwYrXrrx+QfwQ+8jg==
+sidebar_class_name: "patch api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<h1
+  className={"openapi__heading"}
+>
+  Patch a team
+</h1>
+
+<MethodEndpoint
+  method={"patch"}
+  path={"/v1/teams/{name}"}
+>
+  
+</MethodEndpoint>
+
+
+
+Patch a team
+
+## Request
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"name","required":true}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><MimeTabs
+  className={"openapi-tabs__mime"}
+>
+  <TabItem
+    label={"application/json"}
+    value={"application/json-schema"}
+  >
+    <details
+      style={{}}
+      className={"openapi-markdown__details mime"}
+      data-collapsed={false}
+      open={true}
+    >
+      <summary
+        style={{}}
+        className={"openapi-markdown__details-summary-mime"}
+      >
+        <h3
+          className={"openapi-markdown__details-summary-header-body"}
+        >
+          Body
+        </h3>
+      </summary><div
+        style={{"textAlign":"left","marginLeft":"1rem"}}
+      >
+        
+      </div><ul
+        style={{"marginLeft":"1rem"}}
+      >
+        <SchemaItem
+          collapsible={false}
+          name={"name"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"users"}
+          required={false}
+          schemaName={"string[]"}
+          qualifierMessage={undefined}
+          schema={{"type":"array","items":{"type":"string"}}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"description"}
+          required={false}
+          schemaName={["string","null"]}
+          qualifierMessage={undefined}
+          schema={{"type":["string","null"]}}
+        >
+          
+        </SchemaItem>
+      </ul>
+    </details>
+  </TabItem>
+</MimeTabs><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

@@ -1,0 +1,158 @@
+---
+id: delete-a-pages-widget
+title: "Delete a page's widget"
+description: "Delete a page's widget"
+sidebar_label: "Delete a page's widget"
+hide_title: true
+hide_table_of_contents: true
+api: eJy9U02P2jAQ/SuRL20lSqDHqKqEtByq9oD6cUKoMvGQeDGx157Q0ij/vTNOCFlgpfbSC9jxvJk3b940AmURRLYWK1lAEJuJcNLLAyB4/tyIkJdwkCJrBJ4ciEwE9LoqRDsRuqKrk1iKiagIE28F/NAKKtQ7DZ4ePDzV2oMSGfoa2sm/ZvypVQFIOW9zEdkAee01niLVLUhPNakZBYY6yFzXEwd6CM5Wga5U991sxn8KQu61Q2257EPEqCTUeQ4h7GpjTlQztxVSOxwvnTM6lxyfPgYGjZv5q2x9x3b7CDnS3XnrwKPueNk9/0JVH6gJbnHTkihSKc1ZpVmNonfSBBhLsmY4AVrG3COTyIQFeRWSTlMqT3MuLWF7wZgQi5+J9DhPo3ppczXSNu3Q9DKMphU8CX88e6b2hnKUiC5kaSqdngYs3s7mUwp31uNUWzGe3lcWsZPgPMPBHIT+BKeLHxY1Ufb6dxyD6C1TglSEaqOFdjbCNRqOX1G9ZLH6SKHMrxNkPp2x3ZwNeJBxjn32F5V6JuhADuEXps5IIkHpYttNL+FaHOdRT7bgRGS3m9HryI8Xk5MqJbFifNNsZYDv3rQtf36qwbPP6XiUXsstt0diKx34rAZLXFEdDCxef+nN8ia5WPF5C2fRK1b8KE3NNzruaQS3283b/B/LX1RqNxTcD5016N4XtGoOR8ibhWXTDZ5/WH5efltSuKx5YGPH7aPj+gMXuEvs2oodC/5lYe5C3pMTE/LzhyG8e3kR0Dd5jmaZeMf/ALDF8U0=
+sidebar_class_name: "delete api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<h1
+  className={"openapi__heading"}
+>
+  Delete a page's widget
+</h1>
+
+<MethodEndpoint
+  method={"delete"}
+  path={"/v1/pages/{page_identifier}/widgets/{widget_id}"}
+>
+  
+</MethodEndpoint>
+
+
+
+Delete a page's widget
+
+## Request
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"page_identifier","required":true}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"widget_id","required":true}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Deleted successfully
+          
+          
+        </div><div>
+          <MimeTabs
+            className={"openapi-tabs__mime"}
+            schemaType={"response"}
+          >
+            <TabItem
+              label={"application/json"}
+              value={"application/json"}
+            >
+              <SchemaTabs
+                className={"openapi-tabs__schema"}
+              >
+                <TabItem
+                  label={"Schema"}
+                  value={"Schema"}
+                >
+                  <details
+                    style={{}}
+                    className={"openapi-markdown__details response"}
+                    data-collapsed={false}
+                    open={true}
+                  >
+                    <summary
+                      style={{}}
+                      className={"openapi-markdown__details-summary-response"}
+                    >
+                      <strong>
+                        Schema
+                      </strong>
+                    </summary><div
+                      style={{"textAlign":"left","marginLeft":"1rem"}}
+                    >
+                      
+                    </div><ul
+                      style={{"marginLeft":"1rem"}}
+                    >
+                      <SchemaItem
+                        collapsible={false}
+                        name={"ok"}
+                        required={true}
+                        schemaName={""}
+                        qualifierMessage={"**Possible values:** [`true`]"}
+                        schema={{"enum":[true]}}
+                      >
+                        
+                      </SchemaItem>
+                    </ul>
+                  </details>
+                </TabItem><TabItem
+                  label={"Example (from schema)"}
+                  value={"Example (from schema)"}
+                >
+                  <ResponseSamples
+                    responseExample={"{}"}
+                    language={"json"}
+                  >
+                    
+                  </ResponseSamples>
+                </TabItem>
+              </SchemaTabs>
+            </TabItem>
+          </MimeTabs>
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

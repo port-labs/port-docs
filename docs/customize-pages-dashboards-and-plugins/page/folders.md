@@ -32,7 +32,7 @@ To move a page into/out of a folder, hover over it, hold the `⠿` icon and drag
 
 ## Folder identifiers
 
-Each folder has a unique identifier that can be used to reference it when working with the [Port API](/api-reference).  
+Each folder has a unique identifier that can be used to reference it when working with the [Port API](/api-reference/port-api).  
 
 When creating a folder, you will be asked to provide it with a title. The identifier is automatically generated from the titie using [snake_case](https://en.wikipedia.org/wiki/Snake_case), which means that spaces and slashes are replaced with underscores and all letters are lowercase.
 

@@ -1,0 +1,153 @@
+---
+id: delete-a-page
+title: "Delete a page"
+description: "Delete a page"
+sidebar_label: "Delete a page"
+hide_title: true
+hide_table_of_contents: true
+api: eJyNU02v2jAQ/CvRnlopJdBjVFVCehyq9oD6cUIcTLIQP0zsZ69RaZT/3t0khEDfk3oJdpjZnZ3ZNEDqECDfwFodMMA2Bae8OiGhl9cNhKLCk4K8Abo4hBwCeV0foE1B13x1iipIoWYO33SJNem9Rs/vPL5E7bGEnHzElmsHLKLXdOkq71B5xnHvEg03zF0vQYAeg7N14Cs3/jify0+JofDakbbS96njlEmIRYEh7KMxF+5Z2JpYguCVc0YXSvDZcxDSdJr/qjaMbHfPWBDfnbcOPelelz3KE+t44iFkxG3Lrqiy1FJVmfUEvVcm4NSSjdCZ0ArnNTGJSsQQ7sppVJYpg0+iQ0zPITsvss60rLkZ34L47M/XAKM3DK2IXMizTDk9C3T4MF/MDkjOepppC9NsfohF/YDXhMbsmf0VL7e4l5GVef2nMxmGjahQlcxquw3Z246uyQh+zf2S5foLQ0VfP+5iNpdtcjbQSXUpDdUffbhzadRE+JsyZxT35irdtM1g0AbOi84t2asU8sl28sAVNxRM0+xUwF/etK28fonoZUH5eFZeq50oZx9LHeRcjlk+yBk3D959H1J+n9x26F7m1c9azDwrE+XGxyO7e/cVtVtGD46Kih6w5C11NKH+s+uS6Lg3T6tvq58rhqsotkzjPHZxDgdp8Kqyx5x7FfJs0zconzjmhJfl8wjv/3mTMAw5eiAz8MfxF3lTkUU=
+sidebar_class_name: "delete api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<h1
+  className={"openapi__heading"}
+>
+  Delete a page
+</h1>
+
+<MethodEndpoint
+  method={"delete"}
+  path={"/v1/pages/{identifier}"}
+>
+  
+</MethodEndpoint>
+
+
+
+Delete a page
+
+## Request
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"identifier","required":true}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Deleted successfully
+          
+          
+        </div><div>
+          <MimeTabs
+            className={"openapi-tabs__mime"}
+            schemaType={"response"}
+          >
+            <TabItem
+              label={"application/json"}
+              value={"application/json"}
+            >
+              <SchemaTabs
+                className={"openapi-tabs__schema"}
+              >
+                <TabItem
+                  label={"Schema"}
+                  value={"Schema"}
+                >
+                  <details
+                    style={{}}
+                    className={"openapi-markdown__details response"}
+                    data-collapsed={false}
+                    open={true}
+                  >
+                    <summary
+                      style={{}}
+                      className={"openapi-markdown__details-summary-response"}
+                    >
+                      <strong>
+                        Schema
+                      </strong>
+                    </summary><div
+                      style={{"textAlign":"left","marginLeft":"1rem"}}
+                    >
+                      
+                    </div><ul
+                      style={{"marginLeft":"1rem"}}
+                    >
+                      <SchemaItem
+                        collapsible={false}
+                        name={"ok"}
+                        required={true}
+                        schemaName={""}
+                        qualifierMessage={"**Possible values:** [`true`]"}
+                        schema={{"enum":[true]}}
+                      >
+                        
+                      </SchemaItem>
+                    </ul>
+                  </details>
+                </TabItem><TabItem
+                  label={"Example (from schema)"}
+                  value={"Example (from schema)"}
+                >
+                  <ResponseSamples
+                    responseExample={"{}"}
+                    language={"json"}
+                  >
+                    
+                  </ResponseSamples>
+                </TabItem>
+              </SchemaTabs>
+            </TabItem>
+          </MimeTabs>
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

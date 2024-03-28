@@ -1,4 +1,7 @@
 {
-  "label": "🧪 API reference",
-  "position": 12
+  "label": "Port API",
+  "position": 0,
+  "className": "hidden",
+  "collapsible": false,
+  "collapsed": false
 }
