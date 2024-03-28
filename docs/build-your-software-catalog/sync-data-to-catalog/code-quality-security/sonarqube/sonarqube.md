@@ -190,26 +190,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Run Sonarqube Integration
-        run: |
-          # Set Docker image and run the container
-          integration_type="sonarqube"
-          version="latest"
-
-          image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
-
-          docker run -i --rm --platform=linux/amd64 \
-          -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
-          -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-          -e OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN=${{ secrets.OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN }} \
-          -e OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID=${{ secrets.OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID }} \
-          -e OCEAN__INTEGRATION__CONFIG__SONAR_IS_ON_PREMISE=${{ secrets.OCEAN__INTEGRATION__CONFIG__SONAR_IS_ON_PREMISE }} \
-          -e OCEAN__INTEGRATION__CONFIG__SONAR_URL=${{ secrets.OCEAN__INTEGRATION__CONFIG__SONAR_URL }} \
-          -e OCEAN__PORT__CLIENT_ID=${{ secrets.OCEAN__PORT__CLIENT_ID }} \
-          -e OCEAN__PORT__CLIENT_SECRET=${{ secrets.OCEAN__PORT__CLIENT_SECRET }} \
-          $image_name
-
-          exit $?
+      - uses: port-labs/ocean-sail@v1
+        with:
+          type: 'sonarqube'
+          port_client_id: ${{ secrets.OCEAN__PORT__CLIENT_ID }}
+          port_client_secret: ${{ secrets.OCEAN__PORT__CLIENT_SECRET }}
+          config: |
+            sonar_api_token: ${{ secrets.OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN }}
+            sonar_organization_id: ${{ secrets.OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID }}
+            sonar_is_on_premise: ${{ secrets.OCEAN__INTEGRATION__CONFIG__SONAR_IS_ON_PREMISE }}
+            sonar_url: ${{ secrets.OCEAN__INTEGRATION__CONFIG__SONAR_URL }}
 ```
 
   </TabItem>
