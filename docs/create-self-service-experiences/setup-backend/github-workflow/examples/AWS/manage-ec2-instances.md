@@ -7,14 +7,14 @@ sidebar_position: 3
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 In the following guide, you are going to create self-service actions in Port that execute a [GitHub workflow](/create-self-service-experiences/setup-backend/github-workflow/github-workflow.md) to manage an EC2 instance in the following ways:
-1. Terminate an Instance.
-2. Reboot an instance.
-3. Resize an Autoscaling Group.
+1. Terminate an Instance
+2. Reboot an instance
+3. Resize an Autoscaling Group
 
 ## Prerequisites
 
 1. Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new).
-2. Use the [Port AWS exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/Installation)  to ingest AWS EC2 instances and autoscaling groups into Port to create the blueprints and entities.
+2. Use the Port AWS exporter to ingest [AWS EC2 instances](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples/#ec2-instances) and [autoscaling groups](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples/#auto-scaling-group) into Port to create the blueprints and entities.
 :::tip Using the Port AWS exporter
 The Port AWS exporter supports ingesting different AWS resource types. For the sake of this guide, you may run the following command in the [installation](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/Installation#terraform-installation-recommended) step to only ingest relevant resources:
 ```bash
@@ -86,10 +86,7 @@ jobs:
   terminate-instance:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Create a log message (post-action)
+      - name: Inform Port about terminating EC2 instance
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
@@ -100,7 +97,7 @@ jobs:
           logMessage: Configuring AWS credentials and terminating EC2 instance with ID ${{ github.event.inputs.instance_id }}
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -109,7 +106,7 @@ jobs:
       - name: Terminate EC2 instance
         run: aws ec2 terminate-instances --instance-ids ${{ github.event.inputs.instance_id }}
 
-      - name: Create a log message (post-action)
+      - name: Inform Port about status of terminating EC2 instance
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
@@ -178,7 +175,7 @@ jobs:
   reboot-instance:
     runs-on: ubuntu-latest
     steps:
-      - name: Create a log message (post-action)
+      - name: Inform Port of workflow start
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
@@ -189,7 +186,7 @@ jobs:
           logMessage: Configuring AWS credentials and reboot EC2 instance with ID ${{ fromJson(inputs.port_payload).payload.entity.identifier }}
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -198,7 +195,7 @@ jobs:
       - name: Reboot EC2 instance
         run: aws ec2 reboot-instances --instance-ids ${{ fromJson(inputs.port_payload).payload.entity.identifier }}
 
-      - name: Create a log message (post-action)
+      - name: Inform Port about status of rebooting EC2 instance
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
@@ -314,7 +311,7 @@ jobs:
   resize-asg:
     runs-on: ubuntu-latest 
     steps:
-      - name: Create a log message
+      - name: Inform Port about workflow start
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
@@ -326,7 +323,7 @@ jobs:
 
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -340,7 +337,7 @@ jobs:
                 --min-size ${{ github.event.inputs.minimum_capacity }} \
                 --max-size ${{ github.event.inputs.maximum_capacity }} 
     
-      - name: Create a log message
+      - name: Inform Port about status of autoscaling group
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
