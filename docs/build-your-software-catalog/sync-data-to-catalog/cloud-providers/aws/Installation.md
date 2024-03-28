@@ -261,6 +261,6 @@ To configure the AWS exporter to use events as triggers, follow these steps:
 
 ## Further information
 
-- Refer to the [examples](./examples.md) page for practical configurations and their corresponding blueprint definitions;
+- Refer to the [examples](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples/examples.md) page for practical configurations and their corresponding blueprint definitions;
 - Learn about more ways of [working with Cloudformation stacks](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacks.html);
 - Deep-dive into the [Event-based Updates](./event-based-updates.md) mechanism.
