@@ -187,25 +187,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Run ServiceNow Integration
-        run: |
-          # Set Docker image and run the container
-          integration_type="servicenow"
-          version="latest"
+      - uses: port-labs/ocean-sail@v1
+        with: 
+          type: 'servicenow'
+          port_client_id: ${{ secrets.OCEAN__PORT__CLIENT_ID }}
+          port_client_secret: ${{ secrets.OCEAN__PORT__CLIENT_SECRET }}
+          config: |
+          servicenow_username: ${{ secrets.OCEAN__INTEGRATION__CONFIG__SERVICENOW_USERNAME }}
+          servicenow_password: ${{ secrets.OCEAN__INTEGRATION__CONFIG__SERVICENOW_PASSWORD }}
+          servicenow_url: ${{ secrets.OCEAN__INTEGRATION__CONFIG__SERVICENOW_URL }}
 
-          image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
-
-          docker run -i --rm --platform=linux/amd64 \
-          -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
-          -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-          -e OCEAN__INTEGRATION__CONFIG__SERVICENOW_USERNAME=${{ secrets.OCEAN__INTEGRATION__CONFIG__SERVICENOW_USERNAME }} \
-          -e OCEAN__INTEGRATION__CONFIG__SERVICENOW_PASSWORD=${{ secrets.OCEAN__INTEGRATION__CONFIG__SERVICENOW_PASSWORD }} \
-          -e OCEAN__INTEGRATION__CONFIG__SERVICENOW_URL=${{ secrets.OCEAN__INTEGRATION__CONFIG__SERVICENOW_URL }} \
-          -e OCEAN__PORT__CLIENT_ID=${{ secrets.OCEAN__PORT__CLIENT_ID }} \
-          -e OCEAN__PORT__CLIENT_SECRET=${{ secrets.OCEAN__PORT__CLIENT_SECRET }} \
-          $image_name
-
-          exit $?
 ```
 
   </TabItem>
