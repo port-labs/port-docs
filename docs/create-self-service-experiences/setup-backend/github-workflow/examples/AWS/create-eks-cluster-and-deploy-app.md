@@ -25,7 +25,7 @@ In this guide, we are going to use [self-service actions](/create-self-service-e
 
 
 :::tip Starter Repository
-Copy the contents of the `eks-deploy-guide` folder from our examples repository [here](https://github.com/port-labs/self-service-actions-examples) to follow along through the guide. The repository contains the following folders:
+Clone our repository [here](https://github.com/port-labs/eks-deploy-guide) to follow along through the guide. The repository contains the following folders:
 - `app-templates`: contains the cookiecutter templates for scaffolding apps.
 - `terraform`: contains the terraform configuration for creating an EKS cluster.
 :::
@@ -553,6 +553,10 @@ terraform {
 <details>
 
 <summary>GitHub workflow to scaffold a Node.js app</summary>
+
+:::tip Cookiecutter Template
+To implement this workflow, you'll need a cookiecutter template for scaffolding the application. You can either create one or utilize our starter [repository](https://github.com/port-labs/eks-deploy-guide).
+:::
 
 ```yaml showLineNumbers
 name: Scaffold Node.js App
