@@ -177,7 +177,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## ServiceNow
 
-- [ServiceNow integration](/build-your-software-catalog/sync-data-to-catalog/itsm/servicenow)
+- [ServiceNow integration](/build-your-software-catalog/sync-data-to-catalog/incident-management/servicenow)
 - [Self-service action to trigger ServiceNow incident](/create-self-service-experiences/setup-backend/github-workflow/examples/ServiceNow/trigger-servicenow-incident)
 
 
