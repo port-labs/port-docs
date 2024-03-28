@@ -2780,7 +2780,7 @@ paths:
                     - type: array
                       items:
                         type: string
-                  description: The Port team to which the new entity will belong.<br/>
+                  description: The Port team/s to which the new entity will belong.<br/>
                 properties:
                   type: object
                   default: {}
@@ -2796,7 +2796,7 @@ paths:
                           type: string
                           pattern: '^[A-Za-z0-9@_.:\\/=-]+$'
                       - type: 'null'
-                  description: The related entity/ies of the new entity.<br/>
+                  description: The identifier/s of the entity's related entity/ies.<br/>
               additionalProperties: true
             example:
               identifier: new-microservice
@@ -2852,18 +2852,53 @@ paths:
       responses:
         '200':
           description: Success
-          content:
-            application/json:
-              example:
-                identifier: new-microservice
-                title: MyNewMicroservice
-                icon: Microservice
-                team: []
-                properties:
-                  content: my content
-                relations: {}
         '400':
-          description: Error
+          description: |
+            One of the following errors occurred:
+
+            | Error | Description |
+            | ----- | ----------- |
+            | `bad_request` | The json provided does not match the route's schema |
+            | `run_exhausted` | The action run with the provided `runId` has already finished execution |
+        '403':
+          description: |
+            One of the following errors occurred:
+
+            | Error | Description |
+            | ----- | ----------- |
+            | `required_relation` | Relation cannot be deleted because it is a `required relation` |
+            | `missing_permissions` | You do not have permissions to perform the requested operation. For further details, please contact your admin |
+        '404':
+          description: |
+            One of the following errors occurred:
+
+            | Error | Description |
+            | ----- | ----------- |
+            | `not_found` | A resource with the provided `identifier` was not found |
+        '409':
+          description: |
+            One of the following errors occurred:
+
+            | Error | Description |
+            | ----- | ----------- |
+            | `identifier_taken` | The provided `identifier` already exists, identifiers must be unique |
+        '429':
+          description: |
+            One of the following errors occurred:
+
+            | Error | Description |
+            | ----- | ----------- |
+            | `team_inheritance_enabled` | The blueprint's entities inherite their team from other entities through an existing relation |
+            | `blueprint_schema_mismatch` | The provided entity does not match the blueprint's schema |
+            | `required_relation` | A relation is required |
+            | `relation_many_violation` | A provided relation cannot contain more than one entity |
+        '500':
+          description: |
+            One of the following errors occurred:
+
+            | Error | Description |
+            | ----- | ----------- |
+            | `internal_error` | An internal error occurred |
     get:
       summary: Get all blueprint's entities
       tags:

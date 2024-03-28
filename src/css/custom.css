@@ -411,7 +411,7 @@ html[data-theme="dark"] details details  {
   @layer {
   margin: 0 0 1rem 0 !important;
   border-radius: 8px;
-  }/* border: thin solid var(--openapi-tree-line-color) !important; */
+  }
 }
 
 .openapi-params__list-item::before {
@@ -445,4 +445,76 @@ html[data-theme="dark"] details details  {
 
 .openapi-markdown__details ul {
   margin-left: 0 !important;
+}
+
+.openapi-explorer__request-title {
+  text-indent: -9999px;
+  line-height: 0;
+}
+
+.openapi-explorer__request-title::after {
+  content: "Try it out";
+  text-indent: 0;
+  display: block;
+  line-height: initial;
+  font-size: small;
+}
+
+.openapi-explorer__details-container {
+  background-color: rgba(247,249,250,1);
+  @layer {
+  margin: 0 0 1.5rem 0 !important;
+  border-radius: 8px;
+  }
+}
+
+.openapi-explorer__form-item-input {
+  border: 1px solid black !important;
+}
+
+.openapi-explorer__select-input {
+  border: 1px solid black !important;
+}
+
+.openapi-explorer__form-item-input::placeholder {
+  text-indent: -9999px;
+  line-height: 0;
+}
+
+.openapi-explorer__details-summary {
+  font-weight: bold !important;
+  font-size: medium !important;
+}
+
+.openapi-explorer__show-more-btn {
+  margin-top: 0.5rem;
+  font-weight: bold;
+  font-family: "DM Sans";
+  font-size: small !important;
+}
+
+.openapi-explorer__playground-editor {
+  zoom: 115%;
+  height: 15rem !important;
+  border: 1px solid black !important;
+  border-radius: 8px !important;
+}
+
+.openapi-explorer__playground-editor > .prism-code {
+  background-color: rgb(131, 224, 255, 0.08) !important;
+  height: 15rem !important;
+}
+
+.openapi-explorer__show-more-btn {
+  font-size: medium !important;
+}
+
+.openapi-explorer__request-btn {
+  display: block;
+  margin-right: 0;
+  margin-left: auto;
+}
+
+.openapi-tabs__mime-item {
+  display: none !important;
 }

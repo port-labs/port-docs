@@ -162,7 +162,7 @@ const sidebar: SidebarsConfig = {
       items: [
         {
           type: "doc",
-          id: "api-reference/create-entities",
+          id: "api-reference/create-entity",
           label: "Create entities",
           className: "api-method post",
         },
