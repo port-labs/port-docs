@@ -2,7 +2,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 # Create an EKS cluster and deploy a Node.js app
 
-In the following guide, we are going to use [self-service](/create-self-service-experiences/) actions to demonstrate a workflow that does the following:
+In this guide, we are going to use [self-service actions](/create-self-service-experiences/) to demonstrate a workflow that does the following:
 
 - Creating an EKS Cluster.
 - Scaffold a Node.js app that's automatically ingested as an entity by Port.
