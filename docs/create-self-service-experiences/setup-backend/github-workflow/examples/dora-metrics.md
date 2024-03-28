@@ -4,15 +4,15 @@ sidebar_position: 10
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
-# Dora Metrics
+# DORA Metrics
 
-In this guide, we will create a self-service action in Port that executes a GitHub workflow to compute the dora metrics for a service.
+In this guide, we will create a self-service action in Port that executes a GitHub workflow to compute the DORA Metrics for a service.
 
 ## Prerequisites
 1. Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new).
 2. A GitHub repository in which you can trigger a workflow that we will use in this guide.
 
-Below you can find the JSON for the `Service` blueprint required for the guide:
+Below you can find the JSON for the `Service` and `DORA Metrics` blueprints required for the guide:
 
 <details>
 <summary><b>Service blueprint (click to expand)</b></summary>
@@ -107,6 +107,129 @@ Below you can find the JSON for the `Service` blueprint required for the guide:
 ```
 </details>
 
+<details>
+<summary><b>DORA Metrics blueprint (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "doraMetrics",
+  "title": "DORA Metrics",
+  "icon": "Github",
+  "schema": {
+    "properties": {
+      "averageOpenToCloseTime": {
+        "icon": "DefaultProperty",
+        "title": "Average Open To Close Time",
+        "type": "number",
+        "description": "Average time from PR open to close in hours."
+      },
+      "averageTimeToFirstReview": {
+        "title": "Average Time To First Review",
+        "type": "string",
+        "icon": "DefaultProperty",
+        "description": "Average time until first PR review in hours."
+      },
+      "averageTimeToApproval": {
+        "title": "Average Time To Approval",
+        "type": "number",
+        "icon": "DefaultProperty",
+        "description": "Average time from PR open to approval in hours."
+      },
+      "prsOpened": {
+        "title": "PRs Opened",
+        "type": "number",
+        "icon": "DefaultProperty",
+        "description": "Total PRs opened in the timeframe."
+      },
+      "weeklyPrsMerged": {
+        "title": "Weekly PRs Merged",
+        "type": "number",
+        "icon": "DefaultProperty",
+        "description": "Average number of PRs merged per week."
+      },
+      "averageReviewsPerPr": {
+        "title": "Average Review Per PR",
+        "type": "number",
+        "icon": "DefaultProperty",
+        "description": "Average number of reviews per PR."
+      },
+      "averageCommitsPerPr": {
+        "title": "Average Commits Per PR",
+        "type": "number",
+        "icon": "DefaultProperty",
+        "description": "Average number of commits per PR."
+      },
+      "averageLocChangedPerPr": {
+        "title": "Average Loc Changed Per Per",
+        "type": "number",
+        "icon": "DefaultProperty",
+        "description": "Average lines of code changed per PR."
+      },
+      "averagePrsReviewedPerWeek": {
+        "title": "Average PRs Review Per Week",
+        "type": "number",
+        "icon": "DefaultProperty",
+        "description": "Average PRs reviewed per week."
+      },
+      "totalDeployments": {
+        "title": "Total Deployments",
+        "type": "string",
+        "icon": "DefaultProperty",
+        "description": "Total number of deployments in the timeframe."
+      },
+      "deploymentRating": {
+        "title": "Deployment Rating",
+        "type": "string",
+        "icon": "DefaultProperty",
+        "description": "Qualitative rating of deployment success. e.g Elite"
+      },
+      "numberOfUniqueDeploymentDays": {
+        "title": "Number of Unique Deployments",
+        "type": "string",
+        "icon": "DefaultProperty",
+        "description": "Days with at least one deployment."
+      },
+      "deploymentFrequency": {
+        "title": "Deployment Frequency",
+        "type": "string",
+        "icon": "DefaultProperty",
+        "description": "Frequency of deployments"
+      },
+      "leadTimeForChangesInHours": {
+        "title": "Lead Time For Changes In Hours",
+        "type": "string",
+        "icon": "DefaultProperty",
+        "description": "Average time from commit to deployment in hours."
+      },
+      "leadTimeRating": {
+        "title": "Lead Time Rating",
+        "type": "string",
+        "icon": "DefaultProperty",
+        "description": "Qualitative rating of lead time for changes, e.g Elite."
+      },
+      "workflowAverageTimeDuration": {
+        "title": "Workflow Average Time Duration",
+        "type": "string",
+        "icon": "DefaultProperty",
+        "description": "Average duration of CI/CD workflows in hours."
+      },
+      "timeFrameInWeeks": {
+        "icon": "DefaultProperty",
+        "title": "TimeFrame in Weeks",
+        "type": "number",
+        "description": "Timeframe for the metrics in weeks."
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
+}
+```
+</details>
+
 ## Create Github workflow
 
 Follow these steps to get started:
@@ -114,11 +237,10 @@ Follow these steps to get started:
 1. Create the following GitHub Action secrets:
     - `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token)
     - `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token)
-    - `PATTOKEN` - GitHub PAT token. Ensure that Read access to actions and metadata permission is set. [learn more](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)
+    - `PATTOKEN` - GitHub PAT fine-grained token. Ensure that read-only access to actions and metadata permission is set. Grant access to repositories where this GitHub Action will run. [learn more](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token).
 2. Create an action in the [self-service page](https://app.getport.io/self-serve) on the `Service` blueprint with the following JSON definitions:
 
 <details>
-
   <summary><b>Port Action: Dora Metrics (click to expand)</b></summary>
    :::tip
 - `<GITHUB-ORG>` - your GitHub organization or user name.
@@ -129,7 +251,7 @@ Follow these steps to get started:
 ```json showLineNumbers
 {
   "identifier": "dora_metrics",
-  "title": "Dora Metrics",
+  "title": "DORA Metrics",
   "icon": "Github",
   "userInputs": {
     "properties": {
@@ -176,7 +298,7 @@ Follow these steps to get started:
     "reportWorkflowStatus": true
   },
   "trigger": "DAY-2",
-  "description": "Estimate dora metrics for a service",
+  "description": "Calculate DORA metrics for a service",
   "requiredApproval": false
 }
 ```
@@ -216,7 +338,7 @@ jobs:
     steps:
     
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         
       - name: Transform Workflow Inputs
         run: |
@@ -233,7 +355,7 @@ jobs:
         shell: bash
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 
@@ -317,7 +439,7 @@ jobs:
           WORKFLOWS: ${{ inputs.workflow }}
           GITHUB_TOKEN: ${{ secrets.PATTOKEN }} 
           REPOSITORY: ${{ env.REPOSITORY }}
-        run: python dora/deploymentfrequency.py
+        run: python dora/deployment_frequency.py
 
       - name: Report Failure In Computing Deployment Frequency
         if: failure()
@@ -356,7 +478,7 @@ jobs:
           WORKFLOWS: ${{ inputs.workflow }}
           GITHUB_TOKEN: ${{ secrets.PATTOKEN }} 
           REPOSITORY: ${{ env.REPOSITORY }}
-        run: python dora/leadtimeforchanges.py
+        run: python dora/lead_time_forchanges.py
 
       - name: Report Failure In Lead Time For Changes
         if: failure()
@@ -459,7 +581,7 @@ pytz==2024.1
 
 </details>
 
-5. Create the following python scripts (`calculate_pr_metrics.py`, `deploymentfrequency.py` and `leadtimeforchanges.py` ) in a folder named `dora` at the root of your GitHub repository:
+5. Create the following python scripts (`calculate_pr_metrics.py`, `deployment_frequency.py` and `lead_time_for_changes.py` ) in a folder named `dora` at the root of your GitHub repository:
 
 <details>
   <summary><b>Calculate PR Metrics</b></summary>
@@ -629,7 +751,7 @@ if __name__ == "__main__":
 <details>
   <summary><b>Deployment Frequency</b></summary>
 
-```python showLineNumbers title="deploymentfrequency.py"
+```python showLineNumbers title="deployment_frequency.py"
 from github import Github
 import datetime
 import pytz
@@ -726,7 +848,7 @@ if __name__ == "__main__":
 <details>
   <summary><b>Lead Time For Changes</b></summary>
 
-```python showLineNumbers title="leadtimeforchanges.py"
+```python showLineNumbers title="lead_time_for_changes.py"
 import requests
 from datetime import datetime, timedelta
 import base64
@@ -894,4 +1016,23 @@ if __name__ == "__main__":
 ```
 </details>
 
-6. Trigger the action from the [self-service](https://app.getport.io/self-serve) page of your Port application.
+6. Trigger the action from the [self-service](https://app.getport.io/self-serve) page of your Port application. Below is a boilerplate of the expected input payload
+
+<details>
+  <summary><b>Sample Input</b></summary>
+:::tip
+- `<Entity-ID>` - your target entity id in port
+- `<GITHUB-ORG>` - your GitHub organization or user name.
+- `<GITHUB-REPO-NAME>` - your GitHub repository name.
+:::
+
+```json showLineNumbers title="sample input json"
+
+{
+  "$targetEntity": "<Entity-ID>",
+  "timeframe": 4,
+  "repository": "<GITHUB-ORG>/<GITHUB-REPO-NAME>",
+  "workflow": "CI"
+}
+```
+</details>
