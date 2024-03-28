@@ -6,7 +6,7 @@ In this guide, we are going to use [self-service actions](/create-self-service-e
 
 - Creates an EKS Cluster.
 - Scaffolds a Node.js app that's automatically ingested as an entity by Port.
-- Deploy the app onto the cluster.
+- Deploys the app to the cluster.
 
 
 ## Prerequisites
