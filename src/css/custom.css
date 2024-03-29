@@ -456,12 +456,10 @@ html[data-theme="dark"] details details  {
   font-size: small;
 }
 
-.openapi-explorer__details-container {
+.openapi-explorer__details-container:not(.anything) {
   background-color: rgba(247,249,250,1);
-  @layer {
   margin: 0 0 1.5rem 0 !important;
   border-radius: 8px;
-  }
 }
 
 .openapi-explorer__form-item-input:not(.anything) {
