@@ -405,26 +405,22 @@ html[data-theme="dark"] details details  {
   opacity: 0.8;
 }
 
-.openapi-params__list-item {
+.openapi-params__list-item:not(.anything) {
   background-color: rgba(247,249,250,1);
   padding: 1rem;
-  @layer {
   margin: 0 0 1rem 0 !important;
   border-radius: 8px;
-  }
 }
 
 .openapi-params__list-item::before {
   display: none !important;
 }
 
-.openapi-schema__list-item {
+.openapi-schema__list-item:not(.anything) {
   background-color: rgba(247,249,250,1);
   padding: 1rem !important;
-  @layer {
   margin: 0 0 1rem 0 !important;
   border-radius: 8px;
-  }
 }
 
 .openapi-schema__list-item::before {
@@ -468,11 +464,11 @@ html[data-theme="dark"] details details  {
   }
 }
 
-.openapi-explorer__form-item-input {
+.openapi-explorer__form-item-input:not(.anything) {
   border: 1px solid black !important;
 }
 
-.openapi-explorer__select-input {
+.openapi-explorer__select-input:not(.anything) {
   border: 1px solid black !important;
 }
 
