@@ -581,7 +581,7 @@ pytz==2024.1
 
 </details>
 
-5. Create the following python scripts (`calculate_pr_metrics.py`, `deployment_frequency.py` and `lead_time_for_changes.py` ) in a folder named `dora` at the root of your GitHub repository:
+5. Create the following Python scripts (`calculate_pr_metrics.py`, `deployment_frequency.py` and `lead_time_for_changes.py` ) in a folder named `dora` at the root of your GitHub repository:
 
 <details>
   <summary><b>Calculate PR Metrics</b></summary>
