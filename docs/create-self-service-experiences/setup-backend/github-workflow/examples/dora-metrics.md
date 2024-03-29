@@ -1021,7 +1021,7 @@ if __name__ == "__main__":
 <details>
   <summary><b>Sample Input</b></summary>
 :::tip
-- `<Entity-ID>` - your target entity id in port
+- `<Entity-ID>` - your target entity identifier in Port
 - `<GITHUB-ORG>` - your GitHub organization or user name.
 - `<GITHUB-REPO-NAME>` - your GitHub repository name.
 :::
