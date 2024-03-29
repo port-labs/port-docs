@@ -1026,7 +1026,7 @@ if __name__ == "__main__":
 - `<GITHUB-REPO-NAME>` - your GitHub repository name.
 :::
 
-```json showLineNumbers title="sample input json"
+```json showLineNumbers
 
 {
   "$targetEntity": "<Entity-ID>",
