@@ -189,10 +189,8 @@ createMissingRelatedEntities: false
         mappings:
           identifier: .name
           blueprint: '"service"'
-          properties: {
-          #Properties mapping
-          }
-          relations:
+          properties: 
+            #Properties mapping
   - kind: services
     selector:
       query: "true"
