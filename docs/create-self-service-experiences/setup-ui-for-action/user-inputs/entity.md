@@ -1,6 +1,7 @@
 ---
 sidebar_position: 4
 description: Entity is an input used to reference existing entities from the software catalog when triggering actions
+sidebar_class_name: "custom-sidebar-item sidebar-property-entity"
 ---
 
 import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"

@@ -20,7 +20,7 @@ BITBUCKET_API_URL = config("BITBUCKET_HOST")
 PORT_API_URL = "https://api.getport.io/v1"
 
 ## According to https://support.atlassian.com/bitbucket-cloud/docs/api-request-limits/
-RATE_LIMIT = 1000  # Maximum number of requests allowed per hour 
+RATE_LIMIT = 1000  # Maximum number of requests allowed per hour
 RATE_PERIOD = 3600  # Rate limit reset period in seconds (1 hour)
 
 # Initialize rate limiting variables
@@ -111,7 +111,7 @@ def process_project_entities(projects_data: list[dict[str, Any]]):
         add_entity_to_port(blueprint_id=blueprint_id, entity_object=entity)
 
 def process_repository_entities(repository_data: list[dict[str, Any]]):
-    blueprint_id = "bitbucketRepository"
+    blueprint_id = "service"
 
     for repo in repository_data:
 
@@ -157,16 +157,16 @@ def process_pullrequest_entities(pullrequest_data: list[dict[str, Any]]):
             }
         }
         add_entity_to_port(blueprint_id=blueprint_id, entity_object=entity)
-    
+
 
 def get_repositories(project: dict[str, Any]):
     repositories_path = f"projects/{project['key']}/repos"
     for repositories_batch in get_paginated_resource(path=repositories_path):
         logger.info(f"received repositories batch with size {len(repositories_batch)} from project: {project['key']}")
         process_repository_entities(repository_data=repositories_batch)
-    
+
         get_repository_pull_requests(repository_batch=repositories_batch)
-    
+
 
 def get_repository_pull_requests(repository_batch: list[dict[str, Any]]):
     pr_params = {"state": "ALL"} ## Fetch all pull requests

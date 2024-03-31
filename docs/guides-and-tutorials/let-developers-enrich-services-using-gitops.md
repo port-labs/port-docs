@@ -203,7 +203,7 @@ Now we'll define the backend of the action. Port supports multiple invocation ty
 
   - You will need to have [Port's Github app](https://github.com/apps/getport-io) installed in your Github organization (the one that contains the repository you'll work with).
   - Replace the `Organization` and `Repository` values with your values (this is where the workflow will reside and run).
-  - Name the workflow `portEnrichService.yaml`.
+  - Name the workflow `port-enrich-service.yml`.
   - Fill out the rest of the form like this, then click `Next`:
 
 <img src='/img/guides/gitopsActionBackendForm.png' width='75%' />
@@ -365,7 +365,7 @@ Now let's create the file that contains our logic:
 
 <TabItem value="github">
 
-In the same repository, under `.github/workflows`, create a new file named `portEnrichService.yaml` and use the following snippet as its content:
+In the same repository, under `.github/workflows`, create a new file named `port-enrich-service.yml` and use the following snippet as its content:
 
 <details>
 <summary><b>Github workflow (click to expand)</b></summary>

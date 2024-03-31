@@ -1,6 +1,7 @@
 ---
 sidebar_position: 6
 description: Object is a basic input for JSON data
+sidebar_class_name: "custom-sidebar-item sidebar-property-object"
 ---
 
 import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"

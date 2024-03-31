@@ -1,11 +1,11 @@
 ---
 title: Search & query
-sidebar_label: 🔍 Search & query
+sidebar_label: Search & query
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
-# 🔍 Search & query
+# Search & query
 
 import CombinatorIntro from "./\_combinator_intro.md"
 
@@ -14,7 +14,7 @@ import TabItem from "@theme/TabItem"
 
 Port's API provides tools to easily query, search and filter software catalog data.
 
-## 💡 Common queries usage
+## Common queries usage
 
 High quality search is essential to effectively track assets in your software catalog, using Port's search you can:
 

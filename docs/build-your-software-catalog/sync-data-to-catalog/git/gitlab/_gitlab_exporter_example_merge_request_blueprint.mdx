@@ -37,12 +37,19 @@
         "title": "Link",
         "format": "url",
         "type": "string"
+      },
+      "reviewers": {
+        "title": "Reviewers",
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
       }
     }
   },
   "relations": {
-    "repository": {
-      "target": "gitlabRepository",
+    "service": {
+      "target": "service",
       "required": false,
       "many": false
     }
