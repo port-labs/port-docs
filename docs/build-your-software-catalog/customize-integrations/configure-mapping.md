@@ -208,6 +208,6 @@ createMissingRelatedEntities: false
 
 Looking at this mapping configuration we see the following:
 * The first mapping is used to create the entity along with all of its properties.
-* The second mapping is used to update the same entity (notice the mapping for the identifier is the same in both configurations) with the relations. If the target entity of the relation does not exist (You have no matching PagerDuty service), the update itself will fail, but ingestion will still happen.
+* The second `kind` block is used to update the same entity (notice the mapping for the identifier is the same in both configurations) with relations. If the target entity of the relation does not exist (i.e. you have no matching PagerDuty service), the update itself will fail, but the data ingestion will still complete successfully.
 
 This case can also be expanded for handling multiple relation, for each relation that might not be established, you can split it into another kind mapping.
