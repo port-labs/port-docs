@@ -166,7 +166,7 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Install jq
         run: sudo apt-get install jq
@@ -174,7 +174,7 @@ jobs:
       - name: Read Config and Output Matrix
         id: set-matrix
         run: |
-          CONFIG_JSON=$(jq -c . src/dora-config.json)
+          CONFIG_JSON=$(jq -c . dora/dora-config.json)
           MATRIX_JSON=$(echo $CONFIG_JSON | jq -c '{include: .}')
           echo "matrix=${MATRIX_JSON}" >> $GITHUB_OUTPUT
 
@@ -186,7 +186,7 @@ jobs:
       matrix: ${{fromJson(needs.setup.outputs.matrix)}}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           repository: ${{ matrix.include.repository }}
           
@@ -198,14 +198,14 @@ jobs:
           echo "ENTITY_TITLE=$TITLE" >> $GITHUB_ENV
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r src/requirements.txt
+          pip install -r dora/requirements.txt
 
       - name: Compute PR Metrics
         env:
@@ -213,7 +213,7 @@ jobs:
           REPOSITORY: ${{ matrix.repository }}
           OWNER: ${{ matrix.owner }}
         run: |
-          python src/calculate_pr_metrics.py
+          python dora/calculate_pr_metrics.py
 
       - name: Deployment Frequency
         id: deployment_frequency
@@ -223,7 +223,7 @@ jobs:
           REPOSITORY: ${{ matrix.repository }}
           OWNER: ${{ matrix.owner }}
           BRANCH: ${{ matrix.branch }}
-        run: python src/deploymentfrequency.py
+        run: python dora/deployment_frequency.py
 
       - name: Lead Time For Changes
         env:
@@ -232,7 +232,7 @@ jobs:
           REPOSITORY: ${{ matrix.repository }}
           OWNER: ${{ matrix.owner }}
           BRANCH: ${{ matrix.branch }}
-        run: python src/leadtimeforchanges.py
+        run: python dora/lead_time_for_changes.py
 
       - name: UPSERT Entity
         uses: port-labs/port-github-action@v1
