@@ -174,7 +174,7 @@ After ingesting all of our services and PagerDuty services, we want to connect e
 
 ## Common use-cases
 
-### splitting a kind block
+### Splitting a `kind` block
 Sometimes the `CreateRelatedMissingEntities` flag is passed as `false` to not generate additional entities for relations. This can lead to cases where entity ingestion will not happen because the target entity for a relation does not exist in your catalog. To handle this case, you can split a single kind to multiple mappings like so:
 
 
