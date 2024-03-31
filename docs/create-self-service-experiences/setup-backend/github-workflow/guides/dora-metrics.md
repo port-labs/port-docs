@@ -411,7 +411,6 @@ class RepositoryMetrics:
             aggregated["total_loc_changed"] += result["total_loc_changed"]
             aggregated["review_dates"].extend(result["review_dates"])
 
-        # Calculate average PRs reviewed per week
         review_weeks = {
             review_date.isocalendar()[1] for review_date in aggregated["review_dates"]
         }
@@ -467,14 +466,14 @@ class RepositoryMetrics:
 def main():
     owner = os.getenv("OWNER")
     repo = os.getenv("REPOSITORY")
-    time_frame = os.getenv("TIMEFRAME_IN_DAYS")  # os.getenv('TIME_FRAME')
+    time_frame = os.getenv("TIMEFRAME_IN_DAYS")
     print("Repository Name:", f"{owner}/{repo}")
     print("TimeFrame (in days):", time_frame)
 
     repo_metrics = RepositoryMetrics(owner, repo, time_frame)
     metrics = repo_metrics.calculate_pr_metrics()
 
-    metrics_json = json.dumps(metrics, default=str)  # Ensure proper serialization
+    metrics_json = json.dumps(metrics, default=str)
     with open(os.getenv("GITHUB_ENV"), "a") as github_env:
         github_env.write(f"metrics={metrics_json}\n")
 
@@ -867,7 +866,7 @@ class LeadTimeForChanges:
 if __name__ == "__main__":
     owner = os.getenv("OWNER")
     repo = os.getenv("REPOSITORY")
-    token = os.getenv("GITHUB_TOKEN")  # Your personal access token or GitHub App token
+    token = os.getenv("GITHUB_TOKEN")
     workflows = os.getenv("WORKFLOWS", "[]")
     branch = os.getenv("BRANCH", "main")
     time_frame = int(os.getenv("TIMEFRAME_IN_DAYS", 30))
@@ -881,4 +880,4 @@ if __name__ == "__main__":
 ```
 </details>
 
-5. Congrats 🎉 You've successfully scheduled a github action to periodically ingest estimated `DORA Metrics` for github repository(s).
+Congrats 🎉 You've successfully scheduled a github action to periodically ingest estimated `DORA Metrics` for github repository(s).
