@@ -172,7 +172,7 @@ After ingesting all of our services and PagerDuty services, we want to connect e
       This is just the convention we chose for this example, but you can use a different one if you'd like.
 
 
-## Common cases
+## Common use-cases
 
 ### splitting a kind block
 Sometimes the `CreateRelatedMissingEntities` flag is passed as `false` to not generate additional entities for relations. This can lead to cases where entity ingestion will not happen because the target entity for a relation does not exist in your catalog. To handle this case, you can split a single kind to multiple mappings like so:
