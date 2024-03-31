@@ -170,3 +170,42 @@ After ingesting all of our services and PagerDuty services, we want to connect e
 
      Now, if a `service's` **identifier** is equal to a `PagerDuty service's` **name**, that service will automatically have its on-call property filled with the relevant PagerDuty service.  
       This is just the convention we chose for this example, but you can use a different one if you'd like.
+
+
+## Common cases
+
+### splitting a kind block
+Sometimes the `CreateRelatedMissingEntities` flag is passed as `false` to not generate additional entities for relations. This can lead to cases where entity ingestion will not happen because the target entity for a relation does not exist in your catalog. To handle this case, you can split a single kind to multiple mappings like so:
+
+
+```yaml showLineNumbers
+createMissingRelatedEntities: false
+  - kind: services
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .name
+          blueprint: '"service"'
+          properties: {
+          #Properties mapping
+          }
+          relations:
+  - kind: services
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .name
+          blueprint: '"service"'
+          properties: {}
+          relations:
+            pagerduty_service: .id
+```
+Looking at this mapping configuration we see the following:
+* The first mapping is used to create the entity along with all of its properties.
+* The second mapping is used to update the same entity (notice the mapping for the identifier is the same in both configurations) with the relations. If the target entity of the relation does not exist (You have no matching PagerDuty service), the update itself will fail, but ingestion will still happen.
+
+This case can also be expanded for handling multiple relation, for each relation that might not be established, you can split it into another kind mapping.
