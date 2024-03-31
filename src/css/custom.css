@@ -406,10 +406,17 @@ html[data-theme="dark"] details details  {
 }
 
 .openapi-params__list-item:not(.anything) {
-  background-color: rgba(247,249,250,1);
   padding: 1rem;
   margin: 0 0 1rem 0 !important;
   border-radius: 8px;
+}
+
+html[data-theme="light"] .openapi-params__list-item {
+  background-color: rgba(247,249,250,1) !important;
+}
+
+html[data-theme="dark"] .openapi-params__list-item {
+  background-color: rgb(40,42,54) !important;
 }
 
 .openapi-params__list-item::before {
@@ -421,6 +428,14 @@ html[data-theme="dark"] details details  {
   padding: 1rem !important;
   margin: 0 0 1rem 0 !important;
   border-radius: 8px;
+}
+
+html[data-theme="light"] .openapi-schema__list-item {
+  background-color: rgba(247,249,250,1) !important;
+}
+
+html[data-theme="dark"] .openapi-schema__list-item {
+  background-color: rgb(40,42,54) !important;
 }
 
 .openapi-schema__list-item::before {
@@ -457,7 +472,6 @@ html[data-theme="dark"] details details  {
 }
 
 .openapi-explorer__details-container:not(.anything) {
-  background-color: rgba(247,249,250,1);
   margin: 0 0 1.5rem 0 !important;
   border-radius: 8px;
 }
