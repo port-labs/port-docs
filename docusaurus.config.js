@@ -179,16 +179,16 @@ const config = {
             title: "Community",
             items: [
               {
+                label: "Slack",
+                href: "https://www.getport.io/community",
+              },
+              {
                 label: "Twitter",
                 href: "https://twitter.com/tweetsbyport",
               },
               {
                 label: "Linkedin",
                 href: "https://www.linkedin.com/company/getport/",
-              },
-              {
-                label: "DevEx Community",
-                href: "https://join.slack.com/t/devex-community/shared_invite/zt-1bmf5621e-GGfuJdMPK2D8UN58qL4E_g",
               },
             ],
           },

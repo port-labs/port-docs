@@ -1,20 +1,20 @@
 ---
 sidebar_position: 2
-title: Connect GitHub pull request with SonarQube analysis
+title: Connect GitHub pull request to SonarQube analysis
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
-# Connect GitHub PR with SonarQube analysis
+# Connect GitHub PR to SonarQube analysis
 
 This guide aims to cover how to connect a GitHub pull request with a SonarQube analysis to understand the scan results of your PR.
 
 :::tip Prerequisites
 
 - This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart).
-- Ensure you have SonarQube installed and configured in your environment.
+- Ensure you have [SonarQube ocean integration](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube/sonarqube.md) installed and configured in your environment.
 - Ensure you have a registered organization in Port and your Port user role is set to `Admin`.
 - You will need an accessible k8s cluster. If you don't have one, here is how to quickly set-up a [minikube cluster](https://minikube.sigs.k8s.io/docs/start/).
 - [Helm](https://helm.sh/docs/intro/install/) - required to install a relevant integration.
