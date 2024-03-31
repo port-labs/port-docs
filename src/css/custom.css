@@ -526,3 +526,13 @@ html[data-theme="dark"] .openapi-schema__list-item {
 .openapi-tabs__mime-item {
   display: none !important;
 }
+
+.openapi-tabs__response-header-section {
+  display:grid !important;
+  gap: 1rem !important;
+}
+
+.openapi-tabs__response-container {
+  padding: 0 !important;
+  max-width: fit-content !important;
+}
