@@ -79,7 +79,7 @@ This page contains a list of Port's available integrations, organized by the pla
 ## ArgoCD
 
 - [ArgoCD exporter and webhook integration](/build-your-software-catalog/sync-data-to-catalog/kubernetes/argocd/)
-- [ArgoCD events](/build-your-software-catalog/sync-data-to-catalog/kubernetes/argocd/argocd.md#argocd-events)
+- [ArgoCD events](/build-your-software-catalog/sync-data-to-catalog/argocd/argocd.md#argocd-events)
 - [Connect ArgoCD deployment to image](/build-your-software-catalog/sync-data-to-catalog/kubernetes/argocd/examples/connect-argocd-deployment-to-image)
 - [Rollback ArgoCD deployment](/create-self-service-experiences/setup-backend/github-workflow/examples/argocd/rollback-argocd-deployment)
 - [Self-service action to synchronize ArgoCD application](/create-self-service-experiences/setup-backend/github-workflow/examples/argocd/sync-argocd-app)
