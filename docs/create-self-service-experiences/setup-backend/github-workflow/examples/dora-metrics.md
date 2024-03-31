@@ -294,9 +294,9 @@ httpx==0.27.0
 |----------------------|------------------------------------------------------------------------------------------------------|----------|--------------------
 | owner              | GitHub organization or user name                                                            | true    | -               |
 | repository              | your GitHub repository name                                                              | true    | -               |
-| timeframe              | The email address of a valid user associated with the account making the request.                                                              | false    | 4               |
+| timeframe              | Time frame in weeks to calculate metrics on                                                                | false    | 4               |
 | branch              | your preferred GitHub repository branch to estimate metrics on                                                              | false    | main              |
-| workflows              | The workflows within the repositories branch to include in estimating the metrics                                                              | false    | []               |
+| workflows              | An array of workflows to process. Multiple workflows can be separated by a comma (,)                                                              | false    | []               |
 
 
 ```json showLineNumbers title="dora-config.json"
