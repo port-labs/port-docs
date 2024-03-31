@@ -7,6 +7,10 @@ const sidebar: SidebarsConfig = {
       id: "api-reference/port-api",
     },
     {
+      type: "doc",
+      id: "api-reference/rate-limits",
+    },
+    {
       type: "category",
       label: "Blueprints",
       items: [
