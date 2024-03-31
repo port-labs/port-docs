@@ -6,106 +6,13 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 # DORA Metrics
 
-In this guide, we will create a self-service action in Port that executes a GitHub workflow to compute the DORA Metrics for a service.
+In this guide, we will create a github action that computes the DORA Metrics for a service (repository) on schedule and ingests the results to Port.
 
 ## Prerequisites
-1. Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new).
-2. A GitHub repository in which you can trigger a workflow that we will use in this guide.
+1. A GitHub repository in which you can trigger a workflow that we will use in this guide.
+2. A blueprint in port to host the Dora Metrics.
 
-Below you can find the JSON for the `Service` and `DORA Metrics` blueprints required for the guide:
-
-<details>
-<summary><b>Service blueprint (click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "identifier": "service",
-  "title": "Service",
-  "icon": "Github",
-  "schema": {
-    "properties": {
-      "readme": {
-        "title": "README",
-        "type": "string",
-        "format": "markdown",
-        "icon": "Book"
-      },
-      "url": {
-        "title": "URL",
-        "format": "url",
-        "type": "string",
-        "icon": "Link"
-      },
-      "language": {
-        "icon": "Git",
-        "type": "string",
-        "title": "Language",
-        "enum": [
-          "GO",
-          "Python",
-          "Node",
-          "React"
-        ],
-        "enumColors": {
-          "GO": "red",
-          "Python": "green",
-          "Node": "blue",
-          "React": "yellow"
-        }
-      },
-      "slack": {
-        "icon": "Slack",
-        "type": "string",
-        "title": "Slack",
-        "format": "url"
-      },
-      "code_owners": {
-        "title": "Code owners",
-        "description": "This service's code owners",
-        "type": "string",
-        "icon": "TwoUsers"
-      },
-      "type": {
-        "title": "Type",
-        "description": "This service's type",
-        "type": "string",
-        "enum": [
-          "Backend",
-          "Frontend",
-          "Library"
-        ],
-        "enumColors": {
-          "Backend": "purple",
-          "Frontend": "pink",
-          "Library": "green"
-        },
-        "icon": "DefaultProperty"
-      },
-      "lifecycle": {
-        "title": "Lifecycle",
-        "type": "string",
-        "enum": [
-          "Production",
-          "Staging",
-          "Development"
-        ],
-        "enumColors": {
-          "Production": "green",
-          "Staging": "yellow",
-          "Development": "blue"
-        },
-        "icon": "DefaultProperty"
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "aggregationProperties": {},
-  "relations": {}
-}
-```
-</details>
+Below, you can find the JSON for the `DORA Metrics` blueprint required for the guide:
 
 <details>
 <summary><b>DORA Metrics blueprint (click to expand)</b></summary>
@@ -237,289 +144,105 @@ Follow these steps to get started:
 1. Create the following GitHub Action secrets:
     - `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token)
     - `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token)
-    - `PATTOKEN` - GitHub PAT fine-grained token. Ensure that read-only access to actions and metadata permission is set. Grant access to repositories where this GitHub Action will run. [learn more](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token).
-2. Create an action in the [self-service page](https://app.getport.io/self-serve) on the `Service` blueprint with the following JSON definitions:
+    - `PATTOKEN` - GitHub PAT fine-grained token. Ensure that read-only access to actions and metadata permission is set. Grant this action access to the repositories where the metrics are to be estimated for . [learn more](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token).
+
+2. In your Github repository, create a workflow file under `.github/workflows/dora-metrics.yml` with the following content:
 
 <details>
-  <summary><b>Port Action: Dora Metrics (click to expand)</b></summary>
-   :::tip
-- `<GITHUB-ORG>` - your GitHub organization or user name.
-- `<GITHUB-REPO-NAME>` - your GitHub repository name.
-:::
-
-
-```json showLineNumbers
-{
-  "identifier": "dora_metrics",
-  "title": "DORA Metrics",
-  "icon": "Github",
-  "userInputs": {
-    "properties": {
-      "timeframe": {
-        "icon": "Github",
-        "title": "Timeframe",
-        "description": "Time frame in weeks to calculate metrics on",
-        "type": "number",
-        "default": 4,
-        "minimum": 1
-      },
-      "workflow": {
-        "title": "workflow",
-        "description": "The name of the workflows to process. Multiple workflows can be separated by a comma (,) .",
-        "icon": "Github",
-        "type": "string"
-      },
-      "repository": {
-        "title": "Repository",
-        "format": "url",
-        "type": "string",
-        "icon": "Github",
-        "default": {
-          "jqQuery": ".entity.properties.url"
-        }
-      }
-    },
-    "required": [
-      "timeframe",
-      "workflow"
-    ],
-    "order": [
-      "timeframe",
-      "workflow"
-    ]
-  },
-  "invocationMethod": {
-    "type": "GITHUB",
-    "org": "<GITHUB-ORG>",
-    "repo": "<GITHUB-REPO-NAME>",
-    "workflow": "dora-metrics.yaml",
-    "omitUserInputs": false,
-    "omitPayload": false,
-    "reportWorkflowStatus": true
-  },
-  "trigger": "DAY-2",
-  "description": "Calculate DORA metrics for a service",
-  "requiredApproval": false
-}
-```
-
-</details>
-
-3. In your Github repository, create a workflow file under `.github/workflows/dora-metrics.yml` with the following content:
-
-<details>
-
 <summary><b>GitHub workflow: Ingest DORA Metrics (click to expand)</b></summary>
 
 ```yaml showLineNumbers title="dora-metrics.yml"
 name: Ingest DORA Metrics
 
 on:
+  schedule:
+    - cron: '0 2 * * 1'
   workflow_dispatch:
-    inputs:
-      repository:
-        description: 'Comma-separated list of repositories to analyze (eg. https://github.com/port-labs/self-service-actions)'
-        required: true
-      timeframe:
-        description: 'Time frame within which metrics should be computed. e.g. 4 for Last 4 weeks'
-        required: true
-      workflow:
-        description: 'The name of the workflows to process. Multiple workflows can be separated by a comma (,).'
-        required: true
-      port_payload:
-        required: true
-        description: 'Port's payload, including details for who triggered the action and
-          general context (blueprint, run id, etc...)'
-        type: string
-      
-jobs:
-  compute-dora-metrics:
-    runs-on: ubuntu-latest
-    steps:
-    
-      - name: Checkout code
-        uses: actions/checkout@v4
-        
-      - name: Transform Workflow Inputs
-        run: |
-          days=$(( ${{ github.event.inputs.timeframe }} * 7 ))
-          repository_path=$(echo "${{ github.event.inputs.repository }}" | awk -F'com/' '{print $NF}')
-          # repo_name="${repository_path##*/}"
-          cleaned_name=$(echo "${repository_path##*/}" | tr -c '[:alnum:]' ' ')
-          title=$(echo "$cleaned_name" | awk '{for(i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) tolower(substr($i,2));}1')
 
-          # export to github enviroment vars
-          echo "TIMEFRAME_IN_DAYS=$days" >> $GITHUB_ENV
-          echo "REPOSITORY=$repository_path" >> $GITHUB_ENV
-          echo "TITLE=$title" >> $GITHUB_ENV
-        shell: bash
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install jq
+        run: sudo apt-get install jq
+
+      - name: Read Config and Output Matrix
+        id: set-matrix
+        run: |
+          CONFIG_JSON=$(jq -c . src/dora-config.json)
+          MATRIX_JSON=$(echo $CONFIG_JSON | jq -c '{include: .}')
+          echo "matrix=${MATRIX_JSON}" >> $GITHUB_OUTPUT
+
+  compute-dora-metrics:
+    needs: setup
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: ${{fromJson(needs.setup.outputs.matrix)}}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ matrix.include.repository }}
+          
+      - name: Transform Workflow Parameters
+        run: |
+          echo "TIMEFRAME_IN_DAYS=$(( ${{ matrix.timeframe }} * 7 ))" >> $GITHUB_ENV
+          cleaned_name=$(echo "${{ matrix.repository }}" | tr -c '[:alnum:]' ' ')
+          TITLE=$(echo "${cleaned_name}" | awk '{for(i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) tolower(substr($i,2));}1')
+          echo "ENTITY_TITLE=$TITLE" >> $GITHUB_ENV
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v2
         with:
           python-version: '3.x'
 
-      - name: Notify intent to install dependencies
-        if: failure()
-        uses: port-labs/port-github-action@v1
-        with:
-          clientId: ${{ secrets.PORT_CLIENT_ID }}
-          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          baseUrl: https://api.getport.io
-          operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
-          logMessage: "Installing required packages for the action..."
-          
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r dora/requirements.txt
+          pip install -r src/requirements.txt
 
-      - name: Report Failure In Settting Up Dependencies
-        if: failure()
-        uses: port-labs/port-github-action@v1
-        with:
-          clientId: ${{ secrets.PORT_CLIENT_ID }}
-          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          baseUrl: https://api.getport.io
-          operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
-          logMessage: "Failed to install required packages for the action ..."
-
-      - name: Log Before Running PR Metrics
-        uses: port-labs/port-github-action@v1
-        with:
-          clientId: ${{ secrets.PORT_CLIENT_ID }}
-          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          baseUrl: https://api.getport.io
-          operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
-          logMessage: "Computing PR metrics on the repository ..."
-          
       - name: Compute PR Metrics
         env:
-          GITHUB_TOKEN: ${{ secrets.PATTOKEN }}  # Use the automatically provided GITHUB_TOKEN
-          REPOSITORY: ${{ env.REPOSITORY }}
-        run: python dora/calculate_pr_metrics.py
+          GITHUB_TOKEN: ${{ secrets.PATTOKEN }}
+          REPOSITORY: ${{ matrix.repository }}
+          OWNER: ${{ matrix.owner }}
+        run: |
+          python src/calculate_pr_metrics.py
 
-      - name: Report Failure In Computing PR Metrics
-        if: failure()
-        uses: port-labs/port-github-action@v1
-        with:
-          clientId: ${{ secrets.PORT_CLIENT_ID }}
-          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          baseUrl: https://api.getport.io
-          operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
-          logMessage: "Failed to compute Pull Request Metrics❌"
-
-      - name: Report Success In Computing PR Metrics
-        uses: port-labs/port-github-action@v1
-        with:
-          clientId: ${{ secrets.PORT_CLIENT_ID }}
-          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          baseUrl: https://api.getport.io
-          operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
-          logMessage: "Successfully Computed Pull Request metric for the service ✅"
-          
-      - name: Log Before Running Deployment Frequency
-        uses: port-labs/port-github-action@v1
-        with:
-          clientId: ${{ secrets.PORT_CLIENT_ID }}
-          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          baseUrl: https://api.getport.io
-          operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
-          logMessage: "Computing deployment frequency metric ..."
-          
       - name: Deployment Frequency
-        id: deployment_fequency
+        id: deployment_frequency
         env:
-          WORKFLOWS: ${{ inputs.workflow }}
-          GITHUB_TOKEN: ${{ secrets.PATTOKEN }} 
-          REPOSITORY: ${{ env.REPOSITORY }}
-        run: python dora/deployment_frequency.py
+          WORKFLOWS: ${{ toJson(matrix.workflows) }}
+          GITHUB_TOKEN: ${{ secrets.PATTOKEN }}
+          REPOSITORY: ${{ matrix.repository }}
+          OWNER: ${{ matrix.owner }}
+          BRANCH: ${{ matrix.branch }}
+        run: python src/deploymentfrequency.py
 
-      - name: Report Failure In Computing Deployment Frequency
-        if: failure()
-        uses: port-labs/port-github-action@v1
-        with:
-          clientId: ${{ secrets.PORT_CLIENT_ID }}
-          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          baseUrl: https://api.getport.io
-          operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
-          logMessage: "Failed to compute Deployment Frequency ❌"
-          
-      - name: Report Success In Computing Deployment Frequency
-        uses: port-labs/port-github-action@v1
-        with:
-          clientId: ${{ secrets.PORT_CLIENT_ID }}
-          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          baseUrl: https://api.getport.io
-          operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
-          logMessage: "Successfully computed deployment frequency ✅"
-          
-      - name: Log Before Running Lead Time for Changes
-        uses: port-labs/port-github-action@v1
-        with:
-          clientId: ${{ secrets.PORT_CLIENT_ID }}
-          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          baseUrl: https://api.getport.io
-          operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
-          logMessage: "Computing lead time for changes metric ..."
-          
       - name: Lead Time For Changes
-        id: lead_time_for_changes
         env:
-          WORKFLOWS: ${{ inputs.workflow }}
-          GITHUB_TOKEN: ${{ secrets.PATTOKEN }} 
-          REPOSITORY: ${{ env.REPOSITORY }}
-        run: python dora/lead_time_forchanges.py
-
-      - name: Report Failure In Lead Time For Changes
-        if: failure()
-        uses: port-labs/port-github-action@v1
-        with:
-          clientId: ${{ secrets.PORT_CLIENT_ID }}
-          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          baseUrl: https://api.getport.io
-          operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
-          logMessage: "Failed to compute lead time for changes ❌"
-          
-      - name: Report Success In Lead Time For Changes
-        uses: port-labs/port-github-action@v1
-        with:
-          clientId: ${{ secrets.PORT_CLIENT_ID }}
-          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          baseUrl: https://api.getport.io
-          operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
-          logMessage: "Successfully computed lead time for changes ✅"
-          
-      - name: Log Before Upserting Entity
-        uses: port-labs/port-github-action@v1
-        with:
-          clientId: ${{ secrets.PORT_CLIENT_ID }}
-          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          baseUrl: https://api.getport.io
-          operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
-          logMessage: "Upserting DORA Metrics to Port"
+          WORKFLOWS: ${{ toJson(matrix.workflows) }}
+          GITHUB_TOKEN: ${{ secrets.PATTOKEN }}
+          REPOSITORY: ${{ matrix.repository }}
+          OWNER: ${{ matrix.owner }}
+          BRANCH: ${{ matrix.branch }}
+        run: python src/leadtimeforchanges.py
 
       - name: UPSERT Entity
         uses: port-labs/port-github-action@v1
         with:
-          identifier: "${{ fromJson(env.metrics).id }}"
-          title: ${{ env.TITLE }}
+          identifier: ${{ fromJson(env.metrics).id }}
+          title: ${{ env.ENTITY_TITLE }}
           blueprint: doraMetrics
           properties: |-
             {
-              "timeFrameInWeeks": ${{ github.event.inputs.timeframe }},
+              "timeFrameInWeeks": ${{ matrix.timeframe }},
               "totalDeployments": "${{ fromJson(env.deployment_frequency_report).total_deployments }}",
               "deploymentRating": "${{ fromJson(env.deployment_frequency_report).rating }}",
               "numberOfUniqueDeploymentDays": "${{ fromJson(env.deployment_frequency_report).number_of_unique_deployment_days }}",
@@ -542,46 +265,54 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: UPSERT
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
-
-      - name: Report Failure In Upserting Entity
-        if: failure()
-        uses: port-labs/port-github-action@v1
-        with:
-          clientId: ${{ secrets.PORT_CLIENT_ID }}
-          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          baseUrl: https://api.getport.io
-          operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
-          logMessage: "Failed to upsert entity to port ❌"
-          
-      - name: Report Successful Upserting of Entity
-        uses: port-labs/port-github-action@v1
-        with:
-          clientId: ${{ secrets.PORT_CLIENT_ID }}
-          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          baseUrl: https://api.getport.io
-          operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
-          logMessage: "Entity upserting was successful ✅"
 ```
 
 </details>
-<br />
 
-4. Create a text file (`requirements.txt`) in a folder name `dora` to host the required dependencies for running the action.
+3. Create a text file (`requirements.txt`) and a json file (`dora-config.json`) in a folder named `dora` to host the required dependencies and configurations for running the workflow respectively.
 <details>
   <summary><b>Requirements</b></summary>
 
 ```text showLineNumbers title="requirements.txt"
 PyGithub==2.3.0
-requests==2.31.0
-pytz==2024.1
+loguru==0.7.2
+httpx==0.27.0
 ```
 
 </details>
 
-5. Create the following python scripts (`calculate_pr_metrics.py`, `deployment_frequency.py` and `lead_time_for_changes.py` ) in a folder named `dora` at the root of your GitHub repository:
+
+<details>
+  <summary><b>Dora Configuration Template</b></summary>
+:::tip
+- `<GITHUB-ORG>` - your GitHub organization or user name.
+- `<GITHUB-REPO-NAME>` - your GitHub repository name.
+- `<REPO-BRANCH>` - your preferred GitHub repository branch to estimate metrics on.
+:::
+
+| Name                 | Description                                                                                          | Required | Default            |
+|----------------------|------------------------------------------------------------------------------------------------------|----------|--------------------
+| owner              | GitHub organization or user name                                                            | true    | -               |
+| repository              | your GitHub repository name                                                              | true    | -               |
+| timeframe              | The email address of a valid user associated with the account making the request.                                                              | false    | 4               |
+| branch              | your preferred GitHub repository branch to estimate metrics on                                                              | false    | main              |
+| workflows              | The workflows within the repositories branch to include in estimating the metrics                                                              | false    | []               |
+
+
+```json showLineNumbers title="dora-config.json"
+[
+  {
+    "owner": "<GITHUB-ORG>",
+    "repository": "<GITHUB-REPO-NAME>",
+    "branch": "<REPO-BRANCH>",
+    "timeframe": 4,
+    "workflows": ["ci.yaml","cd.yaml"]
+  }
+]
+```
+</details>
+
+4. Create the following python scripts (`calculate_pr_metrics.py`, `deployment_frequency.py` and `lead_time_for_changes.py` ) in the folder named `dora` created earlier at the root of your GitHub repository:
 
 <details>
   <summary><b>Calculate PR Metrics</b></summary>
@@ -589,20 +320,20 @@ pytz==2024.1
 ```python showLineNumbers title="calculate_pr_metrics.py"
 import os
 from github import Github
-from datetime import datetime, timedelta, timezone
+import datetime
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import json
 
 
 class RepositoryMetrics:
-    def __init__(self, repo_name, time_frame):
+    def __init__(self, owner, repo, time_frame):
         self.github_client = Github(os.getenv("GITHUB_TOKEN"))
-        self.repo_name = repo_name
+        self.repo_name = f"{owner}/{repo}"
         self.time_frame = int(time_frame)
-        self.start_date = datetime.utcnow().replace(tzinfo=timezone.utc) - timedelta(
-            days=self.time_frame
-        )
-        self.repo = self.github_client.get_repo(self.repo_name)
+        self.start_date = datetime.datetime.now(datetime.UTC).replace(
+            tzinfo=datetime.timezone.utc
+        ) - datetime.timedelta(days=self.time_frame)
+        self.repo = self.github_client.get_repo(f"{self.repo_name}")
 
     def calculate_pr_metrics(self):
         prs = self.repo.get_pulls(state="all", sort="created", direction="desc")
@@ -622,9 +353,9 @@ class RepositoryMetrics:
 
     def process_pr(self, pr):
         pr_metrics = {
-            "open_to_close_time": timedelta(0),
-            "time_to_first_review": timedelta(0),
-            "time_to_approval": timedelta(0),
+            "open_to_close_time": datetime.timedelta(0),
+            "time_to_first_review": datetime.timedelta(0),
+            "time_to_approval": datetime.timedelta(0),
             "prs_opened": 1,
             "prs_merged": int(pr.merged),
             "total_reviews": 0,
@@ -645,22 +376,22 @@ class RepositoryMetrics:
             if review.state in ["APPROVED", "CHANGES_REQUESTED", "COMMENTED"]:
                 pr_metrics["review_dates"].append(review.submitted_at)
                 pr_metrics["total_reviews"] += 1
-                if pr_metrics["time_to_first_review"] == timedelta(0):
+                if pr_metrics["time_to_first_review"] == datetime.timedelta(0):
                     pr_metrics["time_to_first_review"] = (
                         review.submitted_at - pr.created_at
                     )
                 if review.state == "APPROVED" and pr_metrics[
                     "time_to_approval"
-                ] == timedelta(0):
+                ] == datetime.timedelta(0):
                     pr_metrics["time_to_approval"] = review.submitted_at - pr.created_at
 
         return pr_metrics
 
     def aggregate_results(self, results):
         aggregated = {
-            "total_open_to_close_time": timedelta(0),
-            "total_time_to_first_review": timedelta(0),
-            "total_time_to_approval": timedelta(0),
+            "total_open_to_close_time": datetime.timedelta(0),
+            "total_time_to_first_review": datetime.timedelta(0),
+            "total_time_to_approval": datetime.timedelta(0),
             "prs_opened": 0,
             "prs_merged": 0,
             "total_reviews": 0,
@@ -680,6 +411,7 @@ class RepositoryMetrics:
             aggregated["total_loc_changed"] += result["total_loc_changed"]
             aggregated["review_dates"].extend(result["review_dates"])
 
+        # Calculate average PRs reviewed per week
         review_weeks = {
             review_date.isocalendar()[1] for review_date in aggregated["review_dates"]
         }
@@ -708,19 +440,22 @@ class RepositoryMetrics:
             )
             if aggregated["prs_merged"]
             else 0,
-            "average_reviews_per_pr": round(aggregated["total_reviews"]
-            / aggregated["prs_opened"],2)
+            "average_reviews_per_pr": round(
+                aggregated["total_reviews"] / aggregated["prs_opened"], 2
+            )
             if aggregated["prs_opened"]
             else 0,
-            "average_commits_per_pr": round(aggregated["total_commits"]
-            / aggregated["prs_opened"],2)
+            "average_commits_per_pr": round(
+                aggregated["total_commits"] / aggregated["prs_opened"], 2
+            )
             if aggregated["prs_opened"]
             else 0,
-            "average_loc_changed_per_pr": round(aggregated["total_loc_changed"]
-            / aggregated["prs_opened"],2)
+            "average_loc_changed_per_pr": round(
+                aggregated["total_loc_changed"] / aggregated["prs_opened"], 2
+            )
             if aggregated["prs_opened"]
             else 0,
-            "average_prs_reviewed_per_week": round(average_prs_reviewed_per_week,2),
+            "average_prs_reviewed_per_week": round(average_prs_reviewed_per_week, 2),
         }
 
         return metrics
@@ -730,21 +465,23 @@ class RepositoryMetrics:
 
 
 def main():
-    repo_name = os.getenv("REPOSITORY")
-    time_frame = os.getenv("TIMEFRAME_IN_DAYS")
-    print("Repository Name:", repo_name)
-    print("TimeFrame (in weeks):", time_frame)
+    owner = os.getenv("OWNER")
+    repo = os.getenv("REPOSITORY")
+    time_frame = os.getenv("TIMEFRAME_IN_DAYS")  # os.getenv('TIME_FRAME')
+    print("Repository Name:", f"{owner}/{repo}")
+    print("TimeFrame (in days):", time_frame)
 
-    repo_metrics = RepositoryMetrics(repo_name, time_frame)
+    repo_metrics = RepositoryMetrics(owner, repo, time_frame)
     metrics = repo_metrics.calculate_pr_metrics()
 
-    metrics_json = json.dumps(metrics, default=str)
+    metrics_json = json.dumps(metrics, default=str)  # Ensure proper serialization
     with open(os.getenv("GITHUB_ENV"), "a") as github_env:
         github_env.write(f"metrics={metrics_json}\n")
 
 
 if __name__ == "__main__":
     main()
+
 ```
 </details>
 
@@ -752,39 +489,80 @@ if __name__ == "__main__":
   <summary><b>Deployment Frequency</b></summary>
 
 ```python showLineNumbers title="deployment_frequency.py"
-from github import Github
 import datetime
-import pytz
 import os
+import base64
 import json
+import httpx
+from loguru import logger
+import asyncio
+
+PAGE_SIZE = 100
+
 
 class DeploymentFrequency:
-    def __init__(self, owner_repo, workflows, branch, number_of_days, pat_token=""):
-        self.owner_repo = owner_repo
-        self.workflows = workflows.split(',')
+    def __init__(self, owner, repo, workflows, branch, number_of_days, pat_token=""):
+        self.owner, self.repo = owner, repo
+        self.workflow_url = (
+            f"https://api.github.com/repos/{self.owner}/{self.repo}/actions/workflows"
+        )
+        self.workflows = json.loads(workflows)
         self.branch = branch
         self.number_of_days = number_of_days
         self.pat_token = pat_token
-        self.github = Github(pat_token) if pat_token else Github()
-        self.owner, self.repo_name = owner_repo.split('/')
-        self.repo = self.github.get_repo(f"{self.owner}/{self.repo_name}")
+        self.auth_header = self.get_auth_header
 
-    def fetch_workflow_runs(self):
+    @property
+    def get_auth_header(self):
+        encoded_credentials = base64.b64encode(f":{self.pat_token}".encode()).decode()
+        headers = {
+            "Authorization": f"Basic {encoded_credentials}",
+            "Content-Type": "application/json",
+        }
+        return headers
+
+    async def send_api_requests(self, url, params=None):
+        async with httpx.AsyncClient() as client:
+            try:
+                response = await client.get(
+                    url, headers=self.auth_header, params=params
+                )
+                response.raise_for_status()
+                return response.json()
+            except httpx.HTTPStatusError as e:
+                logger.error(f"HTTP error occurred: {e.response.status_code}")
+            except Exception as e:
+                logger.error(f"An error occurred: {e}")
+
+    async def get_workflows(self):
+        if not (self.workflows):
+            workflows = await self.send_api_requests(self.workflow_url)
+            if workflows:
+                workflow_ids = [workflow["id"] for workflow in workflows["workflows"]]
+                logger.info(f"Found {len(workflow_ids)} workflows in Repo")
+                return workflow_ids
+        else:
+            return self.workflows
+
+    async def fetch_workflow_runs(self):
+        workflow_ids = await self.get_workflows()
         workflow_runs_list = []
         unique_dates = set()
-        now_utc = datetime.datetime.now(pytz.utc)
-
-        for workflow_name in self.workflows:
-            workflows = self.repo.get_workflows()
-            for workflow in workflows:
-                if workflow.name == workflow_name:
-                    runs = workflow.get_runs(branch=self.branch)
-                    for run in runs:
-                        run_date = run.created_at.replace(tzinfo=pytz.utc)
-                        if run_date > now_utc - datetime.timedelta(days=self.number_of_days):
-                            workflow_runs_list.append(run)
-                            unique_dates.add(run_date.date())
-
+        for workflow_id in workflow_ids:
+            runs_url = f"{self.workflow_url}/{workflow_id}/runs"
+            params = {"per_page": PAGE_SIZE, "status": "completed"}
+            runs_response = await self.send_api_requests(runs_url, params=params)
+            for run in runs_response["workflow_runs"]:
+                run_date = datetime.datetime.strptime(
+                    run["created_at"], "%Y-%m-%dT%H:%M:%SZ"
+                )
+                if run[
+                    "head_branch"
+                ] == self.branch and run_date > datetime.datetime.now() - datetime.timedelta(
+                    days=self.number_of_days
+                ):
+                    workflow_runs_list.append(run)
+                    unique_dates.add(run_date.date())
         return workflow_runs_list, unique_dates
 
     def calculate_deployments_per_day(self, workflow_runs_list):
@@ -809,38 +587,45 @@ class DeploymentFrequency:
         else:
             return "None", "lightgrey"
 
-    def report(self):
-        workflow_runs_list, unique_dates = self.fetch_workflow_runs()
+    async def __call__(self):
+        workflow_runs_list, unique_dates = await self.fetch_workflow_runs()
         deployments_per_day = self.calculate_deployments_per_day(workflow_runs_list)
         rating, color = self.compute_rating(deployments_per_day)
 
-        results = {
-            "deployment_frequency": round(deployments_per_day, 2),
-            "rating": rating,
-            "number_of_unique_deployment_days": len(unique_dates),
-            "total_deployments": len(workflow_runs_list)
-        }
+        logger.info(f"Owner/Repo: {self.owner}/{self.repo}")
+        logger.info(f"Workflows: {self.workflows}")
+        logger.info(f"Branch: {self.branch}")
+        logger.info(f"Number of days: {self.number_of_days}")
+        logger.info(
+            f"Deployment frequency over the last {self.number_of_days} days is {deployments_per_day} per day"
+        )
+        logger.info(f"Rating: {rating} ({color})")
 
-        print(f"Owner/Repo: {self.owner}/{self.repo_name}")
-        print(f"Workflows: {', '.join(self.workflows)}")
-        print(f"Branch: {self.branch}")
-        print(f"Number of days: {self.number_of_days}")
-        print(f"Deployment frequency over the last {self.number_of_days} days is {deployments_per_day} per day")
-        print(f"Rating: {rating} ({color})")
-        return json.dumps(results, default=str)
+        return json.dumps(
+            {
+                "deployment_frequency": round(deployments_per_day, 2),
+                "rating": rating,
+                "number_of_unique_deployment_days": len(unique_dates),
+                "total_deployments": len(workflow_runs_list),
+            },
+            default=str,
+        )
+
 
 if __name__ == "__main__":
-    owner_repo = os.getenv('REPOSITORY')
-    token = os.getenv('GITHUB_TOKEN')
-    workflows = os.getenv('WORKFLOWS')
-    branch = 'main'
-    time_frame = int(os.getenv('TIMEFRAME_IN_DAYS'))
-    number_of_days = 30 if not time_frame else time_frame
-    
-    df = DeploymentFrequency(owner_repo,workflows, branch, number_of_days, pat_token=token)
-    report = df.report()
-    
-    with open(os.getenv('GITHUB_ENV'), 'a') as github_env:
+    owner = os.getenv("OWNER")
+    repo = os.getenv("REPOSITORY")
+    pat_token = os.getenv("GITHUB_TOKEN")
+    workflows = os.getenv("WORKFLOWS", "[]")
+    branch = os.getenv("BRANCH", "main")
+    time_frame = int(os.getenv("TIMEFRAME_IN_DAYS", 30))
+
+    deployment_frequency = DeploymentFrequency(
+        owner, repo, workflows, branch, time_frame, pat_token
+    )
+    report = asyncio.run(deployment_frequency())
+
+    with open(os.getenv("GITHUB_ENV"), "a") as github_env:
         github_env.write(f"deployment_frequency_report={report}\n")
 ```
 </details>
@@ -849,190 +634,251 @@ if __name__ == "__main__":
   <summary><b>Lead Time For Changes</b></summary>
 
 ```python showLineNumbers title="lead_time_for_changes.py"
-import requests
-from datetime import datetime, timedelta
+import httpx
+from datetime import datetime, timedelta, timezone
 import base64
 import json
 import os
+from loguru import logger
+import asyncio
 
-def main(owner_repo, workflows, branch, number_of_days, commit_counting_method="last", pat_token="", actions_token="", app_id="", app_installation_id="", app_private_key=""):
-    owner, repo = owner_repo.split('/')
-    workflows_array = workflows.split(',')
-    if commit_counting_method == "":
-        commit_counting_method = "last"
-    print(f"Owner/Repo: {owner}/{repo}")
-    print(f"Number of days: {number_of_days}")
-    print(f"Workflows: {workflows_array[0]}")
-    print(f"Branch: {branch}")
-    print(f"Commit counting method '{commit_counting_method}' being used")
-
-    auth_header = get_auth_header(pat_token, actions_token, app_id, app_installation_id, app_private_key)
-
-    prs_response = get_pull_requests(owner, repo, branch, auth_header)
-    pr_processing_result = process_pull_requests(prs_response, number_of_days, commit_counting_method, owner, repo, auth_header)
-
-    workflows_response = get_workflows(owner, repo, auth_header)
-    workflow_processing_result = process_workflows(workflows_response, workflows_array, owner, repo, branch, number_of_days, auth_header)
-
-    return evaluate_lead_time(pr_processing_result, workflow_processing_result, number_of_days)
-
-def get_auth_header(pat_token, actions_token, app_id, app_installation_id, app_private_key):
-    headers = {}
-    if pat_token:
-        encoded_credentials = base64.b64encode(f":{pat_token}".encode()).decode()
-        headers['Authorization'] = f"Basic {encoded_credentials}"
-    elif actions_token:
-        headers['Authorization'] = f"Bearer {actions_token}"
-    # Add more authentication methods as needed
-    return headers
-
-def get_pull_requests(owner, repo, branch, headers):
-    url = f"https://api.github.com/repos/{owner}/{repo}/pulls?state=all&head={branch}&per_page=100&state=closed"
-    response = requests.get(url, headers=headers)
-    if response.status_code == 404:
-        print("Repo is not found or you do not have access")
-        exit()
-    return response.json()
-
-def process_pull_requests(prs, number_of_days, commit_counting_method, owner, repo, headers):
-    pr_counter = 0
-    total_pr_hours = 0
-    for pr in prs:
-        merged_at = pr.get('merged_at')
-        if merged_at and datetime.strptime(merged_at, "%Y-%m-%dT%H:%M:%SZ") > datetime.utcnow() - timedelta(days=number_of_days):
-            pr_counter += 1
-            commits_url = f"https://api.github.com/repos/{owner}/{repo}/pulls/{pr['number']}/commits?per_page=100"
-            commits_response = requests.get(commits_url, headers=headers).json()
-            if commits_response:
-                if commit_counting_method == "last":
-                    start_date = commits_response[-1]['commit']['committer']['date']
-                elif commit_counting_method == "first":
-                    start_date = commits_response[0]['commit']['committer']['date']
-                start_date = datetime.strptime(start_date, "%Y-%m-%dT%H:%M:%SZ")
-                merged_at = datetime.strptime(merged_at, "%Y-%m-%dT%H:%M:%SZ")
-                duration = merged_at - start_date
-                total_pr_hours += duration.total_seconds() / 3600
-    return pr_counter, total_pr_hours
-
-def get_workflows(owner, repo, headers):
-    url = f"https://api.github.com/repos/{owner}/{repo}/actions/workflows"
-    response = requests.get(url, headers=headers)
-    if response.status_code == 404:
-        print("Repo is not found or you do not have access")
-        exit()
-    return response.json()
-
-def process_workflows(workflows_response, workflow_names, owner, repo, branch, number_of_days, headers):
-    workflow_ids = [wf['id'] for wf in workflows_response['workflows'] if wf['name'] in workflow_names]
-    total_workflow_hours = 0
-    workflow_counter = 0
-    for workflow_id in workflow_ids:
-        runs_url = f"https://api.github.com/repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs?per_page=100&status=completed"
-        runs_response = requests.get(runs_url, headers=headers).json()
-        for run in runs_response['workflow_runs']:
-            if run['head_branch'] == branch and datetime.strptime(run['created_at'], "%Y-%m-%dT%H:%M:%SZ") > datetime.utcnow() - timedelta(days=number_of_days):
-                workflow_counter += 1
-                start_time = datetime.strptime(run['created_at'], "%Y-%m-%dT%H:%M:%SZ")
-                end_time = datetime.strptime(run['updated_at'], "%Y-%m-%dT%H:%M:%SZ")
-                duration = end_time - start_time
-                total_workflow_hours += duration.total_seconds() / 3600
-    return workflow_counter, total_workflow_hours
-
-def calculate_rating(lead_time_for_changes_in_hours):
-    daily_deployment=24
-    weekly_deployment=24*7
-    monthly_deployment=24*30
-    every_six_months_deployment=24*30*6
-    
-    if lead_time_for_changes_in_hours <= 0:
-        rating = "None"
-        color = "lightgrey"
-    elif lead_time_for_changes_in_hours < 1:
-        rating = "Elite"
-        color = "brightgreen"
-    elif lead_time_for_changes_in_hours <= daily_deployment:
-        rating = "Elite"
-        color = "brightgreen"
-    elif daily_deployment < lead_time_for_changes_in_hours <= weekly_deployment:
-        rating = "High"
-        color = "green"
-    elif weekly_deployment < lead_time_for_changes_in_hours <= monthly_deployment:
-        rating = "High"
-        color = "green"
-    elif monthly_deployment < lead_time_for_changes_in_hours <= every_six_months_deployment:
-        rating = "Medium"
-        color = "yellow"
-    else: 
-        # lead_time_for_changes_in_hours > every_six_months_deployment
-        rating = "Low"
-        color = "red"
-        
-    display_metric = round(lead_time_for_changes_in_hours, 2)
-    display_unit = "hours"
-        
-    return {
-        "rating": rating,
-        "color": color,
-        "display_metric": display_metric,
-        "display_unit": display_unit
-    }
+PAGE_SIZE = 100
 
 
-def evaluate_lead_time(pr_result, workflow_result, number_of_days):
-    pr_counter, total_pr_hours = pr_result
-    workflow_counter, total_workflow_hours = workflow_result
-    if pr_counter == 0:
-        pr_counter = 1
-    if workflow_counter == 0:
-        workflow_counter = 1
-    pr_average = total_pr_hours / pr_counter
-    workflow_average = total_workflow_hours / workflow_counter
-    lead_time_for_changes_in_hours = pr_average + workflow_average
-    print(f"PR average time duration: {pr_average} hours")
-    print(f"Workflow average time duration: {workflow_average} hours")
-    print(f"Lead time for changes in hours: {lead_time_for_changes_in_hours}")
+class LeadTimeForChanges:
+    def __init__(
+        self,
+        owner,
+        repo,
+        workflows,
+        branch,
+        number_of_days,
+        commit_counting_method="last",
+        pat_token="",
+    ):
+        self.owner = owner
+        self.repo = repo
+        self.workflows = json.loads(workflows)
+        self.branch = branch
+        self.number_of_days = number_of_days
+        self.commit_counting_method = commit_counting_method
+        self.pat_token = pat_token
+        self.auth_header = self.get_auth_header
+        self.github_url = f"https://api.github.com/repos/{self.owner}/{self.repo}"
 
-    report = {
-            "pr_average_time_duration" : round(pr_average,2),
-            "workflow_average_time_duration" : round(workflow_average,2),
-            "lead_time_for_changes_in_hours": round(lead_time_for_changes_in_hours,2)
-    }
-    rating = calculate_rating(lead_time_for_changes_in_hours)
-    report.update(rating)
-    
-    return json.dumps(report, default=str)
-    
+    async def __call__(self):
+        logger.info(f"Owner/Repo: {self.owner}/{self.repo}")
+        logger.info(f"Number of days: {self.number_of_days}")
+        logger.info(f"Workflows: {self.workflows}")
+        logger.info(f"Branch: {self.branch}")
+        logger.info(
+            f"Commit counting method '{self.commit_counting_method}' being used"
+        )
+
+        pr_result = await self.process_pull_requests()
+        workflow_result = await self.process_workflows()
+
+        return await self.evaluate_lead_time(pr_result, workflow_result)
+
+    @property
+    def get_auth_header(self):
+        encoded_credentials = base64.b64encode(f":{self.pat_token}".encode()).decode()
+        headers = {
+            "Authorization": f"Basic {encoded_credentials}",
+            "Content-Type": "application/json",
+        }
+        return headers
+
+    async def send_api_requests(self, url, params=None):
+        backoff_time = 1
+        max_backoff_time = 60
+
+        async with httpx.AsyncClient() as client:
+            while True:
+                try:
+                    response = await client.get(
+                        url, headers=self.auth_header, params=params
+                    )
+
+                    # Check for rate limiting (HTTP status 429)
+                    if response.status_code == 429 or 403:
+                        reset_time = float(response.headers.get("X-RateLimit-Reset", 0))
+                        current_time = time.time()
+                        wait_time = max(reset_time - current_time, 3)
+                        logger.warning(
+                            f"Rate limit exceeded. Waiting for {wait_time} seconds."
+                        )
+                        await asyncio.sleep(wait_time)
+                        continue
+
+                    response.raise_for_status()
+                    return response.json()
+
+                except httpx.HTTPStatusError as e:
+                    if e.response.status_code in {500, 502, 503, 504}:
+                        logger.warning(
+                            f"Server error ({e.response.status_code}). Retrying in {backoff_time} seconds."
+                        )
+                        await asyncio.sleep(backoff_time)
+                        backoff_time = min(backoff_time * 2, max_backoff_time)
+                    else:
+                        logger.error(f"HTTP error occurred: {e.response.status_code}")
+                        break
+
+                except Exception as e:
+                    logger.error(f"An error occurred: {e}")
+                    break
+
+    async def get_pull_requests(self):
+        url = f"{self.github_url}/pulls"
+        params = {"state": "closed", "head": self.branch, "per_page": PAGE_SIZE}
+        return await self.send_api_requests(url, params=params)
+
+    async def process_pull_requests(self):
+        prs = await self.get_pull_requests()
+        pr_counter = 0
+        total_pr_hours = 0
+        for pr in prs:
+            merged_at = pr.get("merged_at")
+            if merged_at and datetime.strptime(merged_at, "%Y-%m-%dT%H:%M:%SZ").replace(
+                tzinfo=timezone.utc
+            ) > datetime.now(timezone.utc) - timedelta(days=self.number_of_days):
+                pr_counter += 1
+                commits_url = f"{self.github_url}/pulls/{pr['number']}/commits"
+                params = {"per_page": PAGE_SIZE}
+                commits_response = await self.send_api_requests(
+                    commits_url, params=params
+                )
+                if commits_response:
+                    if self.commit_counting_method == "last":
+                        start_date = commits_response[-1]["commit"]["committer"]["date"]
+                    elif self.commit_counting_method == "first":
+                        start_date = commits_response[0]["commit"]["committer"]["date"]
+                    start_date = datetime.strptime(start_date, "%Y-%m-%dT%H:%M:%SZ")
+                    merged_at = datetime.strptime(merged_at, "%Y-%m-%dT%H:%M:%SZ")
+                    duration = merged_at - start_date
+                    total_pr_hours += duration.total_seconds() / 3600
+        return pr_counter, total_pr_hours
+
+    async def get_workflows(self):
+        if not (self.workflows):
+            workflow_url = f"{self.github_url}/workflows"
+            workflows = await self.send_api_requests(workflow_url)
+            if workflows:
+                workflow_ids = [workflow["id"] for workflow in workflows["workflows"]]
+                logger.info(f"Found {len(workflow_ids)} workflows in Repo")
+                return workflow_ids
+        else:
+            return self.workflows
+
+    async def process_workflows(self):
+        workflow_ids = await self.get_workflows()
+        total_workflow_hours = 0
+        workflow_counter = 0
+        for workflow_id in workflow_ids:
+            runs_url = f"{self.github_url}/actions/workflows/{workflow_id}/runs"
+            params = {"per_page": PAGE_SIZE, "status": "completed"}
+            runs_response = await self.send_api_requests(runs_url, params=params)
+            for run in runs_response["workflow_runs"]:
+                if run["head_branch"] == self.branch and datetime.strptime(
+                    run["created_at"], "%Y-%m-%dT%H:%M:%SZ"
+                ).replace(tzinfo=timezone.utc) > datetime.now(timezone.utc) - timedelta(
+                    days=self.number_of_days
+                ):
+                    workflow_counter += 1
+                    start_time = datetime.strptime(
+                        run["created_at"], "%Y-%m-%dT%H:%M:%SZ"
+                    )
+                    end_time = datetime.strptime(
+                        run["updated_at"], "%Y-%m-%dT%H:%M:%SZ"
+                    )
+                    duration = end_time - start_time
+                    total_workflow_hours += duration.total_seconds() / 3600
+        return workflow_counter, total_workflow_hours
+
+    def calculate_rating(self, lead_time_for_changes_in_hours):
+        daily_deployment = 24
+        weekly_deployment = 24 * 7
+        monthly_deployment = 24 * 30
+        every_six_months_deployment = 24 * 30 * 6
+
+        if lead_time_for_changes_in_hours <= 0:
+            rating = "None"
+            color = "lightgrey"
+        elif lead_time_for_changes_in_hours < 1:
+            rating = "Elite"
+            color = "brightgreen"
+        elif lead_time_for_changes_in_hours <= daily_deployment:
+            rating = "Elite"
+            color = "brightgreen"
+        elif daily_deployment < lead_time_for_changes_in_hours <= weekly_deployment:
+            rating = "High"
+            color = "green"
+        elif weekly_deployment < lead_time_for_changes_in_hours <= monthly_deployment:
+            rating = "High"
+            color = "green"
+        elif (
+            monthly_deployment
+            < lead_time_for_changes_in_hours
+            <= every_six_months_deployment
+        ):
+            rating = "Medium"
+            color = "yellow"
+        else:
+            # lead_time_for_changes_in_hours > every_six_months_deployment
+            rating = "Low"
+            color = "red"
+
+        display_metric = round(lead_time_for_changes_in_hours, 2)
+        display_unit = "hours"
+
+        return {
+            "rating": rating,
+            "color": color,
+            "display_metric": display_metric,
+            "display_unit": display_unit,
+        }
+
+    async def evaluate_lead_time(self, pr_result, workflow_result):
+        pr_counter, total_pr_hours = pr_result
+        workflow_counter, total_workflow_hours = workflow_result
+        if pr_counter == 0:
+            pr_counter = 1
+        if workflow_counter == 0:
+            workflow_counter = 1
+        pr_average = total_pr_hours / pr_counter
+        workflow_average = total_workflow_hours / workflow_counter
+        lead_time_for_changes_in_hours = pr_average + workflow_average
+        logger.info(f"PR average time duration: {pr_average} hours")
+        logger.info(f"Workflow average time duration: {workflow_average} hours")
+        logger.info(f"Lead time for changes in hours: {lead_time_for_changes_in_hours}")
+
+        report = {
+            "pr_average_time_duration": round(pr_average, 2),
+            "workflow_average_time_duration": round(workflow_average, 2),
+            "lead_time_for_changes_in_hours": round(lead_time_for_changes_in_hours, 2),
+        }
+        rating = self.calculate_rating(lead_time_for_changes_in_hours)
+        report.update(rating)
+
+        return json.dumps(report, default=str)
+
+
 if __name__ == "__main__":
-    owner_repo = os.getenv('REPOSITORY')
-    token = os.getenv('GITHUB_TOKEN')
-    workflows = os.getenv('WORKFLOWS')
-    branch = 'main'
-    time_frame = int(os.getenv('TIMEFRAME_IN_DAYS'))
-    number_of_days = 30 if not time_frame else time_frame
-    
-    report = main(owner_repo, workflows, branch, number_of_days)
-    with open(os.getenv('GITHUB_ENV'), 'a') as github_env:
+    owner = os.getenv("OWNER")
+    repo = os.getenv("REPOSITORY")
+    token = os.getenv("GITHUB_TOKEN")  # Your personal access token or GitHub App token
+    workflows = os.getenv("WORKFLOWS", "[]")
+    branch = os.getenv("BRANCH", "main")
+    time_frame = int(os.getenv("TIMEFRAME_IN_DAYS", 30))
+
+    lead_time_for_changes = LeadTimeForChanges(
+        owner, repo, workflows, branch, time_frame, pat_token=token
+    )
+    report = asyncio.run(lead_time_for_changes())
+    with open(os.getenv("GITHUB_ENV"), "a") as github_env:
         github_env.write(f"lead_time_for_changes_report={report}\n")
 ```
 </details>
 
-6. Trigger the action from the [self-service](https://app.getport.io/self-serve) page of your Port application. Below is a boilerplate of the expected input payload
-
-<details>
-  <summary><b>Sample Input</b></summary>
-:::tip
-- `<Entity-ID>` - your target entity id in port
-- `<GITHUB-ORG>` - your GitHub organization or user name.
-- `<GITHUB-REPO-NAME>` - your GitHub repository name.
-:::
-
-```json showLineNumbers title="sample input json"
-
-{
-  "$targetEntity": "<Entity-ID>",
-  "timeframe": 4,
-  "repository": "<GITHUB-ORG>/<GITHUB-REPO-NAME>",
-  "workflow": "CI"
-}
-```
-</details>
+5. Congrats 🎉 You've successfully scheduled a github action to periodically ingest estimated `DORA Metrics` for github repository(s).
