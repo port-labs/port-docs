@@ -58,7 +58,8 @@ This example helps internal developer teams to trigger an [Argo Workflow](https:
 </details>
 
 2. Register an existing `Argo Workflow Blueprint Entity` in the catalog (<b>Recommended</b>)
-:::note
+:::note Optional
+
   This step is optional, but recommended in order to avoid having to re-enter the workflow input properties every time before executing the action. The workflow should exist in your Argo Workflow deployment instance as well. [Learn more](https://argo-workflows.readthedocs.io/en/latest/quick-start/#submit-an-example-workflow).
 
 :::
