@@ -541,6 +541,10 @@ To ingest Snyk objects using the [integration configuration](#configuration-stru
 5. Modify the [configuration](#configuration-structure) according to your needs.
 6. Click `Resync`.
 
+:::note
+In a case where an api request to Snyk's api will receive code `SNYK-9999`, it's result will be skipped.
+:::
+
 ## Examples
 
 Examples of blueprints and the relevant integration configurations:
