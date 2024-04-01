@@ -25,7 +25,7 @@ In this guide, we are going to use [self-service actions](/create-self-service-e
 
 
 :::tip Starter Repository
-Clone our repository [here](https://github.com/port-labs/eks-deploy-guide) to follow along through the guide. The repository contains the following folders:
+Clone the repository [here](https://github.com/port-labs/eks-deploy-guide) to follow along with the guide. The repository contains the following folders:
 - `app-templates`: contains the cookiecutter templates for scaffolding apps.
 - `terraform`: contains the terraform configuration for creating an EKS cluster.
 :::
