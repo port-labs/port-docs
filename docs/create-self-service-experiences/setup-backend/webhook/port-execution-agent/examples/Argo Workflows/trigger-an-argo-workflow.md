@@ -8,10 +8,9 @@ This example helps internal developer teams to trigger an [Argo Workflow](https:
 
 :::tip Prerequisites
 
-- This guide assumes you have Kafka credentials available and ready to use within your Port account
+- This guide assumes you have Kafka credentials available and ready to use within your Port account.
 - You will need an accessible k8s cluster. If you don't have one, here is how to quickly set-up a [minikube cluster](https://minikube.sigs.k8s.io/docs/start/).
 - [Helm](https://helm.sh/docs/intro/install/) - required to install the Port Agent with Argo Workflow setup.
-
 :::
 
 ## Steps
@@ -58,10 +57,22 @@ This example helps internal developer teams to trigger an [Argo Workflow](https:
 ```
 </details>
 
-2. Register an existing argo workflow blueprint entity in the catalog (<b>Recommended</b>)
+2. Register an existing `Argo Workflow Blueprint Entity` in the catalog (<b>Recommended</b>)
 :::note
-  This step is optional, but recommended in order to avoid having to re-enter the workflow input properties every time before executing the action. The workflow should exist in your Argo Workflow deployment instance as well.
+  This step is optional, but recommended in order to avoid having to re-enter the workflow input properties every time before executing the action. The workflow should exist in your Argo Workflow deployment instance as well. [learn more](https://argo-workflows.readthedocs.io/en/latest/quick-start/#submit-an-example-workflow)
 :::
+  <b> Here is how to do so:</b>
+  1. The image below shows two ways of ingesting data to Argo Workflow catalog, in this example we will choose the `Manually add Argo Workflow` option
+  
+    ![Manually add argo workflow](../../../../../../../static/img/self-service-actions/setup-backend/webhook/port-agent/examples/create-argo-workflow-image-1.png)
+
+  2. Edit the form with the template data of the workflow you wish to trigger. An example template has been provided below for your convenience.
+
+  ![populate the catalog](../../../../../../../static/img/self-service-actions/setup-backend/webhook/port-agent/examples/create-argo-workflow-image-2.png)
+
+  :::tip
+  As stated in the note above, be sure to submit this example workflow to your Argo Workflow deployment instance before using it in Port.
+  :::
 <details>
 <summary><b>Blueprint Entity Example</b> (click to expand)</summary>
 
