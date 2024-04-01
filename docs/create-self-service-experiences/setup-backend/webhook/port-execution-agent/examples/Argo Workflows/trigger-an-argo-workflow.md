@@ -64,7 +64,7 @@ This example helps internal developer teams to trigger an [Argo Workflow](https:
 
 :::
   <b> Here is how to do so:</b>
-  1. The image below shows two ways of ingesting data to Argo Workflow catalog, in this example we will choose the `Manually add Argo Workflow` option
+  1. The image below shows two ways of ingesting data to Argo Workflow catalog. In this example, we will choose the `Manually add Argo Workflow` option
   
     ![Manually add argo workflow](/img/self-service-actions/setup-backend/webhook/port-agent/examples/create-argo-workflow-image-1.png)
 
@@ -74,9 +74,8 @@ This example helps internal developer teams to trigger an [Argo Workflow](https:
   ![populate the catalog](/img/self-service-actions/setup-backend/webhook/port-agent/examples/create-argo-workflow-image-2.png)
 
 
-  :::tip
   As stated in the note above, be sure to submit this example workflow to your Argo Workflow deployment instance before using it in Port.
-  :::
+
 <details>
 <summary><b>Blueprint Entity Example</b> (click to expand)</summary>
 
