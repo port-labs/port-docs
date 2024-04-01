@@ -9,7 +9,7 @@ This guide aims to demonstrate how to connect an ArgoCD deployment to an image b
 
 :::tip Prerequisites
 - Ensure you have ingested container images into your software catalog using our [ECR Images script](https://github.com/port-labs/example-ecr-images) or [GCR Images script](https://github.com/port-labs/example-gcr-images)
-- Ensure you have [ArgoCD ocean integration](/build-your-software-catalog/sync-data-to-catalog/kubernetes/argocd/) installed and configured in your environment
+- Ensure you have [ArgoCD ocean integration](/build-your-software-catalog/sync-data-to-catalog/argocd/) installed and configured in your environment
 - You will need an accessible k8s cluster. If you don't have one, here is how to quickly set-up a [minikube cluster](https://minikube.sigs.k8s.io/docs/start/)
 - [Helm](https://helm.sh/docs/intro/install/) - required to install a relevant integration
 :::
