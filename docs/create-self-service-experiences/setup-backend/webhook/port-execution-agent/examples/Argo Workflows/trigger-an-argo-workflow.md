@@ -66,7 +66,8 @@ This example helps internal developer teams to trigger an [Argo Workflow](https:
   <b> Here is how to do so:</b>
   1. The image below shows two ways of ingesting data to Argo Workflow catalog, in this example we will choose the `Manually add Argo Workflow` option
   
-    ![Manually add argo workflow](../../../../../../../static/img/self-service-actions/setup-backend/webhook/port-agent/examples/create-argo-workflow-image-1.png)
+    ![Manually add argo workflow](/img/self-service-actions/setup-backend/webhook/port-agent/examples/create-argo-workflow-image-1.png)
+
 
   2. Edit the form with the template data of the workflow you wish to trigger. An example template has been provided below for your convenience.
 
