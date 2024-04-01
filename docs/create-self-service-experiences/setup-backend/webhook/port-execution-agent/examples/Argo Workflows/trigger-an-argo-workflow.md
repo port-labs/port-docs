@@ -6,12 +6,20 @@ sidebar_position: 1
 
 This example helps internal developer teams to trigger an [Argo Workflow](https://argoproj.github.io/workflows/) using Port's self service actions. We will create a blueprint for `argoWorkflow` that will be connected to a backend action. We will then add some configuration files (`invocations.json`) to control the payload and trigger your Argo Workflows directly from Port using the sync execution method.
 
+:::tip Prerequisites
 
+- This guide assumes you have Kafka credentials available and ready to use within your Port account
+- You will need an accessible k8s cluster. If you don't have one, here is how to quickly set-up a [minikube cluster](https://minikube.sigs.k8s.io/docs/start/).
+- [Helm](https://helm.sh/docs/intro/install/) - required to install the Port Agent with Argo Workflow setup.
 
-Create the following blueprint, action and mapping to trigger a workflow.
+:::
+
+## Steps
+
+1. Create an Argo Workflow blueprint in Port
 
 <details>
-<summary>Blueprint</summary>
+<summary><b>Argo Worklow Blueprint</b> (click to expand)</summary>
 
 ```json
 {
@@ -50,12 +58,12 @@ Create the following blueprint, action and mapping to trigger a workflow.
 ```
 </details>
 
+2. Register an existing argo workflow blueprint entity in the catalog (<b>Recommended</b>)
 :::note
-  Register an existing Argo Workflow in the catalog (this is a one time operation). The workflow should exist in your Argo workflow deployment instance as well.
+  This step is optional, but recommended in order to avoid having to re-enter the workflow input properties every time before executing the action. The workflow should exist in your Argo Workflow deployment instance as well.
 :::
-
 <details>
-<summary>Blueprint entity example</summary>
+<summary><b>Blueprint Entity Example</b> (click to expand)</summary>
 
 ```json
 {
@@ -151,10 +159,12 @@ Create the following blueprint, action and mapping to trigger a workflow.
 ```
 </details>
 
-<details>
-<summary>Action</summary>
+3. Create a Port action using the following JSON definition:
 
-```json
+<details>
+<summary><b>Port Action </b> (click to expand)</summary>
+
+```json showLineNumbers title=trigger a workflow
 {
   "identifier": "trigger_a_workflow",
   "title": "Trigger A Workflow",
@@ -197,10 +207,11 @@ Create the following blueprint, action and mapping to trigger a workflow.
 ```
 </details>
 
+4. Create a json file (`invocations.json`) in your working directory
 <details>
-<summary>Mapping - (Should be saved as `invocations.json`)</summary>
+<summary><b> Invocation Mapping </b> (click to expand)</summary>
 
-```json
+```json showLineNumbers title="invocations.json"
 [
 	{
 		"enabled": ".action == \"trigger_a_workflow\"",
@@ -221,9 +232,13 @@ Create the following blueprint, action and mapping to trigger a workflow.
 ```
 </details>
 
-<details>
-<summary> Port agent installation for Argo Workflows </summary>
+5. Run the helm command below to install port agent for Argo Workflows
 
+<details>
+<summary><b>Port agent installation for Argo Workflows</b> (click to expand)</summary>
+:::tip
+Remember to replace the boilerplate credentials in the helm command with your actual credentials
+:::
 
 ```sh
 helm repo add port-labs https://port-labs.github.io/helm-charts
