@@ -60,7 +60,7 @@ You can delete resources you don't want to export by removing them from the reso
 
 After setting up the basic configuration, the template above deploys the AWS exporter Terraform module.
 
-For more information, visit the [AWS exporter module docs](/build-your-software-catalog/sync-data-to-catalog/iac/terraform/modules/aws-exporter-module.md)
+For more information, visit the [AWS exporter module docs](/build-your-software-catalog/custom-integration/iac/terraform/modules/aws-exporter-module.md)
 
 ## Step-by-step installation
 

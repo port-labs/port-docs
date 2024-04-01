@@ -5,7 +5,7 @@ sidebar_class_name: custom-sidebar-item sidebar-menu-usage-methods
 
 import CredentialsGuide from "/docs/build-your-software-catalog/custom-integration/api/\_template_docs/\_find_credentials.mdx";
 import ApiRef from "/docs/api-reference/\_learn_more_reference.mdx"
-import InstallTerraform from "/docs/build-your-software-catalog/sync-data-to-catalog/iac/terraform/\_terraform_provider_base.mdx"
+import InstallTerraform from "/docs/build-your-software-catalog/custom-integration/iac/terraform/\_terraform_provider_base.mdx"
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
@@ -74,7 +74,7 @@ resource "port_blueprint" "myBlueprint" {
 
 Then run `terraform plan` to view the new blueprint that will be created, and `terraform apply` to create the blueprint you defined, inside Port's software catalog.
 
-To learn more about the Terraform resource definition of different API objects, refer to their respective category and structure reference, for example - [configure blueprints in Port](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/setup-blueprint.md?definition=tf#configure-blueprints-in-port) and [Terraform provider](/build-your-software-catalog/sync-data-to-catalog/iac/terraform/terraform.md).
+To learn more about the Terraform resource definition of different API objects, refer to their respective category and structure reference, for example - [configure blueprints in Port](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/setup-blueprint.md?definition=tf#configure-blueprints-in-port) and [Terraform provider](/build-your-software-catalog/custom-integration/iac/terraform/terraform.md).
 
 </TabItem>
 
