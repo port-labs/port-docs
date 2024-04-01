@@ -6,11 +6,11 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 # DORA Metrics
 
-In this guide, we will create a github action that computes the DORA Metrics for a service (repository) on schedule and ingests the results to Port.
+In this guide, we will create a GitHub action that computes the DORA Metrics for a service (repository) on schedule and ingests the results to Port.
 
 ## Prerequisites
 1. A GitHub repository in which you can trigger a workflow that we will use in this guide.
-2. A blueprint in port to host the Dora Metrics.
+2. A blueprint in Port to host the Dora Metrics.
 
 Below, you can find the JSON for the `DORA Metrics` blueprint required for the guide:
 
@@ -141,7 +141,7 @@ Below, you can find the JSON for the `DORA Metrics` blueprint required for the g
 
 Follow these steps to get started:
 
-1. Create the following GitHub Action secrets:
+1. Create the following GitHub action secrets:
     - `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token)
     - `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token)
     - `PATTOKEN` - GitHub PAT fine-grained token. Ensure that read-only access to actions and metadata permission is set. Grant this action access to the repositories where the metrics are to be estimated for . [learn more](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token).
@@ -269,7 +269,7 @@ jobs:
 
 </details>
 
-3. Create a text file (`requirements.txt`) and a json file (`dora-config.json`) in a folder named `dora` to host the required dependencies and configurations for running the workflow respectively.
+3. In the same GitHub repository as the workflow, create a text file (`requirements.txt`) and a json file (`dora-config.json`) in a folder named `dora` to host the required dependencies and configurations for running the workflow respectively.
 <details>
   <summary><b>Requirements</b></summary>
 
@@ -880,4 +880,4 @@ if __name__ == "__main__":
 ```
 </details>
 
-Congrats 🎉 You've successfully scheduled a github action to periodically ingest estimated `DORA Metrics` for github repository(s).
+Congrats 🎉 You've successfully scheduled a GitHub action to periodically ingest estimated `DORA Metrics` for GitHub repository(s).
