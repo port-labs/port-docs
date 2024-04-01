@@ -71,7 +71,8 @@ This example helps internal developer teams to trigger an [Argo Workflow](https:
 
   2. Edit the form with the template data of the workflow you wish to trigger. An example template has been provided below for your convenience.
 
-  ![populate the catalog](../../../../../../../static/img/self-service-actions/setup-backend/webhook/port-agent/examples/create-argo-workflow-image-2.png)
+  ![populate the catalog](/img/self-service-actions/setup-backend/webhook/port-agent/examples/create-argo-workflow-image-2.png)
+
 
   :::tip
   As stated in the note above, be sure to submit this example workflow to your Argo Workflow deployment instance before using it in Port.
