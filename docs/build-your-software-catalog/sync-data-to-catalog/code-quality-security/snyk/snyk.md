@@ -445,6 +445,10 @@ resources:
 
 The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Snyk's API events.
 
+:::note
+In a case where an api request to Snyk's api will receive error code `SNYK-9999` which means that Snyk experienced an internal error, the resync will continue to export and log that error.  This might result in some data missing from the portal. In such cases head to the Event Log inside the integration section and look for that error it will have all the information required to contact snyk to investigate that error
+:::
+
 ### Configuration structure
 
 The integration configuration determines which resources will be queried from Snyk, and which entities and properties will be created in Port.
@@ -540,10 +544,6 @@ To ingest Snyk objects using the [integration configuration](#configuration-stru
 4. Select Snyk under the Code quality & security providers category.
 5. Modify the [configuration](#configuration-structure) according to your needs.
 6. Click `Resync`.
-
-:::note
-In a case where an api request to Snyk's api will receive error code `SNYK-9999` which means that Snyk experienced an internal error, the resync will continue to export and log that error.  This might result in some data missing from the portal. In such cases head to the Event Log inside the integration section and look for that error it will have all the information required to contact snyk to investigate that error 
-:::
 
 ## Examples
 
