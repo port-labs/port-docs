@@ -521,17 +521,44 @@ class DeploymentFrequency:
         return headers
 
     async def send_api_requests(self, url, params=None):
+        backoff_time = 1
+        max_backoff_time = 60
+
         async with httpx.AsyncClient() as client:
-            try:
-                response = await client.get(
-                    url, headers=self.auth_header, params=params
-                )
-                response.raise_for_status()
-                return response.json()
-            except httpx.HTTPStatusError as e:
-                logger.error(f"HTTP error occurred: {e.response.status_code}")
-            except Exception as e:
-                logger.error(f"An error occurred: {e}")
+            while True:
+                try:
+                    response = await client.get(
+                        url, headers=self.auth_header, params=params
+                    )
+
+                    # Check for rate limiting (HTTP status 429)
+                    if response.status_code == 429 or response.status_code == 403:
+                        reset_time = float(response.headers.get("X-RateLimit-Reset", 0))
+                        current_time = time.time()
+                        wait_time = max(reset_time - current_time, 3)
+                        logger.warning(
+                            f"Rate limit exceeded. Waiting for {wait_time} seconds."
+                        )
+                        await asyncio.sleep(wait_time)
+                        continue
+
+                    response.raise_for_status()
+                    return response.json()
+
+                except httpx.HTTPStatusError as e:
+                    if e.response.status_code in {500, 502, 503, 504}:
+                        logger.warning(
+                            f"Server error ({e.response.status_code}). Retrying in {backoff_time} seconds."
+                        )
+                        await asyncio.sleep(backoff_time)
+                        backoff_time = min(backoff_time * 2, max_backoff_time)
+                    else:
+                        logger.error(f"HTTP error occurred: {e.response.status_code}")
+                        break
+
+                except Exception as e:
+                    logger.error(f"An error occurred: {e}")
+                    break
 
     async def get_workflows(self):
         if not (self.workflows):
@@ -700,7 +727,7 @@ class LeadTimeForChanges:
                     )
 
                     # Check for rate limiting (HTTP status 429)
-                    if response.status_code == 429 or 403:
+                    if response.status_code == 429 or response.status_code == 403:
                         reset_time = float(response.headers.get("X-RateLimit-Reset", 0))
                         current_time = time.time()
                         wait_time = max(reset_time - current_time, 3)
