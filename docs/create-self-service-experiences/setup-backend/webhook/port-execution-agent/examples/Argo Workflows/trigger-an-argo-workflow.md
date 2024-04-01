@@ -59,7 +59,8 @@ This example helps internal developer teams to trigger an [Argo Workflow](https:
 
 2. Register an existing `Argo Workflow Blueprint Entity` in the catalog (<b>Recommended</b>)
 :::note
-  This step is optional, but recommended in order to avoid having to re-enter the workflow input properties every time before executing the action. The workflow should exist in your Argo Workflow deployment instance as well. [learn more](https://argo-workflows.readthedocs.io/en/latest/quick-start/#submit-an-example-workflow)
+  This step is optional, but recommended in order to avoid having to re-enter the workflow input properties every time before executing the action. The workflow should exist in your Argo Workflow deployment instance as well. [Learn more](https://argo-workflows.readthedocs.io/en/latest/quick-start/#submit-an-example-workflow).
+
 :::
   <b> Here is how to do so:</b>
   1. The image below shows two ways of ingesting data to Argo Workflow catalog, in this example we will choose the `Manually add Argo Workflow` option
