@@ -111,12 +111,13 @@ This page contains a list of Port's available integrations, organized by the pla
 ### AWS
 
 - [AWS exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws.md)
-- [Map ECS, EC2, RDS, API GW, Cloudfront and more](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples.md)
+- [Map ECS, EC2, RDS, API GW, Cloudfront and more](docs/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples/examples.md)
 - [AWS Cost](/build-your-software-catalog/sync-data-to-catalog/cloud-cost/aws-cost.md)
 - [Deploy AWS resources using AWS CloudFormation](/create-self-service-experiences/setup-backend/github-workflow/examples/AWS/deploy-cloudformation-template.md)
 - [AWS exporter Terraform module](/build-your-software-catalog/sync-data-to-catalog/iac/terraform/modules/aws-exporter-module.md)
 - [Terraform manage S3 buckets lifecycle](/build-your-software-catalog/sync-data-to-catalog/iac/terraform/examples/s3-bucket.md)
 - [Terraform manage developer environment](/build-your-software-catalog/sync-data-to-catalog/iac/terraform/examples/create-dev-env.md)
+- [Connect ECR repository to Service](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples/connect-ecr-repo-to-service-using-tags.md)
 - [Script to ingest ECR Images and Repositories](https://github.com/port-labs/example-ecr-images)
 - [Self-service action to create EC2 instance](/create-self-service-experiences/setup-backend/github-workflow/examples/AWS/create-an-ec2-instance)
 - [Provision AWS cloud resource using Terraform Plan and Apply](/create-self-service-experiences/setup-backend/github-workflow/examples/AWS/terraform-plan-and-apply-aws-resource)
