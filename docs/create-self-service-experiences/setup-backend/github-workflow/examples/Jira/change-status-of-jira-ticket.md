@@ -17,70 +17,14 @@ This self-service guide facilitates transitioning the status of a Jira ticket fr
 
 2. Optional - Install Port's Jira integration [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira#installation)
 
-3. Creating the action in Port
-:::tip Action usage
+3. Create a workflow file under `.github/workflows/change-jira-ticket-status.yml` using the workflow:
 
-This action is on the `Jira Issue` blueprint.
-
+:::tip
+We recommend creating a dedicated repository for the workflows that are used by Port actions.
 :::
 
 <details>
-<summary><b>Change status of a Jira ticket (Click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "identifier": "change_jira_ticket_status",
-  "title": "Change Jira ticket status",
-  "icon": "Jira",
-  "userInputs": {
-    "properties": {
-      "status": {
-        "title": "Status",
-        "type": "string",
-        "enum": [
-          "To Do",
-          "In Progress",
-          "Code Review",
-          "Product Review",
-          "Waiting For Prod",
-          "Done"
-        ],
-        "enumColors": {
-          "To Do": "lightGray",
-          "In Progress": "bronze",
-          "Code Review": "darkGray",
-          "Product Review": "purple",
-          "Waiting For Prod": "orange",
-          "Done": "green"
-        }
-      }
-    },
-    "required": [
-      "status"
-    ],
-    "order": []
-  },
-  "invocationMethod": {
-    "type": "GITHUB",
-    "repo": "<Enter GitHub repository>",
-    "org": "<Enter GitHub organization>",
-    "workflow": "change_jira_ticket_status.yml",
-    "omitUserInputs": false,
-    "omitPayload": false,
-    "reportWorkflowStatus": true
-  },
-  "trigger": "DAY-2",
-  "description": "Transition a ticket to another status.",
-  "requiredApproval": false
-}
-```
-
-</details>
-
-4. Create a workflow file under `.github/workflows/change_jira_ticket_status.yml` using the workflow:
-
-<details>
-<summary><b>Change status of a Jira ticket (Click to expand)</b></summary>
+<summary><b>Change status of a Jira ticket Workflow(Click to expand)</b></summary>
 
 ```yaml showLineNumbers
 
@@ -150,8 +94,73 @@ jobs:
 
 </details>
 
+4. Creating the action in Port using the following JSON:
+
+<details>
+<summary><b>Change status of a Jira ticket (Click to expand)</b></summary>
+:::tip Modification Required
+Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organization and repository names respectively.
+:::
+
+```json showLineNumbers
+{
+  "identifier": "change_jira_ticket_status",
+  "title": "Change Jira ticket status",
+  "icon": "Jira",
+  "userInputs": {
+    "properties": {
+      "status": {
+        "title": "Status",
+        "type": "string",
+        "enum": [
+          "To Do",
+          "In Progress",
+          "Code Review",
+          "Product Review",
+          "Waiting For Prod",
+          "Done"
+        ],
+        "enumColors": {
+          "To Do": "lightGray",
+          "In Progress": "bronze",
+          "Code Review": "darkGray",
+          "Product Review": "purple",
+          "Waiting For Prod": "orange",
+          "Done": "green"
+        }
+      }
+    },
+    "required": [
+      "status"
+    ],
+    "order": []
+  },
+  "invocationMethod": {
+    "type": "GITHUB",
+    "repo": "<GITHUB_ORG>",
+    "org": "<GITHUB_REPO>",
+    "workflow": "change-jira-ticket-status.yml",
+    "omitUserInputs": false,
+    "omitPayload": false,
+    "reportWorkflowStatus": true
+  },
+  "trigger": "DAY-2",
+  "description": "Transition a ticket to another status.",
+  "requiredApproval": false
+}
+```
+
+</details>
+
 5. Trigger the action from Port's [Self Service hub](https://app.getport.io/self-serve)
 
 6. Done! wait for the ticket's status to be changed in Jira
 
 Congrats 🎉 You've changed a ticket status in Port 🔥
+
+:::tip Extra Jira Related Use Cases
+- [Report a bug in Jira](https://docs.getport.io/create-self-service-experiences/setup-backend/github-workflow/examples/Jira/report-a-bug/) using Port's self-service actions
+- [Open Jira issues with automatic labels](https://docs.getport.io/create-self-service-experiences/setup-backend/github-workflow/examples/Jira/open-jira-issue-with-automatic-label)
+- [Open/close JIRA issues for entities with violated scorecard rules](https://docs.getport.io/promote-scorecards/manage-using-3rd-party-apps/jira)
+- Add a comment to a Jira ticket using Port's self-service actions
+:::

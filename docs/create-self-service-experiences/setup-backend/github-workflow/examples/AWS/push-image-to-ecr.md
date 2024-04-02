@@ -2,6 +2,12 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 # Generate ECR image with tags
 
+:::tip Use Cases
+- **Self-service**: Enable developers to build and push Docker images to AWS ECR without needing to access AWS, while ensuring that images are following a consistent tagging convention.
+- **Automation**: Automatically tag Docker images with meaningful information like commit ID, PR ID, and workflow ID.
+- **Traceability**: Track the source of the image and the entity that triggered the build.
+:::
+
 In the following guide, you are going to create a [self-service action](/create-self-service-experiences/) in Port that executes a [GitHub workflow](/create-self-service-experiences/setup-backend/github-workflow) to:
 
 - Generate a Docker image with tags.
@@ -23,6 +29,10 @@ The image will include tags indicating information like the trigger source, comm
 
 Create the file `create-and-push-image.yml` in the `.github/workflows` folder of your repository.
 
+:::tip
+We recommend creating a dedicated repository for the workflows that are used by Port actions.
+:::
+
 <details>
 
 <summary>GitHub Workflow</summary>
@@ -34,7 +44,7 @@ on:
   workflow_dispatch:
     inputs:
       image_repo:
-        description: 'Repository URL'
+        description: 'ECR Repository URL'
         required: true
       dockerfile:
         description: 'Path to Dockerfile'
@@ -123,6 +133,10 @@ jobs:
 <details>
 
 <summary>Port Action</summary>
+
+:::tip Modification Required
+Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organization and repository names respectively.
+:::
 
 ```json showLineNumbers
 {
