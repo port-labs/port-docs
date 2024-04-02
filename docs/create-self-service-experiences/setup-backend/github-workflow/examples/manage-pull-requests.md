@@ -6,7 +6,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 # Manage GitHub Pull Requests
 
-In the following guide, you are going to create a self-service action in Port that executes a GitHub workflow to manage GitHub Pull Requests. This action can be used to:
+In this guide, we are going to create a self-service action in Port that executes a GitHub workflow to manage GitHub Pull Requests. This action can be used to:
 
 - Close a Pull Request
 - Merge a Pull Request
