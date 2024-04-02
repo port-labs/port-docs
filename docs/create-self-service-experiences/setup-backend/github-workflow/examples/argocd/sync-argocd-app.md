@@ -10,11 +10,11 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 In the following guide, we are going to create a self-service action in Port that executes a [GitHub workflow](/create-self-service-experiences/setup-backend/github-workflow/github-workflow.md) to sync an argocd application.
 
 
-## Prerequisites
+:::tip Prerequisites
 1. This guide assumes that you already have a blueprint for an ArgoCD Application with some resources. If you haven't done so yet, create the blueprint by referring to this [guide](/build-your-software-catalog/sync-data-to-catalog/argocd#application) first.
 2. Prior knowledge of Port Actions is essential for following this guide. Learn more about them [here](/create-self-service-experiences/setup-ui-for-action/).
 3. A GitHub repository to contain your action resources i.e. the github workflow file.
-
+:::
 
 ## Steps
 
