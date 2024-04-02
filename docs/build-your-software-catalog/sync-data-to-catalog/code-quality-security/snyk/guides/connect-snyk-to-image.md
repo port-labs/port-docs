@@ -3,7 +3,7 @@
 Snyk API provides information about scanned container images stored in container registries. This section aims to assist users in populating their software catalog using data obtained from the Snyk API. Follow the steps below to fill your catalog entities with images scanned by Snyk.
 
 ## Prerequisites
-- Ensure you have the [Snyk ocean integration](../../snyk) installed
+- Ensure you have the [Snyk ocean integration](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/snyk/) installed
 
 ## Steps
 

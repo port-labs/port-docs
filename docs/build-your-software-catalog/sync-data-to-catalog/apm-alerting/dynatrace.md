@@ -92,24 +92,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Run Dynatrace Integration
-        run: |
-          # Set Docker image and run the container
-          integration_type="dynatrace"
-          version="latest"
-
-          image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
-
-          docker run -i --rm --platform=linux/amd64 \
-          -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
-          -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-          -e OCEAN__INTEGRATION__CONFIG__DYNATRACE_API_KEY=${{ secrets.OCEAN__INTEGRATION__CONFIG__DYNATRACE_API_KEY }} \
-          -e OCEAN__INTEGRATION__CONFIG__DYNATRACE_HOST_URL=${{ secrets.OCEAN__INTEGRATION__CONFIG__DYNATRACE_HOST_URL }} \
-          -e OCEAN__PORT__CLIENT_ID=${{ secrets.OCEAN__PORT__CLIENT_ID }} \
-          -e OCEAN__PORT__CLIENT_SECRET=${{ secrets.OCEAN__PORT__CLIENT_SECRET }} \
-          $image_name
-
-          exit $?
+      - uses: port-labs/ocean-sail@v1
+        with:
+          type: 'dynatrace'
+          port_client_id: ${{ secrets.OCEAN__PORT__CLIENT_ID }}
+          port_client_secret: ${{ secrets.OCEAN__PORT__CLIENT_SECRET }}
+          config: |
+            dynatrace_api_key: ${{ secrets.OCEAN__INTEGRATION__CONFIG__DYNATRACE_API_KEY }}
+            dynatrace_host_url: ${{ secrets.OCEAN__INTEGRATION__CONFIG__DYNATRACE_HOST_URL }}
 ```
 
   </TabItem>

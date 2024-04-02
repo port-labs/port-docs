@@ -262,23 +262,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Run Snyk Integration
-        run: |
-          # Set Docker image and run the container
-          integration_type="snyk"
-          version="latest"
-
-          image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
-
-          docker run -i --rm --platform=linux/amd64 \
-          -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
-          -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-          -e OCEAN__INTEGRATION__CONFIG__TOKEN=${{ secrets.OCEAN__INTEGRATION__CONFIG__TOKEN }} \
-          -e OCEAN__PORT__CLIENT_ID=${{ secrets.OCEAN__PORT__CLIENT_ID }} \
-          -e OCEAN__PORT__CLIENT_SECRET=${{ secrets.OCEAN__PORT__CLIENT_SECRET }} \
-          $image_name
-
-          exit $?
+      - uses: port-labs/ocean-sail@v1
+        with:
+          type: 'snyk'
+          port_client_id: ${{ secrets.OCEAN__PORT__CLIENT_ID }}
+          port_client_secret: ${{ secrets.OCEAN__PORT__CLIENT_SECRET }}
+          config: |
+            token: ${{ secrets.OCEAN__INTEGRATION__CONFIG__TOKEN }}
 ```
 
 </TabItem>
@@ -454,6 +444,10 @@ resources:
 ```
 
 The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Snyk's API events.
+
+:::note
+In a case where an api request to Snyk's api will receive error code `SNYK-9999` which means that Snyk experienced an internal error, the resync will continue to export and log that error.  This might result in some data missing from the portal. In such cases head to the Event Log inside the integration section and look for that error it will have all the information required to contact snyk to investigate that error
+:::
 
 ### Configuration structure
 

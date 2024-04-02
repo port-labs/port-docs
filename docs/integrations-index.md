@@ -78,9 +78,9 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## ArgoCD
 
-- [ArgoCD exporter and webhook integration](/build-your-software-catalog/sync-data-to-catalog/kubernetes/argocd/)
-- [ArgoCD events](/build-your-software-catalog/sync-data-to-catalog/kubernetes/argocd/argocd.md#argocd-events)
-- [Connect ArgoCD deployment to image](/build-your-software-catalog/sync-data-to-catalog/kubernetes/argocd/examples/connect-argocd-deployment-to-image)
+- [ArgoCD exporter and webhook integration](/build-your-software-catalog/sync-data-to-catalog/argocd/)
+- [ArgoCD events](/build-your-software-catalog/sync-data-to-catalog/argocd/argocd.md#argocd-events)
+- [Connect ArgoCD deployment to image](/build-your-software-catalog/sync-data-to-catalog/argocd/examples/connect-argocd-deployment-to-image)
 - [Rollback ArgoCD deployment](/create-self-service-experiences/setup-backend/github-workflow/examples/argocd/rollback-argocd-deployment)
 - [Self-service action to synchronize ArgoCD application](/create-self-service-experiences/setup-backend/github-workflow/examples/argocd/sync-argocd-app)
 
@@ -111,12 +111,13 @@ This page contains a list of Port's available integrations, organized by the pla
 ### AWS
 
 - [AWS exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws.md)
-- [Map ECS, EC2, RDS, API GW, Cloudfront and more](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples.md)
+- [Map ECS, EC2, RDS, API GW, Cloudfront and more](docs/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples/examples.md)
 - [AWS Cost](/build-your-software-catalog/sync-data-to-catalog/cloud-cost/aws-cost.md)
 - [Deploy AWS resources using AWS CloudFormation](/create-self-service-experiences/setup-backend/github-workflow/examples/AWS/deploy-cloudformation-template.md)
 - [AWS exporter Terraform module](/build-your-software-catalog/sync-data-to-catalog/iac/terraform/modules/aws-exporter-module.md)
 - [Terraform manage S3 buckets lifecycle](/build-your-software-catalog/sync-data-to-catalog/iac/terraform/examples/s3-bucket.md)
 - [Terraform manage developer environment](/build-your-software-catalog/sync-data-to-catalog/iac/terraform/examples/create-dev-env.md)
+- [Connect ECR repository to Service](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples/connect-ecr-repo-to-service-using-tags.md)
 - [Script to ingest ECR Images and Repositories](https://github.com/port-labs/example-ecr-images)
 - [Self-service action to create EC2 instance](/create-self-service-experiences/setup-backend/github-workflow/examples/AWS/create-an-ec2-instance)
 - [Provision AWS cloud resource using Terraform Plan and Apply](/create-self-service-experiences/setup-backend/github-workflow/examples/AWS/terraform-plan-and-apply-aws-resource)
@@ -177,7 +178,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## ServiceNow
 
-- [ServiceNow integration](/build-your-software-catalog/sync-data-to-catalog/itsm/servicenow)
+- [ServiceNow integration](/build-your-software-catalog/sync-data-to-catalog/incident-management/servicenow)
 - [Self-service action to trigger ServiceNow incident](/create-self-service-experiences/setup-backend/github-workflow/examples/ServiceNow/trigger-servicenow-incident)
 
 
