@@ -197,7 +197,7 @@ jobs:
 <br />
 4. Trigger the action from the [self-service](https://app.getport.io/self-serve) page or the context menu of a Pull Request entity.
 
-<img src='/img/self-service-actions/setup-backend/github-workflow/examples/prMenu.png' width='100%' />
+<img src='/img/self-service-actions/setup-backend/github-workflow/examples/prMenu.png' width='100%' border='1px' />
 
 <br />
 <br />
