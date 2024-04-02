@@ -56,12 +56,6 @@ The above script performs the following actions:
 You can delete resources you don't want to export by removing them from the resources array in the script above.
 :::
 
-### AWS exporter Terraform module
-
-After setting up the basic configuration, the template above deploys the AWS exporter Terraform module.
-
-For more information, visit the [AWS exporter module docs](/build-your-software-catalog/custom-integration/iac/terraform/modules/aws-exporter-module.md)
-
 ## Step-by-step installation
 
 The steps outlined here can be used to manually install the AWS exporter using CloudFormation.
