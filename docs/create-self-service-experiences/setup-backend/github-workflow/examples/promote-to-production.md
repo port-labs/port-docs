@@ -20,199 +20,6 @@ The deployment involves updating the deployment manifest with the container imag
 
 Below you can find the JSON for the blueprints:
 
-
-<details>
-<summary><b>Image blueprint (click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "identifier": "image",
-  "description": "This blueprint represents an image",
-  "title": "Image",
-  "icon": "AWS",
-  "schema": {
-    "properties": {
-      "registryId": {
-        "type": "string",
-        "title": "Registry ID",
-        "description": "The ID of the registry",
-        "icon": "DefaultProperty"
-      },
-      "digest": {
-        "type": "string",
-        "title": "Image Digest",
-        "description": "SHA256 digest of image manifest",
-        "icon": "DefaultProperty"
-      },
-      "tags": {
-        "type": "array",
-        "title": "Image Tags",
-        "description": "List of tags for the image",
-        "icon": "DefaultProperty"
-      },
-      "pushedAt": {
-        "type": "string",
-        "title": "Pushed At",
-        "description": "Date and time the image was pushed to the repository",
-        "format": "date-time",
-        "icon": "DefaultProperty"
-      },
-      "lastRecordedPullTime": {
-        "type": "string",
-        "title": "Last Recorded Pull Time",
-        "description": "Date and time the image was last pulled",
-        "format": "date-time",
-        "icon": "DefaultProperty"
-      },
-      "triggeredBy": {
-        "type": "string",
-        "icon": "TwoUsers",
-        "title": "Triggered By",
-        "description": "The user who triggered the run"
-      },
-      "commitHash": {
-        "type": "string",
-        "title": "Commit Hash",
-        "icon": "DefaultProperty"
-      },
-      "pullRequestId": {
-        "type": "string",
-        "icon": "Git",
-        "title": "Pull Request ID"
-      },
-      "workflowId": {
-        "type": "string",
-        "title": "Workflow ID",
-        "icon": "DefaultProperty"
-      },
-      "image_branch": {
-        "title": "Image branch",
-        "type": "string",
-        "description": "The git branch associated with the repository used to build the Image"
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {
-    "link_to_the_commit": {
-      "title": "Link to the commit",
-      "calculation": ".commit",
-      "type": "string"
-    },
-    "link_to_the_pr": {
-      "title": "Link to the PR",
-      "calculation": ".pull",
-      "type": "string"
-    },
-    "link_to_the_ci": {
-      "title": "Link to the CI",
-      "icon": "DefaultProperty",
-      "description": "a link to the build in github workflow where the Image was built",
-      "calculation": ".workflowId",
-      "type": "string"
-    }
-  },
-  "aggregationProperties": {},
-  "relations": {}
-}
-```
-</details>
-
-
-<details>
-<summary><b>Running Service blueprint (click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "identifier": "running_service",
-  "description": "This blueprint represents an ArgoCD Application",
-  "title": "Running Service",
-  "icon": "Argo",
-  "schema": {
-    "properties": {
-      "gitRepo": {
-        "type": "string",
-        "format": "url",
-        "icon": "Git",
-        "title": "Repository URL",
-        "description": "The URL of the Git repository containing the application source code"
-      },
-      "gitPath": {
-        "type": "string",
-        "title": "Path",
-        "description": "The path within the Git repository where the application manifests are located"
-      },
-      "destinationServer": {
-        "type": "string",
-        "title": "Destination Server",
-        "format": "url"
-      },
-      "syncStatus": {
-        "type": "string",
-        "title": "Sync Status",
-        "enum": [
-          "Synced",
-          "OutOfSync",
-          "Unknown"
-        ],
-        "enumColors": {
-          "Synced": "green",
-          "OutOfSync": "red",
-          "Unknown": "lightGray"
-        },
-        "description": "The sync status of the application"
-      },
-      "healthStatus": {
-        "type": "string",
-        "title": "Health Status",
-        "enum": [
-          "Healthy",
-          "Missing",
-          "Suspended",
-          "Degraded",
-          "Progressing",
-          "Unknown"
-        ],
-        "enumColors": {
-          "Healthy": "green",
-          "Missing": "yellow",
-          "Suspended": "purple",
-          "Degraded": "red",
-          "Progressing": "blue",
-          "Unknown": "lightGray"
-        },
-        "description": "The health status of the application"
-      },
-      "createdAt": {
-        "title": "Created At",
-        "type": "string",
-        "format": "date-time"
-      },
-      "grafana_link": {
-        "title": "Grafana Link",
-        "icon": "Grafana",
-        "type": "string",
-        "format": "url"
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "aggregationProperties": {},
-  "relations": {
-    "image": {
-      "title": "Image Deployed",
-      "target": "image",
-      "required": false,
-      "many": false
-    }
-  }
-}
-```
-</details>
-
 <details>
 <summary><b>Service blueprint (click to expand)</b></summary>
 
@@ -338,6 +145,183 @@ Below you can find the JSON for the blueprints:
 ```
 </details>
 
+<details>
+<summary><b>Running Service blueprint (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "running_service",
+  "description": "This blueprint represents an ArgoCD Application",
+  "title": "Running Service",
+  "icon": "Argo",
+  "schema": {
+    "properties": {
+      "gitRepo": {
+        "type": "string",
+        "format": "url",
+        "icon": "Git",
+        "title": "Repository URL",
+        "description": "The URL of the Git repository containing the application source code"
+      },
+      "gitPath": {
+        "type": "string",
+        "title": "Path",
+        "description": "The path within the Git repository where the application manifests are located"
+      },
+      "destinationServer": {
+        "type": "string",
+        "title": "Destination Server",
+        "format": "url"
+      },
+      "syncStatus": {
+        "type": "string",
+        "title": "Sync Status",
+        "enum": [
+          "Synced",
+          "OutOfSync",
+          "Unknown"
+        ],
+        "enumColors": {
+          "Synced": "green",
+          "OutOfSync": "red",
+          "Unknown": "lightGray"
+        },
+        "description": "The sync status of the application"
+      },
+      "healthStatus": {
+        "type": "string",
+        "title": "Health Status",
+        "enum": [
+          "Healthy",
+          "Missing",
+          "Suspended",
+          "Degraded",
+          "Progressing",
+          "Unknown"
+        ],
+        "enumColors": {
+          "Healthy": "green",
+          "Missing": "yellow",
+          "Suspended": "purple",
+          "Degraded": "red",
+          "Progressing": "blue",
+          "Unknown": "lightGray"
+        },
+        "description": "The health status of the application"
+      },
+      "createdAt": {
+        "title": "Created At",
+        "type": "string",
+        "format": "date-time"
+      },
+      "grafana_link": {
+        "title": "Grafana Link",
+        "icon": "Grafana",
+        "type": "string",
+        "format": "url"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "image": {
+      "title": "Image Deployed",
+      "target": "image",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+</details>
+
+
+<details>
+<summary><b>Image blueprint (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "image",
+  "description": "This blueprint represents an image",
+  "title": "Image",
+  "icon": "AWS",
+  "schema": {
+    "properties": {
+      "registryId": {
+        "type": "string",
+        "title": "Registry ID",
+        "description": "The ID of the registry",
+        "icon": "DefaultProperty"
+      },
+      "digest": {
+        "type": "string",
+        "title": "Image Digest",
+        "description": "SHA256 digest of image manifest",
+        "icon": "DefaultProperty"
+      },
+      "tags": {
+        "type": "array",
+        "title": "Image Tags",
+        "description": "List of tags for the image",
+        "icon": "DefaultProperty"
+      },
+      "pushedAt": {
+        "type": "string",
+        "title": "Pushed At",
+        "description": "Date and time the image was pushed to the repository",
+        "format": "date-time",
+        "icon": "DefaultProperty"
+      },
+      "lastRecordedPullTime": {
+        "type": "string",
+        "title": "Last Recorded Pull Time",
+        "description": "Date and time the image was last pulled",
+        "format": "date-time",
+        "icon": "DefaultProperty"
+      },
+      "triggeredBy": {
+        "type": "string",
+        "icon": "TwoUsers",
+        "title": "Triggered By",
+        "description": "The user who triggered the run"
+      },
+      "commitHash": {
+        "type": "string",
+        "title": "Commit Hash",
+        "icon": "DefaultProperty"
+      },
+      "pullRequestId": {
+        "type": "string",
+        "icon": "Git",
+        "title": "Pull Request ID"
+      },
+      "workflowId": {
+        "type": "string",
+        "title": "Workflow ID",
+        "icon": "DefaultProperty"
+      },
+      "image_branch": {
+        "title": "Image branch",
+        "type": "string",
+        "description": "The git branch associated with the repository used to build the Image"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
+}
+```
+</details>
+
+:::tip Ingest Images 
+If you do not have the images ingested already, we recommend using our [AWS ECR script](https://github.com/port-labs/example-ecr-images), [Google Container Registry script](https://github.com/port-labs/example-gcr-images), [JFrog build script](/build-your-software-catalog/custom-integration/webhook/examples/jfrog) or [GitHub packages script](https://github.com/port-labs/example-github-packages) to sync data to your catalog
+:::
 
 ## Create Github workflow
 
@@ -483,3 +467,6 @@ jobs:
 
 You should now be able to see a Github pull request created and merged for the deployment.
 
+## More relevant guides and examples
+- [ArgoCD Ocean integration](/build-your-software-catalog/sync-data-to-catalog/argocd/)
+- [Connect ArgoCD deployment to image](/build-your-software-catalog/sync-data-to-catalog/argocd/examples/connect-argocd-deployment-to-image)
