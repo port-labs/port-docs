@@ -214,7 +214,7 @@ For Code scan alerts only open alerts on the default branch are supported
 
 ## Mapping repositories and branches
 
-In the following example you will ingest your GitHub repositories and their branches protection to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+In the following example you will ingest your GitHub repositories and their branches to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
 
 <RepositoryBlueprint/>
 
