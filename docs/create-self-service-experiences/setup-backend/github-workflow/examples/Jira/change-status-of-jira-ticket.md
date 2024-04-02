@@ -177,7 +177,7 @@ jobs:
 
 ## Port Configuration
 
-1. On the [self-service](https://app.getport.io/self-serve) page, create the Port action against the `Repository` blueprint. This will trigger the GitHub workflow.
+On the [self-service](https://app.getport.io/self-serve) page, create the Port action against the `Jira Issue` blueprint. This will trigger the GitHub workflow.
 
 <details>
 <summary><b>Change status of a Jira ticket (Click to expand)</b></summary>
@@ -220,8 +220,8 @@ Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organiz
   },
   "invocationMethod": {
     "type": "GITHUB",
-    "repo": "<GITHUB_ORG>",
-    "org": "<GITHUB_REPO>",
+    "repo": "<GITHUB_REPO>",
+    "org": "<GITHUB_ORG>",
     "workflow": "change-jira-ticket-status.yml",
     "omitUserInputs": false,
     "omitPayload": false,
@@ -235,9 +235,11 @@ Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organiz
 
 </details>
 
-5. Trigger the action from Port's [Self Service hub](https://app.getport.io/self-serve)
+## Let's test it!
 
-6. Done! wait for the ticket's status to be changed in Jira
+1. Trigger the action from Port's [Self Service hub](https://app.getport.io/self-serve)
+
+2. Done! wait for the ticket's status to be changed in Jira
 
 Congrats 🎉 You've changed a ticket status in Port 🔥
 
