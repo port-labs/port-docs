@@ -5,20 +5,20 @@
 resources:
   - kind: repository
     selector:
-      query: "true"
+      query: 'true'
     port:
       entity:
         mappings:
           identifier: .name
           title: .name
-          blueprint: '"service"'
+          blueprint: '"githubRepository"'
           properties:
             readme: file://README.md
             url: .html_url
             defaultBranch: .default_branch
   - kind: branch
     selector:
-      query: "true"
+      query: 'true'
     port:
       entity:
         mappings:
@@ -35,7 +35,6 @@ resources:
             allow_force_pushes: .branch.protectionRules.allow_force_pushes.enabled
             allow_deletions: .branch.protectionRules.allow_deletions.enabled
           relations:
-            service: .repository.name
+            repository: .repository.name
 ```
-
 </details>
