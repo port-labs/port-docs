@@ -21,10 +21,9 @@ You can view the official registry page for our Terraform provider [here](https:
 
 Our Terraform provider makes it easy to fill the software catalog with data directly from your IaC definitions, for example:
 
-- Report **cloud accounts**;
-- Report **databases**;
-- Report **lambdas** and **managed Kubernetes services** (EKS, AKS, GKE, etc.);
-- etc.
+- Report **cloud accounts**.
+- Report **databases**.
+- Report **lambdas** and **managed Kubernetes services** (EKS, AKS, GKE, etc.).
 
 ## Installation
 
