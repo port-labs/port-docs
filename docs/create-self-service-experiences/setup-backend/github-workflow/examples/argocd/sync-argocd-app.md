@@ -142,7 +142,7 @@ jobs:
           runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
           logMessage: "Request to sync argocd application failed ..."
     
-    - name: Log After Upserting Entity
+    - name: Report sync success
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
