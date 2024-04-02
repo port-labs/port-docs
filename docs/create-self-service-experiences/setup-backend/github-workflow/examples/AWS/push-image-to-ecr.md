@@ -1,6 +1,6 @@
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
-# Generate ECR image with tags
+# Push ECR image with tags
 
 :::tip Use Cases
 - **Self-service**: Enable developers to build and push Docker images to AWS ECR without needing to access AWS, while ensuring that images are following a consistent tagging convention.
