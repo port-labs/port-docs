@@ -6,19 +6,22 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 # Broadcast message to API consumers
 
-In this guide, we will create a self-service action in Port that executes a GitHub workflow to broadcast a Slack message to all service owners who consume an API. The required form input for this action is a text box with information about the broadcast message.
+In this guide, we will create a self-service action in Port that executes a GitHub workflow to broadcast a Slack message to the slack channels of all services who consume an API.
 
 ## Prerequisites
 1. Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new).
 2. Configure a [Slack app](https://api.slack.com/apps) that can post a message to a Slack channel. 
    - The app should have a `chat:write` bot scope under **OAuth & Permissions**. 
-   - Then, go to the Incoming Webhooks page and create a new webhook, specifying the target channel for the messages.
+   - Then, go to the Incoming Webhooks page and create a new webhook, specifying the target channel for the messages. 
 3. A GitHub repository in which you can trigger a workflow that we will use in this guide.
 
 Below you can find the JSON for the `Service` and `API` blueprints required for the guide:
 
 <details>
 <summary><b>Service blueprint (click to expand)</b></summary>
+:::tip A Slack channel for each service
+We will create a slack channel for each service, and therefore a webhook for each channel.
+:::
 
 ```json showLineNumbers
 {
@@ -49,12 +52,14 @@ Below you can find the JSON for the `Service` and `API` blueprints required for 
         "title": "Badges",
         "icon": "Git"
       },
+      //highlight-start
       "slack": {
         "icon": "Slack",
         "type": "string",
         "title": "Slack",
         "format": "url"
       },
+      //highlight-end
       "tier": {
         "title": "Tier",
         "type": "string",
@@ -328,7 +333,7 @@ if __name__ == "__main__":
             {
                 "blueprint": "api",
                 "operator": "relatedTo",
-                "value": sending_api,
+                "value": sending_api
             },
         ],
     }
