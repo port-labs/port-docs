@@ -205,7 +205,7 @@ jobs:
 5. Choose an action to complete and execute the workflow.
 
 
-<img src='/img/self-service-actions/setup-backend/github-workflow/examples/prForm.png' width='85%' />
+<img src='/img/self-service-actions/setup-backend/github-workflow/examples/prForm.png' width='85%' border='1px' />
 
 <br />
 <br />
