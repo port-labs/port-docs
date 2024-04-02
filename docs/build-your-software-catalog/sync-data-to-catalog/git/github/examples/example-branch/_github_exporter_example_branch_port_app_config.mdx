@@ -11,7 +11,7 @@ resources:
         mappings:
           identifier: .name
           title: .name
-          blueprint: '"githubRepository"'
+          blueprint: '"service"'
           properties:
             readme: file://README.md
             url: .html_url
@@ -24,11 +24,11 @@ resources:
         mappings:
           identifier: .repository.name + "_" + .branch.name
           title: .repository.name + " " + .branch.name
-          blueprint: '"brancg"'
+          blueprint: '"branch"'
           properties:
             is_protected: .branch.protected
-            commit: .commit.sha
-            commit_url .commit.url
+            commit_sha: .branch.commit.sha
+            commit_url: .branch.commit.url
           relations:
             repository: .repository.name
 ```

@@ -3,16 +3,11 @@
 
 ```json showLineNumbers
 {
-  "identifier": "branch_protection",
+  "identifier": "branch",
   "title": "Branch",
   "icon": "Microservice",
   "schema": {
     "properties": {
-      "require_approval_count": {
-        "title": "Require approvals",
-        "type": "number",
-        "icon": "DefaultProperty"
-      },
       "is_protected": {
         "title": "Is branch protected",
         "type": "boolean",
@@ -37,7 +32,7 @@
   "relations": {
     "repository": {
       "title": "Repository",
-      "target": "githubRepository",
+      "target": "service",
       "required": false,
       "many": true
     }
