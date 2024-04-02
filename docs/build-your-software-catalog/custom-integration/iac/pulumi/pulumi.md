@@ -13,18 +13,13 @@ Our integration with [Pulumi](https://www.pulumi.com/) allows you to combine the
 
 By using Port's Pulumi provider you make it easy to integrate Port with your existing IaC definitions, every resource provisioned by Pulumi can also be reported to the software catalog using the same definition file.
 
-<!-- :::info port pulumi provider
-You can view the official registry page for our Pulumi provider [here](https://)
-::: -->
-
 ## 💡 Pulumi provider common use cases
 
 Our Pulumi provider makes it easy to fill the software catalog with data directly from your IaC definitions, for example:
 
-- Report **cloud accounts**;
-- Report **databases**;
-- Report **lambdas** and **managed Kubernetes services** (EKS, AKS, GKE, etc.);
-- etc.
+- Report **cloud accounts**.
+- Report **databases**.
+- Report **lambdas** and **managed Kubernetes services** (EKS, AKS, GKE, etc.).
 
 ## Installation
 

@@ -171,7 +171,7 @@ const config = {
               },
               {
                 label: "Terraform",
-                to: "/build-your-software-catalog/sync-data-to-catalog/iac/terraform",
+                to: "/build-your-software-catalog/custom-integration/iac/terraform",
               },
             ],
           },
