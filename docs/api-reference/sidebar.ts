@@ -11,6 +11,11 @@ const sidebar: SidebarsConfig = {
       id: "api-reference/rate-limits",
     },
     {
+      type: "html",
+      value: "<hr/>",
+      className: "api-sidebar-divider",
+    },
+    {
       type: "category",
       label: "Blueprints",
       items: [

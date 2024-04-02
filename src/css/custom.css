@@ -536,3 +536,19 @@ html[data-theme="dark"] .openapi-schema__list-item {
   padding: 0 !important;
   max-width: fit-content !important;
 }
+
+.api-sidebar-divider > hr {
+  margin: 1rem;
+}
+
+.openapi-tabs__code-list-container::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 1rem !important;
+  height: 0.5rem !important;
+}
+
+.openapi-tabs__code-list-container::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, .5);
+  box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+}
