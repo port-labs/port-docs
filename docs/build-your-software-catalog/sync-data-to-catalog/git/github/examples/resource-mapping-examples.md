@@ -11,9 +11,10 @@ import WorkflowBlueprint from './example-workflow-workflowrun/\_git_exporter_exa
 import WorkflowRunBlueprint from './example-workflow-workflowrun/\_git_exporter_example_workflow_run_blueprint.mdx'
 import PortWfWfrAppConfig from './example-workflow-workflowrun/\_github_exporter_example_wf_wfr_port_app_config.mdx'
 
-import BranchBlueprint from './example-branch-protection/\_git_exporter_example_branch_blueprint.mdx'
-import PortBrAppConfig from './example-branch-protection/\_github_exporter_example_branch_port_app_config.mdx'
-
+import BranchProtectionBlueprint from './example-branch/\_git_exporter_example_branch_protection_blueprint.mdx'
+import PortBranchProtectionAppConfig from './example-branch/\_github_exporter_example_branch_protection_port_app_config.mdx'
+import BranchBlueprint from './example-branch/\_git_exporter_example_branch_blueprint.mdx'
+import PortBrAppConfig from './example-branch/\_github_exporter_example_branch_port_app_config.mdx'
 
 import PortMonoRepoAppConfig from './example-monorepo/\_github_exporter_example_monorepo_port_app_config.mdx'
 
@@ -211,15 +212,25 @@ In the following example you will ingest your GitHub repositories and their aler
 For Code scan alerts only open alerts on the default branch are supported
 :::
 
-## Mapping repositories and branch protection rules
+## Mapping repositories and branches
 
-In the following example you will ingest your GitHub repositories and their main branch protection rules to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+In the following example you will ingest your GitHub repositories and their branches protection to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
 
 <RepositoryBlueprint/>
 
 <BranchBlueprint/>
 
 <PortBrAppConfig/>
+
+## Mapping repositories and branch protection rules
+
+In the following example you will ingest your GitHub repositories and their main branch protection rules to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+
+<RepositoryBlueprint/>
+
+<BranchProtectionBlueprint/>
+
+<PortBranchProtectionAppConfig/>
 
 :::info supported branch protection rules
 Currently only default branch protection rules are supported

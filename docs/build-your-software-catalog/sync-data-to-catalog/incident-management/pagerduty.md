@@ -1778,8 +1778,9 @@ The script writes the JSON payload for each service and incident to a file named
 Done! you can now import historical data from PagerDuty into Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
 </details>
 
-More relevant guides and examples:
+## More relevant guides and examples
 
+- [Ensure production readniness](https://docs.getport.io/guides-and-tutorials/ensure-production-readiness)
 - [Self-service action to escalate a PagerDuty incident](https://docs.getport.io/create-self-service-experiences/setup-backend/github-workflow/examples/PagerDuty/escalate-an-incident)
 - [Self-service action to trigger a PagerDuty incident](https://docs.getport.io/create-self-service-experiences/setup-backend/github-workflow/examples/PagerDuty/trigger-pagerduty-incident)
 - [Self-service action to change a PagerDuty incident owner](https://docs.getport.io/create-self-service-experiences/setup-backend/github-workflow/examples/PagerDuty/change-pagerduty-incident-owner)
