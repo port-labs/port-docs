@@ -1293,6 +1293,6 @@ The examples below pull data from the OpsGenie REST Api, in a defined scheduled 
 - [GitLab CI Pipeline](https://gitlab.com/getport-labs/opsgenie-oncall-example)
 </details>
 
-More relevant guides and examples:
+## More relevant guides and examples
 
 - [Self-service action to trigger an OpsGenie incident](https://docs.getport.io/create-self-service-experiences/setup-backend/github-workflow/examples/Opsgenie/trigger-an-incident)

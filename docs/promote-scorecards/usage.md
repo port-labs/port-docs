@@ -228,7 +228,7 @@ Therefore the level of the entity is `Bronze` because it passed all the rules in
 
 ### From Terraform
 
-In order to create a scorecard from the [Terraform provider](../../build-your-software-catalog/sync-data-to-catalog/iac/terraform/) , you will need to use the `port_scorecard` resource.
+In order to create a scorecard from the [Terraform provider](../../build-your-software-catalog/custom-integration/iac/terraform/) , you will need to use the `port_scorecard` resource.
 
 Here is an example of how to create an Ownership scorecard with the Terraform provider:
 
