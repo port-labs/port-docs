@@ -11,7 +11,8 @@ In this guide, we will create a GitHub action that computes the DORA Metrics for
 
 ## Prerequisites
 1. A GitHub repository in which you can trigger a workflow that we will use in this guide.
-2. A blueprint in port to host the Dora Metrics.
+2. A blueprint in Port to host the Dora Metrics.
+
 
 Below, you can find the JSON for the `DORA Metrics` blueprint required for the guide:
 
