@@ -5,7 +5,7 @@
 resources:
   - kind: repository
     selector:
-      query: "true"
+      query: 'true'
     port:
       entity:
         mappings:
@@ -18,24 +18,18 @@ resources:
             defaultBranch: .default_branch
   - kind: branch
     selector:
-      query: "true"
+      query: 'true'
     port:
       entity:
         mappings:
           identifier: .repository.name + "_" + .branch.name
           title: .repository.name + " " + .branch.name
-          blueprint: '"branch_protection"'
+          blueprint: '"branch"'
           properties:
             is_protected: .branch.protected
-            url: .branch._links.html
-            require_approval_count: >-
-              .branch.protectionRules.required_pull_request_reviews.required_approving_review_count
-            require_code_owner_review: >-
-              .branch.protectionRules.required_pull_request_reviews.require_code_owner_reviews
-            allow_force_pushes: .branch.protectionRules.allow_force_pushes.enabled
-            allow_deletions: .branch.protectionRules.allow_deletions.enabled
+            commit_sha: .branch.commit.sha
+            commit_url: .branch.commit.url
           relations:
-            service: .repository.name
+            repository: .repository.name
 ```
-
 </details>
