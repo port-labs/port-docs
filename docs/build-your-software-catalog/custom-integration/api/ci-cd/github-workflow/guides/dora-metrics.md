@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 10
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
@@ -8,9 +8,11 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 In this guide, we will create a GitHub action that computes the DORA Metrics for a service (repository) on schedule and ingests the results to Port.
 
+
 ## Prerequisites
 1. A GitHub repository in which you can trigger a workflow that we will use in this guide.
 2. A blueprint in Port to host the Dora Metrics.
+
 
 Below, you can find the JSON for the `DORA Metrics` blueprint required for the guide:
 
@@ -91,10 +93,22 @@ Below, you can find the JSON for the `DORA Metrics` blueprint required for the g
         "description": "Qualitative rating of deployment success. e.g Elite"
       },
       "numberOfUniqueDeploymentDays": {
-        "title": "Number of Unique Deployments",
+        "title": "Unique Deployment Days",
         "type": "string",
         "icon": "DefaultProperty",
         "description": "Days with at least one deployment."
+      },
+      "numberOfUniqueDeploymentWeeks": {
+        "title": "Unique Deployment Weeks",
+        "type": "string",
+        "icon": "DefaultProperty",
+        "description": "Number of weeks with at least one deployment."
+      },
+      "numberOfUniqueDeploymentMonths": {
+        "title": "Unique Deployment Months",
+        "type": "string",
+        "icon": "DefaultProperty",
+        "description": "Number of months with at least one deployment."
       },
       "deploymentFrequency": {
         "title": "Deployment Frequency",
@@ -142,6 +156,7 @@ Below, you can find the JSON for the `DORA Metrics` blueprint required for the g
 Follow these steps to get started:
 
 1. Create the following GitHub action secrets:
+
     - `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token)
     - `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token)
     - `PATTOKEN` - GitHub PAT fine-grained token. Ensure that read-only access to actions and metadata permission is set. Grant this action access to the repositories where the metrics are to be estimated for . [learn more](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token).
@@ -246,6 +261,8 @@ jobs:
               "totalDeployments": "${{ fromJson(env.deployment_frequency_report).total_deployments }}",
               "deploymentRating": "${{ fromJson(env.deployment_frequency_report).rating }}",
               "numberOfUniqueDeploymentDays": "${{ fromJson(env.deployment_frequency_report).number_of_unique_deployment_days }}",
+              "numberOfUniqueDeploymentWeeks": "${{ fromJson(env.deployment_frequency_report).number_of_unique_deployment_weeks }}",
+              "numberOfUniqueDeploymentMonths": "${{ fromJson(env.deployment_frequency_report).number_of_unique_deployment_months }}",
               "deploymentFrequency": "${{ fromJson(env.deployment_frequency_report).deployment_frequency }}",
               "leadTimeForChangesInHours": "${{ fromJson(env.lead_time_for_changes_report).lead_time_for_changes_in_hours }}",
               "leadTimeRating": "${{ fromJson(env.lead_time_for_changes_report).rating }}",
@@ -269,7 +286,7 @@ jobs:
 
 </details>
 
-3. In the same GitHub repository as the workflow, create a text file (`requirements.txt`) and a json file (`dora-config.json`) in a folder named `dora` to host the required dependencies and configurations for running the workflow respectively.
+3. Create a text file (`requirements.txt`) and a json file (`dora-config.json`) in a folder named `dora` to host the required dependencies and configurations for running the workflow respectively.
 <details>
   <summary><b>Requirements</b></summary>
 
@@ -521,17 +538,44 @@ class DeploymentFrequency:
         return headers
 
     async def send_api_requests(self, url, params=None):
+        backoff_time = 1
+        max_backoff_time = 60
+
         async with httpx.AsyncClient() as client:
-            try:
-                response = await client.get(
-                    url, headers=self.auth_header, params=params
-                )
-                response.raise_for_status()
-                return response.json()
-            except httpx.HTTPStatusError as e:
-                logger.error(f"HTTP error occurred: {e.response.status_code}")
-            except Exception as e:
-                logger.error(f"An error occurred: {e}")
+            while True:
+                try:
+                    response = await client.get(
+                        url, headers=self.auth_header, params=params
+                    )
+
+                    # Check for rate limiting (HTTP status 429)
+                    if response.status_code == 429 or response.status_code == 403:
+                        reset_time = float(response.headers.get("X-RateLimit-Reset", 0))
+                        current_time = time.time()
+                        wait_time = max(reset_time - current_time, 3)
+                        logger.warning(
+                            f"Rate limit exceeded. Waiting for {wait_time} seconds."
+                        )
+                        await asyncio.sleep(wait_time)
+                        continue
+
+                    response.raise_for_status()
+                    return response.json()
+
+                except httpx.HTTPStatusError as e:
+                    if e.response.status_code in {500, 502, 503, 504}:
+                        logger.warning(
+                            f"Server error ({e.response.status_code}). Retrying in {backoff_time} seconds."
+                        )
+                        await asyncio.sleep(backoff_time)
+                        backoff_time = min(backoff_time * 2, max_backoff_time)
+                    else:
+                        logger.error(f"HTTP error occurred: {e.response.status_code}")
+                        break
+
+                except Exception as e:
+                    logger.error(f"An error occurred: {e}")
+                    break
 
     async def get_workflows(self):
         if not (self.workflows):
@@ -592,7 +636,7 @@ class DeploymentFrequency:
         rating, color = self.compute_rating(deployments_per_day)
 
         logger.info(f"Owner/Repo: {self.owner}/{self.repo}")
-        logger.info(f"Workflows: {self.workflows}")
+        logger.info(f"Workflows: {await self.get_workflows()}")
         logger.info(f"Branch: {self.branch}")
         logger.info(f"Number of days: {self.number_of_days}")
         logger.info(
@@ -605,6 +649,8 @@ class DeploymentFrequency:
                 "deployment_frequency": round(deployments_per_day, 2),
                 "rating": rating,
                 "number_of_unique_deployment_days": len(unique_dates),
+                "number_of_unique_deployment_weeks": len({date.isocalendar()[1] for date in unique_dates}),
+                "number_of_unique_deployment_months":len({date.month for date in unique_dates}),
                 "total_deployments": len(workflow_runs_list),
             },
             default=str,
@@ -700,7 +746,7 @@ class LeadTimeForChanges:
                     )
 
                     # Check for rate limiting (HTTP status 429)
-                    if response.status_code == 429 or 403:
+                    if response.status_code == 429 or response.status_code == 403:
                         reset_time = float(response.headers.get("X-RateLimit-Reset", 0))
                         current_time = time.time()
                         wait_time = max(reset_time - current_time, 3)
@@ -881,3 +927,4 @@ if __name__ == "__main__":
 </details>
 
 Congrats 🎉 You've successfully scheduled a GitHub action to periodically ingest estimated `DORA Metrics` for GitHub repository(s).
+
