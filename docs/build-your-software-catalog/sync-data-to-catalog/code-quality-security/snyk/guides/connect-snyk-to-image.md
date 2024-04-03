@@ -26,12 +26,6 @@ Snyk API provides information about scanned container images stored in container
         "description": "The origin of the registry",
         "icon": "DefaultProperty"
       },
-      "digest": {
-        "type": "string",
-        "title": "Image Digest",
-        "description": "SHA256 digest of image manifest",
-        "icon": "DefaultProperty"
-      },
       "tags": {
         "type": "array",
         "title": "Image Tags",
@@ -42,13 +36,6 @@ Snyk API provides information about scanned container images stored in container
         "type": "string",
         "title": "Pushed At",
         "description": "Date and time the image was pushed to the repository",
-        "format": "date-time",
-        "icon": "DefaultProperty"
-      },
-      "lastRecordedPullTime": {
-        "type": "string",
-        "title": "Last Recorded Pull Time",
-        "description": "Date and time the image was last pulled",
         "format": "date-time",
         "icon": "DefaultProperty"
       },
