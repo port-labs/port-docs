@@ -90,3 +90,7 @@ The `managed-resource` kind contains information about all the kubernetes resour
 
 Below is an example showing a successful linkage of ArgoCD deployment to image:
 <img src="/img/build-your-software-catalog/sync-data-to-catalog/kubernetes/exampleArgoCDDeployedImages.png" border="1px" width="80%" />
+
+## More relevant guides and examples
+- [Self-service action to rollback an ArgoCD deployment](/create-self-service-experiences/setup-backend/github-workflow/examples/argocd/rollback-argocd-deployment)
+- [Self-service action to synchronize an ArgoCD application](/create-self-service-experiences/setup-backend/github-workflow/examples/argocd/sync-argocd-app)
