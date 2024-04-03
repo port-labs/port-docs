@@ -230,3 +230,9 @@ These tags provide meaningful information about the image, such as the commit ID
 
 
 Done! 🎉 You can now build and push images for your repositories from Port.
+
+
+## More Self Service AWS Actions Examples
+- [Deploy EKS cluster and deploy application](https://docs.getport.io/create-self-service-experiences/setup-backend/github-workflow/examples/AWS/create-eks-cluster-and-deploy-app)
+- [Create an EC2 instance](https://docs.getport.io/create-self-service-experiences/setup-backend/github-workflow/examples/AWS/create-an-ec2-instance)
+- [Deploy cloud formation stack](https://docs.getport.io/create-self-service-experiences/setup-backend/github-workflow/examples/AWS/deploy-cloudformation-template)
