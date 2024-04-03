@@ -114,15 +114,14 @@ This step will ensure the `datadogIncident` blueprint is available, and also upd
 3. After creating the blueprint, create a Port self-service action with the following JSON file on the `datadogIncident` blueprint:
 
 <details>
-<summary><b>Trigger Datadog Incident (Click to expand)</b></summary>
+<summary><b>Trigger Datadog Incident Action (Click to expand)</b></summary>
 
 :::tip Modification Required
 Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organization and repository names respectively
 :::
 
 ```json showLineNumbers
-[
-  {
+{
     "identifier": "trigger_datadog_incident",
     "title": "Trigger Datadog Incident",
     "icon": "Datadog",
@@ -179,8 +178,7 @@ Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organiz
     "trigger": "CREATE",
     "description": "Triggers Datadog incident",
     "requiredApproval": false
-  }
-]
+}
 ```
 </details>
 

@@ -28,7 +28,7 @@ This step is not required for this example, but it will create all the blueprint
 3. After you installed the integration, the blueprints `servicenowGroup`, `servicenowCatalog` and `servicenowIncident` will be created in your software catalog. Create a Port self-service action with the following JSON file on the `servicenowIncident` blueprint:
 
 <details>
-<summary><b>Trigger ServiceNow Incident (Click to expand)</b></summary>
+<summary><b>Trigger ServiceNow Incident Action (Click to expand)</b></summary>
 
 :::tip Modification Required
 Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organization and repository names respectively
