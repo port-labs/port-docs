@@ -24,7 +24,7 @@ This guide provides a step-by-step walkthrough for creating Kubernetes clusters 
 
 
 :::tip Starter Repository
-Copy the `crossplane` folder from our examples repository [here](https://github.com/port-labs/self-service-actions-examples) to follow along through the guide. The repository contains the following folders:
+Clone our starter repository [here](https://github.com/port-labs/crossplane-argocd-k8s) to follow along through the guide. The repository contains the following folders:
 - `.github`: contains the github workflows.
 - `argocd`: contains the ArgoCD application manifests. This is where we define the application that automates our process through GitOps.
 - `compositions`: contains the crossplane compositions that define what a cluster is.
