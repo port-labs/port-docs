@@ -247,9 +247,8 @@ Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organiz
 
 Congrats 🎉 You've changed a ticket status in Port 🔥
 
-:::tip Extra Jira Related Use Cases
+## More Self Service Jira Actions Examples
 - [Report a bug in Jira](https://docs.getport.io/create-self-service-experiences/setup-backend/github-workflow/examples/Jira/report-a-bug/) using Port's self-service actions
 - [Open Jira issues with automatic labels](https://docs.getport.io/create-self-service-experiences/setup-backend/github-workflow/examples/Jira/open-jira-issue-with-automatic-label)
 - [Open/close JIRA issues for entities with violated scorecard rules](https://docs.getport.io/promote-scorecards/manage-using-3rd-party-apps/jira)
 - Add a comment to a Jira ticket using Port's self-service actions
-:::
