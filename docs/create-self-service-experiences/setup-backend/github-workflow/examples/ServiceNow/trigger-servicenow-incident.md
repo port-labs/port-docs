@@ -25,14 +25,17 @@ This step is not required for this example, but it will create all the blueprint
 
 :::
 
-3. After you installed the integration, the blueprints `servicenowGroup`, `servicenowCatalog` and `servicenowIncident` will appear, create the following action with the following JSON file on the `servicenowIncident` blueprint:
+3. After you installed the integration, the blueprints `servicenowGroup`, `servicenowCatalog` and `servicenowIncident` will be created in your software catalog. Create a Port self-service action with the following JSON file on the `servicenowIncident` blueprint:
 
 <details>
-<summary><b>Trigger ServiceNow Incident Blueprint (Click to expand)</b></summary>
+<summary><b>Trigger ServiceNow Incident Action (Click to expand)</b></summary>
+
+:::tip Modification Required
+Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organization and repository names respectively
+:::
 
 ```json showLineNumbers
-[
-  {
+{
     "identifier": "trigger_servicenow_incident",
     "title": "Trigger ServiceNow incident",
     "icon": "Servicenow",
@@ -104,8 +107,8 @@ This step is not required for this example, but it will create all the blueprint
     },
     "invocationMethod": {
       "type": "GITHUB",
-      "org": "<Enter GitHub organization>",
-      "repo": "<Enter GitHub repository>",
+      "org": "<GITHUB_ORG>",
+      "repo": "<GITHUB_REPO>",
       "workflow": "trigger-servicenow-incident.yml",
       "omitUserInputs": false,
       "omitPayload": false,
@@ -114,19 +117,16 @@ This step is not required for this example, but it will create all the blueprint
     "trigger": "CREATE",
     "description": "Triggers an incident in ServiceNow",
     "requiredApproval": false
-  }
-]
+}
 ```
 
 </details>
 
-:::note Customisation
+4. Create the file `trigger-servicenow-incident.yml` in the `.github/workflows` folder of your repository and copy the content of the workflow configuration below:
 
-Replace the invocation method with your own repository details.
-
+:::tip Dedicated repository
+We recommend creating a dedicated repository for the workflows that are used by Port actions.
 :::
-
-4. Create a workflow file under `.github/workflows/trigger-servicenow-incident.yml` with the content below:
 
 <details>
 <summary><b>Trigger ServiceNow Incident Workflow (Click to expand)</b></summary>
@@ -264,6 +264,6 @@ jobs:
 
 5. Trigger the action from Port's [Self Serve](https://app.getport.io/self-serve).
 
-6. Done! wait for the incident to be trigger in ServiceNow.
+6. Done! wait for the incident to be triggered in ServiceNow.
 
 Congrats 🎉 You've triggered your first incident in ServiceNow from Port!
