@@ -91,10 +91,22 @@ Below, you can find the JSON for the `DORA Metrics` blueprint required for the g
         "description": "Qualitative rating of deployment success. e.g Elite"
       },
       "numberOfUniqueDeploymentDays": {
-        "title": "Number of Unique Deployments",
+        "title": "Unique Deployment Days",
         "type": "string",
         "icon": "DefaultProperty",
         "description": "Days with at least one deployment."
+      },
+      "numberOfUniqueDeploymentWeeks": {
+        "title": "Unique Deployment Weeks",
+        "type": "string",
+        "icon": "DefaultProperty",
+        "description": "Number of weeks with at least one deployment."
+      },
+      "numberOfUniqueDeploymentMonths": {
+        "title": "Unique Deployment Months",
+        "type": "string",
+        "icon": "DefaultProperty",
+        "description": "Number of months with at least one deployment."
       },
       "deploymentFrequency": {
         "title": "Deployment Frequency",
@@ -246,6 +258,8 @@ jobs:
               "totalDeployments": "${{ fromJson(env.deployment_frequency_report).total_deployments }}",
               "deploymentRating": "${{ fromJson(env.deployment_frequency_report).rating }}",
               "numberOfUniqueDeploymentDays": "${{ fromJson(env.deployment_frequency_report).number_of_unique_deployment_days }}",
+              "numberOfUniqueDeploymentWeeks": "${{ fromJson(env.deployment_frequency_report).number_of_unique_deployment_weeks }}",
+              "numberOfUniqueDeploymentMonths": "${{ fromJson(env.deployment_frequency_report).number_of_unique_deployment_months }}",
               "deploymentFrequency": "${{ fromJson(env.deployment_frequency_report).deployment_frequency }}",
               "leadTimeForChangesInHours": "${{ fromJson(env.lead_time_for_changes_report).lead_time_for_changes_in_hours }}",
               "leadTimeRating": "${{ fromJson(env.lead_time_for_changes_report).rating }}",
@@ -619,7 +633,7 @@ class DeploymentFrequency:
         rating, color = self.compute_rating(deployments_per_day)
 
         logger.info(f"Owner/Repo: {self.owner}/{self.repo}")
-        logger.info(f"Workflows: {self.workflows}")
+        logger.info(f"Workflows: {await self.get_workflows()}")
         logger.info(f"Branch: {self.branch}")
         logger.info(f"Number of days: {self.number_of_days}")
         logger.info(
@@ -632,6 +646,8 @@ class DeploymentFrequency:
                 "deployment_frequency": round(deployments_per_day, 2),
                 "rating": rating,
                 "number_of_unique_deployment_days": len(unique_dates),
+                "number_of_unique_deployment_weeks": len({date.isocalendar()[1] for date in unique_dates}),
+                "number_of_unique_deployment_months":len({date.month for date in unique_dates}),
                 "total_deployments": len(workflow_runs_list),
             },
             default=str,
