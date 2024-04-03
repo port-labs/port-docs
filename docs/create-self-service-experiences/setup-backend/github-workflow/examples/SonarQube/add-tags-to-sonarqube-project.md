@@ -1,7 +1,6 @@
 # Add tags to SonarQube project
 
-## Overview
-This guide shows how to quickly add tags to a SonarQube project via Port self-service actions with ease.
+This guide shows how to quickly add tags to a SonarQube project via Port self-service actions with ease. Tagging projects in SonarQube allows you to categorize and label your projects based on various attributes such as technology stack, business domain, team ownership etc. In this action, we will add tags to enable you to more easily connect a SonarQube project to a service in Port.
 
 ## Prerequisites
 * SonarQube instance URL, SonarQube API token. Check [SonarQube's documentation](https://docs.sonarsource.com/sonarqube/latest/user-guide/user-account/generating-and-using-tokens/) on how to retrieve your API Token
@@ -22,10 +21,14 @@ The above step is not required for this example, but it will create all the blue
 
 :::
 
-3. After you installed the integration, the blueprints `sonarQubeProject`, `sonarQubeIssue` and `sonarQubeAnalysis` will appear, create the following action with the following JSON file on the `sonarQubeProject` blueprint:
+3. After you installed the integration, the blueprints `sonarQubeProject`, `sonarQubeIssue` and `sonarQubeAnalysis` will appear, create a Port self-service action with the following JSON file on the `sonarQubeProject` blueprint:
 
 <details>
-<summary><b>Add tags to SonarQube project (Click to expand)</b></summary>
+<summary><b>Add tags to SonarQube project action (Click to expand)</b></summary>
+
+:::tip Modification Required
+Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organization and repository names respectively.
+:::
 
 ```json showLineNumbers
 {
@@ -50,8 +53,8 @@ The above step is not required for this example, but it will create all the blue
   },
   "invocationMethod": {
     "type": "GITHUB",
-    "org": "<Enter GitHub organization>",
-    "repo": "<Enter GitHub repository>",
+    "org": "<GITHUB_ORG>",
+    "repo": "<GITHUB_REPO>",
     "workflow": "add-tags-to-sonarqube-project.yml",
     "omitUserInputs": false,
     "omitPayload": false,
@@ -65,13 +68,11 @@ The above step is not required for this example, but it will create all the blue
 
 </details>
 
-:::info Customization information
+4. Create the file `add-tags-to-sonarqube-project.yml` in the `.github/workflows` folder of your repository and copy the content of the workflow configuration below:
 
-In the `invocationMethod` section, replace the `org` and `repo` values with your own repository details
-
+:::tip
+We recommend creating a dedicated repository for the workflows that are used by Port actions.
 :::
-
-4. Create a workflow file under `.github/workflows/add-tags-to-sonarqube-project.yml` using the workflow:
 
 <details>
 <summary><b>Add tags to SonarQube project workflow (Click to expand)</b></summary>
@@ -142,3 +143,6 @@ Congrats 🎉 You've added tags to your SonarQube project from Port!
 Due to SonarQube API's limitation, this action replaces the tags on the project with the new ones specified. If you want to add to the already existing tags, copy the existing tags and add it with the new ones you are adding.
 
 :::
+
+## More relevant guides and examples
+- [A mini guide to connect SonarQube project to a service](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube/guides/connect-sonar-project-to-service)
