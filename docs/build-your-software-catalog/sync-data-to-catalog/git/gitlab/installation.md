@@ -77,7 +77,7 @@ The following steps will guide you how to create a GitLab group access token.
 
 ## Configuring the GitLab integration
 
-### tokenMapping
+### `tokenMapping`
 
 The GitLab integration support fetching data related to specific paths in your GitLab groups. The integration is also able to fetch data from different GitLab parent groups by providing additional group tokens. In order to do so, you need to map the desired paths to the relevant access tokens.
 The `tokenMapping` parameter supports specifying the paths that the integration will search for files and information in, using [globPatterns](https://www.malikbrowne.com/blog/a-beginners-guide-glob-patterns).
@@ -107,6 +107,29 @@ Multiple GitLab group access tokens example:
 {"glpat-QXbeg-Ev9xtu5_5FsaAQ": ["**/DevopsTeam/*Service", "**/RnDTeam/*Service"],"glpat-xF7Ae-vXu5ts5_QbEgAQ9": ["**/MarketingTeam/*Service"]}
 ```
 
+### `tokenGroupHooksOverrideMapping`
+
+the integration can support listening to webhooks on specified groups, by configuring the `tokenGroupHooksOverrideMapping` parameter. this parameter is not required, and when you don't use it, the integration will listen to all of the root groups (if not using `useSystemHooks=true`)
+
+Mapping format:
+
+```text showLineNumbers
+{"MY_FIRST_GROUPS_TOKEN": {"groups:"{"MY_FIRST_GROUP_FULL_PATH": {"events": [CHOSEN_EVENT_TYPES]}, "MY_OTHER_GROUP_FULL_PATH": {"events": [CHOSEN_EVENT_TYPES]}}}}
+```
+
+Example:
+```text showLineNumbers
+{"glpat-QXbeg-Ev9xtu5_5FsaAQ": {"groups": {"path/to/my-first-group": {"events": ["push_events", "merge_requests_events]}, "path/to/my-other-group": {"events": ["pipelines_events"]}}}}
+```
+
+You could configure multiple tokens, and multiple groups per token (the token should have admin access to those groups), but there are some rules:
+- all of the tokens mentioned here must be contained in `tokenMapping`
+- key "groups" per each token is required
+- all of the groups in all of the tokens must be non-hierarchical to each other, and not identical (duplicated)
+- the group path is the full path in gitlab, if a group path inserted was wrong, it will not find it in gitlab and the webhook will not be created
+- the events per each group must match the supported event types mentioned below (pay attention: the "push_events" will be added by default). if you would like to have all the events provided in the webhook, you can use: `{"events" = []}`, but not eliminate this key completely, because it is required.
+
+
 ### `appHost` & listening to hooks
 
 :::tip
@@ -128,29 +151,34 @@ As part of the installation process, the integration will create a webhook in yo
 
 **_There are a few points to consider before deciding on which webhook to choose_**:
 
-- If you choose group webhooks, the integration will create a webhook for each group in your GitLab instance. If you choose system hooks, the integration will create a single webhook for the entire GitLab instance.
+- If you choose system hooks, the integration will create a single webhook for the entire GitLab instance. If you choose group webhooks, the integration will create a webhook for each root group in your GitLab instance, unless you provide the `tokenGroupHooksOverrideMapping` parameter- and then it will create a webhook for each specified group in this parameter.
 - The system hooks has much less event types than the group webhooks.
 
   - Group Webhooks supported event types:
 
-    - `push`
-    - `issues`
-    - `jobs`
-    - `merge_requests`
-    - `pipeline`
+    - `push_events`
+    - `issues_events`
+    - `jobs_events`
+    - `merge_requests_events`
+    - `pipeline_events`
+    - `releases_events`
+    - `tag_push_events`
+    - `subgroup_events`
+    - `confidential_issues_events`
 
   - System Hooks supported event types:
 
-    - `push`
-    - `merge_request`
+    - `push_events`
+    - `merge_requests_events`
+    - `repository_update_events`
 
-    This means that if you choose system hooks, the integration will not be able to update the relevant entities in Port on events such as `issues` or `pipeline`.
+    This means that if you choose system hooks, the integration will not be able to update the relevant entities in Port on events such as `issues_events`, `pipeline_events` and etc.
 
 - Creating a system hook requires admin privileges in GitLab. Due to this, the integration supports that the system hook will be created manually, and the integration will use it to listen to the relevant events.
 
 ##### Configuring the integration to use hooks
 
-By default, if `appHost` is provided, the integration will create group webhooks for each group in your GitLab instance.
+By default, if `appHost` is provided, the integration will create group webhooks for each root group in your GitLab instance. If you need to create webhooks only for specific groups, you should configure the `tokenGroupHooksOverrideMapping` parameter. 
 
 To create a system hook there are two options:
 
@@ -189,6 +217,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `integration.secrets.tokenMapping` | The [token mapping](#tokenmapping) configuration used to query GitLab                                                               |                                  | ✅       |
 | `integration.config.appHost`       | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in GitLab                | https://my-ocean-integration.com | ❌       |
 | `integration.config.gitlabHost`    | (for self-hosted GitLab) the URL of your GitLab instance                                                                            | https://my-gitlab.com            | ❌       |
+| `integration.secrets.tokenGroupHooksOverrideMapping`    | The [token group hooks override mapping](#tokengrouphooksoverridemapping) configuration used to create custom webhooks on groups                                                                            |             | ❌       |
 
 <HelmParameters/>
 
