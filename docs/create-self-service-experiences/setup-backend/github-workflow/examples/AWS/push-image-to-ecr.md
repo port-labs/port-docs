@@ -2,6 +2,10 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 # Push ECR image with tags
 
+## Overview
+
+This guide demonstrates how to build and push a Docker image to AWS ECR with meaningful tags using [self-service action](/create-self-service-experiences/).
+
 :::tip Use Cases
 - **Self-service**: Enable developers to build and push Docker images to AWS ECR without needing to access AWS, while ensuring that images are following a consistent tagging convention.
 - **Automation**: Automatically tag Docker images with meaningful information like commit ID, PR ID, and workflow ID.
@@ -128,67 +132,69 @@ jobs:
 
 ## Port Configuration
 
-1. On the [self-service](https://app.getport.io/self-serve) page, create the Port action against the `Repository` blueprint. This will trigger the GitHub workflow.
+1. Head to the [self-service](https://app.getport.io/self-serve) page.
+2. Click on the `+ New Action` button.
+3. Choose the `Repository` blueprint and click `Next`.
 
-<details>
+   <img src='/img/self-service-actions/setup-backend/github-workflow/examples/awsECRActionNew.png' width='50%' border='1px' />
+4. Click on the `{...} Edit JSON` button.
+5. Copy and paste the following JSON configuration into the editor.
 
-<summary>Port Action</summary>
+   <details>
+   
+   <summary>Port Action</summary>
+   
+   :::tip Modification Required
+   Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organization and repository names respectively.
+   :::
+   
+   ```json showLineNumbers
+   {
+     "identifier": "build_ecr_image",
+     "title": "Build ECR Image",
+     "icon": "AWS",
+     "userInputs": {
+       "properties": {
+         "dockerfile": {
+           "icon": "Docker",
+           "title": "Dockerfile",
+           "description": "The path to the dockerfile e.g Dockerfile or ./deploy/prod.Dockerfile",
+           "type": "string",
+           "default": "Dockerfile"
+         },
+         "image_repo": {
+           "title": "Image Repository",
+           "description": "The Elastic Container Repository Name",
+           "icon": "AWS",
+           "type": "string"
+         }
+       },
+       "required": [
+         "dockerfile",
+         "image_repo"
+       ],
+       "order": [
+         "dockerfile"
+       ]
+     },
+     "invocationMethod": {
+       "type": "GITHUB",
+       "org": "<GITHUB_ORG>",
+       "repo": "<GITHUB_REPO>",
+       "workflow": "create-and-push-image.yml",
+       "omitUserInputs": false,
+       "omitPayload": false,
+       "reportWorkflowStatus": true
+     },
+     "trigger": "DAY-2",
+     "description": "Build Image and Push to ECR",
+     "requiredApproval": false
+   }
+   ```
+   </details>
+6. Click `Save`.
 
-:::tip Modification Required
-Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organization and repository names respectively.
-:::
-
-```json showLineNumbers
-{
-  "identifier": "build_ecr_image",
-  "title": "Build ECR Image",
-  "icon": "AWS",
-  "userInputs": {
-    "properties": {
-      "dockerfile": {
-        "icon": "Docker",
-        "title": "Dockerfile",
-        "description": "The path to the dockerfile e.g Dockerfile or ./deploy/prod.Dockerfile",
-        "type": "string",
-        "default": "Dockerfile"
-      },
-      "image_repo": {
-        "title": "Image Repository",
-        "description": "The Elastic Container Repository Name",
-        "icon": "AWS",
-        "type": "string"
-      }
-    },
-    "required": [
-      "dockerfile",
-      "image_repo"
-    ],
-    "order": [
-      "dockerfile"
-    ]
-  },
-  "invocationMethod": {
-    "type": "GITHUB",
-    "org": "<GITHUB_ORG>",
-    "repo": "<GITHUB_REPO>",
-    "workflow": "create-and-push-image.yml",
-    "omitUserInputs": false,
-    "omitPayload": false,
-    "reportWorkflowStatus": true
-  },
-  "trigger": "DAY-2",
-  "description": "Build Image and Push to ECR",
-  "requiredApproval": false
-}
-```
-</details>
-
-<img src='/img/self-service-actions/setup-backend/github-workflow/examples/awsECRActionNew.png' width='90%' border='1px' />
-<br />
-<br />
-<img src='/img/self-service-actions/setup-backend/github-workflow/examples/awsECRAction.png' width='45%' border='1px' />
-<img src='/img/self-service-actions/setup-backend/github-workflow/examples/awsECRActionInputs.png' width='45%' border='1px' />
-
+Now you should see the `Build ECR Image` action in the self-service page. 🎉
 
 
 ## Let's test it!
