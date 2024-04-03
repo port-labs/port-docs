@@ -73,7 +73,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Map FluxCD](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/fluxcd.md)
 - [Map CRDs](/build-your-software-catalog/sync-data-to-catalog/kubernetes/custom-crds.md)
 - [Port entity CRD](/build-your-software-catalog/sync-data-to-catalog/kubernetes/port-crd.md)
-- [Create and managed Kubernetes cluster](/create-self-service-experiences/setup-backend/github-workflow/examples/manage-clusters)
+- [Create and managed Kubernetes cluster](/create-self-service-experiences/setup-backend/github-workflow/examples/kubernetes/manage-clusters)
 - [Change deployment replica count](/create-self-service-experiences/setup-backend/github-workflow/examples/kubernetes/change-replica-count)
 
 ## ArgoCD
