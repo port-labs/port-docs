@@ -143,7 +143,8 @@ Below, you can find the JSON for the `DORA Metrics` blueprint required for the g
 
 Follow these steps to get started:
 
-1. Create the following GitHub Action secrets:
+1. Create the following GitHub action secrets:
+
     - `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token)
     - `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token)
     - `PATTOKEN` - GitHub PAT fine-grained token. Ensure that read-only access to actions and metadata permission is set. Grant this action access to the repositories where the metrics are to be estimated for . [learn more](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token).
