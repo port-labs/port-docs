@@ -227,3 +227,8 @@ When you will look at the step that failed, you will see that the failure is due
 If you set the value of the `locked_in_prod` field to `false`, the workflow will perform the deployment without any issue:
 
 <img src="/img/guides/serviceInProdNotLocked.png" border="1px" />
+
+
+## More relevant guides and examples
+
+- [Port's self-service action to lock and unlock a service](/create-self-service-experiences/setup-backend/github-workflow/examples/lock-and-unlock-service-in-port)
