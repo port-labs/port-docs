@@ -111,10 +111,14 @@ This step will ensure the `datadogIncident` blueprint is available, and also upd
 
 :::
 
-3. After creating the blueprint, create the following action with the following JSON file on the `datadogIncident` blueprint:
+3. After creating the blueprint, create a Port self-service action with the following JSON file on the `datadogIncident` blueprint:
 
 <details>
-<summary><b>Trigger Datadog Incident Blueprint (Click to expand)</b></summary>
+<summary><b>Trigger Datadog Incident (Click to expand)</b></summary>
+
+:::tip Modification Required
+Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organization and repository names respectively
+:::
 
 ```json showLineNumbers
 [
@@ -165,8 +169,8 @@ This step will ensure the `datadogIncident` blueprint is available, and also upd
     },
     "invocationMethod": {
       "type": "GITHUB",
-      "org": "<Enter GitHub organization>",
-      "repo": "<Enter GitHub repository>",
+      "org": "<GITHUB_ORG>",
+      "repo": "<GITHUB_REPO>",
       "workflow": "trigger-datadog-incident.yml",
       "omitUserInputs": false,
       "omitPayload": false,
@@ -180,13 +184,11 @@ This step will ensure the `datadogIncident` blueprint is available, and also upd
 ```
 </details>
 
-:::note Customisation
+4. Create the file `trigger-datadog-incident.yml` in the `.github/workflows` folder of your repository and copy the content of the workflow configuration below:
 
-Replace the invocation method with your own repository details.
-
+:::tip Dedicated repository
+We recommend creating a dedicated repository for the workflows that are used by Port actions.
 :::
-
-4. Create a workflow file under `.github/workflows/trigger-datadog-incident.yml` with the content below:
 
 <details>
 <summary><b>Trigger Datadog Incident Workflow (Click to expand)</b></summary>
@@ -332,6 +334,6 @@ jobs:
 
 5. Trigger the action from Port's [Self Serve](https://app.getport.io/self-serve)
 
-6. Done! wait for the incident to be trigger in Datadog
+6. Done! wait for the incident to be triggered in Datadog
 
 Congrats 🎉 You've triggered your first incident in Datadog from Port!
