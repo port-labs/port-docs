@@ -19,22 +19,68 @@ Our Wiz integration allows you to import `projects`, `issues`, `controls`, and `
 
 ## Prerequisites
 
-1.**Port Credentials**:
+### Port Credentials
 
 <FindCredentials />
 
-2. **Wiz Credentials**:
+### Wiz Credentials
 
-:::info GETTING YOUR WIZ CREDENTIALS
-The Wiz documentation is behind a login. To gain access as well as get your Wiz Client ID and Client Secret, either:
+You need the following connection details to configure Wiz:
 
-1. **Contact Wiz**: Email win@wiz.io to request access to the developer documentation and access keys.
-2. **Or Reach Out to Your Account Manager**: If you have one, contact them directly.
+- Wiz API URL (API Endpoint URL)
+- Wiz Token URL
+- Client ID and Client Secret
 
-Your Wiz credentials should have the `read:projects` and `read:issues` permission scopes. Visit the Wiz [documentation](https://integrate.wiz.io/reference/prerequisites) for a guide on how to set permissions.
+:::info Wiz Token URL
+There are two possible endpoints depending on your service account's identity provider:
 
+- Amazon Cognito:	https://auth.app.wiz.io/oauth/token
+- Auth0:	https://auth.wiz.io/oauth/token
+
+Learn more [here](https://win.wiz.io/reference/quickstart#generate-a-bearer-token-and-start-using-wiz-api).
 :::
 
+<br />
+
+1. **Finding Your Wiz API URL**:
+    - Log in to Wiz account.
+    - Click the User Profile icon (top right) and select "User Settings."
+    - Click "Tenant" in the left menu.
+    - Copy the API Endpoint URL: It will be displayed on the screen.
+
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/code-quality-security/wizApi.png' width='85%' border='1px' />
+
+For more details, refer to the [documentation](https://docs.wiz.io/wiz-docs/docs/using-the-wiz-api#the-graphql-endpoint)
+
+<br />
+
+2. **Getting the Client ID and Client Secret**
+
+You should use a Wiz account with Project Admin role to complete this step.
+
+    - Log in to Wiz: Access your Wiz account.
+    - Open Settings: Click the Settings icon (top-right).
+    - Go to Service Accounts: In the left menu, find and select "Service Accounts".
+    - Create a Service Account:
+        - Click "Add Service Account".
+        - Provide a descriptive "Service Account Name".
+        - Type: Select "Custom Integration (GraphQL API)".
+        - Project: Choose the relevant project(s).
+        - API Scopes: Select only the `read:projects` and `read:issues` permissions.
+        - Click "Add Service Account".
+
+    <img src='/img/build-your-software-catalog/sync-data-to-catalog/code-quality-security/wizCreds.png' width='85%' border='1px' />
+    
+    <br />
+    <br />
+
+    - Retrieve Credentials: Wiz will display your Client ID and Client Secret.
+    - Save Credentials: Copy and store them securely for use in Port.
+    
+     <img src='/img/build-your-software-catalog/sync-data-to-catalog/code-quality-security/wizSecrets.png' width='85%' border='1px' />
+
+<br />
+    <br />
 
 ## Installation
 
