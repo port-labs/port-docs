@@ -16,8 +16,6 @@ A `Project` in LaunchDarkly is a collection of feature flags, targeting rules, a
 
 A `Flag` in LaunchDarkly represents a feature flag or toggle, which is a central concept in LaunchDarkly. Flags are used to control the visibility and operational state of features in your software without deploying new code.
 
-An `Audit Log` in LaunchDarkly records changes and events that occur within the platform, providing a comprehensive history of activities for compliance, troubleshooting, and analysis.
-
 An `Environment` within a LaunchDarkly project is a logical separation of feature flag states and configurations, typically corresponding to stages in your development lifecycle.
 
 
@@ -363,7 +361,7 @@ To ingest Launchdarkly objects using the [integration configuration](#configurat
 1. Go to the DevPortal Builder page.
 2. Select a blueprint you want to ingest using Launchdarkly.
 3. Choose the **Ingest Data** option from the menu.
-4. Select Launchdarkly under the Project Management category.
+4. Select Launchdarkly under the Feature Management category.
 5. Add the contents of your [integration configuration](#configuration-structure) to the editor.
 6. Click `Resync`.
 
