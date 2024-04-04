@@ -170,3 +170,98 @@ After ingesting all of our services and PagerDuty services, we want to connect e
 
      Now, if a `service's` **identifier** is equal to a `PagerDuty service's` **name**, that service will automatically have its on-call property filled with the relevant PagerDuty service.  
       This is just the convention we chose for this example, but you can use a different one if you'd like.
+
+## Create multiple entities from an array API object
+
+In some cases, an application's API returns an array of objects that you want to map to multiple entities in Port.  
+To achieve this, Port provides you with the `itemsToParse` key, its value should be a JQ query that returns an array.  
+In order to reference an array item attribute, use `.item` in your JQ expression.  
+
+Here is an example mapping configuration of a Jira `issue`, where we want to map each of the issue's `comments` to a separate `comment` entity:
+
+```yaml showLineNumbers
+- kind: issue
+  selector:
+    query: .item.name != 'test-item' and .issueType == 'Bug' 
+  port:
+    # highlight-next-line
+    itemsToParse: .fields.comments
+    entity:
+      mappings:
+        # highlight-next-line
+        identifier: .item.id
+        blueprint: '"comment"'
+        properties:
+          # highlight-next-line
+          text: .item.text
+        relations:
+            issue: .key
+```
+
+The object returned from Jira for which we would apply this mapping might look like this (note the `comments` array):
+
+<details>
+<summary><b>Example Jira API response (click to expand)</b></summary>
+```json
+{
+  "url": "https://example.com/issue/1",
+  "status": "Open",
+  "issueType": "Bug",
+  "comments": [
+    {
+      "id": "123",
+      "text": "This issue is not reproducing"
+    },
+    {
+      "id": "456",
+      "text": "Great issue!"
+    }
+  ],
+  "assignee": "user1",
+  "reporter": "user2",
+  "creator": "user3",
+  "priority": "High",
+  "created": "2024-03-18T10:00:00Z",
+  "updated": "2024-03-18T12:30:00Z",
+  "key": "ISSUE-1"
+}
+```
+</details>
+
+## Common use-cases
+
+### Splitting a `kind` block
+Sometimes the `CreateRelatedMissingEntities` flag is passed as `false` to prevent generation of additional entities for relations. This can lead to cases where entity ingestion will not happen because the target entity for a relation does not exist in your catalog.  
+To handle such cases, you can split a single `kind` to multiple mappings like this:
+
+
+```yaml showLineNumbers
+createMissingRelatedEntities: false
+  - kind: services
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .name
+          blueprint: '"service"'
+          properties: 
+            #Properties mapping
+  - kind: services
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .name
+          blueprint: '"service"'
+          properties: {}
+          relations:
+            pagerduty_service: .id
+```
+
+Looking at this mapping configuration we see the following:
+* The first `kind` block is used to create the entity along with all of its properties.
+* The second `kind` block is used to update the same entity (notice the mapping for the identifier is the same in both configurations) with relations. If the target entity of the relation does not exist (i.e. you have no matching PagerDuty service), the update itself will fail, but the data ingestion will still complete successfully.
+
+This case can also be expanded for handling multiple relation, for each relation that might not be established, you can split it into another kind mapping.

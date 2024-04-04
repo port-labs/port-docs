@@ -266,4 +266,4 @@ Port's GitHub app also supports a self-hosted installation, refer to the [self-h
 
 ## Additional resources
 
-- [Connect GitHub PR with Jira issue](/build-your-software-catalog/sync-data-to-catalog/git/examples/connect-github-pr-with-jira-issue.md)
+- [Connect GitHub PR with Jira issue](/build-your-software-catalog/sync-data-to-catalog/jira/guides/connect-github-pr-with-jira-issue.md)
