@@ -126,6 +126,8 @@ If you want the integration to update Port in real time using webhooks you shoul
 the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
 :::
 
+<br />
+
 Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
 of `Secret Text` type:
 
@@ -184,7 +186,6 @@ pipeline {
 
 <DockerParameters />
 
-<br/>
 
 Here is an example for `wiz-integration.yml` pipeline file:
 
