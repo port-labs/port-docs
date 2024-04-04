@@ -6,6 +6,7 @@ import DockerParameters from "./\_wiz-docker-parameters.mdx"
 import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
 import WizBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/wiz/\_example_wiz_issue_blueprint.mdx";
 import WizConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/wiz/\_example_wiz_issue_webhook_configuration.mdx";
+import FindCredentials from "/docs/build-your-software-catalog/custom-integration/api/_template_docs/_find_credentials.mdx";
 
 # Wiz
 
@@ -18,7 +19,11 @@ Our Wiz integration allows you to import `projects`, `issues`, `controls`, and `
 
 ## Prerequisites
 
-<Prerequisites />
+1.**Port Credentials**:
+
+<FindCredentials />
+
+2. **Wiz Credentials**:
 
 :::info GETTING YOUR WIZ CREDENTIALS
 The Wiz documentation is behind a login. To gain access as well as get your Wiz Client ID and Client Secret, either:
