@@ -6,33 +6,30 @@ sidebar_position: 2
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
+## Overview
+
 In the following guide, you are going to create a self-service action in Port that executes a [GitHub workflow](/create-self-service-experiences/setup-backend/github-workflow/github-workflow.md) to create an EC2 Instance in AWS using Terraform templates.
 
-:::tip Prerequisites
-1. Prior knowledge of Port Actions is essential for following this guide. [Learn more](http://localhost:4000/create-self-service-experiences/setup-ui-for-action/).
-2. A GitHub repository to contain your action resources i.e. the github workflow file.
-3. An AWS Account or IAM user with permission to create access keys. [Learn more](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html)
-4. An SSH Key Pair to connect with the provisioned instance. [Learn more](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/create-key-pairs.html#having-ec2-create-your-key-pair)
-:::
+## Prerequisites
+1. A GitHub repository to contain your action resources i.e. the github workflow file.
 
-## Steps
-1. Create the following GitHub Action secrets:
-    * Create the following Port credentials:
-        * `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
-        * `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
-        * Install the Ports GitHub app from [here](https://github.com/apps/getport-io/installations/new).
-    
-    * Create the following AWS Cloud credentials:   
-        * `TF_USER_AWS_KEY` - an aws access key with the right iam permission to create an ec2 instance [learn more](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html)
-        * `TF_USER_AWS_SECRET` - an aws access key secret with permission to create an ec2 instance [learn more](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html)
-        * `TF_USER_AWS_REGION` - the aws region where you would like to provision your ec2 instance.
+2. An AWS Account or IAM user with permission to create access keys. [Learn more](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html)
 
-2. Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new).
+3. An SSH Key Pair to connect with the provisioned instance. [Learn more](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/create-key-pairs.html#having-ec2-create-your-key-pair)
 
-3. Create a <PortTooltip id="blueprint">blueprint</PortTooltip> in Port for EC2 Instance.
+4. Install the Ports GitHub app from [here](https://github.com/apps/getport-io/installations/new).
+
+5. In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
+    * `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
+    * `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
+    * `TF_USER_AWS_KEY` - An aws access key with the right iam permission to create an ec2 instance [learn more](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html)
+    * `TF_USER_AWS_SECRET` - An aws access key secret with permission to create an ec2 instance [learn more](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html)
+    * `TF_USER_AWS_REGION` - The aws region where you would like to provision your ec2 instance.
+
+6. Create a <PortTooltip id="blueprint">blueprint</PortTooltip> in Port for the EC2 Instance.
 
 <details>
-   <summary><b>Port Blueprint: EC2 Instance</b></summary>
+   <summary><b>EC2 Instance Blueprint</b></summary>
 
 ```json showLineNumbers
 {
@@ -119,78 +116,11 @@ In the following guide, you are going to create a self-service action in Port th
 ```
 </details>
 
-4. Create a Port action in the [self-service page](https://app.getport.io/self-serve) or with the following JSON definition for the `EC2 Instance` blueprint:
+## GitHub Workflow
 
-<details>
-  <summary> <b> Port Action: Create EC2 Instance </b> </summary>
-:::tip
-- `<GITHUB-ORG>` - your GitHub organization or user name.
-- `<GITHUB-REPO-NAME>` - your GitHub repository name.
-:::
+1. Create a folder in a directory of your choice within your github repository to host the terraform template files.
 
-```json showLineNumbers
-{
-  "identifier": "create_an_ec2_instance",
-  "title": "Create An EC2 Instance",
-  "icon": "EC2",
-  "userInputs": {
-    "properties": {
-      "pem_key_name": {
-        "title": "Pem Key Name",
-        "description": "EC2 .pem key pair name",
-        "icon": "EC2",
-        "type": "string"
-      },
-      "ec2_name": {
-        "icon": "EC2",
-        "title": "EC2_Name",
-        "description": "Name of the instance",
-        "type": "string"
-      },
-      "ec2_instance_type": {
-        "title": "EC2 Instance Type",
-        "description": "EC2 instance type",
-        "icon": "EC2",
-        "type": "string",
-        "default": "t2.micro",
-        "enum": [
-          "t2.micro",
-          "t2.medium",
-          "t2.large",
-          "t2.xlarge",
-          "t2.2xlarge"
-        ]
-      }
-    },
-    "required": [
-      "ec2_name",
-      "pem_key_name"
-    ],
-    "order": [
-      "ec2_name",
-      "ec2_instance_type",
-      "pem_key_name"
-    ]
-  },
-  "invocationMethod": {
-    "type": "GITHUB",
-    "org": "<GITHUB-ORG>",
-    "repo": "<GITHUB-REPO-NAME>",
-    "workflow": "create-ec2-instance.yaml",
-    "omitUserInputs": false,
-    "omitPayload": false,
-    "reportWorkflowStatus": true
-  },
-  "trigger": "CREATE",
-  "description": "Create An EC2 Instance from Port",
-  "requiredApproval": false
-}
-```
-</details>
-
-5. Create a folder in a directory of your choice within your github repository to host the terraform template files.
-
-6. Create the following terraform templates ( `main.tf`, `variables.tf` and `outputs.tf` ) within the created folder.
+2. Create the following terraform templates ( `main.tf`, `variables.tf` and `outputs.tf` ) within the created folder.
 
 <details>
   <summary><b>main.tf</b></summary>
@@ -324,7 +254,7 @@ output "tags" {
 </details>
 
 
-7. Create a `Github Workflow` file under `.github/workflows/create-an-ec2-instance.yaml` with the following content:
+3. Create a `Github Workflow` file under `.github/workflows/create-an-ec2-instance.yaml` with the following content:
 
 <details>
 <summary><b>GitHub workflow</b></summary>
@@ -481,7 +411,83 @@ jobs:
 ```
 </details>
 
+## Port Configuration
 
-8. Trigger the action from Port's [Self Serve](https://app.getport.io/self-serve)
+1. Create a Port action in the [self-service page](https://app.getport.io/self-serve) or with the following JSON definition:
 
-Congrats 🎉 You've created your instance in EC2 from Port!
+<details>
+  <summary> <b> Port Action: Create An EC2 Instance </b> </summary>
+:::tip
+- `<GITHUB-ORG>` - your GitHub organization or user name.
+- `<GITHUB-REPO-NAME>` - your GitHub repository name.
+:::
+
+```json showLineNumbers
+{
+  "identifier": "create_an_ec2_instance",
+  "title": "Create An EC2 Instance",
+  "icon": "EC2",
+  "userInputs": {
+    "properties": {
+      "pem_key_name": {
+        "title": "Pem Key Name",
+        "description": "EC2 .pem key pair name",
+        "icon": "EC2",
+        "type": "string"
+      },
+      "ec2_name": {
+        "icon": "EC2",
+        "title": "EC2_Name",
+        "description": "Name of the instance",
+        "type": "string"
+      },
+      "ec2_instance_type": {
+        "title": "EC2 Instance Type",
+        "description": "EC2 instance type",
+        "icon": "EC2",
+        "type": "string",
+        "default": "t2.micro",
+        "enum": [
+          "t2.micro",
+          "t2.medium",
+          "t2.large",
+          "t2.xlarge",
+          "t2.2xlarge"
+        ]
+      }
+    },
+    "required": [
+      "ec2_name",
+      "pem_key_name"
+    ],
+    "order": [
+      "ec2_name",
+      "ec2_instance_type",
+      "pem_key_name"
+    ]
+  },
+  "invocationMethod": {
+    "type": "GITHUB",
+    "org": "<GITHUB-ORG>",
+    "repo": "<GITHUB-REPO-NAME>",
+    "workflow": "create-ec2-instance.yaml",
+    "omitUserInputs": false,
+    "omitPayload": false,
+    "reportWorkflowStatus": true
+  },
+  "trigger": "CREATE",
+  "description": "Create An EC2 Instance from Port",
+  "requiredApproval": false
+}
+```
+</details>
+
+## Let's test it!
+
+1. Head to the [Self Service hub](https://app.getport.io/self-serve)
+2. Click on the `Create An EC2 Instance` action
+3. Fill the pop-up form with details of the EC2 Instance you wish to create
+5. Click on `Execute`
+6. Wait for the EC2 Instance to be created in AWS
+
+Congrats 🎉 You've created an EC2 Instance in Port 🔥
