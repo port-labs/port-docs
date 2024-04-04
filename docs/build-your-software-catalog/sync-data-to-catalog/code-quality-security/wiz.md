@@ -184,6 +184,16 @@ pipeline {
 
 <AzurePremise name="Wiz" />
 
+
+:::info GETTING YOUR WIZ CREDENTIALS
+To get your Wiz Client ID and Client Secret, either:
+
+1. **Contact Wiz**: Email win@wiz.io to request access to the developer documentation and access keys.
+2. **Or Reach Out to Your Account Manager**: If you have one, contact them directly.
+:::
+
+<br />
+
 <DockerParameters />
 
 
