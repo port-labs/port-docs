@@ -25,7 +25,7 @@ An `Environment` within a LaunchDarkly project is a logical separation of featur
 
 - Entity Tracking - See all projects and their associated environments and feature flags.
 
-- Real time Synchronization of Infrastructure: Automatically synchronize projects, feature flags, and environments data from Launchdarkly into Port for centralized tracking and management.
+- Real time Synchronization of Infrastructure - Automatically synchronize projects, feature flags, and environments data from Launchdarkly into Port for centralized tracking and management.
 
 
 ## Prerequisites
