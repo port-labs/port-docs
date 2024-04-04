@@ -13,7 +13,7 @@ This GitHub action allows you to quickly toggle LaunchDarkly Feature Flags via P
     - `PORT_CLIENT_ID` - Port Client ID [Learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
     - `PORT_CLIENT_SECRET` - Port Client Secret. [Learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token) 
 
-3. Optional - Install Port's LaunchDarkly integration. [Learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/launchdarkly/)
+3. Optional - Install Port's LaunchDarkly integration. [Learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/feature%20management/launchdarkly)
 
 	:::tip Launchdarkly Integration
 	This step is not required for this example, but it will create all the blueprint boilerplate for you, and also ingest and update the catalog in real time with your Launchdarkly Fearture Flags.
@@ -319,7 +319,7 @@ Now you should see the `Toogle Launchdarkly Feature Flag` action in the self-ser
 
 1. Head to the [Self Service hub](https://app.getport.io/self-serve)
 2. Click on the `Toggle Launchdarkly Feature Flag` action
-3. Choose the feature flag you want to toggle (In case you didn't install the [Launchdarkly integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/launchdarkly/), it means you don't have any feature flags in Port yet, so you will need to create one manually in Port to test this action)
+3. Choose the feature flag you want to toggle (In case you didn't install the [Launchdarkly integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/feature%20management/launchdarkly), it means you don't have any feature flags in Port yet, so you will need to create one manually in Port to test this action)
 4. Select the new status
 5. Click on `Execute`
 6. Done! wait for the feature flag's status to be changed in Launchdarkly.
