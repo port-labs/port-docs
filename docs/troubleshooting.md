@@ -1,7 +1,8 @@
 ---
 sidebar_position: 14
 title: Troubleshooting
-sidebar_label: ❓ Troubleshooting
+sidebar_label: Troubleshooting
+sidebar_class_name: custom-sidebar-item sidebar-menu-troubleshooting
 ---
 
 # Troubleshooting
@@ -67,6 +68,7 @@ In case you're evaluating Port, it provides you with everything you need, and if
 ---
 
 #### How can I troubleshoot my SSO connection?
+
 <details>
 <summary><b>Answer (click to expand)</b></summary>
 
@@ -90,6 +92,26 @@ After the `error_description`, you can see `User%20is%20not%20assigned%20to%20th
 
 When using the free tier, Port allows you to be connected to a single organization. If your colleague is in another organization, you will not be able to invite him/her.  
 Reach out to us via [Slack](https://www.getport.io/community) or Intercom, and we will help you resolve the issue.
+
+</details>
+
+---
+
+## Ocean integrations
+
+#### Why is my Ocean integration not working?
+
+<details>
+<summary><b>Answer (click to expand)</b></summary>
+
+If you are facing issues after installing an Ocean integration, follow these steps:
+
+1. Make sure all of the parameters you provided in the installation command are correct.
+2. Go to the [audit log](https://app.getport.io/organization/AuditLog) in your Port application and check for any errors in the creation of your `blueprints` and/or `entities`.
+3. In your [builder](https://app.getport.io/dev-portal/data-model) page, make sure that the new `blueprints` were created with the correct properties/relations.
+4. If you tried to install a `self-hosted` integration, check the integration's documentation to ensure you included the necessary parameters.
+
+If you are still facing issues, reach out to us via [Slack](https://www.getport.io/community) or using the Intercom bubble in the bottom right corner, and we will help you resolve the issue.
 
 </details>
 

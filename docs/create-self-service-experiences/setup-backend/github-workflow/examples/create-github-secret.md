@@ -57,7 +57,7 @@ Keep in mind this can be any blueprint you would like and this is just an exampl
 }
 ```
 
-4. Create Port action using the following JSON definition:
+4. Create a Port action using the following JSON definition:
 
 :::note
 Make sure to replace the placeholders for GITHUB_ORG_NAME and GITHUB_REPO_NAME in your Port Action to match your GitHub environment.

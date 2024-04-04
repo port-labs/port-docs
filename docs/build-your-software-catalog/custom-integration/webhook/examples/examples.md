@@ -86,19 +86,13 @@ Check out the following examples for using Port's webhook integration to ingest 
   },
   {
     type: 'link',
-    href: '/build-your-software-catalog/custom-integration/webhook/examples/azuredevops',
-    label: 'Azure DevOps',
-    description: 'Ingest Azure DevOps resources',
-  },
-  {
-    type: 'link',
     href: '/build-your-software-catalog/custom-integration/webhook/examples/prometheus',
     label: 'Prometheus',
     description: 'Ingest Prometheus alerts',
   },
   {
     type: 'link',
-    href: '/build-your-software-catalog/sync-data-to-catalog/kubernetes/argocd#alternative-installation-via-webhook',
+    href: '/build-your-software-catalog/sync-data-to-catalog/argocd#alternative-installation-via-webhook',
     label: 'ArgoCD',
     description: 'Ingest ArgoCD applications',
   },

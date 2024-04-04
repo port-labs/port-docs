@@ -16,11 +16,11 @@ import PagerDutyScript from "/docs/build-your-software-catalog/custom-integratio
 
 # PagerDuty
 
-Our PagerDuty integration allows you to import `schedules`, `services` and `incidents` from your PagerDuty account into Port, according to your mapping and definitions.
+Our PagerDuty integration allows you to import `schedules`, `oncalls`, `services` and `incidents` from your PagerDuty account into Port, according to your mapping and definitions.
 
 ## Common use cases
 
-- Map `schedules`, `services` and `incidents` in your PagerDuty organization environment.
+- Map `schedules`, `oncalls`, `services` and `incidents` in your PagerDuty organization environment.
 - Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
 ## Prerequisites
@@ -190,24 +190,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Run PagerDuty Integration
-        run: |
-          # Set Docker image and run the container
-          integration_type="pagerduty"
-          version="latest"
-
-          image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
-
-          docker run -i --rm --platform=linux/amd64 \
-          -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
-          -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-          -e OCEAN__INTEGRATION__CONFIG__TOKEN=${{ secrets.OCEAN__INTEGRATION__CONFIG__TOKEN }} \
-          -e OCEAN__INTEGRATION__CONFIG__API_URL=${{ secrets.OCEAN__INTEGRATION__CONFIG__API_URL }} \
-          -e OCEAN__PORT__CLIENT_ID=${{ secrets.OCEAN__PORT__CLIENT_ID }} \
-          -e OCEAN__PORT__CLIENT_SECRET=${{ secrets.OCEAN__PORT__CLIENT_SECRET }} \
-          $image_name
-
-          exit $?
+      - uses: port-labs/ocean-sail@v1
+        with:
+          type: 'pagerduty'
+          port_client_id: ${{ secrets.OCEAN__PORT__CLIENT_ID }}
+          port_client_secret: ${{ secrets.OCEAN__PORT__CLIENT_SECRET }}
+          config: |
+            token: ${{ secrets.OCEAN__INTEGRATION__CONFIG__TOKEN }} 
+            api_url: ${{ secrets.OCEAN__INTEGRATION__CONFIG__API_URL }} 
 ```
 
   </TabItem>
@@ -335,6 +325,7 @@ The integration configuration determines which resources will be queried from Pa
 The following resources can be used to map data from PagerDuty, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
 
 - [`Schedule`](https://developer.pagerduty.com/api-reference/846ecf84402bb-list-schedules)
+- [`Oncall`](https://developer.pagerduty.com/api-reference/3a6b910f11050-list-all-of-the-on-calls)
 - [`Service`](https://developer.pagerduty.com/api-reference/e960cca205c0f-list-services)
 - [`Incident`](https://developer.pagerduty.com/api-reference/9d0b4b12e36f9-list-incidents)
 
@@ -481,6 +472,86 @@ resources:
             users: "[.users[].summary]"
 ```
 
+</details>
+
+### Oncall
+
+<details>
+<summary>Oncall blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "pagerdutyOncall",
+  "description": "This blueprint represents a PagerDuty oncall schedule in our software catalog",
+  "title": "PagerDuty Oncall Schedule",
+  "icon": "pagerduty",
+  "schema": {
+    "properties": {
+      "url": {
+        "title": "Oncall Schedule URL",
+        "type": "string",
+        "format": "url"
+      },
+      "user": {
+        "title": "User",
+        "type": "string",
+        "format": "user"
+      },
+      "startDate": {
+        "title": "Start Date",
+        "type": "string",
+        "format": "date-time"
+      },
+      "endDate": {
+        "title": "End Date",
+        "type": "string",
+        "format": "date-time"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "pagerdutySchedule": {
+      "title": "PagerDuty Schedule",
+      "target": "pagerdutySchedule",
+      "required": false,
+      "many": true
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: oncalls
+    selector:
+      query: 'true'
+      apiQueryParams:
+        include: ['users']
+    port:
+      entity:
+        mappings:
+          identifier: .user.id + "-" + .schedule.id + "-" + .start
+          title: .user.name
+          blueprint: '"pagerdutyOncall"'
+          properties:
+            user: .user.email
+            startDate: .start
+            endDate: .end
+            url: .schedule.html_url
+          relations:
+            pagerdutySchedule: .schedule.id
+```
 </details>
 
 ### Service
@@ -1010,11 +1081,11 @@ Here is an example of the payload structure from Pagerduty:
       "html_url": "https://getport-io.pagerduty.com/users/P4K4DLP"
     },
     {
-      "id": "PFZ63E2",
+      "id": "HDW63E2",
       "type": "user_reference",
       "summary": "Doe",
-      "self": "https://api.pagerduty.com/users/PFZ63E2",
-      "html_url": "https://getport-io.pagerduty.com/users/PFZ63E2"
+      "self": "https://api.pagerduty.com/users/HDW63E2",
+      "html_url": "https://getport-io.pagerduty.com/users/HDW63E2"
     },
     {
       "id": "PRGAUI4",
@@ -1042,6 +1113,92 @@ Here is an example of the payload structure from Pagerduty:
     }
   ],
   "teams": []
+}
+```
+
+</details>
+
+<details>
+<summary> Oncall response data</summary>
+
+```json showLineNumbers
+{
+   "escalation_policy":{
+      "id":"P7LVMYP",
+      "type":"escalation_policy_reference",
+      "summary":"Test Escalation Policy",
+      "self":"https://api.pagerduty.com/escalation_policies/P7LVMYP",
+      "html_url":"https://getport-io.pagerduty.com/escalation_policies/P7LVMYP"
+   },
+   "escalation_level":1,
+   "schedule":{
+      "id":"PWAXLIH",
+      "type":"schedule_reference",
+      "summary":"Port Test Service - Weekly Rotation",
+      "self":"https://api.pagerduty.com/schedules/PWAXLIH",
+      "html_url":"https://getport-io.pagerduty.com/schedules/PWAXLIH"
+   },
+   "user":{
+      "name":"John Doe",
+      "email":"johndoe@domain.io",
+      "time_zone":"Asia/Jerusalem",
+      "color":"red",
+      "avatar_url":"https://secure.gravatar.com/avatar/149cf38119ee25af9b8b3a68d06f39e3.png?d=mm&r=PG",
+      "billed":true,
+      "role":"user",
+      "description":null,
+      "invitation_sent":false,
+      "job_title":null,
+      "teams":[
+         
+      ],
+      "contact_methods":[
+         {
+            "id":"PK3SHEX",
+            "type":"email_contact_method_reference",
+            "summary":"Default",
+            "self":"https://api.pagerduty.com/users/HDW63E2/contact_methods/PK3SHEX",
+            "html_url":null
+         },
+         {
+            "id":"PO3TNV8",
+            "type":"phone_contact_method_reference",
+            "summary":"Other",
+            "self":"https://api.pagerduty.com/users/HDW63E2/contact_methods/PO3TNV8",
+            "html_url":null
+         },
+         {
+            "id":"P7U59FI",
+            "type":"sms_contact_method_reference",
+            "summary":"Other",
+            "self":"https://api.pagerduty.com/users/HDW63E2/contact_methods/P7U59FI",
+            "html_url":null
+         }
+      ],
+      "notification_rules":[
+         {
+            "id":"PMTOCX1",
+            "type":"assignment_notification_rule_reference",
+            "summary":"0 minutes: channel PK3SHEX",
+            "self":"https://api.pagerduty.com/users/HDW63E2/notification_rules/PMTOCX1",
+            "html_url":null
+         },
+         {
+            "id":"P3HAND3",
+            "type":"assignment_notification_rule_reference",
+            "summary":"0 minutes: channel P7U59FI",
+            "self":"https://api.pagerduty.com/users/HDW63E2/notification_rules/P3HAND3",
+            "html_url":null
+         }
+      ],
+      "id":"HDW63E2",
+      "type":"user",
+      "summary":"John Doe",
+      "self":"https://api.pagerduty.com/users/HDW63E2",
+      "html_url":"https://getport-io.pagerduty.com/users/HDW63E2"
+   },
+   "start":"2024-02-25T00:00:00Z",
+   "end":"2024-04-14T11:10:48Z"
 }
 ```
 
@@ -1252,6 +1409,35 @@ The combination of the sample payload and the Ocean configuration generates the 
   "createdAt": "2023-12-01T13:18:02.215Z",
   "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
   "updatedAt": "2023-12-01T13:18:02.215Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+<details>
+<summary> Oncall entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "HDW63E2-PWAXLIH-2024-06-03T13:00:00Z",
+  "title": "John Doe",
+  "blueprint": "pagerdutyOncall",
+  "team": [],
+  "properties": {
+    "url": "https://getport-io.pagerduty.com/schedules/PWAXLIH",
+    "timezone": null,
+    "description": "Port Test Service - Weekly Rotation",
+    "user": "johndoe@domain.io",
+    "startDate": "2024-06-03T13:00:00Z",
+    "endDate": "2024-06-17T13:00:00Z"
+  },
+  "relations": {
+    "pagerdutySchedule": "PWAXLIH"
+  },
+  "createdAt": "2024-03-08T15:52:35.807Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2024-03-08T15:52:35.807Z",
   "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
 }
 ```
@@ -1591,3 +1777,11 @@ The script writes the JSON payload for each service and incident to a file named
 
 Done! you can now import historical data from PagerDuty into Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
 </details>
+
+## More relevant guides and examples
+
+- [Ensure production readniness](https://docs.getport.io/guides-and-tutorials/ensure-production-readiness)
+- [Self-service action to escalate a PagerDuty incident](https://docs.getport.io/create-self-service-experiences/setup-backend/github-workflow/examples/PagerDuty/escalate-an-incident)
+- [Self-service action to trigger a PagerDuty incident](https://docs.getport.io/create-self-service-experiences/setup-backend/github-workflow/examples/PagerDuty/trigger-pagerduty-incident)
+- [Self-service action to change a PagerDuty incident owner](https://docs.getport.io/create-self-service-experiences/setup-backend/github-workflow/examples/PagerDuty/change-pagerduty-incident-owner)
+- [Self-service action to create a PagerDuty service from Port](https://docs.getport.io/create-self-service-experiences/setup-backend/github-workflow/examples/PagerDuty/create-pagerduty-service)

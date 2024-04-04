@@ -180,7 +180,7 @@ If this secret doesn't already exist, create a `secret text` type secret using [
 
 Once you have triggered your Jenkins pipeline successfully, it is essential to update the status of the run action in Port.
 
-In order to update the action, you'll need to create the `RUN_ID` variable, and to set it to be fetched from the [action payload](../../self-service-actions-deep-dive/self-service-actions-deep-dive.md#action-message-structure):
+In order to update the action, you'll need to create the `RUN_ID` variable, and to set it to be fetched from the [action payload](/create-self-service-experiences/reflect-action-progress/#action-run-json-structure):
 
 ![RUN_ID variable](../../../../static/img/self-service-actions/setup-backend/jenkins-pipeline/jenkins-runid-variable.png)
 

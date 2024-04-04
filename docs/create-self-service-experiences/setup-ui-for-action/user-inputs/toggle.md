@@ -1,6 +1,7 @@
 ---
 sidebar_position: 11
 description: Toggle is a basic input that has one of two possible values - true and false
+sidebar_class_name: "custom-sidebar-item sidebar-property-boolean"
 ---
 
 import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"

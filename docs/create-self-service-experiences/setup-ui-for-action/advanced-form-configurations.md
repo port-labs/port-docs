@@ -667,19 +667,21 @@ values={[
 
 ```json showLineNumbers
 {
-  "env": {
-    "type": "string",
-    "format": "entity",
-    "blueprint": "environment",
-    "dataset": {
-      "combinator": "and",
-      "rules": [
-        {
-          "property": "type",
-          "operator": "!=",
-          "value": "production"
-        }
-      ]
+  "properties": {
+    "env": {
+      "type": "string",
+      "format": "entity",
+      "blueprint": "environment",
+      "dataset": {
+        "combinator": "and",
+        "rules": [
+          {
+            "property": "type",
+            "operator": "!=",
+            "value": "production"
+          }
+        ]
+      }
     }
   }
 }
@@ -767,32 +769,34 @@ values={[
 
 ```json showLineNumbers
 {
-  "Cluster": {
-    "type": "string",
-    "format": "entity",
-    "blueprint": "Cluster",
-    "title": "Cluster",
-    "description": "The cluster to create the namespace in"
-  },
-  "namespace": {
-    "type": "string",
-    "format": "entity",
-    "blueprint": "namespace",
-    "dependsOn": ["Cluster"],
-    "dataset": {
-      "combinator": "and",
-      "rules": [
-        {
-          "blueprint": "Cluster",
-          "operator": "relatedTo",
-          "value": {
-            "jqQuery": ".form.Cluster.identifier"
-          }
-        }
-      ]
+  "properties": {
+    "Cluster": {
+      "type": "string",
+      "format": "entity",
+      "blueprint": "Cluster",
+      "title": "Cluster",
+      "description": "The cluster to create the namespace in"
     },
-    "title": "namespace",
-    "description": "The namespace to create the cluster in"
+    "namespace": {
+      "type": "string",
+      "format": "entity",
+      "blueprint": "namespace",
+      "dependsOn": ["Cluster"],
+      "dataset": {
+        "combinator": "and",
+        "rules": [
+          {
+            "blueprint": "Cluster",
+            "operator": "relatedTo",
+            "value": {
+              "jqQuery": ".form.Cluster.identifier"
+            }
+          }
+        ]
+      },
+      "title": "namespace",
+      "description": "The namespace to create the cluster in"
+    }
   }
 }
 ```
@@ -898,21 +902,23 @@ values={[
 
 ```json showLineNumbers
 {
-  "namespace": {
-    "type": "string",
-    "format": "entity",
-    "blueprint": "namespace",
-    "dataset": {
-      "combinator": "and",
-      "rules": [
-        {
-          "property": "$team",
-          "operator": "containsAny",
-          "value": {
-            "jqQuery": "[.user.teams[].name]"
+  "properties": {
+    "namespace": {
+      "type": "string",
+      "format": "entity",
+      "blueprint": "namespace",
+      "dataset": {
+        "combinator": "and",
+        "rules": [
+          {
+            "property": "$team",
+            "operator": "containsAny",
+            "value": {
+              "jqQuery": "[.user.teams[].name]"
+            }
           }
-        }
-      ]
+        ]
+      }
     }
   }
 }
@@ -1002,21 +1008,23 @@ values={[
 
 ```json showLineNumbers
 {
-  "namespace": {
-    "type": "string",
-    "format": "entity",
-    "blueprint": "namespace",
-    "dataset": {
-      "combinator": "and",
-      "rules": [
-        {
-          "property": "tags",
-          "operator": "containsAny",
-          "value": {
-            "jqQuery": "[.entity.properties.tags[]]"
+  "properties": {
+    "namespace": {
+      "type": "string",
+      "format": "entity",
+      "blueprint": "namespace",
+      "dataset": {
+        "combinator": "and",
+        "rules": [
+          {
+            "property": "tags",
+            "operator": "containsAny",
+            "value": {
+              "jqQuery": "[.entity.properties.tags[]]"
+            }
           }
-        }
-      ]
+        ]
+      }
     }
   }
 }
@@ -1103,10 +1111,12 @@ values={[
 
 ```json showLineNumbers
 {
-  "some_input": {
-    "type": "array",
-    "default": {
-      "jqQuery": ".entity.properties.tags"
+  "properties": {
+    "some_input": {
+      "type": "array",
+      "default": {
+        "jqQuery": ".entity.properties.tags"
+      }
     }
   }
 }
@@ -1290,7 +1300,7 @@ values={[
           "combinator": "and",
           "rules": [
             {
-              "blueprint": "$team",
+              "property": "$team",
               "operator": "containsAny",
               "value": {
                 "jqQuery": "[.user.teams[].name]"

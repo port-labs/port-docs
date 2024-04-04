@@ -1,6 +1,7 @@
 ---
 sidebar_position: 7
 description: Secret is an input whose value is encrypted with your client secret when sent to your backend and is never saved or logged in its transit.
+sidebar_class_name: "custom-sidebar-item sidebar-property-secret"
 ---
 
 import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"
