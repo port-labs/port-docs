@@ -73,7 +73,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Map FluxCD](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/fluxcd.md)
 - [Map CRDs](/build-your-software-catalog/sync-data-to-catalog/kubernetes/custom-crds.md)
 - [Port entity CRD](/build-your-software-catalog/sync-data-to-catalog/kubernetes/port-crd.md)
-- [Create and managed Kubernetes cluster](/create-self-service-experiences/setup-backend/github-workflow/examples/manage-clusters)
+- [Create and managed Kubernetes cluster](/create-self-service-experiences/setup-backend/github-workflow/examples/kubernetes/manage-clusters)
 - [Change deployment replica count](/create-self-service-experiences/setup-backend/github-workflow/examples/kubernetes/change-replica-count)
 
 ## ArgoCD
@@ -88,22 +88,22 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ### Terraform
 
-- [Terraform provider](/build-your-software-catalog/sync-data-to-catalog/iac/terraform/terraform.md)
+- [Terraform provider](/build-your-software-catalog/custom-integration/iac/terraform/terraform.md)
 - [Terraform managed blueprint](/build-your-software-catalog/customize-integrations/configure-data-model/Iac/terraform-managed-blueprint.md)
 - [Create cloud resources using IaC](/guides-and-tutorials/create-cloud-resource-using-iac.md)
-- [Terraform manage S3 buckets lifecycle](/build-your-software-catalog/sync-data-to-catalog/iac/terraform/examples/s3-bucket.md)
-- [Terraform manage developer environment](/build-your-software-catalog/sync-data-to-catalog/iac/terraform/examples/create-dev-env.md)
+- [Terraform manage S3 buckets lifecycle](/build-your-software-catalog/custom-integration/iac/terraform/examples/s3-bucket.md)
+- [Terraform manage developer environment](/build-your-software-catalog/custom-integration/iac/terraform/examples/create-dev-env.md)
 - [Terraform no-code resource provisioning using self-service actions](/create-self-service-experiences/setup-backend/webhook/examples/terraform-no-code-resource-provisioning.md)
 - [Import Terraform state using webhook](/build-your-software-catalog/custom-integration/webhook/examples/packages/terraform.md)
 
 ### Terraform Cloud
 
-- [Terraform cloud](/build-your-software-catalog/sync-data-to-catalog/iac/terraform-cloud)
+- [Terraform cloud](/build-your-software-catalog/sync-data-to-catalog/terraform-cloud)
 - [Terraform cloud actions](/create-self-service-experiences/setup-backend/terraform-cloud)
 
 ### Pulumi
 
-- [Pulumi provider](/build-your-software-catalog/sync-data-to-catalog/iac/pulumi/pulumi.md)
+- [Pulumi provider](/build-your-software-catalog/custom-integration/iac/pulumi/pulumi.md)
 - [Pulumi managed blueprint](/build-your-software-catalog/customize-integrations/configure-data-model/Iac/pulumi-managed-blueprint.md)
 
 ## Cloud providers
@@ -114,9 +114,8 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Map ECS, EC2, RDS, API GW, Cloudfront and more](docs/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples/examples.md)
 - [AWS Cost](/build-your-software-catalog/sync-data-to-catalog/cloud-cost/aws-cost.md)
 - [Deploy AWS resources using AWS CloudFormation](/create-self-service-experiences/setup-backend/github-workflow/examples/AWS/deploy-cloudformation-template.md)
-- [AWS exporter Terraform module](/build-your-software-catalog/sync-data-to-catalog/iac/terraform/modules/aws-exporter-module.md)
-- [Terraform manage S3 buckets lifecycle](/build-your-software-catalog/sync-data-to-catalog/iac/terraform/examples/s3-bucket.md)
-- [Terraform manage developer environment](/build-your-software-catalog/sync-data-to-catalog/iac/terraform/examples/create-dev-env.md)
+- [Terraform manage S3 buckets lifecycle](/build-your-software-catalog/custom-integration/iac/terraform/examples/s3-bucket.md)
+- [Terraform manage developer environment](/build-your-software-catalog/custom-integration/iac/terraform/examples/create-dev-env.md)
 - [Connect ECR repository to Service](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples/connect-ecr-repo-to-service-using-tags.md)
 - [Script to ingest ECR Images and Repositories](https://github.com/port-labs/example-ecr-images)
 - [Self-service action to create EC2 instance](/create-self-service-experiences/setup-backend/github-workflow/examples/AWS/create-an-ec2-instance)
