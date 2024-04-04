@@ -20,7 +20,15 @@ Our Wiz integration allows you to import `projects`, `issues`, `controls`, and `
 
 <Prerequisites />
 
-Your Wiz credentials should have the `read:projects` and `read:issues` permission scopes. Visit the Wiz [documentation](https://integrate.wiz.io/reference/prerequisites) for a guide on how to get your credentials as well as set permissions.
+:::info GETTING YOUR WIZ CREDENTIALS
+The Wiz documentation is behind a login. To gain access as well as get your Wiz Client ID and Client Secret, either:
+
+1. **Contact Wiz**: Email win@wiz.io to request access to the developer documentation and access keys.
+2. **Or Reach Out to Your Account Manager**: If you have one, contact them directly.
+
+Your Wiz credentials should have the `read:projects` and `read:issues` permission scopes. Visit the Wiz [documentation](https://integrate.wiz.io/reference/prerequisites) for a guide on how to set permissions.
+
+:::
 
 
 ## Installation
@@ -184,15 +192,6 @@ pipeline {
 
 <AzurePremise name="Wiz" />
 
-
-:::info GETTING YOUR WIZ CREDENTIALS
-To get your Wiz Client ID and Client Secret, either:
-
-1. **Contact Wiz**: Email win@wiz.io to request access to the developer documentation and access keys.
-2. **Or Reach Out to Your Account Manager**: If you have one, contact them directly.
-:::
-
-<br />
 
 <DockerParameters />
 
