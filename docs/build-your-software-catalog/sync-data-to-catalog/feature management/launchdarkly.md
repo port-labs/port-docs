@@ -328,7 +328,7 @@ The following resources can be used to map data from Launchdarkly, it is possibl
   ```yaml showLineNumbers
     resources:
       # highlight-next-line
-      - kind: flag
+      - kind: project
         selector:
         ...
   ```
