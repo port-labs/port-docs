@@ -715,7 +715,7 @@ class LeadTimeForChanges:
     async def __call__(self):
         logger.info(f"Owner/Repo: {self.owner}/{self.repo}")
         logger.info(f"Number of days: {self.number_of_days}")
-        logger.info(f"Workflows: {self.workflows}")
+        logger.info(f"Workflows: {await self.get_workflows()}")
         logger.info(f"Branch: {self.branch}")
         logger.info(
             f"Commit counting method '{self.commit_counting_method}' being used"
