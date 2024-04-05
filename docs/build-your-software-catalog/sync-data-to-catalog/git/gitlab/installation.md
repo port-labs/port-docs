@@ -124,7 +124,7 @@ Example:
 
 You can configure multiple tokens, and multiple groups per token (the token should have admin access to those groups), but there are some rules:
 - All of the tokens mentioned here must be contained in `tokenMapping`.
-- key "groups" per each token is required
+- A "groups" key is required for each token.
 - all of the groups in all of the tokens must be non-hierarchical to each other, and not identical (duplicated)
 - The group path is the full path in gitlab. If a group path is incorrect, the webhook will not be created.
 - The events for each group must match the supported event types mentioned below. if you would like to have all the events provided in the webhook, you can use: `{"events" = []}`, but not eliminate this key completely, because it is required.
