@@ -122,7 +122,7 @@ Example:
 {"glpat-QXbeg-Ev9xtu5_5FsaAQ": {"groups": {"path/to/my-first-group": {"events": ["push_events", "merge_requests_events]}, "path/to/my-other-group": {"events": ["pipelines_events"]}}}}
 ```
 
-You could configure multiple tokens, and multiple groups per token (the token should have admin access to those groups), but there are some rules:
+You can configure multiple tokens, and multiple groups per token (the token should have admin access to those groups), but there are some rules:
 - all of the tokens mentioned here must be contained in `tokenMapping`
 - key "groups" per each token is required
 - all of the groups in all of the tokens must be non-hierarchical to each other, and not identical (duplicated)
