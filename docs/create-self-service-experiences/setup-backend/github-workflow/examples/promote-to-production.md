@@ -6,19 +6,48 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 # Promote Deployment to Production
 
-In this guide, we will create a self-service action in Port that executes a GitHub workflow to promote an image from staging to production. 
+In this guide, we will create a self-service action in Port that executes a GitHub workflow to promote an image from staging to production.
 
-The deployment involves updating the deployment manifest with the container image of the staging service and creating a Github pull request (PR) for it. The workflow then merges the PR so that your GitOps operator can redeploy the service.
+:::tip USE CASES
+
+- **Self-service**: Enable developers to update production environments through GitOps.
+- **Traceability**: Track the source of the image and the user that triggered the action.
+  :::
+
+This workflow automates updating your **production** deployment manifests with new **staging** container images. It then opens (and optionally merges) GitHub pull requests, enabling your GitOps operator to seamlessly redeploy the service.
 
 ## Prerequisites
-1. Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new)
-2. This guide assumes the presence of the following blueprints:
-    - `Service`:  Represents your github repository containing the application.
-    - `Running Service`: This is a deployment of a `Service` in an environment e.g. dev, test, production.
-    - `Image`: This blueprint represents the container image running in a particular `Running Service` entity. 
-3. A repository to contain your ArgoCD deployment manifest and action resources i.e. the github workflow file
 
-Below you can find the JSON for the blueprints:
+1. Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new). This will automatically sync all your selected repositories into Port.
+2. A repository to contain your ArgoCD deployment manifests and action resources i.e. the github workflow file. This repository would usually be your infrastructure repositiry containing the manifests for all the apps in the different environments.
+3. Create the following GitHub Action secrets:
+   - `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token)
+   - `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token)
+   - `MY_GITHUB_TOKEN` - a [Classic Personal Access Token](https://github.com/settings/tokens) with the `repo` scope and the following permissions: `pull_requests:write` (to create PR) and `contents:write` (to merge PR)
+
+## Port Configuration
+
+### Blueprints
+
+Create the following blueprints in your Port account. These will model an application and its deployments across environments:
+
+- `Service`: Defines your GitOps application.
+- `Running Service`: Represents a running instance of your application in a specific environment (e.g., dev, test, production).
+- `Image`: Tracks the container image used within a `Running Service`.
+
+:::tip Ingest Images
+If you do not have the images ingested already, we recommend using our [AWS ECR script](https://github.com/port-labs/example-ecr-images), [Google Container Registry script](https://github.com/port-labs/example-gcr-images), [JFrog build script](/build-your-software-catalog/custom-integration/webhook/examples/jfrog) or [GitHub packages script](https://github.com/port-labs/example-github-packages) to sync data to your catalog
+:::
+
+For each of the blueprints:
+
+1. Head to the [Builder](https://app.getport.io/dev-portal/data-model) page.
+
+2. Click on the `+ Blueprint` button.
+
+3. Click on the `{...} Edit JSON` button.
+
+4. Copy and paste the blueprint's JSON configuration into the editor.
 
 <details>
 <summary><b>Service blueprint (click to expand)</b></summary>
@@ -46,12 +75,7 @@ Below you can find the JSON for the blueprints:
         "icon": "Git",
         "type": "string",
         "title": "Language",
-        "enum": [
-          "GO",
-          "Python",
-          "Node",
-          "React"
-        ],
+        "enum": ["GO", "Python", "Node", "React"],
         "enumColors": {
           "GO": "red",
           "Python": "green",
@@ -75,11 +99,7 @@ Below you can find the JSON for the blueprints:
         "title": "Type",
         "description": "This service's type",
         "type": "string",
-        "enum": [
-          "Backend",
-          "Frontend",
-          "Library"
-        ],
+        "enum": ["Backend", "Frontend", "Library"],
         "enumColors": {
           "Backend": "purple",
           "Frontend": "pink",
@@ -90,11 +110,7 @@ Below you can find the JSON for the blueprints:
       "lifecycle": {
         "title": "Lifecycle",
         "type": "string",
-        "enum": [
-          "Production",
-          "Experimental",
-          "Deprecated"
-        ],
+        "enum": ["Production", "Experimental", "Deprecated"],
         "enumColors": {
           "Production": "green",
           "Experimental": "yellow",
@@ -143,10 +159,20 @@ Below you can find the JSON for the blueprints:
   }
 }
 ```
+
 </details>
 
 <details>
 <summary><b>Running Service blueprint (click to expand)</b></summary>
+:::tip Application Manifest Path
+The `gitPath` directs the GitHub workflow to the location of your application's manifests inside your Git repository. This is so that the workflow can update the image.  For instance:
+
+- Service: `messenger`
+- Running Service: `messenger_prod`
+- Manifest File: `deployment.yml`
+
+A possible gitPath could be: `apps/messenger/prod/deployment.yml`
+:::
 
 ```json showLineNumbers
 {
@@ -176,11 +202,7 @@ Below you can find the JSON for the blueprints:
       "syncStatus": {
         "type": "string",
         "title": "Sync Status",
-        "enum": [
-          "Synced",
-          "OutOfSync",
-          "Unknown"
-        ],
+        "enum": ["Synced", "OutOfSync", "Unknown"],
         "enumColors": {
           "Synced": "green",
           "OutOfSync": "red",
@@ -236,8 +258,8 @@ Below you can find the JSON for the blueprints:
   }
 }
 ```
-</details>
 
+</details>
 
 <details>
 <summary><b>Image blueprint (click to expand)</b></summary>
@@ -317,32 +339,28 @@ Below you can find the JSON for the blueprints:
   "relations": {}
 }
 ```
+
 </details>
 
-:::tip Ingest Images 
-If you do not have the images ingested already, we recommend using our [AWS ECR script](https://github.com/port-labs/example-ecr-images), [Google Container Registry script](https://github.com/port-labs/example-gcr-images), [JFrog build script](/build-your-software-catalog/custom-integration/webhook/examples/jfrog) or [GitHub packages script](https://github.com/port-labs/example-github-packages) to sync data to your catalog
-:::
+### Port Action
 
-## Create Github workflow
+1. Head to the [self-service page](https://app.getport.io/self-serve) page.
 
-Follow these steps to get started:
+2. Click on the `+ New Action` button.
 
-1. Create the following GitHub Action secrets:
-    - `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token)
-    - `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token)
-    - `MY_GITHUB_TOKEN` - a [Classic Personal Access Token](https://github.com/settings/tokens) with the `repo` scope and the following permissions: `pull_requests:write` (to create PR) and `contents:write` (to merge PR)
+3. Choose the `Service` blueprint and click `Next`.
 
-<br />
-2. Create a Port action in the [self-service page](https://app.getport.io/self-serve) on the `Service` blueprint with the following JSON definition:
+4. Click on the `{...} Edit` JSON button.
+
+5. Copy and paste the following JSON configuration into the editor.
 
 <details>
 
   <summary>Port Action: Promote Deployment</summary>
-   :::tip
-- `<GITHUB-ORG>` - your GitHub organization or user name.
-- `<GITHUB-REPO-NAME>` - your GitHub repository name.
-:::
 
+:::tip MODIFICATION REQUIRED
+Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organization and repository names respectively.
+:::
 
 ```json showLineNumbers
 {
@@ -350,8 +368,16 @@ Follow these steps to get started:
   "title": "Promote to Production",
   "icon": "Argo",
   "userInputs": {
-    "properties": {},
-    "required": []
+    "properties": {
+      "auto_merge_pr": {
+        "title": "Auto Merge PR",
+        "type": "boolean",
+        "default": false,
+        "description": "Automatically merge created PR"
+      }
+    },
+    "required": [],
+    "order": []
   },
   "invocationMethod": {
     "type": "GITHUB",
@@ -369,17 +395,58 @@ Follow these steps to get started:
 ```
 
 </details>
-<br />
 
-3. Create a workflow file under `.github/workflows/promote-production.yml` with the following content:
+6. Click `Save`.
+
+Now you should see the `Promote to Production` action in the self-service page. 🎉
+
+## Github Workflow
+
+Create a workflow file under `.github/workflows/promote-production.yml` with the following content.
+
+:::tip
+We recommend creating a dedicated repository for your GitOps application manifests.
+:::
 
 <details>
 
 <summary>GitHub workflow script</summary>
 
-:::note Variable replacement
-- `<DEPLOYMENT-MANIFEST-PATH>` - Path to the ArgoCD deployment manifest such as `app/deployment.yaml`.
-- `<IMAGE-PROPERTY-PATH>` - Path to where the deployment image is specified in the deployment manifest such as `spec.template.spec.containers[0].image`.
+:::tip Modifying `<IMAGE_PROPERTTY_PATH>`
+This guide assumes a standard image path of `.spec.template.spec.containers[0].image` for your application manifests. If your image path differs, you may need to adjust the workflow accordingly.
+
+```yaml showLineNumbers title="deployment.yml"
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: messenger
+// highlight-start
+spec:
+// highlight-end
+  replicas: 2
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: messenger
+  // highlight-start
+  template:
+  // highlight-end
+    metadata:
+      labels:
+        app: messenger
+    // highlight-start
+    spec:
+      containers:
+        - image: messenger_v2
+    // highlight-end
+          name: messenger
+          ports:
+            - containerPort: 80
+          resources:
+            limits:
+              cpu: "0.5"
+              memory: "512Mi"
+```
 :::
 
 ```yaml showLineNumbers title="promote-production.yml"
@@ -393,18 +460,21 @@ on:
         description: >-
           Port's payload, including details for who triggered the action and
           general context (blueprint, run id, etc...)
+env:
+  auto_merge: ${{ fromJson(inputs.port_payload).payload.properties.auto_merge_pr }}
 jobs:
   promote-deployment:
     runs-on: ubuntu-latest
     steps:
       - name: Inform execution of request to promote deployment image
+        id: promote
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
+          runId: ${{ fromJson(inputs.port_payload).context.runId }}
           logMessage: "About to promote deployment image from staging to production..."
 
       - name: Get the current staging image
@@ -416,8 +486,8 @@ jobs:
           baseUrl: https://api.getport.io
           operation: GET
           blueprint: running_service
-          identifier: ${{fromJson(github.event.inputs.port_payload).payload.entity.relations.test_runtime }}
-          runId: ${{ fromJson(github.event.inputs.port_payload).context.runId }}
+          identifier: ${{ fromJson(inputs.port_payload).payload.entity.relations.test_runtime }}
+          runId: ${{ fromJson(inputs.port_payload).context.runId }}
           logMessage: "Getting the current staging image..."
 
       - name: Set the production image
@@ -427,9 +497,9 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: UPSERT
-          identifier: ${{fromJson(github.event.inputs.port_payload).payload.entity.relations.prod_runtime }}
+          identifier: ${{ fromJson(inputs.port_payload).payload.entity.relations.prod_runtime }}
           blueprint: running_service
-          runId: ${{ fromJson(github.event.inputs.port_payload).context.runId }}
+          runId: ${{ fromJson(inputs.port_payload).context.runId }}
           logMessage: "Updating the production image..."
           relations: |
             {
@@ -444,29 +514,141 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{ fromJson(github.event.inputs.port_payload).context.runId }}
+          runId: ${{ fromJson(inputs.port_payload).context.runId }}
           logMessage: |
-            The production image has been updated successfully
+            Opening a pull request to update the production image
 
-      - name: Inform Port about pull request creation status - Failure
-        if: steps.set-production.outcome != 'success'
+      - name: Get the production runtime manifest path
+        id: get-prod-runtime
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: GET
+          blueprint: running_service
+          identifier: ${{ fromJson(inputs.port_payload).payload.entity.relations.prod_runtime }}
+          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          logMessage: "Getting the current production manifest runtime path..."
+
+      - uses: actions/checkout@v4
+      - name: Change the production image in the manifest file
+        if: steps.set-production.outcome == 'success'
+        id: make-changes
+        // highlight-start
+        env:
+          IMAGE_PROPERTY_PATH: ".spec.template.spec.containers[0].image"
+        // highlight-end
+        run: |
+          # Update the manifest file to the production image version.
+          manifest_file=${{ fromJson(steps.get-prod-runtime.outputs.entity).properties.gitPath }}
+          yq -i eval '${{ env.IMAGE_PROPERTY_PATH }} = "${{ fromJson(steps.get-staging.outputs.entity).relations.image }}"' $manifest_file
+
+      - name: Create Pull Request
+        id: create-pr
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.MY_GITHUB_TOKEN }}
+          commit-message: Update ${{ fromJson(inputs.port_payload).payload.entity.title }}  production image to latest staging image
+          committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+          author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
+          signoff: false
+          branch: deployment/${{ fromJson(inputs.port_payload).context.runId }}
+          title: "[Promotion] Update production image for ${{ fromJson(inputs.port_payload).payload.entity.title }} to latest staging image"
+          body: |
+            Update report
+            - **Service**: ${{ fromJson(inputs.port_payload).payload.entity.title }}
+            - **Production Runtime**: ${{ fromJson(steps.get-prod-runtime.outputs.entity).title }}
+            - **Staging Image Used**: ${{ fromJson(steps.get-staging.outputs.entity).relations.image }}
+            - **Manifest File Path**: ${{ fromJson(steps.get-prod-runtime.outputs.entity).properties.gitPath }}
+            - Auto-generated by [port-actions][1] 
+
+            [1]: https://app.getport.io/organization/run?runId=${{ fromJson(inputs.port_payload).context.runId }}
+          labels: |
+            deployment
+            automated pr
+          assignees: ${{ fromJson(inputs.port_payload).trigger.by.user.email }}
+
+      - name: Inform Port about pull request creation status - Success
+        if: steps.create-pr.outputs.pull-request-url != ''
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{ fromJson(github.event.inputs.port_payload).context.runId }}
+          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          logMessage: |
+            A pull request has been opened to update the production image: ${{ steps.create-pr.outputs.pull-request-url }}
+
+      - name: Merge Pull Request
+        if: ${{ env.auto_merge == 'true' && steps.create-pr.outcome == 'success' }}
+        env:
+          GH_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
+          PR_URL: ${{ steps.create-pr.outputs.pull-request-number }}
+          pr_number: ${{ steps.create-pr.outputs.pull-request-number }}
+        run: |
+          echo "Merging pull request.. $PR_URL"
+
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            -X PUT \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            "https://api.github.com/repos/${{ github.repository }}/pulls/$pr_number/merge")
+
+          echo "HTTP Status: $HTTP_STATUS"
+
+          if [ $HTTP_STATUS -eq 200 ]; then
+            echo "Pull request merged successfully."
+            echo "merge_status=successful" >> $GITHUB_ENV
+          else
+            echo "Failed to merge PR. HTTP Status: $HTTP_STATUS"
+            echo "merge_status=unsuccessful" >> $GITHUB_ENV
+          fi
+
+      - name: Inform completion of Argocd rollback into Port
+        if: ${{ env.auto_merge == 'true' }}
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: PATCH_RUN
+          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
+          logMessage: "Pull request merge was ${{ env.merge_status }}"
+
+      - name: Inform Port about pull request creation status - Failure
+        if: steps.create-pr.outputs.pull-request-url == ''
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: PATCH_RUN
+          runId: ${{ fromJson(inputs.port_payload).context.runId }}
           logMessage: |
             The promotion of the image to production failed.
 ```
 
 </details>
-<br />
-4. Trigger the action from the [self-service](https://app.getport.io/self-serve) page of your Port application.
 
-You should now be able to see a Github pull request created and merged for the deployment.
+## Let's test it!
+
+1. On the [self-service](https://app.getport.io/self-serve) page, go to the `Promote to Production` action and fill in the properties.
+2. Click the execute button to trigger the GitHub workflow.
+3. You should see the following happen:
+   - The production `Running Service` entity in Port is updated to the staging image.
+   - Your production deployment manifest is updated with the staging image in GitHub.
+   - A pull request is created to merge this change.
+   - Optional: If auto-merge is enabled, the pull request will be merged automatically.
+
+<img src='/img/self-service-actions/setup-backend/github-workflow/examples/promotePR.png' width='85%' border='1px' />
+<br />
+<br />
+
+Done! 🎉 You can now promote images from staging to production.
 
 ## More relevant guides and examples
+
 - [ArgoCD Ocean integration](/build-your-software-catalog/sync-data-to-catalog/argocd/)
 - [Connect ArgoCD deployment to image](/build-your-software-catalog/sync-data-to-catalog/argocd/examples/connect-argocd-deployment-to-image)
