@@ -123,7 +123,7 @@ Example:
 ```
 
 You can configure multiple tokens, and multiple groups per token (the token should have admin access to those groups), but there are some rules:
-- all of the tokens mentioned here must be contained in `tokenMapping`
+- All of the tokens mentioned here must be contained in `tokenMapping`.
 - key "groups" per each token is required
 - all of the groups in all of the tokens must be non-hierarchical to each other, and not identical (duplicated)
 - The group path is the full path in gitlab. If a group path is incorrect, the webhook will not be created.
