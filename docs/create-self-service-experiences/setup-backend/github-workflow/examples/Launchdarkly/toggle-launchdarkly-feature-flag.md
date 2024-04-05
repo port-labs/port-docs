@@ -112,7 +112,8 @@ This GitHub action allows you to quickly toggle LaunchDarkly Feature Flags via P
 
 1. Create a workflow file under `.github/workflows/toggle-feature-flag.yaml` with the following content:
 
-:::tip
+:::tip Dedicated repository
+
 We recommend creating a dedicated repository for the workflows that are used by Port actions.
 :::
 
