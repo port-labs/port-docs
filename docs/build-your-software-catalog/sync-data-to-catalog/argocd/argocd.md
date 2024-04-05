@@ -10,7 +10,7 @@ import ArgoCDEventManifest from '/docs/build-your-software-catalog/custom-integr
 
 # ArgoCD
 
-Our ArgoCD integration allows you to import `cluster`, `project`, `application` and `deployment-history` resources from your ArgoCD instance into Port, according to your mapping and definition.
+Our ArgoCD integration allows you to import `cluster`, `project`, `application`, `deployment-history`, `kubernetes-resource` and `managed-resource` from your ArgoCD instance into Port, according to your mapping and definition.
 
 ## Common use cases
 
@@ -240,7 +240,9 @@ The following resources can be used to map data from ArgoCD, it is possible to r
 - [`cluster`](https://cd.apps.argoproj.io/swagger-ui#operation/ClusterService_List)
 - [`project`](https://cd.apps.argoproj.io/swagger-ui#operation/ProjectService_List)
 - [`application`](https://cd.apps.argoproj.io/swagger-ui#operation/ApplicationService_List)
-- [`deployment-history`](https://cd.apps.argoproj.io/swagger-ui#operation/ApplicationService_List)
+- [`deployment-history`](https://cd.apps.argoproj.io/swagger-ui#operation/ApplicationService_List) - You can reference any valid property from the `.status.history` object of the ArgoCD application
+- [`kubernetes-resource`](https://cd.apps.argoproj.io/swagger-ui#operation/ApplicationService_List) - You can reference any valid property from the `.status.resources` object of the ArgoCD application
+- [`managed-resource`](https://cd.apps.argoproj.io/swagger-ui#operation/ApplicationService_ManagedResources)
 
 :::
 
@@ -803,6 +805,114 @@ resources:
             initiatedBy: .initiatedBy.username
             repoURL: .source.repoURL
             sourcePath: .source.path
+          relations:
+            application: .__applicationId
+```
+
+</details>
+
+### Kubernetes resource
+
+<details>
+<summary> Kubernetes resource blueprint</summary>
+
+```json showlineNumbers
+{
+    "identifier": "argocdKubernetesResource",
+    "description": "This blueprint represents an ArgoCD kubernetes resource",
+    "title": "Kubernetes Resource",
+    "icon": "Argo",
+    "schema": {
+      "properties": {
+        "kind": {
+          "title": "Kind",
+          "type": "string"
+        },
+        "version": {
+          "title": "Version",
+          "type": "string"
+        },
+        "syncStatus": {
+          "type": "string",
+          "title": "Sync Status",
+          "enum": [
+            "Synced",
+            "OutOfSync",
+            "Unknown"
+          ],
+          "enumColors": {
+            "Synced": "green",
+            "OutOfSync": "red",
+            "Unknown": "lightGray"
+          },
+          "description": "The sync status of the application"
+        },
+        "healthStatus": {
+          "type": "string",
+          "title": "Health Status",
+          "enum": [
+            "Healthy",
+            "Missing",
+            "Suspended",
+            "Degraded",
+            "Progressing",
+            "Unknown"
+          ],
+          "enumColors": {
+            "Healthy": "green",
+            "Missing": "yellow",
+            "Suspended": "purple",
+            "Degraded": "red",
+            "Progressing": "blue",
+            "Unknown": "lightGray"
+          },
+          "description": "The health status of the application"
+        },
+        "namespace": {
+          "title": "Namespace",
+          "type": "string"
+        }
+      },
+      "required": []
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "aggregationProperties": {},
+    "relations": {
+      "application": {
+        "title": "Application",
+        "target": "argocdApplication",
+        "required": false,
+        "many": false
+      }
+    }
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: kubernetes-resource
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .__applicationId + "-" + .name
+          title: .name
+          blueprint: '"argocdKubernetesResource"'
+          properties:
+            kind: .kind
+            version: .version
+            namespace: .namespace
+            syncStatus: .status
+            healthStatus: .health.status
           relations:
             application: .__applicationId
 ```
