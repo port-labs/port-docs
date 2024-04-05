@@ -686,6 +686,7 @@ import json
 import os
 from loguru import logger
 import asyncio
+import time
 
 PAGE_SIZE = 100
 
@@ -714,7 +715,7 @@ class LeadTimeForChanges:
     async def __call__(self):
         logger.info(f"Owner/Repo: {self.owner}/{self.repo}")
         logger.info(f"Number of days: {self.number_of_days}")
-        logger.info(f"Workflows: {self.workflows}")
+        logger.info(f"Workflows: {await self.get_workflows()}")
         logger.info(f"Branch: {self.branch}")
         logger.info(
             f"Commit counting method '{self.commit_counting_method}' being used"
@@ -807,7 +808,7 @@ class LeadTimeForChanges:
 
     async def get_workflows(self):
         if not (self.workflows):
-            workflow_url = f"{self.github_url}/workflows"
+            workflow_url = f"{self.github_url}/actions/workflows"
             workflows = await self.send_api_requests(workflow_url)
             if workflows:
                 workflow_ids = [workflow["id"] for workflow in workflows["workflows"]]

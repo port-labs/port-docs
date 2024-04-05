@@ -894,7 +894,7 @@ Here is an example of the payload structure from Launchdarkly:
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
 
 <details>
-<summary> project entity in Port</summary>
+<summary> Project entity in Port</summary>
 
 ```json showLineNumbers
 {
