@@ -126,7 +126,7 @@ You could configure multiple tokens, and multiple groups per token (the token sh
 - all of the tokens mentioned here must be contained in `tokenMapping`
 - key "groups" per each token is required
 - all of the groups in all of the tokens must be non-hierarchical to each other, and not identical (duplicated)
-- the group path is the full path in gitlab, if a group path inserted was wrong, it will not find it in gitlab and the webhook will not be created
+- The group path is the full path in gitlab. If a group path is incorrect, the webhook will not be created.
 - The events for each group must match the supported event types mentioned below. if you would like to have all the events provided in the webhook, you can use: `{"events" = []}`, but not eliminate this key completely, because it is required.
 
 
