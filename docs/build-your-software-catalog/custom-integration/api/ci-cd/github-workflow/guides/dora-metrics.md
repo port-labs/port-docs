@@ -808,7 +808,7 @@ class LeadTimeForChanges:
 
     async def get_workflows(self):
         if not (self.workflows):
-            workflow_url = f"{self.github_url}/workflows"
+            workflow_url = f"{self.github_url}/actions/workflows"
             workflows = await self.send_api_requests(workflow_url)
             if workflows:
                 workflow_ids = [workflow["id"] for workflow in workflows["workflows"]]
