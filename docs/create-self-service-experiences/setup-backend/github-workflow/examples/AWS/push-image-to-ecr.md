@@ -1,4 +1,7 @@
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
+import GithubActionModificationHint from '../../\_github_action_modification_required_hint.mdx'
+import GithubDedicatedRepoHint from '../../\_github_dedicated_workflows_repository_hint.mdx'
+
 
 # Push ECR image with tags
 
@@ -33,9 +36,7 @@ The image will include tags indicating information like the trigger source, comm
 
 Create the file `create-and-push-image.yml` in the `.github/workflows` folder of your repository.
 
-:::tip
-We recommend creating a dedicated repository for the workflows that are used by Port actions.
-:::
+<GithubDedicatedRepoHint/>
 
 <details>
 
@@ -144,9 +145,7 @@ jobs:
    
    <summary>Port Action</summary>
    
-   :::tip Modification Required
-   Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organization and repository names respectively.
-   :::
+   <GithubActionModificationHint/>
    
    ```json showLineNumbers
    {
