@@ -642,7 +642,7 @@ jobs:
    - A pull request is created to merge this change.
    - Optional: If auto-merge is enabled, the pull request will be merged automatically.
 
-<img src='/img/self-service-actions/setup-backend/github-workflow/examples/promoteResult.png' width='85%' border='1px' />
+<img src='/img/self-service-actions/setup-backend/github-workflow/examples/promotePR.png' width='85%' border='1px' />
 <br />
 <br />
 

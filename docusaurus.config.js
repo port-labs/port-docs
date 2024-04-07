@@ -155,7 +155,7 @@ const config = {
               },
               {
                 label: "CI/CD",
-                to: "/build-your-software-catalog/sync-data-to-catalog/ci-cd",
+                to: "/build-your-software-catalog/custom-integration/api/ci-cd",
               },
               {
                 label: "Kubernetes",
