@@ -198,31 +198,16 @@ Below you can find the JSON for the `Service` and `Image` blueprints required fo
     "required": []
   },
   "mirrorProperties": {},
-  "calculationProperties": {
-    "link_to_the_commit": {
-      "title": "Link to the commit",
-      "calculation": ".commit",
-      "type": "string"
-    },
-    "link_to_the_pr": {
-      "title": "Link to the PR",
-      "calculation": ".pull",
-      "type": "string"
-    },
-    "link_to_the_ci": {
-      "title": "Link to the CI",
-      "icon": "DefaultProperty",
-      "description": "a link to the build in github workflow where the Image was built",
-      "calculation": ".workflowId",
-      "type": "string"
-    }
-  },
+  "calculationProperties": {},
   "aggregationProperties": {},
-  "relations": {
-  }
+  "relations": {}
 }
 ```
 </details>
+
+:::tip Ingest Images 
+If you do not have the images ingested already, we recommend using our [AWS ECR script](https://github.com/port-labs/example-ecr-images), [Google Container Registry script](https://github.com/port-labs/example-gcr-images), [JFrog build script](/build-your-software-catalog/custom-integration/webhook/examples/jfrog) or [GitHub packages script](https://github.com/port-labs/example-github-packages) to sync data to your catalog
+:::
 
 ## Create Github workflow
 
@@ -416,3 +401,7 @@ jobs:
 You should now be able to see a Github pull request created and merged for the argocd deployment.
 
 <img src="/img/sync-data-to-catalog/deploymenetRollbackMerged.png" border="1px" width="60%" />
+
+## More relevant guides and examples
+- [ArgoCD Ocean integration](/build-your-software-catalog/sync-data-to-catalog/argocd/)
+- [Connect ArgoCD deployment to image](/build-your-software-catalog/sync-data-to-catalog/argocd/examples/connect-argocd-deployment-to-image)

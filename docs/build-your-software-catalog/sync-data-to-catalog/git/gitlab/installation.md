@@ -79,7 +79,7 @@ The following steps will guide you how to create a GitLab group access token.
 
 ### `tokenMapping`
 
-The GitLab integration support fetching data related to specific paths in your GitLab groups. The integration is also able to fetch data from different GitLab parent groups by providing additional group tokens. In order to do so, you need to map the desired paths to the relevant access tokens.
+The GitLab integration supports fetching data related to specific paths in your GitLab groups. The integration is also able to fetch data from different GitLab parent groups by providing additional group tokens. In order to do so, you need to map the desired paths to the relevant access tokens.
 The `tokenMapping` parameter supports specifying the paths that the integration will search for files and information in, using [globPatterns](https://www.malikbrowne.com/blog/a-beginners-guide-glob-patterns).
 
 Mapping format:
@@ -122,12 +122,12 @@ Example:
 {"glpat-QXbeg-Ev9xtu5_5FsaAQ": {"groups": {"path/to/my-first-group": {"events": ["push_events", "merge_requests_events]}, "path/to/my-other-group": {"events": ["pipelines_events"]}}}}
 ```
 
-You could configure multiple tokens, and multiple groups per token (the token should have admin access to those groups), but there are some rules:
-- all of the tokens mentioned here must be contained in `tokenMapping`
-- key "groups" per each token is required
-- all of the groups in all of the tokens must be non-hierarchical to each other, and not identical (duplicated)
-- the group path is the full path in gitlab, if a group path inserted was wrong, it will not find it in gitlab and the webhook will not be created
-- the events per each group must match the supported event types mentioned below. if you would like to have all the events provided in the webhook, you can use: `{"events" = []}`, but not eliminate this key completely, because it is required.
+You can configure multiple tokens, and multiple groups per token (the token should have admin access to those groups), but there are some rules:
+- All of the tokens mentioned here must be contained in `tokenMapping`.
+- A "groups" key is required for each token.
+- All of the groups in all of the tokens must be non-hierarchical to each other, and not identical (duplicated).
+- The group path is the full path in gitlab. If a group path is incorrect, the webhook will not be created.
+- The events for each group must match the supported event types mentioned below. if you would like to have all the events provided in the webhook, you can use: `{"events" = []}`, but not eliminate this key completely, because it is required.
 
 
 ### `appHost` & listening to hooks

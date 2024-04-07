@@ -1,140 +1,103 @@
 # Trigger ServiceNow Incident
 
-This GitHub action allows you to quickly trigger incidents in ServiceNow via Port Actions with ease.
+This GitHub action allows you to quickly trigger incidents in ServiceNow directly from Port using Port's self service actions.
 
 ## Prerequisites
-* ServiceNow instance URL, username and password. Head over to [ServiceNow](https://signon.service-now.com/x_snc_sso_auth.do?pageId=username) to get your credentials.
-* [Port's GitHub app](https://github.com/apps/getport-io) installed.
+1. [Port's GitHub app](https://github.com/apps/getport-io) needs to be installed.
+2. ServiceNow instance URL, username and password. Head over to [ServiceNow](https://signon.service-now.com/x_snc_sso_auth.do?pageId=username) to get your credentials.
+3. In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
 
-## Steps
+    * `SERVICENOW_USERNAME` - ServiceNow instance username
+    * `SERVICENOW_PASSWORD` - ServiceNow instance password.
+    * `SERVICENOW_INSTANCE_URL` - ServiceNow instance URL.
+    * `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+    * `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
 
-Follow these steps to get started with the Golang template
+4. Optional - Install Port's ServiceNow integration [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/servicenow).
 
-1. Create the following GitHub action secrets
-* `SERVICENOW_USERNAME` - ServiceNow instance username
-* `SERVICENOW_PASSWORD` - ServiceNow instance password.
-* `SERVICENOW_INSTANCE_URL` - ServiceNow instance URL.
-* `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
-* `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
-
-2. Optional - Install Port's ServiceNow integration [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/servicenow).
-
-:::note Blueprint
+:::tip ServiceNow integration
 
 This step is not required for this example, but it will create all the blueprint boilerplate for you, and also update the catalog in real time with the new incident created.
 
 :::
 
-3. After you installed the integration, the blueprints `servicenowGroup`, `servicenowCatalog` and `servicenowIncident` will appear, create the following action with the following JSON file on the `servicenowIncident` blueprint:
+5. In case you decided not to install the ServiceNow integration, you will need to create a blueprint for the ServiceNow Incidet in Port.
 
 <details>
-<summary><b>Trigger ServiceNow Incident Blueprint (Click to expand)</b></summary>
+<summary> <b> ServiceNow Incident Blueprint (Click to expand)</b></summary>
 
 ```json showLineNumbers
-[
-  {
-    "identifier": "trigger_servicenow_incident",
-    "title": "Trigger ServiceNow incident",
-    "icon": "Servicenow",
-    "userInputs": {
-      "properties": {
-        "short_description": {
-          "icon": "DefaultProperty",
-          "title": "Short Description",
-          "description": "Description of the event",
-          "type": "string"
-        },
-        "sysparm_input_display_value": {
-          "title": "Sysparm Input Display Value",
-          "description": "Flag that indicates whether to set field values using the display value or the actual value.",
-          "type": "boolean",
-          "default": false
-        },
-        "urgency": {
-          "title": "Urgency",
-          "icon": "DefaultProperty",
-          "type": "string",
-          "default": "2",
-          "enum": [
-            "1",
-            "2",
-            "3"
-          ],
-          "enumColors": {
-            "1": "lightGray",
-            "2": "lightGray",
-            "3": "lightGray"
-          }
-        },
-        "assigned_to": {
-          "icon": "DefaultProperty",
-          "title": "Assigned To",
-          "description": "User this incident is assigned to",
-          "type": "string"
-        },
-        "sysparm_display_value": {
-          "title": "Sysparm Display Value",
-          "description": "Determines the type of data returned, either the actual values from the database or the display values of the fields.",
-          "icon": "DefaultProperty",
-          "type": "string",
-          "default": "all",
-          "enum": [
-            "true",
-            "false",
-            "all"
-          ],
-          "enumColors": {
-            "true": "lightGray",
-            "false": "lightGray",
-            "all": "lightGray"
-          }
-        }
+{
+  "identifier": "servicenowIncident",
+  "title": "Servicenow Incident",
+  "icon": "Service",
+  "schema": {
+    "properties": {
+      "category": {
+        "title": "Category",
+        "type": "string"
       },
-      "required": [
-        "assigned_to",
-        "short_description"
-      ],
-      "order": [
-        "short_description",
-        "assigned_to",
-        "urgency",
-        "sysparm_display_value",
-        "sysparm_input_display_value"
-      ]
+      "reopenCount": {
+        "title": "Reopen Count",
+        "type": "string"
+      },
+      "severity": {
+        "title": "Severity",
+        "type": "string"
+      },
+      "assignedTo": {
+        "title": "Assigned To",
+        "type": "string",
+        "format": "url"
+      },
+      "urgency": {
+        "title": "Urgency",
+        "type": "string"
+      },
+      "contactType": {
+        "title": "Contact Type",
+        "type": "string"
+      },
+      "createdOn": {
+        "title": "Created On",
+        "type": "string",
+        "format": "date-time"
+      },
+      "createdBy": {
+        "title": "Created By",
+        "type": "string"
+      },
+      "isActive": {
+        "title": "Is Active",
+        "type": "boolean"
+      },
+      "priority": {
+        "title": "Priority",
+        "type": "string"
+      }
     },
-    "invocationMethod": {
-      "type": "GITHUB",
-      "org": "<Enter GitHub organization>",
-      "repo": "<Enter GitHub repository>",
-      "workflow": "trigger-servicenow-incident.yml",
-      "omitUserInputs": false,
-      "omitPayload": false,
-      "reportWorkflowStatus": true
-    },
-    "trigger": "CREATE",
-    "description": "Triggers an incident in ServiceNow",
-    "requiredApproval": false
-  }
-]
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
+}
 ```
-
 </details>
 
-:::note Customisation
+## GitHub Workflow
 
-Replace the invocation method with your own repository details.
+Create the file `trigger-servicenow-incident.yml` in the `.github/workflows` folder of your repository and copy the content of the workflow configuration below:
 
+:::tip Dedicated repository
+We recommend creating a dedicated repository for the workflows that are used by Port actions.
 :::
-
-4. Create a workflow file under `.github/workflows/trigger-servicenow-incident.yml` with the content below:
 
 <details>
 <summary><b>Trigger ServiceNow Incident Workflow (Click to expand)</b></summary>
 
 ```yaml showLineNumbers
-# Description: This workflow creates a ServiceNow incident and ingests it into Port
-## Remove comments and edit for more fields as part of the ServiceNow incident
-
 name: Create an incident in ServiceNow
 
 on:
@@ -262,8 +225,109 @@ jobs:
 
 </details>
 
-5. Trigger the action from Port's [Self Serve](https://app.getport.io/self-serve).
+## Port Configuration
 
-6. Done! wait for the incident to be trigger in ServiceNow.
+On the [self-service](https://app.getport.io/self-serve) page, create the Port action against the `ServiceNow Incident` blueprint. This will trigger the GitHub workflow.
+
+<details>
+<summary><b>Trigger ServiceNow Incident Action (Click to expand)</b></summary>
+
+:::tip Modification Required
+Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organization and repository names respectively
+:::
+
+```json showLineNumbers
+{
+    "identifier": "trigger_servicenow_incident",
+    "title": "Trigger ServiceNow incident",
+    "icon": "Servicenow",
+    "userInputs": {
+      "properties": {
+        "short_description": {
+          "icon": "DefaultProperty",
+          "title": "Short Description",
+          "description": "Description of the event",
+          "type": "string"
+        },
+        "sysparm_input_display_value": {
+          "title": "Sysparm Input Display Value",
+          "description": "Flag that indicates whether to set field values using the display value or the actual value.",
+          "type": "boolean",
+          "default": false
+        },
+        "urgency": {
+          "title": "Urgency",
+          "icon": "DefaultProperty",
+          "type": "string",
+          "default": "2",
+          "enum": [
+            "1",
+            "2",
+            "3"
+          ],
+          "enumColors": {
+            "1": "lightGray",
+            "2": "lightGray",
+            "3": "lightGray"
+          }
+        },
+        "assigned_to": {
+          "icon": "DefaultProperty",
+          "title": "Assigned To",
+          "description": "User this incident is assigned to",
+          "type": "string"
+        },
+        "sysparm_display_value": {
+          "title": "Sysparm Display Value",
+          "description": "Determines the type of data returned, either the actual values from the database or the display values of the fields.",
+          "icon": "DefaultProperty",
+          "type": "string",
+          "default": "all",
+          "enum": [
+            "true",
+            "false",
+            "all"
+          ],
+          "enumColors": {
+            "true": "lightGray",
+            "false": "lightGray",
+            "all": "lightGray"
+          }
+        }
+      },
+      "required": [
+        "assigned_to",
+        "short_description"
+      ],
+      "order": [
+        "short_description",
+        "assigned_to",
+        "urgency",
+        "sysparm_display_value",
+        "sysparm_input_display_value"
+      ]
+    },
+    "invocationMethod": {
+      "type": "GITHUB",
+      "org": "<GITHUB_ORG>",
+      "repo": "<GITHUB_REPO>",
+      "workflow": "trigger-servicenow-incident.yml",
+      "omitUserInputs": false,
+      "omitPayload": false,
+      "reportWorkflowStatus": true
+    },
+    "trigger": "CREATE",
+    "description": "Triggers an incident in ServiceNow",
+    "requiredApproval": false
+}
+```
+
+</details>
+
+## Let's test it
+
+1. Trigger the action from Port's [Self Serve hub](https://app.getport.io/self-serve)
+
+2. Done! wait for the incident to be triggered in ServiceNow
 
 Congrats 🎉 You've triggered your first incident in ServiceNow from Port!
