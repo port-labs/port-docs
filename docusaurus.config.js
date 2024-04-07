@@ -7,12 +7,12 @@ const darkCodeTheme = require("prism-react-renderer").themes.dracula;
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Port",
-  tagline: "Documentation site",
+  tagline: "Port documentation",
   url: "https://docs.getport.io",
   baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "throw",
-  favicon: "img/favicon.svg",
+  favicon: "img/logos/port-favicon.png",
   organizationName: "port-labs", // Usually your GitHub org/user name.
   projectName: "port", // Usually your repo name.
   staticDirectories: ["static"],
@@ -83,7 +83,8 @@ const config = {
         title: "Port Documentation",
         logo: {
           alt: "Port Logo",
-          src: "img/logo.svg",
+          src: "img/logos/port-logo.svg",
+          srcDark: "img/logos/port-logo-dark.svg",
         },
         items: [
           {
@@ -170,7 +171,7 @@ const config = {
               },
               {
                 label: "Terraform",
-                to: "/build-your-software-catalog/sync-data-to-catalog/iac/terraform",
+                to: "/build-your-software-catalog/custom-integration/iac/terraform",
               },
             ],
           },
@@ -178,16 +179,16 @@ const config = {
             title: "Community",
             items: [
               {
+                label: "Slack",
+                href: "https://www.getport.io/community",
+              },
+              {
                 label: "Twitter",
                 href: "https://twitter.com/tweetsbyport",
               },
               {
                 label: "Linkedin",
                 href: "https://www.linkedin.com/company/getport/",
-              },
-              {
-                label: "DevEx Community",
-                href: "https://join.slack.com/t/devex-community/shared_invite/zt-1bmf5621e-GGfuJdMPK2D8UN58qL4E_g",
               },
             ],
           },
@@ -257,6 +258,7 @@ const config = {
           "javascript",
           "go",
           "typescript",
+          "jq"
         ],
       },
       liveCodeBlock: {

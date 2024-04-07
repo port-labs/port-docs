@@ -1,5 +1,5 @@
 
-# 🏗️ Build a Software Catalog
+# Build a Software Catalog
 
 <center>
 
@@ -33,4 +33,4 @@ These integrations come with pre-defined blueprints and mappings, so you can sta
 Can't find your desired tool in our integrations library? No problem! Port provides you with the necessary tools to create your own integrations and ingest data from anywhere.  
 See the [custom integration page](/build-your-software-catalog/custom-integration/) for more information.
 
-<img src='/img/sync-data-to-catalog/catalog-arch.jpg' width='100%' border='1px' />
+<img src='/img/sync-data-to-catalog/catalog-arch.png' width='100%' border='1px' />

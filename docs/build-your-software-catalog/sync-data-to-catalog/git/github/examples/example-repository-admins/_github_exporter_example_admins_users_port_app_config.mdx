@@ -1,0 +1,48 @@
+<details>
+
+<summary> Port port-app-config.yml </summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+resources:
+  - kind: repository
+    selector:
+      query: "true"
+      collaborators: true
+    port:
+      entity:
+        mappings:
+          identifier: .name
+          title: .name
+          blueprint: '"service"'
+          properties:
+            readme: file://README.md
+            url: .html_url
+            defaultBranch: .default_branch
+          relations:
+            admins: "[.collaborators[] | select(.is_admin == true) | .login]"
+  - kind: user
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .login
+          title: .login
+          blueprint: '"githubUser"'
+          relations:
+            user: .email
+  - kind: user
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .email
+          title: .email
+          blueprint: '"user"'
+          relations:
+            user: .email
+```
+
+</details>

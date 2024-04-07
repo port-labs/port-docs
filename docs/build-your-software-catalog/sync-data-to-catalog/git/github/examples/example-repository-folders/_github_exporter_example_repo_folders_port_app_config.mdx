@@ -1,0 +1,64 @@
+<details>
+
+<summary> Port port-app-config.yml </summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: repository
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .name
+          title: .name
+          blueprint: '"service"'
+          properties:
+            readme: file://README.md
+            url: .html_url
+            defaultBranch: .default_branch
+  - kind: pull-request
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .head.repo.name + (.id|tostring)
+          title: .title
+          blueprint: '"githubPullRequest"'
+          properties:
+            creator: .user.login
+            assignees: "[.assignees[].login]"
+            reviewers: "[.requested_reviewers[].login]"
+            status: .status
+            closedAt: .closed_at
+            updatedAt: .updated_at
+            mergedAt: .merged_at
+            prNumber: .id
+            link: .html_url
+          relations:
+            service: .head.repo.name
+  - kind: folder
+    selector:
+      query: "true"
+      folders:
+        - path: "*" # Using "*" will ingest the folders from the root of each of repository as entities
+          repos: # Add any repositories you want to map folders from to the following list
+            - backend-service
+            - frontend-service
+    port:
+      entity:
+        mappings:
+          identifier: .folder.name
+          title: .folder.name
+          blueprint: '"githubFolder"'
+          properties:
+            url: >-
+              .repo.html_url + "/tree/" + .repo.default_branch  + "/" +
+              .folder.path
+            readme: file://README.md
+          relations:
+            service: .repo.name
+```
+
+</details>

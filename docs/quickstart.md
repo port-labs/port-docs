@@ -1,14 +1,15 @@
 ---
 sidebar_position: 2
 title: Getting started
-sidebar_label: ⏱️ Getting started
+sidebar_label: Getting started
+sidebar_class_name: custom-sidebar-item sidebar-menu-getting-started
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
-# ⏱️ Getting started
+# Getting started
 
 After [signing up](https://app.getport.io) to Port, you will be prompted to follow an onboarding process that includes ingesting your Git repositories into your developer portal.  
 

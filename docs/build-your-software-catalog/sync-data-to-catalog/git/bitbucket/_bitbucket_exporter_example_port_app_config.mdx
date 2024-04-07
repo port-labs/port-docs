@@ -4,7 +4,7 @@
 
 ```yaml showLineNumbers
 resources:
-  - kind: service
+  - kind: repository
     selector:
       query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
     port:
@@ -12,7 +12,7 @@ resources:
         mappings:
           identifier: ".name" # The Entity identifier will be the service (repository) name. After the Entity is created, the exporter will send `PATCH` requests to update this microservice within Port.
           title: ".name"
-          blueprint: '"bitbucketService"'
+          blueprint: '"service"'
           properties:
             readme: file://README.md # fetching the README.md file that is within the root folder of the repository and ingesting its contents as a markdown property
             url: ".links.html.href"
@@ -34,7 +34,7 @@ resources:
             updatedAt: ".updated_on"
             link: ".links.html.href"
           relations:
-            repository: ".destination.repository.name"
+            service: ".destination.repository.name"
 ```
 
 </details>

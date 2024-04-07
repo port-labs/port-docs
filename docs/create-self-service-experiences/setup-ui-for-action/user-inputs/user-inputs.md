@@ -29,25 +29,71 @@ The different components that make up a basic user input definition are listed i
 
 | Field         | Description                                                                                                                                                                                             |
 | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `title`       | Input title                                                                                                                                                                                             |
-| `type`        | **Mandatory field.** The data type of the input.                                                                                                                                                        |
-| `icon`        | Icon for the input <br /><br />See the [full icon list](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/setup-blueprint.md#full-icon-list).                                 |
-| `description` | Description of the input.<br /> This value is visible to users when hovering on the info icon in the UI. It provides detailed information about the use of a specific input or the way it will be used. |
-| `default`     | Default value for this input in case the self-service action will be executed without explicitly providing a value.                                                                                     |
+| `title`       | The input's title.                                                                                                                                                                                             |
+| `type`        | **Mandatory field.** The input's data type.                                                                                                                                                        |
+| `icon`        | The input's icon. See the [full icon list](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/setup-blueprint.md#full-icon-list) for the available icons.                                 |
+| `description` | A description that can be used to provide detailed information about a specific input or the way it should be used. |
+| `default`     | A default value for this input in case the action is executed without explicitly providing a value.                                                                                     |
 
 :::tip property structure
-The name of the input is the key of the input object. For example, in the code block above, the name of the input is `myInput`
+The name of the input is the key of the input object. For example, in the code block above, the name of the input is `myInput`.
 
 Note that all of the [properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/properties.md#supported-properties) available for Port blueprints can also be used as user inputs, which is why they follow the same structure.
 :::
 
-## Supported user inputs
+## Supported input types
 
 <DocCardList />
 
+## Special `string` formats
+
+In addition to the `string` formats available in the [Blueprint properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#supported-properties) section, Port's actions also support the following special formats:
+
+| `type`       | Description                                     | Example values                                  |
+| ------------ | ----------------------------------------------- | ----------------------------------------------- |
+| `entity`     | An entity of a specified blueprint              | `"notifications-service"`                       |
+| `array`      | An array of entities from a specified blueprint | `["notifications-service", "frontend-service"]` |
+
+### Entity
+
+```json showLineNumbers
+"entity_prop": {
+    "title": "My string prop",
+    // highlight-start
+    "type": "string",
+    "format": "entity",
+    "blueprint": "microservice",
+    // highlight-end
+    "description": "This is an entity property"
+}
+```
+
+When `"format": "entity"` is used, a `blueprint` field is available.
+
+The `blueprint` field takes an identifier of an existing blueprint. Then, when executing the configured action from Port's UI, the specified field will include a list of existing entities of the selected blueprint from your software catalog to choose from.
+
+### Entity array
+
+```json showLineNumbers
+"entity_prop": {
+    "title": "My string prop",
+    "description": "This property is an array of Entities",
+    // highlight-start
+    "type": "array",
+    "items": {
+      "type": "string",
+      "blueprint": "service",
+      "format": "entity"
+    }
+    // highlight-end
+}
+```
+
+When `"type": "array"` is used, you can create an `items` property. Under this `items` property you can use `"format": "entity"` and write the identifier of the selected `blueprint` which you want to include entities from. You can then pass an entity array to your action.
+
 ## Ordering user inputs
 
-You can define the order in which the user inputs will be displayed in the UI by using the `order` field. This field is an array of the user input names.
+You can define the order in which the user inputs will be displayed in the UI by using the `order` field. This field is an array of the input names:
 
 ```json showLineNumbers
 {

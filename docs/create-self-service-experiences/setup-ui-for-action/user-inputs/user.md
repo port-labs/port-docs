@@ -1,6 +1,7 @@
 ---
 sidebar_position: 14
 description: User is an input used to reference users that exist in Port
+sidebar_class_name: "custom-sidebar-item sidebar-property-user"
 ---
 
 import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"
