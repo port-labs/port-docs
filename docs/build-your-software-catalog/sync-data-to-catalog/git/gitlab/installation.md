@@ -107,30 +107,9 @@ Multiple GitLab group access tokens example:
 {"glpat-QXbeg-Ev9xtu5_5FsaAQ": ["**/DevopsTeam/*Service", "**/RnDTeam/*Service"],"glpat-xF7Ae-vXu5ts5_QbEgAQ9": ["**/MarketingTeam/*Service"]}
 ```
 
-### `tokenGroupHooksOverrideMapping`
-
-the integration can support listening to webhooks on specified groups, by configuring the `tokenGroupHooksOverrideMapping` parameter. this parameter is not required, and when you don't use it, the integration will listen to all of the root groups (if not using `useSystemHooks=true`)
-
-Mapping format:
-
-```text showLineNumbers
-{"MY_FIRST_GROUPS_TOKEN": {"groups:"{"MY_FIRST_GROUP_FULL_PATH": {"events": [CHOSEN_EVENT_TYPES]}, "MY_OTHER_GROUP_FULL_PATH": {"events": [CHOSEN_EVENT_TYPES]}}}}
-```
-
-Example:
-```text showLineNumbers
-{"glpat-QXbeg-Ev9xtu5_5FsaAQ": {"groups": {"path/to/my-first-group": {"events": ["push_events", "merge_requests_events]}, "path/to/my-other-group": {"events": ["pipelines_events"]}}}}
-```
-
-You can configure multiple tokens, and multiple groups per token (the token should have admin access to those groups), but there are some rules:
-- All of the tokens mentioned here must be contained in `tokenMapping`.
-- A "groups" key is required for each token.
-- All of the groups in all of the tokens must be non-hierarchical to each other, and not identical (duplicated).
-- The group path is the full path in gitlab. If a group path is incorrect, the webhook will not be created.
-- The events for each group must match the supported event types mentioned below. if you would like to have all the events provided in the webhook, you can use: `{"events" = []}`, but not eliminate this key completely, because it is required.
-
-
-### `appHost` & listening to hooks
+### Configuring Realtime webhook events
+#### Exposing Endpoint for events
+##### App Host
 
 :::tip
 The `appHost` parameter is used specifically to enable the real-time functionality of the integration.
@@ -141,7 +120,7 @@ If it is not provided, the integration will continue to function correctly. In s
 In order for the GitLab integration to update the data in Port on every change in the GitLab repository, you need to specify the `appHost` parameter.
 The `appHost` parameter should be set to the `url` of your GitLab integration instance. In addition, your GitLab instance (whether it is GitLab SaaS or a self-hosted version of GitLab) needs to have the option to send webhook requests to the GitLab integration instance, so please configure your network accordingly.
 
-#### Hooks
+##### The default webhook events behavior
 
 The GitLab integration supports listening to GitLab webhooks and updating the relevant entities in Port accordingly.
 
@@ -149,7 +128,7 @@ Supported webhooks are [Group webhooks](https://docs.gitlab.com/ee/user/project/
 
 As part of the installation process, the integration will create a webhook in your GitLab instance, and will use it to listen to the relevant events.
 
-**_There are a few points to consider before deciding on which webhook to choose_**:
+**_There are a few points to consider before deciding on which webhook to choose_** :
 
 - If you choose system hooks, the integration will create a single webhook for the entire GitLab instance. If you choose group webhooks, the integration will create a webhook for each root group in your GitLab instance, unless you provide the `tokenGroupHooksOverrideMapping` parameter- and then it will create a webhook for each specified group in this parameter.
 - The system hooks has much less event types than the group webhooks.
@@ -176,9 +155,11 @@ As part of the installation process, the integration will create a webhook in yo
 
 - Creating a system hook requires admin privileges in GitLab. Due to this, the integration supports that the system hook will be created manually, and the integration will use it to listen to the relevant events.
 
-##### Configuring the integration to use hooks
+#### Specific Group Webhooks
 
-By default, if `appHost` is provided, the integration will create group webhooks for each root group in your GitLab instance. If you need to create webhooks only for specific groups, you should configure the `tokenGroupHooksOverrideMapping` parameter. 
+By default, if `appHost` is provided, the integration will create group webhooks for each root group in your GitLab instance. If you need to create webhooks only for specific groups, you should configure the [`tokenGroupHooksOverrideMapping`](#tokengrouphooksoverridemapping) parameter. 
+
+#### System Webhooks
 
 To create a system hook there are two options:
 
@@ -196,6 +177,28 @@ In both options you'll need to provide the `useSystemHook` parameter with the va
       - `merge_request`
 
 ![GitLab System Hook](/img/integrations/gitlab/GitLabSystemHook.png)
+
+### `tokenGroupHooksOverrideMapping`
+
+the integration can support listening to webhooks on specified groups, by configuring the `tokenGroupHooksOverrideMapping` parameter. this parameter is not required, and when you don't use it, the integration will listen to all of the root groups (if not using `useSystemHooks=true`)
+
+Mapping format:
+
+```text showLineNumbers
+{"MY_FIRST_GROUPS_TOKEN": {"groups:"{"MY_FIRST_GROUP_FULL_PATH": {"events": [CHOSEN_EVENT_TYPES]}, "MY_OTHER_GROUP_FULL_PATH": {"events": [CHOSEN_EVENT_TYPES]}}}}
+```
+
+Example:
+```text showLineNumbers
+{"glpat-QXbeg-Ev9xtu5_5FsaAQ": {"groups": {"path/to/my-first-group": {"events": ["push_events", "merge_requests_events]}, "path/to/my-other-group": {"events": ["pipelines_events"]}}}}
+```
+
+You can configure multiple tokens, and multiple groups per token (the token should have admin access to those groups), but there are some rules:
+- All of the tokens mentioned here must be contained in `tokenMapping`.
+- A "groups" key is required for each token.
+- All of the groups in all of the tokens must be non-hierarchical to each other, and not identical (duplicated).
+- The group path is the full path in gitlab. If a group path is incorrect, the webhook will not be created.
+- The events for each group must match the supported event types mentioned below. if you would like to have all the events provided in the webhook, you can use: `{"events" = []}`, but not eliminate this key completely, because it is required.
 
 ## Deploying the GitLab integration
 
