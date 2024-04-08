@@ -45,6 +45,11 @@ Set them as you wish in the script below, then copy it and run it in your termin
 
 <br/>
 
+<Tabs groupId="deploy" queryString="deploy">
+
+<TabItem value="helm" label="Helm" default>
+To install the integration using Helm, run the following command:
+
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-argocd-integration port-labs/port-ocean \
@@ -58,6 +63,88 @@ helm upgrade --install my-argocd-integration port-labs/port-ocean \
   --set integration.secrets.token="<your-token>"  \
   --set integration.config.serverUrl="<your-server-url>"
 ```
+</TabItem>
+
+<TabItem value="argocd" label="ArgoCD" default>
+To install the integration using ArgoCD, follow these steps:
+
+1. Create a `values.yaml` file in `argocd/my-ocean-argocd-integration` in your git repository with the content:
+
+:::note Variable Replacement 
+Remember to replace the placeholders for `TOKEN` and `SERVER_URL`, which represents your ArgoCD API token and server url respectively.
+:::
+```yaml showLineNumbers
+initializePortResources: true
+scheduledResyncInterval: 120
+integration:
+  identifier: my-ocean-argocd-integration
+  type: argocd
+  eventListener:
+    type: POLLING
+  config:
+  // highlight-next-line
+    serverUrl: SERVER_URL
+  secrets:
+  // highlight-next-line
+    token: TOKEN
+```
+<br/>
+
+2. Install the `my-ocean-argocd-integration` ArgoCD Application by creating the following `my-ocean-argocd-integration.yaml` manifest:
+:::note Variable Replacement 
+Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+
+Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
+:::
+
+<details>
+  <summary>ArgoCD Application</summary>
+
+```yaml showLineNumbers
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: my-ocean-argocd-integration
+  namespace: argocd
+spec:
+  destination:
+    namespace: my-ocean-argocd-integration
+    server: https://kubernetes.default.svc
+  project: default
+  sources:
+  - repoURL: 'https://port-labs.github.io/helm-charts/'
+    chart: port-ocean
+    targetRevision: 0.1.18
+    helm:
+      valueFiles:
+      - $values/argocd/my-ocean-argocd-integration/values.yaml
+      // highlight-start
+      parameters:
+        - name: port.clientId
+          value: YOUR_PORT_CLIENT_ID
+        - name: port.clientSecret
+          value: YOUR_PORT_CLIENT_SECRET
+  - repoURL: YOUR_GIT_REPO_URL
+  // highlight-end
+    targetRevision: main
+    ref: values
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+```
+
+</details>
+<br/>
+
+3. Apply your application manifest with `kubectl`:
+```bash
+kubectl apply -f my-ocean-argocd-integration.yaml
+```
+</TabItem>
+</Tabs>
 
 </TabItem>
 
@@ -184,8 +271,9 @@ pipeline {
 
 ### Generating ArgoCD token
 
-1. Navigate to `<serverURL>/settings/accounts/<user>`. For example, if you access your ArgoCD at `https://localhost:8080`, you should navigate to `https://localhost:8080/settings/accounts/<user>`.
-2. Under Tokens, Click **Generate New** to create a new token.
+1. Navigate to `<serverURL>/settings/accounts/<user>`. For example, if you access your ArgoCD at `https://localhost:8080`, you should navigate to `https://localhost:8080/settings/accounts/<user>`
+2. Under Tokens, Click **Generate New** to create a new token
+3. Ensure that the generated token has enough permission to read resources. Follow the [official guide on configuring RBAC](https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/) for the token
 
 ## Ingesting ArgoCD objects
 
