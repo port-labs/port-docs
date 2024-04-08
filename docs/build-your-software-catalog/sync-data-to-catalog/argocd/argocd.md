@@ -272,8 +272,77 @@ pipeline {
 ### Generating ArgoCD token
 
 1. Navigate to `<serverURL>/settings/accounts/<user>`. For example, if you access your ArgoCD at `https://localhost:8080`, you should navigate to `https://localhost:8080/settings/accounts/<user>`
-2. Under Tokens, Click **Generate New** to create a new token
-3. Ensure that the generated token has enough permission to read resources. Follow the [official guide on configuring RBAC](https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/) for the token
+2. The user should have `apiKey` capabilities to allow generating authentication tokens for API access. If you don't have a user created yet, follow the guide on [how to create a new ArgoCD user](https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/#create-new-user)
+3. Newly created users may have limited scope to resources by default. For that reason, You will need to configure RBAC policy for the new user by following [this guide](https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/)
+4. Ensure that the policy definition grants enough permission to `read` resources such as `applications`, `clusters`, `projects`, `repositories` etc.
+5. Under **Tokens** on your ArgoCD UI, Click **Generate New** to create a new token for the user or use the CLI:
+
+```bash
+argocd account generate-token --account <username>
+```
+
+:::tip Creating ArgoCD user with readonly permissions
+
+1. Create an `argocd-user.yaml` file with the below manifest to create a new user `port-ocean-user`
+
+<details>
+<summary><b> Create user manifest (click to expand) </b></summary>
+
+```yaml showLineNumbers
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: argocd-cm
+    app.kubernetes.io/part-of: argocd
+data:
+  # add an additional local user with apiKey and login capabilities
+  #   apiKey - allows generating API keys
+  #   login - allows to login using UI
+  accounts.port-ocean-user: apiKey, login
+  accounts.port-ocean-user.enabled: "true"
+```
+</details>
+
+2. Apply the manifest with `kubectl` to create the user:
+```bash
+kubectl apply -f argocd-user.yaml
+```
+3. Grant read only RBAC policy to the new user using the below manifest file (`argocd-rbac-cm.yaml`)
+<details>
+<summary><b> RBAC policy to grant readonly role to the new user (click to expand) </b></summary>
+
+```yaml showLineNumbers
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-rbac-cm
+  namespace: argocd
+data:
+  policy.default: role:readonly
+  policy.csv: |
+    p, role:read-only-role, applications, *, */*, allow
+    p, role:read-only-role, clusters, get, *, allow
+    p, role:read-only-role, repositories, get, *, allow
+    p, role:read-only-role, projects, get, *, allow
+    p, role:read-only-role, logs, get, *, allow
+
+    g, port-ocean-user, role:read-only-role
+```
+</details>
+
+4. Apply the `argocd-rbac-cm.yaml` manifest with `kubectl`:
+```bash
+kubectl apply -f argocd-rbac-cm.yaml
+```
+
+5. Go to your ArgoCD UI to generate a new token for the user or use the CLI
+```bash
+argocd account generate-token --account <username>
+```
+:::
 
 ## Ingesting ArgoCD objects
 
