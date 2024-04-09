@@ -301,7 +301,6 @@ const config = {
       "@docusaurus/plugin-client-redirects",
       {
         createRedirects(existingPath) {
-          console.log("path is:", existingPath);
           if (!existingPath.includes("/docs") && existingPath !== "/") {
             // Support URLs without /docs prepended and route them to /docs
             return [existingPath.replace("/", "/docs/", 1)];

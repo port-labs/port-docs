@@ -12,7 +12,7 @@ The steps shown in the image above are as follows:
 
 ## Further steps
 
-- See the [Scaffold repositories example](./examples/scaffold-repositories-using-cookiecutter.md) for GitLab pipelines.
+- See the [Scaffold repositories example](/guides-and-tutorials/scaffold-a-new-service.md?git-provider=gitlab) for GitLab pipelines.
 - Contact us through Intercom to set up a Kafka topic for your organization.
 - [Install the Port execution agent to triggering the GitLab pipelines](./Installation.md).
 - [Learn how to customize the payload sent to gitlab api](./Installation.md#control-the-payload).
