@@ -8,6 +8,13 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 In this guide, we will create a self-service action in Port that executes a GitHub workflow to broadcast a Slack message to the slack channels of all services who consume an API.
 
+:::tip Usecases
+- **Critical Updates**: Alert consumers of changes that could disrupt their integrations.
+- **Planned Downtime**: Notify consumers about scheduled maintenance windows.
+- **New Features**: Promote adoption of new API capabilities.
+- **Onboard new API consumers**: Welcome new teams consuming the API. This could include links to documentation, onboarding guides, or points of contact.
+:::
+
 ## Prerequisites
 1. Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new).
 2. Configure a [Slack app](https://api.slack.com/apps) that can post a message to a Slack channel. 
@@ -15,7 +22,14 @@ In this guide, we will create a self-service action in Port that executes a GitH
    - Then, go to the Incoming Webhooks page and create a new webhook, specifying the target channel for the messages. 
 3. A GitHub repository in which you can trigger a workflow that we will use in this guide.
 
-Below you can find the JSON for the `Service` and `API` blueprints required for the guide:
+
+## Port configuration
+
+1. Head over to the [Builder](https://app.getport.io/dev-portal/data-model) page to create the following blueprints: 
+    - Click on the `+ Blueprint` button.
+    - Click on the `{...} Edit JSON` button.
+    - Copy and paste the following JSON configuration into the editor.
+    - Click `Save`.
 
 <details>
 <summary><b>Service blueprint (click to expand)</b></summary>
@@ -180,30 +194,21 @@ We will create a slack channel for each service, and therefore a webhook for eac
 ```
 </details>
 
-:::note How it works
-Our Service blueprint has a relation to the API blueprint called `consumes_api`. When the action is triggered on an `API` entity, we will get all `Service` entities that are related and send the message to the slack webhook urls configured in them.
-:::
-
-## Create Github workflow
-
-Follow these steps to get started:
-
-1. Create the following GitHub Action secrets:
-    - `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#get-api-token)
-    - `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#get-api-token)
-
 <br />
 
-2. Create the Port action in the [self-service page](https://app.getport.io/self-serve) on the `API` blueprint with the following JSON definition:
+2. To create the Port action, go to the [self-service page](https://app.getport.io/self-serve):
+    - Click on the `+ New Action` button.
+    - Choose the `API` blueprint and click `Next`.
+    - Click on the `{...} Edit JSON` button.
+    - Copy and paste the following JSON configuration into the editor.
+    - Click `Save`
 
 <details>
-
   <summary><b>Port Action: Send Announcement (click to expand)</b></summary>
    :::tip
 - `<GITHUB-ORG>` - your GitHub organization or user name.
 - `<GITHUB-REPO-NAME>` - your GitHub repository name.
 :::
-
 
 ```json showLineNumbers
 {
@@ -234,13 +239,21 @@ Follow these steps to get started:
   "requiredApproval": false
 }
 ```
-
 </details>
 
+
+## Github workflow
+
+1. Create the following GitHub Action secrets:
+    - `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#get-api-token)
+    - `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#get-api-token)
 <br />
 
+2. In your Github repository, create a python script file under `/scripts/broadcast_messages.py` with the following content:
 
-3. In your Github repository, create a python script file under `/scripts/broadcast_messages.py` with the following content:
+:::tip
+We recommend creating a dedicated repository for the workflows that are used by Port actions.
+:::
 
 <details>
 
@@ -353,7 +366,7 @@ if __name__ == "__main__":
 </details>
 <br />
 
-4. Then, create a workflow file under `.github/workflows/lock-service.yml` with the following content:
+3. Then, create a workflow file under `.github/workflows/lock-service.yml` with the following content:
 
 <details>
 
@@ -391,12 +404,26 @@ jobs:
 ```
 
 </details>
+
+
+## Let's test it!
+
+Trigger the actions from the [self-service](https://app.getport.io/self-serve) page of your Port application.
+
+<img src='/img/self-service-actions/setup-backend/github-workflow/examples/sendBroadcast.png' width='100%' border="1px" />
+
+<br />
 <br />
 
+:::info How it works
+Our Service blueprint has a relation to the API blueprint called `consumes_api`. When the action is triggered on an `API` entity, we will get all `Service` entities that are related and send the message to the slack webhook urls configured in them.
+:::
 
-5. Trigger the actions from the [self-service](https://app.getport.io/self-serve) page of your Port application.
+<br />
 
-<img src='/img/self-service-actions/setup-backend/github-workflow/apiBroadcast.png' width='85%' />
+<img src='/img/self-service-actions/setup-backend/github-workflow/apiBroadcast.png' width='100%' border="1px" />
 
+<br />
+<br />
 
 Done! You can now broadcast a message to all consumers of an API.
