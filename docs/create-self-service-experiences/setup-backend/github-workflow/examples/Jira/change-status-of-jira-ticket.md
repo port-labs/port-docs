@@ -1,3 +1,6 @@
+import GithubActionModificationHint from '../../\_github_action_modification_required_hint.mdx'
+import GithubDedicatedRepoHint from '../../\_github_dedicated_workflows_repository_hint.mdx'
+
 # Change status of Jira ticket
 
 ## Overview
@@ -100,9 +103,7 @@ This self-service guide facilitates transitioning the status of a Jira ticket fr
 
 Create the file `.github/workflows/change-jira-ticket-status.yml` in the `.github/workflows` folder of your repository.
 
-:::tip
-We recommend creating a dedicated repository for the workflows that are used by Port actions.
-:::
+<GithubDedicatedRepoHint/>
 
 <details>
 
@@ -186,9 +187,8 @@ jobs:
 
 <details>
 <summary><b>Change status of a Jira ticket (Click to expand)</b></summary>
-:::tip Modification Required
-Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organization and repository names respectively.
-:::
+
+<GithubActionModificationHint/>
 
 ```json showLineNumbers
 {
