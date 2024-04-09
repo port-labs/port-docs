@@ -16,15 +16,14 @@ In the following guide, we are going to create a self-service action in Port tha
 
 ## Prerequisites
 1. Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new).
-2. This guide assumes the presence of a blueprint representing your repositories and pull requests. If you haven't done so yet, initiate the setup of your GitHub data model by referring to this [guide](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples) first.
-3. A repository to contain your action resources i.e. the github workflow file.
-4. Set up a slack app:
+2. A repository to contain your action resources i.e. the github workflow file.
+3. Set up a slack app:
     - Go to your [slack apps page](https://api.slack.com/apps).
     - Create a new app or use an existing one.
     - Enable Incoming Webhooks and create a new webhook.
     - Choose the target Slack channel for notifications.
     - Copy the generated webhook URL for use as the `SLACK_WEBHOOK_URL`.
-5. Create the following GitHub Action secrets:
+4. Create the following GitHub Action secrets:
     - Create the following Port credentials:
         - `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#get-api-token).
         - `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#get-api-token).
