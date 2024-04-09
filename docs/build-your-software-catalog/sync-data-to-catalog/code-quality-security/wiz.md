@@ -43,10 +43,11 @@ Learn more [here](https://win.wiz.io/reference/quickstart#generate-a-bearer-toke
 <br />
 
 1. **Finding Your Wiz API URL**:
-    - Log in to Wiz account.
-    - Click the User Profile icon (top right) and select "User Settings."
-    - Click "Tenant" in the left menu.
-    - Copy the API Endpoint URL: It will be displayed on the screen.
+    - Login to Wiz account.
+    - Click the **User Profile** icon available at the top right of the screen and click the **User Settings** option.
+    - Click the **Tenant** option from the left options menu.
+    - The system displays the **API Endpoint URL**.
+    - Copy and save the **API URL** to use while configuring the Wiz intergration.
 
 <img src='/img/build-your-software-catalog/sync-data-to-catalog/code-quality-security/wizApiUrl.png' width='85%' border='1px' />
 
@@ -56,18 +57,18 @@ For more details, refer to the [documentation](https://docs.wiz.io/wiz-docs/docs
 
 2. **Getting the Client ID and Client Secret**
 
-You should use a Wiz account with the Project Admin role to complete this step.
-    - Log in to Wiz: Access your Wiz account.
-    - Open Settings: Click the Settings icon (top-right).
+You must create a service account in Wiz to generate the Client ID and Client Secret. Follow the below steps to get the Client ID and Client Secret:
+    - Login to **Wiz with the Project Admin role**.
+    - Click the **Settings** icon available at the top-right of the page.
   <img src='/img/build-your-software-catalog/sync-data-to-catalog/code-quality-security/wizAddSvcAccount.png' width='85%' border='1px' />
-    - Go to Service Accounts: In the left menu, find and select "Service Accounts".
+    - On the Settings page, Click **Service Accounts** from the left menu.
     - Create a Service Account:
-        - Click "Add Service Account".
-        - Provide a descriptive "Service Account Name".
-        - Type: Select "Custom Integration (GraphQL API)".
-        - Project: Choose the relevant project(s).
-        - API Scopes: Select only the `read:projects` and `read:issues` permissions.
-        - Click "Add Service Account" at the bottom of the page to save.
+        - Click **Add Service Account**.
+        - Provide a descriptive **Service Account Name**.
+        - **Type**: Select **Custom Integration (GraphQL API)**.
+        - **Project**: Choose the relevant project(s).
+        - **API Scopes**: Select only the `read:projects` and `read:issues` permissions.
+        - Click **Add Service Account** at the bottom of the page to save.
 
     <img src='/img/build-your-software-catalog/sync-data-to-catalog/code-quality-security/wizCreds.png' width='85%' border='1px' />
     
