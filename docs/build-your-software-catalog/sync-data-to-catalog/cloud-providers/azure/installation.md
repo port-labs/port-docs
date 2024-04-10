@@ -132,7 +132,28 @@ Or [register an app](https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="ui" label="From the UI">
+
+<TabItem value="real-time-always-on" label="Real Time & Always On" default>
+
+Using this installation option means that the integration will be able to update Port in real time using webhooks.
+
+This table summarizes the available parameters for the installation.
+Set them as you wish in the script below, then copy it and run it in your terminal:
+
+| Parameter                                | Description                                                                                                                                | Example                          | Required |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------- | -------- |
+| `port.clientId`                          | Your port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)              |                                  | ✅       |
+| `port.clientSecret`                      | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)          |                                  | ✅       |
+| `integration.secrets.subscriptionId`            | Your Azure Subscription ID            |   | ✅       |
+| `integration.config.appHost`             | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Jira                         | https://my-ocean-integration.com | ❌       |
+
+<HelmParameters/>
+
+<br/>
+
+<Tabs groupId="deploy" queryString="deploy">
+
+<TabItem value="terraform" label="Terraform">
 1. Login to [Port](https://app.getport.io) and browse to the [builder page](https://app.getport.io/dev-portal)
 2. Open the ingest modal by expanding one of the blueprints and clicking the ingest button on the blueprints.
 
@@ -158,25 +179,6 @@ Or [register an app](https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps
 
 </TabItem>
 
-<TabItem value="real-time-always-on" label="Real Time & Always On" default>
-
-Using this installation option means that the integration will be able to update Port in real time using webhooks.
-
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
-
-| Parameter                                | Description                                                                                                                                | Example                          | Required |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------- | -------- |
-| `port.clientId`                          | Your port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)              |                                  | ✅       |
-| `port.clientSecret`                      | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)          |                                  | ✅       |
-| `integration.secrets.subscriptionId`            | Your Azure Subscription ID            |   | ✅       |
-| `integration.config.appHost`             | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Jira                         | https://my-ocean-integration.com | ❌       |
-
-<HelmParameters/>
-
-<br/>
-
-<Tabs groupId="deploy" queryString="deploy">
 
 <TabItem value="helm" label="Helm" default>
 To install the integration using Helm, run the following command:
@@ -439,15 +441,15 @@ steps:
       docker run -i --rm --platform=linux/amd64 \
           -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
           -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-          -e OCEAN__INTEGRATION__CONFIG__TOKEN=${OCEAN__INTEGRATION__CONFIG__TOKEN} \
-          -e OCEAN__INTEGRATION__CONFIG__API_URL=${OCEAN__INTEGRATION__CONFIG__API_URL} \
-          -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \
-          -e OCEAN__PORT__CLIENT_SECRET=${OCEAN__PORT__CLIENT_SECRET} \
+          -e OCEAN__INTEGRATION__CONFIG__TOKEN=$(OCEAN__INTEGRATION__CONFIG__TOKEN) \
+          -e OCEAN__INTEGRATION__CONFIG__API_URL=$(OCEAN__INTEGRATION__CONFIG__API_URL) \
+          -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
+          -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
           -e OCEAN__INTEGRATION__SECRET__AZURE_SUBSCRIPTION_ID=$OCEAN__SECRET__AZURE_SUBSCRIPTION_ID \
-          -e AZURE_CLIENT_ID=${OCEAN__SECRET__AZURE_CLIENT_ID} \
-          -e AZURE_CLIENT_SECRET=${OCEAN__SECRET__AZURE_CLIENT_SECRET} \
-          -e AZURE_TENANT_ID=${OCEAN__SECRET__AZURE_TENANT_ID} \
-          -e AZURE_SUBSRIPTION_ID=${OCEAN__SECRET__AZURE_SUBSCRIPTION_ID}
+          -e AZURE_CLIENT_ID=$(OCEAN__SECRET__AZURE_CLIENT_ID) \
+          -e AZURE_CLIENT_SECRET=$(OCEAN__SECRET__AZURE_CLIENT_SECRET) \
+          -e AZURE_TENANT_ID=$(OCEAN__SECRET__AZURE_TENANT_ID) \
+          -e AZURE_SUBSRIPTION_ID=$(OCEAN__SECRET__AZURE_SUBSCRIPTION_ID)
           $image_name
 
       exit $?
