@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 6
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
@@ -642,7 +642,7 @@ jobs:
    - A pull request is created to merge this change.
    - Optional: If auto-merge is enabled, the pull request will be merged automatically.
 
-<img src='/img/self-service-actions/setup-backend/github-workflow/examples/promoteResult.png' width='85%' border='1px' />
+<img src='/img/self-service-actions/setup-backend/github-workflow/examples/promotePR.png' width='85%' border='1px' />
 <br />
 <br />
 

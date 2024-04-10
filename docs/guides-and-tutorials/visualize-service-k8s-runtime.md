@@ -23,7 +23,7 @@ This guide takes 10 minutes to complete, and aims to demonstrate the value of Po
 
 ### The goal of this guide
 
-In this guide we will model and visualize out services' Kubernetes resources.
+In this guide we will model and visualize our services' Kubernetes resources.
 
 After completing it, you will get a sense of how it can benefit different personas in your organization:
 
