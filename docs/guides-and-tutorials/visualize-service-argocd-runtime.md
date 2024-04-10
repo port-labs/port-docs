@@ -36,7 +36,7 @@ After completing it, you will get a sense of how it can benefit different person
 
 ### Install Port's ArgoCD integration
 
-1. Go to your [data sources page](https://app.getport.io/dev-portal/data-sources), click on `+ Data source`, find the `Kubernetes Stack` category and select `ArgoCD`.
+1. Go to your [data sources page](https://app.getport.io/settings/data-sources), click on `+ Data source`, find the `Kubernetes Stack` category and select `ArgoCD`.
 
 2. Copy the installation command, it should look like the snippet below, with your Port `client ID` and `secret` filled in.  
    Replace the following placeholders with your own values:  
@@ -62,7 +62,7 @@ helm upgrade --install argocd port-labs/port-ocean \
 
 After installation, the integration will:
 
-1. Create <PortTooltip id="blueprint">blueprints</PortTooltip> in your [Builder](https://app.getport.io/dev-portal/data-model) (as defined [here](https://github.com/port-labs/ocean/blob/main/integrations/argocd/.port/resources/blueprints.json)) that represent ArgoCD resources:
+1. Create <PortTooltip id="blueprint">blueprints</PortTooltip> in your [Builder](https://app.getport.io/settings/data-model) (as defined [here](https://github.com/port-labs/ocean/blob/main/integrations/argocd/.port/resources/blueprints.json)) that represent ArgoCD resources:
 
 <img src='/img/guides/argoBlueprintsCreated.png' width='100%' border='1px' />
 
@@ -92,7 +92,7 @@ Now that we have our <PortTooltip id="blueprint">blueprints</PortTooltip> set up
 
 In this guide we will create one relation named `Prod_runtime` which will represent the production environment of a service. In a real-world setting, we could have another relation for our staging environment, for example.
 
-1. Go to your [Builder](https://app.getport.io/dev-portal/data-model), expand the `Service` blueprint, and click on `New relation`.
+1. Go to your [Builder](https://app.getport.io/settings/data-model), expand the `Service` blueprint, and click on `New relation`.
 
 2. Fill out the form like this, then click `Create`:
 
@@ -125,7 +125,7 @@ For example, an ArgoCD application with the label `portService: awesomeService` 
 
 To achieve this, we need to update the ArgoCD integration's mapping configuration:
 
-1. Go to your [data sources page](https://app.getport.io/dev-portal/data-sources), find the ArgoCD exporter card, click on it and you will see a YAML editor showing the current configuration.  
+1. Go to your [data sources page](https://app.getport.io/settings/data-sources), find the ArgoCD exporter card, click on it and you will see a YAML editor showing the current configuration.  
 Add the following block to the mapping configuration and click `Resync`:
 
 ```yaml showLineNumbers

@@ -108,7 +108,7 @@ If you are facing issues after installing an Ocean integration, follow these ste
 
 1. Make sure all of the parameters you provided in the installation command are correct.
 2. Go to the [audit log](https://app.getport.io/organization/AuditLog) in your Port application and check for any errors in the creation of your `blueprints` and/or `entities`.
-3. In your [builder](https://app.getport.io/dev-portal/data-model) page, make sure that the new `blueprints` were created with the correct properties/relations.
+3. In your [builder](https://app.getport.io/settings/data-model) page, make sure that the new `blueprints` were created with the correct properties/relations.
 4. If you tried to install a `self-hosted` integration, check the integration's documentation to ensure you included the necessary parameters.
 
 If you are still facing issues, reach out to us via [Slack](https://www.getport.io/community) or using the Intercom bubble in the bottom right corner, and we will help you resolve the issue.

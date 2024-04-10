@@ -113,7 +113,7 @@ In order to successfully deploy the Azure exporter, it's crucial to ensure that 
 
 ## Installation
 
-1. Login to [Port](https://app.getport.io) and browse to the [builder page](https://app.getport.io/dev-portal)
+1. Login to [Port](https://app.getport.io) and browse to the [builder page](https://app.getport.io/settings)
 2. Open the ingest modal by expanding one of the blueprints and clicking the ingest button on the blueprints.
 
    ![Dev Portal Builder Ingest Button](/img/integrations/azure-exporter/DevPortalBuilderIngestButton.png)

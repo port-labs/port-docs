@@ -303,7 +303,7 @@ kubectl apply -f port-entity.yaml
 
 4. **Create a mapping configuration for the K8s exporter** - create (or add to an existing) the following exporter configuration to map this CRD using Port's k8s exporter:
    
-   1. Open the [data sources](https://app.getport.io/dev-portal/data-sources) page in your Port environment and click on the integration you wish to add the mapping to;
+   1. Open the [data sources](https://app.getport.io/settings/data-sources) page in your Port environment and click on the integration you wish to add the mapping to;
 
    2. Add the following mapping configuration to your exporter configuration:
    
