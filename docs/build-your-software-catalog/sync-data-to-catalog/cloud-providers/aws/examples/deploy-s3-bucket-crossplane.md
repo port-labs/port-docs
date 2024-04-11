@@ -28,10 +28,6 @@ To streamline deployments with this example, ensure you have a GitOps tool confi
 - GitOps mechanism of your choosing which synchronizes files from your Gitlab Project to your Kubernetes cluster.
 
 
-:::warning Disclaimer
-This example focuses on creating either Merge Requests in GitLab or Pull Requests in GitHub. To automatically deploy the manifest to your Kubernetes cluster, you will also need to set up a GitOps tool.
-:::
-
 ## Port Configuration
 
 1. Head over to the [Builder](https://app.getport.io/dev-portal/data-model) page to create the following blueprints: 
@@ -477,7 +473,10 @@ update-run-status:
 
 </Tabs>
 
-<br/>
+:::warning Disclaimer
+This example focuses on creating either Merge Requests in GitLab or Pull Requests in GitHub. To automatically deploy the manifest to your Kubernetes cluster, you will also need to set up a GitOps tool.
+:::
+
 
 7. Trigger the action from the [Self-service](https://app.getport.io/self-serve) tab of your Port application.<br/>
    You will notice a new Pull Request / Merge Request was created, commiting the S3 Bucket manifest.
