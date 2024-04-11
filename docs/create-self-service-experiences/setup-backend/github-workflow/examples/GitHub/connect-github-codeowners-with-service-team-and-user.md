@@ -157,7 +157,7 @@ If you already have the `githubUser`, `githubTeam` and `service` blueprints crea
   "relations": {
     "service": {
       "title": "Service",
-      "target": "githubRepository",
+      "target": "service",
       "required": false,
       "many": false
     }
@@ -239,8 +239,9 @@ import re
 import sys
 from dataclasses import dataclass
 from enum import StrEnum
+from typing import Any
 
-import aiohttp
+import httpx
 import requests
 from loguru import logger
 
@@ -250,7 +251,7 @@ PORT_CLIENT_SECRET = os.getenv("PORT_CLIENT_SECRET")
 REPOSITORY_NAME = os.getenv("REPO_NAME")
 
 CODEOWNERS_PATTERN_BLUEPRINT = "githubCodeownersPattern"
-CODEOWNERS_BLUEPRINT = "githubCodeOwners"
+CODEOWNERS_BLUEPRINT = "githubCodeowners"
 
 CODEOWNERS_FILE_PATHS = [
     ".github/CODEOWNERS",
@@ -270,22 +271,24 @@ def get_codeowner_file():
 CODEOWNERS_FILE = get_codeowner_file()
 
 if not CODEOWNERS_FILE:
-    print("Error parsing file: CODEOWNERS not found in the right location")
+    logger.error("Error parsing file: CODEOWNERS not found in the right location")
     sys.exit(1)
 
 
 # Get Port Access Token
 credentials = {"clientId": PORT_CLIENT_ID, "clientSecret": PORT_CLIENT_SECRET}
 token_response = requests.post(f"{PORT_API_URL}/auth/access_token", json=credentials)
+if not token_response.ok:
+    logger.error(f"Error retrieving access token: {token_response.json()}")
+    sys.exit(1)
+
 access_token = token_response.json()["accessToken"]
 
 # You can now use the value in access_token when making further requests
 headers = {"Authorization": f"Bearer {access_token}"}
 
 
-async def add_entity_to_port(
-    session: aiohttp.ClientSession, blueprint_id, entity_object
-):
+async def add_entity_to_port(client: httpx.AsyncClient, blueprint_id, entity_object):
     """A function to create the passed entity in Port
 
     Params
@@ -302,7 +305,7 @@ async def add_entity_to_port(
         The response object after calling the webhook
     """
     logger.info(f"Adding entity to Port: {entity_object}")
-    response = await session.post(
+    response = await client.post(
         (
             f"{PORT_API_URL}/blueprints/"
             f"{blueprint_id}/entities?upsert=true&merge=true"
@@ -310,7 +313,7 @@ async def add_entity_to_port(
         json=entity_object,
         headers=headers,
     )
-    if not response.ok:
+    if not response.is_success:
         logger.info("Ingesting {blueprint_id} entity to port failed, skipping...")
     logger.info(f"Added entity to Port: {entity_object}")
 
@@ -362,6 +365,8 @@ def parse_string_to_entity_type(text: str):
 def create_entity_from_value(
     entity_type: GithubEntityType, value: str, pattern: str
 ) -> GithubEntity:
+    if entity_type == GithubEntityType.USERNAME:
+        value = value.replace("@", "")
     entity = GithubEntity(entity_type, value, pattern)
     return entity
 
@@ -380,28 +385,50 @@ async def provide_entities():
             yield create_entity_from_value(*entry, pattern)
 
 
-async def ingest_codeowner_pattern_entity(
-    entity: GithubEntity, session: aiohttp.ClientSession
-):
+def prepare_codeowner_pattern_entity(entity: GithubEntity, codeowner: dict[str, Any]):
     entity_object = {
         "identifier": entity.pattern,
         "title": f"{entity.pattern} | {REPOSITORY_NAME}",
         "properties": {},
         "relations": {
-            "team": entity.value if entity.type == GithubEntityType.TEAM else None,
+            "team": [entity.value] if entity.type == GithubEntityType.TEAM else [],
             "service": REPOSITORY_NAME,
-            "owner": entity.value
+            "user": [entity.value]
             if entity.type in [GithubEntityType.USERNAME, GithubEntityType.EMAIL]
-            else None,
+            else [],
+            "codeownersFile": codeowner["identifier"],
         },
     }
 
-    await add_entity_to_port(session, CODEOWNERS_PATTERN_BLUEPRINT, entity_object)
+    return entity_object
+
+
+def crunch_entities(existing_entities: dict[str, Any], entity: dict[str, Any]):
+    if entity["identifier"] in existing_entities:
+        teams = set(
+            [
+                *entity["relations"]["team"],
+                *existing_entities[entity["identifier"]]["relations"]["team"],
+            ]
+        )
+        users = set(
+            [
+                *entity["relations"]["user"],
+                *existing_entities[entity["identifier"]]["relations"]["user"],
+            ]
+        )
+        existing_entities[entity["identifier"]]["relations"]["team"] = list(teams)
+        existing_entities[entity["identifier"]]["relations"]["user"] = list(users)
+    else:
+        existing_entities[entity["identifier"]] = entity
+
+    return existing_entities
 
 
 async def main():
     logger.info("Starting Port integration")
-    async with aiohttp.ClientSession() as session:
+    crunched_entities: dict[str, Any] = {}
+    async with httpx.AsyncClient() as client:
         entities = provide_entities()
         codeowner_entity = {
             "identifier": REPOSITORY_NAME,
@@ -409,14 +436,21 @@ async def main():
             "properties": {"location": CODEOWNERS_FILE},
             "relations": {"service": REPOSITORY_NAME},
         }
-        await add_entity_to_port(session, CODEOWNERS_BLUEPRINT, codeowner_entity)
-        async for pattern_entity in entities:
-            await ingest_codeowner_pattern_entity(pattern_entity, session)
+        await add_entity_to_port(client, CODEOWNERS_BLUEPRINT, codeowner_entity)
+
+        async for pattern in entities:
+            pattern_entity = prepare_codeowner_pattern_entity(pattern, codeowner_entity)
+            crunched_entities = crunch_entities(crunched_entities, pattern_entity)
+
+        for entity in crunched_entities.values():
+            await add_entity_to_port(client, CODEOWNERS_PATTERN_BLUEPRINT, entity)
+
     logger.info("Finished Port integration")
 
 
 if __name__ == "__main__":
     asyncio.run(main())
+
 
 ```
 
@@ -430,33 +464,45 @@ if __name__ == "__main__":
 ```yaml showLineNumbers
 name: Ingest Codeowners
 on:
-   push:
+  push:
     branches:
-      - 'main'
-      - 'releases/**'
+      - "main"
+      - "releases/**"
 
 jobs:
   ingest_codeowners:
     runs-on: ubuntu-latest
-  
-  steps:
+
+    steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
-      
+
       - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
-      
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install httpx requests loguru
+
       - name: Ingest Codeowners
         run: |
           python <path/to/codeowners_parser.py>
         env:
           REPO_NAME: ${{ github.event.repository.name }}
+          PORT_CLIENT_ID: ${{ secrets.PORT_CLIENT_ID }}
+          PORT_CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
+
 ```
 
 </details>
+
+:::info Update workflow details
+Update the workflow with branches you want this workflow to run on. Also update the path to the script to reflect the path the script is located in the repository
+
+:::
 
 :::info Execution frequency
 This workflow will run on every change made to the branches specified to ensure the CODEOWNERS information is always up-to-date. This frequency choice is in line with GitHub's policy to enforce CODEOWNERS on the base branch a Pull Request is made to, rather than on every branch.
