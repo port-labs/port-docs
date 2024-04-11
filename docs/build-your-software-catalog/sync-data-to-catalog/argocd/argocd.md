@@ -45,6 +45,11 @@ Set them as you wish in the script below, then copy it and run it in your termin
 
 <br/>
 
+<Tabs groupId="deploy" queryString="deploy">
+
+<TabItem value="helm" label="Helm" default>
+To install the integration using Helm, run the following command:
+
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-argocd-integration port-labs/port-ocean \
@@ -58,6 +63,88 @@ helm upgrade --install my-argocd-integration port-labs/port-ocean \
   --set integration.secrets.token="<your-token>"  \
   --set integration.config.serverUrl="<your-server-url>"
 ```
+</TabItem>
+
+<TabItem value="argocd" label="ArgoCD" default>
+To install the integration using ArgoCD, follow these steps:
+
+1. Create a `values.yaml` file in `argocd/my-ocean-argocd-integration` in your git repository with the content:
+
+:::note Variable Replacement 
+Remember to replace the placeholders for `TOKEN` and `SERVER_URL`, which represents your ArgoCD API token and server url respectively.
+:::
+```yaml showLineNumbers
+initializePortResources: true
+scheduledResyncInterval: 120
+integration:
+  identifier: my-ocean-argocd-integration
+  type: argocd
+  eventListener:
+    type: POLLING
+  config:
+  // highlight-next-line
+    serverUrl: SERVER_URL
+  secrets:
+  // highlight-next-line
+    token: TOKEN
+```
+<br/>
+
+2. Install the `my-ocean-argocd-integration` ArgoCD Application by creating the following `my-ocean-argocd-integration.yaml` manifest:
+:::note Variable Replacement 
+Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+
+Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
+:::
+
+<details>
+  <summary>ArgoCD Application</summary>
+
+```yaml showLineNumbers
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: my-ocean-argocd-integration
+  namespace: argocd
+spec:
+  destination:
+    namespace: my-ocean-argocd-integration
+    server: https://kubernetes.default.svc
+  project: default
+  sources:
+  - repoURL: 'https://port-labs.github.io/helm-charts/'
+    chart: port-ocean
+    targetRevision: 0.1.18
+    helm:
+      valueFiles:
+      - $values/argocd/my-ocean-argocd-integration/values.yaml
+      // highlight-start
+      parameters:
+        - name: port.clientId
+          value: YOUR_PORT_CLIENT_ID
+        - name: port.clientSecret
+          value: YOUR_PORT_CLIENT_SECRET
+  - repoURL: YOUR_GIT_REPO_URL
+  // highlight-end
+    targetRevision: main
+    ref: values
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+```
+
+</details>
+<br/>
+
+3. Apply your application manifest with `kubectl`:
+```bash
+kubectl apply -f my-ocean-argocd-integration.yaml
+```
+</TabItem>
+</Tabs>
 
 </TabItem>
 
@@ -184,8 +271,78 @@ pipeline {
 
 ### Generating ArgoCD token
 
-1. Navigate to `<serverURL>/settings/accounts/<user>`. For example, if you access your ArgoCD at `https://localhost:8080`, you should navigate to `https://localhost:8080/settings/accounts/<user>`.
-2. Under Tokens, Click **Generate New** to create a new token.
+1. Navigate to `<serverURL>/settings/accounts/<user>`. For example, if you access your ArgoCD at `https://localhost:8080`, you should navigate to `https://localhost:8080/settings/accounts/<user>`
+2. The user should have `apiKey` capabilities to allow generating authentication tokens for API access. If you don't have a user created yet, follow the guide on [how to create a new ArgoCD user](https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/#create-new-user)
+3. Newly created users may have limited scope to resources by default. For that reason, You will need to configure RBAC policy for the new user by following [this guide](https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/)
+4. Ensure that the policy definition grants enough permission to `read` resources such as `applications`, `clusters`, `projects`, `repositories` etc.
+5. Under **Tokens** on your ArgoCD UI, Click **Generate New** to create a new token for the user or use the CLI:
+
+```bash
+argocd account generate-token --account <username>
+```
+
+:::tip Creating ArgoCD user with readonly permissions
+
+1. Create an `argocd-user.yaml` file with the below manifest to create a new user `port-ocean-user`
+
+<details>
+<summary><b> Create user manifest (click to expand) </b></summary>
+
+```yaml showLineNumbers
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: argocd-cm
+    app.kubernetes.io/part-of: argocd
+data:
+  # add an additional local user with apiKey and login capabilities
+  #   apiKey - allows generating API keys
+  #   login - allows to login using UI
+  accounts.port-ocean-user: apiKey, login
+  accounts.port-ocean-user.enabled: "true"
+```
+</details>
+
+2. Apply the manifest with `kubectl` to create the user:
+```bash
+kubectl apply -f argocd-user.yaml
+```
+3. Grant read only RBAC policy to the new user using the below manifest file (`argocd-rbac-cm.yaml`)
+<details>
+<summary><b> RBAC policy to grant readonly role to the new user (click to expand) </b></summary>
+
+```yaml showLineNumbers
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-rbac-cm
+  namespace: argocd
+data:
+  policy.default: role:readonly
+  policy.csv: |
+    p, role:read-only-role, applications, *, */*, allow
+    p, role:read-only-role, clusters, get, *, allow
+    p, role:read-only-role, repositories, get, *, allow
+    p, role:read-only-role, projects, get, *, allow
+    p, role:read-only-role, logs, get, *, allow
+
+    g, port-ocean-user, role:read-only-role
+```
+</details>
+
+4. Apply the `argocd-rbac-cm.yaml` manifest with `kubectl`:
+```bash
+kubectl apply -f argocd-rbac-cm.yaml
+```
+
+5. Go to your ArgoCD UI to generate a new token for the user or use the CLI
+```bash
+argocd account generate-token --account <username>
+```
+:::
 
 ## Ingesting ArgoCD objects
 
