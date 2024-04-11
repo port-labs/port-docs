@@ -1,5 +1,5 @@
 ---
-sidebar_position: 9
+sidebar_position: 8
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
@@ -164,7 +164,6 @@ Follow these steps to get started:
 
 
 ```json showLineNumbers
-[
 {
   "identifier": "lock_service",
   "title": "Lock Service",
@@ -213,7 +212,6 @@ Follow these steps to get started:
   "description": "Lock service in Port",
   "requiredApproval": false
 }
-]
 ```
 
 </details>
@@ -228,7 +226,6 @@ Follow these steps to get started:
 
 
 ```json showLineNumbers
-[
 {
   "identifier": "unlock_service",
   "title": "Unlock Service",
@@ -277,7 +274,6 @@ Follow these steps to get started:
   "description": "Unlock service in Port",
   "requiredApproval": false
 }
-]
 ```
 
 </details>
@@ -366,7 +362,7 @@ jobs:
         uses: slackapi/slack-github-action@v1.25.0
         with:
           channel-id: '${{ secrets.SLACK_CHANNEL_ID }}'
-          slack-message: "*Port Service Locked*\n\n*Service Name*: ${{ fromJson(github.event.inputs.port_payload).payload.entity.title }}\n*Environment*: ${{ github.event.inputs.environment }}\n*Reporter*: ${{ fromJson(github.event.inputs.port_payload).trigger.by.user.email }}\n*Reason*: ${{ github.event.inputs.reason }}"
+          slack-message: "*Port Service Locked*\n\n*Service Name*: ${{ fromJson(github.event.inputs.port_payload).payload.entity.title }}\n*Link*: https://app.getport.io/${{ fromJson(github.event.inputs.port_payload).context.blueprint }}Entity?identifier=${{ fromJson(github.event.inputs.port_payload).context.entity }}\n*Environment*: ${{ github.event.inputs.environment }}\n*Reporter*: ${{ fromJson(github.event.inputs.port_payload).trigger.by.user.email }}\n*Reason*: ${{ github.event.inputs.reason }}"
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
 
@@ -478,7 +474,7 @@ jobs:
         uses: slackapi/slack-github-action@v1.25.0
         with:
           channel-id: '${{ secrets.SLACK_CHANNEL_ID }}'
-          slack-message: "*Port Service Unlocked*\n\n*Service Name*: ${{ fromJson(github.event.inputs.port_payload).payload.entity.title }}\n*Environment*: ${{ github.event.inputs.environment }}\n*Reporter*: ${{ fromJson(github.event.inputs.port_payload).trigger.by.user.email }}\n*Reason*: ${{ github.event.inputs.reason }}"
+          slack-message: "*Port Service Unlocked*\n\n*Service Name*: ${{ fromJson(github.event.inputs.port_payload).payload.entity.title }}\n*Link*: https://app.getport.io/${{ fromJson(github.event.inputs.port_payload).context.blueprint }}Entity?identifier=${{ fromJson(github.event.inputs.port_payload).context.entity }}\n*Environment*: ${{ github.event.inputs.environment }}\n*Reporter*: ${{ fromJson(github.event.inputs.port_payload).trigger.by.user.email }}\n*Reason*: ${{ github.event.inputs.reason }}"
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
 
@@ -510,13 +506,10 @@ jobs:
 
 5. Trigger the actions from the [self-service](https://app.getport.io/self-serve) page of your Port application.
 
-:::tip Practical usage
-
-Service locking and unlocking can be used to control deployment via Github actions. This means when a service is locked, deployment checks on that service will fail. Follow [Port's self-service mini guide to control deployment using service lock](/guides-and-tutorials/service-lock-github-workflow.md) to add this functionality to your workflow.
-
-:::
-
 Below is the result of a successful service lock and unlock alert sent to a Slack channel:
 
 <img src="/img/self-service-actions/lockServiceSlackAlert.png" border="1px" />
 <img src="/img/self-service-actions/unlockServiceSlackAlert.png" border="1px" />
+
+## More relevant guides and examples
+- [Mini guide on controlling deployment using service lock](/guides-and-tutorials/service-lock-github-workflow.md)
