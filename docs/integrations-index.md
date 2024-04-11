@@ -21,7 +21,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [GitHub workflow self-service actions](/create-self-service-experiences/setup-backend/github-workflow/github-workflow.md)
 - [Sync repositories, file contents, pull-requests, workflows, teams and more](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples.md)
 - [Sync Dependabot](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples.md#mapping-repositories-and-dependabot-alerts)
-- [GitHub scaffolder using GitHub workflows](/create-self-service-experiences/setup-backend/github-workflow/examples/scaffold-repositories-using-cookiecutter.md)
+- [GitHub scaffolder using GitHub workflows](/guides-and-tutorials/scaffold-a-new-service.md?git-provider=github)
 - [GitHub scaffolder using Jenkins pipelines](/create-self-service-experiences/setup-backend/jenkins-pipeline/examples/scaffold-github-using-cookiecutter.md)
 - [GitHub scaffolder using FastAPI backend](/create-self-service-experiences/setup-backend/webhook/examples/software-templates.md)
 - [Deploy AWS resources using AWS CloudFormation](/create-self-service-experiences/setup-backend/github-workflow/examples/AWS/deploy-cloudformation-template.md)
@@ -41,7 +41,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [GitLab advanced file search and search checks](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/mapping_extensions.md)
 - [Sync GitLab pipelines](/build-your-software-catalog/custom-integration/api/ci-cd/gitlab-pipelines/gitlab-pipelines.md)
 - [GitLab pipeline self-service actions](/create-self-service-experiences/setup-backend/gitlab-pipeline/gitlab-pipeline.md)
-- [GitLab scaffolder](/create-self-service-experiences/setup-backend/gitlab-pipeline/examples/scaffold-repositories-using-cookiecutter.md)
+- [GitLab scaffolder](/guides-and-tutorials/scaffold-a-new-service.md?git-provider=gitlab)
 - [Sync projects, file contents, merge-requests and more](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/examples.md)
 
 ### Bitbucket
@@ -73,14 +73,14 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Map FluxCD](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/fluxcd.md)
 - [Map CRDs](/build-your-software-catalog/sync-data-to-catalog/kubernetes/custom-crds.md)
 - [Port entity CRD](/build-your-software-catalog/sync-data-to-catalog/kubernetes/port-crd.md)
-- [Create and managed Kubernetes cluster](/create-self-service-experiences/setup-backend/github-workflow/examples/manage-clusters)
+- [Create and managed Kubernetes cluster](/create-self-service-experiences/setup-backend/github-workflow/examples/kubernetes/manage-clusters)
 - [Change deployment replica count](/create-self-service-experiences/setup-backend/github-workflow/examples/kubernetes/change-replica-count)
 
 ## ArgoCD
 
-- [ArgoCD exporter and webhook integration](/build-your-software-catalog/sync-data-to-catalog/kubernetes/argocd/)
-- [ArgoCD events](/build-your-software-catalog/sync-data-to-catalog/kubernetes/argocd/argocd.md#argocd-events)
-- [Connect ArgoCD deployment to image](/build-your-software-catalog/sync-data-to-catalog/kubernetes/argocd/examples/connect-argocd-deployment-to-image)
+- [ArgoCD exporter and webhook integration](/build-your-software-catalog/sync-data-to-catalog/argocd/)
+- [ArgoCD events](/build-your-software-catalog/sync-data-to-catalog/argocd/argocd.md#argocd-events)
+- [Connect ArgoCD deployment to image](/build-your-software-catalog/sync-data-to-catalog/argocd/examples/connect-argocd-deployment-to-image)
 - [Rollback ArgoCD deployment](/create-self-service-experiences/setup-backend/github-workflow/examples/argocd/rollback-argocd-deployment)
 - [Self-service action to synchronize ArgoCD application](/create-self-service-experiences/setup-backend/github-workflow/examples/argocd/sync-argocd-app)
 
@@ -88,22 +88,22 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ### Terraform
 
-- [Terraform provider](/build-your-software-catalog/sync-data-to-catalog/iac/terraform/terraform.md)
+- [Terraform provider](/build-your-software-catalog/custom-integration/iac/terraform/terraform.md)
 - [Terraform managed blueprint](/build-your-software-catalog/customize-integrations/configure-data-model/Iac/terraform-managed-blueprint.md)
 - [Create cloud resources using IaC](/guides-and-tutorials/create-cloud-resource-using-iac.md)
-- [Terraform manage S3 buckets lifecycle](/build-your-software-catalog/sync-data-to-catalog/iac/terraform/examples/s3-bucket.md)
-- [Terraform manage developer environment](/build-your-software-catalog/sync-data-to-catalog/iac/terraform/examples/create-dev-env.md)
+- [Terraform manage S3 buckets lifecycle](/build-your-software-catalog/custom-integration/iac/terraform/examples/s3-bucket.md)
+- [Terraform manage developer environment](/build-your-software-catalog/custom-integration/iac/terraform/examples/create-dev-env.md)
 - [Terraform no-code resource provisioning using self-service actions](/create-self-service-experiences/setup-backend/webhook/examples/terraform-no-code-resource-provisioning.md)
 - [Import Terraform state using webhook](/build-your-software-catalog/custom-integration/webhook/examples/packages/terraform.md)
 
 ### Terraform Cloud
 
-- [Terraform cloud](/build-your-software-catalog/sync-data-to-catalog/iac/terraform-cloud)
+- [Terraform cloud](/build-your-software-catalog/sync-data-to-catalog/terraform-cloud)
 - [Terraform cloud actions](/create-self-service-experiences/setup-backend/terraform-cloud)
 
 ### Pulumi
 
-- [Pulumi provider](/build-your-software-catalog/sync-data-to-catalog/iac/pulumi/pulumi.md)
+- [Pulumi provider](/build-your-software-catalog/custom-integration/iac/pulumi/pulumi.md)
 - [Pulumi managed blueprint](/build-your-software-catalog/customize-integrations/configure-data-model/Iac/pulumi-managed-blueprint.md)
 
 ## Cloud providers
@@ -111,12 +111,12 @@ This page contains a list of Port's available integrations, organized by the pla
 ### AWS
 
 - [AWS exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws.md)
-- [Map ECS, EC2, RDS, API GW, Cloudfront and more](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples.md)
+- [Map ECS, EC2, RDS, API GW, Cloudfront and more](docs/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples/examples.md)
 - [AWS Cost](/build-your-software-catalog/sync-data-to-catalog/cloud-cost/aws-cost.md)
 - [Deploy AWS resources using AWS CloudFormation](/create-self-service-experiences/setup-backend/github-workflow/examples/AWS/deploy-cloudformation-template.md)
-- [AWS exporter Terraform module](/build-your-software-catalog/sync-data-to-catalog/iac/terraform/modules/aws-exporter-module.md)
-- [Terraform manage S3 buckets lifecycle](/build-your-software-catalog/sync-data-to-catalog/iac/terraform/examples/s3-bucket.md)
-- [Terraform manage developer environment](/build-your-software-catalog/sync-data-to-catalog/iac/terraform/examples/create-dev-env.md)
+- [Terraform manage S3 buckets lifecycle](/build-your-software-catalog/custom-integration/iac/terraform/examples/s3-bucket.md)
+- [Terraform manage developer environment](/build-your-software-catalog/custom-integration/iac/terraform/examples/create-dev-env.md)
+- [Connect ECR repository to Service](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples/connect-ecr-repo-to-service-using-tags.md)
 - [Script to ingest ECR Images and Repositories](https://github.com/port-labs/example-ecr-images)
 - [Self-service action to create EC2 instance](/create-self-service-experiences/setup-backend/github-workflow/examples/AWS/create-an-ec2-instance)
 - [Provision AWS cloud resource using Terraform Plan and Apply](/create-self-service-experiences/setup-backend/github-workflow/examples/AWS/terraform-plan-and-apply-aws-resource)
@@ -144,10 +144,10 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Cookiecutter
 
-- [Cookiecutter GitHub scaffolder using GitHub workflows](/create-self-service-experiences/setup-backend/github-workflow/examples/scaffold-repositories-using-cookiecutter.md)
+- [Cookiecutter GitHub scaffolder using GitHub workflows](/guides-and-tutorials/scaffold-a-new-service.md?git-provider=github)
 - [Cookiecutter GitHub scaffolder using Jenkins pipelines](/create-self-service-experiences/setup-backend/jenkins-pipeline/examples/scaffold-github-using-cookiecutter.md)
 - [Cookiecutter GitHub scaffolder using FastAPI backend](/create-self-service-experiences/setup-backend/webhook/examples/software-templates.md)
-- [Cookiecutter GitLab scaffolder using GitLab pipelines](/create-self-service-experiences/setup-backend/gitlab-pipeline/examples/scaffold-repositories-using-cookiecutter.md)
+- [Cookiecutter GitLab scaffolder using GitLab pipelines](/guides-and-tutorials/scaffold-a-new-service.md?git-provider=gitlab)
 - [Cookiecutter Bitbucket scaffolder using Jenkins pipelines](/create-self-service-experiences/setup-backend/jenkins-pipeline/examples/scaffold-bitbucket-using-cookiecutter.md)
 - [Cookiecutter Azure DevOps scaffolder using Azure DevOps pipelines](/create-self-service-experiences/setup-backend/azure-pipeline/examples/scaffold-repositories-using-cookiecutter.md)
 
@@ -267,7 +267,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Jenkins
 
-- [Jenkins Integration](/build-your-software-catalog/sync-data-to-catalog/ci-cd/jenkins.md)
+- [Jenkins Integration](/build-your-software-catalog/sync-data-to-catalog/jenkins)
 - [Sync Jenkins pipelines via API](/build-your-software-catalog/custom-integration/api/ci-cd/jenkins-deployment/jenkins-deployment.md)
 - [Jenkins webhook integration with Port](/build-your-software-catalog/custom-integration/webhook/examples/jenkins.md)
 - [Jenkins pipeline self-service actions](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md)

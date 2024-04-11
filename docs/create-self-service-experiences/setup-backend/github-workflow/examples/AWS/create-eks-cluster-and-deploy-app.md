@@ -15,9 +15,10 @@ In this guide, we are going to use [self-service actions](/create-self-service-e
 2. This guide assumes the presence of a blueprint representing your repositories. If you haven't done so yet, initiate the setup of your GitHub data model by referring to this [guide](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples#mapping-repositories-file-contents-and-pull-requests) first.
 3. A repository to contain your action resources i.e. the github workflow file.
 4. In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
-   - `AWS_ACCESS_KEY_ID`: Your AWS access key.
-   - `AWS_SECRET_ACCESS_KEY`: Your AWS secret access key.
-   - `CREATOR_TOKEN`: A GitHub personal access token (fine-grained) that has `Read and Write` permissions on the following scopes: _Administration_, _Contents_.
+   - AWS Credentials. Follow this [guide](https://docs.aws.amazon.com/cli/latest/userguide/cli-authentication-user.html) to create them.
+      - `AWS_ACCESS_KEY_ID`: Your AWS access key.
+      - `AWS_SECRET_ACCESS_KEY`: Your AWS secret access key.
+   - `CREATOR_TOKEN`: A GitHub [personal access token (fine-grained)](https://github.blog/2022-10-18-introducing-fine-grained-personal-access-tokens-for-github/#creating-personal-access-tokens) that has `Read and Write` permissions on the following scopes: _Administration_, _Contents_.
    * `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
    * `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
         
@@ -25,7 +26,7 @@ In this guide, we are going to use [self-service actions](/create-self-service-e
 
 
 :::tip Starter Repository
-Copy the contents of the `eks-deploy-guide` folder from our examples repository [here](https://github.com/port-labs/self-service-actions-examples) to follow along through the guide. The repository contains the following folders:
+Clone the repository [here](https://github.com/port-labs/eks-deploy-guide) to follow along with the guide. The repository contains the following folders:
 - `app-templates`: contains the cookiecutter templates for scaffolding apps.
 - `terraform`: contains the terraform configuration for creating an EKS cluster.
 :::
@@ -554,6 +555,10 @@ terraform {
 
 <summary>GitHub workflow to scaffold a Node.js app</summary>
 
+:::tip Cookiecutter Template
+To implement this workflow, you'll need a cookiecutter template for scaffolding the application. You can either create one or utilize our starter [repository](https://github.com/port-labs/eks-deploy-guide).
+:::
+
 ```yaml showLineNumbers
 name: Scaffold Node.js App
 
@@ -937,10 +942,8 @@ Done! 🎉
 
 
 ## Augment It!
-
 Here are a few additional enhancements you can make to the actions in this guide:
-
-1. Add more templates to the Scaffolding action.
-2. Extend the scaffold action by including a step that calls the Port API to trigger the deploy action on the newly created repository.
+- Add more templates to the Scaffolding action.
+- Extend the scaffold action by including a step that calls the Port API to trigger the deploy action on the newly created repository.
 
 These enhancements will provide more flexibility and automation to your workflow.

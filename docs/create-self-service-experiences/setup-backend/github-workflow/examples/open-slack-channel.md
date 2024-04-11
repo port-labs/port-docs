@@ -1,3 +1,7 @@
+---
+sidebar_position: 9
+---
+
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 # Create Slack channel for Incident Management

@@ -20,100 +20,63 @@ In this guide, we will create two self-service actions in Port that execute a Gi
 2. An access to an [AWS account](https://aws.amazon.com/console/) with appropriate permissions to create resources like an S3 bucket.
 3. A GitHub repository to host your Terraform configuration files and GitHub Actions workflows
 
-Below you can find the JSON for the `Service` blueprint required for the guide:
+Below you can find the JSON for the `Cloud Resource` blueprint required for the guide:
 
 <details>
-<summary><b>Service blueprint (click to expand)</b></summary>
+<summary><b>Cloud resource blueprint (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
-  "identifier": "service",
-  "title": "Service",
-  "icon": "Github",
+  "identifier": "cloudResource",
+  "description": "This blueprint represents a cloud resource",
+  "title": "Cloud Resource",
+  "icon": "AWS",
   "schema": {
     "properties": {
-      "readme": {
-        "title": "README",
+      "type": {
         "type": "string",
-        "format": "markdown",
-        "icon": "Book"
+        "description": "Type of the cloud resource (e.g., virtual machine, database, storage, etc.)",
+        "title": "Type"
       },
-      "url": {
-        "title": "URL",
-        "format": "url",
+      "provider": {
         "type": "string",
-        "icon": "Link"
+        "description": "Cloud service provider (e.g., AWS, Azure, GCP)",
+        "title": "Provider"
       },
-      "language": {
-        "icon": "Git",
+      "region": {
         "type": "string",
-        "title": "Language",
-        "enum": [
-          "GO",
-          "Python",
-          "Node",
-          "React"
-        ],
-        "enumColors": {
-          "GO": "red",
-          "Python": "green",
-          "Node": "blue",
-          "React": "yellow"
-        }
+        "description": "Region where the resource is deployed",
+        "title": "Region"
       },
-      "slack": {
-        "icon": "Slack",
+      "link": {
         "type": "string",
-        "title": "Slack",
+        "title": "Link",
         "format": "url"
       },
-      "code_owners": {
-        "title": "Code owners",
-        "description": "This service's code owners",
-        "type": "string",
-        "icon": "TwoUsers"
-      },
-      "type": {
-        "title": "Type",
-        "description": "This service's type",
-        "type": "string",
-        "enum": [
-          "Backend",
-          "Frontend",
-          "Library"
-        ],
-        "enumColors": {
-          "Backend": "purple",
-          "Frontend": "pink",
-          "Library": "green"
+      "tags": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "string"
         },
-        "icon": "DefaultProperty"
+        "description": "Custom tags associated with the resource",
+        "title": "Tags"
       },
-      "lifecycle": {
-        "title": "Lifecycle",
+      "status": {
         "type": "string",
-        "enum": [
-          "Production",
-          "Staging",
-          "Development"
-        ],
-        "enumColors": {
-          "Production": "green",
-          "Staging": "yellow",
-          "Development": "blue"
-        },
-        "icon": "DefaultProperty"
+        "description": "Current status of the resource (e.g., running, stopped, provisioning, etc.)",
+        "title": "Status"
       },
-      "locked_in_prod": {
-        "icon": "DefaultProperty",
-        "title": "Locked in Prod",
-        "type": "boolean",
-        "default": false
+      "created_at": {
+        "type": "string",
+        "description": "Timestamp indicating when the resource was created",
+        "title": "Created At",
+        "format": "date-time"
       },
-      "locked_reason_prod": {
-        "icon": "DefaultProperty",
-        "title": "Locked Reason Prod",
-        "type": "string"
+      "updated_at": {
+        "type": "string",
+        "description": "Timestamp indicating when the resource was last updated",
+        "title": "Updated At",
+        "format": "date-time"
       }
     },
     "required": []
@@ -147,7 +110,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 5.0"
+      version = "5.43"
     }
   }
 }
@@ -190,7 +153,7 @@ variable "environment" {
 </details>
 <br />
 
-3. Create two Port self-service actions in the [self-service page](https://app.getport.io/self-serve) on the `Service` blueprint with the following JSON definitions:
+3. Create two Port self-service actions in the [self-service page](https://app.getport.io/self-serve) on the `Cloud Resource` blueprint with the following JSON definitions:
 
 <details>
 
@@ -537,6 +500,28 @@ jobs:
           logMessage: |
               cloud resource successfully approved and provisioned ✅
 
+      - name: Get current timestamp
+        id: timestamp
+        run: echo "::set-output name=current_time::$(date -u +'%Y-%m-%dT%H:%M:%S.%3NZ')"
+
+      - name: Create cloud resource in Port
+        uses: port-labs/port-github-action@v1
+        if: ${{steps.tf-apply.outcome == 'success'}}
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          operation: UPSERT
+          identifier: ${{ fromJson(inputs.tf_plan_output).variables.bucket_name.value }}
+          blueprint: cloudResource
+          properties: |-
+            {
+              "type": "storage",
+              "provider": "AWS",
+              "region": "${{ secrets.AWS_REGION }}",
+              "link": "https://s3.console.aws.amazon.com/s3/buckets/${{ fromJson(inputs.tf_plan_output).variables.bucket_name.value }}",
+              "created_at": "${{ steps.timestamp.outputs.current_time }}"
+            }
+
       - name: Update Port on status of applying terraform resource (failure)
         uses: port-labs/port-github-action@v1
         if: ${{steps.tf-apply.outcome != 'success'}}
@@ -552,9 +537,17 @@ jobs:
 </details>
 <br />
 
-6. Trigger the `Plan A Terraform Resource` action from the [self-service](https://app.getport.io/self-serve) page of your Port application. After planning the terraform resource, an email will be sent to the approval team to review the resource. The reviewer can click **See details** next to the **Form Inputs** on the run page to review the content of the planned resource:
+6. Trigger the `Plan A Terraform Resource` action from the [self-service](https://app.getport.io/self-serve) page of your Port application. In this example, we request to provision an s3 bucket to manage template assets for a website:
+<img src='/img/self-service-actions/setup-backend/github-workflow/approveAndApplyTriggerAction.png' width='80%' border="1px" />
 
+The logs stream tab in Port will display live logs of the action steps:
+<img src='/img/self-service-actions/setup-backend/github-workflow/approveAndApplyLiveLogs.png' width='80%' border="1px" />
+
+After planning the terraform resource, an email or prompt will be sent to the approval team to review the resource:
 <img src='/img/self-service-actions/setup-backend/github-workflow/approveAndApplyTerraform.png' width='80%' border="1px" />
+
+The reviewer can click **See details** next to the **Form Inputs** on the run page to review the content of the planned resource:
+<img src='/img/self-service-actions/setup-backend/github-workflow/approveAndApplyFormInput.png' width='80%' border="1px" />
 
 7. Once approved, the second action `Approve and Apply Terraform Resource` will be triggered automatically to provision the s3 bucket. Head over to your AWS console to view the created bucket:
 

@@ -10,11 +10,11 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 In the following guide, we are going to create a self-service action in Port that executes a [GitHub workflow](/create-self-service-experiences/setup-backend/github-workflow/github-workflow.md) to sync an argocd application.
 
 
-## Prerequisites
-1. This guide assumes that you already have a blueprint for an ArgoCD Application with some resources. If you haven't done so yet, create the blueprint by referring to this [guide](/build-your-software-catalog/sync-data-to-catalog/kubernetes/argocd#application) first.
+:::tip Prerequisites
+1. This guide assumes that you already have a blueprint for an ArgoCD Application with some resources. If you haven't done so yet, create the blueprint by referring to this [guide](/build-your-software-catalog/sync-data-to-catalog/argocd#application) first.
 2. Prior knowledge of Port Actions is essential for following this guide. Learn more about them [here](/create-self-service-experiences/setup-ui-for-action/).
 3. A GitHub repository to contain your action resources i.e. the github workflow file.
-
+:::
 
 ## Steps
 
@@ -141,59 +141,8 @@ jobs:
           operation: PATCH_RUN
           runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
           logMessage: "Request to sync argocd application failed ..."
-          
-      - name: Log Before Requesting for Synced Application
-        uses: port-labs/port-github-action@v1
-        with:
-          clientId: ${{ secrets.PORT_CLIENT_ID }}
-          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          baseUrl: https://api.getport.io
-          operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
-          logMessage: "Fetching data of synced application ..."
-
-      - name: Request for Synced Application
-        id: synced_application
-        uses: fjogeleit/http-request-action@v1
-        with:
-          url: 'https://${{github.event.inputs.application_host}}/api/v1/applications/${{github.event.inputs.application_name}}'
-          method: 'GET'
-          customHeaders: '{ "Content-Type": "application/json", "Authorization": "Bearer ${{secrets.ARGOCD_TOKEN}}" }'
-              
-      - name: Log Before Upserting Entity
-        uses: port-labs/port-github-action@v1
-        with:
-          clientId: ${{ secrets.PORT_CLIENT_ID }}
-          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          baseUrl: https://api.getport.io
-          operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
-          logMessage: "Reporting the synced application back to port ..."
     
-      - name: UPSERT Entity
-        uses: port-labs/port-github-action@v1
-        with:
-          identifier: "${{ fromJson(steps.synced_application.outputs.response).metadata.uid }}"
-          title: "${{ fromJson(steps.synced_application.outputs.response).metadata.name }}"
-          blueprint: ${{ fromJson(inputs.port_payload).context.blueprint }}
-          properties: |-
-            {
-              "namespace": "${{ fromJson(steps.synced_application.outputs.response).metadata.namespace }}",
-              "gitRepo": "${{ fromJson(steps.synced_application.outputs.response).spec.source.repoURL }}",
-              "gitPath": "${{ fromJson(steps.synced_application.outputs.response).spec.source.path }}",
-              "destinationServer": "${{ fromJson(steps.synced_application.outputs.response).spec.destination.server }}",
-              "syncStatus": "${{ fromJson(steps.synced_application.outputs.response).status.sync.status }}",
-              "healthStatus": "${{ fromJson(steps.synced_application.outputs.response).status.health.status }}",
-              "createdAt": "${{ fromJson(steps.synced_application.outputs.response).metadata.creationTimestamp}}"
-            }
-          clientId: ${{ secrets.PORT_CLIENT_ID }}
-          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          baseUrl: https://api.getport.io
-          operation: UPSERT
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
-
-      - name: Log If Upsetting Entity Fails 
-        if: failure()
+    - name: Report Sync Success
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
@@ -201,17 +150,7 @@ jobs:
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
           runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
-          logMessage: "Failed to upsert synced argocd application to port ..."
-          
-      - name: Log After Upserting Entity
-        uses: port-labs/port-github-action@v1
-        with:
-          clientId: ${{ secrets.PORT_CLIENT_ID }}
-          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          baseUrl: https://api.getport.io
-          operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
-          logMessage: "Entity upserting was successful ✅"
+          logMessage: "Successfully synced ArgoCD Aplication ✅"
 ```
 </details>
 
