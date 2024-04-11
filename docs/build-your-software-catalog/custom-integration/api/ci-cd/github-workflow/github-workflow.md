@@ -208,13 +208,12 @@ use-entities:
   with:
     clientId: ${{ secrets.CLIENT_ID }}
     clientSecret: ${{ secrets.CLIENT_SECRET }}
-    # highlight-next-line
     operation: PATCH_RUN
     runId: myRunId
     status: "SUCCESS"
     logMessage: "My log message"
     summary: "My summary"
-    link: `["https://mylink.com"]`
+    link: '["https://mylink.com"]'
 ```
 
 </TabItem>

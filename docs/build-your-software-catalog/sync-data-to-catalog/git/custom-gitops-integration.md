@@ -7,7 +7,7 @@ sidebar_position: 5
 If Port's available GitOps providers do not fit your use-case, you can create a custom GitOps integration by using our API.
 
 :::tip
-Before writing custom logic to integrate Port into your GitOps process, you should check our existing [Git providers](./git.md) and [CI/CD integrations](../ci-cd/ci-cd.md).
+Before writing custom logic to integrate Port into your GitOps process, you should check our existing [Git providers](./git.md) and [CI/CD integrations](/build-your-software-catalog/custom-integration/api/ci-cd).
 :::
 
 ## 💡 Custom GitOps common use cases
