@@ -353,6 +353,11 @@ PATTERNS = {
     GithubEntityType.TEAM: TEAM_REGEX,
 }
 
+def convert_to_valid_characters(input_string):
+    pattern = r"[^A-Za-z0-9@_.:\\/=-]"
+    output_string = re.sub(pattern, "@", input_string)
+
+    return output_string
 
 def parse_string_to_entity_type(text: str):
     for key, value in PATTERNS.items():
@@ -386,8 +391,9 @@ async def provide_entities():
 
 
 def prepare_codeowner_pattern_entity(entity: GithubEntity, codeowner: dict[str, Any]):
+
     entity_object = {
-        "identifier": entity.pattern,
+        "identifier": convert_to_valid_characters(entity.pattern),
         "title": f"{entity.pattern} | {REPOSITORY_NAME}",
         "properties": {},
         "relations": {
@@ -450,7 +456,6 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-
 
 ```
 
