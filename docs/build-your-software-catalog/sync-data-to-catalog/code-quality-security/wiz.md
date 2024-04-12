@@ -578,7 +578,7 @@ resources:
         "type": "string"
       },
       "resourceTags": {
-        "title": "Subscription Tags",
+        "title": "Resource Tags",
         "type": "string"
       }
       "vulnerability": {
