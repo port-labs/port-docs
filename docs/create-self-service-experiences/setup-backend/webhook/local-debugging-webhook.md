@@ -319,6 +319,7 @@ Inside this folder create an `index.js` file and paste the following:
 const { createHmac } = require("crypto");
 const express = require("express");
 const app = express();
+app.use(express.json());
 const port = 3000;
 
 app.post("/webhooks", (request, response) => {
