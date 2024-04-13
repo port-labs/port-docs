@@ -331,7 +331,7 @@ app.post("/webhooks", (request, response) => {
     .digest("base64");
 
   if (signed !== request.headers["x-port-signature"].split(",")[1]) {
-    throw new Error("Invalid singature");
+    throw new Error("Invalid signature");
   }
 
   // You can put any custom logic here
