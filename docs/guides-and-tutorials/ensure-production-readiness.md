@@ -106,7 +106,7 @@ helm upgrade --install my-pagerduty-integration port-labs/port-ocean \
 
 Great! Now that the integration is installed, we should see some new components in Port:
 
-- Go to your [Builder](https://app.getport.io/dev-portal/data-model), you should now see two new <PortTooltip id="blueprint">blueprints</PortTooltip> created by the integration - `PagerDuty Service` and `PagerDuty Incident`.
+- Go to your [Builder](https://app.getport.io/settings/data-model), you should now see two new <PortTooltip id="blueprint">blueprints</PortTooltip> created by the integration - `PagerDuty Service` and `PagerDuty Incident`.
 - Go to your [Software catalog](https://app.getport.io/services), click on `PagerDuty Services` in the sidebar, you should now see a new <PortTooltip id="entity">entity</PortTooltip> created for our `DemoPdService`, with a populated `On-call` property.
 
 #### Add an on-call property to the service blueprint
@@ -114,7 +114,7 @@ Great! Now that the integration is installed, we should see some new components 
 Now that Port is synced with our Pagerduty resources, let's reflect the Pagerduty service's on-call in our services.  
 First, we will need to create a [relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/#what-is-a-relation) between our services and the corresponding Pagerduty services.
 
-1. Head back to the [Builder](https://app.getport.io/dev-portal/data-model), choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New relation`:
+1. Head back to the [Builder](https://app.getport.io/settings/data-model), choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New relation`:
 
 <img src='/img/guides/serviceCreateRelation.png' width='40%' />
 
@@ -135,7 +135,7 @@ Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, l
 
 <br/><br/>
 
-2. Now that our mirror property is set, we need to assign the relevant Pagerduty service to each of our services. This can be done by adding some mapping logic. Go to your [data sources page](https://app.getport.io/dev-portal/data-sources), and click on your Pagerduty integration:
+2. Now that our mirror property is set, we need to assign the relevant Pagerduty service to each of our services. This can be done by adding some mapping logic. Go to your [data sources page](https://app.getport.io/settings/data-sources), and click on your Pagerduty integration:
 
 <img src='/img/guides/pdDataSources.png' width='60%' />
 
@@ -215,14 +215,14 @@ Let's see how we can easily ingest a CODEOWNERS file into our existing services:
 
 #### Add a codeowners property to the service blueprint
 
-1. Go to your [Builder](https://app.getport.io/dev-portal/data-model) again, choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click `New property`.
+1. Go to your [Builder](https://app.getport.io/settings/data-model) again, choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click `New property`.
 
 2. Fill in the form like this:  
    _Note the `identifier` field value, we will need it in the next step._
 
 <img src='/img/guides/addCodeownersForm.png' width='40%' />
 
-3. Next we will update the Github exporter mapping and add the new property. Go to your [data sources page](https://app.getport.io/dev-portal/data-sources).
+3. Next we will update the Github exporter mapping and add the new property. Go to your [data sources page](https://app.getport.io/settings/data-sources).
 
 4. Under `Exporters`, click on the Github exporter with your organization name.
 
@@ -252,7 +252,7 @@ Let's add our metrics to it:
 
 Now let's implement it:
 
-1. Go to your [Builder](https://app.getport.io/dev-portal/data-model), choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>, click on `Scorecards`, then click our existing `Production readiness` scorecard:
+1. Go to your [Builder](https://app.getport.io/settings/data-model), choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>, click on `Scorecards`, then click our existing `Production readiness` scorecard:
 
 <img src='/img/guides/editReadinessScorecard.png' width='30%' />
 

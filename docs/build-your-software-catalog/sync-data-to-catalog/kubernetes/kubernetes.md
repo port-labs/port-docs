@@ -278,7 +278,7 @@ Done! The exporter will begin creating and updating objects from Kubernetes clus
 
 ### Updating exporter configuration
 
-To **update** the exporter resource mapping, open the [data sources](https://app.getport.io/dev-portal/data-sources) page in Port and click on your Kubernetes integration. Then edit the exporter configuration and click on the `Save & Resync` button.
+To **update** the exporter resource mapping, open the [data sources](https://app.getport.io/settings/data-sources) page in Port and click on your Kubernetes integration. Then edit the exporter configuration and click on the `Save & Resync` button.
 
 ## Examples
 
