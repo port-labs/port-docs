@@ -13,7 +13,7 @@ After [connecting your Git provider](/build-your-software-catalog/sync-data-to-c
 
 If you're working with a **monorepo** and would like to create an entity for each microservice in a single repository instead, you can do that by making an adjustment to your Git integration's mapping:
 
-1. Go to the [data-sources page](https://app.getport.io/dev-portal/data-sources) of your portal.
+1. Go to the [data-sources page](https://app.getport.io/settings/data-sources) of your portal.
 2. Under `Exporters`, click on the Git provider you would like to edit, for example:
 
 <img src='/img/sync-data-to-catalog/monorepoDataSourcesExample.png' width='50%' />

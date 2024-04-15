@@ -72,7 +72,7 @@ Other supported resources are `ecs_service`, `sns`, `sqs`, `rds_db_instance`, `d
 
 The exporter installation did three things:
 
-1. It created blueprints for the resources you specified in the installation command, you can see them in your [builder](https://app.getport.io/dev-portal/data-model).
+1. It created blueprints for the resources you specified in the installation command, you can see them in your [builder](https://app.getport.io/settings/data-model).
 2. It created entities for the resources fetched from your AWS environment, you can see them in your [software catalog](https://app.getport.io/catalog).
 3. It creates a JSON configuration file in an s3 bucket in your AWS environment, which contains a mapping definition to fill the entities' properties with data from your environment. For example, your [lambdas catalog page](https://app.getport.io/lambdas) contains the following entity with its properties filled:
 
