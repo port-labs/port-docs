@@ -11,7 +11,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 In the following guide, you are going to create a self-service action in Port that executes a [GitLab pipeline](/create-self-service-experiences/setup-backend/gitlab-pipeline/) to create an EC2 Instance in AWS using Terraform templates.
 
 ## Prerequisites
-1. A GitHub repository to contain your action resources i.e. the gitlab pipeline file.
+1. A Gitlab project to contain your action resources i.e. the gitlab pipeline file.
 
 2. An AWS Account or IAM user with permission to create access keys. [Learn more](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html)
 
@@ -27,9 +27,7 @@ In the following guide, you are going to create a self-service action in Port th
 
 ## GitLab Pipeline
 
-1. Create a folder in a directory of your choice within your gitlab project to host the terraform template files.
-
-2. Create the terraform templates ( `main.tf`, `variables.tf` and `outputs.tf` ) at the root of your gitlab project.
+1. Create the terraform templates ( `main.tf`, `variables.tf` and `outputs.tf` ) at the root of your gitlab project.
 
 <details>
   <summary><b>main.tf</b></summary>
