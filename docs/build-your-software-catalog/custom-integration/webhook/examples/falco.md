@@ -3,6 +3,7 @@ sidebar_position: 18
 description: Ingest Falco alerts into your catalog
 ---
 
+import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import AlertBlueprint from './resources/falco/\_example_alert_blueprint.mdx'
 import AlertWebhookConfig from './resources/falco/\_example_webhook_configuration.mdx'
 
