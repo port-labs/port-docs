@@ -27,7 +27,9 @@ In the following guide, you are going to create a self-service action in Port th
 
 ## GitLab Pipeline
 
-1. Create the terraform templates ( `main.tf`, `variables.tf` and `outputs.tf` ) at the root of your gitlab project.
+1. Create a gitlab project to host the terraform template files and the `.gitlab-ci.yaml` file.
+
+2. Create the terraform templates ( `main.tf`, `variables.tf` and `outputs.tf` ) at the root of your gitlab project.
 
 <details>
   <summary><b>main.tf</b></summary>
