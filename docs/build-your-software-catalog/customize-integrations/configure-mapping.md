@@ -12,10 +12,10 @@ The mapping of an integration's data source defines the ingested data and its de
 
 ## How does mapping work?
 
-Integration mapping is configured in the [data sources page](https://app.getport.io/dev-portal/data-sources) of your portal, under `Exporters`.  
+Integration mapping is configured in the [data sources page](https://app.getport.io/settings/data-sources) of your portal, under `Exporters`.  
 Each integration has its own mapping, written in `YAML`.
 
-To understand how mapping works, let's take a look at an example. After you complete the [onboarding](/quickstart) and connect your Git provider to Port, you will see an exporter entry in your [data sources page](https://app.getport.io/dev-portal/data-sources):
+To understand how mapping works, let's take a look at an example. After you complete the [onboarding](/quickstart) and connect your Git provider to Port, you will see an exporter entry in your [data sources page](https://app.getport.io/settings/data-sources):
 
 <img src='/img/software-catalog/customize-integrations/mappingExampleEntry.png' width='55%' />
 
@@ -148,7 +148,7 @@ After ingesting all of our services and PagerDuty services, we want to connect e
 
 1. **Option 2** - use the integration's mapping YAML. In our example, we can add an entry to the mapping of the PagerDuty integration:
 
-   - Go to your [data sources page](https://app.getport.io/dev-portal/data-sources) and click on the PagerDuty exporter:
+   - Go to your [data sources page](https://app.getport.io/settings/data-sources) and click on the PagerDuty exporter:
 
       <img src='/img/software-catalog/customize-integrations/dataSourcesPdIntegration.png' width='100%' border='1px' />
 

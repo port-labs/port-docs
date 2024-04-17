@@ -36,7 +36,7 @@ After completing it, you will get a sense of how it can benefit different person
 
 ### Install Port's Kubernetes exporter
 
-1. Go to your [data sources page](https://app.getport.io/dev-portal/data-sources), click on `+ Data source`, find the `Kubernetes Stack` category and select `Kubernetes`:
+1. Go to your [data sources page](https://app.getport.io/settings/data-sources), click on `+ Data source`, find the `Kubernetes Stack` category and select `Kubernetes`:
 
 2. Copy the installation command after specifying your cluster's name, it should look something like this:
 
@@ -60,7 +60,7 @@ helm upgrade --install my-cluster port-labs/port-k8s-exporter \
 
 After installation, the exporter will:
 
-1. Create <PortTooltip id="blueprint">blueprints</PortTooltip> in your [Builder](https://app.getport.io/dev-portal/data-model) (as defined [here](https://github.com/port-labs/port-k8s-exporter/blob/main/assets/defaults/blueprints.json)) that represent Kubernetes resources:
+1. Create <PortTooltip id="blueprint">blueprints</PortTooltip> in your [Builder](https://app.getport.io/settings/data-model) (as defined [here](https://github.com/port-labs/port-k8s-exporter/blob/main/assets/defaults/blueprints.json)) that represent Kubernetes resources:
 
 <img src='/img/guides/k8sBlueprintsCreated.png' width='95%' />
 
@@ -94,7 +94,7 @@ Now that we have our <PortTooltip id="blueprint">blueprints</PortTooltip> set up
 
 In this guide we will create one relation named `Prod_runtime` which will represent the production environment of a service. In a real-world setting, we could have another relation for our staging environment, for example.
 
-1. Go to your [Builder](https://app.getport.io/dev-portal/data-model), expand the `Service` blueprint, and click on `New relation`.
+1. Go to your [Builder](https://app.getport.io/settings/data-model), expand the `Service` blueprint, and click on `New relation`.
 
 2. Fill out the form like this, then click `Create`:
 
@@ -175,7 +175,7 @@ spec:
 <br/>
 
 2. To see the new data, we need to update the mapping configuration that the K8s exporter uses to ingest data.  
-To edit the mapping, go to your [data sources page](https://app.getport.io/dev-portal/data-sources), find the K8s exporter card, click on it and you will see a YAML editor showing the current configuration.  
+To edit the mapping, go to your [data sources page](https://app.getport.io/settings/data-sources), find the K8s exporter card, click on it and you will see a YAML editor showing the current configuration.  
 Add the following block to the mapping configuration and click `Resync`:
 
 ```yaml showLineNumbers

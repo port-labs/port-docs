@@ -31,7 +31,7 @@ For the GitHub app installation you will need to have a registered organization 
 
 :::
 
-1. Go to your [Builder](https://app.getport.io/dev-portal/data-model)
+1. Go to your [Builder](https://app.getport.io/settings/data-model)
 
 2. Create a GitHub pull request <PortTooltip id="blueprint">blueprint</PortTooltip> using this schema:
 <details>
@@ -103,7 +103,7 @@ For the GitHub app installation you will need to have a registered organization 
 
 3. Install Port's GitHub app by following the [installation guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/installation)
 
-4. Now that the integration is installed successfully, we need to ingest `githubPullRequest` data from the GitHub organization into the software catalog. This can be done by adding some mapping logic. Go to your [data sources page](https://app.getport.io/dev-portal/data-sources), and click on your GitHub integration:
+4. Now that the integration is installed successfully, we need to ingest `githubPullRequest` data from the GitHub organization into the software catalog. This can be done by adding some mapping logic. Go to your [data sources page](https://app.getport.io/settings/data-sources), and click on your GitHub integration:
 
 <img src='/img/guides/githubIntegration.png' border='1px' />
 
@@ -179,7 +179,7 @@ helm upgrade --install my-jira-integration port-labs/port-ocean \
 
 2. Great! Now that the integration is installed, we should see some new components in Port:
 
-- Go to your [Builder](https://app.getport.io/dev-portal/data-model), you should now see four new <PortTooltip id="blueprint">blueprints</PortTooltip> created by the integration - `Jira Project` and `Jira Issue`.
+- Go to your [Builder](https://app.getport.io/settings/data-model), you should now see four new <PortTooltip id="blueprint">blueprints</PortTooltip> created by the integration - `Jira Project` and `Jira Issue`.
 - Go to your [Software catalog](https://app.getport.io/services), click on `Jira Issue` in the sidebar, you should now see new <PortTooltip id="entity">entities</PortTooltip> created for all your Jira issues
 
 ## Create the Jira Issue relation
@@ -187,7 +187,7 @@ helm upgrade --install my-jira-integration port-labs/port-ocean \
 Now that Port is synced with our Jira resources, let's map the Jira issues to the Github pull requests.
 First, we will need to create a [relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/relate-blueprints.md) between our `githubPullRequest` and the corresponding `jiraIssue`.
 
-1. Head back to the [Builder](https://app.getport.io/dev-portal/data-model), choose the `Pull Request` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New relation`:
+1. Head back to the [Builder](https://app.getport.io/settings/data-model), choose the `Pull Request` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New relation`:
 
 <img src='/img/guides/githubPRNewJiraIssueRelation.png' width='60%' border='1px' />
 
@@ -199,7 +199,7 @@ First, we will need to create a [relation](/build-your-software-catalog/customiz
 
 <br/><br/>
 
-Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, we need to assign the relevant Jira Issue to each of our pull requests. This can be done by adding some mapping logic. Go to your [data sources page](https://app.getport.io/dev-portal/data-sources), and click on your Github integration:
+Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, we need to assign the relevant Jira Issue to each of our pull requests. This can be done by adding some mapping logic. Go to your [data sources page](https://app.getport.io/settings/data-sources), and click on your Github integration:
 
 <img src='/img/guides/githubIntegrationWithBlueprints.png' border='1px' />
 
