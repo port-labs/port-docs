@@ -97,7 +97,7 @@ Adding namespaces via tags to alerts in Falco allows you to categorize and filte
 3. **Navigate to a rule object you are interested in**
 4. **Navigate to the `tags` key** to add a tag that represents the namespace 
 5. **Add a tag** that represents the Namespace the alert related to, `port-auth-namespace`. For this guide, let's assume there is a namespace entity identified by `auth-namespace` in your `Namespace` blueprint in Port.
-6. **Save the file
+6. **Save the file**
 
 <details>
 <summary><b>`/etc/falco/falco_rules.yaml` (click to expand)</b></summary>
@@ -119,6 +119,8 @@ Adding namespaces via tags to alerts in Falco allows you to categorize and filte
   tags: [maturity_stable, host, container, process, mitre_defense_evasion, T1620, port-auth-namespace]
   # highlight-end
 ```
+
+</details>
 
 :::note Control the tag name
 The Falco Rule will likely already have several tags, we ensure we are able to control how these tags are related to the Namespace blueprint. To do this, we prefix the tag name with the keyword `port-`. With JQ, we can then select the first tag starting with this keyword (Alerts are not supposed to belong to more than one namespace). Hence the name of our example tag being, `port-auth-namespace` which will correspond to a Namespace entity identified by `auth-namespace` in Port.
