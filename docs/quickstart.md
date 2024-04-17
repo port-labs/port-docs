@@ -19,7 +19,7 @@ We highly recommend completing the onboarding process in order to get a basic un
 
 :::info onboarding skipped
 If you chose to **skip** the onboarding process, you can still have these components created for you by connecting Port to your desired Git provider:
-- Go to the [data-sources page](https://app.getport.io/dev-portal/data-sources) of your portal.
+- Go to the [data-sources page](https://app.getport.io/settings/data-sources) of your portal.
 - Click on `+ Data source` in the top right corner, and choose your desired Git provider.
 :::
 
@@ -51,7 +51,7 @@ Initially, your homepage contains two widgets:
 ### Blueprints
 
 A blueprint is Port's basic building block, used to model any data source you would like to add to your software catalog.  
-Head over to your [builder](https://app.getport.io/dev-portal/data-model) - this is where you create, edit and relate blueprints.  
+Head over to your [builder](https://app.getport.io/settings/data-model) - this is where you create, edit and relate blueprints.  
 
 As you can see, after connecting your Git provider to Port, a new `Service` blueprint is automatically created. This blueprint represents a service in your organization, implemented in a Git repository. It comes with some predefined [properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/).
 
@@ -65,7 +65,7 @@ As you can see, after connecting your Git provider to Port, a new `Service` blue
 ### Data sources
 
 Data sources are the different integrations and/or methods that Port uses to ingest data from your tools and platforms.  
-They are created and configured in the [data sources](https://app.getport.io/dev-portal/data-sources) page of your portal.
+They are created and configured in the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
 
 After connecting your Git provider to Port, a data source will be automatically created for you, with default configuration that tells Port where to get the data and where to map it to in Port.
 
@@ -108,7 +108,7 @@ The existing actions in your portal only have their frontends defined. To finish
 ### Scorecards
 
 Another one of Port's main pillars is scorecards. Scorecards are used to define and track metrics for your resources, and can be used to enforce standards in your organization.  
-Scorecards are defined per blueprint, and can be created/modified from the blueprint itself in your [builder](https://app.getport.io/dev-portal/data-model).
+Scorecards are defined per blueprint, and can be created/modified from the blueprint itself in your [builder](https://app.getport.io/settings/data-model).
 
 Take a look at your `Service` blueprint, it has a `Production Readiness` scorecard that defines and track three rules.  
 

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 6
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
@@ -41,7 +41,7 @@ If you do not have the images ingested already, we recommend using our [AWS ECR 
 
 For each of the blueprints:
 
-1. Head to the [Builder](https://app.getport.io/dev-portal/data-model) page.
+1. Head to the [Builder](https://app.getport.io/settings/data-model) page.
 
 2. Click on the `+ Blueprint` button.
 
