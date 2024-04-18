@@ -127,7 +127,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 - [Azure exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure.md)
 - [Azure Active Directory (AD) SSO](/sso-rbac/sso-providers/azure-ad.md)
-- [Map resource groups, storage groups, compute resources database resources and more](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/examples.md)
+- [Map resource groups, storage groups, compute resources database resources and more](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/examples/examples.md)
 - [Add tags to Azure resources](/create-self-service-experiences/setup-backend/github-workflow/examples/Azure/tag-azure-resource)
 
 
