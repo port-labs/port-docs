@@ -809,4 +809,5 @@ if __name__ == "__main__":
 ```
 </details>
 
-Congrats 🎉 You've successfully scheduled a GitHub action to periodically ingest estimated `DORA Metrics` for GitHub repository(s).
+Congrats 🎉 You've successfully created a scheduled GitHub workflow that periodically calculates and ingests `DORA Metrics` for GitHub repository(s).
+
