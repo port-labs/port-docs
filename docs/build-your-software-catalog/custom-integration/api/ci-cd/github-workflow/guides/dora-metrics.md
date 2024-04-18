@@ -503,9 +503,6 @@ from github import Github
 import argparse
 import logging
 
-#Throttling, set to None to restore default behavior
-SECONDS_BETWEEN_REQUESTS=0.12
-SECONDS_BETWEEN_WRITES=0.5
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -515,7 +512,7 @@ class DeploymentFrequency:
         self.branch = branch
         self.number_of_days = number_of_days
         self.pat_token = pat_token
-        self.github = Github(login_or_token = self.pat_token,seconds_between_requests=SECONDS_BETWEEN_REQUESTS, seconds_between_writes=SECONDS_BETWEEN_WRITES)
+        self.github = Github(login_or_token = self.pat_token)
         self.repo_object = self.github.get_repo(f"{self.owner}/{self.repo}")
         try:
             self.workflows = json.loads(workflows)
@@ -619,10 +616,6 @@ from github import Github
 import argparse
 import logging
 
-#Throttling, set to None to restore default behavior
-SECONDS_BETWEEN_REQUESTS=0.12
-SECONDS_BETWEEN_WRITES=0.5
-
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class LeadTimeForChanges:
@@ -642,7 +635,7 @@ class LeadTimeForChanges:
         self.branch = branch
         self.number_of_days = number_of_days
         self.commit_counting_method = commit_counting_method
-        self.github = Github(login_or_token = pat_token,seconds_between_requests=SECONDS_BETWEEN_REQUESTS, seconds_between_writes=SECONDS_BETWEEN_WRITES)
+        self.github = Github(login_or_token = pat_token)
         self.repo_object = self.github.get_repo(f"{self.owner}/{self.repo}")
         self.ignore_workflows = ignore_workflows
         try:
