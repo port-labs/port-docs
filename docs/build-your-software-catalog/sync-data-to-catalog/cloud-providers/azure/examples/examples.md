@@ -11,7 +11,7 @@ import CloudResourceAppConfig from './cloud_resource/\_port_app_config.mdx'
 
 This page contains the base examples for mapping Azure resources to Port.
 
-This base example thrives to provide a simpler and a more abstract way to map Azure resources to Port.
+This base example thrives to provide a simpler and more abstract way to map Azure resources to Port.
 
 The simplification is achieved by using the generic `cloudResource` kind and blueprint, which can be used to map any Azure resource to Port. 
 
@@ -31,9 +31,9 @@ Here are the API references we used to create those blueprints and app config:
 
 ## Mapping Resource Groups
 
-:::note
+:::note Relate subscriptions and resource groups
 
-The Resource Group has a relation to the Subscription, so creation of the [Subscription blueprint](#mapping-azure-subscriptions) is required.
+The Resource Group has a relation to the Subscription, so the creation of the [Subscription blueprint](#mapping-azure-subscriptions) is required.
 
 :::
 
@@ -52,9 +52,9 @@ Here are the API references we used to create those blueprints and app config:
 
 In the following example you will ingest your Azure Resources to Port, you may use the following Port blueprint definitions and integration configuration:
 
-:::note
+:::note Relate resources and resource groups
 
-The Resources below have a relation to the Resource Group, so creation of the [Resource Group blueprint](#mapping-resource-groups) is required.
+The Resources below have a relation to the Resource Group, so the creation of the [Resource Group blueprint](#mapping-resource-groups) is required.
 
 :::
 
@@ -74,12 +74,18 @@ Here are the API references we used to create those blueprints and app config:
 
 ## Mapping Extra Resources
 
-The resources in this page are only few of the resources that the Azure Exporter supports.
-If you don't find the Azure resource you want to map to Port head to the [Mapping Extra Resources](./mapping_extra_resources.md) page to learn about what kind of azure resources are supported by the Azure integration and how to map them into Port.
+The resources in this page are only a few of the resources that the Azure Exporter supports.
+
+
+If the resources you want to ingest into Port do not appear in these examples, you can head to the [Mapping Extra Resources](./mapping_extra_resources.md) page to learn about all of the kinds of Azure resources that are supported by the Azure integration and how to map them into Port.
 
 ## Advanced Use Cases
 
-In certain scenarios you may want to model your Azure resources in a more detailed way, for example, you may want to model a Storage Account and its Containers separately.
+In certain scenarios you may want to model your Azure resources in a more detailed way.
+
+For example, you may want to model a Storage Account and its Containers separately.
+
+
 For these cases, head to the [Advanced Examples](./advanced.md) page to learn how to model your Azure resources in a more detailed way.
 
 

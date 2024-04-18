@@ -82,7 +82,7 @@ Here are the API references we used to create those blueprints and app config:
 
 - [Postgres Flexible Server](https://docs.microsoft.com/en-us/rest/api/azure-postgresql/flexibleservers)
 
-:::info
+:::info Mapping extra resources
 The resources in this page are only few of the resources that the Azure Exporter supports.
 If you don't find the Azure resource you want to map to Port head to the [Mapping Extra Resources](./mapping_extra_resources.md) page to learn about what kind of azure resources are supported by the Azure integration and how to map them into Port.
 :::
