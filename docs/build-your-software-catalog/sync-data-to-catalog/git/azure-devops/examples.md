@@ -43,7 +43,7 @@ After creating the blueprints and saving the integration configuration, you will
 
 ## Mapping projects
 
-In the following example you will ingest your Azure Devops projects to Port, you may use the following Port blueprint definitions and integration configuration:
+In the following example you will ingest your Azure Devops projects and their default team (Optional), you may use the following Port blueprint definitions and integration configuration:
 
 <ProjectBlueprint/>
 
@@ -52,7 +52,6 @@ In the following example you will ingest your Azure Devops projects to Port, you
 :::tip To Learn more
 
 - Click [Here](https://learn.microsoft.com/en-us/rest/api/azure/devops/core/projects/list?view=azure-devops-rest-7.2&tabs=HTTP#teamprojectreference) for the Azure Devops project object structure.
-
 - Click [Here](https://learn.microsoft.com/en-us/rest/api/azure/devops/core/projects/get?view=azure-devops-rest-7.2#teamproject) for the Azure Devops project object structure when `defaultTeam` is set to true.
 
 :::
