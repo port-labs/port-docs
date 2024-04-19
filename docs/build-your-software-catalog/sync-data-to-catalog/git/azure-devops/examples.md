@@ -43,7 +43,7 @@ After creating the blueprints and saving the integration configuration, you will
 
 ## Mapping projects
 
-In the following example you will ingest your Azure Devops projects and their default team (Optional), you may use the following Port blueprint definitions and integration configuration:
+In the following example you will ingest your Azure Devops projects and their default team (Optional) to Port, you may use the following Port blueprint definitions and integration configuration:
 
 <ProjectBlueprint/>
 
