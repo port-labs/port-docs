@@ -575,12 +575,12 @@ resources:
       },
       "subscriptionTags": {
         "title": "Subscription Tags",
-        "type": "string"
+        "type": "object"
       },
       "resourceTags": {
         "title": "Resource Tags",
-        "type": "string"
-      }
+        "type": "object"
+      },
       "vulnerability": {
         "title": "Vulnerability",
         "type": "object",
@@ -672,7 +672,7 @@ resources:
             cloudResourceType: .entitySnapshot.type
             resourceName: .entitySnapshot.name
             cloudPlatform: .entitySnapshot.cloudPlatform
-            linkToResource: .entitySnapshot.cloudProviderURL
+            linkToResource: if .entitySnapshot.cloudProviderURL == "" then null else .entitySnapshot.cloudProviderURL end
             cloudResourceID: .entitySnapshot.providerId
             cloudRegion: .entitySnapshot.region
             resourceGroupExternalId: .entitySnapshot.resourceGroupExternalId
