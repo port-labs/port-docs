@@ -238,7 +238,7 @@ Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organiz
 
 ```json showLineNumbers
 {
-  "identifier": "servicenowIncident_trigger_servicenow_incident",
+  "identifier": "trigger_servicenow_incident",
   "title": "Trigger ServiceNow incident",
   "icon": "Servicenow",
   "description": "Triggers an incident in ServiceNow",
