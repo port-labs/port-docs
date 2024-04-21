@@ -238,9 +238,13 @@ Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organiz
 
 ```json showLineNumbers
 {
-    "identifier": "trigger_servicenow_incident",
-    "title": "Trigger ServiceNow incident",
-    "icon": "Servicenow",
+  "identifier": "servicenowIncident_trigger_servicenow_incident",
+  "title": "Trigger ServiceNow incident",
+  "icon": "Servicenow",
+  "description": "Triggers an incident in ServiceNow",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
     "userInputs": {
       "properties": {
         "short_description": {
@@ -307,18 +311,59 @@ Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organiz
         "sysparm_input_display_value"
       ]
     },
-    "invocationMethod": {
-      "type": "GITHUB",
-      "org": "<GITHUB_ORG>",
-      "repo": "<GITHUB_REPO>",
-      "workflow": "trigger-servicenow-incident.yml",
-      "omitUserInputs": false,
-      "omitPayload": false,
-      "reportWorkflowStatus": true
+    "blueprintIdentifier": "servicenowIncident"
+  },
+  "invocationMethod": {
+    "type": "GITHUB",
+    "org": "<GITHUB_ORG>",
+    "repo": "<GITHUB_REPO>",
+    "workflow": "trigger-servicenow-incident.yml",
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "{{if (.inputs | has(\"short_description\")) then \"short_description\" else null end}}": "{{.inputs.\"short_description\"}}",
+      "{{if (.inputs | has(\"sysparm_input_display_value\")) then \"sysparm_input_display_value\" else null end}}": "{{.inputs.\"sysparm_input_display_value\"}}",
+      "{{if (.inputs | has(\"urgency\")) then \"urgency\" else null end}}": "{{.inputs.\"urgency\"}}",
+      "{{if (.inputs | has(\"assigned_to\")) then \"assigned_to\" else null end}}": "{{.inputs.\"assigned_to\"}}",
+      "{{if (.inputs | has(\"sysparm_display_value\")) then \"sysparm_display_value\" else null end}}": "{{.inputs.\"sysparm_display_value\"}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"servicenowIncident_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "org": "<GITHUB_ORG>",
+              "repo": "<GITHUB_REPO>",
+              "workflow": "trigger-servicenow-incident.yml",
+              "omitUserInputs": false,
+              "omitPayload": false,
+              "reportWorkflowStatus": true
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {
+            "{{if (.inputs | has(\"short_description\")) then \"short_description\" else null end}}": "{{.inputs.\"short_description\"}}",
+            "{{if (.inputs | has(\"sysparm_input_display_value\")) then \"sysparm_input_display_value\" else null end}}": "{{.inputs.\"sysparm_input_display_value\"}}",
+            "{{if (.inputs | has(\"urgency\")) then \"urgency\" else null end}}": "{{.inputs.\"urgency\"}}",
+            "{{if (.inputs | has(\"assigned_to\")) then \"assigned_to\" else null end}}": "{{.inputs.\"assigned_to\"}}",
+            "{{if (.inputs | has(\"sysparm_display_value\")) then \"sysparm_display_value\" else null end}}": "{{.inputs.\"sysparm_display_value\"}}"
+          },
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
     },
-    "trigger": "CREATE",
-    "description": "Triggers an incident in ServiceNow",
-    "requiredApproval": false
+    "reportWorkflowStatus": true
+  },
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 
