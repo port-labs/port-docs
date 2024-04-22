@@ -237,7 +237,7 @@ create-port-entity:
       curl -X POST \
           -H 'Content-Type: application/json' \
           -H "Authorization: Bearer $accessToken" \
-          -d '{"statusLabel": "Creating Entity", "message":"🚀 Updating the instance with the new disk definition!"}' \
+          -d '{"statusLabel": "Creating Entity", "message":"🚀 Creating the instance in Port!"}' \
           "https://api.getport.io/v1/actions/runs/$runId/logs"
 
       log='{
@@ -282,13 +282,12 @@ update-run-status:
         -s 'https://api.getport.io/v1/auth/access_token' | jq -r '.accessToken')
       runId=$(cat $TRIGGER_PAYLOAD | jq -r '.context.runId')
 
-      INSTANCE_ID=$(cat $TRIGGER_PAYLOAD | jq -r '.context.entity')
-
       curl -X POST \
         -H 'Content-Type: application/json' \
         -H "Authorization: Bearer $accessToken" \
-        -d '{"terminationStatus":"SUCCESS", "message":"✅ Created Jira 🔗 Issue: '"$INSTANCE_ID"'!"}' \
+        -d '{"terminationStatus":"SUCCESS", "message":"✅ Created new Jira 🔗 Issue!"}' \
         "https://api.getport.io/v1/actions/runs/$runId/logs"
+
 ```
 
 </details>
