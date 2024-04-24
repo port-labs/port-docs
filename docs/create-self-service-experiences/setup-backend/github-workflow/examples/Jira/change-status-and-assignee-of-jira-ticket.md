@@ -26,75 +26,75 @@ This self-service guide facilitates transitioning the status and assignee of a J
 
 	<summary>Jira Issue Blueprint</summary>
 	
-	```json showLineNumbers
-	{
-		"identifier": "jiraIssue",
-		"title": "Jira Issue",
-		"icon": "Jira",
-		"schema": {
-			"properties": {
-				"url": {
-					"title": "Issue URL",
-					"type": "string",
-					"format": "url",
-					"description": "URL to the issue in Jira"
-				},
-				"status": {
-					"title": "Status",
-					"type": "string",
-					"description": "The status of the issue"
-				},
-				"issueType": {
-					"title": "Type",
-					"type": "string",
-					"description": "The type of the issue"
-				},
-				"components": {
-					"title": "Components",
-					"type": "array",
-					"description": "The components related to this issue"
-				},
-				"assignee": {
-					"title": "Assignee",
-					"type": "string",
-					"format": "user",
-					"description": "The user assigned to the issue"
-				},
-				"reporter": {
-					"title": "Reporter",
-					"type": "string",
-					"description": "The user that reported to the issue",
-					"format": "user"
-				},
-				"creator": {
-					"title": "Creator",
-					"type": "string",
-					"description": "The user that created to the issue",
-					"format": "user"
-				},
-				"priority": {
-					"title": "Priority",
-					"type": "string",
-					"description": "The priority of the issue"
-				},
-				"created": {
-					"title": "Created At",
-					"type": "string",
-					"description": "The created datetime of the issue",
-					"format": "date-time"
-				},
-				"updated": {
-					"title": "Updated At",
-					"type": "string",
-					"description": "The updated datetime of the issue",
-					"format": "date-time"
-				}
-			}
-		},
-		"calculationProperties": {},
-		"relations": {}
-	}
-	```
+    ```json showLineNumbers
+    {
+      "identifier": "jiraIssue",
+      "title": "Jira Issue",
+      "icon": "Jira",
+      "schema": {
+        "properties": {
+          "url": {
+            "title": "Issue URL",
+            "type": "string",
+            "format": "url",
+            "description": "URL to the issue in Jira"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string",
+            "description": "The status of the issue"
+          },
+          "issueType": {
+            "title": "Type",
+            "type": "string",
+            "description": "The type of the issue"
+          },
+          "components": {
+            "title": "Components",
+            "type": "array",
+            "description": "The components related to this issue"
+          },
+          "assignee": {
+            "title": "Assignee",
+            "type": "string",
+            "format": "user",
+            "description": "The user assigned to the issue"
+          },
+          "reporter": {
+            "title": "Reporter",
+            "type": "string",
+            "description": "The user that reported to the issue",
+            "format": "user"
+          },
+          "creator": {
+            "title": "Creator",
+            "type": "string",
+            "description": "The user that created to the issue",
+            "format": "user"
+          },
+          "priority": {
+            "title": "Priority",
+            "type": "string",
+            "description": "The priority of the issue"
+          },
+          "created": {
+            "title": "Created At",
+            "type": "string",
+            "description": "The created datetime of the issue",
+            "format": "date-time"
+          },
+          "updated": {
+            "title": "Updated At",
+            "type": "string",
+            "description": "The updated datetime of the issue",
+            "format": "date-time"
+          }
+        }
+      },
+      "calculationProperties": {},
+      "relations": {}
+    }
+    ```
 	
 	</details>
 
