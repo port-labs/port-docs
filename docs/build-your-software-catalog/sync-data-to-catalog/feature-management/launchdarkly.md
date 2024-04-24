@@ -516,8 +516,7 @@ resources:
             kind: .kind
             description: .description
             creationDate: .creationDate / 1000 | strftime("%Y-%m-%dT%H:%M:%SZ")
-            includeInSnippet: .includeInSnippet
-            clientSideAvailability: .clientSideAvailability
+1            clientSideAvailability: .clientSideAvailability
             temporary: .temporary
             tags: .tags
             maintainer: ._maintainer.email
@@ -526,7 +525,7 @@ resources:
             customProperties: .customProperties
             archived: .archived
           relations:
-            environments: .environments
+            environments: .environments | keys
 ```
 </details>
 
@@ -927,7 +926,7 @@ The combination of the sample payload and the Ocean configuration generates the 
     },
     "temporary": true,
     "tags": [],
-    "maintainer": "Michael Armah",
+    "maintainer": "mikeyarmah@gmail.com",
     "customProperties": {},
     "archived": false,
     "variations": [
@@ -941,7 +940,6 @@ The combination of the sample payload and the Ocean configuration generates the 
         "value": false
       }
     ],
-    "maintainerEmail": "mikeyarmah@gmail.com",
     "deprecated": false
   },
   "relations": {
