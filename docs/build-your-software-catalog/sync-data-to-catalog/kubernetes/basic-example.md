@@ -172,7 +172,7 @@ resources: # List of K8s resources to list, watch, and export to Port.
 
 </details>
 
-After creating the blueprints, open your integration in the [data sources](https://app.getport.io/dev-portal/data-sources) page, apply the provided configuration and click on the `Save & Resync` button.
+After creating the blueprints, open your integration in the [data sources](https://app.getport.io/settings/data-sources) page, apply the provided configuration and click on the `Save & Resync` button.
 
 Done! The exporter will begin creating and updating objects from your Kubernetes cluster as Port entities shortly.
 

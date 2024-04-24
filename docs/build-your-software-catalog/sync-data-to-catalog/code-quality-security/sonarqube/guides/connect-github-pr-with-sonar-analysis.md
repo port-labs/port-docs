@@ -31,7 +31,7 @@ The goal of this section is to fill the software catalog with data directly from
 For the GitHub app installation you will need to have a registered organization in Port and your Port user role must be set to `Admin` (see [prerequisites](#)).
 :::
 
-1. Go to your [Builder](https://app.getport.io/dev-portal/data-model)
+1. Go to your [Builder](https://app.getport.io/settings/data-model)
 
 2. Create a GitHub pull request <PortTooltip id="blueprint">blueprint</PortTooltip> using this schema:
     <details>
@@ -101,7 +101,7 @@ For the GitHub app installation you will need to have a registered organization 
 
 3. Install Port's GitHub app by following the [installation guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/installation)
 
-4. Now that the integration is installed successfully, we need to ingest `githubPullRequest` data from the GitHub organization into the software catalog. This can be done by adding some mapping logic. Go to your [data sources page](https://app.getport.io/dev-portal/data-sources), and click on your GitHub integration:
+4. Now that the integration is installed successfully, we need to ingest `githubPullRequest` data from the GitHub organization into the software catalog. This can be done by adding some mapping logic. Go to your [data sources page](https://app.getport.io/settings/data-sources), and click on your GitHub integration:
 
     <img src='/img/guides/githubAppIntegration.png' border='1px' />
 
@@ -173,7 +173,7 @@ helm upgrade --install my-sonarqube-integration port-labs/port-ocean \
 
 2. Great! Now that the integration is installed, we should see some new components in Port:
 
-- Go to your [Builder](https://app.getport.io/dev-portal/data-model), you should now see three new <PortTooltip id="blueprint">blueprints</PortTooltip> created by the integration - `SonarQube Project`, `SonarQube Issue` and `SonarQube Analysis`.
+- Go to your [Builder](https://app.getport.io/settings/data-model), you should now see three new <PortTooltip id="blueprint">blueprints</PortTooltip> created by the integration - `SonarQube Project`, `SonarQube Issue` and `SonarQube Analysis`.
 - Go to your [Software catalog](https://app.getport.io/services), click on `SonarQube Analysis` in the sidebar, you should now see new <PortTooltip id="entity">entities</PortTooltip> created for all your SonarQube analysis.
 
 
@@ -182,7 +182,7 @@ helm upgrade --install my-sonarqube-integration port-labs/port-ocean \
 Now that Port is synced with our SonarQube resources, let's map the SonarQube analysis to the pull requests to display the result of the sonar scan.
 First, we will need to create a [relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/) between our `githubPullRequest` and the corresponding `sonarQubeAnalysis`.
 
-1. Head back to the [Builder](https://app.getport.io/dev-portal/data-model), choose the `Pull Request` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New relation`:
+1. Head back to the [Builder](https://app.getport.io/settings/data-model), choose the `Pull Request` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New relation`:
 
 <img src='/img/guides/githubPRSonarRelation.png' width='60%' border='1px' />
 
@@ -194,7 +194,7 @@ First, we will need to create a [relation](/build-your-software-catalog/customiz
 
 <br/><br/>
 
-Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, we need to assign the relevant SonarQube analysis to each of our pull requests. This can be done by adding some mapping logic. Go to your [data sources page](https://app.getport.io/dev-portal/data-sources), and click on your SonarQube integration:
+Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, we need to assign the relevant SonarQube analysis to each of our pull requests. This can be done by adding some mapping logic. Go to your [data sources page](https://app.getport.io/settings/data-sources), and click on your SonarQube integration:
 
 <img src='/img/guides/sonarQubeIntegrationDataSource.png' border='1px' />
 

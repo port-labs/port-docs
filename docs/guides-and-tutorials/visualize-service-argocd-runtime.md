@@ -36,33 +36,126 @@ After completing it, you will get a sense of how it can benefit different person
 
 ### Install Port's ArgoCD integration
 
-1. Go to your [data sources page](https://app.getport.io/dev-portal/data-sources), click on `+ Data source`, find the `Kubernetes Stack` category and select `ArgoCD`.
+1. Go to your [data sources page](https://app.getport.io/settings/data-sources), click on `+ Data source`, find the `Kubernetes Stack` category and select `ArgoCD`.
 
-2. Copy the installation command, it should look like the snippet below, with your Port `client ID` and `secret` filled in.  
-   Replace the following placeholders with your own values:  
-   - `integration.secrets.token` - Your [ArgoCD API token](https://argo-cd.readthedocs.io/en/stable/developer-guide/api-docs/#authorization).
-   - `integration.config.serverUrl` - The server url of your ArgoCD instance.
+2. Follow the installation command for your preferred installation method:
+
+<Tabs groupId="deploy" queryString="deploy">
+
+<TabItem value="helm" label="Helm" default>
+To install the integration using Helm, run the following command:
+
+  :::tip Variable replacement
+   Remember to replace the following placeholders with your own values:
+   - `YOUR_PORT_CLIENT_ID` -  Your [Port client ID](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
+   - `YOUR_PORT_CLIENT_SECRET` - Your [Port client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
+   - `YOUR_ARGOCD_TOKEN` - Your [ArgoCD API token](https://argo-cd.readthedocs.io/en/stable/developer-guide/api-docs/#authorization). Ensure that the token has sufficient permissions to read ArgoCD resources. You can configure the RBAC policy for the token user by following [this guide](https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/)
+   - `YOUR_ARGOCD_SERVER_URL` - The server url of your ArgoCD instance
+   :::
 
 ```bash showLineNumbers
 # The following script will install an Ocean integration in your K8s cluster using helm
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install argocd port-labs/port-ocean \
-	--set port.clientId="<CLIENT_ID>"  \
-	--set port.clientSecret="<CLIENT_SECRET>"  \
+	--set port.clientId="YOUR_PORT_CLIENT_ID"  \
+	--set port.clientSecret="YOUR_PORT_CLIENT_SECRET"  \
 	--set port.baseUrl="https://api.getport.io"  \
 	--set initializePortResources=true  \
 	--set integration.identifier="argocd"  \
 	--set integration.type="argocd"  \
 	--set integration.eventListener.type="POLLING"  \
-	--set integration.secrets.token="Enter value here"  \
-	--set integration.config.serverUrl="Enter value here" 
+	--set integration.secrets.token="YOUR_ARGOCD_TOKEN"  \
+	--set integration.config.serverUrl="YOUR_ARGOCD_SERVER_URL" 
 ```
+</TabItem>
+
+<TabItem value="argocd" label="ArgoCD">
+To install the integration using ArgoCD, follow these steps:
+
+1. Create a `values.yaml` file in `argocd/my-ocean-argocd-integration` in your git repository with the content:
+
+:::tip Variable Replacement 
+Remember to replace the placeholders for `TOKEN` and `SERVER_URL`, which represents your ArgoCD API token and server url respectively. Ensure that the token has sufficient permissions to read ArgoCD resources. You can configure the RBAC policy for the token user by following [this guide](https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/)
+:::
+
+```yaml showLineNumbers
+initializePortResources: true
+scheduledResyncInterval: 120
+integration:
+  identifier: my-ocean-argocd-integration
+  type: argocd
+  eventListener:
+    type: POLLING
+  config:
+  // highlight-next-line
+    serverUrl: SERVER_URL
+  secrets:
+  // highlight-next-line
+    token: TOKEN
+```
+<br/>
+
+2. Install the `my-ocean-argocd-integration` ArgoCD Application by creating the following `my-ocean-argocd-integration.yaml` manifest:
+:::tip Variable Replacement 
+Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+
+Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
+:::
+
+<details>
+  <summary>ArgoCD Application</summary>
+
+```yaml showLineNumbers
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: my-ocean-argocd-integration
+  namespace: argocd
+spec:
+  destination:
+    namespace: my-ocean-argocd-integration
+    server: https://kubernetes.default.svc
+  project: default
+  sources:
+  - repoURL: 'https://port-labs.github.io/helm-charts/'
+    chart: port-ocean
+    targetRevision: 0.1.18
+    helm:
+      valueFiles:
+      - $values/argocd/my-ocean-argocd-integration/values.yaml
+      // highlight-start
+      parameters:
+        - name: port.clientId
+          value: YOUR_PORT_CLIENT_ID
+        - name: port.clientSecret
+          value: YOUR_PORT_CLIENT_SECRET
+  - repoURL: YOUR_GIT_REPO_URL
+  // highlight-end
+    targetRevision: main
+    ref: values
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+```
+
+</details>
+<br/>
+
+3. Apply your application manifest with `kubectl`:
+```bash
+kubectl apply -f my-ocean-argocd-integration.yaml
+```
+</TabItem>
+</Tabs>
 
 #### What does the integration do?
 
 After installation, the integration will:
 
-1. Create <PortTooltip id="blueprint">blueprints</PortTooltip> in your [Builder](https://app.getport.io/dev-portal/data-model) (as defined [here](https://github.com/port-labs/ocean/blob/main/integrations/argocd/.port/resources/blueprints.json)) that represent ArgoCD resources:
+1. Create <PortTooltip id="blueprint">blueprints</PortTooltip> in your [Builder](https://app.getport.io/settings/data-model) (as defined [here](https://github.com/port-labs/ocean/blob/main/integrations/argocd/.port/resources/blueprints.json)) that represent ArgoCD resources:
 
 <img src='/img/guides/argoBlueprintsCreated.png' width='100%' border='1px' />
 
@@ -92,7 +185,7 @@ Now that we have our <PortTooltip id="blueprint">blueprints</PortTooltip> set up
 
 In this guide we will create one relation named `Prod_runtime` which will represent the production environment of a service. In a real-world setting, we could have another relation for our staging environment, for example.
 
-1. Go to your [Builder](https://app.getport.io/dev-portal/data-model), expand the `Service` blueprint, and click on `New relation`.
+1. Go to your [Builder](https://app.getport.io/settings/data-model), expand the `Service` blueprint, and click on `New relation`.
 
 2. Fill out the form like this, then click `Create`:
 
@@ -125,7 +218,7 @@ For example, an ArgoCD application with the label `portService: awesomeService` 
 
 To achieve this, we need to update the ArgoCD integration's mapping configuration:
 
-1. Go to your [data sources page](https://app.getport.io/dev-portal/data-sources), find the ArgoCD exporter card, click on it and you will see a YAML editor showing the current configuration.  
+1. Go to your [data sources page](https://app.getport.io/settings/data-sources), find the ArgoCD exporter card, click on it and you will see a YAML editor showing the current configuration.  
 Add the following block to the mapping configuration and click `Resync`:
 
 ```yaml showLineNumbers
