@@ -72,47 +72,50 @@ Also validate that `invocationMethod.webhook` equals `port_trigger`.
     "identifier": "azure_scaffolder",
     "title": "Azure Scaffolder",
     "icon": "Azure",
-    "userInputs": {
-      "properties": {
-        "service_name": {
-          "icon": "DefaultProperty",
-          "title": "Service Name",
-          "type": "string",
-          "description": "Name of the service to scaffold"
+    "trigger": {
+      "type": "self-service",
+      "operation": "CREATE",  
+      "userInputs": {
+        "properties": {
+          "service_name": {
+            "icon": "DefaultProperty",
+            "title": "Service Name",
+            "type": "string",
+            "description": "Name of the service to scaffold"
+          },
+          "azure_organization": {
+            "icon": "DefaultProperty",
+            "title": "Azure Organization",
+            "type": "string",
+            "description": "Your Azure DevOps organization name"
+          },
+          "azure_project": {
+            "icon": "DefaultProperty",
+            "title": "Azure Project",
+            "type": "string",
+            "description": "Your Azure DevOps project name"
+          },
+          "description": {
+            "icon": "DefaultProperty",
+            "title": "Description",
+            "type": "string",
+            "description": "Service description"
+          }
         },
-        "azure_organization": {
-          "icon": "DefaultProperty",
-          "title": "Azure Organization",
-          "type": "string",
-          "description": "Your Azure DevOps organization name"
-        },
-        "azure_project": {
-          "icon": "DefaultProperty",
-          "title": "Azure Project",
-          "type": "string",
-          "description": "Your Azure DevOps project name"
-        },
-        "description": {
-          "icon": "DefaultProperty",
-          "title": "Description",
-          "type": "string",
-          "description": "Service description"
-        }
+        "required": ["service_name"],
+        "order": [
+          "service_name",
+          "azure_organization",
+          "azure_project",
+          "description"
+        ]
       },
-      "required": ["service_name"],
-      "order": [
-        "service_name",
-        "azure_organization",
-        "azure_project",
-        "description"
-      ]
     },
     "invocationMethod": {
       "type": "AZURE-DEVOPS",
       "webhook": "port_trigger",
       "org": "<AZURE_DEVOPS_ORANZATION_NAME>"
     },
-    "trigger": "CREATE",
     "requiredApproval": false
   }
 ]

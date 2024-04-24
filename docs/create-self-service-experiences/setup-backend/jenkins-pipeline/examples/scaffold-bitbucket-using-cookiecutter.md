@@ -63,31 +63,6 @@ Make sure to replace the placeholders for JENKINS_URL and JOB_TOKEN.
     "title": "Scaffold Golang Microservice - BitBucket",
     "description": "Creates a repo for new golang Microservice on Bitbucket",
     "icon": "Go",
-    "userInputs": {
-      "properties": {
-        "repo_name": {
-          "icon": "Microservice",
-          "title": "Repo Name",
-          "type": "string"
-        },
-        "bitbucket_workspace_name": {
-          "icon": "BitBucket",
-          "title": "Bitbucket Workspace Name",
-          "type": "string"
-        },
-        "bitbucket_project_key": {
-          "title": "Bitbucket Project Key",
-          "icon": "BitBucket",
-          "description": "Bitbucket project key symbol",
-          "type": "string"
-        }
-      },
-      "required": [
-        "repo_name",
-        "bitbucket_workspace_name",
-        "bitbucket_project_key"
-      ]
-    },
     "invocationMethod": {
       "type": "WEBHOOK",
       "agent": false,
@@ -95,7 +70,35 @@ Make sure to replace the placeholders for JENKINS_URL and JOB_TOKEN.
       "synchronized": false,
       "method": "POST"
     },
-    "trigger": "CREATE"
+    "trigger": {
+        "type": "self-service",
+        "operation": "CREATE",
+        "userInputs": {
+            "properties": {
+                "repo_name": {
+                    "icon": "Microservice",
+                    "title": "Repo Name",
+                    "type": "string"
+                },
+                "bitbucket_workspace_name": {
+                    "icon": "BitBucket",
+                    "title": "Bitbucket Workspace Name",
+                    "type": "string"
+                },
+                "bitbucket_project_key": {
+                    "title": "Bitbucket Project Key",
+                    "icon": "BitBucket",
+                    "description": "Bitbucket project key symbol",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "repo_name",
+                "bitbucket_workspace_name",
+                "bitbucket_project_key"
+            ]
+        },
+    }
   }
 ]
 ```

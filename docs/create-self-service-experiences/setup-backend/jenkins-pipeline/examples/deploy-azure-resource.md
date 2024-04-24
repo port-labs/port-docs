@@ -96,28 +96,6 @@ Follow these steps to get started:
     "identifier": "create_azure_storage",
     "title": "Create Azure Storage",
     "icon": "Azure",
-    "userInputs": {
-        "properties": {
-            "storage_name": {
-                "title": "Storage Name",
-                "type": "string",
-                "minLength": 3,
-                "maxLength": 63
-            },
-            "storage_location": {
-                "icon": "DefaultProperty",
-                "title": "Storage Location",
-                "description": "storage account geo region",
-                "type": "string"
-            }
-        },
-        "required": [
-            "storage_name"
-        ],
-        "order": [
-            "storage_name"
-        ]
-    },
     "invocationMethod": {
         "type": "WEBHOOK",
         "agent": false,
@@ -125,7 +103,32 @@ Follow these steps to get started:
         "synchronized": false,
         "method": "POST"
     },
-    "trigger": "CREATE",
+    "trigger": {
+        "type": "self-service",
+        "operation": "CREATE",
+        "userInputs": {
+            "properties": {
+                "storage_name": {
+                    "title": "Storage Name",
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 63
+                },
+                "storage_location": {
+                    "icon": "DefaultProperty",
+                    "title": "Storage Location",
+                    "description": "storage account geo region",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "storage_name"
+            ],
+            "order": [
+                "storage_name"
+            ]
+        }
+    },
     "requiredApproval": false
 }
 ```

@@ -210,18 +210,22 @@ Here is an example for an action that will trigger the webhook you just set up:
       "identifier":"runPipeline",
       "title":"Run GCP Cloud Build Pipeline",
       "icon":"GCP",
-      "userInputs":{
-         "properties":{
-            "region":{
-               "type":"string",
-               "title":"Region Name"
-            },
-            "imageName":{
-               "type":"string",
-               "title":"Container Image Name"
-            }
-         },
-         "required":[]
+      "trigger": {
+        "type": "self-service",
+        "operation":"CREATE",
+        "userInputs": {
+          "properties":{
+              "region":{
+                "type":"string",
+                "title":"Region Name"
+              },
+              "imageName":{
+                "type":"string",
+                "title":"Container Image Name"
+              }
+          },
+          "required":[]
+        },
       },
       # highlight-start
       "invocationMethod":{
@@ -229,7 +233,6 @@ Here is an example for an action that will trigger the webhook you just set up:
          "url":"https://cloudbuild.googleapis.com/v1/projects/{project_id}/triggers/{webhook_name}:webhook?key={google_api_key}&secret={webhook_secret}"
       },
       # highlight-end
-      "trigger":"CREATE",
       "description":"Webhook trigger for Google Cloud Build",
       "requiredApproval":false
    }

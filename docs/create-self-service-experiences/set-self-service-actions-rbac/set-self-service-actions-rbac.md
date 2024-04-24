@@ -92,7 +92,10 @@ Add the `requiredApproval` field to your action:
       "type": "WEBHOOK",
       "url": "https://example.com"
     },
-    "trigger": "CREATE",
+    "trigger": {
+      ...
+      "operation": "CREATE",
+    }
     // highlight-next-line
     "requiredApproval": true,
     ...

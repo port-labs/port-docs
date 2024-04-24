@@ -183,30 +183,6 @@ This example helps internal developer teams to trigger an [Argo Workflow](https:
   "identifier": "trigger_a_workflow",
   "title": "Trigger A Workflow",
   "icon": "Argo",
-  "userInputs": {
-    "properties": {
-      "namespace": {
-        "title": "Namespace",
-        "description": "Name of the namespace",
-        "icon": "Argo",
-        "type": "string",
-        "default": {
-          "jqQuery": ".entity.properties.metadata.namespace"
-        }
-      },
-      "memoized": {
-        "title": "Memoized",
-        "description": "Turning on memoized enables all steps to be executed again regardless of previous outputs",
-        "icon": "Argo",
-        "type": "boolean",
-        "default": false
-      }
-    },
-    "required": [],
-    "order": [
-      "memoized"
-    ]
-  },
   "invocationMethod": {
     "type": "WEBHOOK",
     "url": "https://{your-argo-workflow-domain}.com",
@@ -214,7 +190,34 @@ This example helps internal developer teams to trigger an [Argo Workflow](https:
     "synchronized": true,
     "method": "PUT"
   },
-  "trigger": "DAY-2",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {
+        "namespace": {
+          "title": "Namespace",
+          "description": "Name of the namespace",
+          "icon": "Argo",
+          "type": "string",
+          "default": {
+            "jqQuery": ".entity.properties.metadata.namespace"
+          }
+        },
+        "memoized": {
+          "title": "Memoized",
+          "description": "Turning on memoized enables all steps to be executed again regardless of previous outputs",
+          "icon": "Argo",
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "required": [],
+      "order": [
+        "memoized"
+      ]
+    },
+  },
   "description": "Trigger the execution of an argo workflow",
   "requiredApproval": false
 }

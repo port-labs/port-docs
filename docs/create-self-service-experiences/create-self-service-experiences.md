@@ -108,26 +108,39 @@ The basic structure of a self-service action looks like this (see key descriptio
   "identifier": "unique_id",
   "title": "Title",
   "icon": "iconIdentifier",
-  "userInputs": {
-    "properties": {
-      "property1": {
-        "type": "string",
-        "title": "Property title",
-        "default": "default value"
-      },
-      "property2": {
-        "type": "number",
-        "title": "property title",
-        "default": 5
+  "description": "Action description",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
+    "userInputs": {
+      "properties": {
+        "property1": {
+          "type": "string",
+          "title": "Property title",
+          "default": "default value"
+        },
+        "property2": {
+          "type": "number",
+          "title": "property title",
+          "default": 5
+        }
       }
     }
   },
   "invocationMethod": {
     "type": "WEBHOOK",
-    "url": "https://example.com"
-  },
-  "trigger": "CREATE",
-  "description": "Action description"
+    "url": "https://example.com",
+    "agent": false,
+    "synchronized": false,
+    "method": "POST",
+    "headers": {
+      "RUN_ID": "{{ .run.id }}"
+    },
+    "body": {
+      "property1": "{{ .inputs.property1 }}",
+      "property2": "{{ .inputs.property2 }}"
+    }
+  }
 }
 ```
 
@@ -138,6 +151,6 @@ The basic structure of a self-service action looks like this (see key descriptio
 | `icon`             | The action's icon.                                                                                                                                                                                                 |
 | `userInputs`       | An object containing the action's inputs and their metadata. See [User inputs](/create-self-service-experiences/setup-ui-for-action/user-inputs/) for more information. |
 | `invocationMethod` | Defines the type of backend the action will use. See [invocation method](/create-self-service-experiences/setup-backend/#invocation-method-structure-fields) for more information.                                                             |
-| `trigger`          | The [type](/create-self-service-experiences/setup-ui-for-action/#basic-details) of the action: `CREATE`, `DAY-2` or `DELETE`.                                                                                                                                                       |
+| `operation`          | The [operation](/create-self-service-experiences/setup-ui-for-action/#basic-details) of the action: `CREATE`, `DAY-2` or `DELETE`.                                                                                                                                                       |
 | `requiredApproval` | A boolean value that determines whether the action requires approval or not.                                                                                                                                                                 |
 | `description`      | A description that can be used to explain the action to users.                                                                                                                                                                                         |
