@@ -458,6 +458,8 @@ resources:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
 resources:
   - kind: control
     selector:
@@ -528,10 +530,59 @@ resources:
           "CRITICAL": "red"
         }
       },
-      "type": {
-        "title": "Type",
+      "vulnerabilityType": {
+        "title": "Vulnerability Type",
         "type": "string"
       },
+      "wizIssueID": {
+        "title": "Wiz Issue ID",
+        "type": "string"
+      },
+      "cloudResourceType": {
+        "title": "Cloud Resource Type",
+        "type": "string"
+      },
+      "resourceName": {
+        "title": "Resource Name",
+        "type": "string"
+      },
+      "cloudPlatform": {
+        "title": "Cloud Platform",
+        "type": "string"
+      },
+      "linkToResource": {
+        "title": "Link to Cloud Resource",
+        "type": "string",
+        "format": "url"
+      },
+      "cloudResourceID": {
+        "title": "Cloud Resource ID",
+        "type": "string"
+      },
+      "cloudRegion": {
+        "title": "Cloud Region",
+        "type": "string"
+      },
+      "resourceGroupExternalId": {
+        "title": "Resource Group External ID",
+        "type": "string"
+      },
+      "subscriptionExternalId": {
+        "title": "Subscription External ID",
+        "type": "string"
+      },
+      "subscriptionName": {
+        "title": "Subscription Name",
+        "type": "string"
+      },
+      "subscriptionTags": {
+        "title": "Subscription Tags",
+        "type": "string"
+      },
+      "resourceTags": {
+        "title": "Resource Tags",
+        "type": "string"
+      }
       "vulnerability": {
         "title": "Vulnerability",
         "type": "object",
@@ -603,6 +654,8 @@ resources:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
 resources:
   - kind: issue
     selector:
@@ -617,8 +670,20 @@ resources:
             url: .id as $id | "https://app.wiz.io/issues#~(issue~'" + $id + ")"
             status: .status
             severity: .severity
-            type: .type
+            vulnerabilityType: .type
             notes: .notes
+            wizIssueID: .entitySnapshot.id
+            cloudResourceType: .entitySnapshot.type
+            resourceName: .entitySnapshot.name
+            cloudPlatform: .entitySnapshot.cloudPlatform
+            linkToResource: .entitySnapshot.cloudProviderURL
+            cloudResourceID: .entitySnapshot.providerId
+            cloudRegion: .entitySnapshot.region
+            resourceGroupExternalId: .entitySnapshot.resourceGroupExternalId
+            subscriptionExternalId: .entitySnapshot.subscriptionExternalId
+            subscriptionName: .entitySnapshot.subscriptionName
+            subscriptionTags: .entitySnapshot.subscriptionTags
+            resourceTags: .entitySnapshot.tags
             vulnerability: .entitySnapshot
             createdAt: .createdAt
             updatedAt: .updatedAt
@@ -666,6 +731,8 @@ resources:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
 resources:
   - kind: serviceTicket
   selector:

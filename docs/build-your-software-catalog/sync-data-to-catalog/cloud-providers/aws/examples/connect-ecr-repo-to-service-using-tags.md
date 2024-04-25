@@ -52,7 +52,7 @@ With our ECR resources synced with Port, let's reflect the ECR Repository in our
 
 First, we will need to create a [relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/) between our services and the corresponding ECR Repository. To do this:
 
-1. Head back to the [Builder](https://app.getport.io/dev-portal/data-model), choose the `ECR Repository` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New relation`:
+1. Head back to the [Builder](https://app.getport.io/settings/data-model), choose the `ECR Repository` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New relation`:
 
 <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/ecr-repo-create-new-relation.png' width='60%' border='1px' />
 
