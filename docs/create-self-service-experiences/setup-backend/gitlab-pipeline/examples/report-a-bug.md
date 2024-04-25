@@ -219,7 +219,7 @@ create-port-entity:
     - apk add --upgrade curl jq -q
   script:
     - |
-      echo "Creating Port entity to match new S3 bucket"
+      echo "Creating Port entity to match new Jira ticket"
       accessToken=$(curl -X POST \
         -H 'Content-Type: application/json' \
         -d '{"clientId": "'"$PORT_CLIENT_ID"'", "clientSecret": "'"$PORT_CLIENT_SECRET"'"}' \
@@ -237,7 +237,7 @@ create-port-entity:
       curl -X POST \
           -H 'Content-Type: application/json' \
           -H "Authorization: Bearer $accessToken" \
-          -d '{"statusLabel": "Creating Entity", "message":"🚀 Creating the instance in Port!"}' \
+          -d '{"statusLabel": "Creating Entity", "message":"🚀 Creating the Jira ticket entity in Port!"}' \
           "https://api.getport.io/v1/actions/runs/$runId/logs"
 
       log='{
