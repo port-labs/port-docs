@@ -223,31 +223,17 @@ jobs:
           pip install -r dora/requirements.txt
 
       - name: Compute PR Metrics
-        env:
-          GITHUB_TOKEN: ${{ secrets.PATTOKEN }}
-          REPOSITORY: ${{ matrix.repository }}
-          OWNER: ${{ matrix.owner }}
         run: |
-          python dora/calculate_pr_metrics.py
-
+          python dora/calculate_pr_metrics.py  --owner ${{ matrix.owner }} --repo ${{ matrix.repository }} --token ${{ secrets.PATTOKEN }} --timeframe ${{env.TIMEFRAME_IN_DAYS}} --platform github-actions
+          
       - name: Deployment Frequency
         id: deployment_frequency
-        env:
-          WORKFLOWS: ${{ toJson(matrix.workflows) }}
-          GITHUB_TOKEN: ${{ secrets.PATTOKEN }}
-          REPOSITORY: ${{ matrix.repository }}
-          OWNER: ${{ matrix.owner }}
-          BRANCH: ${{ matrix.branch }}
-        run: python dora/deployment_frequency.py
-
+        run: python dora/deployment_frequency.py --owner ${{ matrix.owner }} --repo ${{ matrix.repository }} --token ${{ secrets.PATTOKEN }} --workflows '${{ toJson(matrix.workflows) }}' --timeframe ${{env.TIMEFRAME_IN_DAYS}} --branch ${{ matrix.branch }} --platform github-actions --ignore_workflows
+      
       - name: Lead Time For Changes
-        env:
-          WORKFLOWS: ${{ toJson(matrix.workflows) }}
-          GITHUB_TOKEN: ${{ secrets.PATTOKEN }}
-          REPOSITORY: ${{ matrix.repository }}
-          OWNER: ${{ matrix.owner }}
-          BRANCH: ${{ matrix.branch }}
-        run: python dora/lead_time_for_changes.py
+        id: lead_time_for_changes
+        run: python dora/lead_time_for_changes.py --owner ${{ matrix.owner }} --repo ${{ matrix.repository }} --token ${{ secrets.PATTOKEN }} --workflows '${{ toJson(matrix.workflows) }}' --timeframe ${{env.TIMEFRAME_IN_DAYS}} --branch ${{ matrix.branch }} --platform github-actions
+        
 
       - name: UPSERT Entity
         uses: port-labs/port-github-action@v1
@@ -292,8 +278,6 @@ jobs:
 
 ```text showLineNumbers title="requirements.txt"
 PyGithub==2.3.0
-loguru==0.7.2
-httpx==0.27.0
 ```
 
 </details>
@@ -340,16 +324,19 @@ from github import Github
 import datetime
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import json
+import logging
+import argparse
 
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class RepositoryMetrics:
-    def __init__(self, owner, repo, time_frame):
-        self.github_client = Github(os.getenv("GITHUB_TOKEN"))
+    def __init__(self, owner, repo, timeframe,pat_token):
+        self.github_client = Github(pat_token)
         self.repo_name = f"{owner}/{repo}"
-        self.time_frame = int(time_frame)
+        self.timeframe = int(timeframe)
         self.start_date = datetime.datetime.now(datetime.UTC).replace(
             tzinfo=datetime.timezone.utc
-        ) - datetime.timedelta(days=self.time_frame)
+        ) - datetime.timedelta(days=self.timeframe)
         self.repo = self.github_client.get_repo(f"{self.repo_name}")
 
     def calculate_pr_metrics(self):
@@ -428,10 +415,11 @@ class RepositoryMetrics:
             aggregated["total_loc_changed"] += result["total_loc_changed"]
             aggregated["review_dates"].extend(result["review_dates"])
 
+        # Calculate average PRs reviewed per week
         review_weeks = {
             review_date.isocalendar()[1] for review_date in aggregated["review_dates"]
         }
-        average_prs_reviewed_per_week = len(review_weeks) / max(1, self.time_frame)
+        average_prs_reviewed_per_week = len(review_weeks) / max(1, self.timeframe)
 
         metrics = {
             "id": self.repo.id,
@@ -452,7 +440,7 @@ class RepositoryMetrics:
             else 0,
             "prs_opened": aggregated["prs_opened"],
             "weekly_prs_merged": self.timedelta_to_decimal_hours(
-                aggregated["total_open_to_close_time"] / max(1, self.time_frame)
+                aggregated["total_open_to_close_time"] / max(1, self.timeframe)
             )
             if aggregated["prs_merged"]
             else 0,
@@ -479,24 +467,27 @@ class RepositoryMetrics:
     def timedelta_to_decimal_hours(self, td):
         return round(td.total_seconds() / 3600, 2)
 
-
-def main():
-    owner = os.getenv("OWNER")
-    repo = os.getenv("REPOSITORY")
-    time_frame = os.getenv("TIMEFRAME_IN_DAYS")
-    print("Repository Name:", f"{owner}/{repo}")
-    print("TimeFrame (in days):", time_frame)
-
-    repo_metrics = RepositoryMetrics(owner, repo, time_frame)
-    metrics = repo_metrics.calculate_pr_metrics()
-
-    metrics_json = json.dumps(metrics, default=str)
-    with open(os.getenv("GITHUB_ENV"), "a") as github_env:
-        github_env.write(f"metrics={metrics_json}\n")
-
-
 if __name__ == "__main__":
-    main()
+    
+    parser = argparse.ArgumentParser(description='Calculate Pull Request Metrics.')
+    parser.add_argument('--owner', required=True, help='Owner of the repository')
+    parser.add_argument('--repo', required=True, help='Repository name')
+    parser.add_argument('--token', required=True, help='GitHub token')
+    parser.add_argument('--timeframe', type=int, default=30, help='Timeframe in days')
+    parser.add_argument('--platform', default='github-actions', choices=['github-actions', 'self-hosted'], help='CI/CD platform type')
+    args = parser.parse_args()
+
+    logging.info(f"Repository Name: {args.owner}/{args.repo}")
+    logging.info(f"TimeFrame (in days): {args.timeframe}")
+
+    repo_metrics = RepositoryMetrics(args.owner, args.repo, args.timeframe, pat_token=args.token)
+    metrics = repo_metrics.calculate_pr_metrics()
+    metrics_json = json.dumps(metrics, default=str)
+    print(metrics_json)
+    
+    if args.platform == "github-actions":
+        with open(os.getenv("GITHUB_ENV"), "a") as github_env:
+            github_env.write(f"metrics={metrics_json}\n")
 
 ```
 </details>
@@ -507,103 +498,46 @@ if __name__ == "__main__":
 ```python showLineNumbers title="deployment_frequency.py"
 import datetime
 import os
-import base64
 import json
-import httpx
-from loguru import logger
-import asyncio
+from github import Github
+import argparse
+import logging
 
-PAGE_SIZE = 100
 
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class DeploymentFrequency:
     def __init__(self, owner, repo, workflows, branch, number_of_days, pat_token=""):
         self.owner, self.repo = owner, repo
-        self.workflow_url = (
-            f"https://api.github.com/repos/{self.owner}/{self.repo}/actions/workflows"
-        )
-        self.workflows = json.loads(workflows)
         self.branch = branch
         self.number_of_days = number_of_days
         self.pat_token = pat_token
-        self.auth_header = self.get_auth_header
+        self.github = Github(login_or_token = self.pat_token)
+        self.repo_object = self.github.get_repo(f"{self.owner}/{self.repo}")
+        try:
+            self.workflows = json.loads(workflows)
+        except JSONDecodeError:
+            logging.error("Invalid JSON format for workflows. Using an empty list.")
+            self.workflows = []
 
-    @property
-    def get_auth_header(self):
-        encoded_credentials = base64.b64encode(f":{self.pat_token}".encode()).decode()
-        headers = {
-            "Authorization": f"Basic {encoded_credentials}",
-            "Content-Type": "application/json",
-        }
-        return headers
-
-    async def send_api_requests(self, url, params=None):
-        backoff_time = 1
-        max_backoff_time = 60
-
-        async with httpx.AsyncClient() as client:
-            while True:
-                try:
-                    response = await client.get(
-                        url, headers=self.auth_header, params=params
-                    )
-
-                    # Check for rate limiting (HTTP status 429)
-                    if response.status_code == 429 or response.status_code == 403:
-                        reset_time = float(response.headers.get("X-RateLimit-Reset", 0))
-                        current_time = time.time()
-                        wait_time = max(reset_time - current_time, 3)
-                        logger.warning(
-                            f"Rate limit exceeded. Waiting for {wait_time} seconds."
-                        )
-                        await asyncio.sleep(wait_time)
-                        continue
-
-                    response.raise_for_status()
-                    return response.json()
-
-                except httpx.HTTPStatusError as e:
-                    if e.response.status_code in {500, 502, 503, 504}:
-                        logger.warning(
-                            f"Server error ({e.response.status_code}). Retrying in {backoff_time} seconds."
-                        )
-                        await asyncio.sleep(backoff_time)
-                        backoff_time = min(backoff_time * 2, max_backoff_time)
-                    else:
-                        logger.error(f"HTTP error occurred: {e.response.status_code}")
-                        break
-
-                except Exception as e:
-                    logger.error(f"An error occurred: {e}")
-                    break
-
-    async def get_workflows(self):
-        if not (self.workflows):
-            workflows = await self.send_api_requests(self.workflow_url)
-            if workflows:
-                workflow_ids = [workflow["id"] for workflow in workflows["workflows"]]
-                logger.info(f"Found {len(workflow_ids)} workflows in Repo")
-                return workflow_ids
+    def get_workflows(self):
+        if not self.workflows:
+            workflows = self.repo_object.get_workflows()
+            workflow_ids = [workflow.id for workflow in workflows]
+            logging.info(f"Found {len(workflow_ids)} workflows in Repo")
         else:
-            return self.workflows
+            workflow_ids = self.workflows
+            logging.info(f"Workflows: {workflow_ids}")
+        return workflow_ids
 
-    async def fetch_workflow_runs(self):
-        workflow_ids = await self.get_workflows()
+    def fetch_workflow_runs(self):
+        workflow_ids = self.get_workflows()
         workflow_runs_list = []
         unique_dates = set()
         for workflow_id in workflow_ids:
-            runs_url = f"{self.workflow_url}/{workflow_id}/runs"
-            params = {"per_page": PAGE_SIZE, "status": "completed"}
-            runs_response = await self.send_api_requests(runs_url, params=params)
-            for run in runs_response["workflow_runs"]:
-                run_date = datetime.datetime.strptime(
-                    run["created_at"], "%Y-%m-%dT%H:%M:%SZ"
-                )
-                if run[
-                    "head_branch"
-                ] == self.branch and run_date > datetime.datetime.now() - datetime.timedelta(
-                    days=self.number_of_days
-                ):
+            for run in self.repo_object.get_workflow(workflow_id).get_runs():
+                run_date = run.created_at.replace(tzinfo=None)
+                if run.head_branch == self.branch and run_date > datetime.datetime.now() - datetime.timedelta(days=self.number_of_days):
                     workflow_runs_list.append(run)
                     unique_dates.add(run_date.date())
         return workflow_runs_list, unique_dates
@@ -630,48 +564,44 @@ class DeploymentFrequency:
         else:
             return "None", "lightgrey"
 
-    async def __call__(self):
-        workflow_runs_list, unique_dates = await self.fetch_workflow_runs()
+    def __call__(self):
+        workflow_runs_list, unique_dates = self.fetch_workflow_runs()
         deployments_per_day = self.calculate_deployments_per_day(workflow_runs_list)
         rating, color = self.compute_rating(deployments_per_day)
 
-        logger.info(f"Owner/Repo: {self.owner}/{self.repo}")
-        logger.info(f"Workflows: {await self.get_workflows()}")
-        logger.info(f"Branch: {self.branch}")
-        logger.info(f"Number of days: {self.number_of_days}")
-        logger.info(
-            f"Deployment frequency over the last {self.number_of_days} days is {deployments_per_day} per day"
-        )
-        logger.info(f"Rating: {rating} ({color})")
+        logging.info(f"Owner/Repo: {self.owner}/{self.repo}")
+        logging.info(f"Branch: {self.branch}")
+        logging.info(f"Number of days: {self.number_of_days}")
+        logging.info(f"Deployment frequency over the last {self.number_of_days} days is {deployments_per_day} per day")
+        logging.info(f"Rating: {rating} ({color})")
 
-        return json.dumps(
-            {
-                "deployment_frequency": round(deployments_per_day, 2),
-                "rating": rating,
-                "number_of_unique_deployment_days": len(unique_dates),
-                "number_of_unique_deployment_weeks": len({date.isocalendar()[1] for date in unique_dates}),
-                "number_of_unique_deployment_months":len({date.month for date in unique_dates}),
-                "total_deployments": len(workflow_runs_list),
-            },
-            default=str,
-        )
-
+        return json.dumps({
+            "deployment_frequency": round(deployments_per_day, 2),
+            "rating": rating,
+            "number_of_unique_deployment_days": len(unique_dates),
+            "number_of_unique_deployment_weeks": len({date.isocalendar()[1] for date in unique_dates}),
+            "number_of_unique_deployment_month": len({date.month for date in unique_dates}),
+            "total_deployments": len(workflow_runs_list),
+        }, default=str)
 
 if __name__ == "__main__":
-    owner = os.getenv("OWNER")
-    repo = os.getenv("REPOSITORY")
-    pat_token = os.getenv("GITHUB_TOKEN")
-    workflows = os.getenv("WORKFLOWS", "[]")
-    branch = os.getenv("BRANCH", "main")
-    time_frame = int(os.getenv("TIMEFRAME_IN_DAYS", 30))
+    parser = argparse.ArgumentParser(description='Calculate Deployment Frequency.')
+    parser.add_argument('--owner', required=True, help='Owner of the repository')
+    parser.add_argument('--repo', required=True, help='Repository name')
+    parser.add_argument('--token', required=True, help='GitHub token')
+    parser.add_argument('--workflows', required=True, help='GitHub workflows as a JSON string.')
+    parser.add_argument('--branch', default='main', help='Branch name')
+    parser.add_argument('--timeframe', type=int, default=30, help='Timeframe in days')
+    parser.add_argument('--platform', default='github-actions', choices=['github-actions', 'self-hosted'], help='CI/CD platform type')
+    args = parser.parse_args()
 
-    deployment_frequency = DeploymentFrequency(
-        owner, repo, workflows, branch, time_frame, pat_token
-    )
-    report = asyncio.run(deployment_frequency())
-
-    with open(os.getenv("GITHUB_ENV"), "a") as github_env:
-        github_env.write(f"deployment_frequency_report={report}\n")
+    deployment_frequency = DeploymentFrequency(args.owner, args.repo, args.workflows, args.branch, args.timeframe, pat_token = args.token)
+    report = deployment_frequency()
+    print(report)
+    
+    if args.platform == "github-actions":
+       with open(os.getenv("GITHUB_ENV"), "a") as github_env:
+           github_env.write(f"deployment_frequency_report={report}\n")
 ```
 </details>
 
@@ -679,17 +609,14 @@ if __name__ == "__main__":
   <summary><b>Lead Time For Changes</b></summary>
 
 ```python showLineNumbers title="lead_time_for_changes.py"
-import httpx
-from datetime import datetime, timedelta, timezone
-import base64
-import json
+import datetime
 import os
-from loguru import logger
-import asyncio
-import time
+import json
+from github import Github
+import argparse
+import logging
 
-PAGE_SIZE = 100
-
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class LeadTimeForChanges:
     def __init__(
@@ -701,147 +628,79 @@ class LeadTimeForChanges:
         number_of_days,
         commit_counting_method="last",
         pat_token="",
+        ignore_workflows=True
     ):
         self.owner = owner
         self.repo = repo
-        self.workflows = json.loads(workflows)
         self.branch = branch
         self.number_of_days = number_of_days
         self.commit_counting_method = commit_counting_method
-        self.pat_token = pat_token
-        self.auth_header = self.get_auth_header
-        self.github_url = f"https://api.github.com/repos/{self.owner}/{self.repo}"
+        self.github = Github(login_or_token = pat_token)
+        self.repo_object = self.github.get_repo(f"{self.owner}/{self.repo}")
+        self.ignore_workflows = ignore_workflows
+        try:
+            self.workflows = json.loads(workflows) if workflows else None
+        except JSONDecodeError:
+            logging.error("Invalid JSON format for workflows. Using an empty list.")
+            self.workflows = []
 
-    async def __call__(self):
-        logger.info(f"Owner/Repo: {self.owner}/{self.repo}")
-        logger.info(f"Number of days: {self.number_of_days}")
-        logger.info(f"Workflows: {await self.get_workflows()}")
-        logger.info(f"Branch: {self.branch}")
-        logger.info(
-            f"Commit counting method '{self.commit_counting_method}' being used"
-        )
+    def __call__(self):
+        logging.info(f"Owner/Repo: {self.owner}/{self.repo}")
+        logging.info(f"Number of days: {self.number_of_days}")
+        logging.info(f"Branch: {self.branch}")
+        logging.info(f"Commit counting method '{self.commit_counting_method}' being used")
 
-        pr_result = await self.process_pull_requests()
-        workflow_result = await self.process_workflows()
+        pr_result = self.process_pull_requests()
+        workflow_result = self.process_workflows() if not(self.ignore_workflows) else None
 
-        return await self.evaluate_lead_time(pr_result, workflow_result)
+        return self.evaluate_lead_time(pr_result, workflow_result)
 
-    @property
-    def get_auth_header(self):
-        encoded_credentials = base64.b64encode(f":{self.pat_token}".encode()).decode()
-        headers = {
-            "Authorization": f"Basic {encoded_credentials}",
-            "Content-Type": "application/json",
-        }
-        return headers
+    def get_pull_requests(self):
+        return list(self.repo_object.get_pulls(state='closed', base=self.branch))
 
-    async def send_api_requests(self, url, params=None):
-        backoff_time = 1
-        max_backoff_time = 60
-
-        async with httpx.AsyncClient() as client:
-            while True:
-                try:
-                    response = await client.get(
-                        url, headers=self.auth_header, params=params
-                    )
-
-                    # Check for rate limiting (HTTP status 429)
-                    if response.status_code == 429 or response.status_code == 403:
-                        reset_time = float(response.headers.get("X-RateLimit-Reset", 0))
-                        current_time = time.time()
-                        wait_time = max(reset_time - current_time, 3)
-                        logger.warning(
-                            f"Rate limit exceeded. Waiting for {wait_time} seconds."
-                        )
-                        await asyncio.sleep(wait_time)
-                        continue
-
-                    response.raise_for_status()
-                    return response.json()
-
-                except httpx.HTTPStatusError as e:
-                    if e.response.status_code in {500, 502, 503, 504}:
-                        logger.warning(
-                            f"Server error ({e.response.status_code}). Retrying in {backoff_time} seconds."
-                        )
-                        await asyncio.sleep(backoff_time)
-                        backoff_time = min(backoff_time * 2, max_backoff_time)
-                    else:
-                        logger.error(f"HTTP error occurred: {e.response.status_code}")
-                        break
-
-                except Exception as e:
-                    logger.error(f"An error occurred: {e}")
-                    break
-
-    async def get_pull_requests(self):
-        url = f"{self.github_url}/pulls"
-        params = {"state": "closed", "head": self.branch, "per_page": PAGE_SIZE}
-        return await self.send_api_requests(url, params=params)
-
-    async def process_pull_requests(self):
-        prs = await self.get_pull_requests()
+    def process_pull_requests(self):
+        prs = self.get_pull_requests()
         pr_counter = 0
         total_pr_hours = 0
+        # Ensure now is also offset-aware by using UTC
+        now_utc = datetime.datetime.now(datetime.timezone.utc)
         for pr in prs:
-            merged_at = pr.get("merged_at")
-            if merged_at and datetime.strptime(merged_at, "%Y-%m-%dT%H:%M:%SZ").replace(
-                tzinfo=timezone.utc
-            ) > datetime.now(timezone.utc) - timedelta(days=self.number_of_days):
+            if pr.merged and pr.merge_commit_sha and pr.merged_at > now_utc - datetime.timedelta(days=self.number_of_days):
                 pr_counter += 1
-                commits_url = f"{self.github_url}/pulls/{pr['number']}/commits"
-                params = {"per_page": PAGE_SIZE}
-                commits_response = await self.send_api_requests(
-                    commits_url, params=params
-                )
-                if commits_response:
+                commits = list(pr.get_commits())
+                if commits:
                     if self.commit_counting_method == "last":
-                        start_date = commits_response[-1]["commit"]["committer"]["date"]
+                        start_date = commits[-1].commit.committer.date
                     elif self.commit_counting_method == "first":
-                        start_date = commits_response[0]["commit"]["committer"]["date"]
-                    start_date = datetime.strptime(start_date, "%Y-%m-%dT%H:%M:%SZ")
-                    merged_at = datetime.strptime(merged_at, "%Y-%m-%dT%H:%M:%SZ")
+                        start_date = commits[0].commit.committer.date
+                    merged_at = pr.merged_at
                     duration = merged_at - start_date
                     total_pr_hours += duration.total_seconds() / 3600
         return pr_counter, total_pr_hours
 
-    async def get_workflows(self):
-        if not (self.workflows):
-            workflow_url = f"{self.github_url}/actions/workflows"
-            workflows = await self.send_api_requests(workflow_url)
-            if workflows:
-                workflow_ids = [workflow["id"] for workflow in workflows["workflows"]]
-                logger.info(f"Found {len(workflow_ids)} workflows in Repo")
-                return workflow_ids
+    def get_workflows(self):
+        if not self.workflows:
+            workflows = self.repo_object.get_workflows()
+            workflow_ids = [workflow.id for workflow in workflows]
+            logging.info(f"Found {len(workflow_ids)} workflows in Repo")
         else:
-            return self.workflows
+            workflow_ids = self.workflows
+            logging.info(f"Workflows: {workflow_ids}")
+        return workflow_ids
 
-    async def process_workflows(self):
-        workflow_ids = await self.get_workflows()
+    def process_workflows(self):
+        workflow_ids = self.get_workflows()
         total_workflow_hours = 0
         workflow_counter = 0
         for workflow_id in workflow_ids:
-            runs_url = f"{self.github_url}/actions/workflows/{workflow_id}/runs"
-            params = {"per_page": PAGE_SIZE, "status": "completed"}
-            runs_response = await self.send_api_requests(runs_url, params=params)
-            for run in runs_response["workflow_runs"]:
-                if run["head_branch"] == self.branch and datetime.strptime(
-                    run["created_at"], "%Y-%m-%dT%H:%M:%SZ"
-                ).replace(tzinfo=timezone.utc) > datetime.now(timezone.utc) - timedelta(
-                    days=self.number_of_days
-                ):
+            runs = list(self.repo_object.get_workflow(workflow_id).get_runs())
+            for run in runs:
+                if run.head_branch == self.branch and run.created_at > datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(days=self.number_of_days):
                     workflow_counter += 1
-                    start_time = datetime.strptime(
-                        run["created_at"], "%Y-%m-%dT%H:%M:%SZ"
-                    )
-                    end_time = datetime.strptime(
-                        run["updated_at"], "%Y-%m-%dT%H:%M:%SZ"
-                    )
-                    duration = end_time - start_time
+                    duration = run.updated_at - run.created_at
                     total_workflow_hours += duration.total_seconds() / 3600
         return workflow_counter, total_workflow_hours
-
+        
     def calculate_rating(self, lead_time_for_changes_in_hours):
         daily_deployment = 24
         weekly_deployment = 24 * 7
@@ -885,19 +744,28 @@ class LeadTimeForChanges:
             "display_unit": display_unit,
         }
 
-    async def evaluate_lead_time(self, pr_result, workflow_result):
+
+    def evaluate_lead_time(self, pr_result, workflow_result):
         pr_counter, total_pr_hours = pr_result
-        workflow_counter, total_workflow_hours = workflow_result
         if pr_counter == 0:
             pr_counter = 1
-        if workflow_counter == 0:
-            workflow_counter = 1
-        pr_average = total_pr_hours / pr_counter
-        workflow_average = total_workflow_hours / workflow_counter
+        pr_average = total_pr_hours / pr_counter 
+
+        if workflow_result:
+            workflow_counter, total_workflow_hours = workflow_result
+            if workflow_counter == 0:
+                workflow_counter = 1
+    
+            workflow_average = total_workflow_hours / workflow_counter
+
+        else:
+            workflow_average = 0
+            logging.info("Excluded workflows in computing metric")
+            
         lead_time_for_changes_in_hours = pr_average + workflow_average
-        logger.info(f"PR average time duration: {pr_average} hours")
-        logger.info(f"Workflow average time duration: {workflow_average} hours")
-        logger.info(f"Lead time for changes in hours: {lead_time_for_changes_in_hours}")
+        logging.info(f"PR average time duration: {pr_average} hours")
+        logging.info(f"Workflow average time duration: {workflow_average} hours")
+        logging.info(f"Lead time for changes in hours: {lead_time_for_changes_in_hours}")
 
         report = {
             "pr_average_time_duration": round(pr_average, 2),
@@ -911,21 +779,28 @@ class LeadTimeForChanges:
 
 
 if __name__ == "__main__":
-    owner = os.getenv("OWNER")
-    repo = os.getenv("REPOSITORY")
-    token = os.getenv("GITHUB_TOKEN")
-    workflows = os.getenv("WORKFLOWS", "[]")
-    branch = os.getenv("BRANCH", "main")
-    time_frame = int(os.getenv("TIMEFRAME_IN_DAYS", 30))
+    parser = argparse.ArgumentParser(description='Calculate lead time for changes.')
+    parser.add_argument('--owner', required=True, help='Owner of the repository')
+    parser.add_argument('--repo', required=True, help='Repository name')
+    parser.add_argument('--token', required=True, help='GitHub token')
+    parser.add_argument('--workflows', default='[]', help='GitHub workflows as a JSON string.')
+    parser.add_argument('--branch', default='main', help='Branch name')
+    parser.add_argument('--timeframe', type=int, default=30, help='Timeframe in days')
+    parser.add_argument('--platform', default='github-actions', choices=['github-actions', 'self-hosted'], help='CI/CD platform type')
+    parser.add_argument('--ignore_workflows', action='store_true', help='Exclude workflows. Default is False.')
+    args = parser.parse_args()
 
     lead_time_for_changes = LeadTimeForChanges(
-        owner, repo, workflows, branch, time_frame, pat_token=token
+        args.owner, args.repo, args.workflows, args.branch, args.timeframe, pat_token=args.token,ignore_workflows=args.ignore_workflows
     )
-    report = asyncio.run(lead_time_for_changes())
-    with open(os.getenv("GITHUB_ENV"), "a") as github_env:
-        github_env.write(f"lead_time_for_changes_report={report}\n")
+    report = lead_time_for_changes()
+    print(report)
+    
+    if args.platform == "github-actions":
+       with open(os.getenv("GITHUB_ENV"), "a") as github_env:
+           github_env.write(f"lead_time_for_changes_report={report}\n")
 ```
 </details>
 
-Congrats 🎉 You've successfully scheduled a GitHub action to periodically ingest estimated `DORA Metrics` for GitHub repository(s).
+Congrats 🎉 You've successfully created a scheduled GitHub workflow that periodically calculates and ingests `DORA Metrics` for GitHub repository(s).
 
