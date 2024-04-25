@@ -587,18 +587,21 @@ Examples of blueprints and the relevant integration configurations:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
-- kind: organization
-  selector:
-    query: 'true'
-  port:
-    entity:
-      mappings:
-        identifier: .id
-        title: .name
-        blueprint: '"snykOrganization"'
-        properties:
-          slug: .slug
-          url: ("https://app.snyk.io/org/" + .slug | tostring)
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: organization
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .id
+          title: .name
+          blueprint: '"snykOrganization"'
+          properties:
+            slug: .slug
+            url: ("https://app.snyk.io/org/" + .slug | tostring)
 ```
 </details>
 
@@ -683,21 +686,24 @@ Examples of blueprints and the relevant integration configurations:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
-- kind: target
-  selector:
-    query: "true"
-  port:
-    entity:
-      mappings:
-        identifier: .attributes.displayName
-        title: .attributes.displayName
-        blueprint: '"snykTarget"'
-        properties:
-          origin: .attributes.origin
-          highOpenVulnerabilities: "[.__projects[].meta.latest_issue_counts.high] | add"
-          mediumOpenVulnerabilities: "[.__projects[].meta.latest_issue_counts.medium] | add"
-          lowOpenVulnerabilities: "[.__projects[].meta.latest_issue_counts.low] | add"
-          criticalOpenVulnerabilities: "[.__projects[].meta.latest_issue_counts.critical] | add"
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: target
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .attributes.displayName
+          title: .attributes.displayName
+          blueprint: '"snykTarget"'
+          properties:
+            origin: .attributes.origin
+            highOpenVulnerabilities: "[.__projects[].meta.latest_issue_counts.high] | add"
+            mediumOpenVulnerabilities: "[.__projects[].meta.latest_issue_counts.medium] | add"
+            lowOpenVulnerabilities: "[.__projects[].meta.latest_issue_counts.low] | add"
+            criticalOpenVulnerabilities: "[.__projects[].meta.latest_issue_counts.critical] | add"
 ```
 
 </details>
@@ -826,30 +832,33 @@ Examples of blueprints and the relevant integration configurations:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
-- kind: project
-  selector:
-    query: 'true'
-  port:
-    entity:
-      mappings:
-        identifier: .id
-        title: .attributes.name
-        blueprint: '"snykProject"'
-        properties:
-          url: ("https://app.snyk.io/org/" + .relationships.organization.data.id + "/project/" + .id | tostring)
-          owner: .__owner.email
-          businessCriticality: .attributes.business_criticality
-          environment: .attributes.environment
-          lifeCycle: .attributes.lifecycle
-          highOpenVulnerabilities: .meta.latest_issue_counts.high
-          mediumOpenVulnerabilities: .meta.latest_issue_counts.medium
-          lowOpenVulnerabilities: .meta.latest_issue_counts.low
-          criticalOpenVulnerabilities: .meta.latest_issue_counts.critical
-          importedBy: .__importer.email
-          tags: .attributes.tags
-        relations:
-          snykVulnerabilities: '[.__issues[] | select(.issueType == "vuln").issueData.id]'
-          snykOrganization: .relationships.organization.data.id
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: project
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .id
+          title: .attributes.name
+          blueprint: '"snykProject"'
+          properties:
+            url: ("https://app.snyk.io/org/" + .relationships.organization.data.id + "/project/" + .id | tostring)
+            owner: .__owner.email
+            businessCriticality: .attributes.business_criticality
+            environment: .attributes.environment
+            lifeCycle: .attributes.lifecycle
+            highOpenVulnerabilities: .meta.latest_issue_counts.high
+            mediumOpenVulnerabilities: .meta.latest_issue_counts.medium
+            lowOpenVulnerabilities: .meta.latest_issue_counts.low
+            criticalOpenVulnerabilities: .meta.latest_issue_counts.critical
+            importedBy: .__importer.email
+            tags: .attributes.tags
+          relations:
+            snykVulnerabilities: '[.__issues[] | select(.issueType == "vuln").issueData.id]'
+            snykOrganization: .relationships.organization.data.id
 ```
 
 </details>
@@ -945,25 +954,28 @@ Examples of blueprints and the relevant integration configurations:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
-- kind: issue
-  selector:
-    query: '.issueType == "vuln"'
-  port:
-    entity:
-      mappings:
-        identifier: .issueData.id
-        title: .issueData.title
-        blueprint: '"snykVulnerability"'
-        properties:
-          score: .priorityScore
-          packageName: .pkgName
-          packageVersions: .pkgVersions
-          type: .issueType
-          severity: .issueData.severity
-          url: .issueData.url
-          language: .issueData.language // .issueType
-          publicationTime: .issueData.publicationTime
-          isPatched: .isPatched
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: issue
+    selector:
+      query: '.issueType == "vuln"'
+    port:
+      entity:
+        mappings:
+          identifier: .issueData.id
+          title: .issueData.title
+          blueprint: '"snykVulnerability"'
+          properties:
+            score: .priorityScore
+            packageName: .pkgName
+            packageVersions: .pkgVersions
+            type: .issueType
+            severity: .issueData.severity
+            url: .issueData.url
+            language: .issueData.language // .issueType
+            publicationTime: .issueData.publicationTime
+            isPatched: .isPatched
 ```
 
 </details>
