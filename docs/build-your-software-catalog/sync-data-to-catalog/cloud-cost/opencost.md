@@ -391,7 +391,7 @@ The following resources can be used to map data from OpenCost, it is possible to
 
 - The `port`, `entity` and the `mappings` keys are used to map the OpenCost object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
 
-  ```yaml showLineNumbers
+```yaml showLineNumbers
   resources:
     - kind: cost
       selector:
