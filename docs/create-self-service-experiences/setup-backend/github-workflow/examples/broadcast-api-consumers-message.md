@@ -6,7 +6,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 # Broadcast message to API consumers
 
-In this guide, we will create a self-service action in Port that executes a GitHub workflow to broadcast a Slack message to the slack channels of all services who consume an API.
+In this guide, we will create a self-service action in Port that executes a GitHub workflow to broadcast a Slack message to the Slack channels of all services who consume an API.
 
 :::tip Usecases
 - **Critical Updates**: Alert consumers of changes that could disrupt their integrations.
@@ -408,7 +408,7 @@ jobs:
 
 ## Let's test it!
 
-Trigger the actions from the [self-service](https://app.getport.io/self-serve) page of your Port application.
+Trigger the actions from the `API` page (below) or the [self-service](https://app.getport.io/self-serve) page of your Port application.
 
 <img src='/img/self-service-actions/setup-backend/github-workflow/examples/sendBroadcast.png' width='100%' border="1px" />
 
@@ -416,7 +416,7 @@ Trigger the actions from the [self-service](https://app.getport.io/self-serve) p
 <br />
 
 :::info How it works
-Our Service blueprint has a relation to the API blueprint called `consumes_api`. When the action is triggered on an `API` entity, we will get all `Service` entities that are related and send the message to the slack webhook urls configured in them.
+The Service blueprint has a relation to the API blueprint called `consumes_api`. When the action is triggered on an `API` entity, we will get all `Service` entities that are related and send the message to the slack webhook urls configured in them.
 :::
 
 <br />
