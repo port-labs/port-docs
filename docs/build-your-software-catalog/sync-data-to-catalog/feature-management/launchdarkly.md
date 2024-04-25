@@ -392,8 +392,6 @@ Examples of blueprints and the relevant integration configurations:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
 resources:
   - kind: project
     selector:
@@ -485,11 +483,11 @@ resources:
     "calculationProperties": {},
     "aggregationProperties": {},
     "relations": {
-      "environments": {
-        "title": "Environments",
-        "target": "launchDarklyEnvironment",
-        "required": false,
-        "many": true
+      "project": {
+        "title": "Project",
+        "target": "launchDarklyProject",
+        "required": true,
+        "many": false
       }
     }
   }
@@ -500,9 +498,6 @@ resources:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
   - kind: flag
     selector:
       query: "true"
@@ -516,7 +511,7 @@ resources:
             kind: .kind
             description: .description
             creationDate: .creationDate / 1000 | strftime("%Y-%m-%dT%H:%M:%SZ")
-1            clientSideAvailability: .clientSideAvailability
+            clientSideAvailability: .clientSideAvailability
             temporary: .temporary
             tags: .tags
             maintainer: ._maintainer.email
@@ -525,7 +520,7 @@ resources:
             customProperties: .customProperties
             archived: .archived
           relations:
-            environments: .environments | keys
+            project: .__projectKey
 ```
 </details>
 
@@ -535,7 +530,7 @@ resources:
 <summary>Environment blueprint</summary>
 
 ```json showLineNumbers
-{
+ {
     "identifier": "launchDarklyEnvironment",
     "description": "This blueprint represents an environment in LaunchDarkly",
     "title": "LaunchDarkly Environment",
@@ -600,9 +595,6 @@ resources:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
   - kind: environment
     selector:
       query: "true"
@@ -626,6 +618,63 @@ resources:
 
 </details>
 
+### Feature Flags In Environment
+
+<details>
+<summary>Feature Flags In Environment blueprint</summary>
+
+```json showLineNumbers
+  {
+    "identifier": "featureFlagInEnvironment",
+    "description": "This blueprint represents a feature flag in LaunchDarkly Environment.",
+    "title": "Feature Flag In Environment",
+    "icon": "Launchdarkly",
+    "schema": {
+      "properties": {},
+      "required": []
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "aggregationProperties": {},
+    "relations": {
+      "environment": {
+        "title": "Environment",
+        "target": "launchDarklyEnvironment",
+        "required": false,
+        "many": false
+      },
+      "featureFlag": {
+        "title": "Feature Flag",
+        "target": "launchDarklyFeatureFlag",
+        "required": false,
+        "many": false
+      }
+    }
+  }
+```
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+  - kind: flag
+    selector:
+      query: "true"
+    port:
+      itemsToParse: .environments | keys
+      entity:
+        mappings:
+          identifier: .key + "-" + .item
+          title: .key + "-" + .item
+          blueprint: '"featureFlagInEnvironment"'
+          properties: {}
+          relations:
+            environment: .item
+            featureFlag: .key
+```
+
+</details>
 
 ## Let's Test It
 
