@@ -12,7 +12,7 @@ Our OpenCost integration allows you to import `cost` and `cloudCost` from your O
 ## Common use cases
 
 - Map your monitored Kubernetes resources and cost allocations in OpenCost.
-- Map you cost allocations from different providers from OpenCost.
+- Map you cost allocations from different cloud providers from OpenCost.
 
 ## Prerequisites
 
