@@ -607,7 +607,7 @@ resources:
 ```json showLineNumbers
 {
     "identifier": "openCostCloudcost",
-    "description": "This blueprint represents an instance of OpenCost CloudCost data",
+    "description": "This blueprint represents cloud cost allocations from your OpenCost instance",
     "icon": "Opencost",
     "title": "OpenCost CloudCost",
     "schema": {
