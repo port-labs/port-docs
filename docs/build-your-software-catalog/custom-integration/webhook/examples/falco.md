@@ -91,12 +91,12 @@ This guide assumes:
 
 ### Add namespace to alerts in Falco
 
-Adding namespaces via tags to alerts in Falco allows you to categorize and filter them. You can use namespaces to group alerts that are related to a specific Kubernetes Namespace in Port. In this guide, we will add a namespace using tags to the alert to tell us what namespace the alert is tied to:
+Adding namespaces via tags to alerts in Falco allows you to categorize and filter them. You can use namespaces to group alerts that are related to a specific Kubernetes Namespace in Port. In this guide, we will add a namespace to tell us what namespace the alert is tied to:
 
-1. **Log in to your server instance using methods available to you: SSH, Docker Exec, `docker compose run <bash/sh>`, etc.**
-2. **With necessary permissions and using your favourite editor (Vim, Nano, Emacs), open the YAML file where your Falco Rules are defined.** It is usually `/etc/falco/falco_rules.yaml`.
-3. **Navigate to a rule object you are interested in**
-4. **Navigate to the `tags` key** to add a tag that represents the namespace 
+1. **Log in** to your server instance using methods available to you: SSH, Docker Exec, `docker compose run <bash/sh>`, etc.
+2. With necessary permissions and using your favourite editor (Vim, Nano, Emacs), **open the YAML file** where your Falco Rules are defined. It is usually `/etc/falco/falco_rules.yaml`.
+3. **Navigate to the rule object** you are interested in.
+4. **Navigate** to the `tags` key to add a tag that represents the namespace 
 5. **Add a tag** that represents the Namespace the alert related to, `port-auth-namespace`. For this guide, let's assume there is a namespace entity identified by `auth-namespace` in your `Namespace` blueprint in Port.
 6. **Save the file**
 
