@@ -53,7 +53,7 @@ For example a hello-world action could look like:
 * The `trigger` is now an object detailing how the action should be triggered. The definition of the execution type (`CREATE`/`DAY-2`/`DELETE`) renamed from `trigger` to `operation` and is now a sub-property of the `trigger` object.
 * The `userInputs` field remains unchanged, except that it is now under the `trigger` object.
 
-For example tfor the old action:
+For example for the old action:
 ```json
 {
     "identifier": "myAction",
