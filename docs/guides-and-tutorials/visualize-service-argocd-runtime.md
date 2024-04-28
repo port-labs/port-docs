@@ -15,7 +15,7 @@ This guide takes 10 minutes to complete, and aims to demonstrate the value of Po
 
 - This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
 - You will need an accessible k8s cluster. If you don't have one, here is how to quickly set-up a [minikube cluster](https://minikube.sigs.k8s.io/docs/start/).
-- [Helm](https://helm.sh/docs/intro/install/) - required to install Port's Kubernetes exporter.
+- [Helm](https://helm.sh/docs/intro/install/) - required to install Port's ArgoCD integration.
 
 :::
 
@@ -179,37 +179,24 @@ After installation, the integration will:
 
 <br/>
 
-### Define the connection between services and workloads
+### Define the connection between workloads and services
 
-Now that we have our <PortTooltip id="blueprint">blueprints</PortTooltip> set up, we want to model the logical connection between our ArgoCD resources and the `Service` blueprint that already exists in our builder. This will grant us some helpful context in our Software catalog, allowing us to see relevant ArgoCD application/s in a `Service`'s context, or an application's property directly in its corresponding `Service`.
+Now that we have our <PortTooltip id="blueprint">blueprints</PortTooltip> set up, we want to model the logical connection between our ArgoCD resources and the `Service` blueprint that already exists in our builder. This will grant us some helpful context in our Software catalog, allowing us to see relevant ArgoCD application/s in a `Service`'s context, and their cooresponding data.
 
-In this guide we will create one relation named `Prod_runtime` which will represent the production environment of a service. In a real-world setting, we could have another relation for our staging environment, for example.
+In this guide we will create a relation named `Service` for the `Running Service` blueprint, which represents the service a workload is running. 
 
-1. Go to your [Builder](https://app.getport.io/settings/data-model), expand the `Service` blueprint, and click on `New relation`.
+1. Go to your [Builder](https://app.getport.io/settings/data-model), expand the `Running Service` blueprint, and click on `New relation`.
 
 2. Fill out the form like this, then click `Create`:
 
 <img src='/img/guides/argoCreateRelation.png' width='50%' border='1px' />
 
-<br/><br/>
-
-When looking at a `Service`, some of its `Running service` properties may be especially important to us, and we would like to see them directly in the `Service's` context. This can be achieved using [mirror properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/), so let's create one:
-
-3. Let's mirror the application's health. Under the relation we just created, click on `New mirror property`:
-
-<img src='/img/guides/argoCreateMirrorProp.png' width='50%' border='1px' />
-
-<br/><br/>
-
-4. Fill the form out like this, then click `Create`:
-
-<img src='/img/guides/argoCreateMirrorPropHealth.png' width='50%' border='1px' />
 
 <br/><br/>
 
 ### Map your workloads to their services
 
-You may have noticed that the `Prod_runtime` property and the mirror property we created are empty for all of our `services`. This is because we haven't specified which `Running service` belongs to which `service`. This can be done manually, or via mapping by using a convention of your choice.
+You may have noticed that the `service` relation is empty for all of our `Running Services`. This is because we haven't specified which `Running service` belongs to which `service`. This can be done manually, or via mapping by using a convention of your choice.
 
 In this guide we will use the following convention:  
 An Argo application with a label in the form of `portService: <service-identifier>` will automatically be assigned to a `service` with that identifier.
@@ -222,22 +209,31 @@ To achieve this, we need to update the ArgoCD integration's mapping configuratio
 Add the following block to the mapping configuration and click `Resync`:
 
 ```yaml showLineNumbers
-- kind: application
-  selector:
-    query: 'true'
-  port:
-    entity:
-      mappings:
-        identifier: .metadata.labels.portService
-        blueprint: '"service"'
-        properties: {}
-        relations:
-          prod_runtime: .metadata.uid
+  - kind: application
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .metadata.labels.portService
+          blueprint: '"service"'
+          properties: {}
+  - kind: application
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .metadata.uid
+          blueprint: '"argocdApplication"'
+          properties: {}
+          relations:
+            service: .metadata.labels.portService
 ```
 
 <br/>
 
-2. Go to the [services page](https://app.getport.io/services) of your software catalog. Click on the `Service` for which you created the deployment, and you should see the `Prod_runtime` property filled, along with the `Health` property that we mirrored:
+2. Go to the [services page](https://app.getport.io/services) of your software catalog. Click on the `Service` for which you created the deployment. At the bottom of the page, you will see the `Running Services` related to this service, along with all of their data:
 
 <img src='/img/guides/argoEntityAfterIngestion.png' width='100%' border='1px' />
 
@@ -248,7 +244,7 @@ Add the following block to the mapping configuration and click `Resync`:
 We now have a lot of data about our Argo applications, and a dashboard that visualizes it in ways that will benefit the routines of our developers and managers. Since we connected our ArgoCD application(`Running service`) blueprint to our `Service` blueprint, we can now access some of the application's data directly in the context of the service.  
 Let's see an example of how we can add useful visualizations to our dashboard:
 
-#### Show all "degraded" production services belonging to a specific team
+#### Show all "degraded" workloads of `AwesomeService` service belonging to a specific team
 
 1. Go to your [ArgoCD dashboard](https://app.getport.io/argocdDashboard), click on the `+ Add` button in the top right corner, then select `Table`.
 
@@ -257,7 +253,7 @@ Let's see an example of how we can add useful visualizations to our dashboard:
     <img src='/img/guides/argoTableDegradedServicesForm.png' width='50%' border='1px' />
 
 3. In your new table, click on the `Filter` icon, then on `+ Add new filter`.  
-   Add two filters by filling out the fields like this:
+   Add three filters by filling out the fields like this:
 
     <img src='/img/guides/argoTableFilterDegraded.png' width='80%' border='1px' />
 
