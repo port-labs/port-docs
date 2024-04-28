@@ -181,9 +181,9 @@ After installation, the integration will:
 
 ### Define the connection between workloads and services
 
-Now that we have our <PortTooltip id="blueprint">blueprints</PortTooltip> set up, we want to model the logical connection between our ArgoCD resources and the `Service` blueprint that already exists in our builder. This will grant us some helpful context in our Software catalog, allowing us to see relevant ArgoCD application/s in a `Service`'s context, and their cooresponding data.
+Now that we have our <PortTooltip id="blueprint">blueprints</PortTooltip> set up, we want to model the logical connection between our ArgoCD resources and the `Service` blueprint that already exists in our builder. This will grant us some helpful context in our software catalog, allowing us to see relevant ArgoCD application/s in a `Service`'s context, and their corresponding data.
 
-In this guide we will create a relation named `Service` for the `Running Service` blueprint, which represents the service a workload is running. 
+In this guide we will create a relation named `Service` for the `Running Service` blueprint, which represents the service a workload is running.
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model), expand the `Running Service` blueprint, and click on `New relation`.
 
