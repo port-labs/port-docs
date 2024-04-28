@@ -19,7 +19,7 @@ An example of creating a Jira bug from Port using Port's self service actions.
 - PORT_AUTH_CLIENT_ID - Your port [client id]([How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)).
 - PORT_AUTH_CLIENT_SECRET - Your port [client secret]([How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)).
 
-2. Optional - Install Port's Jira integration [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira#installation)
+2. Optional - Install Port's Jira integration [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/jira/)
 
 :::note Blueprint
 
