@@ -95,7 +95,6 @@ Make sure to replace the placeholders for PROJECT_NAME and GROUP_NAME of your `c
   <summary>Port Action</summary>
 
 ```json showLineNumbers
-[
   {
     "identifier": "crossplane_s3_bucket",
     "title": "Crossplane S3 Bucket",
@@ -134,7 +133,6 @@ Make sure to replace the placeholders for PROJECT_NAME and GROUP_NAME of your `c
     "description": "Creates a crossplane file for a new S3 Bucket",
     "requiredApproval": false
   }
-]
 ```
 
 </details>

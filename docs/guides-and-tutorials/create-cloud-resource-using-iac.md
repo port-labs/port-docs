@@ -35,7 +35,7 @@ After completing it, you will get a sense of how it can benefit different person
 
 In this guide we will add a new property to our `service` <PortTooltip id="blueprint">blueprint</PortTooltip>, which we can use to access our cloud resource definitions.
 
-1. Go to your [Builder](https://app.getport.io/dev-portal/data-model).
+1. Go to your [Builder](https://app.getport.io/settings/data-model).
 2. Click on your `service` <PortTooltip id="blueprint">blueprint</PortTooltip>, then click on `New property`.
 3. Choose `URL` as the type, fill it like this and click `Save`:
 
