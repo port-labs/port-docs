@@ -392,6 +392,8 @@ Examples of blueprints and the relevant integration configurations:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
 resources:
   - kind: project
     selector:
@@ -498,30 +500,32 @@ resources:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
-- kind: flag
-  selector:
-    query: "true"
-  port:
-    entity:
-      mappings:
-        identifier: .key
-        title: .name
-        blueprint: '"launchDarklyFeatureFlag"'
-        properties:
-          kind: .kind
-          description: .description
-          creationDate: .creationDate / 1000 | strftime("%Y-%m-%dT%H:%M:%SZ")
-          includeInSnippet: .includeInSnippet
-          clientSideAvailability: .clientSideAvailability
-          temporary: .temporary
-          tags: .tags
-          maintainer: ._maintainer.email
-          deprecated: .deprecated
-          variations: .variations
-          customProperties: .customProperties
-          archived: .archived
-        relations:
-          environments: .environments
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: flag
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .key
+          title: .name
+          blueprint: '"launchDarklyFeatureFlag"'
+          properties:
+            kind: .kind
+            description: .description
+            creationDate: .creationDate / 1000 | strftime("%Y-%m-%dT%H:%M:%SZ")
+1            clientSideAvailability: .clientSideAvailability
+            temporary: .temporary
+            tags: .tags
+            maintainer: ._maintainer.email
+            deprecated: .deprecated
+            variations: .variations
+            customProperties: .customProperties
+            archived: .archived
+          relations:
+            environments: .environments | keys
 ```
 </details>
 
@@ -596,6 +600,9 @@ resources:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
   - kind: environment
     selector:
       query: "true"
@@ -919,7 +926,7 @@ The combination of the sample payload and the Ocean configuration generates the 
     },
     "temporary": true,
     "tags": [],
-    "maintainer": "Michael Armah",
+    "maintainer": "mikeyarmah@gmail.com",
     "customProperties": {},
     "archived": false,
     "variations": [
@@ -933,7 +940,6 @@ The combination of the sample payload and the Ocean configuration generates the 
         "value": false
       }
     ],
-    "maintainerEmail": "mikeyarmah@gmail.com",
     "deprecated": false
   },
   "relations": {

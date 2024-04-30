@@ -136,12 +136,6 @@ In order to successfully deploy the Azure exporter, it's crucial to ensure that 
 
 5. Run the command in your terminal to deploy the Azure exporter.
 
-## Mapping configuration
-
-You can update the exporter's configuration in the integration page, you can use the configuration to add or remove Azure resources that will be ingested from your subscription.
-
-![Dev Portal Ingest Azure Mapping Configuration](/img/integrations/azure-exporter/DevPortalIngestAzureMappingConfiguration.png)
-
 ## Further information
 
-- Refer to the [examples](./examples.md) page for practical configurations and their corresponding blueprint definitions.
+- Refer to the [examples](./examples/examples.md) page for practical configurations and their corresponding blueprint definitions.

@@ -1,9 +1,9 @@
 ---
-sidebar_position: 3
+sidebar_position: 2
 ---
 
-import StorageAccountBlueprint from './examples/storage/\_storage_account_blueprint.mdx'
-import StorageAppConfig from './examples/storage/\_port_app_config.mdx'
+import StorageAccountBlueprint from './storage/\_storage_account_blueprint.mdx'
+import StorageAppConfig from './storage/\_port_app_config.mdx'
 
 # Mapping Extra Resources
 
