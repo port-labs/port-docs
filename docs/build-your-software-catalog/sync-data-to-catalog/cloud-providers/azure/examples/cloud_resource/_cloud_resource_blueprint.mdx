@@ -1,0 +1,45 @@
+<details>
+
+<summary>Cloud Resource Blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "azureCloudResource",
+  "title": "Cloud Resource",
+  "icon": "Azure",
+  "schema": {
+    "properties": {
+      "type": {
+        "icon": "Service",
+        "title": "Type",
+        "type": "string"
+      },
+      "location": {
+        "icon": "Home",
+        "title": "Location",
+        "type": "string"
+      },
+      "tags": {
+        "title": "Tags",
+        "type": "object",
+        "icon": "BlankPage"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "resource_group": {
+      "title": "Resource Group",
+      "target": "azureResourceGroup",
+      "required": false,
+      "many": false
+    }
+  }
+}
+
+```
+
+</details>

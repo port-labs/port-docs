@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 6
 title: Let developers enrich services using Gitops
 ---
 
@@ -37,7 +37,7 @@ After completing it, you will get a sense of how it can benefit different person
 
 Let's start by adding two new properties to the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>, that we will later populate using Gitops.
 
-1. Go to your [Builder](https://app.getport.io/dev-portal/data-model), expand the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New property`.
+1. Go to your [Builder](https://app.getport.io/settings/data-model), expand the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New property`.
 
 2. The first property will be the service's type, chosen from a predefined list of options. Fill out the form like this, then click `Create`:
 
@@ -57,7 +57,7 @@ _Note the colors of the inputs, this will make it easier to see a service's life
 
 Services that share a business purpose (e.g. payments, shipping) are often grouped together using domains. Let's create a <PortTooltip id="blueprint">blueprint</PortTooltip> to represent a domain in Port:
 
-1. In your [Builder](https://app.getport.io/dev-portal/data-model), click on the `Add` button in the top right corner, then choose `Custom blueprint`:
+1. In your [Builder](https://app.getport.io/settings/data-model), click on the `Add` button in the top right corner, then choose `Custom blueprint`:
 
 <img src='/img/quickstart/builderAddCustomBlueprint.png' width='30%' />
 
@@ -98,7 +98,7 @@ Services that share a business purpose (e.g. payments, shipping) are often group
 
 Now that we have a <PortTooltip id="blueprint">blueprint</PortTooltip> to represent a domain, let's connect it to our services. We will do this by adding a relation to the `Service` blueprint:
 
-1. Go to your [Builder](https://app.getport.io/dev-portal/data-model), expand the `Service` blueprint, and click on `New relation`:
+1. Go to your [Builder](https://app.getport.io/settings/data-model), expand the `Service` blueprint, and click on `New relation`:
 
 <img src='/img/guides/serviceCreateRelation.png' width='30%' />
 
