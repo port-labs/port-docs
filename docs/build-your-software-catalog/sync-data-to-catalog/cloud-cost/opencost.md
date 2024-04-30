@@ -12,7 +12,7 @@ Our OpenCost integration allows you to import `cost` and `cloudCost` from your O
 ## Common use cases
 
 - Map your monitored Kubernetes resources and cost allocations in OpenCost.
-- Map you cost allocations from different cloud providers from OpenCost.
+- Map your cost allocations from different cloud providers from OpenCost.
 
 ## Prerequisites
 
@@ -386,7 +386,7 @@ The following resources can be used to map data from OpenCost, it is possible to
       port:
   ```
 
-  - **window** - Duration of time over which to query. Accepts: words like `today`, `week`, `month`, `yesterday`, `lastweek`, `lastmonth`; durations like `30m`, `12h`, `7d`; RFC3339 date pairs like `2021-01-02T15:04:05Z,2021-02-02T15:04:05Z`; Unix timestamps like `1578002645,1580681045`.If not specified, the default value is `"today"`
+  - **window** - Duration of time over which to query. Accepts words like: `today`, `week`, `month`, `yesterday`, `lastweek`, `lastmonth`; durations like `30m`, `12h`, `7d`; RFC3339 date pairs like `2021-01-02T15:04:05Z,2021-02-02T15:04:05Z`; Unix timestamps like `1578002645,1580681045`. If not specified, the default value is `"today"`
   - **aggregate** - Field by which to aggregate the results. Accepts: `cluster`, `node`, `namespace`, `controllerKind`, `controller`, `service`, `pod`, `container`, `label:name`, and `annotation:name`. Also accepts comma-separated lists for multi-aggregation, like `namespace,label:app`.
   - **step** - Duration of a single allocation set. If unspecified, this defaults to the window, so that you receive exactly one set for the entire window. If specified, such as `30m`, `2h`, `1d` etc, it works chronologically backward, querying in durations of step until the full window is covered. Default is `window`.
   - **resolution** - Duration to use as resolution in Prometheus queries. Smaller values (i.e. higher resolutions) will provide better accuracy, but worse performance (i.e. slower query time, higher memory use). Larger values (i.e. lower resolutions) will perform better, but at the expense of lower accuracy for short-running workloads. Default is `1m`.
@@ -688,7 +688,7 @@ resources:
 #### Selector Parameters
 The following parameters under the `selector` key can be used to manipulate which data is ingested:
 
-- **window** - Duration of time over which to query. Accepts: words like `today`, `week`, `month`, `yesterday`, `lastweek`, `lastmonth`; durations like `30m`, `12h`, `7d`; RFC3339 date pairs like `2021-01-02T15:04:05Z,2021-02-02T15:04:05Z`; Unix timestamps like `1578002645,1580681045`. If not specified, the default value is `"today"`
+- **window** - Duration of time over which to query. Accepts words like: `today`, `week`, `month`, `yesterday`, `lastweek`, `lastmonth`; durations like `30m`, `12h`, `7d`; RFC3339 date pairs like `2021-01-02T15:04:05Z,2021-02-02T15:04:05Z`; Unix timestamps like `1578002645,1580681045`. If not specified, the default value is `"today"`
 - **cloudcostAggregate** - Field by which to aggregate the results. Accepts: `invoiceEntityID`, `accountID`, `provider`, `providerID`, `category`, and `service`. Also accepts comma-separated lists for multi-aggregation, like `provider,service`. If no value is provided, the entire list of items is returned.
 - **accumulate** - Step size of the accumulation. Accepts: `all`, `hour`, `day`, `week`, `month`, and `quarter`. If not specified, the default value is `"day"`.
 
