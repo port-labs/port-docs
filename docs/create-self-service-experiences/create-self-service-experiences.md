@@ -3,6 +3,13 @@ title: Create self-service actions
 sidebar_label: Create self-service actions
 ---
 
+import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+
+:::warning Relevancy
+This document is relevant for the UI and the `/v1/actions` api routes.
+- If you are using `/v1/blueprints/:blueprint_identifier/actions` api please refer to this document: [[Depracated] Create self-service actions](/depracated/create-self-service-experiences/)
+:::
+
 # Create self-service actions
 
 <center>
@@ -39,7 +46,7 @@ In our [live demo](https://demo.getport.io/self-serve), you can see examples for
 ## How does it work?
 
 1. A user **performs an action** from Port's UI interface.
-2. **A payload** that includes the user inputs and relevant action metadata is **sent** to your infrastructure.
+2. **A payload** is generated based on the user inputs and relevant action metadata and **sent** to your infrastructure.
 3. **A job is triggered** and the **user gets a continuous indication** about its progress.
 4. Once the action is running, you can use Port's API to update Port on its status and provide information such as logs and links to the resulting handlers.
 
@@ -52,7 +59,7 @@ Port gives you no-code components to create the experience you want for your use
 
 Self-service actions are created and managed in the [Self-service](https://app.getport.io/self-serve) page of your portal.  
 
-To begin, click on the `+ New Action` button in the top right corner. Choose the blueprint for which you would like to create the action, then follow the steps below.
+To begin, click on the `+ New Action` button in the top right corner, then follow the steps below.
 
 :::tip Other supported methods
 Besides Port's UI, you can also create and manage self-service actions using [Port's API](/api-reference/), or [Terraform](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/port_action).
