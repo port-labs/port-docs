@@ -1021,6 +1021,87 @@ resources:
 ### Kubernetes Resource
 
 <details>
+<summary> Images blueprint</summary>
+
+```json showlineNumbers
+ {
+    "identifier": "image",
+    "description": "This blueprint represents an image",
+    "title": "Image",
+    "icon": "AWS",
+    "schema": {
+      "properties": {
+        "registryId": {
+          "type": "string",
+          "title": "Registry ID",
+          "description": "The ID of the registry",
+          "icon": "DefaultProperty"
+        },
+        "digest": {
+          "type": "string",
+          "title": "Image Digest",
+          "description": "SHA256 digest of image manifest",
+          "icon": "DefaultProperty"
+        },
+        "tags": {
+          "type": "array",
+          "title": "Image Tags",
+          "description": "List of tags for the image",
+          "icon": "DefaultProperty"
+        },
+        "pushedAt": {
+          "type": "string",
+          "title": "Pushed At",
+          "description": "Date and time the image was pushed to the repository",
+          "format": "date-time",
+          "icon": "DefaultProperty"
+        },
+        "lastRecordedPullTime": {
+          "type": "string",
+          "title": "Last Recorded Pull Time",
+          "description": "Date and time the image was last pulled",
+          "format": "date-time",
+          "icon": "DefaultProperty"
+        },
+        "triggeredBy": {
+          "type": "string",
+          "icon": "TwoUsers",
+          "title": "Triggered By",
+          "description": "The user who triggered the run"
+        },
+        "commitHash": {
+          "type": "string",
+          "title": "Commit Hash",
+          "icon": "DefaultProperty"
+        },
+        "pullRequestId": {
+          "type": "string",
+          "icon": "Git",
+          "title": "Pull Request ID"
+        },
+        "workflowId": {
+          "type": "string",
+          "title": "Workflow ID",
+          "icon": "DefaultProperty"
+        },
+        "image_branch": {
+          "title": "Image branch",
+          "type": "string",
+          "description": "The git branch associated with the repository used to build the Image"
+        }
+      },
+      "required": []
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "aggregationProperties": {},
+    "relations": {}
+  }
+```
+
+</details>
+
+<details>
 <summary> Kubernetes resource blueprint</summary>
 
 ```json showlineNumbers
@@ -1072,12 +1153,19 @@ resources:
         "target": "argocdApplication",
         "required": false,
         "many": false
+      },
+      "image": {
+        "title": "Image",
+        "target": "image",
+        "required": false,
+        "many": true
       }
     }
   }
 ```
 
 </details>
+
 
 <details>
 <summary>Integration configuration</summary>
@@ -1092,8 +1180,8 @@ resources:
     port:
       entity:
         mappings:
-          identifier: .__application.metadata.uid + "-" + .name
-          title: .__application.metadata.name + "-" + .name
+          identifier: .__application.metadata.uid + "-" + .kind + "-" + .name
+          title: .__application.metadata.name + "-" + .kind + "-" + .name
           blueprint: '"argocdKubernetesResource"'
           properties:
             kind: .kind
@@ -1103,116 +1191,10 @@ resources:
             labels: .liveState | fromjson | .metadata.labels
           relations:
             application: .__application.metadata.uid
+            image: 'if .kind == "Deployment" then [.liveState | fromjson | .spec.template.spec.containers[] | .image] else [] end'
 ```
 </details>
 
-### Kubernetes resource
-
-<details>
-<summary> Kubernetes resource blueprint</summary>
-
-```json showlineNumbers
-{
-    "identifier": "argocdKubernetesResource",
-    "description": "This blueprint represents an ArgoCD kubernetes resource",
-    "title": "Kubernetes Resource",
-    "icon": "Argo",
-    "schema": {
-      "properties": {
-        "kind": {
-          "title": "Kind",
-          "type": "string"
-        },
-        "version": {
-          "title": "Version",
-          "type": "string"
-        },
-        "syncStatus": {
-          "type": "string",
-          "title": "Sync Status",
-          "enum": [
-            "Synced",
-            "OutOfSync",
-            "Unknown"
-          ],
-          "enumColors": {
-            "Synced": "green",
-            "OutOfSync": "red",
-            "Unknown": "lightGray"
-          },
-          "description": "The sync status of the application"
-        },
-        "healthStatus": {
-          "type": "string",
-          "title": "Health Status",
-          "enum": [
-            "Healthy",
-            "Missing",
-            "Suspended",
-            "Degraded",
-            "Progressing",
-            "Unknown"
-          ],
-          "enumColors": {
-            "Healthy": "green",
-            "Missing": "yellow",
-            "Suspended": "purple",
-            "Degraded": "red",
-            "Progressing": "blue",
-            "Unknown": "lightGray"
-          },
-          "description": "The health status of the application"
-        },
-        "namespace": {
-          "title": "Namespace",
-          "type": "string"
-        }
-      },
-      "required": []
-    },
-    "mirrorProperties": {},
-    "calculationProperties": {},
-    "aggregationProperties": {},
-    "relations": {
-      "application": {
-        "title": "Application",
-        "target": "argocdApplication",
-        "required": false,
-        "many": false
-      }
-    }
-}
-```
-
-</details>
-
-<details>
-<summary>Integration configuration</summary>
-
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: kubernetes-resource
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: .__applicationId + "-" + .name
-          title: .name
-          blueprint: '"argocdKubernetesResource"'
-          properties:
-            kind: .kind
-            version: .version
-            namespace: .namespace
-            syncStatus: .status
-            healthStatus: .health.status
-          relations:
-            application: .__applicationId
-```
-
-</details>
 
 ## Alternative installation via webhook
 
