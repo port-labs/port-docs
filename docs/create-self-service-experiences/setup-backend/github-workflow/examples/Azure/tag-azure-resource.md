@@ -128,7 +128,7 @@ Import Azure resources into your Port account using the [Azure Exporter](/build-
   "identifier": "service_add_tags_to_azure_storage",
   "title": "Add Tags to Azure Storage",
   "icon": "Azure",
-  "description": "Add tags to azure storage acount",
+  "description": "Add tags to azure storage account",
   "trigger": {
     "type": "self-service",
     "operation": "DAY-2",
