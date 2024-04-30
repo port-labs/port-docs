@@ -592,11 +592,8 @@ resources:
       },
       "oncall": {
         "title": "On Call",
-        "type": "array",
-        "items": {
-          "type": "string",
-          "format": "user"
-        }
+        "type": "string",
+        "format": "user"
       }
     },
     "required": []
@@ -628,7 +625,7 @@ resources:
           properties:
             status: .status
             url: .html_url
-            oncall: "[.__oncall_user[].user.email]"
+            oncall: .__oncall_user[] | select(.escalation_level == 1) | .user.email
 ```
 
 </details>

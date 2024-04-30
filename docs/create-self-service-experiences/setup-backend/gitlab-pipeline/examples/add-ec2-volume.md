@@ -302,7 +302,7 @@ create-entity:
     - apk add --upgrade curl jq -q
   script:
     - |
-      echo "Creating Port entity to match new S3 bucket"
+      echo "Creating Port entity for the volume"
       accessToken=$(curl -X POST \
         -H 'Content-Type: application/json' \
         -d '{"clientId": "'"$PORT_CLIENT_ID"'", "clientSecret": "'"$PORT_CLIENT_SECRET"'"}' \

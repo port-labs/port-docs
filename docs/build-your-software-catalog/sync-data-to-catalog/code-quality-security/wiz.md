@@ -6,6 +6,7 @@ import DockerParameters from "./\_wiz-docker-parameters.mdx"
 import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
 import WizBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/wiz/\_example_wiz_issue_blueprint.mdx";
 import WizConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/wiz/\_example_wiz_issue_webhook_configuration.mdx";
+import FindCredentials from "/docs/build-your-software-catalog/custom-integration/api/_template_docs/_find_credentials.mdx";
 
 # Wiz
 
@@ -18,10 +19,69 @@ Our Wiz integration allows you to import `projects`, `issues`, `controls`, and `
 
 ## Prerequisites
 
-<Prerequisites />
+### Port Credentials
 
-Your Wiz credentials should have the `read:projects` and `read:issues` permission scopes. Visit the Wiz [documentation](https://integrate.wiz.io/reference/prerequisites) for a guide on how to get your credentials as well as set permissions.
+<FindCredentials />
 
+### Wiz Credentials
+
+You need the following connection details to configure Wiz:
+
+- Wiz API URL (API Endpoint URL)
+- Wiz Token URL
+- Client ID and Client Secret
+
+:::info Wiz Token URL
+There are two possible endpoints depending on your service account's identity provider:
+
+- Amazon Cognito:	https://auth.app.wiz.io/oauth/token
+- Auth0:	https://auth.wiz.io/oauth/token
+
+Learn more [here](https://win.wiz.io/reference/quickstart#generate-a-bearer-token-and-start-using-wiz-api).
+:::
+
+<br />
+
+1. **Finding Your Wiz API URL**:
+    - Login to Wiz account.
+    - Click the **User Profile** icon available at the top right of the screen and click the **User Settings** option.
+    - Click the **Tenant** option from the left options menu.
+    - The system displays the **API Endpoint URL**.
+    - Copy and save the **API URL** to use while configuring the Wiz intergration.
+
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/code-quality-security/wizApiUrl.png' width='85%' border='1px' />
+
+For more details, refer to the [documentation](https://docs.wiz.io/wiz-docs/docs/using-the-wiz-api#the-graphql-endpoint)
+
+<br />
+
+2. **Getting the Client ID and Client Secret**
+
+You must create a service account in Wiz to generate the Client ID and Client Secret. Follow the below steps to get the Client ID and Client Secret:
+    - Login to **Wiz with the Project Admin role**.
+    - Click the **Settings** icon available at the top-right of the page.
+  <img src='/img/build-your-software-catalog/sync-data-to-catalog/code-quality-security/wizAddSvcAccount.png' width='85%' border='1px' />
+    - On the Settings page, Click **Service Accounts** from the left menu.
+    - Create a Service Account:
+        - Click **Add Service Account**.
+        - Provide a descriptive **Service Account Name**.
+        - **Type**: Select **Custom Integration (GraphQL API)**.
+        - **Project**: Choose the relevant project(s).
+        - **API Scopes**: Select only the `read:projects` and `read:issues` permissions.
+        - Click **Add Service Account** at the bottom of the page to save.
+
+    <img src='/img/build-your-software-catalog/sync-data-to-catalog/code-quality-security/wizCreds.png' width='85%' border='1px' />
+    
+    <br />
+    <br />
+
+    - Retrieve Credentials: Wiz will display your Client ID and Client Secret.
+    - Save Credentials: Copy and store them securely for use in Port.
+    
+     <img src='/img/build-your-software-catalog/sync-data-to-catalog/code-quality-security/wizSecrets.png' width='85%' border='1px' />
+
+<br />
+    <br />
 
 ## Installation
 
@@ -126,6 +186,8 @@ If you want the integration to update Port in real time using webhooks you shoul
 the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
 :::
 
+<br />
+
 Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
 of `Secret Text` type:
 
@@ -182,9 +244,9 @@ pipeline {
 
 <AzurePremise name="Wiz" />
 
+
 <DockerParameters />
 
-<br/>
 
 Here is an example for `wiz-integration.yml` pipeline file:
 
@@ -210,12 +272,12 @@ steps:
     docker run -i --rm \
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-        -e OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_ID=${OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_ID} \
-        -e OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_SECRET=${OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_SECRET} \
-        -e OCEAN__INTEGRATION__CONFIG__WIZ_API_URL=${OCEAN__INTEGRATION__CONFIG__WIZ_API_URL} \
-        -e OCEAN__INTEGRATION__CONFIG__WIZ_TOKEN_URL=${OCEAN__INTEGRATION__CONFIG__WIZ_TOKEN_URL} \
-        -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \
-        -e OCEAN__PORT__CLIENT_SECRET=${OCEAN__PORT__CLIENT_SECRET} \
+        -e OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_ID=$(OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_ID) \
+        -e OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_SECRET=$(OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_SECRET) \
+        -e OCEAN__INTEGRATION__CONFIG__WIZ_API_URL=$(OCEAN__INTEGRATION__CONFIG__WIZ_API_URL) \
+        -e OCEAN__INTEGRATION__CONFIG__WIZ_TOKEN_URL=$(OCEAN__INTEGRATION__CONFIG__WIZ_TOKEN_URL) \
+        -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
+        -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
         $image_name
 
     exit $?
