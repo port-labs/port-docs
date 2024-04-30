@@ -483,11 +483,11 @@ resources:
     "calculationProperties": {},
     "aggregationProperties": {},
     "relations": {
-      "environments": {
-        "title": "Environments",
-        "target": "launchDarklyEnvironment",
-        "required": false,
-        "many": true
+      "project": {
+        "title": "Project",
+        "target": "launchDarklyProject",
+        "required": true,
+        "many": false
       }
     }
   }
@@ -520,7 +520,7 @@ resources:
           customProperties: .customProperties
           archived: .archived
         relations:
-          environments: .environments | keys
+          project: .__projectKey
 ```
 </details>
 
@@ -614,6 +614,64 @@ resources:
             critical: .critical
           relations:
             project: .__projectKey
+```
+
+</details>
+
+### Feature Flags In Environment
+
+<details>
+<summary>Feature Flags In Environment Blueprint</summary>
+
+```json showLineNumbers
+  {
+    "identifier": "launchDarklyFFInEnvironment",
+    "description": "This blueprint represents a feature flag in LaunchDarkly Environment.",
+    "title": "Feature Flag In Environment",
+    "icon": "Launchdarkly",
+    "schema": {
+      "properties": {},
+      "required": []
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "aggregationProperties": {},
+    "relations": {
+      "environment": {
+        "title": "Environment",
+        "target": "launchDarklyEnvironment",
+        "required": false,
+        "many": false
+      },
+      "featureFlag": {
+        "title": "Feature Flag",
+        "target": "launchDarklyFeatureFlag",
+        "required": false,
+        "many": false
+      }
+    }
+  }
+```
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+  - kind: flag
+    selector:
+      query: "true"
+    port:
+      itemsToParse: .environments | keys
+      entity:
+        mappings:
+          identifier: .key + "-" + .item
+          title: .key + "-" + .item
+          blueprint: '"launchDarklyFFInEnvironment"'
+          properties: {}
+          relations:
+            environment: .item
+            featureFlag: .key
 ```
 
 </details>
