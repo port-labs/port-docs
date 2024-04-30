@@ -1,24 +1,20 @@
----
-title: Set actions RBAC
-sidebar_label: Set actions RBAC
----
-
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-:::warning Relevancy
-This document is relevant for the UI and the `/v1/actions` api routes.
-- If you are using `/v1/blueprints/:blueprint_identifier/actions` api please refer to this document: [[Depracated] Set actions RBAC](/depracated/create-self-service-experiences/set-self-service-actions-rbac)
+:::warning Depracation
+This documenation page is for the `/blueprint/:blueprint_identifier/actions` self-service actions management routes, which are planned for depracation.
+- To migrate your code to the new routes follow this guide: [Migrate Actions To The New Routes](/TODO-page-doesn't-exist-yet)
+- For the documentation about the new routes go to this documentation: [[Depracated] Set actions RBAC](/create-self-service-experiences/set-self-service-actions-rbac)
 :::
 
-# Set actions RBAC
+# [Depracated] Set actions RBAC
 
 Port provides granular control to make sure every user can only execute and invoke the actions that are relevant for them.
 
 :::tip
-This section covers the self-service actions section of Port's RBAC functionality, while it is not a prerequisite, it is highly recommended you also go over Port's [permission controls](../../sso-rbac/rbac/rbac.md).
+This section covers the self-service actions section of Port's RBAC functionality, while it is not a prerequisite, it is highly recommended you also go over Port's [permission controls](/sso-rbac/rbac/rbac.md).
 
-In order to manage who can view which pages in Port, check out [page permissions](../../customize-pages-dashboards-and-plugins/page/page-permissions.md).
+In order to manage who can view which pages in Port, check out [page permissions](/customize-pages-dashboards-and-plugins/page/page-permissions.md).
 :::
 
 ## Common Self-service actions RBAC usage
@@ -105,10 +101,7 @@ Add the `requiredApproval` field to your action:
       "type": "WEBHOOK",
       "url": "https://example.com"
     },
-    "trigger": {
-      ...
-      "operation": "CREATE",
-    }
+    "trigger": "CREATE",
     // highlight-next-line
     "requiredApproval": true,
     ...

@@ -1,12 +1,13 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-:::warning Relevancy
-This document is relevant for the UI and the `/v1/actions` api routes.
-- If you are using `/v1/blueprints/:blueprint_identifier/actions` api please refer to this document: [[Depracated] Advanced input configurations](/depracated/create-self-service-experiences/setup-ui-for-action/advanced-form-configurations)
+:::warning Depracation
+This documenation page is for the `/blueprint/:blueprint_identifier/actions` self-service actions management routes, which are planned for depracation.
+- To migrate your code to the new routes follow this guide: [Migrate Actions To The New Routes](/TODO-page-doesn't-exist-yet)
+- For the documentation about the new routes go to this documentation: [Advanced input configurations](/create-self-service-experiences/setup-ui-for-action/advanced-form-configurations)
 :::
 
-# Advanced input configurations
+# [Depracated] Advanced input configurations
 
 Advanced input settings allow you to create more customizable experiences for users who perform self-service actions. This is done by creating adaptive inputs that change according to data about the entity, the user, and other inputs.
 
@@ -568,7 +569,7 @@ action = Action(
 </TabItem>
 </Tabs>
 
-![Cluster And Namespace Action](../../../static/img/software-catalog/blueprint/javascriptSDK.png)
+![Cluster And Namespace Action](/img/software-catalog/blueprint/javascriptSDK.png)
 
 ### Hiding property based on the executing user's roles
 
@@ -651,10 +652,10 @@ action = Action(
 </Tabs>
 
 This is how the run form would show up for non-admin users:
-![What Non-Admins See](../../../static/img/software-catalog/blueprint/hiddenPropertyExample.png)
+![What Non-Admins See](/img/software-catalog/blueprint/hiddenPropertyExample.png)
 
 And this is how the form would show up for admin users:
-![What Admins See](../../../static/img/software-catalog/blueprint/hiddenPropertyShownExample.png)
+![What Admins See](/img/software-catalog/blueprint/hiddenPropertyShownExample.png)
 
 ### Filter the dropdown's available options based on a property
 
@@ -754,7 +755,7 @@ action = Action(
 </TabItem>
 </Tabs>
 
-![Only Production Envs](../../../static/img/software-catalog/blueprint/onlyNotProductionEnvs.png)
+![Only Production Envs](/img/software-catalog/blueprint/onlyNotProductionEnvs.png)
 
 :point_up: only the environments whose type is not `production` will appear in the dropdown. :point_up:
 
@@ -887,7 +888,7 @@ action = Action(
 
 </Tabs>
 
-![Cluster And Namespace Action](../../../static/img/software-catalog/blueprint/clusterNamespaceActionSmallerExample.png)
+![Cluster And Namespace Action](/img/software-catalog/blueprint/clusterNamespaceActionSmallerExample.png)
 
 :point_up: The user will be required to choose a cluster, then the `namespace` input list will be populated with namespace entities related to the chosen cluster. :point_up:
 
@@ -993,7 +994,7 @@ action = Action(
 </TabItem>
 </Tabs>
 
-![Cluster And Namespace Action](../../../static/img/software-catalog/blueprint/userPropertiesModal.png)
+![Cluster And Namespace Action](/img/software-catalog/blueprint/userPropertiesModal.png)
 
 :point_up: These are the only namespaces that are associated with the logged-in user's teams. :point_up:
 
@@ -1166,7 +1167,7 @@ action = Action(
 </TabItem>
 </Tabs>
 
-![entity tags action](../../../static/img/software-catalog/blueprint/defaultEntityTags.png)
+![entity tags action](/img/software-catalog/blueprint/defaultEntityTags.png)
 
 :point_up: The namespace tags are already inserted into the form. :point_up:
 
@@ -1249,7 +1250,7 @@ In this example, we will create an action that lets the user select a cluster an
 
 #### the existing model in Port:
 
-![Developer PortalCreate New Blueprint](../../../static/img/software-catalog/blueprint/clusterNamespaceBlueprint.png)
+![Developer PortalCreate New Blueprint](/img/software-catalog/blueprint/clusterNamespaceBlueprint.png)
 
 #### the action's configuration:
 
@@ -1268,64 +1269,61 @@ values={[
   "identifier": "createRunningService",
   "title": "Deploy running service to a cluster",
   "icon": "Cluster",
-  "trigger": {
-    "type": "self-service",
-    "operation": "CREATE",
-    "userInputs": {
-      "properties": {
-        "Cluster": {
-          "type": "string",
-          "format": "entity",
-          "blueprint": "Cluster",
-          "title": "Cluster",
-          "description": "The cluster to create the namespace in"
-        },
-        "namespace": {
-          "type": "string",
-          "format": "entity",
-          "blueprint": "namespace",
-          "dependsOn": ["Cluster"],
-          "dataset": {
-            "combinator": "and",
-            "rules": [
-              {
-                "blueprint": "Cluster",
-                "operator": "relatedTo",
-                "value": {
-                  "jqQuery": ".form.Cluster.identifier"
-                }
-              }
-            ]
-          },
-          "title": "namespace",
-          "description": "The namespace to create the cluster in"
-        },
-        "service": {
-          "type": "string",
-          "format": "entity",
-          "blueprint": "Service",
-          "dataset": {
-            "combinator": "and",
-            "rules": [
-              {
-                "property": "$team",
-                "operator": "containsAny",
-                "value": {
-                  "jqQuery": "[.user.teams[].name]"
-                }
-              }
-            ]
-          },
-          "title": "Service"
-        }
+  "userInputs": {
+    "properties": {
+      "Cluster": {
+        "type": "string",
+        "format": "entity",
+        "blueprint": "Cluster",
+        "title": "Cluster",
+        "description": "The cluster to create the namespace in"
       },
-      "required": ["Cluster", "namespace", "service"]
+      "namespace": {
+        "type": "string",
+        "format": "entity",
+        "blueprint": "namespace",
+        "dependsOn": ["Cluster"],
+        "dataset": {
+          "combinator": "and",
+          "rules": [
+            {
+              "blueprint": "Cluster",
+              "operator": "relatedTo",
+              "value": {
+                "jqQuery": ".form.Cluster.identifier"
+              }
+            }
+          ]
+        },
+        "title": "namespace",
+        "description": "The namespace to create the cluster in"
+      },
+      "service": {
+        "type": "string",
+        "format": "entity",
+        "blueprint": "Service",
+        "dataset": {
+          "combinator": "and",
+          "rules": [
+            {
+              "property": "$team",
+              "operator": "containsAny",
+              "value": {
+                "jqQuery": "[.user.teams[].name]"
+              }
+            }
+          ]
+        },
+        "title": "Service"
+      }
     },
+    "required": ["Cluster", "namespace", "service"]
   },
   "invocationMethod": {
     "type": "WEBHOOK",
     "url": "https://example.com"
   },
+  "trigger": "CREATE",
   "description": "This will deploy a running service to a cluster"
 }
 ```
@@ -1337,59 +1335,57 @@ values={[
 ```hcl showLineNumbers
 resource "port_action" "createRunningService" {
   title       = "Create Running Service"
+  blueprint   = "abc"
   identifier  = "createRunningService"
+  trigger     = "CREATE"
   description = "This will deploy a running service to a cluster"
   webhook_method = {
     url = "https://example.com"
   }
-  self_service_trigger = {
-    operation = "CREATE"
-    blueprint_identifier = "createRunningService"
-    user_properties = {
-      string_props = {
-        cluster = {
-          format      = "entity",
-          blueprint   = "Cluster",
-          title       = "Cluster"
-          description = "The cluster to create the namespace in"
-          required    = true
-        }
-        namespace = {
-          title       = "Namespace"
-          format      = "entity",
-          blueprint   = "namespace",
-          description = "The namespace to create the cluster in"
-          required    = true
-          depends_on  = ["cluster"]
-          dataset = {
-            combinator = "and"
-            rules = [
-              {
-                blueprint = "Cluster"
-                operator  = "relatedTo"
-                value = {
-                  jq_query = ".form.Cluster.identifier"
-                }
+  user_properties = {
+    string_props = {
+      cluster = {
+        format      = "entity",
+        blueprint   = "Cluster",
+        title       = "Cluster"
+        description = "The cluster to create the namespace in"
+        required    = true
+      }
+      namespace = {
+        title       = "Namespace"
+        format      = "entity",
+        blueprint   = "namespace",
+        description = "The namespace to create the cluster in"
+        required    = true
+        depends_on  = ["cluster"]
+        dataset = {
+          combinator = "and"
+          rules = [
+            {
+              blueprint = "Cluster"
+              operator  = "relatedTo"
+              value = {
+                jq_query = ".form.Cluster.identifier"
               }
-            ]
-          }
+            }
+          ]
         }
-        service = {
-          title     = "Service"
-          blueprint = "Service",
-          required  = true
-          dataset = {
-            combinator = "and"
-            rules = [
-              {
-                blueprint = "$team"
-                operator  = "containsAny"
-                value = {
-                  jq_query = "[.user.teams[].name]"
-                }
+      }
+      service = {
+        title     = "Service"
+        blueprint = "Service",
+        required  = true
+        dataset = {
+          combinator = "and"
+          rules = [
+            {
+              blueprint = "$team"
+              operator  = "containsAny"
+              value = {
+                jq_query = "[.user.teams[].name]"
               }
-            ]
-          }
+            }
+          ]
         }
       }
     }
@@ -1415,59 +1411,56 @@ action = Action(
   identifier="createRunningService",
   title="Deploy running service to a cluster",
   icon="Cluster",
-  self_service_trigger={
-    operation="CREATE"
-    blueprint_identifier="createRunningService"
-    user_properties={
-      "string_props": {
-        "Cluster": {
-          "format": "entity",
-          "blueprint": "Cluster",
-          "required": True,
-          "title": "Cluster",
-          "description": "The cluster to create the namespace in"
-        },
-        "namespace": {
-          "format": "entity",
-          "blueprint": "namespace",
-          "required": True,
-          "depends_ons": ["Cluster"],
-          "dataset": {
-              "combinator": "and",
-              "rules": [
-                {
-                  "blueprint": "Cluster",
-                  "operator": "relatedTo",
-                  "value": {
-                    "jq_query": ".form.Cluster.identifier"
-                  }
-                }
-              ],
-          },
-          "title": "namespace",
-          "description": "The namespace to create the cluster in"
-        },
-        "service": {
-          "format": "entity",
-          "blueprint": "Service",
-          "required": True,
-          "dataset": {
+  user_properties={
+    "string_props": {
+      "Cluster": {
+        "format": "entity",
+        "blueprint": "Cluster",
+        "required": True,
+        "title": "Cluster",
+        "description": "The cluster to create the namespace in"
+      },
+      "namespace": {
+        "format": "entity",
+        "blueprint": "namespace",
+        "required": True,
+        "depends_ons": ["Cluster"],
+        "dataset": {
             "combinator": "and",
             "rules": [
               {
-                "blueprint": "$team",
-                "operator": "containsAny",
+                "blueprint": "Cluster",
+                "operator": "relatedTo",
                 "value": {
-                  "jq_query": "[.user.teams[].name]"
+                  "jq_query": ".form.Cluster.identifier"
                 }
               }
-            ]
-          },
-          "title": "Service"
-        }
+            ],
+        },
+        "title": "namespace",
+        "description": "The namespace to create the cluster in"
       },
+      "service": {
+        "format": "entity",
+        "blueprint": "Service",
+        "required": True,
+        "dataset": {
+          "combinator": "and",
+          "rules": [
+            {
+              "blueprint": "$team",
+              "operator": "containsAny",
+              "value": {
+                "jq_query": "[.user.teams[].name]"
+              }
+            }
+          ]
+        },
+        "title": "Service"
+      }
     },
-  }
+  },
+  trigger="CREATE",
   description="This will deploy a running service to a cluster"
   webhook_method={"url": "https://example.com"},
 )
@@ -1554,7 +1547,7 @@ exports.title = entity.title;
 
 #### The action in the developer portal:
 
-![Cluster And Namespace Action](../../../static/img/software-catalog/blueprint/clusterNamespaceAction.png)
+![Cluster And Namespace Action](/img/software-catalog/blueprint/clusterNamespaceAction.png)
 
 :point_up: The user will be required to choose a cluster, and then the namespace input list will be populated with namespace entities related to the chosen cluster. The user will only be able to deploy services associated with his team.  
 Note the `$` before `team`, this indicates that this is a [metadata property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/meta-properties).

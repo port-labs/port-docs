@@ -1,15 +1,12 @@
----
-title: Setup backend
----
-
 import DocCardList from '@theme/DocCardList';
 
-:::warning Relevancy
-This document is relevant for the UI and the `/v1/actions` api routes.
-- If you are using `/v1/blueprints/:blueprint_identifier/actions` api please refer to this document: [[Depracated] Setup backend](/depracated/create-self-service-experiences/setup-backend)
+:::warning Depracation
+This documenation page is for the `/blueprint/:blueprint_identifier/actions` self-service actions management routes, which are planned for depracation.
+- To migrate your code to the new routes follow this guide: [Migrate Actions To The New Routes](/TODO-page-doesn't-exist-yet)
+- For the documentation about the new routes go to this documentation: [Setup backend](/create-self-service-experiences/setup-backend)
 :::
 
-# Setup backend
+# [Depracated] Setup backend
 
 <center>
 
@@ -28,7 +25,7 @@ Here is the basic backend model:
 Executing a self-service action involves the following steps:
 
 1. **The action is triggered in Port** - the trigger can either be a user executing an action via the UI, or an automation triggering an action via Port's API.
-2. **Port generates the event payload** - the payload is sent according to the invocation method configurations the user defined when creating the action.
+2. **Port generates the event payload** - the payload includes metadata about the invoked action and its inputs.
 3. **The payload is sent to your backend** - the backend can be a URL, a dedicated Kafka topic or one of your CI/CD workflows/pipelines.
 4. **Your backend receives the payload and handles the request** - depending on the action, your backend might open a PR, create a cloud resource, provision a new environment, or perform any other logic you would like.
 5. **Your backend updates Port on the status of the execution** - You can [enrich the action run object](/create-self-service-experiences/reflect-action-progress/) in Port by adding logs, attaching links to other workflows or pipelines that help fullfil the request and add a final success/fail status once the action is complete.
@@ -56,19 +53,14 @@ The action's backend is defined under the `invocationMethod` object:
 {
   "identifier": "unique_id",
   "title": "Title",
-  "description": "Action description",
-  "trigger": {
-    "type": "self-service",
-    "operation": "CREATE"
-    "userInputs": {
-      "properties": {
-        "property1": {
-          "type": "string",
-          "title": "Property title",
-          "default": "default value"
-        }
+  "userInputs": {
+    "properties": {
+      "property1": {
+        "type": "string",
+        "title": "Property title",
+        "default": "default value"
       }
-    },
+    }
   },
   # highlight-start
   "invocationMethod": {
@@ -76,6 +68,8 @@ The action's backend is defined under the `invocationMethod` object:
     "url": "https://example.com"
   },
   # highlight-end
+  "trigger": "CREATE",
+  "description": "Action description"
 }
 ```
 
@@ -84,18 +78,17 @@ The action's backend is defined under the `invocationMethod` object:
 | Field                  | Type      | Description                                                                                                                                                                                                                                                                                                     | Example values                                  |
 | ---------------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
 | `type`                 | `string`  | Defines the backend of the action.                                                                                                                                                                                                                                                                | `WEBHOOK`, `KAFKA`, `GITHUB` or `GITLAB` |
-| `agent`                | `boolean` | Defines whether to use [Port Agent](/create-self-service-experiences/setup-backend/webhook/port-execution-agent/port-execution-agent.md) for execution or not. <br></br> Can only be used if `type` is set to `WEBHOOK`.                                                                                                                  | `true` or `false`                        |
+| `agent`                | `boolean` | Defines whether to use [Port Agent](/create-self-service-experiences/setup-backend/webhook/port-execution-agent/port-execution-agent.md) for execution or not. <br></br> Can only be used if `type` is set to `WEBHOOK` or `GITLAB`.                                                                                                                  | `true` or `false`                        |
 | `url`                  | `string`  | Defines the webhook URL to which Port will send the action via an HTTP POST request. <br></br> Can only be used if `type` is set to `WEBHOOK`.                                                                                                                                                            | `https://example.com`                           |
 | `org`                  | `string`  | The GitHub *organization* name. <br></br> Can only be used if `type` is set to `GITHUB`.                                                                                                                                                                                                                  | `port-labs`                                     |
 | `repo`                 | `string`  | The GitHub *repository* name. <br></br> Can only be used if `type` is set to `GITHUB`.                                                                                                                                                                                                                    | `port-docs`                                     |
-| `workflow`             | `string`  | Defines the GitHub *workflow ID* to run (You can also pass the workflow file name as a string). <br></br> Can only be used if `type` is set to `GITHUB`.                                                                                                                                                          | `workflow.yml`                                     |                                    |
+| `workflow`             | `string`  | Defines the GitHub *workflow ID* to run (You can also pass the workflow file name as a string). <br></br> Can only be used if `type` is set to `GITHUB`.                                                                                                                                                          | `workflow.yml`                                     |
+| `omitPayload`          | `boolean` | A flag to control whether to add the [`port_payload`](#action-message-structure) JSON string to the GitHub/GitLab workflow trigger payload (default: `false`). <br></br> Can only be used if `type` is set to `GITHUB` or `GITLAB`.                                                                                   | `false`                                         |
+| `omitUserInputs`       | `boolean` | A flag to control whether to send the user inputs of the action as isolated parameters to the GitHub/GitLab workflow (default: `false`). When disabled, you can still get the user inputs from the `port_payload` (unless omitted too). <br></br> Can only be used if `type` is set to `GITHUB` or `GITLAB`. | `false`                                         |
 | `reportWorkflowStatus` | `boolean` | A flag to control whether to automatically update the Port `run` object status (SUCCESS/FAILURE) at the end of the workflow (default: `true`). <br></br> Can be added only if `type` is set to `GITHUB`.                                                                                                                             |
 | `defaultRef`           | `string`  | The default ref (branch/tag name) we want the action to use. <br></br> `defaultRef` can be overriden dynamically, by adding `ref` as user input. <br></br> Can only be used if `type` is set to `GITLAB`.                                                                                            |
 | `projectName`          | `string`  | The GitLab *project* name.<br></br>Can only be used if `type` is set to `GITLAB`.                                                                                                                                                                                                                          | `port`                                          |
 | `groupName`            | `string`  | The GitLab *group* name.<br></br>Can only be used if `type` is set to `GITLAB`.                                                                                                                                                                                                                          | `port-labs`                                     |
-| `payload`            | `string`  | The configuration that controls how the payload will be sent to the backend upon invocation.Can only be used if `type` is set to `AZURE_DEVOPS` or `KAFKA`.                                                                                                                                                                                                                          | `port-labs`                                     |
-| `headers`            | `string`  | The configuration that controls how the payload's headers will be sent to the backend upon invocation. Can only be used if `type` is set to `WEBHOOK`.                                                                                                                                                                                                                          | `port-labs`                                     |
-| `body`            | `string`  | The configuration that controls how the payload will be sent to the backend upon invocation.Can only be used if `type` is set to `WEBHOOK`.                                                                                                                                                                                                                          | `port-labs`                                     |
 
 ## Next step
 
