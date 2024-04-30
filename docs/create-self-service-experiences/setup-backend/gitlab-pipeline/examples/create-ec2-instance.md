@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 1
 ---
 
 # Create An AWS EC2 Instance
@@ -134,6 +134,14 @@ variable "aws_region" {
 variable "ec2_instance_type" {
   type = string
 }
+
+variable "ec2_ami" {
+  type = string
+}
+
+variable "port_run_id" {
+  type = string
+}
 ```
 </details>
 
@@ -216,7 +224,7 @@ output "tags" {
 <details>
 <summary><b>GitLab workflow</b></summary>
 
-:::tip 
+:::tip modification required
 Replace `QUOTA_CODE` on line 17 with your service quota code for vCPUs. 
   
 You can [view your quotas](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-resource-limits.html#view-limits) for each region using the [Service Quotas console](https://console.aws.amazon.com/servicequotas/home/services/ec2/quotas/). 
@@ -240,7 +248,7 @@ variables:
   TF_VAR_gitlab_token: ${GITLAB_ACCESS_TOKEN}
   AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
   AWS_SECRET_ACCESS_KEY : ${AWS_SECRET_ACCESS_KEY}
-  AWS_DEFAULT_REGION: "eu-west-1"
+  AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION}
   // highlight-start
   QUOTA_CODE: "L-1216C47A"
   // highlight-end
@@ -251,6 +259,7 @@ before_script:
   - rm -rf .terraform
   - export AWS_ACCESS_KEY=${AWS_ACCESS_KEY_ID}
   - export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+  - export AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
  
 fetch-port-access-token:
   stage: prerequisites
@@ -694,7 +703,8 @@ Before we continue, add some entities onto the AMI blueprint. The **identifier**
 
 <details>
   <summary> <b> Port Action: Create An EC2 Instance </b> </summary>
-:::tip
+
+:::tip modification required
 
 - `<PROJECT_ID>` - your project ID.
 - `<PIPELINE_TRIGGER_TOKEN>` - your pipeline trigger token. Learn [more](https://docs.gitlab.com/ee/ci/triggers/#create-a-pipeline-trigger-token).
@@ -809,3 +819,8 @@ Before we continue, add some entities onto the AMI blueprint. The **identifier**
 5. Wait for the EC2 Instance to be created in AWS
 
 Congrats 🎉 You've created an EC2 Instance in Port 🔥
+
+## Next Steps
+
+1. [Add a disk to the EC2 instance](/create-self-service-experiences/setup-backend/gitlab-pipeline/examples/add-ec2-volume)
+
