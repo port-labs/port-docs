@@ -71,15 +71,11 @@ Create the following blueprint, action and mapping to trigger a Terraform Cloud 
     "identifier": "trigger_tf_run",
     "title": "Trigger TF Cloud run",
     "icon": "Terraform",
-    "trigger": {
-      "type": "self-service",
-      "operation": "DAY-2",
-      "userInputs": {
-        "properties": {},
-        "required": [],
-        "order": []
-      },
-    }
+    "userInputs": {
+      "properties": {},
+      "required": [],
+      "order": []
+    },
     "invocationMethod": {
       "type": "WEBHOOK",
       "agent": true,
@@ -87,6 +83,7 @@ Create the following blueprint, action and mapping to trigger a Terraform Cloud 
       "method": "POST",
       "url": "https://app.terraform.io/api/v2/runs/"
     },
+    "trigger": "DAY-2",
     "requiredApproval": false
   }
 ]

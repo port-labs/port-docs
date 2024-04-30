@@ -95,38 +95,35 @@ Follow these steps to get started:
     "identifier": "azure_pipelines_create_azure",
     "title": "Azure Pipelines Create Azure",
     "icon": "Azure",
+    "userInputs": {
+    "properties": {
+        "storage_name": {
+            "icon": "Azure",
+            "title": "Storage Name",
+            "description": "The Azure Storage Account",
+            "type": "string"
+        },
+        "storage_location": {
+            "title": "Storage Location",
+            "icon": "Azure",
+            "type": "string",
+            "default": "westus2"
+        }
+    },
+    "required": [
+        "storage_name"
+    ],
+    "order": [
+        "storage_name",
+        "storage_location"
+    ]
+    },
     "invocationMethod": {
         "type": "AZURE-DEVOPS",
         "webhook": "<AZURE-DEVOPS-WEBHOOK-NAME>",
         "org": "<AZURE-DEVOPS-ORG>"
     },
-    "trigger": {
-      "type": "self-service",
-      "operation": "CREATE",
-      "userInputs": {
-          "properties": {
-              "storage_name": {
-                  "icon": "Azure",
-                  "title": "Storage Name",
-                  "description": "The Azure Storage Account",
-                  "type": "string"
-              },
-              "storage_location": {
-                  "title": "Storage Location",
-                  "icon": "Azure",
-                  "type": "string",
-                  "default": "westus2"
-              }
-          },
-          "required": [
-              "storage_name"
-          ],
-          "order": [
-              "storage_name",
-              "storage_location"
-          ]
-      },
-    },
+    "trigger": "CREATE",
     "description": "Use azure pipelines to terraform an azure resource ",
     "requiredApproval": false,
 }

@@ -427,6 +427,45 @@ jobs:
   "identifier": "create_an_ec2_instance",
   "title": "Create An EC2 Instance",
   "icon": "EC2",
+  "userInputs": {
+    "properties": {
+      "pem_key_name": {
+        "title": "Pem Key Name",
+        "description": "EC2 .pem key pair name",
+        "icon": "EC2",
+        "type": "string"
+      },
+      "ec2_name": {
+        "icon": "EC2",
+        "title": "EC2_Name",
+        "description": "Name of the instance",
+        "type": "string"
+      },
+      "ec2_instance_type": {
+        "title": "EC2 Instance Type",
+        "description": "EC2 instance type",
+        "icon": "EC2",
+        "type": "string",
+        "default": "t2.micro",
+        "enum": [
+          "t2.micro",
+          "t2.medium",
+          "t2.large",
+          "t2.xlarge",
+          "t2.2xlarge"
+        ]
+      }
+    },
+    "required": [
+      "ec2_name",
+      "pem_key_name"
+    ],
+    "order": [
+      "ec2_name",
+      "ec2_instance_type",
+      "pem_key_name"
+    ]
+  },
   "invocationMethod": {
     "type": "GITHUB",
     "org": "<GITHUB-ORG>",
@@ -436,49 +475,7 @@ jobs:
     "omitPayload": false,
     "reportWorkflowStatus": true
   },
-  "trigger": {
-    "operation": "CREATE",
-    "type": "self-service",
-    "userInputs": {
-      "properties": {
-        "pem_key_name": {
-          "title": "Pem Key Name",
-          "description": "EC2 .pem key pair name",
-          "icon": "EC2",
-          "type": "string"
-        },
-        "ec2_name": {
-          "icon": "EC2",
-          "title": "EC2_Name",
-          "description": "Name of the instance",
-          "type": "string"
-        },
-        "ec2_instance_type": {
-          "title": "EC2 Instance Type",
-          "description": "EC2 instance type",
-          "icon": "EC2",
-          "type": "string",
-          "default": "t2.micro",
-          "enum": [
-            "t2.micro",
-            "t2.medium",
-            "t2.large",
-            "t2.xlarge",
-            "t2.2xlarge"
-          ]
-        }
-      },
-      "required": [
-        "ec2_name",
-        "pem_key_name"
-      ],
-      "order": [
-        "ec2_name",
-        "ec2_instance_type",
-        "pem_key_name"
-      ]
-    }
-  },
+  "trigger": "CREATE",
   "description": "Create An EC2 Instance from Port",
   "requiredApproval": false
 }

@@ -65,14 +65,10 @@ Create the following blueprint, action and mapping to trigger a Circle CI pipeli
     "identifier": "trigger_circle_ci_pipeline",
     "title": "Trigger CircleCI pipeline",
     "icon": "CircleCI",
-    "trigger": {
-      "type": "self-service",
-      "operation": "DAY-2",
-      "userInputs": {
-        "properties": {},
-        "required": [],
-        "order": []
-      },
+    "userInputs": {
+      "properties": {},
+      "required": [],
+      "order": []
     },
     "invocationMethod": {
       "type": "WEBHOOK",
@@ -81,6 +77,7 @@ Create the following blueprint, action and mapping to trigger a Circle CI pipeli
       "method": "POST",
       "url": "https://circleci.com"
     },
+    "trigger": "DAY-2",
     "requiredApproval": false
   }
 ]

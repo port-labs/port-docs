@@ -199,55 +199,51 @@ Please make sure to modify GITHUB_ORG, GITHUB_REPO and GITHUB_WORKFLOW_FILE plac
   "identifier": "deploy_ec2_instance",
   "title": "Deploy EC2 Instance",
   "icon": "EC2",
-  "trigger": {
-    "type": "self-service",
-    "userInputs": {
-      "properties": {
-        "instance_name": {
-          "title": "Instance Name",
-          "type": "string"
-        },
-        "instance_type": {
-          "title": "Instance Type",
-          "type": "string",
-          "default": "t2.micro",
-          "enum": ["t2.micro", "t2.small"],
-          "enumColors": {
-            "t2.micro": "lightGray",
-            "t2.small": "lightGray"
-          }
-        },
-        "image_id": {
-          "title": "Image ID",
-          "type": "string"
-        },
-        "key_pair_name": {
-          "title": "Key Pair Name",
-          "type": "string"
-        },
-        "security_group_ids": {
-          "title": "Security Group IDs",
-          "icon": "DefaultProperty",
-          "type": "string",
-          "description": "Use comma delimited values for multiple SGs"
+  "userInputs": {
+    "properties": {
+      "instance_name": {
+        "title": "Instance Name",
+        "type": "string"
+      },
+      "instance_type": {
+        "title": "Instance Type",
+        "type": "string",
+        "default": "t2.micro",
+        "enum": ["t2.micro", "t2.small"],
+        "enumColors": {
+          "t2.micro": "lightGray",
+          "t2.small": "lightGray"
         }
       },
-      "required": [
-        "instance_name",
-        "instance_type",
-        "image_id",
-        "key_pair_name",
-        "security_group_ids"
-      ],
-      "order": [
-        "instance_name",
-        "instance_type",
-        "image_id",
-        "key_pair_name",
-        "security_group_ids"
-      ]
+      "image_id": {
+        "title": "Image ID",
+        "type": "string"
+      },
+      "key_pair_name": {
+        "title": "Key Pair Name",
+        "type": "string"
+      },
+      "security_group_ids": {
+        "title": "Security Group IDs",
+        "icon": "DefaultProperty",
+        "type": "string",
+        "description": "Use comma delimited values for multiple SGs"
+      }
     },
-    "operation": "CREATE"
+    "required": [
+      "instance_name",
+      "instance_type",
+      "image_id",
+      "key_pair_name",
+      "security_group_ids"
+    ],
+    "order": [
+      "instance_name",
+      "instance_type",
+      "image_id",
+      "key_pair_name",
+      "security_group_ids"
+    ]
   },
   "invocationMethod": {
     "type": "GITHUB",
@@ -258,6 +254,7 @@ Please make sure to modify GITHUB_ORG, GITHUB_REPO and GITHUB_WORKFLOW_FILE plac
     "repo": "<GITHUB_REPO>",
     "workflow": "<GITHUB_WORKFLOW_FILE>"
   },
+  "trigger": "CREATE",
   "requiredApproval": false
 }
 ```

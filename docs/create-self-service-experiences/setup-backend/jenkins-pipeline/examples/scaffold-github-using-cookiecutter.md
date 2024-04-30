@@ -64,6 +64,21 @@ Keep in mind this can be any blueprint you would like and this is just an exampl
     "title": "Scaffold Golang Microservice",
     "description": "Scaffold a new Microservice from a Cookiecutter teplate",
     "icon": "Go",
+    "userInputs": {
+      "properties": {
+        "repo_name": {
+          "icon": "Microservice",
+          "title": "Repo Name",
+          "type": "string"
+        },
+        "github_org_name": {
+          "icon": "Github",
+          "title": "Github Org Name",
+          "type": "string"
+        }
+      },
+      "required": ["repo_name", "github_org_name"]
+    },
     "invocationMethod": {
       "type": "WEBHOOK",
       "agent": false,
@@ -71,25 +86,7 @@ Keep in mind this can be any blueprint you would like and this is just an exampl
       "synchronized": false,
       "method": "POST"
     },
-    "trigger": {
-        "type": "self-service",
-        "operation": "CREATE",
-         "userInputs": {
-            "properties": {
-                "repo_name": {
-                    "icon": "Microservice",
-                    "title": "Repo Name",
-                    "type": "string"
-                },
-                "github_org_name": {
-                    "icon": "Github",
-                    "title": "Github Org Name",
-                    "type": "string"
-                }
-            },
-            "required": ["repo_name", "github_org_name"]
-        }
-    }
+    "trigger": "CREATE"
   }
 ]
 ```
