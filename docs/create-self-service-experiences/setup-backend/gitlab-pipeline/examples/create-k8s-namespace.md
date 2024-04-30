@@ -89,7 +89,7 @@ create-manifest:
   script:
     - echo "Creating k8s namespace manifest"
     - |
-      INSTANCE_ID=$(cat $TRIGGER_PAYLOAD | jq -r '.payload.properties.name')
+      NAMESPACE_NAME=$(cat $TRIGGER_PAYLOAD | jq -r '.payload.properties.name')
       MIN_CPU=$(cat $TRIGGER_PAYLOAD | jq -r '.payload.properties.min_cpu')
       MAX_CPU=$(cat $TRIGGER_PAYLOAD | jq -r '.payload.properties.max_cpu')
       MIN_MEMORY=$(cat $TRIGGER_PAYLOAD | jq -r '.payload.properties.min_memory')
@@ -101,8 +101,8 @@ create-manifest:
       apiVersion: v1
       kind: ResourceQuota
       metadata:
-        name: $INSTANCE_ID-quota
-        namespace: $INSTANCE_ID  # Consider if this should be dynamic too
+        name: $NAMESPACE_NAME-quota
+        namespace: $NAMESPACE_NAME  # Consider if this should be dynamic too
       spec:
         hard:
           requests.cpu: $MIN_CPU
@@ -116,10 +116,7 @@ create-manifest:
       # log the manifest
       cat manifest.yml
 
-      echo "INSTANCE_ID=$INSTANCE_ID" >> create-manifest-data.env
-
-      ls -l
-
+      echo "NAMESPACE_NAME=$NAMESPACE_NAME" >> create-manifest-data.env
   artifacts:
     paths:
       - manifest.yml
@@ -162,7 +159,7 @@ create-k8s-namespace:
       cat manifest.yml
       kubectl config get-contexts
       kubectl config use-context $KUBE_CONTEXT
-      kubectl create namespace $INSTANCE_ID
+      kubectl create namespace $NAMESPACE_NAME
       kubectl apply -f manifest.yml
   
 create-port-entity:
@@ -183,7 +180,7 @@ create-port-entity:
     - |
       echo "Creating Port entity to match new k8s namespace"
 
-      INSTANCE_ID=$(cat $TRIGGER_PAYLOAD | jq -r '.payload.properties.name')
+      NAMESPACE_NAME=$(cat $TRIGGER_PAYLOAD | jq -r '.payload.properties.name')
       MIN_CPU=$(cat $TRIGGER_PAYLOAD | jq -r '.payload.properties.min_cpu')
       MAX_CPU=$(cat $TRIGGER_PAYLOAD | jq -r '.payload.properties.max_cpu')
       MIN_MEMORY=$(cat $TRIGGER_PAYLOAD | jq -r '.payload.properties.min_memory')
@@ -197,12 +194,12 @@ create-port-entity:
       curl -X POST \
           -H 'Content-Type: application/json' \
           -H "Authorization: Bearer $ACCESS_TOKEN" \
-          -d '{"statusLabel": "Creating Entity", "message":"🔧 Creating the instance in Port!"}' \
+          -d '{"statusLabel": "Creating Entity", "message":"🔧 Creating the namespace entity in Port!"}' \
           "https://api.getport.io/v1/actions/runs/$runId/logs"
 
       log='{
-         "identifier": "'"$INSTANCE_ID"'",
-         "title": "'"$INSTANCE_ID"'",
+         "identifier": "'"$NAMESPACE_NAME"'",
+         "title": "'"$NAMESPACE_NAME"'",
          "blueprint": "'"$BLUEPRINT"'",
          "properties": {
             "min_cpu": "'"$MIN_CPU"'",
