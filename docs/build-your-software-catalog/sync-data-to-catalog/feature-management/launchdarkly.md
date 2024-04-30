@@ -621,7 +621,7 @@ resources:
 ### Feature Flags In Environment
 
 <details>
-<summary>Feature Flags In Environment blueprint</summary>
+<summary>Feature Flags In Environment Blueprint</summary>
 
 ```json showLineNumbers
   {
