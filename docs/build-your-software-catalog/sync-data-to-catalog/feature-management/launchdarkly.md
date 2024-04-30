@@ -483,11 +483,11 @@ resources:
     "calculationProperties": {},
     "aggregationProperties": {},
     "relations": {
-      "environments": {
-        "title": "Environments",
-        "target": "launchDarklyEnvironment",
-        "required": false,
-        "many": true
+      "project": {
+        "title": "Project",
+        "target": "launchDarklyProject",
+        "required": true,
+        "many": false
       }
     }
   }
@@ -498,30 +498,29 @@ resources:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
-- kind: flag
-  selector:
-    query: "true"
-  port:
-    entity:
-      mappings:
-        identifier: .key
-        title: .name
-        blueprint: '"launchDarklyFeatureFlag"'
-        properties:
-          kind: .kind
-          description: .description
-          creationDate: .creationDate / 1000 | strftime("%Y-%m-%dT%H:%M:%SZ")
-          includeInSnippet: .includeInSnippet
-          clientSideAvailability: .clientSideAvailability
-          temporary: .temporary
-          tags: .tags
-          maintainer: ._maintainer.email
-          deprecated: .deprecated
-          variations: .variations
-          customProperties: .customProperties
-          archived: .archived
-        relations:
-          environments: .environments
+  - kind: flag
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .key
+          title: .name
+          blueprint: '"launchDarklyFeatureFlag"'
+          properties:
+            kind: .kind
+            description: .description
+            creationDate: .creationDate / 1000 | strftime("%Y-%m-%dT%H:%M:%SZ")
+            clientSideAvailability: .clientSideAvailability
+            temporary: .temporary
+            tags: .tags
+            maintainer: ._maintainer.email
+            deprecated: .deprecated
+            variations: .variations
+            customProperties: .customProperties
+            archived: .archived
+          relations:
+            project: .__projectKey
 ```
 </details>
 
@@ -531,7 +530,7 @@ resources:
 <summary>Environment blueprint</summary>
 
 ```json showLineNumbers
-{
+ {
     "identifier": "launchDarklyEnvironment",
     "description": "This blueprint represents an environment in LaunchDarkly",
     "title": "LaunchDarkly Environment",
@@ -619,6 +618,63 @@ resources:
 
 </details>
 
+### Feature Flags In Environment
+
+<details>
+<summary>Feature Flags In Environment Blueprint</summary>
+
+```json showLineNumbers
+  {
+    "identifier": "featureFlagInEnvironment",
+    "description": "This blueprint represents a feature flag in LaunchDarkly Environment.",
+    "title": "Feature Flag In Environment",
+    "icon": "Launchdarkly",
+    "schema": {
+      "properties": {},
+      "required": []
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "aggregationProperties": {},
+    "relations": {
+      "environment": {
+        "title": "Environment",
+        "target": "launchDarklyEnvironment",
+        "required": false,
+        "many": false
+      },
+      "featureFlag": {
+        "title": "Feature Flag",
+        "target": "launchDarklyFeatureFlag",
+        "required": false,
+        "many": false
+      }
+    }
+  }
+```
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+  - kind: flag
+    selector:
+      query: "true"
+    port:
+      itemsToParse: .environments | keys
+      entity:
+        mappings:
+          identifier: .key + "-" + .item
+          title: .key + "-" + .item
+          blueprint: '"featureFlagInEnvironment"'
+          properties: {}
+          relations:
+            environment: .item
+            featureFlag: .key
+```
+
+</details>
 
 ## Let's Test It
 
@@ -919,7 +975,7 @@ The combination of the sample payload and the Ocean configuration generates the 
     },
     "temporary": true,
     "tags": [],
-    "maintainer": "Michael Armah",
+    "maintainer": "mikeyarmah@gmail.com",
     "customProperties": {},
     "archived": false,
     "variations": [
@@ -933,7 +989,6 @@ The combination of the sample payload and the Ocean configuration generates the 
         "value": false
       }
     ],
-    "maintainerEmail": "mikeyarmah@gmail.com",
     "deprecated": false
   },
   "relations": {
