@@ -338,10 +338,10 @@ update-run-status:
   <summary> <b> Port Action: Create a Namespace </b> </summary>
 :::tip
 
-- `<PROJECT_ID>` - your project ID.
+- `<PROJECT_ID>` - Your project ID.
 <img src="/img/self-service-actions/setup-backend/gitlab-pipeline/gitlabProjectID.png" width="100%" border="1px" />
 
-- `<PIPELINE_TRIGGER_TOKEN>` - your pipeline trigger token. Learn [more](https://docs.gitlab.com/ee/ci/triggers/#create-a-pipeline-trigger-token).
+- `<PIPELINE_TRIGGER_TOKEN>` - Your pipeline trigger token. Learn [more](https://docs.gitlab.com/ee/ci/triggers/#create-a-pipeline-trigger-token).
 :::
 
 ```json showLineNumbers
