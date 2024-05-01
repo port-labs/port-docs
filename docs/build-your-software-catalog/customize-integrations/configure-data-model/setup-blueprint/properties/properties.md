@@ -18,14 +18,14 @@ Properties are customizable data fields of [blueprints](/build-your-software-cat
 
 <h4>To edit an existing property:</h4>
 
-1. Go to your [Builder page](https://app.getport.io/dev-portal).
+1. Go to your [Builder page](https://app.getport.io/settings).
 2. Expand the blueprint you want to edit by double-clicking on it.
 3. Under the `Properties` tab, click on the property you want to edit.
 4. Make your desired changes to the form, then click `Save`.
 
 <h4>To create a new property:</h4>
 
-1. Go to your [Builder page](https://app.getport.io/dev-portal).
+1. Go to your [Builder page](https://app.getport.io/settings).
 2. Expand the blueprint you want to edit by double-clicking on it.
 3. Click on the `+ New property` button in the bottom of the tab:
 

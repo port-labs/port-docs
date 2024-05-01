@@ -155,7 +155,7 @@ const config = {
               },
               {
                 label: "CI/CD",
-                to: "/build-your-software-catalog/sync-data-to-catalog/ci-cd",
+                to: "/build-your-software-catalog/custom-integration/api/ci-cd",
               },
               {
                 label: "Kubernetes",
@@ -301,7 +301,6 @@ const config = {
       "@docusaurus/plugin-client-redirects",
       {
         createRedirects(existingPath) {
-          console.log("path is:", existingPath);
           if (!existingPath.includes("/docs") && existingPath !== "/") {
             // Support URLs without /docs prepended and route them to /docs
             return [existingPath.replace("/", "/docs/", 1)];
