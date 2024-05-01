@@ -41,81 +41,38 @@ Follow these steps to get started:
 
 ```json showLineNumbers
 {
-  "identifier": "service_manage_a_pr",
+  "identifier": "manage_a_pr",
   "title": "Manage a GitHub PR",
   "icon": "Github",
-  "description": "Manage a GitHub pull request",
-  "trigger": {
-    "type": "self-service",
-    "operation": "DAY-2",
-    "userInputs": {
-      "properties": {
-        "action": {
-          "title": "Action",
-          "description": "What action to take",
-          "icon": "Git",
-          "type": "string",
-          "enum": [
-            "close",
-            "merge",
-            "approve"
-          ],
-          "enumColors": {
-            "close": "lightGray",
-            "merge": "lightGray"
-          }
+  "userInputs": {
+    "properties": {
+      "action": {
+        "title": "Action",
+        "description": "What action to take",
+        "icon": "Git",
+        "type": "string",
+        "enum": ["close", "merge", "approve"],
+        "enumColors": {
+          "close": "lightGray",
+          "merge": "lightGray"
         }
-      },
-      "required": [
-        "action"
-      ],
-      "order": []
+      }
     },
-    "blueprintIdentifier": "githubPullRequest"
+    "required": ["action"],
+    "order": []
   },
   "invocationMethod": {
     "type": "GITHUB",
     "org": "<GITHUB-ORG>",
     "repo": "<GITHUB-REPO-NAME>",
     "workflow": "manage-pr.yml",
-    "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"action\")) then \"action\" else null end}}": "{{.inputs.\"action\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"service_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "org": "<GITHUB-ORG>",
-              "repo": "<GITHUB-REPO-NAME>",
-              "workflow": "manage-pr.yml",
-              "omitUserInputs": false,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"action\")) then \"action\" else null end}}": "{{.inputs.\"action\"}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
-      }
-    },
+    "omitUserInputs": false,
+    "omitPayload": false,
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "trigger": "DAY-2",
+  "description": "Manage a GitHub pull request",
+  "requiredApproval": false
 }
 ```
 
