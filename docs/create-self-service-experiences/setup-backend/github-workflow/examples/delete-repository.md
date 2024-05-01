@@ -8,17 +8,10 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 In the following guide, you are going to create a self-service action in Port that executes a GitHub workflow to [delete a GitHub repository](https://docs.github.com/en/rest/repos/repos#delete-a-repository).
 
-:::tip Use Cases
-
-- **Declutter Development**: Clean up outdated, unused, or test repositories to streamline your GitHub environment.
-- **Project Sunset**: Offboard completed projects by gracefully deleting their repositories.
-- **Enhanced Control**: Manage repository lifecycles without needing in-depth GitHub permissions.
-:::
-
 ## Prerequisites
-1. **Port's GitHub Integration**: Install it by clicking [here](https://github.com/apps/getport-io/installations/new). This is essential for Port to interact with your GitHub repositories.
-2. **GitHub Data in Port**: Ensure your repositories are synced with Port. If you haven't set this up yet, follow this quick [guide](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples.md#mapping-repositories-file-contents-and-pull-requests).
-3. **Workflow Repository**: Decide on an existing repository where you'll store your GitHub workflow file, or create a dedicated repository for your Port actions.
+1. Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new).
+2. This guide assumes the presence of a blueprint representing your repositories. If you haven't done so yet, initiate the setup of your GitHub data model by referring to this [guide](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples.md#mapping-repositories-file-contents-and-pull-requests) first.
+3. A repository to contain your action resources i.e. the github workflow file.
 
 
 ## Guide
@@ -32,9 +25,7 @@ Follow these steps to get started:
     - `GH_TOKEN` - a [Classic Personal Access Token](https://github.com/settings/tokens) with the following scopes: `repo` and `delete_repo`
 
 <br />
-
-
-2. Create a Port action against in the [self-service page](https://app.getport.io/self-serve) with the following JSON definition:
+2. Create a Port action in the [self-service page](https://app.getport.io/self-serve) or with the following JSON definition:
 
 <details>
 
@@ -42,20 +33,15 @@ Follow these steps to get started:
    :::tip
 - `<GITHUB-ORG>` - your GitHub organization or user name.
 - `<GITHUB-REPO-NAME>` - your GitHub repository name.
-
-**Note**: Replace the `blueprintIdentifier` on line 30 with the id of your own blueprint.
 :::
 
 
 ```json showLineNumbers
-{
-  "identifier": "service_delete_repo",
-  "title": "Delete Repo",
-  "icon": "Github",
-  "description": "A github action that deletes a github repo",
-  "trigger": {
-    "type": "self-service",
-    "operation": "DELETE",
+[
+  {
+    "identifier": "delete_repo",
+    "title": "Delete Repo",
+    "icon": "Github",
     "userInputs": {
       "properties": {
         "org_name": {
@@ -77,56 +63,20 @@ Follow these steps to get started:
         "delete_dependents"
       ]
     },
-    // highlight-start
-    "blueprintIdentifier": "service"
-    // highlight-end
-  },
-  "invocationMethod": {
-    "type": "GITHUB",
-    "org": "<GITHUB-ORG>",
-    "repo": "<GITHUB-REPO-NAME>",
-    "workflow": "delete-repo.yml",
-    "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"org_name\")) then \"org_name\" else null end}}": "{{.inputs.\"org_name\"}}",
-      "{{if (.inputs | has(\"delete_dependents\")) then \"delete_dependents\" else null end}}": "{{.inputs.\"delete_dependents\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"service_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "org": "<GITHUB-ORG>",
-              "repo": "<GITHUB-REPO-NAME>",
-              "workflow": "delete-repo.yml",
-              "omitUserInputs": false,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"org_name\")) then \"org_name\" else null end}}": "{{.inputs.\"org_name\"}}",
-            "{{if (.inputs | has(\"delete_dependents\")) then \"delete_dependents\" else null end}}": "{{.inputs.\"delete_dependents\"}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
-      }
+    "invocationMethod": {
+      "type": "GITHUB",
+      "org": "<GITHUB-ORG>",
+      "repo": "<GITHUB-REPO-NAME>",
+      "workflow": "delete-repo.yml",
+      "omitUserInputs": false,
+      "omitPayload": false,
+      "reportWorkflowStatus": true
     },
-    "reportWorkflowStatus": true
-  },
-  "requiredApproval": false,
-  "publish": true
-}
+    "trigger": "DELETE",
+    "description": "A github action that deletes a github repo",
+    "requiredApproval": false
+  }
+]
 ```
 
 </details>
@@ -218,10 +168,3 @@ jobs:
 </details>
 <br />
 4. Trigger the action from the [self-service](https://app.getport.io/self-serve) page of your Port application.
-
-
-## More Relevant Guides
-
-- [Scaffold a new service](/guides-and-tutorials/scaffold-a-new-service/)
-- [Manage Pull Requests](/create-self-service-experiences/setup-backend/github-workflow/examples/manage-pull-requests)
-- [Create GitHub Secrets](/create-self-service-experiences/setup-backend/github-workflow/examples/create-github-secret)
