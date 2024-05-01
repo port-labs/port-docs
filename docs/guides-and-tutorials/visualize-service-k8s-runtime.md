@@ -111,7 +111,7 @@ A `workload` with a label in the form of `portService: <service-identifier>` wil
 
 For example, a k8s deployment with the label `portService: myService` will be assigned to a `service` with the identifier `myService`.
 
-We achieved this by adding a [mapping definition](https://github.com/port-labs/template-assets/blob/main/kubernetes/full-configs/k8s-guide/k8s_guide_config.yaml#L111-L123) in the configuration YAML we used when installing the exporter. The definition uses `jq` to perform calculations between properties.
+We achieved this by adding a [mapping definition](https://github.com/port-labs/template-assets/blob/main/kubernetes/full-configs/k8s-guide/k8s_guide_config.yaml#L111-L119) in the configuration YAML we used when installing the exporter. The definition uses `jq` to perform calculations between properties.
 
 **Let's see this in action:**
 
