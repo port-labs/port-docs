@@ -90,41 +90,21 @@ After installation, the exporter will:
 
 ### Define the connection between services and workloads
 
-Now that we have our <PortTooltip id="blueprint">blueprints</PortTooltip> set up, we want to model the logical connection between them by relating the `Service` blueprint to the `Workload` blueprint. This will grant us some helpful context in our Software catalog, allowing us to see relevant `Workloads` in a `Service`'s context, or a `Workload`'s property directly in its corresponding `Service`.
+Now that we have our <PortTooltip id="blueprint">blueprints</PortTooltip> set up, we want to model the logical connection between them by relating the `Workload` blueprint to the `Service` blueprint. This will grant us some helpful context in our Software catalog, allowing us to see relevant `Workloads` in a `Service`'s context, or a `Service`'s property directly in its corresponding `Workload`.
 
-In this guide we will create one relation named `Prod_runtime` which will represent the production environment of a service. In a real-world setting, we could have another relation for our staging environment, for example.
+In this guide we will create one relation named `service` which will represent the different services the workloads are running.
 
-1. Go to your [Builder](https://app.getport.io/settings/data-model), expand the `Service` blueprint, and click on `New relation`.
+1. Go to your [Builder](https://app.getport.io/settings/data-model), expand the `Workload` blueprint, and click on `New relation`.
 
 2. Fill out the form like this, then click `Create`:
 
-<img src='/img/guides/k8sCreateRelation.png' width='50%' />
-
-<br/><br/>
-
-When looking at a `Service`, some of its `Workload` properties may be especially important to us, and we would like to see them directly in the `Service's` context. This can be achieved using [mirror properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/), so let's create some:
-
-3. The first one will be the workload's health. Under the relation we just created, click on `New mirror property`:
-
-<img src='/img/guides/k8sCreateMirrorProp.png' width='50%' />
-
-<br/><br/>
-
-4. Fill the form out like this, then click `Create`:
-
-<img src='/img/guides/k8sCreateMirrorPropHealth.png' width='50%' />
-
-<br/><br/>
-
-5. The second one will be the workload's image tag/s. Create another mirror property, fill the form out like this, then click `Create`:
-
-<img src='/img/guides/k8sCreateMirrorPropImages.png' width='50%' />
+<img src='/img/guides/createServiceRelation.png' width='50%' />
 
 <br/><br/>
 
 ### Map your workloads to their services
 
-You may have noticed that the `Prod_runtime` property and the mirror properties we created are empty for all of our `services`. This is because we haven't specified which `workload` belongs to which `service`. This can be done manually, or via mapping by using a convention of your choice.
+You may have noticed that the `service` relations are empty for all of our `workloads`. This is because we haven't specified which `workload` belongs to which `service`. This can be done manually, or via mapping by using a convention of your choice.
 
 In this guide we will use the following convention:  
 A `workload` with a label in the form of `portService: <service-identifier>` will automatically be assigned to a `service` with that identifier.
@@ -187,18 +167,19 @@ resources:
     port:
       entity:
         mappings:
-        - blueprint: '"service"'
+        - blueprint: '"workload"'
           icon: '"Deployment"'
-          identifier: .metadata.labels.portService
+          identifier: .metadata.name + "-Deployment-" + .metadata.namespace + "-" +
+            "my-cluster"
           properties: {}
           relations:
-            prod_runtime: .metadata.name + "-Deployment-" + .metadata.namespace + "-" + "my-cluster"
+            service: .metadata.labels.portService
           title: .metadata.name
 ```
 
 <br/>
 
-3. Go to your [Software catalog](https://app.getport.io/services), and click on `Services`. Click on the `Service` for which you created the deployment, and you should see the `Prod_runtime` property filled, along with the `Health` and `Images` properties that we mirrored:
+3. Go to your [Software catalog](https://app.getport.io/services), and click on `Workloads`. Click on the `Workload` for which you created the deployment, and you should see the `service` relation filled.
 
 <img src='/img/guides/k8sEntityAfterIngestion.png' width='80%' />
 
@@ -228,7 +209,7 @@ In the configuration provided for this guide, a `workload` is considered `Health
 
 Now you can keep track of services that need your attention right from your homepage.
 
-<img src='/img/guides/k8sHomepageTableUnhealthyFilter.png' width='40%' />
+<img src='/img/guides/k8sHomepageTableUnhealthyFilter.png' width='70%' />
 
 _These services were not included in this guide, but serve to show an example of how this table might look._
 
