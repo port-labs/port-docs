@@ -265,9 +265,13 @@ Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organiz
 
 ```json showLineNumbers
 {
-    "identifier": "trigger_datadog_incident",
-    "title": "Trigger Datadog Incident",
-    "icon": "Datadog",
+  "identifier": "datadogIncident_trigger_datadog_incident",
+  "title": "Trigger Datadog Incident",
+  "icon": "Datadog",
+  "description": "Triggers Datadog incident",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
     "userInputs": {
       "properties": {
         "customerImpactScope": {
@@ -309,18 +313,59 @@ Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organiz
         "notificationHandleEmail"
       ]
     },
-    "invocationMethod": {
-      "type": "GITHUB",
-      "org": "<GITHUB_ORG>",
-      "repo": "<GITHUB_REPO>",
-      "workflow": "trigger-datadog-incident.yml",
-      "omitUserInputs": false,
-      "omitPayload": false,
-      "reportWorkflowStatus": true
+    "blueprintIdentifier": "datadogIncident"
+  },
+  "invocationMethod": {
+    "type": "GITHUB",
+    "org": "<Enter GitHub organization>",
+    "repo": "<Enter GitHub repository>",
+    "workflow": "trigger-datadog-incident.yml",
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "{{if (.inputs | has(\"customerImpactScope\")) then \"customerImpactScope\" else null end}}": "{{.inputs.\"customerImpactScope\"}}",
+      "{{if (.inputs | has(\"customerImpacted\")) then \"customerImpacted\" else null end}}": "{{.inputs.\"customerImpacted\"}}",
+      "{{if (.inputs | has(\"title\")) then \"title\" else null end}}": "{{.inputs.\"title\"}}",
+      "{{if (.inputs | has(\"notificationHandleName\")) then \"notificationHandleName\" else null end}}": "{{.inputs.\"notificationHandleName\"}}",
+      "{{if (.inputs | has(\"notificationHandleEmail\")) then \"notificationHandleEmail\" else null end}}": "{{.inputs.\"notificationHandleEmail\"}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"datadogIncident_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "repo": "<Enter GitHub repository>",
+              "org": "<Enter GitHub organization>",
+              "workflow": "trigger-datadog-incident.yml",
+              "omitUserInputs": false,
+              "omitPayload": false,
+              "reportWorkflowStatus": true
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {
+            "{{if (.inputs | has(\"customerImpactScope\")) then \"customerImpactScope\" else null end}}": "{{.inputs.\"customerImpactScope\"}}",
+            "{{if (.inputs | has(\"customerImpacted\")) then \"customerImpacted\" else null end}}": "{{.inputs.\"customerImpacted\"}}",
+            "{{if (.inputs | has(\"title\")) then \"title\" else null end}}": "{{.inputs.\"title\"}}",
+            "{{if (.inputs | has(\"notificationHandleName\")) then \"notificationHandleName\" else null end}}": "{{.inputs.\"notificationHandleName\"}}",
+            "{{if (.inputs | has(\"notificationHandleEmail\")) then \"notificationHandleEmail\" else null end}}": "{{.inputs.\"notificationHandleEmail\"}}"
+          },
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
     },
-    "trigger": "CREATE",
-    "description": "Triggers Datadog incident",
-    "requiredApproval": false
+    "reportWorkflowStatus": true
+  },
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 </details>
