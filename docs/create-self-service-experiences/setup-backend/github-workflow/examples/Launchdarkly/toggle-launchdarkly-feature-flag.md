@@ -15,14 +15,14 @@ This GitHub action allows you to quickly toggle LaunchDarkly Feature Flags via P
 
 3. Optional - Install Port's LaunchDarkly integration. [Learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/feature%20management/launchdarkly)
 
-	:::tip Launchdarkly Integration
-	This step is not required for this example, but it will create all the blueprint boilerplate for you, and also ingest and update the catalog in real time with your Launchdarkly Fearture Flags.
+	:::tip LaunchDarkly Integration
+	This step is not required for this example, but it will create all the blueprint boilerplate for you, and also ingest and update the catalog in real time with your LaunchDarkly Feature Flags.
 	:::
 
-4. In Case you decided not to install the Launchdarkly integration, you will need to create a blueprint for Launchdarkly Feature Flag in Port.
+4. In Case you decided not to install the LaunchDarkly integration, you will need to create a blueprint for LaunchDarkly Feature Flag in Port.
 
 <details>
-<summary>Launchdarkly Feature Flag Blueprint</summary>
+<summary>LaunchDarkly Feature Flag Blueprint</summary>
 	
 ```json showLineNumbers
 
@@ -240,7 +240,7 @@ jobs:
 
 1. Head to the [self-service](https://app.getport.io/self-serve) page.
 2. Click on the `+ New Action` button.
-3. Choose the `Launchdarkly Feature Flag` blueprint and click `Next`.
+3. Choose the `LaunchDarkly Feature Flag` blueprint and click `Next`.
 4. Click on the `{...} Edit JSON` button.
 5. Copy and paste the following JSON configuration into the editor.
 
@@ -254,7 +254,7 @@ Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organiz
 ```json showLineNumbers
 {
   "identifier": "toggle_a_feature_flag",
-  "title": "Toggle Launchdarkly Feature Flag",
+  "title": "Toggle LaunchDarkly Feature Flag",
   "icon": "Launchdarkly",
   "userInputs": {
     "properties": {
@@ -314,15 +314,15 @@ Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organiz
 
 6. Click `Save`.
 
-Now you should see the `Toogle Launchdarkly Feature Flag` action in the self-service page. 🎉
+Now you should see the `Toggle LaunchDarkly Feature Flag` action in the self-service page. 🎉
 
 ## Let's test it!
 
 1. Head to the [Self Service hub](https://app.getport.io/self-serve)
-2. Click on the `Toggle Launchdarkly Feature Flag` action
-3. Choose the feature flag you want to toggle (In case you didn't install the [Launchdarkly integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/feature%20management/launchdarkly), it means you don't have any feature flags in Port yet, so you will need to create one manually in Port to test this action)
+2. Click on the `Toggle LaunchDarkly Feature Flag` action
+3. Choose the feature flag you want to toggle (In case you didn't install the [LaunchDarkly integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/feature%20management/launchdarkly), it means you don't have any feature flags in Port yet, so you will need to create one manually in Port to test this action)
 4. Select the new status
 5. Click on `Execute`
-6. Done! wait for the feature flag's status to be changed in Launchdarkly.
+6. Done! wait for the feature flag's status to be changed in LaunchDarkly.
 
 Congrats 🎉 You've toggled your first LaunchDarkly feature flag from Port!
