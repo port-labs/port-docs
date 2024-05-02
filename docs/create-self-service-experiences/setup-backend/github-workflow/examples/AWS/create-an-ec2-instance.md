@@ -422,7 +422,7 @@ jobs:
 
 <details>
   <summary> <b> Port Action: Create An EC2 Instance </b> </summary>
-:::tip
+:::tip Modification Required
 - `<GITHUB-ORG>` - your GitHub organization or user name.
 - `<GITHUB-REPO-NAME>` - your GitHub repository name.
 :::
