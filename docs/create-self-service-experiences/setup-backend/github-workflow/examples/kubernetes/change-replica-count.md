@@ -142,40 +142,81 @@ Follow these steps to get started:
 
 ```json showLineNumbers
 {
-  "identifier": "change_replica_count",
+  "identifier": "service_change_replica_count",
   "title": "Change Replica Count",
   "icon": "GithubActions",
-  "userInputs": {
-    "properties": {
-      "replica_count": {
-        "icon": "DefaultProperty",
-        "title": "Number of Replicas",
-        "type": "number"
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {
+        "replica_count": {
+          "icon": "DefaultProperty",
+          "title": "Number of Replicas",
+          "type": "number"
+        },
+        "auto_merge": {
+          "title": "Auto Merge",
+          "type": "boolean",
+          "default": false,
+          "description": "Whether the created PR should be merged or not"
+        }
       },
-      "auto_merge": {
-        "title": "Auto Merge",
-        "type": "boolean",
-        "default": false,
-        "description": "Whether the created PR should be merged or not"
-      }
+      "required": [
+        "replica_count"
+      ],
+      "order": [
+        "replica_count",
+        "auto_merge"
+      ]
     },
-    "required": ["replica_count"],
-    "order": [
-      "replica_count",
-      "auto_merge"
-    ]
+    "blueprintIdentifier": "service"
   },
   "invocationMethod": {
     "type": "GITHUB",
     "org": "<GITHUB-ORG>",
     "repo": "<GITHUB-REPO-NAME>",
     "workflow": "change-replica-count.yaml",
-    "omitUserInputs": false,
-    "omitPayload": false,
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "{{if (.inputs | has(\"replica_count\")) then \"replica_count\" else null end}}": "{{.inputs.\"replica_count\"}}",
+      "{{if (.inputs | has(\"auto_merge\")) then \"auto_merge\" else null end}}": "{{.inputs.\"auto_merge\"}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"service_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "org": "<GITHUB-ORG>",
+              "repo": "<GITHUB-REPO-NAME>",
+              "workflow": "change-replica-count.yaml",
+              "omitUserInputs": false,
+              "omitPayload": false,
+              "reportWorkflowStatus": true
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {
+            "{{if (.inputs | has(\"replica_count\")) then \"replica_count\" else null end}}": "{{.inputs.\"replica_count\"}}",
+            "{{if (.inputs | has(\"auto_merge\")) then \"auto_merge\" else null end}}": "{{.inputs.\"auto_merge\"}}"
+          },
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
     "reportWorkflowStatus": true
   },
-  "trigger": "DAY-2",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 
