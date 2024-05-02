@@ -7,11 +7,12 @@ import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configurat
 
 # OpenCost
 
-Our OpenCost integration allows you to import `cost` from your OpenCost instance into Port, according to your mapping and definition.
+Our OpenCost integration allows you to import `cost` and `cloudCost` from your OpenCost instance into Port, according to your mapping and definition.
 
 ## Common use cases
 
 - Map your monitored Kubernetes resources and cost allocations in OpenCost.
+- Map your cost allocations from different cloud providers from OpenCost.
 
 ## Prerequisites
 
@@ -344,7 +345,8 @@ The integration configuration determines which resources will be queried from Op
 :::tip Supported resources
 The following resources can be used to map data from OpenCost, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
 
-- [`Cost`](https://www.opencost.io/docs/integrations/api-examples)
+- [`Cost`](https://www.opencost.io/docs/integrations/api-examples#allocation-examples)
+- [`Cloud Cost`](https://www.opencost.io/docs/integrations/api-examples#cloudcost-examples)
 
 :::
 
@@ -384,7 +386,7 @@ The following resources can be used to map data from OpenCost, it is possible to
       port:
   ```
 
-  - **window** - Duration of time over which to query. Accepts: words like `today`, `week`, `month`, `yesterday`, `lastweek`, `lastmonth`; durations like `30m`, `12h`, `7d`; RFC3339 date pairs like `2021-01-02T15:04:05Z,2021-02-02T15:04:05Z`; Unix timestamps like `1578002645,1580681045`.
+  - **window** - Duration of time over which to query. Accepts words like: `today`, `week`, `month`, `yesterday`, `lastweek`, `lastmonth`; durations like `30m`, `12h`, `7d`; RFC3339 date pairs like `2021-01-02T15:04:05Z,2021-02-02T15:04:05Z`; Unix timestamps like `1578002645,1580681045`. If not specified, the default value is `"today"`
   - **aggregate** - Field by which to aggregate the results. Accepts: `cluster`, `node`, `namespace`, `controllerKind`, `controller`, `service`, `pod`, `container`, `label:name`, and `annotation:name`. Also accepts comma-separated lists for multi-aggregation, like `namespace,label:app`.
   - **step** - Duration of a single allocation set. If unspecified, this defaults to the window, so that you receive exactly one set for the entire window. If specified, such as `30m`, `2h`, `1d` etc, it works chronologically backward, querying in durations of step until the full window is covered. Default is `window`.
   - **resolution** - Duration to use as resolution in Prometheus queries. Smaller values (i.e. higher resolutions) will provide better accuracy, but worse performance (i.e. slower query time, higher memory use). Larger values (i.e. lower resolutions) will perform better, but at the expense of lower accuracy for short-running workloads. Default is `1m`.
@@ -454,7 +456,7 @@ Examples of blueprints and the relevant integration configurations:
 ### Cost
 
 <details>
-<summary>Cost blueprint</summary>
+<summary><b>Cost blueprint (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -554,7 +556,7 @@ Examples of blueprints and the relevant integration configurations:
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary><b>Integration configuration (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -597,6 +599,127 @@ resources:
 
 </details>
 
+### CloudCost
+
+<details>
+<summary><b>Cost blueprint (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+    "identifier": "openCostCloudcost",
+    "description": "This blueprint represents cloud cost allocations from your OpenCost instance",
+    "icon": "Opencost",
+    "title": "OpenCost CloudCost",
+    "schema": {
+      "properties": {
+        "startDate": {
+          "title": "Start Date",
+          "type": "string",
+          "format": "date-time"
+        },
+        "endDate": {
+          "title": "End Date",
+          "type": "string",
+          "format": "date-time"
+        },
+        "listCost": {
+          "title": "List Cost",
+          "type": "number"
+        },
+        "netCost": {
+          "title": "Net Cost",
+          "type": "number"
+        },
+        "amortizedNetCost": {
+          "title": "Amortized Net Cost",
+          "type": "number"
+        },
+        "invoicedCost": {
+          "title": "Invoiced Cost",
+          "type": "number"
+        },
+        "amortizedCost": {
+          "title": "Amortized Cost",
+          "type": "number"
+        }
+      },
+      "required": []
+    },
+    "calculationProperties": {},
+    "mirrorProperties": {},
+    "relations": {}
+  }
+```
+
+</details>
+
+<details>
+<summary><b>Integration Configuration (click to expand)</b></summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: cloudcost
+    selector:
+      query: "true"
+      cloudcostAggregate: '"provider"'
+      window: '"7d"'
+      accumulate: '"all"'
+    port:
+      entity:
+        mappings:
+          blueprint: '"openCostCloudcost"'
+          identifier: .properties.provider + "-" + .window.start + "-" + .window.end
+          title: .properties.provider + "-" + .window.start + "-" + .window.end
+          properties:
+            startDate: .window.start
+            endDate: .window.end
+            listCost: .listCost.cost
+            netCost: .netCost.cost
+            amortizedNetCost: .amortizedNetCost.cost
+            invoicedCost: .invoicedCost.cost
+            amortizedCost: .amortizedCost.cost
+
+```
+
+</details>
+
+#### Selector Parameters
+The following parameters under the `selector` key can be used to manipulate which data is ingested:
+
+- **window** - Duration of time over which to query. Accepts words like: `today`, `week`, `month`, `yesterday`, `lastweek`, `lastmonth`; durations like `30m`, `12h`, `7d`; RFC3339 date pairs like `2021-01-02T15:04:05Z,2021-02-02T15:04:05Z`; Unix timestamps like `1578002645,1580681045`. If not specified, the default value is `"today"`
+- **cloudcostAggregate** - Field by which to aggregate the results. Accepts: `invoiceEntityID`, `accountID`, `provider`, `providerID`, `category`, and `service`. Also accepts comma-separated lists for multi-aggregation, like `provider,service`. If no value is provided, the entire list of items is returned.
+- **accumulate** - Step size of the accumulation. Accepts: `all`, `hour`, `day`, `week`, `month`, and `quarter`. If not specified, the default value is `"day"`.
+
+#### Ingesting specific providers (AWS, GCP, Azure)
+Perhaps you are not interested in ingesting cloud cost data for other providers and interested in only AWS. To ingest only AWS data, change the selector query key to look like so:
+
+<details>
+<summary><b>Integration Configuration (click to expand)</b></summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: cloudcost
+    # highlight-start
+    selector:
+      // replace "AWS" with provider of choice. Others are "GCP", and "Azure".
+      query: .properties.provider | startswith("AWS")
+      # highlight-end
+      ...
+    port:
+      entity:
+        mappings:
+          blueprint: '"openCostCloudcost"'
+          identifier: .properties.provider + "-" + .window.start + "-" + .window.end
+          title: .properties.provider + "-" + .window.start + "-" + .window.end
+          ...
+
+```
+</details>
+
 ## Let's Test It
 
 This section includes a sample response data from OpenCost. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
@@ -606,7 +729,7 @@ This section includes a sample response data from OpenCost. In addition, it incl
 Here is an example of the payload structure from OpenCost aggregated on the `namespace` level:
 
 <details>
-<summary> Cost response data</summary>
+<summary><b>Cost response data (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -686,12 +809,52 @@ Here is an example of the payload structure from OpenCost aggregated on the `nam
 
 </details>
 
+<details>
+<summary><b>CloudCost response data (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+    "properties": {
+        "provider": "AWS",
+        "invoiceEntityID": "123445954695",
+    },
+    "window": {
+        "start": "2023-10-27T00:00:00Z",
+        "end": "2023-10-28T00:00:00Z",
+    },
+    "listCost": {
+        "cost": 1143.6968755312,
+        "kubernetesPercent": 0.667336136012796,
+    },
+    "netCost": {
+        "cost": 1143.6968755312,
+        "kubernetesPercent": 0.667336136012796,
+    },
+    "amortizedNetCost": {
+        "cost": 1143.6968755312,
+        "kubernetesPercent": 0.667336136012796,
+    },
+    "invoicedCost": {
+        "cost": 1143.6968755312,
+        "kubernetesPercent": 0.667336136012796,
+    },
+    "amortizedCost": {
+        "cost": 1143.6968755312,
+        "kubernetesPercent": 0.667336136012796,
+    },
+}
+
+```
+
+</details>
+
+
 ### Mapping Result
 
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
 
 <details>
-<summary> Cost entity in Port</summary>
+<summary><b>Cost entity in Port (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -719,6 +882,34 @@ The combination of the sample payload and the Ocean configuration generates the 
     "externalCost": 0,
     "totalCost": 0.00972,
     "totalEfficiency": 0
+  },
+  "relations": {},
+  "createdAt": "2023-10-15T09:30:57.924Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2023-10-30T11:49:20.881Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+<details>
+<summary><b>CloudCost entity in Port (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "AWS-2023-10-27T00:00:00Z-2023-10-28T00:00:00Z",
+  "title": "AWS-2023-10-27T00:00:00Z-2023-10-28T00:00:00Z",
+  "blueprint": "openCostResourceAllocation",
+  "team": [],
+  "properties": {
+    "startDate": "2023-10-27T00:00:00Z",
+    "endDate": "2023-10-28T00:00:00Z",
+    "listCost": 1143.6968755312,
+    "netCost": 1143.6968755312,
+    "amortizedNetCost": 1143.6968755312,
+    "invoicedCost": 1143.6968755312,
+    "amortizedCost": 1143.6968755312
   },
   "relations": {},
   "createdAt": "2023-10-15T09:30:57.924Z",
