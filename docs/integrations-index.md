@@ -112,7 +112,6 @@ This page contains a list of Port's available integrations, organized by the pla
 
 - [AWS exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws.md)
 - [Map ECS, EC2, RDS, API GW, Cloudfront and more](docs/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples/examples.md)
-- [AWS Cost](/build-your-software-catalog/sync-data-to-catalog/cloud-cost/aws-cost.md)
 - [Deploy AWS resources using AWS CloudFormation](/create-self-service-experiences/setup-backend/github-workflow/examples/AWS/deploy-cloudformation-template.md)
 - [Terraform manage S3 buckets lifecycle](/build-your-software-catalog/custom-integration/iac/terraform/examples/s3-bucket.md)
 - [Terraform manage developer environment](/build-your-software-catalog/custom-integration/iac/terraform/examples/create-dev-env.md)
@@ -128,7 +127,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 - [Azure exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure.md)
 - [Azure Active Directory (AD) SSO](/sso-rbac/sso-providers/azure-ad.md)
-- [Map resource groups, storage groups, compute resources database resources and more](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/examples.md)
+- [Map resource groups, storage groups, compute resources database resources and more](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/examples/examples.md)
 - [Add tags to Azure resources](/create-self-service-experiences/setup-backend/github-workflow/examples/Azure/tag-azure-resource)
 
 
