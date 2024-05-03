@@ -25,7 +25,7 @@ Follow these steps to get started:
 
 3. Create a Port blueprint with the following properties:
 
-:::tip
+:::note
 Keep in mind this can be any blueprint you would like and this is just an example.
 :::
 
@@ -59,22 +59,16 @@ Keep in mind this can be any blueprint you would like and this is just an exampl
 
 4. Create a Port action using the following JSON definition:
 
-<details>
-:::tip Modification Required
-Make sure to replace the placeholders for `<GITHUB_ORG_NAME>` and `<GITHUB_REPO_NAME>` in your Port Action to match your GitHub environment.
+:::note
+Make sure to replace the placeholders for GITHUB_ORG_NAME and GITHUB_REPO_NAME in your Port Action to match your GitHub environment.
 :::
 
-<summary>Port Action (click to expand)</summary>
-
 ```json showLineNumbers
-{
-  "identifier": "service_create_github_secret",
-  "title": "Create GitHub Secret",
-  "icon": "Github",
-  "description": "Creates a GitHub secret in my repository",
-  "trigger": {
-    "type": "self-service",
-    "operation": "CREATE",
+[
+  {
+    "identifier": "create_github_secret",
+    "title": "Create GitHub Secret",
+    "icon": "Github",
     "userInputs": {
       "properties": {
         "secret_key": {
@@ -90,72 +84,26 @@ Make sure to replace the placeholders for `<GITHUB_ORG_NAME>` and `<GITHUB_REPO_
           "encryption": "aes256-gcm"
         }
       },
-      "required": [
-        "secret_key",
-        "secret_value"
-      ],
-      "order": [
-        "secret_key",
-        "secret_value"
-      ]
+      "required": ["secret_key", "secret_value"],
+      "order": ["secret_key", "secret_value"]
     },
-    "blueprintIdentifier": "githubsecret"
-  },
-  "invocationMethod": {
-    "type": "GITHUB",
-    "org": "<GITHUB_ORG_NAME>",
-    "repo": "<GITHUB_REPO_NAME>",
-    "workflow": "create-repo-secret.yml",
-    "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"secret_key\")) then \"secret_key\" else null end}}": "{{.inputs.\"secret_key\"}}",
-      "{{if (.inputs | has(\"secret_value\")) then \"secret_value\" else null end}}": "{{.inputs.\"secret_value\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"service_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "omitPayload": false,
-              "omitUserInputs": false,
-              "reportWorkflowStatus": true,
-              "org": "<GITHUB_ORG_NAME>",
-              "repo": "<GITHUB_REPO_NAME>",
-              "workflow": "create-repo-secret.yml"
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"secret_key\")) then \"secret_key\" else null end}}": "{{.inputs.\"secret_key\"}}",
-            "{{if (.inputs | has(\"secret_value\")) then \"secret_value\" else null end}}": "{{.inputs.\"secret_value\"}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
-      }
+    "invocationMethod": {
+      "type": "GITHUB",
+      "omitPayload": false,
+      "omitUserInputs": false,
+      "reportWorkflowStatus": true,
+      "org": "<GITHUB_ORG_NAME>",
+      "repo": "<GITHUB_REPO_NAME>",
+      "workflow": "create-repo-secret.yml"
     },
-    "reportWorkflowStatus": true
-  },
-  "requiredApproval": false,
-  "publish": true
-}
+    "trigger": "CREATE",
+    "description": "Creates a GitHub secret in my repository",
+    "requiredApproval": false
+  }
+]
 ```
 
-</details>
-
 5. Create a workflow file under `.github/workflows/create-repo-secret.yml` with the following content:
-
-<details>
-
-<summary>GitHub Workflow (click to expand)</summary>
 
 ```yml showLineNumbers
 name: Create Repository Secret
@@ -205,6 +153,5 @@ jobs:
           operation: UPSERT
           runId: ${{ fromJson(inputs.port_payload).context.runId }}
 ```
-</details>
 
 6. Trigger the action from the [Self-service](https://app.getport.io/self-serve) tab of your Port application.
