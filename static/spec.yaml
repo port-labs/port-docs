@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Port API
-  version: '1.0'
+  version: "1.0"
 servers:
   - url: https://api.getport.io
 components:
@@ -28,8 +28,8 @@ components:
                     type: string
                   operator:
                     enum:
-                      - '>'
-                      - '>='
+                      - ">"
+                      - ">="
                       - <
                       - <=
                   value:
@@ -91,7 +91,7 @@ components:
                   operator:
                     enum:
                       - =
-                      - '!='
+                      - "!="
                       - containsAny
                       - contains
                       - doesNotContain
@@ -103,7 +103,7 @@ components:
                       - notIn
                   value:
                     anyOf:
-                      - type: 'null'
+                      - type: "null"
                       - type: string
                       - type: number
                       - type: boolean
@@ -164,10 +164,10 @@ components:
                   operator:
                     enum:
                       - =
-                      - '!='
+                      - "!="
                   value:
                     anyOf:
-                      - type: 'null'
+                      - type: "null"
                       - type: string
                       - type: number
                       - type: boolean
@@ -175,7 +175,7 @@ components:
                   - operator
                   - propertySchema
                 additionalProperties: false
-              - $ref: '#/components/schemas/def-0'
+              - $ref: "#/components/schemas/def-0"
       required:
         - combinator
         - rules
@@ -295,7 +295,7 @@ components:
                         type: object
                         properties:
                           filterBy:
-                            $ref: '#/components/schemas/def-0'
+                            $ref: "#/components/schemas/def-0"
                         additionalProperties: false
                         required:
                           - filterBy
@@ -369,7 +369,7 @@ components:
                   title:
                     type: string
                   dataset:
-                    $ref: '#/components/schemas/def-0'
+                    $ref: "#/components/schemas/def-0"
                   excludedFields:
                     type: array
                     items:
@@ -391,7 +391,7 @@ components:
                           type: object
                           properties:
                             filterBy:
-                              $ref: '#/components/schemas/def-0'
+                              $ref: "#/components/schemas/def-0"
                           additionalProperties: false
                           required:
                             - filterBy
@@ -480,7 +480,7 @@ components:
                           type: object
                           properties:
                             filterBy:
-                              $ref: '#/components/schemas/def-0'
+                              $ref: "#/components/schemas/def-0"
                           additionalProperties: false
                           required:
                             - filterBy
@@ -536,7 +536,7 @@ components:
                           type: string
                           maxLength: 200
                         dataset:
-                          $ref: '#/components/schemas/def-0'
+                          $ref: "#/components/schemas/def-0"
                         targetBlueprint:
                           type: string
                         relatedProperty:
@@ -620,11 +620,11 @@ components:
                       from:
                         type: string
                         format: date-time
-                        description: 'ISO format IE 2022-04-23T18:25:43.511Z'
+                        description: "ISO format IE 2022-04-23T18:25:43.511Z"
                       to:
                         type: string
                         format: date-time
-                        description: 'ISO format 2022-04-23T18:25:43.511Z'
+                        description: "ISO format 2022-04-23T18:25:43.511Z"
                       action:
                         type: string
                       status:
@@ -642,7 +642,7 @@ components:
                         type: object
                         properties:
                           filterBy:
-                            $ref: '#/components/schemas/def-0'
+                            $ref: "#/components/schemas/def-0"
                         additionalProperties: false
                         required:
                           - filterBy
@@ -720,7 +720,7 @@ components:
                         type: object
                         properties:
                           filterBy:
-                            $ref: '#/components/schemas/def-0'
+                            $ref: "#/components/schemas/def-0"
                         additionalProperties: false
                         required:
                           - filterBy
@@ -797,7 +797,7 @@ components:
                         type: object
                         properties:
                           filterBy:
-                            $ref: '#/components/schemas/def-0'
+                            $ref: "#/components/schemas/def-0"
                         additionalProperties: false
                         required:
                           - filterBy
@@ -892,7 +892,7 @@ components:
                         type: object
                         properties:
                           filterBy:
-                            $ref: '#/components/schemas/def-0'
+                            $ref: "#/components/schemas/def-0"
                         additionalProperties: false
                         required:
                           - filterBy
@@ -1004,7 +1004,7 @@ components:
                   title:
                     type: string
                   dataset:
-                    $ref: '#/components/schemas/def-0'
+                    $ref: "#/components/schemas/def-0"
                   hiddenBlueprints:
                     type: array
                     items:
@@ -1037,7 +1037,7 @@ components:
                   description:
                     type: string
                   dataset:
-                    $ref: '#/components/schemas/def-0'
+                    $ref: "#/components/schemas/def-0"
                 additionalProperties: false
                 required:
                   - type
@@ -1069,8 +1069,8 @@ components:
                               type: string
                             operator:
                               enum:
-                                - '>'
-                                - '>='
+                                - ">"
+                                - ">="
                                 - <
                                 - <=
                             value:
@@ -1132,7 +1132,7 @@ components:
                             operator:
                               enum:
                                 - =
-                                - '!='
+                                - "!="
                                 - containsAny
                                 - contains
                                 - doesNotContain
@@ -1144,7 +1144,7 @@ components:
                                 - notIn
                             value:
                               anyOf:
-                                - type: 'null'
+                                - type: "null"
                                 - type: string
                                 - type: number
                                 - type: boolean
@@ -1205,10 +1205,10 @@ components:
                             operator:
                               enum:
                                 - =
-                                - '!='
+                                - "!="
                             value:
                               anyOf:
-                                - type: 'null'
+                                - type: "null"
                                 - type: string
                                 - type: number
                                 - type: boolean
@@ -1216,7 +1216,7 @@ components:
                             - operator
                             - propertySchema
                           additionalProperties: false
-                        - $ref: '#/components/schemas/def-0'
+                        - $ref: "#/components/schemas/def-0"
                   title:
                     type: string
                   icon:
@@ -1230,7 +1230,7 @@ components:
                       - $
                       - €
                       - £
-                      - '%'
+                      - "%"
                       - custom
                   unitAlignment:
                     type: string
@@ -1576,7 +1576,7 @@ components:
                               type: object
                               properties:
                                 filterBy:
-                                  $ref: '#/components/schemas/def-0'
+                                  $ref: "#/components/schemas/def-0"
                               additionalProperties: false
                               required:
                                 - filterBy
@@ -1650,7 +1650,7 @@ components:
                         title:
                           type: string
                         dataset:
-                          $ref: '#/components/schemas/def-0'
+                          $ref: "#/components/schemas/def-0"
                         excludedFields:
                           type: array
                           items:
@@ -1672,7 +1672,7 @@ components:
                                 type: object
                                 properties:
                                   filterBy:
-                                    $ref: '#/components/schemas/def-0'
+                                    $ref: "#/components/schemas/def-0"
                                 additionalProperties: false
                                 required:
                                   - filterBy
@@ -1761,7 +1761,7 @@ components:
                                 type: object
                                 properties:
                                   filterBy:
-                                    $ref: '#/components/schemas/def-0'
+                                    $ref: "#/components/schemas/def-0"
                                 additionalProperties: false
                                 required:
                                   - filterBy
@@ -1817,7 +1817,7 @@ components:
                                 type: string
                                 maxLength: 200
                               dataset:
-                                $ref: '#/components/schemas/def-0'
+                                $ref: "#/components/schemas/def-0"
                               targetBlueprint:
                                 type: string
                               relatedProperty:
@@ -1901,11 +1901,11 @@ components:
                             from:
                               type: string
                               format: date-time
-                              description: 'ISO format IE 2022-04-23T18:25:43.511Z'
+                              description: "ISO format IE 2022-04-23T18:25:43.511Z"
                             to:
                               type: string
                               format: date-time
-                              description: 'ISO format 2022-04-23T18:25:43.511Z'
+                              description: "ISO format 2022-04-23T18:25:43.511Z"
                             action:
                               type: string
                             status:
@@ -1923,7 +1923,7 @@ components:
                               type: object
                               properties:
                                 filterBy:
-                                  $ref: '#/components/schemas/def-0'
+                                  $ref: "#/components/schemas/def-0"
                               additionalProperties: false
                               required:
                                 - filterBy
@@ -2001,7 +2001,7 @@ components:
                               type: object
                               properties:
                                 filterBy:
-                                  $ref: '#/components/schemas/def-0'
+                                  $ref: "#/components/schemas/def-0"
                               additionalProperties: false
                               required:
                                 - filterBy
@@ -2078,7 +2078,7 @@ components:
                               type: object
                               properties:
                                 filterBy:
-                                  $ref: '#/components/schemas/def-0'
+                                  $ref: "#/components/schemas/def-0"
                               additionalProperties: false
                               required:
                                 - filterBy
@@ -2173,7 +2173,7 @@ components:
                               type: object
                               properties:
                                 filterBy:
-                                  $ref: '#/components/schemas/def-0'
+                                  $ref: "#/components/schemas/def-0"
                               additionalProperties: false
                               required:
                                 - filterBy
@@ -2285,7 +2285,7 @@ components:
                         title:
                           type: string
                         dataset:
-                          $ref: '#/components/schemas/def-0'
+                          $ref: "#/components/schemas/def-0"
                         hiddenBlueprints:
                           type: array
                           items:
@@ -2318,7 +2318,7 @@ components:
                         description:
                           type: string
                         dataset:
-                          $ref: '#/components/schemas/def-0'
+                          $ref: "#/components/schemas/def-0"
                       additionalProperties: false
                       required:
                         - type
@@ -2350,8 +2350,8 @@ components:
                                     type: string
                                   operator:
                                     enum:
-                                      - '>'
-                                      - '>='
+                                      - ">"
+                                      - ">="
                                       - <
                                       - <=
                                   value:
@@ -2413,7 +2413,7 @@ components:
                                   operator:
                                     enum:
                                       - =
-                                      - '!='
+                                      - "!="
                                       - containsAny
                                       - contains
                                       - doesNotContain
@@ -2425,7 +2425,7 @@ components:
                                       - notIn
                                   value:
                                     anyOf:
-                                      - type: 'null'
+                                      - type: "null"
                                       - type: string
                                       - type: number
                                       - type: boolean
@@ -2486,10 +2486,10 @@ components:
                                   operator:
                                     enum:
                                       - =
-                                      - '!='
+                                      - "!="
                                   value:
                                     anyOf:
-                                      - type: 'null'
+                                      - type: "null"
                                       - type: string
                                       - type: number
                                       - type: boolean
@@ -2497,7 +2497,7 @@ components:
                                   - operator
                                   - propertySchema
                                 additionalProperties: false
-                              - $ref: '#/components/schemas/def-0'
+                              - $ref: "#/components/schemas/def-0"
                         title:
                           type: string
                         icon:
@@ -2511,7 +2511,7 @@ components:
                             - $
                             - €
                             - £
-                            - '%'
+                            - "%"
                             - custom
                         unitAlignment:
                           type: string
@@ -2751,7 +2751,7 @@ components:
         - displayMode
       title: /schemas/grouperWidget
 paths:
-  '/v1/blueprints/{blueprint_identifier}/permissions':
+  "/v1/blueprints/{blueprint_identifier}/permissions":
     get:
       summary: Get blueprint's permissions
       tags:
@@ -2764,9 +2764,9 @@ paths:
           required: true
       security:
         - bearer:
-            - 'read:blueprints'
+            - "read:blueprints"
       responses:
-        '200':
+        "200":
           description: Default Response
     patch:
       summary: Patch blueprint's permissions
@@ -2884,9 +2884,9 @@ paths:
       security:
         - bearer: []
       responses:
-        '200':
+        "200":
           description: Default Response
-  '/v1/pages/{page_identifier}/permissions':
+  "/v1/pages/{page_identifier}/permissions":
     get:
       summary: Get page's permissions
       tags:
@@ -2900,7 +2900,7 @@ paths:
       security:
         - bearer: []
       responses:
-        '200':
+        "200":
           description: Default Response
     patch:
       summary: Patch pages permissions
@@ -2938,7 +2938,7 @@ paths:
       security:
         - bearer: []
       responses:
-        '200':
+        "200":
           description: Default Response
   /v1/auth/access_token:
     post:
@@ -2961,7 +2961,7 @@ paths:
                 - clientSecret
         required: true
       responses:
-        '200':
+        "200":
           description: Authorized successfully
           content:
             application/json:
@@ -2983,7 +2983,7 @@ paths:
                   - expiresIn
                   - tokenType
                 description: Authorized successfully
-  '/v1/blueprints/{blueprint_identifier}/entities':
+  "/v1/blueprints/{blueprint_identifier}/entities":
     post:
       summary: Create entities
       tags:
@@ -3020,7 +3020,7 @@ paths:
                         items:
                           type: string
                           pattern: '^[A-Za-z0-9@_.:\\/=-]+$'
-                      - type: 'null'
+                      - type: "null"
               additionalProperties: true
             example:
               identifier: first_ticket
@@ -3068,7 +3068,7 @@ paths:
       security:
         - bearer: []
       responses:
-        '200':
+        "200":
           description: Default Response
     get:
       summary: Get all blueprint's entities
@@ -3113,11 +3113,11 @@ paths:
           required: true
       security:
         - bearer:
-            - 'read:entities'
+            - "read:entities"
       responses:
-        '200':
+        "200":
           description: Default Response
-  '/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}':
+  "/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}":
     patch:
       summary: Patch an entity
       tags:
@@ -3135,16 +3135,16 @@ paths:
                 title:
                   type:
                     - string
-                    - 'null'
+                    - "null"
                 icon:
                   type:
                     - string
-                    - 'null'
+                    - "null"
                 team:
                   oneOf:
                     - type:
                         - string
-                        - 'null'
+                        - "null"
                     - type: array
                       items:
                         type: string
@@ -3162,7 +3162,7 @@ paths:
                         items:
                           type: string
                           pattern: '^[A-Za-z0-9@_.:\\/=-]+$'
-                      - type: 'null'
+                      - type: "null"
               additionalProperties: false
       parameters:
         - schema:
@@ -3189,7 +3189,7 @@ paths:
       security:
         - bearer: []
       responses:
-        '200':
+        "200":
           description: Default Response
     put:
       summary: Change an entities
@@ -3227,7 +3227,7 @@ paths:
                         items:
                           type: string
                           pattern: '^[A-Za-z0-9@_.:\\/=-]+$'
-                      - type: 'null'
+                      - type: "null"
               additionalProperties: true
             example:
               identifier: first_ticket
@@ -3262,7 +3262,7 @@ paths:
       security:
         - bearer: []
       responses:
-        '200':
+        "200":
           description: Default Response
     get:
       summary: Get an entity
@@ -3312,9 +3312,9 @@ paths:
           required: true
       security:
         - bearer:
-            - 'read:entities'
+            - "read:entities"
       responses:
-        '200':
+        "200":
           description: Default Response
     delete:
       summary: Delte a blueprint's entity
@@ -3345,7 +3345,7 @@ paths:
       security:
         - bearer: []
       responses:
-        '200':
+        "200":
           description: Deleted successfully.
           content:
             application/json:
@@ -3359,7 +3359,7 @@ paths:
                 additionalProperties: false
                 required:
                   - ok
-  '/v1/blueprints/{blueprint_identifier}/entities-count':
+  "/v1/blueprints/{blueprint_identifier}/entities-count":
     get:
       summary: Get blueprint's entity count
       tags:
@@ -3373,9 +3373,9 @@ paths:
       security:
         - bearer: []
       responses:
-        '200':
+        "200":
           description: Default Response
-  '/v1/blueprints/{blueprint_identifier}/all-entities':
+  "/v1/blueprints/{blueprint_identifier}/all-entities":
     delete:
       summary: Delete all entities of blueprint
       tags:
@@ -3399,7 +3399,7 @@ paths:
       security:
         - bearer: []
       responses:
-        '200':
+        "200":
           description: Deleted successfully.
           content:
             application/json:
@@ -3438,8 +3438,8 @@ paths:
                             type: string
                           operator:
                             enum:
-                              - '>'
-                              - '>='
+                              - ">"
+                              - ">="
                               - <
                               - <=
                           value:
@@ -3501,7 +3501,7 @@ paths:
                           operator:
                             enum:
                               - =
-                              - '!='
+                              - "!="
                               - containsAny
                               - contains
                               - doesNotContain
@@ -3513,7 +3513,7 @@ paths:
                               - notIn
                           value:
                             anyOf:
-                              - type: 'null'
+                              - type: "null"
                               - type: string
                               - type: number
                               - type: boolean
@@ -3574,10 +3574,10 @@ paths:
                           operator:
                             enum:
                               - =
-                              - '!='
+                              - "!="
                           value:
                             anyOf:
-                              - type: 'null'
+                              - type: "null"
                               - type: string
                               - type: number
                               - type: boolean
@@ -3585,7 +3585,7 @@ paths:
                           - operator
                           - propertySchema
                         additionalProperties: false
-                      - $ref: '#/components/schemas/def-0'
+                      - $ref: "#/components/schemas/def-0"
               required:
                 - combinator
                 - rules
@@ -3625,9 +3625,9 @@ paths:
           required: false
       security:
         - bearer:
-            - 'read:entities'
+            - "read:entities"
       responses:
-        '200':
+        "200":
           description: Default Response
   /v1/entities/aggregate:
     post:
@@ -3660,7 +3660,7 @@ paths:
                     calculationBy:
                       type: string
                     query:
-                      $ref: '#/components/schemas/def-0'
+                      $ref: "#/components/schemas/def-0"
                   additionalProperties: false
                   required:
                     - func
@@ -3690,7 +3690,7 @@ paths:
                     calculationBy:
                       type: string
                     query:
-                      $ref: '#/components/schemas/def-0'
+                      $ref: "#/components/schemas/def-0"
                   additionalProperties: false
                   required:
                     - func
@@ -3703,7 +3703,7 @@ paths:
                           enum:
                             - countValues
                         query:
-                          $ref: '#/components/schemas/def-0'
+                          $ref: "#/components/schemas/def-0"
                         property:
                           type: string
                       required:
@@ -3716,7 +3716,7 @@ paths:
                           enum:
                             - countValues
                         query:
-                          $ref: '#/components/schemas/def-0'
+                          $ref: "#/components/schemas/def-0"
                         relation:
                           type: string
                       required:
@@ -3729,7 +3729,7 @@ paths:
                           enum:
                             - countValues
                         query:
-                          $ref: '#/components/schemas/def-0'
+                          $ref: "#/components/schemas/def-0"
                         scorecard:
                           type: string
                       required:
@@ -3742,7 +3742,7 @@ paths:
                           enum:
                             - countValues
                         query:
-                          $ref: '#/components/schemas/def-0'
+                          $ref: "#/components/schemas/def-0"
                         rule:
                           type: string
                         scorecard:
@@ -3755,9 +3755,9 @@ paths:
                       additionalProperties: false
       security:
         - bearer:
-            - 'read:entities'
+            - "read:entities"
       responses:
-        '200':
+        "200":
           description: Default Response
   /v1/blueprints:
     get:
@@ -3766,9 +3766,9 @@ paths:
         - Blueprints
       security:
         - bearer:
-            - 'read:blueprints'
+            - "read:blueprints"
       responses:
-        '200':
+        "200":
           description: Default Response
     post:
       summary: Create a blueprint
@@ -4043,7 +4043,7 @@ paths:
                                   - calculationBy
                                   - averageOf
                       query:
-                        $ref: '#/components/schemas/def-0'
+                        $ref: "#/components/schemas/def-0"
                     additionalProperties: false
                     required:
                       - title
@@ -4107,11 +4107,11 @@ paths:
         required: true
       security:
         - bearer:
-            - 'create:blueprints'
+            - "create:blueprints"
       responses:
-        '200':
+        "200":
           description: Default Response
-  '/v1/blueprints/{identifier}':
+  "/v1/blueprints/{identifier}":
     get:
       summary: Get a blueprint
       tags:
@@ -4124,9 +4124,9 @@ paths:
           required: true
       security:
         - bearer:
-            - 'read:blueprints'
+            - "read:blueprints"
       responses:
-        '200':
+        "200":
           description: Default Response
     put:
       summary: Change a blueprint
@@ -4401,7 +4401,7 @@ paths:
                                   - calculationBy
                                   - averageOf
                       query:
-                        $ref: '#/components/schemas/def-0'
+                        $ref: "#/components/schemas/def-0"
                     additionalProperties: false
                     required:
                       - title
@@ -4471,7 +4471,7 @@ paths:
       security:
         - bearer: []
       responses:
-        '200':
+        "200":
           description: Default Response
     patch:
       summary: Patch a blueprint
@@ -4744,7 +4744,7 @@ paths:
                                   - calculationBy
                                   - averageOf
                       query:
-                        $ref: '#/components/schemas/def-0'
+                        $ref: "#/components/schemas/def-0"
                     additionalProperties: false
                     required:
                       - title
@@ -4810,7 +4810,7 @@ paths:
       security:
         - bearer: []
       responses:
-        '200':
+        "200":
           description: Default Response
     delete:
       summary: Delete a blueprint
@@ -4830,7 +4830,7 @@ paths:
       security:
         - bearer: []
       responses:
-        '200':
+        "200":
           description: Deleted successfully.
           content:
             application/json:
@@ -4844,7 +4844,7 @@ paths:
                 additionalProperties: false
                 required:
                   - ok
-  '/v1/blueprints/{identifier}/properties/{property_name}/rename':
+  "/v1/blueprints/{identifier}/properties/{property_name}/rename":
     patch:
       summary: Rename a property in a blueprint
       tags:
@@ -4873,9 +4873,9 @@ paths:
       security:
         - bearer: []
       responses:
-        '200':
+        "200":
           description: Default Response
-  '/v1/blueprints/{identifier}/mirror/{mirror_name}/rename':
+  "/v1/blueprints/{identifier}/mirror/{mirror_name}/rename":
     patch:
       summary: Rename a blueprint's mirror
       tags:
@@ -4904,9 +4904,9 @@ paths:
       security:
         - bearer: []
       responses:
-        '200':
+        "200":
           description: Default Response
-  '/v1/blueprints/{identifier}/relations/{relation_identifier}/rename':
+  "/v1/blueprints/{identifier}/relations/{relation_identifier}/rename":
     patch:
       summary: Rename a blueprint's relation
       tags:
@@ -4935,11 +4935,12 @@ paths:
       security:
         - bearer: []
       responses:
-        '200':
+        "200":
           description: Default Response
-  '/v1/blueprints/{blueprint_identifier}/actions':
+  "/v1/blueprints/{blueprint_identifier}/actions":
     post:
       summary: Create a blueprint action
+      description: This route allows you to create an action that is tied to the blueprint.
       tags:
         - Actions
       requestBody:
@@ -5186,8 +5187,8 @@ paths:
                                           type: string
                                         operator:
                                           enum:
-                                            - '>'
-                                            - '>='
+                                            - ">"
+                                            - ">="
                                             - <
                                             - <=
                                         value:
@@ -5213,7 +5214,7 @@ paths:
                                         operator:
                                           enum:
                                             - =
-                                            - '!='
+                                            - "!="
                                             - containsAny
                                             - contains
                                             - doesNotContain
@@ -5225,7 +5226,7 @@ paths:
                                             - notIn
                                         value:
                                           anyOf:
-                                            - type: 'null'
+                                            - type: "null"
                                             - type: string
                                             - type: number
                                             - type: boolean
@@ -5289,10 +5290,10 @@ paths:
                                         operator:
                                           enum:
                                             - =
-                                            - '!='
+                                            - "!="
                                         value:
                                           anyOf:
-                                            - type: 'null'
+                                            - type: "null"
                                             - type: string
                                             - type: number
                                             - type: boolean
@@ -5385,12 +5386,13 @@ paths:
           required: true
       security:
         - bearer:
-            - 'create:actions'
+            - "create:actions"
       responses:
-        '200':
+        "200":
           description: Default Response
     put:
       summary: Change blueprint's actions
+      description: This route allows you to pass an array of actions to be set for the blueprint.
       tags:
         - Actions
       requestBody:
@@ -5639,8 +5641,8 @@ paths:
                                             type: string
                                           operator:
                                             enum:
-                                              - '>'
-                                              - '>='
+                                              - ">"
+                                              - ">="
                                               - <
                                               - <=
                                           value:
@@ -5666,7 +5668,7 @@ paths:
                                           operator:
                                             enum:
                                               - =
-                                              - '!='
+                                              - "!="
                                               - containsAny
                                               - contains
                                               - doesNotContain
@@ -5678,7 +5680,7 @@ paths:
                                               - notIn
                                           value:
                                             anyOf:
-                                              - type: 'null'
+                                              - type: "null"
                                               - type: string
                                               - type: number
                                               - type: boolean
@@ -5742,10 +5744,10 @@ paths:
                                           operator:
                                             enum:
                                               - =
-                                              - '!='
+                                              - "!="
                                           value:
                                             anyOf:
-                                              - type: 'null'
+                                              - type: "null"
                                               - type: string
                                               - type: number
                                               - type: boolean
@@ -5839,12 +5841,13 @@ paths:
           required: true
       security:
         - bearer:
-            - 'update:actions'
+            - "update:actions"
       responses:
-        '200':
+        "200":
           description: Default Response
     get:
       summary: Get all blueprint's actions
+      description: This route allows you to get all actions that are tied to the blueprint.
       tags:
         - Actions
       parameters:
@@ -5855,13 +5858,14 @@ paths:
           required: true
       security:
         - bearer:
-            - 'read:actions'
+            - "read:actions"
       responses:
-        '200':
+        "200":
           description: Default Response
-  '/v1/blueprints/{blueprint_identifier}/actions/{action_identifier}':
+  "/v1/blueprints/{blueprint_identifier}/actions/{action_identifier}":
     put:
       summary: Update a blueprint's action
+      description: This route allows you to update a specific action that is tied to the blueprint.
       tags:
         - Actions
       requestBody:
@@ -6108,8 +6112,8 @@ paths:
                                           type: string
                                         operator:
                                           enum:
-                                            - '>'
-                                            - '>='
+                                            - ">"
+                                            - ">="
                                             - <
                                             - <=
                                         value:
@@ -6135,7 +6139,7 @@ paths:
                                         operator:
                                           enum:
                                             - =
-                                            - '!='
+                                            - "!="
                                             - containsAny
                                             - contains
                                             - doesNotContain
@@ -6147,7 +6151,7 @@ paths:
                                             - notIn
                                         value:
                                           anyOf:
-                                            - type: 'null'
+                                            - type: "null"
                                             - type: string
                                             - type: number
                                             - type: boolean
@@ -6211,10 +6215,10 @@ paths:
                                         operator:
                                           enum:
                                             - =
-                                            - '!='
+                                            - "!="
                                         value:
                                           anyOf:
-                                            - type: 'null'
+                                            - type: "null"
                                             - type: string
                                             - type: number
                                             - type: boolean
@@ -6312,12 +6316,13 @@ paths:
           required: true
       security:
         - bearer:
-            - 'update:actions'
+            - "update:actions"
       responses:
-        '200':
+        "200":
           description: Default Response
     get:
       summary: Get a blueprint action
+      description: This route allows you to get the JSON definition of a specific action.
       tags:
         - Actions
       parameters:
@@ -6333,12 +6338,13 @@ paths:
           required: true
       security:
         - bearer:
-            - 'read:actions'
+            - "read:actions"
       responses:
-        '200':
+        "200":
           description: Default Response
     delete:
       summary: Delete blueprint's action
+      description: This route allows you to delete a specific action that is tied to the blueprint.
       tags:
         - Actions
       parameters:
@@ -6354,13 +6360,14 @@ paths:
           required: true
       security:
         - bearer:
-            - 'delete:actions'
+            - "delete:actions"
       responses:
-        '200':
+        "200":
           description: Default Response
   /v1/actions:
     get:
       summary: Get all actions
+      description: This route allows you to get all of the actions that are available in your organization.
       tags:
         - Actions
       parameters:
@@ -6425,13 +6432,14 @@ paths:
           required: false
       security:
         - bearer:
-            - 'read:actions'
+            - "read:actions"
       responses:
-        '200':
+        "200":
           description: Default Response
-  '/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}/actions/{action_identifier}/runs':
-    post:
+  ? "/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}/actions/{action_identifier}/runs"
+  : post:
       summary: Run a blueprint's entity action
+      description: This route allows you to trigger a Day-2/Delete action on a specific entity, according to the identifier passed.
       tags:
         - Action Runs
       requestBody:
@@ -6470,11 +6478,12 @@ paths:
       security:
         - bearer: []
       responses:
-        '200':
+        "200":
           description: Default Response
-  '/v1/blueprints/{blueprint_identifier}/actions/{action_identifier}/runs':
+  "/v1/blueprints/{blueprint_identifier}/actions/{action_identifier}/runs":
     post:
       summary: Run a blueprint's action
+      description: This route allows you to run a specific Create action that is tied to the blueprint.
       tags:
         - Action Runs
       requestBody:
@@ -6508,11 +6517,12 @@ paths:
       security:
         - bearer: []
       responses:
-        '200':
+        "200":
           description: Default Response
-  '/v1/actions/runs/{run_id}':
+  "/v1/actions/runs/{run_id}":
     patch:
       summary: Patch an action run
+      desciprition: This route allows you to update a specific action run in Port. This includes setting associated links and termination status.
       tags:
         - Action Runs
       requestBody:
@@ -6561,10 +6571,11 @@ paths:
       security:
         - bearer: []
       responses:
-        '200':
+        "200":
           description: Default Response
     get:
       summary: Get an action run's details
+      description: This route allows you to get information regarding a specific run.
       tags:
         - Action Runs
       parameters:
@@ -6583,13 +6594,14 @@ paths:
           required: true
       security:
         - bearer:
-            - 'read:runs'
+            - "read:runs"
       responses:
-        '200':
+        "200":
           description: Default Response
-  '/v1/actions/runs/{run_id}/approval':
+  "/v1/actions/runs/{run_id}/approval":
     patch:
       summary: Approve an action's run
+      description: This route allows you to approve or decline a specific action run in your organization.
       tags:
         - Action Runs
       requestBody:
@@ -6626,11 +6638,12 @@ paths:
       security:
         - bearer: []
       responses:
-        '200':
+        "200":
           description: Default Response
   /v1/actions/runs:
     get:
       summary: Get all action runs
+      description: This route allows you to get all of the action runs in your organization.
       tags:
         - Action Runs
       parameters:
@@ -6676,13 +6689,14 @@ paths:
           required: false
       security:
         - bearer:
-            - 'read:runs'
+            - "read:runs"
       responses:
-        '200':
+        "200":
           description: Default Response
-  '/v1/actions/runs/{run_id}/logs':
+  "/v1/actions/runs/{run_id}/logs":
     post:
       summary: Add a log to an action run
+      description: This route allows you to update an action run with logs, and attach a termination status to your run.
       tags:
         - Action Runs
       requestBody:
@@ -6713,10 +6727,11 @@ paths:
       security:
         - bearer: []
       responses:
-        '200':
+        "200":
           description: Default Response
     get:
       summary: Get an action's run logs
+      description: This route allows you to get all of the log messages of a specific run.
       tags:
         - Action Runs
       parameters:
@@ -6740,11 +6755,12 @@ paths:
       security:
         - bearer: []
       responses:
-        '200':
+        "200":
           description: Default Response
   /v1/pages:
     get:
       summary: Get all pages
+      description: This route allows you to get all of the catalog pages of your organization.
       tags:
         - Pages
       parameters:
@@ -6757,10 +6773,11 @@ paths:
       security:
         - bearer: []
       responses:
-        '200':
+        "200":
           description: Default Response
     post:
       summary: Create pages
+      description: This route allows you to create a new page in your catalog.
       tags:
         - Pages
       requestBody:
@@ -6874,7 +6891,7 @@ paths:
                                 type: object
                                 properties:
                                   filterBy:
-                                    $ref: '#/components/schemas/def-0'
+                                    $ref: "#/components/schemas/def-0"
                                 additionalProperties: false
                                 required:
                                   - filterBy
@@ -6948,7 +6965,7 @@ paths:
                           title:
                             type: string
                           dataset:
-                            $ref: '#/components/schemas/def-0'
+                            $ref: "#/components/schemas/def-0"
                           excludedFields:
                             type: array
                             items:
@@ -6970,7 +6987,7 @@ paths:
                                   type: object
                                   properties:
                                     filterBy:
-                                      $ref: '#/components/schemas/def-0'
+                                      $ref: "#/components/schemas/def-0"
                                   additionalProperties: false
                                   required:
                                     - filterBy
@@ -7059,7 +7076,7 @@ paths:
                                   type: object
                                   properties:
                                     filterBy:
-                                      $ref: '#/components/schemas/def-0'
+                                      $ref: "#/components/schemas/def-0"
                                   additionalProperties: false
                                   required:
                                     - filterBy
@@ -7115,7 +7132,7 @@ paths:
                                   type: string
                                   maxLength: 200
                                 dataset:
-                                  $ref: '#/components/schemas/def-0'
+                                  $ref: "#/components/schemas/def-0"
                                 targetBlueprint:
                                   type: string
                                 relatedProperty:
@@ -7199,11 +7216,11 @@ paths:
                               from:
                                 type: string
                                 format: date-time
-                                description: 'ISO format IE 2022-04-23T18:25:43.511Z'
+                                description: "ISO format IE 2022-04-23T18:25:43.511Z"
                               to:
                                 type: string
                                 format: date-time
-                                description: 'ISO format 2022-04-23T18:25:43.511Z'
+                                description: "ISO format 2022-04-23T18:25:43.511Z"
                               action:
                                 type: string
                               status:
@@ -7221,7 +7238,7 @@ paths:
                                 type: object
                                 properties:
                                   filterBy:
-                                    $ref: '#/components/schemas/def-0'
+                                    $ref: "#/components/schemas/def-0"
                                 additionalProperties: false
                                 required:
                                   - filterBy
@@ -7299,7 +7316,7 @@ paths:
                                 type: object
                                 properties:
                                   filterBy:
-                                    $ref: '#/components/schemas/def-0'
+                                    $ref: "#/components/schemas/def-0"
                                 additionalProperties: false
                                 required:
                                   - filterBy
@@ -7376,7 +7393,7 @@ paths:
                                 type: object
                                 properties:
                                   filterBy:
-                                    $ref: '#/components/schemas/def-0'
+                                    $ref: "#/components/schemas/def-0"
                                 additionalProperties: false
                                 required:
                                   - filterBy
@@ -7471,7 +7488,7 @@ paths:
                                 type: object
                                 properties:
                                   filterBy:
-                                    $ref: '#/components/schemas/def-0'
+                                    $ref: "#/components/schemas/def-0"
                                 additionalProperties: false
                                 required:
                                   - filterBy
@@ -7583,7 +7600,7 @@ paths:
                           title:
                             type: string
                           dataset:
-                            $ref: '#/components/schemas/def-0'
+                            $ref: "#/components/schemas/def-0"
                           hiddenBlueprints:
                             type: array
                             items:
@@ -7616,7 +7633,7 @@ paths:
                           description:
                             type: string
                           dataset:
-                            $ref: '#/components/schemas/def-0'
+                            $ref: "#/components/schemas/def-0"
                         additionalProperties: false
                         required:
                           - type
@@ -7648,8 +7665,8 @@ paths:
                                       type: string
                                     operator:
                                       enum:
-                                        - '>'
-                                        - '>='
+                                        - ">"
+                                        - ">="
                                         - <
                                         - <=
                                     value:
@@ -7711,7 +7728,7 @@ paths:
                                     operator:
                                       enum:
                                         - =
-                                        - '!='
+                                        - "!="
                                         - containsAny
                                         - contains
                                         - doesNotContain
@@ -7723,7 +7740,7 @@ paths:
                                         - notIn
                                     value:
                                       anyOf:
-                                        - type: 'null'
+                                        - type: "null"
                                         - type: string
                                         - type: number
                                         - type: boolean
@@ -7784,10 +7801,10 @@ paths:
                                     operator:
                                       enum:
                                         - =
-                                        - '!='
+                                        - "!="
                                     value:
                                       anyOf:
-                                        - type: 'null'
+                                        - type: "null"
                                         - type: string
                                         - type: number
                                         - type: boolean
@@ -7795,7 +7812,7 @@ paths:
                                     - operator
                                     - propertySchema
                                   additionalProperties: false
-                                - $ref: '#/components/schemas/def-0'
+                                - $ref: "#/components/schemas/def-0"
                           title:
                             type: string
                           icon:
@@ -7809,7 +7826,7 @@ paths:
                               - $
                               - €
                               - £
-                              - '%'
+                              - "%"
                               - custom
                           unitAlignment:
                             type: string
@@ -8148,7 +8165,7 @@ paths:
                                                 type: object
                                                 properties:
                                                   filterBy:
-                                                    $ref: '#/components/schemas/def-0'
+                                                    $ref: "#/components/schemas/def-0"
                                                 additionalProperties: false
                                                 required:
                                                   - filterBy
@@ -8222,7 +8239,7 @@ paths:
                                           title:
                                             type: string
                                           dataset:
-                                            $ref: '#/components/schemas/def-0'
+                                            $ref: "#/components/schemas/def-0"
                                           excludedFields:
                                             type: array
                                             items:
@@ -8244,7 +8261,7 @@ paths:
                                                   type: object
                                                   properties:
                                                     filterBy:
-                                                      $ref: '#/components/schemas/def-0'
+                                                      $ref: "#/components/schemas/def-0"
                                                   additionalProperties: false
                                                   required:
                                                     - filterBy
@@ -8333,7 +8350,7 @@ paths:
                                                   type: object
                                                   properties:
                                                     filterBy:
-                                                      $ref: '#/components/schemas/def-0'
+                                                      $ref: "#/components/schemas/def-0"
                                                   additionalProperties: false
                                                   required:
                                                     - filterBy
@@ -8389,7 +8406,7 @@ paths:
                                                   type: string
                                                   maxLength: 200
                                                 dataset:
-                                                  $ref: '#/components/schemas/def-0'
+                                                  $ref: "#/components/schemas/def-0"
                                                 targetBlueprint:
                                                   type: string
                                                 relatedProperty:
@@ -8473,11 +8490,11 @@ paths:
                                               from:
                                                 type: string
                                                 format: date-time
-                                                description: 'ISO format IE 2022-04-23T18:25:43.511Z'
+                                                description: "ISO format IE 2022-04-23T18:25:43.511Z"
                                               to:
                                                 type: string
                                                 format: date-time
-                                                description: 'ISO format 2022-04-23T18:25:43.511Z'
+                                                description: "ISO format 2022-04-23T18:25:43.511Z"
                                               action:
                                                 type: string
                                               status:
@@ -8495,7 +8512,7 @@ paths:
                                                 type: object
                                                 properties:
                                                   filterBy:
-                                                    $ref: '#/components/schemas/def-0'
+                                                    $ref: "#/components/schemas/def-0"
                                                 additionalProperties: false
                                                 required:
                                                   - filterBy
@@ -8573,7 +8590,7 @@ paths:
                                                 type: object
                                                 properties:
                                                   filterBy:
-                                                    $ref: '#/components/schemas/def-0'
+                                                    $ref: "#/components/schemas/def-0"
                                                 additionalProperties: false
                                                 required:
                                                   - filterBy
@@ -8650,7 +8667,7 @@ paths:
                                                 type: object
                                                 properties:
                                                   filterBy:
-                                                    $ref: '#/components/schemas/def-0'
+                                                    $ref: "#/components/schemas/def-0"
                                                 additionalProperties: false
                                                 required:
                                                   - filterBy
@@ -8745,7 +8762,7 @@ paths:
                                                 type: object
                                                 properties:
                                                   filterBy:
-                                                    $ref: '#/components/schemas/def-0'
+                                                    $ref: "#/components/schemas/def-0"
                                                 additionalProperties: false
                                                 required:
                                                   - filterBy
@@ -8857,7 +8874,7 @@ paths:
                                           title:
                                             type: string
                                           dataset:
-                                            $ref: '#/components/schemas/def-0'
+                                            $ref: "#/components/schemas/def-0"
                                           hiddenBlueprints:
                                             type: array
                                             items:
@@ -8890,7 +8907,7 @@ paths:
                                           description:
                                             type: string
                                           dataset:
-                                            $ref: '#/components/schemas/def-0'
+                                            $ref: "#/components/schemas/def-0"
                                         additionalProperties: false
                                         required:
                                           - type
@@ -8922,8 +8939,8 @@ paths:
                                                       type: string
                                                     operator:
                                                       enum:
-                                                        - '>'
-                                                        - '>='
+                                                        - ">"
+                                                        - ">="
                                                         - <
                                                         - <=
                                                     value:
@@ -8985,7 +9002,7 @@ paths:
                                                     operator:
                                                       enum:
                                                         - =
-                                                        - '!='
+                                                        - "!="
                                                         - containsAny
                                                         - contains
                                                         - doesNotContain
@@ -8997,7 +9014,7 @@ paths:
                                                         - notIn
                                                     value:
                                                       anyOf:
-                                                        - type: 'null'
+                                                        - type: "null"
                                                         - type: string
                                                         - type: number
                                                         - type: boolean
@@ -9058,10 +9075,10 @@ paths:
                                                     operator:
                                                       enum:
                                                         - =
-                                                        - '!='
+                                                        - "!="
                                                     value:
                                                       anyOf:
-                                                        - type: 'null'
+                                                        - type: "null"
                                                         - type: string
                                                         - type: number
                                                         - type: boolean
@@ -9069,7 +9086,7 @@ paths:
                                                     - operator
                                                     - propertySchema
                                                   additionalProperties: false
-                                                - $ref: '#/components/schemas/def-0'
+                                                - $ref: "#/components/schemas/def-0"
                                           title:
                                             type: string
                                           icon:
@@ -9083,7 +9100,7 @@ paths:
                                               - $
                                               - €
                                               - £
-                                              - '%'
+                                              - "%"
                                               - custom
                                           unitAlignment:
                                             type: string
@@ -9434,7 +9451,7 @@ paths:
                                           type: object
                                           properties:
                                             filterBy:
-                                              $ref: '#/components/schemas/def-0'
+                                              $ref: "#/components/schemas/def-0"
                                           additionalProperties: false
                                           required:
                                             - filterBy
@@ -9508,7 +9525,7 @@ paths:
                                     title:
                                       type: string
                                     dataset:
-                                      $ref: '#/components/schemas/def-0'
+                                      $ref: "#/components/schemas/def-0"
                                     excludedFields:
                                       type: array
                                       items:
@@ -9530,7 +9547,7 @@ paths:
                                             type: object
                                             properties:
                                               filterBy:
-                                                $ref: '#/components/schemas/def-0'
+                                                $ref: "#/components/schemas/def-0"
                                             additionalProperties: false
                                             required:
                                               - filterBy
@@ -9619,7 +9636,7 @@ paths:
                                             type: object
                                             properties:
                                               filterBy:
-                                                $ref: '#/components/schemas/def-0'
+                                                $ref: "#/components/schemas/def-0"
                                             additionalProperties: false
                                             required:
                                               - filterBy
@@ -9675,7 +9692,7 @@ paths:
                                             type: string
                                             maxLength: 200
                                           dataset:
-                                            $ref: '#/components/schemas/def-0'
+                                            $ref: "#/components/schemas/def-0"
                                           targetBlueprint:
                                             type: string
                                           relatedProperty:
@@ -9759,11 +9776,11 @@ paths:
                                         from:
                                           type: string
                                           format: date-time
-                                          description: 'ISO format IE 2022-04-23T18:25:43.511Z'
+                                          description: "ISO format IE 2022-04-23T18:25:43.511Z"
                                         to:
                                           type: string
                                           format: date-time
-                                          description: 'ISO format 2022-04-23T18:25:43.511Z'
+                                          description: "ISO format 2022-04-23T18:25:43.511Z"
                                         action:
                                           type: string
                                         status:
@@ -9781,7 +9798,7 @@ paths:
                                           type: object
                                           properties:
                                             filterBy:
-                                              $ref: '#/components/schemas/def-0'
+                                              $ref: "#/components/schemas/def-0"
                                           additionalProperties: false
                                           required:
                                             - filterBy
@@ -9859,7 +9876,7 @@ paths:
                                           type: object
                                           properties:
                                             filterBy:
-                                              $ref: '#/components/schemas/def-0'
+                                              $ref: "#/components/schemas/def-0"
                                           additionalProperties: false
                                           required:
                                             - filterBy
@@ -9936,7 +9953,7 @@ paths:
                                           type: object
                                           properties:
                                             filterBy:
-                                              $ref: '#/components/schemas/def-0'
+                                              $ref: "#/components/schemas/def-0"
                                           additionalProperties: false
                                           required:
                                             - filterBy
@@ -10031,7 +10048,7 @@ paths:
                                           type: object
                                           properties:
                                             filterBy:
-                                              $ref: '#/components/schemas/def-0'
+                                              $ref: "#/components/schemas/def-0"
                                           additionalProperties: false
                                           required:
                                             - filterBy
@@ -10143,7 +10160,7 @@ paths:
                                     title:
                                       type: string
                                     dataset:
-                                      $ref: '#/components/schemas/def-0'
+                                      $ref: "#/components/schemas/def-0"
                                     hiddenBlueprints:
                                       type: array
                                       items:
@@ -10176,7 +10193,7 @@ paths:
                                     description:
                                       type: string
                                     dataset:
-                                      $ref: '#/components/schemas/def-0'
+                                      $ref: "#/components/schemas/def-0"
                                   additionalProperties: false
                                   required:
                                     - type
@@ -10208,8 +10225,8 @@ paths:
                                                 type: string
                                               operator:
                                                 enum:
-                                                  - '>'
-                                                  - '>='
+                                                  - ">"
+                                                  - ">="
                                                   - <
                                                   - <=
                                               value:
@@ -10271,7 +10288,7 @@ paths:
                                               operator:
                                                 enum:
                                                   - =
-                                                  - '!='
+                                                  - "!="
                                                   - containsAny
                                                   - contains
                                                   - doesNotContain
@@ -10283,7 +10300,7 @@ paths:
                                                   - notIn
                                               value:
                                                 anyOf:
-                                                  - type: 'null'
+                                                  - type: "null"
                                                   - type: string
                                                   - type: number
                                                   - type: boolean
@@ -10344,10 +10361,10 @@ paths:
                                               operator:
                                                 enum:
                                                   - =
-                                                  - '!='
+                                                  - "!="
                                               value:
                                                 anyOf:
-                                                  - type: 'null'
+                                                  - type: "null"
                                                   - type: string
                                                   - type: number
                                                   - type: boolean
@@ -10355,7 +10372,7 @@ paths:
                                               - operator
                                               - propertySchema
                                             additionalProperties: false
-                                          - $ref: '#/components/schemas/def-0'
+                                          - $ref: "#/components/schemas/def-0"
                                     title:
                                       type: string
                                     icon:
@@ -10369,7 +10386,7 @@ paths:
                                         - $
                                         - €
                                         - £
-                                        - '%'
+                                        - "%"
                                         - custom
                                     unitAlignment:
                                       type: string
@@ -10630,13 +10647,14 @@ paths:
         required: true
       security:
         - bearer:
-            - 'create:pages'
+            - "create:pages"
       responses:
-        '201':
+        "201":
           description: Created successfully
-  '/v1/pages/{identifier}':
+  "/v1/pages/{identifier}":
     get:
       summary: Get a page
+      description: This route allows you to get a specific page from your software catalog.
       tags:
         - Pages
       parameters:
@@ -10648,10 +10666,11 @@ paths:
       security:
         - bearer: []
       responses:
-        '200':
+        "200":
           description: Default Response
     patch:
       summary: Patch a page
+      description: This route allows you to update a specific page in your software catalog.
       tags:
         - Pages
       requestBody:
@@ -10755,7 +10774,7 @@ paths:
                                 type: object
                                 properties:
                                   filterBy:
-                                    $ref: '#/components/schemas/def-0'
+                                    $ref: "#/components/schemas/def-0"
                                 additionalProperties: false
                                 required:
                                   - filterBy
@@ -10829,7 +10848,7 @@ paths:
                           title:
                             type: string
                           dataset:
-                            $ref: '#/components/schemas/def-0'
+                            $ref: "#/components/schemas/def-0"
                           excludedFields:
                             type: array
                             items:
@@ -10851,7 +10870,7 @@ paths:
                                   type: object
                                   properties:
                                     filterBy:
-                                      $ref: '#/components/schemas/def-0'
+                                      $ref: "#/components/schemas/def-0"
                                   additionalProperties: false
                                   required:
                                     - filterBy
@@ -10940,7 +10959,7 @@ paths:
                                   type: object
                                   properties:
                                     filterBy:
-                                      $ref: '#/components/schemas/def-0'
+                                      $ref: "#/components/schemas/def-0"
                                   additionalProperties: false
                                   required:
                                     - filterBy
@@ -10996,7 +11015,7 @@ paths:
                                   type: string
                                   maxLength: 200
                                 dataset:
-                                  $ref: '#/components/schemas/def-0'
+                                  $ref: "#/components/schemas/def-0"
                                 targetBlueprint:
                                   type: string
                                 relatedProperty:
@@ -11080,11 +11099,11 @@ paths:
                               from:
                                 type: string
                                 format: date-time
-                                description: 'ISO format IE 2022-04-23T18:25:43.511Z'
+                                description: "ISO format IE 2022-04-23T18:25:43.511Z"
                               to:
                                 type: string
                                 format: date-time
-                                description: 'ISO format 2022-04-23T18:25:43.511Z'
+                                description: "ISO format 2022-04-23T18:25:43.511Z"
                               action:
                                 type: string
                               status:
@@ -11102,7 +11121,7 @@ paths:
                                 type: object
                                 properties:
                                   filterBy:
-                                    $ref: '#/components/schemas/def-0'
+                                    $ref: "#/components/schemas/def-0"
                                 additionalProperties: false
                                 required:
                                   - filterBy
@@ -11180,7 +11199,7 @@ paths:
                                 type: object
                                 properties:
                                   filterBy:
-                                    $ref: '#/components/schemas/def-0'
+                                    $ref: "#/components/schemas/def-0"
                                 additionalProperties: false
                                 required:
                                   - filterBy
@@ -11257,7 +11276,7 @@ paths:
                                 type: object
                                 properties:
                                   filterBy:
-                                    $ref: '#/components/schemas/def-0'
+                                    $ref: "#/components/schemas/def-0"
                                 additionalProperties: false
                                 required:
                                   - filterBy
@@ -11352,7 +11371,7 @@ paths:
                                 type: object
                                 properties:
                                   filterBy:
-                                    $ref: '#/components/schemas/def-0'
+                                    $ref: "#/components/schemas/def-0"
                                 additionalProperties: false
                                 required:
                                   - filterBy
@@ -11464,7 +11483,7 @@ paths:
                           title:
                             type: string
                           dataset:
-                            $ref: '#/components/schemas/def-0'
+                            $ref: "#/components/schemas/def-0"
                           hiddenBlueprints:
                             type: array
                             items:
@@ -11497,7 +11516,7 @@ paths:
                           description:
                             type: string
                           dataset:
-                            $ref: '#/components/schemas/def-0'
+                            $ref: "#/components/schemas/def-0"
                         additionalProperties: false
                         required:
                           - type
@@ -11529,8 +11548,8 @@ paths:
                                       type: string
                                     operator:
                                       enum:
-                                        - '>'
-                                        - '>='
+                                        - ">"
+                                        - ">="
                                         - <
                                         - <=
                                     value:
@@ -11592,7 +11611,7 @@ paths:
                                     operator:
                                       enum:
                                         - =
-                                        - '!='
+                                        - "!="
                                         - containsAny
                                         - contains
                                         - doesNotContain
@@ -11604,7 +11623,7 @@ paths:
                                         - notIn
                                     value:
                                       anyOf:
-                                        - type: 'null'
+                                        - type: "null"
                                         - type: string
                                         - type: number
                                         - type: boolean
@@ -11665,10 +11684,10 @@ paths:
                                     operator:
                                       enum:
                                         - =
-                                        - '!='
+                                        - "!="
                                     value:
                                       anyOf:
-                                        - type: 'null'
+                                        - type: "null"
                                         - type: string
                                         - type: number
                                         - type: boolean
@@ -11676,7 +11695,7 @@ paths:
                                     - operator
                                     - propertySchema
                                   additionalProperties: false
-                                - $ref: '#/components/schemas/def-0'
+                                - $ref: "#/components/schemas/def-0"
                           title:
                             type: string
                           icon:
@@ -11690,7 +11709,7 @@ paths:
                               - $
                               - €
                               - £
-                              - '%'
+                              - "%"
                               - custom
                           unitAlignment:
                             type: string
@@ -12029,7 +12048,7 @@ paths:
                                                 type: object
                                                 properties:
                                                   filterBy:
-                                                    $ref: '#/components/schemas/def-0'
+                                                    $ref: "#/components/schemas/def-0"
                                                 additionalProperties: false
                                                 required:
                                                   - filterBy
@@ -12103,7 +12122,7 @@ paths:
                                           title:
                                             type: string
                                           dataset:
-                                            $ref: '#/components/schemas/def-0'
+                                            $ref: "#/components/schemas/def-0"
                                           excludedFields:
                                             type: array
                                             items:
@@ -12125,7 +12144,7 @@ paths:
                                                   type: object
                                                   properties:
                                                     filterBy:
-                                                      $ref: '#/components/schemas/def-0'
+                                                      $ref: "#/components/schemas/def-0"
                                                   additionalProperties: false
                                                   required:
                                                     - filterBy
@@ -12214,7 +12233,7 @@ paths:
                                                   type: object
                                                   properties:
                                                     filterBy:
-                                                      $ref: '#/components/schemas/def-0'
+                                                      $ref: "#/components/schemas/def-0"
                                                   additionalProperties: false
                                                   required:
                                                     - filterBy
@@ -12270,7 +12289,7 @@ paths:
                                                   type: string
                                                   maxLength: 200
                                                 dataset:
-                                                  $ref: '#/components/schemas/def-0'
+                                                  $ref: "#/components/schemas/def-0"
                                                 targetBlueprint:
                                                   type: string
                                                 relatedProperty:
@@ -12354,11 +12373,11 @@ paths:
                                               from:
                                                 type: string
                                                 format: date-time
-                                                description: 'ISO format IE 2022-04-23T18:25:43.511Z'
+                                                description: "ISO format IE 2022-04-23T18:25:43.511Z"
                                               to:
                                                 type: string
                                                 format: date-time
-                                                description: 'ISO format 2022-04-23T18:25:43.511Z'
+                                                description: "ISO format 2022-04-23T18:25:43.511Z"
                                               action:
                                                 type: string
                                               status:
@@ -12376,7 +12395,7 @@ paths:
                                                 type: object
                                                 properties:
                                                   filterBy:
-                                                    $ref: '#/components/schemas/def-0'
+                                                    $ref: "#/components/schemas/def-0"
                                                 additionalProperties: false
                                                 required:
                                                   - filterBy
@@ -12454,7 +12473,7 @@ paths:
                                                 type: object
                                                 properties:
                                                   filterBy:
-                                                    $ref: '#/components/schemas/def-0'
+                                                    $ref: "#/components/schemas/def-0"
                                                 additionalProperties: false
                                                 required:
                                                   - filterBy
@@ -12531,7 +12550,7 @@ paths:
                                                 type: object
                                                 properties:
                                                   filterBy:
-                                                    $ref: '#/components/schemas/def-0'
+                                                    $ref: "#/components/schemas/def-0"
                                                 additionalProperties: false
                                                 required:
                                                   - filterBy
@@ -12626,7 +12645,7 @@ paths:
                                                 type: object
                                                 properties:
                                                   filterBy:
-                                                    $ref: '#/components/schemas/def-0'
+                                                    $ref: "#/components/schemas/def-0"
                                                 additionalProperties: false
                                                 required:
                                                   - filterBy
@@ -12738,7 +12757,7 @@ paths:
                                           title:
                                             type: string
                                           dataset:
-                                            $ref: '#/components/schemas/def-0'
+                                            $ref: "#/components/schemas/def-0"
                                           hiddenBlueprints:
                                             type: array
                                             items:
@@ -12771,7 +12790,7 @@ paths:
                                           description:
                                             type: string
                                           dataset:
-                                            $ref: '#/components/schemas/def-0'
+                                            $ref: "#/components/schemas/def-0"
                                         additionalProperties: false
                                         required:
                                           - type
@@ -12803,8 +12822,8 @@ paths:
                                                       type: string
                                                     operator:
                                                       enum:
-                                                        - '>'
-                                                        - '>='
+                                                        - ">"
+                                                        - ">="
                                                         - <
                                                         - <=
                                                     value:
@@ -12866,7 +12885,7 @@ paths:
                                                     operator:
                                                       enum:
                                                         - =
-                                                        - '!='
+                                                        - "!="
                                                         - containsAny
                                                         - contains
                                                         - doesNotContain
@@ -12878,7 +12897,7 @@ paths:
                                                         - notIn
                                                     value:
                                                       anyOf:
-                                                        - type: 'null'
+                                                        - type: "null"
                                                         - type: string
                                                         - type: number
                                                         - type: boolean
@@ -12939,10 +12958,10 @@ paths:
                                                     operator:
                                                       enum:
                                                         - =
-                                                        - '!='
+                                                        - "!="
                                                     value:
                                                       anyOf:
-                                                        - type: 'null'
+                                                        - type: "null"
                                                         - type: string
                                                         - type: number
                                                         - type: boolean
@@ -12950,7 +12969,7 @@ paths:
                                                     - operator
                                                     - propertySchema
                                                   additionalProperties: false
-                                                - $ref: '#/components/schemas/def-0'
+                                                - $ref: "#/components/schemas/def-0"
                                           title:
                                             type: string
                                           icon:
@@ -12964,7 +12983,7 @@ paths:
                                               - $
                                               - €
                                               - £
-                                              - '%'
+                                              - "%"
                                               - custom
                                           unitAlignment:
                                             type: string
@@ -13315,7 +13334,7 @@ paths:
                                           type: object
                                           properties:
                                             filterBy:
-                                              $ref: '#/components/schemas/def-0'
+                                              $ref: "#/components/schemas/def-0"
                                           additionalProperties: false
                                           required:
                                             - filterBy
@@ -13389,7 +13408,7 @@ paths:
                                     title:
                                       type: string
                                     dataset:
-                                      $ref: '#/components/schemas/def-0'
+                                      $ref: "#/components/schemas/def-0"
                                     excludedFields:
                                       type: array
                                       items:
@@ -13411,7 +13430,7 @@ paths:
                                             type: object
                                             properties:
                                               filterBy:
-                                                $ref: '#/components/schemas/def-0'
+                                                $ref: "#/components/schemas/def-0"
                                             additionalProperties: false
                                             required:
                                               - filterBy
@@ -13500,7 +13519,7 @@ paths:
                                             type: object
                                             properties:
                                               filterBy:
-                                                $ref: '#/components/schemas/def-0'
+                                                $ref: "#/components/schemas/def-0"
                                             additionalProperties: false
                                             required:
                                               - filterBy
@@ -13556,7 +13575,7 @@ paths:
                                             type: string
                                             maxLength: 200
                                           dataset:
-                                            $ref: '#/components/schemas/def-0'
+                                            $ref: "#/components/schemas/def-0"
                                           targetBlueprint:
                                             type: string
                                           relatedProperty:
@@ -13640,11 +13659,11 @@ paths:
                                         from:
                                           type: string
                                           format: date-time
-                                          description: 'ISO format IE 2022-04-23T18:25:43.511Z'
+                                          description: "ISO format IE 2022-04-23T18:25:43.511Z"
                                         to:
                                           type: string
                                           format: date-time
-                                          description: 'ISO format 2022-04-23T18:25:43.511Z'
+                                          description: "ISO format 2022-04-23T18:25:43.511Z"
                                         action:
                                           type: string
                                         status:
@@ -13662,7 +13681,7 @@ paths:
                                           type: object
                                           properties:
                                             filterBy:
-                                              $ref: '#/components/schemas/def-0'
+                                              $ref: "#/components/schemas/def-0"
                                           additionalProperties: false
                                           required:
                                             - filterBy
@@ -13740,7 +13759,7 @@ paths:
                                           type: object
                                           properties:
                                             filterBy:
-                                              $ref: '#/components/schemas/def-0'
+                                              $ref: "#/components/schemas/def-0"
                                           additionalProperties: false
                                           required:
                                             - filterBy
@@ -13817,7 +13836,7 @@ paths:
                                           type: object
                                           properties:
                                             filterBy:
-                                              $ref: '#/components/schemas/def-0'
+                                              $ref: "#/components/schemas/def-0"
                                           additionalProperties: false
                                           required:
                                             - filterBy
@@ -13912,7 +13931,7 @@ paths:
                                           type: object
                                           properties:
                                             filterBy:
-                                              $ref: '#/components/schemas/def-0'
+                                              $ref: "#/components/schemas/def-0"
                                           additionalProperties: false
                                           required:
                                             - filterBy
@@ -14024,7 +14043,7 @@ paths:
                                     title:
                                       type: string
                                     dataset:
-                                      $ref: '#/components/schemas/def-0'
+                                      $ref: "#/components/schemas/def-0"
                                     hiddenBlueprints:
                                       type: array
                                       items:
@@ -14057,7 +14076,7 @@ paths:
                                     description:
                                       type: string
                                     dataset:
-                                      $ref: '#/components/schemas/def-0'
+                                      $ref: "#/components/schemas/def-0"
                                   additionalProperties: false
                                   required:
                                     - type
@@ -14089,8 +14108,8 @@ paths:
                                                 type: string
                                               operator:
                                                 enum:
-                                                  - '>'
-                                                  - '>='
+                                                  - ">"
+                                                  - ">="
                                                   - <
                                                   - <=
                                               value:
@@ -14152,7 +14171,7 @@ paths:
                                               operator:
                                                 enum:
                                                   - =
-                                                  - '!='
+                                                  - "!="
                                                   - containsAny
                                                   - contains
                                                   - doesNotContain
@@ -14164,7 +14183,7 @@ paths:
                                                   - notIn
                                               value:
                                                 anyOf:
-                                                  - type: 'null'
+                                                  - type: "null"
                                                   - type: string
                                                   - type: number
                                                   - type: boolean
@@ -14225,10 +14244,10 @@ paths:
                                               operator:
                                                 enum:
                                                   - =
-                                                  - '!='
+                                                  - "!="
                                               value:
                                                 anyOf:
-                                                  - type: 'null'
+                                                  - type: "null"
                                                   - type: string
                                                   - type: number
                                                   - type: boolean
@@ -14236,7 +14255,7 @@ paths:
                                               - operator
                                               - propertySchema
                                             additionalProperties: false
-                                          - $ref: '#/components/schemas/def-0'
+                                          - $ref: "#/components/schemas/def-0"
                                     title:
                                       type: string
                                     icon:
@@ -14250,7 +14269,7 @@ paths:
                                         - $
                                         - €
                                         - £
-                                        - '%'
+                                        - "%"
                                         - custom
                                     unitAlignment:
                                       type: string
@@ -14503,9 +14522,9 @@ paths:
           required: true
       security:
         - bearer:
-            - 'update:pages'
+            - "update:pages"
       responses:
-        '200':
+        "200":
           description: Updated successfully
           content:
             application/json:
@@ -14524,6 +14543,7 @@ paths:
                 description: Updated successfully
     delete:
       summary: Delete a page
+      description: This route allows you to delete a specific page from your software catalog.
       tags:
         - Pages
       parameters:
@@ -14534,9 +14554,9 @@ paths:
           required: true
       security:
         - bearer:
-            - 'delete:pages'
+            - "delete:pages"
       responses:
-        '200':
+        "200":
           description: Deleted successfully
           content:
             application/json:
@@ -14550,9 +14570,10 @@ paths:
                 additionalProperties: false
                 required:
                   - ok
-  '/v1/pages/{page_identifier}/widgets':
+  "/v1/pages/{page_identifier}/widgets":
     post:
       summary: Create a widget in a page
+      description: This route allows you to create a widget in a specific page of your software catalog.
       tags:
         - Pages
       requestBody:
@@ -14632,7 +14653,7 @@ paths:
                               type: object
                               properties:
                                 filterBy:
-                                  $ref: '#/components/schemas/def-0'
+                                  $ref: "#/components/schemas/def-0"
                               additionalProperties: false
                               required:
                                 - filterBy
@@ -14706,7 +14727,7 @@ paths:
                         title:
                           type: string
                         dataset:
-                          $ref: '#/components/schemas/def-0'
+                          $ref: "#/components/schemas/def-0"
                         excludedFields:
                           type: array
                           items:
@@ -14728,7 +14749,7 @@ paths:
                                 type: object
                                 properties:
                                   filterBy:
-                                    $ref: '#/components/schemas/def-0'
+                                    $ref: "#/components/schemas/def-0"
                                 additionalProperties: false
                                 required:
                                   - filterBy
@@ -14817,7 +14838,7 @@ paths:
                                 type: object
                                 properties:
                                   filterBy:
-                                    $ref: '#/components/schemas/def-0'
+                                    $ref: "#/components/schemas/def-0"
                                 additionalProperties: false
                                 required:
                                   - filterBy
@@ -14873,7 +14894,7 @@ paths:
                                 type: string
                                 maxLength: 200
                               dataset:
-                                $ref: '#/components/schemas/def-0'
+                                $ref: "#/components/schemas/def-0"
                               targetBlueprint:
                                 type: string
                               relatedProperty:
@@ -14957,11 +14978,11 @@ paths:
                             from:
                               type: string
                               format: date-time
-                              description: 'ISO format IE 2022-04-23T18:25:43.511Z'
+                              description: "ISO format IE 2022-04-23T18:25:43.511Z"
                             to:
                               type: string
                               format: date-time
-                              description: 'ISO format 2022-04-23T18:25:43.511Z'
+                              description: "ISO format 2022-04-23T18:25:43.511Z"
                             action:
                               type: string
                             status:
@@ -14979,7 +15000,7 @@ paths:
                               type: object
                               properties:
                                 filterBy:
-                                  $ref: '#/components/schemas/def-0'
+                                  $ref: "#/components/schemas/def-0"
                               additionalProperties: false
                               required:
                                 - filterBy
@@ -15057,7 +15078,7 @@ paths:
                               type: object
                               properties:
                                 filterBy:
-                                  $ref: '#/components/schemas/def-0'
+                                  $ref: "#/components/schemas/def-0"
                               additionalProperties: false
                               required:
                                 - filterBy
@@ -15134,7 +15155,7 @@ paths:
                               type: object
                               properties:
                                 filterBy:
-                                  $ref: '#/components/schemas/def-0'
+                                  $ref: "#/components/schemas/def-0"
                               additionalProperties: false
                               required:
                                 - filterBy
@@ -15229,7 +15250,7 @@ paths:
                               type: object
                               properties:
                                 filterBy:
-                                  $ref: '#/components/schemas/def-0'
+                                  $ref: "#/components/schemas/def-0"
                               additionalProperties: false
                               required:
                                 - filterBy
@@ -15341,7 +15362,7 @@ paths:
                         title:
                           type: string
                         dataset:
-                          $ref: '#/components/schemas/def-0'
+                          $ref: "#/components/schemas/def-0"
                         hiddenBlueprints:
                           type: array
                           items:
@@ -15374,7 +15395,7 @@ paths:
                         description:
                           type: string
                         dataset:
-                          $ref: '#/components/schemas/def-0'
+                          $ref: "#/components/schemas/def-0"
                       additionalProperties: false
                       required:
                         - type
@@ -15406,8 +15427,8 @@ paths:
                                     type: string
                                   operator:
                                     enum:
-                                      - '>'
-                                      - '>='
+                                      - ">"
+                                      - ">="
                                       - <
                                       - <=
                                   value:
@@ -15469,7 +15490,7 @@ paths:
                                   operator:
                                     enum:
                                       - =
-                                      - '!='
+                                      - "!="
                                       - containsAny
                                       - contains
                                       - doesNotContain
@@ -15481,7 +15502,7 @@ paths:
                                       - notIn
                                   value:
                                     anyOf:
-                                      - type: 'null'
+                                      - type: "null"
                                       - type: string
                                       - type: number
                                       - type: boolean
@@ -15542,10 +15563,10 @@ paths:
                                   operator:
                                     enum:
                                       - =
-                                      - '!='
+                                      - "!="
                                   value:
                                     anyOf:
-                                      - type: 'null'
+                                      - type: "null"
                                       - type: string
                                       - type: number
                                       - type: boolean
@@ -15553,7 +15574,7 @@ paths:
                                   - operator
                                   - propertySchema
                                 additionalProperties: false
-                              - $ref: '#/components/schemas/def-0'
+                              - $ref: "#/components/schemas/def-0"
                         title:
                           type: string
                         icon:
@@ -15567,7 +15588,7 @@ paths:
                             - $
                             - €
                             - £
-                            - '%'
+                            - "%"
                             - custom
                         unitAlignment:
                           type: string
@@ -15906,7 +15927,7 @@ paths:
                                               type: object
                                               properties:
                                                 filterBy:
-                                                  $ref: '#/components/schemas/def-0'
+                                                  $ref: "#/components/schemas/def-0"
                                               additionalProperties: false
                                               required:
                                                 - filterBy
@@ -15980,7 +16001,7 @@ paths:
                                         title:
                                           type: string
                                         dataset:
-                                          $ref: '#/components/schemas/def-0'
+                                          $ref: "#/components/schemas/def-0"
                                         excludedFields:
                                           type: array
                                           items:
@@ -16002,7 +16023,7 @@ paths:
                                                 type: object
                                                 properties:
                                                   filterBy:
-                                                    $ref: '#/components/schemas/def-0'
+                                                    $ref: "#/components/schemas/def-0"
                                                 additionalProperties: false
                                                 required:
                                                   - filterBy
@@ -16091,7 +16112,7 @@ paths:
                                                 type: object
                                                 properties:
                                                   filterBy:
-                                                    $ref: '#/components/schemas/def-0'
+                                                    $ref: "#/components/schemas/def-0"
                                                 additionalProperties: false
                                                 required:
                                                   - filterBy
@@ -16147,7 +16168,7 @@ paths:
                                                 type: string
                                                 maxLength: 200
                                               dataset:
-                                                $ref: '#/components/schemas/def-0'
+                                                $ref: "#/components/schemas/def-0"
                                               targetBlueprint:
                                                 type: string
                                               relatedProperty:
@@ -16231,11 +16252,11 @@ paths:
                                             from:
                                               type: string
                                               format: date-time
-                                              description: 'ISO format IE 2022-04-23T18:25:43.511Z'
+                                              description: "ISO format IE 2022-04-23T18:25:43.511Z"
                                             to:
                                               type: string
                                               format: date-time
-                                              description: 'ISO format 2022-04-23T18:25:43.511Z'
+                                              description: "ISO format 2022-04-23T18:25:43.511Z"
                                             action:
                                               type: string
                                             status:
@@ -16253,7 +16274,7 @@ paths:
                                               type: object
                                               properties:
                                                 filterBy:
-                                                  $ref: '#/components/schemas/def-0'
+                                                  $ref: "#/components/schemas/def-0"
                                               additionalProperties: false
                                               required:
                                                 - filterBy
@@ -16331,7 +16352,7 @@ paths:
                                               type: object
                                               properties:
                                                 filterBy:
-                                                  $ref: '#/components/schemas/def-0'
+                                                  $ref: "#/components/schemas/def-0"
                                               additionalProperties: false
                                               required:
                                                 - filterBy
@@ -16408,7 +16429,7 @@ paths:
                                               type: object
                                               properties:
                                                 filterBy:
-                                                  $ref: '#/components/schemas/def-0'
+                                                  $ref: "#/components/schemas/def-0"
                                               additionalProperties: false
                                               required:
                                                 - filterBy
@@ -16503,7 +16524,7 @@ paths:
                                               type: object
                                               properties:
                                                 filterBy:
-                                                  $ref: '#/components/schemas/def-0'
+                                                  $ref: "#/components/schemas/def-0"
                                               additionalProperties: false
                                               required:
                                                 - filterBy
@@ -16615,7 +16636,7 @@ paths:
                                         title:
                                           type: string
                                         dataset:
-                                          $ref: '#/components/schemas/def-0'
+                                          $ref: "#/components/schemas/def-0"
                                         hiddenBlueprints:
                                           type: array
                                           items:
@@ -16648,7 +16669,7 @@ paths:
                                         description:
                                           type: string
                                         dataset:
-                                          $ref: '#/components/schemas/def-0'
+                                          $ref: "#/components/schemas/def-0"
                                       additionalProperties: false
                                       required:
                                         - type
@@ -16680,8 +16701,8 @@ paths:
                                                     type: string
                                                   operator:
                                                     enum:
-                                                      - '>'
-                                                      - '>='
+                                                      - ">"
+                                                      - ">="
                                                       - <
                                                       - <=
                                                   value:
@@ -16743,7 +16764,7 @@ paths:
                                                   operator:
                                                     enum:
                                                       - =
-                                                      - '!='
+                                                      - "!="
                                                       - containsAny
                                                       - contains
                                                       - doesNotContain
@@ -16755,7 +16776,7 @@ paths:
                                                       - notIn
                                                   value:
                                                     anyOf:
-                                                      - type: 'null'
+                                                      - type: "null"
                                                       - type: string
                                                       - type: number
                                                       - type: boolean
@@ -16816,10 +16837,10 @@ paths:
                                                   operator:
                                                     enum:
                                                       - =
-                                                      - '!='
+                                                      - "!="
                                                   value:
                                                     anyOf:
-                                                      - type: 'null'
+                                                      - type: "null"
                                                       - type: string
                                                       - type: number
                                                       - type: boolean
@@ -16827,7 +16848,7 @@ paths:
                                                   - operator
                                                   - propertySchema
                                                 additionalProperties: false
-                                              - $ref: '#/components/schemas/def-0'
+                                              - $ref: "#/components/schemas/def-0"
                                         title:
                                           type: string
                                         icon:
@@ -16841,7 +16862,7 @@ paths:
                                             - $
                                             - €
                                             - £
-                                            - '%'
+                                            - "%"
                                             - custom
                                         unitAlignment:
                                           type: string
@@ -17192,7 +17213,7 @@ paths:
                                         type: object
                                         properties:
                                           filterBy:
-                                            $ref: '#/components/schemas/def-0'
+                                            $ref: "#/components/schemas/def-0"
                                         additionalProperties: false
                                         required:
                                           - filterBy
@@ -17266,7 +17287,7 @@ paths:
                                   title:
                                     type: string
                                   dataset:
-                                    $ref: '#/components/schemas/def-0'
+                                    $ref: "#/components/schemas/def-0"
                                   excludedFields:
                                     type: array
                                     items:
@@ -17288,7 +17309,7 @@ paths:
                                           type: object
                                           properties:
                                             filterBy:
-                                              $ref: '#/components/schemas/def-0'
+                                              $ref: "#/components/schemas/def-0"
                                           additionalProperties: false
                                           required:
                                             - filterBy
@@ -17377,7 +17398,7 @@ paths:
                                           type: object
                                           properties:
                                             filterBy:
-                                              $ref: '#/components/schemas/def-0'
+                                              $ref: "#/components/schemas/def-0"
                                           additionalProperties: false
                                           required:
                                             - filterBy
@@ -17433,7 +17454,7 @@ paths:
                                           type: string
                                           maxLength: 200
                                         dataset:
-                                          $ref: '#/components/schemas/def-0'
+                                          $ref: "#/components/schemas/def-0"
                                         targetBlueprint:
                                           type: string
                                         relatedProperty:
@@ -17517,11 +17538,11 @@ paths:
                                       from:
                                         type: string
                                         format: date-time
-                                        description: 'ISO format IE 2022-04-23T18:25:43.511Z'
+                                        description: "ISO format IE 2022-04-23T18:25:43.511Z"
                                       to:
                                         type: string
                                         format: date-time
-                                        description: 'ISO format 2022-04-23T18:25:43.511Z'
+                                        description: "ISO format 2022-04-23T18:25:43.511Z"
                                       action:
                                         type: string
                                       status:
@@ -17539,7 +17560,7 @@ paths:
                                         type: object
                                         properties:
                                           filterBy:
-                                            $ref: '#/components/schemas/def-0'
+                                            $ref: "#/components/schemas/def-0"
                                         additionalProperties: false
                                         required:
                                           - filterBy
@@ -17617,7 +17638,7 @@ paths:
                                         type: object
                                         properties:
                                           filterBy:
-                                            $ref: '#/components/schemas/def-0'
+                                            $ref: "#/components/schemas/def-0"
                                         additionalProperties: false
                                         required:
                                           - filterBy
@@ -17694,7 +17715,7 @@ paths:
                                         type: object
                                         properties:
                                           filterBy:
-                                            $ref: '#/components/schemas/def-0'
+                                            $ref: "#/components/schemas/def-0"
                                         additionalProperties: false
                                         required:
                                           - filterBy
@@ -17789,7 +17810,7 @@ paths:
                                         type: object
                                         properties:
                                           filterBy:
-                                            $ref: '#/components/schemas/def-0'
+                                            $ref: "#/components/schemas/def-0"
                                         additionalProperties: false
                                         required:
                                           - filterBy
@@ -17901,7 +17922,7 @@ paths:
                                   title:
                                     type: string
                                   dataset:
-                                    $ref: '#/components/schemas/def-0'
+                                    $ref: "#/components/schemas/def-0"
                                   hiddenBlueprints:
                                     type: array
                                     items:
@@ -17934,7 +17955,7 @@ paths:
                                   description:
                                     type: string
                                   dataset:
-                                    $ref: '#/components/schemas/def-0'
+                                    $ref: "#/components/schemas/def-0"
                                 additionalProperties: false
                                 required:
                                   - type
@@ -17966,8 +17987,8 @@ paths:
                                               type: string
                                             operator:
                                               enum:
-                                                - '>'
-                                                - '>='
+                                                - ">"
+                                                - ">="
                                                 - <
                                                 - <=
                                             value:
@@ -18029,7 +18050,7 @@ paths:
                                             operator:
                                               enum:
                                                 - =
-                                                - '!='
+                                                - "!="
                                                 - containsAny
                                                 - contains
                                                 - doesNotContain
@@ -18041,7 +18062,7 @@ paths:
                                                 - notIn
                                             value:
                                               anyOf:
-                                                - type: 'null'
+                                                - type: "null"
                                                 - type: string
                                                 - type: number
                                                 - type: boolean
@@ -18102,10 +18123,10 @@ paths:
                                             operator:
                                               enum:
                                                 - =
-                                                - '!='
+                                                - "!="
                                             value:
                                               anyOf:
-                                                - type: 'null'
+                                                - type: "null"
                                                 - type: string
                                                 - type: number
                                                 - type: boolean
@@ -18113,7 +18134,7 @@ paths:
                                             - operator
                                             - propertySchema
                                           additionalProperties: false
-                                        - $ref: '#/components/schemas/def-0'
+                                        - $ref: "#/components/schemas/def-0"
                                   title:
                                     type: string
                                   icon:
@@ -18127,7 +18148,7 @@ paths:
                                       - $
                                       - €
                                       - £
-                                      - '%'
+                                      - "%"
                                       - custom
                                   unitAlignment:
                                     type: string
@@ -18376,13 +18397,14 @@ paths:
           required: true
       security:
         - bearer:
-            - 'update:pages'
+            - "update:pages"
       responses:
-        '201':
+        "201":
           description: Created successfully
-  '/v1/pages/{page_identifier}/widgets/{widget_id}':
+  "/v1/pages/{page_identifier}/widgets/{widget_id}":
     patch:
       summary: Change a page's widget
+      description: This route allows you to update a sepcific widget in a specific catalog page.
       tags:
         - Pages
       parameters:
@@ -18398,9 +18420,9 @@ paths:
           required: true
       security:
         - bearer:
-            - 'update:pages'
+            - "update:pages"
       responses:
-        '200':
+        "200":
           description: Updated successfully
           content:
             application/json:
@@ -18419,6 +18441,7 @@ paths:
                 description: Updated successfully
     delete:
       summary: Delete a page's widget
+      description: This route allows you to delete a specific widget form a specific catalog page.
       tags:
         - Pages
       parameters:
@@ -18434,9 +18457,9 @@ paths:
           required: true
       security:
         - bearer:
-            - 'delete:pages'
+            - "delete:pages"
       responses:
-        '200':
+        "200":
           description: Deleted successfully
           content:
             application/json:
@@ -18458,7 +18481,7 @@ paths:
       security:
         - bearer: []
       responses:
-        '200':
+        "200":
           description: Default Response
     put:
       summary: Change an integration
@@ -18484,9 +18507,9 @@ paths:
         required: true
       security:
         - bearer:
-            - 'update:organization'
+            - "update:organization"
       responses:
-        '200':
+        "200":
           description: Updated successfully.
           content:
             application/json:
@@ -18518,9 +18541,9 @@ paths:
         required: true
       security:
         - bearer:
-            - 'update:organization'
+            - "update:organization"
       responses:
-        '200':
+        "200":
           description: Updated successfully.
           content:
             application/json:
@@ -18548,7 +18571,7 @@ paths:
                   type: string
                   maxLength: 30
                   minLength: 3
-                  pattern: '^[A-Za-z0-9-]*$'
+                  pattern: "^[A-Za-z0-9-]*$"
               additionalProperties: false
               required:
                 - name
@@ -18556,7 +18579,7 @@ paths:
       security:
         - bearer: []
       responses:
-        '200':
+        "200":
           description: Default Response
   /v1/organization/document:
     post:
@@ -18581,21 +18604,23 @@ paths:
                 - orgId
         required: true
       responses:
-        '200':
+        "200":
           description: Default Response
   /v1/integration:
     get:
       summary: Get all integrations
+      description: This route allows you to get all of the integrations (data sources) registered to the organization.
       tags:
         - Integrations
       security:
         - bearer:
-            - 'read:integrations'
+            - "read:integrations"
       responses:
-        '200':
+        "200":
           description: Default Response
     post:
       summary: Create an integration
+      description: This route allows you to register a new integration, including its mapping configuration.
       tags:
         - Integrations
       requestBody:
@@ -18616,7 +18641,7 @@ paths:
                 config:
                   type:
                     - object
-                    - 'null'
+                    - "null"
                   additionalProperties: true
                   properties:
                     deleteDependentEntities:
@@ -18736,13 +18761,14 @@ paths:
           required: false
       security:
         - bearer:
-            - 'create:integrations'
+            - "create:integrations"
       responses:
-        '200':
+        "200":
           description: Default Response
-  '/v1/integration/{identifier}':
+  "/v1/integration/{identifier}":
     get:
       summary: Get an integration
+      description: This route allows you to get a specific integration, including its mapping configuration.
       tags:
         - Integrations
       parameters:
@@ -18762,12 +18788,13 @@ paths:
           required: true
       security:
         - bearer:
-            - 'read:integrations'
+            - "read:integrations"
       responses:
-        '200':
+        "200":
           description: Default Response
     patch:
       summary: Patch an integration
+      description: This route allows you to update a specific integration.
       tags:
         - Integrations
       requestBody:
@@ -18785,7 +18812,7 @@ paths:
                 config:
                   type:
                     - object
-                    - 'null'
+                    - "null"
                   additionalProperties: true
                   properties:
                     deleteDependentEntities:
@@ -18901,12 +18928,13 @@ paths:
           required: true
       security:
         - bearer:
-            - 'update:integrations'
+            - "update:integrations"
       responses:
-        '200':
+        "200":
           description: Default Response
     delete:
       summary: Delete an integration
+      description: This route allows you to delete a specific integration from your organization.
       tags:
         - Integrations
       parameters:
@@ -18917,13 +18945,14 @@ paths:
           required: true
       security:
         - bearer:
-            - 'delete:integrations'
+            - "delete:integrations"
       responses:
-        '200':
+        "200":
           description: Default Response
-  '/v1/integration/{identifier}/logs':
+  "/v1/integration/{identifier}/logs":
     get:
       summary: Get audit logs
+      description: This route allows you to get the audit logs created by the specified integration.
       tags:
         - Integrations
       parameters:
@@ -18961,13 +18990,14 @@ paths:
           required: true
       security:
         - bearer:
-            - 'read:integrations'
+            - "read:integrations"
       responses:
-        '200':
+        "200":
           description: Default Response
-  '/v1/integration/{identifier}/config':
+  "/v1/integration/{identifier}/config":
     patch:
       summary: Patch an integration's config
+      description: This route allows you update the mapping configuration of a specific integration. This routes expects to receive the mapping configuration in a JSON format (rather than the YAML provided via the UI).
       tags:
         - Integrations
       requestBody:
@@ -18979,7 +19009,7 @@ paths:
                 config:
                   type:
                     - object
-                    - 'null'
+                    - "null"
                   additionalProperties: true
                   properties:
                     deleteDependentEntities:
@@ -19062,23 +19092,25 @@ paths:
           required: true
       security:
         - bearer:
-            - 'update:integrations'
+            - "update:integrations"
       responses:
-        '200':
+        "200":
           description: Default Response
   /v1/data-sources:
     get:
       summary: Get all data sources
+      description: This rotute allows you to get all of the data sources registered to the organization.
       tags:
         - Data Sources
       security:
         - bearer: []
       responses:
-        '200':
+        "200":
           description: Default Response
   /v1/webhooks:
     post:
       summary: Create a webhook
+      description: This route allows you to create a new webhook integration for your organization.
       tags:
         - Webhook
       requestBody:
@@ -19168,23 +19200,25 @@ paths:
         required: true
       security:
         - bearer:
-            - 'create:integrations'
+            - "create:integrations"
       responses:
-        '200':
+        "200":
           description: Default Response
     get:
       summary: Get all webhooks
+      description: This route allows you to get all of the webhook integrations created in your organization.
       tags:
         - Webhook
       security:
         - bearer:
-            - 'read:integrations'
+            - "read:integrations"
       responses:
-        '200':
+        "200":
           description: Default Response
-  '/v1/webhooks/{identifier}':
+  "/v1/webhooks/{identifier}":
     patch:
       summary: Patch a webhook
+      description: This route allows you to update a specific webhook integration in your organization.
       tags:
         - Webhook
       requestBody:
@@ -19276,12 +19310,13 @@ paths:
           required: true
       security:
         - bearer:
-            - 'update:integrations'
+            - "update:integrations"
       responses:
-        '200':
+        "200":
           description: Default Response
     put:
       summary: Change a webhook
+      description: This route allows you to change a specific webhook integration.
       tags:
         - Webhook
       requestBody:
@@ -19377,12 +19412,13 @@ paths:
           required: true
       security:
         - bearer:
-            - 'update:integrations'
+            - "update:integrations"
       responses:
-        '200':
+        "200":
           description: Default Response
     get:
       summary: Get a webhook
+      description: This route allows you to get a specific webhook integration, along with its configuration.
       tags:
         - Webhook
       parameters:
@@ -19393,12 +19429,13 @@ paths:
           required: true
       security:
         - bearer:
-            - 'read:integrations'
+            - "read:integrations"
       responses:
-        '200':
+        "200":
           description: Default Response
     delete:
       summary: delete a webhook
+      description: This route allows you to delete a specific webhook integration from your organization.
       tags:
         - Webhook
       parameters:
@@ -19409,13 +19446,14 @@ paths:
           required: true
       security:
         - bearer:
-            - 'delete:integrations'
+            - "delete:integrations"
       responses:
-        '200':
+        "200":
           description: Default Response
   /v1/audit-log:
     get:
       summary: Get audit logs
+      description: This route allows you to get the audit logs from your organization. This route is not limited by the 1k entries like the UI, and provides you with filtering capabilities to get the audit logs you are intested in.
       tags:
         - Audit
       parameters:
@@ -19505,14 +19543,14 @@ paths:
           in: query
           name: from
           required: false
-          description: 'ISO format IE 2022-04-23T18:25:43.511Z'
+          description: "ISO format IE 2022-04-23T18:25:43.511Z"
         - schema:
             type: string
             format: date-time
           in: query
           name: to
           required: false
-          description: 'ISO format 2022-04-23T18:25:43.511Z'
+          description: "ISO format 2022-04-23T18:25:43.511Z"
         - schema:
             type: string
           in: query
@@ -19533,13 +19571,14 @@ paths:
           required: false
       security:
         - bearer:
-            - 'read:audit-log'
+            - "read:audit-log"
       responses:
-        '200':
+        "200":
           description: Default Response
   /v1/teams:
     get:
       summary: Get all teams in organization
+      description: This route allows you to get all of the Port Teams created in your organization.
       tags:
         - Teams
       parameters:
@@ -19563,12 +19602,13 @@ paths:
           required: false
       security:
         - bearer:
-            - 'read:teams'
+            - "read:teams"
       responses:
-        '200':
+        "200":
           description: Default Response
     post:
       summary: Create a team
+      description: This route allows you to create a new Port Team in your organization.
       tags:
         - Teams
       requestBody:
@@ -19591,13 +19631,14 @@ paths:
         required: true
       security:
         - bearer:
-            - 'create:teams'
+            - "create:teams"
       responses:
-        '200':
+        "200":
           description: Default Response
-  '/v1/teams/{name}':
+  "/v1/teams/{name}":
     get:
       summary: Get a team
+      description: This route allows you to get a specific team from your organization, along with the users who are associated with it.
       tags:
         - Teams
       parameters:
@@ -19626,12 +19667,13 @@ paths:
           required: true
       security:
         - bearer:
-            - 'read:teams'
+            - "read:teams"
       responses:
-        '200':
+        "200":
           description: Default Response
     patch:
       summary: Patch a team
+      description: This route allows you to update a specific Port Team.
       tags:
         - Teams
       requestBody:
@@ -19649,7 +19691,7 @@ paths:
                 description:
                   type:
                     - string
-                    - 'null'
+                    - "null"
       parameters:
         - schema:
             type: string
@@ -19658,12 +19700,13 @@ paths:
           required: true
       security:
         - bearer:
-            - 'update:teams'
+            - "update:teams"
       responses:
-        '200':
+        "200":
           description: Default Response
     put:
-      summary: Change a team
+      summary: Change a Team
+      description: This route allows you to update a specific Port Team
       tags:
         - Teams
       requestBody:
@@ -19691,12 +19734,13 @@ paths:
           required: true
       security:
         - bearer:
-            - 'update:teams'
+            - "update:teams"
       responses:
-        '200':
+        "200":
           description: Default Response
     delete:
       summary: Delete a team
+      description: This route allows you to delete a specific Port Team. Teams ingested from a SSO provider cannot be deleted by this route.
       tags:
         - Teams
       parameters:
@@ -19707,13 +19751,14 @@ paths:
           required: true
       security:
         - bearer:
-            - 'delete:teams'
+            - "delete:teams"
       responses:
-        '200':
+        "200":
           description: Default Response
   /v1/users:
     get:
       summary: Get all users of organization
+      description: This route returns all of the users registered to the organization.
       tags:
         - Users
       parameters:
@@ -19747,13 +19792,14 @@ paths:
           required: false
       security:
         - bearer:
-            - 'read:users'
+            - "read:users"
       responses:
-        '200':
+        "200":
           description: Default Response
   /v1/users/invite:
     post:
       summary: Invite a user to the organization
+      description: This route allows you to invite a user to the organization.
       tags:
         - Users
       requestBody:
@@ -19791,13 +19837,14 @@ paths:
           required: false
       security:
         - bearer:
-            - 'create:users'
+            - "create:users"
       responses:
-        '200':
+        "200":
           description: Default Response
-  '/v1/users/{user_email}':
+  "/v1/users/{user_email}":
     get:
       summary: Get a user
+      description: This route allows you to get the information of a specific user from your organization.
       tags:
         - Users
       parameters:
@@ -19808,12 +19855,13 @@ paths:
           required: true
       security:
         - bearer:
-            - 'read:users'
+            - "read:users"
       responses:
-        '200':
+        "200":
           description: Default Response
     patch:
       summary: Patch a user
+      description: This route allows you to update a specific user in your organization.
       tags:
         - Users
       requestBody:
@@ -19840,12 +19888,13 @@ paths:
           required: true
       security:
         - bearer:
-            - 'update:users'
+            - "update:users"
       responses:
-        '200':
+        "200":
           description: Default Response
     delete:
       summary: Delete a user
+      description: This route allows you to delete a specific user from your organization.
       tags:
         - Users
       parameters:
@@ -19856,13 +19905,14 @@ paths:
           required: true
       security:
         - bearer:
-            - 'delete:users'
+            - "delete:users"
       responses:
-        '200':
+        "200":
           description: Default Response
   /v1/profile:
     patch:
       summary: Patch a user's profile
+      description: This route allows users to update their profile in the organization. This route is accessible using the personal access token
       tags:
         - Users
       requestBody:
@@ -19883,16 +19933,17 @@ paths:
       security:
         - bearer: []
       responses:
-        '200':
+        "200":
           description: Default Response
     get:
       summary: Get user profile
+      description: This route allows users to get their personal profile in the organization. This route is accessible using the personal access token.
       tags:
         - Users
       security:
         - bearer: []
       responses:
-        '200':
+        "200":
           description: Default Response
   /v1/apps:
     get:
@@ -19916,9 +19967,9 @@ paths:
           required: false
       security:
         - bearer:
-            - 'read:apps'
+            - "read:apps"
       responses:
-        '200':
+        "200":
           description: Default Response
   /v1/roles:
     get:
@@ -19941,13 +19992,14 @@ paths:
           required: false
       security:
         - bearer:
-            - 'read:roles'
+            - "read:roles"
       responses:
-        '200':
+        "200":
           description: Default Response
-  '/v1/blueprints/{blueprint_identifier}/scorecards':
+  "/v1/blueprints/{blueprint_identifier}/scorecards":
     post:
-      summary: Run a blueprints' scoreboards
+      summary: Create a blueprint scoreboard
+      description: This route allows you to create a new scoreboard for blueprint.
       operationId: postScorecards
       tags:
         - Scorecards
@@ -19983,10 +20035,10 @@ paths:
                                 type: string
                                 enum:
                                   - =
-                                  - '!='
-                                  - '>'
+                                  - "!="
+                                  - ">"
                                   - <
-                                  - '>='
+                                  - ">="
                                   - <=
                                   - contains
                                   - doesNotContains
@@ -20011,7 +20063,7 @@ paths:
                                 type: string
                                 enum:
                                   - =
-                                  - '!='
+                                  - "!="
                                   - contains
                                   - doesNotContains
                                   - beginsWith
@@ -20097,10 +20149,10 @@ paths:
                                       type: string
                                       enum:
                                         - =
-                                        - '!='
-                                        - '>'
+                                        - "!="
+                                        - ">"
                                         - <
-                                        - '>='
+                                        - ">="
                                         - <=
                                         - contains
                                         - doesNotContains
@@ -20125,7 +20177,7 @@ paths:
                                       type: string
                                       enum:
                                         - =
-                                        - '!='
+                                        - "!="
                                         - contains
                                         - doesNotContains
                                         - beginsWith
@@ -20192,15 +20244,16 @@ paths:
       security:
         - bearer: []
       responses:
-        '200':
+        "200":
           description: Default Response
           text/plain; x-api-version=2.0:
             schema:
               type: string
-        '400':
+        "400":
           description: Default12 Response
     put:
       summary: Change a blueprints' scoreboards
+      description: This route allows you to update the scoreboards of a blueprint.
       tags:
         - Scorecards
       requestBody:
@@ -20237,10 +20290,10 @@ paths:
                                   type: string
                                   enum:
                                     - =
-                                    - '!='
-                                    - '>'
+                                    - "!="
+                                    - ">"
                                     - <
-                                    - '>='
+                                    - ">="
                                     - <=
                                     - contains
                                     - doesNotContains
@@ -20265,7 +20318,7 @@ paths:
                                   type: string
                                   enum:
                                     - =
-                                    - '!='
+                                    - "!="
                                     - contains
                                     - doesNotContains
                                     - beginsWith
@@ -20351,10 +20404,10 @@ paths:
                                         type: string
                                         enum:
                                           - =
-                                          - '!='
-                                          - '>'
+                                          - "!="
+                                          - ">"
                                           - <
-                                          - '>='
+                                          - ">="
                                           - <=
                                           - contains
                                           - doesNotContains
@@ -20379,7 +20432,7 @@ paths:
                                         type: string
                                         enum:
                                           - =
-                                          - '!='
+                                          - "!="
                                           - contains
                                           - doesNotContains
                                           - beginsWith
@@ -20447,7 +20500,7 @@ paths:
       security:
         - bearer: []
       responses:
-        '200':
+        "200":
           description: Default Response
     get:
       summary: Get a blueprints' scoreboards
@@ -20461,11 +20514,11 @@ paths:
           required: true
       security:
         - bearer:
-            - 'read:scorecards'
+            - "read:scorecards"
       responses:
-        '200':
+        "200":
           description: Default Response
-  '/v1/blueprints/{blueprint_identifier}/scorecards/{scorecard_identifier}':
+  "/v1/blueprints/{blueprint_identifier}/scorecards/{scorecard_identifier}":
     put:
       summary: Change a blueprint's scoreboard
       tags:
@@ -20502,10 +20555,10 @@ paths:
                                 type: string
                                 enum:
                                   - =
-                                  - '!='
-                                  - '>'
+                                  - "!="
+                                  - ">"
                                   - <
-                                  - '>='
+                                  - ">="
                                   - <=
                                   - contains
                                   - doesNotContains
@@ -20530,7 +20583,7 @@ paths:
                                 type: string
                                 enum:
                                   - =
-                                  - '!='
+                                  - "!="
                                   - contains
                                   - doesNotContains
                                   - beginsWith
@@ -20616,10 +20669,10 @@ paths:
                                       type: string
                                       enum:
                                         - =
-                                        - '!='
-                                        - '>'
+                                        - "!="
+                                        - ">"
                                         - <
-                                        - '>='
+                                        - ">="
                                         - <=
                                         - contains
                                         - doesNotContains
@@ -20644,7 +20697,7 @@ paths:
                                       type: string
                                       enum:
                                         - =
-                                        - '!='
+                                        - "!="
                                         - contains
                                         - doesNotContains
                                         - beginsWith
@@ -20716,7 +20769,7 @@ paths:
       security:
         - bearer: []
       responses:
-        '200':
+        "200":
           description: Default Response
     get:
       summary: Get a blueprint's scoreboard
@@ -20735,9 +20788,9 @@ paths:
           required: true
       security:
         - bearer:
-            - 'read:scorecards'
+            - "read:scorecards"
       responses:
-        '200':
+        "200":
           description: Default Response
     delete:
       summary: Delete a blueprint's scoreboard
@@ -20757,7 +20810,7 @@ paths:
       security:
         - bearer: []
       responses:
-        '200':
+        "200":
           description: Default Response
   /v1/scorecards:
     get:
@@ -20766,9 +20819,9 @@ paths:
         - Scorecards
       security:
         - bearer:
-            - 'read:scorecards'
+            - "read:scorecards"
       responses:
-        '200':
+        "200":
           description: Default Response
   /v1/migrations:
     get:
@@ -20803,9 +20856,9 @@ paths:
           required: false
       security:
         - bearer:
-            - 'read:blueprints'
+            - "read:blueprints"
       responses:
-        '200':
+        "200":
           description: Default Response
     post:
       summary: Create a migration
@@ -20857,9 +20910,9 @@ paths:
       security:
         - bearer: []
       responses:
-        '200':
+        "200":
           description: Default Response
-  '/v1/migrations/{migration_id}':
+  "/v1/migrations/{migration_id}":
     get:
       summary: Get a migration
       tags:
@@ -20872,11 +20925,11 @@ paths:
           required: true
       security:
         - bearer:
-            - 'read:blueprints'
+            - "read:blueprints"
       responses:
-        '200':
+        "200":
           description: Default Response
-  '/v1/migrations/{migration_id}/cancel':
+  "/v1/migrations/{migration_id}/cancel":
     post:
       summary: Cancel a migration
       tags:
@@ -20899,7 +20952,7 @@ paths:
       security:
         - bearer: []
       responses:
-        '200':
+        "200":
           description: Default Response
   /v1/search:
     get:
@@ -20927,12 +20980,12 @@ paths:
           required: false
       security:
         - bearer:
-            - 'read:entities'
+            - "read:entities"
       responses:
-        '200':
+        "200":
           description: Default Response
-  '/v1/blueprints/{blueprint_identifier}/actions/{action_identifier}/permissions':
-    get:
+  ? "/v1/blueprints/{blueprint_identifier}/actions/{action_identifier}/permissions"
+  : get:
       summary: Get an Action
       tags:
         - Actions
@@ -20949,9 +21002,9 @@ paths:
           required: true
       security:
         - bearer:
-            - 'read:blueprints'
+            - "read:blueprints"
       responses:
-        '200':
+        "200":
           description: Default Response
     patch:
       summary: Patch blueprint's action permissions
@@ -20983,13 +21036,13 @@ paths:
                     policy:
                       type:
                         - object
-                        - 'null'
+                        - "null"
                       properties:
                         queries:
                           type: object
                           minProperties: 1
                           additionalProperties:
-                            $ref: '#/components/schemas/def-0'
+                            $ref: "#/components/schemas/def-0"
                         conditions:
                           type: array
                           items:
@@ -21019,13 +21072,13 @@ paths:
                     policy:
                       type:
                         - object
-                        - 'null'
+                        - "null"
                       properties:
                         queries:
                           type: object
                           minProperties: 1
                           additionalProperties:
-                            $ref: '#/components/schemas/def-0'
+                            $ref: "#/components/schemas/def-0"
                         conditions:
                           type: array
                           items:
@@ -21052,9 +21105,9 @@ paths:
       security:
         - bearer: []
       responses:
-        '200':
+        "200":
           description: Default Response
-  '/v1/sidebars/{identifier}':
+  "/v1/sidebars/{identifier}":
     get:
       summary: Get a sidebar
       tags:
@@ -21068,9 +21121,9 @@ paths:
       security:
         - bearer: []
       responses:
-        '200':
+        "200":
           description: Default Response
-  '/v1/sidebars/{sidebar_identifier}/folders':
+  "/v1/sidebars/{sidebar_identifier}/folders":
     post:
       summary: Create a folder
       tags:
@@ -21108,11 +21161,11 @@ paths:
           required: true
       security:
         - bearer:
-            - 'create:pages'
+            - "create:pages"
       responses:
-        '200':
+        "200":
           description: Default Response
-  '/v1/sidebars/{sidebar_identifier}/folders/{folder_identifier}':
+  "/v1/sidebars/{sidebar_identifier}/folders/{folder_identifier}":
     patch:
       summary: Update a folder
       tags:
@@ -21151,9 +21204,9 @@ paths:
           required: true
       security:
         - bearer:
-            - 'update:pages'
+            - "update:pages"
       responses:
-        '200':
+        "200":
           description: Default Response
     delete:
       summary: Delete a folder
@@ -21174,7 +21227,7 @@ paths:
           required: true
       security:
         - bearer:
-            - 'delete:pages'
+            - "delete:pages"
       responses:
-        '200':
+        "200":
           description: Default Response
