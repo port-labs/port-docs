@@ -9,7 +9,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 ### Introduction
 
-Kubernetes provides a great way of extending its API which is via Custom Resource Definitions (CRDs). CRDs allow you to define your own API objects and controllers to manage them. This is a powerful feature that allows you to extend Kubernetes to manage any kind of resources.
+Kubernetes provides a great way of extending its API which is via Custom Resource Definitions (CRDs). CRDs allow you to define your API objects and controllers to manage them. This is a powerful feature that allows you to extend Kubernetes to manage any kind of resources.
 This guide will show you how to integrate Kubernetes CRDs with Port and expose them in the Port UI for developers to use, without the need of creating Kubernetes Exporter mappings and blueprints.
 
 :::tip Prerequisites
@@ -21,12 +21,12 @@ This guide will show you how to integrate Kubernetes CRDs with Port and expose t
 
 ### The goal of this guide
 
-In this guide, we will deploy Port's [Kubernetes Exporter](../build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md) to export Kubernetes CRDs to Port as <PortTooltip id="blueprint">blueprints</PortTooltip> and the relevant <PortTooltip id="action">actions</PortTooltip> to create, update and delete those resources and listens to changes in those resources and reflect them in Port's UI (without the need of creating a mapping).
-Then we will connect a GitHub account using Port's [GitHub integration](../build-your-software-catalog/sync-data-to-catalog/git/github/github.md) to execute these actions and create the resources directly into the Kubernetes cluster, or optionally with gitops + ArgoCD.
+In this guide, we will deploy Port's [Kubernetes Exporter](../build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md) to export Kubernetes CRDs to Port as <PortTooltip id="blueprint">blueprints</PortTooltip> and the relevant <PortTooltip id="action">actions</PortTooltip> to create, update and delete those resources and listen to changes in those resources and reflect them in Port's UI without the need of creating a mapping and blueprints upfront.
+Then we will connect a GitHub account using Port's [GitHub integration](../build-your-software-catalog/sync-data-to-catalog/git/github/github.md) to provision CRs directly into the Kubernetes cluster, or optionally with GitOps.
 After completing it, you will get a sense of how it can benefit different personas in your organization:
 
 - Developers will be able to use any CRDs directly in a UI.
-- Platform engineers will be able to query the data and get insights about the usage of the CRDs and kubernetes resources.
+- Platform engineers will be able to query the data and get insights about the usage of the CRDs and Kubernetes resources.
 - Platform engineers will be able to serve any CRDs to developers in a self-service manner.
 
 ### 1. (Optional) Creating a Crossplane XRD & Composition or using an existing CRD
@@ -117,7 +117,7 @@ You can also use the Update and Delete actions to update and delete the resource
 
 ### Conclusion
 
-By leveraging the power of the K8s API extensions, platform engineers can keep using K8S as the control plane and expose the resources to developers in a self-service manner and on top of that, developers can consume the resources directly from Port's UI and platform engineers can keep track of the usage of the resources.
+By leveraging the power of the K8s API extensions, platform engineers can keep using K8S as the control plane and on top of that, developers can consume the resources directly from Port's UI with ease, while platform engineers can keep track of the usage of the resources.
 
 ### Troubleshooting
 
@@ -133,3 +133,4 @@ By leveraging the power of the K8s API extensions, platform engineers can keep u
 - Enrich the catalog and visualize the Runtime existing objects in your K8s cluster, by following the [Visualize services' k8s runtime guide](./visualize-service-k8s-runtime.md).
 - Port allows multiple ways to enhance the experience of executing `Actions`, feel free to alter the `Action` in Port to your needs by visiting [Action Documentation](../create-self-service-experiences/create-self-service-experiences.md).
 - [Sync data](../build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md) and create more `Blueprints` to enrich the data beyond what exists in K8S.
+- Build dashboards and reports to visualize the usage of the CRDs and resources in your K8s cluster by following the [Build dashboards and reports guide](../customize-pages-dashboards-and-plugins/dashboards/dashboards.md).
