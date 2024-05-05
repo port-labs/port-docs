@@ -106,4 +106,4 @@ In order to successfully deploy the GCP integration, it's crucial to ensure that
 
 ## Further Examples
 
-- Refer to the [examples](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/examples/) page for practical configurations and their corresponding blueprint definitions.
+Refer to the [examples](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/examples/) page for practical configurations and their corresponding blueprint definitions.
