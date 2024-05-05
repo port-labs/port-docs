@@ -73,7 +73,7 @@ If everything, succeeded you should see the relevant `blueprints` its `actions` 
 
 Now, to execute the action we need to add some workflow to it for Port to trigger the action, the workflow that we will configure will do the operations in the Kubernetes cluster using the kubeconfig that we will provide as a secret in the GitHub repository.
 
-1. Go to the [GitHub control plane example repo](https://github.com/danielsinai/control-plane-demo) and use it as a template to create your own repo by clicking on the `Use this template` button.
+1. Go to the [GitHub control plane example repo](https://github.com/port-labs/control-plane-demo) and use it as a template to create your own repo by clicking on the `Use this template` button.
 
 2. [Install Port's GitHub app](../build-your-software-catalog/sync-data-to-catalog/git/github/github.md#installation) in the GitHub account where you cloned the template.
 
@@ -117,13 +117,19 @@ You can also use the Update and Delete actions to update and delete the resource
 
 ### Conclusion
 
-By leveraging the power of the K8s API extension, we can continue working
+By leveraging the power of the K8s API extensions, platform engineers can keep using K8S as the control plane and expose the resources to developers in a self-service manner and on top of that, developers can consume the resources directly from Port's UI and platform engineers can keep track of the usage of the resources.
 
 ### Troubleshooting
+
+* If you are not seeing the CRDs in Port's UI, check the logs of the Kubernetes Exporter to see if the CRDs are being discovered and exported to Port.
+
+* If the action is stuck in progress make sure you changed the Action Organization + Repository to your own repository and organization.
+
+* If the action is failing, it can be from a various set of problems, make sure the secrets `PORT_CLIENT_ID`, `PORT_CLIENT_SECRET` and `KUBE_CONFIG` are set correctly and check the logs of the action to see what is the problem.
 
 
 ### Next Steps
 
 - Enrich the catalog and visualize the Runtime existing objects in your K8s cluster, by following the [Visualize services' k8s runtime guide](./visualize-service-k8s-runtime.md).
-- Port allows multiple way to enhance the experience of executing `Actions`, feel free to alter the `Action` in Port to your needs by visiting [Action Documentation](../create-self-service-experiences/create-self-service-experiences.md).
+- Port allows multiple ways to enhance the experience of executing `Actions`, feel free to alter the `Action` in Port to your needs by visiting [Action Documentation](../create-self-service-experiences/create-self-service-experiences.md).
 - [Sync data](../build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md) and create more `Blueprints` to enrich the data beyond what exists in K8S.
