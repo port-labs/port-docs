@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 import Tabs from "@theme/Tabs";
@@ -8,36 +8,36 @@ import Image from "@theme/IdealImage";
 
 # GCP
 
-Our integration with GCP provides the ability to export your Google Cloud resources to Port, according to your configuration.
-After the initial import of data, the integration will also listen to live events from Googel Cloud to update data inside Port in real time.
+Our GCP integration allows you to import your Google Cloud resources into Port, according to your configuration.  
+After the initial import of data, the integration will also listen to live events from Google Cloud to update data in Port in real time.  
 
-Our integration with GCP supports real-time event processing, this allows for an accurate **real-time** representation of your Google Cloud infrastructure inside Port.
+The integration with GCP supports real-time event processing, which allows for an accurate **real-time** representation of your Google Cloud infrastructure inside Port.
 
 :::tip
-Port's Google Cloud exporter is open source, view the source code [**here**](https://github.com/port-labs/ocean/tree/main/integrations/gcp).
+Port's Google Cloud integration is open source, view the source code [**here**](https://github.com/port-labs/ocean/tree/main/integrations/gcp).
 :::
 
 ## 💡 GCP integration common use cases
 
-Our GCP integration makes it easy to fill the software catalog with data directly from your GCP Organization, for example:
+Easily fill your software catalog with data directly from your GCP Organization, for example:  
 
-- Map all the resources in your Google Cloud Projects, including **Container Clusters**, **Cloud Run Services**, **BigQuery Tables**, **Compute engine Autoscaler** and other GCP objects;
-- Watch for Google Cloud object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port;
+- Map all the resources in your Google Cloud Projects, including **Container Clusters**, **Cloud Run Services**, **BigQuery Tables**, **Compute engine Autoscaler** and other GCP objects.
+- Watch for Google Cloud object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 - Use relations to create complete, easily digestible views of your Google Cloud infrastructure inside Port.
 
 ## Installation
 
-To install Port's Google Cloud exporter, follow the [installation](./installation.md) guide.
+To install the integration, follow the [installation](./installation.md) guide.  
 
 ## How it works
 
-Port's Google Cloud exporter can retrieve all the resources supported by the [Cloud Assets API](https://cloud.google.com/asset-inventory/docs/supported-asset-types), and export them to Port as entities of existing blueprints.
+Port's Google Cloud integration can retrieve all the resources supported by the [Cloud Assets API](https://cloud.google.com/asset-inventory/docs/supported-asset-types), and export them to Port as entities of existing blueprints.
 
-The GCP exporter allows you to perform extract, transform, load (ETL) on data from the Cloud Assets API into the desired software catalog data model.
+The GCP integration allows you to perform extract, transform, load (ETL) on data from the Cloud Assets API into the desired software catalog data model.
 
-The exporter is deployed using an GCP's [Cloud Run](https://cloud.google.com/run?hl=en) that is deployed to your GCP Project.
+The integration is deployed using GCP's [Cloud Run](https://cloud.google.com/run?hl=en) that is deployed to your GCP Project.
 
-The GCP exporter uses a YAML configuration to describe the ETL process to load data into the developer portal. The approach reflects a middle-ground between an overly opinionated GCP visualization that might not work for everyone and a too-broad approach that could introduce unneeded complexity into the developer portal.
+The GCP integration uses a YAML configuration to describe the ETL process to load data into the developer portal. The approach reflects a middle-ground between an overly opinionated GCP visualization that might not work for everyone and a too-broad approach that could introduce unneeded complexity into the developer portal.
 
 Here is an example snippet from the config which demonstrates the ETL process for getting `PubSub Subscription` data from GCP and into the software catalog:
 
@@ -81,8 +81,7 @@ The integration configuration is a YAML file that describes the ETL process to l
       selector:
       ...
   ```
-- The `kind` field describes the GCP resource type to be ingested into Port.
-  The `kind` field should be set to the GCP resource type as it appears in the [Supported Asset Docs](https://cloud.google.com/asset-inventory/docs/supported-asset-types).
+- The `kind` field value should be set to the GCP resource type as it appears in the [Supported Asset Docs](https://cloud.google.com/asset-inventory/docs/supported-asset-types).
   ```yaml showLineNumbers
   resources:
     # highlight-start
@@ -155,13 +154,13 @@ The integration configuration is a YAML file that describes the ETL process to l
 
 ### Authorization
 
-The exporter will need to have access to your GCP Organization in order to export your resources to Port.
-This is done by assigning a [Service Account](https://cloud.google.com/iam/docs/service-account-overview) to the exporter, and granting that identity the required permissions to your GCP Organization.
+The integration will need to have access to your GCP Organization in order to export your resources to Port.
+This is done by assigning a [Service Account](https://cloud.google.com/iam/docs/service-account-overview) to the integration, and granting that identity the required permissions to your GCP Organization.
 
-As part of the installation process, you will be provided with the default required permissions that the exporter will have to your GCP Organization.
-This will be defined by specifying the [permissions](https://cloud.google.com/iam/docs/service-account-overview#service-account-permissions) that the exporter will be allowed to perform on your GCP Organization.
+As part of the installation process, you will be provided with the default required permissions that the integration will have to your GCP Organization.
+This will be defined by specifying the [permissions](https://cloud.google.com/iam/docs/service-account-overview#service-account-permissions) that the integration will be allowed to perform on your GCP Organization.
 
-Here is an example of permissions that could be assigned to the exporter:
+Here is an example of permissions that could be assigned to the integration:
 
 ```yaml showLineNumbers
 "cloudasset.assets.exportResource",
@@ -183,4 +182,4 @@ Here is an example of permissions that could be assigned to the exporter:
 
 ## Getting started
 
-Continue to the [installation](./installation.md) guide to learn how to install the GCP exporter.
+Continue to the [installation](./installation.md) guide to learn how to install the GCP integration.
