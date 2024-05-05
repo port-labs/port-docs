@@ -42,7 +42,6 @@ Here are the API references we used to create those blueprints and app config:
 
 - [Cloud Asset](https://cloud.google.com/asset-inventory/docs/reference/rest/v1/Asset)
 
-
 ## Mapping Extra Resources
 
 The resources in this page are only a few of the resources that the GCP Integration supports.
