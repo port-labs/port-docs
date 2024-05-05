@@ -133,9 +133,8 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ### GCP
 
-- [GCP asset inventory](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/examples/generic-assets.md)
-- [Sync organizations, folders, projects, buckets, service accounts, compute instances and more](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/examples/extended-specific-assets.md)
-- [Script to ingest GCR Images and Repositories](https://github.com/port-labs/example-gcr-images)
+- [GCP exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/gcp.md)
+- [Sync Projects, buckets, service accounts, compute instances and more](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/examples/mapping_extra_resources.md)
 
 #### Google cloud build
 
