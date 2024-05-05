@@ -4,7 +4,7 @@ sidebar_position: 1
 import AutoscalerBlueprint from './compute_resources/\_autoscaler.mdx'
 import FirewallBlueprint from './compute_resources/\_firewall.mdx'
 import SubnetworkBlueprint from './compute_resources/\_subnetwork.mdx'
-import ComputeInstanceBlueprint from './compute_resources/\compute_instance.mdx'
+import ComputeInstanceBlueprint from './compute_resources/\_compute_instance.mdx'
 import ComputeAppConfig from './compute_resources/\_port_app_config.mdx'
 
 # Mapping Extra Resources
