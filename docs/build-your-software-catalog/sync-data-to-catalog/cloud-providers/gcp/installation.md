@@ -103,3 +103,5 @@ In order to successfully deploy the GCP integration, it's crucial to ensure that
 1. Go to Port's [Data Sources](https://app.getport.io/settings/data-sources?section=integrationS) and click on GCP
 2. Edit and copy the installation command.
 3. Run the command in your terminal to deploy the GCP integration.
+
+## [Further Examples](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/examples/)
