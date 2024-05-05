@@ -75,6 +75,8 @@ Now, to execute the action we need to add some workflow to it for Port to trigge
 
 1. Go to the [GitHub control plane example repo](https://github.com/port-labs/control-plane-demo) and use it as a template to create your own repo by clicking on the `Use this template` button.
 
+![CRD Action](../../static/img/guides/useThisTemplate.png)
+
 2. [Install Port's GitHub app](../build-your-software-catalog/sync-data-to-catalog/git/github/github.md#installation) in the GitHub account where you cloned the template.
 
 3. [Add GitHub secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) the following secrets:
@@ -85,8 +87,14 @@ Now, to execute the action we need to add some workflow to it for Port to trigge
         ```bash
         cat $HOME/.kube/config | base64 | pbcopy
         ```
-4. Now after everything is set up we the last thing we need to do is to change the organization name and the repository name in Port's Action, to your repository and org name where the workflow belongs.
-You can do that by going to the [Self-Service Tab](https://app.getport.io/self-serve) -> Hovering the wanted action -> Clicking on the 3 dots -> Clicking on `Edit Action` -> And in the `Backend` tab, Change the `organization` and `repository` fields to your organization and repository.
+4. Edit the org and repo of Port's Action, to match yours you can do that by (make sure to do it to all actions create/delete/update):
+    * Go to the [Self-Service Tab](https://app.getport.io/self-serve)
+    * Hover the wanted action 
+    * Click on the 3 dots 
+    * Click on `Edit Action` 
+    * Click in the `Backend` tab there change the `organization` and `repository` fields to match yours.
+
+    ![CRD Action](../../static/img/guides/changeOrgRepo.png)
 
 :::note
 **GitOps**
