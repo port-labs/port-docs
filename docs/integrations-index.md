@@ -133,7 +133,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ### GCP
 
-- [GCP exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/gcp.md)
+- [GCP integration](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/gcp.md)
 - [Sync Projects, buckets, service accounts, compute instances and more](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/examples/mapping_extra_resources.md)
 
 #### Google cloud build
