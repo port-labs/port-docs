@@ -1,0 +1,18 @@
+<details>
+
+<summary>Mapping configuration for Google Cloud Projects</summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: cloudresourcemanager.googleapis.com/Project
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: ".name"
+          blueprint: '"gcpProject"'
+          title: ".display_name"
+```
+
+</details>
