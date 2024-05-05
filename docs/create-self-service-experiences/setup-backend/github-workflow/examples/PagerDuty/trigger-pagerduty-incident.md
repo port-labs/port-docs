@@ -31,13 +31,12 @@ Follow these steps to get started:
 4. After you installed the integration, the blueprints `pagerdutyService` and `pagerdutyIncident` will appear, create the following action with the following JSON file on the `pagerdutyService` blueprint:
 
 <details>
-<summary><b>Trigger Pagerduty Incident Blueprint (Click to expand)</b></summary>
+<summary><b>Trigger Pagerduty Incident Action (Click to expand)</b></summary>
 
 ```json showLineNumbers
-[
   {
     "identifier": "trigger_an_incident",
-    "title": "trigger_an_incident",
+    "title": "Trigger PagerDuty Incident",
     "icon": "pagerduty",
     "userInputs": {
       "properties": {
@@ -81,8 +80,6 @@ Follow these steps to get started:
     "description": "Trigger a pagerduty incident using self service",
     "requiredApproval": false
   }
-]
-
 ```
 </details>
 
