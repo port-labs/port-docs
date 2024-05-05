@@ -29,6 +29,7 @@ The following advanced configuration parameters are available:
 {label: "State Key", value: "stateKey"},
 {label: "Verbosity (Log Level)", value: "verbosity"},
 {label: "Event listener type", value: "eventListenerType"},
+{label: "CRDs to discover", value: "crdsToDiscover"},
 ]} >
 
 <TabItem value="resyncInterval">
@@ -88,6 +89,16 @@ The `verbosity` parameter is used to control the verbosity level of info logs in
 
 - Default: `0` (show all info and error logs, including info logs of successful updates)
 - Use case: Set the value to `-1`, if you want to clear out info logs of successful entity updates. Error logs and some info logs (initialization and teardown logs), will be reported.
+
+</TabItem>
+
+<TabItem value="crdsToDiscover">
+
+The `crdsToDiscover` parameter is used to specify a filter for the CRDs that the K8s exporter should discover and export to Port, without the need to create a mapping and the blueprint manually.
+
+For more information how to use the `crdsToDiscover` parameter, please refer to the [Let developers consumer K8S API extension guide](../../../guides-and-tutorials/let-developers-consume-k8s-api-extensions.md)
+
+- Default: `""` (no filter)
 
 </TabItem>
 
