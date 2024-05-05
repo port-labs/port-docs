@@ -13,7 +13,7 @@ As you've probably looked at the [Examples](./examples.md) page, you've noticed 
 
 This page will help you understand what kind of GCP resources are supported by the GCP integration and how to map them into Port.
 
-## Is the resource supported by the GCP Exporter?
+## Is the resource supported by the GCP Integration?
 
 The GCP Integration is relying on GCP's Asset Inventory API. That means:
 

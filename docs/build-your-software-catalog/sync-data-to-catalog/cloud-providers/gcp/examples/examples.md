@@ -45,6 +45,6 @@ Here are the API references we used to create those blueprints and app config:
 
 ## Mapping Extra Resources
 
-The resources in this page are only a few of the resources that the GCP Exporter supports.
+The resources in this page are only a few of the resources that the GCP Integration supports.
 
 If the resources you want to ingest into Port do not appear in these examples, you can head to the [Mapping Extra Resources](./mapping_extra_resources.md) page to learn about all of the kinds of GCP resources that are supported by the GCP integration and how to map them into Port.
