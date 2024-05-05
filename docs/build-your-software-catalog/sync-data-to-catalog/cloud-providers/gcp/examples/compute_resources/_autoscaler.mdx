@@ -1,0 +1,53 @@
+<details>
+<summary> Autoscaler Blueprint </summary>
+
+```json showLineNumbers
+  {
+    "identifier": "gcpAutoScaler",
+    "description": "This blueprint represents a GCP Autoscaler in our software catalog",
+    "title": "Autoscaler",
+    "icon": "GoogleCloud",
+    "schema": {
+      "properties": {
+        "location": {
+          "title": "Location",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "minNumReplicas": {
+          "title": "Minimum Replica Number",
+          "type": "integer",
+        },
+        "maxNumReplicas": {
+            "title": "Maximum Replica Number",
+            "type": "integer"
+        },
+        "recommendedSize": {
+            "title": "Recommended Size",
+            "type": "integer"
+        },
+        "target": {
+            "title": "Target",
+            "type": "string"
+        }
+      },
+      "required": []
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "relations": {
+      "project": {
+        "target": "gcpProject",
+        "title": "Project",
+        "required": false,
+        "many": false
+      }
+    }
+  },
+
+```
+
+</details>
