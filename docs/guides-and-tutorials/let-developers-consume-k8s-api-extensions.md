@@ -91,11 +91,11 @@ You can do that by going to the [Self-Service Tab](https://app.getport.io/self-s
 :::note
 **GitOps**
 
-For the sake of simplicity the GitHub workflow we are using in this example is accessing directly into the Kubernetes cluster.
+For the sake of simplicity, the GitHub workflow we are using in this example is accessing directly into the Kubernetes cluster.
 
-But for production environments when this solution is sometimes not sufficient as extra auditing is required, you can use GitOps to deploy the resources into the cluster.
+Sometimes for production environments, this solution is not sufficient because of the requirement of extra auditing, in this case, you can use GitOps to deploy the resources into the cluster.
 
-If you would like to use GitOps in the same repo you cloned there is another workflow which called `/.github/workflows/gitops.yml` that works purely with GitOps and by leveraging GitOps technology that connects to your Git and working with the Kubernetes API like ArgoCD you can use it instead of the workflow that directly connects to the Kubernetes cluster.
+If you would like to use this method, at the same repo you cloned there is another workflow which is called `.github/workflows/gitops.yml` that works purely with GitOps which you can integrate with ArgoCD for example.
 :::
 
 
