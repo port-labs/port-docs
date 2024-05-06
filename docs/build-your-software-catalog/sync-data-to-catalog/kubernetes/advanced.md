@@ -96,7 +96,7 @@ The `verbosity` parameter is used to control the verbosity level of info logs in
 
 The `crdsToDiscover` parameter is used to specify a filter for the CRDs that the K8s exporter should discover and export to Port, without the need to create a mapping and the blueprint manually.
 
-For more information how to use the `crdsToDiscover` parameter, please refer to the [K8S API extension guide](../../../guides-and-tutorials/visualize-and-deploy-cloud-resources-by-leveraging-k8s-crd.md)
+For more information how to use the `crdsToDiscover` parameter, please refer to the [K8S API extension guide](../../../guides-and-tutorials/manage-resources-using-k8s-crds.md)
 
 - Default: `""` (no filter)
 

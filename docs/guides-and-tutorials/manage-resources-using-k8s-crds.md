@@ -1,11 +1,11 @@
 ---
 sidebar_position: 11
-title: Visualize and deploy cloud resources by leveraging K8s CRDs
+title: Manage resources using Kubernetes CRDs
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
-# Visualize and deploy cloud resources by leveraging K8s CRDs
+# Manage resources using Kubernetes CRDs
 
 ### Introduction
 
