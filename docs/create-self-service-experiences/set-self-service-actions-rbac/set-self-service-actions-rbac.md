@@ -6,11 +6,6 @@ sidebar_label: Set actions RBAC
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-:::warning Relevancy
-This document is relevant for the UI and the `/v1/actions` api routes.
-- If you are using `/v1/blueprints/:blueprint_identifier/actions` api please refer to this document: [[Depracated] Set actions RBAC](/depracated/create-self-service-experiences/set-self-service-actions-rbac)
-:::
-
 # Set actions RBAC
 
 Port provides granular control to make sure every user can only execute and invoke the actions that are relevant for them.
