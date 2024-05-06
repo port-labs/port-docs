@@ -285,10 +285,10 @@ steps:
     docker run -i --rm --platform=linux/amd64 \
       -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
       -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-      -e OCEAN__INTEGRATION__CONFIG__API_TOKEN=${OCEAN__INTEGRATION__CONFIG__API_TOKEN} \
-      -e OCEAN__INTEGRATION__CONFIG__API_URL=${OCEAN__INTEGRATION__CONFIG__API_URL} \
-      -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \
-      -e OCEAN__PORT__CLIENT_SECRET=${OCEAN__PORT__CLIENT_SECRET} \
+      -e OCEAN__INTEGRATION__CONFIG__API_TOKEN=$(OCEAN__INTEGRATION__CONFIG__API_TOKEN) \
+      -e OCEAN__INTEGRATION__CONFIG__API_URL=$(OCEAN__INTEGRATION__CONFIG__API_URL) \
+      -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
+      -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
       $image_name
 
     exit $?
@@ -518,6 +518,8 @@ Examples of blueprints and the relevant integration configurations:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
 resources:
   - kind: service
     selector:
@@ -621,6 +623,8 @@ resources:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
 resources:
   - kind: incident
     selector:
@@ -744,6 +748,8 @@ resources:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
 resources:
   - kind: alert
     selector:

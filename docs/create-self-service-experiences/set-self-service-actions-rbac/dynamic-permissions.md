@@ -17,7 +17,7 @@ Examples of useful applications of dynamic permissions:
 
 To use dynamic permissions:
 
-- Go to your [`builder`](https://app.getport.io/dev-portal/data-model) page.
+- Go to your [`builder`](https://app.getport.io/settings/data-model) page.
 - Choose the blueprint that is coupled to the Action you want to set permissions for.
 - Click on the `...` icon of the blueprint, then click on `Permissions`.
 

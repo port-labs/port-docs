@@ -374,7 +374,7 @@ jobs:
       - name: UPSERT EC2 Instance Entity
         uses: port-labs/port-github-action@v1
         with:
-          identifier: "${{ steps.display_outputs.outputs.instance_id }}"
+          identifier: "${{ env.instance_id }}"
           title: "${{ inputs.ec2_name }}"
           blueprint: ec2Instance
           properties: |-

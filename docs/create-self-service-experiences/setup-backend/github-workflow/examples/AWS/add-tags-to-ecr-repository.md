@@ -107,7 +107,7 @@ This option is way easier but if you do not want this, you can simply type in re
 4. After creating the blueprint, create the following action with the following JSON file on the `ecrRepository` blueprint:
 
 <details>
-<summary><b>Add Tags to ECR Repository Blueprint (Click to expand)</b></summary>
+<summary><b>Add Tags to ECR Repository Action (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
