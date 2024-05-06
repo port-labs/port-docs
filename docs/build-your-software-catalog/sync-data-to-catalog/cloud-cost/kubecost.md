@@ -272,9 +272,9 @@ steps:
     docker run -i --rm \
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-        -e OCEAN__INTEGRATION__CONFIG__KUBECOST_HOST=${OCEAN__INTEGRATION__CONFIG__KUBECOST_HOST} \
-        -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \
-        -e OCEAN__PORT__CLIENT_SECRET=${OCEAN__PORT__CLIENT_SECRET} \
+        -e OCEAN__INTEGRATION__CONFIG__KUBECOST_HOST=$(OCEAN__INTEGRATION__CONFIG__KUBECOST_HOST) \
+        -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
+        -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
         $image_name
 
     exit $?
@@ -410,7 +410,9 @@ You will be able to see `cloud` cost data after you have successfully configured
 
 - The `port`, `entity` and the `mappings` keys are used to map the Kubecost object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
 
-  ```yaml showLineNumbers
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
   resources:
     - kind: kubesystem
       selector:

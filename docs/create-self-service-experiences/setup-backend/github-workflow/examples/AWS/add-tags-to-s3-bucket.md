@@ -98,7 +98,7 @@ Replace the invocation method with your own repository details.
 
 ```json showLineNumbers
 {
-  "identifier": "add_tags_to_ecr_repository",
+  "identifier": "add_tags_to_s3_bucket",
   "title": "Add Tags to S3 Bucket",
   "icon": "AWS",
   "userInputs": {
@@ -133,13 +133,13 @@ Replace the invocation method with your own repository details.
     "org": "<GITHUB-ORG>",
     "repo": "<GITHUB-REPO-NAME>",
     // highlight-end
-    "workflow": "add-tags-to-ecr-repository.yml",
+    "workflow": "add-tags-to-s3-bucket.yml",
     "omitUserInputs": false,
     "omitPayload": false,
     "reportWorkflowStatus": true
   },
   "trigger": "CREATE",
-  "description": "Add tags to a repository on AWS ECR",
+  "description": "Add tags to S3 bucket",
   "requiredApproval": false
 }
 ```

@@ -31,6 +31,10 @@ resources:
 The following advanced configuration parameters are available and can be added to the [integration configuration](./gitlab.md#the-integration-configuration):
 
 <Tabs groupId="config" queryString="parameter">
+<TabItem value="branch" label="branch">
+The `branch` parameter detremines the branch the integration will sync on.  
+By default this parameter is not set and the integration will sync all projects using their default branch.
+</TabItem>
 
 <TabItem label="Spec path" value="specPath">
 

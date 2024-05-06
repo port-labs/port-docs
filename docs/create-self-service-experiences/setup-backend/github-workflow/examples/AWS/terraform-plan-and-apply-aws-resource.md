@@ -167,7 +167,7 @@ variable "environment" {
 ```json showLineNumbers
 {
   "identifier": "plan_terraform_resource",
-  "title": "Plan A Terraform Resource",
+  "title": "Terraform Plan",
   "icon": "Terraform",
   "userInputs": {
     "properties": {
@@ -212,7 +212,7 @@ variable "environment" {
 ```json showLineNumbers
 {
   "identifier": "apply_terraform_resource",
-  "title": "Approve and Apply Terraform Resource",
+  "title": "Terraform Apply",
   "icon": "Terraform",
   "userInputs": {
     "properties": {

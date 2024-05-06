@@ -111,10 +111,6 @@ In the following example you will export your Kubernetes `Replica Sets` and `Pod
       "containers": {
         "title": "Containers",
         "type": "array"
-      },
-      "conditions": {
-        "type": "array",
-        "title": "Conditions"
       }
     },
     "required": []
@@ -165,14 +161,13 @@ resources: # List of K8s resources to list, watch, and export to Port.
               phase: .status.phase
               labels: .metadata.labels
               containers: (.spec.containers | map({image, resources})) + .status.containerStatuses | group_by(.image) | map(add)
-              conditions: .status.conditions
             relations:
               deploymentConfig: .metadata.ownerReferences[0].name
 ```
 
 </details>
 
-After creating the blueprints, open your integration in the [data sources](https://app.getport.io/dev-portal/data-sources) page, apply the provided configuration and click on the `Save & Resync` button.
+After creating the blueprints, open your integration in the [data sources](https://app.getport.io/settings/data-sources) page, apply the provided configuration and click on the `Save & Resync` button.
 
 Done! The exporter will begin creating and updating objects from your Kubernetes cluster as Port entities shortly.
 

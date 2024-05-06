@@ -193,10 +193,9 @@ jobs:
           port_client_id: ${{ secrets.OCEAN__PORT__CLIENT_ID }}
           port_client_secret: ${{ secrets.OCEAN__PORT__CLIENT_SECRET }}
           config: |
-          servicenow_username: ${{ secrets.OCEAN__INTEGRATION__CONFIG__SERVICENOW_USERNAME }}
-          servicenow_password: ${{ secrets.OCEAN__INTEGRATION__CONFIG__SERVICENOW_PASSWORD }}
-          servicenow_url: ${{ secrets.OCEAN__INTEGRATION__CONFIG__SERVICENOW_URL }}
-
+            servicenow_username: ${{ secrets.OCEAN__INTEGRATION__CONFIG__SERVICENOW_USERNAME }}
+            servicenow_password: ${{ secrets.OCEAN__INTEGRATION__CONFIG__SERVICENOW_PASSWORD }}
+            servicenow_url: ${{ secrets.OCEAN__INTEGRATION__CONFIG__SERVICENOW_URL }}
 ```
 
   </TabItem>
@@ -293,11 +292,11 @@ steps:
     docker run -i --rm --platform=linux/amd64 \
       -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
       -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-      -e OCEAN__INTEGRATION__CONFIG__SERVICENOW_USERNAME=${OCEAN__INTEGRATION__CONFIG__SERVICENOW_USERNAME} \
-      -e OCEAN__INTEGRATION__CONFIG__SERVICENOW_PASSWORD=${OCEAN__INTEGRATION__CONFIG__SERVICENOW_PASSWORD} \
-      -e OCEAN__INTEGRATION__CONFIG__SERVICENOW_URL=${OCEAN__INTEGRATION__CONFIG__SERVICENOW_URL} \
-      -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \
-      -e OCEAN__PORT__CLIENT_SECRET=${OCEAN__PORT__CLIENT_SECRET} \
+      -e OCEAN__INTEGRATION__CONFIG__SERVICENOW_USERNAME=$(OCEAN__INTEGRATION__CONFIG__SERVICENOW_USERNAME) \
+      -e OCEAN__INTEGRATION__CONFIG__SERVICENOW_PASSWORD=$(OCEAN__INTEGRATION__CONFIG__SERVICENOW_PASSWORD) \
+      -e OCEAN__INTEGRATION__CONFIG__SERVICENOW_URL=$(OCEAN__INTEGRATION__CONFIG__SERVICENOW_URL) \
+      -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
+      -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
       $image_name
 
     exit $?
@@ -458,6 +457,8 @@ Examples of blueprints and the relevant integration configurations:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
 resources:
   - kind: sys_user_group
     selector:
@@ -522,6 +523,8 @@ resources:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
 resources:
   - kind: sc_catalog
     selector:
@@ -611,6 +614,8 @@ resources:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
 resources:
   - kind: incident
     selector:
