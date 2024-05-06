@@ -2,6 +2,9 @@
 sidebar_position: 2
 ---
 
+import GithubDedicatedRepoHint from '../../\_github_dedicated_workflows_repository_hint.mdx'
+import GithubActionModificationHint from '../../\_github_action_modification_required_hint.mdx'
+
 # Create An AWS EC2 Instance
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
@@ -121,6 +124,8 @@ In the following guide, you are going to create a self-service action in Port th
 1. Create a folder in a directory of your choice within your github repository to host the terraform template files.
 
 2. Create the following terraform templates ( `main.tf`, `variables.tf` and `outputs.tf` ) within the created folder.
+
+<GithubDedicatedRepoHint/>
 
 <details>
   <summary><b>main.tf</b></summary>
@@ -413,14 +418,17 @@ jobs:
 
 ## Port Configuration
 
-1. Create a Port action in the [self-service page](https://app.getport.io/self-serve) or with the following JSON definition:
+1. Create the Port action on the `ec2Instance` blueprint:
+    - Head to the [self-service](https://app.getport.io/self-serve) page.
+    - Click on the `+ New Action` button.
+    - Click on the `{...} Edit JSON` button.
+    - Copy and paste the following JSON configuration into the editor:
+
 
 <details>
   <summary> <b> Port Action: Create An EC2 Instance </b> </summary>
-:::tip
-- `<GITHUB-ORG>` - your GitHub organization or user name.
-- `<GITHUB-REPO-NAME>` - your GitHub repository name.
-:::
+
+<GithubActionModificationHint/>
 
 ```json showLineNumbers
 {
@@ -474,8 +482,8 @@ jobs:
   },
   "invocationMethod": {
     "type": "GITHUB",
-    "org": "<GITHUB-ORG>",
-    "repo": "<GITHUB-REPO-NAME>",
+    "org": "<GITHUB_ORG>",
+    "repo": "<GITHUB_REPO>",
     "workflow": "create-ec2-instance.yaml",
     "workflowInputs": {
       "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
