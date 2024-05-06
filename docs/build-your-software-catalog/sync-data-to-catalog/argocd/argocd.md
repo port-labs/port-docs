@@ -1030,66 +1030,7 @@ resources:
     "title": "Image",
     "icon": "AWS",
     "schema": {
-      "properties": {
-        "registryId": {
-          "type": "string",
-          "title": "Registry ID",
-          "description": "The ID of the registry",
-          "icon": "DefaultProperty"
-        },
-        "digest": {
-          "type": "string",
-          "title": "Image Digest",
-          "description": "SHA256 digest of image manifest",
-          "icon": "DefaultProperty"
-        },
-        "tags": {
-          "type": "array",
-          "title": "Image Tags",
-          "description": "List of tags for the image",
-          "icon": "DefaultProperty"
-        },
-        "pushedAt": {
-          "type": "string",
-          "title": "Pushed At",
-          "description": "Date and time the image was pushed to the repository",
-          "format": "date-time",
-          "icon": "DefaultProperty"
-        },
-        "lastRecordedPullTime": {
-          "type": "string",
-          "title": "Last Recorded Pull Time",
-          "description": "Date and time the image was last pulled",
-          "format": "date-time",
-          "icon": "DefaultProperty"
-        },
-        "triggeredBy": {
-          "type": "string",
-          "icon": "TwoUsers",
-          "title": "Triggered By",
-          "description": "The user who triggered the run"
-        },
-        "commitHash": {
-          "type": "string",
-          "title": "Commit Hash",
-          "icon": "DefaultProperty"
-        },
-        "pullRequestId": {
-          "type": "string",
-          "icon": "Git",
-          "title": "Pull Request ID"
-        },
-        "workflowId": {
-          "type": "string",
-          "title": "Workflow ID",
-          "icon": "DefaultProperty"
-        },
-        "image_branch": {
-          "title": "Image branch",
-          "type": "string",
-          "description": "The git branch associated with the repository used to build the Image"
-        }
-      },
+      "properties": {},
       "required": []
     },
     "mirrorProperties": {},
@@ -1158,7 +1099,7 @@ resources:
         "title": "Image",
         "target": "image",
         "required": false,
-        "many": true
+        "many": false
       }
     }
   }
@@ -1191,7 +1132,7 @@ resources:
             labels: .liveState | fromjson | .metadata.labels
           relations:
             application: .__application.metadata.uid
-            image: 'if .kind == "Deployment" then [.liveState | fromjson | .spec.template.spec.containers[] | .image] else [] end'
+            image: 'if .kind == "Deployment" then .liveState | fromjson | .spec.template.spec.containers[0].image else null end'
 ```
 </details>
 
