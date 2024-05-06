@@ -945,3 +945,285 @@ Create the following webhook configuration [using Port's UI](/build-your-softwar
 
 Done! Any issue created in Wiz will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
 </details>
+
+## Let's Test It
+
+This section includes a sample response data from Wiz. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+
+### Payload
+
+Here is an example of the payload structure from Wiz:
+
+<details>
+<summary>Project response data</summary>
+
+```json showLineNumbers
+{
+  "id": "d6ac50bb-aec0-52fc-80ab-bacd7b02f178",
+  "name": "Project1",
+  "isFolder": false,
+  "archived": false,
+  "businessUnit": "Dev",
+  "description": "Test project"
+}
+```
+
+</details>
+
+<details>
+<summary>Control response data</summary>
+
+```json showLineNumbers
+{
+  "__typename": "Control",
+  "id": "9d7ef6e4-baed-47ba-99ec-a78a801f1e19",
+  "name": "Publicly Exposed Assets with DataFindings ",
+  "controlDescription": "",
+  "resolutionRecommendation": "",
+  "securitySubCategories": [
+    {
+      "title": "Data Security",
+      "category": {
+        "name": "8 Data Security",
+        "framework": {
+          "name": "Wiz"
+        }
+      }
+    }
+  ]
+}
+```
+
+</details>
+
+<details>
+<summary>Issue response data</summary>
+
+```json showLineNumbers
+{
+  "id": "fffedba9-587f-4251-8c96-d966c183f10c",
+  "sourceRule": {
+    "__typename": "Control",
+    "id": "9d7ef6e4-baed-47ba-99ec-a78a801f1e19",
+    "name": "Publicly Exposed Assets with DataFindings ",
+    "controlDescription": "",
+    "resolutionRecommendation": "",
+    "securitySubCategories": [
+      {
+        "title": "Data Security",
+        "category": {
+          "name": "8 Data Security",
+          "framework": {
+            "name": "Wiz"
+          }
+        }
+      }
+    ]
+  },
+  "createdAt": "2023-08-23T07:56:09.903743Z",
+  "updatedAt": "2023-09-12T08:33:16.327851Z",
+  "dueAt": null,
+  "type": "TOXIC_COMBINATION",
+  "resolvedAt": "2023-08-30T08:17:54.613564Z",
+  "statusChangedAt": "2023-08-30T08:17:54.613564Z",
+  "projects": [
+    {
+      "id": "d6ac50bb-aec0-52fc-80ab-bacd7b02f178",
+      "name": "Project1",
+      "slug": "project1",
+      "businessUnit": "Dev",
+      "riskProfile": {
+        "businessImpact": "MBI"
+      }
+    }
+  ],
+  "status": "RESOLVED",
+  "severity": "HIGH",
+  "entitySnapshot": {
+    "id": "3d7dafdc-0087-55e0-81fd-a9e2b152fb47",
+    "type": "DATA_FINDING",
+    "nativeType": "",
+    "name": "GDPR 2415",
+    "status": null,
+    "cloudPlatform": null,
+    "cloudProviderURL": "",
+    "providerId": "data##wizt-recEIECHXqlRPMZRw##wfke-jpb8-twwk-l7mm",
+    "region": "",
+    "resourceGroupExternalId": "",
+    "subscriptionExternalId": "",
+    "subscriptionName": "",
+    "subscriptionTags": null,
+    "tags": {},
+    "externalId": "data##wizt-recEIECHXqlRPMZRw##wfke-jpb8-twwk-l7mm"
+  },
+  "serviceTickets": [],
+  "notes": [
+    {
+      "createdAt": "2023-09-12T08:33:16.29091Z",
+      "updatedAt": "2023-09-12T08:33:16.366971Z",
+      "text": "test",
+      "user": null,
+      "serviceAccount": {
+        "name": "bot-ise"
+      }
+    },
+    {
+      "createdAt": "2023-09-12T08:22:20.13926Z",
+      "updatedAt": "2023-09-12T08:33:16.369728Z",
+      "text": "test",
+      "user": null,
+      "serviceAccount": {
+        "name": "bot-ise"
+      }
+    },
+    {
+      "createdAt": "2023-09-12T08:21:49.663314Z",
+      "updatedAt": "2023-09-12T08:33:16.371541Z",
+      "text": "test",
+      "user": null,
+      "serviceAccount": {
+        "name": "bot-ise"
+      }
+    }
+  ]
+}
+```
+
+</details>
+
+<details>
+<summary>Service Ticket response data</summary>
+
+```json showLineNumbers
+{
+  "externalId": "data##wizt-customID##ja63-kx0z-f27x-mpvl",
+  "name": "Security Vulnerability in AWS S3 Bucket",
+  "url": "https://api.wiz.com/wiz/service-tickets/data##wizt-customID##ja63-kx0z-f27x-mpvl"
+}
+```
+
+</details>
+
+### Mapping Result
+
+The combination of the sample payload and the Ocean configuration generates the following Port entity:
+
+<details>
+<summary><b>Project entity in Port(Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "d6ac50bb-aec0-52fc-80ab-bacd7b02f178",
+  "title": "Project1",
+  "blueprint": "wizProject",
+  "team": [],
+  "icon": "NewRelic",
+  "properties": {
+    "archived": false,
+    "businessUnit": "Dev",
+    "description": "Test project"
+  },
+  "createdAt": "2024-2-6T09:30:57.924Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2024-2-6T11:49:20.881Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+<details>
+<summary><b>Control entity in Port(Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "9d7ef6e4-baed-47ba-99ec-a78a801f1e19",
+  "title": "Publicly Exposed Assets with DataFindings",
+  "blueprint": "wizControl",
+  "icon": "Flag",
+  "properties": {
+    "controlDescription": "",
+    "resolutionRecommendation": ""
+  },
+  "createdAt": "2024-2-6T09:30:57.924Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2024-2-6T11:49:20.881Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+<details>
+<summary><b>Issue entity in Port(Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "fffedba9-587f-4251-8c96-d966c183f10c",
+"title": "GDPR 2415 | DATA_FINDING",
+"blueprint": "wizIssue",
+"icon": "Alert",
+"properties": {
+  "url": "https://app.wiz.io/issues#~(issue~'fffedba9-587f-4251-8c96-d966c183f10c)",
+  "status": "RESOLVED",
+  "severity": "HIGH",
+  "type": "TOXIC_COMBINATION",
+  "notes": [],
+  "vulnerability": {
+    "id": "3d7dafdc-0087-55e0-81fd-a9e2b152fb47",
+    "type": "DATA_FINDING",
+    "nativeType": "",
+    "name": "GDPR 2415",
+    "status": null,
+    "cloudPlatform": null,
+    "cloudProviderURL": "",
+    "providerId": "data##wizt-recEIECHXqlRPMZRw##wfke-jpb8-twwk-l7mm",
+    "region": "",
+    "resourceGroupExternalId": "",
+    "subscriptionExternalId": "",
+    "subscriptionName": "",
+    "subscriptionTags": null,
+    "tags": {},
+    "externalId": "data##wizt-recEIECHXqlRPMZRw##wfke-jpb8-twwk-l7mm"
+  },
+  "createdAt": "2023-08-23T07:56:09.903743Z",
+  "updatedAt": "2023-09-12T08:33:16.327851Z",
+  "resolvedAt": "2023-08-30T08:17:54.613564Z",
+  "statusChangedAt": "2023-08-30T08:17:54.613564Z",
+},
+"relations": {
+  "projects": ["d6ac50bb-aec0-52fc-80ab-bacd7b02f178"],
+  "serviceTickets": [],
+  "control": "9d7ef6e4-baed-47ba-99ec-a78a801f1e19"
+},
+"createdAt": "2023-08-23T07:56:09.903743Z",
+"createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+"updatedAt": "2023-09-12T08:33:16.327851Z",
+"updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+
+<details>
+<summary><b>Service Ticket entity in Port(Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "data##wizt-customID##ja63-kx0z-f27x-mpvl",
+  "title": "Security Vulnerability in AWS S3 Bucket",
+  "blueprint": "serviceTicket",
+  "icon": "Book",
+  "properties": {
+    "url": "https://api.wiz.com/wiz/service-tickets/data##wizt-customID##ja63-kx0z-f27x-mpvl"
+  },
+  "relations": {},
+  "createdAt": "2023-08-23T07:56:09.903743Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2023-09-12T08:33:16.327851Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
