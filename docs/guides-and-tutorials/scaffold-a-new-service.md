@@ -145,40 +145,82 @@ Now we'll define the backend of the action. Port supports multiple invocation ty
 <TabItem value="github">
 
 Fill out the form with your values:
+
 - Replace the `Organization` and `Repository` values with your values (this is where the workflow will reside and run).
+  
 - Name the workflow `port-create-repo.yml`.
-- Set `Omit user inputs` to `Yes`.
-- Fill out the rest of the form like this, then click `Next`:
+  
+- Fill out your workflow details:  
+  <img src='/img/guides/scaffoldGithubBackendDetails.png' width='55%' border='1px' />
+  <br/>
 
-:::tip Important
+- Scroll down to the `Configure the invocation payload` section.  
+  This is where you can define which data will be sent to your backend each time the action is executed.  
 
-In our workflow, the cookiecutter uses the payload for the inputs. We omit the user inputs in order to avoid sending additional inputs to the workflow.
+  For this example, we will send two details that our backend needs to know - the service name, and the id of the action run.  
+  Copy the following JSON snippet and paste it in the payload code box:
 
-:::
-
-<img src='/img/guides/scaffoldBackend.png' width='75%' />
+  ```json showLineNumbers
+  {
+    "port_payload": {
+      "context": {
+        "runId": "{{ .run.id }}"
+      },
+      "payload": {
+        "properties": {
+          "service_name": "{{ .inputs.service_name }}",
+        }
+      }
+    }
+  }
+  ```
 
 </TabItem>
 
 <TabItem value="gitlab">
 
-:::tip
-You will need a few parameters for this part that are generated in the [setup the action's backend](#setup-the-actions-backend) section, it is recommended to complete the steps there and then follow the instructions here with all of the required information in hand.
-:::
+First, choose `Gitlab` as the invocation type.
 
-Fill out the form with your values:
-- For the `Endpoint URL` you need to add a URL in the following format:
-  ```text showLineNumbers
-  https://gitlab.com/api/v4/projects/{GITLAB_PROJECT_ID}/ref/main/trigger/pipeline?token={GITLAB_TRIGGER_TOKEN}
+- Follow the instructions under `Install the Port agent and set GitLab Pipeline trigger token` (you can skip step 4, as it is only required when using a self-hosted Gitlab instance).
+ 
+Then, fill out your workflow details:
+
+- Replace the `Project Name` and `Group Name` values with your values (this is where the pipeline will reside and run).
+
+- Note that leaving `Default Ref` blank will automatically use the `main` branch of your repository:  
+  <img src='/img/guides/scaffoldGitlabBackendDetails.png' width='55%' border='1px' />
+  <br/>
+
+- Scroll down to the `Configure the invocation payload` section.  
+  This is where you can define which data will be sent to your backend each time the action is executed.  
+
+  For this example, we will send two details that our backend needs to know - the service name, and the id of the action run.  
+  Copy the following JSON snippet and paste it in the payload code box:
+
+  ```json showLineNumbers
+  {
+    "port_payload": {
+      "context": {
+        "runId": "{{ .run.id }}",
+        "blueprint": "{{.action.blueprint}}",
+      },
+      "payload": {
+        "properties": {
+          "service_name": "{{ .inputs.service_name }}",
+        }
+      },
+      "trigger": {
+        "by": {
+          "user": {
+            "firstName": "{{ .trigger.by.user.firstName }}",
+            "lastName": "{{ .trigger.by.user.lastName }}",
+            "email": "{{ .trigger.by.user.email }}",
+          }
+        }
+      }
+    }
+  }
   ```
-    - The value for `{GITLAB_PROJECT_ID}` is the ID of the GitLab group that you create in the [setup the action's backend](#setup-the-actions-backend) section which stores the `.gitlab-ci.yml` pipeline file.
-      - To find the project ID, browse to the GitLab page of the group you created, at the top right corner of the page, click on the vertical 3 dots button (next to `Fork`) and select `Copy project ID`
-    - The value for `{GITLAB_TRIGGER_TOKEN}` is the trigger token you create in the [setup the action's backend](#setup-the-actions-backend) section.
-- Set `HTTP method` to `POST`.
-- Set `Request type` to `Async`.
-- Set `Use self-hosted agent` to `No`.
-
-<img src='/img/guides/gitlabActionBackendForm.png' width='75%' />
 
 </TabItem>
 
@@ -204,6 +246,8 @@ Fill out the form with your values:
 </TabItem>
 
 </Tabs>
+
+<br/>
 
 The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Create`.
 
@@ -301,34 +345,25 @@ This workflow uses Port's [cookiecutter Github action](https://github.com/port-l
 
 <TabItem value="gitlab">
 
-1. First, let's create a GitLab project that will store our new scaffolder pipeline - Go to your GitLab account and create a new project.
-
-2. Next, let's create the necessary token and secrets:
+First, let's create the necessary token and secrets in your GitLab project:
 
 - Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
+
 - Go to your [root group](https://gitlab.com/dashboard/groups), and follow the steps [here](https://docs.gitlab.com/ee/user/group/settings/group_access_tokens.html#create-a-group-access-token-using-ui) to create a new group access token with the following permission scopes: `api, read_api, read_repository, write_repository`, then save its value as it will be required in the next step.
-  <img src='/img/guides/gitlabGroupAccessTokenPerms.png' width='80%' />
-- Go to the new GitLab project you created in step 1, from the `Settings` menu at the sidebar on the left, select `CI/CD`.
+  <img src='/img/guides/gitlabGroupAccessTokenPerms.png' width='85%' border='1px' />
+
+- Go to your GitLab project, from the `Settings` menu in the sidebar on the left, select `CI/CD`.
+
 - Expand the `Variables` section and save the following secrets:
   - `PORT_CLIENT_ID` - Your Port client ID.
   - `PORT_CLIENT_SECRET` - Your Port client secret.
   - `GITLAB_ACCESS_TOKEN` - The GitLab group access token you created in the previous step.
   <br/>
-  <img src='/img/guides/gitlabPipelineVariables.png' width='80%' />
-- Expand the `Pipeline trigger tokens` section and add a new token, give it a meaningful description such as `Scaffolder token` and save its value
-  - This is the `{GITLAB_TRIGGER_TOKEN}` that you need for the [define backend type](#define-backend-type) section.
+  <img src='/img/guides/gitlabPipelineVariables.png' width='85%' border='1px' />
 
-<br/>
 
-  <img src='/img/guides/gitlabPipelineTriggerToken.png' width='80%' />
-
-<br/><br/>
-
-:::tip
-Now that you have both the new GitLab project and its respective trigger token, you can go to the [define backend type](#define-backend-type) section and complete the action configuration in Port.
-:::
-
-3. Now let's create the pipeline file that contains our logic. In the new GitLab project you created at step 1, at the root of the project, create a new file named `.gitlab-ci.yml` and use the following snippet as its content:
+Now let's create the pipeline file that contains our logic.  
+In the root of your GitLab project, create a new file named `.gitlab-ci.yml` and use the following snippet as its content:
 
 <details>
 <summary><b>GitLab pipeline (click to expand)</b></summary>
