@@ -38,13 +38,12 @@ This step is not required for this example, but it will create all the blueprint
 4. After you installed the integration, the blueprints `pagerdutyService` and `pagerdutyIncident` will appear, create the following action with the following JSON file on the `pagerdutyService` blueprint:
 
 <details>
-<summary><b>Create PagerDuty Incident Blueprint (Click to expand)</b></summary>
+<summary><b>Create PagerDuty Incident Action (Click to expand)</b></summary>
 
 ```json showLineNumbers
-[
   {
     "identifier": "trigger_incident",
-    "title": "Trigger Incident",
+    "title": "Trigger PagerDuty Incident",
     "icon": "pagerduty",
     "userInputs": {
       "properties": {
@@ -106,7 +105,6 @@ This step is not required for this example, but it will create all the blueprint
     "description": "Notify users and teams about incidents in the service",
     "requiredApproval": false
   }
-]
 ```
 
 :::note Customisation
