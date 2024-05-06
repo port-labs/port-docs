@@ -311,58 +311,108 @@ Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organiz
 
 ```json showLineNumbers
 {
-  "identifier": "open_jira_issue_with_automatic_label",
-  "title": "Open Jira issue with automatic label",
+  "identifier": "jiraIssue_open_jira_issue_with_automatic_label",
+  "title": "Open Jira Issue with automatic label",
   "icon": "Jira",
-  "userInputs": {
-    "properties": {
-      "title": {
-        "title": "Title",
-        "description": "Title of the Jira issue",
-        "icon": "Jira",
-        "type": "string"
-      },
-      "type": {
-        "title": "Type",
-        "description": "Issue type",
-        "icon": "Jira",
-        "type": "string",
-        "default": "Task",
-        "enum": [
-          "Task",
-          "Story",
-          "Bug",
-          "Epic"
-        ],
-        "enumColors": {
-          "Task": "blue",
-          "Story": "green",
-          "Bug": "red",
-          "Epic": "pink"
+  "description": "Creates a Jira issue with a label to the concerned service.",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {
+        "title": {
+          "title": "Title",
+          "description": "Title of the Jira issue",
+          "icon": "Jira",
+          "type": "string"
+        },
+        "type": {
+          "title": "Type",
+          "description": "Issue type",
+          "icon": "Jira",
+          "type": "string",
+          "default": "Task",
+          "enum": [
+            "Task",
+            "Story",
+            "Bug",
+            "Epic"
+          ],
+          "enumColors": {
+            "Task": "blue",
+            "Story": "green",
+            "Bug": "red",
+            "Epic": "pink"
+          }
+        },
+        "project": {
+          "title": "Project",
+          "description": "The issue will be created on this project",
+          "icon": "Jira",
+          "type": "string",
+          "blueprint": "jiraProject",
+          "format": "entity"
         }
-      }
+      },
+      "required": [
+        "title",
+        "type",
+        "project"
+      ],
+      "order": [
+        "title",
+        "type"
+      ]
     },
-    "required": [
-      "title",
-      "type"
-    ],
-    "order": [
-      "title",
-      "type"
-    ]
+    "blueprintIdentifier": "jiraIssue"
   },
   "invocationMethod": {
     "type": "GITHUB",
-    "org": "<GITHUB_ORG>",
-    "repo": "<GITHUB_REPO>",
+    "org": "<Enter GitHub organization>",
+    "repo": "<Enter GitHub repository>",
     "workflow": "open-jira-issue-with-automatic-label.yml",
-    "omitUserInputs": false,
-    "omitPayload": false,
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "{{if (.inputs | has(\"title\")) then \"title\" else null end}}": "{{.inputs.\"title\"}}",
+      "{{if (.inputs | has(\"type\")) then \"type\" else null end}}": "{{.inputs.\"type\"}}",
+      "{{if (.inputs | has(\"project\")) then \"project\" else null end}}": "{{.inputs.\"project\" | if type == \"array\" then map(.identifier) else .identifier end}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"jiraIssue_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "repo": "<Enter GitHub repository>",
+              "org": "<Enter GitHub organization>",
+              "workflow": "open-jira-issue-with-automatic-label.yml",
+              "omitUserInputs": false,
+              "omitPayload": false,
+              "reportWorkflowStatus": true
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {
+            "{{if (.inputs | has(\"title\")) then \"title\" else null end}}": "{{.inputs.\"title\"}}",
+            "{{if (.inputs | has(\"type\")) then \"type\" else null end}}": "{{.inputs.\"type\"}}",
+            "{{if (.inputs | has(\"project\")) then \"project\" else null end}}": "{{.inputs.\"project\" | if type == \"array\" then map(.identifier) else .identifier end}}"
+          },
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
     "reportWorkflowStatus": true
   },
-  "trigger": "DAY-2",
-  "description": "Creates a Jira issue with a label to the concerned service.",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 </details>

@@ -382,59 +382,109 @@ In this guide, we will to create a self-service action in Port that not only aut
 
 ```json showLineNumbers
 {
-  "identifier": "open_slack_channel",
+  "identifier": "service_open_slack_channel",
   "title": "Open Slack Channel",
   "icon": "Slack",
-  "userInputs": {
-    "properties": {
-      "channel_name": {
-        "icon": "Slack",
-        "title": "Channel Name",
-        "type": "string",
-        "default": {
-          "jqQuery": "\"incident-\"+.entity.title"
-        }
-      },
-      "is_private": {
-        "description": "Create a private channel instead of a public one",
-        "title": "Is Private",
-        "type": "boolean",
-        "default": false,
-        "icon": "Slack"
-      },
-      "team_id": {
-        "description": "Encoded team id to create the channel in, required if org token is used",
-        "title": "Team ID",
-        "icon": "Slack",
-        "type": "string"
-      },
-      "members": {
-        "items": {
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {
+        "channel_name": {
+          "icon": "Slack",
+          "title": "Channel Name",
+          "type": "string",
+          "default": {
+            "jqQuery": "\"incident-\"+.entity.title"
+          }
+        },
+        "is_private": {
+          "description": "Create a private channel instead of a public one",
+          "title": "Is Private",
+          "type": "boolean",
+          "default": false,
+          "icon": "Slack"
+        },
+        "team_id": {
+          "description": "Encoded team id to create the channel in, required if org token is used",
+          "title": "Team ID",
+          "icon": "Slack",
           "type": "string"
         },
-        "title": "Members",
-        "icon": "Slack",
-        "type": "array",
-        "description": "Add members manually to the channel.",
-        "default": {
-          "jqQuery": ".entity.properties.code_owners"
+        "members": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Members",
+          "icon": "Slack",
+          "type": "array",
+          "description": "Add members manually to the channel.",
+          "default": {
+            "jqQuery": ".entity.properties.code_owners"
+          }
         }
-      }
+      },
+      "required": [
+        "members"
+      ],
+      "order": [
+        "channel_name",
+        "members",
+        "is_private",
+        "team_id"
+      ]
     },
-    "required": ["members"],
-    "order": ["channel_name", "members", "is_private", "team_id"]
+    "blueprintIdentifier": "service"
   },
   "invocationMethod": {
     "type": "GITHUB",
     "org": "<GITHUB-ORG>",
     "repo": "<GITHUB-REPO-NAME>",
     "workflow": "open-slack-channel.yaml",
-    "omitUserInputs": false,
-    "omitPayload": false,
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "{{if (.inputs | has(\"channel_name\")) then \"channel_name\" else null end}}": "{{.inputs.\"channel_name\"}}",
+      "{{if (.inputs | has(\"is_private\")) then \"is_private\" else null end}}": "{{.inputs.\"is_private\"}}",
+      "{{if (.inputs | has(\"team_id\")) then \"team_id\" else null end}}": "{{.inputs.\"team_id\"}}",
+      "{{if (.inputs | has(\"members\")) then \"members\" else null end}}": "{{.inputs.\"members\"}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"service_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "org": "<GITHUB-ORG>",
+              "repo": "<GITHUB-REPO-NAME>",
+              "workflow": "open-slack-channel.yaml",
+              "omitUserInputs": false,
+              "omitPayload": false,
+              "reportWorkflowStatus": true
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {
+            "{{if (.inputs | has(\"channel_name\")) then \"channel_name\" else null end}}": "{{.inputs.\"channel_name\"}}",
+            "{{if (.inputs | has(\"is_private\")) then \"is_private\" else null end}}": "{{.inputs.\"is_private\"}}",
+            "{{if (.inputs | has(\"team_id\")) then \"team_id\" else null end}}": "{{.inputs.\"team_id\"}}",
+            "{{if (.inputs | has(\"members\")) then \"members\" else null end}}": "{{.inputs.\"members\"}}"
+          },
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
     "reportWorkflowStatus": true
   },
-  "trigger": "DAY-2",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 

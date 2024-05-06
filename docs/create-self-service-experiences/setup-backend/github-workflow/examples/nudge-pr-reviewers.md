@@ -34,7 +34,6 @@ In the following guide, we are going to create a self-service action in Port tha
 
 1. To create the Port action, go to the [self-service page](https://app.getport.io/self-serve):
     - Click on the `+ New Action` button.
-    - Choose the `Pull Request` blueprint and click `Next`.
     - Click on the `{...} Edit JSON` button.
     - Copy and paste the following JSON configuration into the editor.
     - Click `Save`
@@ -50,32 +49,63 @@ In the following guide, we are going to create a self-service action in Port tha
 
 ```json showLineNumbers
 {
-  "identifier": "nudge_reviewers",
+  "identifier": "githubPullRequest_nudge_reviewers",
   "title": "Nudge Reviewers",
-  "userInputs": {
-    "properties": {},
-    "required": []
+  "description": "Remind reviewers about PR",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {},
+      "required": []
+    },
+    "blueprintIdentifier": "githubPullRequest"
   },
   "invocationMethod": {
     "type": "GITHUB",
     "org": "<GITHUB-ORG>",
     "repo": "<GITHUB-REPO-NAME>",
     "workflow": "nudge-pr-reviewers.yml",
-    "omitUserInputs": true,
-    "omitPayload": false,
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"githubPullRequest_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "org": "<GITHUB-ORG>",
+              "repo": "<GITHUB-REPO-NAME>",
+              "workflow": "nudge-pr-reviewers.yml",
+              "omitUserInputs": true,
+              "omitPayload": false,
+              "reportWorkflowStatus": true
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {},
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
     "reportWorkflowStatus": true
   },
-  "trigger": "DAY-2",
-  "description": "Remind reviewers about PR",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 
 </details>
 
-
-<img src='/img/self-service-actions/setup-backend/github-workflow/nudgePRBlueprint.png' width='45%' border="1px" />
-<img src='/img/self-service-actions/setup-backend/github-workflow/nudgePRDefn.png' width='45%' border="1px" />
 
 ## GitHub workflow
 
