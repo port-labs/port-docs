@@ -27,12 +27,12 @@ This guide will show you how to integrate Kubernetes CRDs with Port and expose t
 
 In this guide, we will deploy Port's [Kubernetes Exporter](../build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md) to export Kubernetes CRDs to Port as <PortTooltip id="blueprint">blueprints</PortTooltip> and the relevant <PortTooltip id="action">actions</PortTooltip> to create, update and delete those resources and listen to changes in those resources and reflect them in Port's UI without the need of creating a mapping and blueprints upfront.
 
-![Visualize CRDS](../../static/img/guides/visualizeCrds.svg)
+![Visualize CRDS](/img/guides/visualizeCrds.svg)
 
 Then we will connect a GitHub account using Port's [GitHub integration](../build-your-software-catalog/sync-data-to-catalog/git/github/github.md) to provision CRs directly into the Kubernetes cluster, or optionally with GitOps.
 After completing it, you will get a sense of how it can benefit different personas in your organization:
 
-![Sync CRs](../../static/img/guides/createCRs.svg)
+![Sync CRs](/img/guides/createCRs.svg)
 
 ### 1. (Optional) Creating a Crossplane XRD & Composition or using an existing CRD
 
@@ -80,7 +80,7 @@ Now, to execute the action we need to add some workflow to it for Port to trigge
 
 1. Go to the [GitHub control plane example repo](https://github.com/port-labs/control-plane-demo) and use it as a template to create your own repo by clicking on the `Use this template` button.
 
-![CRD Action](../../static/img/guides/useThisTemplate.png)
+![CRD Action](/img/guides/useThisTemplate.png)
 
 2. [Install Port's GitHub app](../build-your-software-catalog/sync-data-to-catalog/git/github/github.md#installation) in the GitHub account where you cloned the template.
 
@@ -99,7 +99,7 @@ Now, to execute the action we need to add some workflow to it for Port to trigge
     * Click on `Edit Action` 
     * Click in the `Backend` tab there change the `organization` and `repository` fields to match yours.
 
-    ![CRD Action](../../static/img/guides/changeOrgRepo.png)
+    ![CRD Action](/img/guides/changeOrgRepo.png)
 
 :::note
 **GitOps**
@@ -115,13 +115,13 @@ If you would like to use this method, at the same repo you cloned there is anoth
 ### 4. Executing the action
 
 * Now that everything is set up, go to the [Self-Service Tab](https://app.getport.io/self-serve) and execute the Create action.
-![CRD Action](../../static/img/guides/createNosqlComposition.png)
+![CRD Action](/img/guides/createNosqlComposition.png)
 
 * After the action is executed, click on the action run and logs will show up, if everything is succeeded we should see the following logs.
-![CRD Action](../../static/img/guides/createNosqlCompositionLogs.png)
+![CRD Action](/img/guides/createNosqlCompositionLogs.png)
 
 * You are done! Now you can see the created resources in [Port's Catalog](https://app.getport.io/nosqls) and at AWS console 🚀
-![CRD Action](../../static/img/guides/createNosqlCompositionResultCatalog.png)
+![CRD Action](/img/guides/createNosqlCompositionResultCatalog.png)
 
 :::note
 You can also use the Update and Delete actions to update and delete the resources.
