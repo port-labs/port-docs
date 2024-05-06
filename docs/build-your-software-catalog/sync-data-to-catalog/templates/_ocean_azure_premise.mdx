@@ -8,4 +8,20 @@ If you want the integration to update Port in real time using webhooks you shoul
 the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
 :::
 
-Make sure to configure the following variables using [Azure Devops variable groups](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops&tabs=yaml). Add them into in a variable group named `port-ocean-credentials`:
+<br />
+
+:::tip Configure the variables in a variable group
+Variable groups store values and secrets you'll use in your pipelines across your project. [Learn more](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops&tabs=yaml)
+
+**Setting Up Your Credentials**
+1. Create a Variable Group: Name it **port-ocean-credentials**. Store the required variables from the table.
+2. Authorize Your Pipeline:
+    - Go to **"Library" -> "Variable groups."**
+    - Find **port-ocean-credentials** and click on it.
+    - Select "Pipeline Permissions" and add your pipeline to the authorized list.
+
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/code-quality-security/azureVarGroups.png' width='85%' border="1px" />
+
+:::
+
+<br />
