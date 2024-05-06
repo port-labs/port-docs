@@ -1,33 +1,33 @@
 ---
 sidebar_position: 11
-title: Let developers consume Kubernetes API extensions
+title: Visualize and deploy cloud resources by leveraging K8s CRDs
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
-# Let developers consume Kubernetes API extensions
+# Visualize and deploy cloud resources by leveraging K8s CRDs
 
 ### Introduction
 
 Kubernetes provides a great way of extending its API which is via Custom Resource Definitions (CRDs). CRDs allow you to define your API objects and controllers to manage them. This is a powerful feature that allows you to extend Kubernetes to manage any kind of resources.
-This guide will show you how to integrate Kubernetes CRDs with Port and expose them in the Port UI for developers to use, without the need of creating Kubernetes Exporter mappings and blueprints.
+This guide will show you how to integrate Kubernetes CRDs with Port and expose them in the Port UI for developers to use.
 
 :::tip Prerequisites
 - Port account
 - Kubernetes cluster
-- Deployed operator that listens to a CRD
+- Deployed operator that listens to CRD changes
 - GitHub account
 :::
 
 ### The goal of this guide
 
-In this guide, we will deploy Port's [Kubernetes Exporter](../build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md) to export Kubernetes CRDs to Port as <PortTooltip id="blueprint">blueprints</PortTooltip> and the relevant <PortTooltip id="action">actions</PortTooltip> to create, update and delete those resources and listen to changes in those resources and reflect them in Port's UI without the need of creating a mapping and blueprints upfront.
-Then we will connect a GitHub account using Port's [GitHub integration](../build-your-software-catalog/sync-data-to-catalog/git/github/github.md) to provision CRs directly into the Kubernetes cluster, or optionally with GitOps.
-After completing it, you will get a sense of how it can benefit different personas in your organization:
-
 - Developers will be able to use any CRDs directly in a UI.
 - Platform engineers will be able to query the data and get insights about the usage of the CRDs and Kubernetes resources.
 - Platform engineers will be able to serve any CRDs to developers in a self-service manner.
+
+In this guide, we will deploy Port's [Kubernetes Exporter](../build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md) to export Kubernetes CRDs to Port as <PortTooltip id="blueprint">blueprints</PortTooltip> and the relevant <PortTooltip id="action">actions</PortTooltip> to create, update and delete those resources and listen to changes in those resources and reflect them in Port's UI without the need of creating a mapping and blueprints upfront.
+Then we will connect a GitHub account using Port's [GitHub integration](../build-your-software-catalog/sync-data-to-catalog/git/github/github.md) to provision CRs directly into the Kubernetes cluster, or optionally with GitOps.
+After completing it, you will get a sense of how it can benefit different personas in your organization:
 
 ### 1. (Optional) Creating a Crossplane XRD & Composition or using an existing CRD
 
@@ -67,11 +67,11 @@ helm upgrade --install my-port-k8s-exporter port-labs/port-k8s-exporter \
 ```
 
 After the Kubernetes Exporter is installed, you can check the logs to see if the CRDs are being discovered and exported to Port.
-If everything, succeeded you should see the relevant `blueprints` its `actions` in Port's UI
+If everything succeeded you should see the relevant CRDs as `blueprints` and `actions`, and any existing CRs as `entities` in Port's catalog.
 
 ### 3. Connecting a GitHub workflow
 
-Now, to execute the action we need to add some workflow to it for Port to trigger the action, the workflow that we will configure will do the operations in the Kubernetes cluster using the kubeconfig that we will provide as a secret in the GitHub repository.
+Now, to execute the action we need to add some workflow to it for Port to trigger the action, the workflow that we will configure will do the operations in the Kubernetes cluster using the `kubeconfig` that we will provide as a secret in the GitHub repository.
 
 1. Go to the [GitHub control plane example repo](https://github.com/port-labs/control-plane-demo) and use it as a template to create your own repo by clicking on the `Use this template` button.
 
