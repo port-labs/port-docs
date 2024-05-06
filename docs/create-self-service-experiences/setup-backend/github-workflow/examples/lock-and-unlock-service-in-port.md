@@ -165,52 +165,91 @@ Follow these steps to get started:
 
 ```json showLineNumbers
 {
-  "identifier": "lock_service",
+  "identifier": "service_lock_service",
   "title": "Lock Service",
   "icon": "Lock",
-  "userInputs": {
-    "properties": {
-      "reason": {
-        "title": "Reason",
-        "type": "string"
-      },
-      "environment": {
-        "icon": "DefaultProperty",
-        "title": "Environment",
-        "type": "string",
-        "enum": [
-          "Production",
-          "Development",
-          "Staging"
-        ],
-        "enumColors": {
-          "Production": "lightGray",
-          "Development": "lightGray",
-          "Staging": "lightGray"
+  "description": "Lock service in Port",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        },
+        "environment": {
+          "icon": "DefaultProperty",
+          "title": "Environment",
+          "type": "string",
+          "enum": [
+            "Production",
+            "Development",
+            "Staging"
+          ],
+          "enumColors": {
+            "Production": "lightGray",
+            "Development": "lightGray",
+            "Staging": "lightGray"
+          }
         }
-      }
+      },
+      "required": [
+        "environment",
+        "reason"
+      ],
+      "order": [
+        "environment",
+        "reason"
+      ]
     },
-    "required": [
-      "environment",
-      "reason"
-    ],
-    "order": [
-      "environment",
-      "reason"
-    ]
+    "blueprintIdentifier": "service"
   },
   "invocationMethod": {
     "type": "GITHUB",
     "org": "<GITHUB-ORG>",
     "repo": "<GITHUB-REPO-NAME>",
     "workflow": "lock-service.yml",
-    "omitUserInputs": false,
-    "omitPayload": false,
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "{{if (.inputs | has(\"reason\")) then \"reason\" else null end}}": "{{.inputs.\"reason\"}}",
+      "{{if (.inputs | has(\"environment\")) then \"environment\" else null end}}": "{{.inputs.\"environment\"}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"service_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "org": "<GITHUB-ORG>",
+              "repo": "<GITHUB-REPO-NAME>",
+              "workflow": "lock-service.yml",
+              "omitUserInputs": false,
+              "omitPayload": false,
+              "reportWorkflowStatus": true
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {
+            "{{if (.inputs | has(\"reason\")) then \"reason\" else null end}}": "{{.inputs.\"reason\"}}",
+            "{{if (.inputs | has(\"environment\")) then \"environment\" else null end}}": "{{.inputs.\"environment\"}}"
+          },
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
     "reportWorkflowStatus": true
   },
-  "trigger": "DAY-2",
-  "description": "Lock service in Port",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 
@@ -227,52 +266,91 @@ Follow these steps to get started:
 
 ```json showLineNumbers
 {
-  "identifier": "unlock_service",
+  "identifier": "service_unlock_service",
   "title": "Unlock Service",
   "icon": "Unlock",
-  "userInputs": {
-    "properties": {
-      "reason": {
-        "title": "Reason",
-        "type": "string"
-      },
-      "environment": {
-        "icon": "DefaultProperty",
-        "title": "Environment",
-        "type": "string",
-        "enum": [
-          "Production",
-          "Development",
-          "Staging"
-        ],
-        "enumColors": {
-          "Production": "lightGray",
-          "Development": "lightGray",
-          "Staging": "lightGray"
+  "description": "Unlock service in Port",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        },
+        "environment": {
+          "icon": "DefaultProperty",
+          "title": "Environment",
+          "type": "string",
+          "enum": [
+            "Production",
+            "Development",
+            "Staging"
+          ],
+          "enumColors": {
+            "Production": "lightGray",
+            "Development": "lightGray",
+            "Staging": "lightGray"
+          }
         }
-      }
+      },
+      "required": [
+        "environment",
+        "reason"
+      ],
+      "order": [
+        "environment",
+        "reason"
+      ]
     },
-    "required": [
-      "environment",
-      "reason"
-    ],
-    "order": [
-      "environment",
-      "reason"
-    ]
+    "blueprintIdentifier": "service"
   },
   "invocationMethod": {
     "type": "GITHUB",
     "org": "<GITHUB-ORG>",
     "repo": "<GITHUB-REPO-NAME>",
     "workflow": "unlock-service.yml",
-    "omitUserInputs": false,
-    "omitPayload": false,
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "{{if (.inputs | has(\"reason\")) then \"reason\" else null end}}": "{{.inputs.\"reason\"}}",
+      "{{if (.inputs | has(\"environment\")) then \"environment\" else null end}}": "{{.inputs.\"environment\"}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"service_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "org": "<GITHUB-ORG>",
+              "repo": "<GITHUB-REPO-NAME>",
+              "workflow": "unlock-service.yml",
+              "omitUserInputs": false,
+              "omitPayload": false,
+              "reportWorkflowStatus": true
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {
+            "{{if (.inputs | has(\"reason\")) then \"reason\" else null end}}": "{{.inputs.\"reason\"}}",
+            "{{if (.inputs | has(\"environment\")) then \"environment\" else null end}}": "{{.inputs.\"environment\"}}"
+          },
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
     "reportWorkflowStatus": true
   },
-  "trigger": "DAY-2",
-  "description": "Unlock service in Port",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 

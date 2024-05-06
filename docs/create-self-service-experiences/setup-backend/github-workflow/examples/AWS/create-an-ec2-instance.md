@@ -413,11 +413,16 @@ jobs:
 
 ## Port Configuration
 
-1. Create a Port action in the [self-service page](https://app.getport.io/self-serve) or with the following JSON definition:
+1. Create the Port action on the `ec2Instance` blueprint:
+    - Head to the [self-service](https://app.getport.io/self-serve) page.
+    - Click on the `+ New Action` button.
+    - Click on the `{...} Edit JSON` button.
+    - Copy and paste the following JSON configuration into the editor:
+
 
 <details>
   <summary> <b> Port Action: Create An EC2 Instance </b> </summary>
-:::tip
+:::tip Modification Required
 - `<GITHUB-ORG>` - your GitHub organization or user name.
 - `<GITHUB-REPO-NAME>` - your GitHub repository name.
 :::
