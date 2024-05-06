@@ -25,14 +25,14 @@ This guide will show you how to integrate Kubernetes CRDs with Port and expose t
 - Platform engineers will be able to query the data and get insights about the usage of the CRDs and Kubernetes resources.
 - Platform engineers will be able to serve any CRDs to developers in a self-service manner.
 
-In this guide, we will deploy Port's [Kubernetes Exporter](../build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md) to export Kubernetes CRDs to Port as <PortTooltip id="blueprint">blueprints</PortTooltip> and the relevant <PortTooltip id="action">actions</PortTooltip> to create, update and delete those resources and listen to changes in those resources and reflect them in Port's UI without the need of creating a mapping and blueprints upfront.
+In this guide, we will deploy Port's [Kubernetes Exporter](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md) to export Kubernetes CRDs to Port as <PortTooltip id="blueprint">blueprints</PortTooltip> and the relevant <PortTooltip id="action">actions</PortTooltip> to create, update and delete those resources and listen to changes in those resources and reflect them in Port's UI without the need of creating a mapping and blueprints upfront.
 
-![Visualize CRDS](/img/guides/visualizeCrds.svg)
+<img src='/img/guides/visualizeCrds.svg' width='100%' border='1px' />
 
-Then we will connect a GitHub account using Port's [GitHub integration](../build-your-software-catalog/sync-data-to-catalog/git/github/github.md) to provision CRs directly into the Kubernetes cluster, or optionally with GitOps.
+Then we will connect a GitHub account using Port's [GitHub integration](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md) to provision CRs directly into the Kubernetes cluster, or optionally with GitOps.
 After completing it, you will get a sense of how it can benefit different personas in your organization:
 
-![Sync CRs](/img/guides/createCRs.svg)
+<img src='/img/guides/createCRs.svg' width='100%' border='1px' />
 
 ### 1. (Optional) Creating a Crossplane XRD & Composition or using an existing CRD
 
@@ -44,7 +44,7 @@ For this guide, we followed the [AWS DynamoDB composition example](https://docs.
 
 ### 2. Installing the Kubernetes Exporter with `crdsToDiscover` flag
 
-The Kubernetes Exporter can be installed with the `crdsToDiscover` flag which is a JQ pattern to discover and export CRDs to Port as blueprints and actions. In this example we will use [Helm](https://helm.sh/) to install the Kubernetes Exporter, but for more installation options please visit the [Kubernetes Exporter documentation](../build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md#installation)
+The Kubernetes Exporter can be installed with the `crdsToDiscover` flag which is a JQ pattern to discover and export CRDs to Port as blueprints and actions. In this example we will use [Helm](https://helm.sh/) to install the Kubernetes Exporter, but for more installation options please visit the [Kubernetes Exporter documentation](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md#installation)
 
 :::note
 
@@ -53,7 +53,7 @@ With the pattern below, the Kubernetes Exporter will discover CRDs that are mana
 
 Here is a script that will help you install the Kubernetes Exporter with the `crdsToDiscover` flag.
 
-if you already have the Kubernetes Exporter installed just [add to your configuration](../build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md#updating-exporter-configuration) the `crdsToDiscover` flag with the JQ pattern that matches your CRDs
+if you already have the Kubernetes Exporter installed just [add to your configuration](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md#updating-exporter-configuration) the `crdsToDiscover` flag with the JQ pattern that matches your CRDs
 ```bash
 # highlight-start
 echo 'crdsToDiscover: ".metadata.ownerReferences[0].kind == \"CompositeResourceDefinition\" and .spec.scope != \"Namespaced\""' > config.yaml
@@ -82,13 +82,13 @@ Now, to execute the action we need to add some workflow to it for Port to trigge
 
 ![CRD Action](/img/guides/useThisTemplate.png)
 
-2. [Install Port's GitHub app](../build-your-software-catalog/sync-data-to-catalog/git/github/github.md#installation) in the GitHub account where you cloned the template.
+2. [Install Port's GitHub app](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#installation) in the GitHub account where you cloned the template.
 
 3. [Add GitHub secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) the following secrets:
     - `PORT_CLIENT_ID` - Your Port Client ID.
     - `PORT_CLIENT_SECRET` - Your Port Client Secret.
     - `KUBE_CONFIG` - The base64 `kubeconfig` of the Kubernetes cluster where the CRDs are deployed. You can get the kubeconfig by running the following command:
-        Here is a snippet to encode your kubeconfig and copy it to your clipboard:
+        Here is a snippet to encode your `kubeconfig` and copy it to your clipboard:
         ```bash
         cat $HOME/.kube/config | base64 | pbcopy
         ```
@@ -144,6 +144,6 @@ By leveraging the power of the K8s API extensions, platform engineers can keep u
 ### Next Steps
 
 - Enrich the catalog and visualize the Runtime existing objects in your K8s cluster, by following the [Visualize services' k8s runtime guide](./visualize-service-k8s-runtime.md).
-- Port allows multiple ways to enhance the experience of executing `Actions`, feel free to alter the `Action` in Port to your needs by visiting [Action Documentation](../create-self-service-experiences/create-self-service-experiences.md).
-- [Sync data](../build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md) and create more `Blueprints` to enrich the data beyond what exists in K8S.
-- Build dashboards and reports to visualize the usage of the CRDs and resources in your K8s cluster by following the [Build dashboards and reports guide](../customize-pages-dashboards-and-plugins/dashboards/dashboards.md).
+- Port allows multiple ways to enhance the experience of executing `Actions`, feel free to alter the `Action` in Port to your needs by visiting [Action Documentation](/create-self-service-experiences/create-self-service-experiences.md).
+- [Sync data](/build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md) and create more `Blueprints` to enrich the data beyond what exists in K8S.
+- Build dashboards and reports to visualize the usage of the CRDs and resources in your K8s cluster by following the [Build dashboards and reports guide](/customize-pages-dashboards-and-plugins/dashboards/dashboards.md).
