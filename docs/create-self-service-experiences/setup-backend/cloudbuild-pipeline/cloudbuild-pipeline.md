@@ -172,8 +172,9 @@ Here is part of the JSON scheme of the Port action, which shows the inputs sent 
         }
       }
     }
-    ... # Port Action configuration
   }
+    ... # Port Action configuration
+}
 ```
 
 Here is a sample payload that is generated when the action is triggered and sent to Cloud Build:
