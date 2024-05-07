@@ -202,7 +202,7 @@ Then, fill out your workflow details:
     "port_payload": {
       "context": {
         "runId": "{{ .run.id }}",
-        "blueprint": "{{.action.blueprint}}",
+        "blueprint": "{{ .action.blueprint }}",
       },
       "payload": {
         "properties": {
@@ -594,10 +594,10 @@ Create the following varaibles and their related JSONPath expression:
 
     | Variable Name            | JSONPath Expression                             |
     | ------------------------ | ----------------------------------------------- |
-    | SERVICE_NAME             | `$.payload.properties.service_name`             |
-    | BITBUCKET_WORKSPACE_NAME | `$.payload.properties.bitbucket_workspace_name` |
-    | BITBUCKET_PROJECT_KEY    | `$.payload.properties.bitbucket_project_key`    |
-    | RUN_ID                   | `$.context.runId`                               |
+    | SERVICE_NAME             | `$.port_payload.payload.properties.service_name`             |
+    | BITBUCKET_WORKSPACE_NAME | `$.port_payload.payload.properties.bitbucket_workspace_name` |
+    | BITBUCKET_PROJECT_KEY    | `$.port_payload.payload.properties.bitbucket_project_key`    |
+    | RUN_ID                   | `$.port_payload.context.runId`                               |
 
 <br/>
 
