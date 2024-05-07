@@ -194,7 +194,7 @@ Then, fill out your workflow details:
 - Scroll down to the `Configure the invocation payload` section.  
   This is where you can define which data will be sent to your backend each time the action is executed.  
 
-  For this example, we will send two details that our backend needs to know - the service name, and the id of the action run.  
+  For this example, we will send some details that our backend needs to know, including the service name, and the id of the action run.  
   Copy the following JSON snippet and paste it in the payload code box:
 
   ```json showLineNumbers
@@ -226,22 +226,39 @@ Then, fill out your workflow details:
 
 <TabItem value="bitbucket">
 
-:::tip
-You will need a few parameters for this part that are generated in the [setup the action's backend](#setup-the-actions-backend) section, it is recommended to complete the steps there and then follow the instructions here with all of the required information in hand.
-:::
+First, choose `Jenkins` as the invocation type.
 
-Fill out the form with your values:
-- For the `Endpoint URL` you need to add a URL in the following format:
-  ```text showLineNumbers
-  https://{JENKINS_URL}/generic-webhook-trigger/invoke?token={JOB_TOKEN}
+- Follow the instructions under `Define a webhook to trigger a Jenkins job` to obtain your webhook URL.
+ 
+Then, fill out your workflow details:  
+
+- Replace the `Webhook URL` with your value (this is where the pipeline will reside and run).
+
+- Leave the `Use self-hosted agent` option set to `No`.
+  <img src='/img/guides/scaffoldBitbucketBackendDetails.png' width='55%' border='1px' />
+
+- Scroll down to the `Configure the invocation payload` section.  
+  This is where you can define which data will be sent to your backend each time the action is executed.  
+
+  For this example, we will send some details that our backend needs to know - the three user inputs, and the id of the action run.  
+  Copy the following JSON snippet and paste it in the payload code box:
+
+  ```json showLineNumbers
+  {
+    "port_payload": {
+      "context": {
+        "runId": "{{ .run.id }}",
+      },
+      "payload": {
+        "properties": {
+          "service_name": "{{ .inputs.service_name }}",
+          "bitbucket_workspace_name": "{{ .inputs.bitbucket_workspace_name }}",
+          "bitbucket_project_key": "{{ .inputs.bitbucket_project_key }}",
+        }
+      },
+    }
+  }
   ```
-    - The value for `{JENKINS_URL}` is the URL of your Jenkins server.
-    - The value for `{JOB_TOKEN}` is the unique token used to trigger the pipeline you create in the [setup the action's backend](#setup-the-actions-backend) section.
-- Set `HTTP method` to `POST`.
-- Set `Request type` to `Async`.
-- Set `Use self-hosted agent` to `No`.
-
-<img src='/img/guides/bitbucketActionBackendForm.png' width='75%' />
 
 </TabItem>
 
@@ -550,27 +567,30 @@ update-run-status:
 
 <TabItem value="bitbucket">
 
-1. First, install the [generic webhook trigger](https://plugins.jenkins.io/generic-webhook-trigger/) plugin in your Jenkins.
-2. Next, let's create the necessary tokens and secrets
-   - Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
-   - Configure the following as Jenkins credentials:
-     - `BITBUCKET_USERNAME` - a user with access to the Bitbucket workspace and project.
-     - `BITBUCKET_APP_PASSWORD` - an [App Password](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/) with the `Repositories:Read` and `Repositories:Write` permissions permissions.
-     - `PORT_CLIENT_ID` - Your Port client ID.
-     - `PORT_CLIENT_SECRET` - Your Port client secret.
-     <br/>
-     <img src='/img/guides/bitbucketJenkinsCredentials.png' width='80%' />
+First, let's create the necessary tokens and secrets:
+ 
+- Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
+
+- Configure the following as Jenkins credentials:
+  - `BITBUCKET_USERNAME` - a user with access to the Bitbucket workspace and project.
+  - `BITBUCKET_APP_PASSWORD` - an [App Password](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/) with the `Repositories:Read` and `Repositories:Write` permissions permissions.
+  - `PORT_CLIENT_ID` - Your Port client ID.
+  - `PORT_CLIENT_SECRET` - Your Port client secret.
+  <br/>
+  <img src='/img/guides/bitbucketJenkinsCredentials.png' width='90%' border='1px' />
 
 <br/>
 
-1. Create a Jenkins pipeline with the following configuration:
-   - [Enable the webhook trigger for the pipeline](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#enabling-webhook-trigger-for-a-pipeline)
-   - Define the value of the [`token`](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#token-setup) field, the token you specify will be used to trigger the scaffold pipeline specifically. For example, you can use `scaffolder-token`.
-   - [Define variables for the pipeline](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#defining-variables): define the `SERVICE_NAME`, `BITBUCKET_WORKSPACE_NAME`, `BITBUCKET_PROJECT_KEY`, and `RUN_ID` variables. Scroll down to the `Post content parameters` and **for each variable** add configuration like so (look at the table bellow for the full variable list):
+Next, create a Jenkins pipeline with the following configuration:
+- [Enable the webhook trigger for the pipeline](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#enabling-webhook-trigger-for-a-pipeline).
 
-   <img src='/img/guides/jenkinsGenericVariable.png' width='100%' />
+- Define the value of the [`token`](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#token-setup) field, the token you specify will be used to trigger the scaffold pipeline specifically. For example, you can use `scaffolder-token`.
 
-    Create the following varaibles and their related JSONPath expression:
+- [Define variables for the pipeline](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#defining-variables): define the `SERVICE_NAME`, `BITBUCKET_WORKSPACE_NAME`, `BITBUCKET_PROJECT_KEY`, and `RUN_ID` variables. Scroll down to the `Post content parameters` and **for each variable** add configuration like so (look at the table bellow for the full variable list):
+
+  <img src='/img/guides/jenkinsGenericVariable.png' width='100%' border='1px' />
+
+Create the following varaibles and their related JSONPath expression:
 
     | Variable Name            | JSONPath Expression                             |
     | ------------------------ | ----------------------------------------------- |
@@ -579,12 +599,9 @@ update-run-status:
     | BITBUCKET_PROJECT_KEY    | `$.payload.properties.bitbucket_project_key`    |
     | RUN_ID                   | `$.context.runId`                               |
 
+<br/>
 
-:::tip
-Now that you have the `JOB_TOKEN` value, you can go to the [define backend type](#define-backend-type) section and complete the action configuration in Port.
-:::
-
-4. Add the following content to the new Jenkins pipeline:
+Add the following content to the new Jenkins pipeline:
 
 <details>
 <summary><b>Jenkins pipeline (click to expand)</b></summary>
@@ -813,7 +830,7 @@ All done! The action is ready to be used 🚀
 
 ### Execute the action
 
-After creating an action, it will appear under the `Self-service` tab of your Port application:
+Head back to the `Self-service` page of your Port application:
 
 <img src='/img/guides/selfServiceAfterScaffoldCreation.png' width='75%' />
 
@@ -825,15 +842,17 @@ After creating an action, it will appear under the `Self-service` tab of your Po
 
 <br/><br/>
 
-:::tip Trigger bitbucket scaffolder
+:::tip Bitbucket only - additional inputs
 
-To trigger the Bitbucket scaffolder, you will need to provide two additional parameters:
-- Bitbucket Workspace Name - the name of the workspace to create the new repository in
-- Bitbucket Project Key - the key of the Bitbucket project to create the new repository in.
+When executing the Bitbucket scaffolder, you will need to provide two additional inputs:
+- `Bitbucket Workspace Name` - the name of the workspace to create the new repository in
+- `Bitbucket Project Key` - the key of the Bitbucket project to create the new repository in.
   - To find the Bitbucket project key, go to `https://bitbucket.org/YOUR_BITBUCKET_WORKSPACE/workspace/projects/`, find the desired project in the list, and copy the value seen in the `Key` column in the table
 :::
 
-1. This page provides details about the action run. As you can see, the backend returned `Success` and the repo was successfully created (this can take a few moments):
+<br/>
+
+3. This page provides details about the action run. As you can see, the backend returned `Success` and the repo was successfully created (this can take a few moments):
 
 <img src='/img/guides/runStatusScaffolding.png' width='90%' />
 
