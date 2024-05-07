@@ -195,11 +195,7 @@ jobs:
 
 ## Port Configuration
 
-1. Head to the [self-service](https://app.getport.io/self-serve) page.
-2. Click on the `+ New Action` button.
-3. Choose the `PagerDuty Incident` blueprint and click `Next`.
-4. Click on the `{...} Edit JSON` button.
-5. Copy and paste the following JSON configuration into the editor.
+Create a new self service action using the following JSON configuration.
 
 <details>
 <summary><b> Change On-Call User In PagerDuty (click to expand) </b></summary>
@@ -235,7 +231,8 @@ jobs:
           "icon": "pagerduty",
           "description": "The ID of the user who will be taking over the on-call duty",
           "title": "On Call User Id",
-          "type": "string"
+          "type": "string",
+          "format": "user"
         }
       },
       "required": [
@@ -301,8 +298,6 @@ jobs:
 }
 ```
 </details>
-
-6. Click `Save`.
 
 Now you should see the `Change On-Call User` action in the self-service page. 🎉
 
