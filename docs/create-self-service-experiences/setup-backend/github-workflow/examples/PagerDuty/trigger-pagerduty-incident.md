@@ -34,6 +34,7 @@ Create the file `.github/workflows/trigger-incident.yaml` in the `.github/workfl
 
 ```yaml showLineNumbers title="trigger-incident.yaml"
 name: Trigger an Incident In PagerDuty
+name: Trigger an Incident In PagerDuty
 on:
   workflow_dispatch:
     inputs:
@@ -42,6 +43,12 @@ on:
       event_action:
         type: string
       routing_key:
+        type: string
+      summary:
+        type: string
+      source:
+        type: string
+      severity:
         type: string
       port_payload:
         required: true
@@ -71,10 +78,14 @@ jobs:
           customHeaders: '{"Content-Type": "application/json", "Accept": "application/json"}'
           data: >-
             {
-              "payload": ${{ github.event.inputs.payload }},
+              "payload": {
+                "summary": ${{ github.event.inputs.summary }},
+                "source": ${{ github.event.inputs.source }},
+                "severity": ${{ github.event.inputs.severity }}, 
+              },
               "event_action": "${{ github.event.inputs.event_action }}",
               "routing_key": "${{ github.event.inputs.routing_key }}"
-            }  
+            }
       - name: Create a log message
         id: log-response
         uses: port-labs/port-github-action@v1
@@ -92,11 +103,7 @@ jobs:
 
 ## Port Configuration
 
-1. Head to the [self-service](https://app.getport.io/self-serve) page.
-2. Click on the `+ New Action` button.
-3. Choose the `PagerDuty Incident` blueprint and click `Next`.
-4. Click on the `{...} Edit JSON` button.
-5. Copy and paste the following JSON configuration into the editor.
+Create a new self service action using the following JSON configuration.
 
 <details>
 <summary><b> Trigger Incident In PagerDuty (click to expand) </b></summary>
@@ -114,31 +121,75 @@ jobs:
     "operation": "DAY-2",
     "userInputs": {
       "properties": {
-        "payload": {
-          "icon": "pagerduty",
-          "title": "Payload",
-          "type": "object"
-        },
         "event_action": {
           "icon": "pagerduty",
           "title": "Event Action",
-          "type": "string"
+          "type": "string",
+          "description": "The type of event. Can be trigger, acknowledge or resolve",
+          "default": "trigger",
+          "enum": [
+            "trigger",
+            "acknowledge",
+            "resolve"
+          ],
+          "enumColors": {
+            "trigger": "lightGray",
+            "acknowledge": "lightGray",
+            "resolve": "lightGray"
+          }
         },
         "routing_key": {
           "icon": "pagerduty",
           "title": "Routing Key",
-          "type": "string"
+          "type": "string",
+          "description": "This is the 32 character Integration Key for an integration on a service or on a global ruleset."
+        },
+        "summary": {
+          "type": "string",
+          "title": "Summary",
+          "icon": "pagerduty",
+          "description": "A brief text summary of the event, used to generate the summaries/titles of any associated alerts. The maximum permitted length of this property is 1024 characters.",
+          "minLength": 1024
+        },
+        "source": {
+          "type": "string",
+          "title": "Source",
+          "description": "The unique location of the affected system, preferably a hostname or FQDN.",
+          "icon": "pagerduty"
+        },
+        "severity": {
+          "type": "string",
+          "title": "Severity",
+          "description": "The perceived severity of the status the event is describing with respect to the affected system. This can be critical, error, warning or info.",
+          "icon": "pagerduty",
+          "default": "info",
+          "enum": [
+            "critical",
+            "error",
+            "warning",
+            "info"
+          ],
+          "enumColors": {
+            "critical": "red",
+            "error": "orange",
+            "warning": "yellow",
+            "info": "blue"
+          }
         }
       },
       "required": [
         "routing_key",
         "event_action",
-        "payload"
+        "summary",
+        "source",
+        "severity"
       ],
       "order": [
         "routing_key",
         "event_action",
-        "payload"
+        "summary",
+        "source",
+        "severity"
       ]
     },
     "blueprintIdentifier": "pagerdutyIncident"
@@ -150,7 +201,9 @@ jobs:
     "workflow": "trigger-pagerduty-incident.yaml",
     "workflowInputs": {
       "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"payload\")) then \"payload\" else null end}}": "{{.inputs.\"payload\"}}",
+      "{{if (.inputs | has(\"summary\")) then \"summary\" else null end}}": "{{.inputs.\"summary\"}}",
+      "{{if (.inputs | has(\"source\")) then \"source\" else null end}}": "{{.inputs.\"source\"}}",
+      "{{if (.inputs | has(\"severity\")) then \"severity\" else null end}}": "{{.inputs.\"severity\"}}",
       "{{if (.inputs | has(\"event_action\")) then \"event_action\" else null end}}": "{{.inputs.\"event_action\"}}",
       "{{if (.inputs | has(\"routing_key\")) then \"routing_key\" else null end}}": "{{.inputs.\"routing_key\"}}",
       "port_payload": {
@@ -178,7 +231,9 @@ jobs:
             "trigger": "{{.trigger.operation}}"
           },
           "properties": {
-            "{{if (.inputs | has(\"payload\")) then \"payload\" else null end}}": "{{.inputs.\"payload\"}}",
+            "{{if (.inputs | has(\"summary\")) then \"summary\" else null end}}": "{{.inputs.\"summary\"}}",
+            "{{if (.inputs | has(\"source\")) then \"source\" else null end}}": "{{.inputs.\"source\"}}",
+            "{{if (.inputs | has(\"severity\")) then \"severity\" else null end}}": "{{.inputs.\"severity\"}}",
             "{{if (.inputs | has(\"event_action\")) then \"event_action\" else null end}}": "{{.inputs.\"event_action\"}}",
             "{{if (.inputs | has(\"routing_key\")) then \"routing_key\" else null end}}": "{{.inputs.\"routing_key\"}}"
           },
@@ -193,8 +248,6 @@ jobs:
 }
 ```
 </details>
-
-6. Click `Save`.
 
 Now you should see the `Trigger Incidents` action in the self-service page. 🎉
 

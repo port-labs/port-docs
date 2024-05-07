@@ -67,23 +67,120 @@ jobs:
 
 ## Port Configuration
 
-1. Head to the [self-service](https://app.getport.io/self-serve) page.
-2. Click on the `+ New Action` button.
-3. Choose the `PagerDuty Incident` blueprint and click `Next`.
-4. Click on the `{...} Edit JSON` button.
-5. Copy and paste the following JSON configuration into the editor.
-
+Create a new self service action using the following JSON configuration.
 
 <details>
 <summary><b> Create PagerDuty Incident (click to expand) </b></summary>
 
 <GithubActionModificationHint/>
+
 ```json showLineNumbers
+{
+  "identifier": "pagerdutyIncident_create_incident",
+  "title": "Create Incident",
+  "icon": "pagerduty",
+  "description": "Notify users and teams about incidents in the service",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
+    "userInputs": {
+      "properties": {
+        "title": {
+          "icon": "DefaultProperty",
+          "title": "Title",
+          "type": "string"
+        },
+        "extra_details": {
+          "title": "Extra Details",
+          "type": "string"
+        },
+        "urgency": {
+          "icon": "DefaultProperty",
+          "title": "Urgency",
+          "type": "string",
+          "default": "high",
+          "enum": [
+            "high",
+            "low"
+          ],
+          "enumColors": {
+            "high": "yellow",
+            "low": "green"
+          }
+        },
+        "from": {
+          "title": "From",
+          "icon": "User",
+          "type": "string",
+          "format": "user",
+          "default": {
+            "jqQuery": ".user.email"
+          }
+        }
+      },
+      "required": [
+        "title",
+        "urgency",
+        "from"
+      ],
+      "order": [
+        "title",
+        "urgency",
+        "from",
+        "extra_details"
+      ]
+    },
+    "blueprintIdentifier": "pagerdutyIncident"
+  },
+  "invocationMethod": {
+    "type": "GITHUB",
+    "org": "port-pagerduty-example",
+    "repo": "test",
+    "workflow": "create-an-incident.yaml",
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"pagerdutyIncident_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "omitPayload": false,
+              "omitUserInputs": true,
+              "reportWorkflowStatus": true,
+              "org": "port-pagerduty-example",
+              "repo": "test",
+              "workflow": "create-an-incident.yaml"
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {
+            "{{if (.inputs | has(\"title\")) then \"title\" else null end}}": "{{.inputs.\"title\"}}",
+            "{{if (.inputs | has(\"extra_details\")) then \"extra_details\" else null end}}": "{{.inputs.\"extra_details\"}}",
+            "{{if (.inputs | has(\"urgency\")) then \"urgency\" else null end}}": "{{.inputs.\"urgency\"}}",
+            "{{if (.inputs | has(\"from\")) then \"from\" else null end}}": "{{.inputs.\"from\"}}"
+          },
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
+    "reportWorkflowStatus": true
+  },
+  "requiredApproval": false,
+  "publish": true
+}
 ```
 
 </details>
-
-6. Click `Save`.
 
 Now you should see the `Create Incident` action in the self-service page. 🎉
 

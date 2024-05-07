@@ -136,11 +136,7 @@ jobs:
 
 ## Port Configuration
 
-1. Head to the [self-service](https://app.getport.io/self-serve) page.
-2. Click on the `+ New Action` button.
-3. Choose the `PagerDuty Incident` blueprint and click `Next`.
-4. Click on the `{...} Edit JSON` button.
-5. Copy and paste the following JSON configuration into the editor.
+Create a new self service action using the following JSON configuration.
 
 <details>
 <summary><b> Resolve Incident In PagerDuty (click to expand) </b></summary>
@@ -159,7 +155,7 @@ jobs:
     "userInputs": {
       "properties": {
         "from": {
-          "icon": "pagerduty",
+          "icon": "User",
           "title": "From",
           "description": "User Email",
           "type": "string",
@@ -219,8 +215,6 @@ jobs:
 }
 ```
 </details>
-
-6. Click `Save`.
 
 Now you should see the `Resolve Incident` action in the self-service page. 🎉
 

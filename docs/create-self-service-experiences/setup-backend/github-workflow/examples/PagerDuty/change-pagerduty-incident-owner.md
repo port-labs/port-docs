@@ -105,10 +105,6 @@ name: Change PagerDuty Incident Owner
 on:
   workflow_dispatch:
     inputs:
-      incident_id:
-        description: ID of the PagerDuty Incident
-        required: true
-        type: string
       new_owner:
         description: Email User of the new incident owner
         required: true
@@ -179,7 +175,7 @@ jobs:
         id: change_owner
         uses: fjogeleit/http-request-action@v1
         with:
-          url: 'https://api.pagerduty.com/incidents/${{ github.event.inputs.incident_id }}'
+          url: 'https://api.pagerduty.com/incidents/$${{fromJson(github.event.inputs.port_payload).context.entity}}'
           method: 'PUT'
           customHeaders: '{"Content-Type": "application/json", "Accept": "application/vnd.pagerduty+json;version=2", "Authorization": "Token token=${{ secrets.PAGERDUTY_API_KEY }}", "From": "${{ github.event.inputs.from }}"}'
           data: >-
@@ -212,7 +208,7 @@ jobs:
         with:
           identifier: "${{ fromJson(steps.change_owner.outputs.response).incident.id }}"
           title: "${{ fromJson(steps.change_owner.outputs.response).incident.title }}"
-          blueprint: "pagerdutyIncident"
+          blueprint: ${{fromJson(github.event.inputs.port_payload).context.blueprint}}
           properties: |-
             {
               "status": "${{ fromJson(steps.change_owner.outputs.response).incident.status }}",
@@ -245,11 +241,7 @@ jobs:
 
 ## Port Configuration
 
-1. Head to the [self-service](https://app.getport.io/self-serve) page.
-2. Click on the `+ New Action` button.
-3. Choose the `PagerDuty Incident` blueprint and click `Next`.
-4. Click on the `{...} Edit JSON` button.
-5. Copy and paste the following JSON configuration into the editor.
+Create a new self service action using the following JSON configuration.
 
 <details>
 <summary><b> Change Incident Owner In PagerDuty (click to expand) </b></summary>
@@ -267,16 +259,8 @@ jobs:
     "operation": "DAY-2",
     "userInputs": {
       "properties": {
-        "incident_id": {
-          "icon": "pagerduty",
-          "title": "Incident Id",
-          "description": "ID of the PagerDuty Incident",
-          "type": "string",
-          "blueprint": "pagerdutyIncident",
-          "format": "entity"
-        },
         "from": {
-          "icon": "pagerduty",
+          "icon": "User",
           "title": "From",
           "description": "The email address of a valid user associated with the account making the request.",
           "type": "string",
@@ -292,11 +276,9 @@ jobs:
       },
       "required": [
         "new_owner",
-        "incident_id",
         "from"
       ],
       "order": [
-        "incident_id",
         "new_owner",
         "from"
       ]
@@ -310,7 +292,6 @@ jobs:
     "workflow": "change-incident-owner.yaml",
     "workflowInputs": {
       "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"incident_id\")) then \"incident_id\" else null end}}": "{{.inputs.\"incident_id\" | if type == \"array\" then map(.identifier) else .identifier end}}",
       "{{if (.inputs | has(\"new_owner_user_id\")) then \"new_owner_user_id\" else null end}}": "{{.inputs.\"new_owner_user_id\"}}",
       "{{if (.inputs | has(\"from\")) then \"from\" else null end}}": "{{.inputs.\"from\"}}",
       "port_payload": {
@@ -338,8 +319,7 @@ jobs:
             "trigger": "{{.trigger.operation}}"
           },
           "properties": {
-            "{{if (.inputs | has(\"incident_id\")) then \"incident_id\" else null end}}": "{{.inputs.\"incident_id\" | if type == \"array\" then map(.identifier) else .identifier end}}",
-            "{{if (.inputs | has(\"new_owner_user_id\")) then \"new_owner_user_id\" else null end}}": "{{.inputs.\"new_owner_user_id\"}}",
+            "{{if (.inputs | has(\"new_owner\")) then \"new_owner\" else null end}}": "{{.inputs.\"new_owner\"}}",
             "{{if (.inputs | has(\"from\")) then \"from\" else null end}}": "{{.inputs.\"from\"}}"
           },
           "censoredProperties": "{{.action.encryptedProperties}}"
@@ -353,8 +333,6 @@ jobs:
 }
 ```
 </details>
-
-6. Click `Save`.
 
 Now you should see the `Change Incident Owner` action in the self-service page. 🎉
 

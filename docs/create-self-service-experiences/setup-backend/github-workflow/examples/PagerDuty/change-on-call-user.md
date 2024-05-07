@@ -195,11 +195,7 @@ jobs:
 
 ## Port Configuration
 
-1. Head to the [self-service](https://app.getport.io/self-serve) page.
-2. Click on the `+ New Action` button.
-3. Choose the `PagerDuty Incident` blueprint and click `Next`.
-4. Click on the `{...} Edit JSON` button.
-5. Copy and paste the following JSON configuration into the editor.
+Create a new self service action using the following JSON configuration.
 
 <details>
 <summary><b> Change On-Call User In PagerDuty (click to expand) </b></summary>
@@ -231,22 +227,23 @@ jobs:
           "type": "string",
           "format": "date-time"
         },
-        "new_on_call_user_id": {
-          "icon": "pagerduty",
+        "new_on_call_user": {
+          "icon": "User",
           "description": "The ID of the user who will be taking over the on-call duty",
           "title": "On Call User Id",
-          "type": "string"
+          "type": "string",
+          "format": "user"
         }
       },
       "required": [
         "start_time",
         "end_time",
-        "new_on_call_user_id"
+        "new_on_call_user"
       ],
       "order": [
         "start_time",
         "end_time",
-        "new_on_call_user_id"
+        "new_on_call_user"
       ]
     },
     "blueprintIdentifier": "pagerdutyIncident"
@@ -260,7 +257,7 @@ jobs:
       "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
       "{{if (.inputs | has(\"start_time\")) then \"start_time\" else null end}}": "{{.inputs.\"start_time\"}}",
       "{{if (.inputs | has(\"end_time\")) then \"end_time\" else null end}}": "{{.inputs.\"end_time\"}}",
-      "{{if (.inputs | has(\"new_on_call_user_id\")) then \"new_on_call_user_id\" else null end}}": "{{.inputs.\"new_on_call_user_id\"}}",
+      "{{if (.inputs | has(\"new_on_call_user\")) then \"new_on_call_user\" else null end}}": "{{.inputs.\"new_on_call_user\"}}",
       "port_payload": {
         "action": "{{ .action.identifier[(\"pagerdutyIncident_\" | length):] }}",
         "resourceType": "run",
@@ -288,7 +285,7 @@ jobs:
           "properties": {
             "{{if (.inputs | has(\"start_time\")) then \"start_time\" else null end}}": "{{.inputs.\"start_time\"}}",
             "{{if (.inputs | has(\"end_time\")) then \"end_time\" else null end}}": "{{.inputs.\"end_time\"}}",
-            "{{if (.inputs | has(\"new_on_call_user_id\")) then \"new_on_call_user_id\" else null end}}": "{{.inputs.\"new_on_call_user_id\"}}"
+            "{{if (.inputs | has(\"new_on_call_user\")) then \"new_on_call_user\" else null end}}": "{{.inputs.\"new_on_call_user\"}}"
           },
           "censoredProperties": "{{.action.encryptedProperties}}"
         }
@@ -301,8 +298,6 @@ jobs:
 }
 ```
 </details>
-
-6. Click `Save`.
 
 Now you should see the `Change On-Call User` action in the self-service page. 🎉
 
