@@ -27,7 +27,7 @@ This guide will show you how to integrate Kubernetes CRDs with Port and expose t
 
 In this guide, we will deploy Port's [Kubernetes Exporter](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md) to export Kubernetes CRDs to Port as <PortTooltip id="blueprint">blueprints</PortTooltip> and the relevant <PortTooltip id="action">actions</PortTooltip> to create, update and delete those resources and listen to changes in those resources and reflect them in Port's UI without the need of creating a mapping and blueprints upfront.
 
-<img src='/img/guides/visualizeCrds.svg' width='100%' border='1px' />
+<img src='/img/guides/visualizeCRDs.svg' width='100%' border='1px' />
 
 Then we will connect a GitHub account using Port's [GitHub integration](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md) to provision CRs directly into the Kubernetes cluster, or optionally with GitOps.
 After completing it, you will get a sense of how it can benefit different personas in your organization:
