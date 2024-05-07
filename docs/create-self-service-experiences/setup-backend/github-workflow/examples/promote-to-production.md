@@ -348,8 +348,6 @@ A possible gitPath could be: `apps/messenger/prod/deployment.yml`
 
 2. Click on the `+ New Action` button.
 
-3. Choose the `Service` blueprint and click `Next`.
-
 4. Click on the `{...} Edit` JSON button.
 
 5. Copy and paste the following JSON configuration into the editor.
@@ -364,33 +362,70 @@ Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organiz
 
 ```json showLineNumbers
 {
-  "identifier": "promote_to_production",
+  "identifier": "service_promote_to_production",
   "title": "Promote to Production",
   "icon": "Argo",
-  "userInputs": {
-    "properties": {
-      "auto_merge_pr": {
-        "title": "Auto Merge PR",
-        "type": "boolean",
-        "default": false,
-        "description": "Automatically merge created PR"
-      }
+  "description": "Promote a staging image to production",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {
+        "auto_merge_pr": {
+          "title": "Auto Merge PR",
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically merge created PR"
+        }
+      },
+      "required": [],
+      "order": []
     },
-    "required": [],
-    "order": []
+    "blueprintIdentifier": "service"
   },
   "invocationMethod": {
     "type": "GITHUB",
     "org": "<GITHUB-ORG>",
     "repo": "<GITHUB-REPO-NAME>",
     "workflow": "promote-production.yml",
-    "omitUserInputs": false,
-    "omitPayload": false,
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "{{if (.inputs | has(\"auto_merge_pr\")) then \"auto_merge_pr\" else null end}}": "{{.inputs.\"auto_merge_pr\"}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"service_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "org": "<GITHUB-ORG>",
+              "repo": "<GITHUB-REPO-NAME>",
+              "workflow": "promote-production.yml",
+              "omitUserInputs": false,
+              "omitPayload": false,
+              "reportWorkflowStatus": true
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {
+            "{{if (.inputs | has(\"auto_merge_pr\")) then \"auto_merge_pr\" else null end}}": "{{.inputs.\"auto_merge_pr\"}}"
+          },
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
     "reportWorkflowStatus": true
   },
-  "trigger": "DAY-2",
-  "description": "Promote a staging image to production",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 

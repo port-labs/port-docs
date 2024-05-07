@@ -33,7 +33,7 @@ We will use an AWS managed GitHub Action called [aws-actions/aws-cloudformation-
 
 ```json showLineNumbers
 {
-  "identifier": "ec2_instance",
+  "identifier": "ec2Instance",
   "description": "AWS EC2 Instance",
   "title": "EC2 Instance",
   "icon": "EC2",
@@ -183,7 +183,8 @@ We will use an AWS managed GitHub Action called [aws-actions/aws-cloudformation-
 </Tabs>
 <br/>
 
-1. Create Port Action using the following JSON definition:
+4. Create Port Action using the following JSON definition:
+
 
 :::note
 Please make sure to modify GITHUB_ORG, GITHUB_REPO and GITHUB_WORKFLOW_FILE placeholders to match your environment.
@@ -194,68 +195,117 @@ Please make sure to modify GITHUB_ORG, GITHUB_REPO and GITHUB_WORKFLOW_FILE plac
   <details>
   <summary>Port Action</summary>
 
+
 ```json showLineNumbers
 {
-  "identifier": "deploy_ec2_instance",
+  "identifier": "ec2Instance_deploy_ec2_instance",
   "title": "Deploy EC2 Instance",
   "icon": "EC2",
-  "userInputs": {
-    "properties": {
-      "instance_name": {
-        "title": "Instance Name",
-        "type": "string"
-      },
-      "instance_type": {
-        "title": "Instance Type",
-        "type": "string",
-        "default": "t2.micro",
-        "enum": ["t2.micro", "t2.small"],
-        "enumColors": {
-          "t2.micro": "lightGray",
-          "t2.small": "lightGray"
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
+    "userInputs": {
+      "properties": {
+        "instance_name": {
+          "title": "Instance Name",
+          "type": "string"
+        },
+        "instance_type": {
+          "title": "Instance Type",
+          "type": "string",
+          "default": "t2.micro",
+          "enum": [
+            "t2.micro",
+            "t2.small"
+          ],
+          "enumColors": {
+            "t2.micro": "lightGray",
+            "t2.small": "lightGray"
+          }
+        },
+        "image_id": {
+          "title": "Image ID",
+          "type": "string"
+        },
+        "key_pair_name": {
+          "title": "Key Pair Name",
+          "type": "string"
+        },
+        "security_group_ids": {
+          "title": "Security Group IDs",
+          "icon": "DefaultProperty",
+          "type": "string",
+          "description": "Use comma delimited values for multiple SGs"
         }
       },
-      "image_id": {
-        "title": "Image ID",
-        "type": "string"
-      },
-      "key_pair_name": {
-        "title": "Key Pair Name",
-        "type": "string"
-      },
-      "security_group_ids": {
-        "title": "Security Group IDs",
-        "icon": "DefaultProperty",
-        "type": "string",
-        "description": "Use comma delimited values for multiple SGs"
-      }
+      "required": [
+        "instance_name",
+        "instance_type",
+        "image_id",
+        "key_pair_name",
+        "security_group_ids"
+      ],
+      "order": [
+        "instance_name",
+        "instance_type",
+        "image_id",
+        "key_pair_name",
+        "security_group_ids"
+      ]
     },
-    "required": [
-      "instance_name",
-      "instance_type",
-      "image_id",
-      "key_pair_name",
-      "security_group_ids"
-    ],
-    "order": [
-      "instance_name",
-      "instance_type",
-      "image_id",
-      "key_pair_name",
-      "security_group_ids"
-    ]
+    "blueprintIdentifier": "ec2Instance"
   },
   "invocationMethod": {
     "type": "GITHUB",
-    "omitPayload": false,
-    "omitUserInputs": false,
-    "reportWorkflowStatus": true,
     "org": "<GITHUB_ORG>",
     "repo": "<GITHUB_REPO>",
-    "workflow": "<GITHUB_WORKFLOW_FILE>"
+    "workflow": "<GITHUB_WORKFLOW_FILE>",
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "{{if (.inputs | has(\"instance_name\")) then \"instance_name\" else null end}}": "{{.inputs.\"instance_name\"}}",
+      "{{if (.inputs | has(\"instance_type\")) then \"instance_type\" else null end}}": "{{.inputs.\"instance_type\"}}",
+      "{{if (.inputs | has(\"image_id\")) then \"image_id\" else null end}}": "{{.inputs.\"image_id\"}}",
+      "{{if (.inputs | has(\"key_pair_name\")) then \"key_pair_name\" else null end}}": "{{.inputs.\"key_pair_name\"}}",
+      "{{if (.inputs | has(\"security_group_ids\")) then \"security_group_ids\" else null end}}": "{{.inputs.\"security_group_ids\"}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"ec2Instance_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "omitPayload": false,
+              "omitUserInputs": false,
+              "reportWorkflowStatus": true,
+              "org": "<GITHUB_ORG>",
+              "repo": "<GITHUB_REPO>",
+              "workflow": "<GITHUB_WORKFLOW_FILE>"
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {
+            "{{if (.inputs | has(\"instance_name\")) then \"instance_name\" else null end}}": "{{.inputs.\"instance_name\"}}",
+            "{{if (.inputs | has(\"instance_type\")) then \"instance_type\" else null end}}": "{{.inputs.\"instance_type\"}}",
+            "{{if (.inputs | has(\"image_id\")) then \"image_id\" else null end}}": "{{.inputs.\"image_id\"}}",
+            "{{if (.inputs | has(\"key_pair_name\")) then \"key_pair_name\" else null end}}": "{{.inputs.\"key_pair_name\"}}",
+            "{{if (.inputs | has(\"security_group_ids\")) then \"security_group_ids\" else null end}}": "{{.inputs.\"security_group_ids\"}}"
+          },
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
+    "reportWorkflowStatus": true
   },
-  "trigger": "CREATE",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 
@@ -268,51 +318,96 @@ Please make sure to modify GITHUB_ORG, GITHUB_REPO and GITHUB_WORKFLOW_FILE plac
 
 ```json showLineNumbers
 {
-  "identifier": "create_s3_bucket",
+  "identifier": "s3_bucket_create_s3_bucket",
   "title": "Create S3 Bucket",
   "icon": "S3",
-  "userInputs": {
-    "properties": {
-      "bucket_name": {
-        "title": "Bucket Name",
-        "type": "string",
-        "minLength": 3,
-        "maxLength": 63
-      },
-      "bucket_acl": {
-        "icon": "DefaultProperty",
-        "title": "Bucket ACL",
-        "description": "bucket access control list",
-        "type": "string",
-        "default": "Private",
-        "enum": [
-          "Private",
-          "PublicRead",
-          "PublicReadWrite",
-          "AuthenticatedRead"
-        ],
-        "enumColors": {
-          "Private": "lightGray",
-          "PublicRead": "lightGray",
-          "PublicReadWrite": "lightGray",
-          "AuthenticatedRead": "lightGray"
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
+    "userInputs": {
+      "properties": {
+        "bucket_name": {
+          "title": "Bucket Name",
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 63
+        },
+        "bucket_acl": {
+          "icon": "DefaultProperty",
+          "title": "Bucket ACL",
+          "description": "bucket access control list",
+          "type": "string",
+          "default": "Private",
+          "enum": [
+            "Private",
+            "PublicRead",
+            "PublicReadWrite",
+            "AuthenticatedRead"
+          ],
+          "enumColors": {
+            "Private": "lightGray",
+            "PublicRead": "lightGray",
+            "PublicReadWrite": "lightGray",
+            "AuthenticatedRead": "lightGray"
+          }
         }
-      }
+      },
+      "required": [
+        "bucket_name",
+        "bucket_acl"
+      ],
+      "order": [
+        "bucket_name",
+        "bucket_acl"
+      ]
     },
-    "required": ["bucket_name", "bucket_acl"],
-    "order": ["bucket_name", "bucket_acl"]
+    "blueprintIdentifier": "s3_bucket"
   },
   "invocationMethod": {
     "type": "GITHUB",
-    "omitPayload": false,
-    "omitUserInputs": false,
-    "reportWorkflowStatus": true,
     "org": "<GITHUB_ORG>",
     "repo": "<GITHUB_REPO>",
-    "workflow": "<GITHUB_WORKFLOW_FILE>"
+    "workflow": "<GITHUB_WORKFLOW_FILE>",
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "{{if (.inputs | has(\"bucket_name\")) then \"bucket_name\" else null end}}": "{{.inputs.\"bucket_name\"}}",
+      "{{if (.inputs | has(\"bucket_acl\")) then \"bucket_acl\" else null end}}": "{{.inputs.\"bucket_acl\"}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"s3_bucket_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "omitPayload": false,
+              "omitUserInputs": false,
+              "reportWorkflowStatus": true,
+              "org": "<GITHUB_ORG>",
+              "repo": "<GITHUB_REPO>",
+              "workflow": "<GITHUB_WORKFLOW_FILE>"
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {
+            "{{if (.inputs | has(\"bucket_name\")) then \"bucket_name\" else null end}}": "{{.inputs.\"bucket_name\"}}",
+            "{{if (.inputs | has(\"bucket_acl\")) then \"bucket_acl\" else null end}}": "{{.inputs.\"bucket_acl\"}}"
+          },
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
+    "reportWorkflowStatus": true
   },
-  "trigger": "CREATE",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 
@@ -325,85 +420,141 @@ Please make sure to modify GITHUB_ORG, GITHUB_REPO and GITHUB_WORKFLOW_FILE plac
 
 ```json showLineNumbers
 {
-  "identifier": "deploy_rds_instance",
+  "identifier": "rds_instance_deploy_rds_instance",
   "title": "Deploy RDS",
   "icon": "AmazonRDS",
-  "userInputs": {
-    "properties": {
-      "db_instance_identifier": {
-        "title": "DB Instance Identifier",
-        "type": "string",
-        "minLength": 1,
-        "maxLength": 63
-      },
-      "db_master_password": {
-        "title": "DB Master Password",
-        "type": "string",
-        "encryption": "aes256-gcm"
-      },
-      "db_master_username": {
-        "title": "DB Master Username",
-        "type": "string"
-      },
-      "db_engine": {
-        "title": "DB Engine",
-        "type": "string",
-        "default": "mysql",
-        "enum": ["mysql", "postgres", "sqlserver", "oracle"],
-        "enumColors": {
-          "mysql": "lightGray",
-          "postgres": "lightGray",
-          "sqlserver": "lightGray",
-          "oracle": "lightGray"
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
+    "userInputs": {
+      "properties": {
+        "db_instance_identifier": {
+          "title": "DB Instance Identifier",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 63
+        },
+        "db_master_password": {
+          "title": "DB Master Password",
+          "type": "string",
+          "encryption": "aes256-gcm"
+        },
+        "db_master_username": {
+          "title": "DB Master Username",
+          "type": "string"
+        },
+        "db_engine": {
+          "title": "DB Engine",
+          "type": "string",
+          "default": "mysql",
+          "enum": [
+            "mysql",
+            "postgres",
+            "sqlserver",
+            "oracle"
+          ],
+          "enumColors": {
+            "mysql": "lightGray",
+            "postgres": "lightGray",
+            "sqlserver": "lightGray",
+            "oracle": "lightGray"
+          }
+        },
+        "allocated_storage": {
+          "title": "Allocated Storage",
+          "type": "number",
+          "default": 20,
+          "minimum": 5,
+          "maximum": 1000
+        },
+        "db_instance_class": {
+          "title": "DB Instance Class",
+          "type": "string",
+          "default": "db.t2.micro",
+          "enum": [
+            "db.t2.micro",
+            "db.t2.small",
+            "db.m4.large"
+          ],
+          "enumColors": {
+            "db.t2.micro": "lightGray",
+            "db.t2.small": "lightGray",
+            "db.m4.large": "lightGray"
+          }
         }
       },
-      "allocated_storage": {
-        "title": "Allocated Storage",
-        "type": "number",
-        "default": 20,
-        "minimum": 5,
-        "maximum": 1000
-      },
-      "db_instance_class": {
-        "title": "DB Instance Class",
-        "type": "string",
-        "default": "db.t2.micro",
-        "enum": ["db.t2.micro", "db.t2.small", "db.m4.large"],
-        "enumColors": {
-          "db.t2.micro": "lightGray",
-          "db.t2.small": "lightGray",
-          "db.m4.large": "lightGray"
-        }
-      }
+      "required": [
+        "db_instance_identifier",
+        "db_master_password",
+        "db_master_username",
+        "db_engine",
+        "allocated_storage",
+        "db_instance_class"
+      ],
+      "order": [
+        "db_instance_identifier",
+        "db_master_username",
+        "db_master_password",
+        "db_engine",
+        "db_instance_class",
+        "allocated_storage"
+      ]
     },
-    "required": [
-      "db_instance_identifier",
-      "db_master_password",
-      "db_master_username",
-      "db_engine",
-      "allocated_storage",
-      "db_instance_class"
-    ],
-    "order": [
-      "db_instance_identifier",
-      "db_master_username",
-      "db_master_password",
-      "db_engine",
-      "db_instance_class",
-      "allocated_storage"
-    ]
+    "blueprintIdentifier": "rds_instance"
   },
   "invocationMethod": {
     "type": "GITHUB",
-    "omitPayload": false,
-    "omitUserInputs": false,
-    "reportWorkflowStatus": true,
     "org": "<GITHUB_ORG>",
     "repo": "<GITHUB_REPO>",
-    "workflow": "<GITHUB_WORKFLOW_FILE>"
+    "workflow": "<GITHUB_WORKFLOW_FILE>",
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "{{if (.inputs | has(\"db_instance_identifier\")) then \"db_instance_identifier\" else null end}}": "{{.inputs.\"db_instance_identifier\"}}",
+      "{{if (.inputs | has(\"db_master_password\")) then \"db_master_password\" else null end}}": "{{.inputs.\"db_master_password\"}}",
+      "{{if (.inputs | has(\"db_master_username\")) then \"db_master_username\" else null end}}": "{{.inputs.\"db_master_username\"}}",
+      "{{if (.inputs | has(\"db_engine\")) then \"db_engine\" else null end}}": "{{.inputs.\"db_engine\"}}",
+      "{{if (.inputs | has(\"allocated_storage\")) then \"allocated_storage\" else null end}}": "{{.inputs.\"allocated_storage\"}}",
+      "{{if (.inputs | has(\"db_instance_class\")) then \"db_instance_class\" else null end}}": "{{.inputs.\"db_instance_class\"}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"rds_instance_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "omitPayload": false,
+              "omitUserInputs": false,
+              "reportWorkflowStatus": true,
+              "org": "<GITHUB_ORG>",
+              "repo": "<GITHUB_REPO>",
+              "workflow": "<GITHUB_WORKFLOW_FILE>"
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {
+            "{{if (.inputs | has(\"db_instance_identifier\")) then \"db_instance_identifier\" else null end}}": "{{.inputs.\"db_instance_identifier\"}}",
+            "{{if (.inputs | has(\"db_master_password\")) then \"db_master_password\" else null end}}": "{{.inputs.\"db_master_password\"}}",
+            "{{if (.inputs | has(\"db_master_username\")) then \"db_master_username\" else null end}}": "{{.inputs.\"db_master_username\"}}",
+            "{{if (.inputs | has(\"db_engine\")) then \"db_engine\" else null end}}": "{{.inputs.\"db_engine\"}}",
+            "{{if (.inputs | has(\"allocated_storage\")) then \"allocated_storage\" else null end}}": "{{.inputs.\"allocated_storage\"}}",
+            "{{if (.inputs | has(\"db_instance_class\")) then \"db_instance_class\" else null end}}": "{{.inputs.\"db_instance_class\"}}"
+          },
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
+    "reportWorkflowStatus": true
   },
-  "trigger": "CREATE",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 
@@ -685,7 +836,7 @@ jobs:
           title: ${{ inputs.instance_name }}
           team: "[]"
           icon: EC2
-          blueprint: ec2_instance
+          blueprint: ec2Instance
           properties: |-
             {
               "instance_name": "${{ inputs.instance_name }}",
