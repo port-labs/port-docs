@@ -4,17 +4,45 @@
 ```json showLineNumbers
 [
   {
-    "identifier": "deploy_image",
+    "identifier": "image_deploy_image",
     "title": "Deploy image",
-    "userInputs": {
-      "properties": {}
+    "description": "Deploy image version",
+    "trigger": {
+      "type": "self-service",
+      "operation": "DAY-2",
+      "userInputs": {
+        "properties": {}
+      },
+      "blueprintIdentifier": "image"
     },
     "invocationMethod": {
       "type": "WEBHOOK",
-      "url": "https://example.com"
+      "url": "https://example.com",
+      "body": {
+        "action": "{{ .action.identifier[(\"image_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "WEBHOOK",
+              "url": "https://example.com"
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {},
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
     },
-    "trigger": "DAY-2",
-    "description": "Deploy image version"
+    "publish": true
   }
 ]
 ```

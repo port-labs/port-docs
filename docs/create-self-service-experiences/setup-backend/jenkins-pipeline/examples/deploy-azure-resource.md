@@ -93,40 +93,74 @@ Follow these steps to get started:
 
 ```json showLineNumbers
 {
-    "identifier": "create_azure_storage",
-    "title": "Create Azure Storage",
-    "icon": "Azure",
+  "identifier": "azureStorage_create_azure_storage",
+  "title": "Create Azure Storage",
+  "icon": "Azure",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
     "userInputs": {
-        "properties": {
-            "storage_name": {
-                "title": "Storage Name",
-                "type": "string",
-                "minLength": 3,
-                "maxLength": 63
-            },
-            "storage_location": {
-                "icon": "DefaultProperty",
-                "title": "Storage Location",
-                "description": "storage account geo region",
-                "type": "string"
-            }
+      "properties": {
+        "storage_name": {
+          "title": "Storage Name",
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 63
         },
-        "required": [
-            "storage_name"
-        ],
-        "order": [
-            "storage_name"
-        ]
+        "storage_location": {
+          "icon": "DefaultProperty",
+          "title": "Storage Location",
+          "description": "storage account geo region",
+          "type": "string"
+        }
+      },
+      "required": [
+        "storage_name"
+      ],
+      "order": [
+        "storage_name"
+      ]
     },
-    "invocationMethod": {
-        "type": "WEBHOOK",
-        "agent": false,
-        "url": "https://<JENKINS_HOST>/generic-webhook-trigger/invoke?token=<JOB_TOKEN>",
-        "synchronized": false,
-        "method": "POST"
-    },
-    "trigger": "CREATE",
-    "requiredApproval": false
+    "blueprintIdentifier": "azureStorage"
+  },
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "https://<JENKINS_HOST>/generic-webhook-trigger/invoke?token=<JOB_TOKEN>",
+    "agent": false,
+    "synchronized": false,
+    "method": "POST",
+    "body": {
+      "action": "{{ .action.identifier[(\"azureStorage_\" | length):] }}",
+      "resourceType": "run",
+      "status": "TRIGGERED",
+      "trigger": "{{ .trigger | {by, origin, at} }}",
+      "context": {
+        "entity": "{{.entity.identifier}}",
+        "blueprint": "{{.action.blueprint}}",
+        "runId": "{{.run.id}}"
+      },
+      "payload": {
+        "entity": "{{ (if .entity == {} then null else .entity end) }}",
+        "action": {
+          "invocationMethod": {
+            "type": "WEBHOOK",
+            "agent": false,
+            "url": "https://<JENKINS_HOST>/generic-webhook-trigger/invoke?token=<JOB_TOKEN>",
+            "synchronized": false,
+            "method": "POST"
+          },
+          "trigger": "{{.trigger.operation}}"
+        },
+        "properties": {
+          "{{if (.inputs | has(\"storage_name\")) then \"storage_name\" else null end}}": "{{.inputs.\"storage_name\"}}",
+          "{{if (.inputs | has(\"storage_location\")) then \"storage_location\" else null end}}": "{{.inputs.\"storage_location\"}}"
+        },
+        "censoredProperties": "{{.action.encryptedProperties}}"
+      }
+    }
+  },
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 
