@@ -111,10 +111,6 @@ In the following example you will export your Kubernetes `Replica Sets` and `Pod
       "containers": {
         "title": "Containers",
         "type": "array"
-      },
-      "conditions": {
-        "type": "array",
-        "title": "Conditions"
       }
     },
     "required": []
@@ -165,7 +161,6 @@ resources: # List of K8s resources to list, watch, and export to Port.
               phase: .status.phase
               labels: .metadata.labels
               containers: (.spec.containers | map({image, resources})) + .status.containerStatuses | group_by(.image) | map(add)
-              conditions: .status.conditions
             relations:
               deploymentConfig: .metadata.ownerReferences[0].name
 ```

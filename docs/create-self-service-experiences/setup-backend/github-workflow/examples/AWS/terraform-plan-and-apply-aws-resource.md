@@ -167,7 +167,7 @@ variable "environment" {
 ```json showLineNumbers
 {
   "identifier": "cloudResource_plan_terraform_resource",
-  "title": "Plan A Terraform Resource",
+  "title": "Terraform Plan",
   "icon": "Terraform",
   "description": "Plans a cloud resource on AWS using terraform and sends request to the approval team to review the plan and apply the resource",
   "trigger": {
@@ -249,7 +249,7 @@ variable "environment" {
 ```json showLineNumbers
 {
   "identifier": "cloudResource_apply_terraform_resource",
-  "title": "Approve and Apply Terraform Resource",
+  "title": "Terraform ApplyResource",
   "icon": "Terraform",
   "description": "Reviews the cloud resource planned in the \"Plan A Terraform Resource\" workflow and approves/declines the terraform configuration",
   "trigger": {
