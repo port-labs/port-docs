@@ -1,26 +1,28 @@
 # Add tags to ECR repository
 
-This GitHub action allows you to add tags to an ECR repository via Port Actions with ease.
+This guide demonstrates how to add meaningful tags to your AWS ECR repository using [Port's self-service action](/create-self-service-experiences/)
 
 ## Prerequisites
+1. [Port's GitHub app](https://github.com/apps/getport-io) needs to be installed
+2. AWS Access Key and Secret Key pair. Follow [AWS guide on creating access keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html#Using_CreateAccessKey) to create one for your account
+3. AWS `AmazonEC2ContainerRegistryFullAccess` policy should be enabled on the account to enable necessary permissions to carry out the action
+4. Account ID. Click on the account dropdown settings on the upper right corner in your AWS Console to retrieve it
+5. In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
 
-- AWS Access Key and Secret Key pair. Follow [AWS guide on creating access keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html#Using_CreateAccessKey) to create one for your account.
-- AWS `AmazonEC2ContainerRegistryFullAccess` policy should be enabled on the account to enable necessary permissions to carry out the action.
-- Account ID. Click on the account dropdown settings on the upper right corner in your AWS Console to retrieve it.
-- [Port's GitHub app](https://github.com/apps/getport-io) needs to be installed.
+    - `AWS_REGION` - The region where ECR repositories are located. Available regions can be found on the [Regions, Availability Zones, and Local Zones page](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html#Concepts.RegionsAndAvailabilityZones.Regions) in AWS documentation.
+    - `AWS_ACCOUNT_ID` - AWS account ID from the [prerequisites step](#prerequisites)
+    - `AWS_ACCESS_KEY_ID` - AWS Access Key ID
+    - `AWS_SECRET_ACCESS_KEY` - AWS Secret Access Key
+    - `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
+    - `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
 
-## Steps
+6. Optional - Ingest your `AWS ECR Repository` into Port using our [recommended python script](https://github.com/port-labs/example-ecr-images)
 
-1. Create the following GitHub action secrets:
+:::tip ECR Repository Python Script
+This step is not required for this example, but it will create all the blueprint boilerplate for you, and also update the catalog with your repositories.
+:::
 
-- `AWS_REGION` - The region where ECR repositories are located. Available regions can be found on the [Regions, Availability Zones, and Local Zones page](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html#Concepts.RegionsAndAvailabilityZones.Regions) in AWS documentation.
-- `AWS_ACCOUNT_ID` - AWS account ID from the [prerequisites step](#prerequisites)
-- `AWS_ACCESS_KEY_ID` - AWS Access Key
-- `AWS_SECRET_ACCESS_KEY` - AWS Secret Key, also gotten from the access key creation
-- `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
-- `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
-
-3. Create an AWS ECR repository blueprint in Port using the blueprint below:
+7. In case you decided not to use our provided python script, you will need to create a blueprint for the `AWS ECR Repository` in Port using the schema below:
 
 <details>
 <summary><b>ECR Repository Blueprint</b></summary>
@@ -96,77 +98,16 @@ This GitHub action allows you to add tags to an ECR repository via Port Actions 
 
 </details>
 
-<!-- :::note Making use of an easy dropdown selection
+## GitHub Workflow
 
-While this step will ensure the `ecrRepository` blueprint is available, the self-service action supports selecting from the list of ingested repositories instead of having to input the repository name. To allow for this option, follow [Port's guide to ingest images and repositories into Port](https://github.com/port-labs/example-ecr-images).
+Create the file  `.github/workflows/add-tags-to-ecr-repository.yml` in the `.github/workflows` folder of your repository.
 
-This option is way easier but if you do not want this, you can simply type in repository names to tag them.
-
-::: -->
-
-4. After creating the blueprint, create the following action with the following JSON file on the `ecrRepository` blueprint:
-
-<details>
-<summary><b>Add Tags to ECR Repository Action (Click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "identifier": "add_tags_to_ecr_repository",
-  "title": "Add Tags to ECR Repository",
-  "icon": "AWS",
-  "userInputs": {
-    "properties": {
-      "repository": {
-        "icon": "DefaultProperty",
-        "title": "Repository",
-        "type": "string",
-        "blueprint": "ecrRepository",
-        "description": "Use if respository has been ingested into Port. If both Repository and Repository Name are specified, Repository takes precedence.",
-        "format": "entity"
-      },
-      "tags": {
-        "icon": "DefaultProperty",
-        "title": "Tags",
-        "type": "object",
-        "description": "Tags should be in key-value pairs like so: {\"key\": \"value\"}"
-      }
-    },
-    "required": [
-      "tags",
-      "repository"
-    ],
-    "order": [
-      "tags",
-      "repository"
-    ]
-  },
-  "invocationMethod": {
-    "type": "GITHUB",
-    "org": "<Enter GitHub organization>",
-    "repo": "<Enter GitHub repository>",
-    "workflow": "add-tags-to-ecr-repository.yml",
-    "omitUserInputs": false,
-    "omitPayload": false,
-    "reportWorkflowStatus": true
-  },
-  "trigger": "CREATE",
-  "description": "Add tags to a repository on AWS ECR",
-  "requiredApproval": false
-}
-```
-
-</details>
-
-:::note Customisation
-
-Replace the invocation method with your own repository details.
-
+:::tip Dedicated repository
+We recommend creating a dedicated repository for the workflows that are used by Port actions.
 :::
 
-5. Create a workflow file under `.github/workflows/add-tags-to-ecr-repository.yml` with the content below:
-
 <details>
-<summary><b>Add Tags to ECR Repository Workflow (Click to expand)</b></summary>
+<summary><b>GitHub workflow (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 name: Add tags to ECR repository
@@ -250,11 +191,80 @@ jobs:
           runId: ${{ fromJson(inputs.port_payload).context.runId }}
           logMessage: Finished adding tags to ECR repository
 ```
-
 </details>
 
-6. Trigger the action from Port's [Self Serve](https://app.getport.io/self-serve)
+## Port Configuration
 
-7. Done! wait for the ECR repository to be tagged.
+1. Head to the [self-service](https://app.getport.io/self-serve) page.
+2. Click on the `+ New Action` button.
+3. Choose the `AWS ECR Repository` blueprint and click `Next`.
+4. Click on the `{...} Edit JSON` button.
+5. Copy and paste the following JSON configuration into the editor.
+
+<details>
+<summary><b>Add tags to ECR Repository action (Click to expand)</b></summary>
+
+:::tip Modification Required
+Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organization and repository names respectively.
+:::
+
+```json showLineNumbers
+{
+  "identifier": "add_tags_to_ecr_repository",
+  "title": "Add Tags to ECR Repository",
+  "icon": "AWS",
+  "userInputs": {
+    "properties": {
+      "repository": {
+        "title": "Repository",
+        "type": "string",
+        "blueprint": "ecrRepository",
+        "description": "Selects one of the respository that has been ingested into Port",
+        "format": "entity"
+      },
+      "tags": {
+        "title": "Tags",
+        "type": "object",
+        "description": "Tags should be in key-value pairs like so: {\"key\": \"value\"}"
+      }
+    },
+    "required": [
+      "tags",
+      "repository"
+    ],
+    "order": [
+      "tags",
+      "repository"
+    ]
+  },
+  "invocationMethod": {
+    "type": "GITHUB",
+    "org": "<GITHUB_ORG>",
+    "repo": "<GITHUB_REPO>",
+    "workflow": "add-tags-to-ecr-repository.yml",
+    "omitUserInputs": false,
+    "omitPayload": false,
+    "reportWorkflowStatus": true
+  },
+  "trigger": "DAY-2",
+  "description": "Add tags to a repository on AWS ECR",
+  "requiredApproval": false
+}
+```
+</details>
+
+6. Click `Save`.
+
+Now you should see the `Add Tags to ECR Repository` action in the self-service page. 🎉
+
+
+## Let's test it
+
+1. Head to the [Self Service hub](https://app.getport.io/self-serve)
+2. Click on the `Add Tags to ECR Repository` action
+3. Choose the repository you want to add tags to  (In case you did not follow the [guide to ingest images and repositories into Port](https://github.com/port-labs/example-ecr-images), it means you don't have any ECR repository in Port yet, so you will need to create one manually in Port to test this action)
+4. Enter the new tags for the ECR repository in key-value pair format
+5. Click on `Execute`
+6. Done! wait for the ECR repository to be tagged
 
 Congrats 🎉 You've tagged your ECR repository for the first time from Port!
