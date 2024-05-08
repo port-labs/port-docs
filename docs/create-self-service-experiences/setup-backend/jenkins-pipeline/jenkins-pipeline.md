@@ -92,20 +92,14 @@ Here is a sample payload that is generated when the action is triggered and sent
   ... # Event metadata
   "invocationMethod": {
     ...
-    "workflowInputs": {
+    // highlight-start
+    "body": {
       ...
-      "port_payload": {
-        ...
-        // highlight-start
-        "payload": {
-          ...
-            "properties": {
-              "input1": "input1_value"
-            }
+        "properties": {
+          "input1": "input1_value"
         }
-        // highlight-end
-      }
     }
+    // highlight-end
   }
 }
 ```

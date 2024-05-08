@@ -156,7 +156,7 @@ substitutions:
 <br/>
 
 :::tip
-Here is part of the JSON scheme of the Port action, which shows the inputs sent by Port when triggering the action:
+Here is part of the JSON scheme of the Port action, which defines the user inputs that can be used to send in the payload:
 
 ```json showLineNumbers
 {
@@ -175,41 +175,6 @@ Here is part of the JSON scheme of the Port action, which shows the inputs sent 
   }
     ... # Port Action configuration
 }
-```
-
-Here is a sample payload that is generated when the action is triggered and sent to Cloud Build:
-
-```json showLineNumbers
-{
-  ...
-  "trigger": {
-    ...
-  }
-  ... # Event metadata
-  "invocationMethod": {
-    ...
-    "workflowInputs": {
-      ...
-      "port_payload": {
-        ...
-        // highlight-start
-        "payload": {
-          ...
-            "properties": {
-              "region": "region_value"
-            }
-        }
-        // highlight-end
-      }
-    }
-  }
-}
-```
-
-For example, the substitutions value for the `region` input would be:
-
-```text showLineNumbers
-$.payload.properties.region
 ```
 
 **Port Action** - The full Port action definition can be found [here](#setting-up-the-port-action).
