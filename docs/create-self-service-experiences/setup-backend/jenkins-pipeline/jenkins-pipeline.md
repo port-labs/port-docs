@@ -64,11 +64,12 @@ After checking the box, look for the **Post content parameters** section. This i
 Here is part of the JSON scheme of the Port action, which shows the inputs sent by Port when triggering the action:
 
 ```json showLineNumber
-[
-  {
-    "identifier": "runPipeline",
-    "title": "Run Pipeline",
-    "icon": "Jenkins",
+
+{
+  "identifier": "runPipeline",
+  "title": "Run Pipeline",
+  "icon": "Jenkins",
+  "trigger": {
     "userInputs": {
       "properties": {
         "input1": {
@@ -77,21 +78,35 @@ Here is part of the JSON scheme of the Port action, which shows the inputs sent 
       }
     }
     ... # Port Action configuration
-]
+}
 ```
 
 Here is a sample payload that is generated when the action is triggered and sent to Jenkins:
 
 ```json showLineNumber
 {
-    ... # Event metadata
-    "payload": {
-        "properties": {
-            "input1": "input1_value"
+  ...
+  "trigger": {
+    ...
+  }
+  ... # Event metadata
+  "invocationMethod": {
+    ...
+    "workflowInputs": {
+      ...
+      "port_payload": {
+        ...
+        // highlight-start
+        "payload": {
+          ...
+            "properties": {
+              "input1": "input1_value"
+            }
         }
-
+        // highlight-end
+      }
     }
-
+  }
 }
 ```
 
@@ -130,11 +145,14 @@ To trigger the Jenkins pipeline, you will setup a Port [Webhook Action](../webho
 Here is an example for an action that will trigger the webhook you just set up:
 
 ```json showLineNumbers
-[
-  {
-    "identifier": "runPipeline",
-    "title": "Run Pipeline",
-    "icon": "Jenkins",
+{
+  "identifier": "service_runPipeline",
+  "title": "Run Pipeline",
+  "icon": "Jenkins",
+  "description": "Run Jenkins pipeline",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
     "userInputs": {
       "properties": {
         "input1": {
@@ -142,16 +160,39 @@ Here is an example for an action that will trigger the webhook you just set up:
         }
       }
     },
-    # highlight-start
-    "invocationMethod": {
-      "type": "WEBHOOK",
-      "url": "http://JENKINS_URL/generic-webhook-trigger/invoke?token=<JOB_TOKEN>"
-    },
-    # highlight-end
-    "trigger": "CREATE",
-    "description": "Run Jenkins pipeline"
-  }
-]
+    "blueprintIdentifier": "service"
+  },
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "http://JENKINS_URL/generic-webhook-trigger/invoke?token=<JOB_TOKEN>",
+    "body": {
+      "action": "{{ .action.identifier[(\"service_\" | length):] }}",
+      "resourceType": "run",
+      "status": "TRIGGERED",
+      "trigger": "{{ .trigger | {by, origin, at} }}",
+      "context": {
+        "entity": "{{.entity.identifier}}",
+        "blueprint": "{{.action.blueprint}}",
+        "runId": "{{.run.id}}"
+      },
+      "payload": {
+        "entity": "{{ (if .entity == {} then null else .entity end) }}",
+        "action": {
+          "invocationMethod": {
+            "type": "WEBHOOK",
+            "url": "http://JENKINS_URL/generic-webhook-trigger/invoke?token=<JOB_TOKEN>"
+          },
+          "trigger": "{{.trigger.operation}}"
+        },
+        "properties": {
+          "{{if (.inputs | has(\"input1\")) then \"input1\" else null end}}": "{{.inputs.\"input1\"}}"
+        },
+        "censoredProperties": "{{.action.encryptedProperties}}"
+      }
+    }
+  },
+  "publish": true
+}
 ```
 
 ### Securing your webhook

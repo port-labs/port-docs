@@ -159,11 +159,12 @@ substitutions:
 Here is part of the JSON scheme of the Port action, which shows the inputs sent by Port when triggering the action:
 
 ```json showLineNumbers
-[
-  {
-    "identifier": "runPipeline",
-    "title": "Run Pipeline",
-    "icon": "GCP",
+{
+  "identifier": "service_runPipeline",
+  "title": "Run GCP Cloud Build Pipeline",
+  "icon": "GCP",
+  "description": "Webhook trigger for Google Cloud Build",
+  "trigger": {
     "userInputs": {
       "properties": {
         "region": {
@@ -171,21 +172,37 @@ Here is part of the JSON scheme of the Port action, which shows the inputs sent 
         }
       }
     }
-    ... # Port Action configuration
   }
-]
+    ... # Port Action configuration
+}
 ```
 
 Here is a sample payload that is generated when the action is triggered and sent to Cloud Build:
 
 ```json showLineNumbers
 {
-    ... # Event metadata
-    "payload": {
-        "properties": {
-            "region": "region_value"
+  ...
+  "trigger": {
+    ...
+  }
+  ... # Event metadata
+  "invocationMethod": {
+    ...
+    "workflowInputs": {
+      ...
+      "port_payload": {
+        ...
+        // highlight-start
+        "payload": {
+          ...
+            "properties": {
+              "region": "region_value"
+            }
         }
+        // highlight-end
+      }
     }
+  }
 }
 ```
 
@@ -205,35 +222,66 @@ To trigger the Cloud Build pipeline, you will setup a Port [Webhook Action](../w
 Here is an example for an action that will trigger the webhook you just set up:
 
 ```json showLineNumbers
-[
-   {
-      "identifier":"runPipeline",
-      "title":"Run GCP Cloud Build Pipeline",
-      "icon":"GCP",
-      "userInputs":{
-         "properties":{
-            "region":{
-               "type":"string",
-               "title":"Region Name"
-            },
-            "imageName":{
-               "type":"string",
-               "title":"Container Image Name"
-            }
-         },
-         "required":[]
+{
+  "identifier": "service_runPipeline",
+  "title": "Run GCP Cloud Build Pipeline",
+  "icon": "GCP",
+  "description": "Webhook trigger for Google Cloud Build",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
+    "userInputs": {
+      "properties": {
+        "region": {
+          "type": "string",
+          "title": "Region Name"
+        },
+        "imageName": {
+          "type": "string",
+          "title": "Container Image Name"
+        }
       },
-      # highlight-start
-      "invocationMethod":{
-         "type":"WEBHOOK",
-         "url":"https://cloudbuild.googleapis.com/v1/projects/{project_id}/triggers/{webhook_name}:webhook?key={google_api_key}&secret={webhook_secret}"
+      "required": []
+    },
+    "blueprintIdentifier": "service"
+  },
+  # highlight-start
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "https://cloudbuild.googleapis.com/v1/projects/{project_id}/triggers/{webhook_name}:webhook?key={google_api_key}&secret={webhook_secret}",
+  # highlight-end
+    "body": {
+      "action": "{{ .action.identifier[(\"service_\" | length):] }}",
+      "resourceType": "run",
+      "status": "TRIGGERED",
+      "trigger": "{{ .trigger | {by, origin, at} }}",
+      "context": {
+        "entity": "{{.entity.identifier}}",
+        "blueprint": "{{.action.blueprint}}",
+        "runId": "{{.run.id}}"
       },
-      # highlight-end
-      "trigger":"CREATE",
-      "description":"Webhook trigger for Google Cloud Build",
-      "requiredApproval":false
-   }
-]
+      "payload": {
+        "entity": "{{ (if .entity == {} then null else .entity end) }}",
+        "action": {
+          # highlight-start
+          "invocationMethod": {
+            "type": "WEBHOOK",
+            "url": "https://cloudbuild.googleapis.com/v1/projects/{project_id}/triggers/{webhook_name}:webhook?key={google_api_key}&secret={webhook_secret}"
+          },
+          # highlight-end
+          "trigger": "{{.trigger.operation}}"
+        },
+        "properties": {
+          "{{if (.inputs | has(\"region\")) then \"region\" else null end}}": "{{.inputs.\"region\"}}",
+          "{{if (.inputs | has(\"imageName\")) then \"imageName\" else null end}}": "{{.inputs.\"imageName\"}}"
+        },
+        "censoredProperties": "{{.action.encryptedProperties}}"
+      }
+    }
+  },
+  "requiredApproval": false,
+  "publish": true
+}
 ```
 
 ### Report CloudBuild run status to Port

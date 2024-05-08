@@ -153,38 +153,83 @@ Here is the action JSON:
 
 ```json showLineNumbers
 {
-  "identifier": "create_vm",
+  "identifier": "vm_create_vm",
   "title": "Create VM",
   "icon": "Server",
   "description": "Create a new VM in cloud provider infrastructure",
-  "trigger": "CREATE",
-  "invocationMethod": { "type": "KAFKA" },
-  "userInputs": {
-    "properties": {
-      "title": {
-        "type": "string",
-        "title": "Title of the new VM"
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
+    "userInputs": {
+      "properties": {
+        "title": {
+          "type": "string",
+          "title": "Title of the new VM"
+        },
+        "cpu": {
+          "type": "number",
+          "title": "Number of CPU cores"
+        },
+        "memory": {
+          "type": "number",
+          "title": "Size of memory"
+        },
+        "storage": {
+          "type": "number",
+          "title": "Size of storage"
+        },
+        "region": {
+          "type": "string",
+          "title": "Deployment region",
+          "enum": [
+            "eu-west-1",
+            "eu-west-2",
+            "us-west-1",
+            "us-east-1"
+          ]
+        }
       },
-      "cpu": {
-        "type": "number",
-        "title": "Number of CPU cores"
-      },
-      "memory": {
-        "type": "number",
-        "title": "Size of memory"
-      },
-      "storage": {
-        "type": "number",
-        "title": "Size of storage"
-      },
-      "region": {
-        "type": "string",
-        "title": "Deployment region",
-        "enum": ["eu-west-1", "eu-west-2", "us-west-1", "us-east-1"]
-      }
+      "required": [
+        "cpu",
+        "memory",
+        "storage",
+        "region"
+      ]
     },
-    "required": ["cpu", "memory", "storage", "region"]
-  }
+    "blueprintIdentifier": "vm"
+  },
+  "invocationMethod": {
+    "type": "KAFKA",
+    "payload": {
+      "action": "{{ .action.identifier[(\"vm_\" | length):] }}",
+      "resourceType": "run",
+      "status": "TRIGGERED",
+      "trigger": "{{ .trigger | {by, origin, at} }}",
+      "context": {
+        "entity": "{{.entity.identifier}}",
+        "blueprint": "{{.action.blueprint}}",
+        "runId": "{{.run.id}}"
+      },
+      "payload": {
+        "entity": "{{ (if .entity == {} then null else .entity end) }}",
+        "action": {
+          "invocationMethod": {
+            "type": "KAFKA"
+          },
+          "trigger": "{{.trigger.operation}}"
+        },
+        "properties": {
+          "{{if (.inputs | has(\"title\")) then \"title\" else null end}}": "{{.inputs.\"title\"}}",
+          "{{if (.inputs | has(\"cpu\")) then \"cpu\" else null end}}": "{{.inputs.\"cpu\"}}",
+          "{{if (.inputs | has(\"memory\")) then \"memory\" else null end}}": "{{.inputs.\"memory\"}}",
+          "{{if (.inputs | has(\"storage\")) then \"storage\" else null end}}": "{{.inputs.\"storage\"}}",
+          "{{if (.inputs | has(\"region\")) then \"region\" else null end}}": "{{.inputs.\"region\"}}"
+        },
+        "censoredProperties": "{{.action.encryptedProperties}}"
+      }
+    }
+  },
+  "publish": true
 }
 ```
 
