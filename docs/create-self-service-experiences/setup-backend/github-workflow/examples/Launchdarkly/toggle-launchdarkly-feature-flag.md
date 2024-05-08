@@ -1,3 +1,6 @@
+import GithubActionModificationHint from '../../\_github_action_modification_required_hint.mdx'
+import GithubDedicatedRepoHint from '../../\_github_dedicated_workflows_repository_hint.mdx'
+
 # Toggle LaunchDarkly Feature Flag
 
 # Overview
@@ -112,10 +115,7 @@ This GitHub action allows you to quickly toggle LaunchDarkly Feature Flags via P
 
 1. Create a workflow file under `.github/workflows/toggle-feature-flag.yaml` with the following content:
 
-:::tip Dedicated repository
-
-We recommend creating a dedicated repository for the workflows that are used by Port actions.
-:::
+<GithubDedicatedRepoHint/>
 
 <details>
 <summary>GitHub Workflow</summary>
@@ -127,10 +127,6 @@ name: Toggle LaunchDarkly Feature Flag
 on:
   workflow_dispatch:
     inputs:
-      feature_flag_key:
-        description: 'LaunchDarkly Feature Flag Key'
-        required: true
-        type: string
       project_key:
         description: 'LaunchDarkly Project Key'
         required: true
@@ -160,13 +156,13 @@ jobs:
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
           runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
-          logMessage: "Attempting to toggle feature flag '${{ github.event.inputs.feature_flag_key }}' in '${{ github.event.inputs.environment_key }}' environment to ${{ github.event.inputs.flag_state }}."
+          logMessage: "Attempting to toggle feature flag '${{ fromJson(inputs.port_payload).context.entity }}' in '${{ github.event.inputs.environment_key }}' environment to ${{ github.event.inputs.flag_state }}."
 
       - name: Toggle Feature Flag in LaunchDarkly
         id: "toggle_feature_flag"
         uses: fjogeleit/http-request-action@v1
         with:
-          url: 'https://app.launchdarkly.com/api/v2/flags/${{ github.event.inputs.project_key }}/${{ github.event.inputs.feature_flag_key }}'
+          url: 'https://app.launchdarkly.com/api/v2/flags/${{ github.event.inputs.project_key }}/${{ fromJson(inputs.port_payload).context.entity }}'
           method: 'PATCH'
           customHeaders: '{"Authorization": "${{ secrets.LAUNCHDARKLY_ACCESS_TOKEN }}", "Content-Type": "application/json"}'
           data: >-
@@ -200,7 +196,7 @@ jobs:
         with:
           identifier: "${{ fromJson(steps.toggle_feature_flag.outputs.response).key }}"
           title: "${{ fromJson(steps.toggle_feature_flag.outputs.response).description }}"
-          blueprint: "launchDarklyFeatureFlag"
+          blueprint: "${{ fromJson(inputs.port_payload).context.blueprint }}"
           properties: |-
             {
               "kind": "${{ fromJson(steps.toggle_feature_flag.outputs.response).kind }}",
@@ -232,87 +228,112 @@ jobs:
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
           runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
-          logMessage: "Feature flag '${{ github.event.inputs.feature_flag_key }}' in '${{ github.event.inputs.environment_key }}' environment set to ${{ github.event.inputs.flag_state }}."
+          logMessage: "Feature flag '${{ fromJson(inputs.port_payload).context.entity }}' in '${{ github.event.inputs.environment_key }}' environment set to ${{ github.event.inputs.flag_state }}."
 ```
 </details>
 
 ## Port Configuration
 
-1. Head to the [self-service](https://app.getport.io/self-serve) page.
-2. Click on the `+ New Action` button.
-3. Choose the `LaunchDarkly Feature Flag` blueprint and click `Next`.
-4. Click on the `{...} Edit JSON` button.
-5. Copy and paste the following JSON configuration into the editor.
+Create a new self service action using the following JSON configuration.
 
 <details>
 <summary><b>Toggle A Feature Flag (Click to expand)</b></summary>
 
-:::tip Modification Required
-Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organization and repository names respectively.
-:::
+<GithubActionModificationHint/>
 
 ```json showLineNumbers
 {
-  "identifier": "toggle_a_feature_flag",
+  "identifier": "launchDarklyFeatureFlag_toggle_a_feature_flag",
   "title": "Toggle LaunchDarkly Feature Flag",
   "icon": "Launchdarkly",
-  "userInputs": {
-    "properties": {
-      "feature_flag_key": {
-        "title": "feature_flag_key",
-        "description": "LaunchDarkly Feature Flag Key",
-        "icon": "Launchdarkly",
-        "type": "string"
+  "description": "Toggle a Feature Flag in launchdarkly",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {
+        "project_key": {
+          "description": "LaunchDarkly Project Key",
+          "title": "project_key",
+          "icon": "Launchdarkly",
+          "type": "string"
+        },
+        "environment_key": {
+          "description": "LaunchDarkly Environment Key where the flag exists",
+          "title": "environment_key",
+          "icon": "Launchdarkly",
+          "type": "string"
+        },
+        "flag_state": {
+          "title": "flag_state",
+          "description": "Desired state of the feature flag (true for enabled, false for disabled)",
+          "icon": "Launchdarkly",
+          "type": "boolean",
+          "default": true
+        }
       },
-      "project_key": {
-        "description": "LaunchDarkly Project Key",
-        "title": "project_key",
-        "icon": "Launchdarkly",
-        "type": "string",
-        "default": "default"
-      },
-      "environment_key": {
-        "description": "LaunchDarkly Environment Key where the flag exists",
-        "title": "environment_key",
-        "icon": "Launchdarkly",
-        "type": "string",
-        "default": "test"
-      },
-      "flag_state": {
-        "title": "flag_state",
-        "description": "Desired state of the feature flag (true for enabled, false for disabled)",
-        "icon": "Launchdarkly",
-        "type": "boolean",
-        "default": true
-      }
+      "required": [
+        "project_key",
+        "environment_key"
+      ],
+      "order": [
+        "project_key",
+        "environment_key",
+        "flag_state"
+      ]
     },
-    "required": [
-      "feature_flag_key",
-      "project_key"
-    ],
-    "order": [
-      "feature_flag_key",
-      "project_key",
-      "environment_key"
-    ]
+    "blueprintIdentifier": "launchDarklyFeatureFlag"
   },
   "invocationMethod": {
     "type": "GITHUB",
-    "org": "<GITHUB-ORG>",
-    "repo": "<GITHUB-REPO-NAME>",
+    "org": "<GITHUB_ORG>",
+    "repo": "<GITHUB_REPO>",
     "workflow": "toggle-feature-flag.yaml",
-    "omitUserInputs": false,
-    "omitPayload": false,
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "{{if (.inputs | has(\"project_key\")) then \"project_key\" else null end}}": "{{.inputs.\"project_key\"}}",
+      "{{if (.inputs | has(\"environment_key\")) then \"environment_key\" else null end}}": "{{.inputs.\"environment_key\"}}",
+      "{{if (.inputs | has(\"flag_state\")) then \"flag_state\" else null end}}": "{{.inputs.\"flag_state\"}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"launchDarklyFeatureFlag_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "org": "<GITHUB_ORG>",
+              "repo": "<GITHUB_REPO>",
+              "workflow": "toggle-feature-flag.yaml",
+              "omitUserInputs": false,
+              "omitPayload": false,
+              "reportWorkflowStatus": true
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {
+            "{{if (.inputs | has(\"project_key\")) then \"project_key\" else null end}}": "{{.inputs.\"project_key\"}}",
+            "{{if (.inputs | has(\"environment_key\")) then \"environment_key\" else null end}}": "{{.inputs.\"environment_key\"}}",
+            "{{if (.inputs | has(\"flag_state\")) then \"flag_state\" else null end}}": "{{.inputs.\"flag_state\"}}"
+          },
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
     "reportWorkflowStatus": true
   },
-  "trigger": "DAY-2",
-  "description": "Toggle a Feature Flag in launchdarkly",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 </details>
-
-6. Click `Save`.
 
 Now you should see the `Toggle LaunchDarkly Feature Flag` action in the self-service page. 🎉
 
@@ -321,7 +342,7 @@ Now you should see the `Toggle LaunchDarkly Feature Flag` action in the self-ser
 1. Head to the [Self Service hub](https://app.getport.io/self-serve)
 2. Click on the `Toggle LaunchDarkly Feature Flag` action
 3. Choose the feature flag you want to toggle (In case you didn't install the [LaunchDarkly integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/feature%20management/launchdarkly), it means you don't have any feature flags in Port yet, so you will need to create one manually in Port to test this action)
-4. Select the new status
+4. Enter the associated `projectKey` and `environmentKey` for the flag and toggle `flagState` (ON by default)
 5. Click on `Execute`
 6. Done! wait for the feature flag's status to be changed in LaunchDarkly.
 

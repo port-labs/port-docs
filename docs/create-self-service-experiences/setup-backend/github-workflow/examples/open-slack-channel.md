@@ -3,6 +3,8 @@ sidebar_position: 9
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
+import GithubActionModificationHint from '../\_github_action_modification_required_hint.mdx'
+import GithubDedicatedRepoHint from '../\_github_dedicated_workflows_repository_hint.mdx'
 
 # Create Slack channel for Incident Management
 
@@ -12,8 +14,9 @@ In this guide, we will to create a self-service action in Port that not only aut
 
 ## Prerequisites
 
-1. [Create a slack app](https://api.slack.com/start/quickstart#creating) and install it on a workspace.
-2. Generate a [Slack Bot User Oauth Token](https://api.slack.com/apps/A06PVJZQBHB/oauth?success=1) with permissions to create a new channel and invite users of the slack workspace to the slack channel.
+1. [Port's GitHub app](https://github.com/apps/getport-io) needs to be installed.
+2. [Create a slack app](https://api.slack.com/start/quickstart#creating) and install it on a workspace.
+3. Generate a [Slack Bot User Oauth Token](https://api.slack.com/apps/A06PVJZQBHB/oauth?success=1) with permissions to create a new channel and invite users of the slack workspace to the slack channel.
     * [Bot User Scopes](https://api.slack.com/start/quickstart#scopes):
         * [Create channel](https://api.slack.com/methods/conversations.create) (**Required**) :
           `channels:manage`
@@ -33,20 +36,14 @@ In this guide, we will to create a self-service action in Port that not only aut
     :::note
     Without scopes for `Find a user with an email address` and `Invite users to channel`, the channel will be created but users will not be added to it.
     :::
-3. [Port's GitHub app](https://github.com/apps/getport-io) needs to be installed.
-
-## Steps
-
-1. Create the following GitHub action secrets
-
+4. In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
 - `BOT_USER_OAUTH_TOKEN` - [Slack Bot User Oauth Token](https://api.slack.com/authentication/token-types#bot) generated for the slack app.
 - `PORT_CLIENT_ID` - Your port [client id](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
 - `PORT_CLIENT_SECRET` - Your port [client secret](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
-
-2. Create a service <PortTooltip id="blueprint">blueprint</PortTooltip> with the following JSON definition:
+5. Create a service <PortTooltip id="blueprint">blueprint</PortTooltip> with the following JSON definition:
 
 <details>
-   <summary><b>Port Blueprint: Service (Click to expand)</b></summary>
+   <summary><b>Service Blueprint (Click to expand)</b></summary>
 
 ```json showLineNumbers title='service blueprint'
 {
@@ -368,79 +365,11 @@ In this guide, we will to create a self-service action in Port that not only aut
 
 </details>
 
-3. Create an action in Port on the service blueprint
-   :::tip Action usage
-   This action is utilized within the Service blueprint in Port and can be triggered manually via self service action or the catalog
-   :::
+## GitHub Workflow
 
-<details>
-<summary><b>Port Action: Open Slack Channel (Click to expand)</b></summary>
-:::tip
-- `<GITHUB-ORG>` - your GitHub organization or user name.
-- `<GITHUB-REPO-NAME>` - your GitHub repository name.
-:::
+Create the file `.github/workflows/open-slack-channel.yaml` in the `.github/workflows` folder of your repository.
 
-```json showLineNumbers
-{
-  "identifier": "open_slack_channel",
-  "title": "Open Slack Channel",
-  "icon": "Slack",
-  "userInputs": {
-    "properties": {
-      "channel_name": {
-        "icon": "Slack",
-        "title": "Channel Name",
-        "type": "string",
-        "default": {
-          "jqQuery": "\"incident-\"+.entity.title"
-        }
-      },
-      "is_private": {
-        "description": "Create a private channel instead of a public one",
-        "title": "Is Private",
-        "type": "boolean",
-        "default": false,
-        "icon": "Slack"
-      },
-      "team_id": {
-        "description": "Encoded team id to create the channel in, required if org token is used",
-        "title": "Team ID",
-        "icon": "Slack",
-        "type": "string"
-      },
-      "members": {
-        "items": {
-          "type": "string"
-        },
-        "title": "Members",
-        "icon": "Slack",
-        "type": "array",
-        "description": "Add members manually to the channel.",
-        "default": {
-          "jqQuery": ".entity.properties.code_owners"
-        }
-      }
-    },
-    "required": ["members"],
-    "order": ["channel_name", "members", "is_private", "team_id"]
-  },
-  "invocationMethod": {
-    "type": "GITHUB",
-    "org": "<GITHUB-ORG>",
-    "repo": "<GITHUB-REPO-NAME>",
-    "workflow": "open-slack-channel.yaml",
-    "omitUserInputs": false,
-    "omitPayload": false,
-    "reportWorkflowStatus": true
-  },
-  "trigger": "DAY-2",
-  "requiredApproval": false
-}
-```
-
-</details>
-
-4. Create a workflow file under `.github/workflows/open-slack-channel.yaml` using the workflow:
+<GithubDedicatedRepoHint/>
 
 <details>
 <summary><b>Github Workflow: Open Slack Channel (Click to expand)</b></summary>
@@ -458,10 +387,6 @@ on:
         description: Create a private channel instead of a public one.
         required: false
         type: boolean
-      team_id:
-        description: Encoded team ID to create the channel in, required if org token is used.
-        type: string
-        required: false
       members:
         description: Add members manually to the channel.
         type: array
@@ -647,8 +572,125 @@ fi
 ```
 </details>
 
-6. Trigger the action from Port's [Self Service hub](https://app.getport.io/self-serve)
+## Port Configuration
 
-7. Done! wait for the slack channel to be created.
+Create a new self service action using the following JSON configuration.
 
-Congrats 🎉 You've successfully opened a slack channel from Port 🔥
+<details>
+<summary><b>Open Slack Channel (Click to expand)</b></summary>
+<GithubActionModificationHint/>
+
+```json showLineNumbers
+{
+  "identifier": "pagerdutyIncident_open_slack_channel",
+  "title": "Open Slack Channel",
+  "icon": "Slack",
+  "description": "Create and slack channel and optionally add members to it",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
+    "userInputs": {
+      "properties": {
+        "channel_name": {
+          "icon": "Slack",
+          "title": "Channel Name",
+          "type": "string",
+          "default": {
+            "jqQuery": "\"incident-\"+.entity.title"
+          }
+        },
+        "is_private": {
+          "description": "Create a private channel instead of a public one",
+          "title": "Is Private",
+          "type": "boolean",
+          "default": false,
+          "icon": "Slack"
+        },
+        "members": {
+          "items": {
+            "type": "string",
+            "format": "user"
+          },
+          "title": "Members",
+          "icon": "Slack",
+          "type": "array",
+          "description": "Add members manually to the channel.",
+          "default": {
+            "jqQuery": ".entity.properties.code_owners"
+          }
+        }
+      },
+      "required": [
+        "channel_name"
+      ],
+      "order": [
+        "channel_name",
+        "members",
+        "is_private"
+      ]
+    },
+    "blueprintIdentifier": "pagerdutyIncident"
+  },
+  "invocationMethod": {
+    "type": "GITHUB",
+    "org": "<GITHUB-ORG>",
+    "repo": "<GITHUB-REPO-NAME>",
+    "workflow": "open-slack-channel.yaml",
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "{{if (.inputs | has(\"channel_name\")) then \"channel_name\" else null end}}": "{{.inputs.\"channel_name\"}}",
+      "{{if (.inputs | has(\"is_private\")) then \"is_private\" else null end}}": "{{.inputs.\"is_private\"}}",
+      "{{if (.inputs | has(\"members\")) then \"members\" else null end}}": "{{.inputs.\"members\"}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"pagerdutyIncident_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "org": "<GITHUB_ORG>",
+              "repo": "<GITHUB_REPO>",
+              "workflow": "open-slack-channel.yaml",
+              "omitUserInputs": false,
+              "omitPayload": false,
+              "reportWorkflowStatus": true
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {
+            "{{if (.inputs | has(\"channel_name\")) then \"channel_name\" else null end}}": "{{.inputs.\"channel_name\"}}",
+            "{{if (.inputs | has(\"is_private\")) then \"is_private\" else null end}}": "{{.inputs.\"is_private\"}}",
+            "{{if (.inputs | has(\"members\")) then \"members\" else null end}}": "{{.inputs.\"members\"}}"
+          },
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
+    "reportWorkflowStatus": true
+  },
+  "requiredApproval": false,
+  "publish": true
+}
+```
+
+</details>
+
+Now you should see the `Open Slack Channel` action in the self-service page. 🎉
+
+## Let's test it!
+
+1. Head to the [Self Service hub](https://app.getport.io/self-serve)
+2. Click on the `Open Slack Channel` action
+3. Enter your prefered details for `channel_name` and optionally add `members`. You can toggle the `is_private` flag to make the channel private.
+6. Click on `Execute`
+7. Done! wait for the channel to be created in slack.
+
+Congrats 🎉 You've successfully opened a slack channel in Port 🔥

@@ -168,37 +168,74 @@ Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organiz
 
 ```json showLineNumbers
 {
-  "identifier": "add_tags_to_sonar_qube_project",
+  "identifier": "sonarQubeProject_add_tags_to_sonar_qube_project",
   "title": "Add Tags to SonarQube project",
   "icon": "sonarqube",
-  "userInputs": {
-    "properties": {
-      "tags": {
-        "title": "Tags",
-        "description": "Comma separated list of tags",
-        "icon": "DefaultProperty",
-        "type": "string"
-      }
+  "description": "Adds additional tags to a project in SonarQube",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {
+        "tags": {
+          "title": "Tags",
+          "description": "Comma separated list of tags",
+          "icon": "DefaultProperty",
+          "type": "string"
+        }
+      },
+      "required": [
+        "tags"
+      ],
+      "order": [
+        "tags"
+      ]
     },
-    "required": [
-      "tags"
-    ],
-    "order": [
-      "tags"
-    ]
+    "blueprintIdentifier": "sonarQubeProject"
   },
   "invocationMethod": {
     "type": "GITHUB",
-    "org": "<GITHUB_ORG>",
-    "repo": "<GITHUB_REPO>",
+    "org": "<Enter GitHub organization>",
+    "repo": "<Enter GitHub repository>",
     "workflow": "add-tags-to-sonarqube-project.yml",
-    "omitUserInputs": false,
-    "omitPayload": false,
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "{{if (.inputs | has(\"tags\")) then \"tags\" else null end}}": "{{.inputs.\"tags\"}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"sonarQubeProject_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "repo": "<Enter GitHub repository>",
+              "org": "<Enter GitHub organization>",
+              "workflow": "add-tags-to-sonarqube-project.yml",
+              "omitUserInputs": false,
+              "omitPayload": false,
+              "reportWorkflowStatus": true
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {
+            "{{if (.inputs | has(\"tags\")) then \"tags\" else null end}}": "{{.inputs.\"tags\"}}"
+          },
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
     "reportWorkflowStatus": true
   },
-  "trigger": "DAY-2",
-  "description": "Adds additional tags to a project in SonarQube",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 </details>

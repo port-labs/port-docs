@@ -11,7 +11,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 # Getting started
 
-After [signing up](https://app.getport.io) to Port, you will be prompted to follow an onboarding process that includes ingesting your Git repositories into your developer portal.  
+After [signing up](https://app.getport.io) to Port, you will be prompted to follow a short onboarding process that includes ingesting your Git repositories into your developer portal.  
 
 After completing the onboarding process, Port will create some components for you (using your real data 😎) in order to show you the potential of your portal.  
 

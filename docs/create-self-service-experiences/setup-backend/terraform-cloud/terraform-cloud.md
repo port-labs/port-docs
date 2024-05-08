@@ -66,27 +66,56 @@ Create the following blueprint, action and mapping to trigger a Terraform Cloud 
 <summary>Action</summary>
 
 ```json showLineNumbers
-[
-  {
-    "identifier": "trigger_tf_run",
-    "title": "Trigger TF Cloud run",
-    "icon": "Terraform",
+{
+  "identifier": "terraform_cloud_workspace_trigger_tf_run",
+  "title": "Trigger TF Cloud run",
+  "icon": "Terraform",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
     "userInputs": {
       "properties": {},
       "required": [],
       "order": []
     },
-    "invocationMethod": {
-      "type": "WEBHOOK",
-      "agent": true,
-      "synchronized": false,
-      "method": "POST",
-      "url": "https://app.terraform.io/api/v2/runs/"
-    },
-    "trigger": "DAY-2",
-    "requiredApproval": false
-  }
-]
+    "blueprintIdentifier": "terraform_cloud_workspace"
+  },
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "https://app.terraform.io/api/v2/runs/",
+    "agent": true,
+    "synchronized": false,
+    "method": "POST",
+    "body": {
+      "action": "{{ .action.identifier[(\"terraform_cloud_workspace_\" | length):] }}",
+      "resourceType": "run",
+      "status": "TRIGGERED",
+      "trigger": "{{ .trigger | {by, origin, at} }}",
+      "context": {
+        "entity": "{{.entity.identifier}}",
+        "blueprint": "{{.action.blueprint}}",
+        "runId": "{{.run.id}}"
+      },
+      "payload": {
+        "entity": "{{ (if .entity == {} then null else .entity end) }}",
+        "action": {
+          "invocationMethod": {
+            "type": "WEBHOOK",
+            "agent": true,
+            "synchronized": false,
+            "method": "POST",
+            "url": "https://app.terraform.io/api/v2/runs/"
+          },
+          "trigger": "{{.trigger.operation}}"
+        },
+        "properties": {},
+        "censoredProperties": "{{.action.encryptedProperties}}"
+      }
+    }
+  },
+  "requiredApproval": false,
+  "publish": true
+}
 ```
 
 </details>

@@ -320,3 +320,7 @@ html[data-theme="dark"] details details  {
   margin-top: 1px;
   zoom: 100%;
 }
+
+.hidden {
+  display: none
+}

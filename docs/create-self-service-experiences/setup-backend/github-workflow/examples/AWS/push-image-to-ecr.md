@@ -141,56 +141,96 @@ jobs:
 4. Click on the `{...} Edit JSON` button.
 5. Copy and paste the following JSON configuration into the editor.
 
-   <details>
-   
-   <summary>Port Action</summary>
-   
-   <GithubActionModificationHint/>
-   
-   ```json showLineNumbers
-   {
-     "identifier": "build_ecr_image",
-     "title": "Build ECR Image",
-     "icon": "AWS",
-     "userInputs": {
-       "properties": {
-         "dockerfile": {
-           "icon": "Docker",
-           "title": "Dockerfile",
-           "description": "The path to the dockerfile e.g Dockerfile or ./deploy/prod.Dockerfile",
-           "type": "string",
-           "default": "Dockerfile"
-         },
-         "image_repo": {
-           "title": "Image Repository",
-           "description": "The Elastic Container Repository Name",
-           "icon": "AWS",
-           "type": "string"
-         }
-       },
-       "required": [
-         "dockerfile",
-         "image_repo"
-       ],
-       "order": [
-         "dockerfile"
-       ]
-     },
-     "invocationMethod": {
-       "type": "GITHUB",
-       "org": "<GITHUB_ORG>",
-       "repo": "<GITHUB_REPO>",
-       "workflow": "create-and-push-image.yml",
-       "omitUserInputs": false,
-       "omitPayload": false,
-       "reportWorkflowStatus": true
-     },
-     "trigger": "DAY-2",
-     "description": "Build Image and Push to ECR",
-     "requiredApproval": false
-   }
-   ```
-   </details>
+<details>
+
+<summary>Port Action</summary>
+
+<GithubActionModificationHint/>
+
+```json showLineNumbers
+{
+  "identifier": "repository_build_ecr_image",
+  "title": "Build ECR Image",
+  "icon": "AWS",
+  "description": "Build Image and Push to ECR",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {
+        "dockerfile": {
+          "icon": "Docker",
+          "title": "Dockerfile",
+          "description": "The path to the dockerfile e.g Dockerfile or ./deploy/prod.Dockerfile",
+          "type": "string",
+          "default": "Dockerfile"
+        },
+        "image_repo": {
+          "title": "Image Repository",
+          "description": "The Elastic Container Repository Name",
+          "icon": "AWS",
+          "type": "string"
+        }
+      },
+      "required": [
+        "dockerfile",
+        "image_repo"
+      ],
+      "order": [
+        "dockerfile"
+      ]
+    },
+    "blueprintIdentifier": "repository"
+  },
+  "invocationMethod": {
+    "type": "GITHUB",
+    "org": "<GITHUB_ORG>",
+    "repo": "<GITHUB_REPO>",
+    "workflow": "create-and-push-image.yml",
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "{{if (.inputs | has(\"dockerfile\")) then \"dockerfile\" else null end}}": "{{.inputs.\"dockerfile\"}}",
+      "{{if (.inputs | has(\"image_repo\")) then \"image_repo\" else null end}}": "{{.inputs.\"image_repo\"}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"repository_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "org": "<GITHUB_ORG>",
+              "repo": "<GITHUB_REPO>",
+              "workflow": "create-and-push-image.yml",
+              "omitUserInputs": false,
+              "omitPayload": false,
+              "reportWorkflowStatus": true
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {
+            "{{if (.inputs | has(\"dockerfile\")) then \"dockerfile\" else null end}}": "{{.inputs.\"dockerfile\"}}",
+            "{{if (.inputs | has(\"image_repo\")) then \"image_repo\" else null end}}": "{{.inputs.\"image_repo\"}}"
+          },
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
+    "reportWorkflowStatus": true
+  },
+  "requiredApproval": false,
+  "publish": true
+}
+```
+</details>
+
 6. Click `Save`.
 
 Now you should see the `Build ECR Image` action in the self-service page. 🎉
