@@ -1,0 +1,141 @@
+---
+sidebar_position: 1
+---
+import AutoscalerBlueprint from './compute_resources/\_autoscaler.mdx'
+import FirewallBlueprint from './compute_resources/\_firewall.mdx'
+import SubnetworkBlueprint from './compute_resources/\_subnetwork.mdx'
+import ComputeInstanceBlueprint from './compute_resources/\_compute_instance.mdx'
+import ComputeAppConfig from './compute_resources/\_port_app_config.mdx'
+
+# Mapping Extra Resources
+
+As you've probably looked at the [Examples](./examples.md) page, you've noticed that the GCP Integration supports some GCP resources, but most of them are documented in the Examples page.
+
+This page will help you understand what kind of GCP resources are supported by the GCP integration and how to map them into Port.
+
+## Is the resource supported by the GCP Integration?
+
+The GCP Integration is relying on GCP's Asset Inventory API. That means:
+
+- Does the type of resource I want to injest listed [here](https://cloud.google.com/asset-inventory/docs/supported-asset-types)?
+  - If Yes, It's supported!
+  - If not, please contact us, or [add the support to the integration yourself](https://github.com/port-labs/ocean/tree/main/integrations/gcp)
+
+## Mapping the resource to Port
+
+After you've found the resource in the [Cloud Asset Supported Resources](https://cloud.google.com/asset-inventory/docs/supported-asset-types), you can map it to Port by following these steps:
+
+### Blueprint
+
+Create a Port blueprint definition for the resource. The blueprint definition is based on the resource API specified per asset type.
+A few examples:
+
+<SubnetworkBlueprint/>
+<FirewallBlueprint/>
+<SubnetworkBlueprint/>
+<ComputeInstanceBlueprint/>
+
+### Integration configuration
+
+Create an integration configuration for the resource. The integration configuration is a YAML file that describes the ETL process to load data into the developer portal.
+
+#### Digesting values
+As you may see, some of the properties are digested using `.versioned_resources | max_by(.version).resource | <property_value>`. This is done, because the Cloud Assets contains all of the available versions of the resource within each inventory item, so that's why we take the most recent version of the asset in the inventory, and from that version we take the property value.
+All of the other properties, which are not versioned, are properties we digest directly from the asset in the Asset inventory, which are all listed [here](https://cloud.google.com/asset-inventory/docs/reference/rest/v1/Asset). These don't have multiple versions, and so are directly digested.
+
+<ComputeAppConfig/>
+
+#### The integration configuration structure
+
+- The `kind` field describes the GCP resource type to be ingested into Port.
+  The `kind` field should be set to the GCP resource type as it appears in the [supported resources guide](https://cloud.google.com/asset-inventory/docs/supported-asset-types). e.g. The resource type for the `Compute Instance` is `compute.googleapis.com/Instance`
+
+  ```yaml showLineNumbers
+  resources:
+  	# highlight-start
+  	- kind: compute.googleapis.com/Instance
+  		# highlight-end
+  		selector:
+  		...
+  ```
+
+- The `selector` field describes the GCP resource selection criteria.
+
+  ```yaml showLineNumbers
+  	resources:
+  		- kind: compute.googleapis.com/Instance
+  			# highlight-start
+  			selector:
+  				query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
+  			# highlight-end
+  			port:
+  ```
+
+  - The `query` field is a [JQ boolean query](https://stedolan.github.io/jq/manual/#Basicfilters), if evaluated to `false` - the resource will be skipped. Example use case - skip syncing resources that are not in a specific region.
+    ```yaml showLineNumbers
+    query: .location == "global"
+    ```
+- The `port` field describes the Port entity to be created from the GCP resource.
+
+  ```yaml showLineNumbers
+  resources:
+  	- kind: compute.googleapis.com/Instance
+  		selector:
+  			query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
+  		# highlight-start
+  		port:
+      entity:
+        mappings: # Mappings between one GCP object to a Port entity. Each value is a JQ query.
+          identifier: ".name"
+          title:  ".versioned_resources | max_by(.version).resource | .name"
+          blueprint: '"gcpComputeInstance"'
+          properties:
+            location: .location
+            machineType: ".versioned_resources | max_by(.version).resource | .machineType"
+            subnetworks: ".versioned_resources | max_by(.version).resource | .networkInterfaces[].subnetwork"
+            cpuPlatform: ".versioned_resources | max_by(.version).resource | .cpuPlatform"
+            selfLink: ".versioned_resources | max_by(.version).resource | .selfLink"
+          relations:
+            project: ".project"
+  		# highlight-end
+  ```
+
+  - The `entity` field describes the Port entity to be created from the GCP resource.
+
+    - The `mappings` field describes the mapping between the GCP resource and the Port entity.
+
+      - The `identifier` field describes the GCP resource identifier. This field is required for all resources.
+        ```yaml showLineNumbers
+        mappings:
+        	# highlight-start
+          identifier: ".name"
+        	# highlight-end
+        ```
+      - The `title` field describes the GCP resource title. This field is required for all resources.
+        ```yaml showLineNumbers
+        mappings:
+        	# highlight-start
+          title:  ".versioned_resources | max_by(.version).resource | .name"
+        	# highlight-end
+        ```
+      - The `blueprint` field describes the Port blueprint to be used to create the Port entity. This field is required for all resources.
+
+        ```yaml showLineNumbers
+        mappings:
+        	# highlight-start
+          blueprint: '"gcpComputeInstance"'
+        	# highlight-end
+        ```
+
+      - The `properties` field describes the GCP resource properties to be mapped to the Port
+        ```yaml showLineNumbers
+        	mappings:
+          identifier: ".name"
+            title:  ".versioned_resources | max_by(.version).resource | .name"
+            blueprint: '"gcpComputeInstance"'
+        		# highlight-start
+        		properties:
+        			location: .location
+              machineType: ".versioned_resources | max_by(.version).resource | .machineType"
+        		# highlight-end
+        ```

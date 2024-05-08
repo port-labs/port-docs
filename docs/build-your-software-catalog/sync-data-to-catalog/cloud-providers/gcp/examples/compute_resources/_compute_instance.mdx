@@ -1,0 +1,48 @@
+<details>
+<summary> Compute Instance Blueprint </summary>
+
+```json showLineNumbers
+{
+  "identifier": "gcpComputeInstance",
+  "description": "This blueprint represents a GCP Compute Instance in our software catalog",
+  "title": "ComputeInstance",
+  "icon": "GoogelCloud",
+  "schema": {
+    "properties": {
+      "location": {
+        "title": "Location",
+        "type": "string"
+      },
+      "machineType": {
+        "title": "Provisioning State",
+        "type": "string"
+      },
+      "subnetworks": {
+        "title": "Subnetwork",
+        "type": "array"
+      },
+      "cpuPlatform": {
+        "title": "CPU Platform",
+        "type": "string"
+      },
+      "selfLink": {
+        "title": "Self Link",
+        "type": "string"
+      },
+      "required": []
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "relations": {
+      "project": {
+        "target": "gcpProject",
+        "title": "Project",
+        "required": false,
+        "many": false
+      }
+    }
+  }
+}
+```
+
+</details>

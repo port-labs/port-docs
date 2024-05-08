@@ -30,14 +30,12 @@ This step is not required for this example, but it will create all the blueprint
 4. After you installed the integration, the blueprints `pagerdutyService` and `pagerdutyIncident` will appear, create the following action with the following JSON file on the `pagerdutyService` blueprint:
 
 <details>
-<summary><b>Create PagerDuty Service Blueprint (Click to expand)</b></summary>
+<summary><b>Create PagerDuty Service Action (Click to expand)</b></summary>
 
 ```json showLineNumbers
-
-[
   {
     "identifier": "create_pagerduty_service",
-    "title": "create_pagerduty_service",
+    "title": "Create PagerDuty Service",
     "icon": "pagerduty",
     "userInputs": {
       "properties": {
@@ -82,8 +80,6 @@ This step is not required for this example, but it will create all the blueprint
     "description": "Create PagerDuty Service",
     "requiredApproval": false
   }
-]
-
 ```
 
 </details>

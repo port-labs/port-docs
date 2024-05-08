@@ -28,7 +28,7 @@ This step is not required for this example, but it will create all the blueprint
 4. After you installed the integration, the blueprints `pagerdutyService` and `pagerdutyIncident` will appear, create the following action with the following JSON file on the `pagerdutyIncident` blueprint:
 
 <details>
-<summary><b>Change Incident Owner Blueprint (Click to expand)</b></summary>
+<summary><b>Change Incident Owner Action (Click to expand)</b></summary>
 
 ```json
 
