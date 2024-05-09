@@ -52,27 +52,29 @@ The Kubernetes Exporter can be installed with the `crdsToDiscover` flag which is
 With the pattern below, the Kubernetes Exporter will discover CRDs that are managed by [Crossplane's XRD](https://docs.crossplane.io/latest/concepts/composite-resource-definitions/) and that are not namespaced scoped. This is just an example, and you can adjust the pattern to match your own CRDs - even if they are managed by a custom operator.
 :::
 
-Here is a script that will help you install the Kubernetes Exporter with the `crdsToDiscover` flag.
+Here is a script that will help you install the Kubernetes Exporter without initializing default blueprints and mappings, if you would like to install it with the defaults remove the `createDefaultResources=false` variable from the script below.
 
-if you already have the Kubernetes Exporter installed just [add to your configuration](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md#updating-exporter-configuration) the `crdsToDiscover` flag with the JQ pattern that matches your CRDs
 ```bash
-# highlight-start
-echo 'crdsToDiscover: ".metadata.ownerReferences[0].kind == \"CompositeResourceDefinition\" and .spec.scope != \"Namespaced\""' > config.yaml
-# highlight-end 
-
+helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-port-k8s-exporter port-labs/port-k8s-exporter \
     --create-namespace --namespace port-k8s-exporter \
     --set secret.secrets.portClientId=YOUR_PORT_CLIENT_ID \
     --set secret.secrets.portClientSecret=YOUR_PORT_CLIENT_SECRET \
     --set stateKey="k8s-exporter"  \
+    --set createDefaultResources=false \
     --set eventListenerType="POLLING"  \
-    --set overwriteConfigurationOnRestart=true \
     --set "extraEnv[0].name"="CLUSTER_NAME" \
-    --set "extraEnv[0].value"=YOUR_PORT_CLUSTER_NAME \
-    --set-file configMap.config=config.yaml
+    --set "extraEnv[0].value"=YOUR_PORT_CLUSTER_NAME 
 ```
 
-After the Kubernetes Exporter is installed, you can check the logs to see if the CRDs are being discovered and exported to Port.
+
+After you installed the k8s exporter [add to `crdsToDiscover` configuration](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md#updating-exporter-configuration) with the following value:
+
+```yaml
+crdsToDiscover: ".metadata.ownerReferences[0].kind == \"CompositeResourceDefinition\" and .spec.scope != \"Namespaced\""
+```
+
+After this change, it should take no longer than 2 minutes to see the resources in Port.
 If everything succeeded you should see the relevant CRDs as `blueprints` and `actions`, and any existing CRs as `entities` in Port's catalog.
 
 ### 3. Connect a GitHub workflow
