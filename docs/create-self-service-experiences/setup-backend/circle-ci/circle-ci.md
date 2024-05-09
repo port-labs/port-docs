@@ -60,27 +60,56 @@ Create the following blueprint, action and mapping to trigger a Circle CI pipeli
 <summary>Action</summary>
 
 ```json showLineNumbers
-[
-  {
-    "identifier": "trigger_circle_ci_pipeline",
-    "title": "Trigger CircleCI pipeline",
-    "icon": "CircleCI",
+{
+  "identifier": "circle_ci_project_trigger_circle_ci_pipeline",
+  "title": "Trigger CircleCI pipeline",
+  "icon": "CircleCI",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
     "userInputs": {
       "properties": {},
       "required": [],
       "order": []
     },
-    "invocationMethod": {
-      "type": "WEBHOOK",
-      "agent": true,
-      "synchronized": false,
-      "method": "POST",
-      "url": "https://circleci.com"
-    },
-    "trigger": "DAY-2",
-    "requiredApproval": false
-  }
-]
+    "blueprintIdentifier": "circle_ci_project"
+  },
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "https://circleci.com",
+    "agent": true,
+    "synchronized": false,
+    "method": "POST",
+    "body": {
+      "action": "{{ .action.identifier[(\"circle_ci_project_\" | length):] }}",
+      "resourceType": "run",
+      "status": "TRIGGERED",
+      "trigger": "{{ .trigger | {by, origin, at} }}",
+      "context": {
+        "entity": "{{.entity.identifier}}",
+        "blueprint": "{{.action.blueprint}}",
+        "runId": "{{.run.id}}"
+      },
+      "payload": {
+        "entity": "{{ (if .entity == {} then null else .entity end) }}",
+        "action": {
+          "invocationMethod": {
+            "type": "WEBHOOK",
+            "agent": true,
+            "synchronized": false,
+            "method": "POST",
+            "url": "https://circleci.com"
+          },
+          "trigger": "{{.trigger.operation}}"
+        },
+        "properties": {},
+        "censoredProperties": "{{.action.encryptedProperties}}"
+      }
+    }
+  },
+  "requiredApproval": false,
+  "publish": true
+}
 ```
 
 </details>

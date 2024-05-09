@@ -7,6 +7,9 @@ sidebar_position: 1
 The azure exporter is deployed using Terraform on Azure Container App.
 It uses our Terraform [Ocean](https://ocean.getport.io) Integration Factory [module](https://registry.terraform.io/modules/port-labs/integration-factory/ocean/latest) to deploy the exporter.
 
+
+The Azure exporter is initially configured to collect Azure resources from the subscription where it's deployed. However, it can be adjusted to ingest resources from multiple subscriptions. To learn how to configure the Azure exporter for this purpose, check out the instructions in the [Multiple subscriptions setup](#multiple-subscriptions-setup) section.
+
 :::tip
 Multiple ways to deploy the Azure exporter could be found in the Azure Integration example [README](https://registry.terraform.io/modules/port-labs/integration-factory/ocean/latest/examples/azure_container_app_azure_integration)
 :::
@@ -135,6 +138,20 @@ In order to successfully deploy the Azure exporter, it's crucial to ensure that 
    ![Dev Portal Builder Azure Exporter Installation](/img/integrations/azure-exporter/DevPortalIngestAzureInstallation.png)
 
 5. Run the command in your terminal to deploy the Azure exporter.
+
+## Multiple subscriptions setup
+
+To configure the Azure exporter to ingest resources from other subscriptions, you'll need to assign permissions to the managed identity running the integration in the subscriptions which you wish to ingest resources from.
+
+1. Head to the Azure portal and navigate to the subscription you want to ingest resources from.
+2. In the subscription's `Access control (IAM)` section, go to the Role assignment tab and choose the appropriate role for the managed identity responsible for the integration.
+3. Assign this role to the managed identity associated with the integration.
+4. Repeat this process for each subscription you wish to include.
+
+For real-time data ingestion from multiple subscriptions, set up an Event Grid System Topic and an Event Grid Subscription in each subscription you want to include, connecting them to the Azure exporter.
+
+For a detailed example using Terraform to configure the Event Grid System Topic and Event Grid Subscription, based on the installation output of the Azure exporter, refer to [this example](https://github.com/port-labs/terraform-ocean-integration-factory/blob/main/examples/azure_container_app_azure_integration/main.tf))
+
 
 ## Further information
 

@@ -198,7 +198,6 @@ We will create a slack channel for each service, and therefore a webhook for eac
 
 2. To create the Port action, go to the [self-service page](https://app.getport.io/self-serve):
     - Click on the `+ New Action` button.
-    - Choose the `API` blueprint and click `Next`.
     - Click on the `{...} Edit JSON` button.
     - Copy and paste the following JSON configuration into the editor.
     - Click `Save`
@@ -212,31 +211,68 @@ We will create a slack channel for each service, and therefore a webhook for eac
 
 ```json showLineNumbers
 {
-  "identifier": "send_announcement",
+  "identifier": "api_send_announcement",
   "title": "Send Announcement",
   "icon": "Slack",
-  "userInputs": {
-    "properties": {
-      "message": {
-        "title": "Message",
-        "type": "string"
-      }
+  "description": "Send Announcement to the consumers of the API",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {
+        "message": {
+          "title": "Message",
+          "type": "string"
+        }
+      },
+      "required": [],
+      "order": []
     },
-    "required": [],
-    "order": []
+    "blueprintIdentifier": "api"
   },
   "invocationMethod": {
     "type": "GITHUB",
     "org": "<GITHUB-ORG>",
     "repo": "<GITHUB-REPO-NAME>",
     "workflow": "send-announcement.yml",
-    "omitUserInputs": false,
-    "omitPayload": false,
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "{{if (.inputs | has(\"message\")) then \"message\" else null end}}": "{{.inputs.\"message\"}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"api_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "org": "<GITHUB-ORG>",
+              "repo": "<GITHUB-REPO-NAME>",
+              "workflow": "send-announcement.yml",
+              "omitUserInputs": false,
+              "omitPayload": false,
+              "reportWorkflowStatus": true
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {
+            "{{if (.inputs | has(\"message\")) then \"message\" else null end}}": "{{.inputs.\"message\"}}"
+          },
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
     "reportWorkflowStatus": true
   },
-  "trigger": "DAY-2",
-  "description": "Send Announcement to the consumers of the API",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 </details>

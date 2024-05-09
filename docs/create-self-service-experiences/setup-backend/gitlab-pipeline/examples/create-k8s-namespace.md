@@ -343,80 +343,119 @@ update-run-status:
 
 ```json showLineNumbers
 {
-  "identifier": "create_namespace",
+  "identifier": "namespace_create_namespace",
   "title": "Create Namespace",
   "icon": "AmazonEKS",
-  "userInputs": {
-    "properties": {
-      "project_name": {
-        "type": "string",
-        "title": "Project Name"
+  "description": "Create a Kubernetes Namespace",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
+    "userInputs": {
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "title": "Project Name"
+        },
+        "name": {
+          "icon": "DefaultProperty",
+          "type": "string",
+          "title": "Name"
+        },
+        "min_cpu": {
+          "type": "number",
+          "title": "Min CPU",
+          "default": 0.5
+        },
+        "max_cpu": {
+          "icon": "DefaultProperty",
+          "type": "number",
+          "title": "Max CPU",
+          "description": "The maximum number of CPU cores a container can use in the namespace",
+          "default": 1.5
+        },
+        "min_memory": {
+          "type": "number",
+          "title": "Min Memory",
+          "default": 0.5,
+          "description": "The minimum memory resource guaranteed for containers within the namespace"
+        },
+        "max_memory": {
+          "type": "number",
+          "title": "Max Memory",
+          "description": "The maximum memory that containers in the namespace are allowed to use",
+          "default": 2
+        },
+        "min_storage": {
+          "type": "number",
+          "title": "Min Storage",
+          "description": "The minimum storage resource guaranteed for persistent volumes within the namespace ",
+          "default": 0.5
+        }
       },
-      "name": {
-        "icon": "DefaultProperty",
-        "type": "string",
-        "title": "Name"
-      },
-      "min_cpu": {
-        "type": "number",
-        "title": "Min CPU",
-        "default": 0.5
-      },
-      "max_cpu": {
-        "icon": "DefaultProperty",
-        "type": "number",
-        "title": "Max CPU",
-        "description": "The maximum number of CPU cores a container can use in the namespace",
-        "default": 1.5
-      },
-      "min_memory": {
-        "type": "number",
-        "title": "Min Memory",
-        "default": 0.5,
-        "description": "The minimum memory resource guaranteed for containers within the namespace"
-      },
-      "max_memory": {
-        "type": "number",
-        "title": "Max Memory",
-        "description": "The maximum memory that containers in the namespace are allowed to use",
-        "default": 2
-      },
-      "min_storage": {
-        "type": "number",
-        "title": "Min Storage",
-        "description": "The minimum storage resource guaranteed for persistent volumes within the namespace ",
-        "default": 0.5
-      }
+      "required": [
+        "project_name",
+        "min_cpu",
+        "max_cpu",
+        "min_memory",
+        "max_memory",
+        "min_storage",
+        "name"
+      ],
+      "order": [
+        "project_name",
+        "name",
+        "min_cpu",
+        "max_cpu",
+        "min_memory",
+        "max_memory",
+        "min_storage"
+      ]
     },
-    "required": [
-      "project_name",
-      "min_cpu",
-      "max_cpu",
-      "min_memory",
-      "max_memory",
-      "min_storage",
-      "name"
-    ],
-    "order": [
-      "project_name",
-      "name",
-      "min_cpu",
-      "max_cpu",
-      "min_memory",
-      "max_memory",
-      "min_storage"
-    ]
+    "blueprintIdentifier": "namespace"
   },
   "invocationMethod": {
     "type": "WEBHOOK",
     "url": "https://gitlab.com/api/v4/projects/<PROJECT_ID>/ref/main/trigger/pipeline?token=<PIPELINE_TRIGGER_TOKEN>",
     "agent": false,
     "synchronized": false,
-    "method": "POST"
+    "method": "POST",
+    "body": {
+      "action": "{{ .action.identifier[(\"namespace_\" | length):] }}",
+      "resourceType": "run",
+      "status": "TRIGGERED",
+      "trigger": "{{ .trigger | {by, origin, at} }}",
+      "context": {
+        "entity": "{{.entity.identifier}}",
+        "blueprint": "{{.action.blueprint}}",
+        "runId": "{{.run.id}}"
+      },
+      "payload": {
+        "entity": "{{ (if .entity == {} then null else .entity end) }}",
+        "action": {
+          "invocationMethod": {
+            "type": "WEBHOOK",
+            "url": "https://gitlab.com/api/v4/projects/<PROJECT_ID>/ref/main/trigger/pipeline?token=<PIPELINE_TRIGGER_TOKEN>",
+            "agent": false,
+            "synchronized": false,
+            "method": "POST"
+          },
+          "trigger": "{{.trigger.operation}}"
+        },
+        "properties": {
+          "{{if (.inputs | has(\"project_name\")) then \"project_name\" else null end}}": "{{.inputs.\"project_name\"}}",
+          "{{if (.inputs | has(\"name\")) then \"name\" else null end}}": "{{.inputs.\"name\"}}",
+          "{{if (.inputs | has(\"min_cpu\")) then \"min_cpu\" else null end}}": "{{.inputs.\"min_cpu\"}}",
+          "{{if (.inputs | has(\"max_cpu\")) then \"max_cpu\" else null end}}": "{{.inputs.\"max_cpu\"}}",
+          "{{if (.inputs | has(\"min_memory\")) then \"min_memory\" else null end}}": "{{.inputs.\"min_memory\"}}",
+          "{{if (.inputs | has(\"max_memory\")) then \"max_memory\" else null end}}": "{{.inputs.\"max_memory\"}}",
+          "{{if (.inputs | has(\"min_storage\")) then \"min_storage\" else null end}}": "{{.inputs.\"min_storage\"}}"
+        },
+        "censoredProperties": "{{.action.encryptedProperties}}"
+      }
+    }
   },
-  "trigger": "CREATE",
-  "description": "Create a Kubernetes Namespace",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 </details>
