@@ -12,11 +12,12 @@ In the following guide, we are going to create a self-service action in Port tha
 
 
 ## Prerequisites
-1. Install the Ports GitHub app from [here](https://github.com/apps/getport-io/installations/new).
+1. Install the Port GitHub app from [here](https://github.com/apps/getport-io/installations/new).
 
 2. Create the following GitHub Action secrets:
-    - `ARGO_CD_PASSWORD` - Argo CD token [learn more](https://argo-cd.readthedocs.io/en/stable/getting_started/#4-login-using-the-cli)
-    - `ARGO_CD_USERNAME` - Argo CD username [learn more](https://argo-cd.readthedocs.io/en/stable/getting_started/#4-login-using-the-cli)
+    - `ARGO_CD_PASSWORD` - [Argo CD PASSWORD](https://argo-cd.readthedocs.io/en/stable/getting_started/#4-login-using-the-cli)
+    - `ARGO_CD_USERNAME` - [Argo CD Username](https://argo-cd.readthedocs.io/en/stable/getting_started/#4-login-using-the-cli)
+    - `ARGOCD_SERVER` - The host URL or server of your deployed Argo CD instance without http(s). For example, my-argocd-app.com.
     - `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token).
     - `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token).
 
@@ -32,116 +33,117 @@ This step is not required for this example, but it will create all the blueprint
 <summary>Argo CD Application Blueprint</summary>
 	
 ```json showLineNumbers
-{
-  "identifier": "running_service",
-  "description": "This blueprint represents an Argo CD Application",
-  "title": "Running Service",
-  "icon": "Argo",
-  "schema": {
-    "properties": {
-      "gitRepo": {
-        "type": "string",
-        "format": "url",
-        "icon": "Git",
-        "title": "Repository URL",
-        "description": "The URL of the Git repository containing the application source code"
-      },
-      "gitPath": {
-        "type": "string",
-        "title": "Path",
-        "description": "The path within the Git repository where the application manifests are located"
-      },
-      "destinationServer": {
-        "type": "string",
-        "title": "Destination Server",
-        "format": "url"
-      },
-      "syncStatus": {
-        "type": "string",
-        "title": "Sync Status",
-        "enum": [
-          "Synced",
-          "OutOfSync",
-          "Unknown"
-        ],
-        "enumColors": {
-          "Synced": "green",
-          "OutOfSync": "red",
-          "Unknown": "lightGray"
+  {
+    "identifier": "argocdApplication",
+    "description": "This blueprint represents an ArgoCD Application",
+    "title": "Running Service",
+    "icon": "Argo",
+    "schema": {
+      "properties": {
+        "gitRepo": {
+          "type": "string",
+          "icon": "Git",
+          "title": "Repository URL",
+          "description": "The URL of the Git repository containing the application source code"
         },
-        "description": "The sync status of the application"
-      },
-      "healthStatus": {
-        "type": "string",
-        "title": "Health Status",
-        "enum": [
-          "Healthy",
-          "Missing",
-          "Suspended",
-          "Degraded",
-          "Progressing",
-          "Unknown"
-        ],
-        "enumColors": {
-          "Healthy": "green",
-          "Missing": "yellow",
-          "Suspended": "purple",
-          "Degraded": "red",
-          "Progressing": "blue",
-          "Unknown": "lightGray"
+        "gitPath": {
+          "type": "string",
+          "title": "Path",
+          "description": "The path within the Git repository where the application manifests are located"
         },
-        "description": "The health status of the application"
+        "destinationServer": {
+          "type": "string",
+          "title": "Destination Server",
+          "description": "The URL of the target cluster's Kubernetes control plane API"
+        },
+        "revision": {
+          "type": "string",
+          "title": "Revision",
+          "description": "Revision contains information about the revision the comparison has been performed to"
+        },
+        "targetRevision": {
+          "type": "string",
+          "title": "Target Revision",
+          "description": "Target Revision defines the revision of the source to sync the application to. In case of Git, this can be commit, tag, or branch"
+        },
+        "syncStatus": {
+          "type": "string",
+          "title": "Sync Status",
+          "enum": [
+            "Synced",
+            "OutOfSync",
+            "Unknown"
+          ],
+          "enumColors": {
+            "Synced": "green",
+            "OutOfSync": "red",
+            "Unknown": "lightGray"
+          },
+          "description": "Status is the sync state of the comparison"
+        },
+        "healthStatus": {
+          "type": "string",
+          "title": "Health Status",
+          "enum": [
+            "Healthy",
+            "Missing",
+            "Suspended",
+            "Degraded",
+            "Progressing",
+            "Unknown"
+          ],
+          "enumColors": {
+            "Healthy": "green",
+            "Missing": "yellow",
+            "Suspended": "purple",
+            "Degraded": "red",
+            "Progressing": "blue",
+            "Unknown": "lightGray"
+          },
+          "description": "Status holds the status code of the application or resource"
+        },
+        "createdAt": {
+          "title": "Created At",
+          "type": "string",
+          "format": "date-time",
+          "description": "The created timestamp of the application"
+        },
+        "labels": {
+          "type": "object",
+          "title": "Labels",
+          "description": "Map of string keys and values that can be used to organize and categorize object"
+        },
+        "annotations": {
+          "type": "object",
+          "title": "Annotations",
+          "description": "Annotations are unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata"
+        }
       },
-      "createdAt": {
-        "title": "Created At",
-        "type": "string",
-        "format": "date-time"
+      "required": []
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "relations": {
+      "project": {
+        "title": "ArgoCD Project",
+        "target": "argocdProject",
+        "required": false,
+        "many": false
       },
-      "grafana_link": {
-        "title": "Grafana Link",
-        "icon": "Grafana",
-        "type": "string",
-        "format": "url"
+      "cluster": {
+        "title": "ArgoCD Cluster",
+        "target": "argocdCluster",
+        "required": false,
+        "many": false
+      },
+      "namespace": {
+        "title": "ArgoCD Namespace",
+        "target": "argocdNamespace",
+        "required": false,
+        "many": false
       }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "aggregationProperties": {},
-  "relations": {
-    "namespace": {
-      "title": "Namespace",
-      "target": "namespace",
-      "required": false,
-      "many": false
-    },
-    "sentry": {
-      "title": "Sentry",
-      "target": "sentryProjectEnvironment",
-      "required": false,
-      "many": false
-    },
-    "image": {
-      "title": "Image Deployed",
-      "target": "image",
-      "required": false,
-      "many": false
-    },
-    "new_relic_service": {
-      "title": "NewRelic Service",
-      "target": "newRelicService",
-      "required": false,
-      "many": false
-    },
-    "project": {
-      "title": "Project",
-      "target": "argocdProject",
-      "required": false,
-      "many": false
     }
   }
-}
 ```
 </details>
 
@@ -170,9 +172,6 @@ on:
         description: 'Use insecure connection (true/false)'
         required: false
         default: 'false'
-      argocd_server:
-        description: 'Argo CD server address without https. eg. my-argo-cd-server.com'
-        required: false
       port_payload:
         required: true
         description: >-
@@ -184,7 +183,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Install Argo CD CLI
         run: |
@@ -222,11 +221,7 @@ jobs:
       
       - name: Login to Argo CD
         run: |
-          argocd login ${{ inputs.argocd_server }} --username ${{ secrets.ARGO_CD_USERNAME }} --password ${{ secrets.ARGO_CD_PASSWORD }} $INSECURE_FLAG
-        env:
-          ARGO_CD_SERVER: ${{ inputs.argocd_server }}
-          ARGO_CD_USERNAME: ${{ secrets.ARGO_CD_USERNAME }}
-          ARGO_CD_PASSWORD: ${{ secrets.ARGO_CD_PASSWORD }}
+          argocd login ${{ secrets.ARGOCD_SERVER }} --username ${{ secrets.ARGO_CD_USERNAME }} --password ${{ secrets.ARGO_CD_PASSWORD }} $INSECURE_FLAG
 
       - name: Report Failed Login to Argo CD
         if: failure()
@@ -264,16 +259,6 @@ jobs:
           runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
           logMessage: "Failed to restart Argo CD Deployment ❌"
 
-      - name: Report Successful Restarting of Argo CD Deployment
-        uses: port-labs/port-github-action@v1
-        with:
-          clientId: ${{ secrets.PORT_CLIENT_ID }}
-          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          baseUrl: https://api.getport.io
-          operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
-          logMessage: "Successfully restarted Deployment ✅"
-
       - name: Report Wait for Application Stability
         uses: port-labs/port-github-action@v1
         with:
@@ -282,7 +267,7 @@ jobs:
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
           runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
-          logMessage: "Waiting for application to stabilize ... "
+          logMessage: "Successfully restarted Deployment ✅, Waiting for application to stabilize ..."
 
       - name: Wait for Application Stability
         run: |
@@ -406,7 +391,10 @@ Make sure to replace `<GITHUB-ORG-NAME>` and `<GITHUB-REPO-NAME>` with your GitH
         "title": "Application Name",
         "description": "Argo CD Application Name",
         "icon": "Argo",
-        "type": "string"
+        "type": "string",
+        "default": {
+            "jqQuery": ".entity.title"
+          }
       },
       "insecure": {
         "title": "Insecure",
@@ -414,12 +402,6 @@ Make sure to replace `<GITHUB-ORG-NAME>` and `<GITHUB-REPO-NAME>` with your GitH
         "icon": "Argo",
         "type": "boolean",
         "default": false
-      },
-      "argocd_server": {
-        "icon": "Argo",
-        "title": "Argo CD Server",
-        "description": "The Argo CD Application Server. eg. my-argocd-server.com",
-        "type": "string"
       }
     },
     "required": [
@@ -427,8 +409,7 @@ Make sure to replace `<GITHUB-ORG-NAME>` and `<GITHUB-REPO-NAME>` with your GitH
     ],
     "order": [
       "application_name",
-      "insecure",
-      "argocd_server"
+      "insecure"
     ]
   },
   "invocationMethod": {
@@ -456,7 +437,7 @@ Now you should see the `Restart Application` action in the self-service page. �
 1. Head to the [Self Service hub](https://app.getport.io/self-serve)
 2. Click `Execute` on the `Restart Application` action
 3. Choose the Argo CD application you want to restart (In case you didn't install the [Argo CD integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/argocd), it means you don't have any Argo CD Application in Port yet, so you will need to create one manually in Port to test this action)
-4. Select the new status
+4. Select the application you want to sync. The `application_name` field should auto-fill after this, if not, manually enter the application name.
 5. Click on `Execute`
 6. Done! wait for the applicatioin flag's status to be restarted in Argo CD.
 
