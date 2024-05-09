@@ -429,11 +429,11 @@ After creating our backend in GitHub, we need to create the Port actions to trig
 We will create the Port actions using the Port UI.
 
 :::tip Creating actions with JSON
-Don't know how to create Port actions using JSONs in the Port UI?
-Click [here](/docs/create-self-service-experiences/setup-ui-for-action/?configure=ui#configuring-actions-in-port)!
+Don't know how to create actions via the Port UI?
+Click [here](/create-self-service-experiences/setup-ui-for-action)!
 :::
 
-Let's create the Port actions to tirgger the workflows we just created:
+Let's create the Port actions to trigger the workflows we just created:
 <details>
     <summary>`Request permissions` Port action</summary>
 

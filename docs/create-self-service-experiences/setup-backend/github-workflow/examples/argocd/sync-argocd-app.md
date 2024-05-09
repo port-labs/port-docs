@@ -311,4 +311,4 @@ Now you should see the `Sync Argo CD Application` action in the self-service pag
 Congrats 🎉 You've successfully synchronized your Argo CD Application in Port 🔥
 
 ## More Self Service Argo CD Actions Examples
-- [Rollback Argo CD Deployment](/create-self-service-experiences/setup-backend/github-workflow/examples/ArgoCD/rollback-argocd-deployment) using Port's self-service actions.
+- [Rollback Argo CD Deployment](/create-self-service-experiences/setup-backend/github-workflow/examples/argocd/rollback-argocd-deployment) using Port's self-service actions.
