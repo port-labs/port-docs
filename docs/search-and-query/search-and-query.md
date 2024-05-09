@@ -174,6 +174,16 @@ The `=` operator checks exact matches of the specified value:
 }
 ```
 
+This operator can also be used to check the value of `boolean` properties:
+
+```json showLineNumbers
+{
+  "operator": "=",
+  "property": "myBooleanProperty",
+  "value": true
+}
+```
+
 </TabItem>
 
 <TabItem value="!=">
@@ -185,6 +195,16 @@ The `!=` operator checks exact matches of the specified value and returns all re
   "operator": "!=",
   "property": "myProperty",
   "value": "myExactValue"
+}
+```
+
+This operator can also be used to check the value of `boolean` properties:
+
+```json showLineNumbers
+{
+  "operator": "!=",
+  "property": "myBooleanProperty",
+  "value": false
 }
 ```
 
@@ -466,6 +486,8 @@ The `in` operator checks if a `string` property is equal to one or more specifie
 </TabItem>
 
 </Tabs>
+
+___
 
 ### Relation structure and operators
 

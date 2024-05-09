@@ -235,43 +235,82 @@ jobs:
 
 ```json
 {
-  "identifier": "create_eks_cluster",
+  "identifier": "eks_create_eks_cluster",
   "title": "Create an EKS cluster",
   "icon": "AmazonEKS",
-  "userInputs": {
-    "properties": {
-      "cluster_name": {
-        "title": "Cluster Name",
-        "description": "The name of the EKS Cluster",
-        "icon": "AmazonEKS",
-        "type": "string"
+  "description": "An action that creates an eks cluster",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
+    "userInputs": {
+      "properties": {
+        "cluster_name": {
+          "title": "Cluster Name",
+          "description": "The name of the EKS Cluster",
+          "icon": "AmazonEKS",
+          "type": "string"
+        },
+        "region": {
+          "type": "string",
+          "blueprint": "region",
+          "title": "Region",
+          "format": "entity"
+        }
       },
-      "region": {
-        "type": "string",
-        "blueprint": "region",
-        "title": "Region",
-        "format": "entity"
-      }
+      "required": [
+        "cluster_name"
+      ],
+      "order": [
+        "cluster_name"
+      ]
     },
-    "required": [
-      "cluster_name"
-    ],
-    "order": [
-      "cluster_name"
-    ]
+    "blueprintIdentifier": "eks"
   },
   "invocationMethod": {
     "type": "GITHUB",
     "org": "<GITHUB_ORG>",
     "repo": "<GITHUB_REPO>",
     "workflow": "manage-eks-cluster.yml",
-    "omitUserInputs": false,
-    "omitPayload": false,
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "{{if (.inputs | has(\"cluster_name\")) then \"cluster_name\" else null end}}": "{{.inputs.\"cluster_name\"}}",
+      "{{if (.inputs | has(\"region\")) then \"region\" else null end}}": "{{.inputs.\"region\" | if type == \"array\" then map(.identifier) else .identifier end}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"eks_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "org": "<GITHUB_ORG>",
+              "repo": "<GITHUB_REPO>",
+              "workflow": "manage-eks-cluster.yml",
+              "omitUserInputs": false,
+              "omitPayload": false,
+              "reportWorkflowStatus": true
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {
+            "{{if (.inputs | has(\"cluster_name\")) then \"cluster_name\" else null end}}": "{{.inputs.\"cluster_name\"}}",
+            "{{if (.inputs | has(\"region\")) then \"region\" else null end}}": "{{.inputs.\"region\" | if type == \"array\" then map(.identifier) else .identifier end}}"
+          },
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
     "reportWorkflowStatus": true
   },
-  "trigger": "CREATE",
-  "description": "An action that creates an eks cluster",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 </details>
@@ -763,32 +802,69 @@ This action will create the following:
 
 ```json showLineNumbers
 {
-  "identifier": "deploy_to_eks",
+  "identifier": "eks_deploy_to_eks",
   "title": "Deploy to EKS",
-  "userInputs": {
-    "properties": {
-      "cluster": {
-        "type": "string",
-        "blueprint": "eks",
-        "title": "Cluster",
-        "format": "entity"
-      }
+  "description": "Build and deploy an image to EKS",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {
+        "cluster": {
+          "type": "string",
+          "blueprint": "eks",
+          "title": "Cluster",
+          "format": "entity"
+        }
+      },
+      "required": [],
+      "order": []
     },
-    "required": [],
-    "order": []
+    "blueprintIdentifier": "eks"
   },
   "invocationMethod": {
     "type": "GITHUB",
     "org": "<GITHUB_ORG>",
     "repo": "<GITHUB_REPO>",
     "workflow": "build-and-deploy.yml",
-    "omitUserInputs": false,
-    "omitPayload": false,
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "{{if (.inputs | has(\"cluster\")) then \"cluster\" else null end}}": "{{.inputs.\"cluster\" | if type == \"array\" then map(.identifier) else .identifier end}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"eks_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "org": "<GITHUB_ORG>",
+              "repo": "<GITHUB_REPO>",
+              "workflow": "build-and-deploy.yml",
+              "omitUserInputs": false,
+              "omitPayload": false,
+              "reportWorkflowStatus": true
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {
+            "{{if (.inputs | has(\"cluster\")) then \"cluster\" else null end}}": "{{.inputs.\"cluster\" | if type == \"array\" then map(.identifier) else .identifier end}}"
+          },
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
     "reportWorkflowStatus": true
   },
-  "trigger": "DAY-2",
-  "description": "Build and deploy an image to EKS",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 </details>

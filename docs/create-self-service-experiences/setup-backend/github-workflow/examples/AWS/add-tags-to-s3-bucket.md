@@ -88,7 +88,7 @@ Use our [AWS exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-p
 4. After creating the blueprint, create the following action with the following JSON file on the `s3_bucket` blueprint:
 
 <details>
-<summary><b>Add Tags to S3 Bucket Blueprint (Click to expand)</b></summary>
+<summary><b>Port Action: Add Tags to S3 Bucket</b></summary>
 
 :::note Customisation
 Replace the invocation method with your own repository details.
@@ -98,49 +98,74 @@ Replace the invocation method with your own repository details.
 
 ```json showLineNumbers
 {
-  "identifier": "add_tags_to_ecr_repository",
+  "identifier": "s3_bucket_add_tags_to_s3_bucket",
   "title": "Add Tags to S3 Bucket",
   "icon": "AWS",
-  "userInputs": {
-    "properties": {
-      "repository": {
-        "icon": "DefaultProperty",
-        "title": "Repository",
-        "type": "string",
-        "blueprint": "ecrRepository",
-        "description": "Use if respository has been ingested into Port. If both Repository and Repository Name are specified, Repository takes precedence.",
-        "format": "entity"
+  "description": "Add tags to an S3 bucket",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {
+        "tags": {
+          "icon": "DefaultProperty",
+          "title": "Tags",
+          "type": "object",
+          "description": "Tags should be in key-value pairs like so: {\"key\": \"value\"}"
+        }
       },
-      "tags": {
-        "icon": "DefaultProperty",
-        "title": "Tags",
-        "type": "object",
-        "description": "Tags should be in key-value pairs like so: {\"key\": \"value\"}"
-      }
+      "required": [
+        "tags"
+      ],
+      "order": [
+        "tags"
+      ]
     },
-    "required": [
-      "tags",
-      "repository"
-    ],
-    "order": [
-      "tags",
-      "repository"
-    ]
+    "blueprintIdentifier": "s3_bucket"
   },
   "invocationMethod": {
     "type": "GITHUB",
-    // highlight-start
     "org": "<GITHUB-ORG>",
     "repo": "<GITHUB-REPO-NAME>",
-    // highlight-end
-    "workflow": "add-tags-to-ecr-repository.yml",
-    "omitUserInputs": false,
-    "omitPayload": false,
+    "workflow": "add-tags-to-s3-bucket.yml",
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "{{if (.inputs | has(\"tags\")) then \"tags\" else null end}}": "{{.inputs.\"tags\"}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"s3_bucket_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "org": "<GITHUB-ORG>",
+              "repo": "<GITHUB-REPO-NAME>",
+              "workflow": "add-tags-to-s3-bucket.yml",
+              "omitUserInputs": false,
+              "omitPayload": false,
+              "reportWorkflowStatus": true
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {
+            "{{if (.inputs | has(\"tags\")) then \"tags\" else null end}}": "{{.inputs.\"tags\"}}"
+          },
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
     "reportWorkflowStatus": true
   },
-  "trigger": "CREATE",
-  "description": "Add tags to a repository on AWS ECR",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 
