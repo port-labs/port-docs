@@ -61,6 +61,7 @@ helm upgrade --install my-port-k8s-exporter port-labs/port-k8s-exporter \
     --set secret.secrets.portClientId=YOUR_PORT_CLIENT_ID \
     --set secret.secrets.portClientSecret=YOUR_PORT_CLIENT_SECRET \
     --set stateKey="k8s-exporter"  \
+    # highlight-next-line
     --set createDefaultResources=false \
     --set eventListenerType="POLLING"  \
     --set "extraEnv[0].name"="CLUSTER_NAME" \
@@ -68,7 +69,7 @@ helm upgrade --install my-port-k8s-exporter port-labs/port-k8s-exporter \
 ```
 
 
-After you installed the k8s exporter [add to `crdsToDiscover` configuration](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md#updating-exporter-configuration) with the following value:
+After installing the k8s exporter [update the `crdsToDiscover` configuration](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md#updating-exporter-configuration) with the following value:
 
 ```yaml
 crdsToDiscover: ".metadata.ownerReferences[0].kind == \"CompositeResourceDefinition\" and .spec.scope != \"Namespaced\""
