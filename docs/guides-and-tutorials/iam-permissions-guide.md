@@ -429,11 +429,11 @@ After creating our backend in GitHub, we need to create the Port actions to trig
 We will create the Port actions using the Port UI.
 
 :::tip Creating actions with JSON
-Don't know how to create Port actions using JSONs in the Port UI?
-Click [here](/docs/create-self-service-experiences/setup-ui-for-action/?configure=ui#configuring-actions-in-port)!
+Don't know how to create actions via the Port UI?
+Click [here](/create-self-service-experiences/setup-ui-for-action)!
 :::
 
-Let's create the Port actions to tirgger the workflows we just created:
+Let's create the Port actions to trigger the workflows we just created:
 <details>
     <summary>`Request permissions` Port action</summary>
 
@@ -441,56 +441,92 @@ Let's create the Port actions to tirgger the workflows we just created:
 
     ***Replace the `<YOUR_GITHUB_ORG>` placeholder with your GitHub organization.***
 
-    ```json showLineNumbers
-    {
-        "identifier": "request_permissions",
-        "title": "Request permissions",
-        "icon": "Unlock",
-        "userInputs": {
-            "properties": {
-                "permissions": {
-                    "title": "Permissions",
-                    "type": "array",
-                    "items": {
-                        "type": "string",
-                        "format": "entity",
-                        "blueprint": "iam_permissions",
-                        "dataset": {
-                            "combinator": "and",
-                            "rules": [
-                                {
-                                    "property": "resource_type",
-                                    "operator": "=",
-                                    "value": {
-                                    "jqQuery": ".entity.properties.resource_type"
-                                    }
-                                }
-                            ]
-                        }
-                    }
+```json showLineNumbers
+{
+  "identifier": "aws_resource_request_permissions",
+  "title": "Request permissions",
+  "icon": "Unlock",
+  "description": "Request permissions for an AWS resource",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {
+        "permissions": {
+          "title": "Permissions",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "entity",
+            "blueprint": "iam_permissions",
+            "dataset": {
+              "combinator": "and",
+              "rules": [
+                {
+                  "property": "resource_type",
+                  "operator": "=",
+                  "value": {
+                    "jqQuery": ".entity.properties.resource_type"
+                  }
                 }
+              ]
+            }
+          }
+        }
+      },
+      "required": [
+        "permissions"
+      ],
+      "order": [
+        "permissions"
+      ]
+    },
+    "blueprintIdentifier": "aws_resource"
+  },
+  "invocationMethod": {
+    "type": "GITHUB",
+    "org": "<YOUR_GITHUB_ORG>",
+    "repo": "port-iam-permissions",
+    "workflow": "create-iam-permissions.yaml",
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"aws_resource_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "org": "<YOUR_GITHUB_ORG>",
+              "repo": "port-iam-permissions",
+              "workflow": "create-iam-permissions.yaml",
+              "omitUserInputs": true,
+              "omitPayload": false,
+              "reportWorkflowStatus": true
             },
-            "required": [
-                "permissions"
-            ],
-            "order": [
-                "permissions"
-            ]
-        },
-        "invocationMethod": {
-            "type": "GITHUB",
-            "org": "<YOUR_GITHUB_ORG>",
-            "repo": "port-iam-permissions",
-            "workflow": "create-iam-permissions.yaml",
-            "omitUserInputs": true,
-            "omitPayload": false,
-            "reportWorkflowStatus": true
-        },
-        "trigger": "DAY-2",
-        "description": "Request permissions for an AWS resource",
-        "requiredApproval": false
-    }
-    ```
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {
+            "{{if (.inputs | has(\"permissions\")) then \"permissions\" else null end}}": "{{.inputs.\"permissions\" | if type == \"array\" then map(.identifier) else .identifier end}}"
+          },
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
+    "reportWorkflowStatus": true
+  },
+  "requiredApproval": false,
+  "publish": true
+}
+```
 </details>
 
 <details>
@@ -500,29 +536,63 @@ Let's create the Port actions to tirgger the workflows we just created:
 
     ***Replace the `<YOUR_GITHUB_ORG>` placeholder with your GitHub organization.***
 
-    ```json showLineNumbers
-    {
-        "identifier": "revoke_permissions",
-        "title": "Revoke permissions",
-        "icon": "Alert",
-        "userInputs": {
-            "properties": {},
-            "required": []
+```json showLineNumbers
+{
+  "identifier": "provisioned_permissions_revoke_permissions",
+  "title": "Revoke permissions",
+  "icon": "Alert",
+  "description": "Revokes IAM permissions",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DELETE",
+    "userInputs": {
+      "properties": {},
+      "required": []
+    },
+    "blueprintIdentifier": "provisioned_permissions"
+  },
+  "invocationMethod": {
+    "type": "GITHUB",
+    "org": "<YOUR_GITHUB_ORG>",
+    "repo": "port-iam-permissions",
+    "workflow": "delete-iam-permissions.yaml",
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"provisioned_permissions_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
         },
-        "invocationMethod": {
-            "type": "GITHUB",
-            "org": "<YOUR_GITHUB_ORG>",
-            "repo": "port-iam-permissions",
-            "workflow": "delete-iam-permissions.yaml",
-            "omitUserInputs": true,
-            "omitPayload": false,
-            "reportWorkflowStatus": true
-        },
-        "trigger": "DELETE",
-        "description": "Revokes IAM permissions",
-        "requiredApproval": false
-    }
-    ```
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "org": "<YOUR_GITHUB_ORG>",
+              "repo": "port-iam-permissions",
+              "workflow": "delete-iam-permissions.yaml",
+              "omitUserInputs": true,
+              "omitPayload": false,
+              "reportWorkflowStatus": true
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {},
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
+    "reportWorkflowStatus": true
+  },
+  "requiredApproval": false,
+  "publish": true
+}
+```
 </details>
 
 ## Manage permissions using Port

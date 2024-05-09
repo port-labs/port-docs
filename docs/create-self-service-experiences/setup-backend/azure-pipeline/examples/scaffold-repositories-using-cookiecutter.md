@@ -67,11 +67,13 @@ Also validate that `invocationMethod.webhook` equals `port_trigger`.
   <summary>Port Action</summary>
 
 ```json showLineNumbers
-[
-  {
-    "identifier": "azure_scaffolder",
-    "title": "Azure Scaffolder",
-    "icon": "Azure",
+{
+  "identifier": "microservice_azure_scaffolder",
+  "title": "Azure Scaffolder",
+  "icon": "Azure",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
     "userInputs": {
       "properties": {
         "service_name": {
@@ -99,7 +101,9 @@ Also validate that `invocationMethod.webhook` equals `port_trigger`.
           "description": "Service description"
         }
       },
-      "required": ["service_name"],
+      "required": [
+        "service_name"
+      ],
       "order": [
         "service_name",
         "azure_organization",
@@ -107,15 +111,45 @@ Also validate that `invocationMethod.webhook` equals `port_trigger`.
         "description"
       ]
     },
-    "invocationMethod": {
-      "type": "AZURE-DEVOPS",
-      "webhook": "port_trigger",
-      "org": "<AZURE_DEVOPS_ORANZATION_NAME>"
-    },
-    "trigger": "CREATE",
-    "requiredApproval": false
-  }
-]
+    "blueprintIdentifier": "microservice"
+  },
+  "invocationMethod": {
+    "type": "AZURE_DEVOPS",
+    "webhook": "port_trigger",
+    "org": "<AZURE_DEVOPS_ORANZATION_NAME>",
+    "payload": {
+      "action": "{{ .action.identifier[(\"microservice_\" | length):] }}",
+      "resourceType": "run",
+      "status": "TRIGGERED",
+      "trigger": "{{ .trigger | {by, origin, at} }}",
+      "context": {
+        "entity": "{{.entity.identifier}}",
+        "blueprint": "{{.action.blueprint}}",
+        "runId": "{{.run.id}}"
+      },
+      "payload": {
+        "entity": "{{ (if .entity == {} then null else .entity end) }}",
+        "action": {
+          "invocationMethod": {
+            "type": "AZURE-DEVOPS",
+            "webhook": "port_trigger",
+            "org": "<AZURE_DEVOPS_ORANZATION_NAME>"
+          },
+          "trigger": "{{.trigger.operation}}"
+        },
+        "properties": {
+          "{{if (.inputs | has(\"service_name\")) then \"service_name\" else null end}}": "{{.inputs.\"service_name\"}}",
+          "{{if (.inputs | has(\"azure_organization\")) then \"azure_organization\" else null end}}": "{{.inputs.\"azure_organization\"}}",
+          "{{if (.inputs | has(\"azure_project\")) then \"azure_project\" else null end}}": "{{.inputs.\"azure_project\"}}",
+          "{{if (.inputs | has(\"description\")) then \"description\" else null end}}": "{{.inputs.\"description\"}}"
+        },
+        "censoredProperties": "{{.action.encryptedProperties}}"
+      }
+    }
+  },
+  "requiredApproval": false,
+  "publish": true
+}
 ```
 
 </details>

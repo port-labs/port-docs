@@ -1,9 +1,10 @@
 ---
-title: Create self-service actions
 sidebar_label: Create self-service actions
 ---
 
-# Create self-service actions
+import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+
+# Self-service actions
 
 <center>
 
@@ -38,12 +39,12 @@ In our [live demo](https://demo.getport.io/self-serve), you can see examples for
 
 ## How does it work?
 
-1. A user **performs an action** from Port's UI interface.
-2. **A payload** that includes the user inputs and relevant action metadata is **sent** to your infrastructure.
-3. **A job is triggered** and the **user gets a continuous indication** about its progress.
-4. Once the action is running, you can use Port's API to update Port on its status and provide information such as logs and links to the resulting handlers.
+1. A user **executes an action** from Port's UI interface.
+2. A pre-defined **payload** containing any desired metadata about the action and its inputs is **sent** to your infrastructure.
+3. A **job is triggered** and the user gets a **continuous indication** about its progress.
+4. Once the action is running, you can use Port's API to **update Port on its status** and provide information such as **logs and links to the resulting handlers**.
 
-<img src='/img/self-service-actions/selfserviceHLarch.png' width='100%' border='1px' />
+<img src='/img/self-service-actions/selfserviceHLarch.png' width='90%' border='1px' />
 
 ## Create a self-service action
 
@@ -52,10 +53,10 @@ Port gives you no-code components to create the experience you want for your use
 
 Self-service actions are created and managed in the [Self-service](https://app.getport.io/self-serve) page of your portal.  
 
-To begin, click on the `+ New Action` button in the top right corner. Choose the blueprint for which you would like to create the action, then follow the steps below.
+To begin, click on the `+ New Action` button in the top right corner, then follow the steps below.
 
 :::tip Other supported methods
-Besides Port's UI, you can also create and manage self-service actions using [Port's API](/api-reference/), or [Terraform](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/port_action).
+Besides Port's UI, you can also create and manage self-service actions using [Port's API](https://api.getport.io/static/index.html#/Actions), or [Terraform](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/port_action).
 :::
 
 ### Step 1 - setup the action's frontend
@@ -67,17 +68,12 @@ See [Setup UI for actions](/create-self-service-experiences/setup-ui-for-action/
 
 ### Step 2 - setup backend
 
-Setup the logic responsible to handle the action after it is executed.
+Setup the logic responsible to handle the action after it is executed.  
+In this step you can also define the payload that will be sent to your handler upon execution.
 
-The backend logic is yours, so it can do whatever you need it to do. Some examples include:
+The backend logic is yours, so it can do whatever you need it to do. Port supports many different backends for actions, offering a secure and compliant architecture.
 
-- Create a pull request for a IaC file with injected values.
-- Trigger a Github Workflow or custom Python/Bash script.
-- Make an API call to one of your internal APIs.
-
-Port supports many different backends for actions, offering a secure and compliant architecture.
-
-As part of your backend and its logic implementation, you are able to keep the software catalog up to date by sending API requests or ingesting new data that is tied to the performed action (for example, adding a new service entity in Port once the scaffold process has finished).
+As part of your backend and its logic implementation, you can keep your software catalog up to date by sending API requests or ingesting new data that is tied to the performed action (for example, adding a new service entity in Port once the scaffold process has finished).
 
 See [Setup backend](/create-self-service-experiences/setup-backend/) for instructions and examples.
 
@@ -108,26 +104,39 @@ The basic structure of a self-service action looks like this (see key descriptio
   "identifier": "unique_id",
   "title": "Title",
   "icon": "iconIdentifier",
-  "userInputs": {
-    "properties": {
-      "property1": {
-        "type": "string",
-        "title": "Property title",
-        "default": "default value"
-      },
-      "property2": {
-        "type": "number",
-        "title": "property title",
-        "default": 5
+  "description": "Action description",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
+    "userInputs": {
+      "properties": {
+        "property1": {
+          "type": "string",
+          "title": "Property title",
+          "default": "default value"
+        },
+        "property2": {
+          "type": "number",
+          "title": "property title",
+          "default": 5
+        }
       }
     }
   },
   "invocationMethod": {
     "type": "WEBHOOK",
-    "url": "https://example.com"
-  },
-  "trigger": "CREATE",
-  "description": "Action description"
+    "url": "https://example.com",
+    "agent": false,
+    "synchronized": false,
+    "method": "POST",
+    "headers": {
+      "RUN_ID": "{{ .run.id }}"
+    },
+    "body": {
+      "property1": "{{ .inputs.property1 }}",
+      "property2": "{{ .inputs.property2 }}"
+    }
+  }
 }
 ```
 
@@ -136,8 +145,9 @@ The basic structure of a self-service action looks like this (see key descriptio
 | `identifier`       | The action's unique identifier.                                                                                                                                                                                          |
 | `title`            | The action's title.                                                                                                                                                                                                |
 | `icon`             | The action's icon.                                                                                                                                                                                                 |
-| `userInputs`       | An object containing the action's inputs and their metadata. See [User inputs](/create-self-service-experiences/setup-ui-for-action/user-inputs/) for more information. |
+| `description` | A description that can be used to explain the action to users.
+| `trigger` | An object containing data about the action (see next rows of this table). |
+| `trigger.operation`          | The [operation type](/create-self-service-experiences/setup-ui-for-action/#basic-details) of the action: `CREATE`, `DAY-2` or `DELETE`.                                                                                                                                                       |
+| `trigger.userInputs`       | An object containing the action's inputs and their metadata. See [User inputs](/create-self-service-experiences/setup-ui-for-action/user-inputs/) for more information. |
 | `invocationMethod` | Defines the type of backend the action will use. See [invocation method](/create-self-service-experiences/setup-backend/#invocation-method-structure-fields) for more information.                                                             |
-| `trigger`          | The [type](/create-self-service-experiences/setup-ui-for-action/#basic-details) of the action: `CREATE`, `DAY-2` or `DELETE`.                                                                                                                                                       |
-| `requiredApproval` | A boolean value that determines whether the action requires approval or not.                                                                                                                                                                 |
-| `description`      | A description that can be used to explain the action to users.                                                                                                                                                                                         |
+| `requiredApproval` | A boolean value that determines whether the action requires approval or not. |

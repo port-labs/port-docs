@@ -33,8 +33,11 @@ terraform apply -var 'resources=["ec2_instance", "autoscaling_group"]'
 
 ## Terminating an Instance
 
-1. Create a Port action in the [self-service page](https://app.getport.io/self-serve) or with the following JSON definition on the `EC2 Instance` blueprint:
-
+1. Create the Port action on the `ec2Instance` blueprint:
+    - Head to the [self-service](https://app.getport.io/self-serve) page.
+    - Click on the `+ New Action` button.
+    - Click on the `{...} Edit JSON` button.
+    - Copy and paste the following JSON configuration into the editor:
 <details>
   <summary>Port Action: Terminate EC2 Instance</summary>
    :::tip
@@ -44,24 +47,58 @@ terraform apply -var 'resources=["ec2_instance", "autoscaling_group"]'
 
 ```json showLineNumbers
 {
-  "identifier": "terminate_instance",
+  "identifier": "ec2Instance_terminate_instance",
   "title": "Terminate Instance",
-  "userInputs": {
-    "properties": {},
-    "required": []
+  "description": "Terminate an EC2 Instance",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DELETE",
+    "userInputs": {
+      "properties": {},
+      "required": []
+    },
+    "blueprintIdentifier": "ec2Instance"
   },
   "invocationMethod": {
     "type": "GITHUB",
     "org": "<GITHUB-ORG>",
     "repo": "<GITHUB-REPO-NAME>",
     "workflow": "terminate-instance.yml",
-    "omitUserInputs": true,
-    "omitPayload": false,
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"ec2Instance_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "org": "<GITHUB-ORG>",
+              "repo": "<GITHUB-REPO-NAME>",
+              "workflow": "terminate-instance.yml",
+              "omitUserInputs": true,
+              "omitPayload": false,
+              "reportWorkflowStatus": true
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {},
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
     "reportWorkflowStatus": true
   },
-  "trigger": "DELETE",
-  "description": "Terminate an EC2 Instance",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 </details>
@@ -122,8 +159,11 @@ jobs:
 
 ## Rebooting an Instance
 
-1. Create a Port action in the [self-service page](https://app.getport.io/self-serve) or with the following JSON definition on the `EC2 Instance` blueprint:
-
+1. Create the Port action on the `ec2Instance` blueprint:
+    - Head to the [self-service](https://app.getport.io/self-serve) page.
+    - Click on the `+ New Action` button.
+    - Click on the `{...} Edit JSON` button.
+    - Copy and paste the following JSON configuration into the editor:
 <details>
   <summary>Port Action: Reboot EC2 Instance</summary>
    :::tip
@@ -133,24 +173,58 @@ jobs:
 
 ```json showLineNumbers
 {
-  "identifier": "reboot_instance",
+  "identifier": "ec2Instance_reboot_instance",
   "title": "Reboot Instance",
-  "userInputs": {
-    "properties": {},
-    "required": []
+  "description": "Reboot an EC2 Instance",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {},
+      "required": []
+    },
+    "blueprintIdentifier": "ec2Instance"
   },
   "invocationMethod": {
     "type": "GITHUB",
     "org": "<GITHUB-ORG>",
     "repo": "<GITHUB-REPO-NAME>",
     "workflow": "reboot-instance.yml",
-    "omitUserInputs": true,
-    "omitPayload": false,
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"ec2Instance_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "org": "<GITHUB-ORG>",
+              "repo": "<GITHUB-REPO-NAME>",
+              "workflow": "reboot-instance.yml",
+              "omitUserInputs": true,
+              "omitPayload": false,
+              "reportWorkflowStatus": true
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {},
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
     "reportWorkflowStatus": true
   },
-  "trigger": "DAY-2",
-  "description": "Reboot an EC2 Instance",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 </details>
@@ -211,7 +285,11 @@ jobs:
 
 ## Resize Autoscaling Group
 
-1. Create a Port action in the [self-service page](https://app.getport.io/self-serve) or with the following JSON definition on the `Autoscaling Group` blueprint:
+1. Create the Port action on the `Autoscaling Group` blueprint:
+    - Head to the [self-service](https://app.getport.io/self-serve) page.
+    - Click on the `+ New Action` button.
+    - Click on the `{...} Edit JSON` button.
+    - Copy and paste the following JSON configuration into the editor:
 
 <details>
   <summary>Port Action: Resize Autoscaling Group</summary>
@@ -222,53 +300,94 @@ jobs:
 
 ```json showLineNumbers
 {
-  "identifier": "resize_autoscaling_group",
+  "identifier": "awsAutoScalingGroup_resize_autoscaling_group",
   "title": "Resize Autoscaling Group",
-  "userInputs": {
-    "properties": {
-      "minimum_capacity": {
-        "icon": "DefaultProperty",
-        "title": "Minimum Capacity",
-        "description": "Minimum number of instances",
-        "type": "number",
-        "default": 1,
-        "minimum": 0
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {
+        "minimum_capacity": {
+          "icon": "DefaultProperty",
+          "title": "Minimum Capacity",
+          "description": "Minimum number of instances",
+          "type": "number",
+          "default": 1,
+          "minimum": 0
+        },
+        "maximum_capacity": {
+          "icon": "DefaultProperty",
+          "title": "Maximum Capacity",
+          "type": "number",
+          "default": 1,
+          "minimum": 1
+        },
+        "desired_capacity": {
+          "title": "Desired Capacity",
+          "type": "number",
+          "default": 1
+        }
       },
-      "maximum_capacity": {
-        "icon": "DefaultProperty",
-        "title": "Maximum Capacity",
-        "type": "number",
-        "default": 1,
-        "minimum": 1
-      },
-      "desired_capacity": {
-        "title": "Desired Capacity",
-        "type": "number",
-        "default": 1
-      }
+      "required": [
+        "desired_capacity",
+        "maximum_capacity",
+        "minimum_capacity"
+      ],
+      "order": [
+        "minimum_capacity",
+        "maximum_capacity",
+        "desired_capacity"
+      ]
     },
-    "required": [
-      "desired_capacity",
-      "maximum_capacity",
-      "minimum_capacity"
-    ],
-    "order": [
-      "minimum_capacity",
-      "maximum_capacity",
-      "desired_capacity"
-    ]
+    "blueprintIdentifier": "awsAutoScalingGroup"
   },
   "invocationMethod": {
     "type": "GITHUB",
     "org": "<GITHUB-ORG>",
     "repo": "<GITHUB-REPO-NAME>",
     "workflow": "resize-asg.yml",
-    "omitUserInputs": false,
-    "omitPayload": false,
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "{{if (.inputs | has(\"minimum_capacity\")) then \"minimum_capacity\" else null end}}": "{{.inputs.\"minimum_capacity\"}}",
+      "{{if (.inputs | has(\"maximum_capacity\")) then \"maximum_capacity\" else null end}}": "{{.inputs.\"maximum_capacity\"}}",
+      "{{if (.inputs | has(\"desired_capacity\")) then \"desired_capacity\" else null end}}": "{{.inputs.\"desired_capacity\"}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"awsAutoScalingGroup_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "org": "<GITHUB-ORG>",
+              "repo": "<GITHUB-REPO-NAME>",
+              "workflow": "resize-asg.yml",
+              "omitUserInputs": false,
+              "omitPayload": false,
+              "reportWorkflowStatus": true
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {
+            "{{if (.inputs | has(\"minimum_capacity\")) then \"minimum_capacity\" else null end}}": "{{.inputs.\"minimum_capacity\"}}",
+            "{{if (.inputs | has(\"maximum_capacity\")) then \"maximum_capacity\" else null end}}": "{{.inputs.\"maximum_capacity\"}}",
+            "{{if (.inputs | has(\"desired_capacity\")) then \"desired_capacity\" else null end}}": "{{.inputs.\"desired_capacity\"}}"
+          },
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
     "reportWorkflowStatus": true
   },
-  "trigger": "DAY-2",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 </details>

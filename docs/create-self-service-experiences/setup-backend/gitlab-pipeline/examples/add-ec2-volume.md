@@ -474,67 +474,102 @@ update-run-status:
 
 ```json showLineNumbers
 {
-  "identifier": "add_disk",
+  "identifier": "ec2Instance_add_disk",
   "title": "Add Disk",
-  "userInputs": {
-    "properties": {
-      "disk_type": {
-        "type": "string",
-        "title": "Disk Type",
-        "default": "General Purpose SSD (gp3)",
-        "description": "Amazon EBS volume types",
-        "enum": [
-          "General Purpose SSD (gp3)",
-          "General Purpose SSD (gp2)",
-          "Provisioned IOPS SSD (io1)",
-          "Provisioned IOPS SSD (io2)",
-          "Cold HDD (sc1)",
-          "Throughput Optimized HDD (st1)",
-          "Magnetic (standard)"
-        ],
-        "enumColors": {
-          "General Purpose SSD (gp3)": "lightGray",
-          "General Purpose SSD (gp2)": "lightGray",
-          "Provisioned IOPS SSD (io1)": "lightGray",
-          "Provisioned IOPS SSD (io2)": "lightGray",
-          "Cold HDD (sc1)": "lightGray",
-          "Throughput Optimized HDD (st1)": "lightGray",
-          "Magnetic (standard)": "lightGray"
+  "description": "Add a disk to the EC2 instance",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {
+        "disk_type": {
+          "type": "string",
+          "title": "Disk Type",
+          "default": "General Purpose SSD (gp3)",
+          "description": "Amazon EBS volume types",
+          "enum": [
+            "General Purpose SSD (gp3)",
+            "General Purpose SSD (gp2)",
+            "Provisioned IOPS SSD (io1)",
+            "Provisioned IOPS SSD (io2)",
+            "Cold HDD (sc1)",
+            "Throughput Optimized HDD (st1)",
+            "Magnetic (standard)"
+          ],
+          "enumColors": {
+            "General Purpose SSD (gp3)": "lightGray",
+            "General Purpose SSD (gp2)": "lightGray",
+            "Provisioned IOPS SSD (io1)": "lightGray",
+            "Provisioned IOPS SSD (io2)": "lightGray",
+            "Cold HDD (sc1)": "lightGray",
+            "Throughput Optimized HDD (st1)": "lightGray",
+            "Magnetic (standard)": "lightGray"
+          }
+        },
+        "disk_name": {
+          "type": "string",
+          "title": "Disk Name",
+          "description": "The disk name"
+        },
+        "size": {
+          "icon": "DefaultProperty",
+          "type": "number",
+          "title": "Size",
+          "default": 5
         }
       },
-      "disk_name": {
-        "type": "string",
-        "title": "Disk Name",
-        "description": "The disk name"
-      },
-      "size": {
-        "icon": "DefaultProperty",
-        "type": "number",
-        "title": "Size",
-        "default": 5
-      }
+      "required": [
+        "disk_type",
+        "disk_name",
+        "size"
+      ],
+      "order": [
+        "disk_type",
+        "disk_name",
+        "size"
+      ]
     },
-    "required": [
-      "disk_type",
-      "disk_name",
-      "size"
-    ],
-    "order": [
-      "disk_type",
-      "disk_name",
-      "size"
-    ]
+    "blueprintIdentifier": "ec2Instance"
   },
   "invocationMethod": {
     "type": "WEBHOOK",
     "url": "https://gitlab.com/api/v4/projects/<PROJECT_ID>/ref/main/trigger/pipeline?token=<PIPELINE_TRIGGER_TOKEN>",
     "agent": false,
     "synchronized": false,
-    "method": "POST"
+    "method": "POST",
+    "body": {
+      "action": "{{ .action.identifier[(\"ec2Instance_\" | length):] }}",
+      "resourceType": "run",
+      "status": "TRIGGERED",
+      "trigger": "{{ .trigger | {by, origin, at} }}",
+      "context": {
+        "entity": "{{.entity.identifier}}",
+        "blueprint": "{{.action.blueprint}}",
+        "runId": "{{.run.id}}"
+      },
+      "payload": {
+        "entity": "{{ (if .entity == {} then null else .entity end) }}",
+        "action": {
+          "invocationMethod": {
+            "type": "WEBHOOK",
+            "url": "https://gitlab.com/api/v4/projects/<PROJECT_ID>/ref/main/trigger/pipeline?token=<PIPELINE_TRIGGER_TOKEN>",
+            "agent": false,
+            "synchronized": false,
+            "method": "POST"
+          },
+          "trigger": "{{.trigger.operation}}"
+        },
+        "properties": {
+          "{{if (.inputs | has(\"disk_type\")) then \"disk_type\" else null end}}": "{{.inputs.\"disk_type\"}}",
+          "{{if (.inputs | has(\"disk_name\")) then \"disk_name\" else null end}}": "{{.inputs.\"disk_name\"}}",
+          "{{if (.inputs | has(\"size\")) then \"size\" else null end}}": "{{.inputs.\"size\"}}"
+        },
+        "censoredProperties": "{{.action.encryptedProperties}}"
+      }
+    }
   },
-  "trigger": "DAY-2",
-  "description": "Add a disk to the EC2 instance",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 </details>

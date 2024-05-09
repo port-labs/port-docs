@@ -79,9 +79,13 @@ For local setup, look at this [example](../local-debugging-webhook.md#creating-t
 ```json showLineNumbers
 [
   {
-    "identifier": "CreateDjangoService",
-    "title": "Create Django",
-    "icon": "Service",
+  "identifier": "service_CreateDjangoService",
+  "title": "Create Django",
+  "icon": "Service",
+  "description": "Creates a new Django service",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
     "userInputs": {
       "properties": {
         "github_organization": {
@@ -97,19 +101,55 @@ For local setup, look at this [example](../local-debugging-webhook.md#creating-t
           "type": "string"
         }
       },
-      "required": ["github_organization", "github_repository"]
+      "required": [
+        "github_organization",
+        "github_repository"
+      ]
     },
-    "invocationMethod": {
-      "type": "WEBHOOK",
-      "url": "<WEBHOOK_URL>"
-    },
-    "trigger": "CREATE",
-    "description": "Creates a new Django service"
+    "blueprintIdentifier": "service"
   },
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "https://your-webhook-url.com",
+    "body": {
+      "action": "{{ .action.identifier[(\"service_\" | length):] }}",
+      "resourceType": "run",
+      "status": "TRIGGERED",
+      "trigger": "{{ .trigger | {by, origin, at} }}",
+      "context": {
+        "entity": "{{.entity.identifier}}",
+        "blueprint": "{{.action.blueprint}}",
+        "runId": "{{.run.id}}"
+      },
+      "payload": {
+        "entity": "{{ (if .entity == {} then null else .entity end) }}",
+        "action": {
+          "invocationMethod": {
+            "type": "WEBHOOK",
+            "url": "https://your-webhook-url.com"
+          },
+          "trigger": "{{.trigger.operation}}"
+        },
+        "properties": {
+          "{{if (.inputs | has(\"github_organization\")) then \"github_organization\" else null end}}": "{{.inputs.\"github_organization\"}}",
+          "{{if (.inputs | has(\"github_repository\")) then \"github_repository\" else null end}}": "{{.inputs.\"github_repository\"}}",
+          "{{if (.inputs | has(\"project_name\")) then \"project_name\" else null end}}": "{{.inputs.\"project_name\"}}",
+          "{{if (.inputs | has(\"description\")) then \"description\" else null end}}": "{{.inputs.\"description\"}}"
+        },
+        "censoredProperties": "{{.action.encryptedProperties}}"
+      }
+    }
+  },
+  "publish": true
+}
   {
-    "identifier": "CreateCPPService",
-    "title": "Create C++",
-    "icon": "Service",
+  "identifier": "service_CreateCPPService",
+  "title": "Create C++",
+  "icon": "Service",
+  "description": "Creates a new C++ service",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
     "userInputs": {
       "properties": {
         "github_organization": {
@@ -125,19 +165,55 @@ For local setup, look at this [example](../local-debugging-webhook.md#creating-t
           "type": "string"
         }
       },
-      "required": ["github_organization", "github_repository"]
+      "required": [
+        "github_organization",
+        "github_repository"
+      ]
     },
-    "invocationMethod": {
-      "type": "WEBHOOK",
-      "url": "<WEBHOOK_URL>"
-    },
-    "trigger": "CREATE",
-    "description": "Creates a new C++ service"
+    "blueprintIdentifier": "service"
   },
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "https://your-webhook-url.com>",
+    "body": {
+      "action": "{{ .action.identifier[(\"service_\" | length):] }}",
+      "resourceType": "run",
+      "status": "TRIGGERED",
+      "trigger": "{{ .trigger | {by, origin, at} }}",
+      "context": {
+        "entity": "{{.entity.identifier}}",
+        "blueprint": "{{.action.blueprint}}",
+        "runId": "{{.run.id}}"
+      },
+      "payload": {
+        "entity": "{{ (if .entity == {} then null else .entity end) }}",
+        "action": {
+          "invocationMethod": {
+            "type": "WEBHOOK",
+            "url": "https://your-webhook-url.com"
+          },
+          "trigger": "{{.trigger.operation}}"
+        },
+        "properties": {
+          "{{if (.inputs | has(\"github_organization\")) then \"github_organization\" else null end}}": "{{.inputs.\"github_organization\"}}",
+          "{{if (.inputs | has(\"github_repository\")) then \"github_repository\" else null end}}": "{{.inputs.\"github_repository\"}}",
+          "{{if (.inputs | has(\"project_name\")) then \"project_name\" else null end}}": "{{.inputs.\"project_name\"}}",
+          "{{if (.inputs | has(\"description\")) then \"description\" else null end}}": "{{.inputs.\"description\"}}"
+        },
+        "censoredProperties": "{{.action.encryptedProperties}}"
+      }
+    }
+  },
+  "publish": true
+},
   {
-    "identifier": "CreateGoService",
-    "title": "Create Go",
-    "icon": "Service",
+  "identifier": "service_CreateGoService",
+  "title": "Create Go",
+  "icon": "Service",
+  "description": "Creates a new Go service",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
     "userInputs": {
       "properties": {
         "github_organization": {
@@ -153,15 +229,47 @@ For local setup, look at this [example](../local-debugging-webhook.md#creating-t
           "type": "string"
         }
       },
-      "required": ["github_organization", "github_repository"]
+      "required": [
+        "github_organization",
+        "github_repository"
+      ]
     },
-    "invocationMethod": {
-      "type": "WEBHOOK",
-      "url": "<WEBHOOK_URL>"
-    },
-    "trigger": "CREATE",
-    "description": "Creates a new Go service"
-  }
+    "blueprintIdentifier": "service"
+  },
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "https://your-webhook-url.com",
+    "body": {
+      "action": "{{ .action.identifier[(\"service_\" | length):] }}",
+      "resourceType": "run",
+      "status": "TRIGGERED",
+      "trigger": "{{ .trigger | {by, origin, at} }}",
+      "context": {
+        "entity": "{{.entity.identifier}}",
+        "blueprint": "{{.action.blueprint}}",
+        "runId": "{{.run.id}}"
+      },
+      "payload": {
+        "entity": "{{ (if .entity == {} then null else .entity end) }}",
+        "action": {
+          "invocationMethod": {
+            "type": "WEBHOOK",
+            "url": "https://your-webhook-url.com"
+          },
+          "trigger": "{{.trigger.operation}}"
+        },
+        "properties": {
+          "{{if (.inputs | has(\"github_organization\")) then \"github_organization\" else null end}}": "{{.inputs.\"github_organization\"}}",
+          "{{if (.inputs | has(\"github_repository\")) then \"github_repository\" else null end}}": "{{.inputs.\"github_repository\"}}",
+          "{{if (.inputs | has(\"app_name\")) then \"app_name\" else null end}}": "{{.inputs.\"app_name\"}}",
+          "{{if (.inputs | has(\"project_short_description\")) then \"project_short_description\" else null end}}": "{{.inputs.\"project_short_description\"}}"
+        },
+        "censoredProperties": "{{.action.encryptedProperties}}"
+      }
+    }
+  },
+  "publish": true
+}
 ]
 ```
 
@@ -175,7 +283,7 @@ For local setup, look at this [example](../local-debugging-webhook.md#creating-t
 - Template specific parameters, such as `project_name` and `description`.
 
 :::note
-In the following JSON, you need to replace the `<WEBHOOK_URL>` placeholders with your URL.
+In the following JSON, you need to replace the `https://your-webhook-url.com` placeholders with your URL.
 
 For local setup, look at this [example](../local-debugging-webhook.md#creating-the-vm-create-action).
 :::

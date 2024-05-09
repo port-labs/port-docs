@@ -166,34 +166,71 @@ variable "environment" {
 
 ```json showLineNumbers
 {
-  "identifier": "plan_terraform_resource",
+  "identifier": "cloudResource_plan_terraform_resource",
   "title": "Terraform Plan",
   "icon": "Terraform",
-  "userInputs": {
-    "properties": {
-      "bucket_name": {
-        "title": "Bucket Name",
-        "icon": "AWS",
-        "type": "string"
-      }
+  "description": "Plans a cloud resource on AWS using terraform and sends request to the approval team to review the plan and apply the resource",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
+    "userInputs": {
+      "properties": {
+        "bucket_name": {
+          "title": "Bucket Name",
+          "icon": "AWS",
+          "type": "string"
+        }
+      },
+      "required": [
+        "bucket_name"
+      ],
+      "order": []
     },
-    "required": [
-      "bucket_name"
-    ],
-    "order": []
+    "blueprintIdentifier": "cloudResource"
   },
   "invocationMethod": {
     "type": "GITHUB",
     "org": "<ENTER-GITHUB-ORG>",
     "repo": "<ENTER-GITHUB-REPO-NAME>",
     "workflow": "plan-terraform-resource.yaml",
-    "omitUserInputs": false,
-    "omitPayload": false,
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "{{if (.inputs | has(\"bucket_name\")) then \"bucket_name\" else null end}}": "{{.inputs.\"bucket_name\"}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"cloudResource_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "org": "<ENTER-GITHUB-ORG>",
+              "repo": "<ENTER-GITHUB-REPO-NAME>",
+              "workflow": "plan-terraform-resource.yaml",
+              "omitUserInputs": false,
+              "omitPayload": false,
+              "reportWorkflowStatus": true
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {
+            "{{if (.inputs | has(\"bucket_name\")) then \"bucket_name\" else null end}}": "{{.inputs.\"bucket_name\"}}"
+          },
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
     "reportWorkflowStatus": true
   },
-  "trigger": "CREATE",
-  "description": "Plans a cloud resource on AWS using terraform and sends request to the approval team to review the plan and apply the resource",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 
@@ -211,51 +248,92 @@ variable "environment" {
 
 ```json showLineNumbers
 {
-  "identifier": "apply_terraform_resource",
-  "title": "Terraform Apply",
+  "identifier": "cloudResource_apply_terraform_resource",
+  "title": "Terraform ApplyResource",
   "icon": "Terraform",
-  "userInputs": {
-    "properties": {
-      "artifact_identifier": {
-        "icon": "DefaultProperty",
-        "title": "Artifact Identifier",
-        "type": "string"
+  "description": "Reviews the cloud resource planned in the \"Plan A Terraform Resource\" workflow and approves/declines the terraform configuration",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
+    "userInputs": {
+      "properties": {
+        "artifact_identifier": {
+          "icon": "DefaultProperty",
+          "title": "Artifact Identifier",
+          "type": "string"
+        },
+        "port_run_identifier": {
+          "icon": "DefaultProperty",
+          "title": "Port Run Identifier",
+          "type": "string"
+        },
+        "tf_plan_output": {
+          "title": "Terrform Plan Output",
+          "type": "object",
+          "description": "JSON output of TF Plan"
+        }
       },
-      "port_run_identifier": {
-        "icon": "DefaultProperty",
-        "title": "Port Run Identifier",
-        "type": "string"
-      },
-      "tf_plan_output": {
-        "title": "Terrform Plan Output",
-        "type": "object",
-        "description": "JSON output of TF Plan"
-      }
+      "required": [
+        "port_run_identifier",
+        "artifact_identifier"
+      ],
+      "order": [
+        "port_run_identifier",
+        "artifact_identifier"
+      ]
     },
-    "required": [
-      "port_run_identifier",
-      "artifact_identifier"
-    ],
-    "order": [
-      "port_run_identifier",
-      "artifact_identifier"
-    ]
+    "blueprintIdentifier": "cloudResource"
   },
   "invocationMethod": {
     "type": "GITHUB",
     "org": "<ENTER-GITHUB-ORG>",
     "repo": "<ENTER-GITHUB-REPO-NAME>",
     "workflow": "apply-terraform-resource.yaml",
-    "omitUserInputs": false,
-    "omitPayload": false,
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "{{if (.inputs | has(\"artifact_identifier\")) then \"artifact_identifier\" else null end}}": "{{.inputs.\"artifact_identifier\"}}",
+      "{{if (.inputs | has(\"port_run_identifier\")) then \"port_run_identifier\" else null end}}": "{{.inputs.\"port_run_identifier\"}}",
+      "{{if (.inputs | has(\"tf_plan_output\")) then \"tf_plan_output\" else null end}}": "{{.inputs.\"tf_plan_output\"}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"cloudResource_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "org": "<ENTER-GITHUB-ORG>",
+              "repo": "<ENTER-GITHUB-REPO-NAME>",
+              "workflow": "apply-terraform-resource.yaml",
+              "omitUserInputs": false,
+              "omitPayload": false,
+              "reportWorkflowStatus": true
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {
+            "{{if (.inputs | has(\"artifact_identifier\")) then \"artifact_identifier\" else null end}}": "{{.inputs.\"artifact_identifier\"}}",
+            "{{if (.inputs | has(\"port_run_identifier\")) then \"port_run_identifier\" else null end}}": "{{.inputs.\"port_run_identifier\"}}",
+            "{{if (.inputs | has(\"tf_plan_output\")) then \"tf_plan_output\" else null end}}": "{{.inputs.\"tf_plan_output\"}}"
+          },
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
     "reportWorkflowStatus": true
   },
-  "trigger": "CREATE",
-  "description": "Reviews the cloud resource planned in the \"Plan A Terraform Resource\" workflow and approves/declines the terraform configuration",
   "requiredApproval": true,
   "approvalNotification": {
     "type": "email"
-  }
+  },
+  "publish": true
 }
 ```
 
