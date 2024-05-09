@@ -5,6 +5,9 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
+import GithubActionModificationHint from '../../\_github_action_modification_required_hint.mdx'
+import GithubDedicatedRepoHint from '../../\_github_dedicated_workflows_repository_hint.mdx'
+
 # Restart Argo CD Application
 
 ## Overview
@@ -151,10 +154,7 @@ This step is not required for this example, but it will create all the blueprint
 
 1. Create a workflow file under `.github/workflows/restart-argocd-app.yaml` with the following content:
 
-:::tip Dedicated repository
-
-We recommend creating a dedicated repository for the workflows that are used by Port actions.
-:::
+<GithubDedicatedRepoHint/>
 
 <details>
 <summary>GitHub Workflow</summary>
@@ -367,68 +367,99 @@ jobs:
 </details>
 
 ## Port Configuration
-1. Head to the [self-service](https://app.getport.io/self-serve) page.
-2. Click on the `+ New Action` button.
-3. Choose the `Argo CD Application` blueprint and click `Next`.
-4. Click on the `{...} Edit JSON` button.
-5. Copy and paste the following JSON configuration into the editor.
+
+Create a new self service action using the following JSON configuration.
 
 <details>
 <summary><b>Restart Argo CD Application(Click to expand)</b></summary>
 
-:::tip Modification Required
-Make sure to replace `<GITHUB-ORG-NAME>` and `<GITHUB-REPO-NAME>` with your GitHub organization and repository names respectively.
-:::
+<GithubActionModificationHint/>
 
 ```json showLineNumbers
 {
-  "identifier": "restart_application",
+  "identifier": "argocdApplication_restart_application",
   "title": "Restart Application",
   "icon": "Argo",
-  "userInputs": {
-    "properties": {
-      "application_name": {
-        "title": "Application Name",
-        "description": "Argo CD Application Name",
-        "icon": "Argo",
-        "type": "string",
-        "default": {
+  "description": "Restart An Argo CD Application",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {
+        "application_name": {
+          "title": "Application Name",
+          "description": "Argo CD Application Name",
+          "icon": "Argo",
+          "type": "string",
+          "default": {
             "jqQuery": ".entity.title"
           }
+        },
+        "insecure": {
+          "title": "Insecure",
+          "description": "Use insecure connection (true/false)",
+          "icon": "Argo",
+          "type": "boolean",
+          "default": false
+        }
       },
-      "insecure": {
-        "title": "Insecure",
-        "description": "Use insecure connection (true/false)",
-        "icon": "Argo",
-        "type": "boolean",
-        "default": false
-      }
+      "required": [
+        "application_name"
+      ],
+      "order": [
+        "application_name"
+      ]
     },
-    "required": [
-      "application_name"
-    ],
-    "order": [
-      "application_name",
-      "insecure"
-    ]
+    "blueprintIdentifier": "argocdApplication"
   },
   "invocationMethod": {
     "type": "GITHUB",
-    "org": "<GITHUB-ORG-NAME>",
-    "repo": "<GITHUB-REPO-NAME>",
+    "org": "<GITHUB_ORG>",
+    "repo": "<GITHUB_REPO>",
     "workflow": "restart-argocd-app.yaml",
-    "omitUserInputs": false,
-    "omitPayload": false,
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "{{if (.inputs | has(\"application_name\")) then \"application_name\" else null end}}": "{{.inputs.\"application_name\"}}",
+      "{{if (.inputs | has(\"insecure\")) then \"insecure\" else null end}}": "{{.inputs.\"insecure\"}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"argocdApplication_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "org": "<GITHUB_ORG>",
+              "repo": "<GITHUB_REPO>",
+              "workflow": "restart-argocd-app.yaml",
+              "omitUserInputs": false,
+              "omitPayload": false,
+              "reportWorkflowStatus": true
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {
+            "{{if (.inputs | has(\"application_name\")) then \"application_name\" else null end}}": "{{.inputs.\"application_name\"}}",
+            "{{if (.inputs | has(\"insecure\")) then \"insecure\" else null end}}": "{{.inputs.\"insecure\"}}"
+          },
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
     "reportWorkflowStatus": true
   },
-  "trigger": "DAY-2",
-  "description": "Restart argocd application deployment",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 </details>
-
-6. Click `Save`.
 
 Now you should see the `Restart Application` action in the self-service page. 🎉
 
@@ -441,4 +472,8 @@ Now you should see the `Restart Application` action in the self-service page. �
 5. Click on `Execute`
 6. Done! wait for the applicatioin flag's status to be restarted in Argo CD.
 
-Congrats 🎉 You've restarted your first Argo CD Application from Port!
+Congrats 🎉 You've restarted your first Argo CD Application from Port 🔥
+
+## More Self Service Argo CD Actions Examples
+- [Rollback Argo CD Deployment](/create-self-service-experiences/setup-backend/github-workflow/examples/ArgoCD/rollback-argocd-deployment) using Port's self-service actions.
+- [Synchronize Argo CD Application](/create-self-service-experiences/setup-backend/github-workflow/examples/ArgoCD/argocd/sync-argocd-app) using Port's self-service actions.
