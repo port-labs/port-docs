@@ -9,7 +9,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 ### Introduction
 
-Kubernetes provides a great way of extending its API which is via Custom Resource Definitions (CRDs). CRDs allow you to define your API objects and controllers to manage them. This is a powerful feature that allows you to extend Kubernetes to manage any kind of resources.
+Kubernetes provides a great way of extending its API via Custom Resource Definitions (CRDs). CRDs allow you to define your API objects and controllers to manage them. This is a powerful feature that allows you to extend Kubernetes to manage any kind of resource.
 This guide will show you how to integrate Kubernetes CRDs with Port and expose them in the Port UI for developers to use.
 
 :::tip Prerequisites
@@ -21,7 +21,7 @@ This guide will show you how to integrate Kubernetes CRDs with Port and expose t
 
 ### The goal of this guide
 
-- Developers will be able to use any CRDs directly in a UI.
+- Developers will be able to use any CRDs directly in Port's UI.
 - Platform engineers will be able to query the data and get insights about the usage of the CRDs and Kubernetes resources.
 - Platform engineers will be able to serve any CRDs to developers in a self-service manner.
 
@@ -29,12 +29,12 @@ In this guide, we will deploy Port's [Kubernetes Exporter](/build-your-software-
 
 <img src='/img/guides/visualizeCRDs.svg' width='100%' border='1px' />
 
-Then we will connect a GitHub account using Port's [GitHub integration](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md) to provision CRs directly into the Kubernetes cluster, or optionally with GitOps.
+Next, we will connect a GitHub account using Port's [GitHub integration](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md) to provision CRs directly into the Kubernetes cluster, or optionally with GitOps.
 After completing it, you will get a sense of how it can benefit different personas in your organization:
 
 <img src='/img/guides/createCRs.svg' width='100%' border='1px' />
 
-### 1. (Optional) Creating a Crossplane XRD & Composition or using an existing CRD
+### 1. (Optional) Create a Crossplane XRD & Composition or use an existing CRD
 
 **If you already have a CRD that you want to expose in Port, you can skip this step.**
 
@@ -42,7 +42,7 @@ After completing it, you will get a sense of how it can benefit different person
 If you don't have a CRD and you would like to create one, you can use Crossplane's XRD to create a CRD like we do in this guide or to install any operator that applies CRD into your cluster. You can follow the [Crossplane XRD documentation](https://docs.crossplane.io/latest/concepts/composite-resource-definitions/) to create a CRD.
 For this guide, we followed the [AWS DynamoDB composition example](https://docs.crossplane.io/latest/getting-started/provider-aws-part-2/)
 
-### 2. Installing the Kubernetes Exporter with `crdsToDiscover` flag
+### 2. Install the Kubernetes Exporter with the `crdsToDiscover` flag
 
 The Kubernetes Exporter can be installed with the `crdsToDiscover` flag which is a JQ pattern to discover and export CRDs to Port as blueprints and actions. In this example we will use [Helm](https://helm.sh/) to install the Kubernetes Exporter, but for more installation options please visit the [Kubernetes Exporter documentation](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md#installation)
 
@@ -74,7 +74,7 @@ helm upgrade --install my-port-k8s-exporter port-labs/port-k8s-exporter \
 After the Kubernetes Exporter is installed, you can check the logs to see if the CRDs are being discovered and exported to Port.
 If everything succeeded you should see the relevant CRDs as `blueprints` and `actions`, and any existing CRs as `entities` in Port's catalog.
 
-### 3. Connecting a GitHub workflow
+### 3. Connect a GitHub workflow
 
 Now, to execute the action we need to add some workflow to it for Port to trigger the action, the workflow that we will configure will do the operations in the Kubernetes cluster using the `kubeconfig` that we will provide as a secret in the GitHub repository.
 
@@ -95,7 +95,7 @@ Now, to execute the action we need to add some workflow to it for Port to trigge
 4. Edit the org and repo of Port's Action, to match yours you can do that by (make sure to do it to all actions create/delete/update):
     * Go to the [Self-Service Tab](https://app.getport.io/self-serve)
     * Hover the wanted action 
-    * Click on the 3 dots 
+    * Click on the `...` button
     * Click on `Edit Action` 
     * Click in the `Backend` tab there change the `organization` and `repository` fields to match yours.
 
