@@ -1,0 +1,83 @@
+<details>
+
+<summary>
+  Mapping Configuration for Autoscaler, Firewall, Subnetwork, Compute Instance
+</summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: compute.googleapis.com/Autoscaler
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: ".name"
+          title:  ".versioned_resources | max_by(.version).resource | .name"
+          blueprint: '"gcpAutoScaler"'
+          properties:
+            location: .location
+            description: ".versioned_resources | max_by(.version).resource | .description"
+            minNumReplicas: ".versioned_resources | max_by(.version).resource | .autoscalingPolicy.minNumReplicas"
+            maxNumReplicas: ".versioned_resources | max_by(.version).resource | .autoscalingPolicy.maxNumReplicas"
+            recommendedSize: ".versioned_resources | max_by(.version).resource | .recommendedSize"
+            target: ".versioned_resources | max_by(.version).resource | .target"
+          relations:
+            project: ".project"
+  - kind: compute.googleapis.com/Firewall
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: ".name"
+          title:  ".versioned_resources | max_by(.version).resource | .name"
+          blueprint: '"gcpFirewall"'
+          properties:
+            location: .location
+            network: ".versioned_resources | max_by(.version).resource | .network"
+            destinationRanges: ".versioned_resources | max_by(.version).resource | .destinationRanges"
+            sourceRanges: ".versioned_resources | max_by(.version).resource | .sourceRanges"
+            priority: ".versioned_resources | max_by(.version).resource | .priority"
+            allowed: ".versioned_resources | max_by(.version).resource | .allowed"
+            denied: ".versioned_resources | max_by(.version).resource | .denied"
+          relations:
+            project: ".project"
+  - kind: compute.googleapis.com/Subnetwork
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: ".name"
+          title:  ".versioned_resources | max_by(.version).resource | .name"
+          blueprint: '"gcpSubnetwork"'
+          properties:
+            location: .location
+            privateIpGoogleAccess: ".versioned_resources | max_by(.version).resource | .privateIpGoogleAccess"
+            internalIpv6Prefix: ".versioned_resources | max_by(.version).resource | .internalIpv6Prefix"
+            externalIpv6Prefix: ".versioned_resources | max_by(.version).resource | .externalIpv6Prefix"
+            ipCidrRange: ".versioned_resources | max_by(.version).resource | .ipCidrRange"
+            description: ".versioned_resources | max_by(.version).resource | .description"
+          relations:
+            project: ".project"
+  - kind: compute.googleapis.com/Instance
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: ".name"
+          title:  ".versioned_resources | max_by(.version).resource | .name"
+          blueprint: '"gcpComputeInstance"'
+          properties:
+            location: .location
+            machineType: ".versioned_resources | max_by(.version).resource | .machineType"
+            subnetworks: ".versioned_resources | max_by(.version).resource | .networkInterfaces[].subnetwork"
+            cpuPlatform: ".versioned_resources | max_by(.version).resource | .cpuPlatform"
+            selfLink: ".versioned_resources | max_by(.version).resource | .selfLink"
+          relations:
+            project: ".project"
+```
+
+</details>
