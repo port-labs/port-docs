@@ -135,127 +135,7 @@ For each of the blueprints:
   "mirrorProperties": {},
   "calculationProperties": {},
   "aggregationProperties": {},
-  "relations": {
-    "test_runtime": {
-      "title": "Test runtime",
-      "description": "The service's test runtime",
-      "target": "running_service",
-      "required": false,
-      "many": false
-    },
-    "dev_runtime": {
-      "title": "Dev Runtime",
-      "target": "running_service",
-      "required": false,
-      "many": false
-    },
-    "prod_runtime": {
-      "title": "Prod runtime",
-      "description": "The service's prod runtime",
-      "target": "running_service",
-      "required": false,
-      "many": false
-    }
-  }
-}
-```
-
-</details>
-
-<details>
-<summary><b>Running Service blueprint (click to expand)</b></summary>
-:::tip Application Manifest Path
-The `gitPath` directs the GitHub workflow to the location of your application's manifests inside your Git repository. This is so that the workflow can update the image.  For instance:
-
-- Service: `messenger`
-- Running Service: `messenger_prod`
-- Manifest File: `deployment.yml`
-
-A possible gitPath could be: `apps/messenger/prod/deployment.yml`
-:::
-
-```json showLineNumbers
-{
-  "identifier": "running_service",
-  "description": "This blueprint represents an ArgoCD Application",
-  "title": "Running Service",
-  "icon": "Argo",
-  "schema": {
-    "properties": {
-      "gitRepo": {
-        "type": "string",
-        "format": "url",
-        "icon": "Git",
-        "title": "Repository URL",
-        "description": "The URL of the Git repository containing the application source code"
-      },
-      "gitPath": {
-        "type": "string",
-        "title": "Path",
-        "description": "The path within the Git repository where the application manifests are located"
-      },
-      "destinationServer": {
-        "type": "string",
-        "title": "Destination Server",
-        "format": "url"
-      },
-      "syncStatus": {
-        "type": "string",
-        "title": "Sync Status",
-        "enum": ["Synced", "OutOfSync", "Unknown"],
-        "enumColors": {
-          "Synced": "green",
-          "OutOfSync": "red",
-          "Unknown": "lightGray"
-        },
-        "description": "The sync status of the application"
-      },
-      "healthStatus": {
-        "type": "string",
-        "title": "Health Status",
-        "enum": [
-          "Healthy",
-          "Missing",
-          "Suspended",
-          "Degraded",
-          "Progressing",
-          "Unknown"
-        ],
-        "enumColors": {
-          "Healthy": "green",
-          "Missing": "yellow",
-          "Suspended": "purple",
-          "Degraded": "red",
-          "Progressing": "blue",
-          "Unknown": "lightGray"
-        },
-        "description": "The health status of the application"
-      },
-      "createdAt": {
-        "title": "Created At",
-        "type": "string",
-        "format": "date-time"
-      },
-      "grafana_link": {
-        "title": "Grafana Link",
-        "icon": "Grafana",
-        "type": "string",
-        "format": "url"
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "aggregationProperties": {},
-  "relations": {
-    "image": {
-      "title": "Image Deployed",
-      "target": "image",
-      "required": false,
-      "many": false
-    }
-  }
+  "relations": {}
 }
 ```
 
@@ -341,6 +221,127 @@ A possible gitPath could be: `apps/messenger/prod/deployment.yml`
 ```
 
 </details>
+
+
+<details>
+<summary><b>Running Service blueprint (click to expand)</b></summary>
+:::tip Application Manifest Path
+The `gitPath` directs the GitHub workflow to the location of your application's manifests inside your Git repository. This is so that the workflow can update the image.  For instance:
+
+- Service: `messenger`
+- Running Service: `messenger_prod`
+- Manifest File: `deployment.yml`
+
+A possible gitPath could be: `apps/messenger/prod/deployment.yml`
+:::
+
+```json showLineNumbers
+{
+  "identifier": "running_service",
+  "description": "This blueprint represents an ArgoCD Application",
+  "title": "Running Service",
+  "icon": "Argo",
+  "schema": {
+    "properties": {
+      "pullRequest": {
+        "type": "string",
+        "format": "url",
+        "title": "Merged PR",
+        "icon": "Github",
+        "default": "https://github.com"
+      },
+      "locked": {
+        "type": "boolean",
+        "title": "Locked",
+        "description": "Indicate if deploying is allow for microservice in a this environment",
+        "default": false
+      },
+      "gitPath": {
+        "type": "string",
+        "title": "Path",
+        "description": "The path within the Git repository where the application manifests are located"
+      },
+      "destinationServer": {
+        "type": "string",
+        "title": "Destination Server",
+        "format": "url"
+      },
+      "syncStatus": {
+        "type": "string",
+        "title": "Sync Status",
+        "enum": [
+          "Synced",
+          "OutOfSync",
+          "Unknown"
+        ],
+        "enumColors": {
+          "Synced": "green",
+          "OutOfSync": "red",
+          "Unknown": "lightGray"
+        },
+        "description": "The sync status of the application"
+      },
+      "healthStatus": {
+        "type": "string",
+        "title": "Health Status",
+        "enum": [
+          "Healthy",
+          "Missing",
+          "Suspended",
+          "Degraded",
+          "Progressing",
+          "Unknown"
+        ],
+        "enumColors": {
+          "Healthy": "green",
+          "Missing": "yellow",
+          "Suspended": "purple",
+          "Degraded": "red",
+          "Progressing": "blue",
+          "Unknown": "lightGray"
+        },
+        "description": "The health status of the application"
+      },
+      "createdAt": {
+        "title": "Created At",
+        "type": "string",
+        "format": "date-time"
+      },
+      "grafana_link": {
+        "title": "Grafana Link",
+        "icon": "Grafana",
+        "type": "string",
+        "format": "url"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {
+    "service_name": {
+      "path": "service.$title"
+    }
+  },
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "image": {
+      "title": "Image Deployed",
+      "target": "image",
+      "required": false,
+      "many": false
+    },
+    "service": {
+      "title": "Service",
+      "target": "service",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
+
 
 ### Port Action
 
