@@ -15,7 +15,7 @@ This guide will show you how to integrate Kubernetes CRDs with Port and expose t
 :::tip Prerequisites
 - Port account
 - Kubernetes cluster
-- Deployed operator that listens to CRD changes
+- K8S Operator that listens to [CRD](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) changes
 - GitHub account
 :::
 
@@ -25,7 +25,8 @@ This guide will show you how to integrate Kubernetes CRDs with Port and expose t
 - Platform engineers will be able to query the data and get insights about the usage of the CRDs and Kubernetes resources.
 - Platform engineers will be able to serve any CRDs to developers in a self-service manner.
 
-In this guide, we will deploy Port's [Kubernetes Exporter](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md) to export Kubernetes CRDs to Port as <PortTooltip id="blueprint">blueprints</PortTooltip> and the relevant <PortTooltip id="action">actions</PortTooltip> to create, update and delete those resources and listen to changes in those resources and reflect them in Port's UI without the need of creating a mapping and blueprints upfront.
+In this guide, we will deploy Port's [Kubernetes Exporter](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md) to export Kubernetes CRDs to Port as <PortTooltip id="blueprint">blueprints</PortTooltip> and <PortTooltip id="action">actions</PortTooltip> to create, update and delete those resources.
+Also, the K8S exporter will listen to changes in all of the custom resources and reflect them in Port's UI.
 
 <img src='/img/guides/visualizeCRDs.svg' width='100%' border='1px' />
 
@@ -46,7 +47,7 @@ For this guide, we followed the [AWS DynamoDB composition example](https://docs.
 
 The Kubernetes Exporter can be installed with the `crdsToDiscover` flag which is a JQ pattern to discover and export CRDs to Port as blueprints and actions. In this example we will use [Helm](https://helm.sh/) to install the Kubernetes Exporter, but for more installation options please visit the [Kubernetes Exporter documentation](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md#installation)
 
-:::note
+:::tip Crossplane's XRD
 
 With the pattern below, the Kubernetes Exporter will discover CRDs that are managed by [Crossplane's XRD](https://docs.crossplane.io/latest/concepts/composite-resource-definitions/) and that are not namespaced scoped. This is just an example, and you can adjust the pattern to match your own CRDs - even if they are managed by a custom operator.
 :::
@@ -80,7 +81,7 @@ Now, to execute the action we need to add some workflow to it for Port to trigge
 
 1. Go to the [GitHub control plane example repo](https://github.com/port-labs/control-plane-demo) and use it as a template to create your own repo by clicking on the `Use this template` button.
 
-![CRD Action](/img/guides/useThisTemplate.png)
+<img src='/img/guides/useThisTemplate.png' width='100%' border='1px' />
 
 2. [Install Port's GitHub app](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#installation) in the GitHub account where you cloned the template.
 
@@ -99,10 +100,9 @@ Now, to execute the action we need to add some workflow to it for Port to trigge
     * Click on `Edit Action` 
     * Click in the `Backend` tab there change the `organization` and `repository` fields to match yours.
 
-    ![CRD Action](/img/guides/changeOrgRepo.png)
+    <img src='/img/guides/changeOrgRepo.png' width='100%' border='1px' />
 
-:::note
-**GitOps**
+:::tip GitOps
 
 For the sake of simplicity, the GitHub workflow we are using in this example is accessing directly into the Kubernetes cluster.
 
@@ -115,15 +115,15 @@ If you would like to use this method, at the same repo you cloned there is anoth
 ### 4. Executing the action
 
 * Now that everything is set up, go to the [Self-Service Tab](https://app.getport.io/self-serve) and execute the Create action.
-![CRD Action](/img/guides/createNosqlComposition.png)
+<img src='/img/guides/createNosqlComposition.png' width='100%' border='1px' />
 
 * After the action is executed, click on the action run and logs will show up, if everything is succeeded we should see the following logs.
-![CRD Action](/img/guides/createNosqlCompositionLogs.png)
+<img src='/img/guides/createNosqlCompositionLogs.png' width='100%' border='1px' />
 
 * You are done! Now you can see the created resources in [Port's Catalog](https://app.getport.io/nosqls) and at AWS console 🚀
-![CRD Action](/img/guides/createNosqlCompositionResultCatalog.png)
+<img src='/img/guides/createNosqlCompositionResultCatalog.png' width='100%' border='1px' />
 
-:::note
+:::tip Update and Delete
 You can also use the Update and Delete actions to update and delete the resources.
 :::
 
