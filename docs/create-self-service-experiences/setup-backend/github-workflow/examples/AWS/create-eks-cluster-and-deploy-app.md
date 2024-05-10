@@ -876,6 +876,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
+          status: "SUCCESS"
           runId: ${{fromJson(inputs.port_payload).context.runId}}
           logMessage: "Finished scaffolding of app: ${{ github.event.inputs.project_name }}"
 ```
@@ -1108,6 +1109,7 @@ jobs:
         clientId: ${{ secrets.PORT_CLIENT_ID }}
         clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
         operation: PATCH_RUN
+        status: "SUCCESS"
         baseUrl: https://api.getport.io
         runId: ${{ fromJson(inputs.port_payload).context.runId }}
         logMessage: |
