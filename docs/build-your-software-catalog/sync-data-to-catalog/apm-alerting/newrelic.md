@@ -604,7 +604,7 @@ resources:
       calculateOpenIssueCount: true
       entityQueryFilter: "type in ('SERVICE','APPLICATION')"
       entityExtraPropertiesQuery: |
-        ... on ApmApplicationEntityOutline {
+        ... on ApmApplicationEntity {
           guid
           name
           alertSeverity
@@ -762,20 +762,108 @@ Here is an example of the payload structure from New Relic:
 
 ```json showLineNumbers
 {
-  "domain": "APM",
-  "guid": "MjQwNzIwN3xBUE18QVBQTElDQVRJT058MjIwMzEwNzV8MTA0NzYwNzA5",
-  "name": "My Service",
-  "type": "APPLICATION",
+  "accountId": 4444532,
+  "alertSeverity": "NOT_CONFIGURED",
+  "domain": "INFRA",
+  "entityType": "INFRASTRUCTURE_HOST_ENTITY",
+  "guid": "MTIzNDU2Nzg5fElORlJBfE5BfDY1MjQwNDc0NjE4MzUyMDkwOTU=",
+  "lastReportingChangeAt": 1715351571254,
+  "name": "UserMacbook",
+  "permalink": "https://one.eu.newrelic.com/redirect/entity/MTIzNDU2Nzg5fElORlJBfE5BfDY1MjQwNDc0NjE4MzUyMDkwOTU=",
+  "reporting": true,
   "tags": [
     {
+      "key": "account",
+      "values": [
+        "Account 4444831"
+      ]
+    },
+    {
+      "key": "accountId",
+      "values": [
+        "4444831"
+      ]
+    },
+    {
+      "key": "agentName",
+      "values": [
+        "Infrastructure"
+      ]
+    },
+    {
+      "key": "agentVersion",
+      "values": [
+        "1.50.0"
+      ]
+    },
+    {
       "key": "coreCount",
-      "values": ["10"]
+      "values": [
+        "8"
+      ]
+    },
+    {
+      "key": "fullHostname",
+      "values": [
+        "usermacbook"
+      ]
     },
     {
       "key": "hostStatus",
-      "values": ["running"]
+      "values": [
+        "running"
+      ]
+    },
+    {
+      "key": "hostname",
+      "values": [
+        "Usermacbook"
+      ]
+    },
+    {
+      "key": "instanceType",
+      "values": [
+        "MacBook Air MacBookAir10,1"
+      ]
+    },
+    {
+      "key": "kernelVersion",
+      "values": [
+        "23.2.0"
+      ]
+    },
+    {
+      "key": "linuxDistribution",
+      "values": [
+        "macOS 14.2.1"
+      ]
+    },
+    {
+      "key": "operatingSystem",
+      "values": [
+        "macOS"
+      ]
+    },
+    {
+      "key": "processorCount",
+      "values": [
+        "8"
+      ]
+    },
+    {
+      "key": "systemMemoryBytes",
+      "values": [
+        "17179869184"
+      ]
+    },
+    {
+      "key": "trustedAccountId",
+      "values": [
+        "4444532"
+      ]
     }
-  ]
+  ],
+  "type": "HOST"
 }
 ```
 
@@ -805,6 +893,120 @@ The combination of the sample payload and the Ocean configuration generates the 
 <details>
 <summary><b>Service (Entity) entity in Port (Click to expand)</b></summary>
 
+```json showLineNumbers
+{
+  "identifier": "MTIzNDU2Nzg5fElORlJBfE5BfDY1MjQwNDc0NjE4MzUyMDkwOTU=",
+  "title": "UserMacbook",
+  "blueprint": "newRelicAlert",
+  "team": [],
+  "icon": "NewRelic",
+  "properties": {
+    "has_apm": false,
+    "link": "https://one.eu.newrelic.com/redirect/entity/MTIzNDU2Nzg5fElORlJBfE5BfDY1MjQwNDc0NjE4MzUyMDkwOTU=",
+    "open_issues_count": null,
+    "reporting": true,
+    "tags": [
+      {
+        "key": "account",
+        "values": [
+          "Account 4444831"
+        ]
+      },
+      {
+        "key": "accountId",
+        "values": [
+          "4444831"
+        ]
+      },
+      {
+        "key": "agentName",
+        "values": [
+          "Infrastructure"
+        ]
+      },
+      {
+        "key": "agentVersion",
+        "values": [
+          "1.50.0"
+        ]
+      },
+      {
+        "key": "coreCount",
+        "values": [
+          "8"
+        ]
+      },
+      {
+        "key": "fullHostname",
+        "values": [
+          "usermacbook"
+        ]
+      },
+      {
+        "key": "hostStatus",
+        "values": [
+          "running"
+        ]
+      },
+      {
+        "key": "hostname",
+        "values": [
+          "Usermacbook"
+        ]
+      },
+      {
+        "key": "instanceType",
+        "values": [
+          "MacBook Air MacBookAir10,1"
+        ]
+      },
+      {
+        "key": "kernelVersion",
+        "values": [
+          "23.2.0"
+        ]
+      },
+      {
+        "key": "linuxDistribution",
+        "values": [
+          "macOS 14.2.1"
+        ]
+      },
+      {
+        "key": "operatingSystem",
+        "values": [
+          "macOS"
+        ]
+      },
+      {
+        "key": "processorCount",
+        "values": [
+          "8"
+        ]
+      },
+      {
+        "key": "systemMemoryBytes",
+        "values": [
+          "17179869184"
+        ]
+      },
+      {
+        "key": "trustedAccountId",
+        "values": [
+          "4444532"
+        ]
+      }
+    ],
+    "domain": "INFRA",
+    "type": "HOST"
+  },
+  "relations": {},
+  "createdAt": "2024-2-6T09:30:57.924Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2024-2-6T11:49:20.881Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
 
 </details>
 
