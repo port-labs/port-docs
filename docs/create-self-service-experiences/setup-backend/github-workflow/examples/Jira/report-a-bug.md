@@ -19,7 +19,7 @@ An example of creating a Jira bug from Port using Port's self service actions.
 - PORT_AUTH_CLIENT_ID - Your port [client id]([How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)).
 - PORT_AUTH_CLIENT_SECRET - Your port [client secret]([How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)).
 
-2. Optional - Install Port's Jira integration [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira#installation)
+2. Optional - Install Port's Jira integration [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/jira/)
 
 :::note Blueprint
 
@@ -40,37 +40,81 @@ You can add this action to the `Service` or `Jira Issue` blueprints
 
 ```json showLineNumbers
 {
-  "identifier": "report_a_bug",
+  "identifier": "jiraIssue_report_a_bug",
   "title": "Report a bug",
   "icon": "Jira",
-  "userInputs": {
-    "properties": {
-      "description": {
-        "icon": "DefaultProperty",
-        "title": "Description",
-        "type": "string"
+  "description": "Report a bug in Port to our product team.",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
+    "userInputs": {
+      "properties": {
+        "description": {
+          "icon": "DefaultProperty",
+          "title": "Description",
+          "type": "string"
+        },
+        "short_title": {
+          "icon": "DefaultProperty",
+          "title": "Short title",
+          "type": "string"
+        }
       },
-      "short_title": {
-        "icon": "DefaultProperty",
-        "title": "Short title",
-        "type": "string"
-      }
-    },
-    "required": ["short_title", "description"],
-    "order": ["short_title", "description"]
+      "required": [
+        "short_title",
+        "description"
+      ],
+      "order": [
+        "short_title",
+        "description"
+      ]
+    }
   },
   "invocationMethod": {
     "type": "GITHUB",
-    "omitPayload": false,
-    "omitUserInputs": false,
-    "reportWorkflowStatus": true,
-    "repo": "<Enter GitHub repository>",
     "org": "<Enter GitHub organization>",
-    "workflow": "jira.yml"
+    "repo": "<Enter GitHub repository>",
+    "workflow": "report-a-bug.yml",
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "{{if (.inputs | has(\"description\")) then \"description\" else null end}}": "{{.inputs.\"description\"}}",
+      "{{if (.inputs | has(\"short_title\")) then \"short_title\" else null end}}": "{{.inputs.\"short_title\"}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"jiraIssue_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "omitPayload": false,
+              "omitUserInputs": false,
+              "reportWorkflowStatus": true,
+              "org": "<Enter GitHub organization>",
+              "repo": "<Enter GitHub repository>",
+              "workflow": "report-a-bug.yml"
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {
+            "{{if (.inputs | has(\"description\")) then \"description\" else null end}}": "{{.inputs.\"description\"}}",
+            "{{if (.inputs | has(\"short_title\")) then \"short_title\" else null end}}": "{{.inputs.\"short_title\"}}"
+          },
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
+    "reportWorkflowStatus": true
   },
-  "trigger": "CREATE",
-  "description": "Report a bug in Port to our product team.",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 

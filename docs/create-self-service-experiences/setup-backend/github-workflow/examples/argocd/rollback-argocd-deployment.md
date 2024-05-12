@@ -232,42 +232,81 @@ Follow these steps to get started:
 
 ```json showLineNumbers
 {
-  "identifier": "rollback_deployment",
+  "identifier": "service_rollback_deployment",
   "title": "Rollback Deployment",
   "icon": "GithubActions",
-  "userInputs": {
-    "properties": {
-      "image": {
-        "icon": "DefaultProperty",
-        "title": "Image",
-        "type": "string",
-        "blueprint": "image",
-        "format": "entity"
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {
+        "image": {
+          "icon": "DefaultProperty",
+          "title": "Image",
+          "type": "string",
+          "blueprint": "image",
+          "format": "entity"
+        },
+        "auto_merge": {
+          "title": "Auto Merge",
+          "type": "boolean",
+          "default": false,
+          "description": "Whether the created PR should be merged or not"
+        }
       },
-      "auto_merge": {
-        "title": "Auto Merge",
-        "type": "boolean",
-        "default": false,
-        "description": "Whether the created PR should be merged or not"
-      }
+      "required": [],
+      "order": [
+        "image",
+        "auto_merge"
+      ]
     },
-    "required": [],
-    "order": [
-      "image",
-      "auto_merge"
-    ]
+    "blueprintIdentifier": "service"
   },
   "invocationMethod": {
     "type": "GITHUB",
     "org": "<GITHUB-ORG>",
     "repo": "<GITHUB-REPO-NAME>",
     "workflow": "rollback.yaml",
-    "omitUserInputs": false,
-    "omitPayload": false,
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "{{if (.inputs | has(\"image\")) then \"image\" else null end}}": "{{.inputs.\"image\" | if type == \"array\" then map(.identifier) else .identifier end}}",
+      "{{if (.inputs | has(\"auto_merge\")) then \"auto_merge\" else null end}}": "{{.inputs.\"auto_merge\"}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"service_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "org": "<GITHUB-ORG>",
+              "repo": "<GITHUB-REPO-NAME>",
+              "workflow": "rollback.yaml",
+              "omitUserInputs": false,
+              "omitPayload": false,
+              "reportWorkflowStatus": true
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {
+            "{{if (.inputs | has(\"image\")) then \"image\" else null end}}": "{{.inputs.\"image\" | if type == \"array\" then map(.identifier) else .identifier end}}",
+            "{{if (.inputs | has(\"auto_merge\")) then \"auto_merge\" else null end}}": "{{.inputs.\"auto_merge\"}}"
+          },
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
     "reportWorkflowStatus": true
   },
-  "trigger": "DAY-2",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 

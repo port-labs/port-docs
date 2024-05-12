@@ -61,6 +61,11 @@ Set them as you wish in the script below, then copy it and run it in your termin
 
 <br/>
 
+<Tabs groupId="deploy" queryString="deploy">
+
+<TabItem value="helm" label="Helm" default>
+To install the integration using Helm, run the following command:
+
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-jenkins-integration port-labs/port-ocean \
@@ -75,6 +80,91 @@ helm upgrade --install my-jenkins-integration port-labs/port-ocean \
 	--set integration.secrets.jenkinsToken="JENKINS_TOKEN" \
 	--set integration.config.jenkinsHost="JENKINS_HOST"  
 ```
+
+</TabItem>
+<TabItem value="argocd" label="ArgoCD" default>
+To install the integration using ArgoCD, follow these steps:
+
+1. Create a `values.yaml` file in `argocd/my-ocean-jenkins-integration` in your git repository with the content:
+
+:::note
+Remember to replace the placeholders for `JENKINS_USER`, `JENKINS_TOKEN` and `JENKINS_HOST`.
+:::
+```yaml showLineNumbers
+initializePortResources: true
+scheduledResyncInterval: 120
+integration:
+  identifier: my-ocean-jenkins-integration
+  type: jenkins
+  eventListener:
+    type: POLLING
+  config:
+  // highlight-next-line
+    jenkinsHost: JENKINS_HOST
+  secrets:
+  // highlight-start
+    jenkinsUser: JENKINS_USER
+    jenkinsToken: JENKINS_TOKEN
+  // highlight-end
+```
+<br/>
+
+2. Install the `my-ocean-jenkins-integration` ArgoCD Application by creating the following `my-ocean-jenkins-integration.yaml` manifest:
+
+:::note
+Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+
+Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
+:::
+
+<details>
+  <summary>ArgoCD Application</summary>
+
+```yaml showLineNumbers
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: my-ocean-jenkins-integration
+  namespace: argocd
+spec:
+  destination:
+    namespace: my-ocean-jenkins-integration
+    server: https://kubernetes.default.svc
+  project: default
+  sources:
+  - repoURL: 'https://port-labs.github.io/helm-charts/'
+    chart: port-ocean
+    targetRevision: 0.1.14
+    helm:
+      valueFiles:
+      - $values/argocd/my-ocean-jenkins-integration/values.yaml
+      // highlight-start
+      parameters:
+        - name: port.clientId
+          value: YOUR_PORT_CLIENT_ID
+        - name: port.clientSecret
+          value: YOUR_PORT_CLIENT_SECRET
+  - repoURL: YOUR_GIT_REPO_URL
+  // highlight-end
+    targetRevision: main
+    ref: values
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+```
+
+</details>
+<br/>
+
+3. Apply your application manifest with `kubectl`:
+```bash
+kubectl apply -f my-ocean-jenkins-integration.yaml
+```
+</TabItem>
+</Tabs>
 
 </TabItem>
 
@@ -404,6 +494,8 @@ Examples of blueprints and the relevant integration configurations:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
 resources:
   - kind: job
     selector:
@@ -500,6 +592,8 @@ resources:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
 resources:
   - kind: build
     selector:
@@ -562,6 +656,8 @@ resources:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
 resources:
   - kind: user
   selector:

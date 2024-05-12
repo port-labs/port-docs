@@ -121,14 +121,18 @@ Next, we want to create self-service actions to support `Create`, `Change ACL`, 
 <details>
 <summary> Self-service actions for AWS bucket blueprint </summary>
 
-Replace `<YOUR_WEBHOOK_URL>` with the URL you got earlier from Ngrok or Smee.
+Replace `https://your-webhook-url.com` with the URL you got earlier from Ngrok or Smee.
 
 ```json showLineNumbers
 [
   {
-    "identifier": "create_bucket",
-    "title": "Create",
-    "icon": "Bucket",
+  "identifier": "s3_bucket_create_bucket",
+  "title": "Create",
+  "icon": "Bucket",
+  "description": "Create a new S3 Bucket in AWS",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
     "userInputs": {
       "properties": {
         "bucket_name": {
@@ -141,51 +145,143 @@ Replace `<YOUR_WEBHOOK_URL>` with the URL you got earlier from Ngrok or Smee.
           "default": {}
         }
       },
-      "required": ["bucket_name"]
+      "required": [
+        "bucket_name"
+      ]
     },
-    "invocationMethod": {
-      "type": "WEBHOOK",
-      "url": "<YOUR_WEBHOOK_URL>"
-    },
-    "trigger": "CREATE",
-    "description": "Create a new S3 Bucket in AWS"
+    "blueprintIdentifier": "s3_bucket"
   },
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "https://your-webhook-url.com",
+    "body": {
+      "action": "{{ .action.identifier[(\"s3_bucket_\" | length):] }}",
+      "resourceType": "run",
+      "status": "TRIGGERED",
+      "trigger": "{{ .trigger | {by, origin, at} }}",
+      "context": {
+        "entity": "{{.entity.identifier}}",
+        "blueprint": "{{.action.blueprint}}",
+        "runId": "{{.run.id}}"
+      },
+      "payload": {
+        "entity": "{{ (if .entity == {} then null else .entity end) }}",
+        "action": {
+          "invocationMethod": {
+            "type": "WEBHOOK",
+            "url": "https://your-webhook-url.com"
+          },
+          "trigger": "{{.trigger.operation}}"
+        },
+        "properties": {
+          "{{if (.inputs | has(\"bucket_name\")) then \"bucket_name\" else null end}}": "{{.inputs.\"bucket_name\"}}",
+          "{{if (.inputs | has(\"tags\")) then \"tags\" else null end}}": "{{.inputs.\"tags\"}}"
+        },
+        "censoredProperties": "{{.action.encryptedProperties}}"
+      }
+    }
+  },
+  "publish": true
+},
   {
-    "identifier": "change_acl",
-    "title": "Change ACL",
-    "icon": "Bucket",
+  "identifier": "s3_bucket_change_acl",
+  "title": "Change ACL",
+  "icon": "Bucket",
+  "description": "Change S3 Bucket ACL",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
     "userInputs": {
       "properties": {
         "bucket_acl": {
           "type": "string",
-          "enum": ["private", "public-read"],
+          "enum": [
+            "private",
+            "public-read"
+          ],
           "title": "ACL"
         }
       },
-      "required": ["bucket_acl"]
+      "required": [
+        "bucket_acl"
+      ]
     },
-    "invocationMethod": {
-      "type": "WEBHOOK",
-      "url": "<YOUR_WEBHOOK_URL>"
-    },
-    "trigger": "DAY-2",
-    "description": "Change S3 Bucket ACL"
+    "blueprintIdentifier": "s3_bucket"
   },
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "https://your-webhook-url.com",
+    "body": {
+      "action": "{{ .action.identifier[(\"s3_bucket_\" | length):] }}",
+      "resourceType": "run",
+      "status": "TRIGGERED",
+      "trigger": "{{ .trigger | {by, origin, at} }}",
+      "context": {
+        "entity": "{{.entity.identifier}}",
+        "blueprint": "{{.action.blueprint}}",
+        "runId": "{{.run.id}}"
+      },
+      "payload": {
+        "entity": "{{ (if .entity == {} then null else .entity end) }}",
+        "action": {
+          "invocationMethod": {
+            "type": "WEBHOOK",
+            "url": "https://your-webhook-url.com"
+          },
+          "trigger": "{{.trigger.operation}}"
+        },
+        "properties": {
+          "{{if (.inputs | has(\"bucket_acl\")) then \"bucket_acl\" else null end}}": "{{.inputs.\"bucket_acl\"}}"
+        },
+        "censoredProperties": "{{.action.encryptedProperties}}"
+      }
+    }
+  },
+  "publish": true
+},
   {
-    "identifier": "delete_bucket",
-    "title": "Delete",
-    "icon": "Bucket",
+  "identifier": "s3_bucket_delete_bucket",
+  "title": "Delete",
+  "icon": "Bucket",
+  "description": "Delete an S3 Bucket from AWS",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DELETE",
     "userInputs": {
       "properties": {},
       "required": []
     },
-    "invocationMethod": {
-      "type": "WEBHOOK",
-      "url": "<YOUR_WEBHOOK_URL>"
-    },
-    "trigger": "DELETE",
-    "description": "Delete an S3 Bucket from AWS"
-  }
+    "blueprintIdentifier": "s3_bucket"
+  },
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "https://your-webhook-url.com",
+    "body": {
+      "action": "{{ .action.identifier[(\"s3_bucket_\" | length):] }}",
+      "resourceType": "run",
+      "status": "TRIGGERED",
+      "trigger": "{{ .trigger | {by, origin, at} }}",
+      "context": {
+        "entity": "{{.entity.identifier}}",
+        "blueprint": "{{.action.blueprint}}",
+        "runId": "{{.run.id}}"
+      },
+      "payload": {
+        "entity": "{{ (if .entity == {} then null else .entity end) }}",
+        "action": {
+          "invocationMethod": {
+            "type": "WEBHOOK",
+            "url": "https://your-webhook-url.com"
+          },
+          "trigger": "{{.trigger.operation}}"
+        },
+        "properties": {},
+        "censoredProperties": "{{.action.encryptedProperties}}"
+      }
+    }
+  },
+  "publish": true
+}
 ]
 ```
 

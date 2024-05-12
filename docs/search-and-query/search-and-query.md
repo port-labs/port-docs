@@ -12,7 +12,7 @@ import CombinatorIntro from "./\_combinator_intro.md"
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-Port's API provides tools to easily query, search and filter software catalog data.
+Port's API provides tools to easily query, search and filter software catalog data. Port's search and queries can be used accross the Port product: in the catalog such as in initial filters to create advanced dynamic filtering, or in the self service actions form, to dynamically select a dropdown list. 
 
 ## Common queries usage
 
@@ -20,7 +20,8 @@ High quality search is essential to effectively track assets in your software ca
 
 - Find all running services that are not healthy.
 - List all libraries that have known vulnerabilities.
-- Get all services running in a specific cluster.
+- Filter all services running in a specific cluster (in a query or self service form).
+- Catalog initial filters based on the logged in user's properties. 
 
 ## Search request
 
@@ -173,6 +174,16 @@ The `=` operator checks exact matches of the specified value:
 }
 ```
 
+This operator can also be used to check the value of `boolean` properties:
+
+```json showLineNumbers
+{
+  "operator": "=",
+  "property": "myBooleanProperty",
+  "value": true
+}
+```
+
 </TabItem>
 
 <TabItem value="!=">
@@ -184,6 +195,16 @@ The `!=` operator checks exact matches of the specified value and returns all re
   "operator": "!=",
   "property": "myProperty",
   "value": "myExactValue"
+}
+```
+
+This operator can also be used to check the value of `boolean` properties:
+
+```json showLineNumbers
+{
+  "operator": "!=",
+  "property": "myBooleanProperty",
+  "value": false
 }
 ```
 
@@ -465,6 +486,8 @@ The `in` operator checks if a `string` property is equal to one or more specifie
 </TabItem>
 
 </Tabs>
+
+___
 
 ### Relation structure and operators
 

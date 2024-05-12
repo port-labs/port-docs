@@ -32,6 +32,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Nudge PR reviewers](/create-self-service-experiences/setup-backend/github-workflow/examples/nudge-pr-reviewers)
 - [Promote to production](/create-self-service-experiences/setup-backend/github-workflow/examples/promote-to-production)
 - [Self-service action to lock and unlock a service](http://localhost:4000/create-self-service-experiences/setup-backend/github-workflow/examples/lock-and_unlock-service-in-port)
+- [Connect GitHub Codeowners with Service, Team and User](/build-your-software-catalog/custom-integration/api/ci-cd/github-workflow/guides/connect-github-codeowners-with-service-team-and-user.md)
 
 
 ### GitLab
@@ -133,9 +134,8 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ### GCP
 
-- [GCP asset inventory](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/examples/generic-assets.md)
-- [Sync organizations, folders, projects, buckets, service accounts, compute instances and more](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/examples/extended-specific-assets.md)
-- [Script to ingest GCR Images and Repositories](https://github.com/port-labs/example-gcr-images)
+- [GCP integration](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/gcp.md)
+- [Sync Projects, buckets, service accounts, compute instances and more](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/examples/mapping_extra_resources.md)
 
 #### Google cloud build
 

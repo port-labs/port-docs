@@ -410,7 +410,9 @@ You will be able to see `cloud` cost data after you have successfully configured
 
 - The `port`, `entity` and the `mappings` keys are used to map the Kubecost object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
 
-  ```yaml showLineNumbers
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
   resources:
     - kind: kubesystem
       selector:

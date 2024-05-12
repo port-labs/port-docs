@@ -2,6 +2,9 @@
 sidebar_position: 2
 ---
 
+import GithubDedicatedRepoHint from '../../\_github_dedicated_workflows_repository_hint.mdx'
+import GithubActionModificationHint from '../../\_github_action_modification_required_hint.mdx'
+
 # Create An AWS EC2 Instance
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
@@ -121,6 +124,8 @@ In the following guide, you are going to create a self-service action in Port th
 1. Create a folder in a directory of your choice within your github repository to host the terraform template files.
 
 2. Create the following terraform templates ( `main.tf`, `variables.tf` and `outputs.tf` ) within the created folder.
+
+<GithubDedicatedRepoHint/>
 
 <details>
   <summary><b>main.tf</b></summary>
@@ -374,7 +379,7 @@ jobs:
       - name: UPSERT EC2 Instance Entity
         uses: port-labs/port-github-action@v1
         with:
-          identifier: "${{ env.instance_id }}"
+          identifier: "${{ steps.display_outputs.outputs.instance_id }}"
           title: "${{ inputs.ec2_name }}"
           blueprint: ec2Instance
           properties: |-
@@ -413,71 +418,115 @@ jobs:
 
 ## Port Configuration
 
-1. Create a Port action in the [self-service page](https://app.getport.io/self-serve) or with the following JSON definition:
+1. Create the Port action on the `ec2Instance` blueprint:
+    - Head to the [self-service](https://app.getport.io/self-serve) page.
+    - Click on the `+ New Action` button.
+    - Click on the `{...} Edit JSON` button.
+    - Copy and paste the following JSON configuration into the editor:
+
 
 <details>
   <summary> <b> Port Action: Create An EC2 Instance </b> </summary>
-:::tip
-- `<GITHUB-ORG>` - your GitHub organization or user name.
-- `<GITHUB-REPO-NAME>` - your GitHub repository name.
-:::
+
+<GithubActionModificationHint/>
 
 ```json showLineNumbers
 {
-  "identifier": "create_an_ec2_instance",
-  "title": "Create An EC2 Instance",
+  "identifier": "ec2Instance_create_instance",
+  "title": "Create Instance",
   "icon": "EC2",
-  "userInputs": {
-    "properties": {
-      "pem_key_name": {
-        "title": "Pem Key Name",
-        "description": "EC2 .pem key pair name",
-        "icon": "EC2",
-        "type": "string"
+  "description": "Create An EC2 Instance from Port",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
+    "userInputs": {
+      "properties": {
+        "pem_key_name": {
+          "title": "Pem Key Name",
+          "description": "EC2 .pem key pair name",
+          "icon": "EC2",
+          "type": "string"
+        },
+        "ec2_name": {
+          "icon": "EC2",
+          "title": "EC2_Name",
+          "description": "Name of the instance",
+          "type": "string"
+        },
+        "ec2_instance_type": {
+          "title": "EC2 Instance Type",
+          "description": "EC2 instance type",
+          "icon": "EC2",
+          "type": "string",
+          "default": "t2.micro",
+          "enum": [
+            "t2.micro",
+            "t2.medium",
+            "t2.large",
+            "t2.xlarge",
+            "t2.2xlarge"
+          ]
+        }
       },
-      "ec2_name": {
-        "icon": "EC2",
-        "title": "EC2_Name",
-        "description": "Name of the instance",
-        "type": "string"
-      },
-      "ec2_instance_type": {
-        "title": "EC2 Instance Type",
-        "description": "EC2 instance type",
-        "icon": "EC2",
-        "type": "string",
-        "default": "t2.micro",
-        "enum": [
-          "t2.micro",
-          "t2.medium",
-          "t2.large",
-          "t2.xlarge",
-          "t2.2xlarge"
-        ]
-      }
+      "required": [
+        "ec2_name",
+        "pem_key_name"
+      ],
+      "order": [
+        "ec2_name",
+        "ec2_instance_type",
+        "pem_key_name"
+      ]
     },
-    "required": [
-      "ec2_name",
-      "pem_key_name"
-    ],
-    "order": [
-      "ec2_name",
-      "ec2_instance_type",
-      "pem_key_name"
-    ]
+    "blueprintIdentifier": "ec2Instance"
   },
   "invocationMethod": {
     "type": "GITHUB",
-    "org": "<GITHUB-ORG>",
-    "repo": "<GITHUB-REPO-NAME>",
+    "org": "<GITHUB_ORG>",
+    "repo": "<GITHUB_REPO>",
     "workflow": "create-ec2-instance.yaml",
-    "omitUserInputs": false,
-    "omitPayload": false,
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "{{if (.inputs | has(\"pem_key_name\")) then \"pem_key_name\" else null end}}": "{{.inputs.\"pem_key_name\"}}",
+      "{{if (.inputs | has(\"ec2_name\")) then \"ec2_name\" else null end}}": "{{.inputs.\"ec2_name\"}}",
+      "{{if (.inputs | has(\"ec2_instance_type\")) then \"ec2_instance_type\" else null end}}": "{{.inputs.\"ec2_instance_type\"}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"ec2Instance_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "org": "<GITHUB-ORG>",
+              "repo": "<GITHUB-REPO-NAME>",
+              "workflow": "create-ec2-instance.yaml",
+              "omitUserInputs": false,
+              "omitPayload": false,
+              "reportWorkflowStatus": true
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {
+            "{{if (.inputs | has(\"pem_key_name\")) then \"pem_key_name\" else null end}}": "{{.inputs.\"pem_key_name\"}}",
+            "{{if (.inputs | has(\"ec2_name\")) then \"ec2_name\" else null end}}": "{{.inputs.\"ec2_name\"}}",
+            "{{if (.inputs | has(\"ec2_instance_type\")) then \"ec2_instance_type\" else null end}}": "{{.inputs.\"ec2_instance_type\"}}"
+          },
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
     "reportWorkflowStatus": true
   },
-  "trigger": "CREATE",
-  "description": "Create An EC2 Instance from Port",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 </details>

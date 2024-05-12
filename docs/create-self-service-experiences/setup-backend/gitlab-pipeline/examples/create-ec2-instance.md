@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 1
 ---
 
 # Create An AWS EC2 Instance
@@ -134,6 +134,14 @@ variable "aws_region" {
 variable "ec2_instance_type" {
   type = string
 }
+
+variable "ec2_ami" {
+  type = string
+}
+
+variable "port_run_id" {
+  type = string
+}
 ```
 </details>
 
@@ -216,7 +224,7 @@ output "tags" {
 <details>
 <summary><b>GitLab workflow</b></summary>
 
-:::tip 
+:::tip modification required
 Replace `QUOTA_CODE` on line 17 with your service quota code for vCPUs. 
   
 You can [view your quotas](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-resource-limits.html#view-limits) for each region using the [Service Quotas console](https://console.aws.amazon.com/servicequotas/home/services/ec2/quotas/). 
@@ -240,7 +248,7 @@ variables:
   TF_VAR_gitlab_token: ${GITLAB_ACCESS_TOKEN}
   AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
   AWS_SECRET_ACCESS_KEY : ${AWS_SECRET_ACCESS_KEY}
-  AWS_DEFAULT_REGION: "eu-west-1"
+  AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION}
   // highlight-start
   QUOTA_CODE: "L-1216C47A"
   // highlight-end
@@ -251,6 +259,7 @@ before_script:
   - rm -rf .terraform
   - export AWS_ACCESS_KEY=${AWS_ACCESS_KEY_ID}
   - export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+  - export AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
  
 fetch-port-access-token:
   stage: prerequisites
@@ -694,7 +703,8 @@ Before we continue, add some entities onto the AMI blueprint. The **identifier**
 
 <details>
   <summary> <b> Port Action: Create An EC2 Instance </b> </summary>
-:::tip
+
+:::tip modification required
 
 - `<PROJECT_ID>` - your project ID.
 - `<PIPELINE_TRIGGER_TOKEN>` - your pipeline trigger token. Learn [more](https://docs.gitlab.com/ee/ci/triggers/#create-a-pipeline-trigger-token).
@@ -702,82 +712,118 @@ Before we continue, add some entities onto the AMI blueprint. The **identifier**
 
 ```json showLineNumbers
 {
-  "identifier": "create_ec_2_instance_with_git_lab",
+  "identifier": "ec2Instance_create_ec_2_instance_with_git_lab",
   "title": "Create EC2 Instance with GitLab",
-  "userInputs": {
-    "properties": {
-      "project": {
-        "type": "string",
-        "title": "Project",
-        "description": "AWS Account",
-        "default": "851725549828",
-        "enum": [
-          "851725549828",
-          "851745549766"
-        ],
-        "enumColors": {
-          "851725549828": "lightGray",
-          "851745549766": "lightGray"
+  "description": "Trigger instance creation with GitLab and Terraform",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
+    "userInputs": {
+      "properties": {
+        "project": {
+          "type": "string",
+          "title": "Project",
+          "description": "AWS Account",
+          "default": "851725549828",
+          "enum": [
+            "851725549828",
+            "851745549766"
+          ],
+          "enumColors": {
+            "851725549828": "lightGray",
+            "851745549766": "lightGray"
+          }
+        },
+        "size": {
+          "icon": "DefaultProperty",
+          "title": "Size",
+          "type": "string",
+          "default": "t2.micro",
+          "enum": [
+            "t2.micro",
+            "t2.small",
+            "t2.medium",
+            "t2.large"
+          ],
+          "enumColors": {
+            "t2.micro": "lightGray",
+            "t2.small": "lightGray",
+            "t2.medium": "lightGray",
+            "t2.large": "lightGray"
+          }
+        },
+        "role_name": {
+          "icon": "DefaultProperty",
+          "type": "string",
+          "title": "Role Name",
+          "minLength": 4,
+          "maxLength": 8,
+          "pattern": "^[a-z0-9]+$"
+        },
+        "os": {
+          "icon": "EC2",
+          "title": "OS",
+          "description": "The operating system",
+          "type": "string",
+          "blueprint": "ami",
+          "format": "entity"
         }
       },
-      "size": {
-        "icon": "DefaultProperty",
-        "title": "Size",
-        "type": "string",
-        "default": "t2.micro",
-        "enum": [
-          "t2.micro",
-          "t2.small",
-          "t2.medium",
-          "t2.large"
-        ],
-        "enumColors": {
-          "t2.micro": "lightGray",
-          "t2.small": "lightGray",
-          "t2.medium": "lightGray",
-          "t2.large": "lightGray"
-        }
-      },
-      "role_name": {
-        "icon": "DefaultProperty",
-        "type": "string",
-        "title": "Role Name",
-        "minLength": 4,
-        "maxLength": 8,
-        "pattern": "^[a-z0-9]+$"
-      },
-      "os": {
-        "icon": "EC2",
-        "title": "OS",
-        "description": "The operating system",
-        "type": "string",
-        "blueprint": "ami",
-        "format": "entity"
-      }
+      "required": [
+        "project",
+        "role_name",
+        "os",
+        "size"
+      ],
+      "order": [
+        "project",
+        "os",
+        "size",
+        "role_name"
+      ]
     },
-    "required": [
-      "project",
-      "role_name",
-      "os",
-      "size"
-    ],
-    "order": [
-      "project",
-      "os",
-      "size",
-      "role_name"
-    ]
+    "blueprintIdentifier": "ec2Instance"
   },
   "invocationMethod": {
     "type": "WEBHOOK",
     "url": "https://gitlab.com/api/v4/projects/<PROJECT_ID>/ref/main/trigger/pipeline?token=<PIPELINE_TRIGGER_TOKEN>",
     "agent": false,
     "synchronized": false,
-    "method": "POST"
+    "method": "POST",
+    "body": {
+      "action": "{{ .action.identifier[(\"ec2Instance_\" | length):] }}",
+      "resourceType": "run",
+      "status": "TRIGGERED",
+      "trigger": "{{ .trigger | {by, origin, at} }}",
+      "context": {
+        "entity": "{{.entity.identifier}}",
+        "blueprint": "{{.action.blueprint}}",
+        "runId": "{{.run.id}}"
+      },
+      "payload": {
+        "entity": "{{ (if .entity == {} then null else .entity end) }}",
+        "action": {
+          "invocationMethod": {
+            "type": "WEBHOOK",
+            "url": "https://gitlab.com/api/v4/projects/<PROJECT_ID>/ref/main/trigger/pipeline?token=<PIPELINE_TRIGGER_TOKEN>",
+            "agent": false,
+            "synchronized": false,
+            "method": "POST"
+          },
+          "trigger": "{{.trigger.operation}}"
+        },
+        "properties": {
+          "{{if (.inputs | has(\"project\")) then \"project\" else null end}}": "{{.inputs.\"project\"}}",
+          "{{if (.inputs | has(\"size\")) then \"size\" else null end}}": "{{.inputs.\"size\"}}",
+          "{{if (.inputs | has(\"role_name\")) then \"role_name\" else null end}}": "{{.inputs.\"role_name\"}}",
+          "{{if (.inputs | has(\"os\")) then \"os\" else null end}}": "{{.inputs.\"os\" | if type == \"array\" then map(.identifier) else .identifier end}}"
+        },
+        "censoredProperties": "{{.action.encryptedProperties}}"
+      }
+    }
   },
-  "trigger": "CREATE",
-  "description": "Trigger instance creation with GitLab and Terraform",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 </details>
@@ -806,3 +852,8 @@ Before we continue, add some entities onto the AMI blueprint. The **identifier**
 5. Wait for the EC2 Instance to be created in AWS
 
 Congrats 🎉 You've created an EC2 Instance in Port 🔥
+
+## Next Steps
+
+1. [Add a disk to the EC2 instance](/create-self-service-experiences/setup-backend/gitlab-pipeline/examples/add-ec2-volume)
+
