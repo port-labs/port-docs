@@ -1,89 +1,92 @@
 # Port RBAC capabilities overview
 
-Port has extensive RBAC Capabilities. The purpose of this page is to provide a comprehensive summary of all Port RBAC capabilities and link to their associated documentation, to help you find the ones that are best for you. They are grouped 3 key topics:
+This page provides a comprehensive summary of all of Port's RBAC capabilities, and links to their associated documentation pages. They are grouped into 3 key topics:
 
-[1- Catalog RBAC & Ownership](#catalog-rbac--ownership)
+[1 - Catalog RBAC & Ownership](#catalog-rbac--ownership)
 
-[2- RBAC for Self Service Actions](#rbac-for-self-service-actions)
+[2 - RBAC for Self Service Actions](#rbac-for-self-service-actions)
 
-[3- RBAC for operating Port platform](#rbac-for-operating-port-platform)
+[3 - RBAC for operating the Port platform](#rbac-for-operating-port-platform)
 
 
 ## Catalog RBAC & Ownership
 
-
-
 ### Hide & show catalog pages dynamically
-With Port’s Internal Developer Portal, you can offer a personalized experience for the various personas of your organization. 
 
-For instance, you may offer the following personalized experiences:
+With Port, you can offer a personalized experience for the various personas of your organization. 
+
+For instance, you can create:
 
 - A unique Costs dashboard only visible to team leaders.
-- Deep dive service view for developers.
-- Security dashboard & catalog view for the security teams.
+- A deep-dive view of services for developers.
+- A security dashboard & catalog view for security teams.
 
-![Personalized Catalog](/img/software-catalog/role-based-access-control/overview/personalizedcatalog.png)
+<img src='/img/software-catalog/role-based-access-control/overview/personalizedcatalog.png' width='80%' border='1px' />
+<br/><br/>
 
-
-To achieve this you can assign user or team ownership permissions to the various personas login in. To configure who can see what pages, you can refer to the following page: [Page Permissions](/customize-pages-dashboards-and-plugins/page/page-permissions)
-
+To achieve this, you can assign user or team ownership permissions to the various personas logging in to Port.  
+To configure who can see which pages, refer to the [Page Permissions](/customize-pages-dashboards-and-plugins/page/page-permissions) page. 
 
 ### Configuring team ownership
 
-Port offers various features to offer a “**show me my team’s services**” or “**my Pull requests**” view.  
+Port offers various features to provide personalized views such as “**show me my team’s services**” or “**my pull requests**”.  
 
 #### team meta property
-Every entity at Port has a meta property called `$team` or `Port Team`. The `$team` property as well as other meta properties are documented [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/meta-properties).
+
+Every entity in Port has a meta property called `$team`, which stores the Port team that the entity belongs to.  
+The `$team` property as well as other meta properties are documented [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/meta-properties).
 
 #### Port Team and Identity provider
 
 Port teams are automatically fetched from your identity provider when [connecting to SSO](/sso-rbac/sso-providers/). So the Port Team options will be coming from the Port Teams available under **Users and teams** settings.
 
-
-![Port Users and Teams settings](/img/software-catalog/role-based-access-control/overview/portteam.png)
- 
+<img src='/img/software-catalog/role-based-access-control/overview/portteam.png' width='100%' border='1px' /> 
 
 #### Team inheritance
 
-To simplify the setup of Ownership, Port supports team Inheritance. Team inheritance lets you to utilize relations to automatically retrieve Port Teams from a parent entity.
+To simplify the setup of ownership, Port supports team inheritance. Team inheritance lets you to utilize relations to automatically retrieve Port Teams from a parent entity.
 
-In the example below, I may configure a Port Team for every service: 
+In the example below, we can configure a Port Team for every service: 
 
-![Team inheritance graph](/img/software-catalog/role-based-access-control/overview/teaminheritancegraph.png)
+<img src='/img/software-catalog/role-based-access-control/overview/teaminheritancegraph.png' width='100%' border='1px' /> 
+<br/><br/>
 
-When configuring Team Inheritance in Pull Requests every Pull Request will inherit its parent Port Team. 
+When configuring team inheritance in Pull Requests, every Pull Request will inherit its parent Port team. 
 
-![Team inheritance ](/img/software-catalog/role-based-access-control/overview/teaminheritance.png)
+<img src='/img/software-catalog/role-based-access-control/overview/teaminheritance.png' width='50%' border='1px' /> 
+<br/><br/>
 
-The documentation page describing Team inheritance can be found [here](/build-your-software-catalog/set-catalog-rbac/examples/#team-inheritance)
-
-
-
+For more details, see the [Team Inheritance](/build-your-software-catalog/set-catalog-rbac/examples/#team-inheritance) documentation.
 
 ### Dynamic team filtering
 
-Once the team ownership is properly configured we can create dynamic filtering, and provide a dynamic experience to show a user “`my pending Pull Requests`” or “`my team’s service`”, and lock views to prevent a user from seeing services that are outside of his team’s scope. 
+Once the team ownership is properly configured we can create dynamic filtering, and show users personalized views such as “`my open Pull Requests`” or “`my team’s services`”. We can also lock views to prevent a user from seeing services that are outside of his/her team’s scope. 
 
 #### My Team filter & Lock page view
+
 By using the `My Teams filter` you will only see entities that belong to one of your teams. This means you will only see entities from teams that you are a member of.
-![My Team filter](/img/software-catalog/role-based-access-control/overview/teamfilter.png)
 
-You may “Save this view” to lock the page. Further description on customizing [this view can be found here](/customize-pages-dashboards-and-plugins/page/catalog-page/#my-teams-filter). 
+<img src='/img/software-catalog/role-based-access-control/overview/myteamfilter.png' width='100%' border='1px' /> 
+<br/><br/>
 
+You may “Save this view” to permanently keep the filters.  
+For more details about view customization, see the [customization documentation](/customize-pages-dashboards-and-plugins/page/catalog-page/#my-teams-filter).
 
 #### Initial filters to filter out teams or advanced queries
 
-Another option to lock a view is to create [initial filters](/customize-pages-dashboards-and-plugins/page/catalog-page/#initial-filters). Initial filters will allow you to create advanced and dynamic filters, invisible to regular users.
+Another way to personalize a view is to use [initial filters](/customize-pages-dashboards-and-plugins/page/catalog-page/#initial-filters). These allow you to create advanced and dynamic filters, invisible to "regular" users.
 
 With initial filters you can create views such as:
-- Filter all entities owned by My Team or my Business Unit or Department
-- Filter out based on dates (PR created in the last 90 days)
+- Filter all entities owned by My Team or my Business Unit or Department.
+- Filter entities based on dates (e.g. PRs created in the last 90 days).
 
-Leveraging Team as Blueprint we can create advanced business logics, such as Product A’s services: 
+Leveraging teams as blueprints, we can create advanced business logics, such as services belonging to a specific product: 
 
-![My Team filter](/img/software-catalog/role-based-access-control/overview/businesslogic.png)
+<img src='/img/software-catalog/role-based-access-control/overview/businesslogic.png' width='100%' border='1px' /> 
+<br/><br/>
 
-To achieve this you may use related to dynamic filters available here, with syntax such as:
+To achieve this, you can use the `relatedTo` dynamic filters, for example:
+
 ```json showLineNumbers
 {
   "operator": "relatedTo",
@@ -92,19 +95,16 @@ To achieve this you may use related to dynamic filters available here, with synt
 }
 ```
 
+Port also offers additional dynamic properties and advanced queries: 
 
-
-And you may use other dynamic properties and advanced queries: 
 - [Dynamic properties](/search-and-query/#dynamic-properties)
 - [Advanced search queries](/search-and-query/)
 
+#### Dynamic filters for dashboard widgets
 
-#### Widget dynamic filters
+Advanced filters and dynamic filters are also available for [dashboard widgets](/customize-pages-dashboards-and-plugins/dashboards/) in your catalog or homepage, using the same logic as described in the Initial Filters section above.
 
-Advanced filters and dynamic filters are also available for [widgets created in the dashboard](/customize-pages-dashboards-and-plugins/dashboards/) or home page, and the same logic as described in the Initial Filters section applies here.
-
-You can create views based on the logged in user’s properties (email, team) to create a personal view
-
+You can create widgets with data based on the logged in user’s properties (email, team, etc.).
 
 ## RBAC for Self Service Actions
 
@@ -112,10 +112,10 @@ You can create views based on the logged in user’s properties (email, team) to
 
 When creating/editing self-service actions, you can set permissions for who can trigger or approve an action.
 
-![Self Service Actions permissions](/img/software-catalog/role-based-access-control/overview/ssapermissions.png)
+<img src='/img/software-catalog/role-based-access-control/overview/ssapermissions.png' width='80%' border='1px' /> 
+<br/><br/>
 
-The description on how to configure permissions to run or approve an action [is provided here](/create-self-service-experiences/set-self-service-actions-rbac/#configure-permissions-for-actions)
-
+For more details about action permissions, see the [relevant documentation](/create-self-service-experiences/set-self-service-actions-rbac/#configure-permissions-for-actions).
 
 ### Dynamic permissions for Self Service actions
 
@@ -127,36 +127,34 @@ Potential use-cases:
 - Perform validations/manipulations on inputs that depend on data from related entities.
 - Ensure that only those who are on-call can perform rollbacks of a service with issues.
 
-Dynamic permissions for RBAC can run any query on the Port data model. 
-[Full documentation and examples of Dynamic Permissions is provided here](/create-self-service-experiences/set-self-service-actions-rbac/dynamic-permissions/).
+Dynamic permissions for RBAC can run any query on the Port data model.  
 
+For more details about dynamic permissions, see the [relevant documentation](/create-self-service-experiences/set-self-service-actions-rbac/dynamic-permissions/).
 
-## RBAC for operating Port platform
+## RBAC for operating the Port platform
 
 ### Port administration roles
 
-Port supports 3 roles types to administrate Port: `member`, `collaborator` and `administrator`
-
+Port supports 3 role types:
 
 | Role                         | Description                                                                                                      |
 | ---------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| **Admin**                    | Perform any operation on the platform                                                                            |
-| **Moderator** of a Blueprint | Perform any operation on a specific blueprint and its entities. A user can be a moderator of multiple blueprints |
-| **Member**                   | Read-only permissions + permissions to execute actions                                                           |
+| **Admin**                    | Can perform any operation on the platform.                                                                            |
+| **Moderator** of a Blueprint | Can perform any operation on a specific blueprint and its entities. A user can be a moderator of multiple blueprints. |
+| **Member**                   | Has read-only permissions + permissions to execute actions.                                                           |
 
 
-:::info
-The roles above have configurable permissions that are described in the following section. Also there can be multiple moderator roles, leading to a highly granular permission management of Port.
+:::info Configurable permissions
+The roles above have configurable permissions that are described in the following section. It is possible to have multiple moderator roles, allowing highly granular permission management across the developer portal.
 :::
 
+In addition to the permissions designated for each role, permissions are also inherited based on the following hierarchy: **Admin** > **Moderator** > **Member**.
 
-In addition to the permissions designated for each role, permissions are also inherited based on the following hierarchy: **Admin** > **Moderator** > **Member**
-
-
-You can find the [full documentation around Port roles here](/sso-rbac/rbac/)
-
+For more details about Port roles, see the [relevant documentation](/sso-rbac/rbac/).
 
 ### Blueprint permissions
-Also Blueprint permissions allows a granular configuration of the various roles: admin, member or blueprint collaborator. 
-You may for instance decide that a member has edit permissions of a specific Blueprint but not another. 
-You can find detailed information about [Blueprint permissions configuration here](/build-your-software-catalog/set-catalog-rbac/examples/#use-cases-).
+
+Blueprint permissions allow a granular configuration of the various roles: admin, member or blueprint collaborator. 
+You can decide, for example, that a member has edit permissions for a specific Blueprint but not for another.  
+
+For more details about Blueprint permissions, see the [relevant documentation](/build-your-software-catalog/set-catalog-rbac/examples/#use-cases-).
