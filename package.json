@@ -26,7 +26,7 @@
     "@easyops-cn/docusaurus-search-local": "^0.40.1",
     "@mdx-js/react": "^3.0.1",
     "@stackql/docusaurus-plugin-hubspot": "^1.0.1",
-    "clsx": "^1.1.1",
+    "clsx": "^2.1.1",
     "docusaurus-plugin-hotjar": "^0.0.2",
     "docusaurus-plugin-image-zoom": "^2.0.0",
     "prettier": "^3.2.5",
