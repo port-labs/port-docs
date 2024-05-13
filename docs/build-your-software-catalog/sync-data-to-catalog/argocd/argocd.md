@@ -10,7 +10,7 @@ import ArgoCDEventManifest from '/docs/build-your-software-catalog/custom-integr
 
 # ArgoCD
 
-Our ArgoCD integration allows you to import `cluster`, `project`, `application` and `deployment-history` resources from your ArgoCD instance into Port, according to your mapping and definition.
+Our ArgoCD integration allows you to import `cluster`, `project`, `application`, `deployment-history`, `kubernetes-resource` and `managed-resource` from your ArgoCD instance into Port, according to your mapping and definition.
 
 ## Common use cases
 
@@ -387,9 +387,9 @@ The following resources can be used to map data from ArgoCD, it is possible to r
 - [`cluster`](https://cd.apps.argoproj.io/swagger-ui#operation/ClusterService_List)
 - [`project`](https://cd.apps.argoproj.io/swagger-ui#operation/ProjectService_List)
 - [`application`](https://cd.apps.argoproj.io/swagger-ui#operation/ApplicationService_List)
-- [`deployment-history`](https://cd.apps.argoproj.io/swagger-ui#operation/ApplicationService_List)
+- [`deployment-history`](https://cd.apps.argoproj.io/swagger-ui#operation/ApplicationService_List) - You can reference any valid property from the `.status.history` object of the ArgoCD application
+- [`kubernetes-resource`](https://cd.apps.argoproj.io/swagger-ui#operation/ApplicationService_List) - You can reference any valid property from the `.status.resources` object of the ArgoCD application
 - [`managed-resource`](https://cd.apps.argoproj.io/swagger-ui#operation/ApplicationService_ManagedResources)
-
 
 :::
 
@@ -1021,6 +1021,28 @@ resources:
 ### Kubernetes Resource
 
 <details>
+<summary> Images blueprint</summary>
+
+```json showlineNumbers
+ {
+    "identifier": "image",
+    "description": "This blueprint represents an image",
+    "title": "Image",
+    "icon": "AWS",
+    "schema": {
+      "properties": {},
+      "required": []
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "aggregationProperties": {},
+    "relations": {}
+  }
+```
+
+</details>
+
+<details>
 <summary> Kubernetes resource blueprint</summary>
 
 ```json showlineNumbers
@@ -1072,12 +1094,19 @@ resources:
         "target": "argocdApplication",
         "required": false,
         "many": false
+      },
+      "image": {
+        "title": "Image",
+        "target": "image",
+        "required": false,
+        "many": false
       }
     }
   }
 ```
 
 </details>
+
 
 <details>
 <summary>Integration configuration</summary>
@@ -1092,8 +1121,8 @@ resources:
     port:
       entity:
         mappings:
-          identifier: .__application.metadata.uid + "-" + .name
-          title: .__application.metadata.name + "-" + .name
+          identifier: .__application.metadata.uid + "-" + .kind + "-" + .name
+          title: .__application.metadata.name + "-" + .kind + "-" + .name
           blueprint: '"argocdKubernetesResource"'
           properties:
             kind: .kind
@@ -1103,8 +1132,10 @@ resources:
             labels: .liveState | fromjson | .metadata.labels
           relations:
             application: .__application.metadata.uid
+            image: 'if .kind == "Deployment" then .liveState | fromjson | .spec.template.spec.containers[0].image else null end'
 ```
 </details>
+
 
 ## Alternative installation via webhook
 

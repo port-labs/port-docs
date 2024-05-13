@@ -221,7 +221,6 @@ Port's GitHub integration requires the following permissions:
   - **Deployments:** Readonly.
   - **Environments:** Readonly.
   - **Code scanning alerts:** Readonly.
-  -
 
 - Organization permissions:
 

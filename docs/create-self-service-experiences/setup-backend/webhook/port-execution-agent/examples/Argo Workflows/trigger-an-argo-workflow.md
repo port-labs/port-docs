@@ -180,43 +180,77 @@ This example helps internal developer teams to trigger an [Argo Workflow](https:
 
 ```json showLineNumbers title=trigger a workflow
 {
-  "identifier": "trigger_a_workflow",
+  "identifier": "argoWorkflow_trigger_a_workflow",
   "title": "Trigger A Workflow",
   "icon": "Argo",
-  "userInputs": {
-    "properties": {
-      "namespace": {
-        "title": "Namespace",
-        "description": "Name of the namespace",
-        "icon": "Argo",
-        "type": "string",
-        "default": {
-          "jqQuery": ".entity.properties.metadata.namespace"
+  "description": "Trigger the execution of an argo workflow",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {
+        "namespace": {
+          "title": "Namespace",
+          "description": "Name of the namespace",
+          "icon": "Argo",
+          "type": "string",
+          "default": {
+            "jqQuery": ".entity.properties.metadata.namespace"
+          }
+        },
+        "memoized": {
+          "title": "Memoized",
+          "description": "Turning on memoized enables all steps to be executed again regardless of previous outputs",
+          "icon": "Argo",
+          "type": "boolean",
+          "default": false
         }
       },
-      "memoized": {
-        "title": "Memoized",
-        "description": "Turning on memoized enables all steps to be executed again regardless of previous outputs",
-        "icon": "Argo",
-        "type": "boolean",
-        "default": false
-      }
+      "required": [],
+      "order": [
+        "memoized"
+      ]
     },
-    "required": [],
-    "order": [
-      "memoized"
-    ]
+    "blueprintIdentifier": "argoWorkflow"
   },
   "invocationMethod": {
     "type": "WEBHOOK",
     "url": "https://{your-argo-workflow-domain}.com",
     "agent": true,
     "synchronized": true,
-    "method": "PUT"
+    "method": "PUT",
+    "body": {
+      "action": "{{ .action.identifier[(\"argoWorkflow_\" | length):] }}",
+      "resourceType": "run",
+      "status": "TRIGGERED",
+      "trigger": "{{ .trigger | {by, origin, at} }}",
+      "context": {
+        "entity": "{{.entity.identifier}}",
+        "blueprint": "{{.action.blueprint}}",
+        "runId": "{{.run.id}}"
+      },
+      "payload": {
+        "entity": "{{ (if .entity == {} then null else .entity end) }}",
+        "action": {
+          "invocationMethod": {
+            "type": "WEBHOOK",
+            "url": "https://{your-argo-workflow-domain}.com",
+            "agent": true,
+            "synchronized": true,
+            "method": "PUT"
+          },
+          "trigger": "{{.trigger.operation}}"
+        },
+        "properties": {
+          "{{if (.inputs | has(\"namespace\")) then \"namespace\" else null end}}": "{{.inputs.\"namespace\"}}",
+          "{{if (.inputs | has(\"memoized\")) then \"memoized\" else null end}}": "{{.inputs.\"memoized\"}}"
+        },
+        "censoredProperties": "{{.action.encryptedProperties}}"
+      }
+    }
   },
-  "trigger": "DAY-2",
-  "description": "Trigger the execution of an argo workflow",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 </details>
