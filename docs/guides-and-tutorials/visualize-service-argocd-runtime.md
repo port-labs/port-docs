@@ -189,7 +189,7 @@ In this guide we will create a relation named `Service` for the `Running Service
 
 2. Fill out the form like this, then click `Create`:
 
-<img src='/img/guides/argoCreateRelation.png' width='50%' border='1px' />
+<img src='/img/guides/createServiceRelation.png' width='50%' border='1px' />
 
 
 <br/><br/>
