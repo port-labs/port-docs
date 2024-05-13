@@ -92,7 +92,7 @@ After installation, the exporter will:
 
 Now that we have our <PortTooltip id="blueprint">blueprints</PortTooltip> set up, we want to model the logical connection between them by relating the `Workload` blueprint to the `Service` blueprint. This will grant us some helpful context in our Software catalog, allowing us to see relevant `Workloads` in a `Service`'s context, or a `Service`'s property directly in its corresponding `Workload`.
 
-In this guide we will create one relation named `service` which will represent the different services the workloads are running.
+In this guide we will create one relation named `service` which will represent the service that a workload is running.
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model), expand the `Workload` blueprint, and click on `New relation`.
 
