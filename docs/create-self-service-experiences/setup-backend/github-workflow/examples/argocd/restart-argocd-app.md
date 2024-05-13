@@ -18,7 +18,7 @@ In the following guide, we are going to create a self-service action in Port tha
 1. Install the Port GitHub app from [here](https://github.com/apps/getport-io/installations/new).
 
 2. Create the following GitHub Action secrets:
-    - `ARGO_CD_PASSWORD` - [Argo CD PASSWORD](https://argo-cd.readthedocs.io/en/stable/getting_started/#4-login-using-the-cli)
+    - `ARGO_CD_PASSWORD` - [Argo CD Password](https://argo-cd.readthedocs.io/en/stable/getting_started/#4-login-using-the-cli)
     - `ARGO_CD_USERNAME` - [Argo CD Username](https://argo-cd.readthedocs.io/en/stable/getting_started/#4-login-using-the-cli)
     - `ARGOCD_SERVER` - The host URL or server of your deployed Argo CD instance without http(s). For example, my-argocd-app.com.
     - `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token).
