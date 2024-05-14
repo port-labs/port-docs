@@ -72,44 +72,15 @@ You can add this action to the `Service` or `Jira Issue` blueprints
   },
   "invocationMethod": {
     "type": "GITHUB",
-    "org": "<Enter GitHub organization>",
     "repo": "<Enter GitHub repository>",
+    "org": "<Enter GitHub organization>",
     "workflow": "report-a-bug.yml",
     "workflowInputs": {
       "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
       "{{if (.inputs | has(\"description\")) then \"description\" else null end}}": "{{.inputs.\"description\"}}",
       "{{if (.inputs | has(\"short_title\")) then \"short_title\" else null end}}": "{{.inputs.\"short_title\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"jiraIssue_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "omitPayload": false,
-              "omitUserInputs": false,
-              "reportWorkflowStatus": true,
-              "org": "<Enter GitHub organization>",
-              "repo": "<Enter GitHub repository>",
-              "workflow": "report-a-bug.yml"
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"description\")) then \"description\" else null end}}": "{{.inputs.\"description\"}}",
-            "{{if (.inputs | has(\"short_title\")) then \"short_title\" else null end}}": "{{.inputs.\"short_title\"}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
-      }
+      "run_id": "{{ .run.id }}",
+      "triggered_by": "{{ .trigger.by.user.email }}"
     },
     "reportWorkflowStatus": true
   },
