@@ -475,5 +475,6 @@ Now you should see the `Restart Application` action in the self-service page. �
 Congrats 🎉 You've restarted your first Argo CD Application from Port 🔥
 
 ## More Self Service Argo CD Actions Examples
-- [Rollback Argo CD Deployment](/create-self-service-experiences/setup-backend/github-workflow/examples/ArgoCD/rollback-argocd-deployment) using Port's self-service actions.
+- [Rollback Argo CD Deployment](/create-self-service-experiences/setup-backend/github-workflow/examples/argocd/rollback-argocd-deployment) using Port's self-service actions.
+
 - [Synchronize Argo CD Application](/create-self-service-experiences/setup-backend/github-workflow/examples/argocd/sync-argocd-app) using Port's self-service actions.
