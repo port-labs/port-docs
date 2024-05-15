@@ -11,10 +11,9 @@ Our integration with Bitbucket allows you to export Bitbucket objects to Port as
 
 Our Bitbucket integration makes it easy to fill the software catalog with data directly from your Bitbucket workspace, for example:
 
-- Map all of the resources in your Bitbucket workspace, including **repositories**, **pull requests** and other Bitbucket objects;
-- Watch for Bitbucket object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port;
-- Manage Port entities using GitOps;
-- etc.
+- Map all of the resources in your Bitbucket workspace, including **repositories**, **pull requests** and other Bitbucket objects.
+- Watch for Bitbucket object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
+- Manage Port entities using GitOps.
 
 ## Installation
 
@@ -24,9 +23,53 @@ To install Port's Bitbucket app, follow the [installation](./installation.md) gu
 
 By using Port's Bitbucket app, you can automatically ingest Bitbucket resources into Port based on real-time events.
 
-Port's Bitbucket app allows you to ingest a variety of objects resources provided by the Bitbucket API, including repositories, pull requests and more. The Bitbucket app allows you to perform extract, transform, load (ETL) on data from the Bitbucket API into the desired software catalog data model.
+The app allows you to ingest a variety of objects resources provided by the Bitbucket API, including repositories, pull requests and more. It also allows you to perform "extract, transform, load (ETL)" on data from the Bitbucket API into the desired software catalog data model.
 
 The Bitbucket app uses a YAML configuration file to describe the ETL process to load data into the developer portal. The approach reflects a golden middle between an overly opinionated Git visualization that might not work for everyone and a too-broad approach that could introduce unneeded complexity into the developer portal.
+
+After installing the app, Port will automatically create a `service` blueprint in your catalog (representing a BitBucket repository), along with a default YAML configuration file that defines where the data fetched from BitBucket's API should go in the blueprint.
+
+### Configuration
+
+To ingest Bitbucket objects, use one of the following methods:
+
+<Tabs queryString="method">
+
+<TabItem label="Using Port's UI" value="port">
+
+To manage your Bitbucket integration configuration using Port:
+
+1. Go to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
+2. Under `Exporters`, click on your desired BitBucket organization.
+3. A window will open containing the default YAML configuration of your BitBucket integration.
+4. Here you can modify the configuration to suit your needs, by adding/removing entries.
+5. When finished, click `resync` to apply any changes.
+
+Using this method applies the configuration to all repositories in your Bitbucket workspace.
+
+When configuring the integration **using Port**, the YAML configuration is global, allowing you to specify mappings for multiple Port blueprints.
+
+</TabItem>
+
+<TabItem label="Using Bitbucket" value="bitbucket">
+
+To manage your Bitbucket integration configuration using Bitbucket, you can choose either a global or granular configuration:
+
+- **Global configuration:** create a `.bitbucket-private` repository in your workspace and add the `port-app-config.yml` file to the repository;
+  - Using this method applies the configuration to all repositories in your Bitbucket workspace (unless it is overridden by a granular `port-app-config.yml` in a repository);
+- **Granular configuration:** add the `port-app-config.yml` file to the root of your desired repository;
+  - Using this method applies the configuration only to the repository where the `port-app-config.yml` file exists.
+
+When using global configuration **using Bitbucket**, the configuration specified in the `port-app-config.yml` file will only be applied if the file is in the **default branch** of the repository (usually `main`).
+
+</TabItem>
+
+</Tabs>
+
+:::info Important
+
+When using global configuration **using Port**, the configuration specified will override any other configuration source (both global configuration using Bitbucket and granular configuration using Bitbucket);
+:::
 
 Here is an example snippet from the `port-app-config.yml` file which demonstrates the ETL process for getting `pullRequest` data from the Bitbucket workspace and into the software catalog:
 
@@ -62,6 +105,8 @@ The app makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manua
 ### `port-app-config.yml` file
 
 The `port-app-config.yml` file is how you specify the exact resources you want to query from your Bitbucket workspace, and also how you specify which entities and which properties you want to fill with data from Bitbucket.
+
+Note that when using [Port's UI](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/?method=port#configuration) to configure the BitBucket integration, `port-app-config.yml` refers to the YAML editor window where you can modify the configuration.
 
 Here is an example `port-app-config.yml` block:
 
@@ -151,49 +196,6 @@ resources:
 
 :::tip
 Pay attention to the value of the `blueprint` key, if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-:::
-
-### Setup
-
-To ingest Bitbucket objects using the [`port-app-config.yml`](#port-app-configyml-file) file, you can use one of the following methods:
-
-<Tabs queryString="method">
-
-<TabItem label="Using Port" value="port">
-
-To manage your Bitbucket integration configuration using Port:
-
-1. Go to the DevPortal Builder page;
-2. Select a blueprint you want to ingest using Bitbucket;
-3. Choose the **Ingest Data** option from the menu;
-4. Select Bitbucket under the Git providers category;
-5. Add the contents of your `port-app-config.yml` file to the editor;
-6. Click save configuration.
-
-Using this method applies the configuration to all repositories in your Bitbucket workspace.
-
-When configuring the integration **using Port**, the configuration specified in the ingest data window is global, allowing you to specify in the editor mappings for multiple Port blueprints, regardless of the blueprint you selected.
-
-</TabItem>
-
-<TabItem label="Using Bitbucket" value="bitbucket">
-
-To manage your Bitbucket integration configuration using Bitbucket, you can choose either a global or granular configuration:
-
-- **Global configuration:** create a `.bitbucket-private` repository in your workspace and add the `port-app-config.yml` file to the repository;
-  - Using this method applies the configuration to all repositories in your Bitbucket workspace (unless it is overridden by a granular `port-app-config.yml` in a repository);
-- **Granular configuration:** add the `port-app-config.yml` file to the root of your desired repository;
-  - Using this method applies the configuration only to the repository where the `port-app-config.yml` file exists.
-
-When using global configuration **using Bitbucket**, the configuration specified in the `port-app-config.yml` file will only be applied if the file is in the **default branch** of the repository (usually `main`).
-
-</TabItem>
-
-</Tabs>
-
-:::info Important
-
-When using global configuration **using Port**, the configuration specified will override any other configuration source (both global configuration using Bitbucket and granular configuration using Bitbucket);
 :::
 
 ## Permissions

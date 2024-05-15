@@ -15,14 +15,15 @@ Port's Bitbucket integration makes it possible to manage Port entities with a Gi
 
 ## 💡 Bitbucket GitOps common use cases
 
-- Use Bitbucket as the source-of-truth for your **microservices**, **packages**, **libraries** and other software catalog assets;
-- Allow developers to keep the catalog up-to-date, by making updates to files in their Git repositories;
-- Create a standardized way to document software catalog assets in your organization;
-- etc.
+- Use Bitbucket as the source-of-truth for your **microservices**, **packages**, **libraries** and other software catalog assets.
+- Allow developers to keep the catalog up-to-date, by making updates to files in their Git repositories.
+- Create a standardized way to document software catalog assets in your organization.
 
 ## Managing entities using GitOps
 
 To manage entities using GitOps, you will need to add a `port.yml` file to the **default branch** (usually `main`) of your repository.
+
+Note that the `port.yml` file is not the same as the [`port-app-config.yml` file](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/#port-app-configyml-file) used to configure the GitHub integration, and does not replace it.
 
 The `port.yml` file can specify one or more Port entities that will be ingested to Port, and any change made to the `port.yml` file will also be reflected inside Port.
 
