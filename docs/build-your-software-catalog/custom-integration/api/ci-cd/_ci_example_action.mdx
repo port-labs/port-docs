@@ -2,49 +2,43 @@
 <summary> Deploy image action </summary>
 
 ```json showLineNumbers
-[
-  {
-    "identifier": "image_deploy_image",
-    "title": "Deploy image",
-    "description": "Deploy image version",
-    "trigger": {
-      "type": "self-service",
-      "operation": "DAY-2",
-      "userInputs": {
-        "properties": {}
-      },
-      "blueprintIdentifier": "image"
+{
+  "identifier": "deploy_image",
+  "title": "Deploy image",
+  "icon": "DefaultProperty",
+  "description": "Deploy image version",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {},
+      "required": [],
+      "order": []
     },
-    "invocationMethod": {
-      "type": "WEBHOOK",
-      "url": "https://example.com",
-      "body": {
-        "action": "{{ .action.identifier[(\"image_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "WEBHOOK",
-              "url": "https://example.com"
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {},
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+    "blueprintIdentifier": "image"
+  },
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "https://example.com",
+    "agent": false,
+    "synchronized": false,
+    "method": "POST",
+    "headers": {
+      "RUN_ID": "{{ .run.id }}"
+    },
+    "body": {
+      "action": "{{ .action }}",
+      "trigger": "{{ .trigger | {by, origin, at} }}",
+      "context": {
+        "entity": "{{.entity.identifier}}",
+        "blueprint": "{{.action.blueprint}}",
+        "runId": "{{.run.id}}",
+        "operation": "{{.trigger.operation}}"
       }
-    },
-    "publish": true
-  }
-]
+    }
+  },
+  "requiredApproval": false
+}
 ```
 
 </details>
