@@ -1,5 +1,5 @@
 <details>
-<summary>Pipeline blueprint</summary>
+<summary>Pipeline blueprint relation</summary>
 
 ```json showLineNumbers
 {
@@ -27,7 +27,14 @@
   "mirrorProperties": {},
   "calculationProperties": {},
   "aggregationProperties": {},
-  "relations": {}
+  "relations": {
+    "project": {
+      "title": "Project",
+      "target": "project",
+      "required": true,
+      "many": false
+    }
+  }
 }
 ```
 
