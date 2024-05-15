@@ -10,6 +10,9 @@ import AzureDevopsResources from './\_azuredevops_exporter_supported_resources.m
 import PipelineBlueprint from './example-pipeline/\_azuredevops_exporter_example_pipeline_blueprint.mdx'
 import PortPipelineAppConfig from './example-pipeline/\_azuredevops_exporter_example_pipeline_port_app_config.mdx'
 
+import PipelineProjectBlueprint from './example-pipeline/\_azuredevops_exporter_example_pipeline_with_project_relation_blueprint.mdx'
+import PipelineProjectMapping from './example-pipeline/\_azuredevops_exporter_example_pipeline_port_app_config.mdx'
+
 import TeamsBlueprint from './example-teams/\_azuredevops_exporter_example_team_blueprint.mdx'
 import MembersBlueprint from './example-teams/\_azuredevops_exporter_example_member_blueprint.mdx'
 import PortTeamsAppConfig from './example-teams/\_azuredevops_exporter_example_teams_port_app_config.mdx'
@@ -63,6 +66,12 @@ In the following example you will ingest your Azure Devops pipelines to Port, yo
 <PipelineBlueprint/>
 
 <PortPipelineAppConfig/>
+
+To link the pipelines to projects you can use the following configurations:
+
+<PipelineProjectBlueprint/>
+
+<PipelineProjectMapping/>
 
 :::tip To Learn more
 
