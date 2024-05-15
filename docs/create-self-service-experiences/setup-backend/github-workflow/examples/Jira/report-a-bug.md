@@ -76,9 +76,8 @@ You can add this action to the `Service` or `Jira Issue` blueprints
     "org": "<Enter GitHub organization>",
     "workflow": "report-a-bug.yml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"description\")) then \"description\" else null end}}": "{{.inputs.\"description\"}}",
-      "{{if (.inputs | has(\"short_title\")) then \"short_title\" else null end}}": "{{.inputs.\"short_title\"}}",
+      "description": "{{.inputs.\"description\"}}",
+      "short_title": "{{.inputs.\"short_title\"}}",
       "run_id": "{{ .run.id }}",
       "triggered_by": "{{ .trigger.by.user.email }}"
     },
