@@ -23,6 +23,8 @@ Port's GitHub integration makes it possible to manage Port entities with a GitOp
 
 To manage entities using GitOps, you will need to add a `port.yml` file to the **default branch** (usually `main`) of your repository.
 
+Note that the `port.yml` file is not the same as the [`port-app-config.yml` file](/build-your-software-catalog/sync-data-to-catalog/git/github/#port-app-configyml-file) used to configure the GitHub integration, and does not replace it. 
+
 The `port.yml` file can specify one or more Port entities that will be ingested to Port, and any change made to the `port.yml` file will also be reflected inside Port.
 
 :::tip Github app
