@@ -49,6 +49,9 @@ on:
         description: 'Escalation Policy for the service'
         required: true
         type: string
+      port_context:
+        required: true
+        description: includes blueprint, run ID, and entity identifier from Port.
 
 jobs:
   create-pagerduty-service:
@@ -77,7 +80,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: |
              PagerDuty service created! ✅
              Requesting for oncalls
@@ -97,7 +100,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: |
               Upserting Created PagerDuty Entity
 
@@ -108,7 +111,7 @@ jobs:
           title: "${{ fromJson(steps.create_service_request.outputs.response).service.summary }}" 
           team: "[]"
           icon: pagerduty
-          blueprint: pagerdutyService
+          blueprint: ${{fromJson(inputs.port_context).blueprint}}
           properties: |-
             {
               "status": "${{ fromJson(steps.create_service_request.outputs.response).service.status }}",
@@ -120,7 +123,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: UPSERT
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          runId: ${{fromJson(inputs.port_context).run_id}}
 
       - name: Create a log message
         uses: port-labs/port-github-action@v1
@@ -129,7 +132,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: |
               Upsert was successful ✅
 ```
@@ -172,7 +175,7 @@ Create a new self service action using the following JSON configuration.
           "description": "PagerDuty Escalation Policy ID to apply",
           "icon": "pagerduty",
           "type": "string"
-        }
+        },
       },
       "required": [
         "name",
@@ -196,37 +199,10 @@ Create a new self service action using the following JSON configuration.
       "{{if (.inputs | has(\"name\")) then \"name\" else null end}}": "{{.inputs.\"name\"}}",
       "{{if (.inputs | has(\"description\")) then \"description\" else null end}}": "{{.inputs.\"description\"}}",
       "{{if (.inputs | has(\"escalation_policy\")) then \"escalation_policy\" else null end}}": "{{.inputs.\"escalation_policy\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"pagerdutyService_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "org": "<GITHUB_ORG>",
-              "repo": "<GITHUB_REPO>",
-              "workflow": "create-a-service.yaml",
-              "omitUserInputs": false,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"name\")) then \"name\" else null end}}": "{{.inputs.\"name\"}}",
-            "{{if (.inputs | has(\"description\")) then \"description\" else null end}}": "{{.inputs.\"description\"}}",
-            "{{if (.inputs | has(\"escalation_policy\")) then \"escalation_policy\" else null end}}": "{{.inputs.\"escalation_policy\"}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+      "port_context": {
+        "blueprint": "{{.action.blueprint}}",
+        "entity": "{{.entity}}",
+        "run_id": "{{.run.id}}"
       }
     },
     "reportWorkflowStatus": true

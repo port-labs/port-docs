@@ -113,11 +113,9 @@ on:
         description: The email address of a valid pagerduty user associated with the account making the request.
         required: true
         type: string
-      port_payload:
+      port_context:
         required: true
-        description: >-
-          Port's payload, including details for who triggered the action and
-          general context (blueprint, run id, etc...)
+        description: includes blueprint, run ID, and entity identifier from Port.
 
 jobs:
   change-incident-owner:
@@ -131,7 +129,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
+          runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: "Searching for user in organization user list... ⛴️"
 
       - name: Search for user id among user list
@@ -156,7 +154,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: |
             User found 🥹, Changing incident owner to ${{ inputs.new_owner }}... ⛴️
       
@@ -167,7 +165,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: |
             User not found 😭 Skipping assignment... ⛴️
             
@@ -175,7 +173,7 @@ jobs:
         id: change_owner
         uses: fjogeleit/http-request-action@v1
         with:
-          url: 'https://api.pagerduty.com/incidents/$${{fromJson(github.event.inputs.port_payload).context.entity}}'
+          url: 'https://api.pagerduty.com/incidents/$${{fromJson(github.event.inputs.port_payload).port_context.entity}}'
           method: 'PUT'
           customHeaders: '{"Content-Type": "application/json", "Accept": "application/vnd.pagerduty+json;version=2", "Authorization": "Token token=${{ secrets.PAGERDUTY_API_KEY }}", "From": "${{ github.event.inputs.from }}"}'
           data: >-
@@ -200,7 +198,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
+          runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: "Reporting the updated incident back to port ..."
 
       - name: Upsert pagerduty entity to Port 
@@ -208,7 +206,7 @@ jobs:
         with:
           identifier: "${{ fromJson(steps.change_owner.outputs.response).incident.id }}"
           title: "${{ fromJson(steps.change_owner.outputs.response).incident.title }}"
-          blueprint: ${{fromJson(github.event.inputs.port_payload).context.blueprint}}
+          blueprint: ${{fromJson(inputs.port_context).blueprint}}
           properties: |-
             {
               "status": "${{ fromJson(steps.change_owner.outputs.response).incident.status }}",
@@ -223,7 +221,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: UPSERT
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{fromJson(inputs.port_context).run_id}}
           
       - name: Inform completion of pagerduty incident upsertion
         uses: port-labs/port-github-action@v1
@@ -232,7 +230,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
+          runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: "Entity upserting was successful ✅"
 
 ```
@@ -287,43 +285,17 @@ Create a new self service action using the following JSON configuration.
   },
   "invocationMethod": {
     "type": "GITHUB",
-    "org": "your-github-organization",
-    "repo": "your-github-repo",
+    "org": "<GITHUB_ORG>",
+    "repo": "<GITHUB_REPO>",
     "workflow": "change-incident-owner.yaml",
     "workflowInputs": {
       "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
       "{{if (.inputs | has(\"new_owner_user_id\")) then \"new_owner_user_id\" else null end}}": "{{.inputs.\"new_owner_user_id\"}}",
       "{{if (.inputs | has(\"from\")) then \"from\" else null end}}": "{{.inputs.\"from\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"pagerdutyIncident_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "org": "your-github-organization",
-              "repo": "your-github-repo",
-              "workflow": "change-incident-owner.yaml",
-              "omitUserInputs": false,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"new_owner\")) then \"new_owner\" else null end}}": "{{.inputs.\"new_owner\"}}",
-            "{{if (.inputs | has(\"from\")) then \"from\" else null end}}": "{{.inputs.\"from\"}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+      "port_context": {
+        "blueprint": "{{.action.blueprint}}",
+        "entity": "{{.entity}}",
+        "run_id": "{{.run.id}}"
       }
     },
     "reportWorkflowStatus": true
