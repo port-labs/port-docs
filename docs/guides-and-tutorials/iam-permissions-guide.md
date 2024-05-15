@@ -267,7 +267,7 @@ jobs:
       - name: Create JSON for permissions
         id: create-jsons
         run: |
-          permissions=$(echo '${{ inputs.port_payload }}' | jq -c '.payload.properties.permissions')
+          permissions=$(echo '${{ inputs.port_payload }}' | jq -c '.properties.permissions')
           echo "PERMISSIONS_ARRAY=${permissions}" >> $GITHUB_OUTPUT
           jq -r --argjson permissions "${permissions}" --arg resource "${{fromJson(inputs.port_payload).context.entity}}/*" '.Statement[0].Action=$permissions | .Statement[0].Resource=$resource' .github/templates/iamPolicyDocument.json > temp_policy_document.json
           jq -r --arg aws_acc_id "${{ secrets.AWS_ACCOUNT_ID }}" '.Statement[0].Principal.AWS="arn:aws:iam::"+$aws_acc_id+":root"' .github/templates/iamTrustPolicy.json > temp_trust_policy.json
@@ -313,6 +313,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
+          status: "SUCCESS"
           runId: ${{ fromJson(inputs.port_payload).context.runId}}
           logMessage: |
             Created permission for the AWS resource "${{ fromJson(inputs.port_payload).context.entity }}"🚀
@@ -341,7 +342,7 @@ jobs:
     name: Delete IAM permissions
     runs-on: ubuntu-latest
     env:
-      POLICY_ARN: ${{ fromJson(inputs.port_payload).payload.entity.properties.policy_arn }}
+      POLICY_ARN: ${{ fromJson(inputs.port_payload).context.entity.properties.policy_arn }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -356,17 +357,17 @@ jobs:
         id: delete-policies
         run: |
           # Detach the policy from the role
-          aws iam detach-role-policy --role-name ${{ fromJson(inputs.port_payload).context.entity }} --policy-arn ${{ env.POLICY_ARN }}
+          aws iam detach-role-policy --role-name ${{ fromJson(inputs.port_payload).context.entity.identifier }} --policy-arn ${{ env.POLICY_ARN }}
           # Delete the policy
           aws iam delete-policy --policy-arn "${{ env.POLICY_ARN }}" --no-cli-pager
           # Delete the role
-          aws iam delete-role --role-name ${{ fromJson(inputs.port_payload).context.entity }} --no-cli-pager
+          aws iam delete-role --role-name ${{ fromJson(inputs.port_payload).context.entity.identifier }} --no-cli-pager
       - name: "Delete permission from Port 🚢"
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          identifier: ${{ fromJson(inputs.port_payload).context.entity }}
+          identifier: ${{ fromJson(inputs.port_payload).context.entity.identifier }}
           operation: DELETE
           blueprint: provisioned_permissions
       - uses: port-labs/port-github-action@v1
@@ -376,7 +377,7 @@ jobs:
           operation: PATCH_RUN
           runId: ${{ fromJson(inputs.port_payload).context.runId}}
           logMessage: |
-            Permission "${{ fromJson(inputs.port_payload).context.entity}}" has been deleted.
+            Permission "${{ fromJson(inputs.port_payload).context.entity.identifier }}" has been deleted.
             To get more information regarding this deletion, contact "${{ fromJson(inputs.port_payload).trigger.by.user.email }}".
 ```
 
@@ -424,6 +425,8 @@ jobs:
 
 </details> 
 
+
+
 ### Creating the Port actions
 After creating our backend in GitHub, we need to create the Port actions to trigger the workflows we created.
 We will create the Port actions using the Port UI.
@@ -443,9 +446,9 @@ Let's create the Port actions to trigger the workflows we just created:
 
 ```json showLineNumbers
 {
-  "identifier": "aws_resource_request_permissions",
+  "identifier": "request_permissions",
   "title": "Request permissions",
-  "icon": "Unlock",
+  "icon": "DefaultProperty",
   "description": "Request permissions for an AWS resource",
   "trigger": {
     "type": "self-service",
@@ -477,9 +480,7 @@ Let's create the Port actions to trigger the workflows we just created:
       "required": [
         "permissions"
       ],
-      "order": [
-        "permissions"
-      ]
+      "order": []
     },
     "blueprintIdentifier": "aws_resource"
   },
@@ -489,42 +490,19 @@ Let's create the Port actions to trigger the workflows we just created:
     "repo": "port-iam-permissions",
     "workflow": "create-iam-permissions.yaml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
       "port_payload": {
-        "action": "{{ .action.identifier[(\"aws_resource_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "properties": "{{ .inputs }}",
         "context": {
-          "entity": "{{.entity.identifier}}",
           "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "org": "<YOUR_GITHUB_ORG>",
-              "repo": "port-iam-permissions",
-              "workflow": "create-iam-permissions.yaml",
-              "omitUserInputs": true,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"permissions\")) then \"permissions\" else null end}}": "{{.inputs.\"permissions\" | if type == \"array\" then map(.identifier) else .identifier end}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
+          "entity": "{{.entity.identifier}}",
+          "runId": "{{.run.id}}",
+          "trigger": "{{ .trigger }}"
         }
       }
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 </details>
@@ -538,16 +516,16 @@ Let's create the Port actions to trigger the workflows we just created:
 
 ```json showLineNumbers
 {
-  "identifier": "provisioned_permissions_revoke_permissions",
+  "identifier": "revoke_permissions",
   "title": "Revoke permissions",
   "icon": "Alert",
-  "description": "Revokes IAM permissions",
   "trigger": {
     "type": "self-service",
     "operation": "DELETE",
     "userInputs": {
       "properties": {},
-      "required": []
+      "required": [],
+      "order": []
     },
     "blueprintIdentifier": "provisioned_permissions"
   },
@@ -557,40 +535,19 @@ Let's create the Port actions to trigger the workflows we just created:
     "repo": "port-iam-permissions",
     "workflow": "delete-iam-permissions.yaml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
       "port_payload": {
-        "action": "{{ .action.identifier[(\"provisioned_permissions_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "properties": "{{ .inputs }}",
         "context": {
-          "entity": "{{.entity.identifier}}",
           "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "org": "<YOUR_GITHUB_ORG>",
-              "repo": "port-iam-permissions",
-              "workflow": "delete-iam-permissions.yaml",
-              "omitUserInputs": true,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {},
-          "censoredProperties": "{{.action.encryptedProperties}}"
+          "entity": "{{.entity }}",
+          "runId": "{{.run.id}}",
+          "trigger": "{{ .trigger }}"
         }
       }
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 </details>
