@@ -166,7 +166,7 @@ variable "environment" {
 
 ```json showLineNumbers
 {
-  "identifier": "cloudResource_plan_terraform_resource",
+  "identifier": "terraform_plan",
   "title": "Terraform Plan",
   "icon": "Terraform",
   "description": "Plans a cloud resource on AWS using terraform and sends request to the approval team to review the plan and apply the resource",
@@ -176,14 +176,12 @@ variable "environment" {
     "userInputs": {
       "properties": {
         "bucket_name": {
+          "type": "string",
           "title": "Bucket Name",
-          "icon": "AWS",
-          "type": "string"
+          "icon": "AWS"
         }
       },
-      "required": [
-        "bucket_name"
-      ],
+      "required": [],
       "order": []
     },
     "blueprintIdentifier": "cloudResource"
@@ -194,43 +192,17 @@ variable "environment" {
     "repo": "<ENTER-GITHUB-REPO-NAME>",
     "workflow": "plan-terraform-resource.yaml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"bucket_name\")) then \"bucket_name\" else null end}}": "{{.inputs.\"bucket_name\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"cloudResource_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "org": "<ENTER-GITHUB-ORG>",
-              "repo": "<ENTER-GITHUB-REPO-NAME>",
-              "workflow": "plan-terraform-resource.yaml",
-              "omitUserInputs": false,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"bucket_name\")) then \"bucket_name\" else null end}}": "{{.inputs.\"bucket_name\"}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+      "bucket_name": "{{ .inputs.\"bucket_name\" }}",
+      "context": {
+        "blueprint": "{{.action.blueprint}}",
+        "entity": "{{.entity}}",
+        "runId": "{{.run.id}}",
+        "trigger": "{{ .trigger }}"
       }
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 
@@ -248,10 +220,10 @@ variable "environment" {
 
 ```json showLineNumbers
 {
-  "identifier": "cloudResource_apply_terraform_resource",
+  "identifier": "terraform_apply_resource",
   "title": "Terraform ApplyResource",
   "icon": "Terraform",
-  "description": "Reviews the cloud resource planned in the \"Plan A Terraform Resource\" workflow and approves/declines the terraform configuration",
+  "description": "Reviews the cloud resource planned in the \\\"Plan A Terraform Resource\\\" workflow and approves/declines the terraform configuration",
   "trigger": {
     "type": "self-service",
     "operation": "CREATE",
@@ -268,6 +240,7 @@ variable "environment" {
           "type": "string"
         },
         "tf_plan_output": {
+          "icon": "Terraform",
           "title": "Terrform Plan Output",
           "type": "object",
           "description": "JSON output of TF Plan"
@@ -290,41 +263,14 @@ variable "environment" {
     "repo": "<ENTER-GITHUB-REPO-NAME>",
     "workflow": "apply-terraform-resource.yaml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"artifact_identifier\")) then \"artifact_identifier\" else null end}}": "{{.inputs.\"artifact_identifier\"}}",
-      "{{if (.inputs | has(\"port_run_identifier\")) then \"port_run_identifier\" else null end}}": "{{.inputs.\"port_run_identifier\"}}",
-      "{{if (.inputs | has(\"tf_plan_output\")) then \"tf_plan_output\" else null end}}": "{{.inputs.\"tf_plan_output\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"cloudResource_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "org": "<ENTER-GITHUB-ORG>",
-              "repo": "<ENTER-GITHUB-REPO-NAME>",
-              "workflow": "apply-terraform-resource.yaml",
-              "omitUserInputs": false,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"artifact_identifier\")) then \"artifact_identifier\" else null end}}": "{{.inputs.\"artifact_identifier\"}}",
-            "{{if (.inputs | has(\"port_run_identifier\")) then \"port_run_identifier\" else null end}}": "{{.inputs.\"port_run_identifier\"}}",
-            "{{if (.inputs | has(\"tf_plan_output\")) then \"tf_plan_output\" else null end}}": "{{.inputs.\"tf_plan_output\"}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+      "artifact_identifier": "{{ .inputs.\"artifact_identifier\" }}",
+      "port_run_identifier": "{{ .inputs.\"port_run_identifier\" }}",
+      "tf_plan_output": "{{ .inputs.\"tf_plan_output\" }}",
+      "context": {
+        "blueprint": "{{.action.blueprint}}",
+        "entity": "{{.entity}}",
+        "runId": "{{.run.id}}",
+        "trigger": "{{ .trigger }}"
       }
     },
     "reportWorkflowStatus": true
@@ -332,8 +278,7 @@ variable "environment" {
   "requiredApproval": true,
   "approvalNotification": {
     "type": "email"
-  },
-  "publish": true
+  }
 }
 ```
 
@@ -354,11 +299,11 @@ on:
       bucket_name:
         type: string
         required: true
-      port_payload:
+      context:
         required: true
-        description: Port's payload, including details for who triggered the action and
+        description: >-
+          Port's payload, including details for who triggered the action and
           general context (blueprint, run id, etc...)
-        type: string
 jobs:
   plan-and-request-approval-for-bucket:
     runs-on: ubuntu-latest
@@ -371,7 +316,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{fromJson(inputs.context).runId}}
           logMessage: |
               About to create an s3 bucket with name: ${{ github.event.inputs.bucket_name }} ... ⛴️
 
@@ -399,8 +344,8 @@ jobs:
           terraform validate
           terraform plan \
             -input=false \
-            -out=tfplan-${{fromJson(inputs.port_payload).context.runId}}
-          terraform show -json tfplan-${{fromJson(inputs.port_payload).context.runId}} > tfplan.json
+            -out=tfplan-${{fromJson(inputs.context).runId}}
+          terraform show -json tfplan-${{fromJson(inputs.context).runId}} > tfplan.json
 
       - name: Save Terraform Plan JSON to Environment Variable
         id: save-plan-json
@@ -413,7 +358,7 @@ jobs:
         uses: actions/upload-artifact@v4
         id: artifact-upload-step
         with:
-          name: tfplan-${{fromJson(inputs.port_payload).context.runId}}
+          name: tfplan-${{fromJson(inputs.context).runId}}
           path: terraform/
           retention-days: 7 ## change this to preferred number of days to keep the artifact before deletion
       
@@ -424,7 +369,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{fromJson(inputs.context).runId}}
           logMessage: |
               s3 bucket planned successfully and uploaded to GitHub artifact. Proceeding to request approval to apply the plan: ${{ steps.plan.outputs.stdout }} ✅
 
@@ -436,7 +381,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{fromJson(inputs.context).runId}}
           logMessage: |
               Error Occured while planning or saving terraform resource. Aborting request to approve the plan
 
@@ -453,7 +398,7 @@ jobs:
           action: apply_terraform_resource
           properties: |-
             {
-              "port_run_identifier": "${{ fromJson(inputs.port_payload).context.runId }}",
+              "port_run_identifier": "${{ fromJson(inputs.context).runId }}",
               "artifact_identifier": "${{ steps.artifact-upload-step.outputs.artifact-id }}",
               "tf_plan_output": ${{ env.TF_PLAN_JSON }}
             }
@@ -465,7 +410,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{fromJson(inputs.context).runId}}
           logMessage: |
               The request to provision and apply the cloud resource has been sent to the approval team. The status of request will be shared in the action log
 
@@ -476,7 +421,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{fromJson(inputs.context).runId}}
           logMessage: |
               The request to provision and apply the cloud resource has not been sent to the approval team due to an error that occurred during the creation steps
 ```
@@ -502,11 +447,11 @@ on:
         required: true
       tf_plan_output:
         type: string
-      port_payload:
+      context:
         required: true
-        description: Port's payload, including details for who triggered the action and
+        description: >-
+          Port's payload, including details for who triggered the action and
           general context (blueprint, run id, etc...)
-        type: string
 jobs:
   apply-and-provision-resource:
     runs-on: ubuntu-latest
@@ -519,7 +464,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{fromJson(inputs.context).runId}}
           logMessage: |
               About to provision a cloud resource previously planned in Port with run ID: ${{ github.event.inputs.port_run_identifier }} ... ⛴️
 
@@ -574,7 +519,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{fromJson(inputs.context).runId}}
           logMessage: |
               cloud resource successfully approved and provisioned ✅
 
@@ -607,7 +552,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{fromJson(inputs.context).runId}}
           logMessage: |
               cloud resource could not be provisioned
 ```
