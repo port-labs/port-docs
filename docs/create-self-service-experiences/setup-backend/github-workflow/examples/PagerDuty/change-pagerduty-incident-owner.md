@@ -173,7 +173,7 @@ jobs:
         id: change_owner
         uses: fjogeleit/http-request-action@v1
         with:
-          url: 'https://api.pagerduty.com/incidents/$${{fromJson(github.event.inputs.port_payload).port_context.entity}}'
+          url: 'https://api.pagerduty.com/incidents/${{fromJson(inputs.port_context).entity}}'
           method: 'PUT'
           customHeaders: '{"Content-Type": "application/json", "Accept": "application/vnd.pagerduty+json;version=2", "Authorization": "Token token=${{ secrets.PAGERDUTY_API_KEY }}", "From": "${{ github.event.inputs.from }}"}'
           data: >-
