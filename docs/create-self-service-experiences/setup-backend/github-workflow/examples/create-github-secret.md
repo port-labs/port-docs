@@ -37,14 +37,14 @@ Keep in mind this can be any blueprint you would like and this is just an exampl
   "schema": {
     "properties": {
       "secret_key": {
-        "icon": "DefaultProperty",
+        "icon": "Github",
         "title": "Secret Key",
         "type": "string",
         "description": "All Uppercase",
         "pattern": "^[^a-z]*$"
       },
       "secret_value": {
-        "icon": "DefaultProperty",
+        "icon": "Github",
         "title": "Secret Value",
         "type": "string"
       }
@@ -68,7 +68,7 @@ Make sure to replace the placeholders for `<GITHUB_ORG_NAME>` and `<GITHUB_REPO_
 
 ```json showLineNumbers
 {
-  "identifier": "service_create_github_secret",
+  "identifier": "create_git_hub_secret",
   "title": "Create GitHub Secret",
   "icon": "Github",
   "description": "Creates a GitHub secret in my repository",
@@ -107,45 +107,18 @@ Make sure to replace the placeholders for `<GITHUB_ORG_NAME>` and `<GITHUB_REPO_
     "repo": "<GITHUB_REPO_NAME>",
     "workflow": "create-repo-secret.yml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"secret_key\")) then \"secret_key\" else null end}}": "{{.inputs.\"secret_key\"}}",
-      "{{if (.inputs | has(\"secret_value\")) then \"secret_value\" else null end}}": "{{.inputs.\"secret_value\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"service_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "omitPayload": false,
-              "omitUserInputs": false,
-              "reportWorkflowStatus": true,
-              "org": "<GITHUB_ORG_NAME>",
-              "repo": "<GITHUB_REPO_NAME>",
-              "workflow": "create-repo-secret.yml"
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"secret_key\")) then \"secret_key\" else null end}}": "{{.inputs.\"secret_key\"}}",
-            "{{if (.inputs | has(\"secret_value\")) then \"secret_value\" else null end}}": "{{.inputs.\"secret_value\"}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+      "secret_key": "{{ .inputs.\"secret_key\" }}",
+      "secret_value": "{{ .inputs.\"secret_value\" }}",
+      "context": {
+        "entity": "{{.entity}}",
+        "blueprint": "{{.action.blueprint}}",
+        "runId": "{{.run.id}}",
+        "trigger": "{{ .trigger }}"
       }
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 
@@ -169,11 +142,10 @@ on:
       secret_value:
         type: string
         description: value of the secret
-      port_payload:
+      context:
         required: false
         description:
-          Port's payload, including details for who triggered the action and
-          general context (blueprint, run id, etc...)
+          Who triggered the action and general context (blueprint, run id, etc...)
         type: string
 
 jobs:
@@ -193,7 +165,7 @@ jobs:
           title: ${{ inputs.secret_key }}
           team: "[]"
           icon: DefaultBlueprint
-          blueprint: ${{ fromJson(inputs.port_payload).context.blueprint }}
+          blueprint: ${{ fromJson(inputs.context).blueprint }}
           properties: |-
             {
               "secret_key": "${{ inputs.secret_key }}",
@@ -203,7 +175,18 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: UPSERT
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{ fromJson(inputs.context).runId }}
+
+      - name: Inform completion of request to create secret in Port
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: PATCH_RUN
+          status: "SUCCESS"
+          runId: ${{fromJson(inputs.context).runId}}
+          logMessage: "Created github secret ${{ github.event.inputs.secret_key }}"
 ```
 </details>
 
