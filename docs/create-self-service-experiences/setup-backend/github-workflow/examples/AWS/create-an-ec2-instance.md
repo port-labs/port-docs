@@ -288,7 +288,7 @@ on:
         description: EC2 pem key
         required: true
         type: string
-      port_payload:
+      context:
         required: true
         type: string
 jobs:
@@ -306,7 +306,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{ fromJson(inputs.context).runId }}
           logMessage: |
               About to create ec2 instance ${{ github.event.inputs.ec2_name }} .. ⛴️
 
@@ -362,7 +362,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{ fromJson(inputs.context).runId }}
           logMessage: |
               EC2 Instance created successfully ✅
 
@@ -373,7 +373,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
+          runId: ${{fromJson(inputs.context).runId}}
           logMessage: "Upserting created EC2 Instance to Port ... "
           
       - name: UPSERT EC2 Instance Entity
@@ -401,7 +401,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: UPSERT
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{ fromJson(inputs.context).runId }}
 
 
       - name: Log After Upserting Entity
@@ -411,7 +411,8 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
+          status: "SUCCESS"
+          runId: ${{fromJson(inputs.context).runId}}
           logMessage: "Entity upserting was successful ✅"
 ```
 </details>
@@ -432,7 +433,7 @@ jobs:
 
 ```json showLineNumbers
 {
-  "identifier": "ec2Instance_create_instance",
+  "identifier": "create_ec2_instance",
   "title": "Create Instance",
   "icon": "EC2",
   "description": "Create An EC2 Instance from Port",
@@ -486,41 +487,14 @@ jobs:
     "repo": "<GITHUB_REPO>",
     "workflow": "create-ec2-instance.yaml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"pem_key_name\")) then \"pem_key_name\" else null end}}": "{{.inputs.\"pem_key_name\"}}",
-      "{{if (.inputs | has(\"ec2_name\")) then \"ec2_name\" else null end}}": "{{.inputs.\"ec2_name\"}}",
-      "{{if (.inputs | has(\"ec2_instance_type\")) then \"ec2_instance_type\" else null end}}": "{{.inputs.\"ec2_instance_type\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"ec2Instance_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "org": "<GITHUB-ORG>",
-              "repo": "<GITHUB-REPO-NAME>",
-              "workflow": "create-ec2-instance.yaml",
-              "omitUserInputs": false,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"pem_key_name\")) then \"pem_key_name\" else null end}}": "{{.inputs.\"pem_key_name\"}}",
-            "{{if (.inputs | has(\"ec2_name\")) then \"ec2_name\" else null end}}": "{{.inputs.\"ec2_name\"}}",
-            "{{if (.inputs | has(\"ec2_instance_type\")) then \"ec2_instance_type\" else null end}}": "{{.inputs.\"ec2_instance_type\"}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+      "ec2_name": "{{ .inputs.\"ec2_name\" }}",
+      "ec2_instance_type": "{{ .inputs.\"ec2_instance_type\" }}",
+      "pem_key_name": "{{ .inputs.\"pem_key_name\" }}",
+      "context": {
+        "entity": "{{ .entity }}",
+        "blueprint": "{{ .action.blueprint }}",
+        "runId": "{{ .run.id }}",
+        "trigger": "{{ .trigger }}"
       }
     },
     "reportWorkflowStatus": true
