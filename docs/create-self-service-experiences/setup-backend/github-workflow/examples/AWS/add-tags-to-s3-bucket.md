@@ -134,7 +134,7 @@ Replace the invocation method with your own repository details.
         "entity": "{{ .entity }}",
         "blueprint": "{{ .action.blueprint }}",
         "runId": "{{ .run.id }}",
-        "trigger": "{{ .trigger }}",
+        "trigger": "{{ .trigger }}"
       }
     },
     "reportWorkflowStatus": true

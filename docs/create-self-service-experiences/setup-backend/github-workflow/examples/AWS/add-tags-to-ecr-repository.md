@@ -180,7 +180,7 @@ This option is way easier but if you do not want this, you can simply type in re
         "entity": "{{ .entity }}",
         "blueprint": "{{ .action.blueprint }}",
         "runId": "{{ .run.id }}",
-        "trigger": "{{ .trigger }}",
+        "trigger": "{{ .trigger }}"
       }
     },
     "reportWorkflowStatus": true
