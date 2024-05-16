@@ -229,7 +229,7 @@ jobs:
 3. Create a Port action against the `EKS Cluster` blueprint:
     - Go to the [self-service](https://app.getport.io/self-serve) page.
     - Click on the `+ New Action` button.
-    - Click on the `{...} Edit JSON` button.
+    - Click on the `{...} Edit JSON` button in the top right corner.
     - Copy and paste the following JSON configuration into the editor.
     - Click `Save`
 
