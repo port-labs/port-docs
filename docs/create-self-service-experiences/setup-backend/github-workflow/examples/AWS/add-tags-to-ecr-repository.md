@@ -174,39 +174,13 @@ This option is way easier but if you do not want this, you can simply type in re
     "repo": "<GITHUB-REPO-NAME>",
     "workflow": "add-tags-to-ecr-repository.yml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"repository\")) then \"repository\" else null end}}": "{{.inputs.\"repository\" | if type == \"array\" then map(.identifier) else .identifier end}}",
-      "{{if (.inputs | has(\"tags\")) then \"tags\" else null end}}": "{{.inputs.\"tags\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"ecrRepository_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "org": "<GITHUB-ORG>",
-              "repo": "<GITHUB-REPO-NAME>",
-              "workflow": "add-tags-to-ecr-repository.yml",
-              "omitUserInputs": false,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"repository\")) then \"repository\" else null end}}": "{{.inputs.\"repository\" | if type == \"array\" then map(.identifier) else .identifier end}}",
-            "{{if (.inputs | has(\"tags\")) then \"tags\" else null end}}": "{{.inputs.\"tags\"}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+      "repository": "{{ .inputs.\"repository\" }}",
+      "tags": "{{ .inputs.\"tags\" }}",
+      "context": {
+        "entity": "{{ .entity }}",
+        "blueprint": "{{ .action.blueprint }}",
+        "runId": "{{ .run.id }}",
+        "trigger": "{{ .trigger }}",
       }
     },
     "reportWorkflowStatus": true
@@ -238,11 +212,10 @@ on:
         type: string
         required: true
         description: 'Tags should be in key-value pairs like so: {"key": "value"}'
-      port_payload:
+      context:
         required: true
         description:
-          Port's payload, including details for who triggered the action and
-          general context (blueprint, run id, etc...)
+          Action and general context (blueprint, run id, etc...)
         type: string
     secrets:
       AWS_REGION:
@@ -268,7 +241,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          runId: ${{fromJson(inputs.context).runId}}
           logMessage: Starting request to add tags to ECR repository
 
       - name: Configure AWS Credentials
@@ -305,7 +278,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{ fromJson(inputs.context).runId }}
           logMessage: Finished adding tags to ECR repository
 ```
 </details>
