@@ -41,7 +41,7 @@ resources:
           # highlight-start
           identifier: >-
             .repository.project.name + "/" + .repository.name + (.pullRequestId
-            | tostring)
+            | tostring) | gsub(" "; "")
           blueprint: '"azureDevopsPullRequest"'
           properties:
             creator: .createdBy.uniqueName
@@ -49,7 +49,7 @@ resources:
             reviewers: '[.reviewers[].uniqueName]'
             createdAt: .creationDate
           relations:
-            service: .repository.project.name + "/" + .repository.name
+            service: '.repository.project.name + "/" + .repository.name | gsub(" "; "")'
         # highlight-end
 ```
 
@@ -134,7 +134,7 @@ The `port`, `entity` and the `mappings` keys open the section used to map the Az
         # highlight-start
         entity:
           mappings: # Mappings between one Azure DevOps API object to a Port entity. Each value is a JQ query.
-            identifier: .project.name + "/" + .name
+            identifier: '.project.name + "/" + .name | gsub(" "; "")'
             title: .name
             blueprint: '"azureDevopsRepository"'
             properties:
