@@ -161,11 +161,9 @@ on:
       application_name:
         description: The Argo CD Application Name. e.g. app.example.com
         required: true
-      port_payload:
+      port_context:
         required: true
-        description: >-
-          Port's payload, including details for who triggered the action and
-          general context (blueprint, run id, etc...)
+        description: includes blueprint, run ID, and entity identifier from Port.
 
 jobs:
   sync-argocd-app:
@@ -178,7 +176,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
+          runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: "About to make a request to argocd server..."
 
       - name: Sync Argo CD Application
@@ -197,7 +195,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
+          runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: "Request to sync Argo CD application failed ..."
     
     - name: Report Sync Success
@@ -207,7 +205,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
+          runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: "Successfully synced Argo CD Aplication ✅"
 ```
 </details>
@@ -258,36 +256,11 @@ Create a new self service action using the following JSON configuration.
     "workflowInputs": {
       "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
       "{{if (.inputs | has(\"application_name\")) then \"application_name\" else null end}}": "{{.inputs.\"application_name\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"argocdApplication_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "org": "<GITHUB_ORG>",
-              "repo": "<GITHUB_REPO>",
-              "workflow": "sync-argocd-app.yaml",
-              "omitUserInputs": false,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"application_name\")) then \"application_name\" else null end}}": "{{.inputs.\"application_name\"}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
+      "context": {
+      "entity": "{{.entity.identifier}}",
+      "blueprint": "{{.action.blueprint}}",
+      "runId": "{{.run.id}}"
         }
-      }
     },
     "reportWorkflowStatus": true
   },
