@@ -11,7 +11,7 @@ resources:
     port:
       entity:
         mappings:
-          identifier: '.id'
+          identifier: '.id | gsub(" "; "")'
           blueprint: '"project"'
           title: .name
           properties:

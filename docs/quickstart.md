@@ -144,6 +144,7 @@ This dashboard also visualizes data about your services, but this time the focus
 Now that you have a basic understanding of Port's main pillars, you can start customizing your portal to suit your needs. Here are some great ways to begin:
 
 &nbsp;&nbsp;&nbsp; ❇️ Finish setting up your [self-service actions](#self-service-actions) and take them for a spin.  
-&nbsp;&nbsp;&nbsp; ❇️ Complete one of our [guides](https://docs.getport.io/guides-and-tutorials) to learn how to use Port to address real use-cases.  
+&nbsp;&nbsp;&nbsp; ❇️ Complete one of our [guides](/guides-and-tutorials) to learn how to use Port to address real use-cases.  
+&nbsp;&nbsp;&nbsp; ❇️ Check out our [resources](/resources) for more content that can help you get the most out of your developer portal.  
 &nbsp;&nbsp;&nbsp; ❇️ Join our [community Slack](https://www.getport.io/community) to ask questions and share your experience with Port.  
-&nbsp;&nbsp;&nbsp; ❇️ Working with **monorepos**? See our [quick guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/working-with-monorepos) on how to adjust your configuration.
+&nbsp;&nbsp;&nbsp; ❇️ Working with **monorepos**? See our [quick guide](/build-your-software-catalog/sync-data-to-catalog/git/working-with-monorepos) on how to adjust your configuration.
