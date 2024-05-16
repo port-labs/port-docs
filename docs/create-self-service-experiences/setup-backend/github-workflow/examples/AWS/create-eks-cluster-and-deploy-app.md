@@ -878,7 +878,7 @@ This action will create the following:
 
 ```json showLineNumbers
 {
-  "identifier": "eks_deploy_to_eks",
+  "identifier": "deploy_to_eks",
   "title": "Deploy to EKS",
   "description": "Build and deploy an image to EKS",
   "trigger": {
@@ -904,37 +904,12 @@ This action will create the following:
     "repo": "<GITHUB_REPO>",
     "workflow": "build-and-deploy.yml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"cluster\")) then \"cluster\" else null end}}": "{{.inputs.\"cluster\" | if type == \"array\" then map(.identifier) else .identifier end}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"eks_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "org": "<GITHUB_ORG>",
-              "repo": "<GITHUB_REPO>",
-              "workflow": "build-and-deploy.yml",
-              "omitUserInputs": false,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"cluster\")) then \"cluster\" else null end}}": "{{.inputs.\"cluster\" | if type == \"array\" then map(.identifier) else .identifier end}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+      "cluster": "{{.inputs.\"cluster\"}}",
+      "context": {
+        "entity": "{{ .entity }}",
+        "blueprint": "{{ .action.blueprint }}",
+        "runId": "{{ .run.id }}",
+        "trigger": "{{ .trigger }}"
       }
     },
     "reportWorkflowStatus": true
@@ -962,9 +937,9 @@ on:
       cluster:
         description: 'Deployment cluster'
         required: true
-      port_payload:
+      context:
         required: true
-        description: "Port's payload, including details for who triggered the action and general context (blueprint, run id, etc...)"
+        description: "Action and general context (blueprint, run id, etc...)"
         type: string
 
 jobs:
@@ -972,8 +947,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      REPO_URL: ${{ fromJson(inputs.port_payload).payload.entity.properties.url }}
-      TRIGGERED_BY: ${{ fromJson(inputs.port_payload).trigger.by.user.email || github.actor }}
+      REPO_URL: ${{ fromJson(inputs.context).entity.properties.url }}
+      TRIGGERED_BY: ${{ fromJson(inputs.context).trigger.by.user.email || github.actor }}
 
     steps:
     - name: Extract repository owner and name
@@ -1048,7 +1023,7 @@ jobs:
         clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
         operation: PATCH_RUN
         baseUrl: https://api.getport.io
-        runId: ${{ fromJson(inputs.port_payload).context.runId }}
+        runId: ${{ fromJson(inputs.context).runId }}
         logMessage: |
           Built and pushed image to ECR
 
@@ -1076,7 +1051,7 @@ jobs:
         operation: PATCH_RUN
         status: "SUCCESS"
         baseUrl: https://api.getport.io
-        runId: ${{ fromJson(inputs.port_payload).context.runId }}
+        runId: ${{ fromJson(inputs.context).runId }}
         logMessage: |
             Deployed to EKS 
 ```
