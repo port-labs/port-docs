@@ -50,11 +50,9 @@ on:
         description: The email address of a valid user associated with the account making the request.
         required: true
         type: string
-      port_payload:
+      port_context:
         required: true
-        description: >-
-          Port's payload, including details for who triggered the action and
-          general context (blueprint, run id, etc...)
+        description: includes blueprint, run ID, and entity identifier from Port.
 
 jobs:
   escalate-incident:
@@ -67,14 +65,14 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
+          runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: "About to escalate incident in PagerDuty..."
 
       - name: Escalate Incident in PagerDuty
         id: escalate_incident
         uses: fjogeleit/http-request-action@v1
         with:
-          url: 'https://api.pagerduty.com/incidents/${{fromJson(github.event.inputs.port_payload).context.entity}}'
+          url: 'https://api.pagerduty.com/incidents/${{inputs.entity_identifier}}'
           method: 'PUT'
           customHeaders: '{"Content-Type": "application/json", "Accept": "application/vnd.pagerduty+json;version=2", "Authorization": "Token token=${{ secrets.PAGERDUTY_API_KEY }}", "From": "${{ github.event.inputs.from }}"}'
           data: >-
@@ -97,7 +95,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
+          runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: "Request to escalate incident failed ..."
 
       - name: Inform ingestion of PagerDuty escalation to Port
@@ -107,13 +105,13 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
+          runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: "Reporting the escalated incident back to Port ..."
 
       - name: Upsert pagerduty entity to Port 
         uses: port-labs/port-github-action@v1
         with:
-          identifier: ${{fromJson(github.event.inputs.port_payload).context.entity}}
+          identifier: ${{inputs.entity_identifier}}
           title: "${{ fromJson(steps.escalate_incident.outputs.response).incident.title }}"
           blueprint: "pagerdutyIncident"
           properties: |-
@@ -130,7 +128,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: UPSERT
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{fromJson(inputs.port_context).run_id}}
 
       - name: Inform Entity upsert failure
         if: failure()
@@ -140,7 +138,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
+          runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: "Failed to report the escalated incident back to Port ..."
 
       - name: Inform completion of PagerDuty escalation process into Port
@@ -150,7 +148,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
+          runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: "Incident escalation process was successful ✅"
 ```
 </details>
@@ -227,37 +225,10 @@ Create a new self service action using the following JSON configuration.
       "{{if (.inputs | has(\"escalation_policy_id\")) then \"escalation_policy_id\" else null end}}": "{{.inputs.\"escalation_policy_id\"}}",
       "{{if (.inputs | has(\"urgency\")) then \"urgency\" else null end}}": "{{.inputs.\"urgency\"}}",
       "{{if (.inputs | has(\"from\")) then \"from\" else null end}}": "{{.inputs.\"from\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"pagerdutyIncident_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "org": "<GITHUB_ORG>",
-              "repo": "<GITHUB_REPO>",
-              "workflow": "ecalate-an-incident.yaml",
-              "omitUserInputs": false,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"escalation_policy_id\")) then \"escalation_policy_id\" else null end}}": "{{.inputs.\"escalation_policy_id\"}}",
-            "{{if (.inputs | has(\"urgency\")) then \"urgency\" else null end}}": "{{.inputs.\"urgency\"}}",
-            "{{if (.inputs | has(\"from\")) then \"from\" else null end}}": "{{.inputs.\"from\"}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+      "port_context": {
+        "blueprint": "{{.action.blueprint}}",
+        "entity": "{{.entity}}",
+        "run_id": "{{.run.id}}"
       }
     },
     "reportWorkflowStatus": true
