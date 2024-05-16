@@ -217,6 +217,7 @@ jobs:
               "created_at": "${{ fromJson(steps.change_owner.outputs.response).incident.created_at }}",
               "updated_at": "${{ fromJson(steps.change_owner.outputs.response).incident.updated_at }}"
             }
+          relations: "${{ toJson(fromJson(inputs.port_context).relations) }}"
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
@@ -290,12 +291,13 @@ Create a new self service action using the following JSON configuration.
     "workflow": "change-incident-owner.yaml",
     "workflowInputs": {
       "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"new_owner_user_id\")) then \"new_owner_user_id\" else null end}}": "{{.inputs.\"new_owner_user_id\"}}",
+      "{{if (.inputs | has(\"new_owner\")) then \"new_owner\" else null end}}": "{{.inputs.\"new_owner\"}}",
       "{{if (.inputs | has(\"from\")) then \"from\" else null end}}": "{{.inputs.\"from\"}}",
       "port_context": {
         "blueprint": "{{.action.blueprint}}",
-        "entity": "{{.entity}}",
-        "run_id": "{{.run.id}}"
+        "entity": "{{.entity.identifier}}",
+        "run_id": "{{.run.id}}",
+        "relations": "{{.entity.relations}}"
       }
     },
     "reportWorkflowStatus": true

@@ -55,8 +55,7 @@ on:
 jobs:
   trigger-incident:
     runs-on: ubuntu-latest
-    steps: 
-
+    steps:
       - name: Inform starting of PagerDuty trigger 
         uses: port-labs/port-github-action@v1
         with:
@@ -66,6 +65,7 @@ jobs:
           runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: |
               About to trigger PagerDuty incident.. ⛴️
+              
       - name: Send Event to PagerDuty
         id: trigger
         uses: fjogeleit/http-request-action@v1
@@ -76,14 +76,68 @@ jobs:
           data: >-
             {
               "payload": {
-                "summary": ${{ github.event.inputs.summary }},
-                "source": ${{ github.event.inputs.source }},
-                "severity": ${{ github.event.inputs.severity }}, 
+                "summary": "${{ github.event.inputs.summary }}",
+                "source": "${{ github.event.inputs.source }}",
+                "severity": "${{ github.event.inputs.severity }}"
               },
               "event_action": "${{ github.event.inputs.event_action }}",
               "routing_key": "${{ github.event.inputs.routing_key }}"
             }
-      - name: Create a log message
+      - name: Get PagerDuty Incident Details
+        id: get_incident
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: 'https://api.pagerduty.com/incidents/${{fromJson(inputs.port_context).entity}}'
+          method: 'GET'
+          customHeaders: '{"Content-Type": "application/json", "Accept": "application/vnd.pagerduty+json;version=2", "Authorization": "Token token=${{ secrets.PAGERDUTY_API_KEY }}"}'
+
+      - name: Log Before Upserting Entity
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: PATCH_RUN
+          runId: ${{fromJson(inputs.port_context).run_id}}
+          logMessage: "Reporting the updated incident back to port ..."
+          
+      - name: UPSERT Entity
+        uses: port-labs/port-github-action@v1
+        with:
+          identifier: "${{ fromJson(steps.get_incident.outputs.response).incident.id }}"
+          title: "${{ fromJson(steps.get_incident.outputs.response).incident.title }}"
+          team: "[]"
+          icon: "pagerduty"
+          blueprint: "${{fromJson(inputs.port_context).blueprint}}"
+          properties: |-
+            {
+              "status": "${{ fromJson(steps.get_incident.outputs.response).incident.status }}",
+              "url": "${{ fromJson(steps.get_incident.outputs.response).incident.self }}",
+              "urgency": "${{ fromJson(steps.get_incident.outputs.response).incident.urgency }}",
+              "responder": "${{ fromJson(steps.get_incident.outputs.response).incident.assignments[0].assignee.summary }}",
+              "escalation_policy": "${{ fromJson(steps.get_incident.outputs.response).incident.escalation_policy.summary }}",
+              "created_at": "${{ fromJson(steps.get_incident.outputs.response).incident.created_at }}",
+              "updated_at": "${{ fromJson(steps.get_incident.outputs.response).incident.updated_at }}"
+            }
+          relations: "${{ toJson(fromJson(inputs.port_context).relations) }}"
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: UPSERT
+          runId: ${{fromJson(inputs.port_context).run_id}}
+      
+      - name: Inform Entity upsert failure
+        if: steps.upsert_entity.outcome == 'failure'
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: PATCH_RUN
+          runId: ${{fromJson(inputs.port_context).run_id}}
+          logMessage: "Failed to report the triggered incident back to Port ..."
+
+      - name: Log After Upserting Entity
         id: log-response
         uses: port-labs/port-github-action@v1
         with:
@@ -94,7 +148,6 @@ jobs:
           runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: |
              PagerDuty incident triggered! ✅
-             "The incident id is: ${{ steps.trigger.outputs}}"
 ```
 </details>
 
@@ -146,7 +199,7 @@ Create a new self service action using the following JSON configuration.
           "title": "Summary",
           "icon": "pagerduty",
           "description": "A brief text summary of the event, used to generate the summaries/titles of any associated alerts. The maximum permitted length of this property is 1024 characters.",
-          "minLength": 1024
+          "maxLength": 1024
         },
         "source": {
           "type": "string",
@@ -205,8 +258,9 @@ Create a new self service action using the following JSON configuration.
       "{{if (.inputs | has(\"routing_key\")) then \"routing_key\" else null end}}": "{{.inputs.\"routing_key\"}}",
       "port_context": {
         "blueprint": "{{.action.blueprint}}",
-        "entity": "{{.entity}}",
-        "run_id": "{{.run.id}}"
+        "entity": "{{.entity.identifier}}",
+        "run_id": "{{.run.id}}",
+        "relations": "{{.entity.relations}}"
       }
     },
     "reportWorkflowStatus": true
