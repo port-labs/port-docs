@@ -34,7 +34,6 @@ Create the file `.github/workflows/trigger-incident.yaml` in the `.github/workfl
 
 ```yaml showLineNumbers title="trigger-incident.yaml"
 name: Trigger an Incident In PagerDuty
-name: Trigger an Incident In PagerDuty
 on:
   workflow_dispatch:
     inputs:
@@ -50,13 +49,11 @@ on:
         type: string
       severity:
         type: string
-      port_payload:
+      port_context:
         required: true
-        description: Port's payload, including details for who triggered the action and
-          general context (blueprint, run id, etc...)
-        type: string
+        description: includes blueprint, run ID, and entity identifier from Port.
 jobs:
-  create-entity-in-port-and-update-run:
+  trigger-incident:
     runs-on: ubuntu-latest
     steps: 
 
@@ -66,7 +63,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: |
               About to trigger PagerDuty incident.. ⛴️
       - name: Send Event to PagerDuty
@@ -94,7 +91,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: |
              PagerDuty incident triggered! ✅
              "The incident id is: ${{ steps.trigger.outputs}}"
@@ -206,39 +203,10 @@ Create a new self service action using the following JSON configuration.
       "{{if (.inputs | has(\"severity\")) then \"severity\" else null end}}": "{{.inputs.\"severity\"}}",
       "{{if (.inputs | has(\"event_action\")) then \"event_action\" else null end}}": "{{.inputs.\"event_action\"}}",
       "{{if (.inputs | has(\"routing_key\")) then \"routing_key\" else null end}}": "{{.inputs.\"routing_key\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"pagerdutyIncident_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "org": "<GITHUB_ORG>",
-              "repo": "<GITHUB_REPO>",
-              "workflow": "trigger-pagerduty-incident.yaml",
-              "omitUserInputs": false,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"summary\")) then \"summary\" else null end}}": "{{.inputs.\"summary\"}}",
-            "{{if (.inputs | has(\"source\")) then \"source\" else null end}}": "{{.inputs.\"source\"}}",
-            "{{if (.inputs | has(\"severity\")) then \"severity\" else null end}}": "{{.inputs.\"severity\"}}",
-            "{{if (.inputs | has(\"event_action\")) then \"event_action\" else null end}}": "{{.inputs.\"event_action\"}}",
-            "{{if (.inputs | has(\"routing_key\")) then \"routing_key\" else null end}}": "{{.inputs.\"routing_key\"}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+      "port_context": {
+        "blueprint": "{{.action.blueprint}}",
+        "entity": "{{.entity}}",
+        "run_id": "{{.run.id}}"
       }
     },
     "reportWorkflowStatus": true

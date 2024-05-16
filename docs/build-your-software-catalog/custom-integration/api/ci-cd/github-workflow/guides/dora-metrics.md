@@ -87,10 +87,24 @@ Below, you can find the JSON for the `DORA Metrics` blueprint required for the g
         "description": "Total number of deployments in the timeframe."
       },
       "deploymentRating": {
-        "title": "Deployment Rating",
-        "type": "string",
         "icon": "DefaultProperty",
-        "description": "Qualitative rating of deployment success. e.g Elite"
+        "title": "Deployment Rating",
+        "description": "Qualitative rating of deployment success. e.g Elite",
+        "type": "string",
+        "enum": [
+          "Elite",
+          "High",
+          "Medium",
+          "Low",
+          "None"
+        ],
+        "enumColors": {
+          "Elite": "green",
+          "High": "turquoise",
+          "Medium": "yellow",
+          "Low": "red",
+          "None": "lightGray"
+        }
       },
       "numberOfUniqueDeploymentDays": {
         "title": "Unique Deployment Days",
@@ -126,7 +140,21 @@ Below, you can find the JSON for the `DORA Metrics` blueprint required for the g
         "title": "Lead Time Rating",
         "type": "string",
         "icon": "DefaultProperty",
-        "description": "Qualitative rating of lead time for changes, e.g Elite."
+        "description": "Qualitative rating of lead time for changes, e.g Elite.",
+        "enum": [
+          "Elite",
+          "High",
+          "Medium",
+          "Low",
+          "None"
+        ],
+        "enumColors": {
+          "Elite": "green",
+          "High": "turquoise",
+          "Medium": "yellow",
+          "Low": "red",
+          "None": "lightGray"
+        }
       },
       "workflowAverageTimeDuration": {
         "title": "Workflow Average Time Duration",
