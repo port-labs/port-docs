@@ -141,7 +141,7 @@ on:
         description: "Action to perform (apply/destroy)"
         required: true
         default: "apply"
-      port_payload:
+      context:
         required: true
         description: "Port's payload (who triggered, context, etc...)"
         type: string
@@ -161,6 +161,10 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       PORT_CLIENT_ID: ${{ secrets.PORT_CLIENT_ID }}
       PORT_CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
+      CLUSTER_NAME: ${{ github.event.inputs.cluster_name }}
+      REGION: ${{ github.event.inputs.region }}
+      ACTION: ${{ github.event.inputs.action }}
+      PORT_RUN_ID: ${{ fromJson(inputs.context).runId }}
 
     steps:
       - name: Checkout code
@@ -174,8 +178,8 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
-          logMessage: "Initiating creation of EKS cluster: ${{ inputs.cluster_name }}."
+          runId: ${{ env.PORT_RUN_ID }}
+          logMessage: "Initiating creation of EKS cluster: ${{ env.CLUSTER_NAME }}."
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
@@ -194,32 +198,41 @@ jobs:
         if: ${{ github.event.inputs.action == 'apply' }}
         run: terraform apply -auto-approve
         env:
-          TF_VAR_cluster_name: ${{ github.event.inputs.cluster_name }}
-          TF_VAR_region: ${{ github.event.inputs.region }}
-          TF_VAR_port_run_id: ${{ fromJson(inputs.port_payload).context.runId }}
+          TF_VAR_cluster_name: ${{ env.CLUSTER_NAME }}
+          TF_VAR_region: ${{ env.REGION }}
+          TF_VAR_port_run_id: ${{ env.PORT_RUN_ID }}
 
       - name: Terraform Destroy
         if: ${{ github.event.inputs.action == 'destroy' }}
         run: terraform destroy -auto-approve
         env:
-          TF_VAR_cluster_name: ${{ github.event.inputs.cluster_name }}
-          TF_VAR_region: ${{ github.event.inputs.region }}
-          TF_VAR_port_run_id: ${{ fromJson(inputs.port_payload).context.runId }}
+          TF_VAR_cluster_name: ${{ env.CLUSTER_NAME }}
+          TF_VAR_region: ${{ env.REGION }}
+          TF_VAR_port_run_id: ${{ env.PORT_RUN_ID }}
 
-      - name: Create a log message (post-action)
+      - name: Inform Port about the status of the EKS cluster creation
+        if: ${{ github.event.inputs.action == 'apply' }}
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
-          logMessage: "${
-            if eq(github.event.inputs.action, 'apply')
-            'EKS cluster creation has been completed: ${{ github.event.inputs.cluster_name }}.'
-            else
-            'EKS cluster destruction has been completed: ${{ github.event.inputs.cluster_name }}.'
-            }"
+          status: "SUCCESS"
+          runId: ${{ env.PORT_RUN_ID }}
+          logMessage: "EKS cluster creation has been completed: ${{ env.CLUSTER_NAME }}"
+
+      - name: Inform Port about the status of the EKS cluster destruction
+        if: ${{ github.event.inputs.action == 'destroy' }}
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: PATCH_RUN
+          status: "SUCCESS"
+          runId: ${{ env.PORT_RUN_ID }}
+          logMessage: "EKS cluster destruction has been completed: ${{ env.CLUSTER_NAME }}"
 ```
 
 </details>
@@ -281,39 +294,13 @@ jobs:
     "repo": "<GITHUB_REPO>",
     "workflow": "manage-eks-cluster.yml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"cluster_name\")) then \"cluster_name\" else null end}}": "{{.inputs.\"cluster_name\"}}",
-      "{{if (.inputs | has(\"region\")) then \"region\" else null end}}": "{{.inputs.\"region\" | if type == \"array\" then map(.identifier) else .identifier end}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"eks_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "org": "<GITHUB_ORG>",
-              "repo": "<GITHUB_REPO>",
-              "workflow": "manage-eks-cluster.yml",
-              "omitUserInputs": false,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"cluster_name\")) then \"cluster_name\" else null end}}": "{{.inputs.\"cluster_name\"}}",
-            "{{if (.inputs | has(\"region\")) then \"region\" else null end}}": "{{.inputs.\"region\" | if type == \"array\" then map(.identifier) else .identifier end}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+      "cluster_name": "{{ .inputs.\"cluster_name\" }}",
+      "region": "{{ .inputs.\"region\" }}",
+      "context": {
+        "entity": "{{ .entity }}",
+        "blueprint": "{{ .action.blueprint }}",
+        "runId": "{{ .run.id }}",
+        "trigger": "{{ .trigger }}"
       }
     },
     "reportWorkflowStatus": true
@@ -580,7 +567,7 @@ terraform {
 
     port = {
       source  = "port-labs/port-labs"
-      version = "~> 1.10.0"
+      version = "2.0.0"
     }
   }
 
