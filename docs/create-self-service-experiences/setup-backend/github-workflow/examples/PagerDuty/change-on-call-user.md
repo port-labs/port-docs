@@ -46,11 +46,9 @@ on:
         description: The email of the user who will be taking over the on-call duty
         required: true
         type: string
-      port_payload:
+      port_context:
         required: true
-        description: >-
-          Port's payload, including details for who triggered the action and
-          general context (blueprint, run id, etc...)
+        description: includes blueprint, run ID, and entity identifier from Port.
 
 jobs:
   change-on-call-user:
@@ -64,7 +62,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
+          runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: "Searching for user in organization user list... ⛴️"
 
       - name: Search for user id among user list
@@ -89,7 +87,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: |
             User found 🥹, Changing On-Call to ${{ inputs.new_on_call_user }}... ⛴️
       
@@ -100,7 +98,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: |
             User not found 😭 Skipping assignment... ⛴️
   
@@ -109,7 +107,7 @@ jobs:
         id: change_on_call_user
         uses: fjogeleit/http-request-action@v1
         with:
-          url: "https://api.pagerduty.com/schedules/${{fromJson(github.event.inputs.port_payload).context.entity}}/overrides"
+          url: "https://api.pagerduty.com/schedules/${{fromJson(inputs.port_context).entity}}/overrides"
           method: 'POST'
           customHeaders: '{"Content-Type": "application/json", "Accept": "application/json", "Authorization": "Token token=${{ secrets.PAGERDUTY_API_KEY }}"}'
           data: >-
@@ -134,14 +132,14 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
+          runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: "Getting updated schedule from pagerduty ..."
 
       - name: Request For Changed Schedule
         id: new_schedule
         uses: fjogeleit/http-request-action@v1
         with:
-          url: 'https://api.pagerduty.com/schedules/${{fromJson(github.event.inputs.port_payload).context.entity}}'
+          url: 'https://api.pagerduty.com/schedules/${{fromJson(inputs.port_context).entity}}'
           method: 'GET'
           customHeaders: '{"Content-Type": "application/json", "Accept": "application/json", "Authorization": "Token token=${{ secrets.PAGERDUTY_API_KEY }}"}'
 
@@ -159,7 +157,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
+          runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: "Ingesting updated schedule to port..."
           
       - name: UPSERT Entity
@@ -167,7 +165,7 @@ jobs:
         with:
           identifier: "${{ fromJson(steps.new_schedule.outputs.response).schedule.id }}"
           title: "${{ fromJson(steps.new_schedule.outputs.response).schedule.name }}"
-          blueprint: ${{fromJson(github.event.inputs.port_payload).context.blueprint}}
+          blueprint: ${{fromJson(inputs.port_context).blueprint}}
           properties: |-
             {
               "url": "${{ fromJson(steps.new_schedule.outputs.response).schedule.html_url }}",
@@ -179,7 +177,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: UPSERT
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{fromJson(inputs.port_context).run_id}}
 
       - name: Log After Upserting Entity
         uses: port-labs/port-github-action@v1
@@ -188,7 +186,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
+          runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: "Entity upserting was successful ✅"
 ```
 </details>
@@ -246,7 +244,7 @@ Create a new self service action using the following JSON configuration.
         "new_on_call_user"
       ]
     },
-    "blueprintIdentifier": "pagerdutyIncident"
+    "blueprintIdentifier": "pagerdutySchedule"
   },
   "invocationMethod": {
     "type": "GITHUB",
@@ -258,37 +256,10 @@ Create a new self service action using the following JSON configuration.
       "{{if (.inputs | has(\"start_time\")) then \"start_time\" else null end}}": "{{.inputs.\"start_time\"}}",
       "{{if (.inputs | has(\"end_time\")) then \"end_time\" else null end}}": "{{.inputs.\"end_time\"}}",
       "{{if (.inputs | has(\"new_on_call_user\")) then \"new_on_call_user\" else null end}}": "{{.inputs.\"new_on_call_user\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"pagerdutyIncident_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "org": "<GITHUB_ORG>",
-              "repo": "<GITHUB_REPO>",
-              "workflow": "change-incident-owner.yaml",
-              "omitUserInputs": false,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"start_time\")) then \"start_time\" else null end}}": "{{.inputs.\"start_time\"}}",
-            "{{if (.inputs | has(\"end_time\")) then \"end_time\" else null end}}": "{{.inputs.\"end_time\"}}",
-            "{{if (.inputs | has(\"new_on_call_user\")) then \"new_on_call_user\" else null end}}": "{{.inputs.\"new_on_call_user\"}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+      "port_context": {
+        "blueprint": "{{.action.blueprint}}",
+        "entity": "{{.entity}}",
+        "run_id": "{{.run.id}}"
       }
     },
     "reportWorkflowStatus": true
