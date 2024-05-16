@@ -322,8 +322,7 @@ on:
       context:
         required: true
         description: >-
-          Port's payload, including details for who triggered the action and
-          general context (blueprint, run id, etc...)
+          Action and general context (blueprint, run id, etc...)
 
 env: 
   TF_LOG: INFO
