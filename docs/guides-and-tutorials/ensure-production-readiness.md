@@ -14,6 +14,9 @@ This guide takes 10 minutes to complete, and aims to cover:
 - Some advanced types of properties that can be added to <PortTooltip id="blueprint">blueprints</PortTooltip>, and what can be achieved by using them.
 - The value and flexibility of scorecards in Port.
 
+🎬 If you would like to follow along to a **video** that implements this guide, you can find it [here](/resources#production-readiness-setup---tekanaid) 🎬
+<br/>
+
 :::tip Prerequisites
 
 - This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
@@ -21,8 +24,6 @@ This guide takes 10 minutes to complete, and aims to cover:
 - [Helm](https://helm.sh/docs/intro/install/) - required to install a relevant integration.
 
 :::
-
-<br/>
 
 ### The goal of this guide
 
