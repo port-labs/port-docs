@@ -599,7 +599,7 @@ terraform {
 
 1. On the [self-service](https://app.getport.io/self-serve) page, create the Port action against the `Repository` blueprint. This will trigger the GitHub workflow.
     - Click on the `+ New Action` button.
-    - Click on the `{...} Edit JSON` button.
+    - Click on the `{...} Edit JSON` button in the top right corner.
     - Copy and paste the following JSON configuration into the editor.
     - Click `Save`
 
