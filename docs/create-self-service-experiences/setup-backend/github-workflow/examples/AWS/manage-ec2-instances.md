@@ -47,7 +47,7 @@ terraform apply -var 'resources=["ec2_instance", "autoscaling_group"]'
 
 ```json showLineNumbers
 {
-  "identifier": "ec2Instance_terminate_instance",
+  "identifier": "terminate_ec2_instance",
   "title": "Terminate Instance",
   "description": "Terminate an EC2 Instance",
   "trigger": {
@@ -65,34 +65,11 @@ terraform apply -var 'resources=["ec2_instance", "autoscaling_group"]'
     "repo": "<GITHUB-REPO-NAME>",
     "workflow": "terminate-instance.yml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"ec2Instance_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "org": "<GITHUB-ORG>",
-              "repo": "<GITHUB-REPO-NAME>",
-              "workflow": "terminate-instance.yml",
-              "omitUserInputs": true,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {},
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+      "context": {
+        "entity": "{{ .entity }}",
+        "blueprint": "{{ .action.blueprint }}",
+        "runId": "{{ .run.id }}",
+        "trigger": "{{ .trigger }}"
       }
     },
     "reportWorkflowStatus": true
@@ -114,44 +91,46 @@ name: Terminate EC2 Instance
 on:
   workflow_dispatch: # Trigger this workflow manually
     inputs:
-      port_payload:
+      context:
         required: true
-        description: "Port's payload, including details for who triggered the action and general context (blueprint, run id, etc...)"
+        description: "Action and general context (blueprint, run id, etc...)"
         type: string
 
 jobs:
   terminate-instance:
     runs-on: ubuntu-latest
     steps:
-      - name: Inform Port about terminating EC2 instance
+      - name: Create a log message
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
-          logMessage: Configuring AWS credentials and terminating EC2 instance with ID ${{ github.event.inputs.instance_id }}
+          runId: ${{fromJson(inputs.context).runId}}
+          logMessage: Configuring AWS credentials and terminating EC2 instance with ID ${{ fromJson(inputs.context).entity.identifier }}
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Terminate EC2 instance
-        run: aws ec2 terminate-instances --instance-ids ${{ github.event.inputs.instance_id }}
+        run: aws ec2 terminate-instances --instance-ids ${{ fromJson(inputs.context).entity.identifier }}
 
-      - name: Inform Port about status of terminating EC2 instance
+      - name: Create a log message
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
-          logMessage: EC2 instance with ID ${{ github.event.inputs.instance_id }} terminated successfully
+          status: "SUCCESS"
+          runId: ${{fromJson(inputs.context).runId}}
+          logMessage: EC2 instance with ID ${{ fromJson(inputs.context).entity.identifier }} terminated successfully
+
 ```
 </details>
 
@@ -173,7 +152,7 @@ jobs:
 
 ```json showLineNumbers
 {
-  "identifier": "ec2Instance_reboot_instance",
+  "identifier": "reboot_ec2_instance",
   "title": "Reboot Instance",
   "description": "Reboot an EC2 Instance",
   "trigger": {
@@ -191,34 +170,11 @@ jobs:
     "repo": "<GITHUB-REPO-NAME>",
     "workflow": "reboot-instance.yml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"ec2Instance_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "org": "<GITHUB-ORG>",
-              "repo": "<GITHUB-REPO-NAME>",
-              "workflow": "reboot-instance.yml",
-              "omitUserInputs": true,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {},
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+      "context": {
+        "entity": "{{ .entity }}",
+        "blueprint": "{{ .action.blueprint }}",
+        "runId": "{{ .run.id }}",
+        "trigger": "{{ .trigger }}"
       }
     },
     "reportWorkflowStatus": true
@@ -240,9 +196,9 @@ name: Reboot EC2 Instance
 on:
   workflow_dispatch: # Trigger this workflow manually
     inputs:
-      port_payload:
+      context:
         required: true
-        description: "Port's payload, including details for who triggered the action and general context (blueprint, run id, etc...)"
+        description: "Action and general context (blueprint, run id, etc...)"
         type: string
 
 jobs:
@@ -256,8 +212,8 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
-          logMessage: Configuring AWS credentials and reboot EC2 instance with ID ${{ fromJson(inputs.port_payload).payload.entity.identifier }}
+          runId: ${{fromJson(inputs.context).runId}}
+          logMessage: Configuring AWS credentials and reboot EC2 instance with ID ${{ fromJson(inputs.context).entity.identifier }}
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -267,7 +223,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Reboot EC2 instance
-        run: aws ec2 reboot-instances --instance-ids ${{ fromJson(inputs.port_payload).payload.entity.identifier }}
+        run: aws ec2 reboot-instances --instance-ids ${{ fromJson(inputs.context).entity.identifier }}
 
       - name: Inform Port about status of rebooting EC2 instance
         uses: port-labs/port-github-action@v1
@@ -276,8 +232,9 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
-          logMessage: EC2 instance with ID ${{ fromJson(inputs.port_payload).payload.entity.identifier }} rebooted successfully
+          status: "SUCCESS"
+          runId: ${{fromJson(inputs.context).runId}}
+          logMessage: EC2 instance with ID ${{ fromJson(inputs.context).entity.identifier }} rebooted successfully
 ```
 </details>
 
@@ -347,41 +304,14 @@ jobs:
     "repo": "<GITHUB-REPO-NAME>",
     "workflow": "resize-asg.yml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"minimum_capacity\")) then \"minimum_capacity\" else null end}}": "{{.inputs.\"minimum_capacity\"}}",
-      "{{if (.inputs | has(\"maximum_capacity\")) then \"maximum_capacity\" else null end}}": "{{.inputs.\"maximum_capacity\"}}",
-      "{{if (.inputs | has(\"desired_capacity\")) then \"desired_capacity\" else null end}}": "{{.inputs.\"desired_capacity\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"awsAutoScalingGroup_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "org": "<GITHUB-ORG>",
-              "repo": "<GITHUB-REPO-NAME>",
-              "workflow": "resize-asg.yml",
-              "omitUserInputs": false,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"minimum_capacity\")) then \"minimum_capacity\" else null end}}": "{{.inputs.\"minimum_capacity\"}}",
-            "{{if (.inputs | has(\"maximum_capacity\")) then \"maximum_capacity\" else null end}}": "{{.inputs.\"maximum_capacity\"}}",
-            "{{if (.inputs | has(\"desired_capacity\")) then \"desired_capacity\" else null end}}": "{{.inputs.\"desired_capacity\"}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+      "minimum_capacity": "{{.inputs.\"minimum_capacity\"}}",
+      "maximum_capacity": "{{.inputs.\"maximum_capacity\"}}",
+      "desired_capacity": "{{.inputs.\"desired_capacity\"}}",
+      "context": {
+        "entity": "{{ .entity }}",
+        "blueprint": "{{ .action.blueprint }}",
+        "runId": "{{ .run.id }}",
+        "trigger": "{{ .trigger }}"
       }
     },
     "reportWorkflowStatus": true
@@ -421,9 +351,9 @@ on:
       maximum_capacity:
         description: 'Maximum size of the Auto Scaling Group'
         required: true
-      port_payload:
+      context:
         required: true
-        description: "Port's payload, including details for who triggered the action and general context (blueprint, run id, etc...)"
+        description: "Action and general context (blueprint, run id, etc...)"
         type: string
 
 jobs:
@@ -437,7 +367,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          runId: ${{fromJson(inputs.context).runId}}
           logMessage: Configuring AWS credentials
 
 
@@ -451,7 +381,7 @@ jobs:
       - name: Resize Auto Scaling Group
         run: |
             aws autoscaling update-auto-scaling-group \
-                --auto-scaling-group-name ${{ fromJson(inputs.port_payload).payload.entity.title }} \
+                --auto-scaling-group-name ${{ fromJson(inputs.context).entity.title }} \
                 --desired-capacity ${{ github.event.inputs.desired_capacity }} \
                 --min-size ${{ github.event.inputs.minimum_capacity }} \
                 --max-size ${{ github.event.inputs.maximum_capacity }} 
@@ -463,8 +393,9 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
-          logMessage: Resized EC2 Auto Scaling Group ${{ fromJson(inputs.port_payload).payload.entity.title }} to ${{ github.event.inputs.desired_capacity }} instances
+          status: "SUCCESS"
+          runId: ${{fromJson(inputs.context).runId}}
+          logMessage: Resized EC2 Auto Scaling Group ${{ fromJson(inputs.context).entity.title }} to ${{ github.event.inputs.desired_capacity }} instances
 ```
 </details>
 
