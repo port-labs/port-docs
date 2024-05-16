@@ -422,7 +422,7 @@ Create a new self service action using the following JSON configuration.
       "context": {
         "entity": "{{.entity.identifier}}",
         "blueprint": "{{.action.blueprint}}",
-        "runId": "{{.run.id}}"
+        "run_id": "{{.run.id}}"
         }
     },
     "reportWorkflowStatus": true
