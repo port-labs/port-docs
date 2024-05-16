@@ -161,7 +161,7 @@ Create a new self service action using the following JSON configuration.
       "{{if (.inputs | has(\"from\")) then \"from\" else null end}}": "{{.inputs.\"from\"}}",
       "port_context": {
         "blueprint": "{{.action.blueprint}}",
-        "entity": "{{.entity}}",
+        "entity": "{{.entity.identifier}}",
         "run_id": "{{.run.id}}"
       }
     },
