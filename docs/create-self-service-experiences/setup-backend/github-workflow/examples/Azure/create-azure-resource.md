@@ -43,6 +43,7 @@ For secure Azure interactions, we'll use a Service Principal. If you need help c
     - `ARM_CLIENT_SECRET`: Service Principal Password
     - `ARM_SUBSCRIPTION_ID`: Your Azure Subscription ID
     - `ARM_TENANT_ID`: Your Azure [Tenant ID](https://learn.microsoft.com/en-us/azure/azure-portal/get-subscription-tenant-id)
+    - `AZURE_RESOURCE_GROUP`; Your Azure resource group
 
 ## Port Configuration
 
@@ -156,39 +157,13 @@ Import Azure resources into your Port account using the [Azure Exporter](/build-
     "repo": "<GITHUB-REPO-NAME>",
     "workflow": "terraform-azure.yml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"storage_name\")) then \"storage_name\" else null end}}": "{{.inputs.\"storage_name\"}}",
-      "{{if (.inputs | has(\"storage_location\")) then \"storage_location\" else null end}}": "{{.inputs.\"storage_location\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"service_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "org": "<GITHUB-ORG>",
-              "repo": "<GITHUB-REPO-NAME>",
-              "workflow": "terraform-azure.yml",
-              "omitUserInputs": false,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"storage_name\")) then \"storage_name\" else null end}}": "{{.inputs.\"storage_name\"}}",
-            "{{if (.inputs | has(\"storage_location\")) then \"storage_location\" else null end}}": "{{.inputs.\"storage_location\"}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+      "storage_name": "{{ .inputs.\"storage_name\" }}",
+      "storage_location": "{{ .inputs.\"storage_location\" }}",
+      "context": {
+        "entity": "{{ .entity }}",
+        "blueprint": "{{ .action.blueprint }}",
+        "runId": "{{ .run.id }}",
+        "trigger": "{{ .trigger }}"
       }
     },
     "reportWorkflowStatus": true
@@ -333,7 +308,7 @@ output "endpoint_url" {
 <summary>GitHub workflow script</summary>
 
 ```yaml showLineNumbers title="terraform-azure.yml"
-name: "Terraform Infrastructure Change"
+name: "Deploy Azure Resource"
 
 on: 
   workflow_dispatch:
@@ -344,26 +319,26 @@ on:
       storage_location:
         required: true
         type: string
-      port_payload:
+      context:
         required: true
-        description:
-            Port's payload, including details for who triggered the action and
-            general context (blueprint, run id, etc...)
-        type: string
+        description: >-
+          Port's payload, including details for who triggered the action and
+          general context (blueprint, run id, etc...)
 
 env: 
   TF_LOG: INFO
   TF_INPUT: false
-  # BUCKET_TF_STATE: # Uncomment this if you using a storage backend
 
 jobs:
   terraform:
-    name: "Deploy Azure Resource"
+    name: "Terraform Infrastructure Change Management"
     runs-on: ubuntu-latest
     defaults:
       run:
         shell: bash
+        # We keep Terraform files in the terraform directory.
         working-directory: ./terraform
+        # working-directory: ./
 
 
     steps:
@@ -397,7 +372,8 @@ jobs:
             ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
             TF_VAR_port_client_id: ${{ secrets.PORT_CLIENT_ID }}
             TF_VAR_port_client_secret: ${{ secrets.PORT_CLIENT_SECRET }}
-            TF_VAR_port_run_id: ${{fromJson(inputs.port_payload).context.runId}}
+            TF_VAR_port_run_id: ${{ fromJson(inputs.context).runId }}
+            TF_VAR_resource_group_name: ${{ secrets.AZURE_RESOURCE_GROUP }}
         run: |
           terraform plan \
             -input=false \
@@ -421,7 +397,8 @@ jobs:
             ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
             TF_VAR_port_client_id: ${{ secrets.PORT_CLIENT_ID }}
             TF_VAR_port_client_secret: ${{ secrets.PORT_CLIENT_SECRET }}
-            TF_VAR_port_run_id: ${{fromJson(inputs.port_payload).context.runId}}
+            TF_VAR_port_run_id: ${{fromJson(inputs.context).runId}}
+            TF_VAR_resource_group_name: arete-resources
         run: |
           terraform plan \
             -input=false \
@@ -442,7 +419,8 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          status: "SUCCESS"
+          runId: ${{fromJson(inputs.context).runId}}
           logMessage: Created ${{ inputs.storage_name }}
 ```
 
