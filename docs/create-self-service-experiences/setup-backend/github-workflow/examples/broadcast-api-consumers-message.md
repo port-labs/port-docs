@@ -236,37 +236,12 @@ We will create a slack channel for each service, and therefore a webhook for eac
     "repo": "<GITHUB-REPO-NAME>",
     "workflow": "send-announcement.yml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"message\")) then \"message\" else null end}}": "{{.inputs.\"message\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"api_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "org": "<GITHUB-ORG>",
-              "repo": "<GITHUB-REPO-NAME>",
-              "workflow": "send-announcement.yml",
-              "omitUserInputs": false,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"message\")) then \"message\" else null end}}": "{{.inputs.\"message\"}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+      "message": "{{.inputs.\"message\"}}",
+      "context": {
+        "entity": "{{.entity.identifier}}",
+        "blueprint": "{{.action.blueprint}}",
+        "runId": "{{.run.id}}",
+        "trigger": "{{.trigger}}"
       }
     },
     "reportWorkflowStatus": true
@@ -418,9 +393,9 @@ on:
         description: "Message to send to service owners"
         required: true
         type: string
-      port_payload:
+      context:
         required: true
-        description: "Port's payload, including details for who triggered the action and general context (blueprint, run id, etc...)"
+        description: "Details about the action and general context (blueprint, run id, etc...)"
         type: string
 
 jobs:
@@ -432,7 +407,7 @@ jobs:
       - name: Run python script
         env:
           MESSAGE: ${{ github.event.inputs.message }}
-          SENDING_API: ${{ fromJson(github.event.inputs.port_payload).payload.entity.identifier }}
+          SENDING_API: ${{ fromJson(github.event.inputs.context).entity.identifier }}
           PORT_CLIENT_ID: ${{ secrets.PORT_CLIENT_ID }}
           PORT_CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
         run: |
