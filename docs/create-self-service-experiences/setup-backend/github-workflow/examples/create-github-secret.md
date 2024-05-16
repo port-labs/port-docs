@@ -169,31 +169,64 @@ on:
       secret_value:
         type: string
         description: value of the secret
-      port_payload:
-        required: false
-        description:
-          Port's payload, including details for who triggered the action and
-          general context (blueprint, run id, etc...)
+      run_id:
         type: string
-
+        required: true
+      blueprint:
+        type: string
+        required: true
 jobs:
   create_secret:
     runs-on: ubuntu-latest
     steps:
+      - name: Inform starting of creating secret key
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          operation: PATCH_RUN
+          runId: ${{ inputs.run_id }}
+          logMessage: |
+            Setting secret, "${{ inputs.secret_key }}" in repository
+
       - uses: gliech/create-github-secret-action@v1
+        id: set_secret_key
         with:
           name: ${{ inputs.secret_key }}
           value: ${{ inputs.secret_value }}
           pa_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      
+      - name: Inform completion of setting key
+        if: steps.set_secret_key.outcome == 'success'
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          operation: PATCH_RUN
+          runId: ${{ inputs.run_id }}
+          logMessage: |
+            Setting secret, "${{ inputs.secret_key }}" has been set in repository 💪🏿
+
+      - name: Inform upserting entity
+        if: steps.set_secret_key.outcome == 'success'
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          operation: PATCH_RUN
+          runId: ${{ inputs.run_id }}
+          logMessage: |
+            Updating Port blueprint catalogue with newly added secret...
 
       - name: UPSERT Entity
         uses: port-labs/port-github-action@v1
+        id: upsert_entity
         with:
           identifier: ${{ inputs.secret_key }}
           title: ${{ inputs.secret_key }}
           team: "[]"
           icon: DefaultBlueprint
-          blueprint: ${{ fromJson(inputs.port_payload).context.blueprint }}
+          blueprint: ${{ inputs.blueprint }}
           properties: |-
             {
               "secret_key": "${{ inputs.secret_key }}",
@@ -203,7 +236,18 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: UPSERT
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{ inputs.run_id }}
+      
+      - name: Inform completion of upserting entity
+        if: steps.upsert_entity.outcome == 'success'
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          operation: PATCH_RUN
+          runId: ${{ inputs.run_id }}
+          logMessage: |
+            Operation completed, success 🔥
 ```
 </details>
 

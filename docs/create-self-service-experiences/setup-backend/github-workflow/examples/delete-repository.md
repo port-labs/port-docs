@@ -71,7 +71,10 @@ Follow these steps to get started:
           "default": false
         }
       },
-      "required": [],
+      "required": [
+        "org_name",
+        "delete_dependents"
+      ],
       "order": [
         "org_name",
         "delete_dependents"
@@ -87,40 +90,11 @@ Follow these steps to get started:
     "repo": "<GITHUB-REPO-NAME>",
     "workflow": "delete-repo.yml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"org_name\")) then \"org_name\" else null end}}": "{{.inputs.\"org_name\"}}",
-      "{{if (.inputs | has(\"delete_dependents\")) then \"delete_dependents\" else null end}}": "{{.inputs.\"delete_dependents\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"service_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "org": "<GITHUB-ORG>",
-              "repo": "<GITHUB-REPO-NAME>",
-              "workflow": "delete-repo.yml",
-              "omitUserInputs": false,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"org_name\")) then \"org_name\" else null end}}": "{{.inputs.\"org_name\"}}",
-            "{{if (.inputs | has(\"delete_dependents\")) then \"delete_dependents\" else null end}}": "{{.inputs.\"delete_dependents\"}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
-      }
+      "org_name": "{{.inputs.\"org_name\"}}",
+      "delete_dependents": "{{.inputs.\"delete_dependents\"}}",
+      "entity": "{{.entity.identifier}}",
+      "blueprint": "{{.action.blueprint}}",
+      "run_id": "{{.run.id}}"
     },
     "reportWorkflowStatus": true
   },
@@ -148,12 +122,19 @@ on:
         required: true
         type: string
       delete_dependents:
-        required: false
+        required: true
         type: boolean
-        default: false
-      port_payload:
+        default: true
+      entity:
         required: true
         type: string
+      run_id:
+        required: true
+        type: string
+      blueprint:
+        required: true
+        type: string
+
 jobs:
   delete-repo:
     runs-on: ubuntu-latest
@@ -165,14 +146,14 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{ inputs.run_id }}
           logMessage: |
             Deleting a github repository... ⛴️
 
       - name: Delete Repository
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-          REPO_NAME: ${{ fromJson(inputs.port_payload).context.entity }}
+          REPO_NAME: ${{ inputs.entity }}
         run: |
           echo $GH_TOKEN
           HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
@@ -200,8 +181,8 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: DELETE
           delete_dependents: ${{ inputs.delete_dependents }}
-          identifier: ${{ fromJson(inputs.port_payload).context.entity }}
-          blueprint: ${{ fromJson(inputs.port_payload).context.blueprint }}
+          identifier: ${{ inputs.entity }}
+          blueprint: ${{ inputs.blueprint }}
       
       - name: Inform completion of deletion
         uses: port-labs/port-github-action@v1
@@ -209,7 +190,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{ inputs.run_id }}
           logMessage: |
             GitHub repository deleted! ✅
 
