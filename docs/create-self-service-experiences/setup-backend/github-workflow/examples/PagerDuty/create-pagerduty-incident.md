@@ -33,6 +33,8 @@ Create the file `.github/workflows/create-an-incident.yaml` in the `.github/work
 <summary>GitHub Workflow</summary>
 
 ```yaml showLineNumbers title="create-an-incident.yaml"
+name: Create PagerDuty Incident
+
 on:
   workflow_dispatch:
     inputs:
@@ -43,9 +45,6 @@ on:
       extra_details:
         description: Extra details about the incident to create
         required: false
-      service:
-        description: The service id to correlate the incident to
-        required:
       urgency:
         description: The urgency of the incident
         required: false
@@ -55,13 +54,6 @@ on:
       port_context:
         required: true
         description: includes blueprint, run ID, and entity identifier from Port.
-    secrets: 
-      PAGERDUTY_API_KEY: 
-        required: true
-      PORT_CLIENT_ID:
-        required: true
-      PORT_CLIENT_SECRET:
-        required: true
 jobs: 
   trigger:
     runs-on: ubuntu-latest
@@ -72,11 +64,11 @@ jobs:
           portClientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           token: ${{ secrets.PAGERDUTY_API_KEY }}
           portRunId: ${{fromJson(inputs.port_context).run_id}}
-          incidentTitle: ${{ inputs.title }}
-          extraDetails: ${{ inputs.extra_details }}
-          urgency: ${{ inputs.urgency }}
-          actorEmail: ${{ inputs.from }}
-          service: ${{fromJson(inputs.port_context).entity}}
+          incidentTitle: "${{ inputs.title }}"
+          extraDetails: "${{ inputs.extra_details }}"
+          urgency: "${{ inputs.urgency }}"
+          actorEmail: "${{ inputs.from }}"
+          service: "${{fromJson(inputs.port_context).entity}}"
           blueprintIdentifier: 'pagerdutyIncident'
 ```
 </details>
@@ -152,7 +144,7 @@ Create a new self service action using the following JSON configuration.
     "type": "GITHUB",
     "org": "<GITHUB_ORG>",
     "repo": "<GITHUB_REPO>",
-    "workflow": "create-an-incident.yaml",
+    "workflow": "create-pagerduty-incident.yaml",
     "workflowInputs": {
       "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
       "{{if (.inputs | has(\"title\")) then \"title\" else null end}}": "{{.inputs.\"title\"}}",
@@ -162,7 +154,8 @@ Create a new self service action using the following JSON configuration.
       "port_context": {
         "blueprint": "{{.action.blueprint}}",
         "entity": "{{.entity.identifier}}",
-        "run_id": "{{.run.id}}"
+        "run_id": "{{.run.id}}",
+        "relations": "{{.entity.relations}}"
       }
     },
     "reportWorkflowStatus": true
