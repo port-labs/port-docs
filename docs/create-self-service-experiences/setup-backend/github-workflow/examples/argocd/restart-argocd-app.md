@@ -335,6 +335,7 @@ jobs:
               "healthStatus": "${{fromJson(env.response).status.health.status}}",
               "createdAt": "${{fromJson(env.response).metadata.creationTimestamp}}"
             }
+          relations: "${{ toJson(fromJson(inputs.port_context).relations) }}"
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
@@ -422,7 +423,8 @@ Create a new self service action using the following JSON configuration.
       "context": {
         "entity": "{{.entity.identifier}}",
         "blueprint": "{{.action.blueprint}}",
-        "run_id": "{{.run.id}}"
+        "run_id": "{{.run.id}}",
+        "relations": "{{.entity.relations}}"
         }
     },
     "reportWorkflowStatus": true
