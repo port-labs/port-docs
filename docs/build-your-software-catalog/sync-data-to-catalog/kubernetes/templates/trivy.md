@@ -11,7 +11,7 @@ import TemplatePrerequisites from "./_template_prerequisites.mdx";
 [Trivy Operator](https://github.com/aquasecurity/trivy-operator) is an open-source security scanner that leverages [Trivy](https://github.com/aquasecurity/trivy) to continuously scan your Kubernetes cluster for security issues.
 
 Using Port's Kubernetes Exporter, you can keep track of all Trivy resources across your different clusters and export
-all the security issues to Port. You will use built in metadata from your kubernetes resources and CRDs to create entities in
+all the security and configuration issues to Port. You will use built in metadata from your kubernetes resources and CRDs to create entities in
 Port and keep track of their state.
 
 :::tip
@@ -45,7 +45,8 @@ This `blueprints.json` file defines the following blueprints:
 - Cluster
 - Namespace
 - Workload
-- Trivy Vulnerabilities
+- Trivy Config Audit Report
+- Trivy Vulnerability Report
 
 :::note
 
@@ -58,88 +59,194 @@ This `blueprints.json` file defines the following blueprints:
     - StatefulSet
     - DaemonSet
 
-- `Trivy Vulnerabilities` is one of the most important Trivy resources, giving developers the capability to find and view the risks that relate to different resources in their Kubernetes cluster.
+- `Trivy Config Audit Report` represents checks performed by Trivy against a Kubernetes object's configuration
+
+- `Trivy Vulnerability Report` represents the latest vulnerabilities found in a container image of a given Kubernetes workload
 :::
 
-Below is the Trivy blueprint schema used in the exporter:
+Below are the Trivy blueprint schemas used in the exporter:
 
 <details>
-<summary> <b>Trivy vulnerability blueprint (click to expand)</b> </summary>
+<summary> <b>Trivy config audit report blueprint (click to expand)</b> </summary>
 
 ```json showLineNumbers
 {
-   "identifier":"trivyVulnerabilities",
-   "title":"Trivy Vulnerabilities",
-   "icon":"Trivy",
-   "schema":{
-      "properties":{
-         "scanner":{
-            "title":"Scanner",
-            "type":"string"
-         },
-         "criticalCount":{
-            "title":"Critical Count",
-            "type":"number"
-         },
-         "highCount":{
-            "title":"High Count",
-            "type":"number"
-         },
-         "lowCount":{
-            "title":"Low Count",
-            "type":"number"
-         },
-         "mediumCount":{
-            "title":"Medium Count",
-            "type":"number"
-         },
-         "category":{
-            "title":"Category",
-            "type":"string"
-         },
-         "message":{
-            "title":"Message",
-            "type":"array"
-         },
-         "severity":{
-            "title":"Severity",
-            "type":"string",
-            "enum":[
-               "LOW",
-               "MEDIUM",
-               "HIGH",
-               "CRITICAL",
-               "UNKNOWN"
-            ],
-            "enumColors":{
-               "LOW":"green",
-               "MEDIUM":"yellow",
-               "HIGH":"red",
-               "CRITICAL":"red",
-               "UNKNOWN":"lightGray"
-            }
-         },
-         "scannerVersion":{
-            "title":"Scanner Version",
-            "type":"string"
-         },
-         "createdAt":{
-            "title":"Created At",
-            "type":"string",
-            "format":"date-time"
+   "identifier": "trivyConfigAuditReport",
+   "title": "Trivy Config Audit Report",
+   "icon": "Trivy",
+   "schema": {
+      "properties": {
+      "category": {
+         "title": "Category",
+         "type": "string"
+      },
+      "messages": {
+         "title": "Messages",
+         "type": "array"
+      },
+      "description": {
+         "title": "Description",
+         "type": "string"
+      },
+      "severity": {
+         "title": "Severity",
+         "type": "string",
+         "enum": [
+            "LOW",
+            "MEDIUM",
+            "HIGH",
+            "CRITICAL",
+            "UNKNOWN"
+         ],
+         "enumColors": {
+            "LOW": "green",
+            "MEDIUM": "yellow",
+            "HIGH": "red",
+            "CRITICAL": "red",
+            "UNKNOWN": "lightGray"
          }
       },
-      "required":[]
+      "remediation": {
+         "title": "Remediation",
+         "type": "string"
+      },
+      "success": {
+         "title": "Success",
+         "type": "boolean"
+      },
+      "scanner": {
+         "title": "Scanner",
+         "type": "string"
+      },
+      "scannerVersion": {
+         "title": "Scanner Version",
+         "type": "string"
+      },
+      "createdAt": {
+         "title": "Created At",
+         "type": "string",
+         "format": "date-time"
+      },
+      "updatedAt": {
+         "title": "Updated At",
+         "type": "string",
+         "format": "date-time"
+      }
+      },
+      "required": []
    },
-   "mirrorProperties":{},
-   "calculationProperties":{},
-   "aggregationProperties":{},
-   "relations":{
-      "namespace":{
-         "title":"Namespace",
-         "target":"namespace",
-         "required":false,
-         "many":false
+   "mirrorProperties": {},
+   "calculationProperties": {},
+   "aggregationProperties": {},
+   "relations": {
+      "namespace": {
+      "title": "Namespace",
+      "target": "namespace",
+      "required": false,
+      "many": false
+      }
+   }
+}
+```
+</details>
+
+<details>
+<summary> <b>Trivy vulnerability report blueprint (click to expand)</b> </summary>
+
+```json showLineNumbers
+{
+   "identifier": "trivyVulnerabilityReport",
+   "title": "Trivy Vulnerability Report",
+   "icon": "Trivy",
+   "schema": {
+      "properties": {
+      "resource": {
+         "title": "Resource",
+         "type": "string"
+      },
+      "score": {
+         "title": "Score",
+         "type": "number"
+      },
+      "fixedVersion": {
+         "title": "Fixed Version",
+         "type": "string"
+      },
+      "installedVersion": {
+         "title": "Installed Version",
+         "type": "string"
+      },
+      "lastModifiedDate": {
+         "title": "Last Modified Date",
+         "type": "string",
+         "format": "date-time"
+      },
+      "links": {
+         "icon": "DefaultProperty",
+         "title": "Links",
+         "type": "array",
+         "items": {
+            "type": "string",
+            "format": "url"
+         }
+      },
+      "primaryLink": {
+         "title": "Primary Link",
+         "type": "string",
+         "format": "url"
+      },
+      "publishedDate": {
+         "title": "Published Date",
+         "type": "string",
+         "format": "date-time"
+      },
+      "severity": {
+         "title": "Severity",
+         "type": "string",
+         "enum": [
+            "LOW",
+            "MEDIUM",
+            "HIGH",
+            "CRITICAL",
+            "UNKNOWN"
+         ],
+         "enumColors": {
+            "LOW": "green",
+            "MEDIUM": "yellow",
+            "HIGH": "red",
+            "CRITICAL": "red",
+            "UNKNOWN": "lightGray"
+         }
+      },
+      "target": {
+         "title": "Target",
+         "type": "string"
+      },
+      "scanner": {
+         "title": "Scanner Name",
+         "type": "string"
+      },
+      "scannerVersion": {
+         "title": "Scanner Version",
+         "type": "string"
+      },
+      "createdAt": {
+         "title": "Created At",
+         "type": "string",
+         "format": "date-time"
+      }
+      },
+      "required": []
+   },
+   "mirrorProperties": {},
+   "calculationProperties": {},
+   "aggregationProperties": {},
+   "relations": {
+      "namespace": {
+      "title": "Namespace",
+      "target": "namespace",
+      "required": false,
+      "many": false
       }
    }
 }
@@ -155,32 +262,69 @@ In this use-case you will be using the **[this configuration file](https://githu
 ```bash showLineNumbers
 export CONFIG_YAML_URL="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/templates/trivy-kubernetes_v1_config.yaml"
 ```
-Below is the mapping for the Trivy resource:
+Below are the mappings for the Trivy resources:
 <details>
-<summary> <b>Trivy vulnerability mapping (click to expand)</b> </summary>
+<summary> <b>Trivy config audit report mapping (click to expand)</b> </summary>
 
 ```yaml showLineNumbers
-- kind: aquasecurity.github.io/v1alpha1/configauditreports
-  port:
-    entity:
-      mappings:
-        - identifier: .metadata.name + "-" + .metadata.namespace + "-" + env.CLUSTER_NAME
-          title: .metadata.name
-          icon: '"Trivy"'
-          blueprint: '"trivyVulnerabilities"'
-          properties:
-            scanner: .report.scanner.name
-            criticalCount: .report.summary.criticalCount
-            highCount: .report.summary.highCount
-            lowCount: .report.summary.lowCount
-            mediumCount: .report.summary.mediumCount
-            category: .report.checks[0].category
-            message: .report.checks[0].messages
-            severity: .report.checks[0].severity
-            scannerVersion: .report.scanner.version
-            createdAt: .metadata.creationTimestamp
-          relations:
-            namespace: .metadata.namespace + "-" + env.CLUSTER_NAME
+  - kind: aquasecurity.github.io/v1alpha1/configauditreports
+    selector:
+      query: 'true'
+    port:
+      itemsToParse: .report.checks
+      entity:
+        mappings:
+          - identifier: .metadata.name + "-" + .item.checkID + "-" + .metadata.namespace + "-" + env.CLUSTER_NAME
+            title: .item.title
+            icon: '"Trivy"'
+            blueprint: '"trivyConfigAuditReport"'
+            properties:
+              category: .item.category
+              messages: .item.messages
+              description: .item.description
+              severity: .item.severity
+              remediation: .item.remediation
+              success: .item.success
+              scanner: .report.scanner.name
+              scannerVersion: .report.scanner.version
+              createdAt: .metadata.creationTimestamp
+              updatedAt: .report.updateTimestamp
+            relations:
+              namespace: .metadata.namespace + "-" + env.CLUSTER_NAME
+```
+</details>
+
+<details>
+<summary> <b>Trivy vulnerability report mapping (click to expand)</b> </summary>
+
+```yaml showLineNumbers
+  - kind: aquasecurity.github.io/v1alpha1/vulnerabilityreports
+    selector:
+      query: 'true'
+    port:
+      itemsToParse: .report.vulnerabilities
+      entity:
+        mappings:
+          - identifier: .metadata.name + "-" + .item.vulnerabilityID + "-" + .metadata.namespace + "-" + env.CLUSTER_NAME
+            title: .item.title
+            icon: '"Trivy"'
+            blueprint: '"trivyVulnerabilityReport"'
+            properties:
+              resource: .item.resource
+              score: .item.score
+              fixedVersion: .item.fixedVersion
+              installedVersion: .item.installedVersion
+              lastModifiedDate: .item.lastModifiedDate
+              links: .item.links
+              primaryLink: .item.primaryLink
+              publishedDate: .item.publishedDate
+              severity: .item.severity
+              target: .item.target
+              scanner: .report.scanner.name
+              scannerVersion: .report.scanner.version
+              createdAt: .metadata.creationTimestamp
+            relations:
+              namespace: .metadata.namespace + "-" + env.CLUSTER_NAME
 ```
 </details>
 
