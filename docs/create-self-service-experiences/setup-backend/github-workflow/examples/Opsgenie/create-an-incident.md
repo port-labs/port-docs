@@ -262,13 +262,15 @@ Create a new self service action using the following JSON configuration.
           "maxLength": 25000
         },
         "impactedServices": {
-          "items": {
-            "type": "string"
-          },
-          "icon": "OpsGenie",
           "title": "Impacted Services",
           "description": "Services on which incident will be created.",
-          "type": "array"
+          "icon": "OpsGenie",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "entity",
+            "blueprint": "opsGenieService"
+          }
         },
         "notifyStakeholders": {
           "icon": "OpsGenie",

@@ -92,40 +92,72 @@ Follow these steps to get started:
 
 ```json showLineNumbers
 {
-    "identifier": "azure_pipelines_create_azure",
-    "title": "Azure Pipelines Create Azure",
-    "icon": "Azure",
+  "identifier": "azureStorage_azure_pipelines_create_azure",
+  "title": "Azure Pipelines Create Azure",
+  "icon": "Azure",
+  "description": "Use azure pipelines to terraform an azure resource ",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
     "userInputs": {
-    "properties": {
+      "properties": {
         "storage_name": {
-            "icon": "Azure",
-            "title": "Storage Name",
-            "description": "The Azure Storage Account",
-            "type": "string"
+          "icon": "Azure",
+          "title": "Storage Name",
+          "description": "The Azure Storage Account",
+          "type": "string"
         },
         "storage_location": {
-            "title": "Storage Location",
-            "icon": "Azure",
-            "type": "string",
-            "default": "westus2"
+          "title": "Storage Location",
+          "icon": "Azure",
+          "type": "string",
+          "default": "westus2"
         }
-    },
-    "required": [
+      },
+      "required": [
         "storage_name"
-    ],
-    "order": [
+      ],
+      "order": [
         "storage_name",
         "storage_location"
-    ]
+      ]
     },
-    "invocationMethod": {
-        "type": "AZURE-DEVOPS",
-        "webhook": "<AZURE-DEVOPS-WEBHOOK-NAME>",
-        "org": "<AZURE-DEVOPS-ORG>"
-    },
-    "trigger": "CREATE",
-    "description": "Use azure pipelines to terraform an azure resource ",
-    "requiredApproval": false,
+    "blueprintIdentifier": "azureStorage"
+  },
+  "invocationMethod": {
+    "type": "AZURE_DEVOPS",
+    "webhook": "<AZURE-DEVOPS-WEBHOOK-NAME>",
+    "org": "<AZURE-DEVOPS-ORG>",
+    "payload": {
+      "action": "{{ .action.identifier[(\"azureStorage_\" | length):] }}",
+      "resourceType": "run",
+      "status": "TRIGGERED",
+      "trigger": "{{ .trigger | {by, origin, at} }}",
+      "context": {
+        "entity": "{{.entity.identifier}}",
+        "blueprint": "{{.action.blueprint}}",
+        "runId": "{{.run.id}}"
+      },
+      "payload": {
+        "entity": "{{ (if .entity == {} then null else .entity end) }}",
+        "action": {
+          "invocationMethod": {
+            "type": "AZURE-DEVOPS",
+            "webhook": "<AZURE-DEVOPS-WEBHOOK-NAME>",
+            "org": "<AZURE-DEVOPS-ORG>"
+          },
+          "trigger": "{{.trigger.operation}}"
+        },
+        "properties": {
+          "{{if (.inputs | has(\"storage_name\")) then \"storage_name\" else null end}}": "{{.inputs.\"storage_name\"}}",
+          "{{if (.inputs | has(\"storage_location\")) then \"storage_location\" else null end}}": "{{.inputs.\"storage_location\"}}"
+        },
+        "censoredProperties": "{{.action.encryptedProperties}}"
+      }
+    }
+  },
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 

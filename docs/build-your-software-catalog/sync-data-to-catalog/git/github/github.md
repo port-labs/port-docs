@@ -23,9 +23,54 @@ To install Port's GitHub app, follow the [installation](./installation.md) guide
 
 By using Port's GitHub app, you can automatically ingest GitHub resources into Port based on real-time events.
 
-Port's GitHub app allows you to ingest a variety of objects resources provided by the GitHub API, including repositories, pull requests, workflows and more. The GitHub app allows you to perform extract, transform, load (ETL) on data from the GitHub API into the desired software catalog data model.
+The app allows you to ingest a variety of objects resources provided by the GitHub API, including repositories, pull requests, workflows and more. It also allows you to perform "extract, transform, load (ETL)" on data from the GitHub API into the desired software catalog data model.
 
 The GitHub app uses a YAML configuration file to describe the ETL process to load data into the developer portal. The approach reflects a golden middle between an overly opinionated Git visualization that might not work for everyone and a too-broad approach that could introduce unneeded complexity into the developer portal.
+
+After installing the app, Port will automatically create a `service` blueprint in your catalog (representing a GitHub repository), along with a default YAML configuration file that defines where the data fetched from Github's API should go in the blueprint. 
+
+### Configuration
+
+To ingest GitHub objects, use one of the following methods:
+
+<Tabs queryString="method">
+
+<TabItem label="Using Port's UI" value="port">
+
+To manage your GitHub integration configuration using Port:
+
+1. Go to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
+2. Under `Exporters`, click on your desired GitHub organization.
+3. A window will open containing the default YAML configuration of your GitHub integration.
+4. Here you can modify the configuration to suit your needs, by adding/removing entries.
+5. When finished, click `resync` to apply any changes.
+
+Using this method applies the configuration to all repositories that the GitHub app has permissions to.
+
+When configuring the integration **using Port**, the YAML configuration is global, allowing you to specify mappings for multiple Port blueprints.
+
+</TabItem>
+
+<TabItem label="Using GitHub" value="github">
+
+To manage your GitHub integration configuration using GitHub, you can choose either a global or granular configuration:
+
+- **Global configuration:** create a `.github-private` repository in your organization and add the `port-app-config.yml` file to the repository.
+  - Using this method applies the configuration to all repositories that the GitHub app has permissions to (unless it is overridden by a granular `port-app-config.yml` in a repository).
+- **Granular configuration:** add the `port-app-config.yml` file to the `.github` directory of your desired repository.
+  - Using this method applies the configuration only to the repository where the `port-app-config.yml` file exists.
+
+When using global configuration **using GitHub**, the configuration specified in the `port-app-config.yml` file will only be applied if the file is in the **default branch** of the repository (usually `main`).
+
+</TabItem>
+
+</Tabs>
+
+:::info Important
+When **using Port**, the specified configuration will override any other configuration source (both global configuration using GitHub and granular configuration using GitHub).
+
+If you want to delete the configuration specified in Port and use Github instead, simply replace the mapping content in Port with `null`, then click `Save & resync`.
+:::
 
 Here is an example snippet from the `port-app-config.yml` file which demonstrates the ETL process for getting `githubPullRequest` data from the GitHub organization and into the software catalog:
 
@@ -63,6 +108,8 @@ The app makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manua
 ### `port-app-config.yml` file
 
 The `port-app-config.yml` file is how you specify the exact resources you want to query from your GitHub organization, and also how you specify which entities and which properties you want to fill with data from GitHub.
+
+Note that when using [Port's UI](/build-your-software-catalog/sync-data-to-catalog/git/github/?method=port#configuration) to configure the GitHub integration, `port-app-config.yml` refers to the YAML editor window where you can modify the configuration.
 
 Here is an example `port-app-config.yml` block:
 
@@ -160,50 +207,6 @@ resources:
 Pay attention to the value of the `blueprint` key, if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
 :::
 
-### Setup
-
-To ingest GitHub objects using the [`port-app-config.yml`](#port-app-configyml-file) file, you can use one of the following methods:
-
-<Tabs queryString="method">
-
-<TabItem label="Using Port" value="port">
-
-To manage your GitHub integration configuration using Port:
-
-1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using GitHub.
-3. Choose the **Ingest Data** option from the menu.
-4. Select GitHub under the Git providers category.
-5. Add the contents of your `port-app-config.yml` file to the editor.
-6. Click save configuration.
-
-Using this method applies the configuration to all repositories that the GitHub app has permissions to.
-
-When configuring the integration **using Port**, the configuration specified in the ingest data window is global, allowing you to specify in the editor mappings for multiple Port blueprints, regardless of the blueprint you selected.
-
-</TabItem>
-
-<TabItem label="Using GitHub" value="github">
-
-To manage your GitHub integration configuration using GitHub, you can choose either a global or granular configuration:
-
-- **Global configuration:** create a `.github-private` repository in your organization and add the `port-app-config.yml` file to the repository.
-  - Using this method applies the configuration to all repositories that the GitHub app has permissions to (unless it is overridden by a granular `port-app-config.yml` in a repository).
-- **Granular configuration:** add the `port-app-config.yml` file to the `.github` directory of your desired repository.
-  - Using this method applies the configuration only to the repository where the `port-app-config.yml` file exists.
-
-When using global configuration **using GitHub**, the configuration specified in the `port-app-config.yml` file will only be applied if the file is in the **default branch** of the repository (usually `main`).
-
-</TabItem>
-
-</Tabs>
-
-:::info Important
-When **using Port**, the specified configuration will override any other configuration source (both global configuration using GitHub and granular configuration using GitHub).
-
-If you want to delete the configuration specified in Port and use Github instead, simply replace the mapping content in Port with `null`, then click `Save & resync`.
-:::
-
 ## Permissions
 
 Port's GitHub integration requires the following permissions:
@@ -221,7 +224,6 @@ Port's GitHub integration requires the following permissions:
   - **Deployments:** Readonly.
   - **Environments:** Readonly.
   - **Code scanning alerts:** Readonly.
-  -
 
 - Organization permissions:
 

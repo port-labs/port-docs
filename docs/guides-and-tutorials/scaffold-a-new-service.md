@@ -36,101 +36,17 @@ After completing it, you will get a sense of how it can benefit different person
 
 :::tip Onboarding
 
-As part of the onboarding process, you should already have an action named `Scaffold a new service` in your [self-service tab](https://app.getport.io/self-serve).  
-In that case, you can hover over the action, click the `...` button in the top right corner, and choose "Edit":
+As part of the onboarding process, you should already have an action named `Send scorecard reminder` in your [self-service tab](https://app.getport.io/self-serve).  
 
-<img src='/img/guides/editActionBackend.png' width='45%' />
-
-Then, skip to the [Define backend type](#define-backend-type) step.
-
-If you **skipped** the onboarding, or you want to create the action from scratch, complete the `Create the action's frontend` steps below.
-
+If you **skipped** the onboarding, follow the instructions listed [here](/quickstart).
 :::
+1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal. Hover over the `Send scorecard reminder` action, click the `...` button in the top right corner, and choose "Edit":
 
-<details>
-<summary><b>Create the action's frontend</b></summary>
+    <img src='/img/guides/scaffoldEditAction.png' width='45%' border='1px' />
 
-<Tabs groupId="git-provider" queryString defaultValue="github" values={[
-{label: "GitHub", value: "github"},
-{label: "GitLab", value: "gitlab"},
-{label: "Bitbucket (Jenkins)", value: "bitbucket"}
-]}>
+2. The action's basic details should look like the image below. This action has no user inputs, so when ready, click on the `Backend` tab to proceed.
 
-<TabItem value="github">
-
-1. Click on `New action`:
-
-<img src='/img/guides/actionsCreateNew.png' width='50%' />
-
-2. Each action in Port is directly tied to a <PortTooltip id="blueprint">blueprint</PortTooltip>. Since we are creating a repository, let's use the `Service` blueprint that was created for us as part of the [onboarding](/quickstart) process. Choose it from the dropdown.
-
-3. Fill in the basic details of the action like this, then click `Next`:
-
-<img src='/img/guides/actionScaffoldBasicDetails.png' width='60%' />
-
-4. The next step is to define the action's inputs. When someone uses this action, all we want them to enter is the new repository's name. Click on `New input`, fill in the form like this, then click on `Create`:
-
-<img src='/img/guides/actionScaffoldInputName.png' width='50%' />
-
-</TabItem>
-
-<TabItem value="gitlab">
-
-1. Click on `New action`:
-
-<img src='/img/guides/actionsCreateNew.png' width='50%' />
-
-2. Each action in Port is directly tied to a <PortTooltip id="blueprint">blueprint</PortTooltip>. Since we are creating a repository, let's use the `Service` blueprint that was created for us as part of the [onboarding](/quickstart) process. Choose it from the dropdown.
-
-3. Fill in the basic details of the action like this, then click `Next`:
-
-<img src='/img/guides/actionScaffoldBasicDetails.png' width='60%' />
-
-4. The next step is to define the action's inputs. When someone uses this action, all we want them to enter is the new repository's name. Click on `New input`, fill in the form like this, then click on `Create`:
-
-<img src='/img/guides/actionScaffoldInputName.png' width='50%' />
-
-</TabItem>
-
-<TabItem value="bitbucket">
-
-1. Click on `New action`:
-
-<img src='/img/guides/actionsCreateNew.png' width='50%' />
-
-2. Each action in Port is directly tied to a <PortTooltip id="blueprint">blueprint</PortTooltip>. Since we are creating a repository, let's use the `Service` blueprint that was created for us as part of the [onboarding](/quickstart) process. Choose it from the dropdown.
-
-3. Fill in the basic details of the action like this, then click `Next`:
-
-<img src='/img/guides/actionScaffoldBasicDetails.png' width='60%' />
-
-4. The next step is to define the action's inputs. When someone uses this action, all we want them to enter is the new repository's name. Click on `New input`, fill in the form like this, then click on `Create`:
-
-<img src='/img/guides/actionScaffoldInputName.png' width='50%' />
-
-5. The action requires two more inputs, so click on `New input` again and fill the form out like this:
-
-<img src='/img/guides/bitbucketWorkspaceActionInputConfig.png' width='50%' />
-
-<img src='/img/guides/bitbucketProjectKeyActionInputConfig.png' width='50%' />
-
-</TabItem>
-
-</Tabs>
-
-
-
-:::info notes
-
-- We set the `Required` field to `true` to ensure that a name is always provided when using this action.
-- We set the type to `Text` since this is a name, but note all of the different types of input that Port allows.
-- When using `Text` inputs, you can set constraints and limitations to enforce certain patterns.
-
-:::
-
-</details>
-
-<br/>
+    <img src='/img/guides/scaffoldActionDetails.png' width='60%' border='1px' />
 
 #### Define backend type
 
@@ -145,18 +61,35 @@ Now we'll define the backend of the action. Port supports multiple invocation ty
 <TabItem value="github">
 
 Fill out the form with your values:
+
 - Replace the `Organization` and `Repository` values with your values (this is where the workflow will reside and run).
+  
 - Name the workflow `port-create-repo.yml`.
-- Set `Omit user inputs` to `Yes`.
-- Fill out the rest of the form like this, then click `Next`:
+  
+- Fill out your workflow details:  
+  <img src='/img/guides/scaffoldGithubBackendDetails.png' width='55%' border='1px' />
+  <br/>
 
-:::tip Important
+- Scroll down to the `Configure the invocation payload` section.  
+  This is where you can define which data will be sent to your backend each time the action is executed.  
 
-In our workflow, the cookiecutter uses the payload for the inputs. We omit the user inputs in order to avoid sending additional inputs to the workflow.
+  For this example, we will send two details that our backend needs to know - the service name, and the id of the action run.  
+  Copy the following JSON snippet and paste it in the payload code box:
 
-:::
-
-<img src='/img/guides/scaffoldBackend.png' width='75%' />
+  ```json showLineNumbers
+  {
+    "port_payload": {
+      "context": {
+        "runId": "{{ .run.id }}"
+      },
+      "payload": {
+        "properties": {
+          "service_name": "{{ .inputs.service_name }}",
+        }
+      }
+    }
+  }
+  ```
 
 </TabItem>
 
@@ -166,7 +99,8 @@ In our workflow, the cookiecutter uses the payload for the inputs. We omit the u
 You will need a few parameters for this part that are generated in the [setup the action's backend](#setup-the-actions-backend) section, it is recommended to complete the steps there and then follow the instructions here with all of the required information in hand.
 :::
 
-Fill out the form with your values:
+First, choose `Trigger Webhook URL` as the invocation type, then fill out the form:
+
 - For the `Endpoint URL` you need to add a URL in the following format:
   ```text showLineNumbers
   https://gitlab.com/api/v4/projects/{GITLAB_PROJECT_ID}/ref/main/trigger/pipeline?token={GITLAB_TRIGGER_TOKEN}
@@ -174,36 +108,89 @@ Fill out the form with your values:
     - The value for `{GITLAB_PROJECT_ID}` is the ID of the GitLab group that you create in the [setup the action's backend](#setup-the-actions-backend) section which stores the `.gitlab-ci.yml` pipeline file.
       - To find the project ID, browse to the GitLab page of the group you created, at the top right corner of the page, click on the vertical 3 dots button (next to `Fork`) and select `Copy project ID`
     - The value for `{GITLAB_TRIGGER_TOKEN}` is the trigger token you create in the [setup the action's backend](#setup-the-actions-backend) section.
+
 - Set `HTTP method` to `POST`.
+
 - Set `Request type` to `Async`.
+
 - Set `Use self-hosted agent` to `No`.
 
-<img src='/img/guides/gitlabActionBackendForm.png' width='75%' />
+  <img src='/img/guides/scaffoldBackendForm.png' width='80%' border='1px' />
+
+- Scroll down to the `Configure the invocation payload` section.  
+  This is where you can define which data will be sent to your backend each time the action is executed.  
+
+  For this example, we will send some details that our backend needs to know, including the service name, and the id of the action run.  
+  Copy the following JSON snippet and paste it in the "Body" code box:
+
+  ```json showLineNumbers
+  {
+    "port_payload": {
+      "context": {
+        "runId": "{{ .run.id }}",
+        "blueprint": "{{ .action.blueprint }}",
+      },
+      "payload": {
+        "properties": {
+          "service_name": "{{ .inputs.service_name }}",
+        }
+      },
+      "trigger": {
+        "by": {
+          "user": {
+            "firstName": "{{ .trigger.by.user.firstName }}",
+            "lastName": "{{ .trigger.by.user.lastName }}",
+            "email": "{{ .trigger.by.user.email }}",
+          }
+        }
+      }
+    }
+  }
+  ```
 
 </TabItem>
 
 <TabItem value="bitbucket">
 
-:::tip
-You will need a few parameters for this part that are generated in the [setup the action's backend](#setup-the-actions-backend) section, it is recommended to complete the steps there and then follow the instructions here with all of the required information in hand.
-:::
+First, choose `Jenkins` as the invocation type.
 
-Fill out the form with your values:
-- For the `Endpoint URL` you need to add a URL in the following format:
-  ```text showLineNumbers
-  https://{JENKINS_URL}/generic-webhook-trigger/invoke?token={JOB_TOKEN}
+- Follow the instructions under `Define a webhook to trigger a Jenkins job` to obtain your webhook URL.
+ 
+Then, fill out your workflow details:  
+
+- Replace the `Webhook URL` with your value (this is where the pipeline will reside and run).
+
+- Leave the `Use self-hosted agent` option set to `No`.
+  <img src='/img/guides/scaffoldBitbucketBackendDetails.png' width='55%' border='1px' />
+
+- Scroll down to the `Configure the invocation payload` section.  
+  This is where you can define which data will be sent to your backend each time the action is executed.  
+
+  For this example, we will send some details that our backend needs to know - the three user inputs, and the id of the action run.  
+  Copy the following JSON snippet and paste it in the payload code box:
+
+  ```json showLineNumbers
+  {
+    "port_payload": {
+      "context": {
+        "runId": "{{ .run.id }}",
+      },
+      "payload": {
+        "properties": {
+          "service_name": "{{ .inputs.service_name }}",
+          "bitbucket_workspace_name": "{{ .inputs.bitbucket_workspace_name }}",
+          "bitbucket_project_key": "{{ .inputs.bitbucket_project_key }}",
+        }
+      },
+    }
+  }
   ```
-    - The value for `{JENKINS_URL}` is the URL of your Jenkins server.
-    - The value for `{JOB_TOKEN}` is the unique token used to trigger the pipeline you create in the [setup the action's backend](#setup-the-actions-backend) section.
-- Set `HTTP method` to `POST`.
-- Set `Request type` to `Async`.
-- Set `Use self-hosted agent` to `No`.
-
-<img src='/img/guides/bitbucketActionBackendForm.png' width='75%' />
 
 </TabItem>
 
 </Tabs>
+
+<br/>
 
 The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Create`.
 
@@ -301,34 +288,40 @@ This workflow uses Port's [cookiecutter Github action](https://github.com/port-l
 
 <TabItem value="gitlab">
 
-1. First, let's create a GitLab project that will store our new scaffolder pipeline - Go to your GitLab account and create a new project.
+First, let's create a GitLab project that will store our new scaffolder pipeline - Go to your GitLab account and create a new project.
 
-2. Next, let's create the necessary token and secrets:
+Next, let's create the necessary token and secrets:
 
 - Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
+
 - Go to your [root group](https://gitlab.com/dashboard/groups), and follow the steps [here](https://docs.gitlab.com/ee/user/group/settings/group_access_tokens.html#create-a-group-access-token-using-ui) to create a new group access token with the following permission scopes: `api, read_api, read_repository, write_repository`, then save its value as it will be required in the next step.
-  <img src='/img/guides/gitlabGroupAccessTokenPerms.png' width='80%' />
-- Go to the new GitLab project you created in step 1, from the `Settings` menu at the sidebar on the left, select `CI/CD`.
+  <img src='/img/guides/gitlabGroupAccessTokenPerms.png' width='85%' border='1px' />
+
+- Go to the new GitLab project you created, from the `Settings` menu in the sidebar on the left, select `CI/CD`.
+
 - Expand the `Variables` section and save the following secrets:
   - `PORT_CLIENT_ID` - Your Port client ID.
   - `PORT_CLIENT_SECRET` - Your Port client secret.
   - `GITLAB_ACCESS_TOKEN` - The GitLab group access token you created in the previous step.
   <br/>
-  <img src='/img/guides/gitlabPipelineVariables.png' width='80%' />
+  <img src='/img/guides/gitlabPipelineVariables.png' width='85%' border='1px' />
+
 - Expand the `Pipeline trigger tokens` section and add a new token, give it a meaningful description such as `Scaffolder token` and save its value
   - This is the `{GITLAB_TRIGGER_TOKEN}` that you need for the [define backend type](#define-backend-type) section.
 
 <br/>
 
-  <img src='/img/guides/gitlabPipelineTriggerToken.png' width='80%' />
+  <img src='/img/guides/gitlabPipelineTriggerToken.png' width='80%' border='1px' />
 
 <br/><br/>
 
 :::tip
 Now that you have both the new GitLab project and its respective trigger token, you can go to the [define backend type](#define-backend-type) section and complete the action configuration in Port.
 :::
+<br/>
 
-3. Now let's create the pipeline file that contains our logic. In the new GitLab project you created at step 1, at the root of the project, create a new file named `.gitlab-ci.yml` and use the following snippet as its content:
+Now let's create the pipeline file that contains our logic.  
+In the root of your new GitLab project, create a new file named `.gitlab-ci.yml` and use the following snippet as its content:
 
 <details>
 <summary><b>GitLab pipeline (click to expand)</b></summary>
@@ -515,41 +508,41 @@ update-run-status:
 
 <TabItem value="bitbucket">
 
-1. First, install the [generic webhook trigger](https://plugins.jenkins.io/generic-webhook-trigger/) plugin in your Jenkins.
-2. Next, let's create the necessary tokens and secrets
-   - Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
-   - Configure the following as Jenkins credentials:
-     - `BITBUCKET_USERNAME` - a user with access to the Bitbucket workspace and project.
-     - `BITBUCKET_APP_PASSWORD` - an [App Password](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/) with the `Repositories:Read` and `Repositories:Write` permissions permissions.
-     - `PORT_CLIENT_ID` - Your Port client ID.
-     - `PORT_CLIENT_SECRET` - Your Port client secret.
-     <br/>
-     <img src='/img/guides/bitbucketJenkinsCredentials.png' width='80%' />
+First, let's create the necessary tokens and secrets:
+ 
+- Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
+
+- Configure the following as Jenkins credentials:
+  - `BITBUCKET_USERNAME` - a user with access to the Bitbucket workspace and project.
+  - `BITBUCKET_APP_PASSWORD` - an [App Password](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/) with the `Repositories:Read` and `Repositories:Write` permissions permissions.
+  - `PORT_CLIENT_ID` - Your Port client ID.
+  - `PORT_CLIENT_SECRET` - Your Port client secret.
+  <br/>
+  <img src='/img/guides/bitbucketJenkinsCredentials.png' width='90%' border='1px' />
 
 <br/>
 
-1. Create a Jenkins pipeline with the following configuration:
-   - [Enable the webhook trigger for the pipeline](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#enabling-webhook-trigger-for-a-pipeline)
-   - Define the value of the [`token`](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#token-setup) field, the token you specify will be used to trigger the scaffold pipeline specifically. For example, you can use `scaffolder-token`.
-   - [Define variables for the pipeline](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#defining-variables): define the `SERVICE_NAME`, `BITBUCKET_WORKSPACE_NAME`, `BITBUCKET_PROJECT_KEY`, and `RUN_ID` variables. Scroll down to the `Post content parameters` and **for each variable** add configuration like so (look at the table bellow for the full variable list):
+Next, create a Jenkins pipeline with the following configuration:
+- [Enable the webhook trigger for the pipeline](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#enabling-webhook-trigger-for-a-pipeline).
 
-   <img src='/img/guides/jenkinsGenericVariable.png' width='100%' />
+- Define the value of the [`token`](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#token-setup) field, the token you specify will be used to trigger the scaffold pipeline specifically. For example, you can use `scaffolder-token`.
 
-    Create the following varaibles and their related JSONPath expression:
+- [Define variables for the pipeline](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#defining-variables): define the `SERVICE_NAME`, `BITBUCKET_WORKSPACE_NAME`, `BITBUCKET_PROJECT_KEY`, and `RUN_ID` variables. Scroll down to the `Post content parameters` and **for each variable** add configuration like so (look at the table bellow for the full variable list):
+
+  <img src='/img/guides/jenkinsGenericVariable.png' width='100%' border='1px' />
+
+Create the following varaibles and their related JSONPath expression:
 
     | Variable Name            | JSONPath Expression                             |
     | ------------------------ | ----------------------------------------------- |
-    | SERVICE_NAME             | `$.payload.properties.service_name`             |
-    | BITBUCKET_WORKSPACE_NAME | `$.payload.properties.bitbucket_workspace_name` |
-    | BITBUCKET_PROJECT_KEY    | `$.payload.properties.bitbucket_project_key`    |
-    | RUN_ID                   | `$.context.runId`                               |
+    | SERVICE_NAME             | `$.port_payload.payload.properties.service_name`             |
+    | BITBUCKET_WORKSPACE_NAME | `$.port_payload.payload.properties.bitbucket_workspace_name` |
+    | BITBUCKET_PROJECT_KEY    | `$.port_payload.payload.properties.bitbucket_project_key`    |
+    | RUN_ID                   | `$.port_payload.context.runId`                               |
 
+<br/>
 
-:::tip
-Now that you have the `JOB_TOKEN` value, you can go to the [define backend type](#define-backend-type) section and complete the action configuration in Port.
-:::
-
-4. Add the following content to the new Jenkins pipeline:
+Add the following content to the new Jenkins pipeline:
 
 <details>
 <summary><b>Jenkins pipeline (click to expand)</b></summary>
@@ -778,7 +771,7 @@ All done! The action is ready to be used 🚀
 
 ### Execute the action
 
-After creating an action, it will appear under the `Self-service` tab of your Port application:
+Head back to the `Self-service` page of your Port application:
 
 <img src='/img/guides/selfServiceAfterScaffoldCreation.png' width='75%' />
 
@@ -790,15 +783,17 @@ After creating an action, it will appear under the `Self-service` tab of your Po
 
 <br/><br/>
 
-:::tip Trigger bitbucket scaffolder
+:::tip Bitbucket only - additional inputs
 
-To trigger the Bitbucket scaffolder, you will need to provide two additional parameters:
-- Bitbucket Workspace Name - the name of the workspace to create the new repository in
-- Bitbucket Project Key - the key of the Bitbucket project to create the new repository in.
+When executing the Bitbucket scaffolder, you will need to provide two additional inputs:
+- `Bitbucket Workspace Name` - the name of the workspace to create the new repository in
+- `Bitbucket Project Key` - the key of the Bitbucket project to create the new repository in.
   - To find the Bitbucket project key, go to `https://bitbucket.org/YOUR_BITBUCKET_WORKSPACE/workspace/projects/`, find the desired project in the list, and copy the value seen in the `Key` column in the table
 :::
 
-1. This page provides details about the action run. As you can see, the backend returned `Success` and the repo was successfully created (this can take a few moments):
+<br/>
+
+3. This page provides details about the action run. As you can see, the backend returned `Success` and the repo was successfully created (this can take a few moments):
 
 <img src='/img/guides/runStatusScaffolding.png' width='90%' />
 
