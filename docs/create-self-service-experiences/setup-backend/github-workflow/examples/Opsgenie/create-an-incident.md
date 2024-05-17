@@ -136,18 +136,10 @@ on:
       notifyStakeholders:
         required: false
         type: boolean
-      port_payload:
+      port_context:
         required: true
-        description: Port's payload, including details for who triggered the action and
-          general context (blueprint, run id, etc...)
-        type: string
-    secrets:
-      OPSGENIE_API_KEY:
-        required: true
-      PORT_CLIENT_ID:
-        required: true
-      PORT_CLIENT_SECRET:
-        required: true
+        description: includes blueprint, run ID, and entity identifier from Port.
+
 jobs:
   create-entity-in-port-and-update-run:
     runs-on: ubuntu-latest
@@ -159,7 +151,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: Starting request to create Opsgenie incident
       
       - name: Create a Opsgenie incident
@@ -177,7 +169,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: Finished request to create Opsgenie incident
 ```
 </details>
@@ -319,43 +311,10 @@ Create a new self service action using the following JSON configuration.
       "{{if (.inputs | has(\"note\")) then \"note\" else null end}}": "{{.inputs.\"note\"}}",
       "{{if (.inputs | has(\"impactedServices\")) then \"impactedServices\" else null end}}": "{{.inputs.\"impactedServices\"}}",
       "{{if (.inputs | has(\"notifyStakeholders\")) then \"notifyStakeholders\" else null end}}": "{{.inputs.\"notifyStakeholders\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"opsGenieIncident_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "repo": "<Enter GitHub repository>",
-              "org": "<Enter GitHub organization>",
-              "workflow": "trigger-opsgenie-incident.yml",
-              "omitUserInputs": false,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"message\")) then \"message\" else null end}}": "{{.inputs.\"message\"}}",
-            "{{if (.inputs | has(\"description\")) then \"description\" else null end}}": "{{.inputs.\"description\"}}",
-            "{{if (.inputs | has(\"responders\")) then \"responders\" else null end}}": "{{.inputs.\"responders\"}}",
-            "{{if (.inputs | has(\"tags\")) then \"tags\" else null end}}": "{{.inputs.\"tags\"}}",
-            "{{if (.inputs | has(\"details\")) then \"details\" else null end}}": "{{.inputs.\"details\"}}",
-            "{{if (.inputs | has(\"priority\")) then \"priority\" else null end}}": "{{.inputs.\"priority\"}}",
-            "{{if (.inputs | has(\"note\")) then \"note\" else null end}}": "{{.inputs.\"note\"}}",
-            "{{if (.inputs | has(\"impactedServices\")) then \"impactedServices\" else null end}}": "{{.inputs.\"impactedServices\"}}",
-            "{{if (.inputs | has(\"notifyStakeholders\")) then \"notifyStakeholders\" else null end}}": "{{.inputs.\"notifyStakeholders\"}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+      "port_context": {
+        "blueprint": "{{.action.blueprint}}",
+        "entity": "{{.entity.identifier}}",
+        "run_id": "{{.run.id}}"
       }
     },
     "reportWorkflowStatus": true
