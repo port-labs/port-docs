@@ -110,10 +110,11 @@ on:
       tags:
         type: string
         required: true
-      port_payload:
+      run_id:
         required: true
-        description: Port's payload, including details for who triggered the action and
-          general context (blueprint, run id, etc...)
+        type: string
+      entity:
+        required: true
         type: string
     secrets:
       SONARQUBE_HOST_URL:
@@ -132,13 +133,13 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          runId: ${{ inputs.run_id}}
           logMessage: Starting request to add tags to SonarQube project
       
       - name: Add tags to SonarQube project
         uses: fjogeleit/http-request-action@v1
         with:
-          url: "${{ secrets.SONARQUBE_HOST_URL }}/api/project_tags/set?project=${{ fromJson(inputs.port_payload).context.entity }}&tags=${{ inputs.tags }}"
+          url: "${{ secrets.SONARQUBE_HOST_URL }}/api/project_tags/set?project=${{ inputs.entity }}&tags=${{ inputs.tags }}"
           method: "POST"
           bearerToken: ${{ secrets.SONARQUBE_API_TOKEN }}
           customHeaders: '{"Content-Type": "application/json"}'
@@ -150,8 +151,9 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          runId: ${{ inputs.run_id }}
           logMessage: Finished request to create SonarQube project
+
 ```
 </details>
 
@@ -199,38 +201,9 @@ Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organiz
     "repo": "<Enter GitHub repository>",
     "workflow": "add-tags-to-sonarqube-project.yml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"tags\")) then \"tags\" else null end}}": "{{.inputs.\"tags\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"sonarQubeProject_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "repo": "<Enter GitHub repository>",
-              "org": "<Enter GitHub organization>",
-              "workflow": "add-tags-to-sonarqube-project.yml",
-              "omitUserInputs": false,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"tags\")) then \"tags\" else null end}}": "{{.inputs.\"tags\"}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
-      }
+      "tags": "{{.inputs.\"tags\"}}",
+      "entity": "{{.entity.identifier}}",
+      "run_id": "{{.run.id}}"
     },
     "reportWorkflowStatus": true
   },

@@ -248,12 +248,24 @@ on:
       project:
         required: true
         type: string
-      port_payload:
+      run_id:
         required: true
-        description:
-          Port's payload, including details for who triggered the action and
-          general context (blueprint, run id, etc...)
         type: string
+      entity:
+        required: true
+        type: string
+    secrets:
+      JIRA_BASE_URL:
+        required: true
+      JIRA_USER_EMAIL:
+        required: true
+      JIRA_API_TOKEN:
+        required: true
+      PORT_CLIENT_ID:
+        required: true
+      PORT_CLIENT_SECRET:
+        required: true
+
 jobs:
   create-entity-in-port-and-update-run:
     runs-on: ubuntu-latest
@@ -271,7 +283,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{ inputs.run_id }}
           logMessage: |
             Creating a new Jira issue with automatic label.. ⛴️
 
@@ -279,10 +291,10 @@ jobs:
         id: create
         uses: atlassian/gajira-create@v3
         with:
-          project: ${{ github.event.inputs.project }}
-          issuetype: ${{ github.event.inputs.type }}
-          summary: ${{ github.event.inputs.title }}
-          fields: '{"labels": ["port-${{ fromJson(inputs.port_payload).context.entity }}"]}'
+          project: ${{ inputs.project }}
+          issuetype: ${{ inputs.type }}
+          summary: ${{ inputs.title }}
+          fields: '{"labels": ["port-${{ inputs.entity }}"]}'
 
       - name: Inform creation of Jira issue
         uses: port-labs/port-github-action@v1
@@ -291,10 +303,11 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
           link: ${{ secrets.JIRA_BASE_URL }}/browse/${{ steps.create.outputs.issue }}
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{ inputs.run_id }}
           logMessage: |
             Jira issue created! ✅
             The issue id is: ${{ steps.create.outputs.issue }}
+
 ```
 </details>
 
@@ -311,7 +324,7 @@ Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organiz
 
 ```json showLineNumbers
 {
-  "identifier": "jiraIssue_open_jira_issue_with_automatic_label",
+  "identifier": "service_open_jira_issue_with_automatic_label",
   "title": "Open Jira Issue with automatic label",
   "icon": "Jira",
   "description": "Creates a Jira issue with a label to the concerned service.",
@@ -364,7 +377,7 @@ Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organiz
         "type"
       ]
     },
-    "blueprintIdentifier": "jiraIssue"
+    "blueprintIdentifier": "service"
   },
   "invocationMethod": {
     "type": "GITHUB",
@@ -372,42 +385,11 @@ Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organiz
     "repo": "<Enter GitHub repository>",
     "workflow": "open-jira-issue-with-automatic-label.yml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"title\")) then \"title\" else null end}}": "{{.inputs.\"title\"}}",
-      "{{if (.inputs | has(\"type\")) then \"type\" else null end}}": "{{.inputs.\"type\"}}",
-      "{{if (.inputs | has(\"project\")) then \"project\" else null end}}": "{{.inputs.\"project\" | if type == \"array\" then map(.identifier) else .identifier end}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"jiraIssue_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "repo": "<Enter GitHub repository>",
-              "org": "<Enter GitHub organization>",
-              "workflow": "open-jira-issue-with-automatic-label.yml",
-              "omitUserInputs": false,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"title\")) then \"title\" else null end}}": "{{.inputs.\"title\"}}",
-            "{{if (.inputs | has(\"type\")) then \"type\" else null end}}": "{{.inputs.\"type\"}}",
-            "{{if (.inputs | has(\"project\")) then \"project\" else null end}}": "{{.inputs.\"project\" | if type == \"array\" then map(.identifier) else .identifier end}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
-      }
+      "title": "{{.inputs.\"title\"}}",
+      "type": "{{.inputs.\"type\"}}",
+      "project": "{{.inputs.\"project\" | if type == \"array\" then map(.identifier) else .identifier end}}",
+      "entity": "{{.entity.identifier}}",
+      "run_id": "{{.run.id}}"
     },
     "reportWorkflowStatus": true
   },

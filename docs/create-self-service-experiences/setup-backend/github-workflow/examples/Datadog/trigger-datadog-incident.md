@@ -119,32 +119,38 @@ name: Trigger Datadog Incident
 on:
   workflow_dispatch:
     inputs:
-      customerImpactScope:
+      title:
         type: string
       customerImpacted:
         type: boolean
-      title:
+        required: true
+      customerImpactScope:
         type: string
+        description: Required if customer_impacted:"true". A summary of the impact customers experienced during the incident.
       notificationHandleName:
         type: string
       notificationHandleEmail:
         type: string
-      port_payload:
+      run_id:
         required: true
-        description: Port's payload, including details for who triggered the action and
-          general context (blueprint, run id, etc...)
         type: string
-      secrets:
-        DD_API_KEY:
-          required: true
-        DD_APPLICATION_KEY:
-          required: true
-        DD_API_URL:
-          required: true
-        PORT_CLIENT_ID:
-          required: true
-        PORT_CLIENT_SECRET:
-          required: true
+      entity:
+        required: true
+        type: string
+      blueprint:
+        required: true
+        type: string
+    secrets:
+      DD_API_KEY:
+        required: true
+      DD_APPLICATION_KEY:
+        required: true
+      DD_API_URL:
+        required: true
+      PORT_CLIENT_ID:
+        required: true
+      PORT_CLIENT_SECRET:
+        required: true
 jobs:
   create-entity-in-port-and-update-run:
 
@@ -157,7 +163,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          runId: ${{ inputs.run_id }}
           logMessage: Starting request to create Datadog incident
 
       - name: Create a Datadog incident
@@ -176,7 +182,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          runId: ${{ inputs.run_id }}
           logMessage: Finished request to create Datadog incident
       
       - name: Inform ingestion of Datadog incident into Port
@@ -186,7 +192,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          runId: ${{ inputs.run_id }}
           logMessage: Ingesting Datadog incident into Port
 
       - name: Convert dates to desired format
@@ -206,7 +212,7 @@ jobs:
         with:
           identifier: ${{ fromJson(steps.datadog_incident.outputs.response).data.id }}
           title: ${{ fromJson(steps.datadog_incident.outputs.response).data.attributes.title }}
-          blueprint: datadogIncident
+          blueprint: ${{ inputs.blueprint }}
           properties: |-
             {
               "customerImpactScope": "${{ fromJson(steps.datadog_incident.outputs.response).data.attributes.customer_impact_scope }}",
@@ -227,7 +233,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: UPSERT
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          runId: ${{ inputs.run_id }}
     
       - name: Inform completion of Datadog incident ingestion into Port
         uses: port-labs/port-github-action@v1
@@ -236,7 +242,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          runId: ${{ inputs.run_id }}
           link: ${{ secrets.DD_API_URL }}/incidents/${{ fromJson(steps.datadog_incident.outputs.response).data.id }}
           logMessage: Finished request to ingest Datadog incident into Port
 
@@ -247,8 +253,9 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{ inputs.run_id }}
           logMessage: Workflow completed
+
 ```
 
 </details>
@@ -274,15 +281,18 @@ Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organiz
     "operation": "CREATE",
     "userInputs": {
       "properties": {
-        "customerImpactScope": {
-          "title": "Customer Impact Scope",
-          "description": "A summary of the impact customers experienced during the incident.",
-          "type": "string"
-        },
         "customerImpacted": {
+          "icon": "DefaultProperty",
           "title": "Customer Impacted",
           "description": "A flag indicating whether the incident caused customer impact.",
-          "type": "boolean"
+          "type": "boolean",
+          "default": false
+        },
+        "customerImpactScope": {
+          "icon": "DefaultProperty",
+          "title": "Customer Impact Scope",
+          "description": "A summary of the impact customers experienced during the incident. Required if \"Customer Impacted\" is true.",
+          "type": "string"
         },
         "title": {
           "title": "Title",
@@ -321,46 +331,14 @@ Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organiz
     "repo": "<Enter GitHub repository>",
     "workflow": "trigger-datadog-incident.yml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"customerImpactScope\")) then \"customerImpactScope\" else null end}}": "{{.inputs.\"customerImpactScope\"}}",
-      "{{if (.inputs | has(\"customerImpacted\")) then \"customerImpacted\" else null end}}": "{{.inputs.\"customerImpacted\"}}",
-      "{{if (.inputs | has(\"title\")) then \"title\" else null end}}": "{{.inputs.\"title\"}}",
-      "{{if (.inputs | has(\"notificationHandleName\")) then \"notificationHandleName\" else null end}}": "{{.inputs.\"notificationHandleName\"}}",
-      "{{if (.inputs | has(\"notificationHandleEmail\")) then \"notificationHandleEmail\" else null end}}": "{{.inputs.\"notificationHandleEmail\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"datadogIncident_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "repo": "<Enter GitHub repository>",
-              "org": "<Enter GitHub organization>",
-              "workflow": "trigger-datadog-incident.yml",
-              "omitUserInputs": false,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"customerImpactScope\")) then \"customerImpactScope\" else null end}}": "{{.inputs.\"customerImpactScope\"}}",
-            "{{if (.inputs | has(\"customerImpacted\")) then \"customerImpacted\" else null end}}": "{{.inputs.\"customerImpacted\"}}",
-            "{{if (.inputs | has(\"title\")) then \"title\" else null end}}": "{{.inputs.\"title\"}}",
-            "{{if (.inputs | has(\"notificationHandleName\")) then \"notificationHandleName\" else null end}}": "{{.inputs.\"notificationHandleName\"}}",
-            "{{if (.inputs | has(\"notificationHandleEmail\")) then \"notificationHandleEmail\" else null end}}": "{{.inputs.\"notificationHandleEmail\"}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
-      }
+      "customerImpactScope": "{{.inputs.\"customerImpactScope\"}}",
+      "customerImpacted": "{{.inputs.\"customerImpacted\"}}",
+      "title": "{{.inputs.\"title\"}}",
+      "notificationHandleName": "{{.inputs.\"notificationHandleName\"}}",
+      "notificationHandleEmail": "{{.inputs.\"notificationHandleEmail\"}}",
+      "entity": "{{.entity.identifier}}",
+      "blueprint": "{{.action.blueprint}}",
+      "run_id": "{{.run.id}}"
     },
     "reportWorkflowStatus": true
   },
