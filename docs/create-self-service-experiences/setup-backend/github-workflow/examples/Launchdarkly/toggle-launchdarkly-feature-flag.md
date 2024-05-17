@@ -212,12 +212,12 @@ jobs:
               "archived": ${{ fromJson(steps.toggle_feature_flag.outputs.response).archived }},
               "projectKey": "${{ github.event.inputs.project_key }}"
             }
+          relations: "${{ toJson(fromJson(inputs.port_context).relations) }}"
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: UPSERT
           runId: ${{fromJson(inputs.port_context).run_id}}
-
           
       - name: Log After Toggling
         uses: port-labs/port-github-action@v1
@@ -295,8 +295,9 @@ Create a new self service action using the following JSON configuration.
       "{{if (.inputs | has(\"flag_state\")) then \"flag_state\" else null end}}": "{{.inputs.\"flag_state\"}}",
       "port_context": {
       "blueprint": "{{.action.blueprint}}",
-      "entity": "{{.entity}}",
-      "run_id": "{{.run.id}}"
+      "entity": "{{.entity.identifier}}",
+      "run_id": "{{.run.id}}",
+      "relations": "{{.entity.relations}}"
       }
     },
     "reportWorkflowStatus": true
