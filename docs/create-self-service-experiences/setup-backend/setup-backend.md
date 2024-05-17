@@ -58,6 +58,18 @@ For example, this payload contains a user input, and the action's run id (unique
 <img src='/img/self-service-actions/setup-backend/action-form-backend-payload.png' width='55%' border='1px' />
 <br/><br/>
 
+The keys in the payload can also be `jq` expressions.  
+For example, the following expression will add the `ref` key to the payload only if a `ref` input was provided when executing the action:
+
+```json
+{
+  "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.ref}}"
+}
+```
+:::warning Using jq in keys
+Note that if a **key** in the payload evaluates to `null` for any reason, the entire expression (key + value) will be ommitted from the payload.
+:::
+
 You can access any key in your action's JSON structure and add it to the payload. Use the `Test JQ` button to test your expressions against your action and ensure you are sending the correct data.
 
 :::tip Pro tip
