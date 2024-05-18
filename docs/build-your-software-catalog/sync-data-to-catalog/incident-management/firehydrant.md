@@ -184,23 +184,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Run FireHydrant Integration
-        run: |
-          # Set Docker image and run the container
-          integration_type="firehydrant"
-          version="latest"
-
-          image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
-
-          docker run -i --rm --platform=linux/amd64 \
-          -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
-          -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-          -e OCEAN__INTEGRATION__CONFIG__TOKEN=${{ secrets.OCEAN__INTEGRATION__CONFIG__TOKEN }} \
-          -e OCEAN__PORT__CLIENT_ID=${{ secrets.OCEAN__PORT__CLIENT_ID }} \
-          -e OCEAN__PORT__CLIENT_SECRET=${{ secrets.OCEAN__PORT__CLIENT_SECRET }} \
-          $image_name
-
-          exit $?
+      - uses: port-labs/ocean-sail@v1
+        with:
+          type: 'firehydrant'
+          port_client_id: ${{ secrets.OCEAN__PORT__CLIENT_ID }}
+          port_client_secret: ${{ secrets.OCEAN__PORT__CLIENT_SECRET }} 
+          config: |
+            config_token: ${{ secrets.OCEAN__INTEGRATION__CONFIG__TOKEN }} 
 ```
 
   </TabItem>
@@ -294,9 +284,9 @@ steps:
     docker run -i --rm --platform=linux/amd64 \
       -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
       -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-      -e OCEAN__INTEGRATION__CONFIG__TOKEN=${OCEAN__INTEGRATION__CONFIG__TOKEN} \
-      -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \
-      -e OCEAN__PORT__CLIENT_SECRET=${OCEAN__PORT__CLIENT_SECRET} \
+      -e OCEAN__INTEGRATION__CONFIG__TOKEN=$(OCEAN__INTEGRATION__CONFIG__TOKEN) \
+      -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
+      -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
       $image_name
 
     exit $?
@@ -457,6 +447,8 @@ Examples of blueprints and the relevant integration configurations:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
 resources:
   - kind: environment
     selector:
@@ -566,6 +558,8 @@ resources:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
 resources:
   - kind: service
     selector:
@@ -717,6 +711,8 @@ resources:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
 resources:
   - kind: incident
     selector:
@@ -863,6 +859,8 @@ resources:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
 resources:
   - kind: retrospective
     selector:

@@ -6,6 +6,7 @@ import DockerParameters from "./\_wiz-docker-parameters.mdx"
 import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
 import WizBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/wiz/\_example_wiz_issue_blueprint.mdx";
 import WizConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/wiz/\_example_wiz_issue_webhook_configuration.mdx";
+import FindCredentials from "/docs/build-your-software-catalog/custom-integration/api/_template_docs/_find_credentials.mdx";
 
 # Wiz
 
@@ -18,10 +19,69 @@ Our Wiz integration allows you to import `projects`, `issues`, `controls`, and `
 
 ## Prerequisites
 
-<Prerequisites />
+### Port Credentials
 
-Your Wiz credentials should have the `read:projects` and `read:issues` permission scopes. Visit the Wiz [documentation](https://integrate.wiz.io/reference/prerequisites) for a guide on how to get your credentials as well as set permissions.
+<FindCredentials />
 
+### Wiz Credentials
+
+You need the following connection details to configure Wiz:
+
+- Wiz API URL (API Endpoint URL)
+- Wiz Token URL
+- Client ID and Client Secret
+
+:::info Wiz Token URL
+There are two possible endpoints depending on your service account's identity provider:
+
+- Amazon Cognito:	https://auth.app.wiz.io/oauth/token
+- Auth0:	https://auth.wiz.io/oauth/token
+
+Learn more [here](https://win.wiz.io/reference/quickstart#generate-a-bearer-token-and-start-using-wiz-api).
+:::
+
+<br />
+
+1. **Finding Your Wiz API URL**:
+    - Login to Wiz account.
+    - Click the **User Profile** icon available at the top right of the screen and click the **User Settings** option.
+    - Click the **Tenant** option from the left options menu.
+    - The system displays the **API Endpoint URL**.
+    - Copy and save the **API URL** to use while configuring the Wiz intergration.
+
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/code-quality-security/wizApiUrl.png' width='85%' border='1px' />
+
+For more details, refer to the [documentation](https://docs.wiz.io/wiz-docs/docs/using-the-wiz-api#the-graphql-endpoint)
+
+<br />
+
+2. **Getting the Client ID and Client Secret**
+
+You must create a service account in Wiz to generate the Client ID and Client Secret. Follow the below steps to get the Client ID and Client Secret:
+    - Login to **Wiz with the Project Admin role**.
+    - Click the **Settings** icon available at the top-right of the page.
+  <img src='/img/build-your-software-catalog/sync-data-to-catalog/code-quality-security/wizAddSvcAccount.png' width='85%' border='1px' />
+    - On the Settings page, Click **Service Accounts** from the left menu.
+    - Create a Service Account:
+        - Click **Add Service Account**.
+        - Provide a descriptive **Service Account Name**.
+        - **Type**: Select **Custom Integration (GraphQL API)**.
+        - **Project**: Choose the relevant project(s).
+        - **API Scopes**: Select only the `read:projects` and `read:issues` permissions.
+        - Click **Add Service Account** at the bottom of the page to save.
+
+    <img src='/img/build-your-software-catalog/sync-data-to-catalog/code-quality-security/wizCreds.png' width='85%' border='1px' />
+    
+    <br />
+    <br />
+
+    - Retrieve Credentials: Wiz will display your Client ID and Client Secret.
+    - Save Credentials: Copy and store them securely for use in Port.
+    
+     <img src='/img/build-your-software-catalog/sync-data-to-catalog/code-quality-security/wizSecrets.png' width='85%' border='1px' />
+
+<br />
+    <br />
 
 ## Installation
 
@@ -54,6 +114,11 @@ Set them as you wish in the script below, then copy it and run it in your termin
 
 <br/>
 
+<Tabs groupId="deploy" queryString="deploy">
+
+<TabItem value="helm" label="Helm" default>
+To install the integration using Helm, run the following command:
+
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-wiz-integration port-labs/port-ocean \
@@ -69,6 +134,92 @@ helm upgrade --install my-wiz-integration port-labs/port-ocean \
         --set integration.secrets.wizApiUrl="WIZ_API_URL"  \
 	--set integration.config.wizTokenUrl="WIZ_TOKEN_URL"  
 ```
+</TabItem>
+<TabItem value="argocd" label="ArgoCD" default>
+To install the integration using ArgoCD, follow these steps:
+
+1. Create a `values.yaml` file in `argocd/my-ocean-wiz-integration` in your git repository with the content:
+
+:::note
+Remember to replace the placeholders for `WIZ_CLIENT_ID`, `WIZ_CLIENT_SECRET`, `WIZ_API_URL` and `WIZ_TOKEN_URL`.
+:::
+```yaml showLineNumbers
+initializePortResources: true
+scheduledResyncInterval: 120
+integration:
+  identifier: my-ocean-wiz-integration
+  type: wiz
+  eventListener:
+    type: POLLING
+  config:
+  // highlight-start
+    wizApiUrl: WIZ_API_URL
+    wizTokenUrl: WIZ_TOKEN_URL
+  // highlight-end
+  secrets:
+  // highlight-start
+    wizClientId: WIZ_CLIENT_ID
+    wizClientSecret: WIZ_CLIENT_SECRET
+  // highlight-end
+```
+<br/>
+
+2. Install the `my-ocean-wiz-integration` ArgoCD Application by creating the following `my-ocean-wiz-integration.yaml` manifest:
+
+:::note
+Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+
+Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
+:::
+
+<details>
+  <summary>ArgoCD Application</summary>
+
+```yaml showLineNumbers
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: my-ocean-wiz-integration
+  namespace: argocd
+spec:
+  destination:
+    namespace: my-ocean-wiz-integration
+    server: https://kubernetes.default.svc
+  project: default
+  sources:
+  - repoURL: 'https://port-labs.github.io/helm-charts/'
+    chart: port-ocean
+    targetRevision: 0.1.14
+    helm:
+      valueFiles:
+      - $values/argocd/my-ocean-wiz-integration/values.yaml
+      // highlight-start
+      parameters:
+        - name: port.clientId
+          value: YOUR_PORT_CLIENT_ID
+        - name: port.clientSecret
+          value: YOUR_PORT_CLIENT_SECRET
+  - repoURL: YOUR_GIT_REPO_URL
+  // highlight-end
+    targetRevision: main
+    ref: values
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+```
+
+</details>
+<br/>
+
+3. Apply your application manifest with `kubectl`:
+```bash
+kubectl apply -f my-ocean-wiz-integration.yaml
+```
+</TabItem>
+</Tabs>
 
 </TabItem>
 
@@ -102,26 +253,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Run Wiz Integration
-        run: |
-          # Set Docker image and run the container
-          integration_type="wiz"
-          version="latest"
-
-          image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
-
-          docker run -i --rm --platform=linux/amd64 \
-          -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
-          -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-          -e OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_ID=${{ secrets.OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_ID }} \
-          -e OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_SECRET=${{ secrets.OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_SECRET }} \
-          -e OCEAN__INTEGRATION__CONFIG__WIZ_API_URL=${{ secrets.OCEAN__INTEGRATION__CONFIG__WIZ_API_URL }} \
-          -e OCEAN__INTEGRATION__CONFIG__WIZ_TOKEN_URL=${{ secrets.OCEAN__INTEGRATION__CONFIG__WIZ_TOKEN_URL }} \
-          -e OCEAN__PORT__CLIENT_ID=${{ secrets.OCEAN__PORT__CLIENT_ID }} \
-          -e OCEAN__PORT__CLIENT_SECRET=${{ secrets.OCEAN__PORT__CLIENT_SECRET }} \
-          $image_name
-
-          exit $?
+      - uses: port-labs/ocean-sail@v1
+        with:
+          type: 'wiz'
+          port_client_id: ${{ secrets.OCEAN__PORT__CLIENT_ID }}
+          port_client_secret: ${{ secrets.OCEAN__PORT__CLIENT_SECRET }}
+          config: |
+            wiz_client_id: ${{ secrets.OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_ID }}
+            wiz_client_secret: ${{ secrets.OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_SECRET }}
+            wiz_api_url: ${{ secrets.OCEAN__INTEGRATION__CONFIG__WIZ_API_URL }}
+            wiz_token_url: ${{ secrets.OCEAN__INTEGRATION__CONFIG__WIZ_TOKEN_URL }}
 ```
 
 </TabItem>
@@ -135,6 +276,8 @@ Your Jenkins agent should be able to run docker commands.
 If you want the integration to update Port in real time using webhooks you should use
 the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
 :::
+
+<br />
 
 Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
 of `Secret Text` type:
@@ -192,9 +335,9 @@ pipeline {
 
 <AzurePremise name="Wiz" />
 
+
 <DockerParameters />
 
-<br/>
 
 Here is an example for `wiz-integration.yml` pipeline file:
 
@@ -220,12 +363,12 @@ steps:
     docker run -i --rm \
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-        -e OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_ID=${OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_ID} \
-        -e OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_SECRET=${OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_SECRET} \
-        -e OCEAN__INTEGRATION__CONFIG__WIZ_API_URL=${OCEAN__INTEGRATION__CONFIG__WIZ_API_URL} \
-        -e OCEAN__INTEGRATION__CONFIG__WIZ_TOKEN_URL=${OCEAN__INTEGRATION__CONFIG__WIZ_TOKEN_URL} \
-        -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \
-        -e OCEAN__PORT__CLIENT_SECRET=${OCEAN__PORT__CLIENT_SECRET} \
+        -e OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_ID=$(OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_ID) \
+        -e OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_SECRET=$(OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_SECRET) \
+        -e OCEAN__INTEGRATION__CONFIG__WIZ_API_URL=$(OCEAN__INTEGRATION__CONFIG__WIZ_API_URL) \
+        -e OCEAN__INTEGRATION__CONFIG__WIZ_TOKEN_URL=$(OCEAN__INTEGRATION__CONFIG__WIZ_TOKEN_URL) \
+        -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
+        -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
         $image_name
 
     exit $?
@@ -468,6 +611,8 @@ resources:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
 resources:
   - kind: control
     selector:
@@ -538,9 +683,58 @@ resources:
           "CRITICAL": "red"
         }
       },
-      "type": {
-        "title": "Type",
+      "vulnerabilityType": {
+        "title": "Vulnerability Type",
         "type": "string"
+      },
+      "wizIssueID": {
+        "title": "Wiz Issue ID",
+        "type": "string"
+      },
+      "cloudResourceType": {
+        "title": "Cloud Resource Type",
+        "type": "string"
+      },
+      "resourceName": {
+        "title": "Resource Name",
+        "type": "string"
+      },
+      "cloudPlatform": {
+        "title": "Cloud Platform",
+        "type": "string"
+      },
+      "linkToResource": {
+        "title": "Link to Cloud Resource",
+        "type": "string",
+        "format": "url"
+      },
+      "cloudResourceID": {
+        "title": "Cloud Resource ID",
+        "type": "string"
+      },
+      "cloudRegion": {
+        "title": "Cloud Region",
+        "type": "string"
+      },
+      "resourceGroupExternalId": {
+        "title": "Resource Group External ID",
+        "type": "string"
+      },
+      "subscriptionExternalId": {
+        "title": "Subscription External ID",
+        "type": "string"
+      },
+      "subscriptionName": {
+        "title": "Subscription Name",
+        "type": "string"
+      },
+      "subscriptionTags": {
+        "title": "Subscription Tags",
+        "type": "object"
+      },
+      "resourceTags": {
+        "title": "Resource Tags",
+        "type": "object"
       },
       "vulnerability": {
         "title": "Vulnerability",
@@ -613,6 +807,8 @@ resources:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
 resources:
   - kind: issue
     selector:
@@ -627,8 +823,20 @@ resources:
             url: .id as $id | "https://app.wiz.io/issues#~(issue~'" + $id + ")"
             status: .status
             severity: .severity
-            type: .type
+            vulnerabilityType: .type
             notes: .notes
+            wizIssueID: .entitySnapshot.id
+            cloudResourceType: .entitySnapshot.type
+            resourceName: .entitySnapshot.name
+            cloudPlatform: .entitySnapshot.cloudPlatform
+            linkToResource: if .entitySnapshot.cloudProviderURL == "" then null else .entitySnapshot.cloudProviderURL end
+            cloudResourceID: .entitySnapshot.providerId
+            cloudRegion: .entitySnapshot.region
+            resourceGroupExternalId: .entitySnapshot.resourceGroupExternalId
+            subscriptionExternalId: .entitySnapshot.subscriptionExternalId
+            subscriptionName: .entitySnapshot.subscriptionName
+            subscriptionTags: .entitySnapshot.subscriptionTags
+            resourceTags: .entitySnapshot.tags
             vulnerability: .entitySnapshot
             createdAt: .createdAt
             updatedAt: .updatedAt
@@ -676,6 +884,8 @@ resources:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
 resources:
   - kind: serviceTicket
   selector:

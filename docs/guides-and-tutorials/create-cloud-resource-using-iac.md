@@ -31,47 +31,21 @@ After completing it, you will get a sense of how it can benefit different person
 - Platform engineers will be able to define powerful actions that developers can use within controlled permission boundaries.
 - Developers will be able to easily create and track cloud resources from Port.
 
-### Add a URL to your new resource's definition
-
-In this guide we will add a new property to our `service` <PortTooltip id="blueprint">blueprint</PortTooltip>, which we can use to access our cloud resource definitions.
-
-1. Go to your [Builder](https://app.getport.io/dev-portal/data-model).
-2. Click on your `service` <PortTooltip id="blueprint">blueprint</PortTooltip>, then click on `New property`.
-3. Choose `URL` as the type, fill it like this and click `Save`:
-
-<img src='/img/guides/iacPropertyForm.png' width='40%' />
-
-This property is empty for now in all services, we will fill it as part of the action we're about to create 😎
-
 ### Setup the action's frontend
 
-1. Head to the [Self-service tab](https://app.getport.io/self-serve) in your Port application, and click on `+ New action`.
+1. Head to the [Self-service tab](https://app.getport.io/self-serve) in your Port application. Since you completed the [onboarding process](/quickstart), you should already have an action named `Create s3 bucket`. Hover over the action, click the `...` button in the top right corner, and choose "Edit":
 
-2. Each action in Port is directly tied to a <PortTooltip id="blueprint">blueprint</PortTooltip>. Our action creates a resource that is associated with a service and will be provisioned as part of the service's CD process.  
-   Choose `Service` from the dropdown list.
+    <img src='/img/guides/iacEditAction.png' width='35%' border='1px' />
 
-3. This action does not create/delete entities, but rather performs an operation on an existing <PortTooltip id="entity">entity</PortTooltip>. Therefore, we will choose `Day-2` as the action type.  
-   Fill out the form like this and click `Next`:
+2. The action's basic details should look like the image below. When ready, click on the `User Form` tab to proceed.
 
-<img src='/img/guides/iacActionDetails.png' width='50%' />
+    <img src='/img/guides/iacActionDetails.png' width='50%' />
 
-<br/><br/>
+3. The action's user form should look like the image below. When ready, click on the `Backend` tab to proceed.
 
-4. We want the developer who uses this action to specify simple inputs and not be overwhelmed with all the configurations available for an S3 bucket. For this action, we will define a name and a public/private visibility.  
-   Click on `+ New input`, fill out the form like this and click `Create`:
+    <img src='/img/guides/iacActionUserForm.png' width='70%' border='1px' />
 
-<img src='/img/guides/iacActionInputName.png' width='50%' />
-
-<br/><br/>
-
-5. Now let's create the visibility input, which will later serve as the `acl` of our resource.  
-   Click on `+ New input`, fill out the form like this and click `Create`:
-
-<img src='/img/guides/iacActionInputVisibility.png' width='50%' />
-
-<br/><br/>
-
-6. Now we'll define the backend of the action. Port supports multiple invocation types, one of them should be selected for you depending on the Git provider you selected in the beginning of the onboarding process.
+4. Now we'll define the backend type of the action. Port supports multiple invocation types, one of them should be selected for you depending on the Git provider you selected in the beginning of the onboarding process.
 
 <Tabs groupId="git-provider" queryString defaultValue="github" values={[
 {label: "GitHub", value: "github"},
@@ -83,66 +57,115 @@ This property is empty for now in all services, we will fill it as part of the a
 <TabItem value="github">
 
 Fill out the form with your values:
+
 - Replace the `Organization` and `Repository` values with your values (this is where the workflow will reside and run).
-- Name the workflow `portCreateBucket.yaml`.
-- Set `Omit user inputs` to `Yes`.
-- Fill out the rest of the form like this, then click `Next`:
+  
+- Name the workflow `port-create-bucket.yml`.
+  
+- Fill out your workflow details:  
+  <img src='/img/guides/iacGithubBackend.png' width='50%' border='1px' />
+  <br/>
 
-:::tip Important
+- Scroll down to the `Configure the invocation payload` section.  
+  This is where you can define which data will be sent to your backend each time the action is executed.  
 
-In our workflow, the payload is used as the input. We omit the user inputs in order to avoid sending additional inputs to the workflow.
+  For this example, we will send two details that our backend needs to know - the entity and the id of the action run.  
+  Copy the following JSON snippet and paste it in the payload code box:
 
-:::
-
-<img src='/img/guides/createBucketGHBackend.png' width='75%' border='1px' />
+  ```json showLineNumbers
+  {
+    "port_payload": {
+      "context": {
+        "entity": "{{ .entity.identifier }}",
+        "runId": "{{ .run.id }}",
+      },
+      "payload": {
+        "properties": {
+          "name": "{{ .inputs.name }}",
+          "visibility": "{{ .inputs.visibility }}",
+        }
+      }
+    }
+  }
+  ```
 
 </TabItem>
 
 <TabItem value="gitlab">
 
-:::tip
-You will need a few parameters for this part that are generated in the [setup the action's backend](#setup-the-actions-backend) section, it is recommended to complete the steps there and then follow the instructions here with all of the required information in hand.
-:::
+First, choose `Gitlab` as the invocation type.
 
-Fill out the form with your values:
-- For the `Endpoint URL` you need to add a URL in the following format:
-  ```text showLineNumbers
-  https://gitlab.com/api/v4/projects/{GITLAB_PROJECT_ID}/ref/main/trigger/pipeline?token={GITLAB_TRIGGER_TOKEN}
+- Follow the instructions under `Install the Port agent and set GitLab Pipeline trigger token` (you can skip step 4, as it is only required when using a self-hosted Gitlab instance).
+ 
+Then, fill out your workflow details:
+
+- Replace the `Project Name` and `Group Name` values with your values (this is where the pipeline will reside and run).
+
+- Note that leaving `Default Ref` blank will automatically use the `main` branch of your repository:  
+  <img src='/img/guides/scaffoldGitlabBackendDetails.png' width='55%' border='1px' />
+  <br/>
+
+- Scroll down to the `Configure the invocation payload` section.  
+  This is where you can define which data will be sent to your backend each time the action is executed.  
+
+  For this example, we will send some details that our backend needs to know, including the service name, and the id of the action run.  
+  Copy the following JSON snippet and paste it in the payload code box:
+
+  ```json showLineNumbers
+  {
+    "port_payload": {
+      "context": {
+        "entity": "{{ .entity.identifier }}",
+        "runId": "{{ .run.id }}",
+      },
+      "payload": {
+        "properties": {
+          "name": "{{ .inputs.name }}",
+          "visibility": "{{ .inputs.visibility }}",
+        }
+      }
+    }
+  }
   ```
-    - The value for `{GITLAB_PROJECT_ID}` is the ID of the GitLab group that you create in the [setup the action's backend](#setup-the-actions-backend) section which stores the `.gitlab-ci.yml` pipeline file.
-      - To find the project ID, browse to the GitLab page of the group you created, at the top right corner of the page, click on the vertical 3 dots button (next to `Fork`) and select `Copy project ID`
-    - The value for `{GITLAB_TRIGGER_TOKEN}` is the trigger token you create in the [setup the action's backend](#setup-the-actions-backend) section.
-- Set `HTTP method` to `POST`.
-- Set `Request type` to `Async`.
-- Set `Use self-hosted agent` to `No`.
-
-<img src='/img/guides/gitlabActionBackendForm.png' width='75%' />
 
 </TabItem>
 
 <TabItem value="bitbucket">
 
-Bitbucket requires another input to be defined in the action. Create the following input:
+First, choose `Jenkins` as the invocation type.
 
-<img src='/img/guides/bitbucketWorkspaceActionInputConfig.png' width='50%' />
+- Follow the instructions under `Define a webhook to trigger a Jenkins job` to obtain your webhook URL.
 
+Then, fill out your workflow details:
 
-:::tip
-You will need a few parameters for this part that are generated in the [setup the action's backend](#setup-the-actions-backend) section, it is recommended to complete the steps there and then follow the instructions here with all of the required information in hand.
-:::
+- Replace the `Webhook URL` with your value (this is where the pipeline will reside and run).
 
-Fill out the form with your values:
-- For the `Endpoint URL` you need to add a URL in the following format:
-  ```text showLineNumbers
-  https://{JENKINS_URL}/generic-webhook-trigger/invoke?token={JOB_TOKEN}
+- Leave the `Use self-hosted agent` option set to `No`.
+  <img src='/img/guides/scaffoldBitbucketBackendDetails.png' width='55%' border='1px' />
+
+- Scroll down to the `Configure the invocation payload` section.  
+  This is where you can define which data will be sent to your backend each time the action is executed.  
+
+  For this example, we will send some details that our backend needs to know - the three user inputs, and the id of the action run.  
+  Copy the following JSON snippet and paste it in the payload code box:
+
+  ```json showLineNumbers
+  {
+    "port_payload": {
+      "context": {
+        "entity": "{{ .entity.identifier }}",
+        "runId": "{{ .run.id }}",
+      },
+      "payload": {
+        "properties": {
+          "name": "{{ .inputs.name }}",
+          "visibility": "{{ .inputs.visibility }}",
+          "bitbucket_workspace_name": "{{ .inputs.bitbucket_workspace_name }}",
+        }
+      },
+    }
+  }
   ```
-    - The value for `{JENKINS_URL}` is the URL of your Jenkins server.
-    - The value for `{JOB_TOKEN}` is the unique token used to trigger the pipeline you create in the [setup the action's backend](#setup-the-actions-backend) section.
-- Set `HTTP method` to `POST`.
-- Set `Request type` to `Async`.
-- Set `Use self-hosted agent` to `No`.
-
-<img src='/img/guides/bitbucketActionBackendForm.png' width='75%' />
 
 </TabItem>
 
@@ -150,7 +173,7 @@ Fill out the form with your values:
 
 <br/>
 
-7. The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Create`.
+The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Create`.
 
 The action's frontend is now ready 🥳
 
@@ -189,7 +212,7 @@ Now we want to write the logic that our action will trigger.
 - Creating a pull request in the selected service's repository to add the new resource.
 - Reporting & logging the action result back to Port, and updating the relevant service's `Resource definitions` property with the URL of the service's resources directory.
 
-Under `.github/workflows/`, create a new file named `portCreateBucket.yaml` and use the following snippet as its content:
+Under `.github/workflows/`, create a new file named `port-create-bucket.yml` and use the following snippet as its content:
 
 <details>
 <summary><b>Github workflow (click to expand)</b></summary>
@@ -199,10 +222,6 @@ name: Create cloud resource
 on:
   workflow_dispatch:
     inputs:
-      name:
-        type: string
-      visibility:
-        type: string
       port_payload:
         required: true
         description: Port's payload, including details for who triggered the action and general context
@@ -222,25 +241,25 @@ jobs:
       - name: Copy template file
         run: |
           mkdir -p ./targetRepo/resources
-          cp templates/cloudResource.tf ./targetRepo/resources/${{ inputs.name }}.tf
+          cp templates/cloudResource.tf ./targetRepo/resources/${{ fromJson(inputs.port_payload).payload.properties.name }}.tf
       - name: Update new file data
         run: |
-          sed -i 's/{{ bucket_name }}/${{ inputs.name }}/' ./targetRepo/resources/${{ inputs.name }}.tf
-          sed -i 's/{{ bucket_acl }}/${{ inputs.visibility }}/' ./targetRepo/resources/${{ inputs.name }}.tf
+          sed -i 's/{{ bucket_name }}/${{ fromJson(inputs.port_payload).payload.properties.name }}/' ./targetRepo/resources/${{ fromJson(inputs.port_payload).payload.properties.name }}.tf
+          sed -i 's/{{ bucket_acl }}/${{ fromJson(inputs.port_payload).payload.properties.visibility }}/' ./targetRepo/resources/${{ fromJson(inputs.port_payload).payload.properties.name }}.tf
       - name: Open a pull request
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.ORG_ADMIN_TOKEN }}
           path: ./targetRepo
-          commit-message: Create new resource - ${{ inputs.name }}
+          commit-message: Create new resource - ${{ fromJson(inputs.port_payload).payload.properties.name }}
           committer: GitHub <noreply@github.com>
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           signoff: false
-          branch: new-resource-${{ inputs.name }}
+          branch: new-resource-${{ fromJson(inputs.port_payload).payload.properties.name }}
           delete-branch: true
-          title: Create new resource - ${{ inputs.name }}
+          title: Create new resource - ${{ fromJson(inputs.port_payload).payload.properties.name }}
           body: |
-            Create new ${{ inputs.visibility }} resource - ${{ inputs.name }}
+            Create new ${{ fromJson(inputs.port_payload).payload.properties.visibility }} resource - ${{ fromJson(inputs.port_payload).payload.properties.name }}
           draft: false
   create-entity-in-port-and-update-run:
     runs-on: ubuntu-latest
@@ -266,7 +285,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
           runId: ${{fromJson(inputs.port_payload).context.runId}}
-          logMessage: Pull request created successfully for "${{ inputs.name }}" 🚀
+          logMessage: Pull request created successfully for "${{ fromJson(inputs.port_payload).payload.properties.name }}" 🚀
 ```
 
 </details>
@@ -275,30 +294,24 @@ jobs:
 
 <TabItem value="gitlab">
 
-1. First, let's create a GitLab project that will store our new bucket creation pipeline - Go to your GitLab account and create a new project.
-
-2. Next, let's create the necessary token and secrets:
+First, let's create the necessary token and secrets in your GitLab project:
 
 - Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
+
 - Go to your [project](https://gitlab.com/), and follow the steps [here](https://docs.gitlab.com/ee/user/project/settings/project_access_tokens.html#create-a-project-access-token) to create a new project access token with the following permission scopes: `write_repository`, then save its value as it will be required in the next step.
-  <img src='/img/guides/gitlabProjectAccessTokenPerms.png' width='80%' />
-- Go to the new GitLab project you created in step 1, from the `Settings` menu at the sidebar on the left, select `CI/CD`.
+  <img src='/img/guides/gitlabProjectAccessTokenPerms.png' width='80%' border='1px' />
+
+- Go to your GitLab project, from the `Settings` menu at the sidebar on the left, select `CI/CD`.
+
 - Expand the `Variables` section and save the following secrets:
   - `PORT_CLIENT_ID` - Your Port client ID.
   - `PORT_CLIENT_SECRET` - Your Port client secret.
   - `GITLAB_ACCESS_TOKEN` - The GitLab group access token you created in the previous step.
   <br/>
-  <img src='/img/guides/gitlabPipelineVariables.png' width='80%' />
-- Expand the `Pipeline trigger tokens` section and add a new token, give it a meaningful description such as `Bucket creator token` and save its value
-  - This is the `{GITLAB_TRIGGER_TOKEN}` that you need for the defining the backend of the Action.
+  <img src='/img/guides/gitlabPipelineVariables.png' width='80%' border='1px' />
 
-<br/>
 
-  <img src='/img/guides/gitlabPipelineTriggerToken.png' width='80%' />
-
-<br/><br/>
-
-3. Now let's create the pipeline file that contains our logic. In the new GitLab project you created at step 1, at the root of the project, create a new file named `.gitlab-ci.yml` and use the following snippet as its content:
+Now let's create the pipeline file that contains our logic. In the root of your GitLab project, create a new file named `.gitlab-ci.yml` and use the following snippet as its content:
 
 <details>
 <summary><b>GitLab pipeline (click to expand)</b></summary>
@@ -439,35 +452,37 @@ update-run-status:
 
 <TabItem value="bitbucket">
 
-1. First, install the [generic webhook trigger](https://plugins.jenkins.io/generic-webhook-trigger/) plugin in your Jenkins.
-2. Next, let's create the necessary tokens and secrets
-   - Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
-   - Configure the following as Jenkins credentials:
-     - `BITBUCKET_USERNAME` - a user with access to the Bitbucket workspace and project.
-     - `BITBUCKET_APP_PASSWORD` - an [App Password](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/) with the `Repositories:Read` and `Repositories:Write` permissions permissions.
-     - `PORT_CLIENT_ID` - Your Port client ID.
-     - `PORT_CLIENT_SECRET` - Your Port client secret.
-     <br/>
-     <img src='/img/guides/bitbucketJenkinsCredentials.png' width='80%' />
+First, let's create the necessary tokens and secrets:
+- Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
+
+- Configure the following as Jenkins credentials:
+  - `BITBUCKET_USERNAME` - a user with access to the Bitbucket workspace and project.
+  - `BITBUCKET_APP_PASSWORD` - an [App Password](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/) with the `Repositories:Read` and `Repositories:Write` permissions permissions.
+  - `PORT_CLIENT_ID` - Your Port client ID.
+  - `PORT_CLIENT_SECRET` - Your Port client secret.
+  <br/>
+  <img src='/img/guides/bitbucketJenkinsCredentials.png' width='90%' border='1px' />
 
 <br/>
 
-3. Create a Jenkins pipeline with the following configuration:
-   - [Enable the webhook trigger for the pipeline](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#enabling-webhook-trigger-for-a-pipeline)
-   - Define the value of the [`token`](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#token-setup) field, the token you specify will be used to trigger the scaffold pipeline specifically. For example, you can use `bucket-creator-token`. Return to the [frontend setup](#setup-the-actions-frontend) to step #6, and set the `{JOB_TOKEN}` for the trigger URL.
-   - [Define variables for the pipeline](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#defining-variables): define the `SERVICE_NAME`, `BITBUCKET_WORKSPACE_NAME`, `BITBUCKET_PROJECT_KEY`, `BUCKET_NAME`, `VISIBILITY` and `RUN_ID` variables. Scroll down to the `Post content parameters` and **for each variable** add configuration like so (look at the table bellow for the full variable list):
+Next, create a Jenkins pipeline with the following configuration:
+- [Enable the webhook trigger for the pipeline](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#enabling-webhook-trigger-for-a-pipeline).
 
-   <img src='/img/guides/jenkinsGenericVariable.png' width='100%' />
+- Define the value of the [`token`](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#token-setup) field, the token you specify will be used to trigger the scaffold pipeline specifically. For example, you can use `bucket-creator-token`.
 
-    Create the following varaibles and their related JSONPath expression:
+- [Define variables for the pipeline](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#defining-variables): define the `SERVICE_NAME`, `BITBUCKET_WORKSPACE_NAME`, `BITBUCKET_PROJECT_KEY`, `BUCKET_NAME`, `VISIBILITY` and `RUN_ID` variables. Scroll down to the `Post content parameters` and **for each variable** add configuration like so (look at the table bellow for the full variable list):
 
-    | Variable Name            | JSONPath Expression                             |
-    | ------------------------ | ----------------------------------------------- |
-    | SERVICE_NAME             | `$.context.entity`                              |
-    | BITBUCKET_WORKSPACE_NAME | `$.payload.properties.bitbucket_workspace_name` |
-    | RUN_ID                   | `$.context.runId`                               |
-    | BUCKET_NAME              | `$.payload.properties.bucket_name`              |
-    | VISIBILITY               | `$.payload.properties.visibility`               |
+   <img src='/img/guides/jenkinsGenericVariable.png' width='100%' border='1px' />
+
+Create the following varaibles and their related JSONPath expression:
+
+| Variable Name            | JSONPath Expression                             |
+| ------------------------ | ----------------------------------------------- |
+| SERVICE_NAME             | `$.port_payload.context.entity`                              |
+| BITBUCKET_WORKSPACE_NAME | `$.port_payload.payload.properties.bitbucket_workspace_name` |
+| RUN_ID                   | `$.port_payload.context.runId`                               |
+| BUCKET_NAME              | `$.port_payload.payload.properties.name`              |
+| VISIBILITY               | `$.port_payload.payload.properties.visibility`               |
     
 
 Add the following content to the new Jenkins pipeline:
@@ -676,7 +691,7 @@ pipeline {
 
 </Tabs>
 
-4. We will now create a simple `.tf` file that will serve as a template for our new resource:
+1. We will now create a simple `.tf` file that will serve as a template for our new resource:
 
 - In your source repository (`port-actions` for example), create a file named `cloudResource.tf` under `/templates/` (it's path should be `/templates/cloudResource.tf`).
 - Copy the following snippet and paste it in the file's contents:

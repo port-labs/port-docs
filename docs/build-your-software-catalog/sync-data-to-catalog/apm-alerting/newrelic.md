@@ -217,24 +217,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Run New Relic Integration
-        run: |
-          # Set Docker image and run the container
-          integration_type="newrelic"
-          version="latest"
-
-          image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
-
-          docker run -i --rm --platform=linux/amd64 \
-          -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
-          -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-          -e OCEAN__INTEGRATION__CONFIG__NEW_RELIC_API_KEY=${{ secrets.OCEAN__INTEGRATION__CONFIG__NEW_RELIC_API_KEY }} \
-          -e OCEAN__INTEGRATION__CONFIG__NEW_RELIC_ACCOUNT_ID=${{ secrets.OCEAN__INTEGRATION__CONFIG__NEW_RELIC_ACCOUNT_ID }} \
-          -e OCEAN__PORT__CLIENT_ID=${{ secrets.OCEAN__PORT__CLIENT_ID }} \
-          -e OCEAN__PORT__CLIENT_SECRET=${{ secrets.OCEAN__PORT__CLIENT_SECRET }} \
-          $image_name
-
-          exit $?
+      - uses: port-labs/ocean-sail@v1
+        with:
+          type: 'newrelic'
+          port_client_id: ${{ secrets.OCEAN__PORT__CLIENT_ID }}
+          port_client_secret: ${{ secrets.OCEAN__PORT__CLIENT_SECRET }}
+          config: |
+            new_relic_api_key: ${{ secrets.OCEAN__INTEGRATION__CONFIG__NEW_RELIC_API_KEY }} 
+            new_relic_account_id: ${{ secrets.OCEAN__INTEGRATION__CONFIG__NEW_RELIC_ACCOUNT_ID }}
 ```
 
   </TabItem>
@@ -332,10 +322,10 @@ steps:
     docker run -i --rm \
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-        -e OCEAN__INTEGRATION__CONFIG__NEW_RELIC_API_KEY=${OCEAN__INTEGRATION__CONFIG__NEW_RELIC_API_KEY} \
-        -e OCEAN__INTEGRATION__CONFIG__NEW_RELIC_ACCOUNT_ID=${OCEAN__INTEGRATION__CONFIG__NEW_RELIC_ACCOUNT_ID} \
-        -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \
-        -e OCEAN__PORT__CLIENT_SECRET=${OCEAN__PORT__CLIENT_SECRET} \
+        -e OCEAN__INTEGRATION__CONFIG__NEW_RELIC_API_KEY=$(OCEAN__INTEGRATION__CONFIG__NEW_RELIC_API_KEY) \
+        -e OCEAN__INTEGRATION__CONFIG__NEW_RELIC_ACCOUNT_ID=$(OCEAN__INTEGRATION__CONFIG__NEW_RELIC_ACCOUNT_ID) \
+        -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
+        -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
         $image_name
 
     exit $?
@@ -604,52 +594,55 @@ Examples of blueprints and the relevant integration configurations:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
-- kind: newRelicService
-  selector:
-    query: "true"
-    newRelicTypes: ["SERVICE", "APPLICATION"]
-    calculateOpenIssueCount: true
-    entityQueryFilter: "type in ('SERVICE','APPLICATION')"
-    entityExtraPropertiesQuery: |
-      ... on ApmApplicationEntityOutline {
-        guid
-        name
-        alertSeverity
-        applicationId
-        apmBrowserSummary {
-          ajaxRequestThroughput
-          ajaxResponseTimeAverage
-          jsErrorRate
-          pageLoadThroughput
-          pageLoadTimeAverage
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: newRelicService
+    selector:
+      query: "true"
+      newRelicTypes: ["SERVICE", "APPLICATION"]
+      calculateOpenIssueCount: true
+      entityQueryFilter: "type in ('SERVICE','APPLICATION')"
+      entityExtraPropertiesQuery: |
+        ... on ApmApplicationEntityOutline {
+          guid
+          name
+          alertSeverity
+          applicationId
+          apmBrowserSummary {
+            ajaxRequestThroughput
+            ajaxResponseTimeAverage
+            jsErrorRate
+            pageLoadThroughput
+            pageLoadTimeAverage
+          }
+          apmSummary {
+            apdexScore
+            errorRate
+            hostCount
+            instanceCount
+            nonWebResponseTimeAverage
+            nonWebThroughput
+            responseTimeAverage
+            throughput
+            webResponseTimeAverage
+            webThroughput
+          }
         }
-        apmSummary {
-          apdexScore
-          errorRate
-          hostCount
-          instanceCount
-          nonWebResponseTimeAverage
-          nonWebThroughput
-          responseTimeAverage
-          throughput
-          webResponseTimeAverage
-          webThroughput
-        }
-      }
-  port:
-    entity:
-      mappings:
-        blueprint: '"newRelicService"'
-        identifier: .guid
-        title: .name
-        properties:
-          has_apm: 'if .domain | contains("APM") then "true" else "false" end'
-          link: .permalink
-          open_issues_count: .__open_issues_count
-          reporting: .reporting
-          tags: .tags
-          domain: .domain
-          type: .type
+    port:
+      entity:
+        mappings:
+          blueprint: '"newRelicService"'
+          identifier: .guid
+          title: .name
+          properties:
+            has_apm: 'if .domain | contains("APM") then "true" else "false" end'
+            link: .permalink
+            open_issues_count: .__open_issues_count
+            reporting: .reporting
+            tags: .tags
+            domain: .domain
+            type: .type
 ```
 
 </details>
@@ -730,25 +723,28 @@ Examples of blueprints and the relevant integration configurations:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
-- kind: newRelicAlert
-  selector:
-    query: "true"
-    newRelicTypes: ["ISSUE"]
-  port:
-    entity:
-      mappings:
-        blueprint: '"newRelicAlert"'
-        identifier: .issueId
-        title: .title[0]
-        properties:
-          priority: .priority
-          state: .state
-          sources: .sources
-          conditionName: .conditionName
-          alertPolicyNames: .policyName
-          activatedAt: .activatedAt
-        relations:
-          newRelicService: .__APPLICATION.entity_guids + .__SERVICE.entity_guids
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: newRelicAlert
+    selector:
+      query: "true"
+      newRelicTypes: ["ISSUE"]
+    port:
+      entity:
+        mappings:
+          blueprint: '"newRelicAlert"'
+          identifier: .issueId
+          title: .title[0]
+          properties:
+            priority: .priority
+            state: .state
+            sources: .sources
+            conditionName: .conditionName
+            alertPolicyNames: .policyName
+            activatedAt: .activatedAt
+          relations:
+            newRelicService: .__APPLICATION.entity_guids + .__SERVICE.entity_guids
 ```
 
 </details>

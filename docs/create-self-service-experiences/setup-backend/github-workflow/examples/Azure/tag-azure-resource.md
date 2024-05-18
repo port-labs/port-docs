@@ -9,33 +9,110 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 In the following guide, you are going to create a self-service action in Port that executes a [GitHub workflow](https://docs.getport.io//create-self-service-experiences/setup-backend/github-workflow) to add tags to a [storage account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-overview).
 
+:::tip Use-cases
+Organize and manage your Azure resources effectively by adding tags directly through Port.
+
+- **Cost Accounting**: Categorize resources by department, project, or cost center for accurate billing analysis.
+- **Governance**: Label resources based on criticality, compliance requirements, or ownership.
+- **Search & Filtering**: Use tags to link the azure resource to other objects in your Port account.
+:::
+
 ## Prerequisites
-1. This guide assumes that you already have a blueprint for an Azure Storage account with some resources. If you haven't done so yet, create the blueprint by referring to this [guide](https://docs.getport.io/create-self-service-experiences/setup-backend/github-workflow/examples/azure/create-azure-resource) first.
-2. Prior knowledge of Port Actions is essential for following this guide. Learn more about them [here](https://docs.getport.io/create-self-service-experiences/setup-ui-for-action/).
-3. A GitHub repository to contain your action resources i.e. the github workflow file.
+
+1. **Azure Subscription**: An active Azure subscription is required to deploy the storage account.
+2. **Port Actions Knowledge**: Understanding how to create and use Port actions is necessary. Learn the basics [here](https://docs.getport.io/create-self-service-experiences/setup-ui-for-action/).
+3. **GitHub Repository**: A repository to store your GitHub workflow file for this action.
 
 
-## Example - adding tags to a storage account
+### GitHub Secrets
 
-Follow these steps to get started:
+To successfully execute this workflow, we will add the following secrets to the GitHub repository containing the workflow:
 
-1. Create the following GitHub Action secrets:
-    1. Create the following Port credentials:
-        1. `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#get-api-token).
-        2. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#get-api-token).
-    2. Create the following Azure Cloud credentials:
-        :::tip
-        Follow this [guide](https://learn.microsoft.com/en-us/azure/developer/terraform/get-started-cloud-shell-bash?tabs=bash#create-a-service-principal) to create a service principal in order to get the Azure credentials.
-        :::
-        1. `ARM_CLIENT_ID` - Azure Client ID (APP ID) of the application.
-        2. `ARM_CLIENT_SECRET` - Azure Client Secret (Password) of the application.
-        3. `ARM_SUBSCRIPTION_ID` - Azure Subscription ID.
-        4. `ARM_TENANT_ID` - The Azure [Tenant ID](https://learn.microsoft.com/en-us/azure/azure-portal/get-subscription-tenant-id).
+**1. GitHub Action Secrets**
+
+- Navigate to your GitHub repository's "Settings" tab.
+- Select "Secrets" and then "Actions" from the side menu.
+- Create the following secrets:
+    - `PORT_CLIENT_ID`: Your Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#get-api-token).
+    - `PORT_CLIENT_SECRET`: Your Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#get-api-token).
+
+**2. Azure Cloud Credentials**
+
+:::tip **Important**: 
+For secure Azure interactions, we'll use a Service Principal. If you need help creating one, follow this [guide](https://learn.microsoft.com/en-us/azure/developer/terraform/get-started-cloud-shell-bash?tabs=bash#create-a-service-principal)
+:::
+- Once you have your Service Principal, create these GitHub Action secrets:
+    - `ARM_CLIENT_ID`: Service Principal Application (Client) ID
+    - `ARM_CLIENT_SECRET`: Service Principal Password
+    - `ARM_SUBSCRIPTION_ID`: Your Azure Subscription ID
+    - `ARM_TENANT_ID`: Your Azure [Tenant ID](https://learn.microsoft.com/en-us/azure/azure-portal/get-subscription-tenant-id)
+
+
+
+## Port Configuration
+
+:::tip Import Azure Resources
+Import Azure resources into your Port account using the [Azure Exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/)
+:::
+
+1. Create the `azureStorage` blueprint.
+    - Head to the [Builder](https://app.getport.io/settings/data-model) page.
+    - Click on the `+ Blueprint` button.
+    - Click on the `{...} Edit JSON` button.
+    - Copy and paste the following JSON configuration into the editor.
+
+<details>
+   <summary>Port Blueprint: Azure Storage Account</summary>
+   :::note
+   Keep in mind that this can be any blueprint you require; the provided example is just for reference.
+   :::
+
+```json showLineNumbers
+{
+    "identifier": "azureStorage",
+    "title": "Azure Storage Account",
+    "icon": "Azure",
+    "schema": {
+        "properties": {
+            "storage_name": {
+                "title": "Account Name",
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 63,
+                "icon": "DefaultProperty"
+            },
+            "storage_location": {
+                "icon": "DefaultProperty",
+                "title": "Location",
+                "type": "string"
+            },
+            "url": {
+                "title": "URL",
+                "format": "url",
+                "type": "string",
+                "icon": "DefaultProperty"
+            }
+        },
+        "required": [
+            "storage_name",
+            "storage_location"
+        ]
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "relations": {}
+}
+```
+
+</details>
+
 <br />
-2. Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new).
-<br />
 
-3. Create a Port action in the [self-service page](https://app.getport.io/self-serve) or with the following JSON definition:
+2. To create the Port action:
+    - Head to the [self-service](https://app.getport.io/self-serve) page.
+    - Click on the `+ New Action` button.
+    - Click on the `{...} Edit JSON` button.
+    - Copy and paste the following JSON configuration into the editor.
 
 <details>
 
@@ -48,46 +125,82 @@ Follow these steps to get started:
 
 ```json showLineNumbers
 {
-  "identifier": "add_tags_to_azure_storage",
+  "identifier": "service_add_tags_to_azure_storage",
   "title": "Add Tags to Azure Storage",
   "icon": "Azure",
-  "userInputs": {
-    "properties": {
-      "tags": {
-        "title": "Tags",
-        "type": "object"
-      }
+  "description": "Add tags to azure storage account",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {
+        "tags": {
+          "title": "Tags",
+          "type": "object"
+        }
+      },
+      "required": [
+        "tags"
+      ],
+      "order": []
     },
-    "required": [
-      "tags"
-    ],
-    "order": []
+    "blueprintIdentifier": "azureStorage"
   },
   "invocationMethod": {
-   "type": "GITHUB",
+    "type": "GITHUB",
     "org": "<GITHUB-ORG>",
     "repo": "<GITHUB-REPO-NAME>",
     "workflow": "tag-azure-resource.yml",
-    "omitUserInputs": false,
-    "omitPayload": false,
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "{{if (.inputs | has(\"tags\")) then \"tags\" else null end}}": "{{.inputs.\"tags\"}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"service_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "org": "<GITHUB-ORG>",
+              "repo": "<GITHUB-REPO-NAME>",
+              "workflow": "tag-azure-resource.yml",
+              "omitUserInputs": false,
+              "omitPayload": false,
+              "reportWorkflowStatus": true
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {
+            "{{if (.inputs | has(\"tags\")) then \"tags\" else null end}}": "{{.inputs.\"tags\"}}"
+          },
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
     "reportWorkflowStatus": true
   },
-  "trigger": "DAY-2",
-  "description": "Add tags to azure storage acount",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 
 </details>
-<br />
+
+## GitHub Workflow
 
 <Tabs groupId="cicd-method" queryString="cicd-method">
 
 
-
-
 <TabItem value="terraform" label="Terraform">
-4. Update the following Terraform templates in the `terraform` folder at the root of your GitHub repository:
+3. Update the following Terraform templates in the `terraform` folder at the root of your GitHub repository:
     :::tip
     Fork our [example repository](https://github.com/port-labs/pipelines-terraform-azure) to get started.
     :::
@@ -137,7 +250,7 @@ variable "resource_tags" {
 </details>
 
 <br />
-5. Create a workflow file under `.github/workflows/tag-azure-resource.yml` with the following content:
+4. Create a workflow file under `.github/workflows/tag-azure-resource.yml` with the following content:
 
 <details>
 
@@ -177,12 +290,19 @@ jobs:
     defaults:
       run:
         shell: bash
-        # We keep Terraform files in the terraform directory.
         working-directory: ./terraform
-        # working-directory: ./
-
 
     steps:
+      - name: Inform starting of action
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          operation: PATCH_RUN
+          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          logMessage: |
+            Starting a GitHub workflow to tag the Azure resource: ${{fromJson(inputs.port_payload).context.entity}} ... ⛴️
+
       - name: Checkout the repository to the runner
         uses: actions/checkout@v2
 
@@ -193,7 +313,6 @@ jobs:
       
       - name: Terraform init
         id: init
-        # run: terraform init 
         env:
           ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
@@ -240,9 +359,17 @@ jobs:
 
           terraform apply -auto-approve -input=false tfazure-${GITHUB_RUN_NUMBER}.tfplan
 
-      - name: Terraform Azure Status
+      - name: Create a failure log message
         if: steps.plan-azure.outcome == 'failure'
-        run: exit 1
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: PATCH_RUN
+          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          logMessage: Failed to tag azure resource ${{fromJson(inputs.port_payload).context.entity}}
+
 
       - name: Create a log message
         uses: port-labs/port-github-action@v1
@@ -253,8 +380,6 @@ jobs:
           operation: PATCH_RUN
           runId: ${{fromJson(inputs.port_payload).context.runId}}
           logMessage: Added tags to ${{fromJson(inputs.port_payload).context.entity}}
-
-
 ```
 
 </details>
@@ -262,7 +387,7 @@ jobs:
 
 <TabItem value="azurecli" label="Azure CLI">
 
-4. Create a GitHub Action secret `AZURE_CREDENTIALS` with the value like below: (Refer to [Using secrets in GitHub Actions](https://github.com/Azure/login?tab=readme-ov-file#login-with-a-service-principal-secret:~:text=below%3A%20(Refer%20to-,Using%20secrets%20in%20GitHub%20Actions,-.)).)
+3. Create a GitHub Action secret `AZURE_CREDENTIALS` with the value like below: (Refer to [Using secrets in GitHub Actions](https://github.com/Azure/login?tab=readme-ov-file#login-with-a-service-principal-secret:~:text=below%3A%20(Refer%20to-,Using%20secrets%20in%20GitHub%20Actions,-.)).)
 
 ```json
 AZURE_CREDENTIALS = {
@@ -273,7 +398,8 @@ AZURE_CREDENTIALS = {
 }
 ```
 
-5. Create a workflow file under `.github/workflows/tag-azure-resource.yml` with the following content:
+
+4. Create a workflow file under `.github/workflows/tag-azure-resource.yml` with the following content:
 
 <details>
 
@@ -304,8 +430,16 @@ jobs:
       runs-on: ubuntu-latest
       steps:
   
-      - name: Install jq
-        run: sudo apt-get install jq -y
+      - name: Inform starting of action
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          operation: PATCH_RUN
+          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          logMessage: |
+            Starting a GitHub worklfow to tag the Azure resource: ${{fromJson(inputs.port_payload).context.entity}} ... ⛴️
+
   
       - uses: azure/login@v1
         with:
@@ -327,11 +461,29 @@ jobs:
             tags=$(echo ${TAGS} | jq -r 'to_entries|map("\(.key)=\(.value|tojson)")|join(" ")')
             az tag create --resource-id $resource --tags $tags
 
+      - name: Create a log message
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: PATCH_RUN
+          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          logMessage: Added tags to ${{fromJson(inputs.port_payload).context.entity}}
+
 ```
 </details>
 
 </TabItem>
 
 </Tabs>
-<br />
-6. Trigger the action from the [self-service](https://app.getport.io/self-serve) page of your Port application.
+
+## Let's Test It!
+
+- On the [self-service](https://app.getport.io/self-serve) page, select the action and fill in the properties.
+- Click the execute button to trigger the GitHub workflow.
+
+## More relevant guides
+
+1. [Add tags to S3 Bucket](/create-self-service-experiences/setup-backend/github-workflow/examples/AWS/add-tags-to-s3-bucket)
+2. [Add tags to ECR Repository](/create-self-service-experiences/setup-backend/github-workflow/examples/AWS/add-tags-to-ecr-repository)

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 4
+sidebar_position: 5
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
@@ -8,27 +8,35 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 In the following guide, we are going to create a self-service action in Port that executes a GitHub workflow to nudge PR reviewers with a kind message.
 
+:::tip Usecases
+- **Faster Merges**: Remind reviewers of open PRs to reduce delays.
+- **Better Code**: Encourage timely reviews for quicker feedback.
+- **Smoother Workflow**: Prevent bottlenecks that hinder development progress.
+:::
+
 ## Prerequisites
 1. Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new).
-2. This guide assumes the presence of a blueprint representing your repositories. If you haven't done so yet, initiate the setup of your GitHub data model by referring to this [guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/examples/#mapping-repositories-file-contents-and-pull-requests)) first.
-3. A repository to contain your action resources i.e. the github workflow file.
-
-
-## Guide
-
-Follow these steps to get started:
-
-1. Head to your [Slack apps](https://api.slack.com/apps) page and create a new app (or select one of your existing apps). Then, go to the Incoming Webhooks page and create a new webhook, specifying the target channel on your server where messages that are sent to the slack webhook will be transferred.
-
-2. Create the following GitHub Action secrets:
+2. A repository to contain your action resources i.e. the github workflow file.
+3. Set up a slack app:
+    - Go to your [slack apps page](https://api.slack.com/apps).
+    - Create a new app or use an existing one.
+    - Enable Incoming Webhooks and create a new webhook.
+    - Choose the target Slack channel for notifications.
+    - Copy the generated webhook URL for use as the `SLACK_WEBHOOK_URL`.
+4. Create the following GitHub Action secrets:
     - Create the following Port credentials:
         - `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#get-api-token).
         - `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#get-api-token).
     - `SLACK_WEBHOOK_URL` - the webhook URL you obtained from slack.
 
-<br />
 
-3. Create a Port action in the [self-service page](https://app.getport.io/self-serve) or with the following JSON definition:
+## Port configuration
+
+1. To create the Port action, go to the [self-service page](https://app.getport.io/self-serve):
+    - Click on the `+ New Action` button.
+    - Click on the `{...} Edit JSON` button.
+    - Copy and paste the following JSON configuration into the editor.
+    - Click `Save`
 
 <details>
 
@@ -41,37 +49,71 @@ Follow these steps to get started:
 
 ```json showLineNumbers
 {
-  "identifier": "nudge_reviewers",
+  "identifier": "githubPullRequest_nudge_reviewers",
   "title": "Nudge Reviewers",
-  "userInputs": {
-    "properties": {},
-    "required": []
+  "description": "Remind reviewers about PR",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {},
+      "required": []
+    },
+    "blueprintIdentifier": "githubPullRequest"
   },
   "invocationMethod": {
     "type": "GITHUB",
     "org": "<GITHUB-ORG>",
     "repo": "<GITHUB-REPO-NAME>",
     "workflow": "nudge-pr-reviewers.yml",
-    "omitUserInputs": true,
-    "omitPayload": false,
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"githubPullRequest_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "org": "<GITHUB-ORG>",
+              "repo": "<GITHUB-REPO-NAME>",
+              "workflow": "nudge-pr-reviewers.yml",
+              "omitUserInputs": true,
+              "omitPayload": false,
+              "reportWorkflowStatus": true
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {},
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
     "reportWorkflowStatus": true
   },
-  "trigger": "DAY-2",
-  "description": "Remind reviewers about PR",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 
 </details>
 
 
-<img src='/img/self-service-actions/setup-backend/github-workflow/nudgePRBlueprint.png' width='45%' />
-<img src='/img/self-service-actions/setup-backend/github-workflow/nudgePRDefn.png' width='45%' />
+## GitHub workflow
 
-<br />
-<br />
+Create a workflow file under `.github/workflows/nudge-pr-reviewers.yml` with the following content:
 
-4. Create a workflow file under `.github/workflows/nudge-pr-reviewers.yml` with the following content:
+:::tip
+We recommend creating a dedicated repository for the workflows that are used by Port actions.
+:::
 
 <details>
 
@@ -186,12 +228,13 @@ jobs:
 ```
 
 </details>
-<br />
 
-5. Trigger the action from the [self-service](https://app.getport.io/self-serve) page of your Port application.
+## Let's test it!
+
+Trigger the action from the [self-service](https://app.getport.io/self-serve) page of your Port application.
 
 
-<img src='/img/self-service-actions/setup-backend/github-workflow/nudgeSlack.png' width='85%' />
+<img src='/img/self-service-actions/setup-backend/github-workflow/nudgeSlack.png' width='85%' border="1px" />
 
 <br />
 <br />

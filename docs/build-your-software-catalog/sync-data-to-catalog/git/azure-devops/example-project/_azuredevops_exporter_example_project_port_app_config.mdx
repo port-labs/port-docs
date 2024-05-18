@@ -1,0 +1,26 @@
+<details>
+
+<summary> Ocean integration configuration </summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: project
+    selector:
+      query: 'true'
+      defaultTeam: "false"
+    port:
+      entity:
+        mappings:
+          identifier: '.id | gsub(" "; "")'
+          blueprint: '"project"'
+          title: .name
+          properties:
+            state: '.state'
+            revision: '.revision'
+            visibility": '.visibility'
+            defaultTeam: '.defaultTeam.name'
+            link: '.url | gsub("_apis/projects/"; "")'
+
+```
+
+</details>

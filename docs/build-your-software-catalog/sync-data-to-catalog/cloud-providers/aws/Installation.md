@@ -56,12 +56,6 @@ The above script performs the following actions:
 You can delete resources you don't want to export by removing them from the resources array in the script above.
 :::
 
-### AWS exporter Terraform module
-
-After setting up the basic configuration, the template above deploys the AWS exporter Terraform module.
-
-For more information, visit the [AWS exporter module docs](/build-your-software-catalog/sync-data-to-catalog/iac/terraform/modules/aws-exporter-module.md)
-
 ## Step-by-step installation
 
 The steps outlined here can be used to manually install the AWS exporter using CloudFormation.
@@ -261,6 +255,6 @@ To configure the AWS exporter to use events as triggers, follow these steps:
 
 ## Further information
 
-- Refer to the [examples](./examples.md) page for practical configurations and their corresponding blueprint definitions;
+- Refer to the [examples](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples/examples.md) page for practical configurations and their corresponding blueprint definitions;
 - Learn about more ways of [working with Cloudformation stacks](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacks.html);
 - Deep-dive into the [Event-based Updates](./event-based-updates.md) mechanism.

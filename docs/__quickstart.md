@@ -114,7 +114,7 @@ In addition, the `on-call` field is marked as `required`, so that we always know
 
 #### From the UI
 
-Let's head to [Port](https://app.getport.io/dev-portal) and look at the DevPortal Builder page, at the top right corner let's click on **Add Blueprint** and configure our first Blueprint - **Service** as shown in the image below:
+Let's head to [Port](https://app.getport.io/settings) and look at the DevPortal Builder page, at the top right corner let's click on **Add Blueprint** and configure our first Blueprint - **Service** as shown in the image below:
 
 ![Developer PortalCreate New Blueprint](../static/img/quickstart/newBlueprintButton.png)
 

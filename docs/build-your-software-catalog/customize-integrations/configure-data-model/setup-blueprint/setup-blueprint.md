@@ -23,7 +23,7 @@ Blueprints are the most basic building block in Port. They are used to represent
 
 Blueprints are comprised of [properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties), which are used to define the structure of the data they represent. Port supports a wide variety of property types, allowing you to model your data in the most accurate way possible.
 
-Blueprints are completely customizable, and support any number of properties. They are created and managed in the [builder page](https://app.getport.io/dev-portal) of the portal.
+Blueprints are completely customizable, and support any number of properties. They are created and managed in the [builder page](https://app.getport.io/settings) of the portal.
 
 ## Common blueprints
 
@@ -41,7 +41,7 @@ Blueprints can be used to represent any asset in your software catalog, some com
 - Pods
 - VMs
 
-Check out our [**live demo**](https://demo.getport.io/dev-portal) to see an example of a fleshed-out builder with a variety of blueprints.
+Check out our [**live demo**](https://demo.getport.io/settings) to see an example of a fleshed-out builder with a variety of blueprints.
 
 ## Configure blueprints in Port
 
@@ -79,7 +79,7 @@ Port offers a variety of ways to create and edit blueprints:
 
 <h4>To edit an existing blueprint:</h4>
 
-1. Go to your [Builder page](https://app.getport.io/dev-portal).
+1. Go to your [Builder page](https://app.getport.io/settings).
 2. Expand your desired blueprint by double-clicking on it.
 3. Here you can add, remove, or edit this blueprint's [properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/) and [relations](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/).
 4. To edit the blueprint's metadata (title, icon, etc.), click on the `...` icon in the top right corner of the blueprint card, and choose `Edit blueprint`.
@@ -87,7 +87,7 @@ Port offers a variety of ways to create and edit blueprints:
 
 <h4>To create a new blueprint:</h4>
 
-1. Go to your [Builder page](https://app.getport.io/dev-portal).
+1. Go to your [Builder page](https://app.getport.io/settings).
 2. Click on `+ Blueprint` in the top right corner:
 
 <img src='/img/software-catalog/customize-integrations/newBlueprintButton.png' width='40%' border='1px' />

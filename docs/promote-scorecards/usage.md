@@ -22,6 +22,10 @@ Scorecards can be created by three methods:
 A Scorecard is created upon blueprint. So if you haven't created the `microservice` blueprint in the [Quickstart](../quickstart.md#service-blueprint), please make sure to do so to follow along.
 :::
 
+:::note
+For more information of which operators you can use in the scorecard rules explained below, refer to the [Promote Scorebards](./promote-scorecards.md#conditions).
+:::
+
 ### From the UI
 
 To create a scorecard from the UI, go to the DevPortal Builder page and click the 3 dots icon on the `microservice` Blueprint.
@@ -228,7 +232,7 @@ Therefore the level of the entity is `Bronze` because it passed all the rules in
 
 ### From Terraform
 
-In order to create a scorecard from the [Terraform provider](../../build-your-software-catalog/sync-data-to-catalog/iac/terraform/) , you will need to use the `port_scorecard` resource.
+In order to create a scorecard from the [Terraform provider](../../build-your-software-catalog/custom-integration/iac/terraform/) , you will need to use the `port_scorecard` resource.
 
 Here is an example of how to create an Ownership scorecard with the Terraform provider:
 

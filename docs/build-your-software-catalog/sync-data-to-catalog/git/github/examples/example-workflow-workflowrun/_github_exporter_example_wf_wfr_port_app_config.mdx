@@ -36,7 +36,7 @@ resources:
             service: ".repo"
   - kind: workflow-run
     selector:
-      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
+      query: ".status != 'completed'" # JQ boolean query. If evaluated to false - skip syncing the object.
     port:
       entity:
         mappings:

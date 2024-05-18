@@ -55,17 +55,20 @@ To define the Azure pipelines invocation method in Port, follow the steps below:
 ```json showLineNumbers
 {
   ...
-  "userInputs": {
+  "trigger": {
     ...
-  },
+  }
   // highlight-start
   "invocationMethod": {
     "type": "AZURE-DEVOPS",
     "org": "<AZURE-DEVOPS-ORG>",
     "webhook": "<AZURE-DEVOPS-WEBHOOK-NAME>"
-  },
   // highlight-end
-  "trigger": "CREATE"
+    "payload": {
+      ...
+    }
+    ...
+  },
   ...
 }
 ```
@@ -79,4 +82,4 @@ To define the Azure pipelines invocation method in Port, follow the steps below:
 
 ## Examples
 
-Refer to the [deployment example](./examples/run-service-deployment.md) page for practical self-service actions using Azure pipelines.
+Refer to the [Scaffold repositories example](./examples/scaffold-repositories-using-cookiecutter.md) page for practical self-service actions using Azure pipelines.

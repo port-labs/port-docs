@@ -191,25 +191,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Run Sentry Integration
-        run: |
-          # Set Docker image and run the container
-          integration_type="sentry"
-          version="latest"
-
-          image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
-
-          docker run -i --rm --platform=linux/amd64 \
-          -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
-          -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-          -e OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN=${{ secrets.OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN }} \
-          -e OCEAN__INTEGRATION__CONFIG__SENTRY_HOST=${{ secrets.OCEAN__INTEGRATION__CONFIG__SENTRY_HOST }} \
-          -e OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION=${{ secrets.OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION }} \
-          -e OCEAN__PORT__CLIENT_ID=${{ secrets.OCEAN__PORT__CLIENT_ID }} \
-          -e OCEAN__PORT__CLIENT_SECRET=${{ secrets.OCEAN__PORT__CLIENT_SECRET }} \
-          $image_name
-
-          exit $?
+      - uses: port-labs/ocean-sail@v1
+        with: 
+          type: 'sentry'
+          port_client_id: ${{ secrets.OCEAN__PORT__CLIENT_ID }}
+          port_client_secret: ${{ secrets.OCEAN__PORT__CLIENT_SECRET }}
+          config: |
+            sentry_token: ${{ secrets.OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN }}
+            sentry_host: ${{ secrets.OCEAN__INTEGRATION__CONFIG__SENTRY_HOST }}
+            sentry_organization: ${{ secrets.OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION }}
 ```
 
   </TabItem>
@@ -305,11 +295,11 @@ steps:
     docker run -i --rm \
        -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
       -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-      -e OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN=${OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN} \
-      -e OCEAN__INTEGRATION__CONFIG__SENTRY_HOST=${OCEAN__INTEGRATION__CONFIG__SENTRY_HOST} \
-      -e OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION=${OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION} \
-      -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \
-      -e OCEAN__PORT__CLIENT_SECRET=${OCEAN__PORT__CLIENT_SECRET} \
+      -e OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN=$(OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN) \
+      -e OCEAN__INTEGRATION__CONFIG__SENTRY_HOST=$(OCEAN__INTEGRATION__CONFIG__SENTRY_HOST) \
+      -e OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION=$(OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION) \
+      -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
+      -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
       $image_name
 
     exit $?
@@ -484,6 +474,8 @@ Examples of blueprints and the relevant integration configurations:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
 resources:
   - kind: project
     selector:
@@ -562,21 +554,24 @@ resources:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
-- kind: issue
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: ".id"
-          title: ".title"
-          blueprint: '"sentryIssue"'
-          properties:
-            link: ".permalink"
-            status: ".status"
-            isUnhandled: ".isUnhandled"
-          relations:
-            project: ".project.slug"
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: issue
+      selector:
+        query: "true"
+      port:
+        entity:
+          mappings:
+            identifier: ".id"
+            title: ".title"
+            blueprint: '"sentryIssue"'
+            properties:
+              link: ".permalink"
+              status: ".status"
+              isUnhandled: ".isUnhandled"
+            relations:
+              project: ".project.slug"
 ```
 
 </details>
@@ -636,21 +631,24 @@ The`selector.tag` key in the `project-tag` kind defines which Sentry tag data is
 :::
 
 ```yaml showLineNumbers
-- kind: project-tag
-  selector:
-    query: "true"
-    tag: "environment"
-  port:
-    entity:
-      mappings:
-        identifier: .slug + "-" + .__tags.name
-        title: .name + "-" + .__tags.name
-        blueprint: '"sentryProject"'
-        properties:
-          dateCreated: .dateCreated
-          platform: .platform
-          status: .status
-          link: .organization.links.organizationUrl + "/projects/" + .name
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: project-tag
+    selector:
+      query: "true"
+      tag: "environment"
+    port:
+      entity:
+        mappings:
+          identifier: .slug + "-" + .__tags.name
+          title: .name + "-" + .__tags.name
+          blueprint: '"sentryProject"'
+          properties:
+            dateCreated: .dateCreated
+            platform: .platform
+            status: .status
+            link: .organization.links.organizationUrl + "/projects/" + .name
 
   - kind: issue-tag
     selector:

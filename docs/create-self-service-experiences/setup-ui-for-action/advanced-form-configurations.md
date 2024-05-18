@@ -667,19 +667,21 @@ values={[
 
 ```json showLineNumbers
 {
-  "env": {
-    "type": "string",
-    "format": "entity",
-    "blueprint": "environment",
-    "dataset": {
-      "combinator": "and",
-      "rules": [
-        {
-          "property": "type",
-          "operator": "!=",
-          "value": "production"
-        }
-      ]
+  "properties": {
+    "env": {
+      "type": "string",
+      "format": "entity",
+      "blueprint": "environment",
+      "dataset": {
+        "combinator": "and",
+        "rules": [
+          {
+            "property": "type",
+            "operator": "!=",
+            "value": "production"
+          }
+        ]
+      }
     }
   }
 }
@@ -767,32 +769,34 @@ values={[
 
 ```json showLineNumbers
 {
-  "Cluster": {
-    "type": "string",
-    "format": "entity",
-    "blueprint": "Cluster",
-    "title": "Cluster",
-    "description": "The cluster to create the namespace in"
-  },
-  "namespace": {
-    "type": "string",
-    "format": "entity",
-    "blueprint": "namespace",
-    "dependsOn": ["Cluster"],
-    "dataset": {
-      "combinator": "and",
-      "rules": [
-        {
-          "blueprint": "Cluster",
-          "operator": "relatedTo",
-          "value": {
-            "jqQuery": ".form.Cluster.identifier"
-          }
-        }
-      ]
+  "properties": {
+    "Cluster": {
+      "type": "string",
+      "format": "entity",
+      "blueprint": "Cluster",
+      "title": "Cluster",
+      "description": "The cluster to create the namespace in"
     },
-    "title": "namespace",
-    "description": "The namespace to create the cluster in"
+    "namespace": {
+      "type": "string",
+      "format": "entity",
+      "blueprint": "namespace",
+      "dependsOn": ["Cluster"],
+      "dataset": {
+        "combinator": "and",
+        "rules": [
+          {
+            "blueprint": "Cluster",
+            "operator": "relatedTo",
+            "value": {
+              "jqQuery": ".form.Cluster.identifier"
+            }
+          }
+        ]
+      },
+      "title": "namespace",
+      "description": "The namespace to create the cluster in"
+    }
   }
 }
 ```
@@ -898,21 +902,23 @@ values={[
 
 ```json showLineNumbers
 {
-  "namespace": {
-    "type": "string",
-    "format": "entity",
-    "blueprint": "namespace",
-    "dataset": {
-      "combinator": "and",
-      "rules": [
-        {
-          "property": "$team",
-          "operator": "containsAny",
-          "value": {
-            "jqQuery": "[.user.teams[].name]"
+  "properties": {
+    "namespace": {
+      "type": "string",
+      "format": "entity",
+      "blueprint": "namespace",
+      "dataset": {
+        "combinator": "and",
+        "rules": [
+          {
+            "property": "$team",
+            "operator": "containsAny",
+            "value": {
+              "jqQuery": "[.user.teams[].name]"
+            }
           }
-        }
-      ]
+        ]
+      }
     }
   }
 }
@@ -1002,21 +1008,23 @@ values={[
 
 ```json showLineNumbers
 {
-  "namespace": {
-    "type": "string",
-    "format": "entity",
-    "blueprint": "namespace",
-    "dataset": {
-      "combinator": "and",
-      "rules": [
-        {
-          "property": "tags",
-          "operator": "containsAny",
-          "value": {
-            "jqQuery": "[.entity.properties.tags[]]"
+  "properties": {
+    "namespace": {
+      "type": "string",
+      "format": "entity",
+      "blueprint": "namespace",
+      "dataset": {
+        "combinator": "and",
+        "rules": [
+          {
+            "property": "tags",
+            "operator": "containsAny",
+            "value": {
+              "jqQuery": "[.entity.properties.tags[]]"
+            }
           }
-        }
-      ]
+        ]
+      }
     }
   }
 }
@@ -1103,10 +1111,12 @@ values={[
 
 ```json showLineNumbers
 {
-  "some_input": {
-    "type": "array",
-    "default": {
-      "jqQuery": ".entity.properties.tags"
+  "properties": {
+    "some_input": {
+      "type": "array",
+      "default": {
+        "jqQuery": ".entity.properties.tags"
+      }
     }
   }
 }
@@ -1253,61 +1263,64 @@ values={[
   "identifier": "createRunningService",
   "title": "Deploy running service to a cluster",
   "icon": "Cluster",
-  "userInputs": {
-    "properties": {
-      "Cluster": {
-        "type": "string",
-        "format": "entity",
-        "blueprint": "Cluster",
-        "title": "Cluster",
-        "description": "The cluster to create the namespace in"
-      },
-      "namespace": {
-        "type": "string",
-        "format": "entity",
-        "blueprint": "namespace",
-        "dependsOn": ["Cluster"],
-        "dataset": {
-          "combinator": "and",
-          "rules": [
-            {
-              "blueprint": "Cluster",
-              "operator": "relatedTo",
-              "value": {
-                "jqQuery": ".form.Cluster.identifier"
-              }
-            }
-          ]
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
+    "userInputs": {
+      "properties": {
+        "Cluster": {
+          "type": "string",
+          "format": "entity",
+          "blueprint": "Cluster",
+          "title": "Cluster",
+          "description": "The cluster to create the namespace in"
         },
-        "title": "namespace",
-        "description": "The namespace to create the cluster in"
-      },
-      "service": {
-        "type": "string",
-        "format": "entity",
-        "blueprint": "Service",
-        "dataset": {
-          "combinator": "and",
-          "rules": [
-            {
-              "property": "$team",
-              "operator": "containsAny",
-              "value": {
-                "jqQuery": "[.user.teams[].name]"
+        "namespace": {
+          "type": "string",
+          "format": "entity",
+          "blueprint": "namespace",
+          "dependsOn": ["Cluster"],
+          "dataset": {
+            "combinator": "and",
+            "rules": [
+              {
+                "blueprint": "Cluster",
+                "operator": "relatedTo",
+                "value": {
+                  "jqQuery": ".form.Cluster.identifier"
+                }
               }
-            }
-          ]
+            ]
+          },
+          "title": "namespace",
+          "description": "The namespace to create the cluster in"
         },
-        "title": "Service"
-      }
+        "service": {
+          "type": "string",
+          "format": "entity",
+          "blueprint": "Service",
+          "dataset": {
+            "combinator": "and",
+            "rules": [
+              {
+                "property": "$team",
+                "operator": "containsAny",
+                "value": {
+                  "jqQuery": "[.user.teams[].name]"
+                }
+              }
+            ]
+          },
+          "title": "Service"
+        }
+      },
+      "required": ["Cluster", "namespace", "service"]
     },
-    "required": ["Cluster", "namespace", "service"]
   },
   "invocationMethod": {
     "type": "WEBHOOK",
     "url": "https://example.com"
   },
-  "trigger": "CREATE",
   "description": "This will deploy a running service to a cluster"
 }
 ```
@@ -1319,57 +1332,59 @@ values={[
 ```hcl showLineNumbers
 resource "port_action" "createRunningService" {
   title       = "Create Running Service"
-  blueprint   = "abc"
   identifier  = "createRunningService"
-  trigger     = "CREATE"
   description = "This will deploy a running service to a cluster"
   webhook_method = {
     url = "https://example.com"
   }
-  user_properties = {
-    string_props = {
-      cluster = {
-        format      = "entity",
-        blueprint   = "Cluster",
-        title       = "Cluster"
-        description = "The cluster to create the namespace in"
-        required    = true
-      }
-      namespace = {
-        title       = "Namespace"
-        format      = "entity",
-        blueprint   = "namespace",
-        description = "The namespace to create the cluster in"
-        required    = true
-        depends_on  = ["cluster"]
-        dataset = {
-          combinator = "and"
-          rules = [
-            {
-              blueprint = "Cluster"
-              operator  = "relatedTo"
-              value = {
-                jq_query = ".form.Cluster.identifier"
-              }
-            }
-          ]
+  self_service_trigger = {
+    operation = "CREATE"
+    blueprint_identifier = "createRunningService"
+    user_properties = {
+      string_props = {
+        cluster = {
+          format      = "entity",
+          blueprint   = "Cluster",
+          title       = "Cluster"
+          description = "The cluster to create the namespace in"
+          required    = true
         }
-      }
-      service = {
-        title     = "Service"
-        blueprint = "Service",
-        required  = true
-        dataset = {
-          combinator = "and"
-          rules = [
-            {
-              blueprint = "$team"
-              operator  = "containsAny"
-              value = {
-                jq_query = "[.user.teams[].name]"
+        namespace = {
+          title       = "Namespace"
+          format      = "entity",
+          blueprint   = "namespace",
+          description = "The namespace to create the cluster in"
+          required    = true
+          depends_on  = ["cluster"]
+          dataset = {
+            combinator = "and"
+            rules = [
+              {
+                blueprint = "Cluster"
+                operator  = "relatedTo"
+                value = {
+                  jq_query = ".form.Cluster.identifier"
+                }
               }
-            }
-          ]
+            ]
+          }
+        }
+        service = {
+          title     = "Service"
+          blueprint = "Service",
+          required  = true
+          dataset = {
+            combinator = "and"
+            rules = [
+              {
+                blueprint = "$team"
+                operator  = "containsAny"
+                value = {
+                  jq_query = "[.user.teams[].name]"
+                }
+              }
+            ]
+          }
         }
       }
     }
@@ -1395,56 +1410,59 @@ action = Action(
   identifier="createRunningService",
   title="Deploy running service to a cluster",
   icon="Cluster",
-  user_properties={
-    "string_props": {
-      "Cluster": {
-        "format": "entity",
-        "blueprint": "Cluster",
-        "required": True,
-        "title": "Cluster",
-        "description": "The cluster to create the namespace in"
-      },
-      "namespace": {
-        "format": "entity",
-        "blueprint": "namespace",
-        "required": True,
-        "depends_ons": ["Cluster"],
-        "dataset": {
+  self_service_trigger={
+    operation="CREATE"
+    blueprint_identifier="createRunningService"
+    user_properties={
+      "string_props": {
+        "Cluster": {
+          "format": "entity",
+          "blueprint": "Cluster",
+          "required": True,
+          "title": "Cluster",
+          "description": "The cluster to create the namespace in"
+        },
+        "namespace": {
+          "format": "entity",
+          "blueprint": "namespace",
+          "required": True,
+          "depends_ons": ["Cluster"],
+          "dataset": {
+              "combinator": "and",
+              "rules": [
+                {
+                  "blueprint": "Cluster",
+                  "operator": "relatedTo",
+                  "value": {
+                    "jq_query": ".form.Cluster.identifier"
+                  }
+                }
+              ],
+          },
+          "title": "namespace",
+          "description": "The namespace to create the cluster in"
+        },
+        "service": {
+          "format": "entity",
+          "blueprint": "Service",
+          "required": True,
+          "dataset": {
             "combinator": "and",
             "rules": [
               {
-                "blueprint": "Cluster",
-                "operator": "relatedTo",
+                "blueprint": "$team",
+                "operator": "containsAny",
                 "value": {
-                  "jq_query": ".form.Cluster.identifier"
+                  "jq_query": "[.user.teams[].name]"
                 }
               }
-            ],
-        },
-        "title": "namespace",
-        "description": "The namespace to create the cluster in"
+            ]
+          },
+          "title": "Service"
+        }
       },
-      "service": {
-        "format": "entity",
-        "blueprint": "Service",
-        "required": True,
-        "dataset": {
-          "combinator": "and",
-          "rules": [
-            {
-              "blueprint": "$team",
-              "operator": "containsAny",
-              "value": {
-                "jq_query": "[.user.teams[].name]"
-              }
-            }
-          ]
-        },
-        "title": "Service"
-      }
     },
-  },
-  trigger="CREATE",
+  }
   description="This will deploy a running service to a cluster"
   webhook_method={"url": "https://example.com"},
 )

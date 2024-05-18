@@ -171,23 +171,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Run Opencost Integration
-        run: |
-          # Set Docker image and run the container
-          integration_type="opencost"
-          version="latest"
-
-          image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
-
-          docker run -i --rm --platform=linux/amd64 \
-          -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
-          -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-          -e OCEAN__INTEGRATION__CONFIG__OPENCOST_HOST=${{ secrets.OCEAN__INTEGRATION__CONFIG__OPENCOST_HOST }} \
-          -e OCEAN__PORT__CLIENT_ID=${{ secrets.OCEAN__PORT__CLIENT_ID }} \
-          -e OCEAN__PORT__CLIENT_SECRET=${{ secrets.OCEAN__PORT__CLIENT_SECRET }} \
-          $image_name
-
-          exit $?
+      - uses: port-labs/ocean-sail@v1
+        with:
+          type: 'opencost'
+          port_client_id: ${{ secrets.OCEAN__PORT__CLIENT_ID }}
+          port_client_secret: ${{ secrets.OCEAN__PORT__CLIENT_SECRET }}
+          config: |
+            opencost_host: ${{ secrets.OCEAN__INTEGRATION__CONFIG__OPENCOST_HOST }}
 ```
 
   </TabItem>
@@ -281,9 +271,9 @@ steps:
     docker run -i --rm \
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-        -e OCEAN__INTEGRATION__CONFIG__OPENCOST_HOST=${OCEAN__INTEGRATION__CONFIG__OPENCOST_HOST} \
-        -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \
-        -e OCEAN__PORT__CLIENT_SECRET=${OCEAN__PORT__CLIENT_SECRET} \
+        -e OCEAN__INTEGRATION__CONFIG__OPENCOST_HOST=$(OCEAN__INTEGRATION__CONFIG__OPENCOST_HOST) \
+        -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
+        -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
         $image_name
 
     exit $?
@@ -401,7 +391,7 @@ The following resources can be used to map data from OpenCost, it is possible to
 
 - The `port`, `entity` and the `mappings` keys are used to map the OpenCost object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
 
-  ```yaml showLineNumbers
+```yaml showLineNumbers
   resources:
     - kind: cost
       selector:

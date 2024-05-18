@@ -198,31 +198,16 @@ Below you can find the JSON for the `Service` and `Image` blueprints required fo
     "required": []
   },
   "mirrorProperties": {},
-  "calculationProperties": {
-    "link_to_the_commit": {
-      "title": "Link to the commit",
-      "calculation": ".commit",
-      "type": "string"
-    },
-    "link_to_the_pr": {
-      "title": "Link to the PR",
-      "calculation": ".pull",
-      "type": "string"
-    },
-    "link_to_the_ci": {
-      "title": "Link to the CI",
-      "icon": "DefaultProperty",
-      "description": "a link to the build in github workflow where the Image was built",
-      "calculation": ".workflowId",
-      "type": "string"
-    }
-  },
+  "calculationProperties": {},
   "aggregationProperties": {},
-  "relations": {
-  }
+  "relations": {}
 }
 ```
 </details>
+
+:::tip Ingest Images 
+If you do not have the images ingested already, we recommend using our [AWS ECR script](https://github.com/port-labs/example-ecr-images), [Google Container Registry script](https://github.com/port-labs/example-gcr-images), [JFrog build script](/build-your-software-catalog/custom-integration/webhook/examples/jfrog) or [GitHub packages script](https://github.com/port-labs/example-github-packages) to sync data to your catalog
+:::
 
 ## Create Github workflow
 
@@ -247,42 +232,81 @@ Follow these steps to get started:
 
 ```json showLineNumbers
 {
-  "identifier": "rollback_deployment",
+  "identifier": "service_rollback_deployment",
   "title": "Rollback Deployment",
   "icon": "GithubActions",
-  "userInputs": {
-    "properties": {
-      "image": {
-        "icon": "DefaultProperty",
-        "title": "Image",
-        "type": "string",
-        "blueprint": "image",
-        "format": "entity"
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {
+        "image": {
+          "icon": "DefaultProperty",
+          "title": "Image",
+          "type": "string",
+          "blueprint": "image",
+          "format": "entity"
+        },
+        "auto_merge": {
+          "title": "Auto Merge",
+          "type": "boolean",
+          "default": false,
+          "description": "Whether the created PR should be merged or not"
+        }
       },
-      "auto_merge": {
-        "title": "Auto Merge",
-        "type": "boolean",
-        "default": false,
-        "description": "Whether the created PR should be merged or not"
-      }
+      "required": [],
+      "order": [
+        "image",
+        "auto_merge"
+      ]
     },
-    "required": [],
-    "order": [
-      "image",
-      "auto_merge"
-    ]
+    "blueprintIdentifier": "service"
   },
   "invocationMethod": {
     "type": "GITHUB",
     "org": "<GITHUB-ORG>",
     "repo": "<GITHUB-REPO-NAME>",
     "workflow": "rollback.yaml",
-    "omitUserInputs": false,
-    "omitPayload": false,
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "{{if (.inputs | has(\"image\")) then \"image\" else null end}}": "{{.inputs.\"image\" | if type == \"array\" then map(.identifier) else .identifier end}}",
+      "{{if (.inputs | has(\"auto_merge\")) then \"auto_merge\" else null end}}": "{{.inputs.\"auto_merge\"}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"service_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "org": "<GITHUB-ORG>",
+              "repo": "<GITHUB-REPO-NAME>",
+              "workflow": "rollback.yaml",
+              "omitUserInputs": false,
+              "omitPayload": false,
+              "reportWorkflowStatus": true
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {
+            "{{if (.inputs | has(\"image\")) then \"image\" else null end}}": "{{.inputs.\"image\" | if type == \"array\" then map(.identifier) else .identifier end}}",
+            "{{if (.inputs | has(\"auto_merge\")) then \"auto_merge\" else null end}}": "{{.inputs.\"auto_merge\"}}"
+          },
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
     "reportWorkflowStatus": true
   },
-  "trigger": "DAY-2",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 
@@ -416,3 +440,7 @@ jobs:
 You should now be able to see a Github pull request created and merged for the argocd deployment.
 
 <img src="/img/sync-data-to-catalog/deploymenetRollbackMerged.png" border="1px" width="60%" />
+
+## More relevant guides and examples
+- [ArgoCD Ocean integration](/build-your-software-catalog/sync-data-to-catalog/argocd/)
+- [Connect ArgoCD deployment to image](/build-your-software-catalog/sync-data-to-catalog/argocd/examples/connect-argocd-deployment-to-image)

@@ -1,21 +1,19 @@
 # Trigger Datadog Incident
-This GitHub action allows you to quickly trigger incidents in Datadog via Port Actions with ease.
+
+This GitHub action allows you to quickly trigger incidents in Datadog directly from Port using Port's self service actions.
 
 ## Prerequisites
-* Datadog API Key. Head over to your account's [API and application keys page](https://app.datadoghq.com/account/settings?_gl=1*47zn4y*_gcl_au*MTg2NDEzODgwMC4xNzA1NjQyMDUz*_ga*MTk2MjcxMTc2OC4xNzA1NjQyMDU0*_ga_KN80RDFSQK*MTcwNjAwNzI0MS40LjEuMTcwNjAwNzI0Mi4wLjAuMA..*_fplc*dHFWa3VWZ1YwQVM3QWIlMkZrbmFSWE5OdVFnMWJVRzFFeVhkRnJCVTN6JTJGNEx3Nkc5bmsyVW1VY2locW96ZzB4ekVlcWIyJTJGZnlxc3lpYWlLSzJjYzdpODdTTVZBRzkyUnh2c1NKUVhWR3VoZERnN1R5dVJabjRmSDVMeWIzeklnJTNEJTNE#api) to create a new API key. The API key should have the `incident_write` permission scope.
-* Datadog Application Key. It is available on the same page as the Datadog API key.
-* [Port's GitHub app](https://github.com/apps/getport-io) needs to be installed.
+1. [Port's GitHub app](https://github.com/apps/getport-io) needs to be installed.
+2. Datadog API Key. Head over to your account's [API and application keys page](https://app.datadoghq.com/account/settings) to create a new API key. The API key should have the `incident_write` permission scope.
+3. Datadog Application Key. This key is available on the same page as the Datadog API key.
+4. In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
+    * `DD_API_URL` - Datadog API URL by default should be [https://api.datadoghq.com](https://api.datadoghq.com). However, if you are on the Datadog EU site, set the secret to `https://api.datadoghq.eu`. If you have your region information you use `https://api.<region>.datadoghq.com` or `https://api.<region>.datadoghq.eu`.
+    * `DD_API_KEY` - Datadog API Key.
+    * `DD_APPLICATION_KEY` - Datadog Application Key.
+    * `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
+    * `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
 
-## Steps
-
-1. Create the following GitHub action secrets
-* `DD_API_URL` - Datadog API URL by default should be [https://api.datadoghq.com](https://api.datadoghq.com). However, if you are on the Datadog EU site, set the secret to `https://api.datadoghq.eu`. If you have your region information you use `https://api.<region>.datadoghq.com` or `https://api.<region>.datadoghq.eu`.
-* `DD_API_KEY` - Datadog API Key.
-* `DD_APPLICATION_KEY` - Datadog Application Key.
-* `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
-* `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
-
-2. Create a Datadog incident blueprint in Port using the blueprint below:
+5. Create a Datadog incident blueprint in Port using the schema below:
 
 <details>
 <summary><b>Datadog Incident Blueprint</b></summary>
@@ -105,88 +103,13 @@ This GitHub action allows you to quickly trigger incidents in Datadog via Port A
 
 </details>
 
-:::note Blueprint
 
-This step will ensure the `datadogIncident` blueprint is available, and also update the catalog in real time with the new incident created.
+## GitHub Workflow
+Create the file `trigger-datadog-incident.yml` in the `.github/workflows` folder of your repository and copy the content of the workflow configuration below:
 
+:::tip Dedicated repository
+We recommend creating a dedicated repository for the workflows that are used by Port actions.
 :::
-
-3. After creating the blueprint, create the following action with the following JSON file on the `datadogIncident` blueprint:
-
-<details>
-<summary><b>Trigger Datadog Incident Blueprint (Click to expand)</b></summary>
-
-```json showLineNumbers
-[
-  {
-    "identifier": "trigger_datadog_incident",
-    "title": "Trigger Datadog Incident",
-    "icon": "Datadog",
-    "userInputs": {
-      "properties": {
-        "customerImpactScope": {
-          "title": "Customer Impact Scope",
-          "description": "A summary of the impact customers experienced during the incident.",
-          "type": "string"
-        },
-        "customerImpacted": {
-          "title": "Customer Impacted",
-          "description": "A flag indicating whether the incident caused customer impact.",
-          "type": "boolean"
-        },
-        "title": {
-          "title": "Title",
-          "description": "The title of the incident, which summarizes what happened.",
-          "type": "string"
-        },
-        "notificationHandleName": {
-          "title": "Notification Handle Name",
-          "type": "string",
-          "description": "The name of the notified handle."
-        },
-        "notificationHandleEmail": {
-          "title": "Notification Handle Email",
-          "description": "The email address used for the notification.",
-          "type": "string",
-          "pattern": "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$"
-        }
-      },
-      "required": [
-        "customerImpacted",
-        "title"
-      ],
-      "order": [
-        "title",
-        "customerImpacted",
-        "customerImpactScope",
-        "notificationHandleName",
-        "notificationHandleEmail"
-      ]
-    },
-    "invocationMethod": {
-      "type": "GITHUB",
-      "org": "<Enter GitHub organization>",
-      "repo": "<Enter GitHub repository>",
-      "workflow": "trigger-datadog-incident.yml",
-      "omitUserInputs": false,
-      "omitPayload": false,
-      "reportWorkflowStatus": true
-    },
-    "trigger": "CREATE",
-    "description": "Triggers Datadog incident",
-    "requiredApproval": false
-  }
-]
-```
-</details>
-
-:::note Customisation
-
-Replace the invocation method with your own repository details.
-
-:::
-
-4. Create a workflow file under `.github/workflows/trigger-datadog-incident.yml` with the content below:
 
 <details>
 <summary><b>Trigger Datadog Incident Workflow (Click to expand)</b></summary>
@@ -330,8 +253,127 @@ jobs:
 
 </details>
 
-5. Trigger the action from Port's [Self Serve](https://app.getport.io/self-serve)
+## Port Configuration
+On the [self-service](https://app.getport.io/self-serve) page, create the Port action against the `Datadog Incident` blueprint. This will trigger the GitHub workflow.
 
-6. Done! wait for the incident to be trigger in Datadog
+<details>
+<summary><b>Trigger Datadog Incident Action (Click to expand)</b></summary>
+
+:::tip Modification Required
+Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organization and repository names respectively
+:::
+
+```json showLineNumbers
+{
+  "identifier": "datadogIncident_trigger_datadog_incident",
+  "title": "Trigger Datadog Incident",
+  "icon": "Datadog",
+  "description": "Triggers Datadog incident",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
+    "userInputs": {
+      "properties": {
+        "customerImpactScope": {
+          "title": "Customer Impact Scope",
+          "description": "A summary of the impact customers experienced during the incident.",
+          "type": "string"
+        },
+        "customerImpacted": {
+          "title": "Customer Impacted",
+          "description": "A flag indicating whether the incident caused customer impact.",
+          "type": "boolean"
+        },
+        "title": {
+          "title": "Title",
+          "description": "The title of the incident, which summarizes what happened.",
+          "type": "string"
+        },
+        "notificationHandleName": {
+          "title": "Notification Handle Name",
+          "type": "string",
+          "description": "The name of the notified handle."
+        },
+        "notificationHandleEmail": {
+          "title": "Notification Handle Email",
+          "description": "The email address used for the notification.",
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$"
+        }
+      },
+      "required": [
+        "customerImpacted",
+        "title"
+      ],
+      "order": [
+        "title",
+        "customerImpacted",
+        "customerImpactScope",
+        "notificationHandleName",
+        "notificationHandleEmail"
+      ]
+    },
+    "blueprintIdentifier": "datadogIncident"
+  },
+  "invocationMethod": {
+    "type": "GITHUB",
+    "org": "<Enter GitHub organization>",
+    "repo": "<Enter GitHub repository>",
+    "workflow": "trigger-datadog-incident.yml",
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "{{if (.inputs | has(\"customerImpactScope\")) then \"customerImpactScope\" else null end}}": "{{.inputs.\"customerImpactScope\"}}",
+      "{{if (.inputs | has(\"customerImpacted\")) then \"customerImpacted\" else null end}}": "{{.inputs.\"customerImpacted\"}}",
+      "{{if (.inputs | has(\"title\")) then \"title\" else null end}}": "{{.inputs.\"title\"}}",
+      "{{if (.inputs | has(\"notificationHandleName\")) then \"notificationHandleName\" else null end}}": "{{.inputs.\"notificationHandleName\"}}",
+      "{{if (.inputs | has(\"notificationHandleEmail\")) then \"notificationHandleEmail\" else null end}}": "{{.inputs.\"notificationHandleEmail\"}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"datadogIncident_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "repo": "<Enter GitHub repository>",
+              "org": "<Enter GitHub organization>",
+              "workflow": "trigger-datadog-incident.yml",
+              "omitUserInputs": false,
+              "omitPayload": false,
+              "reportWorkflowStatus": true
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {
+            "{{if (.inputs | has(\"customerImpactScope\")) then \"customerImpactScope\" else null end}}": "{{.inputs.\"customerImpactScope\"}}",
+            "{{if (.inputs | has(\"customerImpacted\")) then \"customerImpacted\" else null end}}": "{{.inputs.\"customerImpacted\"}}",
+            "{{if (.inputs | has(\"title\")) then \"title\" else null end}}": "{{.inputs.\"title\"}}",
+            "{{if (.inputs | has(\"notificationHandleName\")) then \"notificationHandleName\" else null end}}": "{{.inputs.\"notificationHandleName\"}}",
+            "{{if (.inputs | has(\"notificationHandleEmail\")) then \"notificationHandleEmail\" else null end}}": "{{.inputs.\"notificationHandleEmail\"}}"
+          },
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
+    "reportWorkflowStatus": true
+  },
+  "requiredApproval": false,
+  "publish": true
+}
+```
+</details>
+
+## Let's test it
+
+1. Trigger the action from Port's [Self Serve hub](https://app.getport.io/self-serve)
+
+2. Done! wait for the incident to be triggered in Datadog
 
 Congrats 🎉 You've triggered your first incident in Datadog from Port!

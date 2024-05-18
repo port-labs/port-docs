@@ -11,7 +11,7 @@ This page will teach you how to use Port's API to obtain existing action runs an
 
 You can find your existing action runs using one of the following methods:
 
-- Go to the [audit logs](https://app.getport.io/organization/AuditLog) page of your portal, then select the `Runs` tab.  
+- Go to the [audit logs](https://app.getport.io/settings/AuditLog) page of your portal, then select the `Runs` tab.  
    This page will display all action runs that have been executed in your organization.
 
 - Go the [entity page](/customize-pages-dashboards-and-plugins/page/entity-page.md) of your desired Entity, then select the `Runs` tab.  
@@ -100,6 +100,7 @@ You will receive a response that looks like this:
 You can use Port's API to update an the following properties of an action run:
 - `status` - The status of the action run. Initial value is `IN_PROGRESS`, can be set to `SUCCESS` or `FAILURE`.
 - `statusLabel` - A custom message used to add information to the status of the action run.
+- `link` - One or more links to external logs/jobs related to the action run.
 - `logs` - Log entries that will be displayed in the action run's page in Port.
 - `summary` - A summary of the action run, which will be displayed in the run's page in Port.
 
@@ -215,75 +216,4 @@ Now when you look at the action run page in Port, you will see the new Entity li
 
 :::tip Multiple entities
 It is possible to create, update or delete multiple entities as part of the steps taken by a single action run, and all of these changes will be reflected in the action run page.
-:::
-
-## Action run JSON structure
-
-The action run object created after executing an action resides under the `port_payload` key, and has the following structure:
-
-| Field          | Description                                                                                  | Example               |
-| -------------- | -------------------------------------------------------------------------------------------- | --------------------- |
-| `action`       | The action's unique identifier.                                                                            | `create_microservice` |
-| `resourceType` | The resource type that triggered the action. In the case of action runs, it always defaults to `run`. | `run`                 |
-| `status`       | The action's status. In the case of action runs, it always defaults to `TRIGGERED`.                 | `TRIGGERED`           |
-| `trigger`      | Audit data for the action run.                                                                | Example below         |
-| `context`      | Contains the context of the action, and has keys for `blueprint`, `entity` and `runId`.       | Example below         |
-| `payload`      | Explanation below.                                                                            | Example below         |
-
-### Example Trigger
-
-The trigger includes audit data such as who triggered the action, and when and how it was triggered (`UI` or `API`):
-
-```json showLineNumbers
-"trigger": {
-    "by": {
-        "userId": "auth0|<USER>",
-        "orgId": "<ORG>",
-        "user": {
-          "email": "<USER_EMAIL>",
-          "firstName": "<USER_FIRST_NAME>",
-          "lastName": "<USER_LASTT_NAME",
-          "id": "<USER_ID>"
-        }
-    },
-    "at": "2022-07-27T17:50:58.776Z",
-    "origin": "UI"
-}
-```
-
-### Example context
-
-```json showLineNumbers
-"context": {
-    "entity": null,
-    "blueprint": "k8sCluster",
-    "runId": "r_AtbOjbe45GNDElcQ"
-}
-```
-
-### Self-Service Action run payload
-
-The `payload` object contains the data of the action invocation, it includes the following keys:
-
-- `entity` - The entity this run is executed on (in the case of `CREATE` actions, this will be null).
-- `action` - The triggered action's configuration, including `userInputs`, `description`, etc.
-- `properties` - This key includes the values provided by the user when executing the action. The keys in this object match the keys defined under the `userInputs` key in the action definition.
-
-Here is an example `payload` object for a `CREATE` action:
-
-```json showLineNumbers
-"payload": {
-    "entity": null,
-    "properties": {
-        "region": "prod-2-use1",
-        "title": "dev-env",
-        "version": "1.2",
-        "type": "EKS"
-    }
-}
-```
-
-:::info Create vs Day-2 actions
-An action run of a `day-2` action is very similar to that of a `create` action, with one main difference:  
-Since `day-2` actions are always tied to an `entity`, the entity itself is also provided in the action run object, under the `payload.entity` key.
 :::

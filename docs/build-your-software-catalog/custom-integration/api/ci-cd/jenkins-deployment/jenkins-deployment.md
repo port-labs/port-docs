@@ -8,7 +8,7 @@ import TabItem from "@theme/TabItem"
 # Jenkins Deployment
 
 :::tip Available Ocean integration
-Port provides an [Ocean integration](/build-your-software-catalog/sync-data-to-catalog/ci-cd/jenkins.md) for Jenkins, which allows you to automatically sync your Jenkins resources with Port and provides more configuration options. This is the **recommended** way to integrate Port with Jenkins.  
+Port provides an [Ocean integration](/build-your-software-catalog/sync-data-to-catalog/jenkins) for Jenkins, which allows you to automatically sync your Jenkins resources with Port and provides more configuration options. This is the **recommended** way to integrate Port with Jenkins.  
 If you would still prefer to use Port's API, follow this page.
 :::
 
