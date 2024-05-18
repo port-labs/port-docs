@@ -5383,6 +5383,7 @@ paths:
           in: path
           name: blueprint_identifier
           required: true
+          description: sdfghjsdlfkgj hsdflkgjdhfgklj
       security:
         - bearer:
             - 'create:actions'

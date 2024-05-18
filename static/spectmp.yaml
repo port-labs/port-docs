@@ -2774,12 +2774,13 @@ paths:
                   type: string
                   description: The icon of the new entity.<br/>
                 team:
-                  oneOf:
-                    - type: string
-                      description: Team name
-                    - type: array
-                      items:
-                        type: string
+                  # oneOf:
+                  #   - type: string
+                  #     description: Team name
+                  #   - type: array
+                  #     items:
+                        # type: string
+                  type: string, string[]
                   description: The Port team/s to which the new entity will belong.<br/>
                 properties:
                   type: object
@@ -2812,7 +2813,7 @@ paths:
             default: false
           in: query
           name: upsert
-          required: true
+          required: false
           description: If `true`, this call will override the entire entity if it already exists.<br/>
         - schema:
             type: boolean
@@ -2851,56 +2852,116 @@ paths:
         - bearer: []
       responses:
         '200':
-          description: Success
+          description: Successfully updated an entity
+        '201':
+          description: Successfully created an entity
         '400':
           description: |
-            One of the following errors occurred:
+            One of the following errors occurred: 
 
-            | Error | Description |
-            | ----- | ----------- |
-            | `bad_request` | The json provided does not match the route's schema |
-            | `run_exhausted` | The action run with the provided `runId` has already finished execution |
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`bad_request`</td>
+              <td>The json provided does not match the route's schema</td>
+            </tr>
+            <tr>
+              <td>`run_exhausted`</td>
+              <td>The action run with the provided `runId` has already finished execution</td>
+            </tr>
+            </table>
         '403':
           description: |
             One of the following errors occurred:
 
-            | Error | Description |
-            | ----- | ----------- |
-            | `required_relation` | Relation cannot be deleted because it is a `required relation` |
-            | `missing_permissions` | You do not have permissions to perform the requested operation. For further details, please contact your admin |
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`required_relation`</td>
+              <td>Relation cannot be deleted because it is a `required relation`</td>
+            </tr>
+            <tr>
+              <td>`missing_permissions`</td>
+              <td>You do not have permissions to perform the requested operation. For further details, please contact your admin</td>
+            </tr>
+            </table>
         '404':
           description: |
             One of the following errors occurred:
 
-            | Error | Description |
-            | ----- | ----------- |
-            | `not_found` | A resource with the provided `identifier` was not found |
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`not_found`</td>
+              <td>A resource with the provided `identifier` was not found</td>
+            </tr>
+            </table>
         '409':
           description: |
             One of the following errors occurred:
 
-            | Error | Description |
-            | ----- | ----------- |
-            | `identifier_taken` | The provided `identifier` already exists, identifiers must be unique |
-        '429':
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`identifier_taken`</td>
+              <td>The provided `identifier` already exists, identifiers must be unique</td>
+            </tr>
+            </table>
+        '422':
           description: |
             One of the following errors occurred:
 
-            | Error | Description |
-            | ----- | ----------- |
-            | `team_inheritance_enabled` | The blueprint's entities inherite their team from other entities through an existing relation |
-            | `blueprint_schema_mismatch` | The provided entity does not match the blueprint's schema |
-            | `required_relation` | A relation is required |
-            | `relation_many_violation` | A provided relation cannot contain more than one entity |
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`team_inheritance_enabled`</td>
+              <td>The blueprint's entities inherite their team from other entities through an existing relation</td>
+            </tr>
+            <tr>
+              <td>`blueprint_schema_mismatch`</td>
+              <td>The provided entity does not match the blueprint's schema</td>
+            </tr>
+            <tr>
+              <td>`required_relation`</td>
+              <td>A relation is required</td>
+            </tr>
+            <tr>
+              <td>`relation_many_violation`</td>
+              <td>A provided relation cannot contain more than one entity</td>
+            </tr>
+            </table>
         '500':
           description: |
             One of the following errors occurred:
 
-            | Error | Description |
-            | ----- | ----------- |
-            | `internal_error` | An internal error occurred |
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`internal_error`</td>
+              <td>An internal error occurred </td>
+            </tr>
+            </table>
     get:
       summary: Get all blueprint's entities
+      description: This route allows you to fetch all entities in your software catalog based on a given blueprint.<br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).
       tags:
         - Entities
       parameters:
@@ -2925,17 +2986,6 @@ paths:
           name: exclude
           required: false
         - schema:
-            type: boolean
-          in: query
-          name: compact
-          required: false
-        - schema:
-            type: boolean
-            default: false
-          in: query
-          name: attach_title_to_relation
-          required: false
-        - schema:
             type: string
           in: path
           name: blueprint_identifier
@@ -2943,6 +2993,352 @@ paths:
       security:
         - bearer:
             - 'read:entities'
+      responses:
+        '200':
+          description: Default Response
+    put:
+      summary: Change a blueprint
+      description: This route allows you to modify a blueprint in your data model.<br/>To learn more about blueprints, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#blueprints).
+      tags:
+        - Blueprints
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                identifier:
+                  type: string
+                  pattern: '^[A-Za-z0-9@_.:\\/=-]+$'
+                  maxLength: 30
+                title:
+                  type: string
+                  maxLength: 30
+                description:
+                  type: string
+                  maxLength: 200
+                icon:
+                  type: string
+                teamInheritance:
+                  type: object
+                  properties:
+                    path:
+                      type: string
+                  additionalProperties: false
+                  required:
+                    - path
+                schema:
+                  type: object
+                  properties:
+                    properties:
+                      type: object
+                      propertyNames:
+                        pattern: '^[A-Za-z0-9@_=\\-]+$'
+                      additionalProperties:
+                        type: object
+                        properties:
+                          title:
+                            type: string
+                          description:
+                            type: string
+                          icon:
+                            type: string
+                          type:
+                            enum:
+                              - string
+                              - number
+                              - boolean
+                              - object
+                              - array
+                          format:
+                            enum:
+                              - date-time
+                              - url
+                              - email
+                              - ipv4
+                              - ipv6
+                              - markdown
+                              - yaml
+                              - user
+                              - team
+                              - timer
+                              - proto
+                          spec:
+                            enum:
+                              - open-api
+                              - embedded-url
+                              - async-api
+                        required:
+                          - type
+                    required:
+                      type: array
+                      items:
+                        type: string
+                  additionalProperties: false
+                  required:
+                    - properties
+                calculationProperties:
+                  type: object
+                  default: {}
+                  propertyNames:
+                    pattern: '^[A-Za-z0-9@_=\\-]+$'
+                  additionalProperties:
+                    type: object
+                    properties:
+                      title:
+                        type: string
+                      description:
+                        type: string
+                      icon:
+                        type: string
+                      calculation:
+                        type: string
+                      type:
+                        enum:
+                          - string
+                          - number
+                          - boolean
+                          - object
+                          - array
+                      format:
+                        enum:
+                          - date-time
+                          - url
+                          - email
+                          - ipv4
+                          - ipv6
+                          - markdown
+                          - yaml
+                          - user
+                          - team
+                          - proto
+                      spec:
+                        enum:
+                          - open-api
+                          - embedded-url
+                          - async-api
+                      colorized:
+                        type: boolean
+                      colors:
+                        type: object
+                      items:
+                        type: object
+                        properties:
+                          type:
+                            enum:
+                              - string
+                              - number
+                              - boolean
+                              - object
+                              - array
+                          format:
+                            enum:
+                              - date-time
+                              - url
+                              - email
+                              - ipv4
+                              - ipv6
+                              - markdown
+                              - yaml
+                              - user
+                              - team
+                              - timer
+                              - proto
+                    required:
+                      - calculation
+                      - type
+                mirrorProperties:
+                  type: object
+                  propertyNames:
+                    pattern: '^[A-Za-z0-9@_=\\-]+$'
+                  additionalProperties:
+                    type: object
+                    properties:
+                      path:
+                        type: string
+                        pattern: '^(?:[A-Za-z0-9@_=\-]+\.)+?(\w|\$|@|-)*?[^\.]+$'
+                      title:
+                        type: string
+                    additionalProperties: false
+                    required:
+                      - path
+                aggregationProperties:
+                  type: object
+                  default: {}
+                  propertyNames:
+                    pattern: '^[A-Za-z0-9@_=\\-]+$'
+                  additionalProperties:
+                    type: object
+                    properties:
+                      title:
+                        type: string
+                      description:
+                        type: string
+                      icon:
+                        type: string
+                      type:
+                        enum:
+                          - number
+                        default: number
+                      target:
+                        type: string
+                      calculationSpec:
+                        type: object
+                        oneOf:
+                          - oneOf:
+                              - type: object
+                                properties:
+                                  func:
+                                    enum:
+                                      - average
+                                  measureTimeBy:
+                                    type: string
+                                  averageOf:
+                                    type: string
+                                    enum:
+                                      - hour
+                                      - day
+                                      - week
+                                      - month
+                                      - total
+                                  calculationBy:
+                                    type: string
+                                    enum:
+                                      - entities
+                                required:
+                                  - func
+                                  - calculationBy
+                                  - averageOf
+                              - type: object
+                                properties:
+                                  func:
+                                    enum:
+                                      - count
+                                  calculationBy:
+                                    type: string
+                                    enum:
+                                      - entities
+                                required:
+                                  - func
+                                  - calculationBy
+                          - oneOf:
+                              - type: object
+                                properties:
+                                  func:
+                                    type: string
+                                    enum:
+                                      - sum
+                                      - min
+                                      - max
+                                      - median
+                                  property:
+                                    type: string
+                                  calculationBy:
+                                    type: string
+                                    enum:
+                                      - property
+                                additionalProperties: false
+                                required:
+                                  - func
+                                  - property
+                                  - calculationBy
+                              - type: object
+                                properties:
+                                  func:
+                                    enum:
+                                      - average
+                                  measureTimeBy:
+                                    type: string
+                                  averageOf:
+                                    type: string
+                                    enum:
+                                      - hour
+                                      - day
+                                      - week
+                                      - month
+                                      - total
+                                  property:
+                                    type: string
+                                  calculationBy:
+                                    type: string
+                                    enum:
+                                      - property
+                                additionalProperties: false
+                                required:
+                                  - func
+                                  - property
+                                  - calculationBy
+                                  - averageOf
+                      query:
+                        $ref: '#/components/schemas/def-0'
+                    additionalProperties: false
+                    required:
+                      - title
+                      - target
+                      - calculationSpec
+                relations:
+                  type: object
+                  propertyNames:
+                    pattern: '^[A-Za-z0-9@_=\\-]+$'
+                  additionalProperties:
+                    type: object
+                    properties:
+                      title:
+                        type: string
+                      target:
+                        type: string
+                      required:
+                        type: boolean
+                        default: false
+                      many:
+                        type: boolean
+                        default: false
+                      description:
+                        type: string
+                    additionalProperties: false
+                    required:
+                      - target
+                      - required
+                      - many
+                changelogDestination:
+                  oneOf:
+                    - type: object
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - WEBHOOK
+                        agent:
+                          type: boolean
+                        url:
+                          type: string
+                          format: uri
+                      required:
+                        - url
+                        - type
+                      additionalProperties: false
+                    - type: object
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - KAFKA
+                      required:
+                        - type
+                      additionalProperties: false
+              additionalProperties: true
+              required:
+                - title
+                - schema
+        required: true
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: identifier
+          required: true
+      security:
+        - bearer: []
       responses:
         '200':
           description: Default Response
@@ -3588,3 +3984,4 @@ paths:
       responses:
         '200':
           description: Default Response
+
