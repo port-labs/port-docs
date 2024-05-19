@@ -122,7 +122,7 @@ If you would like to use this method, at the same repo you cloned there is anoth
 
 :::tip invisible fields
 You might have noticed that some fields are not visible in the UI but are present in the CRD.
-By default, Port will not show all the fields of the CRD in the UI and it will show only the required one, you can change this by editing the action JSON, and removing the `visible`: `false` from the fields that you want to show in the UI.
+By default, Port will not show all the fields of the CRD in the UI and it will show only the required ones. You can change this by editing the action JSON, and removing the `visible`: `false` from the fields that you want to show in the UI.
 :::
 
 * After the action is executed, click on the action run and logs will show up, if everything is succeeded we should see the following logs.
