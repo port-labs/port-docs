@@ -36,11 +36,12 @@ After completing it, you will get a sense of how it can benefit different person
 
 :::tip Onboarding
 
-As part of the onboarding process, you should already have an action named `Send scorecard reminder` in your [self-service tab](https://app.getport.io/self-serve).  
+As part of the onboarding process, you should already have an action named `Scaffold a new service` in your [self-service tab](https://app.getport.io/self-serve).  
 
 If you **skipped** the onboarding, follow the instructions listed [here](/quickstart).
 :::
-1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal. Hover over the `Send scorecard reminder` action, click the `...` button in the top right corner, and choose "Edit":
+
+1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal. Hover over the `Scaffold a new service` action, click the `...` button in the top right corner, and choose "Edit":
 
     <img src='/img/guides/scaffoldEditAction.png' width='45%' border='1px' />
 
