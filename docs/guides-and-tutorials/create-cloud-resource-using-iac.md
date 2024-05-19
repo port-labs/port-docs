@@ -69,7 +69,7 @@ Fill out the form with your values:
 - Scroll down to the `Configure the invocation payload` section.  
   This is where you can define which data will be sent to your backend each time the action is executed.  
 
-  For this example, we will send two details that our backend needs to know - the entity and the id of the action run.  
+  For this example, we will send some details that our backend needs to know - the inputs, along with the entity and the id of the action run.  
   Copy the following JSON snippet and paste it in the payload code box:
 
   ```json showLineNumbers
@@ -93,23 +93,33 @@ Fill out the form with your values:
 
 <TabItem value="gitlab">
 
-First, choose `Gitlab` as the invocation type.
+:::tip
+You will need a few parameters for this part that are generated in the [setup the action's backend](#setup-the-actions-backend) section, it is recommended to complete the steps there and then follow the instructions here with all of the required information in hand.
+:::
 
-- Follow the instructions under `Install the Port agent and set GitLab Pipeline trigger token` (you can skip step 4, as it is only required when using a self-hosted Gitlab instance).
- 
-Then, fill out your workflow details:
+First, choose `Trigger Webhook URL` as the invocation type, then fill out the form:
 
-- Replace the `Project Name` and `Group Name` values with your values (this is where the pipeline will reside and run).
+- For the `Endpoint URL` you need to add a URL in the following format:
+  ```text showLineNumbers
+  https://gitlab.com/api/v4/projects/{GITLAB_PROJECT_ID}/ref/main/trigger/pipeline?token={GITLAB_TRIGGER_TOKEN}
+  ```
+    - The value for `{GITLAB_PROJECT_ID}` is the ID of the GitLab group that you create in the [setup the action's backend](#setup-the-actions-backend) section which stores the `.gitlab-ci.yml` pipeline file.
+      - To find the project ID, browse to the GitLab page of the group you created, at the top right corner of the page, click on the vertical 3 dots button (next to `Fork`) and select `Copy project ID`
+    - The value for `{GITLAB_TRIGGER_TOKEN}` is the trigger token you create in the [setup the action's backend](#setup-the-actions-backend) section.
 
-- Note that leaving `Default Ref` blank will automatically use the `main` branch of your repository:  
-  <img src='/img/guides/scaffoldGitlabBackendDetails.png' width='55%' border='1px' />
-  <br/>
+- Set `HTTP method` to `POST`.
+
+- Set `Request type` to `Async`.
+
+- Set `Use self-hosted agent` to `No`.
+
+  <img src='/img/guides/iacGitlabBackendForm.png' width='80%' border='1px' />
 
 - Scroll down to the `Configure the invocation payload` section.  
   This is where you can define which data will be sent to your backend each time the action is executed.  
 
-  For this example, we will send some details that our backend needs to know, including the service name, and the id of the action run.  
-  Copy the following JSON snippet and paste it in the payload code box:
+  For this example, we will send some details that our backend needs to know - the inputs, along with the entity and the id of the action run.   
+  Copy the following JSON snippet and paste it in the "Body" code box:
 
   ```json showLineNumbers
   {
@@ -294,8 +304,10 @@ jobs:
 
 <TabItem value="gitlab">
 
-First, let's create the necessary token and secrets in your GitLab project:
+First, let's create a GitLab project that will store our new bucket creation pipeline - Go to your GitLab account and create a new project.
 
+Next, let's create the necessary token and secrets:
+   
 - Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
 
 - Go to your [project](https://gitlab.com/), and follow the steps [here](https://docs.gitlab.com/ee/user/project/settings/project_access_tokens.html#create-a-project-access-token) to create a new project access token with the following permission scopes: `write_repository`, then save its value as it will be required in the next step.
@@ -310,6 +322,10 @@ First, let's create the necessary token and secrets in your GitLab project:
   <br/>
   <img src='/img/guides/gitlabPipelineVariables.png' width='80%' border='1px' />
 
+- Expand the `Pipeline trigger tokens` section and add a new token, give it a meaningful description such as `Bucket creator token` and save its value
+  - This is the `{GITLAB_TRIGGER_TOKEN}` that you need for the defining the backend of the Action.
+  
+    <img src='/img/guides/gitlabPipelineTriggerToken.png' width='80%' border='1px' />
 
 Now let's create the pipeline file that contains our logic. In the root of your GitLab project, create a new file named `.gitlab-ci.yml` and use the following snippet as its content:
 
