@@ -309,11 +309,7 @@ Next, let's create the necessary token and secrets:
 - Expand the `Pipeline trigger tokens` section and add a new token, give it a meaningful description such as `Scaffolder token` and save its value
   - This is the `{GITLAB_TRIGGER_TOKEN}` that you need for the [define backend type](#define-backend-type) section.
 
-<br/>
-
-  <img src='/img/guides/gitlabPipelineTriggerToken.png' width='80%' border='1px' />
-
-<br/><br/>
+    <img src='/img/guides/gitlabPipelineTriggerToken.png' width='80%' border='1px' />
 
 :::tip
 Now that you have both the new GitLab project and its respective trigger token, you can go to the [define backend type](#define-backend-type) section and complete the action configuration in Port.
